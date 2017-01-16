@@ -90,7 +90,7 @@ numberFormat.setMinimumIntegerDigits(2);
 
 			TimeZoneFormat icuTimeZoneFormat = icuSimpleDateFormat.getTimeZoneFormat();
 
-			sb.append(icuTimeZoneFormat.format(TimeZoneFormat.Style.GENERIC_LOCATION, icuTimeZone, date.getTime()));
+			sb.append(icuTimeZoneFormat.format(TimeZoneFormat.Style.ZONE_ID, icuTimeZone, date.getTime()));
 
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 

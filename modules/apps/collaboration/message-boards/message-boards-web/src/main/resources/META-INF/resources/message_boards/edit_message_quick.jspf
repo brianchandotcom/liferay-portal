@@ -118,7 +118,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 		<div class="divider"></div>
 
 		<div class="panel-body">
-			<div class="card-row card-row-padded" id="<%= liferayPortletResponse.getNamespace() + "addQuickReply" + replyToMessageId %>">
+			<div class="card-row card-row-padded message-content" id="<%= liferayPortletResponse.getNamespace() + "addQuickReply" + replyToMessageId %>">
 				<portlet:actionURL name="/message_boards/edit_message" var="editMessageURL" />
 
 				<aui:form action="<%= editMessageURL %>" method="post" name='<%= "addQuickReplyFm" + replyToMessageId %>' onSubmit='<%= "event.preventDefault(); " %>'>

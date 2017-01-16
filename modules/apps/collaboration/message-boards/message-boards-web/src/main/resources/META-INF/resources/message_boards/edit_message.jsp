@@ -218,7 +218,7 @@ if (portletTitleBasedNavigation) {
 
 				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="subject" value="<%= subject %>" />
 
-				<aui:field-wrapper label="body">
+				<aui:field-wrapper cssClass="message-content" label="body">
 					<c:choose>
 						<c:when test='<%= ((messageId != 0) && message.isFormatBBCode()) || ((messageId == 0) && messageFormat.equals("bbcode")) %>'>
 							<%@ include file="/message_boards/bbcode_editor.jspf" %>

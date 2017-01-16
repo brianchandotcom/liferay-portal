@@ -94,12 +94,6 @@
 			padding-left: 0;
 		}
 
-		.message-content {
-			img {
-				max-width: 100%;
-			}
-		}
-
 		.reply-to-main-thread-container {
 			text-align: center;
 		}
@@ -107,6 +101,12 @@
 
 	.message-container {
 		padding-left: 10px;
+	}
+
+	.message-content {
+		img {
+			max-width: 100%;
+		}
 	}
 
 	.thread-bottom, .thread-top {

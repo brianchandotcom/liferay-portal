@@ -42,23 +42,25 @@ public abstract class BaseFailureMessageGenerator
 
 		String baseRepositoryName = topLevelBuild.getRepositoryName();
 
-		Map<String, String> baseRepositoryGitDetailMap =
+		Map<String, String> baseRepositoryGitDetailsTempMap =
 			topLevelBuild.getGitRepositoryDetailsTempMap(baseRepositoryName);
 
-		sb.append(baseRepositoryGitDetailMap.get("github.origin.name"));
+		sb.append(baseRepositoryGitDetailsTempMap.get("github.origin.name"));
 
 		sb.append("/");
 		sb.append(baseRepositoryName);
 		sb.append("/tree/");
-		sb.append(baseRepositoryGitDetailMap.get("github.sender.branch.name"));
+		sb.append(
+			baseRepositoryGitDetailsTempMap.get("github.sender.branch.name"));
 
 		String url = sb.toString();
 
 		sb = new StringBuilder();
 
-		sb.append(baseRepositoryGitDetailMap.get("github.origin.name"));
+		sb.append(baseRepositoryGitDetailsTempMap.get("github.origin.name"));
 		sb.append("/");
-		sb.append(baseRepositoryGitDetailMap.get("github.sender.branch.name"));
+		sb.append(
+			baseRepositoryGitDetailsTempMap.get("github.sender.branch.name"));
 
 		return Dom4JUtil.getNewAnchorElement(url, sb.toString());
 	}
@@ -114,7 +116,7 @@ public abstract class BaseFailureMessageGenerator
 			portalRepositoryName += "-ee";
 		}
 
-		Map<String, String> portalRepositoryGitDetailsMap =
+		Map<String, String> portalRepositoryGitDetailsTempMap =
 			topLevelBuild.getGitRepositoryDetailsTempMap(portalRepositoryName);
 
 		Element gitCommitPluginsAnchorElement = new DefaultElement("a");
@@ -122,12 +124,12 @@ public abstract class BaseFailureMessageGenerator
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("https://github.com/");
-		sb.append(portalRepositoryGitDetailsMap.get("github.origin.name"));
+		sb.append(portalRepositoryGitDetailsTempMap.get("github.origin.name"));
 		sb.append("/");
 		sb.append(portalRepositoryName);
 		sb.append("/blob/");
 		sb.append(
-			portalRepositoryGitDetailsMap.get("github.sender.branch.name"));
+			portalRepositoryGitDetailsTempMap.get("github.sender.branch.name"));
 		sb.append("/git-commit-plugins");
 
 		gitCommitPluginsAnchorElement.addAttribute("href", sb.toString());

@@ -71,9 +71,10 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 			long time = System.currentTimeMillis();
 
-			Map<String, String> stopPropertiesMap = getStopPropertiesMap();
+			Map<String, String> stopPropertiesTempMap =
+				getStopPropertiesTempMap();
 
-			while (!stopPropertiesMap.containsKey(
+			while (!stopPropertiesTempMap.containsKey(
 						"TOP_LEVEL_GITHUB_COMMENT_ID")) {
 
 				if ((System.currentTimeMillis() - time) > (5 * 60 * 1000)) {
@@ -86,7 +87,7 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 				JenkinsResultsParserUtil.sleep(10 * 1000);
 
-				stopPropertiesMap = getStopPropertiesMap();
+				stopPropertiesTempMap = getStopPropertiesTempMap();
 			}
 
 			StringBuilder sb = new StringBuilder();
@@ -117,7 +118,7 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 			sb.append("liferay-portal-ee");
 			sb.append("/issues/comments/");
 
-			sb.append(stopPropertiesMap.get("TOP_LEVEL_GITHUB_COMMENT_ID"));
+			sb.append(stopPropertiesTempMap.get("TOP_LEVEL_GITHUB_COMMENT_ID"));
 
 			JSONObject jsonObject = getJSONObjectFromURL(sb.toString());
 

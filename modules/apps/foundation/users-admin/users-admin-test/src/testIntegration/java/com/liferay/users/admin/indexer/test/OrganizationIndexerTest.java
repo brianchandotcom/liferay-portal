@@ -166,18 +166,6 @@ public class OrganizationIndexerTest {
 		Assert.assertEquals(toString(names), toString(getNames(keywords)));
 	}
 
-	protected String getNames(List<Organization> organizations) {
-		List<String> names = new ArrayList<>(organizations.size());
-
-		for (Organization organization : organizations) {
-			names.add(organization.getName());
-		}
-
-		Collections.sort(names);
-
-		return names.toString();
-	}
-
 	protected List<String> getNames(String keywords) throws Exception {
 		Hits hits = search(keywords);
 

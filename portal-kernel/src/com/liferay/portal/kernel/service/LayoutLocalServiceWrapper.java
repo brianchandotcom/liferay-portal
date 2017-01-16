@@ -562,6 +562,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			privateLayout);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Layout getDefaultLayout(
+		long groupId, boolean privateLayout) {
+		return _layoutLocalService.getDefaultLayout(groupId, privateLayout);
+	}
+
 	/**
 	* Returns the layout for the friendly URL
 	*

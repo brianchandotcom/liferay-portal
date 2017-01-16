@@ -41,6 +41,8 @@ public interface TemplateConstants {
 
 	public static final String LANG_TYPE_SOY = "soy";
 
+	public static final String LANG_TYPE_TPL = "tpl";
+
 	public static final String LANG_TYPE_VM = "vm";
 
 	public static final String LANG_TYPE_XML = "xml";

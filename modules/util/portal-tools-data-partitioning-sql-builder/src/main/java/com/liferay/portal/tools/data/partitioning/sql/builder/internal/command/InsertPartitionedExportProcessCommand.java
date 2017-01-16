@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.impl;
+package com.liferay.portal.tools.data.partitioning.sql.builder.internal.command;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.DBExporter;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
-import com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.BaseExportProcessCommand;
 
 import java.io.OutputStream;
 
@@ -25,9 +24,10 @@ import java.util.List;
 /**
  * @author Manuel de la Peña
  */
-public class DeleteExportProcessCommand extends BaseExportProcessCommand {
+public class InsertPartitionedExportProcessCommand
+	extends BaseExportProcessCommand {
 
-	public DeleteExportProcessCommand(
+	public InsertPartitionedExportProcessCommand(
 		long companyId, DBExporter dbExporter, List<String> tableNames,
 		ExportContext exportContext) {
 
@@ -36,18 +36,19 @@ public class DeleteExportProcessCommand extends BaseExportProcessCommand {
 
 	@Override
 	protected String getOutputFileName() {
-		return exportContext.getSchemaName() + "-" + companyId + "-delete.sql";
+		return exportContext.getSchemaName() + "-" + companyId +
+			"-partitioned" + dbExporter.getOutputFileExtension();
 	}
 
 	@Override
 	protected String getOutputFileName(String tableName) {
 		return exportContext.getSchemaName() + "-" + companyId + "-table-" +
-			tableName + "-delete.sql";
+			tableName + dbExporter.getOutputFileExtension();
 	}
 
 	@Override
 	protected void write(String tableName, OutputStream outputStream) {
-		dbExporter.writeDelete(companyId, tableName, outputStream);
+		dbExporter.write(companyId, tableName, outputStream);
 	}
 
 }

@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.impl;
+package com.liferay.portal.tools.data.partitioning.sql.builder.internal.command;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.DBExporter;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
-import com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.BaseExportProcessCommand;
 
 import java.io.OutputStream;
 

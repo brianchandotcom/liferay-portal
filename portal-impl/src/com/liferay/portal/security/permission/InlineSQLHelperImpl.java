@@ -324,6 +324,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	protected long[] getRoleIds(long[] groupIds) {
+		if (groupIds.length == 1) {
+			return getRoleIds(groupIds[0]);
+		}
+
 		Set<Long> roleIds = new HashSet<>();
 
 		for (long groupId : groupIds) {

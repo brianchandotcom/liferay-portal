@@ -1,7 +1,6 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
-task expandMavenDistribution(type: Copy)
 task writeProjectTemplateVersions
 
 Set<Project> projectTemplateProjects = project.parent.subprojects.findAll {
@@ -18,7 +17,7 @@ configurations {
 }
 
 dependencies {
-	mavenDistribution classifier: "bin", ext: "tar.gz", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
+	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
 	projectTemplates project(":sdk:project-templates-activator")
 	projectTemplates project(":sdk:project-templates-api")
@@ -50,17 +49,7 @@ dependencies {
 	testCompile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.2.0"
 	testCompile group: "junit", name: "junit", version: "4.12"
 	testCompile group: "net.diibadaaba.zipdiff", name: "zipdiff", version: "1.0"
-}
-
-expandMavenDistribution {
-	eachFile new StripPathSegmentsAction(1)
-
-	from {
-		tarTree(configurations.mavenDistribution.singleFile)
-	}
-
-	includeEmptyDirs = false
-	into new File(buildDir, "maven-distribution")
+	testCompile project(":test:maven-executor")
 }
 
 processResources {
@@ -72,7 +61,6 @@ test {
 		"${it.path}:install"
 	}
 
-	dependsOn expandMavenDistribution
 	dependsOn writeProjectTemplateVersions
 
 	doFirst {
@@ -89,6 +77,7 @@ test {
 		File gradleDistributionFile = FileUtil.get(project, gradleDistributionUrl)
 
 		systemProperty "gradle.distribution", uri(gradleDistributionFile)
+		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
 	}
 
 	jvmArgs "-XX:MaxMetaspaceSize=256m"
@@ -97,7 +86,6 @@ test {
 	systemProperty "repository.url", System.properties["repository.url"]
 	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
 	systemProperty "http.proxyPort", System.properties["http.proxyPort"]
-	systemProperty "maven.distribution.dir", expandMavenDistribution.destinationDir
 }
 
 writeProjectTemplateVersions {

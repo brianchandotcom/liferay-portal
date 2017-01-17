@@ -59,7 +59,7 @@ copySystemPackagesExtraLibs {
 }
 
 copySystemPackagesExtraManifest {
-	if (!FileUtil.isUpToDate(project, systemPackagesExtraBndFile, systemPackagesExtraManifestFile)) {
+	if ((System.properties["build.profile"] == "slim") || !FileUtil.isUpToDate(project, systemPackagesExtraBndFile, systemPackagesExtraManifestFile)) {
 		dependsOn buildSystemPackagesExtraManifest
 	}
 

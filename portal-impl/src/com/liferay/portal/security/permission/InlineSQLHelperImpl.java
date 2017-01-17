@@ -568,12 +568,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 								companyId, className,
 								ResourceConstants.SCOPE_GROUP,
 								String.valueOf(groupId), roleIds,
-								ActionKeys.VIEW)) {
-
-						return sql;
-					}
-
-					if (ResourcePermissionLocalServiceUtil.
+								ActionKeys.VIEW) ||
+						ResourcePermissionLocalServiceUtil.
 							hasResourcePermission(
 								companyId, className,
 								ResourceConstants.SCOPE_GROUP_TEMPLATE,

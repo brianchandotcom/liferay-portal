@@ -409,26 +409,10 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 				<div class="card-row card-row-padded message-attachments">
 					<h3><liferay-ui:message key="attachments" />:</h3>
 
-					<%
-					List<FileEntry> attachmentsFileEntries = message.getAttachmentsFileEntries();
-
-					for (FileEntry fileEntry : attachmentsFileEntries) {
-						if (MimeTypesUtil.isWebImage(fileEntry.getMimeType())) {
-					%>
-
-							<p>
-								<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="attachment" />" class="crop-img" src="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>" />
-							</p>
-
-					<%
-						}
-					}
-					%>
-
 					<ul>
 
 						<%
-						for (FileEntry fileEntry : attachmentsFileEntries) {
+						for (FileEntry fileEntry : message.getAttachmentsFileEntries()) {
 						%>
 
 							<li class="message-attachment">
@@ -437,6 +421,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								StringBundler sb = new StringBundler(4);
 
 								sb.append(fileEntry.getTitle());
+								sb.append(StringPool.SPACE);
 								sb.append(StringPool.OPEN_PARENTHESIS);
 								sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
 								sb.append(StringPool.CLOSE_PARENTHESIS);

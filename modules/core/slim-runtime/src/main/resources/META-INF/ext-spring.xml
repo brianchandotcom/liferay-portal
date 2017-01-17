@@ -225,7 +225,7 @@
 	<bean class="com.liferay.portal.service.impl.ClassNameLocalServiceImpl" id="com.liferay.portal.kernel.service.ClassNameLocalService" />
 	<bean class="com.liferay.portal.service.impl.ClassNameServiceImpl" id="com.liferay.portal.kernel.service.ClassNameService" />
 	<bean class="com.liferay.portal.service.persistence.impl.ClassNamePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ClassNamePersistence" parent="basePersistence" />
-	<bean class="com.liferay.slim.runtime.internal.service.impl.SlimRuntimeReleaseLocalServiceImpl" id="com.liferay.portal.kernel.service.ReleaseLocalService" />
+	<bean class="com.liferay.slim.runtime.internal.service.SlimRuntimeReleaseLocalServiceImpl" id="com.liferay.portal.kernel.service.ReleaseLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.ReleasePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ReleasePersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl" depends-on="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil" id="com.liferay.portal.kernel.service.ServiceComponentLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence" parent="basePersistence" />

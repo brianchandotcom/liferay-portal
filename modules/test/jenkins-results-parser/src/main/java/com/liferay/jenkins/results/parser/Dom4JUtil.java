@@ -71,12 +71,18 @@ public class Dom4JUtil {
 
 		Writer writer = new CharArrayWriter();
 
+		OutputFormat outputFormat = OutputFormat.createPrettyPrint();
+
+		outputFormat.setTrimText(false);
+
 		XMLWriter xmlWriter = pretty ? new XMLWriter(
-			writer, OutputFormat.createPrettyPrint()) : new XMLWriter(writer);
+			writer, outputFormat) : new XMLWriter(writer);
 
 		xmlWriter.write(element);
 
-		return writer.toString();
+		String formattedContent = writer.toString();
+
+		return formattedContent.replace("<code> ", "<code>\n ");
 	}
 
 	public static Element getNewAnchorElement(

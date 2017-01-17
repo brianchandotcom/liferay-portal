@@ -19,13 +19,14 @@ buildAlloyEditor {
 	doLast {
 		FileTree alloyEditorJsFileTree = fileTree(dir: alloyEditorDestinationDir, include : "alloy-editor*.js")
 		FileTree buttonsJsFileTree = fileTree(dir: new File(alloyEditorSrcDir, "buttons"), include: "**/*.js")
+		FileTree selectionsJsFileTree = fileTree(dir: new File(alloyEditorSrcDir, "selections"), include: "**/*.js")
 
 		alloyEditorJsFileTree.each {
 			File alloyEditorJsFile ->
 
 			File liferayAlloyEditorJsFile = new File(alloyEditorDestinationDir, "liferay-" + alloyEditorJsFile.name)
 
-			FileUtil.concatenate(liferayAlloyEditorJsFile, files(alloyEditorJsFile, buttonsJsFileTree))
+			FileUtil.concatenate(liferayAlloyEditorJsFile, files(alloyEditorJsFile, buttonsJsFileTree, selectionsJsFileTree))
 		}
 	}
 

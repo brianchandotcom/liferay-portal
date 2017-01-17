@@ -40,6 +40,8 @@
 
 		<execute macro="DDLNavigator#gotoAddDisplayTemplate" />
 
+		<execute function="Click" locator1="TextInput#NAME" />
+
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlDisplayTemplateName}" />
 
 		<execute macro="DDLTemplate#_showDetails" />
@@ -72,6 +74,8 @@
 		<execute function="Pause" locator1="3000" />
 
 		<execute function="SelectFrameTop" />
+
+		<execute function="ScrollBy" value1="0, 400" />
 
 		<execute macro="PortletEntry#save" />
 	</command>

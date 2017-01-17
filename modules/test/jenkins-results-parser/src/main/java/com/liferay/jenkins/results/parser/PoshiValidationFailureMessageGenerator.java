@@ -19,7 +19,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Element;
-import org.dom4j.tree.DefaultElement;
 
 /**
  * @author Kevin Yen
@@ -54,16 +53,10 @@ public class PoshiValidationFailureMessageGenerator
 			return null;
 		}
 
-		Element messageElement = new DefaultElement("div");
-
-		Element paragraphElement = Dom4JUtil.getNewElement("p", messageElement);
-
-		paragraphElement.addText("POSHI Validation Failure");
-
-		messageElement.add(
-			Dom4JUtil.toCodeSnippetElement(poshiFailureMatcher.group(1)));
-
-		return messageElement;
+		return Dom4JUtil.getNewElement(
+			"div", null, Dom4JUtil.getNewElement(
+				"p", null, "POSHI Validation Failure",
+				Dom4JUtil.toCodeSnippetElement(poshiFailureMatcher.group(1))));
 	}
 
 	private static final Pattern _poshiFailurePattern = Pattern.compile(

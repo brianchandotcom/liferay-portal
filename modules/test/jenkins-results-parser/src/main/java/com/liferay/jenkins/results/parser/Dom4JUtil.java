@@ -94,12 +94,7 @@ public class Dom4JUtil {
 
 		Element anchorElement = null;
 
-		if (parentElement == null) {
-			anchorElement = new DefaultElement("a");
-		}
-		else {
-			anchorElement = getNewElement("a", parentElement);
-		}
+		anchorElement = getNewElement("a", parentElement);
 
 		anchorElement.addAttribute("href", href);
 
@@ -112,12 +107,18 @@ public class Dom4JUtil {
 		return getNewAnchorElement(href, null, items);
 	}
 
+	public static Element getNewElement(String childElementTag) {
+		return getNewElement(childElementTag, null);
+	}
+
 	public static Element getNewElement(
 		String childElementTag, Element parentElement, Object... items) {
 
 		Element childElement = new DefaultElement(childElementTag);
 
-		parentElement.add(childElement);
+		if (parentElement != null) {
+			parentElement.add(childElement);
+		}
 
 		if ((items != null) && (items.length > 0)) {
 			addToElement(childElement, items);
@@ -174,30 +175,9 @@ public class Dom4JUtil {
 	}
 
 	public static Element toCodeSnippetElement(String content) {
-		return wrapWithNewElement(
-			wrapWithNewElement(
-				JenkinsResultsParserUtil.redact(content), "code"),
-			"pre");
-	}
-
-	public static Element wrapWithNewElement(
-		Element element, String wrapperTag) {
-
-		Element wrapperElement = new DefaultElement(wrapperTag);
-
-		wrapperElement.add(element);
-
-		return wrapperElement;
-	}
-
-	public static Element wrapWithNewElement(
-		String content, String wrapperTag) {
-
-		Element wrapperElement = new DefaultElement(wrapperTag);
-
-		wrapperElement.addText(content);
-
-		return wrapperElement;
+		return getNewElement(
+			"pre", null, getNewElement(
+				"code", null, JenkinsResultsParserUtil.redact(content)));
 	}
 
 }

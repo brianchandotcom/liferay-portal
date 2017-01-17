@@ -175,6 +175,7 @@ public class ThemeBuilder {
 			themeDirPath,
 			new SimpleFileVisitor<Path>() {
 
+				@Override
 				public FileVisitResult visitFile(
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {

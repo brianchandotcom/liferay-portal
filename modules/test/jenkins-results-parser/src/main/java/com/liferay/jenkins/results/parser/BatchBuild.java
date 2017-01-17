@@ -27,7 +27,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 
 import org.dom4j.Element;
-import org.dom4j.tree.DefaultElement;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -100,36 +99,21 @@ public class BatchBuild extends BaseBuild {
 			failCount++;
 
 			if (failCount < 4) {
-				Dom4JUtil.addToElement(
-					Dom4JUtil.getNewElement(
-						"li", downstreamBuildOrderedListElement),
-					failureElement);
+				Dom4JUtil.getNewElement(
+					"li", downstreamBuildOrderedListElement, failureElement);
 
 				continue;
 			}
 
-			Dom4JUtil.addToElement(
-				Dom4JUtil.getNewElement(
-					"li", downstreamBuildOrderedListElement),
-				"...");
+			Dom4JUtil.getNewElement(
+				"li", downstreamBuildOrderedListElement, "...");
 
 			break;
 		}
 
-		String downstreamBuildOrderedListElementHTML = null;
-
-		try {
-			downstreamBuildOrderedListElementHTML = Dom4JUtil.format(
-				downstreamBuildOrderedListElement, false);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to format downstreamBuildOrderedListElement", ioe);
-		}
-
-		if (downstreamBuildOrderedListElementHTML.contains(">...<")) {
-			Dom4JUtil.addToElement(
-				Dom4JUtil.getNewElement("strong", messageElement), "Click ",
+		if (failureElements.size() >= 4) {
+			Dom4JUtil.getNewElement(
+				"strong", messageElement, "Click ",
 				Dom4JUtil.getNewAnchorElement(
 					getBuildURL() + "testReport", "here"),
 				" for more failures.");
@@ -298,12 +282,6 @@ public class BatchBuild extends BaseBuild {
 
 	@Override
 	protected Element getGitHubMessageJobResultsElement() {
-		Element jobResultsElement = new DefaultElement("div");
-
-		Dom4JUtil.addToElement(
-			jobResultsElement,
-			Dom4JUtil.wrapWithNewElement("Job Results:", "h6"));
-
 		String result = getResult();
 
 		int failCount = getDownstreamBuildCountByResult("FAILURE");
@@ -314,16 +292,17 @@ public class BatchBuild extends BaseBuild {
 			successCount = getTestCountByStatus("SUCCESS");
 		}
 
-		Dom4JUtil.addToElement(
-			Dom4JUtil.getNewElement("p", jobResultsElement),
-			Integer.toString(successCount),
-			JenkinsResultsParserUtil.getNounForm(
-				successCount, " Tests", " Test"),
-			" Passed.", new DefaultElement("br"), Integer.toString(failCount),
-			JenkinsResultsParserUtil.getNounForm(failCount, " Tests", " Test"),
-			" Failed.", getFailureMessageElement());
-
-		return jobResultsElement;
+		return Dom4JUtil.getNewElement(
+			"div", null, Dom4JUtil.getNewElement("h6", null, "Job Results:"),
+			Dom4JUtil.getNewElement(
+				"p", null, Integer.toString(successCount),
+				JenkinsResultsParserUtil.getNounForm(
+					successCount, " Tests", " Test"),
+				" Passed.", Dom4JUtil.getNewElement("br"),
+				Integer.toString(failCount),
+				JenkinsResultsParserUtil.getNounForm(
+					failCount, " Tests", " Test"),
+				" Failed.", getFailureMessageElement()));
 	}
 
 	protected int getTestCountByStatus(String status) {

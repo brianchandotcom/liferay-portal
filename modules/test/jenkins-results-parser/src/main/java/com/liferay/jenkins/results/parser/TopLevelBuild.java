@@ -29,7 +29,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Element;
-import org.dom4j.tree.DefaultElement;
 
 import org.json.JSONObject;
 
@@ -237,15 +236,13 @@ public class TopLevelBuild extends BaseBuild {
 			"https://github.com/liferay/" + repositoryName + "/commit/" +
 				repositorySHA;
 
-		Element baseBranchDetailsElement = new DefaultElement("p");
-
-		Dom4JUtil.addToElement(
-			baseBranchDetailsElement, "Branch Name: ",
+		Element baseBranchDetailsElement = Dom4JUtil.getNewElement(
+			"p", null, "Branch Name: ",
 			Dom4JUtil.getNewAnchorElement(baseBranchURL, getBranchName()));
 
 		if (repositorySHA != null) {
 			Dom4JUtil.addToElement(
-				baseBranchDetailsElement, new DefaultElement("br"),
+				baseBranchDetailsElement, Dom4JUtil.getNewElement("br"),
 				"Branch GIT ID: ", Dom4JUtil.getNewAnchorElement(
 					repositoryCommitURL, repositorySHA));
 		}
@@ -254,13 +251,9 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getBuildTimeElement() {
-		Element buildTimeElement = new DefaultElement("p");
-
-		buildTimeElement.addText(
-			"Build Time: " +
-				JenkinsResultsParserUtil.toDurationString(getDuration()));
-
-		return buildTimeElement;
+		return Dom4JUtil.getNewElement(
+			"p", null, "Build Time: ",
+			JenkinsResultsParserUtil.toDurationString(getDuration()));
 	}
 
 	protected Element getDownstreamGitHubMessageElement() {
@@ -276,10 +269,10 @@ public class TopLevelBuild extends BaseBuild {
 			return null;
 		}
 
-		Element messageElement = new DefaultElement("div");
-
-		Dom4JUtil.getNewAnchorElement(
-			getBuildURL(), messageElement, getDisplayName());
+		Element messageElement = Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewAnchorElement(
+				getBuildURL(), null, getDisplayName()));
 
 		if (result.equals("ABORTED")) {
 			messageElement.add(
@@ -313,24 +306,21 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	protected Element getGitHubMessageJobResultsElement() {
-		Element jobResultsElement = new DefaultElement("div");
-
-		jobResultsElement.add(
-			Dom4JUtil.wrapWithNewElement("Job Results:", "h6"));
-
 		int successCount = getDownstreamBuildCountByResult("SUCCESS");
 
 		int failCount = getDownstreamBuildCount(null) - successCount + 1;
 
-		Dom4JUtil.addToElement(
-			Dom4JUtil.getNewElement("p", jobResultsElement),
-			Integer.toString(successCount),
-			JenkinsResultsParserUtil.getNounForm(successCount, " Jobs", " Job"),
-			" Passed.", new DefaultElement("br"), Integer.toString(failCount),
-			JenkinsResultsParserUtil.getNounForm(failCount, " Jobs", " Job"),
-			" Failed.");
-
-		return jobResultsElement;
+		return Dom4JUtil.getNewElement(
+			"div", null, Dom4JUtil.getNewElement(
+				"h6", null, "Job Results:", Dom4JUtil.getNewElement(
+					"p", null, Integer.toString(successCount),
+					JenkinsResultsParserUtil.getNounForm(
+						successCount, " Jobs", " Job"),
+					" Passed.", Dom4JUtil.getNewElement("br"),
+					Integer.toString(failCount),
+					JenkinsResultsParserUtil.getNounForm(
+						failCount, " Jobs", " Job"),
+					" Failed.")));
 	}
 
 	protected String getGitRepositoryDetailsPropertiesTempMapURL(
@@ -372,7 +362,7 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getJobSummaryListElement() {
-		Element jobSummaryListElement = new DefaultElement("ul");
+		Element jobSummaryListElement = Dom4JUtil.getNewElement("ul");
 
 		List<Build> builds = new ArrayList<>();
 
@@ -392,17 +382,15 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getMoreDetailsElement() {
-		Element moreDetailsElement = new DefaultElement("h5");
-
-		Dom4JUtil.addToElement(
-			moreDetailsElement, "For more details click ",
+		Element moreDetailsElement = Dom4JUtil.getNewElement(
+			"h5", null, "For more details click ",
 			Dom4JUtil.getNewAnchorElement(getJenkinsReportURL(), "here"), ".");
 
 		return moreDetailsElement;
 	}
 
 	protected Element getResultElement() {
-		Element resultElement = new DefaultElement("h1");
+		Element resultElement = Dom4JUtil.getNewElement("h1");
 
 		String result = getResult();
 
@@ -481,28 +469,24 @@ public class TopLevelBuild extends BaseBuild {
 	protected Element getTopGitHubMessageElement() {
 		update();
 
-		Element rootElement = new DefaultElement("html");
-
-		Dom4JUtil.addToElement(
-			rootElement, getResultElement(), getBuildTimeElement(),
-			Dom4JUtil.wrapWithNewElement("Base Branch:", "h4"),
+		Element rootElement = Dom4JUtil.getNewElement(
+			"html", null, getResultElement(), getBuildTimeElement(),
+			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
 			getBaseBranchDetailsElement(),
-			Dom4JUtil.wrapWithNewElement("Job Summary:", "h4"),
+			Dom4JUtil.getNewElement("h4", null, "Job Summary:"),
 			getJobSummaryListElement(), getMoreDetailsElement());
 
 		String result = getResult();
 
 		if (!result.equals("SUCCESS")) {
 			Dom4JUtil.addToElement(
-				rootElement, new DefaultElement("hr"),
-				Dom4JUtil.wrapWithNewElement("Failed Jobs:", "h4"));
+				rootElement, Dom4JUtil.getNewElement("hr"),
+				Dom4JUtil.getNewElement("h4", null, "Failed Jobs:"));
 
 			Element failedJobsOrderedListElement = Dom4JUtil.getNewElement(
-				"ol", rootElement);
-
-			failedJobsOrderedListElement.add(
-				Dom4JUtil.wrapWithNewElement(
-					super.getGitHubMessageElement(), "li"));
+				"ol", rootElement,
+				Dom4JUtil.getNewElement(
+					"li", null, super.getGitHubMessageElement()));
 
 			int failureCount = 1;
 

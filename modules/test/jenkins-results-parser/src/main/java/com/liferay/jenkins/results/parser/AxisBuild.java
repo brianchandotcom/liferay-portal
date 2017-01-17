@@ -28,7 +28,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Element;
-import org.dom4j.tree.DefaultElement;
 
 import org.json.JSONObject;
 
@@ -104,7 +103,16 @@ public class AxisBuild extends BaseBuild {
 		}
 
 		if (fromArchive) {
-			return jobURL + "/" + axisVariable + "/" + buildNumber + "/";
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(jobURL);
+			sb.append("/");
+			sb.append(axisVariable);
+			sb.append("/");
+			sb.append(buildNumber);
+			sb.append("/");
+
+			return sb.toString();
 		}
 
 		try {
@@ -114,7 +122,16 @@ public class AxisBuild extends BaseBuild {
 			throw new RuntimeException("Unable to decode " + jobURL, uee);
 		}
 
-		String buildURL = jobURL + "/" + axisVariable + "/" + buildNumber + "/";
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(jobURL);
+		sb.append("/");
+		sb.append(axisVariable);
+		sb.append("/");
+		sb.append(buildNumber);
+		sb.append("/");
+
+		String buildURL = sb.toString();
 
 		try {
 			return JenkinsResultsParserUtil.encode(buildURL);
@@ -185,10 +202,10 @@ public class AxisBuild extends BaseBuild {
 			return null;
 		}
 
-		Element messageElement = new DefaultElement("div");
-
-		Dom4JUtil.getNewAnchorElement(
-			getBuildURL(), messageElement, getDisplayName());
+		Element messageElement = Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewAnchorElement(
+				getBuildURL(), null, getDisplayName()));
 
 		if (result.equals("ABORTED")) {
 			messageElement.add(

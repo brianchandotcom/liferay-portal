@@ -20,6 +20,7 @@
 			outputProperty="baseline.current.branch.dirs"
 		>
 			<arg value="git.marker.file=bnd.bnd" />
+			<arg value="git.working.branch.name=${git.working.branch.name}" />
 			<arg value="tools.throw.main.exception=true" />
 		</java>
 

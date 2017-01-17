@@ -32,9 +32,13 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.social.kernel.model.SocialRelationConstants;
+import com.liferay.social.kernel.service.SocialRelationLocalServiceUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -73,6 +77,12 @@ public class UserFinderTest {
 		OrganizationLocalServiceUtil.addUserOrganization(
 			_organizationUser.getUserId(), _organization);
 
+		_socialUser = UserTestUtil.addUser();
+
+		SocialRelationLocalServiceUtil.addRelation(
+			_groupUser.getUserId(), _socialUser.getUserId(),
+			SocialRelationConstants.TYPE_BI_CONNECTION);
+
 		_userGroup = UserGroupTestUtil.addUserGroup();
 		_userGroupUser = UserTestUtil.addUser();
 
@@ -89,6 +99,7 @@ public class UserFinderTest {
 
 		OrganizationLocalServiceUtil.deleteOrganization(_organization);
 
+		UserLocalServiceUtil.deleteUser(_socialUser);
 		UserLocalServiceUtil.deleteUser(_userGroupUser);
 
 		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup);
@@ -317,10 +328,22 @@ public class UserFinderTest {
 		Assert.assertEquals(expectedUsers.size() + 2, users.size());
 	}
 
+	@Test
+	public void testFindBySocialUsers() throws Exception {
+		List<User> socialUsers = UserFinderUtil.findBySocialUsers(
+			TestPropsValues.getCompanyId(), _groupUser.getUserId(),
+			SocialRelationConstants.TYPE_BI_CONNECTION, StringPool.EQUAL,
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new UserFirstNameComparator(true));
+
+		Assert.assertEquals(1, socialUsers.size());
+	}
+
 	private static Group _group;
 	private static User _groupUser;
 	private static Organization _organization;
 	private static User _organizationUser;
+	private static User _socialUser;
 	private static UserGroup _userGroup;
 	private static User _userGroupUser;
 

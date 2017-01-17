@@ -120,12 +120,12 @@ public class OrganizationStagedModelDataHandler
 		while (!organizations.isEmpty()) {
 			Organization exportedOrganization = organizations.remove();
 
-			if (organization.getParentOrganizationId() !=
+			if (exportedOrganization.getParentOrganizationId() !=
 					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
 
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, organization,
-					organization.getParentOrganization(),
+					portletDataContext, exportedOrganization,
+					exportedOrganization.getParentOrganization(),
 					PortletDataContext.REFERENCE_TYPE_PARENT);
 			}
 

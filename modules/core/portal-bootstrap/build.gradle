@@ -84,8 +84,12 @@ dependencies {
 	provided project(":core:jaxws-osgi-bridge")
 	provided project(":core:osgi-felix-util")
 	provided project(":core:portal-app-license-api")
-	provided project(":core:portal-compat:blogs:portal-impl-blogs-compat")
-	provided project(":core:portal-compat:blogs:portal-kernel-blogs-compat")
+
+	if (System.properties['build.profile'] != 'slim') {
+		provided project(":core:portal-compat:blogs:portal-impl-blogs-compat")
+		provided project(":core:portal-compat:blogs:portal-kernel-blogs-compat")
+	}
+
 	provided project(":core:registry-api")
 	provided project(":core:registry-impl")
 }

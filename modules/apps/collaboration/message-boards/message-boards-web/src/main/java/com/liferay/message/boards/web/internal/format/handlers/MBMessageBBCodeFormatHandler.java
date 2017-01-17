@@ -17,7 +17,7 @@ package com.liferay.message.boards.web.internal.format.handlers;
 import com.liferay.message.boards.web.internal.format.MBMessageFormatHandler;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.portal.kernel.editor.EditorConstants;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -26,6 +26,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -44,7 +45,9 @@ public class MBMessageBBCodeFormatHandler implements MBMessageFormatHandler {
 		for (MBAttachmentFileEntryReference mbAttachmentFileEntryReference :
 				mbAttachmentFileEntryReferences) {
 
-			Matcher matcher = _BBCODE_IMG_TAG_REGEXP.matcher(content);
+			Matcher matcher = _getTempImagePattern(
+				mbAttachmentFileEntryReference.
+					getTempMBAttachmentFileEntryId()).matcher(content);
 
 			content = matcher.replaceAll(
 				_getMBAttachmentBBCodeImgTag(
@@ -54,17 +57,28 @@ public class MBMessageBBCodeFormatHandler implements MBMessageFormatHandler {
 		return content;
 	}
 
+	@Reference(unbind = "-")
+	public void setPortletFileRepository(
+		PortletFileRepository portletFileRepository) {
+
+		_portletFileRepository = portletFileRepository;
+	}
+
 	private String _getMBAttachmentBBCodeImgTag(
 		FileEntry mbAttachmentFileEntry) {
 
-		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
+		String fileEntryURL = _portletFileRepository.getPortletFileEntryURL(
 			null, mbAttachmentFileEntry, StringPool.BLANK);
 
 		return "[img]" + fileEntryURL + "[/img]";
 	}
 
-	private static final Pattern _BBCODE_IMG_TAG_REGEXP = Pattern.compile(
-		"\\[img[^\\]]*?" + EditorConstants.ATTRIBUTE_DATA_IMAGE_ID +
-			"=\"[^\"]*\"[^\\]]*\\][^\\[]+\\[/img\\]");
+	private Pattern _getTempImagePattern(long tempFileId) {
+		return Pattern.compile(
+			"\\[img[^\\]]*?" + EditorConstants.ATTRIBUTE_DATA_IMAGE_ID + "=\"" +
+				tempFileId + "\"[^\\]]*\\][^\\[]+\\[/img\\]");
+	}
+
+	private PortletFileRepository _portletFileRepository;
 
 }

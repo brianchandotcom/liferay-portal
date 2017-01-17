@@ -17,7 +17,7 @@ package com.liferay.message.boards.web.internal.format.handlers;
 import com.liferay.message.boards.web.internal.format.MBMessageFormatHandler;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.portal.kernel.editor.EditorConstants;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -65,10 +66,15 @@ public class MBMessageHTMLFormatHandler implements MBMessageFormatHandler {
 		return content;
 	}
 
-	private static String _getMBAttachmentHTMLImgTag(
-		FileEntry mbAttachmentFileEntry) {
+	@Reference(unbind = "-")
+	public void setPortletFileRepository(
+		PortletFileRepository portletFileRepository) {
 
-		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
+		_portletFileRepository = portletFileRepository;
+	}
+
+	private String _getMBAttachmentHTMLImgTag(FileEntry mbAttachmentFileEntry) {
+		String fileEntryURL = _portletFileRepository.getPortletFileEntryURL(
 			null, mbAttachmentFileEntry, StringPool.BLANK);
 
 		return "<img src=\"" + fileEntryURL + "\" />";
@@ -76,5 +82,7 @@ public class MBMessageHTMLFormatHandler implements MBMessageFormatHandler {
 
 	private static final String _ATTRIBUTE_LIST_REGEXP =
 		"(\\s*?\\w+\\s*?=\\s*?\"[^\"]*\")*?\\s*?";
+
+	private PortletFileRepository _portletFileRepository;
 
 }

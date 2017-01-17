@@ -37,6 +37,7 @@ public class ReplaceTranslationTaskTest extends ReplaceTranslationCommandTest {
 	}
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

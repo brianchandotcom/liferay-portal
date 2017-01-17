@@ -32,7 +32,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Element;
-import org.dom4j.tree.DefaultElement;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -327,9 +326,9 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return Dom4JUtil.getNewAnchorElement(
-			getBuildURL(), null, Dom4JUtil.wrapWithNewElement(
-				Dom4JUtil.wrapWithNewElement(getDisplayName(), "strong"),
-				"strike"));
+			getBuildURL(), null, Dom4JUtil.getNewElement(
+				"strike", null, Dom4JUtil.getNewElement(
+					"strong", null, getDisplayName())));
 	}
 
 	@Override
@@ -346,7 +345,7 @@ public abstract class BaseBuild implements Build {
 			return null;
 		}
 
-		Element messageElement = new DefaultElement("div");
+		Element messageElement = Dom4JUtil.getNewElement("div");
 
 		if (result.equals("ABORTED")) {
 			messageElement.add(
@@ -354,10 +353,9 @@ public abstract class BaseBuild implements Build {
 		}
 
 		Dom4JUtil.addToElement(
-			messageElement,
-			Dom4JUtil.wrapWithNewElement(
-				Dom4JUtil.getNewAnchorElement(getBuildURL(), getDisplayName()),
-				"h5"),
+			messageElement, Dom4JUtil.getNewElement(
+				"h5", null, Dom4JUtil.getNewAnchorElement(
+					getBuildURL(), getDisplayName())),
 			getGitHubMessageJobResultsElement());
 
 		if (result.equals("FAILURE")) {

@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.util.Hashtable;
 
 import org.dom4j.Element;
-import org.dom4j.tree.DefaultElement;
 
 /**
  * @author Peter Yoo
@@ -74,16 +73,6 @@ public class SemanticVersioningFailureMessageGenerator
 			return null;
 		}
 
-		Element messageElement = new DefaultElement("div");
-
-		Dom4JUtil.addToElement(
-			Dom4JUtil.getNewElement("p", messageElement), "Please fix ",
-			Dom4JUtil.wrapWithNewElement("semantic versioning", "strong"),
-			" on ",
-			Dom4JUtil.wrapWithNewElement(
-				getBaseBranchAnchorElement(build.getTopLevelBuild()),
-				"strong"));
-
 		int end = consoleText.indexOf(_SEMVER_END_STRING);
 
 		end = consoleText.indexOf("\n", end);
@@ -92,10 +81,15 @@ public class SemanticVersioningFailureMessageGenerator
 
 		start = consoleText.lastIndexOf("\n", start);
 
-		messageElement.add(
-			getConsoleOutputSnippetElement(consoleText, true, start, end));
-
-		return messageElement;
+		return Dom4JUtil.getNewElement(
+			"div", null, Dom4JUtil.getNewElement(
+				"p", null, "Please fix ", Dom4JUtil.getNewElement(
+					"strong", null, "semantic versioning"),
+				" on ", Dom4JUtil.getNewElement(
+					"strong", null, getBaseBranchAnchorElement(
+						build.getTopLevelBuild()),
+					getConsoleOutputSnippetElement(
+						consoleText, true, start, end))));
 	}
 
 	private static final String _SEMVER_END_STRING = ":baseline FAILED";

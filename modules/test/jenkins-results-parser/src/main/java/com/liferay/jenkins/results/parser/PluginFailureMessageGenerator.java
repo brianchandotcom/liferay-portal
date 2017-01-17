@@ -21,7 +21,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Element;
-import org.dom4j.tree.DefaultElement;
 
 import org.json.JSONObject;
 
@@ -132,7 +131,7 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 		Matcher matcher = _pattern.matcher(consoleText);
 
-		Element messageElement = new DefaultElement("div");
+		Element messageElement = Dom4JUtil.getNewElement("div");
 
 		Element paragraphElement = Dom4JUtil.getNewElement("p", messageElement);
 

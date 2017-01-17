@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.util.Hashtable;
 
 import org.dom4j.Element;
-import org.dom4j.tree.DefaultElement;
 
 /**
  * @author Peter Yoo
@@ -84,12 +83,13 @@ public class LocalGitMirrorFailureMessageGenerator
 			return null;
 		}
 
-		Element messageElement = new DefaultElement("div");
+		Element messageElement = Dom4JUtil.getNewElement("div");
 
-		Dom4JUtil.addToElement(
-			Dom4JUtil.getNewElement("p", messageElement),
-			"Unable to synchronize with ",
-			Dom4JUtil.wrapWithNewElement("local Git mirror", "strong"), ".");
+		Dom4JUtil.getNewElement(
+			"p", messageElement,
+			"Unable to synchronize with ", Dom4JUtil.getNewElement(
+				"strong", null, "local Git mirror"),
+			".");
 
 		int end = consoleText.indexOf(_LOCAL_GIT_FAILURE_END_STRING);
 

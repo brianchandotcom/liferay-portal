@@ -1,0 +1,55 @@
+import com.liferay.gradle.util.StringUtil
+
+task importClasses(type: Copy)
+
+classes {
+	dependsOn importClasses
+}
+
+importClasses {
+	into {
+		compileJava.destinationDir
+	}
+}
+
+liferay {
+	deployDir = "../../../tmp/lib-pre"
+}
+
+Properties importedClassesProperties = new Properties()
+
+File importedClassesPropertiesFile = file("imported-classes.properties")
+
+importedClassesPropertiesFile.withInputStream {
+	importedClassesProperties.load it
+}
+
+importedClassesProperties.each {
+	String dependencyNotation, String packageNames ->
+
+	String dependencySuffix = dependencyNotation.replaceAll(/[\.|:](\w)/) {
+		String s = it[1]
+
+		s.toUpperCase()
+	}
+
+	Configuration dependencyConfiguration = configurations.create("importedClasses" + StringUtil.capitalize(dependencySuffix))
+
+	dependencyConfiguration.transitive = false
+
+	dependencies.add dependencyConfiguration.name, dependencyNotation
+
+	String[] dependencyIncludes = packageNames.tokenize(",")
+
+	dependencyIncludes = dependencyIncludes.collect {
+		it.replace('.' as char, '/' as char) + ".class"
+	}
+
+	importClasses {
+		from {
+			zipTree(dependencyConfiguration.singleFile)
+		} {
+			include dependencyIncludes
+		}
+	}
+}

@@ -14,9 +14,4 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%@ page import="com.liferay.expando.kernel.model.ExpandoColumnConstants" %><%@
-page import="com.liferay.expando.kernel.model.ExpandoTableConstants" %><%@
-page import="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil" %><%@
-page import="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" %>
+<%-- Do not modify this file. This is used by the portal-web-compat module. --%>

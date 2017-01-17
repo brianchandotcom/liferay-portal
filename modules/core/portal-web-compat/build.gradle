@@ -1,0 +1,52 @@
+import com.liferay.gradle.util.StringUtil
+
+task deployFiles(type: Copy)
+
+deploy {
+	deleteAllActions()
+
+	dependsOn = []
+	finalizedBy deployFiles
+}
+
+deployFiles {
+	from processResources
+
+	into {
+		liferay.appServerPortalDir
+	}
+}
+
+Properties importedFilesProperties = new Properties()
+
+File importedFilesPropertiesFile = file("imported-files.properties")
+
+importedFilesPropertiesFile.withInputStream {
+	importedFilesProperties.load it
+}
+
+importedFilesProperties.each {
+	String dependencyNotation, String packageNames ->
+
+	String dependencySuffix = dependencyNotation.replaceAll(/[\.|:](\w)/) {
+		String s = it[1]
+
+		s.toUpperCase()
+	}
+
+	Configuration dependencyConfiguration = configurations.create("importedFiles" + StringUtil.capitalize(dependencySuffix))
+
+	dependencyConfiguration.transitive = false
+
+	dependencies.add dependencyConfiguration.name, dependencyNotation
+
+	String[] dependencyIncludes = packageNames.tokenize(",")
+
+	processResources {
+		from {
+			zipTree(dependencyConfiguration.singleFile)
+		} {
+			include dependencyIncludes
+		}
+	}
+}

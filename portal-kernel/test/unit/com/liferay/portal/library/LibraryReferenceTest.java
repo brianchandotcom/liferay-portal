@@ -243,14 +243,16 @@ public class LibraryReferenceTest {
 				public FileVisitResult preVisitDirectory(
 					Path dirPath, BasicFileAttributes basicFileAttributes) {
 
-					if (Files.exists(dirPath.resolve(".lfrbuild-portal-pre"))) {
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (!dirName.equals("util-taglib-compat") &&
+						Files.exists(dirPath.resolve(".lfrbuild-portal-pre"))) {
+
 						Path sourceDirPath = dirPath.resolve(
 							_SRC_JAVA_DIR_NAME);
 
-						Path relativePath = _portalPath.relativize(
-							sourceDirPath);
-
-						String sourceDir = relativePath.toString();
+						String sourceDir = String.valueOf(
+							_portalPath.relativize(sourceDirPath));
 
 						if (File.separatorChar != CharPool.SLASH) {
 							sourceDir = StringUtil.replace(

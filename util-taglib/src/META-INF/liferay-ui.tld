@@ -5563,19 +5563,4 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
-	<tag>
-		<name>write</name>
-		<tag-class>com.liferay.taglib.ui.WriteTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>bean</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>property</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
 </taglib>

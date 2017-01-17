@@ -28,6 +28,8 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -148,7 +150,8 @@ public class DDMFormFieldTemplateContextFactory {
 		setDDMFormFieldTemplateContextVisible(
 			ddmFormFieldTemplateContext, ddmFormFieldEvaluationResult);
 		setDDMFormFieldTemplateContextOptions(
-			ddmFormFieldTemplateContext, ddmFormField.getDDMFormFieldOptions());
+			ddmFormFieldTemplateContext, ddmFormFieldEvaluationResult,
+			ddmFormField.getDDMFormFieldOptions());
 
 		// Contributed template parameters
 
@@ -204,6 +207,46 @@ public class DDMFormFieldTemplateContextFactory {
 		}
 
 		return nestedDDMFormFieldTemplateContext;
+	}
+
+	protected List<Map<String, String>> createOptions(
+		DDMFormFieldOptions ddmFormFieldOptions) {
+
+		List<Map<String, String>> list = new ArrayList<>();
+
+		Map<String, LocalizedValue> options = ddmFormFieldOptions.getOptions();
+
+		for (Entry<String, LocalizedValue> entry : options.entrySet()) {
+			Map<String, String> option = new HashMap<>();
+
+			LocalizedValue localizedValue = entry.getValue();
+
+			option.put("label", localizedValue.getString(_locale));
+
+			option.put("value", entry.getKey());
+
+			list.add(option);
+		}
+
+		return list;
+	}
+
+	protected List<Map<String, String>> createOptions(
+		List<KeyValuePair> optionsList) {
+
+		List<Map<String, String>> list = new ArrayList<>();
+
+		for (KeyValuePair keyValuePair : optionsList) {
+			Map<String, String> option = new HashMap<>();
+
+			option.put("label", keyValuePair.getValue());
+
+			option.put("value", keyValuePair.getKey());
+
+			list.add(option);
+		}
+
+		return list;
 	}
 
 	protected String getAffixedDDMFormFieldParameterName(
@@ -340,25 +383,20 @@ public class DDMFormFieldTemplateContextFactory {
 
 	protected void setDDMFormFieldTemplateContextOptions(
 		Map<String, Object> ddmFormFieldTemplateContext,
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
 		DDMFormFieldOptions ddmFormFieldOptions) {
 
-		Map<String, LocalizedValue> options = ddmFormFieldOptions.getOptions();
+		List<KeyValuePair> optionsList =
+			ddmFormFieldEvaluationResult.getProperty("options");
 
-		List<Map<String, String>> list = new ArrayList<>();
-
-		for (Entry<String, LocalizedValue> entry : options.entrySet()) {
-			Map<String, String> option = new HashMap<>();
-
-			LocalizedValue localizedValue = entry.getValue();
-
-			option.put("label", localizedValue.getString(_locale));
-
-			option.put("value", entry.getKey());
-
-			list.add(option);
+		if (ListUtil.isNotEmpty(optionsList)) {
+			ddmFormFieldTemplateContext.put(
+				"options", createOptions(optionsList));
 		}
-
-		ddmFormFieldTemplateContext.put("options", list);
+		else {
+			ddmFormFieldTemplateContext.put(
+				"options", createOptions(ddmFormFieldOptions));
+		}
 	}
 
 	protected void setDDMFormFieldTemplateContextReadOnly(

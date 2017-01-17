@@ -46,10 +46,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  * @author Marcellus Tavares
  */
-@Component(
-	immediate = true, service = DDMFormRulesToDDLFormRulesConverter.class
-)
-public class DDMFormRulesToDDLFormRulesConverter {
+@Component(immediate = true, service = DDMFormRuleToDDLFormRuleConverter.class)
+public class DDMFormRuleToDDLFormRuleConverter {
 
 	public List<DDLFormRule> convert(List<DDMFormRule> ddmFormRules) {
 		List<DDLFormRule> ddlFormRules = new ArrayList<>();
@@ -128,7 +126,7 @@ public class DDMFormRulesToDDLFormRulesConverter {
 	@Reference
 	protected DDMExpressionFactory ddmExpressionFactory;
 
-	private static class ActionExpressionVisitor
+	protected static class ActionExpressionVisitor
 		extends ExpressionVisitor<Object> {
 
 		@Override
@@ -139,17 +137,7 @@ public class DDMFormRulesToDDLFormRulesConverter {
 			List<Expression> parameters =
 				functionCallExpression.getParameterExpressions();
 
-			if (Objects.equals(action, "jump-to-page")) {
-				String source = doVisit(parameters.get(0));
-				String target = doVisit(parameters.get(1));
-
-				return new DDLFormRuleAction(action, source, target);
-			}
-			else {
-				String target = doVisit(parameters.get(0));
-
-				return new DDLFormRuleAction(action, null, target);
-			}
+			return DDLFormRuleActionFactory.create(action, parameters, this);
 		}
 
 		@Override
@@ -165,6 +153,7 @@ public class DDMFormRulesToDDLFormRulesConverter {
 			new HashMap<>();
 
 		static {
+			_functionToActionMap.put("call", "auto-fill");
 			_functionToActionMap.put("jumpPage", "jump-to-page");
 			_functionToActionMap.put("setEnabled", "enable");
 			_functionToActionMap.put("setInvalid", "invalidate");

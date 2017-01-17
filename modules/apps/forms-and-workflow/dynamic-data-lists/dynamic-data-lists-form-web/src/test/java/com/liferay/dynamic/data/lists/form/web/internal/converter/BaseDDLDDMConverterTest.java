@@ -31,7 +31,7 @@ public class BaseDDLDDMConverterTest {
 		String serializedDDLFormRules, Class<T> targetType) {
 
 		JSONDeserializer<T> jsonDeserializer =
-			_jsonFactory.createJSONDeserializer();
+			jsonFactory.createJSONDeserializer();
 
 		return jsonDeserializer.deserialize(serializedDDLFormRules, targetType);
 	}
@@ -49,11 +49,11 @@ public class BaseDDLDDMConverterTest {
 	}
 
 	protected <T> String serialize(List<T> rules) {
-		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
+		JSONSerializer jsonSerializer = jsonFactory.createJSONSerializer();
 
 		return jsonSerializer.serializeDeep(rules);
 	}
 
-	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
+	protected final JSONFactory jsonFactory = new JSONFactoryImpl();
 
 }

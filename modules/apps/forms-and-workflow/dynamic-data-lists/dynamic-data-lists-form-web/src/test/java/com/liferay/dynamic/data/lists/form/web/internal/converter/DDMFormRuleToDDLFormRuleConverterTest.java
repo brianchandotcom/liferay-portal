@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.form.web.internal.converter;
 
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRule;
+import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -28,60 +29,70 @@ import org.skyscreamer.jsonassert.JSONAssert;
 /**
  * @author Marcellus Tavares
  */
-public class DDLFormRulesToDDMFormRulesConverterTest
+public class DDMFormRuleToDDLFormRuleConverterTest
 	extends BaseDDLDDMConverterTest {
 
 	@Before
 	public void setUp() {
-		_ddlFormRulesToDDMFormRulesConverter =
-			new DDLFormRulesToDDMFormRulesConverter();
+		_ddmFormRulesToDDLFormRulesConverter =
+			new DDMFormRuleToDDLFormRuleConverter();
+
+		_ddmFormRulesToDDLFormRulesConverter.ddmExpressionFactory =
+			new DDMExpressionFactoryImpl();
 	}
 
 	@Test
 	public void testAndOrCondition() throws Exception {
 		assertConversion(
-			"ddl-form-rules-and-or-condition.json",
-			"ddm-form-rules-and-or-condition.json");
+			"ddm-form-rules-and-or-condition.json",
+			"ddl-form-rules-and-or-condition.json");
+	}
+
+	@Test
+	public void testAutoFillActions() throws Exception {
+		assertConversion(
+			"ddm-form-rules-auto-fill-actions.json",
+			"ddl-form-rules-auto-fill-actions.json");
 	}
 
 	@Test
 	public void testBooleanActions() throws Exception {
 		assertConversion(
-			"ddl-form-rules-boolean-actions.json",
-			"ddm-form-rules-boolean-actions.json");
+			"ddm-form-rules-boolean-actions.json",
+			"ddl-form-rules-boolean-actions.json");
 	}
 
 	@Test
 	public void testComparisonOperatorsCondition() throws Exception {
 		assertConversion(
-			"ddl-form-rules-comparison-operators-condition.json",
-			"ddm-form-rules-comparison-operators-condition.json");
+			"ddm-form-rules-comparison-operators-condition.json",
+			"ddl-form-rules-comparison-operators-condition.json");
 	}
 
 	@Test
 	public void testJumpToPageActions() throws Exception {
 		assertConversion(
-			"ddl-form-rules-jump-to-page-actions.json",
-			"ddm-form-rules-jump-to-page-actions.json");
+			"ddm-form-rules-jump-to-page-actions.json",
+			"ddl-form-rules-jump-to-page-actions.json");
 	}
 
 	protected void assertConversion(String fromFileName, String toFileName)
 		throws Exception {
 
-		String serializedDDLFormRules = read(fromFileName);
+		String serializedDDMFormRules = read(fromFileName);
 
-		DDLFormRule[] ddlFormRules = deserialize(
-			serializedDDLFormRules, DDLFormRule[].class);
+		DDMFormRule[] ddmFormRules = deserialize(
+			serializedDDMFormRules, DDMFormRule[].class);
 
-		List<DDMFormRule> actualDDMFormRules =
-			_ddlFormRulesToDDMFormRulesConverter.convert(
-				ListUtil.toList(ddlFormRules));
+		List<DDLFormRule> actualDDLFormRules =
+			_ddmFormRulesToDDLFormRulesConverter.convert(
+				ListUtil.toList(ddmFormRules));
 
 		JSONAssert.assertEquals(
-			read(toFileName), serialize(actualDDMFormRules), false);
+			read(toFileName), serialize(actualDDLFormRules), false);
 	}
 
-	private DDLFormRulesToDDMFormRulesConverter
-		_ddlFormRulesToDDMFormRulesConverter;
+	private DDMFormRuleToDDLFormRuleConverter
+		_ddmFormRulesToDDLFormRulesConverter;
 
 }

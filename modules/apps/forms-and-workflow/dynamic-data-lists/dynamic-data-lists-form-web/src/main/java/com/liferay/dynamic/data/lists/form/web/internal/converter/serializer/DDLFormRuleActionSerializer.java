@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.form.web.internal.converter.model;
-
-import com.liferay.dynamic.data.lists.form.web.internal.converter.serializer.DDLFormRuleActionSerializer;
+package com.liferay.dynamic.data.lists.form.web.internal.converter.serializer;
 
 /**
- * @author Marcellus Tavares
+ * @author Leonardo Barros
  */
-public interface DDLFormRuleAction extends DDLFormRuleActionSerializer {
+public interface DDLFormRuleActionSerializer {
 
-	public String getAction();
+	public String serialize();
 
 }

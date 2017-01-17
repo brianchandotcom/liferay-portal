@@ -13,7 +13,7 @@
 		<description>Creates a flag icon that lets users report inappropriate content.</description>
 		<name>flags</name>
 		<tag-class>com.liferay.flags.taglib.servlet.taglib.FlagsTag</tag-class>
-		<body-content>JSP</body-content>
+		<body-content>empty</body-content>
 		<attribute>
 			<description>The flagged asset's Java class name.</description>
 			<name>className</name>

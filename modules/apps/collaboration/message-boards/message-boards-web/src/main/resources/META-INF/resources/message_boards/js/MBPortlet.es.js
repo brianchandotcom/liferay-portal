@@ -20,7 +20,7 @@ class MBPortlet extends PortletBase {
 	 * @inheritDoc
 	 */
 	attached() {
-		let publishButton = this.one('button[type="submit"]');
+		let publishButton = this.one('.button-holder button[type="submit"]');
 
 		if (publishButton) {
 			this.eventHandler_.add(publishButton.addEventListener('click', (e) => {

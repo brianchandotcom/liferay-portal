@@ -187,6 +187,8 @@ AUI.add(
 
 						var actionKey = MAP_ACTION_DESCRIPTIONS[type];
 
+						var pages = instance.getPages();
+
 						if (actionKey) {
 							var data;
 

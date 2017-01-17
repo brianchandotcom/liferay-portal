@@ -8,5 +8,6 @@ Export-Package:\
 Liferay-JS-Config: /META-INF/resources/blogs/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
+Require-Capability: osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /blogs-web
 -dsannotations-options: inherit

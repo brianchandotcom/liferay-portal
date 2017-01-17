@@ -154,9 +154,28 @@ public class AlloyEditorCreoleConfigContributor
 		return jsonObject;
 	}
 
+	protected JSONObject getToolbarsStylesSelectionsHeadingTextJSONObject(
+		Locale locale) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		jsonArray.put("h1");
+		jsonArray.put("h2");
+
+		jsonObject.put("buttons", jsonArray);
+
+		jsonObject.put("name", "headertext");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.headingtext");
+
+		return jsonObject;
+	}
+
 	protected JSONArray getToolbarsStylesSelectionsJSONArray(Locale locale) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		jsonArray.put(getToolbarsStylesSelectionsHeadingTextJSONObject(locale));
 		jsonArray.put(getToolbarsStylesSelectionsLinkJSONObject());
 		jsonArray.put(getToolbarsStylesSelectionsTextJSONObject(locale));
 		jsonArray.put(getToolbarsStylesSelectionsTableJSONObject());

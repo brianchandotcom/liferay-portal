@@ -14,27 +14,134 @@
 
 package com.liferay.flags.taglib.servlet.taglib;
 
-import com.liferay.flags.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
+import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.trash.kernel.util.TrashUtil;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 /**
  * @author Julio Camarero
  */
-public class FlagsTag extends IncludeTag {
+public class FlagsTag extends TemplateRendererTag {
+
+	@Override
+	public int doStartTag() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
+
+		try {
+			Map<String, Object> context = getContext();
+
+			boolean enabled = (Boolean)context.get("enabled");
+
+			putValue("enabled", inTrash);
+
+			putValue("id", randomNamespace + "id");
+
+			String cssClass = randomNamespace;
+
+			if (enabled) {
+				cssClass = randomNamespace + " flag-enable";
+			}
+
+			putValue("cssClass", cssClass);
+
+			String flagsPortletNamespace = PortalUtil.getPortletNamespace(
+				PortletKeys.FLAGS);
+			JSONObject dataJSON = JSONFactoryUtil.createJSONObject();
+
+			dataJSON.put(flagsPortletNamespace + "className", className);
+			dataJSON.put(flagsPortletNamespace + "classPK", classPK);
+			dataJSON.put(
+				flagsPortletNamespace + "contentTitle",
+				context.get("contentTitle"));
+			dataJSON.put(
+				flagsPortletNamespace + "contentURL",
+				PortalUtil.getPortalURL(request) + _getCurrentURL());
+			dataJSON.put(
+				flagsPortletNamespace + "reportedUserId",
+				context.get("reportedUserId"));
+
+			putValue("data", dataJSON);
+
+			if (Validator.isNull(context.get("label"))) {
+				putValue("label", true);
+			}
+
+			if (Validator.isNull(context.get("message"))) {
+				putValue("message", LanguageUtil.get(request, "flag"));
+			}
+
+			FlagsGroupServiceConfiguration flagsGroupServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					FlagsGroupServiceConfiguration.class,
+					themeDisplay.getCompanyId());
+
+			putValue(
+				"signedUser",
+				flagsGroupServiceConfiguration.guestUsersEnabled() ||
+				 themeDisplay.isSignedIn());
+
+			PortletURL renderURL = PortletURLFactoryUtil.create(
+				request, PortletKeys.FLAGS, PortletRequest.RENDER_PHASE);
+
+			renderURL.setParameter("mvcRenderCommandName", "/flags/edit_entry");
+			renderURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+			putValue("uri", renderURL.toString());
+		}
+		catch (PortalException pe) {
+			pe.printStackTrace();
+		}
+		catch (WindowStateException wse) {
+		}
+
+		putValue("pathThemeImages", themeDisplay.getPathThemeImages());
+
+		setTemplateNamespace("Flags.render");
+
+		return super.doStartTag();
+	}
+
+	@Override
+	public String getModule() {
+		return "flags-taglib/flags/js/Flags.es";
+	}
 
 	public void setClassName(String className) {
-		_className = className;
+		putValue("className", className);
 	}
 
 	public void setClassPK(long classPK) {
-		_classPK = classPK;
+		putValue("classPK", classPK);
 	}
 
 	public void setContentTitle(String contentTitle) {
-		_contentTitle = contentTitle;
+		putValue("contentTitle", contentTitle);
 	}
 
 	public void setEnabled(boolean enabled) {
@@ -42,64 +149,38 @@ public class FlagsTag extends IncludeTag {
 	}
 
 	public void setLabel(boolean label) {
-		_label = label;
+		putValue("label", label);
 	}
 
 	public void setMessage(String message) {
-		_message = message;
-	}
-
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		setServletContext(ServletContextUtil.getServletContext());
+		putValue("message", LanguageUtil.get(request, message));
 	}
 
 	public void setReportedUserId(long reportedUserId) {
-		_reportedUserId = reportedUserId;
+		putValue("reportedUserId", reportedUserId);
 	}
 
-	@Override
-	protected void cleanUp() {
-		_className = null;
-		_classPK = 0;
-		_contentTitle = null;
-		_enabled = true;
-		_label = true;
-		_message = null;
-		_reportedUserId = 0;
+	private String _getCurrentURL() {
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		PortletResponse portletResponse =
+			(PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		String currentURL;
+
+		if ((portletRequest != null) && (portletResponse != null)) {
+			PortletURL currentURLObj = PortletURLUtil.getCurrent(
+				PortalUtil.getLiferayPortletRequest(portletRequest),
+				PortalUtil.getLiferayPortletResponse(portletResponse));
+
+			currentURL = currentURLObj.toString();
+		}
+		else {
+			currentURL = PortalUtil.getCurrentURL(request);
+		}
+
+		return currentURL;
 	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-flags:flags:className", _className);
-		request.setAttribute(
-			"liferay-flags:flags:classPK", String.valueOf(_classPK));
-		request.setAttribute("liferay-flags:flags:contentTitle", _contentTitle);
-		request.setAttribute(
-			"liferay-flags:flags:enabled", String.valueOf(_enabled));
-		request.setAttribute(
-			"liferay-flags:flags:label", String.valueOf(_label));
-		request.setAttribute("liferay-flags:flags:message", _message);
-		request.setAttribute(
-			"liferay-flags:flags:reportedUserId",
-			String.valueOf(_reportedUserId));
-	}
-
-	private static final String _PAGE = "/flags/page.jsp";
-
-	private String _className;
-	private long _classPK;
-	private String _contentTitle;
-	private boolean _enabled = true;
-	private boolean _label = true;
-	private String _message;
-	private long _reportedUserId;
 
 }

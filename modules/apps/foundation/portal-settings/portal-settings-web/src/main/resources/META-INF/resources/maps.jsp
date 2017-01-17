@@ -25,6 +25,7 @@ String mapProviderKey = (String)request.getAttribute(MapProviderWebKeys.MAP_PROV
 <h3><liferay-ui:message key="maps" /></h3>
 
 <liferay-map:map-provider-selector
+	configurationPrefix="settings"
 	mapProviderKey="<%= mapProviderKey %>"
 	name='<%= "settings--" + MapProviderWebKeys.MAP_PROVIDER_KEY + "--" %>'
 />

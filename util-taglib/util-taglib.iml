@@ -12,6 +12,13 @@
 		<orderEntry type="module" module-name="portal-kernel" scope="PROVIDED" />
 		<orderEntry type="module" module-name="registry-api" />
 		<orderEntry type="module" module-name="util-java" />
+		<orderEntry type="module-library">
+			<library>
+				<CLASSES>
+					<root url="file://$MODULE_DIR$/../modules/core/util-taglib-compat/classes" />
+				</CLASSES>
+			</library>
+		</orderEntry>
 		<orderEntry type="library" scope="PROVIDED" name="development" level="project" />
 		<orderEntry type="library" scope="PROVIDED" name="global" level="project" />
 		<orderEntry type="library" name="portal" level="project" />

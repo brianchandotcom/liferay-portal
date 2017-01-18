@@ -335,9 +335,16 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		return breadcrumbTag;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
-	public DiscussionTag getDiscussionTag() throws Exception {
-		DiscussionTag discussionTag = new DiscussionTag();
+	public com.liferay.taglib.ui.DiscussionTag getDiscussionTag()
+		throws Exception {
+
+		com.liferay.taglib.ui.DiscussionTag discussionTag =
+			new com.liferay.taglib.ui.DiscussionTag();
 
 		setUp(discussionTag);
 

@@ -143,8 +143,12 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
-	public DiscussionTag getDiscussionTag() {
+	public com.liferay.taglib.ui.DiscussionTag getDiscussionTag() {
 		return null;
 	}
 

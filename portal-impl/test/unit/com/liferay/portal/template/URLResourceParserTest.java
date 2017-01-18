@@ -44,45 +44,18 @@ public class URLResourceParserTest {
 
 		};
 
-		Assert.assertTrue(
-			urlResourceParser.isTemplateResourceValid(
-				"_SEPARATOR_/template.css", TemplateConstants.LANG_TYPE_CSS));
-		Assert.assertTrue(
-			urlResourceParser.isTemplateResourceValid(
-				"_SEPARATOR_/template.ftl", TemplateConstants.LANG_TYPE_FTL));
-		Assert.assertTrue(
-			urlResourceParser.isTemplateResourceValid(
-				"_SEPARATOR_/template.soy", TemplateConstants.LANG_TYPE_SOY));
-		Assert.assertTrue(
-			urlResourceParser.isTemplateResourceValid(
-				"_SEPARATOR_/template.tpl", TemplateConstants.LANG_TYPE_TPL));
-		Assert.assertTrue(
-			urlResourceParser.isTemplateResourceValid(
-				"_SEPARATOR_/template.vm", TemplateConstants.LANG_TYPE_VM));
-		Assert.assertTrue(
-			urlResourceParser.isTemplateResourceValid(
-				"_SEPARATOR_/template.xsl", TemplateConstants.LANG_TYPE_XSL));
+		for (String langType : TemplateConstants.allowedLangTypes) {
+			Assert.assertTrue(
+				urlResourceParser.isTemplateResourceValid(
+					"_SEPARATOR_/template." + langType, langType));
+			Assert.assertFalse(
+				urlResourceParser.isTemplateResourceValid(
+					"portal-ext.properties", langType));
+		}
+
 		Assert.assertTrue(
 			urlResourceParser.isTemplateResourceValid(
 				"_SEPARATOR_/template.custom", "custom"));
-		Assert.assertFalse(
-			urlResourceParser.isTemplateResourceValid(
-				"portal-ext.properties", TemplateConstants.LANG_TYPE_CSS));
-		Assert.assertFalse(
-			urlResourceParser.isTemplateResourceValid(
-				"portal-ext.properties", TemplateConstants.LANG_TYPE_FTL));
-		Assert.assertFalse(
-			urlResourceParser.isTemplateResourceValid(
-				"portal-ext.properties", TemplateConstants.LANG_TYPE_SOY));
-		Assert.assertFalse(
-			urlResourceParser.isTemplateResourceValid(
-				"portal-ext.properties", TemplateConstants.LANG_TYPE_TPL));
-		Assert.assertFalse(
-			urlResourceParser.isTemplateResourceValid(
-				"portal-ext.properties", TemplateConstants.LANG_TYPE_VM));
-		Assert.assertFalse(
-			urlResourceParser.isTemplateResourceValid(
-				"portal-ext.properties", TemplateConstants.LANG_TYPE_XSL));
 		Assert.assertFalse(
 			urlResourceParser.isTemplateResourceValid(
 				"..\\file", StringPool.BLANK));

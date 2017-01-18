@@ -360,7 +360,7 @@ public class S3Store extends BaseStore {
 
 			putObject(companyId, repositoryId, fileName, versionLabel, file);
 		}
-		catch (java.io.IOException ioe) {
+		catch (IOException ioe) {
 			throw new SystemException(ioe);
 		}
 		finally {
@@ -714,6 +714,8 @@ public class S3Store extends BaseStore {
 			String versionLabel, File file)
 		throws PortalException {
 
+		Upload upload = null;
+
 		try {
 			String key = _s3KeyTransformer.getFileVersionKey(
 				companyId, repositoryId, fileName, versionLabel);
@@ -723,7 +725,7 @@ public class S3Store extends BaseStore {
 
 			putObjectRequest.withStorageClass(_storageClass);
 
-			Upload upload = _transferManager.upload(putObjectRequest);
+			upload = _transferManager.upload(putObjectRequest);
 
 			upload.waitForCompletion();
 		}
@@ -731,7 +733,11 @@ public class S3Store extends BaseStore {
 			throw transform(ace);
 		}
 		catch (InterruptedException ie) {
-			throw new RuntimeException(ie);
+			upload.abort();
+
+			Thread thread = Thread.currentThread();
+
+			thread.interrupt();
 		}
 	}
 

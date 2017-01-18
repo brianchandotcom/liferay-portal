@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,6 +33,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Tina Tian
@@ -178,16 +180,18 @@ public abstract class URLResourceParser implements TemplateResourceParser {
 	private static final Log _log = LogFactoryUtil.getLog(
 		URLResourceParser.class);
 
-	private static final List<String> _allowedLangTypes;
+	private static final Set<String> _allowedLangTypes;
 
 	static {
-		_allowedLangTypes = new ArrayList<String>();
-
-		_allowedLangTypes.add(TemplateConstants.LANG_TYPE_CSS);
-		_allowedLangTypes.add(TemplateConstants.LANG_TYPE_FTL);
-		_allowedLangTypes.add(TemplateConstants.LANG_TYPE_TPL);
-		_allowedLangTypes.add(TemplateConstants.LANG_TYPE_VM);
-		_allowedLangTypes.add(TemplateConstants.LANG_TYPE_XSL);
+		_allowedLangTypes = SetUtil.fromArray(
+			new String[] {
+				TemplateConstants.LANG_TYPE_CSS,
+				TemplateConstants.LANG_TYPE_FTL,
+				TemplateConstants.LANG_TYPE_JSON,
+				TemplateConstants.LANG_TYPE_SOY,
+				TemplateConstants.LANG_TYPE_TPL, TemplateConstants.LANG_TYPE_VM,
+				TemplateConstants.LANG_TYPE_XML, TemplateConstants.LANG_TYPE_XSL
+			});
 	}
 
 }

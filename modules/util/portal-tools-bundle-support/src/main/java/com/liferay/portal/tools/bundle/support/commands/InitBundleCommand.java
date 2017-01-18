@@ -27,7 +27,6 @@ import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * @author David Truong
@@ -43,8 +42,14 @@ public class InitBundleCommand extends BaseCommand {
 	public void execute() throws Exception {
 		_deleteBundle();
 
+		Path cacheDirPath = null;
+
+		if (_cacheDir != null) {
+			cacheDirPath = _cacheDir.toPath();
+		}
+
 		Path path = FileUtil.downloadFile(
-			_url.toURI(), _userName, _password, bundlesCacheDirPath);
+			_url.toURI(), _userName, _password, cacheDirPath);
 
 		FileUtil.unpack(path, getLiferayHomePath(), _stripComponents);
 
@@ -128,8 +133,13 @@ public class InitBundleCommand extends BaseCommand {
 		}
 	}
 
-	protected static final Path bundlesCacheDirPath = Paths.get(
-		System.getProperty("user.home"), ".liferay/bundles");
+	public File getCacheDir() {
+		return _cacheDir;
+	}
+
+	public void setCacheDir(File cacheDir) {
+		_cacheDir = cacheDir;
+	}
 
 	private static final int _DEFAULT_STRIP_COMPONENTS = 1;
 
@@ -182,5 +192,11 @@ public class InitBundleCommand extends BaseCommand {
 		names = {"-u", "--username", "--user-name"}
 	)
 	private String _userName;
+
+	@Parameter(
+		description = "The directory where to cache the downloaded bundles.",
+		names = "--cache-dir")
+	private File _cacheDir = new File(
+		System.getProperty("user.home"), ".liferay/bundles");
 
 }

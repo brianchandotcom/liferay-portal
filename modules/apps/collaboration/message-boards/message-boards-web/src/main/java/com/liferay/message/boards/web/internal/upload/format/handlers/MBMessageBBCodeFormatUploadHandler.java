@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.message.boards.web.internal.format.handlers;
+package com.liferay.message.boards.web.internal.upload.format.handlers;
 
-import com.liferay.message.boards.web.internal.format.MBMessageFormatHandler;
+import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandler;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -32,10 +32,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = MBMessageFormatHandler.FORMAT_KEY + "=bbcode",
-	service = MBMessageFormatHandler.class
+	property = MBMessageFormatUploadHandler.FORMAT_KEY + "=bbcode",
+	service = MBMessageFormatUploadHandler.class
 )
-public class MBMessageBBCodeFormatHandler implements MBMessageFormatHandler {
+public class MBMessageBBCodeFormatUploadHandler
+	implements MBMessageFormatUploadHandler {
 
 	@Override
 	public String replaceImageReferences(

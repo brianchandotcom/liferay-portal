@@ -34,8 +34,8 @@ import com.liferay.message.boards.kernel.service.MBMessageService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadService;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.message.boards.web.internal.format.MBMessageFormatHandler;
-import com.liferay.message.boards.web.internal.format.MBMessageFormatHandlerFactory;
+import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandler;
+import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandlerProvider;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryUtil;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
@@ -463,8 +463,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 						serviceContext);
 				}
 
-				MBMessageFormatHandler formatHandler =
-					_formatHandlerFactory.provide(message.getFormat());
+				MBMessageFormatUploadHandler formatHandler =
+					_formatHandlerProvider.provide(message.getFormat());
 
 				if (formatHandler != null) {
 					_attachTempFiles(
@@ -486,8 +486,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 				message = _mbMessageService.getMessage(messageId);
 
-				MBMessageFormatHandler formatHandler =
-					_formatHandlerFactory.provide(message.getFormat());
+				MBMessageFormatUploadHandler formatHandler =
+					_formatHandlerProvider.provide(message.getFormat());
 
 				if (formatHandler != null) {
 					body = _attachTempFiles(
@@ -535,7 +535,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 	private String _attachTempFiles(
 			ThemeDisplay themeDisplay, String body, MBMessage message,
-			List<String> existingFiles, MBMessageFormatHandler formatHandler)
+			List<String> existingFiles,
+			MBMessageFormatUploadHandler formatHandler)
 		throws PortalException {
 
 		List<FileEntry> tempMBAttachmentFileEntries =
@@ -576,7 +577,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	private void _attachTempFiles(
 			ThemeDisplay themeDisplay, String body,
 			ServiceContext serviceContext, MBMessage message,
-			MBMessageFormatHandler formatHandler)
+			MBMessageFormatUploadHandler formatHandler)
 		throws PortalException {
 
 		List<FileEntry> tempMBAttachmentFileEntries =
@@ -608,7 +609,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private MBMessageFormatHandlerFactory _formatHandlerFactory;
+	private MBMessageFormatUploadHandlerProvider _formatHandlerProvider;
 
 	private MBCategoryService _mbCategoryService;
 	private MBMessageService _mbMessageService;

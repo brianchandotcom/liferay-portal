@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.web.internal.format;
+package com.liferay.message.boards.web.internal.upload.format;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -25,14 +25,14 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = MBMessageFormatHandlerFactory.class)
-public class MBMessageFormatHandlerFactory {
+@Component(service = MBMessageFormatUploadHandlerProvider.class)
+public class MBMessageFormatUploadHandlerProvider {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
 		_formatHandlerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, MBMessageFormatHandler.class,
-			MBMessageFormatHandler.FORMAT_KEY);
+			bundleContext, MBMessageFormatUploadHandler.class,
+			MBMessageFormatUploadHandler.FORMAT_KEY);
 	}
 
 	@Deactivate
@@ -40,10 +40,11 @@ public class MBMessageFormatHandlerFactory {
 		_formatHandlerMap.close();
 	}
 
-	public MBMessageFormatHandler provide(String format) {
+	public MBMessageFormatUploadHandler provide(String format) {
 		return _formatHandlerMap.getService(format);
 	}
 
-	private ServiceTrackerMap<String, MBMessageFormatHandler> _formatHandlerMap;
+	private ServiceTrackerMap<String, MBMessageFormatUploadHandler>
+		_formatHandlerMap;
 
 }

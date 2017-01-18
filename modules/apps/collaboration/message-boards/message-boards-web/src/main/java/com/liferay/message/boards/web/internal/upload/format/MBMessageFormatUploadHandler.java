@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.web.internal.format;
+package com.liferay.message.boards.web.internal.upload.format;
 
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 
@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Alejandro Tardín
  */
-public interface MBMessageFormatHandler {
+public interface MBMessageFormatUploadHandler {
 
 	public String replaceImageReferences(
 		String body,

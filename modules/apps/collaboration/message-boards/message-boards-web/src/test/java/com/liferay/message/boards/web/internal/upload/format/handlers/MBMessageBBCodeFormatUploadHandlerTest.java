@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.web.internal.format.handlers;
+package com.liferay.message.boards.web.internal.upload.format.handlers;
 
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -36,7 +36,7 @@ import org.mockito.runners.MockitoJUnitRunner;
  * @author Alejandro Tardín
  */
 @RunWith(MockitoJUnitRunner.class)
-public class MBMessageBBCodeFormatHandlerTest {
+public class MBMessageBBCodeFormatUploadHandlerTest {
 
 	@Before
 	public void setUp() {
@@ -128,8 +128,8 @@ public class MBMessageBBCodeFormatHandlerTest {
 		Assert.assertEquals(expectedContent.toString(), finalContent);
 	}
 
-	private final MBMessageBBCodeFormatHandler _handler =
-		new MBMessageBBCodeFormatHandler();
+	private final MBMessageBBCodeFormatUploadHandler _handler =
+		new MBMessageBBCodeFormatUploadHandler();
 
 	@Mock
 	private PortletFileRepository _portletFileRepository;

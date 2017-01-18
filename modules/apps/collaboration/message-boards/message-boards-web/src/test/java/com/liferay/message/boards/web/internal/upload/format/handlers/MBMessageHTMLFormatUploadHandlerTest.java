@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.web.internal.format.handlers;
+package com.liferay.message.boards.web.internal.upload.format.handlers;
 
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -36,7 +36,7 @@ import org.mockito.runners.MockitoJUnitRunner;
  * @author Alejandro Tardín
  */
 @RunWith(MockitoJUnitRunner.class)
-public class MBMessageHTMLFormatHandlerTest {
+public class MBMessageHTMLFormatUploadHandlerTest {
 
 	@Before
 	public void setUp() {
@@ -129,8 +129,8 @@ public class MBMessageHTMLFormatHandlerTest {
 		Assert.assertEquals(expectedContent.toString(), finalContent);
 	}
 
-	private final MBMessageHTMLFormatHandler _handler =
-		new MBMessageHTMLFormatHandler();
+	private final MBMessageHTMLFormatUploadHandler _handler =
+		new MBMessageHTMLFormatUploadHandler();
 
 	@Mock
 	private PortletFileRepository _portletFileRepository;

@@ -14,21 +14,19 @@
 
 package com.liferay.message.boards.editor.configuration.internal;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
-import com.liferay.portlet.messageboards.util.MBUtil;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -58,11 +56,16 @@ public class MBEditorOptionsContributor implements EditorOptionsContributor {
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/message_boards/upload_temp_image");
 
-		MBMessage message = (MBMessage)themeDisplay.getRequest().getAttribute(
-			WebKeys.MESSAGE_BOARDS_MESSAGE);
+		Map<String, String> fileBrowserParamsMap =
+			(Map<String, String>)inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:fileBrowserParams");
 
-		long categoryId = MBUtil.getCategoryId(
-			themeDisplay.getRequest(), message);
+		long categoryId = 0;
+
+		if (fileBrowserParamsMap != null) {
+			categoryId = GetterUtil.getLong(
+				fileBrowserParamsMap.get("categoryId"));
+		}
 
 		portletURL.setParameter("categoryId", String.valueOf(categoryId));
 

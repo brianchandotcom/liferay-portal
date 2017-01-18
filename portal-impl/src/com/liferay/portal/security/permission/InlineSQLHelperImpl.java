@@ -634,13 +634,11 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			}
 		}
 
-		String permissionJoin = StringPool.BLANK;
+		String permissionJoin = CustomSQLUtil.get(JOIN_RESOURCE_PERMISSION);
 
 		if (Validator.isNotNull(bridgeJoin)) {
-			permissionJoin = bridgeJoin;
+			permissionJoin = bridgeJoin.concat(permissionJoin);
 		}
-
-		permissionJoin += CustomSQLUtil.get(JOIN_RESOURCE_PERMISSION);
 
 		StringBundler sb = new StringBundler(8);
 

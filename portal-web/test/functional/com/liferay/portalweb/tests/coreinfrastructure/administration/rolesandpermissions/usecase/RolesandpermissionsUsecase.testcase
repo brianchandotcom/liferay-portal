@@ -449,6 +449,8 @@
 	</command>
 
 	<command name="NoGuestRolePermissionsFromPrivateLayout" priority="3">
+		<property name="custom.properties" value="permissions.check.guest.enabled=false" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

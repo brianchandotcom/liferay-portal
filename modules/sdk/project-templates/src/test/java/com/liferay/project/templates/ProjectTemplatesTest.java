@@ -302,18 +302,6 @@ public class ProjectTemplatesTest {
 		_testExists(gradleProjectDir, "bnd.bnd");
 
 		_testContains(
-			gradleProjectDir,
-			"src/main/resources/META-INF/resources/foobar_field.js",
-			"var FoobarField");
-		_testContains(
-			gradleProjectDir,
-			"src/main/resources/META-INF/resources/foobar.soy",
-			"{template .Foobar autoescape");
-		_testContains(
-			gradleProjectDir, "src/main/resources/META-INF/resources/config.js",
-			"'foobar-form-field': {");
-
-		_testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
@@ -325,12 +313,23 @@ public class ProjectTemplatesTest {
 			gradleProjectDir,
 			"src/main/java/foobar/form/field/FoobarDDMFormFieldType.java",
 			"class FoobarDDMFormFieldType extends BaseDDMFormFieldType");
+		_testContains(
+			gradleProjectDir, "src/main/resources/META-INF/resources/config.js",
+			"'foobar-form-field': {");
+		_testContains(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/foobar.soy",
+			"{template .Foobar autoescape");
+		_testContains(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/foobar_field.js",
+			"var FoobarField");
 
-		String[] gradleTaskPath = new String[] {
+		String[] gradleTaskPaths = new String[] {
 			_GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING, _GRADLE_TASK_PATH_BUILD
 		};
 
-		_executeGradle(gradleProjectDir, gradleTaskPath);
+		_executeGradle(gradleProjectDir, gradleTaskPaths);
 
 		_testExists(gradleProjectDir, "build/libs/foobar-1.0.0.jar");
 	}

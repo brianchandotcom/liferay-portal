@@ -927,9 +927,9 @@ directory if the project contains dependencies to other projects.
 ## 2.4.15 - 2017-01-17
 
 ### Changed
-- [LPS-70170]: Always use the deployed JAR file of Liferay taglib dependencies
-for JSP compilation.
-- [LPS-70170]: Always use the latest snapshot of the `com.liferay.util.taglib`
+- [LPS-70170]: Use the deployed JAR file of Liferay taglib dependencies for JSP
+compilation.
+- [LPS-70170]: Use the latest snapshot of the `com.liferay.util.taglib`
 dependency for JSP compilation.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

@@ -1151,6 +1151,10 @@
 			<var name="roleType" value="Organization" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Roles" />
+		</execute>
+
 		<execute macro="Role#addCP">
 			<var name="roleName" value="United States Orgrole" />
 			<var name="roleType" value="Organization" />

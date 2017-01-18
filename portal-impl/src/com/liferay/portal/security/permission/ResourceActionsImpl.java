@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -107,6 +108,23 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+	}
+
+	@Override
+	public void check(String portletName) {
+		List<String> portletActions = getPortletResourceActions(portletName);
+
+		ResourceActionLocalServiceUtil.checkResourceActions(
+			portletName, portletActions);
+
+		List<String> modelNames = getPortletModelResources(portletName);
+
+		for (String modelName : modelNames) {
+			List<String> modelActions = getModelResourceActions(modelName);
+
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				modelName, modelActions);
 		}
 	}
 
@@ -654,50 +672,18 @@ public class ResourceActionsImpl implements ResourceActions {
 			String servletContextName, ClassLoader classLoader, String source)
 		throws Exception {
 
-		InputStream inputStream = classLoader.getResourceAsStream(source);
+		read(servletContextName, classLoader, source, new HashSet<>());
+	}
 
-		if (inputStream == null) {
-			if (_log.isInfoEnabled() && !source.endsWith("-ext.xml") &&
-				!source.startsWith("META-INF/")) {
+	@Override
+	public void read(
+			String servletContextName, ClassLoader classLoader,
+			String[] sources)
+		throws Exception {
 
-				_log.info("Cannot load " + source);
-			}
-
-			return;
+		for (String source : sources) {
+			read(servletContextName, classLoader, source);
 		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Loading " + source);
-		}
-
-		Document document = UnsecureSAXReaderUtil.read(inputStream, true);
-
-		DocumentType documentType = document.getDocumentType();
-
-		String publicId = GetterUtil.getString(documentType.getPublicId());
-
-		if (publicId.equals(
-				"-//Liferay//DTD Resource Action Mapping 6.0.0//EN")) {
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Please update " + source + " to use the 6.1.0 format");
-			}
-		}
-
-		Element rootElement = document.getRootElement();
-
-		for (Element resourceElement : rootElement.elements("resource")) {
-			String file = resourceElement.attributeValue("file").trim();
-
-			read(servletContextName, classLoader, file);
-
-			String extFile = StringUtil.replace(file, ".xml", "-ext.xml");
-
-			read(servletContextName, classLoader, extFile);
-		}
-
-		read(servletContextName, document);
 	}
 
 	/**
@@ -710,7 +696,24 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		Document document = UnsecureSAXReaderUtil.read(inputStream, true);
 
-		read(servletContextName, document);
+		read(servletContextName, document, new HashSet<>());
+	}
+
+	@Override
+	public void readAndCheck(
+			String servletContextName, ClassLoader classLoader,
+			String[] sources)
+		throws Exception {
+
+		Set<String> portletNames = new HashSet<>();
+
+		for (String source : sources) {
+			read(servletContextName, classLoader, source, portletNames);
+		}
+
+		for (String portletName : portletNames) {
+			check(portletName);
+		}
 	}
 
 	protected void checkGuestUnsupportedActions(
@@ -1002,7 +1005,60 @@ public class ResourceActionsImpl implements ResourceActions {
 		return types;
 	}
 
-	protected void read(String servletContextName, Document document)
+	protected void read(
+			String servletContextName, ClassLoader classLoader, String source,
+			Set<String> portletNames)
+		throws Exception {
+
+		InputStream inputStream = classLoader.getResourceAsStream(source);
+
+		if (inputStream == null) {
+			if (_log.isInfoEnabled() && !source.endsWith("-ext.xml") &&
+				!source.startsWith("META-INF/")) {
+
+				_log.info("Cannot load " + source);
+			}
+
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Loading " + source);
+		}
+
+		Document document = UnsecureSAXReaderUtil.read(inputStream, true);
+
+		DocumentType documentType = document.getDocumentType();
+
+		String publicId = GetterUtil.getString(documentType.getPublicId());
+
+		if (publicId.equals(
+				"-//Liferay//DTD Resource Action Mapping 6.0.0//EN")) {
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Please update " + source + " to use the 6.1.0 format");
+			}
+		}
+
+		Element rootElement = document.getRootElement();
+
+		for (Element resourceElement : rootElement.elements("resource")) {
+			String file = resourceElement.attributeValue("file").trim();
+
+			read(servletContextName, classLoader, file, portletNames);
+
+			String extFile = StringUtil.replace(file, ".xml", "-ext.xml");
+
+			read(servletContextName, classLoader, extFile, portletNames);
+		}
+
+		read(servletContextName, document, portletNames);
+	}
+
+	protected void read(
+			String servletContextName, Document document,
+			Set<String> portletNames)
 		throws Exception {
 
 		Element rootElement = document.getRootElement();
@@ -1011,14 +1067,22 @@ public class ResourceActionsImpl implements ResourceActions {
 			for (Element portletResourceElement :
 					rootElement.elements("portlet-resource")) {
 
-				readPortletResource(servletContextName, portletResourceElement);
+				portletNames.add(
+					readPortletResource(
+						servletContextName, portletResourceElement));
 			}
 		}
 
 		for (Element modelResourceElement :
 				rootElement.elements("model-resource")) {
 
-			readModelResource(servletContextName, modelResourceElement);
+			String modelName = readModelResource(
+				servletContextName, modelResourceElement);
+
+			ModelResourceActionsBag modelResourceActionsBag =
+				getModelResourceActionsBag(modelName);
+
+			portletNames.addAll(modelResourceActionsBag.getResources());
 		}
 	}
 
@@ -1095,7 +1159,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
-	protected void readModelResource(
+	protected String readModelResource(
 			String servletContextName, Element modelResourceElement)
 		throws Exception {
 
@@ -1211,6 +1275,8 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		readOwnerDefaultActions(
 			modelResourceElement, modelResourceOwnerDefaultActions);
+
+		return name;
 	}
 
 	protected void readOwnerDefaultActions(
@@ -1226,7 +1292,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		ownerDefaultActions.addAll(readActionKeys(ownerDefaultsElement));
 	}
 
-	protected void readPortletResource(
+	protected String readPortletResource(
 			String servletContextName, Element portletResourceElement)
 		throws Exception {
 
@@ -1283,6 +1349,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		readLayoutManagerActions(
 			portletResourceElement, portletResourceLayoutManagerActions,
 			portletResourceActions);
+
+		return name;
 	}
 
 	protected Set<String> readSupportsActions(

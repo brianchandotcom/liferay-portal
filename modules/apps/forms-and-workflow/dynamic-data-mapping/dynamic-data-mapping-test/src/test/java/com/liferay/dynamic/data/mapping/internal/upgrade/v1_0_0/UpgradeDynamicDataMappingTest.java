@@ -28,13 +28,9 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -46,6 +42,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -58,7 +55,8 @@ import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.util.LocalizationImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
 
-import java.io.InputStream;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,8 +68,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -113,7 +109,42 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		_upgradeDynamicDataMapping = new UpgradeDynamicDataMapping(
 			null, null, null, null, null, _ddmFormValuesJSONDeserializer,
 			_ddmFormValuesJSONSerializer, null, null, null, null, null, null,
-			null, new TestResourceActions(), null, null);
+			null,
+			(ResourceActions)ProxyUtil.newProxyInstance(
+				UpgradeDynamicDataMappingTest.class.getClassLoader(),
+				new Class<?>[] {ResourceActions.class},
+				new InvocationHandler() {
+
+					@Override
+					public Object invoke(
+						Object proxy, Method method, Object[] args) {
+
+						String methodName = method.getName();
+
+						if (methodName.equals("getCompositeModelName")) {
+							if (ArrayUtil.isEmpty(args)) {
+								return StringPool.BLANK;
+							}
+
+							Arrays.sort(args);
+
+							StringBundler sb = new StringBundler(
+								args.length * 2);
+
+							for (Object className : args) {
+								sb.append(className);
+							}
+
+							sb.setIndex(sb.index() - 1);
+
+							return sb.toString();
+						}
+
+						return null;
+					}
+
+				}),
+			null, null);
 	}
 
 	@Test(expected = UpgradeException.class)
@@ -984,221 +1015,6 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 	@Mock
 	private Language _language;
 
-	@Mock
-	private ResourceActions _resourceActions;
-
 	private UpgradeDynamicDataMapping _upgradeDynamicDataMapping;
-
-	private static class TestResourceActions implements ResourceActions {
-
-		public void checkAction(String name, String actionId)
-			throws NoSuchResourceActionException {
-		}
-
-		public String getAction(HttpServletRequest request, String action) {
-			return null;
-		}
-
-		public String getAction(Locale locale, String action) {
-			return null;
-		}
-
-		public String getActionNamePrefix() {
-			return null;
-		}
-
-		public List<String> getActionsNames(
-			HttpServletRequest request, List<String> actions) {
-
-			return null;
-		}
-
-		public List<String> getActionsNames(
-			HttpServletRequest request, String name, long actionIds) {
-
-			return null;
-		}
-
-		public String getCompositeModelName(String... classNames) {
-			if (ArrayUtil.isEmpty(classNames)) {
-				return StringPool.BLANK;
-			}
-
-			Arrays.sort(classNames);
-
-			StringBundler sb = new StringBundler(classNames.length * 2);
-
-			for (String className : classNames) {
-				sb.append(className);
-				sb.append(getCompositeModelNameSeparator());
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			return sb.toString();
-		}
-
-		public String getCompositeModelNameSeparator() {
-			return null;
-		}
-
-		public List<String> getModelNames() {
-			return null;
-		}
-
-		public List<String> getModelPortletResources(String name) {
-			return null;
-		}
-
-		public String getModelResource(
-			HttpServletRequest request, String name) {
-
-			return null;
-		}
-
-		public String getModelResource(Locale locale, String name) {
-			return null;
-		}
-
-		public List<String> getModelResourceActions(String name) {
-			return null;
-		}
-
-		public List<String> getModelResourceGroupDefaultActions(String name) {
-			return null;
-		}
-
-		public List<String> getModelResourceGuestDefaultActions(String name) {
-			return null;
-		}
-
-		public List<String> getModelResourceGuestUnsupportedActions(
-			String name) {
-
-			return null;
-		}
-
-		public String getModelResourceNamePrefix() {
-			return null;
-		}
-
-		public List<String> getModelResourceOwnerDefaultActions(String name) {
-			return null;
-		}
-
-		public Double getModelResourceWeight(String name) {
-			return null;
-		}
-
-		public String[] getOrganizationModelResources() {
-			return new String[0];
-		}
-
-		public String[] getPortalModelResources() {
-			return new String[0];
-		}
-
-		public String getPortletBaseResource(String portletName) {
-			return null;
-		}
-
-		public List<String> getPortletModelResources(String portletName) {
-			return null;
-		}
-
-		public List<String> getPortletNames() {
-			return null;
-		}
-
-		public List<String> getPortletResourceActions(Portlet portlet) {
-			return null;
-		}
-
-		public List<String> getPortletResourceActions(String name) {
-			return null;
-		}
-
-		public List<String> getPortletResourceGroupDefaultActions(String name) {
-			return null;
-		}
-
-		public List<String> getPortletResourceGuestDefaultActions(String name) {
-			return null;
-		}
-
-		public List<String> getPortletResourceGuestUnsupportedActions(
-			String name) {
-
-			return null;
-		}
-
-		public List<String> getPortletResourceLayoutManagerActions(
-			String name) {
-
-			return null;
-		}
-
-		public String getPortletRootModelResource(String portletName) {
-			return null;
-		}
-
-		public List<String> getResourceActions(String name) {
-			return null;
-		}
-
-		public List<String> getResourceActions(
-			String portletResource, String modelResource) {
-
-			return null;
-		}
-
-		public List<String> getResourceGroupDefaultActions(String name) {
-			return null;
-		}
-
-		public List<String> getResourceGuestUnsupportedActions(
-			String portletResource, String modelResource) {
-
-			return null;
-		}
-
-		public List<Role> getRoles(
-			long companyId, Group group, String modelResource,
-			int[] roleTypes) {
-
-			return null;
-		}
-
-		public String[] getRootModelResources() {
-			return new String[0];
-		}
-
-		public boolean hasModelResourceActions(String name) {
-			return false;
-		}
-
-		public boolean isOrganizationModelResource(String modelResource) {
-			return false;
-		}
-
-		public boolean isPortalModelResource(String modelResource) {
-			return false;
-		}
-
-		public boolean isRootModelResource(String modelResource) {
-			return false;
-		}
-
-		public void read(
-				String servletContextName, ClassLoader classLoader,
-				String source)
-			throws Exception {
-		}
-
-		public void read(String servletContextName, InputStream inputStream)
-			throws Exception {
-		}
-
-	}
 
 }

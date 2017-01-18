@@ -2643,7 +2643,7 @@
 		</execute>
 	</command>
 
-	<command name="SubmitFormWithAllFieldTypesAndTwoPages" priority="5">
+	<command name="SubmitFormWithAllFieldTypesAndThreePages" priority="5">
 		<description message="This is a use case for LPS-64798." />
 		<property name="portal.acceptance" value="true" />
 

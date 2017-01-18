@@ -15,7 +15,6 @@
 package com.liferay.portal.tools.bundle.support.commands;
 
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
-import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
 import com.sun.net.httpserver.BasicAuthenticator;
 import com.sun.net.httpserver.Headers;
@@ -94,8 +93,6 @@ public class BundleSupportCommandsTest {
 	public void setUp() throws Exception {
 		_authenticatedHttpProxyCounter.set(0);
 		_httpProxyCounter.set(0);
-
-		FileUtil.deleteDirectory(InitBundleCommand.bundlesCacheDirPath);
 	}
 
 	@Test
@@ -250,12 +247,13 @@ public class BundleSupportCommandsTest {
 	}
 
 	protected void initBundle(
-			File configsDir, File liferayHomeDir, String password, URL url,
-			String userName)
+			File cacheDir, File configsDir, File liferayHomeDir,
+			String password, URL url, String userName)
 		throws Exception {
 
 		InitBundleCommand initBundleCommand = new InitBundleCommand();
 
+		initBundleCommand.setCacheDir(cacheDir);
 		initBundleCommand.setConfigsDir(configsDir);
 		initBundleCommand.setEnvironment("local");
 		initBundleCommand.setLiferayHomeDir(liferayHomeDir);
@@ -429,10 +427,12 @@ public class BundleSupportCommandsTest {
 			String password, String userName)
 		throws Exception {
 
+		File cacheDir = temporaryFolder.newFolder();
 		URL url = new URL(
 			"http", "localhost.localdomain", _HTTP_SERVER_PORT, contextPath);
 
-		initBundle(configsDir, liferayHomeDir, password, url, userName);
+		initBundle(
+			cacheDir, configsDir, liferayHomeDir, password, url, userName);
 	}
 
 	private void _testDistBundle(String format) throws Exception {

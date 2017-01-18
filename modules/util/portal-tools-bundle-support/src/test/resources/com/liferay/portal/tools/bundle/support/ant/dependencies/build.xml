@@ -6,38 +6,37 @@
 
 	<target name="clean">
 		<clean
-			fileName = "${bundle.support.file.name}"
-			liferayHomeDir = "${bundle.support.liferay.home.dir}"
+			fileName="${bundle.support.file.name}"
+			liferayHomeDir="${bundle.support.liferay.home.dir}"
 		/>
 	</target>
 
 	<target name="deploy">
 		<deploy
-			file = "${bundle.support.file}"
-			liferayHomeDir = "${bundle.support.liferay.home.dir}"
-			outputFileName = "${bundle.support.output.file.name}"
-
+			file="${bundle.support.file}"
+			liferayHomeDir="${bundle.support.liferay.home.dir}"
+			outputFileName="${bundle.support.output.file.name}"
 		/>
 	</target>
 
 	<target name="dist-bundle">
 		<dist-bundle
-			format = "${bundle.support.format}"
-			includeFolder = "${bundle.support.include.folder}"
-			liferayHomeDir = "${bundle.support.liferay.home.dir}"
-			outputFile = "${bundle.support.output.file}"
+			format="${bundle.support.format}"
+			includeFolder="${bundle.support.include.folder}"
+			liferayHomeDir="${bundle.support.liferay.home.dir}"
+			outputFile="${bundle.support.output.file}"
 		/>
 	</target>
 
 	<target name="init-bundle">
 		<init-bundle
-			configsDir = "${bundle.support.configs.dir}"
-			environment = "${bundle.support.environment}"
-			liferayHomeDir = "${bundle.support.liferay.home.dir}"
-			password = "${bundle.support.password}"
-			stripComponents = "${bundle.support.strip.components}"
-			url = "${bundle.support.url}"
-			username = "${bundle.support.username}"
+			configsDir="${bundle.support.configs.dir}"
+			environment="${bundle.support.environment}"
+			liferayHomeDir="${bundle.support.liferay.home.dir}"
+			password="${bundle.support.password}"
+			stripComponents="${bundle.support.strip.components}"
+			url="${bundle.support.url}"
+			username="${bundle.support.username}"
 		/>
 	</target>
 </project>

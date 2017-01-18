@@ -149,35 +149,35 @@ public class InitBundleCommand extends BaseCommand {
 
 	@Parameter(
 		description = "The directory that contains the configuration files.",
-		names = {"--configs"}
+		names = "--configs"
 	)
 	private File _configsDir;
 
-	@Parameter (
+	@Parameter(
 		description = "The environment of your Liferay home deployment.",
-		names = {"--environment"}
+		names = "--environment"
 	)
 	private String _environment;
 
-	@Parameter (
+	@Parameter(
 		description = "The password if your URL requires authentication.",
 		names = {"-p", "--password"}, password = true
 	)
 	private String _password;
 
-	@Parameter (
+	@Parameter(
 		description = "The number of directories to strip when expanding your bundle.",
-		names = {"--strip-components"}
+		names = "--strip-components"
 	)
 	private int _stripComponents = _DEFAULT_STRIP_COMPONENTS;
 
-	@Parameter (
+	@Parameter(
 		description = "The URL of the Liferay Bundle to expand.",
-		names = {"--url"}
+		names = "--url"
 	)
 	private URL _url = _DEFAULT_URL;
 
-	@Parameter (
+	@Parameter(
 		description = "The user name if your URL requires authentication.",
 		names = {"-u", "--username", "--user-name"}
 	)

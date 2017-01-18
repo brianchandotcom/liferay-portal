@@ -1,4 +1,30 @@
 <definition>
+	<command name="add">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="New Role" />
+
+		<execute function="Type" locator1="TextInput#TITLE" value1="${roleTitle}" />
+
+		<if>
+			<isset var="roleDescription" />
+			<then>
+				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${roleDescription}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="roleKey" />
+			<then>
+				<execute function="Type" locator1="TextInput#KEY" value1="${roleKey}" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="addCP">
 		<if>
 			<equals arg1="${roleType}" arg2="Organization" />

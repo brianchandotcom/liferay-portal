@@ -40,7 +40,6 @@ import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
 import com.liferay.taglib.ui.AssetLinksTag;
 import com.liferay.taglib.ui.AssetTagsSummaryTag;
 import com.liferay.taglib.ui.BreadcrumbTag;
-import com.liferay.taglib.ui.DiscussionTag;
 import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
 import com.liferay.taglib.ui.LanguageTag;
@@ -274,7 +273,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 			long userId)
 		throws Exception {
 
-		DiscussionTag discussionTag = new DiscussionTag();
+		com.liferay.taglib.ui.DiscussionTag discussionTag =
+			new com.liferay.taglib.ui.DiscussionTag();
 
 		setUp(discussionTag);
 
@@ -335,9 +335,16 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		return breadcrumbTag;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
-	public DiscussionTag getDiscussionTag() throws Exception {
-		DiscussionTag discussionTag = new DiscussionTag();
+	public com.liferay.taglib.ui.DiscussionTag getDiscussionTag()
+		throws Exception {
+
+		com.liferay.taglib.ui.DiscussionTag discussionTag =
+			new com.liferay.taglib.ui.DiscussionTag();
 
 		setUp(discussionTag);
 

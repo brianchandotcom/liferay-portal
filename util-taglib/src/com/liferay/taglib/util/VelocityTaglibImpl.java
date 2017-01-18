@@ -340,11 +340,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	 */
 	@Deprecated
 	@Override
-	public com.liferay.taglib.ui.DiscussionTag getDiscussionTag()
-		throws Exception {
-
-		com.liferay.taglib.ui.DiscussionTag discussionTag =
-			new com.liferay.taglib.ui.DiscussionTag();
+	public DiscussionTag getDiscussionTag() throws Exception {
+		DiscussionTag discussionTag = new DiscussionTag();
 
 		setUp(discussionTag);
 

@@ -104,6 +104,7 @@ test {
 	systemProperty "maven.debug", System.properties["maven.debug"]
 	systemProperty "maven.repo.local", System.properties["maven.repo.local"]
 	systemProperty "repository.url", System.properties["repository.url"]
+	systemProperty "test.debug.bundle.diffs", System.properties["test.debug.bundle.diffs"]
 
 	systemProperties projectTemplateTokens
 }

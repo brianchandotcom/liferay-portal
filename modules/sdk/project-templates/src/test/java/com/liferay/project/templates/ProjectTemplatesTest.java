@@ -1252,11 +1252,29 @@ public class ProjectTemplatesTest {
 		File mavenBundleFile = _testExists(
 			mavenProjectDir, mavenBundleFileName);
 
-		if (gradleBundleFileName.endsWith(".jar")) {
-			_testBundlesDiff(gradleBundleFile, mavenBundleFile);
+		try {
+			if (gradleBundleFileName.endsWith(".jar")) {
+				_testBundlesDiff(gradleBundleFile, mavenBundleFile);
+			}
+			else if (gradleBundleFileName.endsWith(".war")) {
+				_testWarsDiff(gradleBundleFile, mavenBundleFile);
+			}
 		}
-		else if (gradleBundleFileName.endsWith(".war")) {
-			_testWarsDiff(gradleBundleFile, mavenBundleFile);
+		catch (Throwable t) {
+			String testDebug = System.getProperty("test.debug.bundle.diffs");
+
+			if (Boolean.parseBoolean(testDebug)) {
+				Path buildPath = new File("build").getAbsoluteFile().toPath();
+
+				Files.copy(
+					gradleBundleFile.toPath(),
+					buildPath.resolve(gradleBundleFile.getName()));
+				Files.copy(
+					mavenBundleFile.toPath(),
+					buildPath.resolve(mavenBundleFile.getName()));
+			}
+
+			throw t;
 		}
 	}
 

@@ -78,9 +78,12 @@
 			<var name="portlet" value="Roles" />
 		</execute>
 
-		<execute macro="Role#addCP">
-			<var name="roleTitle" value="Orgrole1 Name" />
+		<execute macro="RoleNavigator#gotoRoleType">
 			<var name="roleType" value="Organization" />
+		</execute>
+
+		<execute macro="Role#add">
+			<var name="roleTitle" value="Orgrole1 Name" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
@@ -225,9 +228,12 @@
 			<var name="portlet" value="Roles" />
 		</execute>
 
-		<execute macro="Role#addCP">
-			<var name="roleTitle" value="Siterole Name" />
+		<execute macro="RoleNavigator#gotoRoleType">
 			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Role#add">
+			<var name="roleTitle" value="Siterole Name" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">

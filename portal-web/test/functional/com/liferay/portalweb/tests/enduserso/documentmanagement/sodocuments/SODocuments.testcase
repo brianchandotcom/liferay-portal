@@ -1088,9 +1088,12 @@
 			<var name="portlet" value="Roles" />
 		</execute>
 
-		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName}" />
+		<execute macro="RoleNavigator#gotoRoleType">
 			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Role#add">
+			<var name="roleName" value="${roleName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -2664,9 +2667,12 @@
 			<var name="portlet" value="Roles" />
 		</execute>
 
-		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName}" />
+		<execute macro="RoleNavigator#gotoRoleType">
 			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Role#add">
+			<var name="roleName" value="${roleName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

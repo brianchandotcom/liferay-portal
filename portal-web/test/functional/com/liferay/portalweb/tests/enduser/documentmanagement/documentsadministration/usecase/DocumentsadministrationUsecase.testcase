@@ -874,12 +874,15 @@
 			<var name="portlet" value="Roles" />
 		</execute>
 
-		<execute macro="Role#addCP">
+		<execute macro="RoleNavigator#gotoRoleType">
+			<var name="roleType" value="Regular" />
+		</execute>
+
+		<execute macro="Role#add">
 			<var name="roleDescription" value="This is the technical writer role" />
 			<var name="roleKey" value="Technical Writer" />
 			<var name="roleName" value="Writer" />
 			<var name="roleTitle" value="Technical Writer" />
-			<var name="roleType" value="Regular Role" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

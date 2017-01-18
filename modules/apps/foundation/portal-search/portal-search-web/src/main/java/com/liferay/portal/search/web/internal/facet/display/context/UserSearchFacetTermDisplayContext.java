@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 import java.io.Serializable;
 
 /**
@@ -27,7 +25,7 @@ public class UserSearchFacetTermDisplayContext implements Serializable {
 		return _frequency;
 	}
 
-	public String getUserName() throws PortalException {
+	public String getUserName() {
 		return _userName;
 	}
 

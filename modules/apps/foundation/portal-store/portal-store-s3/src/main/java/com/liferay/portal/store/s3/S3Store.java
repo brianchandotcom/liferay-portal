@@ -382,19 +382,17 @@ public class S3Store extends BaseStore {
 		_transferManager = getTransferManager(_amazonS3);
 
 		try {
-			if (Validator.isNull(_s3StoreConfiguration.s3StorageClass())) {
-				_storageClass = StorageClass.Standard;
-			}
-			else {
-				_storageClass = StorageClass.fromValue(
-					_s3StoreConfiguration.s3StorageClass());
-			}
+			_storageClass = StorageClass.fromValue(
+				_s3StoreConfiguration.s3StorageClass());
 		}
 		catch (IllegalArgumentException iae) {
 			_storageClass = StorageClass.Standard;
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(iae);
+				_log.warn(
+					_s3StoreConfiguration.s3StorageClass() +
+						" is not a valid value for the storage class",
+					iae);
 			}
 		}
 	}
@@ -733,7 +731,7 @@ public class S3Store extends BaseStore {
 			throw transform(ace);
 		}
 		catch (InterruptedException ie) {
-			ie.printStackTrace();
+			throw new RuntimeException(ie);
 		}
 	}
 

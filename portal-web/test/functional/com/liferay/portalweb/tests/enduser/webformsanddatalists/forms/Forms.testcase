@@ -2797,6 +2797,34 @@
 
 		<execute macro="Form#closeSidebar" />
 
+		<execute macro="Form#addPage" />
+
+		<execute macro="Form#editPageTitle">
+			<var name="formPageName" value="Page 3" />
+		</execute>
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Multiple Selection" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Checkbox" />
+		</execute>
+
+		<execute macro="FormFields#editOptionsRow">
+			<var name="optionName" value="Checkbox1" />
+			<var name="optionValue" value="Checkbox 1" />
+			<var name="rowNumber" value="1" />
+		</execute>
+
+		<execute macro="FormFields#editOptionsRow">
+			<var name="optionName" value="Checkbox2" />
+			<var name="optionValue" value="Checkbox 2" />
+			<var name="rowNumber" value="2" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
 		<execute macro="Form#save" />
 
 		<execute macro="Page#add">

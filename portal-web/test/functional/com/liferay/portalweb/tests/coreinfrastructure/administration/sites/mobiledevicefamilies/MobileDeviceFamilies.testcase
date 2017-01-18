@@ -52,8 +52,8 @@
 			<var name="page" value="Mobile Device Family Test Page" />
 		</execute>
 
-		<execute macro="Navigator#gotoTab">
-			<var name="tab" value="Advanced" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Advanced" />
 		</execute>
 
 		<execute macro="Panel#expandPanel">

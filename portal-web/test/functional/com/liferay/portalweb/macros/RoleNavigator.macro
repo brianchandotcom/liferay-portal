@@ -1,19 +1,40 @@
 <definition>
+	<command name="gotoAssignees">
+		<execute macro="Navigator#gotoDescriptiveViewEntry">
+			<var name="entryName" value="${roleTitle}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="NavBar#ASSIGNEES" value1="Assignees" />
+	</command>
+
+	<command name="gotoAssigneeType">
+		<var method="StringUtil#upperCase('${assigneeType}')" name="assigneeTypeUppercase" />
+
+		<if>
+			<equals arg1="${assigneeType}" arg2="User Groups" />
+			<then>
+				<var method="StringUtil#replace('${assigneeTypeUppercase}', ' ', '_')" name="assigneeTypeUppercase" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="NavBar#${assigneeTypeUppercase}" value1="${assigneeType}" />
+	</command>
+
 	<command name="gotoRoleType">
 		<if>
-			<equals arg1="${roleType}" arg2="Organization" />
+			<isset var="roleType" />
 			<then>
-				<execute function="AssertClick" locator1="MenuItem#ORGANIZATION_ROLES" value1="Organization Roles" />
+				<var method="StringUtil#upperCase('${roleType}')" name="roleTypeUppercase" />
+
+				<execute function="AssertClick" locator1="NavBar#${roleTypeUppercase}_ROLES" value1="${roleType} Roles" />
+
+				<var name="key_navItem" value="${roleType}" />
 			</then>
-			<elseif>
-				<equals arg1="${roleType}" arg2="Site" />
-				<then>
-					<execute function="AssertClick" locator1="MenuItem#SITE_ROLES" value1="Site Roles" />
-				</then>
-			</elseif>
 			<else>
-				<execute function="AssertClick" locator1="MenuItem#REGULAR_ROLES" value1="Regular Roles" />
+				<var name="key_navItem" value="Regular" />
 			</else>
 		</if>
+
+		<execute function="AssertVisible" locator1="NavBar#ACTIVE_NAV_ITEM_LINK" />
 	</command>
 </definition>

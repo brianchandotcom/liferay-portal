@@ -14,7 +14,10 @@
 
 package com.liferay.portal.kernel.template;
 
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
+
+import java.util.Set;
 
 /**
  * @author Tina Tian
@@ -66,5 +69,13 @@ public interface TemplateConstants {
 		"_THEME_LOADER_CONTEXT_";
 
 	public static final String WRITER = "writer";
+
+	public static final Set<String> allowedLangTypes = SetUtil.fromArray(
+		new String[] {
+			TemplateConstants.LANG_TYPE_CSS, TemplateConstants.LANG_TYPE_FTL,
+			TemplateConstants.LANG_TYPE_JSON, TemplateConstants.LANG_TYPE_SOY,
+			TemplateConstants.LANG_TYPE_TPL, TemplateConstants.LANG_TYPE_VM,
+			TemplateConstants.LANG_TYPE_XML, TemplateConstants.LANG_TYPE_XSL
+		});
 
 }

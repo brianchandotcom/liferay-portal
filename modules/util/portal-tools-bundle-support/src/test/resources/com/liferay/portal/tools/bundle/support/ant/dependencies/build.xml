@@ -30,6 +30,7 @@
 
 	<target name="init-bundle">
 		<init-bundle
+			cacheDir="${bundle.support.cache.dir}"
 			configsDir="${bundle.support.configs.dir}"
 			environment="${bundle.support.environment}"
 			liferayHomeDir="${bundle.support.liferay.home.dir}"

@@ -4145,7 +4145,7 @@
 	</command>
 
 	<command name="SearchForOtherCalendars" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="Calendar#SearchForOtherCalendars" />
 
 		<execute macro="TestCase#getSiteName">

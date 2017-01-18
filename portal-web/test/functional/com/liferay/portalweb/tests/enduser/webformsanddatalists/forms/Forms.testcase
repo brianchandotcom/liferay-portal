@@ -2808,7 +2808,7 @@
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Checkbox" />
+			<var name="fieldValue" value="Checkbox Page 3" />
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">

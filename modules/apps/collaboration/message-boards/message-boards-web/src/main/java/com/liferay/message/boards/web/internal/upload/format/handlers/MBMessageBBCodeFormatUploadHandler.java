@@ -58,7 +58,7 @@ public class MBMessageBBCodeFormatUploadHandler
 	}
 
 	@Reference(unbind = "-")
-	public void setPortletFileRepository(
+	protected void setPortletFileRepository(
 		PortletFileRepository portletFileRepository) {
 
 		_portletFileRepository = portletFileRepository;

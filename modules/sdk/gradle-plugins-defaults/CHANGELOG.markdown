@@ -932,6 +932,12 @@ compilation.
 - [LPS-70170]: Use the latest snapshot of the `com.liferay.util.taglib`
 dependency for JSP compilation.
 
+## 2.4.16 - 2017-01-19
+
+### Changed
+- [LPS-69501]: Use the published portal tools by default instead of the ones
+deployed locally in the `tools/sdk/dependencies` directories.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

@@ -663,53 +663,42 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		sb.append("))");
 
-		StringBundler groupAdminResourcePermissionSB = new StringBundler(3);
-
-		if (Validator.isNotNull(groupIdField) && (groupIds.length > 1)) {
-			boolean groupAdmin = false;
-
-			StringBundler sb1 = new StringBundler(4);
-
-			sb1.append("(ResourcePermission.primKeyId = 0) AND ");
-			sb1.append("(ResourcePermission.roleId = ");
-			sb1.append(permissionChecker.getOwnerRoleId());
-			sb1.append(")");
-
-			StringBundler sb2 = new StringBundler(groupIds.length);
-
-			sb2.append(groupIdField);
-			sb2.append(" IN (");
-
-			for (int i = 0; i < groupIds.length; i++) {
-				if (!isEnabled(0, groupIds[i])) {
-					sb2.append(groupIds[i]);
-					sb2.append(", ");
-
-					groupAdmin = true;
-				}
-			}
-
-			sb2.setIndex(sb2.index() - 1);
-
-			sb2.append(")");
-
-			if (groupAdmin) {
-				groupAdminResourcePermissionSB.append(sb1);
-				groupAdminResourcePermissionSB.append(" AND ");
-				groupAdminResourcePermissionSB.append(sb2);
-			}
-			else {
-				groupAdminResourcePermissionSB.append("[$FALSE$] <> [$FALSE$]");
-			}
-		}
-		else {
-			groupAdminResourcePermissionSB.append("[$FALSE$] <> [$FALSE$]");
-		}
-
 		String roleIdsOrOwnerIdSQL = getRoleIdsOrOwnerIdSQL(
 			permissionChecker, groupIds, userIdField);
 
+		StringBundler groupAdminResourcePermissionSB = null;
+
+		for (long groupId : groupIds) {
+			if (!isEnabled(groupId)) {
+				groupAdminResourcePermissionSB = new StringBundler(5);
+
+				if (!roleIdsOrOwnerIdSQL.isEmpty()) {
+					groupAdminResourcePermissionSB.append(" OR ");
+				}
+
+				groupAdminResourcePermissionSB.append(
+					"((ResourcePermission.primKeyId = 0) AND ");
+
+				groupAdminResourcePermissionSB.append(
+					"(ResourcePermission.roleId = ");
+
+				groupAdminResourcePermissionSB.append(
+					permissionChecker.getOwnerRoleId());
+
+				groupAdminResourcePermissionSB.append("))");
+
+				break;
+			}
+		}
+
 		int scope = ResourceConstants.SCOPE_INDIVIDUAL;
+
+		String groupAdminSQL = StringPool.BLANK;
+
+		if (groupAdminResourcePermissionSB != null) {
+			groupAdminSQL = groupAdminResourcePermissionSB.toString();
+		}
+
 
 		permissionJoin = StringUtil.replace(
 			permissionJoin,
@@ -719,9 +708,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				"[$RESOURCE_SCOPE_INDIVIDUAL$]", "[$ROLE_IDS_OR_OWNER_ID$]"
 			},
 			new String[] {
-				className, String.valueOf(companyId),
-				groupAdminResourcePermissionSB.toString(), sb.toString(),
-				String.valueOf(scope), roleIdsOrOwnerIdSQL
+				className, String.valueOf(companyId), groupAdminSQL,
+				sb.toString(), String.valueOf(scope), roleIdsOrOwnerIdSQL
 			});
 
 		int pos = sql.indexOf(_WHERE_CLAUSE);

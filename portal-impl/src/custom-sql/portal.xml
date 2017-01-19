@@ -50,8 +50,8 @@
 					(
 						[$ROLE_IDS_OR_OWNER_ID$] AND
 						[$PRIM_KEYS$]
-					) OR
-					([$GROUP_ADMIN_RESOURCE_PERMISSION$])
+					)
+					[$GROUP_ADMIN_RESOURCE_PERMISSION$]
 				)
 		]]>
 	</sql>

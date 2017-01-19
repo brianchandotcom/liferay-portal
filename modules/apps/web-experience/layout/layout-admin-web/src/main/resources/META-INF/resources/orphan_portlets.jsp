@@ -19,31 +19,7 @@
 <%
 OrphanPortletsDisplayContext orphanPortletsDisplayContext = new OrphanPortletsDisplayContext(renderRequest);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
 Layout selLayout = orphanPortletsDisplayContext.getSelLayout();
-
-List<Portlet> orphanPortlets = Collections.emptyList();
-
-if (selLayout.isSupportsEmbeddedPortlets()) {
-	for (PortletPreferences orphanPortletPreferences : orphanPortletsDisplayContext.getOrphanPortletPreferences()) {
-		Portlet orphanPortlet = PortletLocalServiceUtil.getPortletById(orphanPortletPreferences.getCompanyId(), orphanPortletPreferences.getPortletId());
-
-		orphanPortlets.add(orphanPortlet);
-	}
-}
-
-PortletTitleComparator portletTitleComparator = new PortletTitleComparator(application, locale);
-
-orphanPortlets = ListUtil.sort(orphanPortlets, portletTitleComparator);
-
-RowChecker rowChecker = new EmptyOnClickRowChecker(liferayPortletResponse);
-
-if (selLayout.isLayoutPrototypeLinkActive()) {
-	rowChecker = null;
-}
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -67,8 +43,8 @@ portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= orphanPortletsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= orphanPortletsDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"name"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
@@ -78,7 +54,7 @@ portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			selectedDisplayStyle="<%= orphanPortletsDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
@@ -109,10 +85,10 @@ portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 			deltaConfigurable="<%= false %>"
 			id="portlets"
 			iteratorURL="<%= portletURL %>"
-			rowChecker="<%= rowChecker %>"
+			rowChecker="<%= selLayout.isLayoutPrototypeLinkActive() ? null : new EmptyOnClickRowChecker(liferayPortletResponse) %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= orphanPortlets %>"
+				results="<%= orphanPortletsDisplayContext.getOrphanPortlets() %>"
 			/>
 
 			<liferay-ui:search-container-row
@@ -121,26 +97,8 @@ portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 				keyProperty="portletId"
 				modelVar="portlet"
 			>
-
-				<%
-				String status = StringPool.BLANK;
-
-				if (!portlet.isActive()) {
-					status = LanguageUtil.get(request, "inactive");
-				}
-				else if (!portlet.isReady()) {
-					status = LanguageUtil.format(request, "is-not-ready", "portlet");
-				}
-				else if (portlet.isUndeployedPortlet()) {
-					status = LanguageUtil.get(request, "undeployed");
-				}
-				else {
-					status = LanguageUtil.get(request, "active");
-				}
-				%>
-
 				<c:choose>
-					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<c:when test='<%= Objects.equals(orphanPortletsDisplayContext.getDisplayStyle(), "descriptive") %>'>
 						<liferay-ui:search-container-column-icon
 							icon="archive"
 							toggleRowChecker="<%= true %>"
@@ -158,7 +116,7 @@ portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 							</h6>
 
 							<h6 class="text-default">
-								<strong><liferay-ui:message key="status" /></strong>: <%= status %>
+								<strong><liferay-ui:message key="status" /></strong>: <%= orphanPortletsDisplayContext.getStatus(portlet) %>
 							</h6>
 						</liferay-ui:search-container-column-text>
 
@@ -166,7 +124,7 @@ portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 							path="/orphan_portlets_action.jsp"
 						/>
 					</c:when>
-					<c:when test='<%= displayStyle.equals("icon") %>'>
+					<c:when test='<%= Objects.equals(orphanPortletsDisplayContext.getDisplayStyle(), "icon") %>'>
 
 						<%
 						row.setCssClass("entry-card lfr-asset-item");
@@ -183,12 +141,12 @@ portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 								title="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
 							>
 								<liferay-frontend:vertical-card-footer>
-									<%= status %>
+									<%= orphanPortletsDisplayContext.getStatus(portlet) %>
 								</liferay-frontend:vertical-card-footer>
 							</liferay-frontend:icon-vertical-card>
 						</liferay-ui:search-container-column-text>
 					</c:when>
-					<c:when test='<%= displayStyle.equals("list") %>'>
+					<c:when test='<%= Objects.equals(orphanPortletsDisplayContext.getDisplayStyle(), "list") %>'>
 						<liferay-ui:search-container-column-text
 							name="title"
 							truncate="<%= true %>"
@@ -203,7 +161,7 @@ portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 
 						<liferay-ui:search-container-column-text
 							name="status"
-							value="<%= status %>"
+							value="<%= orphanPortletsDisplayContext.getStatus(portlet) %>"
 						/>
 
 						<liferay-ui:search-container-column-jsp
@@ -213,7 +171,7 @@ portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" type="none" />
+			<liferay-ui:search-iterator displayStyle="<%= orphanPortletsDisplayContext.getDisplayStyle() %>" markupView="lexicon" type="none" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

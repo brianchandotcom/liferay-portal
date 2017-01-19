@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -24,14 +25,21 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -44,11 +52,48 @@ public class OrphanPortletsDisplayContext {
 		_portletRequest = portletRequest;
 	}
 
-	public List<PortletPreferences> getOrphanPortletPreferences() {
+	public String getDisplayStyle() {
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
+		}
+
+		_displayStyle = ParamUtil.getString(
+			_portletRequest, "displayStyle", "list");
+
+		return _displayStyle;
+	}
+
+	public String getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(
+			_portletRequest, "orderByCol", "modified-date");
+
+		return _orderByCol;
+	}
+
+	public String getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = ParamUtil.getString(
+			_portletRequest, "orderByType", "asc");
+
+		return _orderByType;
+	}
+
+	public List<Portlet> getOrphanPortlets() {
+		Layout selLayout = getSelLayout();
+
+		if (!selLayout.isSupportsEmbeddedPortlets()) {
+			return Collections.emptyList();
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		Layout selLayout = getSelLayout();
 
 		LayoutTypePortlet selLayoutTypePortlet =
 			(LayoutTypePortlet)selLayout.getLayoutType();
@@ -63,7 +108,7 @@ public class OrphanPortletsDisplayContext {
 				explicitlyAddedPortlet.getPortletId());
 		}
 
-		List<PortletPreferences> orphanPortletPreferences = new ArrayList<>();
+		List<Portlet> orphanPortlets = new ArrayList<>();
 
 		List<PortletPreferences> portletPreferences =
 			PortletPreferencesLocalServiceUtil.getPortletPreferences(
@@ -84,10 +129,19 @@ public class OrphanPortletsDisplayContext {
 				continue;
 			}
 
-			orphanPortletPreferences.add(portletPreference);
+			orphanPortlets.add(portlet);
 		}
 
-		return orphanPortletPreferences;
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			_portletRequest);
+
+		PortletTitleComparator portletTitleComparator =
+			new PortletTitleComparator(
+				request.getServletContext(), themeDisplay.getLocale());
+
+		orphanPortlets = ListUtil.sort(orphanPortlets, portletTitleComparator);
+
+		return orphanPortlets;
 	}
 
 	public Layout getSelLayout() {
@@ -113,6 +167,26 @@ public class OrphanPortletsDisplayContext {
 		return _selPlid;
 	}
 
+	public String getStatus(Portlet portlet) {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			_portletRequest);
+
+		if (!portlet.isActive()) {
+			return LanguageUtil.get(request, "inactive");
+		}
+		else if (!portlet.isReady()) {
+			return LanguageUtil.format(request, "is-not-ready", "portlet");
+		}
+		else if (portlet.isUndeployedPortlet()) {
+			return LanguageUtil.get(request, "undeployed");
+		}
+
+		return LanguageUtil.get(request, "active");
+	}
+
+	private String _displayStyle;
+	private String _orderByCol;
+	private String _orderByType;
 	private final PortletRequest _portletRequest;
 	private Layout _selLayout;
 	private Long _selPlid;

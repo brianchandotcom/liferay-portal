@@ -19,7 +19,7 @@ import com.liferay.layout.admin.web.internal.display.context.OrphanPortletsDispl
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -110,10 +110,10 @@ public class OrphanPortletsPortletConfigurationIcon
 			OrphanPortletsDisplayContext orphanPortletsDisplayContext =
 				new OrphanPortletsDisplayContext(portletRequest);
 
-			List<PortletPreferences> orphanPortletPreferences =
-				orphanPortletsDisplayContext.getOrphanPortletPreferences();
+			List<Portlet> orphanPortlets =
+				orphanPortletsDisplayContext.getOrphanPortlets();
 
-			if (!orphanPortletPreferences.isEmpty()) {
+			if (!orphanPortlets.isEmpty()) {
 				return true;
 			}
 		}

@@ -125,6 +125,17 @@ AUI.add(
 							value = inputNode.val();
 						}
 
+						if (!value) {
+							var contextValue = instance._getContextValue();
+
+							var hasCorrespondentOption =
+								instance._hasCorrespondentOption(contextValue);
+
+							if (contextValue && !hasCorrespondentOption) {
+								value = contextValue;
+							}
+						}
+
 						return value;
 					},
 
@@ -237,6 +248,18 @@ AUI.add(
 						}
 					},
 
+					_getContextValue: function() {
+						var instance = this;
+
+						var contextValue = instance.get('value');
+
+						if (Lang.isArray(contextValue)) {
+							contextValue = contextValue[0];
+						}
+
+						return contextValue;
+					},
+
 					_getDataSourceType: function(value) {
 						if (Lang.isString(value)) {
 							try {
@@ -285,6 +308,24 @@ AUI.add(
 						var instance = this;
 
 						return instance.get('container').one('.' + CSS_SELECT_TRIGGER_ACTION);
+					},
+
+					_hasCorrespondentOption: function(value) {
+						var instance = this;
+
+						var hasCorrespondentOption = false;
+
+						var inputNode = instance.getInputNode();
+
+						inputNode.all('option').each(
+							function(optionNode) {
+								if (optionNode.val() === value) {
+									hasCorrespondentOption = true;
+								}
+							}
+						);
+
+						return hasCorrespondentOption;
 					},
 
 					_isClickingOutSide: function(event) {

@@ -17,18 +17,22 @@
 <%@ include file="/init.jsp" %>
 
 <%
+OrphanPortletsDisplayContext orphanPortletsDisplayContext = new OrphanPortletsDisplayContext(renderRequest);
+
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+Layout selLayout = orphanPortletsDisplayContext.getSelLayout();
 
 List<Portlet> orphanPortlets = Collections.emptyList();
 
 if (selLayout.isSupportsEmbeddedPortlets()) {
-	LayoutTypePortlet selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
+	for (PortletPreferences orphanPortletPreferences : orphanPortletsDisplayContext.getOrphanPortletPreferences()) {
+		Portlet orphanPortlet = PortletLocalServiceUtil.getPortletById(orphanPortletPreferences.getCompanyId(), orphanPortletPreferences.getPortletId());
 
-	embeddedPortlets = selLayoutTypePortlet.getEmbeddedPortlets();
+		orphanPortlets.add(orphanPortlet);
+	}
 }
 
 PortletTitleComparator portletTitleComparator = new PortletTitleComparator(application, locale);
@@ -97,7 +101,7 @@ portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 
 	<portlet:actionURL name="deleteOrphanPortlets" var="deleteOrphanPortletsURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="selPlid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
+		<portlet:param name="selPlid" value="<%= String.valueOf(orphanPortletsDisplayContext.getSelPlid()) %>" />
 	</portlet:actionURL>
 
 	<aui:form action="<%= deleteOrphanPortletsURL %>" name="fm">

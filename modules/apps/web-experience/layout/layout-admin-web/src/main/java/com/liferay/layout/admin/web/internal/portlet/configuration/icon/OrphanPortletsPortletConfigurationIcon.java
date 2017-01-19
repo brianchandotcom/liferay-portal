@@ -15,11 +15,11 @@
 package com.liferay.layout.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.display.context.OrphanPortletsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -107,13 +107,13 @@ public class OrphanPortletsPortletConfigurationIcon
 				return false;
 			}
 
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
+			OrphanPortletsDisplayContext orphanPortletsDisplayContext =
+				new OrphanPortletsDisplayContext(portletRequest);
 
-			List<Portlet> embeddedPortlets =
-				layoutTypePortlet.getEmbeddedPortlets();
+			List<PortletPreferences> orphanPortletPreferences =
+				orphanPortletsDisplayContext.getOrphanPortletPreferences();
 
-			if (!embeddedPortlets.isEmpty()) {
+			if (!orphanPortletPreferences.isEmpty()) {
 				return true;
 			}
 		}

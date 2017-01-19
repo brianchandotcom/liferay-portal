@@ -16,10 +16,7 @@
 			_entry = wikiPageModel
 		/>
 
-		<@insertSubscription
-			_entry = wikiPageModel
-		/>
-
+		${dataFactory.toInsertSQL(dataFactory.newSubscriptionModel(wikiPageModel))}
 		${dataFactory.toInsertSQL(dataFactory.newWikiPageResourceModel(wikiPageModel))}
 
 		<@insertAssetEntry

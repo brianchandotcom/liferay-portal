@@ -7,9 +7,7 @@
 		_entry = blogsEntryModel
 	/>
 
-	<@insertFriendlyURL
-		_entry = blogsEntryModel
-	/>
+	${dataFactory.toInsertSQL(dataFactory.newFriendlyURLModel(blogsEntryModel))}
 
 	<@insertAssetEntry
 		_entry = blogsEntryModel
@@ -30,13 +28,8 @@
 		_mbThreadId = mbThreadId
 	/>
 
-	<@insertSubscription
-		_entry = blogsEntryModel
-	/>
-
-	<@insertSocialActivity
-		_entry = blogsEntryModel
-	/>
+	${dataFactory.toInsertSQL(dataFactory.newSubscriptionModel(blogsEntryModel))}
+	${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(blogsEntryModel))}
 
 	${dataFactory.getCSVWriter("blog").write(blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbThreadId + "," + mbRootMessageId + "\n")}
 </#list>

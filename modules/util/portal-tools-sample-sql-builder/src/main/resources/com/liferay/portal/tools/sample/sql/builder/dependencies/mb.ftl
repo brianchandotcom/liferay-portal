@@ -13,10 +13,7 @@
 
 	<#list mbThreadModels as mbThreadModel>
 		${dataFactory.toInsertSQL(mbThreadModel)}
-
-		<@insertSubscription
-			_entry = mbThreadModel
-		/>
+		${dataFactory.toInsertSQL(dataFactory.newSubscriptionModel(mbThreadModel))}
 
 		<@insertAssetEntry
 			_entry = mbThreadModel
@@ -31,9 +28,7 @@
 				_mbMessageModel = mbMessageModel
 			/>
 
-			<@insertSocialActivity
-				_entry = mbMessageModel
-			/>
+			${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel))}
 		</#list>
 
 		${dataFactory.getCSVWriter("messageBoard").write(mbCategoryModel.categoryId + "," + mbThreadModel.threadId + "," + mbThreadModel.rootMessageId + "\n")}

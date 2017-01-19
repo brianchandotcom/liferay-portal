@@ -54,13 +54,11 @@ public class FileUtil {
 		return new File(url.toURI());
 	}
 
-	public static String read(String name) throws IOException {
+	public static String read(Class<?> clazz, String name) throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
-		ClassLoader classLoader = ThemeBuilder.class.getClassLoader();
-
-		try (InputStream inputStream = classLoader.getResourceAsStream(name)) {
+		try (InputStream inputStream = clazz.getResourceAsStream(name)) {
 			byte[] bytes = new byte[1024];
 			int length = 0;
 

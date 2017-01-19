@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -27,7 +28,16 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 /**
  * @author Lino Alves
  */
-@DDMForm
+@DDMForm(
+	rules = {
+		@DDMFormRule(
+			actions = {
+				"call('getDataProviderInstanceOutputParameters', 'dataProviderInstanceId=ddmDataProviderInstanceId', 'ddmDataProviderOutput={key: outputParameterName, value: outputParameterName}')"
+			},
+			condition = "not(equals(getValue('ddmDataProviderInstanceId'), 0))"
+		)
+	}
+)
 @DDMFormLayout(
 	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.TABBED_MODE,
 	value = {
@@ -53,7 +63,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 							size = 12,
 							value = {
 								"predefinedValue", "dataSourceType",
-								"ddmDataProviderInstanceId", "options",
+								"ddmDataProviderInstanceId",
+								"ddmDataProviderOutput", "options",
 								"placeholder", "visibilityExpression",
 								"validation", "fieldNamespace", "indexType",
 								"localizable", "readOnly", "dataType", "type",
@@ -83,6 +94,16 @@ public interface TextDDMFormFieldTypeSettings
 		visibilityExpression = "equals(dataSourceType, \"data-provider\")"
 	)
 	public long ddmDataProviderInstanceId();
+
+	@DDMFormField(
+		label = "%choose-an-output-parameter",
+		properties = {
+			"tooltip=%choose-an-output-parameter-for-a-data-provider-previously-created"
+		},
+		type = "select",
+		visibilityExpression = "equals(dataSourceType, \"data-provider\")"
+	)
+	public String ddmDataProviderOutput();
 
 	@DDMFormField(
 		label = "%my-text-field-has",

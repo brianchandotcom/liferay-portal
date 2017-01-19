@@ -159,6 +159,8 @@ AUI.add(
 
 						var ddmDataProviderInstanceIdContainer = instance.getField('ddmDataProviderInstanceId').get('container');
 
+						var ddmDataProviderOutputContainer = instance.getField('ddmDataProviderOutput').get('container');
+
 						var optionsContainer = instance.getField('options').get('container');
 
 						var tabView = instance.getTabView();
@@ -169,6 +171,7 @@ AUI.add(
 
 						sidebarBody.one('.autocomplete-body').append(dataSourceTypeContainer);
 						sidebarBody.one('.autocomplete-body').append(ddmDataProviderInstanceIdContainer);
+						sidebarBody.one('.autocomplete-body').append(ddmDataProviderOutputContainer);
 						sidebarBody.one('.autocomplete-body').append(optionsContainer);
 
 						sidebarBody.one('.autocomplete-header-back').on('click', A.bind('_onClickAutocompleteHeaderBack', instance));

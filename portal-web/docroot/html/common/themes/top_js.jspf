@@ -118,8 +118,8 @@
 			<c:if test="<%= ShutdownUtil.isInProcess() %>">
 				, {
 					node: '#lfrShutdownMessage',
-					noticeClass: 'alert-danger',
-					toggleText: false
+					toggleText: false,
+					type: 'warning'
 				}
 			</c:if>
 		];

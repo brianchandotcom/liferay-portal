@@ -5,7 +5,8 @@ Export-Package:\
 	com.liferay.portal.tools.bundle.support,\
 	com.liferay.portal.tools.bundle.support.ant,\
 	com.liferay.portal.tools.bundle.support.commands,\
-	com.liferay.portal.tools.bundle.support.maven
+	com.liferay.portal.tools.bundle.support.maven,\
+	com.liferay.portal.tools.bundle.support.util
 Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\

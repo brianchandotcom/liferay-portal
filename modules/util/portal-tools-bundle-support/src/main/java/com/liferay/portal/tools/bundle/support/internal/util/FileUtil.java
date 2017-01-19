@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.bundle.support.internal.util;
 
 import com.liferay.portal.tools.bundle.support.BundleSupport;
+import com.liferay.portal.tools.bundle.support.util.StreamLogger;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -43,6 +44,7 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
@@ -176,7 +178,8 @@ public class FileUtil {
 	}
 
 	public static Path downloadFile(
-			URI uri, String userName, String password, Path cacheDirPath)
+			URI uri, String userName, String password, Path cacheDirPath,
+			StreamLogger streamLogger)
 		throws Exception {
 
 		Path path;
@@ -263,14 +266,34 @@ public class FileUtil {
 			HttpGet httpGet = new HttpGet(uri);
 
 			try (CloseableHttpResponse closeableHttpResponse =
-					closeableHttpClient.execute(httpGet);
-				OutputStream outputStream = Files.newOutputStream(path)) {
+					closeableHttpClient.execute(httpGet)) {
 
 				_checkResponseStatus(closeableHttpResponse);
 
 				HttpEntity httpEntity = closeableHttpResponse.getEntity();
 
-				httpEntity.writeTo(outputStream);
+				long length = httpEntity.getContentLength();
+
+				streamLogger.onStarted();
+
+				try (InputStream inputStream = httpEntity.getContent();
+					OutputStream outputStream = Files.newOutputStream(path)) {
+
+					byte[] buffer = new byte[10 * 1024];
+					int completed = 0;
+					int read = -1;
+
+					while ((read = inputStream.read(buffer)) >= 0) {
+						outputStream.write(buffer, 0, read);
+
+						completed += read;
+
+						streamLogger.onProgress(completed, length);
+					}
+				}
+				finally {
+					streamLogger.onCompleted();
+				}
 			}
 
 			Files.setLastModifiedTime(
@@ -278,6 +301,22 @@ public class FileUtil {
 		}
 
 		return path;
+	}
+
+	public static String getFileLength(long length) {
+		DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+		if (length > _FILE_LENGTH_MB) {
+			return decimalFormat.format((double)length / _FILE_LENGTH_MB) +
+				" MB";
+		}
+
+		if (length > +_FILE_LENGTH_KB) {
+			return decimalFormat.format((double)length / _FILE_LENGTH_KB) +
+				" KB";
+		}
+
+		return decimalFormat.format(length) + " B";
 	}
 
 	public static File getJarFile() throws Exception {
@@ -546,5 +585,9 @@ public class FileUtil {
 				});
 		}
 	}
+
+	private static final long _FILE_LENGTH_KB = 1024;
+
+	private static final long _FILE_LENGTH_MB = 1024 * 1024;
 
 }

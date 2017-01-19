@@ -18,6 +18,7 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
+import com.liferay.portal.tools.bundle.support.util.StreamLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +37,7 @@ import java.nio.file.Path;
 	commandDescription = "Download and expand a new bundle.",
 	commandNames = "initBundle"
 )
-public class InitBundleCommand extends BaseCommand {
+public class InitBundleCommand extends BaseCommand implements StreamLogger {
 
 	@Override
 	public void execute() throws Exception {
@@ -49,7 +50,7 @@ public class InitBundleCommand extends BaseCommand {
 		}
 
 		Path path = FileUtil.downloadFile(
-			_url.toURI(), _userName, _password, cacheDirPath);
+			_url.toURI(), _userName, _password, cacheDirPath, this);
 
 		FileUtil.unpack(path, getLiferayHomePath(), _stripComponents);
 
@@ -198,5 +199,39 @@ public class InitBundleCommand extends BaseCommand {
 		names = "--cache-dir")
 	private File _cacheDir = new File(
 		System.getProperty("user.home"), ".liferay/bundles");
+
+	@Override
+	public void onStarted() {
+		onStarted("Download " + _url);
+	}
+
+	protected void onStarted(String message) {
+		System.out.println(message);
+	}
+
+	@Override
+	public void onCompleted() {
+		System.out.println();
+	}
+
+	protected void onProgress(String message) {
+		System.out.print("\r" + message);
+	}
+
+	@Override
+	public void onProgress(long completed, long length) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(FileUtil.getFileLength(completed));
+
+		if (length > 0) {
+			sb.append('/');
+			sb.append(FileUtil.getFileLength(length));
+		}
+
+		sb.append(" downloaded");
+
+		onProgress(sb.toString());
+	}
 
 }

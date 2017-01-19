@@ -214,6 +214,7 @@
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
+			<var name="fieldName" value="ChooseYourDestiny" />
 			<var name="fieldValue" value="Edit Label" />
 		</execute>
 

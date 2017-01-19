@@ -10,4 +10,4 @@ insert into Account_ values (${accountModel.mvccVersion}, ${accountModel.account
 
 insert into VirtualHost values (${virtualHostModel.mvccVersion}, ${virtualHostModel.virtualHostId}, ${virtualHostModel.companyId}, ${virtualHostModel.layoutSetId}, '${virtualHostModel.hostname}');
 
-${companyCSVWriter.write(companyModel.companyId + "\n")}
+${dataFactory.getCSVWriter("company").write(companyModel.companyId + "\n")}

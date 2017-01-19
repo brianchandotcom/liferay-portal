@@ -33,7 +33,7 @@ insert into DDMTemplate values ('${ddmTemplateModel.uuid}', ${ddmTemplateModel.t
 		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
 	/>
 
-	${layoutCSVWriter.write(layoutModel.friendlyURL + "\n")}
+	${dataFactory.getCSVWriter("layout").write(layoutModel.friendlyURL + "\n")}
 
 	<@insertLayout
 		_layoutModel = layoutModel

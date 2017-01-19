@@ -1056,6 +1056,10 @@ public interface Portal {
 		PortletResponse portletResponse, ThemeDisplay themeDisplay,
 		String portletName);
 
+	public String getSiteAdminURL(
+			Group group, String ppid, Map<String, String[]> params)
+		throws PortalException;
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getCurrentAndAncestorSiteGroupIds(long)}

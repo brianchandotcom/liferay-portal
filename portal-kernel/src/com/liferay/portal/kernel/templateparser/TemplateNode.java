@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -195,7 +196,10 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 			Layout layout = LayoutLocalServiceUtil.getLayout(
 				groupId, privateLayout, getLayoutId());
 
-			return PortalUtil.getLayoutFriendlyURL(layout, _themeDisplay);
+			String layoutFriendlyURL = PortalUtil.getLayoutFriendlyURL(
+				layout, _themeDisplay);
+
+			return HttpUtil.removeDomain(layoutFriendlyURL);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

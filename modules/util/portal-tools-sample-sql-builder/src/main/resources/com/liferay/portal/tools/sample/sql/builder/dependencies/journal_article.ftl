@@ -8,7 +8,7 @@
 
 <#assign ddmTemplateModel = dataFactory.defaultJournalDDMTemplateModel />
 
-insert into DDMTemplate values ('${ddmTemplateModel.uuid}', ${ddmTemplateModel.templateId}, ${ddmTemplateModel.groupId}, ${ddmTemplateModel.companyId}, ${ddmTemplateModel.userId}, '${ddmTemplateModel.userName}', ${ddmTemplateModel.versionUserId}, '${ddmTemplateModel.versionUserName}', '${dataFactory.getDateString(ddmTemplateModel.createDate)}', '${dataFactory.getDateString(ddmTemplateModel.modifiedDate)}', ${ddmTemplateModel.classNameId}, ${ddmTemplateModel.classPK}, ${ddmTemplateModel.resourceClassNameId}, '${ddmTemplateModel.templateKey}', '${ddmTemplateModel.version}', '${ddmTemplateModel.name}', '${ddmTemplateModel.description}', '${ddmTemplateModel.type}', '${ddmTemplateModel.mode}', '${ddmTemplateModel.language}', '${ddmTemplateModel.script}', ${ddmTemplateModel.cacheable?string}, ${ddmTemplateModel.smallImage?string}, ${ddmTemplateModel.smallImageId}, '${ddmTemplateModel.smallImageURL}', '${dataFactory.getDateString(ddmTemplateModel.lastPublishDate)}');
+${dataFactory.toInsertSQL(ddmTemplateModel)}
 
 <@insertResourcePermissions
 	_entry = ddmTemplateModel
@@ -52,22 +52,19 @@ insert into DDMTemplate values ('${ddmTemplateModel.uuid}', ${ddmTemplateModel.t
 	<#list journalArticleCounts as journalArticleCount>
 		<#assign journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId) />
 
-		insert into JournalArticleResource values ('${journalArticleResourceModel.uuid}', ${journalArticleResourceModel.resourcePrimKey}, ${journalArticleResourceModel.groupId}, ${journalArticleResourceModel.companyId}, '${journalArticleResourceModel.articleId}');
+		${dataFactory.toInsertSQL(journalArticleResourceModel)}
 
 		<#assign versionCounts = dataFactory.getSequence(dataFactory.maxJournalArticleVersionCount) />
 
 		<#list versionCounts as versionCount>
 			<#assign journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, journalArticleCount, versionCount) />
 
-			insert into JournalArticle values ('${journalArticleModel.uuid}', ${journalArticleModel.id}, ${journalArticleModel.resourcePrimKey}, ${journalArticleModel.groupId}, ${journalArticleModel.companyId}, ${journalArticleModel.userId}, '${journalArticleModel.userName}', '${dataFactory.getDateString(journalArticleModel.createDate)}', '${dataFactory.getDateString(journalArticleModel.modifiedDate)}', ${journalArticleModel.folderId}, ${journalArticleModel.classNameId}, ${journalArticleModel.classPK}, '', '${journalArticleModel.articleId}', ${journalArticleModel.version}, '${journalArticleModel.urlTitle}', '${journalArticleModel.content}', '${journalArticleModel.DDMStructureKey}', '${journalArticleModel.DDMTemplateKey}', '${journalArticleModel.defaultLanguageId}', '${journalArticleModel.layoutUuid}', '${dataFactory.getDateString(journalArticleModel.displayDate)}', '${dataFactory.getDateString(journalArticleModel.expirationDate)}', '${dataFactory.getDateString(journalArticleModel.reviewDate)}', ${journalArticleModel.indexable?string}, ${journalArticleModel.smallImage?string}, ${journalArticleModel.smallImageId}, '${journalArticleModel.smallImageURL}', '${dataFactory.getDateString(journalArticleModel.lastPublishDate)}', ${journalArticleModel.status}, ${journalArticleModel.statusByUserId}, '${journalArticleModel.statusByUserName}', '${dataFactory.getDateString(journalArticleModel.statusDate)}');
+			${dataFactory.toInsertSQL(journalArticleModel)}
 
 			<#assign journalArticleLocalizationModel = dataFactory.newJournalArticleLocalizationModel(journalArticleModel, journalArticleCount, versionCount) />
 
-			insert into JournalArticleLocalization values (${journalArticleLocalizationModel.articleLocalizationId}, ${journalArticleLocalizationModel.companyId}, ${journalArticleLocalizationModel.articlePK}, '${journalArticleLocalizationModel.title}', '${journalArticleLocalizationModel.description}', '${journalArticleLocalizationModel.languageId}');
-
-			<#assign ddmTemplateLinkModel = dataFactory.newDDMTemplateLinkModel(journalArticleModel, ddmTemplateModel.templateId) />
-
-			insert into DDMTemplateLink values (${ddmTemplateLinkModel.templateLinkId}, ${ddmTemplateLinkModel.companyId}, ${ddmTemplateLinkModel.classNameId}, ${ddmTemplateLinkModel.classPK}, ${ddmTemplateLinkModel.templateId});
+			${dataFactory.toInsertSQL(journalArticleLocalizationModel)}
+			${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(journalArticleModel, ddmTemplateModel.templateId))}
 
 			<@insertDDMStorageLink
 				_ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(journalArticleModel, ddmStructureModel.structureId)
@@ -104,8 +101,6 @@ insert into DDMTemplate values ('${ddmTemplateModel.uuid}', ${ddmTemplateModel.t
 			_portletPreferencesModel = portletPreferencesModel
 		/>
 
-		<#assign journalContentSearchModel = dataFactory.newJournalContentSearchModel(journalArticleModel, layoutModel.plid) />
-
-		insert into JournalContentSearch values (${journalContentSearchModel.contentSearchId}, ${journalContentSearchModel.groupId}, ${journalContentSearchModel.companyId}, ${journalContentSearchModel.privateLayout?string}, ${journalContentSearchModel.layoutId}, '${journalContentSearchModel.portletId}', '${journalContentSearchModel.articleId}');
+		${dataFactory.toInsertSQL(dataFactory.newJournalContentSearchModel(journalArticleModel, layoutModel.plid))}
 	</#list>
 </#list>

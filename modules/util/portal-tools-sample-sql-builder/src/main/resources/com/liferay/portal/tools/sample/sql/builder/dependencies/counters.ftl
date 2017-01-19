@@ -4,6 +4,6 @@
 	<#if '${counterModel.name}' == 'com.liferay.counter.kernel.model.Counter'>
 		update Counter set currentId = ${counterModel.currentId} where name = '${counterModel.name}';
 	<#else>
-		insert into Counter values ('${counterModel.name}', ${counterModel.currentId});
+		${dataFactory.toInsertSQL(counterModel)}
 	</#if>
 </#list>

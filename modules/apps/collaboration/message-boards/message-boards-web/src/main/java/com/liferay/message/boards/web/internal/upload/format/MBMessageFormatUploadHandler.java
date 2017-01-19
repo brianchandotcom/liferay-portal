@@ -27,6 +27,4 @@ public interface MBMessageFormatUploadHandler {
 		String body,
 		List<MBAttachmentFileEntryReference> mbAttachmentFileEntryReferences);
 
-	public String FORMAT_KEY = "format";
-
 }

@@ -28,7 +28,7 @@ public class MBAttachmentFileEntryReference {
 		_mbAttachmentFileEntry = mbAttachmentFileEntry;
 	}
 
-	public FileEntry getMbAttachmentFileEntry() {
+	public FileEntry getMBAttachmentFileEntry() {
 		return _mbAttachmentFileEntry;
 	}
 

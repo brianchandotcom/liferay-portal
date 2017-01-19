@@ -30,21 +30,20 @@ public class MBMessageFormatUploadHandlerProvider {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		_formatHandlerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, MBMessageFormatUploadHandler.class,
-			MBMessageFormatUploadHandler.FORMAT_KEY);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, MBMessageFormatUploadHandler.class, "format");
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_formatHandlerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	public MBMessageFormatUploadHandler provide(String format) {
-		return _formatHandlerMap.getService(format);
+		return _serviceTrackerMap.getService(format);
 	}
 
 	private ServiceTrackerMap<String, MBMessageFormatUploadHandler>
-		_formatHandlerMap;
+		_serviceTrackerMap;
 
 }

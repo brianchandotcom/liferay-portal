@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = MBMessageFormatUploadHandler.FORMAT_KEY + "=html",
-	service = MBMessageFormatUploadHandler.class
+	property = "format=html", service = MBMessageFormatUploadHandler.class
 )
 public class MBMessageHTMLFormatUploadHandler
 	implements MBMessageFormatUploadHandler {
@@ -60,8 +59,8 @@ public class MBMessageHTMLFormatUploadHandler
 
 			content = content.replaceAll(
 				sb.toString(),
-				_getMBAttachmentHTMLImgTag(
-					mbAttachmentFileEntryReference.getMbAttachmentFileEntry()));
+				_getMBAttachmentFileEntryHTMLImgTag(
+					mbAttachmentFileEntryReference.getMBAttachmentFileEntry()));
 		}
 
 		return content;
@@ -74,7 +73,9 @@ public class MBMessageHTMLFormatUploadHandler
 		_portletFileRepository = portletFileRepository;
 	}
 
-	private String _getMBAttachmentHTMLImgTag(FileEntry mbAttachmentFileEntry) {
+	private String _getMBAttachmentFileEntryHTMLImgTag(
+		FileEntry mbAttachmentFileEntry) {
+
 		String fileEntryURL = _portletFileRepository.getPortletFileEntryURL(
 			null, mbAttachmentFileEntry, StringPool.BLANK);
 

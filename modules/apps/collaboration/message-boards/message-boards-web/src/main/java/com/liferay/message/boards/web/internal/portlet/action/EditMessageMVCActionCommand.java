@@ -468,7 +468,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 				if (formatHandler != null) {
 					body = _addBodyAttachmentTempFiles(
-						themeDisplay, body, message, new ArrayList<>(),
+						themeDisplay, body, message, new ArrayList<String>(),
 						formatHandler);
 
 					_mbMessageService.updateMessage(
@@ -561,7 +561,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 					mbAttachmentFileEntryReferences) {
 
 				FileEntry mbAttachmentFileEntry =
-					mbAttachmentFileEntryReference.getMbAttachmentFileEntry();
+					mbAttachmentFileEntryReference.getMBAttachmentFileEntry();
 
 				existingFiles.add(
 					String.valueOf(mbAttachmentFileEntry.getFileEntryId()));

@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = MBMessageFormatUploadHandler.FORMAT_KEY + "=bbcode",
-	service = MBMessageFormatUploadHandler.class
+	property = "format=bbcode", service = MBMessageFormatUploadHandler.class
 )
 public class MBMessageBBCodeFormatUploadHandler
 	implements MBMessageFormatUploadHandler {
@@ -51,8 +50,8 @@ public class MBMessageBBCodeFormatUploadHandler
 					getTempMBAttachmentFileEntryId()).matcher(content);
 
 			content = matcher.replaceAll(
-				_getMBAttachmentBBCodeImgTag(
-					mbAttachmentFileEntryReference.getMbAttachmentFileEntry()));
+				_getMBAttachmentFileEntryBBCodeImgTag(
+					mbAttachmentFileEntryReference.getMBAttachmentFileEntry()));
 		}
 
 		return content;
@@ -65,7 +64,7 @@ public class MBMessageBBCodeFormatUploadHandler
 		_portletFileRepository = portletFileRepository;
 	}
 
-	private String _getMBAttachmentBBCodeImgTag(
+	private String _getMBAttachmentFileEntryBBCodeImgTag(
 		FileEntry mbAttachmentFileEntry) {
 
 		String fileEntryURL = _portletFileRepository.getPortletFileEntryURL(

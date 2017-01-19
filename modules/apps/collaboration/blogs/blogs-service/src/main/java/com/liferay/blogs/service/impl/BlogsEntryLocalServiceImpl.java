@@ -101,8 +101,7 @@ import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.social.kernel.model.SocialActivityConstants;
-import com.liferay.subscription.util.UnsubscribeLifecycleHook;
-import com.liferay.subscription.util.UnsubscribeLifecycleHookProvider;
+import com.liferay.subscription.util.UnsubscribeLifecycleHookFactory;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
@@ -117,7 +116,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
@@ -1957,13 +1955,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-
-		Optional<UnsubscribeLifecycleHook> unsubscribeLifecycleHookOptional =
-			unsubscribeLifecycleHookProvider.get();
-
-		unsubscribeLifecycleHookOptional.ifPresent(
-			unsubscribeLifecycleHook ->
-				subscriptionSender.addLifecycleHook(unsubscribeLifecycleHook));
+		subscriptionSender.addLifecycleHook(
+			unsubscribeLifecycleHookFactory.create());
 
 		subscriptionSender.addPersistedSubscribers(
 			BlogsEntry.class.getName(), entry.getGroupId());
@@ -2301,8 +2294,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	@ServiceReference(type = FriendlyURLLocalService.class)
 	protected FriendlyURLLocalService friendlyURLLocalService;
 
-	@ServiceReference(type = UnsubscribeLifecycleHookProvider.class)
-	protected UnsubscribeLifecycleHookProvider unsubscribeLifecycleHookProvider;
+	@ServiceReference(type = UnsubscribeLifecycleHookFactory.class)
+	protected UnsubscribeLifecycleHookFactory unsubscribeLifecycleHookFactory;
 
 	private String _getGroupDescriptiveName(Group group, Locale locale) {
 		try {

@@ -19,10 +19,6 @@ import com.liferay.mail.kernel.template.MailTemplate;
 import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
-import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
-import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.Ticket;
@@ -40,25 +36,27 @@ import com.liferay.subscription.web.constants.SubscriptionConstants;
 import java.io.IOException;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.mail.internet.InternetHeaders;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	configurationPid = "com.liferay.subscription.web.configuration.SubscriptionConfiguration",
-	immediate = true, service = UnsubscribeLifecycleHook.class
-)
 public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
+
+	public UnsubscribeLifecycleHookImpl(
+		SubscriptionConfiguration configuration,
+		TicketLocalService ticketLocalService,
+		UserLocalService userLocalService) {
+
+		_configuration = configuration;
+		_ticketLocalService = ticketLocalService;
+		_userLocalService = userLocalService;
+	}
 
 	@Override
 	public void beforeSendNotificationToPersistedSubscriber(
@@ -79,7 +77,7 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 			subscription.getSubscriptionId(),
 			SubscriptionConstants.TICKET_TYPE);
 
-		Ticket ticket = null;
+		Ticket ticket;
 
 		if (ListUtil.isEmpty(tickets)) {
 			ticket = _ticketLocalService.addTicket(
@@ -98,9 +96,7 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 				calendar.getTime());
 		}
 
-		ThreadLocalCache<Ticket> cache = _getTicketCache();
-
-		cache.put(String.valueOf(subscription.getUserId()), ticket);
+		_cache.put(subscription.getUserId(), ticket);
 	}
 
 	@Override
@@ -118,9 +114,7 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 			subscriptionSender.getCompanyId(),
 			mailMessage.getTo()[0].getAddress());
 
-		ThreadLocalCache<Ticket> cache = _getTicketCache();
-
-		Ticket ticket = cache.get(String.valueOf(user.getUserId()));
+		Ticket ticket = _cache.get(user.getUserId());
 
 		if (ticket != null) {
 			try {
@@ -131,16 +125,9 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 				_addUnsubscribeLink(mailMessage, locale, unsubscribeURL);
 			}
 			finally {
-				cache.remove(String.valueOf(user.getUserId()));
+				_cache.remove(user.getUserId());
 			}
 		}
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_configuration = ConfigurableUtil.createConfigurable(
-			SubscriptionConfiguration.class, properties);
 	}
 
 	private void _addUnsubscribeHeader(
@@ -176,11 +163,6 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 		mailMessage.setBody(processedBody);
 	}
 
-	private ThreadLocalCache<Ticket> _getTicketCache() {
-		return ThreadLocalCacheManager.getThreadLocalCache(
-			Lifecycle.REQUEST, UnsubscribeLifecycleHookImpl.class.getName());
-	}
-
 	private String _getUnsubscribeURL(
 		SubscriptionSender sender, User user, Ticket ticket) {
 
@@ -196,12 +178,9 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 		return sb.toString();
 	}
 
-	private volatile SubscriptionConfiguration _configuration;
-
-	@Reference
-	private TicketLocalService _ticketLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private final Map<Long, Ticket> _cache = new HashMap<>();
+	private final SubscriptionConfiguration _configuration;
+	private final TicketLocalService _ticketLocalService;
+	private final UserLocalService _userLocalService;
 
 }

@@ -36,16 +36,7 @@
 	</#if>
 
 	${dataFactory.toInsertSQL(ddmContentModel)}
-
-	<@insertDDMStorageLink
-		_ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId)
-	/>
-</#macro>
-
-<#macro insertDDMStorageLink
-	_ddmStorageLinkModel
->
-	${dataFactory.toInsertSQL(_ddmStorageLinkModel)}
+	${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId))}
 </#macro>
 
 <#macro insertDDMStructure
@@ -61,12 +52,6 @@
 
 	${dataFactory.toInsertSQL(_ddmStructureLayoutModel)}
 	${dataFactory.toInsertSQL(_ddmStructureVersionModel)}
-</#macro>
-
-<#macro insertDDMStructureLink
-	_entry
->
-	${dataFactory.toInsertSQL(dataFactory.newDDMStructureLinkModel(_entry))}
 </#macro>
 
 <#macro insertDLFolder
@@ -123,17 +108,12 @@
 					_mbThreadId = dataFactory.getCounterNext()
 				/>
 
-				<@insertSocialActivity
-					_entry = dlFileEntryModel
-				/>
+				${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(dlFileEntryModel))}
 
 				<#local dlFileEntryMetadataModel = dataFactory.newDLFileEntryMetadataModel(ddmStorageLinkId, _ddmStructureId, dlFileVersionModel)>
 
 				${dataFactory.toInsertSQL(dlFileEntryMetadataModel)}
-
-				<@insertDDMStructureLink
-					_entry = dlFileEntryMetadataModel
-				/>
+				${dataFactory.toInsertSQL(dataFactory.newDDMStructureLinkModel(dlFileEntryMetadataModel))}
 
 				${dataFactory.getCSVWriter("documentLibrary").write(dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "," + dataFactory.getDateLong(dlFileEntryModel.createDate) + "," + dataFactory.getDateLong(dlFolderModel.createDate) + "\n")}
 			</#list>
@@ -146,12 +126,6 @@
 			/>
 		</#list>
 	</#if>
-</#macro>
-
-<#macro insertFriendlyURL
-	_entry
->
-	${dataFactory.toInsertSQL(dataFactory.newFriendlyURLModel(_entry))}
 </#macro>
 
 <#macro insertGroup
@@ -208,9 +182,7 @@
 			_mbMessageModel = mbMessageModel
 		/>
 
-		<@insertSocialActivity
-			_entry = mbMessageModel
-		/>
+		${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel))}
 	</#list>
 
 	${dataFactory.toInsertSQL(dataFactory.newMBDiscussionModel(_groupId, _classNameId, _classPK, _mbThreadId))}
@@ -240,34 +212,14 @@
 	/>
 </#macro>
 
-<#macro insertResourcePermission
-	_resourcePermissionModel
->
-	${dataFactory.toInsertSQL(_resourcePermissionModel)}
-</#macro>
-
 <#macro insertResourcePermissions
 	_entry
 >
 	<#local resourcePermissionModels = dataFactory.newResourcePermissionModels(_entry)>
 
 	<#list resourcePermissionModels as resourcePermissionModel>
-		<@insertResourcePermission
-			_resourcePermissionModel = resourcePermissionModel
-		/>
+		${dataFactory.toInsertSQL(resourcePermissionModel)}
 	</#list>
-</#macro>
-
-<#macro insertSocialActivity
-	_entry
->
-	${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(_entry))}
-</#macro>
-
-<#macro insertSubscription
-	_entry
->
-	${dataFactory.toInsertSQL(dataFactory.newSubscriptionModel(_entry))}
 </#macro>
 
 <#macro insertUser

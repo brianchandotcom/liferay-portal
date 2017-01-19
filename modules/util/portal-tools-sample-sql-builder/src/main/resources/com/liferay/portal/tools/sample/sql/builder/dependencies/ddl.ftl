@@ -28,10 +28,7 @@
 	<#assign ddlRecordSetModel = dataFactory.newDDLRecordSetModel(ddmStructureModel, ddlRecordSetCount) />
 
 	${dataFactory.toInsertSQL(ddlRecordSetModel)}
-
-	<@insertDDMStructureLink
-		_entry = ddlRecordSetModel
-	/>
+	${dataFactory.toInsertSQL(dataFactory.newDDMStructureLinkModel(ddlRecordSetModel))}
 
 	<@insertResourcePermissions
 		_entry = ddlRecordSetModel

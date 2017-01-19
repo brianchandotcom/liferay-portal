@@ -21,9 +21,7 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 />
 
 <#list resourcePermissionModels as resourcePermissionModel>
-	<@insertResourcePermission
-		_resourcePermissionModel = resourcePermissionModel
-	/>
+	${dataFactory.toInsertSQL(resourcePermissionModel)}
 </#list>
 
 <#list journalArticlePageCounts as journalArticlePageCount>
@@ -65,14 +63,8 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 
 			${dataFactory.toInsertSQL(journalArticleLocalizationModel)}
 			${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(journalArticleModel, ddmTemplateModel.templateId))}
-
-			<@insertDDMStorageLink
-				_ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(journalArticleModel, ddmStructureModel.structureId)
-			/>
-
-			<@insertSocialActivity
-				_entry = journalArticleModel
-			/>
+			${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(journalArticleModel, ddmStructureModel.structureId))}
+			${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(journalArticleModel))}
 
 			<#if versionCount = dataFactory.maxJournalArticleVersionCount>
 				<@insertAssetEntry

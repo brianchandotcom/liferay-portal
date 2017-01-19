@@ -39,6 +39,10 @@ public class DDMDataProviderContext {
 		_parameters.putAll(parameters);
 	}
 
+	public DDMFormValues getDDMFormValues() {
+		return _ddmFormValues;
+	}
+
 	public HttpServletRequest getHttpServletRequest() {
 		return _httpServletRequest;
 	}

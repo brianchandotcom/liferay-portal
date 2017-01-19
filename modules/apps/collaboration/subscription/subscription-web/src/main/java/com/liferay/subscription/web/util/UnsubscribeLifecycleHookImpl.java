@@ -115,7 +115,8 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 		Locale locale = subscriptionSender.getServiceContext().getLocale();
 
 		User user = _userLocalService.getUserByEmailAddress(
-			subscriptionSender.getCompanyId(), mailMessage.getTo()[0].getAddress());
+			subscriptionSender.getCompanyId(),
+			mailMessage.getTo()[0].getAddress());
 
 		ThreadLocalCache<Ticket> cache = _getTicketCache();
 

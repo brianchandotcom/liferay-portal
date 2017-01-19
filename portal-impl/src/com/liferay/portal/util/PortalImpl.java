@@ -280,6 +280,7 @@ import javax.portlet.StateAwareResponse;
 import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -3657,11 +3658,20 @@ public class PortalImpl implements Portal {
 	public HttpServletRequest getOriginalServletRequest(
 		HttpServletRequest request) {
 
+		return getOriginalServletRequest(request, false);
+	}
+
+	@Override
+	public HttpServletRequest getOriginalServletRequest(
+		HttpServletRequest request, boolean forwardRequest) {
+
 		HttpServletRequest originalRequest = null;
 
 		HttpServletRequestWrapper currentRequestWrapper = null;
 
 		HttpServletRequest currentRequest = request;
+
+		HttpServletRequest nextRequest = null;
 
 		while (currentRequest instanceof HttpServletRequestWrapper) {
 			if (currentRequest instanceof
@@ -3692,8 +3702,17 @@ public class PortalImpl implements Portal {
 			HttpServletRequestWrapper httpServletRequestWrapper =
 				(HttpServletRequestWrapper)currentRequest;
 
-			currentRequest =
+			nextRequest =
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
+
+			if (forwardRequest && (currentRequest.getDispatcherType() ==
+					DispatcherType.FORWARD) &&
+				(nextRequest.getDispatcherType() == DispatcherType.REQUEST)) {
+
+				break;
+			}
+
+			currentRequest = nextRequest;
 		}
 
 		if (currentRequestWrapper != null) {

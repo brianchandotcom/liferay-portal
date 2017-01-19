@@ -1282,6 +1282,12 @@ public class PortalUtil {
 		return getPortal().getOriginalServletRequest(request);
 	}
 
+	public static HttpServletRequest getOriginalServletRequest(
+		HttpServletRequest request, boolean forwardRequest) {
+
+		return getPortal().getOriginalServletRequest(request, forwardRequest);
+	}
+
 	public static String getPathContext() {
 		return getPortal().getPathContext();
 	}

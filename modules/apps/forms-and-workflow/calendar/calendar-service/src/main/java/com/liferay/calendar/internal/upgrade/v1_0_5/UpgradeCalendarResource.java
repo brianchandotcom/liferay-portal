@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,10 +80,16 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 			long groupClassNameId, long defaultUserId, long adminUserId)
 		throws SQLException {
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select Calendar.calendarId from Calendar, CalendarResource " +
-					"where CalendarResource.classNameId = ? and " +
-						"CalendarResource.userId = ?")) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("select Calendar.calendarId from Calendar join ");
+		sb.append("CalendarResource on Calendar.calendarResourceId = ");
+		sb.append("CalendarResource.calendarResourceId where ");
+		sb.append("CalendarResource.classNameId = ? and ");
+		sb.append("CalendarResource.userId = ?");
+
+		try (PreparedStatement ps =
+				connection.prepareStatement(sb.toString())) {
 
 			ps.setLong(1, groupClassNameId);
 			ps.setLong(2, defaultUserId);

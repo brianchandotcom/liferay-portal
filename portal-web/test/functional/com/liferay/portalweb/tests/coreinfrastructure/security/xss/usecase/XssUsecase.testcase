@@ -274,7 +274,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleTitle"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
+			<var name="roleName"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -282,8 +282,7 @@
 		</execute>
 
 		<execute macro="Role#viewCP">
-			<var name="roleTitle"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
-			<var name="roleType" value="Regular" />
+			<var name="roleName"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />

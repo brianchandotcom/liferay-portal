@@ -19,6 +19,7 @@ import com.liferay.message.boards.web.internal.upload.TempImageMBUploadHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.upload.UploadHandler;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -44,10 +45,9 @@ public class UploadTempImageMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String categoryId = actionRequest.getParameter("categoryId");
+		long categoryId = ParamUtil.getLong(actionRequest, "categoryId");
 
-		UploadHandler uploadHandler = new TempImageMBUploadHandler(
-			Long.valueOf(categoryId));
+		UploadHandler uploadHandler = new TempImageMBUploadHandler(categoryId);
 
 		uploadHandler.upload(actionRequest, actionResponse);
 	}

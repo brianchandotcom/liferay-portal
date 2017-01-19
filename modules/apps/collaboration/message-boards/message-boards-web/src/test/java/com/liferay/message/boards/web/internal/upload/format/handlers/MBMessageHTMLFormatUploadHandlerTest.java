@@ -50,12 +50,17 @@ public class MBMessageHTMLFormatUploadHandlerTest {
 
 		FileEntry fileEntry = Mockito.mock(FileEntry.class);
 		long tempFileId = 1;
-		String originalContent = "<img src=\"http://random\"/>";
 
-		Mockito.doReturn("http://final").when(_portletFileRepository).
-			getPortletFileEntryURL(
-				Mockito.isNull(ThemeDisplay.class), Mockito.eq(fileEntry),
-				Mockito.eq(StringPool.BLANK));
+		String originalContent = "<img src=\"http://random\"/>";
+		String finalURL = "http://final";
+
+		Mockito.doReturn(
+			finalURL
+		).when(
+			_portletFileRepository
+		).getPortletFileEntryURL(
+			Mockito.isNull(ThemeDisplay.class), Mockito.eq(fileEntry),
+			Mockito.eq(StringPool.BLANK));
 
 		fileEntryReferences.add(
 			new MBAttachmentFileEntryReference(tempFileId, fileEntry));
@@ -72,24 +77,27 @@ public class MBMessageHTMLFormatUploadHandlerTest {
 			new ArrayList<>();
 
 		FileEntry fileEntry = Mockito.mock(FileEntry.class);
-
-		String temporalURL = "http://temporal";
-		String finalURL = "http://final";
 		long tempFileId = 1;
 
-		Mockito.doReturn(finalURL).when(_portletFileRepository).
-			getPortletFileEntryURL(
-				Mockito.isNull(ThemeDisplay.class), Mockito.eq(fileEntry),
-				Mockito.eq(StringPool.BLANK));
+		String originalContent = String.format(
+			"<img data-image-id=\"%d\" src=\"%s\"/>", tempFileId,
+			"http://temporal");
+
+		String finalURL = "http://final";
+
+		Mockito.doReturn(
+			finalURL
+		).when(
+			_portletFileRepository
+		).getPortletFileEntryURL(
+			Mockito.isNull(ThemeDisplay.class), Mockito.eq(fileEntry),
+			Mockito.eq(StringPool.BLANK));
 
 		fileEntryReferences.add(
 			new MBAttachmentFileEntryReference(tempFileId, fileEntry));
 
 		String finalContent = _handler.replaceImageReferences(
-			String.format(
-				"<img data-image-id=\"%d\" src=\"%s\"/>", tempFileId,
-				temporalURL),
-			fileEntryReferences);
+			originalContent, fileEntryReferences);
 
 		Assert.assertEquals("<img src=\"" + finalURL + "\" />", finalContent);
 	}
@@ -103,22 +111,26 @@ public class MBMessageHTMLFormatUploadHandlerTest {
 		StringBuilder expectedContent = new StringBuilder();
 
 		for (int tempFileId = 0; tempFileId < 3; tempFileId++) {
-			String temporalURL = "http://temporal-" + tempFileId;
-			String finalURL = "http://final-" + tempFileId;
 			FileEntry fileEntry = Mockito.mock(FileEntry.class);
 
-			Mockito.doReturn(finalURL).when(_portletFileRepository).
-				getPortletFileEntryURL(
-					Mockito.isNull(ThemeDisplay.class), Mockito.eq(fileEntry),
-					Mockito.eq(StringPool.BLANK));
+			String finalURL = "http://final-" + tempFileId;
+
+			String curOriginalContent = String.format(
+				"<img data-image-id=\"%d\" src=\"%s\"/>", tempFileId,
+				"http://temporal-" + tempFileId);
+
+			Mockito.doReturn(
+				finalURL
+			).when(
+				_portletFileRepository
+			).getPortletFileEntryURL(
+				Mockito.isNull(ThemeDisplay.class), Mockito.eq(fileEntry),
+				Mockito.eq(StringPool.BLANK));
 
 			fileEntryReferences.add(
 				new MBAttachmentFileEntryReference(tempFileId, fileEntry));
 
-			originalContent.append(
-				String.format(
-					"<img data-image-id=\"%d\" src=\"%s\"/>", tempFileId,
-					temporalURL));
+			originalContent.append(curOriginalContent);
 
 			expectedContent.append("<img src=\"" + finalURL + "\" />");
 		}

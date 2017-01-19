@@ -37,6 +37,7 @@
 			</supports>
 			<site-member-defaults>
 				<action-key>VIEW</action-key>
+				<action-key>VIEW_BOOKING_DETAILS</action-key>
 			</site-member-defaults>
 			<guest-defaults>
 				<action-key>VIEW</action-key>

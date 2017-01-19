@@ -51,10 +51,7 @@
 				(ResourcePermission.scope = [$RESOURCE_SCOPE_INDIVIDUAL$]) AND
 				(ResourcePermission.viewActionId = [$TRUE$]) AND
 				(
-					(
-						[$ROLE_IDS_OR_OWNER_ID$] AND
-						[$PRIM_KEYS$]
-					)
+					[$ROLE_IDS_OR_OWNER_ID$]
 					[$GROUP_ADMIN_RESOURCE_PERMISSION$]
 				)
 		]]>

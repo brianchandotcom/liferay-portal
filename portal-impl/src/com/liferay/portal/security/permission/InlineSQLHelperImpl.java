@@ -640,29 +640,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			permissionQuery = bridgeJoin.concat(permissionQuery);
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append("((ResourcePermission.primKeyId = ");
-		sb.append(classPKField);
-
-		if (Validator.isNotNull(groupIdField) && (groupIds.length > 0)) {
-			sb.append(") AND (");
-
-			sb.append(groupIdField);
-
-			if (groupIds.length > 1) {
-				sb.append(" IN (");
-				sb.append(StringUtil.merge(groupIds));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
-			else {
-				sb.append(" = ");
-				sb.append(groupIds[0]);
-			}
-		}
-
-		sb.append("))");
-
 		String roleIdsOrOwnerIdSQL = getRoleIdsOrOwnerIdSQL(
 			permissionChecker, groupIds, userIdField);
 
@@ -703,15 +680,15 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			permissionQuery,
 			new String[] {
 				"[$CLASS_NAME$]", "[$COMPANY_ID$]",
-				"[$GROUP_ADMIN_RESOURCE_PERMISSION$]", "[$PRIM_KEYS$]",
+				"[$GROUP_ADMIN_RESOURCE_PERMISSION$]",
 				"[$RESOURCE_SCOPE_INDIVIDUAL$]", "[$ROLE_IDS_OR_OWNER_ID$]"
 			},
 			new String[] {
 				className, String.valueOf(companyId), groupAdminSQL,
-				sb.toString(), String.valueOf(scope), roleIdsOrOwnerIdSQL
+				String.valueOf(scope), roleIdsOrOwnerIdSQL
 			});
 
-		sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(8);
 
 		int pos = sql.indexOf(_WHERE_CLAUSE);
 

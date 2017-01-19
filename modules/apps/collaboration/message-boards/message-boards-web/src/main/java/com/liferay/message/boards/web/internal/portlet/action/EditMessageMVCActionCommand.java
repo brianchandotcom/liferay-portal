@@ -467,9 +467,14 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 					_formatHandlerProvider.provide(message.getFormat());
 
 				if (formatHandler != null) {
-					_attachTempFiles(
-						themeDisplay, body, serviceContext, message,
+					body = _addBodyAttachmentTempFiles(
+						themeDisplay, body, message, new ArrayList<>(),
 						formatHandler);
+
+					_mbMessageService.updateMessage(
+						message.getMessageId(), message.getSubject(), body,
+						null, null, message.getPriority(),
+						message.getAllowPingbacks(), serviceContext);
 				}
 			}
 			else {
@@ -490,7 +495,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 					_formatHandlerProvider.provide(message.getFormat());
 
 				if (formatHandler != null) {
-					body = _attachTempFiles(
+					body = _addBodyAttachmentTempFiles(
 						themeDisplay, body, message, existingFiles,
 						formatHandler);
 				}
@@ -533,7 +538,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private String _attachTempFiles(
+	private String _addBodyAttachmentTempFiles(
 			ThemeDisplay themeDisplay, String body, MBMessage message,
 			List<String> existingFiles,
 			MBMessageFormatUploadHandler formatHandler)
@@ -572,40 +577,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return body;
-	}
-
-	private void _attachTempFiles(
-			ThemeDisplay themeDisplay, String body,
-			ServiceContext serviceContext, MBMessage message,
-			MBMessageFormatUploadHandler formatHandler)
-		throws PortalException {
-
-		List<FileEntry> tempMBAttachmentFileEntries =
-			MBAttachmentFileEntryUtil.getTempMBAttachmentFileEntries(body);
-
-		if (!tempMBAttachmentFileEntries.isEmpty()) {
-			Folder folder = message.addAttachmentsFolder();
-
-			List<MBAttachmentFileEntryReference>
-				mbAttachmentFileEntryReferences =
-					MBAttachmentFileEntryUtil.addMBAttachmentFileEntries(
-						message.getGroupId(), themeDisplay.getUserId(),
-						message.getMessageId(), folder.getFolderId(),
-						tempMBAttachmentFileEntries);
-
-			body = formatHandler.replaceImageReferences(
-				body, mbAttachmentFileEntryReferences);
-
-			_mbMessageService.updateMessage(
-				message.getMessageId(), message.getSubject(), body, null, null,
-				message.getPriority(), message.getAllowPingbacks(),
-				serviceContext);
-		}
-
-		for (FileEntry tempMBAttachment : tempMBAttachmentFileEntries) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				tempMBAttachment.getFileEntryId());
-		}
 	}
 
 	@Reference

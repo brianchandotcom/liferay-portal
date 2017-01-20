@@ -932,7 +932,7 @@ compilation.
 - [LPS-70170]: Use the latest snapshot of the `com.liferay.util.taglib`
 dependency for JSP compilation.
 
-## 2.4.16 - 2017-01-19
+## 2.4.16 - 2017-01-20
 
 ### Changed
 - [LPS-69501]: Use the published portal tools by default instead of the ones

@@ -676,8 +676,10 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 				socialRelationTypeComparator.equals(StringPool.EQUAL) ?
 					StringPool.EQUAL : StringPool.NOT_EQUAL);
 
-			sql = CustomSQLUtil.replaceOrderBy(
-				sql, new TableNameOrderByComparator<>(obc, "User_"));
+			if (obc != null) {
+				sql = CustomSQLUtil.replaceOrderBy(
+					sql, new TableNameOrderByComparator<>(obc, "User_"));
+			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

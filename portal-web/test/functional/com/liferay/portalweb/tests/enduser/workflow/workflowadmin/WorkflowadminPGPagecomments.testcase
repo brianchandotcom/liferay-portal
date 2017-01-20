@@ -177,6 +177,7 @@
 
 	<command name="EditCommentAssignedToMe" priority="5">
 		<description message="This is a use case for LPS-68780." />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />

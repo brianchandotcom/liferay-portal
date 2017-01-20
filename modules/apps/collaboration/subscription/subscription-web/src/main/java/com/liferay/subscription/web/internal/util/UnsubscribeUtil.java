@@ -49,11 +49,6 @@ public class UnsubscribeUtil {
 		}
 	}
 
-	public static Subscription getFromSession(ActionRequest actionRequest) {
-		return (Subscription)actionRequest.getPortletSession().getAttribute(
-			_LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
-	}
-
 	public static Ticket getTicket(TicketLocalService service, String key)
 		throws PortalException {
 
@@ -70,16 +65,5 @@ public class UnsubscribeUtil {
 
 		return ticket;
 	}
-
-	public static void saveToSession(
-		ActionRequest actionRequest, Subscription subscription) {
-
-		actionRequest.getPortletSession().setAttribute(
-			_LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY, subscription);
-	}
-
-	private static final String _LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY =
-		"com_liferay_mysubscriptions_web_portlet_MySubscriptionsPortlet_" +
-			"LastUnsubscribedSubscription";
 
 }

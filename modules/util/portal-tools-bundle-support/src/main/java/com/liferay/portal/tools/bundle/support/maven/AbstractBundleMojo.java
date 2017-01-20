@@ -26,13 +26,13 @@ public abstract class AbstractBundleMojo extends AbstractLiferayMojo {
 	@Parameter(defaultValue = "configs")
 	protected String configs;
 
-	@Parameter (defaultValue = "local")
+	@Parameter(defaultValue = "local")
 	protected String environment;
 
 	@Parameter
 	protected String password;
 
-	@Parameter (defaultValue = "1")
+	@Parameter(defaultValue = "1")
 	protected int stripComponents;
 
 	@Parameter(

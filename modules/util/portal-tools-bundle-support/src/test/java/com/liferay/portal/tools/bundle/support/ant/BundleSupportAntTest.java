@@ -99,12 +99,14 @@ public class BundleSupportAntTest extends BundleSupportCommandsTest {
 
 	@Override
 	protected void initBundle(
-			File configsDir, File liferayHomeDir, String password, URL url,
-			String userName)
+			File cacheDir, File configsDir, File liferayHomeDir,
+			String password, URL url, String userName)
 		throws Exception {
 
 		Project project = buildFileRule.getProject();
 
+		project.setProperty(
+			"bundle.support.cache.dir", _getAbsolutePath(cacheDir));
 		project.setProperty(
 			"bundle.support.configs.dir", _getAbsolutePath(configsDir));
 		project.setProperty("bundle.support.environment", "local");

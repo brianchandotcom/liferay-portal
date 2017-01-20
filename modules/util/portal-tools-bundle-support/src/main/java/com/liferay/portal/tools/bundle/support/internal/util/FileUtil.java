@@ -242,6 +242,10 @@ public class FileUtil {
 				fileName = uriPath.substring(uriPath.lastIndexOf('/') + 1);
 			}
 
+			if (cacheDirPath == null) {
+				cacheDirPath = Files.createTempDirectory(null);
+			}
+
 			path = cacheDirPath.resolve(fileName);
 
 			if (Files.exists(path)) {

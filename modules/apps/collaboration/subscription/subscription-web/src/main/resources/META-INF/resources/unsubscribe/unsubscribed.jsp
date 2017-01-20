@@ -37,7 +37,14 @@ PortletURL manageSubscriptionsURL = SubscriptionUtil.getManageSubscriptionsURL(r
 	</h3>
 
 	<p>
-		<liferay-ui:message arguments="<%= subscriptionTitle %>" key="you-have-been-removed-from-x" />
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(subscriptionTitle) %>">
+				<liferay-ui:message arguments="<%= subscriptionTitle %>" key="you-have-been-removed-from-x" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="you-are-already-unsubscribed" />
+			</c:otherwise>
+		</c:choose>
 	</p>
 
 	<p>

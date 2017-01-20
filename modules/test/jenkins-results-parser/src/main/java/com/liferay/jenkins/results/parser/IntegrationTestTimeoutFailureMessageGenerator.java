@@ -19,7 +19,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Element;
-import org.dom4j.tree.DefaultElement;
 
 /**
  * @author Peter Yoo
@@ -61,12 +60,13 @@ public class IntegrationTestTimeoutFailureMessageGenerator
 			return null;
 		}
 
-		Element messageElement = new DefaultElement("div");
-
-		Dom4JUtil.addToElement(
-			Dom4JUtil.getNewElement("p", messageElement),
-			Dom4JUtil.wrapWithNewElement(matcher.group("testName"), "strong"),
-			" was aborted because it exceeded the timeout period.");
+		Element messageElement = Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewElement(
+				"p", null,
+				Dom4JUtil.getNewElement(
+					"strong", null, matcher.group("testName")),
+				" was aborted because it exceeded the timeout period."));
 
 		String snippet = matcher.group(0);
 

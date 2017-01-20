@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.util.Collections;
 import java.util.List;
 
+import org.dom4j.Element;
+
 import org.json.JSONObject;
 
 /**
@@ -45,5 +47,22 @@ public class SourceBuild extends BaseBuild {
 	public List<TestResult> getTestResults(String testStatus) {
 		return Collections.emptyList();
 	}
+
+	@Override
+	protected FailureMessageGenerator[] getFailureMessageGenerators() {
+		return _failureMessageGenerators;
+	}
+
+	@Override
+	protected Element getGitHubMessageJobResultsElement() {
+		return null;
+	}
+
+	private static final FailureMessageGenerator[] _failureMessageGenerators = {
+		new RebaseFailureMessageGenerator(),
+		new SourceFormatFailureMessageGenerator(),
+
+		new GenericFailureMessageGenerator()
+	};
 
 }

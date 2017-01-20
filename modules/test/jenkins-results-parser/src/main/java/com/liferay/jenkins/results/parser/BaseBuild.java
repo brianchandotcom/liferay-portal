@@ -20,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +30,8 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.dom4j.Element;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -314,6 +317,59 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Element getGitHubMessageBuildAnchorElement() {
+		getResult();
+
+		if (result.equals("SUCCESS")) {
+			return Dom4JUtil.getNewAnchorElement(
+				getBuildURL(), getDisplayName());
+		}
+
+		return Dom4JUtil.getNewAnchorElement(
+			getBuildURL(), null, Dom4JUtil.getNewElement(
+				"strike", null, Dom4JUtil.getNewElement(
+					"strong", null, getDisplayName())));
+	}
+
+	@Override
+	public Element getGitHubMessageElement() {
+		String status = getStatus();
+
+		if (!status.equals("completed") && (getParentBuild() != null)) {
+			return null;
+		}
+
+		String result = getResult();
+
+		if (result.equals("SUCCESS")) {
+			return null;
+		}
+
+		Element messageElement = Dom4JUtil.getNewElement("div");
+
+		if (result.equals("ABORTED")) {
+			messageElement.add(
+				Dom4JUtil.toCodeSnippetElement("Build was aborted"));
+		}
+
+		Dom4JUtil.addToElement(
+			messageElement, Dom4JUtil.getNewElement(
+				"h5", null, Dom4JUtil.getNewAnchorElement(
+					getBuildURL(), getDisplayName())),
+			getGitHubMessageJobResultsElement());
+
+		if (result.equals("FAILURE")) {
+			Element failureMessageElement = getFailureMessageElement();
+
+			if (failureMessageElement != null) {
+				messageElement.add(failureMessageElement);
+			}
+		}
+
+		return messageElement;
+	}
+
+	@Override
 	public String getInvocationURL() {
 		String jobURL = getJobURL();
 
@@ -449,6 +505,24 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return repositoryName;
+	}
+
+	@Override
+	public String getRepositorySHA(String repositoryName) {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (repositoryName.equals("liferay-jenkins-ee")) {
+			Map<String, String> topLevelBuildStartPropertiesTempMap =
+				topLevelBuild.getStartPropertiesTempMap();
+
+			return topLevelBuildStartPropertiesTempMap.get(
+				"JENKINS_GITHUB_UPSTREAM_SHA");
+		}
+
+		Map<String, String> repositoryGitDetailsTempMap =
+			topLevelBuild.getGitRepositoryDetailsTempMap(repositoryName);
+
+		return repositoryGitDetailsTempMap.get("github.upstream.branch.sha");
 	}
 
 	@Override
@@ -817,6 +891,40 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	public static class BuildDisplayNameComparator
+		implements Comparator<Build> {
+
+		@Override
+		public int compare(Build build1, Build build2) {
+			String displayName1 = build1.getDisplayName();
+			String displayName2 = build2.getDisplayName();
+
+			return displayName1.compareTo(displayName2);
+		}
+
+	}
+
+	protected static boolean isHighPriorityBuildFailureElement(
+		Element gitHubMessage) {
+
+		String content = null;
+
+		try {
+			content = Dom4JUtil.format(gitHubMessage, false);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to format github message.", ioe);
+		}
+
+		for (String contentFlag : _highPriorityContentFlags) {
+			if (content.contains(contentFlag)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected BaseBuild(String url) {
 		this(url, null);
 	}
@@ -1104,9 +1212,50 @@ public abstract class BaseBuild implements Build {
 		return jsonObject.getJSONArray("builds");
 	}
 
+	protected int getDownstreamBuildCountByResult(String result) {
+		int count = 0;
+
+		List<Build> downstreamBuilds = getDownstreamBuilds(null);
+
+		if (result == null) {
+			return downstreamBuilds.size();
+		}
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			String downstreamBuildResult = downstreamBuild.getResult();
+
+			if (downstreamBuildResult.equals(result)) {
+				count++;
+			}
+		}
+
+		return count;
+	}
+
 	protected ExecutorService getExecutorService() {
 		return null;
 	}
+
+	protected Element getFailureMessageElement() {
+		for (FailureMessageGenerator failureMessageGenerator :
+				getFailureMessageGenerators()) {
+
+			Element failureMessage = failureMessageGenerator.getMessageElement(
+				this);
+
+			if (failureMessage != null) {
+				return failureMessage;
+			}
+		}
+
+		return null;
+	}
+
+	protected FailureMessageGenerator[] getFailureMessageGenerators() {
+		return _failureMessageGenerators;
+	}
+
+	protected abstract Element getGitHubMessageJobResultsElement();
 
 	protected Set<String> getJobParameterNames() {
 		JSONObject jsonObject;
@@ -1434,9 +1583,9 @@ public abstract class BaseBuild implements Build {
 	protected void setBuildNumber(int buildNumber) {
 		_buildNumber = buildNumber;
 
-		setStatus("running");
-
 		if (_buildNumber != -1) {
+			setStatus("running");
+
 			checkForReinvocation();
 		}
 	}
@@ -1563,7 +1712,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected static final Pattern archiveBuildURLPattern = Pattern.compile(
-		"($\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]+)/" +
+		"(\\$\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]+)/" +
 			"(?<master>[^/]+)/+(?<jobName>[^/]+).*/(?<buildNumber>\\d+)/?");
 	protected static final Pattern buildURLPattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>" +
@@ -1588,6 +1737,13 @@ public abstract class BaseBuild implements Build {
 	protected String repositoryName;
 	protected String result;
 	protected long statusModifiedTime;
+
+	private static final FailureMessageGenerator[] _failureMessageGenerators = {
+		new GenericFailureMessageGenerator()
+	};
+	private static final String[] _highPriorityContentFlags = new String[] {
+		"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"
+	};
 
 	private int _buildNumber = -1;
 	private int _consoleReadCursor;

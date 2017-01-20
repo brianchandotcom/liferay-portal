@@ -20,7 +20,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Element;
-import org.dom4j.tree.DefaultElement;
 
 /**
  * @author Peter Yoo
@@ -119,7 +118,7 @@ public abstract class BaseFailureMessageGenerator
 		Map<String, String> portalRepositoryGitDetailsTempMap =
 			topLevelBuild.getGitRepositoryDetailsTempMap(portalRepositoryName);
 
-		Element gitCommitPluginsAnchorElement = new DefaultElement("a");
+		Element gitCommitPluginsAnchorElement = Dom4JUtil.getNewElement("a");
 
 		StringBuilder sb = new StringBuilder();
 

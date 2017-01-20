@@ -15,14 +15,12 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.BufferedReader;
-import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
@@ -49,10 +47,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.dom4j.Element;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -280,23 +274,6 @@ public class JenkinsResultsParserUtil {
 		url = url.replace("]", "%5D");
 
 		return url;
-	}
-
-	public static String format(Element element) throws IOException {
-		return format(element, true);
-	}
-
-	public static String format(Element element, boolean pretty)
-		throws IOException {
-
-		Writer writer = new CharArrayWriter();
-
-		XMLWriter xmlWriter = pretty ? new XMLWriter(
-			writer, OutputFormat.createPrettyPrint()) : new XMLWriter(writer);
-
-		xmlWriter.write(element);
-
-		return writer.toString();
 	}
 
 	public static String getActualResult(String buildURL) throws IOException {

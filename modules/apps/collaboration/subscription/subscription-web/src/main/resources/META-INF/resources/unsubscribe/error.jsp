@@ -18,7 +18,6 @@
 
 <liferay-ui:header title="error" />
 
-<liferay-ui:error exception="<%= NoSuchSubscriptionException.class %>" message="the-link-is-no-longer-valid" />
 <liferay-ui:error exception="<%= NoSuchTicketException.class %>" message="the-link-is-no-longer-valid" />
 
 <liferay-ui:error-principal />

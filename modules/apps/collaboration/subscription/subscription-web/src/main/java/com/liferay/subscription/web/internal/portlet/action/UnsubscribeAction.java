@@ -22,6 +22,7 @@ import com.liferay.subscription.web.constants.SubscriptionPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,6 +49,8 @@ public class UnsubscribeAction extends BaseStrutsAction {
 
 		liferayPortletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/subscription/unsubscribe");
+
+		liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
 
 		liferayPortletURL.setParameter(
 			"userId", request.getParameter("userId"));

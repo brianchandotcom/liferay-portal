@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.subscription.web.constants.SubscriptionPortletKeys;
@@ -98,29 +97,18 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 
 		long subscriptionId = ticket.getClassPK();
 
-		Subscription subscription = UnsubscribeUtil.getFromSession(
-			actionRequest);
-
-		if ((subscription != null) &&
-			(subscription.getSubscriptionId() == subscriptionId)) {
-
-			return subscription;
-		}
-
 		if (ticket.isExpired()) {
 			_ticketLocalService.deleteTicket(ticket);
 
 			throw new NoSuchTicketException("{ticketKey=" + key + "}");
 		}
 
-		subscription = _subscriptionLocalService.getSubscription(
+		Subscription subscription = _subscriptionLocalService.getSubscription(
 			subscriptionId);
 
 		UnsubscribeUtil.checkUser(userId, subscription);
 
 		_subscriptionLocalService.deleteSubscription(subscription);
-
-		UnsubscribeUtil.saveToSession(actionRequest, subscription);
 
 		return subscription;
 	}
@@ -130,8 +118,5 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private TicketLocalService _ticketLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

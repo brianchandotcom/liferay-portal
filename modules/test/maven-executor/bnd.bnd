@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Maven Executor
+Bundle-SymbolicName: com.liferay.maven.executor
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.maven.executor

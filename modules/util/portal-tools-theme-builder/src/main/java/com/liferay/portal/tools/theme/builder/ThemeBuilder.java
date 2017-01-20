@@ -175,6 +175,7 @@ public class ThemeBuilder {
 			themeDirPath,
 			new SimpleFileVisitor<Path>() {
 
+				@Override
 				public FileVisitResult visitFile(
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
@@ -259,8 +260,7 @@ public class ThemeBuilder {
 		}
 
 		String content = FileUtil.read(
-			"com/liferay/portal/tools/theme/builder/dependencies" +
-				"/liferay-look-and-feel.xml");
+			ThemeBuilder.class, "dependencies/liferay-look-and-feel.xml");
 
 		String id = _name.toLowerCase();
 

@@ -58,7 +58,7 @@
 		</if>
 	</tear-down>
 
-	<command name="ApproveFrontPageUserEdit" priority="4">
+	<command name="ApproveFrontPageUserEdit" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>

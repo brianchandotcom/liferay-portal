@@ -175,7 +175,7 @@
 		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
 	</command>
 
-	<command name="EditCommentAssignedToMe" priority="4">
+	<command name="EditCommentAssignedToMe" priority="5">
 		<description message="This is a use case for LPS-68780." />
 
 		<execute macro="Navigator#gotoPage">

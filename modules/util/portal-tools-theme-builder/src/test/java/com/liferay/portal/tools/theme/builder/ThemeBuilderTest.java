@@ -50,20 +50,38 @@ public class ThemeBuilderTest {
 			String line;
 
 			while ((line = bufferedReader.readLine()) != null) {
-				File jarFile = new File(line);
+				File file = new File(line);
 
-				Assert.assertTrue(jarFile.isFile());
+				Assert.assertTrue(file.isFile());
 
-				if (line.contains("com.liferay.frontend.theme.styled-")) {
-					_styledJarFile = jarFile;
+				if (line.contains("classic-theme-")) {
+					_classicWarFile = file;
+				}
+				else if (line.contains("com.liferay.frontend.theme.styled-")) {
+					_styledJarFile = file;
 				}
 				else if (line.contains(
 							"com.liferay.frontend.theme.unstyled-")) {
 
-					_unstyledJarFile = jarFile;
+					_unstyledJarFile = file;
 				}
 			}
 		}
+	}
+
+	@Test
+	public void testThemeBuilderClassic() throws Exception {
+		buildTheme(
+			_diffsDir, _NAME, temporaryFolder.getRoot(), _classicWarFile,
+			"classic", "ftl", _unstyledJarFile);
+
+		_assertEquals("css/_custom.scss", ".text { color: black; }");
+		_assertNotExists("css/main.css");
+		_assertNotEquals("css/_portal.scss", "");
+		_assertExists("images/thumbnail.png");
+		_assertExists("templates/init.ftl");
+		_assertNotExists("templates/init.vm");
+		_assertExists("WEB-INF/liferay-look-and-feel.xml");
 	}
 
 	@Test
@@ -72,7 +90,7 @@ public class ThemeBuilderTest {
 			_diffsDir, _NAME, temporaryFolder.getRoot(), _styledJarFile,
 			ThemeBuilder.STYLED, "ftl", _unstyledJarFile);
 
-		_assertEquals("css/custom.scss", ".text { color: black; }");
+		_assertEquals("css/_custom.scss", ".text { color: black; }");
 		_assertNotEquals("css/_portal.scss", "");
 		_assertExists("images/thumbnail.png");
 		_assertExists("templates/init.ftl");
@@ -86,7 +104,7 @@ public class ThemeBuilderTest {
 			_diffsDir, _NAME, temporaryFolder.getRoot(), null,
 			ThemeBuilder.UNSTYLED, "vm", _unstyledJarFile);
 
-		_assertEquals("css/custom.scss", ".text { color: black; }");
+		_assertEquals("css/_custom.scss", ".text { color: black; }");
 		_assertEquals("css/_portal.scss", "");
 		_assertNotExists("images/thumbnail.png");
 		_assertNotExists("templates/init.ftl");
@@ -150,6 +168,7 @@ public class ThemeBuilderTest {
 
 	private static final String _NAME = "Test Theme";
 
+	private static File _classicWarFile;
 	private static File _diffsDir;
 	private static File _styledJarFile;
 	private static File _unstyledJarFile;

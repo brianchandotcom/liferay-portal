@@ -34,6 +34,7 @@ dependencies {
 
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
+	parentThemes group: "com.liferay.plugins", name: "classic-theme", version: "1.0.2"
 	parentThemes project(":apps:foundation:frontend-theme:frontend-theme-styled")
 	parentThemes project(":apps:foundation:frontend-theme:frontend-theme-unstyled")
 

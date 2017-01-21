@@ -180,7 +180,7 @@ public class ThemeBuilder {
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					if (_isIgnoredTemplateFile(path.toString())) {
+					if (_isIgnoredFiles(path.toString())) {
 						return FileVisitResult.CONTINUE;
 					}
 
@@ -207,6 +207,10 @@ public class ThemeBuilder {
 			return;
 		}
 
+		String themeDirName = themeDir.getName();
+
+		boolean jar = themeDirName.endsWith(".jar");
+
 		Path outputDirPath = _outputDir.toPath();
 
 		try (ZipFile zipFile = new ZipFile(themeDir)) {
@@ -218,13 +222,16 @@ public class ThemeBuilder {
 				String name = zipEntry.getName();
 
 				if (name.endsWith("/") ||
-					!name.startsWith("META-INF/resources/" + themeName) ||
-					_isIgnoredTemplateFile(name)) {
+					(jar &&
+					 !name.startsWith("META-INF/resources/" + themeName)) ||
+					_isIgnoredFiles(name)) {
 
 					continue;
 				}
 
-				name = name.substring(20 + themeName.length());
+				if (jar) {
+					name = name.substring(20 + themeName.length());
+				}
 
 				Path path = outputDirPath.resolve(name);
 
@@ -237,13 +244,18 @@ public class ThemeBuilder {
 		}
 	}
 
-	private boolean _isIgnoredTemplateFile(String fileName) {
+	private boolean _isIgnoredFiles(String fileName) {
 		String extension = FileUtil.getExtension(fileName);
 
 		if ((extension.equalsIgnoreCase("ftl") ||
 			 extension.equalsIgnoreCase("vm")) &&
 			!extension.equalsIgnoreCase(_templateExtension)) {
 
+			return true;
+		}
+
+		if (fileName.endsWith("rtl.css") || fileName.endsWith("main.css") ||
+			fileName.endsWith("aui.css")) {
 			return true;
 		}
 

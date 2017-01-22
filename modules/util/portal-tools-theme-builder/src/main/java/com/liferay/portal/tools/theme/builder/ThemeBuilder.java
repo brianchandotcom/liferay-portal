@@ -23,7 +23,11 @@ import com.liferay.portal.tools.theme.builder.internal.util.Validator;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.URI;
+
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,9 +35,8 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import java.util.Enumeration;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.Thumbnails.Builder;
@@ -145,7 +148,7 @@ public class ThemeBuilder {
 			themeBuilderArgs.getUnstyledDir());
 	}
 
-	public void build() throws IOException {
+	public void build() throws Exception {
 		if (_unstyledDir != null) {
 			_copyTheme(UNSTYLED, _unstyledDir);
 		}
@@ -157,7 +160,7 @@ public class ThemeBuilder {
 		_writeLookAndFeelXml();
 
 		if (_diffsDir != null) {
-			_copyTheme(_diffsDir);
+			_copyTheme(_diffsDir.toPath());
 		}
 
 		_writeScreenshotThumbnail();
@@ -167,9 +170,8 @@ public class ThemeBuilder {
 		jCommander.usage();
 	}
 
-	private void _copyTheme(File themeDir) throws IOException {
+	private void _copyTheme(final Path themeDirPath) throws IOException {
 		final Path outputDirPath = _outputDir.toPath();
-		final Path themeDirPath = themeDir.toPath();
 
 		Files.walkFileTree(
 			themeDirPath,
@@ -184,8 +186,10 @@ public class ThemeBuilder {
 						return FileVisitResult.CONTINUE;
 					}
 
+					Path relativePath = themeDirPath.relativize(path);
+
 					Path outputPath = outputDirPath.resolve(
-						themeDirPath.relativize(path));
+						relativePath.toString());
 
 					Files.createDirectories(outputPath.getParent());
 
@@ -198,48 +202,35 @@ public class ThemeBuilder {
 			});
 	}
 
-	private void _copyTheme(String themeName, File themeDir)
-		throws IOException {
+	private void _copyTheme(String themeName, File themeDir) throws Exception {
+		Path path = themeDir.toPath();
 
 		if (themeDir.isDirectory()) {
-			_copyTheme(themeDir);
-
-			return;
+			_copyTheme(path);
 		}
+		else {
+			URI uri = path.toUri();
 
-		String themeDirName = themeDir.getName();
+			Map<String, String> properties = new HashMap<>();
 
-		boolean jar = themeDirName.endsWith(".jar");
+			properties.put("create", "false");
+			properties.put("encoding", StandardCharsets.UTF_8.name());
 
-		Path outputDirPath = _outputDir.toPath();
+			try (FileSystem fileSystem = FileSystems.newFileSystem(
+					new URI("jar:" + uri.getScheme(), uri.getPath(), null),
+					properties)) {
 
-		try (ZipFile zipFile = new ZipFile(themeDir)) {
-			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+				String themeDirName = themeDir.getName();
 
-			while (enumeration.hasMoreElements()) {
-				ZipEntry zipEntry = enumeration.nextElement();
-
-				String name = zipEntry.getName();
-
-				if (name.endsWith("/") ||
-					(jar &&
-					 !name.startsWith("META-INF/resources/" + themeName)) ||
-					_isIgnoredFiles(name)) {
-
-					continue;
-				}
+				boolean jar = themeDirName.endsWith(".jar");
 
 				if (jar) {
-					name = name.substring(20 + themeName.length());
+					_copyTheme(
+						fileSystem.getPath("/META-INF/resources/" + themeName));
 				}
-
-				Path path = outputDirPath.resolve(name);
-
-				Files.createDirectories(path.getParent());
-
-				Files.copy(
-					zipFile.getInputStream(zipEntry), path,
-					StandardCopyOption.REPLACE_EXISTING);
+				else {
+					_copyTheme(fileSystem.getPath("/"));
+				}
 			}
 		}
 	}
@@ -281,6 +272,7 @@ public class ThemeBuilder {
 		content = content.replace("[$ID$]", id);
 
 		content = content.replace("[$NAME$]", _name);
+
 		content = content.replace("[$TEMPLATE_EXTENSION$]", _templateExtension);
 
 		Files.createDirectories(path.getParent());
@@ -299,7 +291,6 @@ public class ThemeBuilder {
 
 		thumbnailBuilder.outputFormat("png");
 		thumbnailBuilder.size(160, 120);
-
 		thumbnailBuilder.toFile(new File(_outputDir, "images/thumbnail.png"));
 	}
 

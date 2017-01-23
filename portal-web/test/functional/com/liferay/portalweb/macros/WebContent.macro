@@ -1580,6 +1580,32 @@
 		</if>
 	</command>
 
+	<command name="viewCPWithoutContentField">
+		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
+
+		<if>
+			<equals arg1="${field}" arg2="Web Content" />
+			<then>
+				<var name="key_fieldData" value="${fieldData}" />
+				<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+				<var name="key_fieldName" value="${fieldName}" />
+
+				<execute function="AssertTextEquals" locator1="DDMField#WEB_CONTENT" value1="${fieldFieldLabel}" />
+				<execute function="AssertTextEquals" locator1="DDMField#WEB_CONTENT_TITLE_SELECTED" value1="${fieldData}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Geolocation" />
+			<then>
+				<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+				<var name="key_fieldName" value="${fieldName}" />
+
+				<execute function="AssertTextEquals" locator1="DDMField#GEOLOCATION" value1="${fieldFieldLabel}" />
+			</then>
+		</if>
+	</command>
+
 	<command name="viewDefaultCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

@@ -67,6 +67,15 @@ public class ThemeBuilderTest {
 				}
 			}
 		}
+
+		Assert.assertNotNull(_classicWarFile);
+		Assert.assertTrue(_classicWarFile.isFile());
+
+		Assert.assertNotNull(_styledJarFile);
+		Assert.assertTrue(_styledJarFile.isFile());
+
+		Assert.assertNotNull(_unstyledJarFile);
+		Assert.assertTrue(_unstyledJarFile.isFile());
 	}
 
 	@Test

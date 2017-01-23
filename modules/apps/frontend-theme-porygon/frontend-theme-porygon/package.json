@@ -4,15 +4,15 @@
 		"url": "https://issues.liferay.com/"
 	},
 	"dependencies": {
-		"gulp": "^3.8.10",
-		"liferay-theme-deps-7.0": "*",
-		"liferay-theme-tasks": "*",
 		"metal": "^2.2.0",
 		"metal-dom": "^2.4.0",
 		"metal-state": "^2.3.0"
 	},
 	"devDependencies": {
-		"liferay-theme-es2015-hook": "^0.1.0"
+		"gulp": "^3.8.10",
+		"liferay-theme-deps-7.0": "*",
+		"liferay-theme-es2015-hook": "0.1.1",
+		"liferay-theme-tasks": "*"
 	},
 	"keywords": [
 		"liferay-theme"

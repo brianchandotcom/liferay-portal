@@ -182,14 +182,14 @@ public class ThemeBuilder {
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					if (_isIgnoredFiles(path.toString())) {
+					if (_isIgnoredFile(path.toString())) {
 						return FileVisitResult.CONTINUE;
 					}
 
-					Path relativePath = themeDirPath.relativize(path);
+					String relativePath = String.valueOf(
+						themeDirPath.relativize(path));
 
-					Path outputPath = outputDirPath.resolve(
-						relativePath.toString());
+					Path outputPath = outputDirPath.resolve(relativePath);
 
 					Files.createDirectories(outputPath.getParent());
 
@@ -203,13 +203,13 @@ public class ThemeBuilder {
 	}
 
 	private void _copyTheme(String themeName, File themeDir) throws Exception {
-		Path path = themeDir.toPath();
+		Path themePath = themeDir.toPath();
 
-		if (themeDir.isDirectory()) {
-			_copyTheme(path);
+		if (Files.isDirectory(themePath)) {
+			_copyTheme(themePath);
 		}
 		else {
-			URI uri = path.toUri();
+			URI uri = themePath.toUri();
 
 			Map<String, String> properties = new HashMap<>();
 
@@ -220,11 +220,10 @@ public class ThemeBuilder {
 					new URI("jar:" + uri.getScheme(), uri.getPath(), null),
 					properties)) {
 
-				String themeDirName = themeDir.getName();
+				String extension = FileUtil.getExtension(
+					String.valueOf(themePath.getFileName()));
 
-				boolean jar = themeDirName.endsWith(".jar");
-
-				if (jar) {
+				if (extension.equalsIgnoreCase("jar")) {
 					_copyTheme(
 						fileSystem.getPath("/META-INF/resources/" + themeName));
 				}
@@ -235,7 +234,7 @@ public class ThemeBuilder {
 		}
 	}
 
-	private boolean _isIgnoredFiles(String fileName) {
+	private boolean _isIgnoredFile(String fileName) {
 		String extension = FileUtil.getExtension(fileName);
 
 		if ((extension.equalsIgnoreCase("ftl") ||
@@ -245,8 +244,9 @@ public class ThemeBuilder {
 			return true;
 		}
 
-		if (fileName.endsWith("rtl.css") || fileName.endsWith("main.css") ||
-			fileName.endsWith("aui.css")) {
+		if (fileName.endsWith("aui.css") || fileName.endsWith("main.css") ||
+			fileName.endsWith("rtl.css")) {
+
 			return true;
 		}
 
@@ -272,7 +272,6 @@ public class ThemeBuilder {
 		content = content.replace("[$ID$]", id);
 
 		content = content.replace("[$NAME$]", _name);
-
 		content = content.replace("[$TEMPLATE_EXTENSION$]", _templateExtension);
 
 		Files.createDirectories(path.getParent());
@@ -291,6 +290,7 @@ public class ThemeBuilder {
 
 		thumbnailBuilder.outputFormat("png");
 		thumbnailBuilder.size(160, 120);
+
 		thumbnailBuilder.toFile(new File(_outputDir, "images/thumbnail.png"));
 	}
 

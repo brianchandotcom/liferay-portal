@@ -642,6 +642,22 @@
 		</if>
 
 		<if>
+			<isset var="WebContentSelecteWCFile" />
+			<then>
+				<var name="key_fieldName" value="${fieldName}" />
+				<var name="key_webContentTitle" value="${WebContentSelecteWCFile}" />
+
+				<execute function="AssertClick" locator1="DDLEditRecord#WEB_CONTENT_CHOOSE_FROM_WEB_CONTENT_LIBRARY_BUTTON" value1="Select" />
+
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+				<execute function="AssertClick" locator1="Link#WEB_CONTENT_ARTICLE" value1="${WebContentSelecteWCFile}" />
+
+				<execute function="SelectFrame" value1="relative=top" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="webContentText" />
 			<then>
 				<var name="key_fieldName" value="Text" />

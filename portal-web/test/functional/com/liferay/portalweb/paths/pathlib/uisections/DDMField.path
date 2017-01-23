@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GEOLOCATION</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//span[contains(.,'${key_fieldFieldLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HTML</td>
 	<td>//div[@data-fieldname='${key_fieldName}']//div[contains(@id,'cke__')]</td>
 	<td></td>
@@ -76,6 +81,16 @@
 <tr>
 	<td>TEXT_BOX</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//label[contains(.,'${key_fieldFieldLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TITLE_SELECTED</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//input[@value='${key_fieldData}']</td>
 	<td></td>
 </tr>
 </tbody>

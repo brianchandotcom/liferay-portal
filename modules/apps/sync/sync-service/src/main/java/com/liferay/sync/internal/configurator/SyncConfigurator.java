@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.sync.internal.messaging.SyncDLFileVersionDiffMessageListener;
+import com.liferay.sync.internal.messaging.SyncMaintenanceMessageListener;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.util.SyncUtil;
@@ -79,22 +79,29 @@ public class SyncConfigurator extends BasePortalInstanceLifecycleListener {
 			_log.error(e, e);
 		}
 
-		_serviceRegistration = registerMessageListener(
+		_dlSyncEventProcessorServiceRegistration = registerMessageListener(
 			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
 
-		if (SyncServiceConfigurationValues.SYNC_FILE_DIFF_CACHE_ENABLED) {
-			registerMessageListener(
-				SyncDLFileVersionDiffMessageListener.DESTINATION_NAME);
-		}
+		_syncMaintenanceProcessorServiceRegistration = registerMessageListener(
+			SyncMaintenanceMessageListener.DESTINATION_NAME);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (_serviceRegistration != null) {
+		if (_dlSyncEventProcessorServiceRegistration != null) {
 			Destination destination = _bundleContext.getService(
-				_serviceRegistration.getReference());
+				_dlSyncEventProcessorServiceRegistration.getReference());
 
-			_serviceRegistration.unregister();
+			_dlSyncEventProcessorServiceRegistration.unregister();
+
+			destination.destroy();
+		}
+
+		if (_syncMaintenanceProcessorServiceRegistration != null) {
+			Destination destination = _bundleContext.getService(
+				_syncMaintenanceProcessorServiceRegistration.getReference());
+
+			_syncMaintenanceProcessorServiceRegistration.unregister();
 
 			destination.destroy();
 		}
@@ -146,10 +153,14 @@ public class SyncConfigurator extends BasePortalInstanceLifecycleListener {
 	private DestinationFactory _destinationFactory;
 
 	private DLSyncEventLocalService _dlSyncEventLocalService;
-	private ServiceRegistration<Destination> _serviceRegistration;
+	private ServiceRegistration<Destination>
+		_dlSyncEventProcessorServiceRegistration;
 
 	@Reference
 	private SingleDestinationMessageSenderFactory
 		_singleDestinationMessageSenderFactory;
+
+	private ServiceRegistration<Destination>
+		_syncMaintenanceProcessorServiceRegistration;
 
 }

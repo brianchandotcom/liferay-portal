@@ -110,12 +110,15 @@ public class SyncDLObjectLocalServiceImpl
 					syncDLObjectPersistence.fetchByT_T(
 						SyncDLObjectConstants.TYPE_FILE, typePK);
 
-				approvedSyncDLObject.setModifiedTime(modifiedTime);
-				approvedSyncDLObject.setLockExpirationDate(lockExpirationDate);
-				approvedSyncDLObject.setLockUserId(lockUserId);
-				approvedSyncDLObject.setLockUserName(lockUserName);
+				if (approvedSyncDLObject != null) {
+					approvedSyncDLObject.setModifiedTime(modifiedTime);
+					approvedSyncDLObject.setLockExpirationDate(
+						lockExpirationDate);
+					approvedSyncDLObject.setLockUserId(lockUserId);
+					approvedSyncDLObject.setLockUserName(lockUserName);
 
-				syncDLObjectPersistence.update(approvedSyncDLObject);
+					syncDLObjectPersistence.update(approvedSyncDLObject);
+				}
 			}
 		}
 		else if (syncDLObject.getModifiedTime() >= modifiedTime) {
@@ -142,9 +145,11 @@ public class SyncDLObjectLocalServiceImpl
 					syncDLObjectPersistence.fetchByT_T(
 						SyncDLObjectConstants.TYPE_FILE, typePK);
 
-				approvedSyncDLObject.setEvent(event);
+				if (approvedSyncDLObject != null) {
+					approvedSyncDLObject.setEvent(event);
 
-				syncDLObjectPersistence.update(approvedSyncDLObject);
+					syncDLObjectPersistence.update(approvedSyncDLObject);
+				}
 			}
 		}
 

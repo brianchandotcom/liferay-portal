@@ -279,9 +279,7 @@ public class SyncUtil {
 		portletPreferences.store();
 	}
 
-	public static String getChecksum(DLFileVersion dlFileVersion)
-		throws PortalException {
-
+	public static String getChecksum(DLFileVersion dlFileVersion) {
 		if (dlFileVersion.getSize() >
 				SyncServiceConfigurationValues.
 					SYNC_FILE_CHECKSUM_THRESHOLD_SIZE) {
@@ -289,11 +287,16 @@ public class SyncUtil {
 			return StringPool.BLANK;
 		}
 
-		return DigesterUtil.digestBase64(
-			Digester.SHA_1, dlFileVersion.getContentStream(false));
+		try {
+			return DigesterUtil.digestBase64(
+				Digester.SHA_1, dlFileVersion.getContentStream(false));
+		}
+		catch (Exception e) {
+			return StringPool.BLANK;
+		}
 	}
 
-	public static String getChecksum(File file) throws PortalException {
+	public static String getChecksum(File file) {
 		if (file.length() >
 				SyncServiceConfigurationValues.
 					SYNC_FILE_CHECKSUM_THRESHOLD_SIZE) {
@@ -309,7 +312,7 @@ public class SyncUtil {
 			return DigesterUtil.digestBase64(Digester.SHA_1, fileInputStream);
 		}
 		catch (Exception e) {
-			throw new PortalException(e);
+			return StringPool.BLANK;
 		}
 		finally {
 			StreamUtil.cleanUp(fileInputStream);

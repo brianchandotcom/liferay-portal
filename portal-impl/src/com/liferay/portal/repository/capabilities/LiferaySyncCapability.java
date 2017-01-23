@@ -17,6 +17,8 @@ package com.liferay.portal.repository.capabilities;
 import com.liferay.document.library.kernel.model.DLSyncConstants;
 import com.liferay.document.library.kernel.model.DLSyncEvent;
 import com.liferay.document.library.kernel.service.DLSyncEventLocalService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
 import com.liferay.portal.kernel.repository.event.WorkflowRepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -118,6 +121,17 @@ public class LiferaySyncCapability
 			return;
 		}
 
+		try {
+			FileVersion fileVersion = fileEntry.getFileVersion();
+
+			if (fileVersion.isPending()) {
+				return;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
 		registerDLSyncEventCallback(
 			event, DLSyncConstants.TYPE_FILE, fileEntry.getFileEntryId());
 	}
@@ -166,6 +180,9 @@ public class LiferaySyncCapability
 
 			});
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferaySyncCapability.class);
 
 	private final RepositoryEventListener
 		<RepositoryEventType.Add, Folder> _addFolderEventListener =

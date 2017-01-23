@@ -226,6 +226,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 			"returnToFullPageURL", _getReturnToFullPageURL());
 		portletURL.setParameter(
 			"portletConfiguration", Boolean.TRUE.toString());
+		portletURL.setParameter("modelResource", getModelResource());
 		portletURL.setParameter("portletResource", _getPortletResource());
 		portletURL.setParameter("resourcePrimKey", getResourcePrimKey());
 

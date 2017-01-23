@@ -10,9 +10,8 @@
 	},
 	"devDependencies": {
 		"gulp": "^3.8.10",
-		"gulp-metal": "^1.9.12",
 		"liferay-theme-deps-7.0": "*",
-		"liferay-theme-es2015-hook": "^0.1.0",
+		"liferay-theme-es2015-hook": "0.1.1",
 		"liferay-theme-tasks": "*"
 	},
 	"keywords": [

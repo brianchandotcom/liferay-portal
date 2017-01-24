@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.BaseRepository;
@@ -551,6 +552,16 @@ public class BaseRepositoryProxyBean
 
 		return _baseRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
 			folderId, status, mimeTypes, includeMountFolders);
+	}
+
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, String[] mimetypes, boolean includeMountFolders,
+			QueryDefinition<Object> queryDefinition)
+		throws PortalException {
+
+		return _baseRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
+			folderId, mimetypes, includeMountFolders, queryDefinition);
 	}
 
 	@Override

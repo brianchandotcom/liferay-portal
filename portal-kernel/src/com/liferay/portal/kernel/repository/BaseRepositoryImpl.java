@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.util.DL;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -328,6 +329,15 @@ public abstract class BaseRepositoryImpl
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
+		throws PortalException {
+
+		return getFoldersAndFileEntriesCount(folderId, mimeTypes);
+	}
+
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, String[] mimeTypes, boolean includeMountFolders,
+			QueryDefinition<Object> queryDefinition)
 		throws PortalException {
 
 		return getFoldersAndFileEntriesCount(folderId, mimeTypes);

@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.repository.cmis.internal;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.Repository;
@@ -732,6 +733,20 @@ public class RepositoryProxyBean
 
 			return _repository.getFoldersAndFileEntriesAndFileShortcutsCount(
 				folderId, status, mimetypes, includeMountFolders);
+		}
+	}
+
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, String[] mimetypes, boolean includeMountFolders,
+			QueryDefinition<Object> queryDefinition)
+		throws PortalException {
+
+		try (ContextClassLoaderSetter contextClassLoaderSetter =
+				new ContextClassLoaderSetter(_classLoader)) {
+
+			return _repository.getFoldersAndFileEntriesAndFileShortcutsCount(
+				folderId, mimetypes, includeMountFolders, queryDefinition);
 		}
 	}
 

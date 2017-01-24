@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.repository;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -159,6 +160,11 @@ public interface Repository extends DocumentRepository {
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status, String[] mimetypes,
 			boolean includeMountFolders)
+		throws PortalException;
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, String[] mimetypes, boolean includeMountFolders,
+			QueryDefinition<Object> queryDefinition)
 		throws PortalException;
 
 	public int getFoldersFileEntriesCount(List<Long> folderIds, int status)

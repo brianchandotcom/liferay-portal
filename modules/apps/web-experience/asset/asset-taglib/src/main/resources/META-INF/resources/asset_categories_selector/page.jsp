@@ -27,6 +27,8 @@ boolean showRequiredLabel = GetterUtil.getBoolean((String)request.getAttribute("
 List<AssetVocabulary> vocabularies = (List<AssetVocabulary>)request.getAttribute("liferay-asset:asset-categories-selector:vocabularies");
 
 int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
+
+String randomNamespace = PortalUtil.generateRandomKey(request, "assetCategoriesSelector") + StringPool.UNDERLINE;
 %>
 
 <c:choose>
@@ -103,7 +105,7 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 		String[] categoryIdsTitle = categoryIdsTitles.get(0);
 		%>
 
-		<div class="lfr-tags-selector-content" id="<portlet:namespace />assetCategoriesSelector">
+		<div class="lfr-tags-selector-content" id="<%= renderResponse.getNamespace() + randomNamespace + "assetCategoriesSelector" %>">
 			<aui:input name="<%= hiddenInput %>" type="hidden" />
 		</div>
 
@@ -112,7 +114,7 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 				{
 					categoryIds: '<%= categoryIdsTitle[0] %>',
 					categoryTitles: '<%= HtmlUtil.escapeJS(categoryIdsTitle[1]) %>',
-					contentBox: '#<portlet:namespace />assetCategoriesSelector',
+					contentBox: '#<%= renderResponse.getNamespace() + randomNamespace + "assetCategoriesSelector" %>',
 					eventName: '<%= eventName %>',
 					hiddenInput: '#<portlet:namespace /><%= hiddenInput %>',
 					instanceVar: '<portlet:namespace />',

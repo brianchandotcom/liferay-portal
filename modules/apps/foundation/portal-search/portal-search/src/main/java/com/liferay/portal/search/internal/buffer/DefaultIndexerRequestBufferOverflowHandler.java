@@ -61,12 +61,19 @@ public class DefaultIndexerRequestBufferOverflowHandler
 				Math.abs(maxBufferSize * _minimumBufferAvailabilityPercentage));
 
 		if (numRequests > 0) {
-			IndexerRequestBufferExecutor indexerRequestBufferExecutor =
-				indexerRequestBufferExecutorWatcher.
-					getIndexerRequestBufferExecutor();
+			try {
+				BufferOverflowThreadLocal.setOverflowMode(true);
 
-			indexerRequestBufferExecutor.execute(
-				indexerRequestBuffer, numRequests);
+				IndexerRequestBufferExecutor indexerRequestBufferExecutor =
+					indexerRequestBufferExecutorWatcher.
+						getIndexerRequestBufferExecutor();
+
+				indexerRequestBufferExecutor.execute(
+					indexerRequestBuffer, numRequests);
+			}
+			finally {
+				BufferOverflowThreadLocal.setOverflowMode(false);
+			}
 		}
 
 		return true;

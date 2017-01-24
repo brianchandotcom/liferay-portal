@@ -22,7 +22,7 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface IndexerRequestBufferOverflowHandler {
 
-	public void bufferOverflowed(
+	public boolean bufferOverflowed(
 		IndexerRequestBuffer indexerRequestBuffer, int maxBufferSize);
 
 }

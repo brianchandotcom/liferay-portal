@@ -40,4 +40,7 @@ public interface IndexerRegistryConfiguration {
 	@Meta.AD(deflt = "200", required = false)
 	public int maxBufferSize();
 
+	@Meta.AD(deflt = "0.90", max = "0.99", min = "0.1", required = false)
+	public float minimumBufferAvailabilityPercentage();
+
 }

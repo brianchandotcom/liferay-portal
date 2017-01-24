@@ -108,9 +108,12 @@ import com.liferay.message.boards.kernel.model.MBThreadFlagModel;
 import com.liferay.message.boards.kernel.model.MBThreadModel;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.model.AccountModel;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassNameModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyModel;
@@ -154,9 +157,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -215,10 +220,18 @@ import com.liferay.wiki.model.impl.WikiPageModelImpl;
 import com.liferay.wiki.model.impl.WikiPageResourceModelImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.Writer;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+import java.sql.Types;
 
 import java.text.Format;
 
@@ -330,6 +343,12 @@ public class DataFactory {
 		initUserModels();
 		initVirtualHostModel(
 			properties.getProperty("sample.sql.virtual.hostname"));
+	}
+
+	public void closeCSVWriters() throws IOException {
+		for (Writer writer : _csvWriters.values()) {
+			writer.close();
+		}
 	}
 
 	public AccountModel getAccountModel() {
@@ -472,6 +491,17 @@ public class DataFactory {
 
 	public long getCounterNext() {
 		return _counter.get();
+	}
+
+	public Writer getCSVWriter(String csvFileName) {
+		Writer writer = _csvWriters.get(csvFileName);
+
+		if (writer == null) {
+			throw new IllegalArgumentException(
+				"Unknown csv file name: " + csvFileName);
+		}
+
+		return writer;
 	}
 
 	public String getDateLong(Date date) {
@@ -792,7 +822,9 @@ public class DataFactory {
 		_accountModel.setLegalName("Liferay, Inc.");
 	}
 
-	public void initContext(Properties properties) {
+	public void initContext(Properties properties)
+		throws FileNotFoundException {
+
 		String timeZoneId = properties.getProperty("sample.sql.db.time.zone");
 
 		if (Validator.isNotNull(timeZoneId)) {
@@ -873,6 +905,26 @@ public class DataFactory {
 			properties.getProperty("sample.sql.max.wiki.page.comment.count"));
 		_maxWikiPageCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.wiki.page.count"));
+
+		for (String csvFileName : StringUtil.split(
+				properties.getProperty("sample.sql.output.csv.file.names"))) {
+
+			_csvWriters.put(
+				csvFileName,
+				new UnsyncBufferedWriter(
+					new OutputStreamWriter(
+						new FileOutputStream(csvFileName.concat(".csv"))),
+					_WRITER_BUFFER_SIZE) {
+
+					@Override
+					public void flush() {
+
+						// Disable FreeMarker from flushing
+
+					}
+
+				});
+		}
 	}
 
 	public void initDLFileEntryTypeModel() {
@@ -2628,6 +2680,80 @@ public class DataFactory {
 		return userName;
 	}
 
+	public String toInsertSQL(BaseModel<?> baseModel) {
+		try {
+			StringBundler sb = new StringBundler();
+
+			sb.append("insert into ");
+
+			Class<?> clazz = baseModel.getClass();
+
+			Field tableNameField = clazz.getField("TABLE_NAME");
+
+			sb.append(tableNameField.get(null));
+
+			sb.append(" values (");
+
+			Field tableColumnsField = clazz.getField("TABLE_COLUMNS");
+
+			for (Object[] tableColumn :
+					(Object[][])tableColumnsField.get(null)) {
+
+				String name = TextFormatter.format(
+					(String)tableColumn[0], TextFormatter.G);
+
+				if (name.endsWith(StringPool.UNDERLINE)) {
+					name = name.substring(0, name.length() - 1);
+				}
+
+				int type = (int)tableColumn[1];
+
+				if (type == Types.TIMESTAMP) {
+					Method method = clazz.getMethod("get".concat(name));
+
+					Date date = (Date)method.invoke(baseModel);
+
+					if (date == null) {
+						sb.append("null");
+					}
+					else {
+						sb.append("'");
+						sb.append(getDateString(date));
+						sb.append("'");
+					}
+				}
+				else if ((type == Types.VARCHAR) || (type == Types.CLOB)) {
+					Method method = clazz.getMethod("get".concat(name));
+
+					sb.append("'");
+					sb.append(method.invoke(baseModel));
+					sb.append("'");
+				}
+				else if (type == Types.BOOLEAN) {
+					Method method = clazz.getMethod("is".concat(name));
+
+					sb.append(method.invoke(baseModel));
+				}
+				else {
+					Method method = clazz.getMethod("get".concat(name));
+
+					sb.append(method.invoke(baseModel));
+				}
+
+				sb.append(", ");
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			sb.append(");");
+
+			return sb.toString();
+		}
+		catch (ReflectiveOperationException roe) {
+			return ReflectionUtil.throwException(roe);
+		}
+	}
+
 	protected String[] getAssetPublisherAssetCategoriesQueryValues(
 		List<AssetCategoryModel> assetCategoryModels, int index) {
 
@@ -3390,6 +3516,8 @@ public class DataFactory {
 
 	private static final String _SAMPLE_USER_NAME = "Sample";
 
+	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
+
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
 
@@ -3411,6 +3539,7 @@ public class DataFactory {
 	private final long _companyId;
 	private CompanyModel _companyModel;
 	private final SimpleCounter _counter;
+	private final Map<String, Writer> _csvWriters = new HashMap<>();
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreference;
 	private AssetVocabularyModel _defaultAssetVocabularyModel;

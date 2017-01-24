@@ -1,15 +1,13 @@
 <#assign blogsEntryModels = dataFactory.newBlogsEntryModels(groupId) />
 
 <#list blogsEntryModels as blogsEntryModel>
-	insert into BlogsEntry values ('${blogsEntryModel.uuid}', ${blogsEntryModel.entryId}, ${blogsEntryModel.groupId}, ${blogsEntryModel.companyId}, ${blogsEntryModel.userId}, '${blogsEntryModel.userName}', '${dataFactory.getDateString(blogsEntryModel.createDate)}', '${dataFactory.getDateString(blogsEntryModel.modifiedDate)}', '${blogsEntryModel.title}', '${blogsEntryModel.subtitle}', '${blogsEntryModel.urlTitle}', '${blogsEntryModel.description}', '${blogsEntryModel.content}', '${dataFactory.getDateString(blogsEntryModel.displayDate)}', ${blogsEntryModel.allowPingbacks?string}, ${blogsEntryModel.allowTrackbacks?string}, '${blogsEntryModel.trackbacks}', '${blogsEntryModel.coverImageCaption}', ${blogsEntryModel.coverImageFileEntryId}, '${blogsEntryModel.coverImageURL}', ${blogsEntryModel.smallImage?string}, ${blogsEntryModel.smallImageFileEntryId}, ${blogsEntryModel.smallImageId}, '${blogsEntryModel.smallImageURL}', '${dataFactory.getDateString(blogsEntryModel.lastPublishDate)}', ${blogsEntryModel.status}, ${blogsEntryModel.statusByUserId}, '${blogsEntryModel.statusByUserName}', '${dataFactory.getDateString(blogsEntryModel.statusDate)}');
+	${dataFactory.toInsertSQL(blogsEntryModel)}
 
 	<@insertResourcePermissions
 		_entry = blogsEntryModel
 	/>
 
-	<@insertFriendlyURL
-		_entry = blogsEntryModel
-	/>
+	${dataFactory.toInsertSQL(dataFactory.newFriendlyURLModel(blogsEntryModel))}
 
 	<@insertAssetEntry
 		_entry = blogsEntryModel
@@ -30,13 +28,8 @@
 		_mbThreadId = mbThreadId
 	/>
 
-	<@insertSubscription
-		_entry = blogsEntryModel
-	/>
+	${dataFactory.toInsertSQL(dataFactory.newSubscriptionModel(blogsEntryModel))}
+	${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(blogsEntryModel))}
 
-	<@insertSocialActivity
-		_entry = blogsEntryModel
-	/>
-
-	${blogCSVWriter.write(blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbThreadId + "," + mbRootMessageId + "\n")}
+	${dataFactory.getCSVWriter("blog").write(blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbThreadId + "," + mbRootMessageId + "\n")}
 </#list>

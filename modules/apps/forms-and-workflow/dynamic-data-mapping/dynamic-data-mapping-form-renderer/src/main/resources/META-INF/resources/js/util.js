@@ -189,6 +189,12 @@ AUI.add(
 			getFieldNameFromQualifiedName: function(qualifiedName) {
 				var instance = this;
 
+				var nestedFieldName = qualifiedName.split('#');
+
+				if (nestedFieldName.length > 1) {
+					return nestedFieldName[1].split('$')[0];
+				}
+
 				var name = qualifiedName.split('$$')[1];
 
 				return name.split('$')[0];
@@ -196,6 +202,12 @@ AUI.add(
 
 			getInstanceIdFromQualifiedName: function(qualifiedName) {
 				var instance = this;
+
+				var nestedFieldName = qualifiedName.split('#');
+
+				if (nestedFieldName.length > 1) {
+					return nestedFieldName[1].split('$')[1];
+				}
 
 				var name = qualifiedName.split('$$')[1];
 

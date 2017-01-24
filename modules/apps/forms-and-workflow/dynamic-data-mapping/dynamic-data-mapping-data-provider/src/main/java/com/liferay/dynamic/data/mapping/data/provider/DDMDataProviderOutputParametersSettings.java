@@ -30,8 +30,8 @@ public interface DDMDataProviderOutputParametersSettings {
 	public String outputParameterPath();
 
 	@DDMFormField(
-		label = "%type", optionLabels = {"%text", "%number"},
-		optionValues = {"text", "number"}, type = "select"
+		label = "%type", optionLabels = {"%text", "%number", "%list"},
+		optionValues = {"text", "number", "list"}, type = "select"
 	)
 	public String outputParameterType();
 

@@ -31,6 +31,7 @@ import com.liferay.knowledge.base.model.impl.KBCommentImpl;
 import com.liferay.knowledge.base.model.impl.KBTemplateImpl;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBCommentLocalService;
+import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.service.KBTemplateLocalService;
 import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -95,7 +96,8 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 
 		_kbArticleLocalService.deleteGroupKBArticles(
 			portletDataContext.getScopeGroupId());
-
+		_kbFolderLocalService.deleteKBFolders(
+			portletDataContext.getScopeGroupId());
 		_kbTemplateLocalService.deleteGroupKBTemplates(
 			portletDataContext.getScopeGroupId());
 
@@ -260,6 +262,13 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(unbind = "-")
+	protected void setKBFolderLocalService(
+		KBFolderLocalService kbFolderLocalService) {
+
+		_kbFolderLocalService = kbFolderLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setKBTemplateLocalService(
 		KBTemplateLocalService kbTemplateLocalService) {
 
@@ -276,6 +285,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 
 	private KBArticleLocalService _kbArticleLocalService;
 	private KBCommentLocalService _kbCommentLocalService;
+	private KBFolderLocalService _kbFolderLocalService;
 	private KBTemplateLocalService _kbTemplateLocalService;
 	private Portal _portal;
 

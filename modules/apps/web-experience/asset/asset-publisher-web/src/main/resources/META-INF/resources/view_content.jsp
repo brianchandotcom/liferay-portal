@@ -88,4 +88,15 @@ else {
 	</c:otherwise>
 </c:choose>
 
+<aui:script use="aui-base">
+	var portletId = '<%= portletDisplay.getId() %>';
+
+	Liferay.once(
+		'allPortletsReady',
+		function() {
+			A.one('#p_p_id_' + portletId + '_').scrollIntoView();
+		}
+	);
+</aui:script>
+
 <liferay-util:dynamic-include key="com.liferay.asset.publisher.web#/view_content.jsp#post" />

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Item Selector Criteria API
 Bundle-SymbolicName: com.liferay.item.selector.criteria.api
-Bundle-Version: 2.0.6
+Bundle-Version: 2.1.0
 Export-Package:\
 	com.liferay.item.selector.criteria,\
 	com.liferay.item.selector.criteria.audio.criterion,\

@@ -48,6 +48,10 @@ AUI.add(
 					uploadItemURL: {
 						validator: Lang.isString,
 						value: ''
+					},
+					validExtensions: {
+						validator: Lang.isString,
+						value: '*'
 					}
 				},
 
@@ -163,7 +167,18 @@ AUI.add(
 									rootNode.removeClass(CSS_DROP_ACTIVE);
 
 									if (eventDrop) {
-										instance._previewFile(dataTransfer.files[0]);
+										var fileExtension = dataTransfer.files[0].name.split('.').pop().toLowerCase();
+
+										var validExtensions = instance.get('validExtensions');
+
+										if (validExtensions === '*' || validExtensions.indexOf(fileExtension) != -1) {
+											instance._previewFile(dataTransfer.files[0]);
+										}
+										else {
+											var message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [validExtensions]);
+
+											instance._showError(message);
+										}
 									}
 								}
 							}
@@ -173,46 +188,29 @@ AUI.add(
 					_getUploadErrorMessage: function(error) {
 						var instance = this;
 
-						var notice = instance._notice;
+						var errorType = error.errorType;
 
-						if (!notice) {
-							var errorType = error.errorType;
+						var message = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
 
-							var message = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
+						if (errorType === STATUS_CODE.SC_FILE_ANTIVIRUS_EXCEPTION) {
+							message = error.message;
+						}
+						else if (errorType === STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION) {
+							message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [error.message]);
+						}
+						else if (errorType === STATUS_CODE.SC_FILE_NAME_EXCEPTION) {
+							message = Liferay.Language.get('please-enter-a-file-with-a-valid-file-name');
+						}
+						else if (errorType === STATUS_CODE.SC_FILE_SIZE_EXCEPTION || errorType === STATUS_CODE.SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION) {
+							message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [instance.formatStorage(instance.get('maxFileSize'))]);
+						}
+						else if (errorType === STATUS_CODE.SC_UPLOAD_REQUEST_SIZE_EXCEPTION) {
+							var maxUploadRequestSize = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
-							if (errorType === STATUS_CODE.SC_FILE_ANTIVIRUS_EXCEPTION) {
-								message = error.message;
-							}
-							else if (errorType === STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION) {
-								message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [error.message]);
-							}
-							else if (errorType === STATUS_CODE.SC_FILE_NAME_EXCEPTION) {
-								message = Liferay.Language.get('please-enter-a-file-with-a-valid-file-name');
-							}
-							else if (errorType === STATUS_CODE.SC_FILE_SIZE_EXCEPTION || errorType === STATUS_CODE.SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION) {
-								message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [instance.formatStorage(instance.get('maxFileSize'))]);
-							}
-							else if (errorType === STATUS_CODE.SC_UPLOAD_REQUEST_SIZE_EXCEPTION) {
-								var maxUploadRequestSize = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
-
-								message = Lang.sub(Liferay.Language.get('request-is-larger-than-x-and-could-not-be-processed'), [instance.formatStorage(maxUploadRequestSize)]);
-							}
-
-							notice = new Liferay.Notice(
-								{
-									closeText: false,
-									content: message + '<button class="close" type="button">&times;</button>',
-									noticeClass: 'hide',
-									toggleText: false,
-									type: 'warning',
-									useAnimation: false
-								}
-							);
-
-							instance._notice = notice;
+							message = Lang.sub(Liferay.Language.get('request-is-larger-than-x-and-could-not-be-processed'), [instance.formatStorage(maxUploadRequestSize)]);
 						}
 
-						return notice;
+						return message;
 					},
 
 					_getUploadFileMetadata: function(file) {
@@ -284,7 +282,9 @@ AUI.add(
 
 						instance._uploadItemViewer.hide();
 
-						instance._getUploadErrorMessage(event.error).show();
+						var errorMessage = instance._getUploadErrorMessage(event.error);
+
+						instance._showError(errorMessage);
 					},
 
 					_previewFile: function(file) {
@@ -311,6 +311,24 @@ AUI.add(
 
 						instance._itemViewer.render(rootNode);
 						instance._uploadItemViewer.render(rootNode);
+					},
+
+					_showError: function(message) {
+						var instance = this;
+
+						new Liferay.Alert(
+							{
+								closeable: true,
+								delay: {
+									hide: 5000,
+									show: 0
+								},
+								duration: 250,
+								icon: 'exclamation-full',
+								message: message,
+								type: 'danger'
+							}
+						).render(instance.rootNode);
 					},
 
 					_showFile: function(file, preview) {
@@ -349,6 +367,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-item-selector-uploader', 'liferay-item-viewer', 'liferay-notice', 'liferay-portlet-base', 'liferay-storage-formatter']
+		requires: ['liferay-alert', 'liferay-item-selector-uploader', 'liferay-item-viewer', 'liferay-portlet-base', 'liferay-storage-formatter']
 	}
 );

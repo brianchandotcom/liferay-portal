@@ -18,6 +18,8 @@
 
 <%
 ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (ItemSelectorUploadViewDisplayContext)request.getAttribute(ItemSelectorUploadView.ITEM_SELECTOR_UPLOAD_VIEW_DISPLAY_CONTEXT);
+
+String[] validExtensions = itemSelectorUploadViewDisplayContext.getExtensions();
 %>
 
 <div class="container-fluid-1280 lfr-item-viewer" id="itemSelectorUploadContainer">
@@ -32,7 +34,7 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 			<p>
 				<label class="btn btn-default" for="<portlet:namespace />inputFile"><liferay-ui:message key="select-file" /></label>
 
-				<input class="hide" id="<portlet:namespace />inputFile" type="file" />
+				<input accept="<%= ArrayUtil.isEmpty(validExtensions) ? "*" : StringUtil.merge(validExtensions) %>" class="hide" id="<portlet:namespace />inputFile" type="file" />
 			</p>
 		</div>
 	</div>
@@ -52,7 +54,8 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 			},
 			rootNode: '#itemSelectorUploadContainer',
 			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(FileEntryItemSelectorReturnType.class.getName()) %>',
-			uploadItemURL: '<%= itemSelectorUploadViewDisplayContext.getURL() %>'
+			uploadItemURL: '<%= itemSelectorUploadViewDisplayContext.getURL() %>',
+			validExtensions: '<%= ArrayUtil.isEmpty(validExtensions) ? "*" : StringUtil.merge(validExtensions) %>'
 		}
 	);
 </aui:script>

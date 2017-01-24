@@ -53,6 +53,10 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		_portletURL = portletURL;
 	}
 
+	public String[] getExtensions() {
+		return _dlItemSelectorView.getExtensions();
+	}
+
 	public long getFolderId(HttpServletRequest request) {
 		return ParamUtil.getLong(
 			request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);

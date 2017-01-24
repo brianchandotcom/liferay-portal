@@ -106,6 +106,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The list of file extensions acceptable in the file uploader.</description>
+			<name>extensions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The name of the event to be thrown once an image is selected.</description>
 			<name>itemSelectedEventName</name>
 			<required>true</required>

@@ -34,6 +34,10 @@ public class ItemSelectorUploadViewDisplayContext {
 		_itemSelectedEventName = itemSelectedEventName;
 	}
 
+	public String[] getExtensions() {
+		return _uploadItemSelectorCriterion.getExtensions();
+	}
+
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
 	}

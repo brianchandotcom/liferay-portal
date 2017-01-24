@@ -45,6 +45,11 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 	implements DLItemSelectorView<T> {
 
 	@Override
+	public String[] getExtensions() {
+		return new String[0];
+	}
+
+	@Override
 	public String[] getMimeTypes() {
 		return new String[0];
 	}

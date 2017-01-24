@@ -26,7 +26,9 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.item.selector.upload.web.internal.ItemSelectorUploadView" %><%@
 page import="com.liferay.item.selector.upload.web.internal.display.context.ItemSelectorUploadViewDisplayContext" %><%@
 page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %>
+page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %>
 
 <liferay-theme:defineObjects />
 

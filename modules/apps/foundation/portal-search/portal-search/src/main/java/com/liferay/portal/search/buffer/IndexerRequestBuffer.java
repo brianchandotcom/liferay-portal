@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.buffer;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.List;
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public class IndexerRequestBuffer {
 
 	public static IndexerRequestBuffer create() {
@@ -59,8 +62,27 @@ public class IndexerRequestBuffer {
 		return indexerRequestBuffers.remove(indexerRequestBuffers.size() - 1);
 	}
 
+	/**
+	/**
+	 * @deprecated As of 2.1.0, replaced by {@link #add(
+	 *             IndexerRequest, IndexerRequestBufferOverflowHandler, int)}
+	 *
+	 * @param indexerRequest
+	 */
+	@Deprecated
 	public void add(IndexerRequest indexerRequest) {
 		_indexerRequests.put(indexerRequest, indexerRequest);
+	}
+
+	public void add(
+		IndexerRequest indexerRequest,
+		IndexerRequestBufferOverflowHandler indexerRequestBufferOverflowHandler,
+		int maxBufferSize) {
+
+		_indexerRequests.put(indexerRequest, indexerRequest);
+
+		indexerRequestBufferOverflowHandler.bufferOverflowed(
+			this, maxBufferSize);
 	}
 
 	public void clear() {

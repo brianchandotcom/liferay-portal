@@ -40,6 +40,6 @@
 			/>
 		</#list>
 
-		${messageBoardCSVWriter.write(mbCategoryModel.categoryId + "," + mbThreadModel.threadId + "," + mbThreadModel.rootMessageId + "\n")}
+		${dataFactory.getCSVWriter("messageBoard").write(mbCategoryModel.categoryId + "," + mbThreadModel.threadId + "," + mbThreadModel.rootMessageId + "\n")}
 	</#list>
 </#list>

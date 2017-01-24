@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSettings;
 
 /**
  * @author Marcellus Tavares
@@ -46,7 +47,9 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 							size = 12,
 							value = {
 								"url", "key", "value", "username", "password",
-								"filterable", "filterParameterName", "cacheable"
+								"filterable", "filterParameterName",
+								"cacheable", "inputParameters",
+								"outputParameters"
 							}
 						)
 					}
@@ -55,7 +58,8 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 		)
 	}
 )
-public interface DDMRESTDataProviderSettings {
+public interface DDMRESTDataProviderSettings
+	extends DDMDataProviderParameterSettings {
 
 	@DDMFormField(
 		label = "%cache-data-on-the-first-request",

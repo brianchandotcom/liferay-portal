@@ -126,30 +126,50 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		Set<String> ddmFormFieldParameterNames) {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			if (containsDDMFormFieldParameterName(
-					ddmFormField, ddmFormFieldParameterNames)) {
+			Set<String> filteredDDMFormFieldParameterNames =
+				filterDDMFormFieldParameterNames(
+					ddmFormField, ddmFormFieldParameterNames);
 
-				continue;
+			String ddmFormFieldParameterPrefix = getDDMFormFieldParameterPrefix(
+				ddmFormField, parentDDMFormFieldParameterName);
+
+			boolean containsDefaultDDMFormFieldParameterName =
+				containsDefaultDDMFormFieldParameterName(
+					filteredDDMFormFieldParameterNames,
+					ddmFormFieldParameterPrefix);
+
+			if (!ddmFormField.isTransient() &&
+				!containsDefaultDDMFormFieldParameterName) {
+
+				String defaultDDMFormFieldParameterName =
+					createDefaultDDMFormFieldParameterName(
+						ddmFormField, parentDDMFormFieldParameterName);
+
+				ddmFormFieldParameterNames.add(
+					defaultDDMFormFieldParameterName);
 			}
 
-			String defaultDDMFormFieldParameterName =
-				createDefaultDDMFormFieldParameterName(
-					ddmFormField, parentDDMFormFieldParameterName);
+			for (String filteredDDMFormFieldParameterName :
+					filteredDDMFormFieldParameterNames) {
 
-			ddmFormFieldParameterNames.add(defaultDDMFormFieldParameterName);
+				checkDDMFormFieldParameterNames(
+					ddmFormField.getNestedDDMFormFields(),
+					filteredDDMFormFieldParameterName,
+					ddmFormFieldParameterNames);
+			}
 		}
 	}
 
-	protected boolean containsDDMFormFieldParameterName(
-		DDMFormField ddmFormField, Set<String> ddmFormFieldParameterNames) {
+	protected boolean containsDefaultDDMFormFieldParameterName(
+		Set<String> filteredDDMFormFieldParameterNames,
+		String ddmFormFieldParameterPrefix) {
 
-		for (String ddmFormFieldParameterName : ddmFormFieldParameterNames) {
-			String[] ddmFormFieldParameterNameParts =
-				getDDMFormFieldParameterNameParts(ddmFormFieldParameterName);
+		for (String filteredDDMFormFieldParameterName :
+				filteredDDMFormFieldParameterNames) {
 
-			String fieldName = getFieldName(ddmFormFieldParameterNameParts);
+			if (filteredDDMFormFieldParameterName.startsWith(
+					ddmFormFieldParameterPrefix)) {
 
-			if (fieldName.equals(ddmFormField.getName())) {
 				return true;
 			}
 		}
@@ -267,6 +287,27 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		return ddmFormFieldParameterName.substring(0, pos);
 	}
 
+	protected Set<String> filterDDMFormFieldParameterNames(
+		DDMFormField ddmFormField, Set<String> ddmFormFieldParameterNames) {
+
+		Set<String> filteredDDMFormFieldParameterNames = new HashSet<>();
+
+		for (String ddmFormFieldParameterName : ddmFormFieldParameterNames) {
+			String[] ddmFormFieldParameterNameParts =
+				getLastDDMFormFieldParameterNameParts(
+					ddmFormFieldParameterName);
+
+			String fieldName = getFieldName(ddmFormFieldParameterNameParts);
+
+			if (fieldName.equals(ddmFormField.getName())) {
+				filteredDDMFormFieldParameterNames.add(
+					ddmFormFieldParameterName);
+			}
+		}
+
+		return filteredDDMFormFieldParameterNames;
+	}
+
 	protected Set<Locale> getAvailableLocales(
 		HttpServletRequest httpServletRequest) {
 
@@ -343,6 +384,17 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		}
 
 		return ddmFormFieldParameterNames;
+	}
+
+	protected String getDDMFormFieldParameterPrefix(
+		DDMFormField ddmFormField, String parentDDMFormFieldParameterName) {
+
+		if (Validator.isNull(parentDDMFormFieldParameterName)) {
+			return ddmFormField.getName();
+		}
+
+		return parentDDMFormFieldParameterName.concat(
+			StringPool.POUND).concat(ddmFormField.getName());
 	}
 
 	protected String getDDMFormFieldParameterValue(

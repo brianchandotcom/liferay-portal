@@ -16,11 +16,15 @@ package com.liferay.dynamic.data.mapping.type.fieldset.internal;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -48,13 +52,31 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 			(List<Object>)ddmFormFieldRenderingContext.getProperty(
 				"nestedFields");
 
-		parameters.put("columnSize", getColumnSize(nestedFields));
-		parameters.put("fields", nestedFields);
+		String orientation = GetterUtil.getString(
+			ddmFormField.getProperty("orientation"), "horizontal");
+
+		int columnSize = getColumnSize(nestedFields, orientation);
+
+		parameters.put("columnSize", columnSize);
+
+		LocalizedValue label = ddmFormField.getLabel();
+
+		if (label != null) {
+			parameters.put(
+				"label",
+				label.getString(ddmFormFieldRenderingContext.getLocale()));
+
+			parameters.put("showLabel", true);
+		}
 
 		return parameters;
 	}
 
-	protected int getColumnSize(List<Object> nestedFields) {
+	protected int getColumnSize(List<Object> nestedFields, String orientation) {
+		if (Objects.equals(orientation, "vertical")) {
+			return DDMFormLayoutColumn.FULL;
+		}
+
 		if (nestedFields.isEmpty()) {
 			return 0;
 		}

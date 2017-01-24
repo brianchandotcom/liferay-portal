@@ -21,9 +21,9 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field'), 'fieldset', 0, ddm
 
 
 ddm.fieldset_column = function(opt_data, opt_ignored) {
-  var output = '<div class="col-md-' + soy.$$escapeHtmlAttribute(opt_data.columnSize) + '">';
-  var variant__soy8 = opt_data.field.type;
-  output += soy.$$getDelegateFn(soy.$$getDelTemplateId('ddm.field'), variant__soy8, true)(opt_data.field) + '</div>';
+  var output = '<div class="col-md-' + soy.$$escapeHtmlAttribute(opt_data.columnSize) + '"><div class="clearfix ' + ((! opt_data.field.visible) ? 'hide' : '') + ' lfr-ddm-form-field-container">';
+  var variant__soy12 = opt_data.field.type;
+  output += soy.$$getDelegateFn(soy.$$getDelTemplateId('ddm.field'), variant__soy12, true)(opt_data.field) + '</div></div>';
   return output;
 };
 if (goog.DEBUG) {
@@ -33,11 +33,11 @@ if (goog.DEBUG) {
 
 ddm.fieldset_columns = function(opt_data, opt_ignored) {
   var output = '';
-  var fieldList15 = opt_data.fields;
-  var fieldListLen15 = fieldList15.length;
-  for (var fieldIndex15 = 0; fieldIndex15 < fieldListLen15; fieldIndex15++) {
-    var fieldData15 = fieldList15[fieldIndex15];
-    output += ddm.fieldset_column(soy.$$augmentMap(opt_data, {columnSize: opt_data.columnSize, field: fieldData15}));
+  var fieldList19 = opt_data.fields;
+  var fieldListLen19 = fieldList19.length;
+  for (var fieldIndex19 = 0; fieldIndex19 < fieldListLen19; fieldIndex19++) {
+    var fieldData19 = fieldList19[fieldIndex19];
+    output += ddm.fieldset_column(soy.$$augmentMap(opt_data, {columnSize: opt_data.columnSize, field: fieldData19}));
   }
   return output;
 };
@@ -47,7 +47,7 @@ if (goog.DEBUG) {
 
 
 ddm.fieldset = function(opt_data, opt_ignored) {
-  return '<div class="form-group' + soy.$$escapeHtmlAttribute(opt_data.visible ? '' : ' hide') + ' liferay-ddm-form-field-fieldset" data-fieldname="' + soy.$$escapeHtmlAttribute(opt_data.name) + '">' + ((opt_data.tip) ? '<p class="liferay-ddm-form-field-tip">' + soy.$$escapeHtml(opt_data.tip) + '</p>' : '') + '<fieldset><legend>' + soy.$$escapeHtml(opt_data.label) + '</legend>' + ddm.fieldset_columns(opt_data) + '</fieldset></div>';
+  return '<div class="form-group' + soy.$$escapeHtmlAttribute(opt_data.visible ? '' : ' hide') + ' liferay-ddm-form-field-fieldset' + soy.$$escapeHtmlAttribute(opt_data.showBorderTop ? ' border-top' : '') + ' ' + soy.$$escapeHtmlAttribute(opt_data.showBorderBottom ? ' border-bottom' : '') + '" data-fieldname="' + soy.$$escapeHtmlAttribute(opt_data.name) + '">' + ((opt_data.tip) ? '<p class="liferay-ddm-form-field-tip">' + soy.$$escapeHtml(opt_data.tip) + '</p>' : '') + '<fieldset>' + ((opt_data.showLabel) ? '<legend>' + soy.$$escapeHtml(opt_data.label) + '</legend>' : '') + ddm.fieldset_columns(soy.$$augmentMap(opt_data, {columnSize: opt_data.columnSize, fields: opt_data.nestedFields})) + '</fieldset></div>';
 };
 if (goog.DEBUG) {
   ddm.fieldset.soyTemplateName = 'ddm.fieldset';

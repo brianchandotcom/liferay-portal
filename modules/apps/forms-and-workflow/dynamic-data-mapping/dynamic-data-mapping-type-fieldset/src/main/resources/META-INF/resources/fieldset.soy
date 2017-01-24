@@ -15,9 +15,12 @@
  */
 {template .fieldset_column autoescape="deprecated-contextual"}
 	<div class="col-md-{$columnSize}">
-		{let $variant: $field.type /}
 
-		{delcall ddm.field variant="$variant" data="$field" /}
+		<div class="clearfix {if not $field.visible}hide{/if} lfr-ddm-form-field-container">
+			{let $variant: $field.type /}
+
+			{delcall ddm.field variant="$variant" data="$field" /}
+		</div>
 	</div>
 {/template}
 
@@ -41,25 +44,31 @@
  * Prints the DDM form fieldset field.
  *
  * @param columnSize
- * @param name
- * @param fields
  * @param? label
+ * @param name
+ * @param nestedFields
+ * @param? showBorderBottom
+ * @param? showBorderTop
+ * @param? showLabel
  * @param tip
  * @param visible
  */
 {template .fieldset autoescape="deprecated-contextual"}
-	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-fieldset" data-fieldname="{$name}">
+	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-fieldset
+		{$showBorderTop ? ' border-top' : ''} {$showBorderBottom ? ' border-bottom' : ''}" data-fieldname="{$name}">
 
 		{if $tip}
 			<p class="liferay-ddm-form-field-tip">{$tip}</p>
 		{/if}
 
 		<fieldset>
-			<legend>{$label}</legend>
+			{if $showLabel}
+				<legend>{$label}</legend>
+			{/if}
 
 			{call ddm.fieldset_columns data="all"}
 				{param columnSize: $columnSize /}
-				{param fields: $fields /}
+				{param fields: $nestedFields /}
 			{/call}
 		</fieldset>
 	</div>

@@ -296,6 +296,10 @@ AUI.add(
 
 						var container = instance.get('container');
 
+						if (!container.one('.drop-chosen')) {
+							return false;
+						}
+
 						var openList = container.one('.drop-chosen').hasClass('hide');
 
 						return !openList;
@@ -303,8 +307,6 @@ AUI.add(
 
 					_onClickItem: function(event) {
 						var instance = this;
-
-						var options = instance.get('options');
 
 						var value = event.target.getAttribute('data-option-value');
 

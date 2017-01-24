@@ -365,25 +365,29 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		try {
 			long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
-			if (_lockManager.hasLock(
-					defaultUserId, UserImporter.class.getName(), companyId)) {
+			synchronized (this) {
+				if (_lockManager.hasLock(
+						defaultUserId, UserImporter.class.getName(),
+						companyId)) {
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Skipping LDAP import for company " + companyId +
-							" because another LDAP import is in process");
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Skipping LDAP import for company " + companyId +
+								" because another LDAP import is in process");
+					}
+
+					return;
 				}
 
-				return;
+				LDAPImportConfiguration ldapImportConfiguration =
+					_ldapImportConfigurationProvider.getConfiguration(
+						companyId);
+
+				_lockManager.lock(
+					defaultUserId, UserImporter.class.getName(), companyId,
+					LDAPUserImporterImpl.class.getName(), false,
+					ldapImportConfiguration.importLockExpirationTime());
 			}
-
-			LDAPImportConfiguration ldapImportConfiguration =
-				_ldapImportConfigurationProvider.getConfiguration(companyId);
-
-			_lockManager.lock(
-				defaultUserId, UserImporter.class.getName(), companyId,
-				LDAPUserImporterImpl.class.getName(), false,
-				ldapImportConfiguration.importLockExpirationTime());
 
 			Collection<LDAPServerConfiguration> ldapServerConfigurations =
 				_ldapServerConfigurationProvider.getConfigurations(companyId);

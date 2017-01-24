@@ -22,8 +22,6 @@
 		</if>
 
 		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_CLOSED" />
-
-		<execute function="AssertNotVisible" locator1="ProductMenu#PRODUCT_MENU_BODY" />
 	</command>
 
 	<command name="expandCategory">

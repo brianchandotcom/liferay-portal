@@ -40,9 +40,16 @@ public class IndexerRequestBufferHandler {
 			IndexerRequestBuffer indexerRequestBuffer)
 		throws Exception {
 
-		indexerRequestBuffer.add(
-			indexerRequest, _indexerRequestBufferOverflowHandler,
-			_indexerRegistryConfiguration.maxBufferSize());
+		if (!BufferOverflowThreadLocal.isOverflowMode()) {
+			indexerRequestBuffer.add(
+				indexerRequest, _indexerRequestBufferOverflowHandler,
+				_indexerRegistryConfiguration.maxBufferSize());
+		}
+		else {
+			indexerRequestBuffer.remove(indexerRequest);
+
+			indexerRequest.execute();
+		}
 	}
 
 	private final IndexerRegistryConfiguration _indexerRegistryConfiguration;

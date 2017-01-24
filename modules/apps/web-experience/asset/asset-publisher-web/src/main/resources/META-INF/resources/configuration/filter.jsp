@@ -118,7 +118,7 @@
 			contentBox: '#<portlet:namespace />queryRules',
 			fieldIndexes: '<portlet:namespace />queryLogicIndexes',
 			namespace: '<portlet:namespace />',
-			url: '<liferay-portlet:renderURL portletName="<%= AssetPublisherPortletKeys.ASSET_PUBLISHER %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/edit_query_rule.jsp" /><portlet:param name="categorizableGroupIds" value="<%= StringUtil.merge(assetPublisherDisplayContext.getReferencedModelsGroupIds()) %>" /></liferay-portlet:renderURL>'
+			url: '<liferay-portlet:renderURL portletConfiguration="<%= true %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="<%= Constants.CMD %>" value="edit_query_rule" /><portlet:param name="categorizableGroupIds" value="<%= StringUtil.merge(assetPublisherDisplayContext.getReferencedModelsGroupIds()) %>" /></liferay-portlet:renderURL>'
 		}
 	).render();
 </aui:script>

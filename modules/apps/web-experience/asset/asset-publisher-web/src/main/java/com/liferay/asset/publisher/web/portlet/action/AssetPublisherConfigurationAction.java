@@ -90,6 +90,12 @@ public class AssetPublisherConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {
+		String command = ParamUtil.getString(request, Constants.CMD);
+
+		if (Validator.isNotNull(command) && command.equals("edit_query_rule")) {
+			return "/edit_query_rule.jsp";
+		}
+
 		return "/configuration.jsp";
 	}
 

@@ -26,7 +26,7 @@ if (categorizableGroupIds == null) {
 }
 
 int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-index")));
-int queryLogicIndex = GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-queryLogicIndex"));
+int queryLogicIndex = GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-queryLogicIndex"), -1);
 
 boolean queryContains = true;
 boolean queryAndOperator = false;

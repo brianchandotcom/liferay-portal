@@ -212,6 +212,16 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			IndexerRequestBuffer indexerRequestBuffer)
 		throws Exception {
 
+		if (_indexStatusManager.isIndexReadOnly(className)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping indexer request buffer because index for " +
+						className + " is read only");
+			}
+
+			return;
+		}
+
 		IndexerRequest indexerRequest = new IndexerRequest(
 			methodKey.getMethod(), _indexer, className, classPK);
 

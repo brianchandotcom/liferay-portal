@@ -58,6 +58,10 @@ public class DLFileEntryMetadataIndexer
 			Indexer<DLFileEntry> indexer =
 				IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
 
+			if (IndexWriterHelperUtil.isIndexReadOnly(indexer.getClassName())) {
+				return;
+			}
+
 			List<DLFileEntry> dlFileEntries =
 				DLFileEntryLocalServiceUtil.getDDMStructureFileEntries(
 					ArrayUtil.toLongArray(ddmStructureIds));

@@ -24,6 +24,10 @@ public interface IndexStatusManager {
 
 	public boolean isIndexReadOnly();
 
+	public boolean isIndexReadOnly(String className);
+
 	public void setIndexReadOnly(boolean indexReadOnly);
+
+	public void setIndexReadOnly(String className, boolean indexReadOnly);
 
 }

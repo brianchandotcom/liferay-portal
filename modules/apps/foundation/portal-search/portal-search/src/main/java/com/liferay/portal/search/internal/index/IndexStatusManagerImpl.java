@@ -15,10 +15,12 @@
 package com.liferay.portal.search.internal.index;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.search.configuration.IndexStatusManagerConfiguration;
 import com.liferay.portal.search.index.IndexStatusManager;
 
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -39,8 +41,23 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 	}
 
 	@Override
+	public boolean isIndexReadOnly(String className) {
+		return _indexReadOnlyModels.contains(className);
+	}
+
+	@Override
 	public void setIndexReadOnly(boolean indexReadOnly) {
 		_indexReadOnly = indexReadOnly;
+	}
+
+	@Override
+	public void setIndexReadOnly(String className, boolean indexReadOnly) {
+		if (indexReadOnly) {
+			_indexReadOnlyModels.add(className);
+		}
+		else {
+			_indexReadOnlyModels.remove(className);
+		}
 	}
 
 	@Activate
@@ -54,5 +71,6 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 	}
 
 	private volatile boolean _indexReadOnly;
+	private final Set<String> _indexReadOnlyModels = new ConcurrentHashSet<>();
 
 }

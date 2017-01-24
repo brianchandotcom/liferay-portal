@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
 import java.lang.annotation.Annotation;
@@ -47,6 +48,18 @@ public class IndexableAdvice
 
 		if (IndexWriterHelperUtil.isIndexReadOnly() ||
 			CompanyThreadLocal.isDeleteInProcess()) {
+
+			if (_log.isDebugEnabled()) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Skipping indexing - ");
+				sb.append("IndexWriterHelperUtil.isIndexReadOnly = ");
+				sb.append(IndexWriterHelperUtil.isIndexReadOnly());
+				sb.append(" CompanyThreadLocal.isDeleteInProcess = ");
+				sb.append(CompanyThreadLocal.isDeleteInProcess());
+
+				_log.debug(sb.toString());
+			}
 
 			return;
 		}
@@ -76,6 +89,16 @@ public class IndexableAdvice
 		if (indexer == null) {
 			serviceBeanAopCacheManager.removeMethodInterceptor(
 				methodInvocation, this);
+
+			return;
+		}
+
+		if (IndexWriterHelperUtil.isIndexReadOnly(indexer.getClassName())) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping indexing - " + indexer.getClassName() +
+						" is index read only.");
+			}
 
 			return;
 		}

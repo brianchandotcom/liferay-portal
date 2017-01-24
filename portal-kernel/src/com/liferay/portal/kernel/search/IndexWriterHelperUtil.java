@@ -179,6 +179,16 @@ public class IndexWriterHelperUtil {
 		return _indexWriterHelper.isIndexReadOnly();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.search.index.IndexStatusManager#
+	 *             isIndexReadOnly(String)}
+	 */
+	@Deprecated
+	public static boolean isIndexReadOnly(String className) {
+		return _indexWriterHelper.isIndexReadOnly(className);
+	}
+
 	public static void partiallyUpdateDocument(
 			String searchEngineId, long companyId, Document document,
 			boolean commitImmediately)
@@ -223,6 +233,18 @@ public class IndexWriterHelperUtil {
 	@Deprecated
 	public static void setIndexReadOnly(boolean indexReadOnly) {
 		_indexWriterHelper.setIndexReadOnly(indexReadOnly);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.search.index.IndexStatusManager#
+	 *             setIndexReadOnly(String, boolean)}
+	 */
+	@Deprecated
+	public static void setIndexReadOnly(
+		String className, boolean indexReadOnly) {
+
+		_indexWriterHelper.setIndexReadOnly(className, indexReadOnly);
 	}
 
 	public static void updateDocument(

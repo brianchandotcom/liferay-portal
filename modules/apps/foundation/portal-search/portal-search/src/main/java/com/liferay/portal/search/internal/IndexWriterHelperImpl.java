@@ -398,6 +398,16 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		return _indexStatusManager.isIndexReadOnly();
 	}
 
+	/**
+	 * @deprecated As of 3.3.0, replaced by {@link IndexStatusManager#
+	 *             isIndexReadOnly(String)}
+	 */
+	@Deprecated
+	@Override
+	public boolean isIndexReadOnly(String className) {
+		return _indexStatusManager.isIndexReadOnly(className);
+	}
+
 	@Override
 	public void partiallyUpdateDocument(
 			String searchEngineId, long companyId, Document document,
@@ -528,6 +538,16 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	@Override
 	public void setIndexReadOnly(boolean indexReadOnly) {
 		_indexStatusManager.setIndexReadOnly(indexReadOnly);
+	}
+
+	/**
+	 * @deprecated As of 3.3.0, replaced by {@link IndexStatusManager.
+	 *             setIndexReadOnly(String, boolean)}
+	 */
+	@Deprecated
+	@Override
+	public void setIndexReadOnly(String className, boolean indexReadOnly) {
+		_indexStatusManager.setIndexReadOnly(className, indexReadOnly);
 	}
 
 	@Override

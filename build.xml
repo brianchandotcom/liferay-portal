@@ -51,6 +51,11 @@
 	</target>
 
 	<target name="clean">
+		<gradle-execute dir="modules" task="clean">
+			<arg value="--parallel" />
+			<arg value="-Dbuild.profile=portal-pre" />
+		</gradle-execute>
+
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<ant dir="benchmarks" inheritAll="false" target="clean" />
 

@@ -15,7 +15,6 @@
 		<delete dir="test-classes" />
 		<delete dir="test-coverage" />
 		<delete dir="test-results" />
-		<delete dir="tmp" />
 		<delete dir="woven-classes" />
 		<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
 		<delete failonerror="false" file="${deploy.dir}/${jar.file}.jar" />

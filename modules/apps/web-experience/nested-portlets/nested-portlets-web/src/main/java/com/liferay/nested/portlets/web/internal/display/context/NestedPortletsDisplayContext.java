@@ -18,6 +18,7 @@ import com.liferay.nested.portlets.web.configuration.NestedPortletsPortletInstan
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -27,7 +28,9 @@ import com.liferay.portal.plugin.PluginUtil;
 
 import java.util.List;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
  * @author Juergen Kappler
@@ -47,6 +50,65 @@ public class NestedPortletsDisplayContext {
 		_nestedPortletsPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				NestedPortletsPortletInstanceConfiguration.class);
+	}
+
+	public HttpServletRequest getLastForwardRequest() {
+		HttpServletRequest originalRequest = null;
+
+		HttpServletRequestWrapper currentRequestWrapper = null;
+
+		HttpServletRequest currentRequest = _request;
+
+		HttpServletRequest nextRequest = null;
+
+		while (currentRequest instanceof HttpServletRequestWrapper) {
+			if (currentRequest instanceof
+					PersistentHttpServletRequestWrapper) {
+
+				PersistentHttpServletRequestWrapper
+					persistentHttpServletRequestWrapper =
+						(PersistentHttpServletRequestWrapper)currentRequest;
+
+				persistentHttpServletRequestWrapper =
+					persistentHttpServletRequestWrapper.clone();
+
+				if (originalRequest == null) {
+					originalRequest = persistentHttpServletRequestWrapper;
+				}
+
+				if (currentRequestWrapper != null) {
+					currentRequestWrapper.setRequest(
+						persistentHttpServletRequestWrapper);
+				}
+
+				currentRequestWrapper = persistentHttpServletRequestWrapper;
+			}
+
+			HttpServletRequestWrapper httpServletRequestWrapper =
+				(HttpServletRequestWrapper)currentRequest;
+
+			nextRequest =
+				(HttpServletRequest)httpServletRequestWrapper.getRequest();
+
+			if ((currentRequest.getDispatcherType() ==
+					DispatcherType.FORWARD) &&
+				(nextRequest.getDispatcherType() == DispatcherType.REQUEST)) {
+
+				break;
+			}
+
+			currentRequest = nextRequest;
+		}
+
+		if (currentRequestWrapper != null) {
+			currentRequestWrapper.setRequest(currentRequest);
+		}
+
+		if (originalRequest != null) {
+			return originalRequest;
+		}
+
+		return currentRequest;
 	}
 
 	public String getLayoutTemplateId() {

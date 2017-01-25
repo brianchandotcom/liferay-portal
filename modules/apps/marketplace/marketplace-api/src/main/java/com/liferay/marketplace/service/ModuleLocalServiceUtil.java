@@ -63,6 +63,20 @@ public class ModuleLocalServiceUtil {
 	}
 
 	/**
+	* @deprecated As of 1.1.0, replaced by {@link #addModule(long, String,
+	String, String)}
+	*/
+	@Deprecated
+	public static com.liferay.marketplace.model.Module addModule(long userId,
+		long appId, java.lang.String bundleSymbolicName,
+		java.lang.String bundleVersion, java.lang.String contextName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addModule(userId, appId, bundleSymbolicName, bundleVersion,
+			contextName);
+	}
+
+	/**
 	* Creates a new module with the primary key. Does not add the module to the database.
 	*
 	* @param moduleId the primary key for the new module

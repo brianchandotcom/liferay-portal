@@ -11,7 +11,7 @@ Import-Package:\
 	\
 	!javax.swing.*,\
 	*
-Liferay-Releng-Module-Group-Description:Liferay-Releng-Module-Group-Title: Runtime
+Liferay-Releng-Module-Group-Description: Liferay-Releng-Module-Group-Title: Runtime
 -includeresource:\
 	@antlr4-runtime-[0-9]*.jar,\
 	@org.abego.treelayout.core-[0-9]*.jar

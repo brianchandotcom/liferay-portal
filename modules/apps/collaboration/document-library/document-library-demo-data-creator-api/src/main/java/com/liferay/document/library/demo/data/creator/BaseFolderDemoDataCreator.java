@@ -15,16 +15,12 @@
 package com.liferay.document.library.demo.data.creator;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.Folder;
 
 /**
  * @author Alejandro Hernández
  */
-public interface RootFolderDemoDataCreator extends BaseFolderDemoDataCreator {
+public interface BaseFolderDemoDataCreator {
 
-	public Folder create(long userId, long groupId) throws PortalException;
-
-	public Folder create(long userId, long groupId, String name)
-		throws PortalException;
+	public void delete() throws PortalException;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.demo.data.creator.internal;
 
-import com.liferay.document.library.demo.data.creator.RootFolderDemoDataCreator;
+import com.liferay.document.library.demo.data.creator.SubfolderDemoDataCreator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.Folder;
 
@@ -23,20 +23,22 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = RootFolderDemoDataCreator.class)
-public class RootFolderDemoDataCreatorImpl
-	extends BaseFolderDemoDataCreatorImpl implements RootFolderDemoDataCreator {
+@Component(service = SubfolderDemoDataCreator.class)
+public class SubfolderDemoDataCreatorImpl
+	extends BaseFolderDemoDataCreatorImpl implements SubfolderDemoDataCreator {
 
 	@Override
-	public Folder create(long userId, long groupId) throws PortalException {
-		return create(userId, groupId, "Demo");
+	public Folder create(long userId, long folderId) throws PortalException {
+		return create(userId, folderId, "Demo");
 	}
 
 	@Override
-	public Folder create(long userId, long groupId, String name)
+	public Folder create(long userId, long folderId, String name)
 		throws PortalException {
 
-		return createBaseFolder(userId, groupId, 0, name);
+		Folder folder = dlAppLocalService.getFolder(folderId);
+
+		return createBaseFolder(userId, folder.getGroupId(), folderId, name);
 	}
 
 }

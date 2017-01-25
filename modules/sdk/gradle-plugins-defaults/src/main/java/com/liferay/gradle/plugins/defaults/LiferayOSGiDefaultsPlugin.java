@@ -1763,6 +1763,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, JavaPlugin.COMPILE_CONFIGURATION_NAME, false);
 		}
 
+		_configureDependenciesTransitive(
+			project, LiferayOSGiPlugin.COMPILE_INCLUDE_CONFIGURATION_NAME,
+			false);
+
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
 
@@ -1784,6 +1788,26 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, name);
 
 		configuration.setTransitive(transitive);
+	}
+
+	private void _configureDependenciesTransitive(
+		Project project, String configurationName, final boolean transitive) {
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, configurationName);
+
+		DependencySet dependencySet = configuration.getAllDependencies();
+
+		dependencySet.withType(
+			ModuleDependency.class,
+			new Action<ModuleDependency>() {
+
+				@Override
+				public void execute(ModuleDependency moduleDependency) {
+					moduleDependency.setTransitive(transitive);
+				}
+
+			});
 	}
 
 	private void _configureDependencyChecker(Project project) {

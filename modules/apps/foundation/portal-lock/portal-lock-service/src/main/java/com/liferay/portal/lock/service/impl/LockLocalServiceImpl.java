@@ -34,6 +34,7 @@ import com.liferay.portal.lock.service.base.LockLocalServiceBaseImpl;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -259,7 +260,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Lock refresh(String uuid, long companyId, long expirationTime)
+	public synchronized Lock refresh(
+			String uuid, long companyId, long expirationTime)
 		throws PortalException {
 
 		Date now = new Date();
@@ -309,6 +311,52 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 				lockListener.onAfterRefresh(key);
 			}
 		}
+	}
+
+	@Override
+	public Optional<Lock> tryLock(
+			long userId, String className, long key, String owner,
+			boolean inheritable, long expirationTime)
+		throws PortalException {
+
+		return tryLock(
+			userId, className, String.valueOf(key), owner, inheritable,
+			expirationTime);
+	}
+
+	@Override
+	public synchronized Optional<Lock> tryLock(
+			long userId, String className, String key, String owner,
+			boolean inheritable, long expirationTime)
+		throws PortalException {
+
+		if (hasLock(userId, className, key)) {
+			return Optional.empty();
+		}
+
+		return Optional.of(
+			lock(userId, className, key, owner, inheritable, expirationTime));
+	}
+
+	@MasterDataSource
+	@Override
+	public synchronized Optional<Lock> tryLock(
+		String className, String key, String owner) {
+
+		return tryLock(className, key, null, owner);
+	}
+
+	@MasterDataSource
+	@Override
+	public synchronized Optional<Lock> tryLock(
+		final String className, final String key, final String expectedOwner,
+		final String updatedOwner) {
+
+		if (isLocked(className, key)) {
+			return Optional.empty();
+		}
+
+		return Optional.of(lock(className, key, expectedOwner, updatedOwner));
 	}
 
 	@Override

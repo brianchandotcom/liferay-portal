@@ -32,6 +32,20 @@ import java.util.List;
 @ProviderType
 public class ModuleLocalServiceImpl extends ModuleLocalServiceBaseImpl {
 
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link #addModule(long, String,
+	*             String, String)}
+	*/
+	@Deprecated
+	@Override
+	public Module addModule(
+			long userId, long appId, String bundleSymbolicName,
+			String bundleVersion, String contextName)
+		throws PortalException {
+
+		return addModule(appId, bundleSymbolicName, bundleVersion, contextName);
+	}
+
 	@Override
 	public Module addModule(
 			long appId, String bundleSymbolicName, String bundleVersion,

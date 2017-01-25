@@ -275,12 +275,11 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 				StringBuilder sb = new StringBuilder();
 
-				sb.append("Module ");
-				sb.append(moduleName);
-				sb.append(' ');
-				sb.append(moduleVersion);
-				sb.append(" - ");
 				sb.append(groupName);
+				sb.append(" - com.liferay:");
+				sb.append(moduleName);
+				sb.append(':');
+				sb.append(moduleVersion);
 
 				groupName = sb.toString();
 			}

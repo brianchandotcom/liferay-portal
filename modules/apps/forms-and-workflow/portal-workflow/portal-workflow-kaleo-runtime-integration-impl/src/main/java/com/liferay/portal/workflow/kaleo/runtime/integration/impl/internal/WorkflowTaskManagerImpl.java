@@ -581,20 +581,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
 					workflowTaskInstanceId);
 
-			KaleoInstanceToken kaleoInstanceToken =
-				kaleoTaskInstanceToken.getKaleoInstanceToken();
-
-			Map<String, Serializable> workflowContext =
-				WorkflowContextUtil.convert(
-					kaleoTaskInstanceToken.getWorkflowContext());
-
-			ServiceContext workflowContextServiceContext =
-				(ServiceContext)workflowContext.get(
-					WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
-
-			ExecutionContext executionContext = new ExecutionContext(
-				kaleoInstanceToken, workflowContext,
-				workflowContextServiceContext);
+			ExecutionContext executionContext = createExecutionContext(
+				kaleoTaskInstanceToken);
 
 			List<KaleoTaskAssignment> configuredKaleoTaskAssignments =
 				_kaleoTaskAssignmentLocalService.getKaleoTaskAssignments(
@@ -603,10 +591,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			for (KaleoTaskAssignment configuredKaleoTaskAssignment :
 					configuredKaleoTaskAssignments) {
 
-				List<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
-					new ArrayList<>(
-						getKaleoTaskAssignments(
-							configuredKaleoTaskAssignment, executionContext));
+				Collection<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
+					getKaleoTaskAssignments(
+						configuredKaleoTaskAssignment, executionContext);
 
 				for (KaleoTaskAssignment calculatedKaleoTaskAssignment :
 						calculatedKaleoTaskAssignments) {
@@ -793,12 +780,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			workflowTaskInstanceId, comment, dueDate, serviceContext);
 	}
 
-	protected List<KaleoTaskAssignment> getCalculatedKaleoTaskAssignments(
+	protected ExecutionContext createExecutionContext(
 			KaleoTaskInstanceToken kaleoTaskInstanceToken)
 		throws PortalException {
-
-		List<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
-			new ArrayList<>();
 
 		KaleoInstanceToken kaleoInstanceToken =
 			kaleoTaskInstanceToken.getKaleoInstanceToken();
@@ -810,8 +794,19 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			(ServiceContext)workflowContext.get(
 				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
-		ExecutionContext executionContext = new ExecutionContext(
+		return new ExecutionContext(
 			kaleoInstanceToken, workflowContext, workflowContextServiceContext);
+	}
+
+	protected List<KaleoTaskAssignment> getCalculatedKaleoTaskAssignments(
+			KaleoTaskInstanceToken kaleoTaskInstanceToken)
+		throws PortalException {
+
+		List<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
+			new ArrayList<>();
+
+		ExecutionContext executionContext = createExecutionContext(
+			kaleoTaskInstanceToken);
 
 		List<KaleoTaskAssignment> configuredKaleoTaskAssignments =
 			_kaleoTaskAssignmentLocalService.getKaleoTaskAssignments(
@@ -829,19 +824,18 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	}
 
 	protected Collection<KaleoTaskAssignment> getKaleoTaskAssignments(
-			KaleoTaskAssignment configuredKaleoTaskAssignment,
+			KaleoTaskAssignment kaleoTaskAssignment,
 			ExecutionContext executionContext)
 		throws PortalException {
 
-		String assigneeClassName =
-			configuredKaleoTaskAssignment.getAssigneeClassName();
+		String assigneeClassName = kaleoTaskAssignment.getAssigneeClassName();
 
 		TaskAssignmentSelector taskAssignmentSelector =
 			_taskAssignmentSelectorRegistry.getTaskAssignmentSelector(
 				assigneeClassName);
 
 		return taskAssignmentSelector.calculateTaskAssignments(
-			configuredKaleoTaskAssignment, executionContext);
+			kaleoTaskAssignment, executionContext);
 	}
 
 	protected boolean hasOtherPooledActors(
@@ -876,9 +870,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					kaleoTaskInstanceToken.getGroupId(), assigneeClassPK);
 
 			for (UserGroupRole userGroupRole : userGroupRoles) {
-				User user = userGroupRole.getUser();
-
-				if (user.getUserId() != userId) {
+				if (userGroupRole.getUserId() != userId) {
 					return true;
 				}
 			}
@@ -934,8 +926,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			return;
 		}
 
-		Role role = _roleLocalService.getRole(
-			kaleoTaskAssignment.getAssigneeClassPK());
+		Role role = _roleLocalService.getRole(assigneeClassPK);
 
 		if ((role.getType() == RoleConstants.TYPE_SITE) ||
 			(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {

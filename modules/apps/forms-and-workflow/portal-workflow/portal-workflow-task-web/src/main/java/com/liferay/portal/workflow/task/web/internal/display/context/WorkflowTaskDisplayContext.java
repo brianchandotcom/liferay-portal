@@ -797,6 +797,10 @@ public class WorkflowTaskDisplayContext {
 	public boolean hasOtherAssignees(WorkflowTask workflowTask)
 		throws PortalException {
 
+		if (workflowTask.isCompleted()) {
+			return false;
+		}
+
 		return WorkflowTaskManagerUtil.hasOtherAssignees(
 			workflowTask.getWorkflowTaskId(),
 			_workflowTaskRequestHelper.getUserId());

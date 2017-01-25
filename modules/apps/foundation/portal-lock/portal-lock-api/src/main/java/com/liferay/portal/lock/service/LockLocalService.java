@@ -37,6 +37,7 @@ import com.liferay.portal.lock.model.Lock;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Provides the local service interface for Lock. Methods of this
@@ -268,6 +269,23 @@ public interface LockLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Lock> getLocks(int start, int end);
+
+	@MasterDataSource
+	public Optional<Lock> tryLock(java.lang.String className,
+		java.lang.String key, java.lang.String expectedOwner,
+		java.lang.String updatedOwner);
+
+	@MasterDataSource
+	public Optional<Lock> tryLock(java.lang.String className,
+		java.lang.String key, java.lang.String owner);
+
+	public Optional<Lock> tryLock(long userId, java.lang.String className,
+		java.lang.String key, java.lang.String owner, boolean inheritable,
+		long expirationTime) throws PortalException;
+
+	public Optional<Lock> tryLock(long userId, java.lang.String className,
+		long key, java.lang.String owner, boolean inheritable,
+		long expirationTime) throws PortalException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.

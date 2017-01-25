@@ -90,13 +90,15 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 					ddmDataProviderOutputParametersSetting :
 						ddmDataProviderOutputParametersSettings) {
 
-				data.add(createMap(ddmDataProviderOutputParametersSetting));
+				data.add(
+					createDDMDataProviderOutputParameterMap(
+						ddmDataProviderOutputParametersSetting));
 			}
 		}
 		catch (Exception e) {
 			_log.error(
 				String.format(
-					"Unable to get the output parameters from data provider " +
+					"Unable to get the output parameters for data provider " +
 						"instance with id '%d'",
 					dataProviderInstanceId),
 				e);
@@ -110,7 +112,7 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 		throw new UnsupportedOperationException();
 	}
 
-	protected Map<Object, Object> createMap(
+	protected Map<Object, Object> createDDMDataProviderOutputParameterMap(
 		DDMDataProviderOutputParametersSettings
 			ddmDataProviderOutputParametersSetting) {
 
@@ -129,7 +131,7 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 		return map;
 	}
 
-	protected DDMFormValues getDataProviderFormValues(
+	protected DDMFormValues getDataProviderInstanceFormValues(
 			DDMDataProvider ddmDataProvider,
 			DDMDataProviderInstance ddmDataProviderInstance)
 		throws PortalException {
@@ -160,15 +162,16 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 			return new DDMDataProviderOutputParametersSettings[0];
 		}
 
-		DDMFormValues dataProviderFormValues = getDataProviderFormValues(
-			ddmDataProvider, ddmDataProviderInstance);
+		DDMFormValues dataProviderFormValues =
+			getDataProviderInstanceFormValues(
+				ddmDataProvider, ddmDataProviderInstance);
 
-		DDMDataProviderParameterSettings dataProviderParameterizedSettings =
+		DDMDataProviderParameterSettings ddmDataProviderParameterSetting =
 			(DDMDataProviderParameterSettings)
 				DDMFormInstanceFactory.create(
 					ddmDataProvider.getSettings(), dataProviderFormValues);
 
-		return dataProviderParameterizedSettings.outputParameters();
+		return ddmDataProviderParameterSetting.outputParameters();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -232,11 +232,11 @@ public class DDMFormFieldTemplateContextFactory {
 	}
 
 	protected List<Map<String, String>> createOptions(
-		List<KeyValuePair> optionsList) {
+		List<KeyValuePair> keyValuePairs) {
 
 		List<Map<String, String>> list = new ArrayList<>();
 
-		for (KeyValuePair keyValuePair : optionsList) {
+		for (KeyValuePair keyValuePair : keyValuePairs) {
 			Map<String, String> option = new HashMap<>();
 
 			option.put("label", keyValuePair.getValue());
@@ -386,12 +386,12 @@ public class DDMFormFieldTemplateContextFactory {
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
 		DDMFormFieldOptions ddmFormFieldOptions) {
 
-		List<KeyValuePair> optionsList =
+		List<KeyValuePair> keyValuePairs =
 			ddmFormFieldEvaluationResult.getProperty("options");
 
-		if (ListUtil.isNotEmpty(optionsList)) {
+		if (ListUtil.isNotEmpty(keyValuePairs)) {
 			ddmFormFieldTemplateContext.put(
-				"options", createOptions(optionsList));
+				"options", createOptions(keyValuePairs));
 		}
 		else {
 			ddmFormFieldTemplateContext.put(

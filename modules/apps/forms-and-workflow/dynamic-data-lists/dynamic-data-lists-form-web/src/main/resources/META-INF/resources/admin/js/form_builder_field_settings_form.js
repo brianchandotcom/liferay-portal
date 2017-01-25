@@ -159,7 +159,7 @@ AUI.add(
 
 						var ddmDataProviderInstanceIdContainer = instance.getField('ddmDataProviderInstanceId').get('container');
 
-						var ddmDataProviderOutputContainer = instance.getField('ddmDataProviderOutput').get('container');
+						var ddmDataProviderOutputContainer = instance.getField('ddmDataProviderInstanceOutput').get('container');
 
 						var optionsContainer = instance.getField('options').get('container');
 

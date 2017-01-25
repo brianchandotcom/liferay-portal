@@ -32,7 +32,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 	rules = {
 		@DDMFormRule(
 			actions = {
-				"call('getDataProviderInstanceOutputParameters', 'dataProviderInstanceId=ddmDataProviderInstanceId', 'ddmDataProviderOutput={key: outputParameterName, value: outputParameterName}')"
+				"call('getDataProviderInstanceOutputParameters', 'dataProviderInstanceId=ddmDataProviderInstanceId', 'ddmDataProviderInstanceOutput={key: outputParameterName, value: outputParameterName}')"
 			},
 			condition = "not(equals(getValue('ddmDataProviderInstanceId'), 0))"
 		)
@@ -64,7 +64,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 							value = {
 								"predefinedValue", "dataSourceType",
 								"ddmDataProviderInstanceId",
-								"ddmDataProviderOutput", "options",
+								"ddmDataProviderInstanceOutput", "options",
 								"placeholder", "visibilityExpression",
 								"validation", "fieldNamespace", "indexType",
 								"localizable", "readOnly", "dataType", "type",
@@ -103,7 +103,7 @@ public interface TextDDMFormFieldTypeSettings
 		type = "select",
 		visibilityExpression = "equals(dataSourceType, \"data-provider\")"
 	)
-	public String ddmDataProviderOutput();
+	public String ddmDataProviderInstanceOutput();
 
 	@DDMFormField(
 		label = "%my-text-field-has",

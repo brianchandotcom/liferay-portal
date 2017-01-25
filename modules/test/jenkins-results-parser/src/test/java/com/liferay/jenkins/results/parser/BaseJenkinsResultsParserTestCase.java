@@ -178,8 +178,7 @@ public abstract class BaseJenkinsResultsParserTestCase {
 			throw newDE;
 		}
 
-		String formattedXML = JenkinsResultsParserUtil.format(
-			document.getRootElement());
+		String formattedXML = Dom4JUtil.format(document.getRootElement());
 
 		for (int i = 0; i < _XML_REPLACEMENTS.length; i++) {
 			formattedXML = formattedXML.replace(

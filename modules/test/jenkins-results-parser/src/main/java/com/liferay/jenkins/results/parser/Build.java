@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.util.List;
 import java.util.Map;
 
+import org.dom4j.Element;
+
 import org.json.JSONObject;
 
 /**
@@ -58,6 +60,10 @@ public interface Build {
 
 	public long getDuration();
 
+	public Element getGitHubMessageBuildAnchorElement();
+
+	public Element getGitHubMessageElement();
+
 	public String getInvocationURL();
 
 	public String getJDK();
@@ -79,6 +85,8 @@ public interface Build {
 	public Build getParentBuild();
 
 	public String getRepositoryName();
+
+	public String getRepositorySHA(String repositoryName);
 
 	public String getResult();
 

@@ -77,9 +77,9 @@ public class JenkinsPerformanceTableUtil {
 
 		JenkinsPerformanceDataUtil.reset();
 
-		System.out.println(JenkinsResultsParserUtil.format(pElement));
+		System.out.println(Dom4JUtil.format(pElement));
 
-		return JenkinsResultsParserUtil.format(divElement);
+		return Dom4JUtil.format(divElement);
 	}
 
 	private static Element _createAxisElement(

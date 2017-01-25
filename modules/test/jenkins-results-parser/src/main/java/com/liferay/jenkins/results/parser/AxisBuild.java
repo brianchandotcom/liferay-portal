@@ -27,6 +27,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.dom4j.Element;
+
 import org.json.JSONObject;
 
 /**
@@ -101,7 +103,16 @@ public class AxisBuild extends BaseBuild {
 		}
 
 		if (fromArchive) {
-			return jobURL + "/" + axisVariable + "/" + buildNumber + "/";
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(jobURL);
+			sb.append("/");
+			sb.append(axisVariable);
+			sb.append("/");
+			sb.append(buildNumber);
+			sb.append("/");
+
+			return sb.toString();
 		}
 
 		try {
@@ -111,7 +122,16 @@ public class AxisBuild extends BaseBuild {
 			throw new RuntimeException("Unable to decode " + jobURL, uee);
 		}
 
-		String buildURL = jobURL + "/" + axisVariable + "/" + buildNumber + "/";
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(jobURL);
+		sb.append("/");
+		sb.append(axisVariable);
+		sb.append("/");
+		sb.append(buildNumber);
+		sb.append("/");
+
+		String buildURL = sb.toString();
 
 		try {
 			return JenkinsResultsParserUtil.encode(buildURL);
@@ -169,6 +189,102 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
+	public Element getGitHubMessageElement() {
+		String status = getStatus();
+
+		if (!status.equals("completed") && (getParentBuild() != null)) {
+			return null;
+		}
+
+		String result = getResult();
+
+		if (result.equals("SUCCESS")) {
+			return null;
+		}
+
+		Element messageElement = Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewAnchorElement(
+				getBuildURL(), null, getDisplayName()));
+
+		if (result.equals("ABORTED")) {
+			messageElement.add(
+				Dom4JUtil.toCodeSnippetElement("Build was aborted"));
+		}
+
+		if (result.equals("FAILURE")) {
+			Element failureMessageElement = getFailureMessageElement();
+
+			if (failureMessageElement != null) {
+				messageElement.add(failureMessageElement);
+			}
+		}
+
+		if (result.equals("UNSTABLE")) {
+			String jobVariant = getParameterValue("JOB_VARIANT");
+
+			Element downstreamBuildOrderedListElement = Dom4JUtil.getNewElement(
+				"ol", messageElement);
+
+			int failureCount = 0;
+
+			for (TestResult testResult : getTestResults(null)) {
+				String testStatus = testResult.getStatus();
+
+				if (testStatus.equals("PASSED") ||
+					testStatus.equals("SKIPPED")) {
+
+					continue;
+				}
+
+				Element downstreamBuildListItemElement =
+					Dom4JUtil.getNewElement(
+						"li", downstreamBuildOrderedListElement);
+
+				if (failureCount < 3) {
+					downstreamBuildListItemElement.add(
+						Dom4JUtil.getNewAnchorElement(
+							testResult.getTestReportURL(),
+							testResult.getDisplayName()));
+
+					if (jobVariant.contains("functional")) {
+						Dom4JUtil.addToElement(
+							downstreamBuildListItemElement, " - ",
+							Dom4JUtil.getNewAnchorElement(
+								testResult.getPoshiReportURL(), "Poshi Report"),
+							" - ",
+							Dom4JUtil.getNewAnchorElement(
+								testResult.getPoshiSummaryURL(),
+								"Poshi Summary"),
+							" - ",
+							Dom4JUtil.getNewAnchorElement(
+								testResult.getConsoleOutputURL(),
+								"Console Output"));
+
+						if (testResult.hasLiferayLog()) {
+							Dom4JUtil.addToElement(
+								downstreamBuildListItemElement, " - ",
+								Dom4JUtil.getNewAnchorElement(
+									testResult.getLiferayLogURL(),
+									"Liferay Log"));
+						}
+					}
+
+					failureCount++;
+
+					continue;
+				}
+
+				downstreamBuildListItemElement.addText("...");
+
+				break;
+			}
+		}
+
+		return messageElement;
+	}
+
+	@Override
 	public String getJDK() {
 		Build parentBuild = getParentBuild();
 
@@ -223,7 +339,7 @@ public class AxisBuild extends BaseBuild {
 		sb.append("/");
 		sb.append(getParameterValue("JOB_VARIANT"));
 		sb.append("/");
-		sb.append(getAxisVariable());
+		sb.append(getAxisNumber());
 
 		return sb.toString();
 	}
@@ -257,6 +373,16 @@ public class AxisBuild extends BaseBuild {
 
 	@Override
 	protected void checkForReinvocation() {
+	}
+
+	@Override
+	protected FailureMessageGenerator[] getFailureMessageGenerators() {
+		return _failureMessageGenerators;
+	}
+
+	@Override
+	protected Element getGitHubMessageJobResultsElement() {
+		return null;
 	}
 
 	@Override
@@ -354,5 +480,16 @@ public class AxisBuild extends BaseBuild {
 
 	private static final Pattern _axisVariablePattern = Pattern.compile(
 		"AXIS_VARIABLE=(?<axisNumber>[^,]+),.*");
+
+	private static final FailureMessageGenerator[] _failureMessageGenerators = {
+		new IntegrationTestTimeoutFailureMessageGenerator(),
+		new LocalGitMirrorFailureMessageGenerator(),
+		new PluginFailureMessageGenerator(),
+		new PluginGitIDFailureMessageGenerator(),
+		new SemanticVersioningFailureMessageGenerator(),
+		new SourceFormatFailureMessageGenerator(),
+
+		new GenericFailureMessageGenerator()
+	};
 
 }

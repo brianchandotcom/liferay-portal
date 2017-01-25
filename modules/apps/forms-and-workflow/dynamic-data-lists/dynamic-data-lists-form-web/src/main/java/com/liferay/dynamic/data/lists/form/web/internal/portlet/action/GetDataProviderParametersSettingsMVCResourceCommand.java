@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
@@ -127,7 +127,7 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 		long ddmDataProviderInstanceId = ParamUtil.getLong(
 			resourceRequest, "ddmDataProviderInstanceId");
 
-		return _ddmDataProviderInstanceLocalService.getDataProviderInstance(
+		return _ddmDataProviderInstanceService.getDataProviderInstance(
 			ddmDataProviderInstanceId);
 	}
 
@@ -197,8 +197,7 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 	}
 
 	@Reference
-	private DDMDataProviderInstanceLocalService
-		_ddmDataProviderInstanceLocalService;
+	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
 
 	@Reference
 	private DDMDataProviderTracker _ddmDataProviderTracker;

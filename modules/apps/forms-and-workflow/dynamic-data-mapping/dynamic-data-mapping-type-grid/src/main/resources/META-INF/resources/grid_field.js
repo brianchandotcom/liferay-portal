@@ -1,6 +1,10 @@
 AUI.add(
 	'liferay-ddm-form-field-grid',
 	function(A) {
+		var Lang = A.Lang;
+
+		var TPL_QUERY_INPUT_CHECKED = 'input[name="{name}"]:checked';
+
 		var GridField = A.Component.create(
 			{
 				ATTRS: {
@@ -36,26 +40,6 @@ AUI.add(
 						);
 					},
 
-					getGridRowsNode: function() {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						var gridRowsNode = container.all('tbody tr');
-
-						return gridRowsNode;
-					},
-
-					getInputNode: function() {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						var inputNode = container.all('input[type="hidden"]');
-
-						return inputNode;
-					},
-
 					getTemplateContext: function() {
 						var instance = this;
 
@@ -71,23 +55,28 @@ AUI.add(
 					getValue: function() {
 						var instance = this;
 
-						var gridRowsNode = instance.getGridRowsNode();
-
-						var gridRows = gridRowsNode.get(0);
+						var gridRowsNode = instance._getGridRowsNode();
 
 						var value = {};
 
-						gridRows.forEach(
-							function(gridRow) {
-								var colValue = gridRow.all('td').one('input[type="radio"]:checked');
+						for (var i = 0; i < gridRowsNode.size(); i++) {
+							var gridRow = gridRowsNode.item(i);
 
-								if (colValue) {
-									var rowValue = colValue.attr('name');
+							var rowName = gridRow.attr('name');
 
-									value[rowValue] = colValue.val();
+							var queryChecked = Lang.sub(
+								TPL_QUERY_INPUT_CHECKED,
+								{
+									name: rowName
 								}
+							);
+
+							var inputChecked = gridRow.one(queryChecked);
+
+							if (inputChecked) {
+								value[rowName] = inputChecked.val();
 							}
-						);
+						}
 
 						return value;
 					},
@@ -95,29 +84,31 @@ AUI.add(
 					setValue: function(value) {
 						var instance = this;
 
-						var gridRowsNode = instance.getGridRowsNode();
+						var contextValue = {};
 
-						var gridRows = gridRowsNode.get(0);
+						var gridRowsNode = instance._getGridRowsNode();
 
-						gridRows.forEach(
-							function(gridRow, index) {
-								var tableCellNodeList = gridRow.all('td');
+						for (var i = 0; i < gridRowsNode.size(); i++) {
+							var gridRow = gridRowsNode.item(i);
 
-								var radioNodeList = tableCellNodeList.all('input[type="radio"]');
+							var tableCellNodeList = gridRow.all('td');
 
-								radioNodeList.removeAttribute('checked');
+							var radioNodeList = tableCellNodeList.all('input');
 
-								var radioToCheck = radioNodeList.filter(
-									function(node) {
-										return node.val() === value[node.attr('name')];
-									}
-								).item(0);
+							radioNodeList.attr('checked', false);
 
-								if (radioToCheck) {
-									radioToCheck.attr('checked', true);
-								}
+							var radioToCheck = instance._getRadioToCheck(radioNodeList, value);
+
+							if (radioToCheck) {
+								radioToCheck.attr('checked', true);
+
+								contextValue[radioToCheck.attr('name')] = radioToCheck.attr('value');
+
+								instance._setValueInputHidden(i, radioToCheck);
 							}
-						);
+						}
+
+						instance.set('value', contextValue);
 					},
 
 					showErrorMessage: function() {
@@ -130,10 +121,40 @@ AUI.add(
 						container.all('.help-block').appendTo(container.one('.form-group'));
 					},
 
+					_getGridRowsNode: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var gridRowsNode = container.all('tbody tr');
+
+						return gridRowsNode;
+					},
+
+					_getInputNode: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var inputNode = container.all('input[type="hidden"]');
+
+						return inputNode;
+					},
+
 					_getLocalizedLabel: function(option) {
 						var defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
 						return option.label[defaultLanguageId] ? option.label[defaultLanguageId] : option.label;
+					},
+
+					_getRadioToCheck: function(radioNodeList, value) {
+						var radioToCheck = radioNodeList.filter(
+							function(node) {
+								return node.val() === value[node.attr('name')];
+							}
+						).item(0);
+
+						return radioToCheck;
 					},
 
 					_mapItemsLabels: function(items) {
@@ -149,19 +170,21 @@ AUI.add(
 					_onCheckItem: function(event) {
 						var instance = this;
 
-						var inputNode = this.getInputNode();
-
 						var target = event.currentTarget;
-
-						var rowValue = target.attr('name');
 
 						var rowIndex = target.attr('data-row-index');
 
-						var colValue = target.attr('value');
+						instance._setValueInputHidden(rowIndex, target);
 
-						var currentItem = inputNode.item(rowIndex);
+						var value = instance.get('value');
 
-						currentItem.attr('value', rowValue + ';' + colValue);
+						if (!value) {
+							value = {};
+						}
+
+						value[target.attr('name')] = target.attr('value');
+
+						instance.set('value', value);
 					},
 
 					_setColumns: function(columns) {
@@ -174,6 +197,16 @@ AUI.add(
 						var instance = this;
 
 						instance._mapItemsLabels(rows);
+					},
+
+					_setValueInputHidden: function(index, radio) {
+						var instance = this;
+
+						var inputNode = this._getInputNode();
+
+						var currentItem = inputNode.item(index);
+
+						currentItem.attr('value', radio.attr('name') + ';' + radio.attr('value'));
 					}
 				}
 			}
@@ -183,6 +216,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-field']
+		requires: ['liferay-ddm-form-field-grid', 'liferay-ddm-form-renderer-field']
 	}
 );

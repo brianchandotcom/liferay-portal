@@ -1,10 +1,13 @@
 ;(function() {
+	var LiferayAUI = Liferay.AUI;
+
 	AUI().applyConfig(
 		{
 			groups: {
 				'field-grid': {
 					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
+					filter: LiferayAUI.getFilterConfig(),
 					modules: {
 						'liferay-ddm-form-field-grid': {
 							condition: {
@@ -12,6 +15,7 @@
 							},
 							path: 'grid_field.js',
 							requires: [
+								'liferay-ddm-form-field-grid-template',
 								'liferay-ddm-form-renderer-field'
 							]
 						},

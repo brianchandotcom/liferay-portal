@@ -28,17 +28,17 @@ ddm.grid = function(opt_data, opt_ignored) {
     output += '<th>' + soy.$$escapeHtml(columnData34.label) + '</th>';
   }
   output += '</tr></thead><tbody>';
-  var rowList57 = opt_data.rows;
-  var rowListLen57 = rowList57.length;
-  for (var rowIndex57 = 0; rowIndex57 < rowListLen57; rowIndex57++) {
-    var rowData57 = rowList57[rowIndex57];
-    output += '<tr><td>' + soy.$$escapeHtml(rowData57.label) + '</td>';
-    var columnList54 = opt_data.columns;
-    var columnListLen54 = columnList54.length;
-    for (var columnIndex54 = 0; columnIndex54 < columnListLen54; columnIndex54++) {
-      var columnData54 = columnList54[columnIndex54];
-      var checked__soy40 = columnData54.value == opt_data.value[rowData57.value] ? 'checked' : '';
-      output += '<td><input ' + soy.$$filterHtmlAttributes(checked__soy40) + ' class="form-builder-grid-field" data-row-index="' + soy.$$escapeHtmlAttribute(rowIndex57) + '" ' + ((opt_data.readOnly) ? 'disabled' : '') + ' name="' + soy.$$escapeHtmlAttribute(rowData57.value) + '" type="radio" value="' + soy.$$escapeHtmlAttribute(columnData54.value) + '" /></td>';
+  var rowList59 = opt_data.rows;
+  var rowListLen59 = rowList59.length;
+  for (var rowIndex59 = 0; rowIndex59 < rowListLen59; rowIndex59++) {
+    var rowData59 = rowList59[rowIndex59];
+    output += '<tr name="' + soy.$$escapeHtmlAttribute(rowData59.value) + '"><td>' + soy.$$escapeHtml(rowData59.label) + '</td>';
+    var columnList56 = opt_data.columns;
+    var columnListLen56 = columnList56.length;
+    for (var columnIndex56 = 0; columnIndex56 < columnListLen56; columnIndex56++) {
+      var columnData56 = columnList56[columnIndex56];
+      var checked__soy42 = columnData56.value == opt_data.value[rowData59.value] ? 'checked' : '';
+      output += '<td><input ' + soy.$$filterHtmlAttributes(checked__soy42) + ' class="form-builder-grid-field" data-row-index="' + soy.$$escapeHtmlAttribute(rowIndex59) + '" ' + ((opt_data.readOnly) ? 'disabled' : '') + ' name="' + soy.$$escapeHtmlAttribute(rowData59.value) + '" type="radio" value="' + soy.$$escapeHtmlAttribute(columnData56.value) + '" /></td>';
     }
     output += '</tr>';
   }
@@ -52,10 +52,10 @@ if (goog.DEBUG) {
 
 ddm.hidden_grid = function(opt_data, opt_ignored) {
   var output = '';
-  var rowList71 = opt_data.rows;
-  var rowListLen71 = rowList71.length;
-  for (var rowIndex71 = 0; rowIndex71 < rowListLen71; rowIndex71++) {
-    var rowData71 = rowList71[rowIndex71];
+  var rowList73 = opt_data.rows;
+  var rowListLen73 = rowList73.length;
+  for (var rowIndex73 = 0; rowIndex73 < rowListLen73; rowIndex73++) {
+    var rowData73 = rowList73[rowIndex73];
     output += '<input class="form-control hide" dir="' + soy.$$escapeHtmlAttribute(opt_data.dir) + '" name="' + soy.$$escapeHtmlAttribute(opt_data.name) + '" type="hidden"/>';
   }
   return output;

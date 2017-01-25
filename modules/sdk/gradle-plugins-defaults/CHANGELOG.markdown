@@ -946,6 +946,7 @@ file contains a `Main-Class` header.
 
 ### Changed
 - [LPS-70282]: Update the [Liferay Gradle Plugins] dependency to version 3.1.2.
+- [LPS-70286]: Change `appJavadoc` module headings.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1037,6 +1038,7 @@ file contains a `Main-Class` header.
 [LPS-70146]: https://issues.liferay.com/browse/LPS-70146
 [LPS-70170]: https://issues.liferay.com/browse/LPS-70170
 [LPS-70282]: https://issues.liferay.com/browse/LPS-70282
+[LPS-70286]: https://issues.liferay.com/browse/LPS-70286
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

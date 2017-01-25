@@ -844,6 +844,9 @@ public interface Portal {
 	public HttpServletRequest getOriginalServletRequest(
 		HttpServletRequest request);
 
+	public HttpServletRequest getOriginalServletRequest(
+		HttpServletRequest request, boolean forwardRequest);
+
 	public String getPathContext();
 
 	public String getPathContext(HttpServletRequest request);

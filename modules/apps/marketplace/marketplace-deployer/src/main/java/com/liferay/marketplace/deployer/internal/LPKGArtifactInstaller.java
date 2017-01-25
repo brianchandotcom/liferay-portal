@@ -63,6 +63,7 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 		if (GetterUtil.getBoolean(
 				properties.getProperty("restart-required"), true)) {
+
 			_logRestartRequired(file);
 
 			return;
@@ -110,6 +111,7 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 						properties.getProperty("restart-required"), true)) {
 
 					_logRestartRequired(file);
+
 					return;
 				}
 

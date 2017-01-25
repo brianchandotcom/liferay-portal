@@ -70,7 +70,7 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 			return parametersJSONObject;
 		}
 
-		DDMDataProviderParameterSettings dataProviderParameterizedSettings =
+		DDMDataProviderParameterSettings ddmDataProviderParameterSetting =
 			(DDMDataProviderParameterSettings)
 				DDMFormInstanceFactory.create(
 					ddmDataProvider.getSettings(), ddmFormValues);
@@ -78,11 +78,11 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 		parametersJSONObject.put(
 			"inputs",
 			getInputParametersJSONObject(
-				dataProviderParameterizedSettings.inputParameters()));
+				ddmDataProviderParameterSetting.inputParameters()));
 		parametersJSONObject.put(
 			"outputs",
 			getOutputParametersJSONObject(
-				dataProviderParameterizedSettings.outputParameters()));
+				ddmDataProviderParameterSetting.outputParameters()));
 
 		return parametersJSONObject;
 	}
@@ -99,11 +99,11 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 			_ddmDataProviderTracker.getDDMDataProvider(
 				ddmDataProviderInstance.getType());
 
-		DDMFormValues dataProviderFormValues = getDataProviderFormValues(
+		DDMFormValues ddmFormValues = getDataProviderFormValues(
 			ddmDataProvider, ddmDataProviderInstance);
 
 		JSONObject parametersJSONObject = createParametersJSONObject(
-			ddmDataProvider, dataProviderFormValues);
+			ddmDataProvider, ddmFormValues);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, parametersJSONObject);

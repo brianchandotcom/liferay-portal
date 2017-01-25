@@ -128,10 +128,9 @@ AUI.add(
 						if (!value) {
 							var contextValue = instance._getContextValue();
 
-							var hasCorrespondentOption =
-								instance._hasCorrespondentOption(contextValue);
+							var hasOption = instance._hasOption(contextValue);
 
-							if (contextValue && !hasCorrespondentOption) {
+							if (contextValue && !hasOption) {
 								value = contextValue;
 							}
 						}
@@ -310,22 +309,22 @@ AUI.add(
 						return instance.get('container').one('.' + CSS_SELECT_TRIGGER_ACTION);
 					},
 
-					_hasCorrespondentOption: function(value) {
+					_hasOption: function(value) {
 						var instance = this;
 
-						var hasCorrespondentOption = false;
+						var hasOption = false;
 
 						var inputNode = instance.getInputNode();
 
 						inputNode.all('option').each(
 							function(optionNode) {
 								if (optionNode.val() === value) {
-									hasCorrespondentOption = true;
+									hasOption = true;
 								}
 							}
 						);
 
-						return hasCorrespondentOption;
+						return hasOption;
 					},
 
 					_isClickingOutSide: function(event) {

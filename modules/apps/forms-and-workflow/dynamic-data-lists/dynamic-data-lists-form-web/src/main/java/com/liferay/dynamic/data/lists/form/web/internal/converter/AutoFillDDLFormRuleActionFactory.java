@@ -60,7 +60,7 @@ public class AutoFillDDLFormRuleActionFactory {
 		for (String innerExpression : innerExpressions) {
 			String[] tokens = StringUtil.split(innerExpression, CharPool.EQUAL);
 
-			if (!hasLeftAndRightExpression(tokens)) {
+			if (!isValidExpression(tokens)) {
 				continue;
 			}
 
@@ -85,7 +85,7 @@ public class AutoFillDDLFormRuleActionFactory {
 		for (String innerExpression : innerExpressions) {
 			String[] tokens = StringUtil.split(innerExpression, CharPool.EQUAL);
 
-			if (!hasLeftAndRightExpression(tokens)) {
+			if (!isValidExpression(tokens)) {
 				continue;
 			}
 
@@ -95,7 +95,7 @@ public class AutoFillDDLFormRuleActionFactory {
 		return map;
 	}
 
-	protected static boolean hasLeftAndRightExpression(String[] tokens) {
+	protected static boolean isValidExpression(String[] tokens) {
 		if (tokens.length < 2) {
 			return false;
 		}

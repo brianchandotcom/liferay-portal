@@ -140,9 +140,6 @@ public class TextDDMFormFieldTemplateContextContributor
 			ddmDataProviderInstanceService.getDataProviderInstance(
 				Long.valueOf(ddmDataProviderInstanceId));
 
-		ddmDataProvider = ddmDataProviderTracker.getDDMDataProvider(
-			ddmDataProviderInstance.getType());
-
 		DDMForm ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
 
 		DDMFormValues ddmFormValues = ddmFormValuesJSONDeserializer.deserialize(
@@ -167,21 +164,20 @@ public class TextDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
-
-		List<Map<String, String>> keyValuePairs =
+		List<Map<String, String>> options =
 			(List<Map<String, String>>)
 				ddmFormFieldRenderingContext.getProperty("options");
 
-		if (keyValuePairs.isEmpty()) {
+		if (options.isEmpty()) {
 			return ddmFormField.getDDMFormFieldOptions();
 		}
 
-		for (Map<String, String> keyValuePair : keyValuePairs) {
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		for (Map<String, String> option : options) {
 			ddmFormFieldOptions.addOptionLabel(
-				keyValuePair.get("value"),
-				ddmFormFieldRenderingContext.getLocale(),
-				keyValuePair.get("label"));
+				option.get("value"), ddmFormFieldRenderingContext.getLocale(),
+				option.get("label"));
 		}
 
 		return ddmFormFieldOptions;
@@ -228,13 +224,13 @@ public class TextDDMFormFieldTemplateContextContributor
 			DDMDataProviderResponse ddmDataProviderResponse =
 				executeDDMDataProvider(ddmDataProvider, ddmDataProviderContext);
 
-			String ddmDataProviderOutput = GetterUtil.getString(
-				ddmFormField.getProperty("ddmDataProviderOutput"));
+			String ddmDataProviderInstanceOutput = GetterUtil.getString(
+				ddmFormField.getProperty("ddmDataProviderInstanceOutput"));
 
-			if (Validator.isNotNull(ddmDataProviderOutput)) {
+			if (Validator.isNotNull(ddmDataProviderInstanceOutput)) {
 				DDMDataProviderOutputParametersSettings outputParameterSetting =
 					getDDMDataProviderOutputParametersSetting(
-						ddmDataProviderOutput, ddmDataProvider,
+						ddmDataProviderInstanceOutput, ddmDataProvider,
 						ddmDataProviderContext);
 
 				String[] paths = StringUtil.split(
@@ -259,10 +255,12 @@ public class TextDDMFormFieldTemplateContextContributor
 				}
 			}
 			else {
-				for (Map<Object, Object> map :
+				for (Map<Object, Object> ddmDataProviderData :
 						ddmDataProviderResponse.getData()) {
 
-					for (Entry<Object, Object> entry : map.entrySet()) {
+					for (Entry<Object, Object> entry :
+							ddmDataProviderData.entrySet()) {
+
 						ddmFormFieldOptions.addOptionLabel(
 							String.valueOf(entry.getValue()),
 							ddmFormFieldRenderingContext.getLocale(),
@@ -301,13 +299,15 @@ public class TextDDMFormFieldTemplateContextContributor
 				ddmDataProviderContext.getSettingsInstance(
 					ddmDataProvider.getSettings());
 
-		for (DDMDataProviderOutputParametersSettings outputParameterSettings :
-				dataProviderParameterizedSettings.outputParameters()) {
+		for (DDMDataProviderOutputParametersSettings
+				ddmDataProviderOutputParametersSetting :
+					dataProviderParameterizedSettings.outputParameters()) {
 
 			if (ddmDataProviderOutput.equals(
-					outputParameterSettings.outputParameterName())) {
+					ddmDataProviderOutputParametersSetting.
+						outputParameterName())) {
 
-				return outputParameterSettings;
+				return ddmDataProviderOutputParametersSetting;
 			}
 		}
 

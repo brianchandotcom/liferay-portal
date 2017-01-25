@@ -320,21 +320,23 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 				ddmDataProviderContext.getSettingsInstance(
 					ddmDataProvider.getSettings());
 
-		for (DDMDataProviderOutputParametersSettings outputParameterSettings :
-				ddmDataProviderParameterSettings.outputParameters()) {
+		for (DDMDataProviderOutputParametersSettings
+				ddmDataProviderOutputParameterSetting :
+					ddmDataProviderParameterSettings.outputParameters()) {
 
 			String[] paths = StringUtil.split(
-				outputParameterSettings.outputParameterPath(),
+				ddmDataProviderOutputParameterSetting.outputParameterPath(),
 				CharPool.SEMICOLON);
 
 			if (isListOutputParameterWithOnePath(
-					outputParameterSettings, paths)) {
+					ddmDataProviderOutputParameterSetting, paths)) {
 
 				paths = ArrayUtil.append(paths, paths[0]);
 			}
 
 			outputParameterNameToPathsMap.put(
-				outputParameterSettings.outputParameterName(), paths);
+				ddmDataProviderOutputParameterSetting.outputParameterName(),
+				paths);
 		}
 
 		return outputParameterNameToPathsMap;

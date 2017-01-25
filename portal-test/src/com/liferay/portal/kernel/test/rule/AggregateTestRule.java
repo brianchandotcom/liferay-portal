@@ -96,7 +96,9 @@ public class AggregateTestRule implements ArquillianClassRuleHandler, TestRule {
 		"com.liferay.portal.test.rule.SynchronousMailTestRule",
 		"com.liferay.document.library.webdav.test." +
 			"WebDAVEnvironmentConfigTestRule",
-		"com.liferay.portal.test.rule.SyntheticBundleRule"
+		"com.liferay.portal.test.rule.SyntheticBundleRule",
+		"com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal." +
+			"test.WorkflowTaskEnvironmentConfigTestRule"
 	};
 
 	private static final Comparator<TestRule> _testRuleComparator =

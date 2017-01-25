@@ -75,6 +75,15 @@ public interface ModuleLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* @deprecated As of 1.1.0, replaced by {@link #addModule(long, String,
+	String, String)}
+	*/
+	@java.lang.Deprecated
+	public Module addModule(long userId, long appId,
+		java.lang.String bundleSymbolicName, java.lang.String bundleVersion,
+		java.lang.String contextName) throws PortalException;
+
+	/**
 	* Creates a new module with the primary key. Does not add the module to the database.
 	*
 	* @param moduleId the primary key for the new module

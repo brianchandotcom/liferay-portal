@@ -2903,7 +2903,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  il;version="6.2.0";uses:="com.liferay.portal.kernel.exception",com.li
  feray.portal.kernel.struts;version="7.0.0";uses:="javax.portlet,javax
  .servlet.http",com.liferay.portal.kernel.systemevent;version="6.2.0",
- com.liferay.portal.kernel.template;version="7.1.0";uses:="com.liferay
+ com.liferay.portal.kernel.template;version="7.2.0";uses:="com.liferay
  .dynamic.data.mapping.kernel,com.liferay.portal.kernel.exception,com.
  liferay.portal.kernel.xml,javax.servlet,javax.servlet.http",com.lifer
  ay.portal.kernel.template.comparator;version="6.2.0";uses:="com.lifer

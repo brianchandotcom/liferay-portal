@@ -315,6 +315,35 @@ public class LockLocalServiceUtil {
 		return getService().getLocks(start, end);
 	}
 
+	public static java.util.Optional<com.liferay.portal.lock.model.Lock> tryLock(
+		java.lang.String className, java.lang.String key,
+		java.lang.String expectedOwner, java.lang.String updatedOwner) {
+		return getService().tryLock(className, key, expectedOwner, updatedOwner);
+	}
+
+	public static java.util.Optional<com.liferay.portal.lock.model.Lock> tryLock(
+		java.lang.String className, java.lang.String key, java.lang.String owner) {
+		return getService().tryLock(className, key, owner);
+	}
+
+	public static java.util.Optional<com.liferay.portal.lock.model.Lock> tryLock(
+		long userId, java.lang.String className, java.lang.String key,
+		java.lang.String owner, boolean inheritable, long expirationTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .tryLock(userId, className, key, owner, inheritable,
+			expirationTime);
+	}
+
+	public static java.util.Optional<com.liferay.portal.lock.model.Lock> tryLock(
+		long userId, java.lang.String className, long key,
+		java.lang.String owner, boolean inheritable, long expirationTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .tryLock(userId, className, key, owner, inheritable,
+			expirationTime);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

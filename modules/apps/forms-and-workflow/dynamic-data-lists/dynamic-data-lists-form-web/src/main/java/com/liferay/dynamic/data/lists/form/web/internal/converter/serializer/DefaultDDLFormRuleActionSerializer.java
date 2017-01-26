@@ -41,12 +41,9 @@ public class DefaultDDLFormRuleActionSerializer
 			_defaultDefaultDDLFormRuleAction.getTarget());
 	}
 
-	private DefaultDDLFormRuleAction _defaultDefaultDDLFormRuleAction;
-
-	private static final String _setBooleanPropertyFormat = "%s('%s', true)";
-
 	private static final Map<String, String> _actionBooleanFunctionNameMap =
 		new HashMap<>();
+	private static final String _setBooleanPropertyFormat = "%s('%s', true)";
 
 	static {
 		_actionBooleanFunctionNameMap.put("enable", "setEnabled");
@@ -54,5 +51,7 @@ public class DefaultDDLFormRuleActionSerializer
 		_actionBooleanFunctionNameMap.put("require", "setRequired");
 		_actionBooleanFunctionNameMap.put("show", "setVisible");
 	}
+
+	private final DefaultDDLFormRuleAction _defaultDefaultDDLFormRuleAction;
 
 }

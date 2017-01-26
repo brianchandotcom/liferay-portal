@@ -114,6 +114,20 @@ public class StrutsActionRegistryUtil {
 		_strutsPortletActionServiceRegistrations =
 			new StringServiceRegistrationMapImpl<>();
 
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(&(|(objectClass=" + StrutsAction.class.getName() +
+				")(objectClass=" + StrutsPortletAction.class.getName() +
+					"))(path=*))");
+
+		_serviceTracker = registry.trackServices(
+			filter, new ActionServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
 	private static class ActionServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Action> {
 
@@ -172,20 +186,6 @@ public class StrutsActionRegistryUtil {
 			}
 		}
 
-	}
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
-			"(&(|(objectClass=" + StrutsAction.class.getName() +
-				")(objectClass=" + StrutsPortletAction.class.getName() +
-					"))(path=*))");
-
-		_serviceTracker = registry.trackServices(
-			filter, new ActionServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 }

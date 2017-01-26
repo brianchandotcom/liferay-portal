@@ -60,6 +60,7 @@ import com.liferay.portlet.PortletPreferencesImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -90,10 +91,10 @@ public class AssetPublisherConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {
-		String command = ParamUtil.getString(request, Constants.CMD);
+		String cmd = ParamUtil.getString(request, Constants.CMD);
 
-		if (Validator.isNotNull(command) && command.equals("edit_query_rule")) {
-			return "/edit_query_rule.jsp";
+		if (Objects.equals(cmd, "edit_query_rule")) {
+			return "/edit_field.jsp";
 		}
 
 		return "/configuration.jsp";

@@ -30,6 +30,12 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 
 	redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
 
+	if (request.getAttribute("view.jsp-workflowEnabledRedirect") != null) {
+		String workflowEnabledRedirect = (String)request.getAttribute("view.jsp-workflowEnabledRedirect");
+
+		redirectURL.setParameter("workflowEnabledRedirect", workflowEnabledRedirect);
+	}
+
 	String fullContentRedirect = (String)request.getAttribute("view.jsp-fullContentRedirect");
 
 	if (fullContentRedirect != null) {

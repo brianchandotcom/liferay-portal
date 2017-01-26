@@ -13,10 +13,3 @@ Import-Package:\
 	*
 JPM-Command: liferay-bundle-support
 Main-Class: com.liferay.portal.tools.bundle.support.BundleSupport
--includeresource:\
-	@commons-codec-[0-9]*.jar,\
-	@commons-compress-[0-9]*.jar,\
-	@commons-logging-[0-9]*.jar,\
-	@httpclient-[0-9]*.jar,\
-	@httpcore-[0-9]*.jar,\
-	@jcommander-[0-9]*.jar

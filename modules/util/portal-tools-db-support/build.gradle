@@ -12,7 +12,8 @@ buildPluginDescriptor {
 }
 
 dependencies {
-	provided group: "com.beust", name: "jcommander", version: "1.58"
+	compileInclude group: "com.beust", name: "jcommander", version: "1.58"
+
 	provided group: "com.liferay", name: "com.liferay.portal.tools.service.builder", transitive: false, version: "1.0.135"
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"

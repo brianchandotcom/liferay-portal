@@ -105,7 +105,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "assetCategoriesS
 		String[] categoryIdsTitle = categoryIdsTitles.get(0);
 		%>
 
-		<div class="lfr-tags-selector-content" id="<%= renderResponse.getNamespace() + randomNamespace + "assetCategoriesSelector" %>">
+		<div class="lfr-tags-selector-content" id="<%= randomNamespace %>assetCategoriesSelector">
 			<aui:input name="<%= hiddenInput %>" type="hidden" />
 		</div>
 
@@ -114,7 +114,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "assetCategoriesS
 				{
 					categoryIds: '<%= categoryIdsTitle[0] %>',
 					categoryTitles: '<%= HtmlUtil.escapeJS(categoryIdsTitle[1]) %>',
-					contentBox: '#<%= renderResponse.getNamespace() + randomNamespace + "assetCategoriesSelector" %>',
+					contentBox: '#<%= randomNamespace %>assetCategoriesSelector',
 					eventName: '<%= eventName %>',
 					hiddenInput: '#<portlet:namespace /><%= hiddenInput %>',
 					instanceVar: '<portlet:namespace />',

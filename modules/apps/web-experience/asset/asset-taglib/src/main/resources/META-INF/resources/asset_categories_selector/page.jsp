@@ -29,6 +29,8 @@ boolean showRequiredLabel = GetterUtil.getBoolean((String)request.getAttribute("
 List<AssetVocabulary> vocabularies = (List<AssetVocabulary>)request.getAttribute("liferay-asset:asset-categories-selector:vocabularies");
 
 int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
+
+String randomNamespace = PortalUtil.generateRandomKey(request, "assetCategoriesSelector") + StringPool.UNDERLINE;
 %>
 
 <c:choose>

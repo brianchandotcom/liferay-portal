@@ -64,6 +64,7 @@ import org.gradle.testkit.runner.TaskOutcome;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -700,6 +701,7 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, gradleProjectDir, name, packageName, "");
 	}
 
+	@Ignore
 	@Test
 	public void testBuildTemplateServiceBuilderNestedPath() throws Exception {
 		File workspaceProjectDir = _buildTemplateWithGradle(

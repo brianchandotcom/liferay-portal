@@ -11,4 +11,3 @@ Import-Package:\
 	!org.apache.tools.ant.*,\
 	*
 Main-Class: com.liferay.portal.tools.soy.builder.SoyBuilder
--includeresource: @jcommander-[0-9]*.jar

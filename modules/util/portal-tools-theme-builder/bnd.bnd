@@ -7,6 +7,3 @@ Import-Package:\
 	!org.apache.tools.ant.*,\
 	*
 Main-Class: com.liferay.portal.tools.theme.builder.ThemeBuilder
--includeresource:\
-	@jcommander-[0-9]*.jar,\
-	@thumbnailator-[0-9]*.jar

@@ -78,9 +78,9 @@ configurations {
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.0"
 
-	jnaerator classifier: "shaded", group: "com.nativelibs4java", name: "jnaerator", transitive: false, version: "0.12"
+	compileInclude group: "com.nativelibs4java", name: "bridj", version: "0.7.0"
 
-	provided group: "com.nativelibs4java", name: "bridj", transitive: false, version: "0.7.0"
+	jnaerator classifier: "shaded", group: "com.nativelibs4java", name: "jnaerator", transitive: false, version: "0.12"
 }
 
 downloadSassSpec {

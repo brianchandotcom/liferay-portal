@@ -164,8 +164,8 @@ public class FlagsTag extends TemplateRendererTag {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		PortletResponse portletResponse =
-			(PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		String currentURL;
 

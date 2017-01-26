@@ -2,6 +2,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.flags.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.flags.service", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.3"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.4.0"

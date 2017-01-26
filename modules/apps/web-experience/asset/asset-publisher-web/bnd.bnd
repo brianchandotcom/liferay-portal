@@ -13,5 +13,6 @@ Export-Package:\
 Import-Package: com.liferay.portal.kernel.portlet;version="[7.3.0,8)",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset
+Require-Capability: osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /asset-publisher-web
 -dsannotations-options: inherit

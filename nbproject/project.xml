@@ -261,6 +261,7 @@
 				<classpath mode="compile">lib/development/com.liferay.ant.bnd.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.ant.build.logger.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.ant.mirrors.get.jar</classpath>
+				<classpath mode="compile">lib/development/com.liferay.util.taglib.compat.jar</classpath>
 				<classpath mode="compile">lib/development/deployment.jar</classpath>
 				<classpath mode="compile">lib/development/dtddoc.jar</classpath>
 				<classpath mode="compile">lib/development/dtdparser.jar</classpath>

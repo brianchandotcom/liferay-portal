@@ -44,7 +44,7 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 			<span class="field-content">
 				<label id="<portlet:namespace />assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>">
 					<%= vocabulary.getTitle(locale) %>
-d
+
 					<c:if test="<%= vocabulary.getGroupId() != themeDisplay.getSiteGroupId() %>">
 
 						<%

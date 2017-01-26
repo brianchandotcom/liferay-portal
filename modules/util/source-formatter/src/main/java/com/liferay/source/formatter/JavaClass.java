@@ -1176,13 +1176,15 @@ public class JavaClass {
 				}
 
 				javaTermName = (String)tuple.getObject(0);
+				javaTermType = (Integer)tuple.getObject(1);
 
-				if (!Validator.isVariableName(javaTermName)) {
+				if ((javaTermType != JavaTerm.TYPE_STATIC_BLOCK) &&
+					!Validator.isVariableName(javaTermName)) {
+
 					return Collections.emptySet();
 				}
 
 				javaTermStartPosition = javaTermEndPosition;
-				javaTermType = (Integer)tuple.getObject(1);
 
 				lastCommentOrAnnotationPos = -1;
 			}

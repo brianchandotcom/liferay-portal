@@ -990,7 +990,7 @@ to version 1.0.74.
 - [LPS-70036]: Update the [Liferay Gradle Plugins Soy] dependency to version
 3.0.1.
 
-## 3.1.2 - 2017-01-24
+## 3.1.2 - 2017-01-26
 
 ### Added
 - [LPS-70282]: Automatically configure the `mainClassName` project property

@@ -938,7 +938,7 @@ dependency for JSP compilation.
 - [LPS-69501]: Use the published portal tools by default instead of the ones
 deployed locally in the `tools/sdk/dependencies` directories.
 
-## 2.4.17 - 2017-01-24
+## 2.4.17 - 2017-01-26
 
 ### Added
 - [LPS-70282]: Automatically apply the `application` plugin if the `bnd.bnd`

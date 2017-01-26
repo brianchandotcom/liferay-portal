@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletConfigurationPermissionsDisplayContext portletConfigurationPermissionsDisplayContext = new PortletConfigurationPermissionsDisplayContext(request);
-
-String resourcePrimKey = portletConfigurationPermissionsDisplayContext.getResourcePrimKey();
+PortletConfigurationPermissionsDisplayContext portletConfigurationPermissionsDisplayContext = new PortletConfigurationPermissionsDisplayContext(request, renderRequest);
 
 if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelResource())) {
 	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.unescape(portletConfigurationPermissionsDisplayContext.getModelResourceDescription()), null);
@@ -29,10 +27,6 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 Group group = portletConfigurationPermissionsDisplayContext.getGroup();
 
 Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
-
-SearchContainer roleSearchContainer = new RoleSearch(renderRequest, portletConfigurationPermissionsDisplayContext.getIteratorURL());
-
-RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerms();
 %>
 
 <div class="edit-permissions portlet-configuration-edit-permissions">
@@ -52,124 +46,8 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 		<aui:form action="<%= portletConfigurationPermissionsDisplayContext.getUpdateRolePermissionsURL() %>" cssClass="container-fluid-1280" method="post" name="fm">
 			<aui:input name="resourceId" type="hidden" value="<%= resource.getResourceId() %>" />
 
-			<%
-			boolean filterGroupRoles = !ResourceActionsUtil.isPortalModelResource(portletConfigurationPermissionsDisplayContext.getModelResource());
-
-			List<String> actions = ResourceActionsUtil.getResourceActions(portletResource, portletConfigurationPermissionsDisplayContext.getModelResource());
-
-			if (Objects.equals(portletConfigurationPermissionsDisplayContext.getModelResource(), Group.class.getName())) {
-				long modelResourceGroupId = GetterUtil.getLong(resourcePrimKey);
-
-				Group modelResourceGroup = GroupLocalServiceUtil.getGroup(modelResourceGroupId);
-
-				if (modelResourceGroup.isLayoutPrototype() || modelResourceGroup.isLayoutSetPrototype() || modelResourceGroup.isUserGroup()) {
-					actions = new ArrayList<String>(actions);
-
-					actions.remove(ActionKeys.ADD_LAYOUT_BRANCH);
-					actions.remove(ActionKeys.ADD_LAYOUT_SET_BRANCH);
-					actions.remove(ActionKeys.ASSIGN_MEMBERS);
-					actions.remove(ActionKeys.ASSIGN_USER_ROLES);
-					actions.remove(ActionKeys.MANAGE_ANNOUNCEMENTS);
-					actions.remove(ActionKeys.MANAGE_STAGING);
-					actions.remove(ActionKeys.MANAGE_TEAMS);
-					actions.remove(ActionKeys.PUBLISH_STAGING);
-					actions.remove(ActionKeys.VIEW_MEMBERS);
-					actions.remove(ActionKeys.VIEW_STAGING);
-				}
-			}
-			else if (Objects.equals(portletConfigurationPermissionsDisplayContext.getModelResource(), Role.class.getName())) {
-				long modelResourceRoleId = GetterUtil.getLong(resourcePrimKey);
-
-				Role modelResourceRole = RoleLocalServiceUtil.getRole(modelResourceRoleId);
-
-				String name = modelResourceRole.getName();
-
-				if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.USER)) {
-					actions = new ArrayList<String>(actions);
-
-					actions.remove(ActionKeys.ASSIGN_MEMBERS);
-					actions.remove(ActionKeys.DEFINE_PERMISSIONS);
-					actions.remove(ActionKeys.DELETE);
-					actions.remove(ActionKeys.PERMISSIONS);
-					actions.remove(ActionKeys.UPDATE);
-					actions.remove(ActionKeys.VIEW);
-				}
-
-				if ((modelResourceRole.getType() == RoleConstants.TYPE_ORGANIZATION) || (modelResourceRole.getType() == RoleConstants.TYPE_SITE)) {
-					filterGroupRoles = true;
-				}
-			}
-
-			long modelResourceRoleId = 0;
-
-			if (Objects.equals(portletConfigurationPermissionsDisplayContext.getModelResource(), Role.class.getName())) {
-				modelResourceRoleId = GetterUtil.getLong(resourcePrimKey);
-			}
-
-			boolean filterGuestRole = false;
-			boolean permissionCheckGuestEnabled = PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED;
-
-			if (Objects.equals(portletConfigurationPermissionsDisplayContext.getModelResource(), Layout.class.getName())) {
-				Layout resourceLayout = LayoutLocalServiceUtil.getLayout(GetterUtil.getLong(resourcePrimKey));
-
-				if (resourceLayout.isPrivateLayout()) {
-					Group resourceLayoutGroup = resourceLayout.getGroup();
-
-					if (!resourceLayoutGroup.isLayoutSetPrototype() && !permissionCheckGuestEnabled) {
-						filterGuestRole = true;
-					}
-				}
-			}
-			else if (Validator.isNotNull(portletResource)) {
-				int pos = resourcePrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
-
-				if (pos > 0) {
-					long resourcePlid = GetterUtil.getLong(resourcePrimKey.substring(0, pos));
-
-					Layout resourceLayout = LayoutLocalServiceUtil.getLayout(resourcePlid);
-
-					if (resourceLayout.isPrivateLayout()) {
-						Group resourceLayoutGroup = resourceLayout.getGroup();
-
-						if (!resourceLayoutGroup.isLayoutPrototype() && !resourceLayoutGroup.isLayoutSetPrototype() && !permissionCheckGuestEnabled) {
-							filterGuestRole = true;
-						}
-					}
-				}
-			}
-
-			List<String> excludedRoleNames = new ArrayList<>();
-
-			excludedRoleNames.add(RoleConstants.ADMINISTRATOR);
-
-			if (filterGroupRoles) {
-				excludedRoleNames.add(RoleConstants.ORGANIZATION_ADMINISTRATOR);
-				excludedRoleNames.add(RoleConstants.ORGANIZATION_OWNER);
-				excludedRoleNames.add(RoleConstants.SITE_ADMINISTRATOR);
-				excludedRoleNames.add(RoleConstants.SITE_OWNER);
-			}
-
-			if (filterGuestRole) {
-				excludedRoleNames.add(RoleConstants.GUEST);
-			}
-
-			long teamGroupId = group.getGroupId();
-
-			if (group.isLayout()) {
-				teamGroupId = group.getParentGroupId();
-			}
-
-			int count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(company.getCompanyId(), searchTerms.getKeywords(), excludedRoleNames, portletConfigurationPermissionsDisplayContext.getRoleTypes(), modelResourceRoleId, teamGroupId);
-
-			roleSearchContainer.setTotal(count);
-
-			List<Role> roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(company.getCompanyId(), searchTerms.getKeywords(), excludedRoleNames, portletConfigurationPermissionsDisplayContext.getRoleTypes(), modelResourceRoleId, teamGroupId, roleSearchContainer.getStart(), roleSearchContainer.getResultEnd());
-
-			roleSearchContainer.setResults(roles);
-			%>
-
 			<liferay-ui:search-container
-				searchContainer="<%= roleSearchContainer %>"
+				searchContainer="<%= portletConfigurationPermissionsDisplayContext.getRoleSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.Role"
@@ -212,7 +90,7 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 					List<String> currentGroupTemplateActions = new ArrayList<String>();
 					List<String> currentCompanyActions = new ArrayList<String>();
 
-					ResourcePermissionUtil.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resource, actions, currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
+					ResourcePermissionUtil.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resource, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
 
 					List<String> guestUnsupportedActions = ResourceActionsUtil.getResourceGuestUnsupportedActions(portletResource, portletConfigurationPermissionsDisplayContext.getModelResource());
 
@@ -226,7 +104,7 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 						guestUnsupportedActions.add(ActionKeys.VIEW);
 					}
 
-					for (String action : actions) {
+					for (String action : portletConfigurationPermissionsDisplayContext.getActions()) {
 						boolean checked = false;
 						boolean disabled = false;
 						String preselectedMsg = StringPool.BLANK;
@@ -311,7 +189,7 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 		function(event) {
 			event.preventDefault();
 
-			if (<%= roleSearchContainer.getTotal() != 0 %>) {
+			if (<%= portletConfigurationPermissionsDisplayContext.getRoleSearchContainer().getTotal() != 0 %>) {
 				submitForm(form);
 			}
 		}

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -47,14 +50,20 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationPortletKeys;
+import com.liferay.portlet.rolesadmin.search.RoleSearch;
+import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -65,10 +74,11 @@ import javax.servlet.http.HttpServletRequest;
 public class PortletConfigurationPermissionsDisplayContext {
 
 	public PortletConfigurationPermissionsDisplayContext(
-			HttpServletRequest request)
+			HttpServletRequest request, RenderRequest renderRequest)
 		throws PortalException {
 
 		_request = request;
+		_renderRequest = renderRequest;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -97,6 +107,66 @@ public class PortletConfigurationPermissionsDisplayContext {
 		_selLayout = selLayout;
 		_group = group;
 		_groupId = groupId;
+	}
+
+	public List<String> getActions() throws PortalException {
+		if (_actions != null) {
+			return _actions;
+		}
+
+		List<String> actions = ResourceActionsUtil.getResourceActions(
+			_getPortletResource(), getModelResource());
+
+		if (Objects.equals(getModelResource(), Group.class.getName())) {
+			long modelResourceGroupId = GetterUtil.getLong(
+				getResourcePrimKey());
+
+			Group modelResourceGroup = GroupLocalServiceUtil.getGroup(
+				modelResourceGroupId);
+
+			if (modelResourceGroup.isLayoutPrototype() ||
+				modelResourceGroup.isLayoutSetPrototype() ||
+				modelResourceGroup.isUserGroup()) {
+
+				actions = new ArrayList<>(actions);
+
+				actions.remove(ActionKeys.ADD_LAYOUT_BRANCH);
+				actions.remove(ActionKeys.ADD_LAYOUT_SET_BRANCH);
+				actions.remove(ActionKeys.ASSIGN_MEMBERS);
+				actions.remove(ActionKeys.ASSIGN_USER_ROLES);
+				actions.remove(ActionKeys.MANAGE_ANNOUNCEMENTS);
+				actions.remove(ActionKeys.MANAGE_STAGING);
+				actions.remove(ActionKeys.MANAGE_TEAMS);
+				actions.remove(ActionKeys.PUBLISH_STAGING);
+				actions.remove(ActionKeys.VIEW_MEMBERS);
+				actions.remove(ActionKeys.VIEW_STAGING);
+			}
+		}
+		else if (Objects.equals(getModelResource(), Role.class.getName())) {
+			long modelResourceRoleId = GetterUtil.getLong(getResourcePrimKey());
+
+			Role modelResourceRole = RoleLocalServiceUtil.getRole(
+				modelResourceRoleId);
+
+			String name = modelResourceRole.getName();
+
+			if (name.equals(RoleConstants.GUEST) ||
+				name.equals(RoleConstants.USER)) {
+
+				actions = new ArrayList<>(actions);
+
+				actions.remove(ActionKeys.ASSIGN_MEMBERS);
+				actions.remove(ActionKeys.DEFINE_PERMISSIONS);
+				actions.remove(ActionKeys.DELETE);
+				actions.remove(ActionKeys.PERMISSIONS);
+				actions.remove(ActionKeys.UPDATE);
+				actions.remove(ActionKeys.VIEW);
+			}
+		}
+
+		_actions = actions;
+
+		return _actions;
 	}
 
 	public PortletURL getDefinePermissionsURL() throws Exception {
@@ -253,6 +323,125 @@ public class PortletConfigurationPermissionsDisplayContext {
 		return _resourcePrimKey;
 	}
 
+	public SearchContainer getRoleSearchContainer() throws Exception {
+		if (_roleSearchContainer != null) {
+			return _roleSearchContainer;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		SearchContainer roleSearchContainer = new RoleSearch(
+			_renderRequest, getIteratorURL());
+
+		RoleSearchTerms searchTerms =
+			(RoleSearchTerms)roleSearchContainer.getSearchTerms();
+
+		boolean filterGroupRoles = !ResourceActionsUtil.isPortalModelResource(
+			getModelResource());
+
+		if (Objects.equals(getModelResource(), Role.class.getName())) {
+			long modelResourceRoleId = GetterUtil.getLong(getResourcePrimKey());
+
+			Role modelResourceRole = RoleLocalServiceUtil.getRole(
+				modelResourceRoleId);
+
+			if ((modelResourceRole.getType() ==
+					RoleConstants.TYPE_ORGANIZATION) ||
+				(modelResourceRole.getType() == RoleConstants.TYPE_SITE)) {
+
+				filterGroupRoles = true;
+			}
+		}
+
+		long modelResourceRoleId = 0;
+
+		if (Objects.equals(getModelResource(), Role.class.getName())) {
+			modelResourceRoleId = GetterUtil.getLong(getResourcePrimKey());
+		}
+
+		boolean filterGuestRole = false;
+		boolean permissionCheckGuestEnabled =
+			PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED;
+
+		if (Objects.equals(getModelResource(), Layout.class.getName())) {
+			Layout resourceLayout = LayoutLocalServiceUtil.getLayout(
+				GetterUtil.getLong(getResourcePrimKey()));
+
+			if (resourceLayout.isPrivateLayout()) {
+				Group resourceLayoutGroup = resourceLayout.getGroup();
+
+				if (!resourceLayoutGroup.isLayoutSetPrototype() &&
+					!permissionCheckGuestEnabled) {
+
+					filterGuestRole = true;
+				}
+			}
+		}
+		else if (Validator.isNotNull(_getPortletResource())) {
+			int pos =
+				getResourcePrimKey().indexOf(PortletConstants.LAYOUT_SEPARATOR);
+
+			if (pos > 0) {
+				long resourcePlid = GetterUtil.getLong(
+					getResourcePrimKey().substring(0, pos));
+
+				Layout resourceLayout = LayoutLocalServiceUtil.getLayout(
+					resourcePlid);
+
+				if (resourceLayout.isPrivateLayout()) {
+					Group resourceLayoutGroup = resourceLayout.getGroup();
+
+					if (!resourceLayoutGroup.isLayoutPrototype() &&
+						!resourceLayoutGroup.isLayoutSetPrototype() &&
+						!permissionCheckGuestEnabled) {
+
+						filterGuestRole = true;
+					}
+				}
+			}
+		}
+
+		List<String> excludedRoleNames = new ArrayList<>();
+
+		excludedRoleNames.add(RoleConstants.ADMINISTRATOR);
+
+		if (filterGroupRoles) {
+			excludedRoleNames.add(RoleConstants.ORGANIZATION_ADMINISTRATOR);
+			excludedRoleNames.add(RoleConstants.ORGANIZATION_OWNER);
+			excludedRoleNames.add(RoleConstants.SITE_ADMINISTRATOR);
+			excludedRoleNames.add(RoleConstants.SITE_OWNER);
+		}
+
+		if (filterGuestRole) {
+			excludedRoleNames.add(RoleConstants.GUEST);
+		}
+
+		long teamGroupId = _group.getGroupId();
+
+		if (_group.isLayout()) {
+			teamGroupId = _group.getParentGroupId();
+		}
+
+		int count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
+			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+			excludedRoleNames, getRoleTypes(), modelResourceRoleId,
+			teamGroupId);
+
+		roleSearchContainer.setTotal(count);
+
+		List<Role> roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+			excludedRoleNames, getRoleTypes(), modelResourceRoleId, teamGroupId,
+			roleSearchContainer.getStart(), roleSearchContainer.getResultEnd());
+
+		roleSearchContainer.setResults(roles);
+
+		_roleSearchContainer = roleSearchContainer;
+
+		return _roleSearchContainer;
+	}
+
 	public int[] getRoleTypes() {
 		if (_roleTypes != null) {
 			return _roleTypes;
@@ -387,15 +576,18 @@ public class PortletConfigurationPermissionsDisplayContext {
 		return _roleTypesParam;
 	}
 
+	private List<String> _actions;
 	private Group _group;
 	private final long _groupId;
 	private String _modelResource;
 	private String _modelResourceDescription;
 	private String _portletResource;
+	private final RenderRequest _renderRequest;
 	private final HttpServletRequest _request;
 	private Resource _resource;
 	private String _resourcePrimKey;
 	private String _returnToFullPageURL;
+	private SearchContainer _roleSearchContainer;
 	private int[] _roleTypes;
 	private String _roleTypesParam;
 	private final Layout _selLayout;

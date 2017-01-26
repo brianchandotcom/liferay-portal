@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -57,6 +56,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.lock.model.Lock;
+import com.liferay.portal.lock.service.LockLocalService;
 import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.portal.security.ldap.ContactConverterKeys;
 import com.liferay.portal.security.ldap.PortalLDAP;
@@ -87,6 +88,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 
@@ -365,41 +367,36 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		try {
 			long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
-			synchronized (this) {
-				if (_lockManager.hasLock(
-						defaultUserId, UserImporter.class.getName(),
-						companyId)) {
+			LDAPImportConfiguration ldapImportConfiguration =
+				_ldapImportConfigurationProvider.getConfiguration(companyId);
 
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Skipping LDAP import for company " + companyId +
-								" because another LDAP import is in process");
-					}
+			Optional<Lock> tryLock = _lockLocalService.tryLock(
+				defaultUserId, UserImporter.class.getName(), companyId,
+				LDAPUserImporterImpl.class.getName(), false,
+				ldapImportConfiguration.importLockExpirationTime());
 
-					return;
-				}
-
-				LDAPImportConfiguration ldapImportConfiguration =
-					_ldapImportConfigurationProvider.getConfiguration(
+			if (tryLock.isPresent()) {
+				Collection<LDAPServerConfiguration> ldapServerConfigurations =
+					_ldapServerConfigurationProvider.getConfigurations(
 						companyId);
 
-				_lockManager.lock(
-					defaultUserId, UserImporter.class.getName(), companyId,
-					LDAPUserImporterImpl.class.getName(), false,
-					ldapImportConfiguration.importLockExpirationTime());
-			}
-
-			Collection<LDAPServerConfiguration> ldapServerConfigurations =
-				_ldapServerConfigurationProvider.getConfigurations(companyId);
-
-			for (LDAPServerConfiguration ldapServerConfiguration :
+				for (LDAPServerConfiguration ldapServerConfiguration :
 					ldapServerConfigurations) {
 
-				importUsers(ldapServerConfiguration.ldapServerId(), companyId);
+					importUsers(
+						ldapServerConfiguration.ldapServerId(), companyId);
+				}
+			}
+			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipping LDAP import for company " + companyId +
+						" because another LDAP import is in process");
+				}
 			}
 		}
 		finally {
-			_lockManager.unlock(UserImporter.class.getName(), companyId);
+			_lockLocalService.unlock(UserImporter.class.getName(), companyId);
 		}
 	}
 
@@ -1316,8 +1313,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setLockManager(LockManager lockManager) {
-		_lockManager = lockManager;
+	protected void setLockLocalService(LockLocalService lockLocalService) {
+		_lockLocalService = lockLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -1638,7 +1635,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		_ldapServerConfigurationProvider;
 	private LDAPSettings _ldapSettings;
 	private LDAPToPortalConverter _ldapToPortalConverter;
-	private LockManager _lockManager;
+	private LockLocalService _lockLocalService;
 	private PortalCache<String, Long> _portalCache;
 	private PortalLDAP _portalLDAP;
 	private RoleLocalService _roleLocalService;

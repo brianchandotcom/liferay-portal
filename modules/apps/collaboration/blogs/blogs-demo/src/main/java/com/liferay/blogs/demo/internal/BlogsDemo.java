@@ -14,16 +14,22 @@
 
 package com.liferay.blogs.demo.internal;
 
+import com.liferay.blogs.demo.data.creator.BlogsEntryDemoDataCreator;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.users.admin.demo.data.creator.BasicUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.OmniAdminUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.SiteAdminUserDemoDataCreator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -37,21 +43,34 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		_basicUserDemoDataCreator.create(
-			company.getCompanyId(), "nikki.prudencio@liferay.com");
-
-		_omniAdminUserDemoDataCreator.create(
-			company.getCompanyId(), "sergio.gonzalez@liferay.com");
+		List<User> users = new ArrayList<>();
 
 		Group guestGroup = _groupLocalService.getGroup(
 			company.getCompanyId(), "Guest");
 
-		_siteAdminUserDemoDataCreator.create(
-			guestGroup.getGroupId(), "sharon.choi@liferay.com");
+		users.add(
+			_basicUserDemoDataCreator.create(
+				company.getCompanyId(), "nikki.prudencio@liferay.com"));
+
+		users.add(
+			_omniAdminUserDemoDataCreator.create(
+				company.getCompanyId(), "sergio.gonzalez@liferay.com"));
+
+		users.add(
+			_siteAdminUserDemoDataCreator.create(
+				guestGroup.getGroupId(), "sharon.choi@liferay.com"));
+
+		for (int i = 0; i < 15; i++) {
+			long randomUserId = users.get(
+				RandomUtil.nextInt(users.size())).getUserId();
+
+			_blogsDemoDataCreator.create(randomUserId, guestGroup.getGroupId());
+		}
 	}
 
 	@Deactivate
 	protected void deactivate() throws PortalException {
+		_blogsDemoDataCreator.delete();
 		_basicUserDemoDataCreator.delete();
 		_omniAdminUserDemoDataCreator.delete();
 		_siteAdminUserDemoDataCreator.delete();
@@ -62,6 +81,13 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 		BasicUserDemoDataCreator basicUserDemoDataCreator) {
 
 		_basicUserDemoDataCreator = basicUserDemoDataCreator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsDemoDataCreator(
+		BlogsEntryDemoDataCreator blogsDemoDataCreator) {
+
+		_blogsDemoDataCreator = blogsDemoDataCreator;
 	}
 
 	@Reference(unbind = "-")
@@ -89,6 +115,7 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 	}
 
 	private BasicUserDemoDataCreator _basicUserDemoDataCreator;
+	private BlogsEntryDemoDataCreator _blogsDemoDataCreator;
 	private GroupLocalService _groupLocalService;
 	private OmniAdminUserDemoDataCreator _omniAdminUserDemoDataCreator;
 	private SiteAdminUserDemoDataCreator _siteAdminUserDemoDataCreator;

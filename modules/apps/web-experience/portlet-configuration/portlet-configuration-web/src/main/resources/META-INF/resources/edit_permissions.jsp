@@ -21,10 +21,6 @@ PortletConfigurationPermissionsDisplayContext portletConfigurationPermissionsDis
 
 String resourcePrimKey = portletConfigurationPermissionsDisplayContext.getResourcePrimKey();
 
-if (Validator.isNull(resourcePrimKey)) {
-	throw new ResourcePrimKeyException();
-}
-
 if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelResource())) {
 	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.unescape(portletConfigurationPermissionsDisplayContext.getModelResourceDescription()), null);
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "permissions"), currentURL);

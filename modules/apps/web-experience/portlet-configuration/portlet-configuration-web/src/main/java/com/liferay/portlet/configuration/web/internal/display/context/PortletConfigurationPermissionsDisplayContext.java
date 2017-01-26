@@ -17,6 +17,7 @@ package com.liferay.portlet.configuration.web.internal.display.context;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.NoSuchResourceException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.ResourcePrimKeyException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
@@ -238,12 +239,16 @@ public class PortletConfigurationPermissionsDisplayContext {
 		return _resource;
 	}
 
-	public String getResourcePrimKey() {
+	public String getResourcePrimKey() throws ResourcePrimKeyException {
 		if (_resourcePrimKey != null) {
 			return _resourcePrimKey;
 		}
 
 		_resourcePrimKey = ParamUtil.getString(_request, "resourcePrimKey");
+
+		if (Validator.isNull(_resourcePrimKey)) {
+			throw new ResourcePrimKeyException();
+		}
 
 		return _resourcePrimKey;
 	}
@@ -316,7 +321,9 @@ public class PortletConfigurationPermissionsDisplayContext {
 		return _selLayout;
 	}
 
-	public PortletURL getUpdateRolePermissionsURL() {
+	public PortletURL getUpdateRolePermissionsURL()
+		throws ResourcePrimKeyException {
+
 		int cur = ParamUtil.getInteger(
 			_request, SearchContainer.DEFAULT_CUR_PARAM);
 		int delta = ParamUtil.getInteger(

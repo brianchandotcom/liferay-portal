@@ -1750,6 +1750,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_configureConfigurationDefault(project);
 		_configureConfigurationJspC(project, liferayExtension);
+		_configureConfigurationTestCompile(project);
 
 		String projectPath = project.getPath();
 
@@ -1779,6 +1780,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _configureConfigurationTestCompile(Project project) {
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME);
+
+		Configuration compileIncludeConfiguration = GradleUtil.getConfiguration(
+			project, LiferayOSGiPlugin.COMPILE_INCLUDE_CONFIGURATION_NAME);
+
+		configuration.extendsFrom(compileIncludeConfiguration);
 	}
 
 	private void _configureConfigurationTransitive(

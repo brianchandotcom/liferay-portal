@@ -26,4 +26,3 @@ Private-Package:\
 	org.codehaus.plexus.util.xml.pull,\
 	org.codehaus.plexus.velocity,\
 	org.dom4j
--includeresource: @jcommander-[0-9]*.jar

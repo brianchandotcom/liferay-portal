@@ -17,6 +17,8 @@ configurations {
 }
 
 dependencies {
+	compileInclude group: "com.beust", name: "jcommander", version: "1.48"
+
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
 	projectTemplates project(":sdk:project-templates-activator")
@@ -43,7 +45,6 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-theme-contributor")
 	projectTemplates project(":sdk:project-templates-workspace")
 
-	provided group: "com.beust", name: "jcommander", version: "1.48"
 	provided group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
 
 	testCompile gradleTestKit()

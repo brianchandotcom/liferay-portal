@@ -159,7 +159,7 @@ public class BatchBuild extends BaseBuild {
 			Matcher axisBuildURLMatcher = null;
 
 			if (fromArchive) {
-				axisBuildURLMatcher = AxisBuild.buildURLPattern.matcher(
+				axisBuildURLMatcher = AxisBuild.archiveBuildURLPattern.matcher(
 					axisBuildURL);
 			}
 			else {

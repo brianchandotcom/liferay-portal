@@ -188,8 +188,11 @@ public class PortletConfigurationPermissionsDisplayContext {
 		return liferayPortletURL;
 	}
 
-	public Group getGroup() {
-		return _group;
+	public String getGroupDescriptiveName() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _group.getDescriptiveName(themeDisplay.getLocale());
 	}
 
 	public long getGroupId() {

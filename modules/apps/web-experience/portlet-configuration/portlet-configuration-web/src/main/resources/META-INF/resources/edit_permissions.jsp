@@ -24,8 +24,6 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "permissions"), currentURL);
 }
 
-Group group = portletConfigurationPermissionsDisplayContext.getGroup();
-
 Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 %>
 
@@ -57,13 +55,13 @@ Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 				>
 
 					<%
-					PortletURL definePermissionsURL = portletConfigurationPermissionsDisplayContext.getDefinePermissionsURL();
-
 					String definePermissionsHREF = null;
 
 					String name = role.getName();
 
 					if (!name.equals(RoleConstants.ADMINISTRATOR) && !name.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) && !name.equals(RoleConstants.ORGANIZATION_OWNER) && !name.equals(RoleConstants.OWNER) && !name.equals(RoleConstants.SITE_ADMINISTRATOR) && !name.equals(RoleConstants.SITE_OWNER) && !role.isTeam() && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DEFINE_PERMISSIONS)) {
+						PortletURL definePermissionsURL = portletConfigurationPermissionsDisplayContext.getDefinePermissionsURL();
+
 						definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 						definePermissionsHREF = definePermissionsURL.toString();
@@ -93,49 +91,51 @@ Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 					ResourcePermissionUtil.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resource, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
 
 					for (String action : portletConfigurationPermissionsDisplayContext.getActions()) {
+						if (action.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+							continue;
+						}
+
 						boolean checked = false;
-						boolean disabled = false;
+
+						if (currentIndividualActions.contains(action) || currentGroupActions.contains(action) || currentGroupTemplateActions.contains(action) || currentCompanyActions.contains(action)) {
+							checked = true;
+						}
+
 						String preselectedMsg = StringPool.BLANK;
 
-						if (currentIndividualActions.contains(action)) {
-							checked = true;
-						}
-
 						if (currentGroupActions.contains(action) || currentGroupTemplateActions.contains(action)) {
-							checked = true;
 							preselectedMsg = "x-is-allowed-to-do-action-x-in-all-items-of-type-x-in-x";
 						}
-
-						if (currentCompanyActions.contains(action)) {
-							checked = true;
+						else if (currentCompanyActions.contains(action)) {
 							preselectedMsg = "x-is-allowed-to-do-action-x-in-all-items-of-type-x-in-this-portal-instance";
 						}
 
 						List<String> guestUnsupportedActions = portletConfigurationPermissionsDisplayContext.getGuestUnsupportedActions();
 
+						boolean disabled = false;
+
 						if (name.equals(RoleConstants.GUEST) && guestUnsupportedActions.contains(action)) {
 							disabled = true;
 						}
 
-						if (action.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
-							continue;
+						String dataMessage = StringPool.BLANK;
+
+						if (Validator.isNotNull(preselectedMsg)) {
+							String type = portletConfigurationPermissionsDisplayContext.getModelResourceDescription();
+
+							if (Validator.isNull(type)) {
+								type = ResourceActionsUtil.getModelResource(locale, resource.getName());
+							}
+
+							dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), ResourceActionsUtil.getAction(request, action), type, HtmlUtil.escape(portletConfigurationPermissionsDisplayContext.getGroupDescriptiveName())}, false));
 						}
+
+						String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;
 					%>
 
 						<liferay-ui:search-container-column-text
 							name="<%= ResourceActionsUtil.getAction(request, action) %>"
 						>
-
-							<%
-							String dataMessage = StringPool.BLANK;
-
-							if (Validator.isNotNull(preselectedMsg)) {
-								dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), ResourceActionsUtil.getAction(request, action), Validator.isNull(portletConfigurationPermissionsDisplayContext.getModelResource()) ? portletConfigurationPermissionsDisplayContext.getModelResourceDescription() : ResourceActionsUtil.getModelResource(locale, resource.getName()), HtmlUtil.escape(group.getDescriptiveName(locale))}, false));
-							}
-
-							String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;
-							%>
-
 							<c:if test="<%= disabled && checked %>">
 								<input name="<%= renderResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" type="hidden" value="<%= true %>" />
 							</c:if>

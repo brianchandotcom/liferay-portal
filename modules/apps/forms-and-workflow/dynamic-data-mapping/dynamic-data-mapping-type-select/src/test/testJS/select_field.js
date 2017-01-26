@@ -208,6 +208,28 @@ describe(
 		);
 
 		describe(
+			'.getValueSelected()',
+			function() {
+				it(
+					'should return correct label if the value is related',
+					function(done) {
+						selectField = createSelectField(
+							{
+								options: [{label: 'a', value: '119'}, {label: 'b', value: '19'}]
+							}
+						);
+
+						selectField.set('value', '19');
+
+						assert.equal(selectField.getValueSelected().label, 'b');
+
+						done();
+					}
+				);
+			}
+		);
+
+		describe(
 			'.clickSelectTrigger()',
 			function() {
 				it(

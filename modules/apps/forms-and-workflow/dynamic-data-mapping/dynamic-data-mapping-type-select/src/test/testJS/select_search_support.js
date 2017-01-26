@@ -1,7 +1,5 @@
 'use strict';
 
-var A = AUI();
-
 function triggerEvent(name, element) {
 	var event = document.createEvent('HTMLEvents');
 

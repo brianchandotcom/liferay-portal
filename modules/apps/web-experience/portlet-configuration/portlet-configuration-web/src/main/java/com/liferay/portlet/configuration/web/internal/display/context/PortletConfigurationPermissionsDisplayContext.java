@@ -54,6 +54,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationPortletKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,6 +194,32 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 	public long getGroupId() {
 		return _groupId;
+	}
+
+	public List<String> getGuestUnsupportedActions() {
+		if (_guestUnsupportedActions != null) {
+			return _guestUnsupportedActions;
+		}
+
+		List<String> guestUnsupportedActions =
+			ResourceActionsUtil.getResourceGuestUnsupportedActions(
+				_getPortletResource(), getModelResource());
+
+		// LPS-32515
+
+		if ((_selLayout != null) && _group.isGuest() &&
+			SitesUtil.isFirstLayout(
+				_selLayout.getGroupId(), _selLayout.isPrivateLayout(),
+				_selLayout.getLayoutId())) {
+
+			guestUnsupportedActions = new ArrayList<>(guestUnsupportedActions);
+
+			guestUnsupportedActions.add(ActionKeys.VIEW);
+		}
+
+		_guestUnsupportedActions = guestUnsupportedActions;
+
+		return _guestUnsupportedActions;
 	}
 
 	public PortletURL getIteratorURL() throws Exception {
@@ -506,10 +533,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 		return _roleTypes;
 	}
 
-	public Layout getSelLayout() {
-		return _selLayout;
-	}
-
 	public PortletURL getUpdateRolePermissionsURL()
 		throws ResourcePrimKeyException {
 
@@ -579,6 +602,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 	private List<String> _actions;
 	private Group _group;
 	private final long _groupId;
+	private List<String> _guestUnsupportedActions;
 	private String _modelResource;
 	private String _modelResourceDescription;
 	private String _portletResource;

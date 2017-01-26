@@ -92,18 +92,6 @@ Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 
 					ResourcePermissionUtil.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resource, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
 
-					List<String> guestUnsupportedActions = ResourceActionsUtil.getResourceGuestUnsupportedActions(portletResource, portletConfigurationPermissionsDisplayContext.getModelResource());
-
-					// LPS-32515
-
-					Layout selLayout = portletConfigurationPermissionsDisplayContext.getSelLayout();
-
-					if ((selLayout != null) && group.isGuest() && SitesUtil.isFirstLayout(selLayout.getGroupId(), selLayout.isPrivateLayout(), selLayout.getLayoutId())) {
-						guestUnsupportedActions = new ArrayList<String>(guestUnsupportedActions);
-
-						guestUnsupportedActions.add(ActionKeys.VIEW);
-					}
-
 					for (String action : portletConfigurationPermissionsDisplayContext.getActions()) {
 						boolean checked = false;
 						boolean disabled = false;
@@ -122,6 +110,8 @@ Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 							checked = true;
 							preselectedMsg = "x-is-allowed-to-do-action-x-in-all-items-of-type-x-in-this-portal-instance";
 						}
+
+						List<String> guestUnsupportedActions = portletConfigurationPermissionsDisplayContext.getGuestUnsupportedActions();
 
 						if (name.equals(RoleConstants.GUEST) && guestUnsupportedActions.contains(action)) {
 							disabled = true;

@@ -77,7 +77,6 @@ page import="com.liferay.portlet.configuration.web.internal.util.comparator.Arch
 page import="com.liferay.portlet.configuration.web.internal.util.comparator.ArchivedSettingsNameComparator" %><%@
 page import="com.liferay.portlet.portletconfiguration.action.ActionUtil" %><%@
 page import="com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration" %><%@
-page import="com.liferay.sites.kernel.util.SitesUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 

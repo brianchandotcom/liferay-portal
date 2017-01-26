@@ -157,7 +157,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 		<c:if test="<%= calendar.isEnableComments() %>">
 			<liferay-ui:panel-container extended="<%= false %>" id="calendarBookingPanelContainer" persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="calendarBookingCommentsPanel" persistState="<%= true %>" title="comments">
-					<liferay-comment:discussion
+					<liferay-ui:discussion
 						className="<%= CalendarBooking.class.getName() %>"
 						classPK="<%= calendarBooking.getCalendarBookingId() %>"
 						formName="fm2"

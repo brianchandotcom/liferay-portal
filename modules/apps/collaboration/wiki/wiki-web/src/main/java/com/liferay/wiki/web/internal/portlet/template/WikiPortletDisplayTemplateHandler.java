@@ -16,6 +16,7 @@ package com.liferay.wiki.web.internal.portlet.template;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -115,5 +116,10 @@ public class WikiPortletDisplayTemplateHandler
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.wiki.service)(release.schema.version=1.0.0))"
+	)
+	private Release _release;
 
 }

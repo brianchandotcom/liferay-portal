@@ -25,43 +25,14 @@ if (Validator.isNull(resourcePrimKey)) {
 	throw new ResourcePrimKeyException();
 }
 
-String selResource = portletConfigurationPermissionsDisplayContext.getModelResource();
-String selResourceDescription = portletConfigurationPermissionsDisplayContext.getModelResourceDescription();
-
-if (Validator.isNull(portletConfigurationPermissionsDisplayContext.getModelResource())) {
-	Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
-
-	selResource = portlet.getRootPortletId();
-	selResourceDescription = PortalUtil.getPortletTitle(portlet, application, locale);
-}
-else {
-	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.unescape(selResourceDescription), null);
+if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelResource())) {
+	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.unescape(portletConfigurationPermissionsDisplayContext.getModelResourceDescription()), null);
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "permissions"), currentURL);
 }
 
 Group group = portletConfigurationPermissionsDisplayContext.getGroup();
 
-Resource resource = null;
-
-try {
-	if (ResourceBlockLocalServiceUtil.isSupported(selResource)) {
-		ResourceBlockLocalServiceUtil.verifyResourceBlockId(company.getCompanyId(), selResource, Long.valueOf(resourcePrimKey));
-	}
-	else {
-		if (ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(company.getCompanyId(), selResource, ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey) == 0) {
-			throw new NoSuchResourceException();
-		}
-	}
-
-	resource = ResourceLocalServiceUtil.getResource(company.getCompanyId(), selResource, ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
-}
-catch (NoSuchResourceException nsre) {
-	boolean portletActions = Validator.isNull(portletConfigurationPermissionsDisplayContext.getModelResource());
-
-	ResourceLocalServiceUtil.addResources(company.getCompanyId(), portletConfigurationPermissionsDisplayContext.getGroupId(), 0, selResource, resourcePrimKey, portletActions, true, true);
-
-	resource = ResourceLocalServiceUtil.getResource(company.getCompanyId(), selResource, ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
-}
+Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 
 SearchContainer roleSearchContainer = new RoleSearch(renderRequest, portletConfigurationPermissionsDisplayContext.getIteratorURL());
 
@@ -295,7 +266,7 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 							String dataMessage = StringPool.BLANK;
 
 							if (Validator.isNotNull(preselectedMsg)) {
-								dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), ResourceActionsUtil.getAction(request, action), Validator.isNull(portletConfigurationPermissionsDisplayContext.getModelResource()) ? selResourceDescription : ResourceActionsUtil.getModelResource(locale, resource.getName()), HtmlUtil.escape(group.getDescriptiveName(locale))}, false));
+								dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), ResourceActionsUtil.getAction(request, action), Validator.isNull(portletConfigurationPermissionsDisplayContext.getModelResource()) ? portletConfigurationPermissionsDisplayContext.getModelResourceDescription() : ResourceActionsUtil.getModelResource(locale, resource.getName()), HtmlUtil.escape(group.getDescriptiveName(locale))}, false));
 							}
 
 							String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;

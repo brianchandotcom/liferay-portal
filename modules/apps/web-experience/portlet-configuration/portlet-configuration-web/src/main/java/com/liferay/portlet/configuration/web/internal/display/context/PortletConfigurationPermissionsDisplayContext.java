@@ -15,10 +15,14 @@
 package com.liferay.portlet.configuration.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.NoSuchResourceException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.Resource;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
@@ -30,10 +34,15 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -46,6 +55,7 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -139,6 +149,18 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 		_modelResource = ParamUtil.getString(_request, "modelResource");
 
+		if (Validator.isNotNull(_modelResource)) {
+			return _modelResource;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), _getPortletResource());
+
+		_modelResource = portlet.getRootPortletId();
+
 		return _modelResource;
 	}
 
@@ -150,7 +172,70 @@ public class PortletConfigurationPermissionsDisplayContext {
 		_modelResourceDescription = ParamUtil.getString(
 			_request, "modelResourceDescription");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (Validator.isNotNull(getModelResource())) {
+			return _modelResourceDescription;
+		}
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), _getPortletResource());
+
+		ServletContext servletContext =
+			_request.getSession().getServletContext();
+
+		_modelResourceDescription = PortalUtil.getPortletTitle(
+			portlet, servletContext, themeDisplay.getLocale());
+
 		return _modelResourceDescription;
+	}
+
+	public Resource getResource() throws PortalException {
+		if (_resource != null) {
+			return _resource;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			if (ResourceBlockLocalServiceUtil.isSupported(getModelResource())) {
+				ResourceBlockLocalServiceUtil.verifyResourceBlockId(
+					themeDisplay.getCompanyId(), getModelResource(),
+					Long.valueOf(getResourcePrimKey()));
+			}
+			else {
+				int count =
+					ResourcePermissionLocalServiceUtil.
+						getResourcePermissionsCount(
+							themeDisplay.getCompanyId(), getModelResource(),
+							ResourceConstants.SCOPE_INDIVIDUAL,
+							getResourcePrimKey());
+
+				if (count == 0) {
+					throw new NoSuchResourceException();
+				}
+			}
+
+			_resource = ResourceLocalServiceUtil.getResource(
+				themeDisplay.getCompanyId(), getModelResource(),
+				ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
+		}
+		catch (NoSuchResourceException nsre) {
+			boolean portletActions = Validator.isNull(getModelResource());
+
+			ResourceLocalServiceUtil.addResources(
+				themeDisplay.getCompanyId(), getGroupId(), 0,
+				getModelResource(), getResourcePrimKey(), portletActions, true,
+				true);
+
+			_resource = ResourceLocalServiceUtil.getResource(
+				themeDisplay.getCompanyId(), getModelResource(),
+				ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
+		}
+
+		return _resource;
 	}
 
 	public String getResourcePrimKey() {
@@ -301,6 +386,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 	private String _modelResourceDescription;
 	private String _portletResource;
 	private final HttpServletRequest _request;
+	private Resource _resource;
 	private String _resourcePrimKey;
 	private String _returnToFullPageURL;
 	private int[] _roleTypes;

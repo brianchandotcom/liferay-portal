@@ -93,6 +93,8 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
+import org.gradle.api.plugins.ApplicationPlugin;
+import org.gradle.api.plugins.ApplicationPluginConvention;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaPlugin;
@@ -131,7 +133,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	public static final String PLUGIN_NAME = "liferayOSGi";
 
 	@Override
-	public void apply(Project project) {
+	public void apply(final Project project) {
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
 
 		final LiferayOSGiExtension liferayOSGiExtension =
@@ -162,6 +164,17 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		}
 
 		_configureVersion(project);
+
+		GradleUtil.withPlugin(
+			project, ApplicationPlugin.class,
+			new Action<ApplicationPlugin>() {
+
+				@Override
+				public void execute(ApplicationPlugin applicationPlugin) {
+					_configureApplication(project);
+				}
+
+			});
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -649,6 +662,18 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		UpgradeTableBuilderDefaultsPlugin.INSTANCE.apply(project);
 		WSDDBuilderDefaultsPlugin.INSTANCE.apply(project);
 		XMLFormatterDefaultsPlugin.INSTANCE.apply(project);
+	}
+
+	private void _configureApplication(Project project) {
+		ApplicationPluginConvention applicationPluginConvention =
+			GradleUtil.getConvention(
+				project, ApplicationPluginConvention.class);
+
+		String mainClassName = _getBundleInstruction(project, "Main-Class");
+
+		if (Validator.isNotNull(mainClassName)) {
+			applicationPluginConvention.setMainClassName(mainClassName);
+		}
 	}
 
 	private void _configureArchivesBaseName(Project project) {

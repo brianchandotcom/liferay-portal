@@ -990,6 +990,13 @@ to version 1.0.74.
 - [LPS-70036]: Update the [Liferay Gradle Plugins Soy] dependency to version
 3.0.1.
 
+## 3.1.2 - 2017-01-24
+
+### Added
+- [LPS-70282]: Automatically configure the `mainClassName` project property
+based on the `Main-Class` header in the `bnd.bnd` file, if the `application`
+plugin is applied.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1082,4 +1089,5 @@ to version 1.0.74.
 [LPS-70060]: https://issues.liferay.com/browse/LPS-70060
 [LPS-70084]: https://issues.liferay.com/browse/LPS-70084
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092
+[LPS-70282]: https://issues.liferay.com/browse/LPS-70282
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

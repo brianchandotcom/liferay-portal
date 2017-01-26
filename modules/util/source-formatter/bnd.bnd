@@ -9,6 +9,7 @@ Import-Package:\
 	!org.apache.maven.plugin,\
 	!org.apache.tools.ant.*,\
 	*
+Main-Class: com.liferay.source.formatter.SourceFormatter
 -includeresource:\
 	@biz.aQute.bndlib-[0-9]*!/aQute/bnd/osgi/Constants.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/deploy/dependencies/web.xml,\

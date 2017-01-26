@@ -1,6 +1,7 @@
 dependencies {
+	compileInclude group: "com.github.jsqlparser", name: "jsqlparser", version: "0.9.3"
+
 	provided group: "aopalliance", name: "aopalliance", version: "1.0"
-	provided group: "com.github.jsqlparser", name: "jsqlparser", version: "0.9.3"
 	provided group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1-LIFERAY-CACHED"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

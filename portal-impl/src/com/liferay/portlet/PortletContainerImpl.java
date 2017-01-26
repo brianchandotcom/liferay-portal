@@ -200,21 +200,20 @@ public class PortletContainerImpl implements PortletContainer {
 	protected void processPublicRenderParameters(
 		HttpServletRequest request, Layout layout, Portlet portlet) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = null;
 
 		PortletApp portletApp = portlet.getPortletApp();
 
-		Map<String, String[]> publicRenderParameters =
-			PublicRenderParametersPool.get(
-				request, layout.getPlid(), portletApp.isWARFile());
+		Map<String, String[]> publicRenderParameters = null;
 
 		Map<String, String[]> parameters = request.getParameterMap();
+
+		PortletQName portletQName = PortletQNameUtil.getPortletQName();
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			String name = entry.getKey();
 
-			QName qName = PortletQNameUtil.getQName(name);
+			QName qName = portletQName.getQName(name);
 
 			if (qName == null) {
 				continue;
@@ -228,11 +227,21 @@ public class PortletContainerImpl implements PortletContainer {
 				continue;
 			}
 
+			if (publicRenderParameters == null) {
+				publicRenderParameters = PublicRenderParametersPool.get(
+					request, layout.getPlid(), portletApp.isWARFile());
+			}
+
 			String publicRenderParameterName =
-				PortletQNameUtil.getPublicRenderParameterName(qName);
+				portletQName.getPublicRenderParameterName(qName);
 
 			if (name.startsWith(
 					PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE)) {
+
+				if (themeDisplay == null) {
+					themeDisplay = (ThemeDisplay)request.getAttribute(
+						WebKeys.THEME_DISPLAY);
+				}
 
 				String[] values = entry.getValue();
 

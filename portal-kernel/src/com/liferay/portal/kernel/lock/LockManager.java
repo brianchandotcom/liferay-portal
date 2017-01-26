@@ -23,6 +23,7 @@ import java.util.Optional;
 /**
  * @author Tina Tian
  */
+@ProviderType
 public interface LockManager {
 
 	public void clear();
@@ -37,26 +38,58 @@ public interface LockManager {
 	public Lock getLockByUuidAndCompanyId(String uuid, long companyId)
 		throws PortalException;
 
+	@Deprecated
+	/**
+	 * @deprecated As of 7.0.0, see #tryLock
+	 */
 	public boolean hasLock(long userId, String className, long key);
 
+	@Deprecated
+	/**
+	 * @deprecated As of 7.0.0, see #tryLock
+	 */
 	public boolean hasLock(long userId, String className, String key);
 
+	@Deprecated
+	/**
+	 * @deprecated As of 7.0.0, see #tryLock
+	 */
 	public boolean isLocked(String className, long key);
 
+	@Deprecated
+	/**
+	 * @deprecated As of 7.0.0, see #tryLock
+	 */
 	public boolean isLocked(String className, String key);
 
+	@Deprecated
+	/**
+	 * @deprecated As of 7.0.0, see #tryLock
+	 */
 	public Lock lock(
 			long userId, String className, long key, String owner,
 			boolean inheritable, long expirationTime)
 		throws PortalException;
 
+	@Deprecated
+	/**
+	 * @deprecated As of 7.0.0, see #tryLock
+	 */
 	public Lock lock(
 			long userId, String className, String key, String owner,
 			boolean inheritable, long expirationTime)
 		throws PortalException;
 
+	@Deprecated
+	/**
+	 * @deprecated As of 7.0.0, see #tryLock
+	 */
 	public Lock lock(String className, String key, String owner);
 
+	@Deprecated
+	/**
+	 * @deprecated As of 7.0.0, see #tryLock
+	 */
 	public Lock lock(
 		String className, String key, String expectedOwner,
 		String updatedOwner);

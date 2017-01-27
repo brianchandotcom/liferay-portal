@@ -176,7 +176,10 @@
 
 		<execute macro="Tag#addCP">
 			<var name="tagName" value="tag name" />
-			<var name="tagNameVariation" value="Duplicate" />
+		</execute>
+
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName" value="tag name" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

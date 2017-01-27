@@ -59,9 +59,9 @@
 	</command>
 
 	<command name="addWithNullTitleCP">
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<execute function="Type" locator1="TextInput#NAME" value1="${tagEntry}" />
+		<execute macro="Tag#_addCP">
+			<var name="tagName" value="${tagName}" />
+		</execute>
 
 		<execute macro="Button#clickSave" />
 

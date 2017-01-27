@@ -54,6 +54,10 @@ public class LDAPImportContext {
 		return _groupMappings;
 	}
 
+	public User getImportedUser(String fullUserDN) {
+		return _importedLdapUsers.get(fullUserDN);
+	}
+
 	public LdapContext getLdapContext() {
 		return _ldapContext;
 	}

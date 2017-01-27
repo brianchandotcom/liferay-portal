@@ -1213,39 +1213,43 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		for (int i = 0; i < usersLdapAttribute.size(); i++) {
 			String fullUserDN = (String)usersLdapAttribute.get(i);
 
-			if (ldapImportContext.isImportedUser(fullUserDN)) {
-				continue;
+			User user = ldapImportContext.getImportedUser(fullUserDN);
+
+			if (user != null) {
+				newUserIds.add(user.getUserId());
 			}
+			else {
+				Attributes userAttributes = null;
 
-			Attributes userAttributes = null;
-
-			try {
-				userAttributes = _portalLDAP.getUserAttributes(
-					ldapServerId, companyId, ldapContext, fullUserDN);
-			}
-			catch (NameNotFoundException nnfe) {
-				_log.error(
-					"LDAP user not found with fullUserDN " + fullUserDN, nnfe);
-
-				continue;
-			}
-
-			try {
-				User user = importUser(
-					ldapImportContext, fullUserDN, userAttributes, null);
-
-				if (user != null) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Adding user " + user + " to user group " +
-								userGroupId);
-					}
-
-					newUserIds.add(user.getUserId());
+				try {
+					userAttributes = _portalLDAP.getUserAttributes(
+						ldapServerId, companyId, ldapContext, fullUserDN);
 				}
-			}
-			catch (Exception e) {
-				_log.error("Unable to load user " + userAttributes, e);
+				catch (NameNotFoundException nnfe) {
+					_log.error(
+						"LDAP user not found with fullUserDN " + fullUserDN,
+						nnfe);
+
+					continue;
+				}
+
+				try {
+					user = importUser(
+						ldapImportContext, fullUserDN, userAttributes, null);
+
+					if (user != null) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Adding user " + user + " to user group " +
+								userGroupId);
+						}
+
+						newUserIds.add(user.getUserId());
+					}
+				}
+				catch (Exception e) {
+					_log.error("Unable to load user " + userAttributes, e);
+				}
 			}
 		}
 

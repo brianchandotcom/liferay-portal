@@ -339,6 +339,8 @@ public interface KBFolderLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
+	public void deleteKBFolders(long groupId) throws PortalException;
+
 	public void moveKBFolder(long kbFolderId, long parentKBFolderId)
 		throws PortalException;
 }

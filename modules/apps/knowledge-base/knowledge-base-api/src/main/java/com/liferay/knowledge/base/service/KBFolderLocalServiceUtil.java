@@ -408,6 +408,11 @@ public class KBFolderLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void deleteKBFolders(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteKBFolders(groupId);
+	}
+
 	public static void moveKBFolder(long kbFolderId, long parentKBFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().moveKBFolder(kbFolderId, parentKBFolderId);

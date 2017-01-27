@@ -134,7 +134,7 @@
 			<var name="portletTitle" value="${tagName}" />
 		</execute>
 
-		<execute function="Type" locator1="Tags#NAME_FIELD" value1="${tagNameEdit}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${tagNameEdit}" />
 
 		<execute macro="PortletEntry#save" />
 	</command>

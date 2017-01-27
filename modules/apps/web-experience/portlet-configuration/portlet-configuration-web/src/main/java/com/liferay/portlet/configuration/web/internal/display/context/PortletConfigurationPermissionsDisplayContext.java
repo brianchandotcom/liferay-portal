@@ -15,7 +15,6 @@
 package com.liferay.portlet.configuration.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.NoSuchResourceException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.ResourcePrimKeyException;
 import com.liferay.portal.kernel.model.Group;
@@ -300,41 +299,30 @@ public class PortletConfigurationPermissionsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		try {
-			if (ResourceBlockLocalServiceUtil.isSupported(getModelResource())) {
-				ResourceBlockLocalServiceUtil.verifyResourceBlockId(
+		if (ResourceBlockLocalServiceUtil.isSupported(getModelResource())) {
+			ResourceBlockLocalServiceUtil.verifyResourceBlockId(
+				themeDisplay.getCompanyId(), getModelResource(),
+				Long.valueOf(getResourcePrimKey()));
+		}
+		else {
+			int count =
+				ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
 					themeDisplay.getCompanyId(), getModelResource(),
-					Long.valueOf(getResourcePrimKey()));
+					ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
+
+			if (count == 0) {
+				boolean portletActions = Validator.isNull(getModelResource());
+
+				ResourceLocalServiceUtil.addResources(
+					themeDisplay.getCompanyId(), getGroupId(), 0,
+					getModelResource(), getResourcePrimKey(), portletActions,
+					true, true);
 			}
-			else {
-				int count =
-					ResourcePermissionLocalServiceUtil.
-						getResourcePermissionsCount(
-							themeDisplay.getCompanyId(), getModelResource(),
-							ResourceConstants.SCOPE_INDIVIDUAL,
-							getResourcePrimKey());
-
-				if (count == 0) {
-					throw new NoSuchResourceException();
-				}
-			}
-
-			_resource = ResourceLocalServiceUtil.getResource(
-				themeDisplay.getCompanyId(), getModelResource(),
-				ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
 		}
-		catch (NoSuchResourceException nsre) {
-			boolean portletActions = Validator.isNull(getModelResource());
 
-			ResourceLocalServiceUtil.addResources(
-				themeDisplay.getCompanyId(), getGroupId(), 0,
-				getModelResource(), getResourcePrimKey(), portletActions, true,
-				true);
-
-			_resource = ResourceLocalServiceUtil.getResource(
-				themeDisplay.getCompanyId(), getModelResource(),
-				ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
-		}
+		_resource = ResourceLocalServiceUtil.getResource(
+			themeDisplay.getCompanyId(), getModelResource(),
+			ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
 
 		return _resource;
 	}

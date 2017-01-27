@@ -956,6 +956,12 @@ non-transitive by default.
 - [LPS-69926]: Make the `testCompile` configuration extend from the
 `compileInclude` configuration.
 
+## 2.4.19 - 2017-01-27
+
+### Changed
+- [LPS-70335]: Skip replacements of the `updateFileVersions` task in read-only
+sub-repositories.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -1048,6 +1054,7 @@ non-transitive by default.
 [LPS-70170]: https://issues.liferay.com/browse/LPS-70170
 [LPS-70282]: https://issues.liferay.com/browse/LPS-70282
 [LPS-70286]: https://issues.liferay.com/browse/LPS-70286
+[LPS-70335]: https://issues.liferay.com/browse/LPS-70335
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

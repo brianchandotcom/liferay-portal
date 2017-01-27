@@ -1,4 +1,10 @@
 <definition>
+	<command name="_addCP">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
+	</command>
+
 	<command name="addAutoAssertionTagViaBlogsPG">
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 

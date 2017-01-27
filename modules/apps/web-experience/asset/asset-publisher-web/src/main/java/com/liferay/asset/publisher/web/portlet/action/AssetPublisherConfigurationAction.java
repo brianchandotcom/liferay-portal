@@ -95,7 +95,7 @@ public class AssetPublisherConfigurationAction
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
 		if (Objects.equals(cmd, "edit_query_rule")) {
-			return "/edit_field.jsp";
+			return "/edit_query_rule.jsp";
 		}
 
 		return "/configuration.jsp";

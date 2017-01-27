@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.alloy.mvc.internal;
+package com.liferay.alloy.mvc;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

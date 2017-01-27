@@ -38,7 +38,7 @@ updateFileVersions {
 	match(buildPropertiesRegex, "../../../build.properties")
 
 	replaceOnlyIf = [{
-		String group, String replacement, String content ->
+		String group, String replacement, String content, File contentFile ->
 
 		if (content =~ buildPropertiesRegex) {
 			return true

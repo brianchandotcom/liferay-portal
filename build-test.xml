@@ -598,8 +598,15 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<include name="**/.gitrepo" />
 				</fileset>
 				<sequential>
+					<local name="gitrepo.file.content" />
+
+					<loadfile property="gitrepo.file.content" srcfile="@{gitrepo.file}" />
+
 					<if>
-						<resourcecontains resource="@{gitrepo.file}" substring="git@github.com:liferay/${subrepository.name}.git" />
+						<or>
+							<contains string="${gitrepo.file.content}" substring="git@github.com:liferay/${subrepository.name}.git" />
+							<contains string="${gitrepo.file.content}" substring="git@github.com:liferay/${subrepository.name}-private.git" />
+						</or>
 						<then>
 							<antelope:stringutil property="module.base.dir" string="@{gitrepo.file}">
 								<antelope:replace regex="\\" replacement="/" />

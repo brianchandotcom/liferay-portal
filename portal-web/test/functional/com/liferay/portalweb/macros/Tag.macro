@@ -29,48 +29,21 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="Tag#_addCP">
+			<var name="tagName" value="${tagName}" />
+		</execute>
 
-		<if>
-			<equals arg1="${tagNameVariation}" arg2="Variation" />
-			<then>
-				<var name="errorMessage1"><![CDATA[, = > / < [ { % | + # ` ? " ; / * ~.]]></var>
+		<execute macro="PortletEntry#save" />
+	</command>
 
-				<execute function="Type" locator1="TextInput#NAME" value1="${tagEntry}" />
-				<execute macro="Button#clickSave" />
+	<command name="addInvalidCP">
+		<execute macro="Tag#_addCP">
+			<var name="tagName" value="${tagName}" />
+		</execute>
 
-				<execute macro="Alert#viewRequestFailedToComplete" />
-			</then>
-			<elseif>
-				<equals arg1="${tagNameVariation}" arg2="Duplicate" />
-				<then>
-					<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
+		<execute macro="Button#clickSave" />
 
-					<execute macro="Button#clickSave" />
-
-					<execute macro="Alert#viewSuccessMessage" />
-
-					<var name="key_tagName" value="${tagName}" />
-
-					<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
-
-					<execute function="Click" locator1="Button#PLUS" />
-
-					<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
-
-					<execute macro="Button#clickSave" />
-
-					<execute macro="Alert#viewRequestFailedToComplete" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
-
-				<execute macro="Button#clickSave" />
-
-				<execute macro="Alert#viewSuccessMessage" />
-			</else>
-		</if>
+		<execute macro="Alert#viewRequestFailedToComplete" />
 	</command>
 
 	<command name="addViaSiteCP">

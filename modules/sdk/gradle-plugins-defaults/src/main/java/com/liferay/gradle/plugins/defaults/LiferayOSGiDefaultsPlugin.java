@@ -261,7 +261,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		final LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 
-		final GitRepo gitRepo = _getGitRepo(project);
+		final GitRepo gitRepo = _getGitRepo(project.getProjectDir());
 
 		File versionOverrideFile = _getVersionOverrideFile(project, gitRepo);
 
@@ -1057,7 +1057,18 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@SuppressWarnings("unused")
 				public Boolean doCall(
-					String group, String replacement, String content) {
+					String group, String replacement, String content,
+					File contentFile) {
+
+					GitRepo contentGitRepo = _getGitRepo(
+						contentFile.getParentFile());
+
+					if ((contentGitRepo != null) && contentGitRepo.readOnly &&
+						((gitRepo == null) ||
+						 !contentGitRepo.dir.equals(gitRepo.dir))) {
+
+						return false;
+					}
 
 					String projectPath = project.getPath();
 
@@ -3058,8 +3069,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return (Map<String, String>)bundleExtension.getInstructions();
 	}
 
-	private GitRepo _getGitRepo(Project project) {
-		File dir = GradleUtil.getRootDir(project, _GIT_REPO_FILE_NAME);
+	private GitRepo _getGitRepo(File dir) {
+		dir = GradleUtil.getRootDir(dir, _GIT_REPO_FILE_NAME);
 
 		if (dir == null) {
 			return null;

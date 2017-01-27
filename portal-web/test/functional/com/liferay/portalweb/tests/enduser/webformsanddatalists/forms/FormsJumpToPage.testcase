@@ -138,6 +138,32 @@
 		</if>
 	</tear-down>
 
+	<command name="ViewFormRulesSummary" priority="4">
+		<description message="This is a use case for LPS-68227." />
+
+		<execute macro="FormsAdminNavigator#gotoRules" />
+
+		<execute macro="FormRules#viewSummary">
+			<var name="action" value="Jump from page" />
+			<var name="actionTarget" value="Page 1" />
+			<var name="actionTarget2" value="Page 3" />
+			<var name="conditionField" value="Choose Your Destiny" />
+			<var name="conditionFieldConstant" value="Destiny 2" />
+			<var name="conditionOperator" value="equal to" />
+			<var name="ruleNumber" value="1" />
+		</execute>
+
+		<execute macro="FormRules#viewSummary">
+			<var name="action" value="Jump from page" />
+			<var name="actionTarget" value="Page 1" />
+			<var name="actionTarget2" value="Page 4" />
+			<var name="conditionField" value="Choose Your Destiny" />
+			<var name="conditionFieldConstant" value="Destiny 3" />
+			<var name="conditionOperator" value="equal to" />
+			<var name="ruleNumber" value="2" />
+		</execute>
+	</command>
+
 	<command name="ViewPagesAfterJump" priority="5">
 		<description message="This is a use case for LPS-69372." />
 		<property name="portal.acceptance" value="pending" />

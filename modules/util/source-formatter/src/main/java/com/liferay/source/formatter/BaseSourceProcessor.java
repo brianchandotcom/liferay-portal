@@ -516,7 +516,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String fileExtension = FilenameUtils.getExtension(fileName);
 
-		if (!portalSource || fileExtension.equals("vm")) {
+		if (!portalSource || fileExtension.equals("vm") ||
+			isExcludedPath(LANGUAGE_KEYS_CHECK_EXCLUDES, absolutePath)) {
+
 			return;
 		}
 
@@ -2987,6 +2989,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		return line;
 	}
+
+	protected static final String LANGUAGE_KEYS_CHECK_EXCLUDES =
+		"language.keys.check.excludes";
 
 	protected static final String METHOD_CALL_SORT_EXCLUDES =
 		"method.call.sort.excludes";

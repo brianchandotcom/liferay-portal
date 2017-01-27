@@ -74,6 +74,10 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	protected void addDuplicateLanguageKey(
 		String fileName, String key, String value) {
 
+		if (fileName.contains("osb-testray")) {
+			Thread.dumpStack();
+		}
+
 		if (fileName.endsWith("portal-impl/src/content/Language.properties")) {
 			return;
 		}
@@ -231,7 +235,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		String newContent = content;
 
 		if (portalSource && !fileName.contains("/samples/") &&
-			fileName.endsWith("Language.properties")) {
+			fileName.endsWith("Language.properties") &&
+			!isExcludedPath(LANGUAGE_KEYS_CHECK_EXCLUDES, absolutePath)) {
 
 			checkLanguageProperties(fileName);
 		}
@@ -666,6 +671,10 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			true);
 
 		for (String fileName : modulesLanguagePropertiesNames) {
+			if (isExcludedPath(LANGUAGE_KEYS_CHECK_EXCLUDES, fileName)) {
+				continue;
+			}
+
 			Properties properties = new Properties();
 
 			fileName = StringUtil.replace(

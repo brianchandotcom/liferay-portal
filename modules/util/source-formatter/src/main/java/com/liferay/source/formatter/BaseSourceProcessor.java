@@ -546,11 +546,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			for (String languageKey : languageKeys) {
 				if (Validator.isNumber(languageKey) ||
+					languageKey.endsWith(StringPool.CLOSE_CURLY_BRACE) ||
 					languageKey.endsWith(StringPool.DASH) ||
 					languageKey.endsWith(StringPool.OPEN_BRACKET) ||
 					languageKey.endsWith(StringPool.PERIOD) ||
 					languageKey.endsWith(StringPool.UNDERLINE) ||
 					languageKey.startsWith(StringPool.DASH) ||
+					languageKey.startsWith(StringPool.DOLLAR) ||
 					languageKey.startsWith(StringPool.OPEN_BRACKET) ||
 					languageKey.startsWith(StringPool.OPEN_CURLY_BRACE) ||
 					languageKey.startsWith(StringPool.PERIOD) ||

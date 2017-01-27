@@ -17,7 +17,6 @@ package com.liferay.twitter.internal.upgrade;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.release.BaseUpgradeServiceModuleRelease;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,20 +29,8 @@ public class TwitterServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		try {
-			BaseUpgradeServiceModuleRelease upgradeServiceModuleRelease =
-				new BaseUpgradeServiceModuleRelease() {
-
-					@Override
-					protected String getNewBundleSymbolicName() {
-						return "com.liferay.twitter.service";
-					}
-
-					@Override
-					protected String getOldBundleSymbolicName() {
-						return "twitter-portlet";
-					}
-
-				};
+			TwitterUpgradeServiceModuleRelease upgradeServiceModuleRelease =
+				new TwitterUpgradeServiceModuleRelease();
 
 			upgradeServiceModuleRelease.upgrade();
 		}

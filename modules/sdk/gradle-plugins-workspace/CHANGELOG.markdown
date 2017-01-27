@@ -61,6 +61,11 @@ default repository for module and WAR projects.
 ### Changed
 - [LPS-69501]: Update the [Liferay Gradle Plugins] dependency to version 3.0.47.
 
+## 1.2.3 - 2017-01-27
+
+### Changed
+- [LPS-70282]: Update the [Liferay Gradle Plugins] dependency to version 3.1.2.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67352]: https://issues.liferay.com/browse/LPS-67352
@@ -73,3 +78,4 @@ default repository for module and WAR projects.
 [LPS-69445]: https://issues.liferay.com/browse/LPS-69445
 [LPS-69473]: https://issues.liferay.com/browse/LPS-69473
 [LPS-69501]: https://issues.liferay.com/browse/LPS-69501
+[LPS-70282]: https://issues.liferay.com/browse/LPS-70282

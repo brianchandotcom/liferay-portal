@@ -1253,13 +1253,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Finished importing " + newUserIds.size() + " of " +
-					usersLdapAttribute.size() + " users from LDAP server " +
-						ldapServerId + " in " + stopWatch.getTime() + "ms");
-		}
-
 		Set<Long> deletedUserIds = new LinkedHashSet<>();
 
 		List<User> userGroupUsers = _userLocalService.getUserGroupUsers(

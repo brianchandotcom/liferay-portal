@@ -197,7 +197,7 @@ public class ReplaceRegexTask extends DefaultTask {
 			}
 
 			for (Closure<Boolean> closure : getReplaceOnlyIf()) {
-				if (!closure.call(group, replacement, newContent)) {
+				if (!closure.call(group, replacement, newContent, file)) {
 					replace = false;
 
 					break;

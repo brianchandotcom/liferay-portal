@@ -179,7 +179,7 @@
 		</execute>
 
 		<execute macro="Tag#addWithNullTitleCP">
-			<var name="tagEntry" value=" " />
+			<var name="tagName" value=" " />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

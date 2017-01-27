@@ -44,11 +44,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryAmpersand"><![CDATA[&tag]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryAmpersand}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[&tag]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -57,11 +54,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryApostrophe"><![CDATA['tag']]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryApostrophe}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA['tag']]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -70,11 +64,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryAsterisk"><![CDATA[*tag]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryAsterisk}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[*tag]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -83,11 +74,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryAt"><![CDATA[@tag]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryAt}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[@tag]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -96,11 +84,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryBackSlash"><![CDATA[\test]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryBackSlash}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[\test]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -109,11 +94,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryBracket"><![CDATA[[tag]]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryBracket}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[[tag]]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -122,11 +104,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryCompare"><![CDATA[>tag<]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryCompare}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[>tag<]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -135,11 +114,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryCurlyBrace"><![CDATA[{tag}]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryCurlyBrace}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[{tag}]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -148,11 +124,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryColon"><![CDATA[:tag]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryColon}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[:tag]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -161,11 +134,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryComma"><![CDATA[,tag]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryComma}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[,tag]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -188,11 +158,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryEqual"><![CDATA[=tag]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryEqual}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[=tag]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -201,11 +168,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryForwardSlash"><![CDATA[/test]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryForwardSlash}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[/test]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -224,11 +188,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryPercent"><![CDATA[%tag]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryPercent}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[%tag]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -237,11 +198,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryPlus"><![CDATA[+tag]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryPlus}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[+tag]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -250,11 +208,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryPound"><![CDATA[#tag]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryPound}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[#tag]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -263,11 +218,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryQuestion"><![CDATA[?tag]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryQuestion}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[?tag]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -276,11 +228,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryQuotation"><![CDATA["tag"]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryQuotation}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA["tag"]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -289,11 +238,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntrySemiColon"><![CDATA[;tag]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntrySemiColon}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[;tag]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -302,11 +248,8 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<var name="tagEntryTilde"><![CDATA[~tag]]></var>
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryTilde}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName"><![CDATA[~tag]]></var>
 		</execute>
 	</command>
 

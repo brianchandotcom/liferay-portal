@@ -194,4 +194,33 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Form#RULE_BUILDER_SUMMARY_CONDITION_OPERATOR" value1="${conditionOperator}" />
 	</command>
+
+	<command name="viewSummary">
+		<execute macro="FormRules#viewConditionFieldSummary">
+			<var name="conditionField" value="${conditionField}" />
+			<var name="ruleNumber" value="${ruleNumber}" />
+		</execute>
+
+		<execute macro="FormRules#viewConditionOperatorSummary">
+			<var name="conditionOperator" value="${conditionOperator}" />
+			<var name="ruleNumber" value="${ruleNumber}" />
+		</execute>
+
+		<execute macro="FormRules#viewConditionFieldConstantSummary">
+			<var name="conditionFieldConstant" value="${conditionFieldConstant}" />
+			<var name="ruleNumber" value="${ruleNumber}" />
+		</execute>
+
+		<execute macro="FormRules#viewActionSummary">
+			<var name="action" value="${action}" />
+			<var name="ruleNumber" value="${ruleNumber}" />
+		</execute>
+
+		<execute macro="FormRules#viewActionTargetSummary">
+			<var name="action" value="${action}" />
+			<var name="actionTarget" value="${actionTarget}" />
+			<var name="actionTarget2" value="${actionTarget2}" />
+			<var name="ruleNumber" value="${ruleNumber}" />
+		</execute>
+	</command>
 </definition>

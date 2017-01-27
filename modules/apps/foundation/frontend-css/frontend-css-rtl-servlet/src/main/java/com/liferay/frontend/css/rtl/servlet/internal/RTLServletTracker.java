@@ -41,7 +41,7 @@ public class RTLServletTracker {
 	protected void activate(final BundleContext bundleContext) {
 		String filterString =
 			"(&(objectClass=" + ServletContextHelper.class.getName() + ")" +
-				"(rtl.required = true))";
+				"(rtl.required=true))";
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, filterString,

@@ -117,13 +117,17 @@ serverURL.setParameter("tabs2", tabs2);
 
 			if (tabs2.equals("portal-properties")) {
 				if (serverPortletPreferencesMap.containsKey(property)) {
-					value = serverPortletPreferences.getValue(property, StringPool.BLANK);
+					if (!ArrayUtil.contains(PropsValues.ADMIN_OBFUSCATED_PROPERTIES, property)) {
+						value = serverPortletPreferences.getValue(property, StringPool.BLANK);
+					}
 
 					overriddenPropertyValue = true;
 				}
 
 				if (companyPortletPreferencesMap.containsKey(property)) {
-					value = companyPortletPreferences.getValue(property, StringPool.BLANK);
+					if (!ArrayUtil.contains(PropsValues.ADMIN_OBFUSCATED_PROPERTIES, property)) {
+						value = companyPortletPreferences.getValue(property, StringPool.BLANK);
+					}
 
 					overriddenPropertyValue = true;
 				}

@@ -50,7 +50,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.portal.tools.service.builder</artifactId>
-				<version>1.0.133</version>
+				<version>@com.liferay.portal.tools.service.builder.version@</version>
 				<configuration>
 					<apiDirName>../${artifactId}-api/src/main/java</apiDirName>
 					<autoNamespaceTables>true</autoNamespaceTables>

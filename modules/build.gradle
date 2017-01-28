@@ -3,11 +3,20 @@ import com.liferay.gradle.util.GradleUtil
 
 import java.util.concurrent.ConcurrentSkipListSet
 
+import org.apache.tools.ant.filters.ReplaceTokens
+
 buildscript {
 	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
 }
 
 Set<File> bndPrintJarFiles = null
+
+Map projectTemplateTokens = [
+	"com.liferay.gradle.plugins.theme.builder.version": "2.0.0",
+	"com.liferay.gradle.plugins.version": "3.1.1",
+	"com.liferay.gradle.plugins.workspace.version": "1.2.2",
+	"com.liferay.portal.tools.theme.builder.version": "1.1.0"
+]
 
 if (Boolean.getBoolean("build.bnd.print.enabled") && System.getenv("JENKINS_HOME")) {
 	configurations {
@@ -64,6 +73,16 @@ gradle.beforeProject {
 				updateVersion {
 					replacement = forcedUpdateVersion
 				}
+			}
+		}
+
+		if (project.path.startsWith(":sdk:project-templates-")) {
+			processResources {
+				filesMatching(["**/*.gradle", "**/pom.xml"]) {
+					filter(ReplaceTokens, tokens: projectTemplateTokens)
+				}
+
+				rename "gitignore", ".gitignore"
 			}
 		}
 

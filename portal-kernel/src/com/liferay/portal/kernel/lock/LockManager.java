@@ -96,13 +96,11 @@ public interface LockManager {
 
 	Optional<Lock> tryLock(
 			long userId, String className, long key, String owner,
-			boolean inheritable, long expirationTime)
-		throws PortalException;
+			boolean inheritable, long expirationTime);
 
 	Optional<Lock> tryLock(
 			long userId, String className, String key, String owner,
-			boolean inheritable, long expirationTime)
-		throws PortalException;
+			boolean inheritable, long expirationTime);
 
 	Optional<Lock> tryLock(String className, String key, String owner);
 

@@ -351,8 +351,7 @@ public class LockLocalServiceWrapper implements LockLocalService,
 	@Override
 	public java.util.Optional<com.liferay.portal.lock.model.Lock> tryLock(
 		long userId, java.lang.String className, java.lang.String key,
-		java.lang.String owner, boolean inheritable, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		java.lang.String owner, boolean inheritable, long expirationTime) {
 		return _lockLocalService.tryLock(userId, className, key, owner,
 			inheritable, expirationTime);
 	}
@@ -360,8 +359,7 @@ public class LockLocalServiceWrapper implements LockLocalService,
 	@Override
 	public java.util.Optional<com.liferay.portal.lock.model.Lock> tryLock(
 		long userId, java.lang.String className, long key,
-		java.lang.String owner, boolean inheritable, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		java.lang.String owner, boolean inheritable, long expirationTime) {
 		return _lockLocalService.tryLock(userId, className, key, owner,
 			inheritable, expirationTime);
 	}

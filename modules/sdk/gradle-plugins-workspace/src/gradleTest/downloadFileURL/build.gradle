@@ -1,0 +1,16 @@
+task runGradleTest
+
+task downloadFileURL << {
+	download {
+		src file('files.zip').toURL().toExternalForm()
+		dest buildDir
+	}
+}
+
+runGradleTest {
+	dependsOn downloadFileURL
+
+	doLast {
+		assert file("$buildDir/files.zip").exists()
+	}
+}

@@ -64,8 +64,8 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
-
 import javax.portlet.WindowStateException;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -529,7 +529,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 	}
 
 	public PortletURL getUpdateRolePermissionsURL()
-		throws ResourcePrimKeyException {
+		throws ResourcePrimKeyException, WindowStateException {
 
 		int cur = ParamUtil.getInteger(
 			_request, SearchContainer.DEFAULT_CUR_PARAM);
@@ -557,6 +557,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 			"resourceGroupId", String.valueOf(_getResourceGroupId()));
 		portletURL.setParameter("resourcePrimKey", getResourcePrimKey());
 		portletURL.setParameter("roleTypes", _getRoleTypesParam());
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL;
 	}

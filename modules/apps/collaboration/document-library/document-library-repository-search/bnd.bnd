@@ -1,19 +1,6 @@
-Bundle-ClassPath:\
-	.,\
-	lib/lucene-analyzers-common.jar,\
-	lib/lucene-core.jar,\
-	lib/lucene-queries.jar,\
-	lib/lucene-queryparser.jar,\
-	lib/lucene-sandbox.jar
 Bundle-Name: Liferay Document Library Repository Search
 Bundle-SymbolicName: com.liferay.document.library.repository.search
 Bundle-Version: 2.0.3
 Export-Package: com.liferay.document.library.repository.search.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
--includeresource:\
-	lib/lucene-analyzers-common.jar=lucene-analyzers-common-[0-9]*.jar,\
-	lib/lucene-core.jar=lucene-core-[0-9]*.jar,\
-	lib/lucene-queries.jar=lucene-queries-[0-9]*.jar,\
-	lib/lucene-queryparser.jar=lucene-queryparser-[0-9]*.jar,\
-	lib/lucene-sandbox.jar=lucene-sandbox-[0-9]*.jar

@@ -11,11 +11,3 @@ Import-Package:\
 	\
 	!org.pegdown.*,\
 	*
--includeresource:\
-	@asm-[0-9]*.jar,\
-	@asm-analysis-[0-9]*.jar,\
-	@asm-tree-[0-9]*.jar,\
-	@asm-util-[0-9]*.jar,\
-	@parboiled-core-[0-9]*.jar,\
-	@parboiled-java-[0-9]*.jar,\
-	@pegdown-[0-9]*.jar

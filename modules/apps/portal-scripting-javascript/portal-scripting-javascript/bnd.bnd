@@ -6,4 +6,3 @@ Import-Package:\
 	\
 	!org.apache.xmlbeans.*,\
 	*
--includeresource: @rhino-[0-9]*.jar

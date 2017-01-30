@@ -1001,6 +1001,14 @@ to version 1.0.75.
 based on the `Main-Class` header in the `bnd.bnd` file, if the `application`
 plugin is applied.
 
+## 3.1.3 - 2017-01-29
+
+### Changed
+- [LPS-70336]: Update the [Liferay Source Formatter] dependency to version
+1.0.343.
+- [LPS-70336]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.76.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1095,4 +1103,5 @@ plugin is applied.
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092
 [LPS-70274]: https://issues.liferay.com/browse/LPS-70274
 [LPS-70282]: https://issues.liferay.com/browse/LPS-70282
+[LPS-70336]: https://issues.liferay.com/browse/LPS-70336
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

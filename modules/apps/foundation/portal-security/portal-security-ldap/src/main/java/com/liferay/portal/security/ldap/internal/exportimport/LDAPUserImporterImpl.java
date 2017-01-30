@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -56,8 +58,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.lock.model.Lock;
-import com.liferay.portal.lock.service.LockLocalService;
 import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.portal.security.ldap.ContactConverterKeys;
 import com.liferay.portal.security.ldap.PortalLDAP;
@@ -370,7 +370,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			LDAPImportConfiguration ldapImportConfiguration =
 				_ldapImportConfigurationProvider.getConfiguration(companyId);
 
-			Optional<Lock> tryLock = _lockLocalService.tryLock(
+			Optional<Lock> tryLock = _lockManager.tryLock(
 				defaultUserId, UserImporter.class.getName(), companyId,
 				LDAPUserImporterImpl.class.getName(), false,
 				ldapImportConfiguration.importLockExpirationTime());
@@ -381,7 +381,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 						companyId);
 
 				for (LDAPServerConfiguration ldapServerConfiguration :
-					ldapServerConfigurations) {
+						ldapServerConfigurations) {
 
 					importUsers(
 						ldapServerConfiguration.ldapServerId(), companyId);
@@ -391,12 +391,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Skipping LDAP import for company " + companyId +
-						" because another LDAP import is in process");
+							" because another LDAP import is in process");
 				}
 			}
 		}
 		finally {
-			_lockLocalService.unlock(UserImporter.class.getName(), companyId);
+			_lockManager.unlock(UserImporter.class.getName(), companyId);
 		}
 	}
 
@@ -1313,8 +1313,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setLockLocalService(LockLocalService lockLocalService) {
-		_lockLocalService = lockLocalService;
+	protected void setLockManager(LockManager lockManager) {
+		_lockManager = lockManager;
 	}
 
 	@Reference(unbind = "-")
@@ -1635,7 +1635,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		_ldapServerConfigurationProvider;
 	private LDAPSettings _ldapSettings;
 	private LDAPToPortalConverter _ldapToPortalConverter;
-	private LockLocalService _lockLocalService;
+	private LockManager _lockManager;
 	private PortalCache<String, Long> _portalCache;
 	private PortalLDAP _portalLDAP;
 	private RoleLocalService _roleLocalService;

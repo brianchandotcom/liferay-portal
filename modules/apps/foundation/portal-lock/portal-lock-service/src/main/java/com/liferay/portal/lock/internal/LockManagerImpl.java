@@ -175,34 +175,22 @@ public class LockManagerImpl implements LockManager {
 
 	@Override
 	public Optional<Lock> tryLock(
-			long userId, String className, long key, String owner,
-			boolean inheritable, long expirationTime)
-		throws PortalException {
+		long userId, String className, long key, String owner,
+		boolean inheritable, long expirationTime) {
 
-		try {
-			return _lockLocalService.tryLock(
-				userId, className, key, owner, inheritable,
-				expirationTime).map(LockImpl::new);
-		}
-		catch (PortalException pe) {
-			throw translate(pe);
-		}
+		return _lockLocalService.tryLock(
+			userId, className, key, owner, inheritable,
+			expirationTime).map(LockImpl::new);
 	}
 
 	@Override
 	public Optional<Lock> tryLock(
-			long userId, String className, String key, String owner,
-			boolean inheritable, long expirationTime)
-		throws PortalException {
+		long userId, String className, String key, String owner,
+		boolean inheritable, long expirationTime) {
 
-		try {
-			return _lockLocalService.tryLock(
-				userId, className, key, owner, inheritable,
-				expirationTime).map(LockImpl::new);
-		}
-		catch (PortalException pe) {
-			throw translate(pe);
-		}
+		return _lockLocalService.tryLock(
+			userId, className, key, owner, inheritable,
+			expirationTime).map(LockImpl::new);
 	}
 
 	@Override

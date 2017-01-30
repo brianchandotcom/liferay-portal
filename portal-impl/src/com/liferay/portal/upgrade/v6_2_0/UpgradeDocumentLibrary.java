@@ -16,6 +16,9 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.v6_2_0.util.DLFileEntryTypeTable;
 
 import java.sql.PreparedStatement;
@@ -82,6 +86,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		// Temp directory
 
 		deleteTempDirectory();
+
+		updateDLFolderUserName();
 	}
 
 	protected String getUserName(long userId) throws Exception {
@@ -122,6 +128,43 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		return LocalizationUtil.updateLocalization(
 			localizationMap, StringPool.BLANK, key, languageId);
+	}
+
+	protected void updateDLFolderUserName() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps1 = connection.prepareStatement(
+				"select distinct userId from DLFolder where userName is null " +
+					"or userName = ''");
+			ResultSet rs = ps1.executeQuery();
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"update DLFolder set userName = ? where userId = ? and " +
+						"(userName is null or userName = '')"))) {
+
+			while (rs.next()) {
+				long userId = rs.getLong("userId");
+
+				String userName = getUserName(userId);
+
+				if (Validator.isNotNull(userName)) {
+					ps2.setString(1, userName);
+
+					ps2.setLong(2, userId);
+
+					ps2.addBatch();
+				}
+				else {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"User " + userId + " does not exist in the " +
+								"database. The userNames of DLFolders with " +
+									"this userId will not be updated.");
+					}
+				}
+			}
+
+			ps2.executeBatch();
+		}
 	}
 
 	protected void updateFileEntryType(
@@ -168,5 +211,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeDocumentLibrary.class);
 
 }

@@ -26,6 +26,7 @@ import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import java.io.Serializable;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -62,9 +63,26 @@ public class ScriptingLanguagesTaskAssignmentSelector
 		String assigneeScriptingLanguage =
 			kaleoTaskAssignment.getAssigneeScriptLanguage();
 
-		Map<String, Object> results = _scripting.eval(
-			null, inputObjects, _outputNames, assigneeScriptingLanguage,
-			assigneeScript);
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		Map<String, Object> results = new HashMap<>();
+
+		try {
+			currentThread.setContextClassLoader(classLoader);
+
+			results = _scripting.eval(
+				null, inputObjects, _outputNames, assigneeScriptingLanguage,
+				assigneeScript);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 
 		Map<String, Serializable> resultsWorkflowContext =
 			(Map<String, Serializable>)results.get(

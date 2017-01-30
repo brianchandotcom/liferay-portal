@@ -1,16 +1,19 @@
 task runGradleTest
 
-task downloadFileURL << {
-	download {
-		src file('files.zip').toURL().toExternalForm()
-		dest buildDir
-	}
+gradle.liferayWorkspace {
+	File bundleFile = file("bundle.zip")
+
+	URL bundleURL = bundleFile.toURL()
+
+	bundleUrl = bundleURL.toExternalForm()
 }
 
 runGradleTest {
-	dependsOn downloadFileURL
+	dependsOn initBundle
 
 	doLast {
-		assert file("$buildDir/files.zip").exists()
+		File generatedFile = new File(gradle.liferayWorkspace.homeDir, "file.txt")
+
+		assert generatedFile.exists()
 	}
 }

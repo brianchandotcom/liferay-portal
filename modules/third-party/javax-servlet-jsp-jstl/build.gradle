@@ -1,3 +1,3 @@
 dependencies {
-	provided group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", version: "1.2.3"
+	compileInclude group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", version: "1.2.3"
 }

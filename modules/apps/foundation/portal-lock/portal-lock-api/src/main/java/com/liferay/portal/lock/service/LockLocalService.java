@@ -61,31 +61,16 @@ public interface LockLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LockLocalServiceUtil} to access the lock local service. Add custom service methods to {@link com.liferay.portal.lock.service.impl.LockLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Deprecated
-	/**
-	 * @deprecated As of 7.0.0, see #tryLock
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLock(long userId, java.lang.String className,
 		java.lang.String key);
-	@Deprecated
-	/**
-	 * @deprecated As of 7.0.0, see #tryLock
-	 */
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLock(long userId, java.lang.String className, long key);
 
-	@Deprecated
-	/**
-	 * @deprecated As of 7.0.0, see #tryLock
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isLocked(java.lang.String className, java.lang.String key);
 
-	@Deprecated
-	/**
-	 * @deprecated As of 7.0.0, see #tryLock
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isLocked(java.lang.String className, long key);
 
@@ -296,11 +281,11 @@ public interface LockLocalService extends BaseLocalService,
 
 	public Optional<Lock> tryLock(long userId, java.lang.String className,
 		java.lang.String key, java.lang.String owner, boolean inheritable,
-		long expirationTime) throws PortalException;
+		long expirationTime);
 
 	public Optional<Lock> tryLock(long userId, java.lang.String className,
 		long key, java.lang.String owner, boolean inheritable,
-		long expirationTime) throws PortalException;
+		long expirationTime);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

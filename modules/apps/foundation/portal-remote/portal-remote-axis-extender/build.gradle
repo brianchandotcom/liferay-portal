@@ -1,7 +1,8 @@
 dependencies {
-	provided group: "axis", name: "axis-wsdl4j", version: "1.5.1"
+	compileInclude group: "axis", name: "axis-wsdl4j", version: "1.5.1"
+	compileInclude group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-2"
+
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
-	provided group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-2"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"

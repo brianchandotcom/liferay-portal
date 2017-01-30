@@ -1,25 +1,26 @@
 dependencies {
+	compileInclude group: "org.apache.cxf", name: "cxf-core", version: "3.0.3"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.0.3"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-databinding-jaxb", version: "3.0.3"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-transports-http", version: "3.0.3"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-wsdl", version: "3.0.3"
+	compileInclude group: "org.apache.cxf", name: "cxf-tools-common", version: "3.0.3"
+	compileInclude group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.0.3"
+	compileInclude group: "org.apache.ws.xmlschema", name: "xmlschema-core", version: "2.1.0"
+	compileInclude group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
+
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	provided group: "org.apache.cxf", name: "cxf-core", version: "3.0.3"
-	provided group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.0.3"
-	provided group: "org.apache.cxf", name: "cxf-rt-databinding-jaxb", version: "3.0.3"
-	provided group: "org.apache.cxf", name: "cxf-rt-transports-http", version: "3.0.3"
-	provided group: "org.apache.cxf", name: "cxf-rt-wsdl", version: "3.0.3"
-	provided group: "org.apache.cxf", name: "cxf-tools-common", version: "3.0.3"
-	provided group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.0.3"
 	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
-	provided group: "org.apache.ws.xmlschema", name: "xmlschema-core", version: "2.1.0"
 	provided group: "org.codehaus.woodstox", name: "stax2-api", version: "3.1.4"
 	provided group: "org.codehaus.woodstox", name: "woodstox-core-asl", version: "4.4.1"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
 	provided group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
-	provided group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
 }
 
 deployDependencies {
@@ -30,4 +31,8 @@ deployDependencies {
 
 	rename(/stax2-api-(.+)\.jar/, "org.codehaus.stax2" + renameSuffix)
 	rename(/woodstox-core-asl-(.+)\.jar/, "com.ctc.wstx" + renameSuffix)
+}
+
+liferayOSGi {
+	expandCompileInclude = false
 }

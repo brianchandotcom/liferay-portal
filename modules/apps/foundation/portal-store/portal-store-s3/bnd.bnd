@@ -17,15 +17,3 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Stores
--includeresource:\
-	@aws-java-sdk-core-[0-9]*.jar,\
-	@aws-java-sdk-kms-[0-9]*.jar,\
-	@aws-java-sdk-s3-[0-9]*.jar,\
-	@commons-codec-[0-9]*.jar,\
-	@commons-logging-[0-9]*.jar,\
-	@httpclient-[0-9]*.jar,\
-	@httpcore-[0-9]*.jar,\
-	@jackson-annotations-[0-9]*.jar,\
-	@jackson-core-[0-9]*.jar,\
-	@jackson-databind-[0-9]*.jar,\
-	@joda-time-[0-9]*.jar

@@ -260,8 +260,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	}
 
 	@Override
-	public synchronized Lock refresh(
-			String uuid, long companyId, long expirationTime)
+	public Lock refresh(String uuid, long companyId, long expirationTime)
 		throws PortalException {
 
 		Date now = new Date();

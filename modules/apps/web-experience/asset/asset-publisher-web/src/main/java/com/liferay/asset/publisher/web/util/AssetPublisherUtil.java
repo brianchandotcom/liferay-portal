@@ -338,10 +338,11 @@ public class AssetPublisherUtil {
 			String queryName = portletPreferences.getValue(
 				"queryName" + i, StringPool.BLANK);
 
-			if (Objects.equals(queryName, "assetCategories") &&
-				queryContains && queryAndOperator) {
+			if (Objects.equals(queryName, "assetCategories") && queryContains &&
+				(queryAndOperator || (queryValues.length == 1))) {
 
-				assetCategoryIds = GetterUtil.getLongValues(queryValues);
+				assetCategoryIds = ArrayUtil.append(
+					assetCategoryIds, GetterUtil.getLongValues(queryValues));
 			}
 		}
 

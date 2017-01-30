@@ -1,15 +1,15 @@
 <definition>
 	<command name="addCondition">
-		<execute function="Click" locator1="Form#RULE_BUILDER_ADD_CONDITION" />
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_ADD_CONDITION" />
 
 		<var name="key_condition" value="${condition}" />
 		<var name="key_conditonRowNumber" value="${conditonRowNumber}" />
 
-		<execute function="AssertTextEquals" locator1="Form#RULE_BUILDER_TIMELINE_RULE_CONDITION" value1="${condition}" />
+		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_TIMELINE_RULE_CONDITION" value1="${condition}" />
 	</command>
 
 	<command name="addRule">
-		<execute function="Click" locator1="Form#RULE_BUILDER_ADD_RULE_BUTTON" />
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_ADD_RULE_BUTTON" />
 	</command>
 
 	<command name="configureActionOptions">
@@ -55,7 +55,7 @@
 			<then>
 				<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
 
-				<execute function="Type" locator1="Form#RULE_BUILDER_CONDITION_VALUE_TEXT_FIELD" value1="${conditionFieldValue}" />
+				<execute function="Type" locator1="FormRules#RULE_BUILDER_CONDITION_VALUE_TEXT_FIELD" value1="${conditionFieldValue}" />
 			</then>
 		</if>
 
@@ -65,9 +65,9 @@
 				<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
 				<var name="key_conditionValueField" value="${conditionValueField}" />
 
-				<execute function="Click" locator1="Form#RULE_BUILDER_CONDITION_VALUE_FIELD" />
+				<execute function="Click" locator1="FormRules#RULE_BUILDER_CONDITION_VALUE_FIELD" />
 
-				<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD" value1="${conditionValueField}" />
+				<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD" value1="${conditionValueField}" />
 			</then>
 		</if>
 	</command>
@@ -75,40 +75,40 @@
 	<command name="gotoEdit">
 		<var name="key_ruleNumber" value="${ruleNumber}" />
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Form#RULE_BUILDER_ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="FormRules#RULE_BUILDER_ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
 	<command name="save">
-		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="selectAction">
 		<var name="key_action" value="${action}" />
 		<var name="key_actionRowNumber" value="${actionRowNumber}" />
 
-		<execute function="Click" locator1="Form#RULE_BUILDER_ACTION_FIELD" />
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_ACTION_FIELD" />
 
-		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_ACTION" value1="${action}" />
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_SELECT_ACTION" value1="${action}" />
 	</command>
 
 	<command name="selectActionTarget">
 		<var name="key_actionRowNumber" value="${actionRowNumber}" />
 		<var name="key_actionTarget" value="${actionTarget}" />
 
-		<execute function="Click" locator1="Form#RULE_BUILDER_ACTION_TARGET_FIELD" />
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_ACTION_TARGET_FIELD" />
 
-		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_ACTION_TARGET" value1="${actionTarget}" />
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_SELECT_ACTION_TARGET" value1="${actionTarget}" />
 
 		<if>
 			<isset var="actionTarget2" />
 			<then>
-				<execute function="Click" locator1="Form#RULE_BUILDER_ACTION_TARGET_FIELD_2" />
+				<execute function="Click" locator1="FormRules#RULE_BUILDER_ACTION_TARGET_FIELD_2" />
 
 				<var name="key_actionTarget" value="${actionTarget2}" />
 
-				<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_ACTION_TARGET" value1="${actionTarget2}" />
+				<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_SELECT_ACTION_TARGET" value1="${actionTarget2}" />
 			</then>
 		</if>
 	</command>
@@ -117,27 +117,27 @@
 		<var name="key_conditionField" value="${conditionField}" />
 		<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
 
-		<execute function="Click" locator1="Form#RULE_BUILDER_CONDITION_FIELD" />
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_CONDITION_FIELD" />
 
-		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_CONDITION_FIELD" value1="${conditionField}" />
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_SELECT_CONDITION_FIELD" value1="${conditionField}" />
 	</command>
 
 	<command name="selectConditionOperator">
 		<var name="key_conditionOperator" value="${conditionOperator}" />
 		<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
 
-		<execute function="Click" locator1="Form#RULE_BUILDER_CONDITION_OPERATOR_FIELD" />
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_CONDITION_OPERATOR_FIELD" />
 
-		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_CONDITION_OPERATOR" value1="${conditionOperator}" />
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR" value1="${conditionOperator}" />
 	</command>
 
 	<command name="selectConditionValue">
 		<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
 		<var name="key_conditionValueType" value="${conditionValueType}" />
 
-		<execute function="Click" locator1="Form#RULE_BUILDER_CONDITION_VALUE_TYPE_FIELD" />
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_CONDITION_VALUE_TYPE_FIELD" />
 
-		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_CONDITION_VALUE_TYPE" value1="${conditionValueType}" />
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_SELECT_CONDITION_VALUE_TYPE" value1="${conditionValueType}" />
 	</command>
 
 	<command name="selectRuleCondition">
@@ -145,16 +145,16 @@
 
 		<var method="StringUtil#upperCase('${condition}')" name="condition" />
 
-		<execute function="Click" locator1="Form#RULE_BUILDER_RULE_CONDITION_DROPDOWN" />
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_RULE_CONDITION_DROPDOWN" />
 
-		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_RULE_CONDITION" value1="${condition}" />
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_SELECT_RULE_CONDITION" value1="${condition}" />
 	</command>
 
 	<command name="viewActionSummary">
 		<var name="key_action" value="${action}" />
 		<var name="key_ruleNumber" value="${ruleNumber}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Form#RULE_BUILDER_SUMMARY_ACTION" value1="${action}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="FormRules#RULE_BUILDER_SUMMARY_ACTION" value1="${action}" />
 	</command>
 
 	<command name="viewActionTargetSummary">
@@ -162,14 +162,14 @@
 		<var name="key_actionTarget" value="${actionTarget}" />
 		<var name="key_ruleNumber" value="${ruleNumber}" />
 
-		<execute function="AssertTextEquals" locator1="Form#RULE_BUILDER_SUMMARY_ACTION_TARGET" value1="${actionTarget}" />
+		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_SUMMARY_ACTION_TARGET" value1="${actionTarget}" />
 
 		<if>
 			<isset var="actionTarget2" />
 			<then>
 				<var name="key_actionTarget" value="${actionTarget2}" />
 
-				<execute function="AssertTextEquals" locator1="Form#RULE_BUILDER_SUMMARY_ACTION_TARGET" value1="${actionTarget2}" />
+				<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_SUMMARY_ACTION_TARGET" value1="${actionTarget2}" />
 			</then>
 		</if>
 	</command>
@@ -178,21 +178,21 @@
 		<var name="key_conditionFieldConstant" value="${conditionFieldConstant}" />
 		<var name="key_ruleNumber" value="${ruleNumber}" />
 
-		<execute function="AssertTextEquals" locator1="Form#RULE_BUILDER_SUMMARY_CONDITION_FIELD_CONSTANT" value1="${conditionFieldConstant}" />
+		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_SUMMARY_CONDITION_FIELD_CONSTANT" value1="${conditionFieldConstant}" />
 	</command>
 
 	<command name="viewConditionFieldSummary">
 		<var name="key_conditionField" value="${conditionField}" />
 		<var name="key_ruleNumber" value="${ruleNumber}" />
 
-		<execute function="AssertTextEquals" locator1="Form#RULE_BUILDER_SUMMARY_CONDITION_FIELD" value1="${conditionField}" />
+		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_SUMMARY_CONDITION_FIELD" value1="${conditionField}" />
 	</command>
 
 	<command name="viewConditionOperatorSummary">
 		<var name="key_conditionOperator" value="${conditionOperator}" />
 		<var name="key_ruleNumber" value="${ruleNumber}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Form#RULE_BUILDER_SUMMARY_CONDITION_OPERATOR" value1="${conditionOperator}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="FormRules#RULE_BUILDER_SUMMARY_CONDITION_OPERATOR" value1="${conditionOperator}" />
 	</command>
 
 	<command name="viewSummary">

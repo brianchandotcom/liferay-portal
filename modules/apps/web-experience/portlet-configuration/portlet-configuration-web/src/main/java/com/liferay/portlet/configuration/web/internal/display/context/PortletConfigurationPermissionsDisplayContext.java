@@ -249,18 +249,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 		_modelResource = ParamUtil.getString(_request, "modelResource");
 
-		if (Validator.isNotNull(_modelResource)) {
-			return _modelResource;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			themeDisplay.getCompanyId(), _getPortletResource());
-
-		_modelResource = portlet.getRootPortletId();
-
 		return _modelResource;
 	}
 
@@ -271,22 +259,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 		_modelResourceDescription = ParamUtil.getString(
 			_request, "modelResourceDescription");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (Validator.isNotNull(getModelResource())) {
-			return _modelResourceDescription;
-		}
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			themeDisplay.getCompanyId(), _getPortletResource());
-
-		ServletContext servletContext =
-			_request.getSession().getServletContext();
-
-		_modelResourceDescription = PortalUtil.getPortletTitle(
-			portlet, servletContext, themeDisplay.getLocale());
 
 		return _modelResourceDescription;
 	}
@@ -299,15 +271,15 @@ public class PortletConfigurationPermissionsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (ResourceBlockLocalServiceUtil.isSupported(getModelResource())) {
+		if (ResourceBlockLocalServiceUtil.isSupported(getSelResource())) {
 			ResourceBlockLocalServiceUtil.verifyResourceBlockId(
-				themeDisplay.getCompanyId(), getModelResource(),
+				themeDisplay.getCompanyId(), getSelResource(),
 				Long.valueOf(getResourcePrimKey()));
 		}
 		else {
 			int count =
 				ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-					themeDisplay.getCompanyId(), getModelResource(),
+					themeDisplay.getCompanyId(), getSelResource(),
 					ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
 
 			if (count == 0) {
@@ -315,13 +287,13 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 				ResourceLocalServiceUtil.addResources(
 					themeDisplay.getCompanyId(), getGroupId(), 0,
-					getModelResource(), getResourcePrimKey(), portletActions,
+					getSelResource(), getResourcePrimKey(), portletActions,
 					true, true);
 			}
 		}
 
 		_resource = ResourceLocalServiceUtil.getResource(
-			themeDisplay.getCompanyId(), getModelResource(),
+			themeDisplay.getCompanyId(), getSelResource(),
 			ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
 
 		return _resource;
@@ -524,6 +496,46 @@ public class PortletConfigurationPermissionsDisplayContext {
 		return _roleTypes;
 	}
 
+	public String getSelResource() {
+		_selResource = getModelResource();
+
+		if (Validator.isNotNull(_selResource)) {
+			return _selResource;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), _getPortletResource());
+
+		_selResource = portlet.getRootPortletId();
+
+		return _selResource;
+	}
+
+	public String getSelResourceDescription() {
+		_selResourceDescription = getModelResourceDescription();
+
+		if (Validator.isNotNull(_selResourceDescription)) {
+			return _selResourceDescription;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), _getPortletResource());
+
+		ServletContext servletContext =
+			_request.getSession().getServletContext();
+
+		_selResourceDescription = PortalUtil.getPortletTitle(
+			portlet, servletContext, themeDisplay.getLocale());
+
+		return _selResourceDescription;
+	}
+
 	public PortletURL getUpdateRolePermissionsURL()
 		throws ResourcePrimKeyException {
 
@@ -606,5 +618,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 	private int[] _roleTypes;
 	private String _roleTypesParam;
 	private final Layout _selLayout;
+	private String _selResource;
+	private String _selResourceDescription;
 
 }

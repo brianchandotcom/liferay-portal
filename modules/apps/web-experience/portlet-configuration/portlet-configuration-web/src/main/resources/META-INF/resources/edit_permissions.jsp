@@ -20,7 +20,7 @@
 PortletConfigurationPermissionsDisplayContext portletConfigurationPermissionsDisplayContext = new PortletConfigurationPermissionsDisplayContext(request, renderRequest);
 
 if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelResource())) {
-	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.unescape(portletConfigurationPermissionsDisplayContext.getModelResourceDescription()), null);
+	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.unescape(portletConfigurationPermissionsDisplayContext.getSelResourceDescription()), null);
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "permissions"), currentURL);
 }
 
@@ -121,7 +121,7 @@ Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 						String dataMessage = StringPool.BLANK;
 
 						if (Validator.isNotNull(preselectedMsg)) {
-							String type = portletConfigurationPermissionsDisplayContext.getModelResourceDescription();
+							String type = portletConfigurationPermissionsDisplayContext.getSelResourceDescription();
 
 							if (Validator.isNull(type)) {
 								type = ResourceActionsUtil.getModelResource(locale, resource.getName());

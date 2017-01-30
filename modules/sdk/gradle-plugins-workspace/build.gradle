@@ -8,8 +8,8 @@ task copyDistBundleZipPluginsSdk(type: Copy)
 task downloadPluginsSdk(type: Download)
 task copyGradleTestDependencies(type: Copy)
 
-String bundleUrl = "https://sourceforge.net/projects/lportal/files/Liferay%20Portal/7.0.2%20GA3/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip"
-String pluginsSdkUrl = "https://sourceforge.net/projects/lportal/files/Liferay%20Portal/7.0.2%20GA3/com.liferay.portal.plugins.sdk-7.0-ga3-20160804222206210.zip"
+String bundleUrl = "https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.2-ga3/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip"
+String pluginsSdkUrl = "https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.2-ga3/com.liferay.portal.plugins.sdk-7.0-ga3-20160804222206210.zip"
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
 	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.0.2-ga3/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip"

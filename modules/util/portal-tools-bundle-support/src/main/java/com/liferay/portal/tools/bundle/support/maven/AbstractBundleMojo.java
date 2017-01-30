@@ -36,7 +36,7 @@ public abstract class AbstractBundleMojo extends AbstractLiferayMojo {
 	protected int stripComponents;
 
 	@Parameter(
-		defaultValue = "https://sourceforge.net/projects/lportal/files/Liferay%20Portal/7.0.2%20GA3/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip",
+		defaultValue = "https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.2-ga3/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip",
 		required = true
 	)
 	protected URL url;

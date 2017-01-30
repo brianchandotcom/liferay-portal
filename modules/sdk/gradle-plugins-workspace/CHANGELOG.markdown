@@ -70,7 +70,9 @@ default repository for module and WAR projects.
 
 ### Changed
 - [LPS-70336]: Update the [Liferay Gradle Plugins] dependency to version 3.1.3.
+- [LPS-70353]: Update the [Gradle Download Task] dependency to version 3.2.0.
 
+[Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67352]: https://issues.liferay.com/browse/LPS-67352
@@ -85,3 +87,4 @@ default repository for module and WAR projects.
 [LPS-69501]: https://issues.liferay.com/browse/LPS-69501
 [LPS-70282]: https://issues.liferay.com/browse/LPS-70282
 [LPS-70336]: https://issues.liferay.com/browse/LPS-70336
+[LPS-70353]: https://issues.liferay.com/browse/LPS-70353

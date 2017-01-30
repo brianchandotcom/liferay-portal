@@ -10,5 +10,5 @@ dependencies {
 	testCompile group: "org.apache.lucene", name: "lucene-queries", version: "5.2.1"
 	testCompile group: "org.apache.lucene", name: "lucene-queryparser", version: "5.2.1"
 	testCompile group: "org.apache.lucene", name: "lucene-sandbox", version: "5.2.1"
-	testCompile project(":apps:collaboration:document-library:document-library-repository-search")
+	testCompile group: "com.liferay", name: "com.liferay.document.library.repository.search", version: "2.0.2"
 }

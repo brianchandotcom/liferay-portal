@@ -6,4 +6,3 @@ Export-Package:\
 	com.liferay.portal.upgrade.release
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Upgrade and Verify
--includeresource: @jgrapht-core-[0-9]*.jar

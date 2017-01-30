@@ -1,9 +1,3 @@
-Bundle-ClassPath:\
-	.,\
-	lib/ecs.jar,\
-	lib/freshcookies-security.jar,\
-	lib/jcrs-diff.jar,\
-	lib/oro.jar
 Bundle-Name: Liferay Wiki Engine JSPWiki
 Bundle-SymbolicName: com.liferay.wiki.engine.jspwiki
 Bundle-Version: 2.0.8
@@ -27,7 +21,7 @@ Import-Package:\
 	*
 Web-ContextPath: /wiki-engine-jspwiki
 -includeresource:\
-	lib/ecs.jar=../../../../lib/portal/ecs.jar,\
-	lib/freshcookies-security.jar=../../../../lib/portal/freshcookies-security.jar,\
-	lib/jcrs-diff.jar=../../../../lib/portal/jrcs-diff.jar,\
-	lib/oro.jar=../../../../lib/portal/oro.jar
+	lib/ecs.jar=../../../../lib/portal/ecs.jar;lib:=true,\
+	lib/freshcookies-security.jar=../../../../lib/portal/freshcookies-security.jar;lib:=true,\
+	lib/jcrs-diff.jar=../../../../lib/portal/jrcs-diff.jar;lib:=true,\
+	lib/oro.jar=../../../../lib/portal/oro.jar;lib:=true

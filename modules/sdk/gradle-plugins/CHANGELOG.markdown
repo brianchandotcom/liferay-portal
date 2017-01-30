@@ -993,6 +993,10 @@ to version 1.0.74.
 ## 3.1.2 - 2017-01-26
 
 ### Added
+- [LPS-70274]: Update the [Liferay Source Formatter] dependency to version
+1.0.342.
+- [LPS-70274]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.75.
 - [LPS-70282]: Automatically configure the `mainClassName` project property
 based on the `Main-Class` header in the `bnd.bnd` file, if the `application`
 plugin is applied.
@@ -1089,5 +1093,6 @@ plugin is applied.
 [LPS-70060]: https://issues.liferay.com/browse/LPS-70060
 [LPS-70084]: https://issues.liferay.com/browse/LPS-70084
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092
+[LPS-70274]: https://issues.liferay.com/browse/LPS-70274
 [LPS-70282]: https://issues.liferay.com/browse/LPS-70282
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

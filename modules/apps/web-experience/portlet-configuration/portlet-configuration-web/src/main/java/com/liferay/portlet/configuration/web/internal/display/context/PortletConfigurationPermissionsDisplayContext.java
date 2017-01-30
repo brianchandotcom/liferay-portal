@@ -65,6 +65,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
+import javax.portlet.WindowStateException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -80,16 +81,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 		_request = request;
 		_renderRequest = renderRequest;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long resourceGroupId = ParamUtil.getLong(_request, "resourceGroupId");
-
-		if (resourceGroupId == 0) {
-			resourceGroupId = themeDisplay.getScopeGroupId();
-		}
-
-		long groupId = resourceGroupId;
+		long groupId = _getResourceGroupId();
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -544,8 +536,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 		int delta = ParamUtil.getInteger(
 			_request, SearchContainer.DEFAULT_DELTA_PARAM);
 
-		long resourceGroupId = ParamUtil.getLong(_request, "resourceGroupId");
-
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			_request, PortletConfigurationPortletKeys.PORTLET_CONFIGURATION,
 			PortletRequest.ACTION_PHASE);
@@ -564,7 +554,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 		portletURL.setParameter(
 			"modelResourceDescription", getModelResourceDescription());
 		portletURL.setParameter(
-			"resourceGroupId", String.valueOf(resourceGroupId));
+			"resourceGroupId", String.valueOf(_getResourceGroupId()));
 		portletURL.setParameter("resourcePrimKey", getResourcePrimKey());
 		portletURL.setParameter("roleTypes", _getRoleTypesParam());
 
@@ -579,6 +569,23 @@ public class PortletConfigurationPermissionsDisplayContext {
 		_portletResource = ParamUtil.getString(_request, "portletResource");
 
 		return _portletResource;
+	}
+
+	private long _getResourceGroupId() {
+		if (_resourceGroupId != null) {
+			return _resourceGroupId;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_resourceGroupId = ParamUtil.getLong(_request, "resourceGroupId");
+
+		if (_resourceGroupId == 0) {
+			_resourceGroupId = themeDisplay.getScopeGroupId();
+		}
+
+		return _resourceGroupId;
 	}
 
 	private String _getReturnToFullPageURL() {
@@ -612,6 +619,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final HttpServletRequest _request;
 	private Resource _resource;
+	private Long _resourceGroupId;
 	private String _resourcePrimKey;
 	private String _returnToFullPageURL;
 	private SearchContainer _roleSearchContainer;

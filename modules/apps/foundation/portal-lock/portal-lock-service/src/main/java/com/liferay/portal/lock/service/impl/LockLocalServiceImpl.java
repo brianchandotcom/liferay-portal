@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.lock.LockListenerRegistryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -314,9 +316,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	public Optional<Lock> tryLock(
-			long userId, String className, long key, String owner,
-			boolean inheritable, long expirationTime)
-		throws PortalException {
+		long userId, String className, long key, String owner,
+		boolean inheritable, long expirationTime) {
 
 		return tryLock(
 			userId, className, String.valueOf(key), owner, inheritable,
@@ -324,38 +325,59 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	}
 
 	@Override
-	public synchronized Optional<Lock> tryLock(
-			long userId, String className, String key, String owner,
-			boolean inheritable, long expirationTime)
-		throws PortalException {
+	public Optional<Lock> tryLock(
+		long userId, String className, String key, String owner,
+		boolean inheritable, long expirationTime) {
 
-		if (hasLock(userId, className, key)) {
+		Lock lock = null;
+
+		try {
+			lock = lock(
+				userId, className, key, owner, inheritable, expirationTime);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to acquire lock with className " + className +
+						" and key " + key,
+					e);
+			}
+
 			return Optional.empty();
 		}
 
-		return Optional.of(
-			lock(userId, className, key, owner, inheritable, expirationTime));
+		return Optional.of(lock);
 	}
 
 	@MasterDataSource
 	@Override
-	public synchronized Optional<Lock> tryLock(
-		String className, String key, String owner) {
-
+	public Optional<Lock> tryLock(String className, String key, String owner) {
 		return tryLock(className, key, null, owner);
 	}
 
 	@MasterDataSource
 	@Override
-	public synchronized Optional<Lock> tryLock(
+	public Optional<Lock> tryLock(
 		final String className, final String key, final String expectedOwner,
 		final String updatedOwner) {
 
-		if (isLocked(className, key)) {
+		Lock lock = null;
+
+		try {
+			lock = lock(className, key, expectedOwner, updatedOwner);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to acquire lock with className " + className +
+						" and key " + key,
+					e);
+			}
+
 			return Optional.empty();
 		}
 
-		return Optional.of(lock(className, key, expectedOwner, updatedOwner));
+		return Optional.of(lock);
 	}
 
 	@Override
@@ -454,6 +476,9 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 		return lock;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LockLocalServiceImpl.class);
 
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

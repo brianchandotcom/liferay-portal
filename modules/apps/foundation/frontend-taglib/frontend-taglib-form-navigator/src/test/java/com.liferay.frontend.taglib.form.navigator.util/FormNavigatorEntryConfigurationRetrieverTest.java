@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,6 +41,29 @@ import org.osgi.service.cm.ConfigurationAdmin;
  */
 @RunWith(Enclosed.class)
 public class FormNavigatorEntryConfigurationRetrieverTest {
+
+	public static class WhenAConfigurationEntryHasOneLineWithNoKeys {
+
+		@Before
+		public void setUp() throws InvalidSyntaxException, IOException {
+			StringBuilder line1 = new StringBuilder();
+
+			line1.append("add.general");
+			line1.append(StringPool.EQUAL);
+
+			_setMockConfigurations(
+				_createMockConfig("form1", new String[]{line1.toString()}));
+		}
+
+		@Test
+		public void testReturnsEmptyList() {
+			List<String> formNavigatorEntryKeys =
+				_formNavigatorEntryConfigurationHelper.
+					getFormNavigatorEntryKeys("form1", "general", "add").get();
+
+			Assert.assertTrue(formNavigatorEntryKeys.isEmpty());
+		}
+	}
 
 	public static class WhenAConfigurationEntryHasSeveralLines {
 
@@ -71,7 +95,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		public void testContainsValuesForLine1() {
 			List<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationHelper.
-					getFormNavigatorEntryKeys("form1", "general", "add");
+					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(3, formNavigatorEntryKeys.size());
 			Assert.assertEquals(
@@ -86,7 +110,8 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		public void testContainsValuesForLine2() {
 			List<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationHelper.
-					getFormNavigatorEntryKeys("form1", "general", "update");
+					getFormNavigatorEntryKeys("form1", "general", "update").
+					get();
 
 			Assert.assertEquals(3, formNavigatorEntryKeys.size());
 			Assert.assertEquals(
@@ -128,7 +153,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		public void testContainsValuesForEntry1() {
 			List<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationHelper.
-					getFormNavigatorEntryKeys("form1", "general", "add");
+					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(3, formNavigatorEntryKeys.size());
 			Assert.assertEquals(
@@ -143,7 +168,8 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		public void testContainsValuesForEntry2() {
 			List<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationHelper.
-					getFormNavigatorEntryKeys("form1", "general", "update");
+					getFormNavigatorEntryKeys("form1", "general", "update").
+					get();
 
 			Assert.assertEquals(3, formNavigatorEntryKeys.size());
 			Assert.assertEquals(
@@ -155,32 +181,32 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		}
 
 		@Test
-		public void testReturnsEmptyListForAnUnknownCategory() {
-			List<String> formNavigatorEntryKeys =
+		public void testReturnsEmptyOptionalForAnUnknownCategory() {
+			Optional<List<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationHelper.
 					getFormNavigatorEntryKeys(
 						"form1", "unknownCategory", "add");
 
-			Assert.assertTrue(formNavigatorEntryKeys.isEmpty());
+			Assert.assertFalse(formNavigatorEntryKeys.isPresent());
 		}
 
 		@Test
-		public void testReturnsEmptyListForAnUnknownFormId() {
-			List<String> formNavigatorEntryKeys =
+		public void testReturnsEmptyOptionalForAnUnknownFormId() {
+			Optional<List<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationHelper.
 					getFormNavigatorEntryKeys("unknownForm", "general", "add");
 
-			Assert.assertTrue(formNavigatorEntryKeys.isEmpty());
+			Assert.assertFalse(formNavigatorEntryKeys.isPresent());
 		}
 
 		@Test
-		public void testReturnsEmptyListForAnUnknownVariant() {
-			List<String> formNavigatorEntryKeys =
+		public void testReturnsEmptyOptionalForAnUnknownVariant() {
+			Optional<List<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationHelper.
 					getFormNavigatorEntryKeys(
 						"form1", "general", "unknownVariant");
 
-			Assert.assertTrue(formNavigatorEntryKeys.isEmpty());
+			Assert.assertFalse(formNavigatorEntryKeys.isPresent());
 		}
 
 	}
@@ -193,17 +219,16 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		}
 
 		@Test
-		public void testGetFormNavigatorEntriesReturnsAnEmptyList()
+		public void testGetFormNavigatorEntriesReturnsEmptyOptional()
 			throws InvalidSyntaxException, IOException {
 
-			List<String> formNavigatorEntryKeys =
+			Optional<List<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationHelper.
 					getFormNavigatorEntryKeys(
 						"formNavigatorId", "categoryKey", "variant");
 
-			Assert.assertTrue(formNavigatorEntryKeys.isEmpty());
+			Assert.assertFalse(formNavigatorEntryKeys.isPresent());
 		}
-
 	}
 
 	public static class WhenThereIsOneConfigurationWithTwoLinesForSameTarget {
@@ -236,7 +261,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		public void testTheLastOneHasPrecedence() {
 			List<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationHelper.
-					getFormNavigatorEntryKeys("form1", "general", "add");
+					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(3, formNavigatorEntryKeys.size());
 			Assert.assertEquals(

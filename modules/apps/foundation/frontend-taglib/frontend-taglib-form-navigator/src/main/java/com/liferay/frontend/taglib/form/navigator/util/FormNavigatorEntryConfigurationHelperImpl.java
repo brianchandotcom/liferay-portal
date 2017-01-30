@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryConfigurati
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.osgi.framework.BundleContext;
@@ -39,37 +40,36 @@ public class FormNavigatorEntryConfigurationHelperImpl
 	implements FormNavigatorEntryConfigurationHelper {
 
 	@Override
-	public <T> List<FormNavigatorEntry<T>> getFormNavigatorEntries(
+	public <T> Optional<List<FormNavigatorEntry<T>>> getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, String variant) {
 
 		return _formNavigatorEntryConfigurationRetriever.
-			getFormNavigatorEntryKeys(
-				formNavigatorId, categoryKey, variant).stream().map(
-				key -> this.<T>_getFormNavigatorEntry(
-					key, formNavigatorId)).collect(Collectors.toList());
+			getFormNavigatorEntryKeys(formNavigatorId, categoryKey, variant).
+			map(keys -> _convertKeysToServices(formNavigatorId, keys));
+	}
+
+	private <T> List<FormNavigatorEntry<T>> _convertKeysToServices(
+		String formNavigatorId, List<String> formNavigatorEntryKeys) {
+
+		return formNavigatorEntryKeys.stream().map(
+			key -> this.<T>_getFormNavigatorEntry(key, formNavigatorId)
+		).collect(Collectors.toList());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_formNavigatorEntriesMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, FormNavigatorEntry.class, null,
-			new ServiceReferenceMapper<String, FormNavigatorEntry>() {
+			(serviceReference, emitter) -> {
 
-				@Override
-				public void map(
-					ServiceReference<FormNavigatorEntry> serviceReference,
-					Emitter<String> emitter) {
+				FormNavigatorEntry service = bundleContext.getService(
+					serviceReference);
 
-					FormNavigatorEntry service = bundleContext.getService(
-						serviceReference);
+				emitter.emit(
+					_getKey(
+						service.getKey(), service.getFormNavigatorId()));
 
-					emitter.emit(
-						_getKey(
-							service.getKey(), service.getFormNavigatorId()));
-
-					bundleContext.ungetService(serviceReference);
-				}
-
+				bundleContext.ungetService(serviceReference);
 			});
 	}
 

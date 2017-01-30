@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.io.IOException;
 import java.io.StringReader;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = FormNavigatorEntryConfigurationRetriever.class)
 public class FormNavigatorEntryConfigurationRetriever {
 
-	public List<String> getFormNavigatorEntryKeys(
+	public Optional<List<String>> getFormNavigatorEntryKeys(
 		String formNavigatorId, String categoryKey, String variant) {
 
 		try {
@@ -51,14 +51,17 @@ public class FormNavigatorEntryConfigurationRetriever {
 			String entryKeys = properties.getProperty(expectedKey);
 
 			if (entryKeys != null) {
-				return Arrays.asList(entryKeys.split(StringPool.COMMA));
+				return Optional.of(
+					Arrays.stream(entryKeys.split(StringPool.COMMA)).
+					filter(s -> !s.isEmpty()).
+					collect(Collectors.toList()));
 			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 
-		return new ArrayList<>();
+		return Optional.empty();
 	}
 
 	@Reference(bind = "-", unbind = "-")

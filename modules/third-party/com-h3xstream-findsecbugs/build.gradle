@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.h3xstream.findsecbugs", name: "findsecbugs-plugin", version: "1.5.0"
+	compileInclude group: "com.h3xstream.findsecbugs", name: "findsecbugs-plugin", version: "1.5.0"
 }
 
 updateFileVersions {

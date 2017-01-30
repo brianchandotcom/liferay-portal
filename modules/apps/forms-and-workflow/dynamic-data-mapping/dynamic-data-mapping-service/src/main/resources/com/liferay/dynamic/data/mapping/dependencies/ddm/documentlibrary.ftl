@@ -22,8 +22,6 @@
 	</#if>
 </#if>
 
-<#assign itemSelectorAuthToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), itemSelectorPortletId) />
-
 <#assign data = data + {
 	"itemSelectorAuthToken": itemSelectorAuthToken
 }>

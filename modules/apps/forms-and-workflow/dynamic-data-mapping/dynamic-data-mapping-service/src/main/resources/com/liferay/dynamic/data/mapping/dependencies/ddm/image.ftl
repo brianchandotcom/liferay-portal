@@ -22,8 +22,6 @@
 	/>
 </#if>
 
-<#assign itemSelectorAuthToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), "com_liferay_item_selector_web_portlet_ItemSelectorPortlet") />
-
 <#assign data = data + {
 	"itemSelectorAuthToken": itemSelectorAuthToken
 }>

@@ -30,12 +30,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.template.ClassLoaderTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -45,6 +53,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.Writer;
 
@@ -492,7 +501,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			"ddmPortletId", DDMPortletKeys.DYNAMIC_DATA_MAPPING);
 		freeMarkerContext.put("fieldStructure", fieldContext);
 		freeMarkerContext.put(
-			"itemSelectorPortletId", PortletKeys.ITEM_SELECTOR);
+			"itemSelectorAuthToken", getItemSelectorAuthToken(request));
 		freeMarkerContext.put("namespace", namespace);
 		freeMarkerContext.put("parentFieldStructure", parentFieldContext);
 		freeMarkerContext.put("portletNamespace", portletNamespace);
@@ -524,6 +533,35 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		}
 
 		return sb.toString();
+	}
+
+	protected String getItemSelectorAuthToken(HttpServletRequest request) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long companyId = themeDisplay.getCompanyId();
+
+		Group controlPanelGroup = GroupLocalServiceUtil.fetchGroup(
+			companyId, GroupConstants.CONTROL_PANEL);
+
+		if (controlPanelGroup == null) {
+			return AuthTokenUtil.getToken(
+				request, themeDisplay.getPlid(), PortletKeys.ITEM_SELECTOR);
+		}
+
+		Layout layout = LayoutLocalServiceUtil.fetchDefaultLayout(
+			controlPanelGroup.getGroupId(), true);
+
+		if (layout == null) {
+			return AuthTokenUtil.getToken(
+				request, themeDisplay.getPlid(), PortletKeys.ITEM_SELECTOR);
+		}
+
+		VirtualLayout virtualLayout = new VirtualLayout(
+			layout, themeDisplay.getScopeGroup());
+
+		return AuthTokenUtil.getToken(
+			request, virtualLayout.getPlid(), PortletKeys.ITEM_SELECTOR);
 	}
 
 	protected URL getResource(String name) {

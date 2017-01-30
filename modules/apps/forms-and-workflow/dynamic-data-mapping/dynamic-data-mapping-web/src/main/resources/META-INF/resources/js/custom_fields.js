@@ -151,15 +151,13 @@ AUI.add(
 					_getDocumentLibrarySelectorURL: function() {
 						var instance = this;
 
-						var scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
-
 						var portletNamespace = instance.get('portletNamespace');
 
-						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getSiteAdminURL());
 
-						portletURL.setDoAsGroupId(scopeGroupId);
 						portletURL.setParameter('criteria', 'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion');
 						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
+						portletURL.setParameter('p_p_auth', container.getData('itemSelectorAuthToken'));
 
 						var criterionJSON = {
 							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
@@ -184,11 +182,8 @@ AUI.add(
 					_getUploadURL: function() {
 						var instance = this;
 
-						var scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
+						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getSiteAdminURL());
 
-						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
-
-						portletURL.setDoAsGroupId(scopeGroupId);
 						portletURL.setLifecycle(Liferay.PortletURL.ACTION_PHASE);
 						portletURL.setParameter('cmd', 'add_temp');
 						portletURL.setParameter('javax.portlet.action', '/document_library/upload_file_entry');

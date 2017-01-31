@@ -146,14 +146,9 @@ public abstract class BaseBuild implements Build {
 		String jobURL = getJobURL();
 
 		for (Integer badBuildNumber : badBuildNumbers) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(jobURL);
-			sb.append("/");
-			sb.append(badBuildNumber);
-			sb.append("/");
-
-			badBuildURLs.add(sb.toString());
+			badBuildURLs.add(
+				JenkinsResultsParserUtil.combine(
+					jobURL, "/", Integer.toString(badBuildNumber), "/"));
 		}
 
 		return badBuildURLs;
@@ -477,16 +472,6 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getRepositoryName() {
 		if (repositoryName == null) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("repository[");
-
-			TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-			sb.append(topLevelBuild.getJobName());
-
-			sb.append("]");
-
 			Properties buildProperties = null;
 
 			try {
@@ -497,7 +482,11 @@ public abstract class BaseBuild implements Build {
 					"Unable to get build.properties", ioe);
 			}
 
-			repositoryName = buildProperties.getProperty(sb.toString());
+			TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+			repositoryName = buildProperties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"repository[", topLevelBuild.getJobName(), "]"));
 
 			if (repositoryName == null) {
 				throw new RuntimeException(
@@ -645,32 +634,23 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getStatusSummary() {
-		StringBuilder sb = new StringBuilder();
+		return JenkinsResultsParserUtil.combine(
+			Integer.toString(getDownstreamBuildCount("starting")),
+			" Starting  ", "/ ",
 
-		sb.append(getDownstreamBuildCount("starting"));
-		sb.append(" Starting  ");
-		sb.append("/ ");
+			Integer.toString(getDownstreamBuildCount("missing")), " Missing  ",
+			"/ ",
 
-		sb.append(getDownstreamBuildCount("missing"));
-		sb.append(" Missing  ");
-		sb.append("/ ");
+			Integer.toString(getDownstreamBuildCount("queued")), " Queued  ",
+			"/ ",
 
-		sb.append(getDownstreamBuildCount("queued"));
-		sb.append(" Queued  ");
-		sb.append("/ ");
+			Integer.toString(getDownstreamBuildCount("running")), " Running  ",
+			"/ ",
 
-		sb.append(getDownstreamBuildCount("running"));
-		sb.append(" Running  ");
-		sb.append("/ ");
+			Integer.toString(getDownstreamBuildCount("completed")),
+			" Completed  ", "/ ",
 
-		sb.append(getDownstreamBuildCount("completed"));
-		sb.append(" Completed  ");
-		sb.append("/ ");
-
-		sb.append(getDownstreamBuildCount(null));
-		sb.append(" Total ");
-
-		return sb.toString();
+			Integer.toString(getDownstreamBuildCount(null)), " Total ");
 	}
 
 	@Override
@@ -1388,13 +1368,9 @@ public abstract class BaseBuild implements Build {
 			Properties buildProperties =
 				JenkinsResultsParserUtil.getBuildProperties();
 
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("repository.type[");
-			sb.append(repositoryName);
-			sb.append("]");
-
-			String repositoryType = buildProperties.getProperty(sb.toString());
+			String repositoryType = buildProperties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"repository.type[", repositoryName, "]"));
 
 			if ((repositoryType == null) || repositoryType.isEmpty()) {
 				throw new RuntimeException(
@@ -1702,28 +1678,28 @@ public abstract class BaseBuild implements Build {
 	protected void writeArchiveFile(String content, String path)
 		throws IOException {
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(
-			JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE.substring(
-				"file:".length()));
-		sb.append("/");
-		sb.append(path);
-
-		JenkinsResultsParserUtil.write(sb.toString(), replaceBuildURL(content));
+		JenkinsResultsParserUtil.write(
+			JenkinsResultsParserUtil.combine(
+				JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE.substring(
+					"file:".length()),
+				"/", path),
+			replaceBuildURL(content));
 	}
 
 	protected static final Pattern archiveBuildURLPattern = Pattern.compile(
-		"(\\$\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]+)/" +
-			"(?<master>[^/]+)/+(?<jobName>[^/]+).*/(?<buildNumber>\\d+)/?");
+		JenkinsResultsParserUtil.combine(
+			"(\\$\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]",
+			"+)/(?<master>[^/]+)/+(?<jobName>[^/]+).*/(?<buildNumber>\\d+)/?"));
 	protected static final Pattern buildURLPattern = Pattern.compile(
-		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>" +
-			"\\d+)/?");
+		JenkinsResultsParserUtil.combine(
+			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>",
+			"\\d+)/?"));
 	protected static final Pattern downstreamBuildURLPattern = Pattern.compile(
 		"[\\'\\\"].*[\\'\\\"] started at (?<url>.+)\\.");
 	protected static final Pattern invocationURLPattern = Pattern.compile(
-		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/" +
-			"buildWithParameters\\?(?<queryString>.*)");
+		JenkinsResultsParserUtil.combine(
+			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/",
+			"buildWithParameters\\?(?<queryString>.*)"));
 	protected static final Pattern jobNamePattern = Pattern.compile(
 		"(?<baseJob>[^\\(]+)\\((?<branchName>[^\\)]+)\\)");
 	protected static final String tempMapBaseURL =

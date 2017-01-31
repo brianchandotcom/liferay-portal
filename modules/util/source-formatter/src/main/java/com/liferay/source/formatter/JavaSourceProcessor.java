@@ -384,6 +384,34 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						lineCount);
 				}
 			}
+
+			x = trimmedLine.length() + 1;
+
+			while (true) {
+				x = trimmedLine.lastIndexOf(StringPool.COMMA, x - 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				if (ToolsUtil.isInsideQuotes(trimmedLine, x)) {
+					continue;
+				}
+
+				String linePart = trimmedLine.substring(x);
+
+				if ((getLevel(linePart) == 1) &&
+					(getLevel(linePart, "<", ">") == 0)) {
+
+					processMessage(
+						fileName,
+						"There should be a line break after '" +
+							trimmedLine.substring(0, x + 1) + "'",
+						lineCount);
+
+					break;
+				}
+			}
 		}
 
 		if (trimmedLine.matches("\\)\\..*\\([^)].*")) {

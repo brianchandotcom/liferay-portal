@@ -43,6 +43,22 @@
 		<execute macro="FormFields#selectDataProviderOutputType">
 			<var name="outputParameterType" value="${outputParameterType}" />
 		</execute>
+
+		<if>
+			<isset var="outputParameterPath2" />
+			<then>
+				<execute function="Click" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_REPEAT_ICON" />
+
+				<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD_2" value1="${outputParameterPath2}" />
+				<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_NAME_FIELD_2" value1="${outputParameterName2}" />
+
+				<execute function="Click" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_2" />
+
+				<var name="key_outputParameterType" value="${outputParameterType2}" />
+
+				<execute function="AssertClick" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST_2" value1="${outputParameterType2}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="saveDataProvider">

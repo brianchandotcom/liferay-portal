@@ -2755,7 +2755,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String definition = matcher.group();
 
-			if (Validator.isNotNull(matcher.group(1))) {
+			if (Validator.isNotNull(matcher.group(1)) &&
+				definition.endsWith("\n")) {
+
 				definition = definition.substring(0, definition.length() - 1);
 			}
 

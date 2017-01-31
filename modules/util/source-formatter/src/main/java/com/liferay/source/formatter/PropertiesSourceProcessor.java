@@ -74,6 +74,10 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	protected void addDuplicateLanguageKey(
 		String fileName, String key, String value) {
 
+		if (fileName.contains("osb-testray")) {
+			Thread.dumpStack();
+		}
+
 		if (fileName.endsWith("portal-impl/src/content/Language.properties")) {
 			return;
 		}

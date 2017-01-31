@@ -273,7 +273,11 @@ public class PortletPermissionImpl implements PortletPermission {
 				groupId, name, resourcePermissionPrimKey, actionId);
 		}
 
-		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+		Group group = null;
+
+		if (groupId > 0) {
+			group = GroupLocalServiceUtil.fetchGroup(groupId);
+		}
 
 		if (group == null) {
 			group = layout.getGroup();

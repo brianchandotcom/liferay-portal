@@ -259,8 +259,14 @@ public class PortletDisplay implements Cloneable, Serializable {
 	public <T> T getPortletInstanceConfiguration(Class<T> clazz)
 		throws ConfigurationException {
 
-		String portletId = Validator.isNull(
-			_portletResource) ? _id : _portletResource;
+		String portletId = null;
+
+		if (Validator.isNotNull(_portletResource)) {
+			portletId = _portletResource;
+		}
+		else {
+			portletId = _id;
+		}
 
 		PortletInstance portletInstance =
 			PortletInstance.fromPortletInstanceKey(portletId);

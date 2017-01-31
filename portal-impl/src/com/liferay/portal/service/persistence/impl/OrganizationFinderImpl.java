@@ -318,10 +318,18 @@ public class OrganizationFinderImpl
 
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
 			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
-			sql = StringUtil.replace(
-				sql, "[$PARENT_ORGANIZATION_ID_COMPARATOR$]",
-				parentOrganizationIdComparator.equals(StringPool.EQUAL) ?
-					StringPool.EQUAL : StringPool.NOT_EQUAL);
+
+			if (parentOrganizationIdComparator.equals(StringPool.EQUAL)) {
+				sql = StringUtil.replace(
+					sql, "[$PARENT_ORGANIZATION_ID_COMPARATOR$]",
+					StringPool.EQUAL);
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "[$PARENT_ORGANIZATION_ID_COMPARATOR$]",
+					StringPool.NOT_EQUAL);
+			}
+
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -691,10 +699,16 @@ public class OrganizationFinderImpl
 			sql, "lower(Address.city)", StringPool.LIKE, false, cities);
 		sql = CustomSQLUtil.replaceKeywords(
 			sql, "lower(Address.zip)", StringPool.LIKE, true, zips);
-		sql = StringUtil.replace(
-			sql, "[$PARENT_ORGANIZATION_ID_COMPARATOR$]",
-			parentOrganizationIdComparator.equals(StringPool.EQUAL) ?
-				StringPool.EQUAL : StringPool.NOT_EQUAL);
+
+		if (parentOrganizationIdComparator.equals(StringPool.EQUAL)) {
+			sql = StringUtil.replace(
+				sql, "[$PARENT_ORGANIZATION_ID_COMPARATOR$]", StringPool.EQUAL);
+		}
+		else {
+			sql = StringUtil.replace(
+				sql, "[$PARENT_ORGANIZATION_ID_COMPARATOR$]",
+				StringPool.NOT_EQUAL);
+		}
 
 		if (regionId == null) {
 			sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);

@@ -818,10 +818,15 @@ public class GroupFinderImpl
 			}
 		}
 
-		sql = StringUtil.replace(
-			sql, "[$PARENT_GROUP_ID_COMPARATOR$]",
-			parentGroupIdComparator.equals(StringPool.EQUAL) ?
-				StringPool.EQUAL : StringPool.NOT_EQUAL);
+		if (parentGroupIdComparator.equals(StringPool.EQUAL)) {
+			sql = StringUtil.replace(
+				sql, "[$PARENT_GROUP_ID_COMPARATOR$]", StringPool.EQUAL);
+		}
+		else {
+			sql = StringUtil.replace(
+				sql, "[$PARENT_GROUP_ID_COMPARATOR$]", StringPool.NOT_EQUAL);
+		}
+
 		sql = CustomSQLUtil.replaceKeywords(
 			sql, "lower(Group_.name)", StringPool.LIKE, false, names);
 		sql = CustomSQLUtil.replaceKeywords(
@@ -931,10 +936,15 @@ public class GroupFinderImpl
 
 		String sql = CustomSQLUtil.get(COUNT_BY_C_PG_N_D);
 
-		sql = StringUtil.replace(
-			sql, "[$PARENT_GROUP_ID_COMPARATOR$]",
-			parentGroupIdComparator.equals(StringPool.EQUAL) ?
-				StringPool.EQUAL : StringPool.NOT_EQUAL);
+		if (parentGroupIdComparator.equals(StringPool.EQUAL)) {
+			sql = StringUtil.replace(
+				sql, "[$PARENT_GROUP_ID_COMPARATOR$]", StringPool.EQUAL);
+		}
+		else {
+			sql = StringUtil.replace(
+				sql, "[$PARENT_GROUP_ID_COMPARATOR$]", StringPool.NOT_EQUAL);
+		}
+
 		sql = CustomSQLUtil.replaceKeywords(
 			sql, "lower(Group_.name)", StringPool.LIKE, false, names);
 		sql = CustomSQLUtil.replaceKeywords(

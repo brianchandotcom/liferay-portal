@@ -932,9 +932,16 @@ public class RegistryTest {
 			Assert.assertNotNull(serviceRegistrationB);
 
 			Assert.assertFalse(serviceTracker.isEmpty());
-			Assert.assertEquals(
-				(expectedServicesCount == 2) ? referenceA.get() :
+
+			if (expectedServicesCount == 2) {
+				Assert.assertEquals(
+					referenceA.get(), serviceTracker.getService());
+			}
+			else {
+				Assert.assertEquals(
 					referenceB.get(), serviceTracker.getService());
+			}
+
 			Assert.assertEquals(
 				referenceB.get(),
 				serviceTracker.getService(
@@ -957,11 +964,20 @@ public class RegistryTest {
 			Assert.assertNotNull(trackedServiceReferences);
 			Assert.assertEquals(
 				expectedServicesCount, trackedServiceReferences.size());
-			Assert.assertEquals(
-				(expectedServicesCount == 2) ?
-					referenceA.get() : referenceB.get(),
-				trackedServiceReferences.get(
-					trackedServiceReferences.firstKey()));
+
+			if (expectedServicesCount == 2) {
+				Assert.assertEquals(
+					referenceA.get(),
+					trackedServiceReferences.get(
+						trackedServiceReferences.firstKey()));
+			}
+			else {
+				Assert.assertEquals(
+					referenceB.get(),
+					trackedServiceReferences.get(
+						trackedServiceReferences.firstKey()));
+			}
+
 			Assert.assertEquals(
 				referenceB.get(),
 				trackedServiceReferences.get(

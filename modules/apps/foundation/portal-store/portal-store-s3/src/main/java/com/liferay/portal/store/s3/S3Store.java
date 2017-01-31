@@ -394,7 +394,6 @@ public class S3Store extends BaseStore {
 		_amazonS3 = getAmazonS3(_awsCredentialsProvider);
 
 		_bucketName = _s3StoreConfiguration.bucketName();
-
 		_transferManager = getTransferManager(_amazonS3);
 
 		try {
@@ -534,7 +533,6 @@ public class S3Store extends BaseStore {
 
 		clientConfiguration.setMaxErrorRetry(
 			_s3StoreConfiguration.httpClientMaxErrorRetry());
-
 		clientConfiguration.setMaxConnections(
 			_s3StoreConfiguration.httpClientMaxConnections());
 
@@ -655,11 +653,10 @@ public class S3Store extends BaseStore {
 		TransferManagerConfiguration transferManagerConfiguration =
 			new TransferManagerConfiguration();
 
-		transferManagerConfiguration.setMultipartUploadThreshold(
-			_s3StoreConfiguration.multipartUploadThreshold());
-
 		transferManagerConfiguration.setMinimumUploadPartSize(
 			_s3StoreConfiguration.minimumUploadPartSize());
+		transferManagerConfiguration.setMultipartUploadThreshold(
+			_s3StoreConfiguration.multipartUploadThreshold());
 
 		transferManager.setConfiguration(transferManagerConfiguration);
 
@@ -879,9 +876,10 @@ public class S3Store extends BaseStore {
 			LocalDateTime localDateTime = LocalDateTime.ofInstant(
 				date.toInstant(), ZoneId.systemDefault());
 
-			LocalDateTime previousDay = localDateTime.minus(1, ChronoUnit.DAYS);
+			LocalDateTime previousDayLocalDateTime = localDateTime.minus(
+				1, ChronoUnit.DAYS);
 
-			ZonedDateTime zonedDateTime = previousDay.atZone(
+			ZonedDateTime zonedDateTime = previousDayLocalDateTime.atZone(
 				ZoneId.systemDefault());
 
 			return Date.from(zonedDateTime.toInstant());

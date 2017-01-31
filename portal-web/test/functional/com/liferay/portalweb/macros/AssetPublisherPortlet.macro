@@ -52,9 +52,9 @@
 
 				<execute function="SelectFrame" locator1="IFrame#SELECT_SITES" />
 
-				<var name="key_siteName" value="${otherSite}" />
-
-				<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
+				<execute macro="SiteSelector#selectSite">
+					<var name="site" value="${otherSite}" />
+				</execute>
 			</then>
 		</if>
 

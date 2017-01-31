@@ -53,5 +53,5 @@
 		_publicPageCount = publicPageCount
 	/>
 
-	${repositoryCSVWriter.write(groupId + ", " + groupModel.name + "\n")}
+	${dataFactory.getCSVWriter("repository").write(groupId + ", " + groupModel.name + "\n")}
 </#list>

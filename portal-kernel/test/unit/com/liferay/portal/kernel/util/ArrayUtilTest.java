@@ -47,7 +47,8 @@ public class ArrayUtilTest {
 			new char[] {'a', 'b', 'c', 'd'},
 			ArrayUtil.append(new char[] {'a', 'b', 'c'}, 'd'));
 		Assert.assertArrayEquals(
-			new char[] {'a', 'b', 'c', 'd', 'e', 'f'}, ArrayUtil.append(
+			new char[] {'a', 'b', 'c', 'd', 'e', 'f'},
+			ArrayUtil.append(
 				new char[] {'a', 'b', 'c'}, new char[] {'d', 'e', 'f'}));
 		Assert.assertArrayEquals(
 			new double[] {1.0, 2.0, 3.0, 4.0},

@@ -113,8 +113,8 @@ public class PrivateMessagingUserNotificationHandler
 			"content.Language", serviceContext.getLocale(), getClass());
 
 		String title = ResourceBundleUtil.getString(
-			resourceBundle, "x-sent-you-a-message", HtmlUtil.escape(
-				_portal.getUserName(userId, StringPool.BLANK)));
+			resourceBundle, "x-sent-you-a-message",
+			HtmlUtil.escape(_portal.getUserName(userId, StringPool.BLANK)));
 
 		return StringUtil.replace(
 			getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},

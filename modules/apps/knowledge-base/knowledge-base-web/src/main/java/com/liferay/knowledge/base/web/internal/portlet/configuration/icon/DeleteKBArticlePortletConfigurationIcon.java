@@ -81,7 +81,8 @@ public class DeleteKBArticlePortletConfigurationIcon
 		portletURL.setParameter(
 			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
 		portletURL.setParameter(
-			"status", String.valueOf(
+			"status",
+			String.valueOf(
 				portletRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS)));
 
 		return portletURL.toString();

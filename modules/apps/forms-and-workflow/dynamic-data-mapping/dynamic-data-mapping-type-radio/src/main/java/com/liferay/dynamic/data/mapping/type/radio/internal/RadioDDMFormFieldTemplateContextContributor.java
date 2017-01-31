@@ -95,7 +95,8 @@ public class RadioDDMFormFieldTemplateContextContributor
 
 		RadioDDMFormFieldContextHelper radioDDMFormFieldContextHelper =
 			new RadioDDMFormFieldContextHelper(
-				jsonFactory, getDDMFormFieldOptions(
+				jsonFactory,
+				getDDMFormFieldOptions(
 					ddmFormField, ddmFormFieldRenderingContext),
 				ddmFormFieldRenderingContext.getValue(),
 				ddmFormField.getPredefinedValue(),

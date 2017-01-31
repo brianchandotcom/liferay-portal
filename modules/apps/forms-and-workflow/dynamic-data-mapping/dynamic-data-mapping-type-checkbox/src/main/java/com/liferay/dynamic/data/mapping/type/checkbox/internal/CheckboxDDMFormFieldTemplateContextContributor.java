@@ -50,8 +50,8 @@ public class CheckboxDDMFormFieldTemplateContextContributor
 		parameters.put("showAsSwitcher", showAsSwitcher);
 
 		parameters.put(
-			"value", Boolean.parseBoolean(
-				ddmFormFieldRenderingContext.getValue()));
+			"value",
+			Boolean.parseBoolean(ddmFormFieldRenderingContext.getValue()));
 
 		return parameters;
 	}

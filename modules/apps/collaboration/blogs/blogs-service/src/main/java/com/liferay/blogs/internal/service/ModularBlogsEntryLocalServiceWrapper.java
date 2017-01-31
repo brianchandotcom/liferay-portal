@@ -651,7 +651,8 @@ public class ModularBlogsEntryLocalServiceWrapper
 		throws PortalException {
 
 		_blogsEntryLocalService.updateAsset(
-			userId, ModelAdapterUtil.adapt(
+			userId,
+			ModelAdapterUtil.adapt(
 				com.liferay.blogs.model.BlogsEntry.class, entry),
 			assetCategoryIds, assetTagNames, assetLinkEntryIds, priority);
 	}

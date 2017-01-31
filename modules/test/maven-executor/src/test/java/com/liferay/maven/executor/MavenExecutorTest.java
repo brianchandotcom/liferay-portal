@@ -86,7 +86,8 @@ public class MavenExecutorTest {
 		Assert.assertEquals(result.output, 0, result.exitCode);
 
 		Assert.assertTrue(
-			result.output, result.output.contains(
+			result.output,
+			result.output.contains(
 				"This is the text which will be printed out."));
 	}
 
@@ -141,8 +142,8 @@ public class MavenExecutorTest {
 
 			Assert.assertNotEquals(result.output, 0, result.exitCode);
 			Assert.assertTrue(
-				result.output, result.output.contains(
-					"127.0.0.1:" + fakeProxyPort));
+				result.output,
+				result.output.contains("127.0.0.1:" + fakeProxyPort));
 		}
 		finally {
 			_setSystemProperty("http.proxyHost", proxyHost);

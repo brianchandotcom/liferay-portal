@@ -354,9 +354,10 @@ public abstract class BaseBuild implements Build {
 		}
 
 		Dom4JUtil.addToElement(
-			messageElement, Dom4JUtil.getNewElement(
-				"h5", null, Dom4JUtil.getNewAnchorElement(
-					getBuildURL(), getDisplayName())),
+			messageElement,
+			Dom4JUtil.getNewElement(
+				"h5", null,
+				Dom4JUtil.getNewAnchorElement(getBuildURL(), getDisplayName())),
 			getGitHubMessageJobResultsElement());
 
 		if (result.equals("FAILURE")) {

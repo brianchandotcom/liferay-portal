@@ -1072,16 +1072,14 @@ public abstract class BaseBuild implements Build {
 			while (downstreamBuildURLMatcher.find()) {
 				String url = downstreamBuildURLMatcher.group("url");
 
-				String reinvocationMarker = url + " restarted at ";
+				Pattern reinvocationPattern = Pattern.compile(
+					Pattern.quote(url) + " restarted at (?<url>[^\\n]*)\\.\\n");
 
-				int reinvocationIndex = consoleText.indexOf(reinvocationMarker);
+				Matcher reinvocationMatcher = reinvocationPattern.matcher(
+					consoleText);
 
-				if (reinvocationIndex != -1) {
-					url = consoleText.substring(
-						reinvocationIndex + reinvocationMarker.length(),
-						consoleText.indexOf(
-							".\n",
-							reinvocationIndex + reinvocationMarker.length()));
+				while (reinvocationMatcher.find()) {
+					url = reinvocationMatcher.group("url");
 				}
 
 				if (!foundDownstreamBuildURLs.contains(url)) {

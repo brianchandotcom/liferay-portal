@@ -48,7 +48,7 @@ PortletDescription[] portletDescriptions = serviceDescription.getOfferedPortlets
 
 <portlet:actionURL name="updateWSRPConsumerPortlet" var="updateWSRPConsumerPortletURL" />
 
-<aui:form action="<%= updateWSRPConsumerPortletURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConsumerPortlet();" %>'>
+<aui:form action="<%= updateWSRPConsumerPortletURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConsumerPortlet();" %>'>
 	<aui:input name="mvcPath" type="hidden" value="/admin/edit_consumer_portlet.jsp" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="wsrpConsumerPortletId" type="hidden" value="<%= wsrpConsumerPortletId %>" />

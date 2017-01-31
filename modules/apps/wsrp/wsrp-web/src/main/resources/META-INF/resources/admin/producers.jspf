@@ -14,58 +14,57 @@
  */
 --%>
 
-<liferay-ui:search-container
-	emptyResultsMessage="there-are-no-producers"
-	headerNames="name"
-	iteratorURL="<%= portletURL %>"
-	total="<%= WSRPProducerLocalServiceUtil.getWSRPProducersCount(company.getCompanyId()) %>"
->
-	<liferay-ui:search-container-results
-		results="<%= WSRPProducerLocalServiceUtil.getWSRPProducers(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.wsrp.model.WSRPProducer"
-		escapedModel="<%= true %>"
-		keyProperty="wsrpProducerId"
-		modelVar="producer"
+<div class="container-fluid-1280">
+	<liferay-ui:search-container
+		emptyResultsMessage="there-are-no-producers"
+		headerNames="name"
+		iteratorURL="<%= portletURL %>"
+		total="<%= WSRPProducerLocalServiceUtil.getWSRPProducersCount(company.getCompanyId()) %>"
 	>
-		<portlet:renderURL var="rowURL">
-			<portlet:param name="mvcPath" value="/admin/edit_producer.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="wsrpProducerId" value="<%= String.valueOf(producer.getWsrpProducerId()) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="producer"
-			property="name"
+		<liferay-ui:search-container-results
+			results="<%= WSRPProducerLocalServiceUtil.getWSRPProducers(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
-		<%
-		String producerURL = producer.getURL(themeDisplay.getPortalURL() + "/o/wsrp-service");
-		%>
+		<liferay-ui:search-container-row
+			className="com.liferay.wsrp.model.WSRPProducer"
+			escapedModel="<%= true %>"
+			keyProperty="wsrpProducerId"
+			modelVar="producer"
+		>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="mvcPath" value="/admin/edit_producer.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="wsrpProducerId" value="<%= String.valueOf(producer.getWsrpProducerId()) %>" />
+			</portlet:renderURL>
 
-		<liferay-ui:search-container-column-text
-			href="<%= producerURL %>"
-			name="url"
-			value="<%= producerURL %>"
-		/>
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="producer"
+				property="name"
+			/>
 
-		<liferay-ui:search-container-column-text
-			property="version"
-		/>
+			<%
+			String producerURL = producer.getURL(themeDisplay.getPortalURL() + "/o/wsrp-service");
+			%>
 
-		<liferay-ui:search-container-column-jsp
-			align="right"
-			cssClass="entry-action"
-			path="/admin/producer_action.jsp"
-			valign="top"
-		/>
-	</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-text
+				href="<%= producerURL %>"
+				name="url"
+				value="<%= producerURL %>"
+			/>
 
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+			<liferay-ui:search-container-column-text
+				property="version"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				path="/admin/producer_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</div>
 
 <portlet:renderURL var="addProducerURL">
 	<portlet:param name="mvcPath" value="/admin/edit_producer.jsp" />

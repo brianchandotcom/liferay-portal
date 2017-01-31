@@ -35,53 +35,52 @@ portletURL.setParameter("wsrpConsumerId", String.valueOf(wsrpConsumerId));
 	</aui:nav>
 </aui:nav-bar>
 
-<liferay-ui:search-container
-	emptyResultsMessage="there-are-no-portlets"
-	headerNames="name,remote-portlet"
-	iteratorURL="<%= portletURL %>"
-	total="<%= WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortletsCount(wsrpConsumerId) %>"
->
-	<liferay-ui:search-container-results
-		results="<%= WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortlets(wsrpConsumerId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.wsrp.model.WSRPConsumerPortlet"
-		keyProperty="wsrpConsumerPortletId"
-		modelVar="wsrpConsumerPortlet"
+<div class="container-fluid-1280">
+	<liferay-ui:search-container
+		emptyResultsMessage="there-are-no-portlets"
+		headerNames="name,remote-portlet"
+		iteratorURL="<%= portletURL %>"
+		total="<%= WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortletsCount(wsrpConsumerId) %>"
 	>
-		<liferay-ui:search-container-column-text
-			property="name"
+		<liferay-ui:search-container-results
+			results="<%= WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortlets(wsrpConsumerId, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			buffer="buffer"
-			name="remote-portlet"
+		<liferay-ui:search-container-row
+			className="com.liferay.wsrp.model.WSRPConsumerPortlet"
+			keyProperty="wsrpConsumerPortletId"
+			modelVar="wsrpConsumerPortlet"
 		>
+			<liferay-ui:search-container-column-text
+				property="name"
+			/>
 
-			<%
-			PortletDescription portletDescription = wsrpConsumerManager.getPortletDescription(wsrpConsumerPortlet.getPortletHandle());
+			<liferay-ui:search-container-column-text
+				buffer="buffer"
+				name="remote-portlet"
+			>
 
-			if (portletDescription != null) {
-				buffer.append(wsrpConsumerManager.getDisplayName(portletDescription));
-			}
-			else {
-				buffer.append(LanguageUtil.format(locale, "is-temporarily-unavailable", "remote-portlet"));
-			}
-			%>
+				<%
+				PortletDescription portletDescription = wsrpConsumerManager.getPortletDescription(wsrpConsumerPortlet.getPortletHandle());
 
-		</liferay-ui:search-container-column-text>
+				if (portletDescription != null) {
+					buffer.append(wsrpConsumerManager.getDisplayName(portletDescription));
+				}
+				else {
+					buffer.append(LanguageUtil.format(locale, "is-temporarily-unavailable", "remote-portlet"));
+				}
+				%>
 
-		<liferay-ui:search-container-column-jsp
-			align="right"
-			cssClass="entry-action"
-			path="/admin/consumer_portlet_action.jsp"
-			valign="top"
-		/>
-	</liferay-ui:search-container-row>
+			</liferay-ui:search-container-column-text>
 
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+			<liferay-ui:search-container-column-jsp
+				path="/admin/consumer_portlet_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</div>
 
 <portlet:renderURL var="addPortletURL">
 	<portlet:param name="mvcPath" value="/admin/edit_consumer_portlet.jsp" />

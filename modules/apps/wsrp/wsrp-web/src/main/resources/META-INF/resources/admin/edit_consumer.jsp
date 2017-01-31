@@ -31,7 +31,7 @@ WSRPConsumer wsrpConsumer = WSRPConsumerLocalServiceUtil.fetchWSRPConsumer(wsrpC
 
 <portlet:actionURL name="updateWSRPConsumer" var="updateWSRPConsumerURL" />
 
-<aui:form action="<%= updateWSRPConsumerURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConsumer();" %>'>
+<aui:form action="<%= updateWSRPConsumerURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConsumer();" %>'>
 	<aui:input name="mvcPath" type="hidden" value="/admin/edit_consumer.jsp" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="wsrpConsumerId" type="hidden" value="<%= wsrpConsumerId %>" />

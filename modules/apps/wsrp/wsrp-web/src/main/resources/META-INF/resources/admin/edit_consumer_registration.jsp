@@ -49,7 +49,7 @@ if (supportsInbandRegistration) {
 
 <portlet:actionURL name="updateWSRPConsumerRegistration" var="updateWSRPConsumerRegistrationURL" />
 
-<aui:form action="<%= updateWSRPConsumerRegistrationURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConsumerRegistration();" %>'>
+<aui:form action="<%= updateWSRPConsumerRegistrationURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConsumerRegistration();" %>'>
 	<aui:input name="mvcPath" type="hidden" value="/admin/edit_consumer_registration.jsp" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="wsrpConsumerId" type="hidden" value="<%= wsrpConsumerId %>" />

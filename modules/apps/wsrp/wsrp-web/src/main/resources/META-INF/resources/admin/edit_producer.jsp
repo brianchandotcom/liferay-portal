@@ -47,7 +47,7 @@ ServletContext portalServletContext = ServletContextPool.get(portalServletContex
 
 <portlet:actionURL name="updateWSRPProducer" var="updateWSRPProducerURL" />
 
-<aui:form action="<%= updateWSRPProducerURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveProducer();" %>'>
+<aui:form action="<%= updateWSRPProducerURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveProducer();" %>'>
 	<aui:input name="mvcPath" type="hidden" value="/admin/edit_producer.jsp" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="wsrpProducerId" type="hidden" value="<%= wsrpProducerId %>" />

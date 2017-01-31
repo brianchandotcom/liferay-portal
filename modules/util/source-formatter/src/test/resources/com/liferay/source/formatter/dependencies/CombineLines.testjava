@@ -184,12 +184,6 @@ public class CombineLines
 		String string1, List<String>
 			listWithAVeryLongNameThatThereforeByNoMeansFitsOnTheSameLine) {
 
-		String anotherStringWithAVeryLongName = "Hello World";
-
-		boolean b = StringUtil.contains(
-			anotherStringWithAVeryLongName, StringUtil.trim(
-				anotherStringWithAVeryLongName));
-
 		boolean b2 = StringUtil.contains(
 			test1, "Hello WorldHello World Hello" +
 				"HelloWorldHelloWorldHelloWorldHelloWorld");

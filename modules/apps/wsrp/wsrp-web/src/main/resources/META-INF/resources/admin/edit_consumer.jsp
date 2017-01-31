@@ -22,12 +22,12 @@ String redirect = ParamUtil.getString(request, "redirect");
 long wsrpConsumerId = ParamUtil.getLong(request, "wsrpConsumerId");
 
 WSRPConsumer wsrpConsumer = WSRPConsumerLocalServiceUtil.fetchWSRPConsumer(wsrpConsumerId);
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title='<%= (wsrpConsumer != null) ? wsrpConsumer.getName() : "new-consumer" %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(((wsrpConsumer == null) ? LanguageUtil.get(request, "new-consumer") : wsrpConsumer.getName()));
+%>
 
 <portlet:actionURL name="updateWSRPConsumer" var="updateWSRPConsumerURL" />
 

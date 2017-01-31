@@ -38,12 +38,12 @@ String[] portletIds = StringUtil.split(BeanParamUtil.getString(wsrpProducer, req
 String portalServletContextName = PortalUtil.getPathContext();
 
 ServletContext portalServletContext = ServletContextPool.get(portalServletContextName);
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title='<%= (wsrpProducer != null) ? wsrpProducer.getName() : "new-producer" %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(((wsrpProducer == null) ? LanguageUtil.get(request, "new-producer") : wsrpProducer.getName()));
+%>
 
 <portlet:actionURL name="updateWSRPProducer" var="updateWSRPProducerURL" />
 

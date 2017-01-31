@@ -39,12 +39,12 @@ WSRPConsumerManager wsrpConsumerManager = WSRPConsumerManagerFactory.getWSRPCons
 ServiceDescription serviceDescription = wsrpConsumerManager.getServiceDescription();
 
 PortletDescription[] portletDescriptions = serviceDescription.getOfferedPortlets();
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title='<%= (wsrpConsumerPortlet != null) ? wsrpConsumerPortlet.getName() : "new-portlet" %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(((wsrpConsumerPortlet == null) ? LanguageUtil.get(request, "new-portlet") : wsrpConsumerPortlet.getName()));
+%>
 
 <portlet:actionURL name="updateWSRPConsumerPortlet" var="updateWSRPConsumerPortletURL" />
 

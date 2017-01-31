@@ -40,12 +40,12 @@ PropertyDescription[] propertyDescriptions = new PropertyDescription[0];
 if (supportsInbandRegistration) {
 	propertyDescriptions = wsrpConsumerManager.getPropertyDescriptions();
 }
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title='<%= (wsrpConsumer != null) ? wsrpConsumer.getName() : "new-consumer-registration" %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(((wsrpConsumer == null) ? LanguageUtil.get(request, "new-consumer-registration") : wsrpConsumer.getName()));
+%>
 
 <portlet:actionURL name="updateWSRPConsumerRegistration" var="updateWSRPConsumerRegistrationURL" />
 

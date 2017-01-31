@@ -40,7 +40,10 @@ catch (Exception e) {
 				<portlet:param name="wsrpConsumerId" value="<%= String.valueOf(wsrpConsumer.getWsrpConsumerId()) %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon iconCssClass="icon-list-alt" message="restart-consumer" url="<%= restartConsumerURL %>" />
+			<liferay-ui:icon
+				message="restart-consumer"
+				url="<%= restartConsumerURL %>"
+			/>
 
 			<portlet:actionURL name="deleteWSRPConsumer" var="deleteURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -59,7 +62,6 @@ catch (Exception e) {
 			</portlet:renderURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-edit"
 				message="edit"
 				url="<%= editURL %>"
 			/>
@@ -72,7 +74,6 @@ catch (Exception e) {
 				</portlet:renderURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-edit"
 					message="edit-registration"
 					url="<%= editRegistrationURL %>"
 				/>
@@ -85,7 +86,6 @@ catch (Exception e) {
 				</portlet:renderURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-list-alt"
 					message="manage-portlets"
 					url="<%= managePortletsURL %>"
 				/>
@@ -97,7 +97,6 @@ catch (Exception e) {
 			</portlet:actionURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-list-alt"
 				message="update-service-description"
 				url="<%= updateServiceDescriptionURL %>"
 			/>
@@ -108,7 +107,6 @@ catch (Exception e) {
 			</portlet:actionURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-list-alt"
 				message="restart-consumer"
 				url="<%= restartConsumerURL %>"
 			/>

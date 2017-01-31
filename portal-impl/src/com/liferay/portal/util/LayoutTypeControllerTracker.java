@@ -90,26 +90,6 @@ public class LayoutTypeControllerTracker {
 	private static final ServiceTracker
 		<LayoutTypeController, LayoutTypeController> _serviceTracker;
 
-	static {
-		for (String type : _LAYOUT_TYPES) {
-			_defaultLayoutTypeControllers.put(
-				type, new LayoutTypeControllerImpl(type));
-		}
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		_registerDefaults(registry);
-
-		Filter filter = registry.getFilter(
-			"(&(layout.type=*)(objectClass=" +
-				LayoutTypeController.class.getName() + "))");
-
-		_serviceTracker = registry.trackServices(
-			filter, new LayoutTypeControllerServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
 	private static class LayoutTypeControllerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<LayoutTypeController, LayoutTypeController> {
@@ -160,6 +140,26 @@ public class LayoutTypeControllerTracker {
 			}
 		}
 
+	}
+
+	static {
+		for (String type : _LAYOUT_TYPES) {
+			_defaultLayoutTypeControllers.put(
+				type, new LayoutTypeControllerImpl(type));
+		}
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		_registerDefaults(registry);
+
+		Filter filter = registry.getFilter(
+			"(&(layout.type=*)(objectClass=" +
+				LayoutTypeController.class.getName() + "))");
+
+		_serviceTracker = registry.trackServices(
+			filter, new LayoutTypeControllerServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 }

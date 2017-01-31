@@ -166,16 +166,6 @@ public class PortalWebResourcesUtil {
 	private static final ServiceTracker<PortalWebResources, PortalWebResources>
 		_serviceTracker;
 
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			PortalWebResources.class,
-			new PortalWebResourcesServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
 	private static class PortalWebResourcesServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<PortalWebResources, PortalWebResources> {
@@ -214,6 +204,16 @@ public class PortalWebResourcesUtil {
 				portalWebResources.getResourceType(), portalWebResources);
 		}
 
+	}
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			PortalWebResources.class,
+			new PortalWebResourcesServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 }

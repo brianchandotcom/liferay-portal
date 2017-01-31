@@ -92,16 +92,6 @@ public class FriendlyURLResolverRegistryUtil {
 		ServiceTracker<FriendlyURLResolver, FriendlyURLResolver>
 			_serviceTracker;
 
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			FriendlyURLResolver.class,
-			new FriendlyURLResolverServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
 	private static class FriendlyURLResolverServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<FriendlyURLResolver, FriendlyURLResolver> {
@@ -139,6 +129,16 @@ public class FriendlyURLResolverRegistryUtil {
 			_friendlyURLResolvers.remove(friendlyURLResolver.getURLSeparator());
 		}
 
+	}
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			FriendlyURLResolver.class,
+			new FriendlyURLResolverServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 }

@@ -93,19 +93,6 @@ public class FinalizeManager {
 
 		};
 
-	static {
-		if (THREAD_ENABLED) {
-			Thread thread = new FinalizeThread("Finalize Thread");
-
-			thread.setContextClassLoader(
-				FinalizeManager.class.getClassLoader());
-
-			thread.setDaemon(true);
-
-			thread.start();
-		}
-	}
-
 	public static <T> Reference<T> register(
 		T reference, FinalizeAction finalizeAction,
 		ReferenceFactory referenceFactory) {
@@ -174,6 +161,19 @@ public class FinalizeManager {
 			}
 		}
 
+	}
+
+	static {
+		if (THREAD_ENABLED) {
+			Thread thread = new FinalizeThread("Finalize Thread");
+
+			thread.setContextClassLoader(
+				FinalizeManager.class.getClassLoader());
+
+			thread.setDaemon(true);
+
+			thread.start();
+		}
 	}
 
 }

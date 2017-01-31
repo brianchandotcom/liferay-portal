@@ -543,24 +543,6 @@ public class ProcessUtilTest {
 
 	private static final String _CLASS_PATH;
 
-	static {
-		Class<?> clazz = Echo.class;
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		String className = clazz.getName();
-
-		String name = className.replace('.', '/') + ".class";
-
-		URL url = classLoader.getResource(name);
-
-		String path = url.getPath();
-
-		int index = path.lastIndexOf(name);
-
-		_CLASS_PATH = path.substring(0, index);
-	}
-
 	private static class DummyJob implements Callable<Void> {
 
 		public DummyJob() {
@@ -660,6 +642,24 @@ public class ProcessUtilTest {
 			Thread.sleep(Long.MAX_VALUE);
 		}
 
+	}
+
+	static {
+		Class<?> clazz = Echo.class;
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		String className = clazz.getName();
+
+		String name = className.replace('.', '/') + ".class";
+
+		URL url = classLoader.getResource(name);
+
+		String path = url.getPath();
+
+		int index = path.lastIndexOf(name);
+
+		_CLASS_PATH = path.substring(0, index);
 	}
 
 }

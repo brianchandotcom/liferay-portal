@@ -94,17 +94,6 @@ public class JSONSerializerImpl implements JSONSerializer {
 		return this;
 	}
 
-	static {
-		JoddJson.defaultSerializers.register(
-			JSONArray.class, new JSONArrayTypeJSONSerializer());
-		JoddJson.defaultSerializers.register(
-			JSONObject.class, new JSONObjectTypeJSONSerializer());
-		JoddJson.defaultSerializers.register(
-			Long.TYPE, new LongToStringTypeJSONSerializer());
-		JoddJson.defaultSerializers.register(
-			Long.class, new LongToStringTypeJSONSerializer());
-	}
-
 	private final JsonSerializer _jsonSerializer;
 
 	private static class JSONArrayTypeJSONSerializer
@@ -135,6 +124,17 @@ public class JSONSerializerImpl implements JSONSerializer {
 			jsonContext.writeString(Long.toString(value));
 		}
 
+	}
+
+	static {
+		JoddJson.defaultSerializers.register(
+			JSONArray.class, new JSONArrayTypeJSONSerializer());
+		JoddJson.defaultSerializers.register(
+			JSONObject.class, new JSONObjectTypeJSONSerializer());
+		JoddJson.defaultSerializers.register(
+			Long.TYPE, new LongToStringTypeJSONSerializer());
+		JoddJson.defaultSerializers.register(
+			Long.class, new LongToStringTypeJSONSerializer());
 	}
 
 }

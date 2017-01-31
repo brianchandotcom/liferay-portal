@@ -108,18 +108,6 @@ public class MailboxUtil {
 		new DelayQueue<>();
 	private static final AtomicLong _receiptGenerator = new AtomicLong();
 
-	static {
-		if (_INTRABAND_MAILBOX_REAPER_THREAD_ENABLED) {
-			Thread thread = new OverdueMailReaperThread(
-				MailboxUtil.class.getName());
-
-			thread.setContextClassLoader(MailboxUtil.class.getClassLoader());
-			thread.setDaemon(true);
-
-			thread.start();
-		}
-	}
-
 	private static class OverdueMailReaperThread extends Thread {
 
 		@Override
@@ -193,6 +181,18 @@ public class MailboxUtil {
 		private final long _expireTime;
 		private final long _receipt;
 
+	}
+
+	static {
+		if (_INTRABAND_MAILBOX_REAPER_THREAD_ENABLED) {
+			Thread thread = new OverdueMailReaperThread(
+				MailboxUtil.class.getName());
+
+			thread.setContextClassLoader(MailboxUtil.class.getClassLoader());
+			thread.setDaemon(true);
+
+			thread.start();
+		}
 	}
 
 }

@@ -422,38 +422,6 @@ public class MPIHelperUtil {
 	private static final ThreadLocal<SPI> _unregisteringSPIThreadLocal =
 		new CentralizedThreadLocal<>(true);
 
-	static {
-
-		// Keep strong reference to prevent garbage collection
-
-		_mpiImpl = new MPIImpl();
-
-		try {
-			if (PropsUtil.getProps() != null) {
-				System.setProperty(
-					PropsKeys.INTRABAND_IMPL,
-					PropsUtil.get(PropsKeys.INTRABAND_IMPL));
-				System.setProperty(
-					PropsKeys.INTRABAND_TIMEOUT_DEFAULT,
-					PropsUtil.get(PropsKeys.INTRABAND_TIMEOUT_DEFAULT));
-				System.setProperty(
-					PropsKeys.INTRABAND_WELDER_IMPL,
-					PropsUtil.get(PropsKeys.INTRABAND_WELDER_IMPL));
-			}
-
-			_intraband = IntrabandFactoryUtil.createIntraband();
-
-			_intraband.registerDatagramReceiveHandler(
-				SystemDataType.RPC.getValue(),
-				new BootstrapRPCDatagramReceiveHandler());
-
-			_mpi = (MPI)UnicastRemoteObject.exportObject(_mpiImpl, 0);
-		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
-		}
-	}
-
 	private static class MPIImpl implements MPI {
 
 		@Override
@@ -493,6 +461,38 @@ public class MPIHelperUtil {
 		private final ConcurrentMap<String, SPI> _spis =
 			new ConcurrentHashMap<>();
 
+	}
+
+	static {
+
+		// Keep strong reference to prevent garbage collection
+
+		_mpiImpl = new MPIImpl();
+
+		try {
+			if (PropsUtil.getProps() != null) {
+				System.setProperty(
+					PropsKeys.INTRABAND_IMPL,
+					PropsUtil.get(PropsKeys.INTRABAND_IMPL));
+				System.setProperty(
+					PropsKeys.INTRABAND_TIMEOUT_DEFAULT,
+					PropsUtil.get(PropsKeys.INTRABAND_TIMEOUT_DEFAULT));
+				System.setProperty(
+					PropsKeys.INTRABAND_WELDER_IMPL,
+					PropsUtil.get(PropsKeys.INTRABAND_WELDER_IMPL));
+			}
+
+			_intraband = IntrabandFactoryUtil.createIntraband();
+
+			_intraband.registerDatagramReceiveHandler(
+				SystemDataType.RPC.getValue(),
+				new BootstrapRPCDatagramReceiveHandler());
+
+			_mpi = (MPI)UnicastRemoteObject.exportObject(_mpiImpl, 0);
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
 	}
 
 }

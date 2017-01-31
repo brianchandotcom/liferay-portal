@@ -43,16 +43,6 @@ public class IdentifiableOSGiServiceUtil {
 		ServiceTracker<IdentifiableOSGiService, IdentifiableOSGiService>
 			_serviceTracker;
 
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			IdentifiableOSGiService.class,
-			new IdentifiableOSGiServiceServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
 	private static class IdentifiableOSGiServiceServiceTrackerCustomizer
 		implements
 			ServiceTrackerCustomizer
@@ -97,6 +87,16 @@ public class IdentifiableOSGiServiceUtil {
 				identifiableOSGiService.getOSGiServiceIdentifier());
 		}
 
+	}
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			IdentifiableOSGiService.class,
+			new IdentifiableOSGiServiceServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 }

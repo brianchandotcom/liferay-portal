@@ -21,16 +21,12 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 long wsrpProducerId = ParamUtil.getLong(request, "wsrpProducerId");
 
-WSRPProducer wsrpProducer = null;
+WSRPProducer wsrpProducer = WSRPProducerLocalServiceUtil.fetchWSRPProducer(wsrpProducerId);
 
 String version = Constants.WSRP_V2;
 
-try {
-	wsrpProducer = WSRPProducerLocalServiceUtil.getWSRPProducer(wsrpProducerId);
-
+if (wsrpProducer != null) {
 	version = GetterUtil.getString(wsrpProducer.getVersion(), Constants.WSRP_V2);
-}
-catch (NoSuchProducerException nspe) {
 }
 
 String[] portletIds = StringUtil.split(BeanParamUtil.getString(wsrpProducer, request, "portletIds"));

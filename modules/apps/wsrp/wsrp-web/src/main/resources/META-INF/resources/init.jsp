@@ -42,7 +42,6 @@ page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.wsrp.constants.Constants" %><%@
 page import="com.liferay.wsrp.exception.NoSuchConsumerPortletException" %><%@
-page import="com.liferay.wsrp.exception.NoSuchProducerException" %><%@
 page import="com.liferay.wsrp.exception.WSRPConsumerNameException" %><%@
 page import="com.liferay.wsrp.exception.WSRPConsumerPortletHandleException" %><%@
 page import="com.liferay.wsrp.exception.WSRPConsumerPortletNameException" %><%@

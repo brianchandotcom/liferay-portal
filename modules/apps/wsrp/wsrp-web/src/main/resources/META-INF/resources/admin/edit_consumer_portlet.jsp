@@ -21,13 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 long wsrpConsumerPortletId = ParamUtil.getLong(request, "wsrpConsumerPortletId");
 
-WSRPConsumerPortlet wsrpConsumerPortlet = null;
-
-try {
-	wsrpConsumerPortlet = WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortlet(wsrpConsumerPortletId);
-}
-catch (NoSuchConsumerPortletException nscpe) {
-}
+WSRPConsumerPortlet wsrpConsumerPortlet = WSRPConsumerPortletLocalServiceUtil.fetchWSRPConsumerPortlet(wsrpConsumerPortletId);
 
 long wsrpConsumerId = BeanParamUtil.getLong(wsrpConsumerPortlet, request, "wsrpConsumerId");
 String portletHandle = BeanParamUtil.getString(wsrpConsumerPortlet, request, "portletHandle");

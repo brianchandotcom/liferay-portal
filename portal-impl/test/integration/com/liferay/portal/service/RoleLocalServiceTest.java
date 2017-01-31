@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.RoleNameException;
 import com.liferay.portal.kernel.model.Group;
@@ -175,6 +176,70 @@ public class RoleLocalServiceTest {
 				}
 			}
 		}
+
+		Comparator roleIdComparator = new RoleRoleIdComparator();
+
+		Collections.sort(actualRoles, roleIdComparator);
+		Collections.sort(expectedRoles, roleIdComparator);
+
+		Assert.assertEquals(expectedRoles, actualRoles);
+	}
+
+	@Test
+	public void testGetGroupRolesAndTeamRoles() throws Exception {
+		Object[] organizationAndTeam = getOrganizationAndTeam();
+
+		Organization organization = (Organization)organizationAndTeam[0];
+
+		long companyId = organization.getCompanyId();
+		long groupId = organization.getGroupId();
+
+		int[] roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR;
+
+		List<String> excludedRoleNames = new ArrayList<>();
+
+		excludedRoleNames.add(RoleConstants.ADMINISTRATOR);
+		excludedRoleNames.add(RoleConstants.GUEST);
+
+		int count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
+			companyId, null, excludedRoleNames, roleTypes, 0, groupId);
+
+		List<Role> actualRoles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+			companyId, null, excludedRoleNames, roleTypes, 0, groupId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		List<Role> allRoles = RoleLocalServiceUtil.getRoles(companyId);
+
+		List<Role> expectedRoles = new ArrayList<>();
+
+		for (Role role : allRoles) {
+			String name = role.getName();
+
+			if (name.equals(RoleConstants.ADMINISTRATOR) ||
+				name.equals(RoleConstants.GUEST)) {
+
+				continue;
+			}
+
+			int type = role.getType();
+
+			if ((type == RoleConstants.TYPE_REGULAR) ||
+				(type == RoleConstants.TYPE_ORGANIZATION)) {
+
+				expectedRoles.add(role);
+			}
+			else if ((type == RoleConstants.TYPE_PROVIDER) && role.isTeam()) {
+				Team team = TeamLocalServiceUtil.getTeam(role.getClassPK());
+
+				if (team.getGroupId() == groupId) {
+					expectedRoles.add(role);
+				}
+			}
+		}
+
+		Assert.assertEquals(expectedRoles.size(), count);
+
+		actualRoles = new ArrayList(actualRoles);
 
 		Comparator roleIdComparator = new RoleRoleIdComparator();
 

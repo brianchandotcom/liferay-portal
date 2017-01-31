@@ -82,6 +82,7 @@ catch (Exception e) {
 			<c:if test="<%= !serviceDescription.isRequiresRegistration() || (wsrpConsumer.getRegistrationContext() != null) %>">
 				<portlet:renderURL var="managePortletsURL">
 					<portlet:param name="mvcPath" value="/admin/view_consumer_portlets.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="wsrpConsumerId" value="<%= String.valueOf(wsrpConsumer.getWsrpConsumerId()) %>" />
 				</portlet:renderURL>
 

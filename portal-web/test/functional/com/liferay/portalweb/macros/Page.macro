@@ -759,7 +759,15 @@
 
 		<execute function="Click" locator1="SitePages#EDIT_SPECIFIC_PAGE" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
+		<if>
+			<and>
+				<condition function="IsElementPresent" locator1="Message#ERROR_3" />
+				<condition function="IsVisible" locator1="Message#ERROR_3" />
+			</and>
+			<then>
+				<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewNoPG">

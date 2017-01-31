@@ -43,10 +43,27 @@
 	right: 0;
 }
 
+
 .lfr-preview-file-arrow {
-	color: #000;
-	font-size: 30px;
-	font-weight: bold;
+	border-radius: 4px;
+	height: 52px;
+	line-height: 48px;
+	top: 50%;
+
+	@include transform(translateY(-50%));
+
+	width: 52px;
+
+	@include sm {
+		height: 64px;
+		line-height: 60px;
+		width: 64px;
+	}
+
+	&.carousel-control {
+		background-color: #000;
+		background-image: none;
+	}
 }
 
 .lfr-preview-file-toolbar {
@@ -125,8 +142,7 @@
 	width: 70%;
 
 	.modal-header {
-		height: 20px;
-		padding-bottom: 0 5px 0;
+		min-height: 61px;
 
 		.close {
 			font-size: 30px;
@@ -143,11 +159,11 @@
 .lfr-preview-file-image-overlay-controls {
 	.image-viewer-control.carousel-control {
 		&.left {
-			left: 80px;
+			left: 15px;
 		}
 
 		&.right {
-			right: 80px;
+			right: 25px;
 		}
 	}
 }

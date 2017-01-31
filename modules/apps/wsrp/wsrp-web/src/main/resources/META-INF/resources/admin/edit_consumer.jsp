@@ -41,17 +41,19 @@ renderResponse.setTitle(((wsrpConsumer == null) ? LanguageUtil.get(request, "new
 
 	<aui:model-context bean="<%= wsrpConsumer %>" model="<%= WSRPConsumer.class %>" />
 
-	<aui:fieldset>
-		<aui:input name="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="name" />
 
-		<aui:input name="url" type="textarea" />
+			<aui:input name="url" type="textarea" />
 
-		<aui:input name="forwardCookies" />
+			<aui:input name="forwardCookies" />
 
-		<aui:input name="forwardHeaders" />
+			<aui:input name="forwardHeaders" />
 
-		<aui:input helpMessage="markup-character-sets-help" name="markupCharacterSets" />
-	</aui:fieldset>
+			<aui:input helpMessage="markup-character-sets-help" name="markupCharacterSets" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

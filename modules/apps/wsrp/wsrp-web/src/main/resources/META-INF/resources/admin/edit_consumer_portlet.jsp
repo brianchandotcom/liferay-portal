@@ -59,32 +59,34 @@ renderResponse.setTitle(((wsrpConsumerPortlet == null) ? LanguageUtil.get(reques
 
 	<aui:model-context bean="<%= wsrpConsumerPortlet %>" model="<%= WSRPConsumerPortlet.class %>" />
 
-	<aui:fieldset>
-		<aui:input name="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="name" />
 
-		<aui:select label="remote-portlet" name="portletHandle">
-			<aui:option value="" />
+			<aui:select label="remote-portlet" name="portletHandle">
+				<aui:option value="" />
 
-			<c:if test="<%= portletDescriptions != null %>">
+				<c:if test="<%= portletDescriptions != null %>">
 
-				<%
-				for (PortletDescription portletDescription : portletDescriptions) {
-					try {
-						WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortlet(wsrpConsumer.getWsrpConsumerId(), portletDescription.getPortletHandle());
+					<%
+					for (PortletDescription portletDescription : portletDescriptions) {
+						try {
+							WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortlet(wsrpConsumer.getWsrpConsumerId(), portletDescription.getPortletHandle());
+						}
+						catch (NoSuchConsumerPortletException nscpe) {
+					%>
+
+							<aui:option label="<%= wsrpConsumerManager.getDisplayName(portletDescription) %>" selected="<%= portletHandle.equals(portletDescription.getPortletHandle()) %>" value="<%= portletDescription.getPortletHandle() %>" />
+
+					<%
+						}
 					}
-					catch (NoSuchConsumerPortletException nscpe) {
-				%>
+					%>
 
-						<aui:option label="<%= wsrpConsumerManager.getDisplayName(portletDescription) %>" selected="<%= portletHandle.equals(portletDescription.getPortletHandle()) %>" value="<%= portletDescription.getPortletHandle() %>" />
-
-				<%
-					}
-				}
-				%>
-
-			</c:if>
-		</aui:select>
-	</aui:fieldset>
+				</c:if>
+			</aui:select>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

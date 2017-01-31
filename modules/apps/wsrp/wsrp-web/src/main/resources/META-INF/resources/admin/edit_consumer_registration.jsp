@@ -54,99 +54,101 @@ renderResponse.setTitle(((wsrpConsumer == null) ? LanguageUtil.get(request, "new
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="wsrpConsumerId" type="hidden" value="<%= wsrpConsumerId %>" />
 
-	<aui:fieldset>
-		<aui:field-wrapper label="name">
-			<%= wsrpConsumer.getName() %>
-		</aui:field-wrapper>
-
-		<aui:field-wrapper label="url">
-			<aui:a href="<%= wsrpConsumer.getUrl() %>" target="_blank"><%= wsrpConsumer.getUrl() %></aui:a>
-		</aui:field-wrapper>
-
-		<aui:select label="registration-type" name="inbandRegistration">
-			<c:if test="<%= supportsInbandRegistration %>">
-				<aui:option label="inband" value="true" />
-			</c:if>
-
-			<aui:option label="outband" value="false" />
-		</aui:select>
-
-		<div <%= supportsInbandRegistration ? "class=\"hide\"" : "" %> id="<portlet:namespace />registrationHandleSettings">
-			<aui:input name="registrationHandle" />
-		</div>
-
-		<div <%= !supportsInbandRegistration ? "class=\"hide\"" : "" %> id="<portlet:namespace />registrationPropertiesSettings">
-			<aui:field-wrapper label="registration-properties">
-
-				<%
-				SearchContainer searchContainer = new SearchContainer();
-
-				List<String> headerNames = new ArrayList<String>();
-
-				headerNames.add("name");
-				headerNames.add("value");
-				headerNames.add("description");
-
-				searchContainer.setHeaderNames(headerNames);
-				searchContainer.setEmptyResultsMessage("there-are-no-registration-properties");
-
-				List resultRows = searchContainer.getResultRows();
-
-				for (int i = 0; i < propertyDescriptions.length; i++) {
-					PropertyDescription propertyDescription = propertyDescriptions[i];
-
-					String fullyQualifiedName = propertyDescription.getName().toString();
-
-					String name = propertyDescription.getName().getLocalPart();
-
-					String description = LocalizedStringUtil.getLocalizedStringValue(propertyDescription.getDescription(), StringPool.BLANK);
-
-					description += LocalizedStringUtil.getLocalizedStringValue(propertyDescription.getHint(), StringPool.BLANK);
-
-					ResultRow row = new ResultRow(name, name, i);
-
-					// Name
-
-					row.addText(name);
-
-					// Value
-
-					StringBuilder sb = new StringBuilder();
-
-					sb.append("<input name=\"");
-					sb.append(renderResponse.getNamespace());
-					sb.append("registrationPropertyName");
-					sb.append(i);
-					sb.append("\" type=\"hidden\" value=\"");
-					sb.append(fullyQualifiedName);
-					sb.append("\" />");
-
-					String registrationPropertyValue = GetterUtil.getString(registrationProperties.get(fullyQualifiedName));
-
-					sb.append("<input name=\"");
-					sb.append(renderResponse.getNamespace());
-					sb.append("registrationPropertyValue");
-					sb.append(i);
-					sb.append("\" type=\"text\" value=\"");
-					sb.append(registrationPropertyValue);
-					sb.append("\" />");
-
-					row.addText(sb.toString());
-
-					// Description
-
-					row.addText(description);
-
-					// Add result row
-
-					resultRows.add(row);
-				}
-				%>
-
-				<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:field-wrapper label="name">
+				<%= wsrpConsumer.getName() %>
 			</aui:field-wrapper>
-		</div>
-	</aui:fieldset>
+
+			<aui:field-wrapper label="url">
+				<aui:a href="<%= wsrpConsumer.getUrl() %>" target="_blank"><%= wsrpConsumer.getUrl() %></aui:a>
+			</aui:field-wrapper>
+
+			<aui:select label="registration-type" name="inbandRegistration">
+				<c:if test="<%= supportsInbandRegistration %>">
+					<aui:option label="inband" value="true" />
+				</c:if>
+
+				<aui:option label="outband" value="false" />
+			</aui:select>
+
+			<div <%= supportsInbandRegistration ? "class=\"hide\"" : "" %> id="<portlet:namespace />registrationHandleSettings">
+				<aui:input name="registrationHandle" />
+			</div>
+
+			<div <%= !supportsInbandRegistration ? "class=\"hide\"" : "" %> id="<portlet:namespace />registrationPropertiesSettings">
+				<aui:field-wrapper label="registration-properties">
+
+					<%
+					SearchContainer searchContainer = new SearchContainer();
+
+					List<String> headerNames = new ArrayList<String>();
+
+					headerNames.add("name");
+					headerNames.add("value");
+					headerNames.add("description");
+
+					searchContainer.setHeaderNames(headerNames);
+					searchContainer.setEmptyResultsMessage("there-are-no-registration-properties");
+
+					List resultRows = searchContainer.getResultRows();
+
+					for (int i = 0; i < propertyDescriptions.length; i++) {
+						PropertyDescription propertyDescription = propertyDescriptions[i];
+
+						String fullyQualifiedName = propertyDescription.getName().toString();
+
+						String name = propertyDescription.getName().getLocalPart();
+
+						String description = LocalizedStringUtil.getLocalizedStringValue(propertyDescription.getDescription(), StringPool.BLANK);
+
+						description += LocalizedStringUtil.getLocalizedStringValue(propertyDescription.getHint(), StringPool.BLANK);
+
+						ResultRow row = new ResultRow(name, name, i);
+
+						// Name
+
+						row.addText(name);
+
+						// Value
+
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("<input name=\"");
+						sb.append(renderResponse.getNamespace());
+						sb.append("registrationPropertyName");
+						sb.append(i);
+						sb.append("\" type=\"hidden\" value=\"");
+						sb.append(fullyQualifiedName);
+						sb.append("\" />");
+
+						String registrationPropertyValue = GetterUtil.getString(registrationProperties.get(fullyQualifiedName));
+
+						sb.append("<input name=\"");
+						sb.append(renderResponse.getNamespace());
+						sb.append("registrationPropertyValue");
+						sb.append(i);
+						sb.append("\" type=\"text\" value=\"");
+						sb.append(registrationPropertyValue);
+						sb.append("\" />");
+
+						row.addText(sb.toString());
+
+						// Description
+
+						row.addText(description);
+
+						// Add result row
+
+						resultRows.add(row);
+					}
+					%>
+
+					<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+				</aui:field-wrapper>
+			</div>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

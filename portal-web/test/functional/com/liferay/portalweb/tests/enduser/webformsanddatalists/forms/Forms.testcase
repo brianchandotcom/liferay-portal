@@ -276,10 +276,11 @@
 		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
 
 		<execute macro="FormsAdmin#editDataProvider">
-			<var name="displayedAttribute" value="nameCurrentValue" />
 			<var name="name" value="Countries Full Name" />
+			<var name="outputParameterName" value="Countries Full Names" />
+			<var name="outputParameterPath" value="nameCurrentValue" />
+			<var name="outputParameterType" value="Text" />
 			<var name="password" value="test" />
-			<var name="storedAttribute" value="name" />
 			<var name="url" value="${portalURL}/api/jsonws/country/get-countries" />
 			<var name="username" value="test@liferay.com" />
 		</execute>
@@ -507,10 +508,11 @@
 		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
 
 		<execute macro="FormsAdmin#editDataProvider">
-			<var name="displayedAttribute" value="nameCurrentValue" />
 			<var name="name" value="Liferay Countries" />
+			<var name="outputParameterName" value="Country Names" />
+			<var name="outputParameterPath" value="nameCurrentValue" />
+			<var name="outputParameterType" value="Text" />
 			<var name="password" value="test" />
-			<var name="storedAttribute" value="name" />
 			<var name="url" value="${portalURL}/api/jsonws/country/get-countries" />
 			<var name="username" value="test@liferay.com" />
 		</execute>

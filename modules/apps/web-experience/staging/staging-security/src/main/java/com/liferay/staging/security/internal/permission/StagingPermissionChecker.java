@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
+import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 
 import java.util.List;
 
@@ -115,14 +116,17 @@ public class StagingPermissionChecker implements PermissionChecker {
 
 		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
 
-		if (liveGroupId != groupId) {
+		if ((liveGroupId != groupId) &&
+			!ResourceBlockLocalServiceUtil.isSupported(name)) {
 			if (primKey == groupId) {
 				primKey = liveGroupId;
 			}
+
+			groupId = liveGroupId;
 		}
 
 		return _permissionChecker.hasPermission(
-			liveGroupId, name, primKey, actionId);
+			groupId, name, primKey, actionId);
 	}
 
 	@Override

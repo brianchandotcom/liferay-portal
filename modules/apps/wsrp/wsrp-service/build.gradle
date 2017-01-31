@@ -3,6 +3,10 @@ buildService {
 	testDir = "../wsrp-test/src/testIntegration/java"
 }
 
+buildWSDD {
+	serverConfigFile = "server-config.wsdd"
+}
+
 dependencies {
 	provided group: "axis", name: "axis", version: "1.4"
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"

@@ -177,6 +177,17 @@ public class PortletPermissionUtil {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long groupId, Layout layout,
+			Portlet portlet, String actionId, boolean strict,
+			boolean checkStagingPermission)
+		throws PortalException {
+
+		return getPortletPermission().contains(
+			permissionChecker, groupId, layout, portlet, actionId, strict,
+			checkStagingPermission);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
 			String portletId, String actionId)
 		throws PortalException {
 

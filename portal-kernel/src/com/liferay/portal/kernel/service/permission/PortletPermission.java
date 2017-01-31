@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -27,6 +28,7 @@ import javax.portlet.PortletMode;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
+@ProviderType
 public interface PortletPermission {
 
 	public void check(
@@ -108,6 +110,12 @@ public interface PortletPermission {
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId, Layout layout,
 			Portlet portlet, String actionId, boolean strict)
+		throws PortalException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			Portlet portlet, String actionId, boolean strict,
+			boolean checkStagingPermission)
 		throws PortalException;
 
 	public boolean contains(

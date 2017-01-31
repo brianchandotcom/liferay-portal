@@ -69,6 +69,20 @@ public class JenkinsResultsParserUtil {
 			"/liferay-portal/test.properties"
 	};
 
+	public static String combine(String...strings) {
+		if ((strings == null) || (strings.length == 0)) {
+			return "";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (String string : strings) {
+			sb.append(string);
+		}
+
+		return sb.toString();
+	}
+
 	public static JSONObject createJSONObject(String jsonString)
 		throws IOException {
 

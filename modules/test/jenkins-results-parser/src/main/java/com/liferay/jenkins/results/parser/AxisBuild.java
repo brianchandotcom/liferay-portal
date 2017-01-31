@@ -103,16 +103,9 @@ public class AxisBuild extends BaseBuild {
 		}
 
 		if (fromArchive) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(jobURL);
-			sb.append("/");
-			sb.append(axisVariable);
-			sb.append("/");
-			sb.append(buildNumber);
-			sb.append("/");
-
-			return sb.toString();
+			return JenkinsResultsParserUtil.combine(
+				jobURL, "/", axisVariable, "/", Integer.toString(buildNumber),
+				"/");
 		}
 
 		try {
@@ -122,16 +115,8 @@ public class AxisBuild extends BaseBuild {
 			throw new RuntimeException("Unable to decode " + jobURL, uee);
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(jobURL);
-		sb.append("/");
-		sb.append(axisVariable);
-		sb.append("/");
-		sb.append(buildNumber);
-		sb.append("/");
-
-		String buildURL = sb.toString();
+		String buildURL = JenkinsResultsParserUtil.combine(
+			jobURL, "/", axisVariable, "/", Integer.toString(buildNumber), "/");
 
 		try {
 			return JenkinsResultsParserUtil.encode(buildURL);
@@ -179,13 +164,8 @@ public class AxisBuild extends BaseBuild {
 
 	@Override
 	public String getDisplayName() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(getAxisVariable());
-		sb.append(" #");
-		sb.append(getBuildNumber());
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			getAxisVariable(), " #", Integer.toString(getBuildNumber()));
 	}
 
 	@Override
@@ -299,8 +279,6 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	public String getTestRayLogsURL() {
-		StringBuilder sb = new StringBuilder();
-
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
 		Properties buildProperties = null;
@@ -322,26 +300,15 @@ public class AxisBuild extends BaseBuild {
 			logBaseURL = defaultLogBaseURL;
 		}
 
-		sb.append(logBaseURL);
-		sb.append("/");
-		sb.append(topLevelBuild.getMaster());
-		sb.append("/");
-
 		Map<String, String> startPropertiesTempMap =
 			getStartPropertiesTempMap();
 
-		sb.append(startPropertiesTempMap.get("TOP_LEVEL_START_TIME"));
-
-		sb.append("/");
-		sb.append(topLevelBuild.getJobName());
-		sb.append("/");
-		sb.append(topLevelBuild.getBuildNumber());
-		sb.append("/");
-		sb.append(getParameterValue("JOB_VARIANT"));
-		sb.append("/");
-		sb.append(getAxisNumber());
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			logBaseURL, "/", topLevelBuild.getMaster(), "/",
+			startPropertiesTempMap.get("TOP_LEVEL_START_TIME"), "/",
+			topLevelBuild.getJobName(), "/",
+			Integer.toString(topLevelBuild.getBuildNumber()), "/",
+			getParameterValue("JOB_VARIANT"), "/", getAxisNumber());
 	}
 
 	@Override
@@ -393,25 +360,12 @@ public class AxisBuild extends BaseBuild {
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(
-			"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/");
-		sb.append(topLevelBuild.getMaster());
-		sb.append("/");
-		sb.append(topLevelBuild.getJobName());
-		sb.append("/");
-		sb.append(topLevelBuild.getBuildNumber());
-		sb.append("/");
-		sb.append(getJobName());
-		sb.append("/");
-		sb.append(getAxisVariable());
-		sb.append("/");
-		sb.append(getParameterValue("JOB_VARIANT"));
-		sb.append("/");
-		sb.append("stop.properties");
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/",
+			topLevelBuild.getMaster(), "/", topLevelBuild.getJobName(), "/",
+			Integer.toString(topLevelBuild.getBuildNumber()), "/", getJobName(),
+			"/", getAxisVariable(), "/", getParameterValue("JOB_VARIANT"), "/",
+			"stop.properties");
 	}
 
 	@Override
@@ -466,13 +420,15 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	protected static final Pattern archiveBuildURLPattern = Pattern.compile(
-		"(\\$\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]+)/" +
-			"(?<master>[^/]+)/+(?<jobName>[^/]+)/(?<axisVariable>" +
-				"AXIS_VARIABLE=[^,]+,[^/]+)/(?<buildNumber>\\d+)/?");
+		JenkinsResultsParserUtil.combine(
+			"(\\$\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]",
+			"+)/(?<master>[^/]+)/+(?<jobName>[^/]+)/(?<axisVariable>",
+			"AXIS_VARIABLE=[^,]+,[^/]+)/(?<buildNumber>\\d+)/?"));
 	protected static final Pattern buildURLPattern = Pattern.compile(
-		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/" +
-			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/" +
-				"(?<buildNumber>\\d+)/?");
+		JenkinsResultsParserUtil.combine(
+			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/",
+			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/",
+			"(?<buildNumber>\\d+)/?"));
 	protected static final String defaultLogBaseURL =
 		"https://testray.liferay.com/reports/production/logs";
 

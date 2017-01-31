@@ -189,14 +189,9 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 	}
 
 	protected Element getElement(String content) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<div>");
-		sb.append(content);
-		sb.append("</div>");
-
 		try {
-			Document document = Dom4JUtil.parse(sb.toString());
+			Document document = Dom4JUtil.parse(
+				JenkinsResultsParserUtil.combine("<div>", content, "</div>"));
 
 			return document.getRootElement();
 		}

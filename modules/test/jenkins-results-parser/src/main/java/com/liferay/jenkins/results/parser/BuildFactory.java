@@ -79,12 +79,8 @@ public class BuildFactory {
 	}
 
 	public static Build newBuildFromArchive(String archiveName) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("${dependencies.url}/");
-		sb.append(archiveName);
-		sb.append("/");
-		sb.append("archive.properties");
+		String url = JenkinsResultsParserUtil.combine(
+			"${dependencies.url}/", archiveName, "/", "archive.properties");
 
 		Properties archiveProperties = new Properties();
 
@@ -92,7 +88,7 @@ public class BuildFactory {
 			archiveProperties.load(
 				new StringReader(
 					JenkinsResultsParserUtil.toString(
-						JenkinsResultsParserUtil.getLocalURL(sb.toString()))));
+						JenkinsResultsParserUtil.getLocalURL(url))));
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(

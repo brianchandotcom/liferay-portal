@@ -118,18 +118,10 @@ public class TopLevelBuild extends BaseBuild {
 			return getBuildURL() + "/jenkins-report.html";
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("https://");
-		sb.append(getMaster());
-		sb.append(".liferay.com/");
-		sb.append("userContent/jobs/");
-		sb.append(getJobName());
-		sb.append("/builds/");
-		sb.append(getBuildNumber());
-		sb.append("/jenkins-report.html");
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			"https://", getMaster(), ".liferay.com/", "userContent/jobs/",
+			getJobName(), "/builds/", Integer.toString(getBuildNumber()),
+			"/jenkins-report.html");
 	}
 
 	@Override
@@ -330,38 +322,17 @@ public class TopLevelBuild extends BaseBuild {
 		String repositoryType) {
 
 		if (fromArchive) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(getBuildURL());
-			sb.append("git.");
-			sb.append(repositoryType);
-			sb.append(".properties.json");
-
-			return sb.toString();
+			return JenkinsResultsParserUtil.combine(
+				getBuildURL(), "git.", repositoryType, ".properties.json");
 		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(tempMapBaseURL);
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		sb.append(topLevelBuild.getMaster());
-
-		sb.append("/");
-		sb.append(topLevelBuild.getJobName());
-
-		sb.append("/");
-		sb.append(topLevelBuild.getBuildNumber());
-
-		sb.append("/");
-		sb.append(topLevelBuild.getJobName());
-
-		sb.append("/git.");
-		sb.append(repositoryType);
-		sb.append(".properties");
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			tempMapBaseURL, topLevelBuild.getMaster(), "/",
+			topLevelBuild.getJobName(), "/",
+			Integer.toString(topLevelBuild.getBuildNumber()), "/",
+			topLevelBuild.getJobName(), "/git.", repositoryType, ".properties");
 	}
 
 	protected Element getJobSummaryListElement() {
@@ -413,20 +384,10 @@ public class TopLevelBuild extends BaseBuild {
 			return getBuildURL() + "/start.properties.json";
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(tempMapBaseURL);
-		sb.append(getMaster());
-		sb.append("/");
-		sb.append(getJobName());
-		sb.append("/");
-		sb.append(getBuildNumber());
-		sb.append("/");
-		sb.append(getJobName());
-		sb.append("/");
-		sb.append("start.properties");
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			tempMapBaseURL, getMaster(), "/", getJobName(), "/",
+			Integer.toString(getBuildNumber()), "/", getJobName(), "/",
+			"start.properties");
 	}
 
 	@Override
@@ -435,20 +396,10 @@ public class TopLevelBuild extends BaseBuild {
 			return getBuildURL() + "/stop.properties.json";
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(tempMapBaseURL);
-		sb.append(getMaster());
-		sb.append("/");
-		sb.append(getJobName());
-		sb.append("/");
-		sb.append(getBuildNumber());
-		sb.append("/");
-		sb.append(getJobName());
-		sb.append("/");
-		sb.append("stop.properties");
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			tempMapBaseURL, getMaster(), "/", getJobName(), "/",
+			Integer.toString(getBuildNumber()), "/", getJobName(), "/",
+			"stop.properties");
 	}
 
 	@Override
@@ -532,21 +483,19 @@ public class TopLevelBuild extends BaseBuild {
 			String jobName = getJobName();
 
 			if (jobName.contains("pullrequest")) {
-				StringBuilder sb = new StringBuilder();
-
-				sb.append("https://test-1-1.liferay.com/job/");
-				sb.append(jobName.replace("pullrequest", "upstream"));
+				String url = JenkinsResultsParserUtil.combine(
+					"https://test-1-1.liferay.com/job/",
+					jobName.replace("pullrequest", "upstream"));
 
 				try {
 					JenkinsResultsParserUtil.toString(
-						JenkinsResultsParserUtil.getLocalURL(sb.toString()),
-						false, 0, 0, 0);
+						JenkinsResultsParserUtil.getLocalURL(url), false, 0, 0,
+						0);
 
 					Dom4JUtil.addToElement(
 						Dom4JUtil.getNewElement("h5", rootElement),
 						"For upstream results, click ",
-						Dom4JUtil.getNewAnchorElement(sb.toString(), "here"),
-						".");
+						Dom4JUtil.getNewAnchorElement(url, "here"), ".");
 				}
 				catch (IOException ioe) {
 					System.out.println("No upstream build detected.");

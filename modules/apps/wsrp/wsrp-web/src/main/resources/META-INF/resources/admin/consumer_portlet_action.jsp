@@ -22,26 +22,15 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 WSRPConsumerPortlet wsrpConsumerPortlet = (WSRPConsumerPortlet)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<portlet:actionURL name="deleteWSRPConsumerPortlet" var="deleteURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="wsrpConsumerPortletId" value="<%= String.valueOf(wsrpConsumerPortlet.getWsrpConsumerPortletId()) %>" />
+</portlet:actionURL>
 
-	<%--
-	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcPath" value="/admin/edit_consumer_portlet.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="wsrpConsumerPortletId" value="<%= String.valueOf(wsrpConsumerPortlet.getWsrpConsumerPortletId()) %>" />
-	</portlet:renderURL>
-
-	<liferay-ui:icon
-		iconCssClass="icon-edit"
-		message="edit"
-		url="<%= editURL %>"
-	/>
-	--%>
-
-	<portlet:actionURL name="deleteWSRPConsumerPortlet" var="deleteURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="wsrpConsumerPortletId" value="<%= String.valueOf(wsrpConsumerPortlet.getWsrpConsumerPortletId()) %>" />
-	</portlet:actionURL>
-
-	<liferay-ui:icon-delete url="<%= deleteURL %>" />
-</liferay-ui:icon-menu>
+<liferay-ui:icon-delete
+	icon="trash"
+	linkCssClass="icon-monospaced text-default"
+	message="delete"
+	showIcon="<%= true %>"
+	url="<%= deleteURL %>"
+/>

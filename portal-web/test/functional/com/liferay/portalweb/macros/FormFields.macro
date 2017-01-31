@@ -142,6 +142,8 @@
 	</command>
 
 	<command name="selectDataProviderOutputType">
+		<execute function="ScrollWebElementIntoView" locator1="Button#SAVE" />
+
 		<execute function="Click" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD" />
 
 		<var name="key_outputParameterType" value="${outputParameterType}" />

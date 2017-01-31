@@ -25,38 +25,6 @@
 			<var name="fieldValue" value="${url}" />
 		</execute>
 
-		<var name="key_fieldName" value="$key" />
-
-		<while>
-			<condition function="IsTextNotEqual" locator1="FormFields#TEXT_FIELD" value1="${displayedAttribute}" />
-			<then>
-				<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="" />
-
-				<execute function="Type#sendKeysAceEditorNoMouseOver" locator1="FormFields#TEXT_FIELD" value1="${displayedAttribute}" />
-			</then>
-		</while>
-
-		<execute macro="FormFields#viewTextValue">
-			<var name="fieldName" value="$key" />
-			<var name="fieldValue" value="${displayedAttribute}" />
-		</execute>
-
-		<var name="key_fieldName" value="$value" />
-
-		<while>
-			<condition function="IsTextNotEqual" locator1="FormFields#TEXT_FIELD" value1="${storedAttribute}" />
-			<then>
-				<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="" />
-
-				<execute function="Type#sendKeysAceEditorNoMouseOver" locator1="FormFields#TEXT_FIELD" value1="${storedAttribute}" />
-			</then>
-		</while>
-
-		<execute macro="FormFields#viewTextValue">
-			<var name="fieldName" value="$value" />
-			<var name="fieldValue" value="${storedAttribute}" />
-		</execute>
-
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="$username" />
 			<var name="fieldValue" value="${username}" />

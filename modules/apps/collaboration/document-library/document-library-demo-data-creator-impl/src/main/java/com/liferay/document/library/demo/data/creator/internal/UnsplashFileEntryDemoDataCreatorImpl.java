@@ -143,10 +143,10 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 		return new URL(urlString);
 	}
 
-	private static final List<String> _categories = new ArrayList<>();
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		UnsplashFileEntryDemoDataCreatorImpl.class);
+
+	private static final List<String> _categories = new ArrayList<>();
 
 	static {
 		_categories.add("buildings");

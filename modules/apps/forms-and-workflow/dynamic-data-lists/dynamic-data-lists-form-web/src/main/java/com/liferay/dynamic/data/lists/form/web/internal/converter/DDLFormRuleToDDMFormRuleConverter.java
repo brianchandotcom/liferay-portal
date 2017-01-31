@@ -140,10 +140,10 @@ public class DDLFormRuleToDDMFormRuleConverter {
 	}
 
 	private static final String _comparisonExpressionFormat = "%s %s %s";
+	private static final String _functionCallUnaryExpressionFormat = "%s(%s)";
 	private static final String _notExpressionFormat = "not(%s)";
 	private static final Map<String, String> _operatorFunctionNameMap =
 		new HashMap<>();
-	private static final String _functionCallUnaryExpressionFormat = "%s(%s)";
 	private static final Map<String, String> _operatorMap = new HashMap<>();
 
 	static {

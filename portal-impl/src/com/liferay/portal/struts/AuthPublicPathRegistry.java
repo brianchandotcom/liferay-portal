@@ -73,6 +73,17 @@ public class AuthPublicPathRegistry {
 		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
 	private static final ServiceTracker<Object, Object> _serviceTracker;
 
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			registry.getFilter(
+				"(&(auth.public.path=*)(objectClass=java.lang.Object))"),
+			new AuthPublicTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
 	private static class AuthPublicTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Object> {
 
@@ -107,17 +118,6 @@ public class AuthPublicPathRegistry {
 			}
 		}
 
-	}
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(
-				"(&(auth.public.path=*)(objectClass=java.lang.Object))"),
-			new AuthPublicTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 }

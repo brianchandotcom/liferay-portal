@@ -230,7 +230,6 @@ public class ConfigurableUtil {
 	}
 
 	private static final AtomicLong _counter = new AtomicLong();
-
 	private static final Method _defineClassMethod;
 
 	static {

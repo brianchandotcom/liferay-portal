@@ -226,8 +226,12 @@ public class PortletConfigurationPermissionsDisplayContext {
 			"returnToFullPageURL", _getReturnToFullPageURL());
 		portletURL.setParameter(
 			"portletConfiguration", Boolean.TRUE.toString());
+		portletURL.setParameter("modelResource", getModelResource());
 		portletURL.setParameter("portletResource", _getPortletResource());
+		portletURL.setParameter(
+			"resourceGroupId", String.valueOf(_getResourceGroupId()));
 		portletURL.setParameter("resourcePrimKey", getResourcePrimKey());
+		portletURL.setParameter("roleTypes", _getRoleTypesParam());
 
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 

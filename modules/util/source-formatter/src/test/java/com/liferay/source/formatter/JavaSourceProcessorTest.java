@@ -168,6 +168,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"\"Hello\", \"World\"),'",
 				"There should be a line break after '\"Hello World Hello " +
 					"World Hello World\",'",
+				"There should be a line break after " +
+					"'anotherStringWithAVeryLongName,'",
 				"There should be a line break after '='",
 				"There should be a line break after '+'",
 				"There should be a line break after '='",
@@ -187,8 +189,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"'new String[] {' should be added to previous line"
 			},
 			new Integer[] {
-				31, 35, 43, 47, 49, 52, 55, 59, 62, 67, 71, 76, 80, 87, 98, 111,
-				115, 116, 122, 132
+				31, 35, 43, 47, 52, 55, 58, 61, 65, 68, 73, 77, 82, 86, 93, 104,
+				117, 121, 122, 128, 138
 			});
 		test("IncorrectLineBreaks2.testjava");
 	}

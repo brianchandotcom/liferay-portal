@@ -46,6 +46,12 @@ public class IncorrectLineBreaks1 {
 			"Hello World Hello World Hello World " +
 				"Hello World Hello World Hello World", "Hello");
 
+		String anotherStringWithAVeryLongName = "Hello World";
+
+		boolean b2 = StringUtil.contains(
+			anotherStringWithAVeryLongName, StringUtil.trim(
+				anotherStringWithAVeryLongName));
+
 		String test2 = thisIsAStringWithAVeryVeryVeryLongName +
 			thisIsAStringWithAVeryVeryVeryLongName2;
 

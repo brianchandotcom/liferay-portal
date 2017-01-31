@@ -52,11 +52,13 @@ portletURL.setParameter("wsrpConsumerId", String.valueOf(wsrpConsumerId));
 			modelVar="wsrpConsumerPortlet"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
 				buffer="buffer"
+				cssClass="table-cell-content"
 				name="remote-portlet"
 			>
 

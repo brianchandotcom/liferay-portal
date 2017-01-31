@@ -38,6 +38,7 @@
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				href="<%= rowURL %>"
 				name="producer"
 				property="name"
@@ -48,6 +49,7 @@
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				href="<%= producerURL %>"
 				name="url"
 				value="<%= producerURL %>"

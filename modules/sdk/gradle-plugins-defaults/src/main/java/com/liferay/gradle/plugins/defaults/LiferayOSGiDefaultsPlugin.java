@@ -62,6 +62,7 @@ import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
 import com.liferay.gradle.util.copy.RenameDependencyClosure;
 import com.liferay.gradle.util.copy.ReplaceLeadingPathAction;
+import com.liferay.portal.tools.wsdd.builder.WSDDBuilderArgs;
 
 import groovy.json.JsonSlurper;
 
@@ -2322,9 +2323,35 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		buildServiceTask.setBuildNumberIncrement(false);
 	}
 
-	private void _configureTaskBuildWSDD(Project project) {
+	private void _configureTaskBuildWSDD(final Project project) {
 		BuildWSDDTask buildWSDDTask = (BuildWSDDTask)GradleUtil.getTask(
 			project, WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME);
+
+		buildWSDDTask.setOutputDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					File dir = new File(project.getBuildDir(), "wsdd/output");
+
+					dir.mkdirs();
+
+					return dir;
+				}
+
+			});
+
+		buildWSDDTask.setServerConfigFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						project.getBuildDir(),
+						"wsdd/" + WSDDBuilderArgs.SERVER_CONFIG_FILE_NAME);
+				}
+
+			});
 
 		boolean remoteServices = false;
 

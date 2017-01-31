@@ -1819,20 +1819,11 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="PortletEntry#publish">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		<execute macro="Button#clickPublish" />
 
-		<execute macro="Navigator#openURL" />
+		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewApprovedStatus">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		<execute macro="Alert#viewExpireContentFailedMessage" />
 	</command>
 
 	<command name="SearchWebContent" priority="5">

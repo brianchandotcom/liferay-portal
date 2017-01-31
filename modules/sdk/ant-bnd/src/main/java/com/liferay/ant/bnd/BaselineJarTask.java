@@ -75,6 +75,9 @@ public class BaselineJarTask extends BaseBndTask {
 			throw new BuildException("New jar file is invalid");
 		}
 
+		_forcePackageInfo = Boolean.parseBoolean(
+			project.getProperty("baseline.force.package.info"));
+
 		_forceVersionOneOnAddedPackages = true;
 
 		String forceVersionOneOnAddedPackages = project.getProperty(
@@ -146,6 +149,7 @@ public class BaselineJarTask extends BaseBndTask {
 		properties.putAll(project.getProperties());
 		properties.putAll(getBndFileProperties());
 
+		baseline.setForcePackageInfo(_forcePackageInfo);
 		baseline.setForceVersionOneOnAddedPackages(
 			_forceVersionOneOnAddedPackages);
 		baseline.setLogFile(_logFile);
@@ -188,6 +192,7 @@ public class BaselineJarTask extends BaseBndTask {
 
 	private String _baselineReportsDirName;
 	private File _bndFile;
+	private boolean _forcePackageInfo;
 	private boolean _forceVersionOneOnAddedPackages;
 	private File _logFile;
 	private File _newCompatJarFile;

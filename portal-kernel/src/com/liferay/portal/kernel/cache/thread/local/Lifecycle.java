@@ -19,6 +19,12 @@ package com.liferay.portal.kernel.cache.thread.local;
  */
 public enum Lifecycle {
 
-	ETERNAL, REQUEST, SESSION
+	ETERNAL, REQUEST,
+
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+		SESSION
 
 }

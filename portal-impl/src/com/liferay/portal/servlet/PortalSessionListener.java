@@ -14,8 +14,6 @@
 
 package com.liferay.portal.servlet;
 
-import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
-import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdHttpSession;
@@ -73,8 +71,6 @@ public class PortalSessionListener implements HttpSessionListener {
 		}
 
 		new PortalSessionDestroyer(httpSessionEvent.getSession());
-
-		ThreadLocalCacheManager.clearAll(Lifecycle.SESSION);
 
 		if (PropsValues.SESSION_MAX_ALLOWED > 0) {
 			_counter.decrementAndGet();

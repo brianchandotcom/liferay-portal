@@ -333,6 +333,7 @@
 
 		<execute macro="Form#editFieldDataProvider">
 			<var name="dataProvider" value="Countries A2" />
+			<var name="dataProviderOutput" value="Countries A2" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />
@@ -359,6 +360,7 @@
 
 		<execute macro="Form#editFieldDataProvider">
 			<var name="dataProvider" value="Countries Full Name" />
+			<var name="dataProviderOutput" value="Countries Full Name" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />
@@ -537,6 +539,7 @@
 
 		<execute macro="Form#editFieldDataProvider">
 			<var name="dataProvider" value="Liferay Countries" />
+			<var name="dataProviderOutput" value="Country Names" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />

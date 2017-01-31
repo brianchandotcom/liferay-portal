@@ -97,6 +97,11 @@
 			<var name="fieldName" value="ddmDataProviderInstanceId" />
 			<var name="selectOption" value="${dataProvider}" />
 		</execute>
+
+		<execute macro="FormFields#selectSelectOption">
+			<var name="fieldName" value="ddmDataProviderInstanceOutput" />
+			<var name="selectOption" value="${dataProviderOutput}" />
+		</execute>
 	</command>
 
 	<command name="editFieldLabel">

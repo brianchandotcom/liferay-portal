@@ -3,6 +3,7 @@
 <project basedir="." default="compile" name="portal-test">
 	<import file="../build-common-java.xml" />
 
+	<property name="baseline.force.package.info" value="true" />
 	<property name="deploy.dir" value="${liferay.home}/osgi/test" />
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="javac.classpathref" value="portal.test.classpath" />

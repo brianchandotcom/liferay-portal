@@ -1520,7 +1520,9 @@ public class JavaClass {
 			while (javaTermsIterator.hasNext()) {
 				JavaTerm javaTerm = javaTermsIterator.next();
 
-				if (!javaTerm.isStatic() || !javaTerm.isVariable()) {
+				if (!javaTerm.isStatic() ||
+					(!javaTerm.isClass() && !javaTerm.isVariable())) {
+
 					continue;
 				}
 

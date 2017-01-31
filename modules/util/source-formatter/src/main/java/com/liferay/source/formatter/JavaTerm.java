@@ -27,51 +27,57 @@ import java.util.List;
  */
 public class JavaTerm {
 
-	public static final int TYPE_CLASS_PRIVATE = 25;
+	public static final int TYPE_CLASS_PRIVATE = 28;
 
-	public static final int TYPE_CLASS_PRIVATE_STATIC = 24;
+	public static final int TYPE_CLASS_PRIVATE_STATIC = 26;
 
-	public static final int TYPE_CLASS_PROTECTED = 16;
+	public static final int TYPE_CLASS_PROTECTED = 18;
 
-	public static final int TYPE_CLASS_PROTECTED_STATIC = 15;
+	public static final int TYPE_CLASS_PROTECTED_STATIC = 16;
 
-	public static final int TYPE_CLASS_PUBLIC = 8;
+	public static final int TYPE_CLASS_PUBLIC = 9;
 
 	public static final int TYPE_CLASS_PUBLIC_STATIC = 7;
 
-	public static final int TYPE_CONSTRUCTOR_PRIVATE = 18;
+	public static final int TYPE_CONSTRUCTOR_PRIVATE = 20;
 
-	public static final int TYPE_CONSTRUCTOR_PROTECTED = 10;
+	public static final int TYPE_CONSTRUCTOR_PROTECTED = 11;
 
 	public static final int TYPE_CONSTRUCTOR_PUBLIC = 4;
 
-	public static final int TYPE_METHOD_PRIVATE = 19;
+	public static final int TYPE_METHOD_PRIVATE = 21;
 
-	public static final int TYPE_METHOD_PRIVATE_STATIC = 17;
+	public static final int TYPE_METHOD_PRIVATE_STATIC = 19;
 
-	public static final int TYPE_METHOD_PROTECTED = 11;
+	public static final int TYPE_METHOD_PROTECTED = 12;
 
-	public static final int TYPE_METHOD_PROTECTED_STATIC = 9;
+	public static final int TYPE_METHOD_PROTECTED_STATIC = 10;
 
 	public static final int TYPE_METHOD_PUBLIC = 5;
 
 	public static final int TYPE_METHOD_PUBLIC_STATIC = 3;
 
-	public static final int TYPE_STATIC_BLOCK = 22;
+	public static final int TYPE_STATIC_BLOCK = 24;
 
-	public static final int TYPE_STATIC_BLOCK_PRIVATE = 21;
+	public static final int TYPE_STATIC_BLOCK_AFTER_PRIVATE_CLASSES = 27;
 
-	public static final int TYPE_STATIC_BLOCK_PROTECTED = 13;
+	public static final int TYPE_STATIC_BLOCK_AFTER_PRIVATE_VARIABLES = 23;
 
-	public static final int TYPE_STATIC_BLOCK_PUBLIC = 2;
+	public static final int TYPE_STATIC_BLOCK_AFTER_PROTECTED_CLASSES = 17;
 
-	public static final int TYPE_VARIABLE_PRIVATE = 23;
+	public static final int TYPE_STATIC_BLOCK_AFTER_PROTECTED_VARIABLES = 14;
 
-	public static final int TYPE_VARIABLE_PRIVATE_STATIC = 20;
+	public static final int TYPE_STATIC_BLOCK_AFTER_PUBLIC_CLASSES = 8;
 
-	public static final int TYPE_VARIABLE_PROTECTED = 14;
+	public static final int TYPE_STATIC_BLOCK_AFTER_PUBLIC_VARIABLES = 2;
 
-	public static final int TYPE_VARIABLE_PROTECTED_STATIC = 12;
+	public static final int TYPE_VARIABLE_PRIVATE = 25;
+
+	public static final int TYPE_VARIABLE_PRIVATE_STATIC = 22;
+
+	public static final int TYPE_VARIABLE_PROTECTED = 15;
+
+	public static final int TYPE_VARIABLE_PROTECTED_STATIC = 13;
 
 	public static final int TYPE_VARIABLE_PUBLIC = 6;
 

@@ -968,6 +968,11 @@ sub-repositories.
 ### Fixed
 - [LPS-70335]: Fix location of version override files.
 
+## 2.4.21 - 2017-01-30
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 3.1.4.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

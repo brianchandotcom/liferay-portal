@@ -1009,6 +1009,14 @@ plugin is applied.
 - [LPS-70336]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 1.0.76.
 
+## 3.1.4 - 2017-01-30
+
+### Changed
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.344.
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.77.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

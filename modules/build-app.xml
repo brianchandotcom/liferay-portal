@@ -27,7 +27,7 @@
 		</sequential>
 	</macrodef>
 
-	<target depends="dist-module-artifacts,update-app-marketplace-verson, write-app-change-log" name="build-app">
+	<target depends="dist-module-artifacts,update-app-marketplace-verson,write-app-change-log" name="build-app">
 		<delete file="${dist.dir}/ticket.list.tmp" />
 	</target>
 
@@ -415,9 +415,10 @@
 		</subant>
 	</target>
 
-	<target depends="get-app-version, get-artifact-versions-previous-release" name="update-app-marketplace-verson">
-		<echo message="${app.version.previous.release}" />
-		<echo message="${app.version}" />
+	<target depends="get-app-version,get-artifact-versions-previous-release" name="update-app-marketplace-verson">
+		<echo message="app.version.previous.release = ${app.version.previous.release}" />
+
+		<echo message="app.version = ${app.version}" />
 
 		<replaceregexp
 			file="${releng.app.dir}/app.properties"

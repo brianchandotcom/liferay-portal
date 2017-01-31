@@ -936,7 +936,7 @@ public class ProjectTemplatesTest {
 		_testNotExists(workspaceProjectDir, "wars/pom.xml");
 
 		_testContains(
-			workspaceProjectDir, "settings.gradle", "version: \"1.2.2\"");
+			workspaceProjectDir, "settings.gradle", "version: \"1.2.4\"");
 
 		File moduleProjectDir = _buildTemplateWithGradle(
 			new File(workspaceProjectDir, "modules"), "", "foo-portlet");

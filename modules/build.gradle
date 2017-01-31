@@ -14,7 +14,7 @@ Set<File> bndPrintJarFiles = null
 Map projectTemplateTokens = [
 	"com.liferay.ant.bnd.version": "2.0.32",
 	"com.liferay.css.builder.version": "1.0.23",
-	"com.liferay.gradle.plugins.theme.builder.version": "2.0.0",
+	"com.liferay.gradle.plugins.theme.builder.version": "2.0.1",
 	"com.liferay.gradle.plugins.version": "3.1.1",
 	"com.liferay.gradle.plugins.workspace.version": "1.2.4",
 	"com.liferay.portal.tools.bundle.support.version": "2.0.0",

@@ -48,15 +48,8 @@
 			keyProperty="wsrpProducerId"
 			modelVar="producer"
 		>
-			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/admin/edit_producer.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="wsrpProducerId" value="<%= String.valueOf(producer.getWsrpProducerId()) %>" />
-			</portlet:renderURL>
-
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				href="<%= rowURL %>"
 				name="producer"
 				property="name"
 			/>

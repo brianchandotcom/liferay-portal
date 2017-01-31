@@ -58,15 +58,8 @@
 			}
 			%>
 
-			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/admin/edit_consumer.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="wsrpConsumerId" value="<%= String.valueOf(consumer.getWsrpConsumerId()) %>" />
-			</portlet:renderURL>
-
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				href="<%= rowURL %>"
 				name="consumer"
 				property="name"
 			/>

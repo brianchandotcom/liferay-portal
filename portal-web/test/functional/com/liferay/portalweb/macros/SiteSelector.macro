@@ -1,0 +1,33 @@
+<definition>
+	<command name="_searchSite">
+		<if>
+			<equals arg1="${site}" arg2="Liferay" />
+			<then>
+				<var name="searchTerm" value="guest" />
+			</then>
+			<else>
+				<var name="searchTerm" value="${site}" />
+			</else>
+		</if>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
+	</command>
+
+	<command name="selectSite">
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<execute macro="SiteSelector#_searchSite">
+			<var name="site" value="${site}" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${site}" />
+		</execute>
+
+		<execute function="SelectFrameTop" />
+	</command>
+</definition>

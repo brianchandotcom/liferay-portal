@@ -968,6 +968,11 @@ sub-repositories.
 ### Fixed
 - [LPS-70335]: Fix location of version override files.
 
+## 2.4.20 - 2017-01-30
+
+### Fixed
+- [LPS-70335]: Fix location of version override files.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

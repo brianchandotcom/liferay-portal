@@ -8,4 +8,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -includeresource:\
 	@../../../../../lib/portal/jhlabs-filters.jar,\
-	@../../../../../lib/portal/simplecaptcha.jar
+	@nl.captcha.simplecaptcha-[0-9]*.jar

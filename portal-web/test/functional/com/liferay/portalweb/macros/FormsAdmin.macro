@@ -34,6 +34,15 @@
 			<var name="fieldName" value="$password" />
 			<var name="fieldValue" value="${password}" />
 		</execute>
+
+		<execute macro="FormsAdmin#editDataProviderOutputParameter">
+			<var name="outputParameterName" value="${outputParameterName}" />
+			<var name="outputParameterName2" value="${outputParameterName2}" />
+			<var name="outputParameterPath" value="${outputParameterPath}" />
+			<var name="outputParameterPath2" value="${outputParameterPath2}" />
+			<var name="outputParameterType" value="${outputParameterType}" />
+			<var name="outputParameterType2" value="${outputParameterType2}" />
+		</execute>
 	</command>
 
 	<command name="editDataProviderOutputParameter">

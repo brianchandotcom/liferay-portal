@@ -23,6 +23,6 @@ import java.util.Optional;
 public interface FormNavigatorEntryConfigurationHelper {
 
 	public <T> Optional<List<FormNavigatorEntry<T>>> getFormNavigatorEntries(
-		String formNavigatorId, String categoryKey, String variant);
+		String formNavigatorId, String categoryKey, T formModelBean);
 
 }

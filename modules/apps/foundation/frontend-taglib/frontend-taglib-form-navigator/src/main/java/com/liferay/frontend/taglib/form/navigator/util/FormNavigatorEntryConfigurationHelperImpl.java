@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.taglib.form.navigator.util;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
@@ -26,7 +25,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -41,11 +39,20 @@ public class FormNavigatorEntryConfigurationHelperImpl
 
 	@Override
 	public <T> Optional<List<FormNavigatorEntry<T>>> getFormNavigatorEntries(
-		String formNavigatorId, String categoryKey, String variant) {
+		String formNavigatorId, String categoryKey, T formModelBean) {
+
+		String context = getContext(formNavigatorId, formModelBean);
 
 		return _formNavigatorEntryConfigurationRetriever.
-			getFormNavigatorEntryKeys(formNavigatorId, categoryKey, variant).
+			getFormNavigatorEntryKeys(formNavigatorId, categoryKey, context).
 			map(keys -> _convertKeysToServices(formNavigatorId, keys));
+	}
+
+	private <T> String getContext(String formNavigatorId, T formModelBean) {
+		FormNavigatorContextProvider<T> fnvp =
+			_formNavigatorContextProviderMap.getService(formNavigatorId);
+
+		return fnvp != null ? fnvp.getContext(formModelBean) : "";
 	}
 
 	private <T> List<FormNavigatorEntry<T>> _convertKeysToServices(
@@ -71,11 +78,17 @@ public class FormNavigatorEntryConfigurationHelperImpl
 
 				bundleContext.ungetService(serviceReference);
 			});
+
+		_formNavigatorContextProviderMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, FormNavigatorContextProvider.class,
+				FormNavigatorContextProvider.ID_KEY);
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_formNavigatorEntriesMap.close();
+		_formNavigatorContextProviderMap.close();
 	}
 
 	private <T> FormNavigatorEntry<T> _getFormNavigatorEntry(
@@ -98,6 +111,9 @@ public class FormNavigatorEntryConfigurationHelperImpl
 
 	private ServiceTrackerMap<String, List<FormNavigatorEntry>>
 		_formNavigatorEntriesMap;
+
+	private ServiceTrackerMap<String, FormNavigatorContextProvider>
+		_formNavigatorContextProviderMap;
 
 	@Reference
 	private FormNavigatorEntryConfigurationRetriever

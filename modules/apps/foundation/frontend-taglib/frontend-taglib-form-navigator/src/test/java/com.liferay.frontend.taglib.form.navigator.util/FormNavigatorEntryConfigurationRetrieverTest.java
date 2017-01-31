@@ -200,11 +200,11 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		}
 
 		@Test
-		public void testReturnsEmptyOptionalForAnUnknownVariant() {
+		public void testReturnsEmptyOptionalForAnUnknownContext() {
 			Optional<List<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationHelper.
 					getFormNavigatorEntryKeys(
-						"form1", "general", "unknownVariant");
+						"form1", "general", "unknownContext");
 
 			Assert.assertFalse(formNavigatorEntryKeys.isPresent());
 		}
@@ -225,7 +225,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 			Optional<List<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationHelper.
 					getFormNavigatorEntryKeys(
-						"formNavigatorId", "categoryKey", "variant");
+						"formNavigatorId", "categoryKey", "context");
 
 			Assert.assertFalse(formNavigatorEntryKeys.isPresent());
 		}

@@ -44,7 +44,8 @@ public class FormNavigatorEntryUtil {
 		T formModelBean) {
 
 		List<FormNavigatorEntry<T>> formNavigatorEntries =
-			_getFormNavigatorEntries(formNavigatorId, categoryKey);
+			_getFormNavigatorEntries(
+				formNavigatorId, categoryKey, formModelBean);
 
 		return filterVisibleFormNavigatorEntries(
 			formNavigatorEntries, user, formModelBean);
@@ -60,7 +61,8 @@ public class FormNavigatorEntryUtil {
 
 		for (String categoryKey : categoryKeys) {
 			List<FormNavigatorEntry<T>> curFormNavigatorEntries =
-				_getFormNavigatorEntries(formNavigatorId, categoryKey);
+				_getFormNavigatorEntries(
+					formNavigatorId, categoryKey, formModelBean);
 
 			if (curFormNavigatorEntries != null) {
 				formNavigatorEntries.addAll(curFormNavigatorEntries);
@@ -118,61 +120,28 @@ public class FormNavigatorEntryUtil {
 			List<FormNavigatorEntry<T>> formNavigatorEntries, User user,
 			T formModelBean) {
 
-		List<FormNavigatorEntry<T>> filterFormNavigatorEntries =
-			new ArrayList<>();
-
-		if (ListUtil.isEmpty(formNavigatorEntries)) {
-			return filterFormNavigatorEntries;
-		}
-
-		for (FormNavigatorEntry<T> formNavigatorEntry : formNavigatorEntries) {
-			FormNavigatorEntryVisibilitySupervisor
-				formNavigatorEntryVisibilitySupervisor =
-					_instance._formNavigatorEntryVisibilitySupervisors.
-						getService(
-							_getKey(
-								formNavigatorEntry.getFormNavigatorId(),
-								formNavigatorEntry.getCategoryKey()));
-
-			if (formNavigatorEntryVisibilitySupervisor != null) {
-				if (formNavigatorEntryVisibilitySupervisor.isVisible(
-						formNavigatorEntry, user, formModelBean)) {
-
-					filterFormNavigatorEntries.add(formNavigatorEntry);
-				}
-			}
-			else {
-				if (formNavigatorEntry.isVisible(user, formModelBean)) {
-					filterFormNavigatorEntries.add(formNavigatorEntry);
-				}
-			}
-		}
-
-		return filterFormNavigatorEntries;
+		return ListUtil.fromCollection(formNavigatorEntries).stream().filter(
+				formNavigatorEntry ->
+					formNavigatorEntry.isVisible(user, formModelBean)).collect(
+						Collectors.toList());
 	}
 
 	private static <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
-		String formNavigatorId, String categoryKey) {
+		String formNavigatorId, String categoryKey, T formModelBean) {
 
-		List<FormNavigatorEntry<T>> formNavigatorEntries =
-			_getFormNavigatorEntriesFromConfig(formNavigatorId, categoryKey);
-
-		if (ListUtil.isEmpty(formNavigatorEntries)) {
-			formNavigatorEntries =
-				(List)_instance._formNavigatorEntries.getService(
-					_getKey(formNavigatorId, categoryKey));
-		}
-
-		return formNavigatorEntries;
+		return _getFormNavigatorEntriesFromConfig(formNavigatorId, categoryKey, formModelBean).
+			orElse((List)_instance._formNavigatorEntries.getService(
+				_getKey(formNavigatorId, categoryKey)));
 	}
 
-	private static <T> List<FormNavigatorEntry<T>>
+	private static <T> Optional<List<FormNavigatorEntry<T>>>
 		_getFormNavigatorEntriesFromConfig(
-			String formNavigatorId, String categoryKey) {
+			String formNavigatorId, String categoryKey, T formModelBean) {
 
 		return _getFormNavigatorEntryConfigurationHelper().map(
 			helper -> helper.<T>getFormNavigatorEntries(
-				formNavigatorId, categoryKey, "add")).orElse(new ArrayList<>());
+				formNavigatorId, categoryKey, formModelBean)).
+			orElse(Optional.empty());
 	}
 
 	private static Optional<FormNavigatorEntryConfigurationHelper>
@@ -214,36 +183,6 @@ public class FormNavigatorEntryUtil {
 			},
 			new PropertyServiceReferenceComparator<FormNavigatorEntry>(
 				"form.navigator.entry.order"));
-
-		_formNavigatorEntryVisibilitySupervisors =
-			ServiceTrackerCollections.openSingleValueMap(
-				FormNavigatorEntryVisibilitySupervisor.class, null,
-				new ServiceReferenceMapper
-					<String, FormNavigatorEntryVisibilitySupervisor>() {
-
-					@Override
-					public void map(
-						ServiceReference<FormNavigatorEntryVisibilitySupervisor>
-							serviceReference,
-						Emitter<String> emitter) {
-
-						Registry registry = RegistryUtil.getRegistry();
-
-						FormNavigatorEntryVisibilitySupervisor<?>
-							formNavigatorEntryVisibilitySupervisor =
-								registry.getService(serviceReference);
-
-						emitter.emit(
-							_getKey(
-								formNavigatorEntryVisibilitySupervisor.
-									getFormNavigatorId(),
-								formNavigatorEntryVisibilitySupervisor.
-									getCategoryKey()));
-
-						registry.ungetService(serviceReference);
-					}
-
-				});
 	}
 
 	private static final FormNavigatorEntryUtil _instance =
@@ -252,10 +191,6 @@ public class FormNavigatorEntryUtil {
 	@SuppressWarnings("rawtypes")
 	private final ServiceTrackerMap<String, List<FormNavigatorEntry>>
 		_formNavigatorEntries;
-
-	private final ServiceTrackerMap
-		<String, FormNavigatorEntryVisibilitySupervisor>
-			_formNavigatorEntryVisibilitySupervisors;
 
 	/**
 	 * @see com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator

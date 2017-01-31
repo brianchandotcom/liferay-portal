@@ -42,10 +42,10 @@ import org.osgi.service.component.annotations.Reference;
 public class FormNavigatorEntryConfigurationRetriever {
 
 	public Optional<List<String>> getFormNavigatorEntryKeys(
-		String formNavigatorId, String categoryKey, String variant) {
+		String formNavigatorId, String categoryKey, String context) {
 
 		try {
-			String expectedKey = variant + StringPool.PERIOD + categoryKey;
+			String expectedKey = context + StringPool.PERIOD + categoryKey;
 			Properties properties = _getFormNavigatorEntryKeys(formNavigatorId);
 
 			String entryKeys = properties.getProperty(expectedKey);

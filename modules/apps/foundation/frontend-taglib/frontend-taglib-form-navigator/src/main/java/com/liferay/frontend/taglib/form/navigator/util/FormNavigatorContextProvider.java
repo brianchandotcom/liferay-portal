@@ -12,20 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet.taglib.ui;
-
-import com.liferay.portal.kernel.model.User;
+package com.liferay.frontend.taglib.form.navigator.util;
 
 /**
- * @author Sergio González
+ * @author Alejandro Tardín
  */
-public interface FormNavigatorEntryVisibilitySupervisor<T> {
+public interface FormNavigatorContextProvider<T> {
 
-	public String getCategoryKey();
+	public String ID_KEY = "id";
 
-	public String getFormNavigatorId();
-
-	public boolean isVisible(
-		FormNavigatorEntry<T> formNavigatorEntry, User user, T formModelBean);
-
+	public String getContext(T formModelBean);
 }

@@ -1688,8 +1688,11 @@ public abstract class BaseBuild implements Build {
 
 	protected static final Pattern archiveBuildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
-			"(\\$\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]",
-			"+)/(?<master>[^/]+)/+(?<jobName>[^/]+).*/(?<buildNumber>\\d+)/?"));
+			"(", Pattern.quote("${dependencies.url}"), "|",
+			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE), "|",
+			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_HTTP),
+			")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)",
+			".*/(?<buildNumber>\\d+)/?"));
 	protected static final Pattern buildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>",

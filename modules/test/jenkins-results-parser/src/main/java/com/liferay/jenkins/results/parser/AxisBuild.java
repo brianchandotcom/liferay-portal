@@ -421,9 +421,12 @@ public class AxisBuild extends BaseBuild {
 
 	protected static final Pattern archiveBuildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
-			"(\\$\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]",
-			"+)/(?<master>[^/]+)/+(?<jobName>[^/]+)/(?<axisVariable>",
-			"AXIS_VARIABLE=[^,]+,[^/]+)/(?<buildNumber>\\d+)/?"));
+			"(", Pattern.quote("${dependencies.url}"), "|",
+			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE), "|",
+			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_HTTP),
+			")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)/",
+			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/",
+			"(?<buildNumber>\\d+)/?"));
 	protected static final Pattern buildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/",

@@ -174,15 +174,9 @@
 			<var name="navItem" value="My Sites" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoSite">
+		<execute macro="SiteSelector#selectSite">
 			<var name="site" value="${site}" />
 		</execute>
-
-		<execute function="SelectFrameTop" />
 
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 

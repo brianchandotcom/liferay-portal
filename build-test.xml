@@ -4687,6 +4687,43 @@ go]]></replacevalue>
 		</if>
 	</target>
 
+	<target name="deploy-latest-marketplace-apps">
+		<if>
+			<available file="${liferay.home}/osgi/marketplace" />
+			<then>
+				<for param="app.file.path">
+					<path>
+						<fileset dir="${liferay.home}/osgi/marketplace">
+							<include name="*.lpkg" />
+						</fileset>
+					</path>
+					<sequential>
+						<local name="app.file.name" />
+
+						<propertyregex
+							input="@{app.file.path}"
+							override="true"
+							property="app.file.name"
+							regexp=".*[/\\]marketplace[/\\](.+\.lpkg)"
+							replace="\1"
+						/>
+
+						<if>
+							<available file="${project.dir}/plugins/marketplace/${app.file.name}" />
+							<then>
+								<echo>Copying ${project.dir}/plugins/marketplace/${app.file.name} to ${liferay.home}/osgi/marketplace/${app.file.name}</echo>
+
+								<delete file="${liferay.home}/osgi/marketplace/${app.file.name}" />
+
+								<copy file="${project.dir}/plugins/marketplace/${app.file.name}" tofile="${liferay.home}/osgi/marketplace/${app.file.name}" />
+							</then>
+						</if>
+					</sequential>
+				</for>
+			</then>
+		</if>
+	</target>
+
 	<target name="deploy-lcs-environment-token">
 		<get-testcase-property property.name="app.server.bundles.size" />
 
@@ -9076,6 +9113,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<equals arg1="${test.smtp.server.enabled}" arg2="true" />
 			<then>
 				<start-test-smtp-server />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${test.latest.marketplace.apps}" arg2="true" />
+			<then>
+				<antcall target="deploy-latest-marketplace-apps" />
 			</then>
 		</if>
 

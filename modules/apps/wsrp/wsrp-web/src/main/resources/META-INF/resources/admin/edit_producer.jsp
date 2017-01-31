@@ -55,7 +55,7 @@ renderResponse.setTitle(((wsrpProducer == null) ? LanguageUtil.get(request, "new
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input name="name" />
+			<aui:input autoFocus="<%= true %>" name="name" />
 
 			<aui:select name="version" value="<%= version %>">
 				<aui:option label="<%= Constants.WSRP_V2 %>" />
@@ -152,12 +152,11 @@ renderResponse.setTitle(((wsrpProducer == null) ? LanguageUtil.get(request, "new
 		'<portlet:namespace />saveProducer',
 		function() {
 			document.<portlet:namespace />fm.<portlet:namespace />portletIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentPortletIds);
+
 			submitForm(document.<portlet:namespace />fm);
 		},
 		['liferay-util-list-fields']
 	);
-
-	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
 </aui:script>
 
 <%

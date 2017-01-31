@@ -31,7 +31,7 @@ renderResponse.setTitle(((wsrpConsumer == null) ? LanguageUtil.get(request, "new
 
 <portlet:actionURL name="updateWSRPConsumer" var="updateWSRPConsumerURL" />
 
-<aui:form action="<%= updateWSRPConsumerURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConsumer();" %>'>
+<aui:form action="<%= updateWSRPConsumerURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="mvcPath" type="hidden" value="/admin/edit_consumer.jsp" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="wsrpConsumerId" type="hidden" value="<%= wsrpConsumerId %>" />
@@ -43,7 +43,7 @@ renderResponse.setTitle(((wsrpConsumer == null) ? LanguageUtil.get(request, "new
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input name="name" />
+			<aui:input autoFocus="<%= true %>" name="name" />
 
 			<aui:input name="url" type="textarea" />
 
@@ -61,14 +61,6 @@ renderResponse.setTitle(((wsrpConsumer == null) ? LanguageUtil.get(request, "new
 		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveConsumer() {
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
-</aui:script>
 
 <%
 if (wsrpConsumer != null) {

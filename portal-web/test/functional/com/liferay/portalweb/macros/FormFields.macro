@@ -141,6 +141,14 @@
 		<execute function="Click" locator1="FormFields#CHECKBOX_OPTION" />
 	</command>
 
+	<command name="selectDataProviderOutputType">
+		<execute function="Click" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD" />
+
+		<var name="key_outputParameterType" value="${outputParameterType}" />
+
+		<execute function="AssertClick" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST" value1="${outputParameterType}" />
+	</command>
+
 	<command name="selectRadioOption">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_radioOption" value="${radioOption}" />

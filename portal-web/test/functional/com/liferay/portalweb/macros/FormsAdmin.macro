@@ -36,6 +36,15 @@
 		</execute>
 	</command>
 
+	<command name="editDataProviderOutputParameter">
+		<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD" value1="${outputParameterPath}" />
+		<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_NAME_FIELD" value1="${outputParameterName}" />
+
+		<execute macro="FormFields#selectDataProviderOutputType">
+			<var name="outputParameterType" value="${outputParameterType}" />
+		</execute>
+	</command>
+
 	<command name="saveDataProvider">
 		<execute macro="Button#clickSave" />
 

@@ -17,17 +17,27 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1");
+String tabs1 = ParamUtil.getString(request, "tabs1", "consumers");
 
 PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("tabs1", tabs1);
 %>
 
-<liferay-ui:tabs
-	names="consumers,producers"
-	url="<%= portletURL.toString() %>"
-/>
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<%
+		portletURL.setParameter("tabs1", "consumers");
+		%>
+
+		<aui:nav-item href="<%= portletURL.toString() %>" label="consumers" selected='<%= Objects.equals(tabs1, "consumers") %>' />
+
+		<%
+		portletURL.setParameter("tabs1", "producers");
+		%>
+
+		<aui:nav-item href="<%= portletURL.toString() %>" label="producers" selected='<%= Objects.equals(tabs1, "producers") %>' />
+	</aui:nav>
+</aui:nav-bar>
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("producers") %>'>

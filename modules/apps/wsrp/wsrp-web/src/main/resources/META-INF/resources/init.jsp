@@ -61,7 +61,8 @@ page import="com.liferay.wsrp.util.WebKeys" %>
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Arrays" %><%@
 page import="java.util.Iterator" %><%@
-page import="java.util.List" %>
+page import="java.util.List" %><%@
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

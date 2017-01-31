@@ -29,6 +29,12 @@ portletURL.setParameter("mvcPath", "/admin/view_consumer_portlets.jsp");
 portletURL.setParameter("wsrpConsumerId", String.valueOf(wsrpConsumerId));
 %>
 
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="portlets" selected="<%= true %>" />
+	</aui:nav>
+</aui:nav-bar>
+
 <aui:button-row>
 	<portlet:renderURL var="addPortletURL">
 		<portlet:param name="mvcPath" value="/admin/edit_consumer_portlet.jsp" />

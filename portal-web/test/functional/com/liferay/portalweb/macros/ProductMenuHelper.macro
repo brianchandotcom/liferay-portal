@@ -123,26 +123,6 @@
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 	</command>
 
-	<command name="gotoSite">
-		<var name="key_site" value="${site}" />
-
-		<if>
-			<equals arg1="${site}" arg2="Liferay" />
-			<then>
-				<execute function="Type" locator1="TextInput#SEARCH" value1="guest" />
-			</then>
-			<else>
-				<execute function="Type" locator1="TextInput#SEARCH" value1="${site}" />
-			</else>
-		</if>
-
-		<execute function="AssertElementPresent" locator1="Icon#BASIC_SEARCH" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" value1="${site}" />
-	</command>
-
 	<command name="gotoTab">
 		<var name="key_tab" value="${tab}" />
 

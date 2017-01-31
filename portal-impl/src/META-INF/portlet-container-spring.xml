@@ -34,8 +34,7 @@
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil">
-		<property name="portletURLFactory">
-			<bean class="com.liferay.portlet.PortletURLFactoryImpl" />
-		</property>
+		<property name="portletURLFactory" ref="com.liferay.portlet.PortletURLFactory" />
 	</bean>
+	<bean class="com.liferay.portlet.PortletURLFactoryImpl" id="com.liferay.portlet.PortletURLFactory" />
 </beans>

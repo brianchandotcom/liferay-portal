@@ -35,16 +35,6 @@ portletURL.setParameter("wsrpConsumerId", String.valueOf(wsrpConsumerId));
 	</aui:nav>
 </aui:nav-bar>
 
-<aui:button-row>
-	<portlet:renderURL var="addPortletURL">
-		<portlet:param name="mvcPath" value="/admin/edit_consumer_portlet.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="wsrpConsumerId" value="<%= String.valueOf(wsrpConsumer.getWsrpConsumerId()) %>" />
-	</portlet:renderURL>
-
-	<aui:button href="<%= addPortletURL %>" value="add-portlet" />
-</aui:button-row>
-
 <liferay-ui:search-container
 	emptyResultsMessage="there-are-no-portlets"
 	headerNames="name,remote-portlet"
@@ -92,6 +82,16 @@ portletURL.setParameter("wsrpConsumerId", String.valueOf(wsrpConsumerId));
 
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
+
+<portlet:renderURL var="addPortletURL">
+	<portlet:param name="mvcPath" value="/admin/edit_consumer_portlet.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="wsrpConsumerId" value="<%= String.valueOf(wsrpConsumer.getWsrpConsumerId()) %>" />
+</portlet:renderURL>
+
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-portlet") %>' url="<%= addPortletURL.toString() %>" />
+</liferay-frontend:add-menu>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "manage-portlets"), currentURL);

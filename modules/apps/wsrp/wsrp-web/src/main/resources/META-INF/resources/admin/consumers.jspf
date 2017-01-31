@@ -17,15 +17,6 @@
 <liferay-ui:error key="restartConsumer" message="the-consumer-is-not-available" />
 <liferay-ui:error key="updateServiceDescription" message="unable-to-update-the-service-description" />
 
-<aui:button-row>
-	<portlet:renderURL var="addConsumerURL">
-		<portlet:param name="mvcPath" value="/admin/edit_consumer.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
-
-	<aui:button href="<%= addConsumerURL %>" value="add-consumer" />
-</aui:button-row>
-
 <liferay-ui:search-container
 	emptyResultsMessage="there-are-no-consumers"
 	headerNames="name"
@@ -71,6 +62,15 @@
 
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
+
+<portlet:renderURL var="addConsumerURL">
+	<portlet:param name="mvcPath" value="/admin/edit_consumer.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:renderURL>
+
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-consumer") %>' url="<%= addConsumerURL.toString() %>" />
+</liferay-frontend:add-menu>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "consumers"), currentURL);

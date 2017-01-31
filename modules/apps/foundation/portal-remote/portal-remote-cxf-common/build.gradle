@@ -1,11 +1,11 @@
 dependencies {
-	compileInclude group: "org.apache.cxf", name: "cxf-core", version: "3.0.3"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.0.3"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-databinding-jaxb", version: "3.0.3"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-transports-http", version: "3.0.3"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-wsdl", version: "3.0.3"
-	compileInclude group: "org.apache.cxf", name: "cxf-tools-common", version: "3.0.3"
-	compileInclude group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.0.3"
+	compileInclude group: "org.apache.cxf", name: "cxf-core", version: "3.1.9"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.1.9"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-databinding-jaxb", version: "3.1.9"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-transports-http", version: "3.1.9"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-wsdl", version: "3.1.9"
+	compileInclude group: "org.apache.cxf", name: "cxf-tools-common", version: "3.1.9"
+	compileInclude group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.1.9"
 	compileInclude group: "org.apache.ws.xmlschema", name: "xmlschema-core", version: "2.1.0"
 	compileInclude group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
 

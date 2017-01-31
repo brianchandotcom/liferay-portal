@@ -23,7 +23,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
+import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpRequest;
+import io.netty.handler.codec.http.HttpResponse;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -34,7 +36,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URL;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
@@ -66,10 +68,10 @@ public class BundleSupportCommandsTest {
 	public static void setUpClass() throws Exception {
 		_authenticatedHttpProxyServer = _startHttpProxyServer(
 			_AUTHENTICATED_HTTP_PROXY_SERVER_PORT, true,
-			_authenticatedHttpProxyCounter);
+			_authenticatedHttpProxyHit);
 
 		_httpProxyServer = _startHttpProxyServer(
-			_HTTP_PROXY_SERVER_PORT, false, _httpProxyCounter);
+			_HTTP_PROXY_SERVER_PORT, false, _httpProxyHit);
 
 		_httpServer = _startHttpServer();
 	}
@@ -91,8 +93,8 @@ public class BundleSupportCommandsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_authenticatedHttpProxyCounter.set(0);
-		_httpProxyCounter.set(0);
+		_authenticatedHttpProxyHit.set(false);
+		_httpProxyHit.set(false);
 	}
 
 	@Test
@@ -157,7 +159,7 @@ public class BundleSupportCommandsTest {
 	public void testInitBundleTarProxy() throws Exception {
 		_testInitBundleTar(
 			"localhost", _HTTP_PROXY_SERVER_PORT, null, null, null,
-			_httpProxyCounter, 2);
+			_httpProxyHit, Boolean.TRUE);
 	}
 
 	@Test
@@ -165,21 +167,21 @@ public class BundleSupportCommandsTest {
 		_testInitBundleTar(
 			"localhost", _AUTHENTICATED_HTTP_PROXY_SERVER_PORT,
 			_HTTP_PROXY_SERVER_USER_NAME, _HTTP_PROXY_SERVER_PASSWORD, null,
-			_authenticatedHttpProxyCounter, 2);
+			_authenticatedHttpProxyHit, Boolean.TRUE);
 	}
 
 	@Test
 	public void testInitBundleTarProxyNonProxyHosts() throws Exception {
 		_testInitBundleTar(
 			"localhost", _HTTP_PROXY_SERVER_PORT, null, null,
-			"localhost2.localdomain", _httpProxyCounter, 2);
+			"localhost2.localdomain", _httpProxyHit, Boolean.TRUE);
 	}
 
 	@Test
 	public void testInitBundleTarProxySkip() throws Exception {
 		_testInitBundleTar(
 			"localhost", _HTTP_PROXY_SERVER_PORT, null, null,
-			"localhost.localdomain", _httpProxyCounter, 0);
+			"localhost.localdomain", _httpProxyHit, Boolean.FALSE);
 	}
 
 	@Test
@@ -188,7 +190,7 @@ public class BundleSupportCommandsTest {
 
 		_testInitBundleTar(
 			"localhost", _AUTHENTICATED_HTTP_PROXY_SERVER_PORT, null, null,
-			null, _authenticatedHttpProxyCounter, 2);
+			null, _authenticatedHttpProxyHit, Boolean.TRUE);
 	}
 
 	@Test
@@ -337,7 +339,7 @@ public class BundleSupportCommandsTest {
 	}
 
 	private static HttpProxyServer _startHttpProxyServer(
-		int port, boolean authenticate, final AtomicInteger counter) {
+		int port, boolean authenticate, final AtomicBoolean hit) {
 
 		HttpProxyServerBootstrap httpProxyServerBootstrap =
 			DefaultHttpProxyServer.bootstrap();
@@ -346,12 +348,18 @@ public class BundleSupportCommandsTest {
 			new HttpFiltersSourceAdapter() {
 
 				@Override
-				public HttpFilters filterRequest(HttpRequest httpRequest) {
+				public HttpFilters filterRequest(
+					final HttpRequest httpRequest) {
+
 					return new HttpFiltersAdapter(httpRequest) {
 
 						@Override
-						public void proxyToServerRequestSent() {
-							counter.incrementAndGet();
+						public HttpResponse clientToProxyRequest(
+							HttpObject httpObject) {
+
+							hit.set(true);
+
+							return super.clientToProxyRequest(httpObject);
 						}
 
 					};
@@ -453,12 +461,12 @@ public class BundleSupportCommandsTest {
 
 	private void _testInitBundleTar(
 			String proxyHost, Integer proxyPort, String proxyUser,
-			String proxyPassword, String nonProxyHosts,
-			AtomicInteger proxyCounter, Integer expectedCounter)
+			String proxyPassword, String nonProxyHosts, AtomicBoolean proxyHit,
+			Boolean expectedProxyHit)
 		throws Exception {
 
-		if (proxyCounter != null) {
-			Assert.assertEquals(0, proxyCounter.get());
+		if (proxyHit != null) {
+			Assert.assertFalse(proxyHit.get());
 		}
 
 		proxyHost = BundleSupportUtil.setSystemProperty(
@@ -477,9 +485,9 @@ public class BundleSupportCommandsTest {
 
 			_initBundle(null, _CONTEXT_PATH_TAR, liferayHomeDir, null, null);
 
-			if (proxyCounter != null) {
+			if (proxyHit != null) {
 				Assert.assertEquals(
-					expectedCounter.intValue(), proxyCounter.intValue());
+					expectedProxyHit.booleanValue(), proxyHit.get());
 			}
 
 			_assertExists(liferayHomeDir, "README.markdown");
@@ -542,10 +550,10 @@ public class BundleSupportCommandsTest {
 
 	private static final String _HTTP_SERVER_USER_NAME = "test";
 
-	private static final AtomicInteger _authenticatedHttpProxyCounter =
-		new AtomicInteger();
+	private static final AtomicBoolean _authenticatedHttpProxyHit =
+		new AtomicBoolean();
 	private static HttpProxyServer _authenticatedHttpProxyServer;
-	private static final AtomicInteger _httpProxyCounter = new AtomicInteger();
+	private static final AtomicBoolean _httpProxyHit = new AtomicBoolean();
 	private static HttpProxyServer _httpProxyServer;
 	private static HttpServer _httpServer;
 

@@ -977,6 +977,7 @@ sub-repositories.
 ## 2.4.22 - 2017-01-31
 
 ### Changed
+- [LPS-69606]: Generate WSDD files in a temporary directory.
 - [LPS-70379]: Update the [Liferay Gradle Plugins] dependency to version 3.1.5.
 - [LPS-70379]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.1.2.

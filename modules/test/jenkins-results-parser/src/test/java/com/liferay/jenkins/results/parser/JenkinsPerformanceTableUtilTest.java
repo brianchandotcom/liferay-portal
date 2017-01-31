@@ -122,19 +122,13 @@ public class JenkinsPerformanceTableUtilTest
 	}
 
 	@Override
-	protected String getMessage(String urlString) throws Exception {
+	protected String getMessage(File sampleDir) throws Exception {
 		Class<?> clazz = getClass();
-
-		while (urlString.endsWith("/")) {
-			urlString = urlString.substring(0, urlString.length() - 1);
-		}
-
-		String sampleName = urlString.substring(urlString.lastIndexOf("/") + 1);
 
 		String content = JenkinsResultsParserUtil.toString(
 			JenkinsResultsParserUtil.getLocalURL(
 				"${dependencies.url}" + clazz.getSimpleName() + "/" +
-					sampleName + "/urls.txt"));
+					sampleDir.getName() + "/urls.txt"));
 
 		if (content.length() == 0) {
 			return "";

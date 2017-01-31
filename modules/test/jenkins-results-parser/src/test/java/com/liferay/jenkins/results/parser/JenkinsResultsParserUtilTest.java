@@ -177,7 +177,7 @@ public class JenkinsResultsParserUtilTest
 	}
 
 	@Override
-	protected String getMessage(String urlString) throws Exception {
+	protected String getMessage(File sampleDir) throws Exception {
 		return null;
 	}
 

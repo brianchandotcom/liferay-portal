@@ -153,9 +153,7 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 	}
 
 	@Override
-	protected String getMessage(String urlString) throws Exception {
-		File sampleDir = new File(urlString.substring("file:".length()));
-
+	protected String getMessage(File sampleDir) throws Exception {
 		Properties properties = getTestProperties(sampleDir.getName());
 
 		return LoadBalancerUtil.getMostAvailableMasterURL(properties);

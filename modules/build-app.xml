@@ -27,7 +27,7 @@
 		</sequential>
 	</macrodef>
 
-	<target depends="dist-module-artifacts,write-app-change-log" name="build-app">
+	<target depends="dist-module-artifacts,update-app-marketplace-verson, write-app-change-log" name="build-app">
 		<delete file="${dist.dir}/ticket.list.tmp" />
 	</target>
 
@@ -413,6 +413,19 @@
 			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
 			<property name="osgi.dir" value="${osgi.dir}" />
 		</subant>
+	</target>
+
+	<target depends="get-app-version, get-artifact-versions-previous-release" name="update-app-marketplace-verson">
+		<echo message="${app.version.previous.release}" />
+		<echo message="${app.version}" />
+
+		<replaceregexp
+			file="${releng.app.dir}/app.properties"
+			flags="m"
+			match="app.marketplace.version=.*$"
+			replace="app.marketplace.version=${app.version}"
+			byline="true"
+		/>
 	</target>
 
 	<target depends="dist-module-artifacts,get-app-artifacts,get-app-change-log,get-app-change-log-header,get-app-git-id,release-tool-dependencies" name="write-app-change-log">

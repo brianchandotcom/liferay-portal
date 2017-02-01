@@ -250,6 +250,52 @@ public class RoleLocalServiceTest {
 	}
 
 	@Test
+	public void testGetGroupRolesAndTeamRolesWithKeyword() throws Exception {
+		Object[] organizationAndTeam = getOrganizationAndTeam();
+
+		Organization organization = (Organization)organizationAndTeam[0];
+		Team team = (Team)organizationAndTeam[1];
+
+		long companyId = organization.getCompanyId();
+		long groupId = organization.getGroupId();
+
+		int[] roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
+
+		List<String> excludedRoleNames = new ArrayList<>();
+
+		excludedRoleNames.add(RoleConstants.GUEST);
+
+		String keyword = RoleConstants.GUEST;
+
+		int count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
+			companyId, keyword, excludedRoleNames, roleTypes, 0, groupId);
+
+		Assert.assertEquals(0, count);
+
+		List<Role> roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+			companyId, keyword, excludedRoleNames, roleTypes, 0, groupId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertTrue(roles.isEmpty());
+
+		keyword = team.getName();
+
+		count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
+			companyId, keyword, excludedRoleNames, roleTypes, 0, groupId);
+
+		Assert.assertEquals(1, count);
+
+		roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+			companyId, keyword, excludedRoleNames, roleTypes, 0, groupId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		_role = RoleLocalServiceUtil.getRole(
+			companyId, String.valueOf(team.getTeamId()));
+
+		Assert.assertEquals(_role, roles.get(0));
+	}
+
+	@Test
 	public void testGetTeamRoleMapWithExclusion() throws Exception {
 		Object[] organizationAndTeam = getOrganizationAndTeam();
 

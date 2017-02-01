@@ -41,26 +41,11 @@ public class FormNavigatorEntryConfigurationHelperImpl
 	public <T> Optional<List<FormNavigatorEntry<T>>> getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean) {
 
-		String context = getContext(formNavigatorId, formModelBean);
+		String context = _getContext(formNavigatorId, formModelBean);
 
 		return _formNavigatorEntryConfigurationRetriever.
 			getFormNavigatorEntryKeys(formNavigatorId, categoryKey, context).
-			map(keys -> _convertKeysToServices(formNavigatorId, keys));
-	}
-
-	private <T> String getContext(String formNavigatorId, T formModelBean) {
-		FormNavigatorContextProvider<T> fnvp =
-			_formNavigatorContextProviderMap.getService(formNavigatorId);
-
-		return fnvp != null ? fnvp.getContext(formModelBean) : "";
-	}
-
-	private <T> List<FormNavigatorEntry<T>> _convertKeysToServices(
-		String formNavigatorId, List<String> formNavigatorEntryKeys) {
-
-		return formNavigatorEntryKeys.stream().map(
-			key -> this.<T>_getFormNavigatorEntry(key, formNavigatorId)
-		).collect(Collectors.toList());
+				map(keys -> _convertKeysToServices(formNavigatorId, keys));
 	}
 
 	@Activate
@@ -73,8 +58,7 @@ public class FormNavigatorEntryConfigurationHelperImpl
 					serviceReference);
 
 				emitter.emit(
-					_getKey(
-						service.getKey(), service.getFormNavigatorId()));
+					_getKey(service.getKey(), service.getFormNavigatorId()));
 
 				bundleContext.ungetService(serviceReference);
 			});
@@ -89,6 +73,25 @@ public class FormNavigatorEntryConfigurationHelperImpl
 	protected void deactivate() {
 		_formNavigatorEntriesMap.close();
 		_formNavigatorContextProviderMap.close();
+	}
+
+	private <T> List<FormNavigatorEntry<T>> _convertKeysToServices(
+		String formNavigatorId, List<String> formNavigatorEntryKeys) {
+
+		return formNavigatorEntryKeys.stream().map(
+			key -> this.<T>_getFormNavigatorEntry(key, formNavigatorId)).
+				collect(Collectors.toList());
+	}
+
+	private <T> String _getContext(String formNavigatorId, T formModelBean) {
+		FormNavigatorContextProvider<T> formNavigatorContextProvider =
+			_formNavigatorContextProviderMap.getService(formNavigatorId);
+
+		if (formNavigatorContextProvider != null) {
+			return formNavigatorContextProvider.getContext(formModelBean);
+		}
+
+		return null;
 	}
 
 	private <T> FormNavigatorEntry<T> _getFormNavigatorEntry(
@@ -109,11 +112,10 @@ public class FormNavigatorEntryConfigurationHelperImpl
 		return formNavigatorId + StringPool.PERIOD + key;
 	}
 
-	private ServiceTrackerMap<String, List<FormNavigatorEntry>>
-		_formNavigatorEntriesMap;
-
 	private ServiceTrackerMap<String, FormNavigatorContextProvider>
 		_formNavigatorContextProviderMap;
+	private ServiceTrackerMap<String, List<FormNavigatorEntry>>
+		_formNavigatorEntriesMap;
 
 	@Reference
 	private FormNavigatorEntryConfigurationRetriever

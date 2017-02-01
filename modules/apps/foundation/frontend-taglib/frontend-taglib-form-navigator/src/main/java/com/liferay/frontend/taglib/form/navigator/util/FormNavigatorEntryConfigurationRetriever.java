@@ -19,6 +19,8 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -29,7 +31,6 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
-import com.liferay.portal.kernel.util.Validator;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -52,10 +53,7 @@ public class FormNavigatorEntryConfigurationRetriever {
 			String entryKeys = properties.getProperty(expectedKey);
 
 			if (entryKeys != null) {
-				return Optional.of(
-					Arrays.stream(entryKeys.split(StringPool.COMMA)).
-					filter(s -> !s.isEmpty()).
-					collect(Collectors.toList()));
+				return Optional.of(_splitKeys(entryKeys));
 			}
 		}
 		catch (Exception e) {
@@ -63,15 +61,6 @@ public class FormNavigatorEntryConfigurationRetriever {
 		}
 
 		return Optional.empty();
-	}
-
-	private String _getExpectedKey(String categoryKey, String context) {
-		if (Validator.isNull(context)) {
-			return categoryKey;
-		}
-		else {
-			return context + StringPool.PERIOD + categoryKey;
-		}
 	}
 
 	@Reference(bind = "-", unbind = "-")
@@ -102,6 +91,15 @@ public class FormNavigatorEntryConfigurationRetriever {
 				configuration.getProperties())).collect(Collectors.toList());
 	}
 
+	private String _getExpectedKey(String categoryKey, String context) {
+		if (Validator.isNull(context)) {
+			return categoryKey;
+		}
+		else {
+			return context + StringPool.PERIOD + categoryKey;
+		}
+	}
+
 	private Properties _getFormNavigatorEntryKeys(String formNavigatorId)
 		throws InvalidSyntaxException, IOException {
 
@@ -117,6 +115,10 @@ public class FormNavigatorEntryConfigurationRetriever {
 		properties.load(new StringReader(sb.toString()));
 
 		return properties;
+	}
+
+	private List<String> _splitKeys(String entryKeys) {
+		return Arrays.asList(StringUtil.split(entryKeys));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

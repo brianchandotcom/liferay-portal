@@ -121,27 +121,31 @@ public class FormNavigatorEntryUtil {
 			T formModelBean) {
 
 		return ListUtil.fromCollection(formNavigatorEntries).stream().filter(
-				formNavigatorEntry ->
-					formNavigatorEntry.isVisible(user, formModelBean)).collect(
-						Collectors.toList());
+			formNavigatorEntry -> formNavigatorEntry.isVisible(
+				user, formModelBean)).collect(Collectors.toList());
 	}
 
 	private static <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean) {
 
-		return _getFormNavigatorEntriesFromConfig(formNavigatorId, categoryKey, formModelBean).
-			orElse((List)_instance._formNavigatorEntries.getService(
-				_getKey(formNavigatorId, categoryKey)));
+		return _getFormNavigatorEntriesFromConfig(
+			formNavigatorId, categoryKey,
+			formModelBean).orElse(
+				(List)_instance._formNavigatorEntries.getService(
+					_getKey(formNavigatorId, categoryKey)));
 	}
 
 	private static <T> Optional<List<FormNavigatorEntry<T>>>
 		_getFormNavigatorEntriesFromConfig(
 			String formNavigatorId, String categoryKey, T formModelBean) {
 
-		return _getFormNavigatorEntryConfigurationHelper().map(
-			helper -> helper.<T>getFormNavigatorEntries(
-				formNavigatorId, categoryKey, formModelBean)).
-			orElse(Optional.empty());
+		Optional<FormNavigatorEntryConfigurationHelper> helperOptional =
+			_getFormNavigatorEntryConfigurationHelper();
+
+		return helperOptional.map(
+			helper -> helper.getFormNavigatorEntries(
+				formNavigatorId, categoryKey, formModelBean)).orElse(
+				Optional.empty());
 	}
 
 	private static Optional<FormNavigatorEntryConfigurationHelper>

@@ -19,7 +19,8 @@ package com.liferay.frontend.taglib.form.navigator.util;
  */
 public interface FormNavigatorContextProvider<T> {
 
+	public String getContext(T formModelBean);
+
 	public String ID_KEY = "id";
 
-	public String getContext(T formModelBean);
 }

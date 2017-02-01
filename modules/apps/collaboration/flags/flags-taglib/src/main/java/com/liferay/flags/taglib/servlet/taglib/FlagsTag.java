@@ -63,34 +63,15 @@ public class FlagsTag extends TemplateRendererTag {
 
 			boolean inTrash = TrashUtil.isInTrash(className, classPK);
 
-			putValue("inTrash", inTrash);
+			putValue("cssClass", _getCssClass(randomNamespace, inTrash));
+
+			putValue("data", _getDataJSON(context, className, classPK));
+
+			putValue("flagsEnabled", _isFlagsEnabled(themeDisplay));
 
 			putValue("id", randomNamespace + "id");
 
-			String cssClass = randomNamespace;
-
-			if (!inTrash) {
-				cssClass = randomNamespace + " flag-enable";
-			}
-
-			putValue("cssClass", cssClass);
-
-			String namespace = PortalUtil.getPortletNamespace(
-				PortletKeys.FLAGS);
-
-			JSONObject dataJSON = JSONFactoryUtil.createJSONObject();
-
-			dataJSON.put(namespace + "className", className);
-			dataJSON.put(namespace + "classPK", classPK);
-			dataJSON.put(
-				namespace + "contentTitle", context.get("contentTitle"));
-			dataJSON.put(
-				namespace + "contentURL",
-				PortalUtil.getPortalURL(request) + _getCurrentURL());
-			dataJSON.put(
-				namespace + "reportedUserId", context.get("reportedUserId"));
-
-			putValue("data", dataJSON);
+			putValue("inTrash", inTrash);
 
 			if (Validator.isNull(context.get("label"))) {
 				putValue("label", true);
@@ -100,37 +81,15 @@ public class FlagsTag extends TemplateRendererTag {
 				putValue("message", LanguageUtil.get(request, "flag"));
 			}
 
-			FlagsGroupServiceConfiguration flagsGroupServiceConfiguration =
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					FlagsGroupServiceConfiguration.class,
-					themeDisplay.getCompanyId());
+			putValue("pathThemeImages", themeDisplay.getPathThemeImages());
 
-			boolean flagsEnabled = false;
-
-			if (flagsGroupServiceConfiguration.guestUsersEnabled() ||
-				themeDisplay.isSignedIn()) {
-
-				flagsEnabled = true;
-			}
-
-			putValue("flagsEnabled", flagsEnabled);
-
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				request, PortletKeys.FLAGS, PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/flags/edit_entry");
-			portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-
-			putValue("uri", portletURL.toString());
+			putValue("uri", _getUri());
 		}
 		catch (PortalException pe) {
 			pe.printStackTrace();
 		}
 		catch (WindowStateException wse) {
 		}
-
-		putValue("pathThemeImages", themeDisplay.getPathThemeImages());
 
 		setTemplateNamespace("Flags.render");
 
@@ -166,6 +125,16 @@ public class FlagsTag extends TemplateRendererTag {
 		putValue("reportedUserId", reportedUserId);
 	}
 
+	private String _getCssClass(String randomNamespace, boolean inTrash) {
+		String cssClass = randomNamespace;
+
+		if (!inTrash) {
+			cssClass = randomNamespace + " flag-enable";
+		}
+
+		return cssClass;
+	}
+
 	private String _getCurrentURL() {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -187,6 +156,54 @@ public class FlagsTag extends TemplateRendererTag {
 		}
 
 		return currentURL;
+	}
+
+	private JSONObject _getDataJSON(
+		Map<String, Object> context, String className, long classPK) {
+
+		String namespace = PortalUtil.getPortletNamespace(PortletKeys.FLAGS);
+
+		JSONObject dataJSON = JSONFactoryUtil.createJSONObject();
+
+		dataJSON.put(namespace + "className", className);
+		dataJSON.put(namespace + "classPK", classPK);
+		dataJSON.put(namespace + "contentTitle", context.get("contentTitle"));
+		dataJSON.put(
+			namespace + "contentURL",
+			PortalUtil.getPortalURL(request) + _getCurrentURL());
+		dataJSON.put(
+			namespace + "reportedUserId", context.get("reportedUserId"));
+
+		return dataJSON;
+	}
+
+	private String _getUri() throws WindowStateException {
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			request, PortletKeys.FLAGS, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcRenderCommandName", "/flags/edit_entry");
+		portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+		return portletURL.toString();
+	}
+
+	private boolean _isFlagsEnabled(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		FlagsGroupServiceConfiguration flagsGroupServiceConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				FlagsGroupServiceConfiguration.class,
+				themeDisplay.getCompanyId());
+
+		boolean flagsEnabled = false;
+
+		if (flagsGroupServiceConfiguration.guestUsersEnabled() ||
+			themeDisplay.isSignedIn()) {
+
+			flagsEnabled = true;
+		}
+
+		return flagsEnabled;
 	}
 
 }

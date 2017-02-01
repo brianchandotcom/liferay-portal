@@ -14,10 +14,12 @@
 
 package com.liferay.frontend.taglib.form.navigator.util;
 
+import com.liferay.frontend.taglib.form.navigator.exception.NoSuchFormNavigatorEntryException;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryConfigurationHelper;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
@@ -101,8 +103,8 @@ public class FormNavigatorEntryConfigurationHelperImpl
 			(List)_formNavigatorEntriesMap.getService(
 				_getKey(key, formNavigatorId));
 
-		if (formNavigatorEntries.isEmpty()) {
-			throw new RuntimeException("fix this");
+		if (ListUtil.isEmpty(formNavigatorEntries)) {
+			throw new NoSuchFormNavigatorEntryException(formNavigatorId, key);
 		}
 
 		return formNavigatorEntries.get(0);

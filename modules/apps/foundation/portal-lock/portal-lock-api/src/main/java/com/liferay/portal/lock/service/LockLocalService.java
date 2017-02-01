@@ -174,18 +174,37 @@ public interface LockLocalService extends BaseLocalService,
 	public Lock getLockByUuidAndCompanyId(java.lang.String uuid, long companyId)
 		throws PortalException;
 
+	/**
+	* @deprecated As of 2.0.0, see {@link #tryLock(
+	String, String, String, String)}
+	*/
+	@java.lang.Deprecated
 	@MasterDataSource
 	public Lock lock(java.lang.String className, java.lang.String key,
 		java.lang.String expectedOwner, java.lang.String updatedOwner);
 
+	/**
+	* @deprecated As of 2.0.0, see {@link #tryLock(String, String, String)}
+	*/
+	@java.lang.Deprecated
 	@MasterDataSource
 	public Lock lock(java.lang.String className, java.lang.String key,
 		java.lang.String owner);
 
+	/**
+	* @deprecated As of 2.0.0, see {@link #tryLock(
+	long, String, String, String, boolean, long)}
+	*/
+	@java.lang.Deprecated
 	public Lock lock(long userId, java.lang.String className,
 		java.lang.String key, java.lang.String owner, boolean inheritable,
 		long expirationTime) throws PortalException;
 
+	/**
+	* @deprecated As of 2.0.0, see {@link #tryLock(
+	long, String, String, String, boolean, long)}
+	*/
+	@java.lang.Deprecated
 	public Lock lock(long userId, java.lang.String className, long key,
 		java.lang.String owner, boolean inheritable, long expirationTime)
 		throws PortalException;

@@ -106,8 +106,24 @@ public abstract class BaseItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() throws PortletException {
-		return PortletURLUtil.clone(
-			portletURL, (LiferayPortletResponse)getPortletResponse());
+		PortletURL portletURL = PortletURLUtil.clone(
+			this.portletURL, (LiferayPortletResponse)getPortletResponse());
+
+		long groupId = ParamUtil.getLong(request, "groupId");
+
+		long plid = ParamUtil.getLong(request, "plid");
+
+		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+
+		String portletResource = ParamUtil.getString(
+			request, "portletResource");
+
+		portletURL.setParameter("groupId", String.valueOf(groupId));
+		portletURL.setParameter("plid", String.valueOf(plid));
+		portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
+		portletURL.setParameter("portletResource", portletResource);
+
+		return portletURL;
 	}
 
 	@Override

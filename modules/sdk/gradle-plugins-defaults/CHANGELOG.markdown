@@ -982,6 +982,12 @@ sub-repositories.
 - [LPS-70379]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.1.2.
 
+## 2.4.23 - 2017-02-01
+
+### Changed
+- [LPS-69926]: Move the `compileInclude` dependencies at the beginning of the
+test compile and runtime classpaths.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

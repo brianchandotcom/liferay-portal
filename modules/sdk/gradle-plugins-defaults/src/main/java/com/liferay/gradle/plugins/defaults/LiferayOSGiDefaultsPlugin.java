@@ -1765,7 +1765,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_configureConfigurationDefault(project);
 		_configureConfigurationJspC(project, liferayExtension);
-		_configureConfigurationTestCompile(project);
 
 		String projectPath = project.getPath();
 
@@ -1794,16 +1793,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private void _configureConfigurationTestCompile(Project project) {
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME);
-
-		Configuration compileIncludeConfiguration = GradleUtil.getConfiguration(
-			project, LiferayOSGiPlugin.COMPILE_INCLUDE_CONFIGURATION_NAME);
-
-		configuration.extendsFrom(compileIncludeConfiguration);
 	}
 
 	private void _configureConfigurationTransitive(
@@ -2105,15 +2094,20 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Configuration compileConfiguration = GradleUtil.getConfiguration(
 			project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
 
+		Configuration compileIncludeConfiguration = GradleUtil.getConfiguration(
+			project, LiferayOSGiPlugin.COMPILE_INCLUDE_CONFIGURATION_NAME);
+
 		sourceSet.setCompileClasspath(
 			FileUtil.join(
-				compileConfiguration, portalConfiguration,
-				sourceSet.getCompileClasspath(), portalTestConfiguration));
+				compileIncludeConfiguration, compileConfiguration,
+				portalConfiguration, sourceSet.getCompileClasspath(),
+				portalTestConfiguration));
 
 		sourceSet.setRuntimeClasspath(
 			FileUtil.join(
-				compileConfiguration, portalConfiguration,
-				sourceSet.getRuntimeClasspath(), portalTestConfiguration));
+				compileIncludeConfiguration, compileConfiguration,
+				portalConfiguration, sourceSet.getRuntimeClasspath(),
+				portalTestConfiguration));
 	}
 
 	private void _configureSourceSetTestIntegration(

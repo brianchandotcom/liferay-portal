@@ -10,4 +10,3 @@ Import-Package:\
 	org.osgi.framework,\
 	org.osgi.resource,\
 	*
--includeresource: @biz.aQute.bnd-[0-9]*.jar

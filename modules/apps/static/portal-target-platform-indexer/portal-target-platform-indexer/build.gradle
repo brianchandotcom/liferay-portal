@@ -1,7 +1,8 @@
 task deployTool(type: Copy)
 
 dependencies {
-	provided group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.2.0"
+	compileInclude group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.2.0"
+
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.4.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.4.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"

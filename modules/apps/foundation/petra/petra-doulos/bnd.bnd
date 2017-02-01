@@ -6,6 +6,3 @@ Export-Package:\
 	com.liferay.petra.doulos.servlet
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--includeresource:\
-	@commons-lang3-[0-9]*.jar,\
-	@concurrentlinkedhashmap-lru-[0-9]*.jar

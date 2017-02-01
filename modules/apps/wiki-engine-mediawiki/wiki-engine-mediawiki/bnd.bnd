@@ -10,4 +10,3 @@ Import-Package:\
 	!org.incava.util.diff.*,\
 	*
 Web-ContextPath: /wiki-engine-mediawiki
--includeresource: @org.jamwiki-[0-9]*.jar

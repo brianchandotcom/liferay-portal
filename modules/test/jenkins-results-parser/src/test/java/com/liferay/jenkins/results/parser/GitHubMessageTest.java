@@ -17,7 +17,9 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.StringReader;
+
 import java.net.URL;
+
 import java.util.Hashtable;
 import java.util.Properties;
 
@@ -60,7 +62,7 @@ public class GitHubMessageTest extends BaseJenkinsResultsParserTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		JenkinsResultsParserUtil.setBuildProperties((Hashtable<?, ?>) null);
+		JenkinsResultsParserUtil.setBuildProperties((Hashtable<?, ?>)null);
 	}
 
 	@Test

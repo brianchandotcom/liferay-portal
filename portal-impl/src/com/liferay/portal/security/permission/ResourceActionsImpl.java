@@ -586,17 +586,21 @@ public class ResourceActionsImpl implements ResourceActions {
 	public List<String> getResourceGuestUnsupportedActions(
 		String portletResource, String modelResource) {
 
-		List<String> actions = null;
-
 		if (Validator.isNull(modelResource)) {
-			actions = getPortletResourceGuestUnsupportedActions(
-				portletResource);
+			return getPortletResourceGuestUnsupportedActions(portletResource);
+		}
+		else if (Validator.isNull(portletResource)) {
+			return getModelResourceGuestUnsupportedActions(modelResource);
+		}
+		else if (_modelResourceActionsBags.containsKey(modelResource)) {
+			return getModelResourceGuestUnsupportedActions(modelResource);
+		}
+		else if (_portletResourceActionsBags.containsKey(portletResource)) {
+			return getPortletResourceGuestUnsupportedActions(portletResource);
 		}
 		else {
-			actions = getModelResourceGuestUnsupportedActions(modelResource);
+			return Collections.<String>emptyList();
 		}
-
-		return actions;
 	}
 
 	@Override

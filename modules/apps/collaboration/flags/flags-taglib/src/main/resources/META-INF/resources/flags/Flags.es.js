@@ -20,7 +20,7 @@ class FlagsPortlet extends Component {
 		AUI().use('aui-io-plugin-deprecated', (A) => {
 			let dialogTitle = Liferay.Language.get('report-inappropriate-content');
 
-			if (this.signedUser) {
+			if (this.flagsEnabled) {
 				let popup = Liferay.Util.Window.getWindow(
 					{
 						dialog: {
@@ -74,13 +74,12 @@ FlagsPortlet.STATE = {
 	},
 
 	/**
-	 * Whether the user is signed in
-	 * and is able to flag the page.
+	 * Whether the user is able to flag the page.
 	 * @instance
 	 * @memberof FlagsPortlet
 	 * @type {!Boolean}
 	 */
-	signedUser: {
+	flagsEnabled: {
 		validator: core.isBoolean
 	},
 

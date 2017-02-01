@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -81,10 +83,8 @@ public class FlagsTag extends TemplateRendererTag {
 
 			putValue("uri", _getUri());
 		}
-		catch (PortalException pe) {
-			pe.printStackTrace();
-		}
-		catch (WindowStateException wse) {
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		setTemplateNamespace("Flags.render");
@@ -205,5 +205,7 @@ public class FlagsTag extends TemplateRendererTag {
 
 		return flagsEnabled;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(FlagsTag.class);
 
 }

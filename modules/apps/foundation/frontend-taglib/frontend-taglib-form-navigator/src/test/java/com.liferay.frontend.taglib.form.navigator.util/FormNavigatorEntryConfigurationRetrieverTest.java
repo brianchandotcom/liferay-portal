@@ -42,6 +42,35 @@ import org.osgi.service.cm.ConfigurationAdmin;
 @RunWith(Enclosed.class)
 public class FormNavigatorEntryConfigurationRetrieverTest {
 
+	public static class WhenNoVariantIsSet {
+
+		@Before
+		public void setUp() throws InvalidSyntaxException, IOException {
+			StringBuilder line1 = new StringBuilder();
+
+			line1.append("general");
+			line1.append(StringPool.EQUAL);
+			line1.append("formNavigatorEntryKey1,");
+			line1.append("formNavigatorEntryKey2");
+
+			_setMockConfigurations(
+				_createMockConfig("form1", new String[]{line1.toString()}));
+		}
+
+		@Test
+		public void testReturnsTheKeysInThatLine() {
+			List<String> formNavigatorEntryKeys =
+				_formNavigatorEntryConfigurationHelper.
+					getFormNavigatorEntryKeys("form1", "general", null).get();
+
+			Assert.assertEquals(formNavigatorEntryKeys.size(), 2);
+			Assert.assertEquals(
+				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
+			Assert.assertEquals(
+				"formNavigatorEntryKey2", formNavigatorEntryKeys.get(1));
+		}
+	}
+
 	public static class WhenAConfigurationEntryHasOneLineWithNoKeys {
 
 		@Before

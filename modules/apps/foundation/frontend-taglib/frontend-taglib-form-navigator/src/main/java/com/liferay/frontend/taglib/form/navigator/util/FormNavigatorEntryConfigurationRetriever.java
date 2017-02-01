@@ -29,6 +29,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+import com.liferay.portal.kernel.util.Validator;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -45,7 +46,7 @@ public class FormNavigatorEntryConfigurationRetriever {
 		String formNavigatorId, String categoryKey, String context) {
 
 		try {
-			String expectedKey = context + StringPool.PERIOD + categoryKey;
+			String expectedKey = _getExpectedKey(categoryKey, context);
 			Properties properties = _getFormNavigatorEntryKeys(formNavigatorId);
 
 			String entryKeys = properties.getProperty(expectedKey);
@@ -62,6 +63,15 @@ public class FormNavigatorEntryConfigurationRetriever {
 		}
 
 		return Optional.empty();
+	}
+
+	private String _getExpectedKey(String categoryKey, String context) {
+		if (Validator.isNull(context)) {
+			return categoryKey;
+		}
+		else {
+			return context + StringPool.PERIOD + categoryKey;
+		}
 	}
 
 	@Reference(bind = "-", unbind = "-")

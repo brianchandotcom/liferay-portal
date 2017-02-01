@@ -396,6 +396,7 @@
 		<reference entity="Mail" package-path="com.liferay.mail" />
 		<reference entity="Company" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="Subscription" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="ShoppingItem" package-path="com.liferay.shopping" />
 		<reference entity="ShoppingItemField" package-path="com.liferay.shopping" />

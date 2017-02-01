@@ -46,54 +46,57 @@ public interface LockManager {
 
 	public boolean isLocked(String className, String key);
 
-	@Deprecated
 	/**
-	 * @deprecated As of 7.0.0, see #tryLock
+	 * @deprecated As of 7.0.0, see {@link #tryLock(
+	 * 				long, String, long, String, boolean, long)}
 	 */
+	@Deprecated
 	public Lock lock(
 			long userId, String className, long key, String owner,
 			boolean inheritable, long expirationTime)
 		throws PortalException;
 
-	@Deprecated
 	/**
-	 * @deprecated As of 7.0.0, see #tryLock
+	 * @deprecated As of 7.0.0, see {@link #tryLock(
+	 * 				long, String, String, String, boolean, long)}
 	 */
+	@Deprecated
 	public Lock lock(
 			long userId, String className, String key, String owner,
 			boolean inheritable, long expirationTime)
 		throws PortalException;
 
-	@Deprecated
 	/**
-	 * @deprecated As of 7.0.0, see #tryLock
+	 * @deprecated As of 7.0.0, see {@link #tryLock(String, String, String)}
 	 */
+	@Deprecated
 	public Lock lock(String className, String key, String owner);
 
-	@Deprecated
 	/**
-	 * @deprecated As of 7.0.0, see #tryLock
+	 * @deprecated As of 7.0.0, see {@link #tryLock(
+	 * 				String, String, String, String)}
 	 */
+	@Deprecated
 	public Lock lock(
-		String className, String key, String expectedOwner,
-		String updatedOwner);
-
-	Optional<Lock> tryLock(
-			long userId, String className, long key, String owner,
-			boolean inheritable, long expirationTime);
-
-	Optional<Lock> tryLock(
-			long userId, String className, String key, String owner,
-			boolean inheritable, long expirationTime);
-
-	Optional<Lock> tryLock(String className, String key, String owner);
-
-	Optional<Lock> tryLock(
 		String className, String key, String expectedOwner,
 		String updatedOwner);
 
 	public Lock refresh(String uuid, long companyId, long expirationTime)
 		throws PortalException;
+
+	public Optional<Lock> tryLock(
+		long userId, String className, long key, String owner,
+		boolean inheritable, long expirationTime);
+
+	public Optional<Lock> tryLock(
+		long userId, String className, String key, String owner,
+		boolean inheritable, long expirationTime);
+
+	public Optional<Lock> tryLock(String className, String key, String owner);
+
+	public Optional<Lock> tryLock(
+		String className, String key, String expectedOwner,
+		String updatedOwner);
 
 	public void unlock(String className, long key);
 

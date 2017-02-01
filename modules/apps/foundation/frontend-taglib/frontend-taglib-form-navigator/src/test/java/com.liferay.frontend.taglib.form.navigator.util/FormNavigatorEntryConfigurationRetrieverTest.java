@@ -125,6 +125,36 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
+	public static class WhenAKeyHasLeadingOrTrailingSpaces {
+
+		@Before
+		public void setUp() throws InvalidSyntaxException, IOException {
+			StringBuilder line = new StringBuilder();
+
+			line.append("add.general");
+			line.append(StringPool.EQUAL);
+			line.append("   formNavigatorEntryKey1,  ");
+			line.append("  formNavigatorEntryKey2  ");
+
+			_setMockConfigurations(
+				_createMockConfig("form1", new String[] {line.toString()}));
+		}
+
+		@Test
+		public void testTheyAreTrimmed() {
+			List<String> formNavigatorEntryKeys =
+				_formNavigatorEntryConfigurationHelper.
+					getFormNavigatorEntryKeys("form1", "general", "add").get();
+
+			Assert.assertEquals(2, formNavigatorEntryKeys.size());
+			Assert.assertEquals(
+				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
+			Assert.assertEquals(
+				"formNavigatorEntryKey2", formNavigatorEntryKeys.get(1));
+		}
+
+	}
+
 	public static class WhenNoVariantIsSet {
 
 		@Before

@@ -122,7 +122,8 @@ public class FormNavigatorEntryConfigurationRetriever {
 	}
 
 	private List<String> _splitKeys(String entryKeys) {
-		return Arrays.asList(StringUtil.split(entryKeys));
+		return Arrays.stream(StringUtil.split(entryKeys)).map(
+			String::trim).collect(Collectors.toList());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

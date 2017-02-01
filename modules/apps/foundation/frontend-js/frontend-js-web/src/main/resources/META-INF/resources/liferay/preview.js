@@ -239,7 +239,7 @@ AUI.add(
 
 							var id = maxPreviewImage.get('id');
 
-							maxPreviewImage.set('id', id + "Preview");
+							maxPreviewImage.set('id', id + 'Preview');
 
 							instance._maxPreviewImage = maxPreviewImage;
 						}

@@ -54,10 +54,25 @@ public class ScriptingNotificationRecipientEvaluator
 		Map<String, Object> inputObjects =
 			_scriptingContextBuilder.buildScriptingContext(executionContext);
 
-		return _scripting.eval(
-			null, inputObjects, _outputNames,
-			kaleoNotificationRecipient.getRecipientScriptLanguage(),
-			kaleoNotificationRecipient.getRecipientScript());
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(classLoader);
+
+			return _scripting.eval(
+				null, inputObjects, _outputNames,
+				kaleoNotificationRecipient.getRecipientScriptLanguage(),
+				kaleoNotificationRecipient.getRecipientScript());
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	private static final Set<String> _outputNames = new HashSet<>();

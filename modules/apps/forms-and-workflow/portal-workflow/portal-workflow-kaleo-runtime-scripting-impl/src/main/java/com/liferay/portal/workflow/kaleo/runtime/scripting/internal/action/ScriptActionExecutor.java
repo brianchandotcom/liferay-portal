@@ -24,6 +24,7 @@ import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -75,9 +76,26 @@ public class ScriptActionExecutor implements ActionExecutor {
 		Map<String, Object> inputObjects =
 			_scriptingContextBuilder.buildScriptingContext(executionContext);
 
-		Map<String, Object> results = _scripting.eval(
-			null, inputObjects, _outputObjects, kaleoAction.getScriptLanguage(),
-			kaleoAction.getScript());
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		Map<String, Object> results = new HashMap<>();
+
+		try {
+			currentThread.setContextClassLoader(classLoader);
+
+			results = _scripting.eval(
+				null, inputObjects, _outputObjects,
+				kaleoAction.getScriptLanguage(), kaleoAction.getScript());
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 
 		Map<String, Serializable> resultsWorkflowContext =
 			(Map<String, Serializable>)results.get(

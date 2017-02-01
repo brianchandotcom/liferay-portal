@@ -276,31 +276,14 @@
 		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
 
 		<execute macro="FormsAdmin#editDataProvider">
-			<var name="displayedAttribute" value="nameCurrentValue" />
-			<var name="name" value="Countries Full Name" />
+			<var name="name" value="Country Names" />
+			<var name="outputParameterName" value="Countries Full Name" />
+			<var name="outputParameterName2" value="Countries A2" />
+			<var name="outputParameterPath" value="nameCurrentValue" />
+			<var name="outputParameterPath2" value="a2" />
+			<var name="outputParameterType" value="Text" />
+			<var name="outputParameterType2" value="Text" />
 			<var name="password" value="test" />
-			<var name="storedAttribute" value="name" />
-			<var name="url" value="${portalURL}/api/jsonws/country/get-countries" />
-			<var name="username" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="FormsAdmin#saveDataProvider" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<execute macro="FormsAdminNavigator#gotoDataProviders" />
-
-		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
-
-		<execute macro="FormsAdmin#editDataProvider">
-			<var name="displayedAttribute" value="a2" />
-			<var name="name" value="Countries A2" />
-			<var name="password" value="test" />
-			<var name="storedAttribute" value="a2" />
 			<var name="url" value="${portalURL}/api/jsonws/country/get-countries" />
 			<var name="username" value="test@liferay.com" />
 		</execute>
@@ -332,7 +315,8 @@
 		<execute macro="Form#gotoAutocompleteConfiguration" />
 
 		<execute macro="Form#editFieldDataProvider">
-			<var name="dataProvider" value="Countries A2" />
+			<var name="dataProvider" value="Country Names" />
+			<var name="dataProviderOutput" value="Countries A2" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />
@@ -358,7 +342,8 @@
 		<execute macro="Form#gotoAutocompleteConfiguration" />
 
 		<execute macro="Form#editFieldDataProvider">
-			<var name="dataProvider" value="Countries Full Name" />
+			<var name="dataProvider" value="Country Names" />
+			<var name="dataProviderOutput" value="Countries Full Name" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />
@@ -505,10 +490,11 @@
 		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
 
 		<execute macro="FormsAdmin#editDataProvider">
-			<var name="displayedAttribute" value="nameCurrentValue" />
 			<var name="name" value="Liferay Countries" />
+			<var name="outputParameterName" value="Country Names" />
+			<var name="outputParameterPath" value="nameCurrentValue" />
+			<var name="outputParameterType" value="Text" />
 			<var name="password" value="test" />
-			<var name="storedAttribute" value="name" />
 			<var name="url" value="${portalURL}/api/jsonws/country/get-countries" />
 			<var name="username" value="test@liferay.com" />
 		</execute>
@@ -537,6 +523,7 @@
 
 		<execute macro="Form#editFieldDataProvider">
 			<var name="dataProvider" value="Liferay Countries" />
+			<var name="dataProviderOutput" value="Country Names" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />
@@ -588,7 +575,7 @@
 
 		<execute macro="FormsAdmin#viewFormTableEntry">
 			<var name="fieldLabel" value="Data Provider Select Field" />
-			<var name="fieldValue" value="united-states" />
+			<var name="fieldValue" value="United States" />
 		</execute>
 	</command>
 

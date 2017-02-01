@@ -25,38 +25,6 @@
 			<var name="fieldValue" value="${url}" />
 		</execute>
 
-		<var name="key_fieldName" value="$key" />
-
-		<while>
-			<condition function="IsTextNotEqual" locator1="FormFields#TEXT_FIELD" value1="${displayedAttribute}" />
-			<then>
-				<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="" />
-
-				<execute function="Type#sendKeysAceEditorNoMouseOver" locator1="FormFields#TEXT_FIELD" value1="${displayedAttribute}" />
-			</then>
-		</while>
-
-		<execute macro="FormFields#viewTextValue">
-			<var name="fieldName" value="$key" />
-			<var name="fieldValue" value="${displayedAttribute}" />
-		</execute>
-
-		<var name="key_fieldName" value="$value" />
-
-		<while>
-			<condition function="IsTextNotEqual" locator1="FormFields#TEXT_FIELD" value1="${storedAttribute}" />
-			<then>
-				<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="" />
-
-				<execute function="Type#sendKeysAceEditorNoMouseOver" locator1="FormFields#TEXT_FIELD" value1="${storedAttribute}" />
-			</then>
-		</while>
-
-		<execute macro="FormFields#viewTextValue">
-			<var name="fieldName" value="$value" />
-			<var name="fieldValue" value="${storedAttribute}" />
-		</execute>
-
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="$username" />
 			<var name="fieldValue" value="${username}" />
@@ -66,6 +34,40 @@
 			<var name="fieldName" value="$password" />
 			<var name="fieldValue" value="${password}" />
 		</execute>
+
+		<execute macro="FormsAdmin#editDataProviderOutputParameter">
+			<var name="outputParameterName" value="${outputParameterName}" />
+			<var name="outputParameterName2" value="${outputParameterName2}" />
+			<var name="outputParameterPath" value="${outputParameterPath}" />
+			<var name="outputParameterPath2" value="${outputParameterPath2}" />
+			<var name="outputParameterType" value="${outputParameterType}" />
+			<var name="outputParameterType2" value="${outputParameterType2}" />
+		</execute>
+	</command>
+
+	<command name="editDataProviderOutputParameter">
+		<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD" value1="${outputParameterPath}" />
+		<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_NAME_FIELD" value1="${outputParameterName}" />
+
+		<execute macro="FormFields#selectDataProviderOutputType">
+			<var name="outputParameterType" value="${outputParameterType}" />
+		</execute>
+
+		<if>
+			<isset var="outputParameterPath2" />
+			<then>
+				<execute function="Click" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_REPEAT_ICON" />
+
+				<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD_2" value1="${outputParameterPath2}" />
+				<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_NAME_FIELD_2" value1="${outputParameterName2}" />
+
+				<execute function="Click" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_2" />
+
+				<var name="key_outputParameterType" value="${outputParameterType2}" />
+
+				<execute function="AssertClick" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST_2" value1="${outputParameterType2}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="saveDataProvider">

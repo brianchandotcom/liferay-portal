@@ -141,6 +141,16 @@
 		<execute function="Click" locator1="FormFields#CHECKBOX_OPTION" />
 	</command>
 
+	<command name="selectDataProviderOutputType">
+		<execute function="ScrollWebElementIntoView" locator1="Button#SAVE" />
+
+		<execute function="Click" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD" />
+
+		<var name="key_outputParameterType" value="${outputParameterType}" />
+
+		<execute function="AssertClick" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST" value1="${outputParameterType}" />
+	</command>
+
 	<command name="selectRadioOption">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_radioOption" value="${radioOption}" />
@@ -156,7 +166,10 @@
 		<var name="key_selectOption" value="${selectOption}" />
 
 		<if>
-			<equals arg1="${fieldName}" arg2="ddmDataProviderInstanceId" />
+			<or>
+				<equals arg1="${fieldName}" arg2="ddmDataProviderInstanceId" />
+				<equals arg1="${fieldName}" arg2="ddmDataProviderInstanceOutput" />
+			</or>
 			<then>
 				<execute function="AssertClick" locator1="FormFields#SELECT_FIELD_DATA_PROVIDER_LIST" value1="${selectOption}" />
 			</then>

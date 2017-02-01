@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.lists.form.web.internal.converter.model.action.A
 import com.liferay.dynamic.data.mapping.expression.model.Expression;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,22 +50,21 @@ public class AutoFillDDLFormRuleActionFactory {
 
 		Map<String, String> map = new LinkedHashMap<>();
 
+		if (Validator.isNull(paramsExpression)) {
+			return map;
+		}
+
 		String[] innerExpressions = StringUtil.split(
 			paramsExpression, CharPool.SEMICOLON);
 
-		if (innerExpressions.length == 0) {
-			String[] tokens = StringUtil.split(
-				paramsExpression, CharPool.EQUAL);
+		for (String innerExpression : innerExpressions) {
+			String[] tokens = StringUtil.split(innerExpression, CharPool.EQUAL);
+
+			if (!isValidExpression(tokens)) {
+				continue;
+			}
 
 			map.put(tokens[0], tokens[1]);
-		}
-		else {
-			for (String innerExpression : innerExpressions) {
-				String[] tokens = StringUtil.split(
-					innerExpression, CharPool.EQUAL);
-
-				map.put(tokens[0], tokens[1]);
-			}
 		}
 
 		return map;
@@ -75,25 +75,36 @@ public class AutoFillDDLFormRuleActionFactory {
 
 		Map<String, String> map = new LinkedHashMap<>();
 
+		if (Validator.isNull(resultMapExpression)) {
+			return map;
+		}
+
 		String[] innerExpressions = StringUtil.split(
 			resultMapExpression, CharPool.SEMICOLON);
 
-		if (innerExpressions.length == 0) {
-			String[] tokens = StringUtil.split(
-				resultMapExpression, CharPool.EQUAL);
+		for (String innerExpression : innerExpressions) {
+			String[] tokens = StringUtil.split(innerExpression, CharPool.EQUAL);
+
+			if (!isValidExpression(tokens)) {
+				continue;
+			}
 
 			map.put(tokens[1], tokens[0]);
 		}
-		else {
-			for (String innerExpression : innerExpressions) {
-				String[] tokens = StringUtil.split(
-					innerExpression, CharPool.EQUAL);
-
-				map.put(tokens[1], tokens[0]);
-			}
-		}
 
 		return map;
+	}
+
+	protected static boolean isValidExpression(String[] tokens) {
+		if (tokens.length < 2) {
+			return false;
+		}
+
+		if (Validator.isNull(tokens[0]) || Validator.isNull(tokens[1])) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

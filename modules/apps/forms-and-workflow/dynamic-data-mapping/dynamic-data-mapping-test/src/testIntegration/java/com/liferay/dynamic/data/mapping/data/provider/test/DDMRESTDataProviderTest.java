@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
@@ -82,9 +83,6 @@ public class DDMRESTDataProviderTest {
 				"filterParameterName", StringPool.BLANK));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"key", "countryId"));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"password", "test"));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
@@ -93,9 +91,24 @@ public class DDMRESTDataProviderTest {
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"username", "test@liferay.com"));
-		ddmFormValues.addDDMFormFieldValue(
+
+		DDMFormFieldValue outputParameters =
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"value", "nameCurrentValue"));
+				"outputParameters", StringPool.BLANK);
+
+		ddmFormValues.addDDMFormFieldValue(outputParameters);
+
+		outputParameters.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"outputParameterName", "output"));
+
+		outputParameters.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"outputParameterPath", "nameCurrentValue;countryId"));
+
+		outputParameters.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"outputParameterType", "[\"list\"]"));
 
 		DDMDataProviderContext ddmDataProviderContext =
 			new DDMDataProviderContext(ddmFormValues);
@@ -139,9 +152,6 @@ public class DDMRESTDataProviderTest {
 				"filterParameterName", "name"));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"key", "countryId"));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"password", "test"));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
@@ -149,9 +159,24 @@ public class DDMRESTDataProviderTest {
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"username", "test@liferay.com"));
-		ddmFormValues.addDDMFormFieldValue(
+
+		DDMFormFieldValue outputParameters =
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"value", "nameCurrentValue"));
+				"outputParameters", StringPool.BLANK);
+
+		ddmFormValues.addDDMFormFieldValue(outputParameters);
+
+		outputParameters.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"outputParameterName", "output"));
+
+		outputParameters.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"outputParameterPath", "nameCurrentValue;countryId"));
+
+		outputParameters.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"outputParameterType", "[\"list\"]"));
 
 		DDMDataProviderContext ddmDataProviderContext =
 			new DDMDataProviderContext(ddmFormValues);
@@ -172,7 +197,8 @@ public class DDMRESTDataProviderTest {
 
 		Map<Object, Object> map = new HashMap<>();
 
-		map.put("48", "Brazil");
+		map.put("countryId", "48");
+		map.put("nameCurrentValue", "Brazil");
 
 		Assert.assertTrue(data.contains(map));
 	}
@@ -182,25 +208,29 @@ public class DDMRESTDataProviderTest {
 
 		Map<Object, Object> map = new HashMap<>();
 
-		map.put("3", "France");
+		map.put("countryId", "3");
+		map.put("nameCurrentValue", "France");
 
 		expectedData.add(map);
 
 		map = new HashMap<>();
 
-		map.put("15", "Spain");
+		map.put("countryId", "15");
+		map.put("nameCurrentValue", "Spain");
 
 		expectedData.add(map);
 
 		map = new HashMap<>();
 
-		map.put("19", "United States");
+		map.put("countryId", "19");
+		map.put("nameCurrentValue", "United States");
 
 		expectedData.add(map);
 
 		map = new HashMap<>();
 
-		map.put("48", "Brazil");
+		map.put("countryId", "48");
+		map.put("nameCurrentValue", "Brazil");
 
 		expectedData.add(map);
 

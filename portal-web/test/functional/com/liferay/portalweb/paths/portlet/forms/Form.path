@@ -205,6 +205,52 @@
 	<td>//div[contains(@class,'sidebar-header')]//a[contains(@class,'close')]</td>
 	<td></td>
 </tr>
+<!--DATA_PROVIDER_OUTPUT_PARAMETER-->
+<tr>
+	<td>DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'path')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD_2</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div/div//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'path')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_PROVIDER_OUTPUT_PARAMETER_NAME_FIELD</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_PROVIDER_OUTPUT_PARAMETER_NAME_FIELD_2</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div/div//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]//div[contains(@class,'select-field')]//a[contains(@id,'outputParameterType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_2</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div//div[contains(@class,'select-field')]//a[contains(@id,'outputParameterType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]//div[contains(@class,'select-field')]//ul[@class='results-chosen']//li[contains(.,'${key_outputParameterType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST_2</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div//div[contains(@class,'select-field')]//ul[@class='results-chosen']//li[contains(.,'${key_outputParameterType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_PROVIDER_OUTPUT_PARAMETER_REPEAT_ICON</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]/following-sibling::div[contains(@class,'field-repeatable')]//a[contains(@class,'add-button')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

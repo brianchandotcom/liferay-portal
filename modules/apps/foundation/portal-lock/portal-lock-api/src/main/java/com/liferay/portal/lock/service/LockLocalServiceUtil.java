@@ -185,17 +185,31 @@ public class LockLocalServiceUtil {
 		return getService().getLockByUuidAndCompanyId(uuid, companyId);
 	}
 
+	/**
+	* @deprecated As of 2.0.0, see {@link #tryLock(
+	String, String, String, String)}
+	*/
+	@Deprecated
 	public static com.liferay.portal.lock.model.Lock lock(
 		java.lang.String className, java.lang.String key,
 		java.lang.String expectedOwner, java.lang.String updatedOwner) {
 		return getService().lock(className, key, expectedOwner, updatedOwner);
 	}
 
+	/**
+	* @deprecated As of 2.0.0, see {@link #tryLock(String, String, String)}
+	*/
+	@Deprecated
 	public static com.liferay.portal.lock.model.Lock lock(
 		java.lang.String className, java.lang.String key, java.lang.String owner) {
 		return getService().lock(className, key, owner);
 	}
 
+	/**
+	* @deprecated As of 2.0.0, see {@link #tryLock(
+	long, String, String, String, boolean, long)}
+	*/
+	@Deprecated
 	public static com.liferay.portal.lock.model.Lock lock(long userId,
 		java.lang.String className, java.lang.String key,
 		java.lang.String owner, boolean inheritable, long expirationTime)
@@ -205,6 +219,11 @@ public class LockLocalServiceUtil {
 			expirationTime);
 	}
 
+	/**
+	* @deprecated As of 2.0.0, see {@link #tryLock(
+	long, String, String, String, boolean, long)}
+	*/
+	@Deprecated
 	public static com.liferay.portal.lock.model.Lock lock(long userId,
 		java.lang.String className, long key, java.lang.String owner,
 		boolean inheritable, long expirationTime)

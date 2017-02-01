@@ -193,6 +193,11 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		return _lockLocalService.getLockByUuidAndCompanyId(uuid, companyId);
 	}
 
+	/**
+	* @deprecated As of 2.0.0, see {@link #tryLock(
+	String, String, String, String)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.lock.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String expectedOwner,
@@ -201,12 +206,21 @@ public class LockLocalServiceWrapper implements LockLocalService,
 			updatedOwner);
 	}
 
+	/**
+	* @deprecated As of 2.0.0, see {@link #tryLock(String, String, String)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.lock.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String owner) {
 		return _lockLocalService.lock(className, key, owner);
 	}
 
+	/**
+	* @deprecated As of 2.0.0, see {@link #tryLock(
+	long, String, String, String, boolean, long)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.lock.model.Lock lock(long userId,
 		java.lang.String className, java.lang.String key,
@@ -216,6 +230,11 @@ public class LockLocalServiceWrapper implements LockLocalService,
 			inheritable, expirationTime);
 	}
 
+	/**
+	* @deprecated As of 2.0.0, see {@link #tryLock(
+	long, String, String, String, boolean, long)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.lock.model.Lock lock(long userId,
 		java.lang.String className, long key, java.lang.String owner,

@@ -139,7 +139,7 @@ AUI.add(
 
 						for (var i = 0; i < pagesQuantity; i++) {
 							pages[i] = {
-								label: pagesTitles[i] ? pagesTitles[i] : (i + 1).toString(),
+								label: pagesTitles[i] ? (i + 1).toString() + ' ' + pagesTitles[i] : (i + 1).toString(),
 								value: i.toString()
 							};
 						}

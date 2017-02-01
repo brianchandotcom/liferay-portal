@@ -141,7 +141,20 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		}
 
 		@Test
-		public void testReturnsTheKeysInThatLine() {
+		public void testReturnsTheKeysInThatLineWhenAskedForAVariant() {
+			List<String> formNavigatorEntryKeys =
+				_formNavigatorEntryConfigurationHelper.
+					getFormNavigatorEntryKeys("form1", "general", "add").get();
+
+			Assert.assertEquals(2, formNavigatorEntryKeys.size());
+			Assert.assertEquals(
+				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
+			Assert.assertEquals(
+				"formNavigatorEntryKey2", formNavigatorEntryKeys.get(1));
+		}
+
+		@Test
+		public void testReturnsTheKeysInThatLineWhenAskedForNoVariant() {
 			List<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationHelper.
 					getFormNavigatorEntryKeys("form1", "general", null).get();

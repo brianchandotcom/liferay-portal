@@ -52,6 +52,10 @@ public class FormNavigatorEntryConfigurationRetriever {
 
 			String entryKeys = properties.getProperty(expectedKey);
 
+			if (entryKeys == null) {
+				entryKeys = properties.getProperty(categoryKey);
+			}
+
 			if (entryKeys != null) {
 				return Optional.of(_splitKeys(entryKeys));
 			}

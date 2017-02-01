@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -122,7 +123,19 @@ public abstract class BaseModelUserNotificationHandler
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		return jsonObject.getString("entryURL");
+		String entryURL = jsonObject.getString("entryURL");
+
+		String portalURL = serviceContext.getPortalURL();
+
+		String entryURLDomain = HttpUtil.getDomain(entryURL);
+		String portalURLDomain = HttpUtil.getDomain(portalURL);
+
+		if (!entryURLDomain.equals(portalURLDomain)) {
+			entryURL = StringUtil.replaceFirst(
+				entryURL, entryURLDomain, portalURLDomain);
+		}
+
+		return entryURL;
 	}
 
 	protected String getTitle(

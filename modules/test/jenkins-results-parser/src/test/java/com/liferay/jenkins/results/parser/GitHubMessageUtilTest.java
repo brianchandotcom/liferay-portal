@@ -17,11 +17,11 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.StringReader;
-
 import java.net.URL;
-
+import java.util.Hashtable;
 import java.util.Properties;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,9 +32,35 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		JenkinsResultsParserUtil.setBuildProperties(
+			JenkinsResultsParserUtil.getBuildProperties());
+
 		downloadSample(
-			"test-portal-acceptance-pullrequest(master)-generic_failure",
+			"test-jenkins-acceptance-pullrequest_generic-failure", "42",
+			"test-jenkins-acceptance-pullrequest", "test-1-13");
+		downloadSample(
+			"test-jenkins-acceptance-pullrequest_passed", "84",
+			"test-jenkins-acceptance-pullrequest", "test-1-4");
+		downloadSample(
+			"test-plugins-acceptance-pullrequest(ee-6.2.x)_passed", "66",
+			"test-plugins-acceptance-pullrequest(ee-6.2.x)", "test-1-8");
+		downloadSample(
+			"test-portal-acceptance-pullrequest(ee-6.2.x)_passed", "337",
+			"test-portal-acceptance-pullrequest(ee-6.2.x)", "test-1-17");
+		downloadSample(
+			"test-portal-acceptance-pullrequest(ee-7.0.x)_sf-failure", "191",
+			"test-portal-acceptance-pullrequest(ee-7.0.x)", "test-1-6");
+		downloadSample(
+			"test-portal-acceptance-pullrequest(master)_generic-failure",
 			"1375", "test-portal-acceptance-pullrequest(master)", "test-1-1");
+		downloadSample(
+			"test-portal-acceptance-pullrequest(master)_passed", "446",
+			"test-portal-acceptance-pullrequest(master)", "test-1-8");
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		JenkinsResultsParserUtil.setBuildProperties((Hashtable<?, ?>) null);
 	}
 
 	@Test

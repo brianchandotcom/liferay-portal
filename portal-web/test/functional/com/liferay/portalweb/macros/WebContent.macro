@@ -2020,6 +2020,10 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="WCEditWebContent#VERSION" value1="1.1" />
 	</command>
 
+	<command name="viewVideoViaWCD">
+		<execute function="AssertElementPresent" locator1="WCD#WEB_CONTENT_VIDEO" />
+	</command>
+
 	<command name="viewWCViewableByPermissions">
 		<execute function="Type" locator1="TextInput#TITLE" value1="Web Content Title" />
 

@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WEB_CONTENT_VIDEO</td>
+	<td>//div[contains(@class,'video-content')]/video[@class='video-node']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

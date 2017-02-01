@@ -2861,7 +2861,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  rsion="1.0.0";uses:="com.liferay.portal.kernel.service.configuration,
  javax.servlet",com.liferay.portal.kernel.service.http;version="1.0.0"
  ;uses:="com.liferay.portal.kernel.security.auth,com.liferay.portal.ke
- rnel.util",com.liferay.portal.kernel.service.permission;version="1.0.
+ rnel.util",com.liferay.portal.kernel.service.permission;version="1.1.
  0";uses:="com.liferay.portal.kernel.exception,com.liferay.portal.kern
  el.model,com.liferay.portal.kernel.security.auth,com.liferay.portal.k
  ernel.security.permission,javax.portlet,javax.servlet.http",com.lifer
@@ -3253,7 +3253,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  tal.kernel.util,com.liferay.portal.kernel.xml,com.liferay.portal.serv
  ice.base,javax.portlet,javax.servlet,org.aopalliance.intercept,org.ap
  ache.commons.lang.time,org.springframework.core.annotation";version="
- 1.0.0",com.liferay.portal.service.permission;version="1.0.2";uses:="c
+ 1.0.0",com.liferay.portal.service.permission;version="1.1.0";uses:="c
  om.liferay.portal.kernel.exception,com.liferay.portal.kernel.model,co
  m.liferay.portal.kernel.security.auth,com.liferay.portal.kernel.secur
  ity.permission,com.liferay.portal.kernel.service.permission,com.lifer

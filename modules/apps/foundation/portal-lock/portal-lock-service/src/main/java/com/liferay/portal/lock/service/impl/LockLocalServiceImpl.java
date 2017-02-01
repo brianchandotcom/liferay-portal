@@ -126,6 +126,11 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, see {@link #tryLock(
+	 * 				long, String, String, String, boolean, long)}
+	 */
+	@Deprecated
 	@Override
 	public Lock lock(
 			long userId, String className, long key, String owner,
@@ -137,6 +142,11 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			expirationTime);
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, see {@link #tryLock(
+	 * 				long, String, String, String, boolean, long)}
+	 */
+	@Deprecated
 	@Override
 	public Lock lock(
 			long userId, String className, String key, String owner,
@@ -188,77 +198,28 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		return lock;
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, see {@link #tryLock(String, String, String)}
+	 */
+	@Deprecated
 	@MasterDataSource
 	@Override
 	public Lock lock(String className, String key, String owner) {
-		return lock(className, key, null, owner);
+		return _lock(className, key, null, owner);
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, see {@link #tryLock(
+	 * 				String, String, String, String)}
+	 */
+	@Deprecated
 	@MasterDataSource
 	@Override
 	public Lock lock(
 		final String className, final String key, final String expectedOwner,
 		final String updatedOwner) {
 
-		while (true) {
-			try {
-				return TransactionInvokerUtil.invoke(
-					_transactionConfig,
-					new Callable<Lock>() {
-
-						@Override
-						public Lock call() {
-							Lock lock = lockPersistence.fetchByC_K(
-								className, key, false);
-
-							if (lock == null) {
-								long lockId = counterLocalService.increment();
-
-								lock = lockPersistence.create(lockId);
-
-								lock.setCreateDate(new Date());
-								lock.setClassName(className);
-								lock.setKey(key);
-								lock.setOwner(updatedOwner);
-
-								lockPersistence.update(lock);
-
-								lock.setNew(true);
-							}
-							else if (Objects.equals(
-										lock.getOwner(), expectedOwner)) {
-
-								lock.setCreateDate(new Date());
-								lock.setClassName(className);
-								lock.setKey(key);
-								lock.setOwner(updatedOwner);
-
-								lockPersistence.update(lock);
-
-								lock.setNew(true);
-							}
-
-							return lock;
-						}
-
-					});
-			}
-			catch (Throwable t) {
-				Throwable cause = t;
-
-				if (t instanceof ORMException) {
-					cause = t.getCause();
-				}
-
-				if (cause instanceof ConstraintViolationException ||
-					cause instanceof LockAcquisitionException) {
-
-					continue;
-				}
-
-				ReflectionUtil.throwException(t);
-			}
-		}
+		return _lock(className, key, expectedOwner, updatedOwner);
 	}
 
 	@Override
@@ -475,6 +436,71 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		}
 
 		return lock;
+	}
+
+	private Lock _lock(
+		final String className, final String key, final String expectedOwner,
+		final String updatedOwner) {
+
+		while (true) {
+			try {
+				return TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					new Callable<Lock>() {
+
+						@Override
+						public Lock call() {
+							Lock lock = lockPersistence.fetchByC_K(
+								className, key, false);
+
+							if (lock == null) {
+								long lockId = counterLocalService.increment();
+
+								lock = lockPersistence.create(lockId);
+
+								lock.setCreateDate(new Date());
+								lock.setClassName(className);
+								lock.setKey(key);
+								lock.setOwner(updatedOwner);
+
+								lockPersistence.update(lock);
+
+								lock.setNew(true);
+							}
+							else if (Objects.equals(
+										lock.getOwner(), expectedOwner)) {
+
+								lock.setCreateDate(new Date());
+								lock.setClassName(className);
+								lock.setKey(key);
+								lock.setOwner(updatedOwner);
+
+								lockPersistence.update(lock);
+
+								lock.setNew(true);
+							}
+
+							return lock;
+						}
+
+					});
+			}
+			catch (Throwable t) {
+				Throwable cause = t;
+
+				if (t instanceof ORMException) {
+					cause = t.getCause();
+				}
+
+				if (cause instanceof ConstraintViolationException ||
+					cause instanceof LockAcquisitionException) {
+
+					continue;
+				}
+
+				ReflectionUtil.throwException(t);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

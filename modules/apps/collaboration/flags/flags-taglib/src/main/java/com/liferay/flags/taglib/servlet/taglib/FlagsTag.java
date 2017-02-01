@@ -43,6 +43,7 @@ import javax.portlet.WindowStateException;
 
 /**
  * @author Julio Camarero
+ * @author Ambrin Chaudhary
  */
 public class FlagsTag extends TemplateRendererTag {
 
@@ -70,21 +71,20 @@ public class FlagsTag extends TemplateRendererTag {
 
 			putValue("cssClass", cssClass);
 
-			String flagsPortletNamespace = PortalUtil.getPortletNamespace(
+			String namespace = PortalUtil.getPortletNamespace(
 				PortletKeys.FLAGS);
+
 			JSONObject dataJSON = JSONFactoryUtil.createJSONObject();
 
-			dataJSON.put(flagsPortletNamespace + "className", className);
-			dataJSON.put(flagsPortletNamespace + "classPK", classPK);
+			dataJSON.put(namespace + "className", className);
+			dataJSON.put(namespace + "classPK", classPK);
 			dataJSON.put(
-				flagsPortletNamespace + "contentTitle",
-				context.get("contentTitle"));
+				namespace + "contentTitle", context.get("contentTitle"));
 			dataJSON.put(
-				flagsPortletNamespace + "contentURL",
+				namespace + "contentURL",
 				PortalUtil.getPortalURL(request) + _getCurrentURL());
 			dataJSON.put(
-				flagsPortletNamespace + "reportedUserId",
-				context.get("reportedUserId"));
+				namespace + "reportedUserId", context.get("reportedUserId"));
 
 			putValue("data", dataJSON);
 
@@ -101,18 +101,24 @@ public class FlagsTag extends TemplateRendererTag {
 					FlagsGroupServiceConfiguration.class,
 					themeDisplay.getCompanyId());
 
-			putValue(
-				"signedUser",
-				flagsGroupServiceConfiguration.guestUsersEnabled() ||
-				 themeDisplay.isSignedIn());
+			boolean flagsEnabled = false;
 
-			PortletURL renderURL = PortletURLFactoryUtil.create(
+			if (flagsGroupServiceConfiguration.guestUsersEnabled() ||
+				themeDisplay.isSignedIn()) {
+
+				flagsEnabled = true;
+			}
+
+			putValue("flagsEnabled", flagsEnabled);
+
+			PortletURL portletURL = PortletURLFactoryUtil.create(
 				request, PortletKeys.FLAGS, PortletRequest.RENDER_PHASE);
 
-			renderURL.setParameter("mvcRenderCommandName", "/flags/edit_entry");
-			renderURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/flags/edit_entry");
+			portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
-			putValue("uri", renderURL.toString());
+			putValue("uri", portletURL.toString());
 		}
 		catch (PortalException pe) {
 			pe.printStackTrace();

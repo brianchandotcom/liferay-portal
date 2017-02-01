@@ -1,6 +1,6 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.portal.kernel.test,\
 	com.liferay.portal.kernel.test.context,\
@@ -33,3 +33,4 @@ Include-Resource:\
 	@${project.dir}/../lib/development/junit.jar,\
 	@${project.dir}/../lib/development/spring-test.jar,\
 	@${project.dir}/../lib/portal/aspectj-rt.jar
+-baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.portal.test-1.0.0.jar

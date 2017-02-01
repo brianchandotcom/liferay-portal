@@ -2605,6 +2605,11 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			<replacevalue><![CDATA[disableJIT="false" maximumHeapSize="1024">]]></replacevalue>
 		</replace>
 
+		<replace file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/nodes/liferay-node/servers/server1/server.xml">
+			<replacetoken><![CDATA[genericJvmArguments="-Xquickstart"]]></replacetoken>
+			<replacevalue><![CDATA[genericJvmArguments="-Xquickstart -Dfile.encoding=UTF-8"]]></replacevalue>
+		</replace>
+
 		<echo>Installing fix pack. This may take a few minutes</echo>
 
 		<tstamp>

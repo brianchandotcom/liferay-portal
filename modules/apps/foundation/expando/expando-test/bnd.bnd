@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Expando Test
+Bundle-SymbolicName: com.liferay.expando.test
+Bundle-Version: 1.0.0
+
+-includeresource: test-classes/integration

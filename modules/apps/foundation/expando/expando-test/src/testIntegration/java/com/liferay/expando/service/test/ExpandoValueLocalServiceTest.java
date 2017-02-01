@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.expando.service;
+package com.liferay.expando.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.expando.kernel.exception.ValueDataException;
@@ -22,6 +23,7 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoRowLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -43,10 +45,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Marcellus Tavares
  */
+@RunWith(Arquillian.class)
 public class ExpandoValueLocalServiceTest {
 
 	@ClassRule
@@ -155,6 +159,43 @@ public class ExpandoValueLocalServiceTest {
 		}
 		catch (ValueDataException vde) {
 		}
+	}
+
+	@Test
+	public void testDeleteAllColumns() throws Exception {
+		ExpandoColumn column = ExpandoTestUtil.addColumn(
+			_expandoTable, "Test Column", ExpandoColumnConstants.STRING);
+
+		long classPK = CounterLocalServiceUtil.increment();
+
+		ExpandoValue value = ExpandoTestUtil.addValue(
+			_expandoTable, column, classPK, "value");
+
+		ExpandoValueLocalServiceUtil.deleteColumnValues(column.getColumnId());
+
+		Assert.assertNull(
+			ExpandoRowLocalServiceUtil.fetchExpandoRow(value.getRowId()));
+	}
+
+	@Test
+	public void testDeleteOnlyOneColumn() throws Exception {
+		ExpandoColumn column1 = ExpandoTestUtil.addColumn(
+			_expandoTable, "Test Column 1", ExpandoColumnConstants.STRING);
+
+		ExpandoColumn column2 = ExpandoTestUtil.addColumn(
+			_expandoTable, "Test Column 2", ExpandoColumnConstants.STRING);
+
+		long classPK = CounterLocalServiceUtil.increment();
+
+		ExpandoValue value = ExpandoTestUtil.addValue(
+			_expandoTable, column1, classPK, "value");
+
+		ExpandoTestUtil.addValue(_expandoTable, column2, classPK, "value");
+
+		ExpandoValueLocalServiceUtil.deleteColumnValues(column1.getColumnId());
+
+		Assert.assertNotNull(
+			ExpandoRowLocalServiceUtil.getRow(value.getRowId()));
 	}
 
 	@Test

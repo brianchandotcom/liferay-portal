@@ -47,12 +47,17 @@ User selUser = (User)request.getAttribute("user.selUser");
 		<c:if test="<%= selUser != null %>">
 			<c:choose>
 				<c:when test='<%= UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "portrait") %>'>
+
+					<%
+					UserFileUploadsConfiguration userFileUploadsConfiguration = (UserFileUploadsConfiguration)request.getAttribute(UserFileUploadsConfiguration.class.getName());
+					%>
+
 					<liferay-ui:logo-selector
 						currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
 						defaultLogo="<%= selUser.getPortraitId() == 0 %>"
 						defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
 						logoDisplaySelector=".user-logo"
-						maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>"
+						maxFileSize="<%= userFileUploadsConfiguration.imageMaxSize() / 1024 %>"
 						showBackground="<%= false %>"
 						tempImageFileName="<%= String.valueOf(selUser.getUserId()) %>"
 					/>

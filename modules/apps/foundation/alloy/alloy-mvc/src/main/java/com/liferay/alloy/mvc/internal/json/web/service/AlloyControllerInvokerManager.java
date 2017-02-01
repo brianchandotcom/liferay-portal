@@ -354,11 +354,14 @@ public class AlloyControllerInvokerManager {
 	protected String getAlloyControllerInvokerClassName(
 		Class<? extends AlloyController> controllerClass) {
 
+		String prefix = StringPool.BLANK;
 		String simpleName = StringPool.BLANK;
 
 		Class<?> enclosingClass = controllerClass.getEnclosingClass();
 
 		if (enclosingClass != null) {
+			prefix = enclosingClass.getName();
+
 			String name = StringUtil.replace(
 				enclosingClass.getSimpleName(), "005f", StringPool.BLANK);
 
@@ -375,10 +378,12 @@ public class AlloyControllerInvokerManager {
 			simpleName = simpleName.concat(_BASE_CLASS_NAME);
 		}
 		else {
+			prefix = controllerClass.getName();
+
 			simpleName = _BASE_CLASS_NAME + _counter.getAndIncrement();
 		}
 
-		return controllerClass.getCanonicalName() + StringPool.PERIOD + simpleName;
+		return prefix + StringPool.PERIOD + simpleName;
 	}
 
 	protected String getAPIPath(String controller, Method method) {

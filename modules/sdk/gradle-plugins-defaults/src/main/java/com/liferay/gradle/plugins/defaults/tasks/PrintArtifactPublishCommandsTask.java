@@ -19,7 +19,6 @@ import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -345,24 +344,6 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 					"artifact properties", false, true, false));
 		}
 
-		// WSDD
-
-		Task buildWSDDTask = _getTask(WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME);
-
-		if ((buildWSDDTask != null) && buildWSDDTask.getEnabled()) {
-			Project project = getProject();
-
-			String command =
-				"git add --all " + _getRelativePath(project.getProjectDir()) +
-					File.separator;
-
-			commands.add(command + "*.wsdd");
-			commands.add(
-				_getQuietCommand(command + "**" + File.separator + "*.wsdd"));
-
-			commands.add(_getGitCommitCommand("wsdd", false, false, true));
-		}
-
 		// Commit other changed files
 
 		commands.add(_getGitCommitCommand("apply", true, false, true));
@@ -447,10 +428,6 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 
 	private String _getGradleRelativePath() {
 		return _getRelativePath(_getGradleFile());
-	}
-
-	private String _getQuietCommand(String command) {
-		return "(" + command + " || true)";
 	}
 
 	private String _getRelativePath(Object object) {

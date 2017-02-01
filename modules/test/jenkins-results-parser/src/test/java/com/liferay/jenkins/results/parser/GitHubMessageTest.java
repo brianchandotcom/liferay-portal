@@ -28,7 +28,7 @@ import org.junit.Test;
 /**
  * @author Peter Yoo
  */
-public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
+public class GitHubMessageTest extends BaseJenkinsResultsParserTestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -96,7 +96,7 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	@Override
 	protected String getMessage(File sampleDir) throws Exception {
 		Build build = BuildFactory.newBuildFromArchive(
-			"GitHubMessageUtilTest/" + sampleDir.getName());
+			"GitHubMessageTest/" + sampleDir.getName());
 
 		return Dom4JUtil.format(build.getGitHubMessageElement(), true);
 	}
@@ -130,7 +130,7 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		File expectedMessageFile = new File(sampleDir, "expected_message.html");
 
 		Build build = BuildFactory.newBuildFromArchive(
-			"GitHubMessageUtilTest/" + sampleDir.getName());
+			"GitHubMessageTest/" + sampleDir.getName());
 
 		String expectedMessage = fixMessage(
 			Dom4JUtil.format(build.getGitHubMessageElement()));

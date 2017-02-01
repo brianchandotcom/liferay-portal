@@ -818,7 +818,8 @@ public class AssetPublisherUtil {
 				"queryName" + i, StringPool.BLANK);
 
 			if (!Objects.equals(queryName, "assetCategories") &&
-				queryContains && queryAndOperator) {
+				queryContains &&
+				(queryAndOperator || (queryValues.length == 1))) {
 
 				allAssetTagNames = queryValues;
 			}

@@ -38,28 +38,12 @@ public interface LockManager {
 	public Lock getLockByUuidAndCompanyId(String uuid, long companyId)
 		throws PortalException;
 
-	@Deprecated
-	/**
-	 * @deprecated As of 7.0.0, see #tryLock
-	 */
 	public boolean hasLock(long userId, String className, long key);
 
-	@Deprecated
-	/**
-	 * @deprecated As of 7.0.0, see #tryLock
-	 */
 	public boolean hasLock(long userId, String className, String key);
 
-	@Deprecated
-	/**
-	 * @deprecated As of 7.0.0, see #tryLock
-	 */
 	public boolean isLocked(String className, long key);
 
-	@Deprecated
-	/**
-	 * @deprecated As of 7.0.0, see #tryLock
-	 */
 	public boolean isLocked(String className, String key);
 
 	@Deprecated

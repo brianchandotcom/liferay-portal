@@ -276,7 +276,7 @@
 		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
 
 		<execute macro="FormsAdmin#editDataProvider">
-			<var name="name" value="Countries Full Name" />
+			<var name="name" value="Country Names" />
 			<var name="outputParameterName" value="Countries Full Name" />
 			<var name="outputParameterName2" value="Countries A2" />
 			<var name="outputParameterPath" value="nameCurrentValue" />
@@ -315,7 +315,7 @@
 		<execute macro="Form#gotoAutocompleteConfiguration" />
 
 		<execute macro="Form#editFieldDataProvider">
-			<var name="dataProvider" value="Countries A2" />
+			<var name="dataProvider" value="Country Names" />
 			<var name="dataProviderOutput" value="Countries A2" />
 		</execute>
 
@@ -342,7 +342,7 @@
 		<execute macro="Form#gotoAutocompleteConfiguration" />
 
 		<execute macro="Form#editFieldDataProvider">
-			<var name="dataProvider" value="Countries Full Name" />
+			<var name="dataProvider" value="Country Names" />
 			<var name="dataProviderOutput" value="Countries Full Name" />
 		</execute>
 

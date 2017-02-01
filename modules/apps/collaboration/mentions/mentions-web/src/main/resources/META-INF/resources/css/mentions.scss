@@ -21,9 +21,8 @@
 			}
 		}
 	}
-}
 
-.nameplate-content h4 {
-	width: inherit;
-	word-break: break-word;
+	.nameplate-content h4 {
+		word-break: break-all;
+	}
 }

@@ -1689,6 +1689,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="jboss" database.type="mysql" />
 	</target>
 
+	<target name="functional-upgrade-tcserver26-mysql56-jdk8">
+		<run-functional-test app.server.type="tcserver" database.type="mysql" />
+	</target>
+
 	<target name="functional-upgrade-tomcat80-mariadb100-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
 	</target>

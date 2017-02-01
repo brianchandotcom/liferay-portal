@@ -59,6 +59,10 @@ public class KBArticlePortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (portletPreferences == null) {
+			return portletPreferences;
+		}
+
 		portletPreferences.setValue("resourcePrimKey", StringPool.BLANK);
 
 		return portletPreferences;

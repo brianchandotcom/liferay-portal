@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.kernel.util.TrashUtil;
 
@@ -76,9 +75,10 @@ public class FlagsTag extends TemplateRendererTag {
 
 			putValue("label", label);
 
-			if (Validator.isNull(context.get("message"))) {
-				putValue("message", LanguageUtil.get(request, "flag"));
-			}
+			String message = GetterUtil.getString(
+				context.get("message"), LanguageUtil.get(request, "flag"));
+
+			putValue("message", message);
 
 			putValue("pathThemeImages", themeDisplay.getPathThemeImages());
 

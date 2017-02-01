@@ -167,7 +167,7 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 
 		Role role = RoleLocalServiceUtil.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+			TestPropsValues.getCompanyId(), RoleConstants.USER);
 
 		roleIdsToActionIds.put(
 			role.getRoleId(), new String[] {ActionKeys.CONFIGURATION});

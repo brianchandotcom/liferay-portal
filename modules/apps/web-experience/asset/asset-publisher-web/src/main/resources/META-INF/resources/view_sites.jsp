@@ -28,4 +28,5 @@ GroupSearch groupSearch = itemSelectorViewDisplayContext.getGroupSearch();
 	groups="<%= groupSearch.getResults() %>"
 	groupsCount="<%= groupSearch.getTotal() %>"
 	portletURL="<%= itemSelectorViewDisplayContext.getPortletURL() %>"
+	selectedGroupIds="<%= itemSelectorViewDisplayContext.getSelectedGroupIds() %>"
 />

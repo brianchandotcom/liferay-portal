@@ -93,12 +93,14 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 						<h5>
 							<c:choose>
 								<c:when test="<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) %>">
+									<span class="text-muted">
+										<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+									</span>
+								</c:when>
+								<c:otherwise>
 									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
 										<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 									</aui:a>
-								</c:when>
-								<c:otherwise>
-									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 								</c:otherwise>
 							</c:choose>
 						</h5>
@@ -119,11 +121,11 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<div role="button">
+						<div <%= !ArrayUtil.contains(selectedGroupIds, group.getGroupId()) ? "role='button'" : StringPool.BLANK %>>
 							<c:choose>
 								<c:when test="<%= Validator.isNotNull(group.getLogoURL(themeDisplay, false)) %>">
 									<liferay-frontend:vertical-card
-										cssClass='<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) ? StringPool.BLANK : "selector-button" %>'
+										cssClass='<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) ? "text-muted" : "selector-button" %>'
 										data="<%= data %>"
 										imageUrl="<%= group.getLogoURL(themeDisplay, false) %>"
 										resultRow="<%= row %>"
@@ -134,7 +136,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 								</c:when>
 								<c:otherwise>
 									<liferay-frontend:icon-vertical-card
-										cssClass='<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) ? StringPool.BLANK : "selector-button" %>'
+										cssClass='<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) ? "text-muted" : "selector-button" %>'
 										data="<%= data %>"
 										icon="sites"
 										resultRow="<%= row %>"
@@ -154,12 +156,14 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 					>
 						<c:choose>
 							<c:when test="<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) %>">
+								<span class="text-muted">
+									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+								</span>
+							</c:when>
+							<c:otherwise>
 								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
 									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 								</aui:a>
-							</c:when>
-							<c:otherwise>
-								<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 							</c:otherwise>
 						</c:choose>
 					</liferay-ui:search-container-column-text>

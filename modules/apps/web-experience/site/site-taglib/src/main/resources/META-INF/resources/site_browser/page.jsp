@@ -93,12 +93,12 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 						<h5>
 							<c:choose>
 								<c:when test="<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) %>">
+									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+								</c:when>
+								<c:otherwise>
 									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
 										<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 									</aui:a>
-								</c:when>
-								<c:otherwise>
-									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 								</c:otherwise>
 							</c:choose>
 						</h5>
@@ -154,12 +154,12 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 					>
 						<c:choose>
 							<c:when test="<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) %>">
+								<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+							</c:when>
+							<c:otherwise>
 								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
 									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 								</aui:a>
-							</c:when>
-							<c:otherwise>
-								<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 							</c:otherwise>
 						</c:choose>
 					</liferay-ui:search-container-column-text>

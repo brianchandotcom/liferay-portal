@@ -15,10 +15,14 @@
 package com.liferay.asset.publisher.web.display.context;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
+import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,6 +30,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -103,6 +108,31 @@ public abstract class BaseItemSelectorViewDisplayContext
 	public PortletURL getPortletURL() throws PortletException {
 		return PortletURLUtil.clone(
 			portletURL, (LiferayPortletResponse)getPortletResponse());
+	}
+
+	@Override
+	public long[] getSelectedGroupIds() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String portletResource = ParamUtil.getString(
+			request, "portletResource");
+
+		long plid = ParamUtil.getLong(request, "plid");
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+
+		if (layout == null) {
+			return new long[0];
+		}
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+				layout, portletResource);
+
+		return AssetPublisherUtil.getGroupIds(
+			portletPreferences, themeDisplay.getScopeGroupId(),
+			themeDisplay.getLayout());
 	}
 
 	@Override

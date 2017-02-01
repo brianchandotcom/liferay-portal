@@ -20,12 +20,6 @@
 ItemSelectorViewDisplayContext itemSelectorViewDisplayContext = (ItemSelectorViewDisplayContext)request.getAttribute(AssetPublisherWebKeys.ITEM_SELECTOR_DISPLAY_CONTEXT);
 
 GroupSearch groupSearch = itemSelectorViewDisplayContext.getGroupSearch();
-
-long[] selectedGroupIds = new long[groupSearch.getTotal()];
-
-for (Group group : groupSearch.getResults()) {
-	selectedGroupIds = ArrayUtil.append(selectedGroupIds, group.getGroupId());
-}
 %>
 
 <liferay-site:site-browser
@@ -34,5 +28,5 @@ for (Group group : groupSearch.getResults()) {
 	groups="<%= groupSearch.getResults() %>"
 	groupsCount="<%= groupSearch.getTotal() %>"
 	portletURL="<%= itemSelectorViewDisplayContext.getPortletURL() %>"
-	selectedGroupIds="<%= selectedGroupIds %>"
+	selectedGroupIds="<%= itemSelectorViewDisplayContext.getSelectedGroupIds() %>"
 />

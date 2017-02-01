@@ -39,6 +39,8 @@ public interface ItemSelectorViewDisplayContext {
 
 	public PortletURL getPortletURL() throws PortletException;
 
+	public long[] getSelectedGroupIds();
+
 	public SiteItemSelectorCriterion getSiteItemSelectorCriterion();
 
 }

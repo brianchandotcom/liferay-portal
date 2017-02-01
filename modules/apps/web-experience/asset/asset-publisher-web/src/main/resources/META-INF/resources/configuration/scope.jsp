@@ -125,7 +125,9 @@ siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorR
 PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, siteItemSelectorCriterion);
 
 itemSelectorURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
+itemSelectorURL.setParameter("plid", String.valueOf(layout.getPlid()));
 itemSelectorURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
+itemSelectorURL.setParameter("portletResource", assetPublisherDisplayContext.getPortletResource());
 %>
 
 <aui:script sandbox="<%= true %>">

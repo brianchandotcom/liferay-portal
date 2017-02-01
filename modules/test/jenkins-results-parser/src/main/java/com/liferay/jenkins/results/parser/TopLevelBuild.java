@@ -290,11 +290,7 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	protected FailureMessageGenerator[] getFailureMessageGenerators() {
-		if (getParentBuild() == null) {
-			return _FAILURE_MESSAGE_GENERATORS;
-		}
-
-		return super.getFailureMessageGenerators();
+		return _FAILURE_MESSAGE_GENERATORS;
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.model;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
@@ -23,6 +24,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -80,6 +82,29 @@ public class PortletCategory implements Serializable {
 
 	public PortletCategory getCategory(String name) {
 		return _portletCategories.get(name);
+	}
+
+	public Set<String> getFirstChildPortletIds() {
+		Set<String> portletIds = getPortletIds();
+
+		if (!portletIds.isEmpty()) {
+			return portletIds;
+		}
+
+		List<PortletCategory> subcategories = ListUtil.fromCollection(
+			getCategories());
+
+		for (int i = 0; i < subcategories.size(); i++) {
+			PortletCategory portletCategory = subcategories.get(i);
+
+			portletIds = iteratePortletCategories(portletCategory);
+
+			if (!portletIds.isEmpty()) {
+				return portletIds;
+			}
+		}
+
+		return new HashSet<>();
 	}
 
 	public String getName() {
@@ -145,6 +170,33 @@ public class PortletCategory implements Serializable {
 
 	public void setPortletIds(Set<String> portletIds) {
 		_portletIds = portletIds;
+	}
+
+	protected Set<String> iteratePortletCategories(
+		PortletCategory parentCategory) {
+
+		Set<String> portletIds = parentCategory.getPortletIds();
+
+		if (!portletIds.isEmpty()) {
+			return portletIds;
+		}
+
+		List<PortletCategory> subcategories = ListUtil.fromCollection(
+			parentCategory.getCategories());
+
+		for (int i = 0; i < subcategories.size(); i++) {
+			PortletCategory portletCategory = subcategories.get(i);
+
+			if (portletIds.isEmpty()) {
+				portletIds = iteratePortletCategories(portletCategory);
+			}
+
+			if (!portletIds.isEmpty()) {
+				return portletIds;
+			}
+		}
+
+		return new HashSet<>();
 	}
 
 	protected void merge(

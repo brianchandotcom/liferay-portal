@@ -9,7 +9,3 @@ Liferay-Releng-Module-Group-Title: Sync Connector
 Liferay-Require-SchemaVersion: 1.0.4
 Liferay-Service: true
 -dsannotations-options: inherit
--includeresource:\
-	@bcpg-jdk15on-[0-9]*.jar,\
-	@bcpkix-jdk15on-[0-9]*.jar,\
-	@bcprov-jdk15on-[0-9]*.jar

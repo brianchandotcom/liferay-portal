@@ -1,12 +1,5 @@
-Bundle-ClassPath:\
-	.,\
-	lib/commons-fileupload.jar,\
-	lib/commons-io.jar
 Bundle-Name: Liferay Server Manager
 Bundle-SymbolicName: com.liferay.server.manager
 Bundle-Version: 1.0.4
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--includeresource:\
-	lib/commons-fileupload.jar=commons-fileupload-[0-9]*.jar,\
-	lib/commons-io.jar=commons-io-[0-9]*.jar

@@ -250,6 +250,12 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		content = formatBundleClassPath(content);
 
+		int pos = fileName.lastIndexOf(StringPool.SLASH);
+
+		String shortFileName = fileName.substring(pos + 1);
+
+		content = formatLineBreaks(shortFileName, content);
+
 		if ((portalSource || subrepository) && isModulesFile(absolutePath) &&
 			!fileName.endsWith("test-bnd.bnd")) {
 
@@ -381,6 +387,39 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		return sortDefinitionProperties(
 			content, includeResources, new IncludeResourceComparator());
+	}
+
+	protected String formatLineBreaks(
+		String content, Map<String, String> definitionsKeysMap) {
+
+		if (definitionsKeysMap == null) {
+			return content;
+		}
+
+		for (Map.Entry<String, String> entry : definitionsKeysMap.entrySet()) {
+			String definitionKey = entry.getValue();
+
+			Pattern pattern = Pattern.compile(" " + definitionKey + ":");
+
+			Matcher matcher = pattern.matcher(content);
+
+			if (matcher.find()) {
+				return StringUtil.replaceFirst(
+					content, " ", "\n", matcher.start());
+			}
+		}
+
+		return content;
+	}
+
+	protected String formatLineBreaks(String shortFileName, String content) {
+		content = formatLineBreaks(content, getDefinitionKeysMap());
+
+		Map<String, Map<String, String>> fileSpecificDefinitionKeysMap =
+			getFileSpecificDefinitionKeysMap();
+
+		return formatLineBreaks(
+			content, fileSpecificDefinitionKeysMap.get(shortFileName));
 	}
 
 	protected Map<String, String> getDefinitionKeysMap() {

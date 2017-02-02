@@ -52,7 +52,9 @@ public class ConstantNameCheck
 		DetailAST modifiersAST = detailAST.findFirstToken(TokenTypes.MODIFIERS);
 
 		if (modifiersAST.branchContains(TokenTypes.LITERAL_PRIVATE)) {
-			if (DetailASTUtil.isCollection(detailAST)) {
+			if (DetailASTUtil.isCollection(
+					detailAST.findFirstToken(TokenTypes.TYPE))) {
+
 				message = MSG_PRIVATE_COLLECTION;
 				regex = "^_[a-z0-9][_a-zA-Z0-9]*$";
 			}
@@ -64,7 +66,9 @@ public class ConstantNameCheck
 		else if (modifiersAST.branchContains(TokenTypes.LITERAL_PROTECTED) ||
 				 modifiersAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
 
-			if (DetailASTUtil.isCollection(detailAST)) {
+			if (DetailASTUtil.isCollection(
+					detailAST.findFirstToken(TokenTypes.TYPE))) {
+
 				message = MSG_PROTECTED_PUBLIC_COLLECTION;
 				regex = "^[a-z0-9][_a-zA-Z0-9]*$";
 			}

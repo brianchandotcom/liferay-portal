@@ -255,6 +255,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		String shortFileName = fileName.substring(pos + 1);
 
 		content = formatLineBreaks(shortFileName, content);
+		content = formatWhitespace(shortFileName, content);
 
 		if ((portalSource || subrepository) && isModulesFile(absolutePath) &&
 			!fileName.endsWith("test-bnd.bnd")) {
@@ -419,6 +420,40 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			getFileSpecificDefinitionKeysMap();
 
 		return formatLineBreaks(
+			content, fileSpecificDefinitionKeysMap.get(shortFileName));
+	}
+
+	protected String formatWhitespace(
+		String content, Map<String, String> definitionsKeysMap) {
+
+		if (definitionsKeysMap == null) {
+			return content;
+		}
+
+		for (Map.Entry<String, String> entry : definitionsKeysMap.entrySet()) {
+			String definitionKey = entry.getValue();
+
+			Pattern pattern = Pattern.compile(
+				"[\\A\n]" + definitionKey + ":[^ \\\\\n]");
+
+			Matcher matcher = pattern.matcher(content);
+
+			if (matcher.find()) {
+				return StringUtil.insert(
+					content, StringPool.SPACE, matcher.end() - 1);
+			}
+		}
+
+		return content;
+	}
+
+	protected String formatWhitespace(String shortFileName, String content) {
+		content = formatWhitespace(content, getDefinitionKeysMap());
+
+		Map<String, Map<String, String>> fileSpecificDefinitionKeysMap =
+			getFileSpecificDefinitionKeysMap();
+
+		return formatWhitespace(
 			content, fileSpecificDefinitionKeysMap.get(shortFileName));
 	}
 

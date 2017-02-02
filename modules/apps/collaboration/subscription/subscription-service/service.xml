@@ -3,7 +3,6 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.subscription">
 	<namespace>Subscription</namespace>
-
 	<entity local-service="true" mvcc-enabled="true" name="Subscription" remote-service="false">
 
 		<!-- PK fields -->

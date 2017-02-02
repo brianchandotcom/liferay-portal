@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.my.subscriptions.web.util;
+package com.liferay.my.subscriptions.web.internal.util;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;

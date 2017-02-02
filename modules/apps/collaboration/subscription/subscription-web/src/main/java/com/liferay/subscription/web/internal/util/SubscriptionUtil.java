@@ -14,8 +14,9 @@
 
 package com.liferay.subscription.web.internal.util;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.my.subscriptions.web.util.MySubscriptionsUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -52,12 +53,14 @@ public class SubscriptionUtil {
 	public static String getTitle(Locale locale, Subscription subscription)
 		throws PortalException {
 
-		AssetRenderer assetRenderer = MySubscriptionsUtil.getAssetRenderer(
-			subscription.getClassName(), subscription.getClassPK());
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				subscription.getClassName());
 
-		return MySubscriptionsUtil.getTitleText(
-			locale, subscription.getClassName(), subscription.getClassPK(),
-			(assetRenderer != null) ? assetRenderer.getTitle(locale) : null);
+		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+			subscription.getClassPK());
+
+		return assetRenderer.getTitle(locale);
 	}
 
 }

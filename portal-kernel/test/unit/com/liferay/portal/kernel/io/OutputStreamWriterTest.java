@@ -30,6 +30,7 @@ import java.nio.charset.CodingErrorAction;
 import java.nio.charset.MalformedInputException;
 import java.nio.charset.UnmappableCharacterException;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -395,7 +396,8 @@ public class OutputStreamWriterTest {
 
 		char[] surrogatePair = Character.toChars(0x2363A);
 
-		Assert.assertEquals(2, surrogatePair.length);
+		Assert.assertEquals(
+			Arrays.toString(surrogatePair), 2, surrogatePair.length);
 
 		surrogatePairConsumer.accept(outputStreamWriter, surrogatePair);
 

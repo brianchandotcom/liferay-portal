@@ -93,7 +93,9 @@ public class BaseIntrabandTest {
 		DatagramReceiveHandler[] datagramReceiveHandlers =
 			datagramReceiveHandlersReference.get();
 
-		Assert.assertEquals(256, datagramReceiveHandlers.length);
+		Assert.assertEquals(
+			Arrays.toString(datagramReceiveHandlers), 256,
+			datagramReceiveHandlers.length);
 
 		// Copy
 

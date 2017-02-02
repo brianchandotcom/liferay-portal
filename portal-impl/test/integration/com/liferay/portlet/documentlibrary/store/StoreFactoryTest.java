@@ -24,6 +24,8 @@ import com.liferay.portlet.documentlibrary.store.bundle.storefactory.FirstStoreW
 
 import java.lang.reflect.Method;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -61,7 +63,7 @@ public class StoreFactoryTest {
 
 		String[] fileNames = store.getFileNames(0, 0);
 
-		Assert.assertEquals(1, fileNames.length);
+		Assert.assertEquals(Arrays.toString(fileNames), 1, fileNames.length);
 		Assert.assertEquals("TestStore", fileNames[0]);
 	}
 

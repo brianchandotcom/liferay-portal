@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
 import java.security.SecureRandom;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
@@ -105,7 +106,7 @@ public class SecureRandomUtilTest {
 		byte[] bytes = ReflectionTestUtil.getFieldValue(
 			SecureRandomUtil.class, "_bytes");
 
-		Assert.assertEquals(1024, bytes.length);
+		Assert.assertEquals(Arrays.toString(bytes), 1024, bytes.length);
 	}
 
 	@Test

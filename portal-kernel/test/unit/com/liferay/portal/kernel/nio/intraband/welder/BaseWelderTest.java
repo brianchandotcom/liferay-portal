@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.IOException;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -90,7 +92,7 @@ public class BaseWelderTest {
 	public void testStateEnum() {
 		BaseWelder.State[] states = BaseWelder.State.values();
 
-		Assert.assertEquals(3, states.length);
+		Assert.assertEquals(Arrays.toString(states), 3, states.length);
 		Assert.assertEquals(BaseWelder.State.CREATED, states[0]);
 		Assert.assertEquals(BaseWelder.State.DESTROYED, states[1]);
 		Assert.assertEquals(BaseWelder.State.WELDED, states[2]);

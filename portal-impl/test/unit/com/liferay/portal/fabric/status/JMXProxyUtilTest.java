@@ -131,7 +131,8 @@ public class JMXProxyUtilTest {
 				boolean.class.getName()
 			});
 
-		Assert.assertEquals(1, compositeDatas.length);
+		Assert.assertEquals(
+			Arrays.toString(compositeDatas), 1, compositeDatas.length);
 
 		compositeDataSupport = (CompositeDataSupport)compositeDatas[0];
 
@@ -619,7 +620,8 @@ public class JMXProxyUtilTest {
 	protected static void assertEquals(
 		LockInfo[] lockInfos1, LockInfo[] lockInfos2) {
 
-		Assert.assertEquals(lockInfos1.length, lockInfos2.length);
+		Assert.assertEquals(
+			Arrays.toString(lockInfos2), lockInfos1.length, lockInfos2.length);
 
 		for (int i = 0; i < lockInfos1.length; i++) {
 			assertEquals(lockInfos1[i], lockInfos2[i]);
@@ -629,7 +631,9 @@ public class JMXProxyUtilTest {
 	protected static void assertEquals(
 		MonitorInfo[] monitorInfos1, MonitorInfo[] monitorInfos2) {
 
-		Assert.assertEquals(monitorInfos1.length, monitorInfos2.length);
+		Assert.assertEquals(
+			Arrays.toString(monitorInfos2), monitorInfos1.length,
+			monitorInfos2.length);
 
 		for (int i = 0; i < monitorInfos1.length; i++) {
 			Assert.assertEquals(
@@ -650,7 +654,9 @@ public class JMXProxyUtilTest {
 	protected static void assertEquals(
 		ThreadInfo[] threadInfos1, ThreadInfo[] threadInfos2) {
 
-		Assert.assertEquals(threadInfos1.length, threadInfos2.length);
+		Assert.assertEquals(
+			Arrays.toString(threadInfos2), threadInfos1.length,
+			threadInfos2.length);
 
 		for (int i = 0; i < threadInfos1.length; i++) {
 			Assert.assertEquals(

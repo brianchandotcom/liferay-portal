@@ -355,7 +355,7 @@ public abstract class BaseStoreTestCase {
 
 		String[] fileNames = store.getFileNames(companyId, repositoryId);
 
-		Assert.assertEquals(2, fileNames.length);
+		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
 
 		Set<String> fileNamesSet = SetUtil.fromArray(fileNames);
 
@@ -378,7 +378,7 @@ public abstract class BaseStoreTestCase {
 		String[] fileNames = store.getFileNames(
 			companyId, repositoryId, dirName);
 
-		Assert.assertEquals(2, fileNames.length);
+		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
 
 		Set<String> fileNamesSet = SetUtil.fromArray(fileNames);
 
@@ -408,7 +408,7 @@ public abstract class BaseStoreTestCase {
 		String[] fileNames = store.getFileNames(
 			companyId, repositoryId, dirName);
 
-		Assert.assertEquals(2, fileNames.length);
+		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
 
 		Set<String> fileNamesSet = SetUtil.fromArray(fileNames);
 
@@ -417,7 +417,7 @@ public abstract class BaseStoreTestCase {
 
 		fileNames = store.getFileNames(companyId, repositoryId, subdirName);
 
-		Assert.assertEquals(1, fileNames.length);
+		Assert.assertEquals(Arrays.toString(fileNames), 1, fileNames.length);
 		Assert.assertEquals(fileName2, fileNames[0]);
 	}
 
@@ -428,14 +428,14 @@ public abstract class BaseStoreTestCase {
 		String[] fileNames = store.getFileNames(
 			companyId, repositoryId, dirName);
 
-		Assert.assertEquals(0, fileNames.length);
+		Assert.assertEquals(Arrays.toString(fileNames), 0, fileNames.length);
 	}
 
 	@Test
 	public void testGetFileNamesWithInvalidRepository() throws Exception {
 		String[] fileNames = store.getFileNames(companyId, repositoryId);
 
-		Assert.assertEquals(0, fileNames.length);
+		Assert.assertEquals(Arrays.toString(fileNames), 0, fileNames.length);
 	}
 
 	@Test
@@ -454,7 +454,7 @@ public abstract class BaseStoreTestCase {
 
 		String[] fileNames = store.getFileNames(companyId, repositoryId);
 
-		Assert.assertEquals(2, fileNames.length);
+		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
 
 		Set<String> fileNamesSet = SetUtil.fromArray(fileNames);
 

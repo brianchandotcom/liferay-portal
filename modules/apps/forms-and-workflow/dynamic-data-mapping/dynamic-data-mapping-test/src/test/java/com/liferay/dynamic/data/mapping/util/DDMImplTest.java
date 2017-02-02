@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -713,7 +714,9 @@ public class DDMImplTest extends BaseDDMTestCase {
 	}
 
 	protected void testValues(String[] actualValues, String... expectedValues) {
-		Assert.assertEquals(expectedValues.length, actualValues.length);
+		Assert.assertEquals(
+			Arrays.toString(actualValues), expectedValues.length,
+			actualValues.length);
 
 		for (int i = 0; i < expectedValues.length; i++) {
 			Assert.assertEquals(expectedValues[i], actualValues[i]);

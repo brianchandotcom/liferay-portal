@@ -124,12 +124,16 @@ public class LocalizationImplTest {
 		String[] documentAvailableLanguageIds =
 			LocalizationUtil.getAvailableLanguageIds(document);
 
-		Assert.assertEquals(2, documentAvailableLanguageIds.length);
+		Assert.assertEquals(
+			Arrays.toString(documentAvailableLanguageIds), 2,
+			documentAvailableLanguageIds.length);
 
 		String[] xmlAvailableLanguageIds =
 			LocalizationUtil.getAvailableLanguageIds(_xml);
 
-		Assert.assertEquals(2, xmlAvailableLanguageIds.length);
+		Assert.assertEquals(
+			Arrays.toString(xmlAvailableLanguageIds), 2,
+			xmlAvailableLanguageIds.length);
 
 		Arrays.sort(documentAvailableLanguageIds);
 		Arrays.sort(xmlAvailableLanguageIds);

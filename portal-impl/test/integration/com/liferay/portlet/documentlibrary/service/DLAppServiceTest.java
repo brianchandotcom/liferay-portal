@@ -77,6 +77,7 @@ import com.liferay.portal.util.test.PrefsPropsTemporarySwapper;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -1271,7 +1272,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			assetTagNames = assetEntry.getTagNames();
 
-			Assert.assertEquals(1, assetTagNames.length);
+			Assert.assertEquals(
+				Arrays.toString(assetTagNames), 1, assetTagNames.length);
 		}
 
 		@Test
@@ -1318,7 +1320,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			assetTagNames = assetEntry.getTagNames();
 
-			Assert.assertEquals(1, assetTagNames.length);
+			Assert.assertEquals(
+				Arrays.toString(assetTagNames), 1, assetTagNames.length);
 		}
 
 		@Test

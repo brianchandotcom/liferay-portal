@@ -59,7 +59,8 @@ public class NaturalOrderStringComparatorTest {
 		Arrays.sort(
 			array, new NaturalOrderStringComparator(true, caseSensitive));
 
-		Assert.assertEquals(array.length, sortedArray.length);
+		Assert.assertEquals(
+			Arrays.toString(sortedArray), array.length, sortedArray.length);
 
 		for (int i = 0; i < array.length; i++) {
 			Assert.assertEquals(array[i], sortedArray[i]);

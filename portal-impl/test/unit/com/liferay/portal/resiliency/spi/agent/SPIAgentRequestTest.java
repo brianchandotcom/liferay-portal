@@ -478,7 +478,7 @@ public class SPIAgentRequestTest {
 
 		Cookie[] cookies = populatedHttpServletRequest.getCookies();
 
-		Assert.assertEquals(2, cookies.length);
+		Assert.assertEquals(Arrays.toString(cookies), 2, cookies.length);
 		Assert.assertTrue(CookieUtil.equals(_cookie1, cookies[0]));
 		Assert.assertTrue(CookieUtil.equals(_cookie2, cookies[1]));
 
@@ -539,19 +539,19 @@ public class SPIAgentRequestTest {
 
 		String[] parameter1 = parameterMap.get(_PARAMETER_NAME_1);
 
-		Assert.assertEquals(2, parameter1.length);
+		Assert.assertEquals(Arrays.toString(parameter1), 2, parameter1.length);
 		Assert.assertEquals(_PARAMETER_VALUE_1, parameter1[0]);
 		Assert.assertEquals(_PARAMETER_VALUE_2, parameter1[1]);
 
 		String[] parameter2 = parameterMap.get(_PARAMETER_NAME_2);
 
-		Assert.assertEquals(2, parameter2.length);
+		Assert.assertEquals(Arrays.toString(parameter2), 2, parameter2.length);
 		Assert.assertEquals(_PARAMETER_VALUE_3, parameter2[0]);
 		Assert.assertEquals(_PARAMETER_VALUE_4, parameter2[1]);
 
 		String[] parameter3 = parameterMap.get(_PARAMETER_NAME_3);
 
-		Assert.assertEquals(0, parameter3.length);
+		Assert.assertEquals(Arrays.toString(parameter3), 0, parameter3.length);
 
 		Assert.assertEquals(
 			_PARAMETER_VALUE_1,
@@ -576,21 +576,21 @@ public class SPIAgentRequestTest {
 		parameter1 = populatedHttpServletRequest.getParameterValues(
 			_PARAMETER_NAME_1);
 
-		Assert.assertEquals(2, parameter1.length);
+		Assert.assertEquals(Arrays.toString(parameter1), 2, parameter1.length);
 		Assert.assertEquals(_PARAMETER_VALUE_1, parameter1[0]);
 		Assert.assertEquals(_PARAMETER_VALUE_2, parameter1[1]);
 
 		parameter2 = populatedHttpServletRequest.getParameterValues(
 			_PARAMETER_NAME_2);
 
-		Assert.assertEquals(2, parameter2.length);
+		Assert.assertEquals(Arrays.toString(parameter2), 2, parameter2.length);
 		Assert.assertEquals(_PARAMETER_VALUE_3, parameter2[0]);
 		Assert.assertEquals(_PARAMETER_VALUE_4, parameter2[1]);
 
 		parameter3 = populatedHttpServletRequest.getParameterValues(
 			_PARAMETER_NAME_3);
 
-		Assert.assertEquals(0, parameter3.length);
+		Assert.assertEquals(Arrays.toString(parameter3), 0, parameter3.length);
 
 		// Remote address, host, port, and user
 

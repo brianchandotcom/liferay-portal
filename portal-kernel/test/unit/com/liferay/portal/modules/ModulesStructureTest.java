@@ -599,8 +599,15 @@ public class ModulesStructureTest {
 		String previousKey = null;
 		String projectPathPrefix = null;
 
-		for (String line : StringUtil.split(
-				gradleProperties, CharPool.NEW_LINE)) {
+		String[] lines = StringUtil.split(gradleProperties, CharPool.NEW_LINE);
+
+		for (int i = 0; i < lines.length; i++) {
+			String line = lines[i];
+
+			Assert.assertEquals(
+				"Forbidden leading or trailing whitespaces in line " + (i + 1) +
+					" of " + gradlePropertiesPath,
+				line.trim(), line);
 
 			Assert.assertFalse(
 				"Forbbiden empty line in " + gradlePropertiesPath,

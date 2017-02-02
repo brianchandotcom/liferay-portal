@@ -117,7 +117,7 @@ public class MBThreadLocalServiceTest {
 
 		List<MBThread> threads = MBThreadLocalServiceUtil.getNoAssetThreads();
 
-		Assert.assertEquals(1, threads.size());
+		Assert.assertEquals(threads.toString(), 1, threads.size());
 		Assert.assertEquals(thread, threads.get(0));
 	}
 

@@ -350,14 +350,16 @@ public class ConstantsBeanFactoryImplTest {
 		Map<Class<?>, ?> constantsBeans =
 			ConstantsBeanFactoryImpl.constantsBeans;
 
-		Assert.assertEquals(1, constantsBeans.size());
+		Assert.assertEquals(
+			constantsBeans.toString(), 1, constantsBeans.size());
 
 		// Hit cache
 
 		Assert.assertSame(
 			constantsBean1,
 			constantsBeanImpl.getConstantsBean(constantsClass1));
-		Assert.assertEquals(1, constantsBeans.size());
+		Assert.assertEquals(
+			constantsBeans.toString(), 1, constantsBeans.size());
 
 		// Second create
 
@@ -372,14 +374,16 @@ public class ConstantsBeanFactoryImplTest {
 		Assert.assertNotSame(constantsBean1, constantsBean2);
 		Assert.assertNotSame(constantsBeanClass1, constantsBean2.getClass());
 
-		Assert.assertEquals(2, constantsBeans.size());
+		Assert.assertEquals(
+			constantsBeans.toString(), 2, constantsBeans.size());
 
 		// Hit cache
 
 		Assert.assertSame(
 			constantsBean2,
 			constantsBeanImpl.getConstantsBean(constantsClass2));
-		Assert.assertEquals(2, constantsBeans.size());
+		Assert.assertEquals(
+			constantsBeans.toString(), 2, constantsBeans.size());
 
 		// Weak reference release key
 
@@ -396,7 +400,8 @@ public class ConstantsBeanFactoryImplTest {
 		Assert.assertSame(
 			constantsBean2,
 			constantsBeanImpl.getConstantsBean(constantsClass2));
-		Assert.assertEquals(1, constantsBeans.size());
+		Assert.assertEquals(
+			constantsBeans.toString(), 1, constantsBeans.size());
 
 		// Weak reference release value
 

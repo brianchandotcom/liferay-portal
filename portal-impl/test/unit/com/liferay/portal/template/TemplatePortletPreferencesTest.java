@@ -95,7 +95,7 @@ public class TemplatePortletPreferencesTest {
 
 			Map<String, String[]> map = portletPreferencesImpl.getMap();
 
-			Assert.assertEquals(1, map.size());
+			Assert.assertEquals(map.toString(), 1, map.size());
 		}
 	}
 

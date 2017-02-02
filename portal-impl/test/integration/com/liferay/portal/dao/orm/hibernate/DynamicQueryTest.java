@@ -65,7 +65,7 @@ public class DynamicQueryTest {
 		List<ClassName> classNames = ClassNameLocalServiceUtil.dynamicQuery(
 			dynamicQuery);
 
-		Assert.assertEquals(1, classNames.size());
+		Assert.assertEquals(classNames.toString(), 1, classNames.size());
 		Assert.assertEquals(className, classNames.get(0));
 	}
 
@@ -190,7 +190,9 @@ public class DynamicQueryTest {
 		List<ClassName> dynamicQueryClassNames =
 			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(1, dynamicQueryClassNames.size());
+		Assert.assertEquals(
+			dynamicQueryClassNames.toString(), 1,
+			dynamicQueryClassNames.size());
 		Assert.assertEquals(
 			_allClassNames.get(10), dynamicQueryClassNames.get(0));
 	}

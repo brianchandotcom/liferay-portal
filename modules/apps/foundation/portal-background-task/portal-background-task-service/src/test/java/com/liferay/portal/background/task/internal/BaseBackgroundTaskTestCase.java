@@ -113,7 +113,8 @@ public abstract class BaseBackgroundTaskTestCase {
 		Map<String, Serializable> threadLocalValues) {
 
 		Assert.assertTrue(MapUtil.isNotEmpty(threadLocalValues));
-		Assert.assertEquals(7, threadLocalValues.size());
+		Assert.assertEquals(
+			threadLocalValues.toString(), 7, threadLocalValues.size());
 		Assert.assertEquals(_companyId, threadLocalValues.get("companyId"));
 		Assert.assertEquals(
 			_clusterInvokeEnabled, threadLocalValues.get("clusterInvoke"));

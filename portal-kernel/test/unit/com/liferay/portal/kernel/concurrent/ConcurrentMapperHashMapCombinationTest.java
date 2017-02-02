@@ -56,7 +56,7 @@ public class ConcurrentMapperHashMapCombinationTest {
 
 		Assert.assertNull(concurrentMap.put(testKey1, testValue1));
 		Assert.assertNull(concurrentMap.put(testKey2, testValue2));
-		Assert.assertEquals(2, concurrentMap.size());
+		Assert.assertEquals(concurrentMap.toString(), 2, concurrentMap.size());
 		Assert.assertTrue(concurrentMap.containsKey(testKey1));
 		Assert.assertTrue(concurrentMap.containsValue(testValue1));
 		Assert.assertTrue(concurrentMap.containsKey(testKey2));
@@ -71,7 +71,7 @@ public class ConcurrentMapperHashMapCombinationTest {
 		ReflectionTestUtil.invoke(
 			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
 
-		Assert.assertEquals(1, concurrentMap.size());
+		Assert.assertEquals(concurrentMap.toString(), 1, concurrentMap.size());
 		Assert.assertTrue(concurrentMap.containsKey(testKey2));
 
 		testValue2 = null;
@@ -103,7 +103,9 @@ public class ConcurrentMapperHashMapCombinationTest {
 
 		Assert.assertNull(concurrentReferenceMap.put(testKey1, testValue1));
 		Assert.assertNull(concurrentReferenceMap.put(testKey2, testValue2));
-		Assert.assertEquals(2, concurrentReferenceMap.size());
+		Assert.assertEquals(
+			concurrentReferenceMap.toString(), 2,
+			concurrentReferenceMap.size());
 		Assert.assertTrue(concurrentReferenceMap.containsKey(testKey1));
 		Assert.assertTrue(concurrentReferenceMap.containsValue(testValue1));
 		Assert.assertSame(testValue1, concurrentReferenceMap.get(testKey1));
@@ -118,7 +120,9 @@ public class ConcurrentMapperHashMapCombinationTest {
 		ReflectionTestUtil.invoke(
 			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
 
-		Assert.assertEquals(2, concurrentReferenceMap.size());
+		Assert.assertEquals(
+			concurrentReferenceMap.toString(), 2,
+			concurrentReferenceMap.size());
 		Assert.assertTrue(concurrentReferenceMap.containsValue(testValue1));
 		Assert.assertTrue(concurrentReferenceMap.containsKey(testKey2));
 		Assert.assertTrue(concurrentReferenceMap.containsValue(testValue2));
@@ -129,7 +133,9 @@ public class ConcurrentMapperHashMapCombinationTest {
 		ReflectionTestUtil.invoke(
 			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
 
-		Assert.assertEquals(1, concurrentReferenceMap.size());
+		Assert.assertEquals(
+			concurrentReferenceMap.toString(), 1,
+			concurrentReferenceMap.size());
 		Assert.assertTrue(concurrentReferenceMap.containsKey(testKey2));
 		Assert.assertTrue(concurrentReferenceMap.containsValue(testValue2));
 		Assert.assertSame(testValue2, concurrentReferenceMap.get(testKey2));

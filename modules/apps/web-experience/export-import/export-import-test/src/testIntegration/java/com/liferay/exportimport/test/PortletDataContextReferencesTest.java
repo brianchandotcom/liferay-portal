@@ -129,7 +129,9 @@ public class PortletDataContextReferencesTest {
 			missingReferencesElement.elements();
 
 		Assert.assertFalse(missingReferenceElements.isEmpty());
-		Assert.assertEquals(1, missingReferenceElements.size());
+		Assert.assertEquals(
+			missingReferenceElements.toString(), 1,
+			missingReferenceElements.size());
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			_portletDataContext, assetCategory);
@@ -157,7 +159,9 @@ public class PortletDataContextReferencesTest {
 		List<Element> missingReferenceElements =
 			missingReferencesElement.elements();
 
-		Assert.assertEquals(0, missingReferenceElements.size());
+		Assert.assertEquals(
+			missingReferenceElements.toString(), 0,
+			missingReferenceElements.size());
 	}
 
 	@Test
@@ -175,7 +179,9 @@ public class PortletDataContextReferencesTest {
 		List<Element> missingReferenceElements =
 			missingReferencesElement.elements();
 
-		Assert.assertEquals(1, missingReferenceElements.size());
+		Assert.assertEquals(
+			missingReferenceElements.toString(), 1,
+			missingReferenceElements.size());
 
 		Element missingReferenceElement = missingReferenceElements.get(0);
 
@@ -215,7 +221,9 @@ public class PortletDataContextReferencesTest {
 		List<Element> missingReferenceElements =
 			missingReferencesElement.elements();
 
-		Assert.assertEquals(0, missingReferenceElements.size());
+		Assert.assertEquals(
+			missingReferenceElements.toString(), 0,
+			missingReferenceElements.size());
 	}
 
 	@Test
@@ -239,7 +247,9 @@ public class PortletDataContextReferencesTest {
 			missingReferencesElement.elements();
 
 		Assert.assertFalse(missingReferenceElements.isEmpty());
-		Assert.assertEquals(1, missingReferenceElements.size());
+		Assert.assertEquals(
+			missingReferenceElements.toString(), 1,
+			missingReferenceElements.size());
 
 		Element missingReferenceElement = missingReferenceElements.get(0);
 
@@ -269,7 +279,9 @@ public class PortletDataContextReferencesTest {
 		List<Element> missingReferenceElements =
 			missingReferencesElement.elements();
 
-		Assert.assertEquals(0, missingReferenceElements.size());
+		Assert.assertEquals(
+			missingReferenceElements.toString(), 0,
+			missingReferenceElements.size());
 	}
 
 	@Test
@@ -287,7 +299,9 @@ public class PortletDataContextReferencesTest {
 		List<Element> missingReferenceElements =
 			missingReferencesElement.elements();
 
-		Assert.assertEquals(0, missingReferenceElements.size());
+		Assert.assertEquals(
+			missingReferenceElements.toString(), 0,
+			missingReferenceElements.size());
 	}
 
 	@Test
@@ -341,13 +355,16 @@ public class PortletDataContextReferencesTest {
 		List<Element> missingReferenceElements =
 			missingReferencesElement.elements();
 
-		Assert.assertEquals(1, missingReferenceElements.size());
+		Assert.assertEquals(
+			missingReferenceElements.toString(), 1,
+			missingReferenceElements.size());
 
 		List<Element> referencesElements =
 			_portletDataContext.getReferenceElements(
 				_bookmarksEntry, BookmarksFolder.class);
 
-		Assert.assertEquals(2, referencesElements.size());
+		Assert.assertEquals(
+			referencesElements.toString(), 2, referencesElements.size());
 
 		for (Element referenceElement : referencesElements) {
 			Assert.assertTrue(

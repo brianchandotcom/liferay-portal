@@ -272,7 +272,9 @@ public class StagingImplTest {
 		List<Element> journalStagedModelElements = journalElement.elements(
 			"staged-model");
 
-		Assert.assertEquals(0, journalStagedModelElements.size());
+		Assert.assertEquals(
+			journalStagedModelElements.toString(), 0,
+			journalStagedModelElements.size());
 	}
 
 	protected void enableLocalStaging(boolean branching) throws Exception {

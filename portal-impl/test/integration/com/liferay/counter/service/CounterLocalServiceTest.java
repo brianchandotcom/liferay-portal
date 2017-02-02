@@ -174,7 +174,7 @@ public class CounterLocalServiceTest {
 			ids.addAll(Arrays.asList(futures.get()));
 		}
 
-		Assert.assertEquals(total, ids.size());
+		Assert.assertEquals(ids.toString(), total, ids.size());
 
 		Collections.sort(ids);
 

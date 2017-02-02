@@ -273,11 +273,12 @@ public class GroupFinderTest {
 
 		groups = findByLayouts(GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		Assert.assertEquals(initialGroupCount + 1, groups.size());
+		Assert.assertEquals(
+			groups.toString(), initialGroupCount + 1, groups.size());
 
 		groups = findByLayouts(parentGroup.getGroupId());
 
-		Assert.assertEquals(2, groups.size());
+		Assert.assertEquals(groups.toString(), 2, groups.size());
 
 		groups = findByLayouts(childGroup1.getGroupId());
 

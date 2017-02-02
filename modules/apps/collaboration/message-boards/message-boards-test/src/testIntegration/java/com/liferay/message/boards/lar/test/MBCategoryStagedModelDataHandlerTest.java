@@ -124,7 +124,8 @@ public class MBCategoryStagedModelDataHandlerTest
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
 			MBCategory.class.getSimpleName());
 
-		Assert.assertEquals(1, dependentStagedModels.size());
+		Assert.assertEquals(
+			dependentStagedModels.toString(), 1, dependentStagedModels.size());
 
 		MBCategory category = (MBCategory)dependentStagedModels.get(0);
 

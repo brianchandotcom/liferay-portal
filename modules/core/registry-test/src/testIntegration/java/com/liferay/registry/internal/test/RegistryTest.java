@@ -233,21 +233,24 @@ public class RegistryTest {
 		Collection<ServiceReference<InterfaceOne>> serviceReferences =
 			_registry.getServiceReferences(InterfaceOne.class, null);
 
-		Assert.assertEquals(2, serviceReferences.size());
+		Assert.assertEquals(
+			serviceReferences.toString(), 2, serviceReferences.size());
 
 		serviceRegistrationA.unregister();
 
 		serviceReferences = _registry.getServiceReferences(
 			InterfaceOne.class, null);
 
-		Assert.assertEquals(1, serviceReferences.size());
+		Assert.assertEquals(
+			serviceReferences.toString(), 1, serviceReferences.size());
 
 		serviceRegistrationB.unregister();
 
 		serviceReferences = _registry.getServiceReferences(
 			InterfaceOne.class, null);
 
-		Assert.assertEquals(0, serviceReferences.size());
+		Assert.assertEquals(
+			serviceReferences.toString(), 0, serviceReferences.size());
 	}
 
 	@Test
@@ -278,21 +281,24 @@ public class RegistryTest {
 		Collection<ServiceReference<InterfaceOne>> serviceReferences =
 			_registry.getServiceReferences(InterfaceOne.class, filterString);
 
-		Assert.assertEquals(1, serviceReferences.size());
+		Assert.assertEquals(
+			serviceReferences.toString(), 1, serviceReferences.size());
 
 		serviceRegistrationA.unregister();
 
 		serviceReferences = _registry.getServiceReferences(
 			InterfaceOne.class, filterString);
 
-		Assert.assertEquals(1, serviceReferences.size());
+		Assert.assertEquals(
+			serviceReferences.toString(), 1, serviceReferences.size());
 
 		serviceRegistrationB.unregister();
 
 		serviceReferences = _registry.getServiceReferences(
 			InterfaceOne.class, filterString);
 
-		Assert.assertEquals(0, serviceReferences.size());
+		Assert.assertEquals(
+			serviceReferences.toString(), 0, serviceReferences.size());
 	}
 
 	@Test
@@ -405,19 +411,19 @@ public class RegistryTest {
 		Collection<InterfaceOne> interfaceOnes = _registry.getServices(
 			InterfaceOne.class, filterString);
 
-		Assert.assertEquals(1, interfaceOnes.size());
+		Assert.assertEquals(interfaceOnes.toString(), 1, interfaceOnes.size());
 
 		serviceRegistrationA.unregister();
 
 		interfaceOnes = _registry.getServices(InterfaceOne.class, filterString);
 
-		Assert.assertEquals(1, interfaceOnes.size());
+		Assert.assertEquals(interfaceOnes.toString(), 1, interfaceOnes.size());
 
 		serviceRegistrationB.unregister();
 
 		interfaceOnes = _registry.getServices(InterfaceOne.class, filterString);
 
-		Assert.assertEquals(0, interfaceOnes.size());
+		Assert.assertEquals(interfaceOnes.toString(), 0, interfaceOnes.size());
 	}
 
 	@Test
@@ -858,7 +864,8 @@ public class RegistryTest {
 
 			Assert.assertNotNull(trackedServiceReferences);
 			Assert.assertEquals(
-				expectedServicesCount, trackedServiceReferences.size());
+				trackedServiceReferences.toString(), expectedServicesCount,
+				trackedServiceReferences.size());
 			Assert.assertEquals(
 				(expectedServicesCount == 2) ? interfaceOneA : interfaceOneB,
 				trackedServiceReferences.get(
@@ -880,7 +887,9 @@ public class RegistryTest {
 				serviceTracker.getTrackedServiceReferences();
 
 			Assert.assertNotNull(trackedServiceReferences);
-			Assert.assertEquals(0, trackedServiceReferences.size());
+			Assert.assertEquals(
+				trackedServiceReferences.toString(), 0,
+				trackedServiceReferences.size());
 
 			serviceTracker.close();
 		}
@@ -963,7 +972,8 @@ public class RegistryTest {
 
 			Assert.assertNotNull(trackedServiceReferences);
 			Assert.assertEquals(
-				expectedServicesCount, trackedServiceReferences.size());
+				trackedServiceReferences.toString(), expectedServicesCount,
+				trackedServiceReferences.size());
 
 			if (expectedServicesCount == 2) {
 				Assert.assertEquals(
@@ -995,7 +1005,9 @@ public class RegistryTest {
 				serviceTracker.getTrackedServiceReferences();
 
 			Assert.assertNotNull(trackedServiceReferences);
-			Assert.assertEquals(0, trackedServiceReferences.size());
+			Assert.assertEquals(
+				trackedServiceReferences.toString(), 0,
+				trackedServiceReferences.size());
 
 			assertInvocationCounts(
 				mockServiceTrackerCustomizer, expectedAddingInvocationCount,

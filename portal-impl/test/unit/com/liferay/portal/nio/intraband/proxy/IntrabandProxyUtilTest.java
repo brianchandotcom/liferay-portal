@@ -304,7 +304,7 @@ public class IntrabandProxyUtilTest {
 
 		List<Method> idMethods = methodsBag.idMethods;
 
-		Assert.assertEquals(2, idMethods.size());
+		Assert.assertEquals(idMethods.toString(), 2, idMethods.size());
 		Assert.assertTrue(
 			idMethods.contains(
 				TestExtractMethodsClass5.class.getMethod("getId1")));
@@ -314,7 +314,7 @@ public class IntrabandProxyUtilTest {
 
 		List<Method> proxyMethods = methodsBag.proxyMethods;
 
-		Assert.assertEquals(2, proxyMethods.size());
+		Assert.assertEquals(proxyMethods.toString(), 2, proxyMethods.size());
 		Assert.assertEquals(
 			TestExtractMethodsClass5.class.getMethod("doStuff1"),
 			proxyMethods.get(0));
@@ -324,7 +324,7 @@ public class IntrabandProxyUtilTest {
 
 		List<Method> emptyMethods = methodsBag.emptyMethods;
 
-		Assert.assertEquals(1, emptyMethods.size());
+		Assert.assertEquals(emptyMethods.toString(), 1, emptyMethods.size());
 		Assert.assertEquals(
 			TestExtractMethodsClass5.class.getMethod("doStuff4"),
 			emptyMethods.get(0));
@@ -386,7 +386,7 @@ public class IntrabandProxyUtilTest {
 				testId, registrationReference,
 				WarnLogExceptionHandler.INSTANCE);
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -820,7 +820,7 @@ public class IntrabandProxyUtilTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -953,7 +953,7 @@ public class IntrabandProxyUtilTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -1646,7 +1646,8 @@ public class IntrabandProxyUtilTest {
 
 					List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-					Assert.assertEquals(1, logRecords.size());
+					Assert.assertEquals(
+						logRecords.toString(), 1, logRecords.size());
 
 					LogRecord logRecord = logRecords.get(0);
 
@@ -2033,7 +2034,8 @@ public class IntrabandProxyUtilTest {
 				_assertInsnNode(insnList.getFirst(), Opcodes.RETURN);
 
 				if (logEnabled) {
-					Assert.assertEquals(1, logRecords.size());
+					Assert.assertEquals(
+						logRecords.toString(), 1, logRecords.size());
 
 					LogRecord logRecord = logRecords.get(0);
 

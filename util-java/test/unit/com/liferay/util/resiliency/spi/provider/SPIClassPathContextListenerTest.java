@@ -248,7 +248,7 @@ public class SPIClassPathContextListenerTest {
 			Assert.assertEquals(
 				spiClassPath, SPIClassPathContextListener.SPI_CLASS_PATH);
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -358,7 +358,7 @@ public class SPIClassPathContextListenerTest {
 
 		List<SPIProvider> spiProviders = MPIHelperUtil.getSPIProviders();
 
-		Assert.assertEquals(1, spiProviders.size());
+		Assert.assertEquals(spiProviders.toString(), 1, spiProviders.size());
 		Assert.assertSame(spiProviderReference.get(), spiProviders.get(0));
 
 		// Duplicate register
@@ -373,7 +373,7 @@ public class SPIClassPathContextListenerTest {
 			spiClassPathContextListener.contextInitialized(
 				new ServletContextEvent(_mockServletContext));
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -427,7 +427,7 @@ public class SPIClassPathContextListenerTest {
 
 		spiProviders = MPIHelperUtil.getSPIProviders();
 
-		Assert.assertEquals(1, spiProviders.size());
+		Assert.assertEquals(spiProviders.toString(), 1, spiProviders.size());
 		Assert.assertSame(spiProviderReference.get(), spiProviders.get(0));
 
 		embeddedLibDir.delete();

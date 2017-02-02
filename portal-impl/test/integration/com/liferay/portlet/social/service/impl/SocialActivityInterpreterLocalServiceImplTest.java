@@ -50,7 +50,9 @@ public class SocialActivityInterpreterLocalServiceImplTest {
 		List<SocialActivityInterpreter> socialActivityInterpreters =
 			activityInterpreters.get(TestSocialActivityInterpreter.SELECTOR);
 
-		Assert.assertEquals(1, socialActivityInterpreters.size());
+		Assert.assertEquals(
+			socialActivityInterpreters.toString(), 1,
+			socialActivityInterpreters.size());
 
 		SocialActivityInterpreter socialActivityInterpreter =
 			socialActivityInterpreters.get(0);
@@ -72,7 +74,8 @@ public class SocialActivityInterpreterLocalServiceImplTest {
 			SocialActivityInterpreterLocalServiceUtil.getActivityInterpreters(
 				TestSocialActivityInterpreter.SELECTOR);
 
-		Assert.assertEquals(1, activityInterpreters.size());
+		Assert.assertEquals(
+			activityInterpreters.toString(), 1, activityInterpreters.size());
 
 		SocialActivityInterpreter socialActivityInterpreter =
 			activityInterpreters.get(0);

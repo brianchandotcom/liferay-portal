@@ -89,7 +89,8 @@ public class ResourceRequestPortletContainerTest
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
 
-			Assert.assertEquals(2, loggingEvents.size());
+			Assert.assertEquals(
+				loggingEvents.toString(), 2, loggingEvents.size());
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 

@@ -197,7 +197,7 @@ public class AcceptorServletTest {
 					"IOException on prepare request", ioe.getMessage());
 			}
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -225,7 +225,7 @@ public class AcceptorServletTest {
 					"RuntimeException on prepare request", re.getMessage());
 			}
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.get(0);
 

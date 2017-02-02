@@ -91,7 +91,7 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
 			searchResultTranslator, document);
 
-		Assert.assertEquals(1, searchResults.size());
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
 
 		return searchResults.get(0);
 	}

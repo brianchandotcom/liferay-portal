@@ -367,7 +367,8 @@ public class DDLRecordServiceTest {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			record.getDDMFormFieldValues(fieldName);
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
 
 		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 

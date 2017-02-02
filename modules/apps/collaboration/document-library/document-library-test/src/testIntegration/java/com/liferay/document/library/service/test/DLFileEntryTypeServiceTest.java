@@ -158,7 +158,7 @@ public class DLFileEntryTypeServiceTest {
 		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
 			ddmStructures = dlFileEntryType.getDDMStructures();
 
-		Assert.assertEquals(1, ddmStructures.size());
+		Assert.assertEquals(ddmStructures.toString(), 1, ddmStructures.size());
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			ddmStructures.get(0).getStructureId());

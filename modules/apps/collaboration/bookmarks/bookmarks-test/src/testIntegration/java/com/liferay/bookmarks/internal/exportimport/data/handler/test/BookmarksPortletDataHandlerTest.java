@@ -89,7 +89,7 @@ public class BookmarksPortletDataHandlerTest
 		List<BookmarksFolder> folders =
 			BookmarksFolderLocalServiceUtil.getFolders(group.getGroupId());
 
-		Assert.assertEquals(0, folders.size());
+		Assert.assertEquals(folders.toString(), 0, folders.size());
 	}
 
 	@Override

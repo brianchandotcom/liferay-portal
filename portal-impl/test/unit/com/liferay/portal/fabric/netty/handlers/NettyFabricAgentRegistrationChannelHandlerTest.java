@@ -130,7 +130,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -176,7 +176,8 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 			List<FabricAgent> fabricAgents =
 				fabricAgentRegistry.getFabricAgents();
 
-			Assert.assertEquals(1, fabricAgents.size());
+			Assert.assertEquals(
+				fabricAgents.toString(), 1, fabricAgents.size());
 			Assert.assertSame(
 				fabricAgents.get(0),
 				NettyChannelAttributes.getNettyFabricAgentStub(
@@ -207,7 +208,8 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 			List<FabricAgent> fabricAgents =
 				fabricAgentRegistry.getFabricAgents();
 
-			Assert.assertEquals(1, fabricAgents.size());
+			Assert.assertEquals(
+				fabricAgents.toString(), 1, fabricAgents.size());
 			Assert.assertSame(
 				fabricAgents.get(0),
 				NettyChannelAttributes.getNettyFabricAgentStub(
@@ -215,7 +217,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.remove(0);
 
@@ -225,7 +227,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			embeddedChannel.close();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.remove(0);
 
@@ -260,7 +262,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 		List<FabricAgent> fabricAgents = fabricAgentRegistry.getFabricAgents();
 
-		Assert.assertEquals(1, fabricAgents.size());
+		Assert.assertEquals(fabricAgents.toString(), 1, fabricAgents.size());
 		Assert.assertSame(
 			fabricAgents.get(0),
 			NettyChannelAttributes.getNettyFabricAgentStub(embeddedChannel));
@@ -275,7 +277,8 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			fabricAgents = fabricAgentRegistry.getFabricAgents();
 
-			Assert.assertEquals(1, fabricAgents.size());
+			Assert.assertEquals(
+				fabricAgents.toString(), 1, fabricAgents.size());
 			Assert.assertSame(
 				fabricAgents.get(0),
 				NettyChannelAttributes.getNettyFabricAgentStub(
@@ -294,7 +297,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -304,7 +307,8 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			fabricAgents = fabricAgentRegistry.getFabricAgents();
 
-			Assert.assertEquals(1, fabricAgents.size());
+			Assert.assertEquals(
+				fabricAgents.toString(), 1, fabricAgents.size());
 			Assert.assertSame(
 				fabricAgents.get(0),
 				NettyChannelAttributes.getNettyFabricAgentStub(
@@ -339,7 +343,8 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 			List<FabricAgent> fabricAgents =
 				fabricAgentRegistry.getFabricAgents();
 
-			Assert.assertEquals(1, fabricAgents.size());
+			Assert.assertEquals(
+				fabricAgents.toString(), 1, fabricAgents.size());
 			Assert.assertSame(
 				fabricAgents.get(0),
 				NettyChannelAttributes.getNettyFabricAgentStub(
@@ -373,7 +378,8 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 			List<FabricAgent> fabricAgents =
 				fabricAgentRegistry.getFabricAgents();
 
-			Assert.assertEquals(1, fabricAgents.size());
+			Assert.assertEquals(
+				fabricAgents.toString(), 1, fabricAgents.size());
 			Assert.assertSame(
 				fabricAgents.get(0),
 				NettyChannelAttributes.getNettyFabricAgentStub(
@@ -386,7 +392,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 

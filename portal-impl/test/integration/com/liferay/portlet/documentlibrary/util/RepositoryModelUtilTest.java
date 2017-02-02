@@ -84,7 +84,8 @@ public class RepositoryModelUtilTest {
 		List<FileEntry> fileEntries = RepositoryModelUtil.toFileEntries(
 			dlFileEntries);
 
-		Assert.assertEquals(dlFileEntries.size(), fileEntries.size());
+		Assert.assertEquals(
+			fileEntries.toString(), dlFileEntries.size(), fileEntries.size());
 
 		for (int i = 0; i < dlFileEntries.size(); i++) {
 			DLFileEntry dlFileEntry = dlFileEntries.get(i);
@@ -111,7 +112,9 @@ public class RepositoryModelUtilTest {
 		List<FileShortcut> fileShortcuts = RepositoryModelUtil.toFileShortcuts(
 			dlFileShortcuts);
 
-		Assert.assertEquals(dlFileShortcuts.size(), fileShortcuts.size());
+		Assert.assertEquals(
+			fileShortcuts.toString(), dlFileShortcuts.size(),
+			fileShortcuts.size());
 
 		for (int i = 0; i < dlFileShortcuts.size(); i++) {
 			DLFileShortcut dlFileShortcut = dlFileShortcuts.get(i);
@@ -144,7 +147,9 @@ public class RepositoryModelUtilTest {
 		List<FileVersion> fileVersions = RepositoryModelUtil.toFileVersions(
 			dlFileVersions);
 
-		Assert.assertEquals(dlFileVersions.size(), fileVersions.size());
+		Assert.assertEquals(
+			fileVersions.toString(), dlFileVersions.size(),
+			fileVersions.size());
 
 		for (int i = 0; i < dlFileVersions.size(); i++) {
 			DLFileVersion dlFileVersion = dlFileVersions.get(i);
@@ -166,7 +171,8 @@ public class RepositoryModelUtilTest {
 
 		List<Folder> folders = RepositoryModelUtil.toFolders(dlFolders);
 
-		Assert.assertEquals(dlFolders.size(), folders.size());
+		Assert.assertEquals(
+			folders.toString(), dlFolders.size(), folders.size());
 
 		for (int i = 0; i < dlFolders.size(); i++) {
 			DLFolder dlFolder = dlFolders.get(i);
@@ -197,6 +203,7 @@ public class RepositoryModelUtilTest {
 				dlFoldersAndDLFileEntriesAndDLFileShortcuts);
 
 		Assert.assertEquals(
+			repositoryEntries.toString(),
 			dlFoldersAndDLFileEntriesAndDLFileShortcuts.size(),
 			repositoryEntries.size());
 	}

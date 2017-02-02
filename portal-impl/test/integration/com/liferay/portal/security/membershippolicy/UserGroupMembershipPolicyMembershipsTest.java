@@ -185,7 +185,7 @@ public class UserGroupMembershipPolicyMembershipsTest
 
 		List<UserGroup> userGroups = user.getUserGroups();
 
-		Assert.assertEquals(0, userGroups.size());
+		Assert.assertEquals(userGroups.toString(), 0, userGroups.size());
 
 		long[] userUserGroupIds = ArrayUtil.append(
 			standardUserGroupIds, requiredUserGroupIds);
@@ -196,7 +196,8 @@ public class UserGroupMembershipPolicyMembershipsTest
 
 		userGroups = user.getUserGroups();
 
-		Assert.assertEquals(userUserGroupIds.length, userGroups.size());
+		Assert.assertEquals(
+			userGroups.toString(), userUserGroupIds.length, userGroups.size());
 
 		MembershipPolicyTestUtil.updateUser(
 			user, null, null, null, requiredUserGroupIds,
@@ -204,7 +205,9 @@ public class UserGroupMembershipPolicyMembershipsTest
 
 		userGroups = user.getUserGroups();
 
-		Assert.assertEquals(requiredUserGroupIds.length, userGroups.size());
+		Assert.assertEquals(
+			userGroups.toString(), requiredUserGroupIds.length,
+			userGroups.size());
 	}
 
 	@Test
@@ -217,7 +220,7 @@ public class UserGroupMembershipPolicyMembershipsTest
 
 		List<UserGroup> userGroups = user.getUserGroups();
 
-		Assert.assertEquals(0, userGroups.size());
+		Assert.assertEquals(userGroups.toString(), 0, userGroups.size());
 
 		long[] userUserGroupIds = ArrayUtil.append(
 			standardUserGroupIds, requiredUserGroupIds);
@@ -228,7 +231,8 @@ public class UserGroupMembershipPolicyMembershipsTest
 
 		userGroups = user.getUserGroups();
 
-		Assert.assertEquals(userUserGroupIds.length, userGroups.size());
+		Assert.assertEquals(
+			userGroups.toString(), userUserGroupIds.length, userGroups.size());
 
 		MembershipPolicyTestUtil.updateUser(
 			user, null, null, null, standardUserGroupIds,
@@ -236,7 +240,8 @@ public class UserGroupMembershipPolicyMembershipsTest
 
 		userGroups = user.getUserGroups();
 
-		Assert.assertEquals(userUserGroupIds.length, userGroups.size());
+		Assert.assertEquals(
+			userGroups.toString(), userUserGroupIds.length, userGroups.size());
 	}
 
 	@Test(expected = MembershipPolicyException.class)

@@ -69,7 +69,8 @@ public class DefaultDDMFormValuesFactoryTest {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
 
 		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 
@@ -142,7 +143,8 @@ public class DefaultDDMFormValuesFactoryTest {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
 
 		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 

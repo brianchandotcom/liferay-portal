@@ -167,7 +167,7 @@ public class PortletSessionImplTest {
 		Map<String, Object> attributeMap =
 			_portletSessionImpl.getAttributeMap();
 
-		Assert.assertEquals(3, attributeMap.size());
+		Assert.assertEquals(attributeMap.toString(), 3, attributeMap.size());
 		Assert.assertSame(_value1, attributeMap.get(_KEY_1));
 		Assert.assertSame(_value2, attributeMap.get(_KEY_2));
 		Assert.assertSame(_value3, attributeMap.get(_KEY_3));
@@ -178,7 +178,7 @@ public class PortletSessionImplTest {
 		attributeMap = _portletSessionImpl.getAttributeMap(
 			PortletSession.APPLICATION_SCOPE);
 
-		Assert.assertEquals(5, attributeMap.size());
+		Assert.assertEquals(attributeMap.toString(), 5, attributeMap.size());
 		Assert.assertSame(
 			_value1, attributeMap.get(_scopePrefix.concat(_KEY_1)));
 		Assert.assertSame(

@@ -232,7 +232,8 @@ public class LayoutStagedModelDataHandlerTest
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
 			Layout.class.getSimpleName());
 
-		Assert.assertEquals(1, dependentStagedModels.size());
+		Assert.assertEquals(
+			dependentStagedModels.toString(), 1, dependentStagedModels.size());
 
 		Layout parentLayout = (Layout)dependentStagedModels.get(0);
 

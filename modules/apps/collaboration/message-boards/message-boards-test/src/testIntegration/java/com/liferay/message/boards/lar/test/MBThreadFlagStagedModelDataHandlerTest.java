@@ -118,7 +118,8 @@ public class MBThreadFlagStagedModelDataHandlerTest
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
 			MBMessage.class.getSimpleName());
 
-		Assert.assertEquals(1, dependentStagedModels.size());
+		Assert.assertEquals(
+			dependentStagedModels.toString(), 1, dependentStagedModels.size());
 
 		MBMessage message = (MBMessage)dependentStagedModels.get(0);
 

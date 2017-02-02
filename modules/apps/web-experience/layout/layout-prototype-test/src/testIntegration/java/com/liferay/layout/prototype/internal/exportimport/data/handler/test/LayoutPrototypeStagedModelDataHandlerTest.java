@@ -98,7 +98,8 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
 				layout.getPlid());
 
-		Assert.assertEquals(1, layoutFriendlyURLs.size());
+		Assert.assertEquals(
+			layoutFriendlyURLs.toString(), 1, layoutFriendlyURLs.size());
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, LayoutFriendlyURL.class,
@@ -150,7 +151,9 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 		List<StagedModel> layoutDependentStagedModels =
 			dependentStagedModelsMap.get(Layout.class.getSimpleName());
 
-		Assert.assertEquals(1, layoutDependentStagedModels.size());
+		Assert.assertEquals(
+			layoutDependentStagedModels.toString(), 1,
+			layoutDependentStagedModels.size());
 
 		Layout layout = (Layout)layoutDependentStagedModels.get(0);
 

@@ -78,7 +78,8 @@ public class WebXMLDefinitionTest {
 		Map<String, FilterDefinition> filterDefinitions =
 			_webXmlDefinition.getFilterDefinitions();
 
-		Assert.assertEquals(count, filterDefinitions.size());
+		Assert.assertEquals(
+			filterDefinitions.toString(), count, filterDefinitions.size());
 	}
 
 	protected void testAddListenerDefinition(int count) {
@@ -93,7 +94,8 @@ public class WebXMLDefinitionTest {
 		List<ListenerDefinition> listenerDefinitions =
 			_webXmlDefinition.getListenerDefinitions();
 
-		Assert.assertEquals(count, listenerDefinitions.size());
+		Assert.assertEquals(
+			listenerDefinitions.toString(), count, listenerDefinitions.size());
 	}
 
 	protected void testAddServletDefinitions(int count) {
@@ -112,7 +114,8 @@ public class WebXMLDefinitionTest {
 		Map<String, ServletDefinition> servletDefinitions =
 			_webXmlDefinition.getServletDefinitions();
 
-		Assert.assertEquals(count, servletDefinitions.size());
+		Assert.assertEquals(
+			servletDefinitions.toString(), count, servletDefinitions.size());
 	}
 
 	private WebXMLDefinition _webXmlDefinition;

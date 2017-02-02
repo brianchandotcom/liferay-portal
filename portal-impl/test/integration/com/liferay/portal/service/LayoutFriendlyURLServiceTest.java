@@ -84,7 +84,9 @@ public class LayoutFriendlyURLServiceTest {
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
 				layout.getPlid());
 
-		Assert.assertEquals(availableLocales.size(), layoutFriendlyURLs.size());
+		Assert.assertEquals(
+			layoutFriendlyURLs.toString(), availableLocales.size(),
+			layoutFriendlyURLs.size());
 
 		String[] availableLanguageIds = LocaleUtil.toLanguageIds(
 			availableLocales);

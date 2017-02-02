@@ -133,7 +133,8 @@ public class BookmarksEntryStagedModelDataHandlerTest
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
 			BookmarksFolder.class.getSimpleName());
 
-		Assert.assertEquals(1, dependentStagedModels.size());
+		Assert.assertEquals(
+			dependentStagedModels.toString(), 1, dependentStagedModels.size());
 
 		BookmarksFolder folder = (BookmarksFolder)dependentStagedModels.get(0);
 

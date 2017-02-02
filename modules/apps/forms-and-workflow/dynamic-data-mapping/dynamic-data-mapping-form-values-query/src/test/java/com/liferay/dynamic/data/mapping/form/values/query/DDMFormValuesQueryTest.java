@@ -61,7 +61,8 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(18, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 18, ddmFormFieldValues.size());
 	}
 
 	@Test
@@ -71,7 +72,8 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 		Assert.assertEquals(
 			"text1", getDDMFormFieldValueFieldName(ddmFormFieldValues.get(0)));
 		Assert.assertEquals(
@@ -90,7 +92,8 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(4, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 4, ddmFormFieldValues.size());
 		Assert.assertEquals(
 			"text11", getDDMFormFieldValueFieldName(ddmFormFieldValues.get(0)));
 		Assert.assertEquals(
@@ -109,7 +112,8 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(7, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 7, ddmFormFieldValues.size());
 	}
 
 	@Test
@@ -120,7 +124,8 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(2, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 2, ddmFormFieldValues.size());
 	}
 
 	@Test
@@ -166,7 +171,8 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
 		Assert.assertEquals(
 			"text313",
 			getDDMFormFieldValueFieldName(ddmFormFieldValues.get(0)));
@@ -180,7 +186,8 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
 		Assert.assertEquals(
 			"text313",
 			getDDMFormFieldValueFieldName(ddmFormFieldValues.get(0)));
@@ -195,21 +202,24 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 
 		ddmFormValuesQuery = createDDMFormValuesQuery(
 			"//*[@value('en_US') = 'En text22' and @type = 'text']");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 
 		ddmFormValuesQuery = createDDMFormValuesQuery(
 			"//*[@value('en_US') = 'En text22' and @value('pt_BR') = 'wrong']");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(0, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 0, ddmFormFieldValues.size());
 	}
 
 	@Test
@@ -223,21 +233,24 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 
 		ddmFormValuesQuery = createDDMFormValuesQuery(
 			"//*[@value('en_US') = 'En text22' and @type = 'text']");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 
 		ddmFormValuesQuery = createDDMFormValuesQuery(
 			"//*[@value('en_US') = 'En text22' and @value('pt_BR') = 'wrong']");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(0, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 0, ddmFormFieldValues.size());
 	}
 
 	@Test
@@ -250,14 +263,16 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 
 		ddmFormValuesQuery = createDDMFormValuesQuery(
 			"//*[@value('en_US') = 'Pt text22']");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(0, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 0, ddmFormFieldValues.size());
 	}
 
 	@Test
@@ -285,7 +300,8 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 	}
 
 	@Test
@@ -296,31 +312,36 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
 
 		ddmFormValuesQuery = createDDMFormValuesQuery("//text3/text311");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(0, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 0, ddmFormFieldValues.size());
 
 		ddmFormValuesQuery = createDDMFormValuesQuery("/text3//text311");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
 
 		ddmFormValuesQuery = createDDMFormValuesQuery("/text31//text311");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(0, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 0, ddmFormFieldValues.size());
 
 		ddmFormValuesQuery = createDDMFormValuesQuery("//*/text22");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 	}
 
 	@Test
@@ -331,21 +352,24 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(0, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 0, ddmFormFieldValues.size());
 
 		ddmFormValuesQuery = createDDMFormValuesQuery(
 			"/*[@value('en_US') = 'wrong' or @type = 'text']");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 
 		ddmFormValuesQuery = createDDMFormValuesQuery(
 			"/*[@value('en_US') = 'En text1' or @value('pt_BR') = 'wrong']");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
 	}
 
 	@Test
@@ -358,13 +382,15 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(18, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 18, ddmFormFieldValues.size());
 
 		ddmFormValuesQuery = createDDMFormValuesQuery("/*[@type = 'date']");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(0, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 0, ddmFormFieldValues.size());
 	}
 
 	@Test
@@ -377,14 +403,16 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 
 		ddmFormValuesQuery = createDDMFormValuesQuery(
 			"//*[@value = 'Pt text22']");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 	}
 
 	@Test(expected = DDMFormValuesQuerySyntaxException.class)

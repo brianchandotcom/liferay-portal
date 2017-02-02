@@ -42,7 +42,8 @@ public class DDLRecordDDMFormValuesReaderTest {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesReader.getDDMFormFieldValues("text");
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 		Assert.assertEquals(
 			"Text", getDDMFormFieldValueName(ddmFormFieldValues.get(0)));
 		Assert.assertEquals(

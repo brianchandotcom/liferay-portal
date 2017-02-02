@@ -193,7 +193,7 @@ public class DDMRESTDataProviderTest {
 
 		List<Map<Object, Object>> data = ddmDataProviderResponse.getData();
 
-		Assert.assertEquals(1, data.size());
+		Assert.assertEquals(data.toString(), 1, data.size());
 
 		Map<Object, Object> map = new HashMap<>();
 

@@ -189,7 +189,8 @@ public class SiteMembershipPolicyRolesTest
 			UserGroupRoleLocalServiceUtil.getUserGroupRoles(user.getUserId());
 
 		Assert.assertEquals(
-			initialUserGroupRoles.size(), currentUserGroupRoles.size());
+			currentUserGroupRoles.toString(), initialUserGroupRoles.size(),
+			currentUserGroupRoles.size());
 	}
 
 	@Test(expected = MembershipPolicyException.class)

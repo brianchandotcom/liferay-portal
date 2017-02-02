@@ -294,7 +294,9 @@ public class FolderStagedModelDataHandlerTest
 		List<StagedModel> ddmStructureDependentStagedModels =
 			dependentStagedModelsMap.get(ddmStructureClass.getSimpleName());
 
-		Assert.assertEquals(1, ddmStructureDependentStagedModels.size());
+		Assert.assertEquals(
+			ddmStructureDependentStagedModels.toString(), 1,
+			ddmStructureDependentStagedModels.size());
 
 		DDMStructure ddmStructure =
 			(DDMStructure)ddmStructureDependentStagedModels.get(0);
@@ -307,7 +309,9 @@ public class FolderStagedModelDataHandlerTest
 		List<StagedModel> dlFileEntryTypesDependentStagedModels =
 			dependentStagedModelsMap.get(DLFileEntryType.class.getSimpleName());
 
-		Assert.assertEquals(1, dlFileEntryTypesDependentStagedModels.size());
+		Assert.assertEquals(
+			dlFileEntryTypesDependentStagedModels.toString(), 1,
+			dlFileEntryTypesDependentStagedModels.size());
 
 		DLFileEntryType dlFileEntryType =
 			(DLFileEntryType)dlFileEntryTypesDependentStagedModels.get(0);
@@ -331,7 +335,9 @@ public class FolderStagedModelDataHandlerTest
 		List<StagedModel> ddmStructureDependentStagedModels =
 			dependentStagedModelsMap.get(ddmStructureClass.getSimpleName());
 
-		Assert.assertEquals(1, ddmStructureDependentStagedModels.size());
+		Assert.assertEquals(
+			ddmStructureDependentStagedModels.toString(), 1,
+			ddmStructureDependentStagedModels.size());
 
 		DDMStructure ddmStructure =
 			(DDMStructure)ddmStructureDependentStagedModels.get(0);
@@ -342,7 +348,9 @@ public class FolderStagedModelDataHandlerTest
 		List<StagedModel> dlFileEntryTypesDependentStagedModels =
 			dependentStagedModelsMap.get(DLFileEntryType.class.getSimpleName());
 
-		Assert.assertEquals(1, dlFileEntryTypesDependentStagedModels.size());
+		Assert.assertEquals(
+			dlFileEntryTypesDependentStagedModels.toString(), 1,
+			dlFileEntryTypesDependentStagedModels.size());
 
 		DLFileEntryType dlFileEntryType =
 			(DLFileEntryType)dlFileEntryTypesDependentStagedModels.get(0);
@@ -353,7 +361,9 @@ public class FolderStagedModelDataHandlerTest
 		List<StagedModel> folderDependentStagedModels =
 			dependentStagedModelsMap.get(DLFolder.class.getSimpleName());
 
-		Assert.assertEquals(1, folderDependentStagedModels.size());
+		Assert.assertEquals(
+			folderDependentStagedModels.toString(), 1,
+			folderDependentStagedModels.size());
 
 		Folder parentFolder = (Folder)folderDependentStagedModels.get(0);
 

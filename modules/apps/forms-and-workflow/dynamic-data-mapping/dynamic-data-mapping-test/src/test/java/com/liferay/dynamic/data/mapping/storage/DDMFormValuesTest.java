@@ -49,7 +49,8 @@ public class DDMFormValuesTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
 			fieldName);
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 	}
 
 	@Test

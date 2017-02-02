@@ -320,7 +320,8 @@ public class ExpressionModelTest {
 			functionCallExpression.getParameterExpressions();
 
 		Assert.assertNotNull(parameterExpressions);
-		Assert.assertEquals(2, parameterExpressions.size());
+		Assert.assertEquals(
+			parameterExpressions.toString(), 2, parameterExpressions.size());
 
 		Expression parameterExpression = parameterExpressions.get(0);
 
@@ -426,7 +427,8 @@ public class ExpressionModelTest {
 		List<Expression> parameterExpressions =
 			functionCallExpression.getParameterExpressions();
 
-		Assert.assertEquals(2, parameterExpressions.size());
+		Assert.assertEquals(
+			parameterExpressions.toString(), 2, parameterExpressions.size());
 
 		Expression parameterExpression1 = parameterExpressions.get(0);
 
@@ -450,7 +452,8 @@ public class ExpressionModelTest {
 		List<Expression> parameterExpressions2 =
 			functionCallExpression2.getParameterExpressions();
 
-		Assert.assertEquals(2, parameterExpressions2.size());
+		Assert.assertEquals(
+			parameterExpressions2.toString(), 2, parameterExpressions2.size());
 
 		Expression parameterExpression3 = parameterExpressions2.get(0);
 

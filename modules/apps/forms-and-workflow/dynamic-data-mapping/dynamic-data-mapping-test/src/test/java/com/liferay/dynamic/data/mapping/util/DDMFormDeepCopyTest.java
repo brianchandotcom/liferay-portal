@@ -67,7 +67,8 @@ public class DDMFormDeepCopyTest extends BaseDDMTestCase {
 
 		List<DDMFormField> copyDDMFormFields = copyDDMForm.getDDMFormFields();
 
-		Assert.assertEquals(1, copyDDMFormFields.size());
+		Assert.assertEquals(
+			copyDDMFormFields.toString(), 1, copyDDMFormFields.size());
 
 		DDMFormField copyDDMFormField = copyDDMFormFields.get(0);
 
@@ -77,7 +78,9 @@ public class DDMFormDeepCopyTest extends BaseDDMTestCase {
 		List<DDMFormField> copyNestedDDMFormFields =
 			copyDDMFormField.getNestedDDMFormFields();
 
-		Assert.assertEquals(2, copyNestedDDMFormFields.size());
+		Assert.assertEquals(
+			copyNestedDDMFormFields.toString(), 2,
+			copyNestedDDMFormFields.size());
 
 		DDMFormField copyNestedDDMFormField = copyNestedDDMFormFields.get(0);
 
@@ -212,7 +215,8 @@ public class DDMFormDeepCopyTest extends BaseDDMTestCase {
 
 		List<DDMFormField> copyDDMFormFields = copyDDMForm.getDDMFormFields();
 
-		Assert.assertEquals(2, copyDDMFormFields.size());
+		Assert.assertEquals(
+			copyDDMFormFields.toString(), 2, copyDDMFormFields.size());
 
 		DDMFormField copyDDMFormField = copyDDMFormFields.get(0);
 

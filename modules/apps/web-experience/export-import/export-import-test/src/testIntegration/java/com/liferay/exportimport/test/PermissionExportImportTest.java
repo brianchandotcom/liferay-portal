@@ -236,7 +236,8 @@ public class PermissionExportImportTest {
 			new ArrayList<String>(), new ArrayList<String>());
 
 		Assert.assertEquals(
-			_ACTION_IDS.length, currentIndividualActions.size());
+			currentIndividualActions.toString(), _ACTION_IDS.length,
+			currentIndividualActions.size());
 
 		for (String action : currentIndividualActions) {
 			boolean foundActionId = false;

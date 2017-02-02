@@ -170,7 +170,7 @@ public class NettyRepositoryTest {
 
 			Assert.assertTrue(Files.notExists(tempFilePath));
 			Assert.assertTrue(Files.exists(localFilePath));
-			Assert.assertEquals(1, pathMap.size());
+			Assert.assertEquals(pathMap.toString(), 1, pathMap.size());
 			Assert.assertSame(localFilePath, pathMap.get(remoteFilePath));
 
 			_nettyRepository.dispose(false);
@@ -230,14 +230,14 @@ public class NettyRepositoryTest {
 
 			Assert.assertTrue(Files.notExists(tempFilePath));
 			Assert.assertTrue(Files.exists(localFilePath));
-			Assert.assertEquals(1, pathMap.size());
+			Assert.assertEquals(pathMap.toString(), 1, pathMap.size());
 			Assert.assertSame(localFilePath, pathMap.get(remoteFilePath));
 
 			Files.delete(localFilePath);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(4, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 4, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -374,7 +374,7 @@ public class NettyRepositoryTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -436,7 +436,7 @@ public class NettyRepositoryTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -517,7 +517,7 @@ public class NettyRepositoryTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -527,7 +527,7 @@ public class NettyRepositoryTest {
 
 		Map<Path, Path> resultPathMap = noticeableFuture.get();
 
-		Assert.assertEquals(1, resultPathMap.size());
+		Assert.assertEquals(resultPathMap.toString(), 1, resultPathMap.size());
 		Assert.assertEquals(localFilePath, resultPathMap.get(remoteFilePath1));
 	}
 
@@ -591,7 +591,7 @@ public class NettyRepositoryTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 

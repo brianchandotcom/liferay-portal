@@ -80,7 +80,7 @@ public class ThreadLocalDistributorTest {
 
 			threadLocalDistributor.afterPropertiesSet();
 
-			Assert.assertEquals(3, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 3, logRecords.size());
 
 			LogRecord logRecord1 = logRecords.get(0);
 
@@ -102,7 +102,8 @@ public class ThreadLocalDistributorTest {
 				ReflectionTestUtil.getFieldValue(
 					threadLocalDistributor, "_threadLocals");
 
-			Assert.assertEquals(1, threadLocals.size());
+			Assert.assertEquals(
+				threadLocals.toString(), 1, threadLocals.size());
 			Assert.assertSame(TestClass._threadLocal, threadLocals.get(0));
 
 			// Without log
@@ -121,7 +122,8 @@ public class ThreadLocalDistributorTest {
 			threadLocals = ReflectionTestUtil.getFieldValue(
 				threadLocalDistributor, "_threadLocals");
 
-			Assert.assertEquals(1, threadLocals.size());
+			Assert.assertEquals(
+				threadLocals.toString(), 1, threadLocals.size());
 			Assert.assertSame(TestClass._threadLocal, threadLocals.get(0));
 		}
 	}
@@ -155,7 +157,7 @@ public class ThreadLocalDistributorTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(3, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 3, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 

@@ -87,7 +87,8 @@ public class ServiceTrackerListTest {
 		Collection<ServiceRegistration<Object>> serviceRegistrations =
 			registerServices(Object.class, services);
 
-		Assert.assertEquals(2, serviceTrackerList.size());
+		Assert.assertEquals(
+			serviceTrackerList.toString(), 2, serviceTrackerList.size());
 
 		unregister(serviceRegistrations);
 	}
@@ -133,12 +134,14 @@ public class ServiceTrackerListTest {
 		ServiceTrackerList<Object, Object> serviceTrackerList =
 			ServiceTrackerListFactory.open(_bundleContext, Object.class);
 
-		Assert.assertEquals(0, serviceTrackerList.size());
+		Assert.assertEquals(
+			serviceTrackerList.toString(), 0, serviceTrackerList.size());
 
 		ServiceRegistration<Object> serviceRegistration = registerService(
 			Object.class, new Object());
 
-		Assert.assertEquals(1, serviceTrackerList.size());
+		Assert.assertEquals(
+			serviceTrackerList.toString(), 1, serviceTrackerList.size());
 
 		serviceRegistration.unregister();
 	}
@@ -213,14 +216,16 @@ public class ServiceTrackerListTest {
 		ServiceTrackerList<Object, Object> serviceTrackerList =
 			ServiceTrackerListFactory.open(_bundleContext, Object.class);
 
-		Assert.assertEquals(0, serviceTrackerList.size());
+		Assert.assertEquals(
+			serviceTrackerList.toString(), 0, serviceTrackerList.size());
 
 		ServiceRegistration<Object> serviceRegistration = registerService(
 			Object.class, new Object());
 
 		serviceRegistration.unregister();
 
-		Assert.assertEquals(0, serviceTrackerList.size());
+		Assert.assertEquals(
+			serviceTrackerList.toString(), 0, serviceTrackerList.size());
 	}
 
 	@ArquillianResource

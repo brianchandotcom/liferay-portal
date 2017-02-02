@@ -198,7 +198,9 @@ public class OrganizationStagedModelDataHandlerTest
 		List<StagedModel> addressDependentStagedModels =
 			dependentStagedModelsMap.get(Address.class.getSimpleName());
 
-		Assert.assertEquals(1, addressDependentStagedModels.size());
+		Assert.assertEquals(
+			addressDependentStagedModels.toString(), 1,
+			addressDependentStagedModels.size());
 
 		Address address = (Address)addressDependentStagedModels.get(0);
 
@@ -213,7 +215,9 @@ public class OrganizationStagedModelDataHandlerTest
 		List<StagedModel> emailAddressDependentStagedModels =
 			dependentStagedModelsMap.get(EmailAddress.class.getSimpleName());
 
-		Assert.assertEquals(1, emailAddressDependentStagedModels.size());
+		Assert.assertEquals(
+			emailAddressDependentStagedModels.toString(), 1,
+			emailAddressDependentStagedModels.size());
 
 		EmailAddress emailAddress =
 			(EmailAddress)emailAddressDependentStagedModels.get(0);
@@ -231,7 +235,8 @@ public class OrganizationStagedModelDataHandlerTest
 			OrgLaborLocalServiceUtil.getOrgLabors(
 				organization.getOrganizationId());
 
-		Assert.assertEquals(1, importedOrgLabors.size());
+		Assert.assertEquals(
+			importedOrgLabors.toString(), 1, importedOrgLabors.size());
 
 		OrgLabor importedOrgLabor = importedOrgLabors.get(0);
 
@@ -242,7 +247,9 @@ public class OrganizationStagedModelDataHandlerTest
 		List<StagedModel> passwordPolicyDependentStagedModels =
 			dependentStagedModelsMap.get(PasswordPolicy.class.getSimpleName());
 
-		Assert.assertEquals(1, passwordPolicyDependentStagedModels.size());
+		Assert.assertEquals(
+			passwordPolicyDependentStagedModels.toString(), 1,
+			passwordPolicyDependentStagedModels.size());
 
 		PasswordPolicy passwordPolicy =
 			(PasswordPolicy)passwordPolicyDependentStagedModels.get(0);
@@ -260,7 +267,9 @@ public class OrganizationStagedModelDataHandlerTest
 		List<StagedModel> phoneDependentStagedModels =
 			dependentStagedModelsMap.get(Phone.class.getSimpleName());
 
-		Assert.assertEquals(1, phoneDependentStagedModels.size());
+		Assert.assertEquals(
+			phoneDependentStagedModels.toString(), 1,
+			phoneDependentStagedModels.size());
 
 		Phone phone = (Phone)phoneDependentStagedModels.get(0);
 
@@ -275,7 +284,9 @@ public class OrganizationStagedModelDataHandlerTest
 		List<StagedModel> websiteDependentStagedModels =
 			dependentStagedModelsMap.get(Website.class.getSimpleName());
 
-		Assert.assertEquals(1, websiteDependentStagedModels.size());
+		Assert.assertEquals(
+			websiteDependentStagedModels.toString(), 1,
+			websiteDependentStagedModels.size());
 
 		Website website = (Website)websiteDependentStagedModels.get(0);
 

@@ -133,7 +133,8 @@ public class RepositoryStagedModelDataHandlerTest
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
 			RepositoryEntry.class.getSimpleName());
 
-		Assert.assertEquals(1, dependentStagedModels.size());
+		Assert.assertEquals(
+			dependentStagedModels.toString(), 1, dependentStagedModels.size());
 
 		RepositoryEntry repositoryEntry =
 			(RepositoryEntry)dependentStagedModels.get(0);

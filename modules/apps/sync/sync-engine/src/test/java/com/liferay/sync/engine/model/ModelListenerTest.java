@@ -49,7 +49,8 @@ public class ModelListenerTest extends BaseTestCase {
 		Assert.assertEquals(
 			FileUtil.getFilePathName(filePathName, "test"),
 			_originalFieldValues.get("filePathName"));
-		Assert.assertEquals(2, _originalFieldValues.size());
+		Assert.assertEquals(
+			_originalFieldValues.toString(), 2, _originalFieldValues.size());
 
 		SyncFileService.deleteSyncFile(syncFile);
 

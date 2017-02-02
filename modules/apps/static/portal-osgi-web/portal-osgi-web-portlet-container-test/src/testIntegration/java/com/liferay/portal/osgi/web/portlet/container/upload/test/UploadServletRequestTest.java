@@ -304,7 +304,7 @@ public class UploadServletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadServletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, map.size());
+			Assert.assertEquals(map.toString(), 1, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();
@@ -368,7 +368,7 @@ public class UploadServletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadServletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, map.size());
+			Assert.assertEquals(map.toString(), 1, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();
@@ -457,7 +457,7 @@ public class UploadServletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadServletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, map.size());
+			Assert.assertEquals(map.toString(), 1, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();
@@ -549,7 +549,7 @@ public class UploadServletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadServletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, map.size());
+			Assert.assertEquals(map.toString(), 1, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();
@@ -636,7 +636,7 @@ public class UploadServletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadServletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(10, map.size());
+			Assert.assertEquals(map.toString(), 10, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();
@@ -728,7 +728,7 @@ public class UploadServletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadServletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(10, map.size());
+			Assert.assertEquals(map.toString(), 10, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();
@@ -821,7 +821,7 @@ public class UploadServletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadServletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(10, map.size());
+			Assert.assertEquals(map.toString(), 10, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();
@@ -915,7 +915,7 @@ public class UploadServletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadServletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, map.size());
+			Assert.assertEquals(map.toString(), 1, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();
@@ -1192,7 +1192,7 @@ public class UploadServletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadServletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, map.size());
+			Assert.assertEquals(map.toString(), 1, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();
@@ -1326,7 +1326,7 @@ public class UploadServletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadServletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, map.size());
+			Assert.assertEquals(map.toString(), 1, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();

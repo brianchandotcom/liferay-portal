@@ -292,10 +292,9 @@ public class RoleLocalServiceTest {
 			companyId, keyword, excludedRoleNames, roleTypes, 0, groupId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		_role = RoleLocalServiceUtil.getRole(
-			companyId, String.valueOf(team.getTeamId()));
+		_role = roles.get(0);
 
-		Assert.assertEquals(_role, roles.get(0));
+		Assert.assertEquals(team.getTeamId(), _role.getClassPK());
 	}
 
 	@Test

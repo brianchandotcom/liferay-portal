@@ -211,20 +211,18 @@ public class DetailASTUtil {
 	}
 
 	public static boolean isCollection(DetailAST detailAST) {
-		if (detailAST.getType() != TokenTypes.VARIABLE_DEF) {
+		if (detailAST.getType() != TokenTypes.TYPE) {
 			return false;
 		}
 
-		DetailAST typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
-
-		DetailAST typeArgumentsAST = typeAST.findFirstToken(
+		DetailAST typeArgumentsAST = detailAST.findFirstToken(
 			TokenTypes.TYPE_ARGUMENTS);
 
 		if (typeArgumentsAST == null) {
 			return false;
 		}
 
-		DetailAST nameAST = typeAST.findFirstToken(TokenTypes.IDENT);
+		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 		String name = nameAST.getText();
 

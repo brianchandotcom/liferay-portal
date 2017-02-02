@@ -21,6 +21,3 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Template Engines
--includeresource:\
-	@velocity-[0-9]*.jar,\
-	@velocity-tools-[0-9]*.jar

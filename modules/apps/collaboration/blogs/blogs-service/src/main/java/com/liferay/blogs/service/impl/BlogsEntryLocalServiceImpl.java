@@ -1955,6 +1955,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
+
 		subscriptionSender.addLifecycleHook(
 			unsubscribeLifecycleHookFactory.create());
 

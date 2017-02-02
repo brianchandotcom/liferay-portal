@@ -47,6 +47,7 @@ AUI.add(
 							GridField.superclass.getTemplateContext.apply(instance, arguments),
 							{
 								columns: instance.get('columns'),
+								focusTarget: instance._getFocusTarget(),
 								rows: instance.get('rows')
 							}
 						);
@@ -84,31 +85,9 @@ AUI.add(
 					setValue: function(value) {
 						var instance = this;
 
-						var contextValue = {};
+						instance.set('value', value);
 
-						var gridRowsNode = instance._getGridRowsNode();
-
-						for (var i = 0; i < gridRowsNode.size(); i++) {
-							var gridRow = gridRowsNode.item(i);
-
-							var tableCellNodeList = gridRow.all('td');
-
-							var radioNodeList = tableCellNodeList.all('input');
-
-							radioNodeList.attr('checked', false);
-
-							var radioToCheck = instance._getRadioToCheck(radioNodeList, value);
-
-							if (radioToCheck) {
-								radioToCheck.attr('checked', true);
-
-								contextValue[radioToCheck.attr('name')] = radioToCheck.attr('value');
-
-								instance._setValueInputHidden(i, radioToCheck);
-							}
-						}
-
-						instance.set('value', contextValue);
+						instance.render();
 					},
 
 					showErrorMessage: function() {
@@ -121,6 +100,12 @@ AUI.add(
 						container.all('.help-block').appendTo(container.one('.form-group'));
 					},
 
+					_getFocusTarget: function() {
+						var instance = this;
+
+						return instance.focusTarget;
+					},
+
 					_getGridRowsNode: function() {
 						var instance = this;
 
@@ -131,30 +116,10 @@ AUI.add(
 						return gridRowsNode;
 					},
 
-					_getInputNode: function() {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						var inputNode = container.all('input[type="hidden"]');
-
-						return inputNode;
-					},
-
 					_getLocalizedLabel: function(option) {
 						var defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
 						return option.label[defaultLanguageId] ? option.label[defaultLanguageId] : option.label;
-					},
-
-					_getRadioToCheck: function(radioNodeList, value) {
-						var radioToCheck = radioNodeList.filter(
-							function(node) {
-								return node.val() === value[node.attr('name')];
-							}
-						).item(0);
-
-						return radioToCheck;
 					},
 
 					_mapItemsLabels: function(items) {
@@ -172,10 +137,6 @@ AUI.add(
 
 						var target = event.currentTarget;
 
-						var rowIndex = target.attr('data-row-index');
-
-						instance._setValueInputHidden(rowIndex, target);
-
 						var value = instance.get('value');
 
 						if (!value) {
@@ -184,7 +145,9 @@ AUI.add(
 
 						value[target.attr('name')] = target.attr('value');
 
-						instance.set('value', value);
+						instance._setFocusTarget(target);
+
+						instance.setValue(value);
 					},
 
 					_setColumns: function(columns) {
@@ -193,20 +156,22 @@ AUI.add(
 						instance._mapItemsLabels(columns);
 					},
 
+					_setFocusTarget: function(target) {
+						var instance = this;
+
+						var focusTarget = {};
+
+						focusTarget.row = target.attr('name');
+
+						focusTarget.index = target.attr('data-row-index');
+
+						instance.focusTarget = focusTarget;
+					},
+
 					_setRows: function(rows) {
 						var instance = this;
 
 						instance._mapItemsLabels(rows);
-					},
-
-					_setValueInputHidden: function(index, radio) {
-						var instance = this;
-
-						var inputNode = this._getInputNode();
-
-						var currentItem = inputNode.item(index);
-
-						currentItem.attr('value', radio.attr('name') + ';' + radio.attr('value'));
 					}
 				}
 			}

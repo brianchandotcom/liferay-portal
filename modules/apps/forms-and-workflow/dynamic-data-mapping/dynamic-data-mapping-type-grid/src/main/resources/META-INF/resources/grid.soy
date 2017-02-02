@@ -10,12 +10,13 @@
 /**
  * Prints the DDM form grid field.
  *
+ * @param columns
  * @param? childElementsHTML
  * @param dir
+ * @param? focusTarget
  * @param label
  * @param name
  * @param rows
- * @param columns
  * @param readOnly
  * @param required
  * @param showLabel
@@ -45,6 +46,7 @@
 					{param dir: $dir /}
 					{param name: $name /}
 					{param rows: $rows /}
+					{param value: $value /}
 				{/call}
 			{/if}
 
@@ -63,8 +65,11 @@
 							<td>{$row.label}</td>
 							{foreach $column in $columns}
 								{let $checked: $column.value == $value[$row.value] ? 'checked' : '' /}
+
+								{let $autoFocus: $focusTarget and ($focusTarget.row == $row.value and $focusTarget.index == index($column)) ? 'autofocus' : ''/}
+
 								<td>
-									<input {$checked} class="form-builder-grid-field" data-row-index="{index($row)}" {if $readOnly}disabled{/if} name="{$row.value}" type="radio" value="{$column.value}" />
+									<input {$autoFocus} {$checked} class="form-builder-grid-field" data-row-index="{index($column)}" {if $readOnly}disabled{/if} name="{$row.value}" type="radio" value="{$column.value}" />
 								</td>
 							{/foreach}
 						</tr>
@@ -85,9 +90,12 @@
  * @param dir
  * @param name
  * @param rows
+ * @param value
  */
 {template .hidden_grid autoescape="deprecated-contextual"}
 	{foreach $row in $rows}
-		<input class="form-control hide" dir="{$dir}" name="{$name}" type="hidden"/>
+		{let $inputValue: $value[$row.value] ? $row.value + ';' + $value[$row.value] : '' /}
+
+		<input class="form-control" dir="{$dir}" name="{$name}" type="hidden" {if $inputValue}value="{$inputValue}"{/if}/>
 	{/foreach}
 {/template}

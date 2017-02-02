@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.subscription.web.constants.SubscriptionPortletKeys;
 
 import javax.portlet.ActionRequest;
@@ -43,6 +44,9 @@ public class UnsubscribeAction extends BaseStrutsAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
+		long userId = ParamUtil.getLong(request, "userId");
+		String key = ParamUtil.getString(request, "key");
+
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			request, SubscriptionPortletKeys.UNSUBSCRIBE,
 			PortletRequest.ACTION_PHASE);
@@ -52,9 +56,8 @@ public class UnsubscribeAction extends BaseStrutsAction {
 
 		liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
 
-		liferayPortletURL.setParameter(
-			"userId", request.getParameter("userId"));
-		liferayPortletURL.setParameter("key", request.getParameter("key"));
+		liferayPortletURL.setParameter("userId", String.valueOf(userId));
+		liferayPortletURL.setParameter("key", key);
 
 		response.sendRedirect(liferayPortletURL.toString());
 

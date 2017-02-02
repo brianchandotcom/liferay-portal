@@ -66,7 +66,7 @@ public class NamespaceServletRequestTest {
 		Map<String, String[]> parameterMap =
 			dynamicServletRequest.getParameterMap();
 
-		Assert.assertEquals(3, parameterMap.size());
+		Assert.assertEquals(parameterMap.toString(), 3, parameterMap.size());
 		Assert.assertArrayEquals(
 			new String[] {parameterValue1}, parameterMap.get(parameterName1));
 		Assert.assertArrayEquals(
@@ -77,7 +77,8 @@ public class NamespaceServletRequestTest {
 		Set<String> attributeNames = SetUtil.fromEnumeration(
 			dynamicServletRequest.getAttributeNames());
 
-		Assert.assertEquals(1, attributeNames.size());
+		Assert.assertEquals(
+			attributeNames.toString(), 1, attributeNames.size());
 		Assert.assertTrue(attributeNames.contains(attributeName));
 
 		Assert.assertEquals(

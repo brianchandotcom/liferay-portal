@@ -147,7 +147,7 @@ public class DDMFormFactoryTest {
 
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
-		Assert.assertEquals(0, ddmFormRules.size());
+		Assert.assertEquals(ddmFormRules.toString(), 0, ddmFormRules.size());
 	}
 
 	@Test
@@ -156,7 +156,7 @@ public class DDMFormFactoryTest {
 
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
-		Assert.assertEquals(2, ddmFormRules.size());
+		Assert.assertEquals(ddmFormRules.toString(), 2, ddmFormRules.size());
 
 		DDMFormRule ddmFormRule = ddmFormRules.get(0);
 
@@ -164,7 +164,8 @@ public class DDMFormFactoryTest {
 
 		List<String> ddmFormRuleActions = ddmFormRule.getActions();
 
-		Assert.assertEquals(2, ddmFormRuleActions.size());
+		Assert.assertEquals(
+			ddmFormRuleActions.toString(), 2, ddmFormRuleActions.size());
 		Assert.assertArrayEquals(
 			new String[] {"action1", "action2"}, ddmFormRuleActions.toArray());
 
@@ -174,7 +175,8 @@ public class DDMFormFactoryTest {
 
 		ddmFormRuleActions = ddmFormRule.getActions();
 
-		Assert.assertEquals(1, ddmFormRuleActions.size());
+		Assert.assertEquals(
+			ddmFormRuleActions.toString(), 1, ddmFormRuleActions.size());
 		Assert.assertArrayEquals(
 			new String[] {"action1"}, ddmFormRuleActions.toArray());
 	}
@@ -185,7 +187,7 @@ public class DDMFormFactoryTest {
 
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
-		Assert.assertEquals(1, ddmFormFields.size());
+		Assert.assertEquals(ddmFormFields.toString(), 1, ddmFormFields.size());
 
 		DDMFormField ddmFormField = ddmFormFields.get(0);
 
@@ -198,7 +200,8 @@ public class DDMFormFactoryTest {
 		List<DDMFormField> nestedDDMFormFields =
 			ddmFormField.getNestedDDMFormFields();
 
-		Assert.assertEquals(2, nestedDDMFormFields.size());
+		Assert.assertEquals(
+			nestedDDMFormFields.toString(), 2, nestedDDMFormFields.size());
 
 		DDMFormField nestedDDMFormField1 = nestedDDMFormFields.get(0);
 

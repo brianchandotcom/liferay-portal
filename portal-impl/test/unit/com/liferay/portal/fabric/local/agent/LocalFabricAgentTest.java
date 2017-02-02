@@ -83,7 +83,7 @@ public class LocalFabricAgentTest {
 
 			});
 
-		Assert.assertEquals(1, fabricWorkers.size());
+		Assert.assertEquals(fabricWorkers.toString(), 1, fabricWorkers.size());
 		Assert.assertTrue(fabricWorkers.contains(fabricWorker));
 
 		DefaultNoticeableFuture<String> defaultNoticeableFuture =
@@ -110,7 +110,7 @@ public class LocalFabricAgentTest {
 
 			});
 
-		Assert.assertEquals(1, fabricWorkers.size());
+		Assert.assertEquals(fabricWorkers.toString(), 1, fabricWorkers.size());
 		Assert.assertTrue(fabricWorkers.contains(fabricWorker));
 
 		defaultNoticeableFuture =

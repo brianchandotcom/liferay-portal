@@ -106,6 +106,7 @@ public class CopyRecordSetMVCActionCommandTest {
 			recordSetSettingsDDMFormValues.getDDMFormFieldValues();
 
 		Assert.assertEquals(
+			recordSetSettingsDDMFormFieldValues.toString(),
 			getDDMFormFieldsSize(expectedRecordSetSettingsDDMForm),
 			recordSetSettingsDDMFormFieldValues.size());
 

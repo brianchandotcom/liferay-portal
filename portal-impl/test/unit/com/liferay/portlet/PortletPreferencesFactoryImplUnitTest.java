@@ -84,7 +84,8 @@ public class PortletPreferencesFactoryImplUnitTest {
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();
 
-		Assert.assertEquals(1, preferencesMap.size());
+		Assert.assertEquals(
+			preferencesMap.toString(), 1, preferencesMap.size());
 
 		Preference preference = preferencesMap.values().iterator().next();
 
@@ -131,7 +132,8 @@ public class PortletPreferencesFactoryImplUnitTest {
 
 		preferencesMap = portletPreferencesImpl.getPreferences();
 
-		Assert.assertEquals(4, preferencesMap.size());
+		Assert.assertEquals(
+			preferencesMap.toString(), 4, preferencesMap.size());
 
 		// Blank
 
@@ -211,7 +213,8 @@ public class PortletPreferencesFactoryImplUnitTest {
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();
 
-		Assert.assertEquals(0, preferencesMap.size());
+		Assert.assertEquals(
+			preferencesMap.toString(), 0, preferencesMap.size());
 	}
 
 	@Test
@@ -237,7 +240,8 @@ public class PortletPreferencesFactoryImplUnitTest {
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();
 
-		Assert.assertEquals(1, preferencesMap.size());
+		Assert.assertEquals(
+			preferencesMap.toString(), 1, preferencesMap.size());
 
 		Preference preference = preferencesMap.values().iterator().next();
 
@@ -270,7 +274,8 @@ public class PortletPreferencesFactoryImplUnitTest {
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();
 
-		Assert.assertEquals(1, preferencesMap.size());
+		Assert.assertEquals(
+			preferencesMap.toString(), 1, preferencesMap.size());
 
 		Preference preference = preferencesMap.values().iterator().next();
 
@@ -306,7 +311,8 @@ public class PortletPreferencesFactoryImplUnitTest {
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();
 
-		Assert.assertEquals(1, preferencesMap.size());
+		Assert.assertEquals(
+			preferencesMap.toString(), 1, preferencesMap.size());
 
 		Preference preference = preferencesMap.values().iterator().next();
 

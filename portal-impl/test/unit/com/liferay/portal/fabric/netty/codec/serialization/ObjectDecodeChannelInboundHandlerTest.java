@@ -144,7 +144,7 @@ public class ObjectDecodeChannelInboundHandlerTest {
 
 		map = channelPipeline.toMap();
 
-		Assert.assertEquals(1, map.size());
+		Assert.assertEquals(map.toString(), 1, map.size());
 		Assert.assertTrue(map.containsValue(annotatedObjectDecoder));
 
 		Assert.assertSame(

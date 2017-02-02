@@ -79,6 +79,7 @@ public class BookmarksEntryLocalServiceTest {
 			BookmarksEntryLocalServiceUtil.getNoAssetEntries();
 
 		Assert.assertEquals(
+			actualBookmarksEntries.toString(),
 			initialBookmarksEntries.size() + 1, actualBookmarksEntries.size());
 
 		Assert.assertTrue(actualBookmarksEntries.contains(entry));

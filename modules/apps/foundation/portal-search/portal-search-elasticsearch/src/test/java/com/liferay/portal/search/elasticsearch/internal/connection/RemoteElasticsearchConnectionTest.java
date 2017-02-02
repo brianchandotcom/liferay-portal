@@ -87,7 +87,8 @@ public class RemoteElasticsearchConnectionTest {
 		List<TransportAddress> transportAddresses =
 			transportClient.transportAddresses();
 
-		Assert.assertEquals(1, transportAddresses.size());
+		Assert.assertEquals(
+			transportAddresses.toString(), 1, transportAddresses.size());
 
 		InetSocketTransportAddress inetSocketTransportAddress =
 			(InetSocketTransportAddress)transportAddresses.get(0);

@@ -66,7 +66,8 @@ public class SocialActivitySettingLocalServiceTest
 		Assert.assertNotNull(activityDefinitions);
 		Assert.assertFalse(activityDefinitions.isEmpty());
 		Assert.assertEquals(
-			defaultActivityDefinitions.size(), activityDefinitions.size());
+			activityDefinitions.toString(), defaultActivityDefinitions.size(),
+			activityDefinitions.size());
 		Assert.assertTrue(
 			activityDefinitions.contains(defaultActivityDefinition));
 	}

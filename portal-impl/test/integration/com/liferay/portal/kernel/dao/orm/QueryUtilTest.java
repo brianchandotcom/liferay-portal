@@ -237,7 +237,7 @@ public class QueryUtilTest {
 				q, _sessionFactory.getDialect(), start, end, unmodifiable);
 
 			Assert.assertNotNull(result);
-			Assert.assertEquals(expectedSize, result.size());
+			Assert.assertEquals(result.toString(), expectedSize, result.size());
 
 			if (expectedSize > 0) {
 				Object[] firstRow = result.get(0);
@@ -261,7 +261,7 @@ public class QueryUtilTest {
 				Assert.assertTrue(unmodifiable);
 			}
 
-			Assert.assertEquals(expectedSize, result.size());
+			Assert.assertEquals(result.toString(), expectedSize, result.size());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -286,7 +286,7 @@ public class QueryUtilTest {
 			List<Integer> result = (List<Integer>)QueryUtil.list(
 				sqlQuery, _sessionFactory.getDialect(), start, end, true);
 
-			Assert.assertEquals(end - start, result.size());
+			Assert.assertEquals(result.toString(), end - start, result.size());
 
 			Number firstId = result.get(0);
 			Number lastId = result.get(result.size() - 1);
@@ -320,7 +320,7 @@ public class QueryUtilTest {
 			List<Object[]> result = (List<Object[]>)QueryUtil.list(
 				q, _sessionFactory.getDialect(), start, end, true);
 
-			Assert.assertEquals(size, result.size());
+			Assert.assertEquals(result.toString(), size, result.size());
 
 			Object[] firstRow = result.get(0);
 			Object[] lastRow = result.get(result.size() - 1);

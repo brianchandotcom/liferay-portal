@@ -135,7 +135,8 @@ public class SearchResultUtilMBMessageTest
 
 		Assert.assertEquals(_mbMessage.getMessageId(), comment.getCommentId());
 
-		Assert.assertEquals(1, relatedSearchResults.size());
+		Assert.assertEquals(
+			relatedSearchResults.toString(), 1, relatedSearchResults.size());
 		Assert.assertNull(searchResult.getSummary());
 
 		assertEmptyFileEntryRelatedSearchResults(searchResult);
@@ -152,7 +153,7 @@ public class SearchResultUtilMBMessageTest
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
 			searchResultTranslator, document1, document2);
 
-		Assert.assertEquals(1, searchResults.size());
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
 
 		SearchResult searchResult = searchResults.get(0);
 

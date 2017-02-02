@@ -184,7 +184,9 @@ public class RoleMembershipPolicyRolesTest
 		List<Role> currentUserRoles = RoleLocalServiceUtil.getUserRoles(
 			user.getUserId());
 
-		Assert.assertEquals(initialUserRoles.size(), currentUserRoles.size());
+		Assert.assertEquals(
+			currentUserRoles.toString(), initialUserRoles.size(),
+			currentUserRoles.size());
 	}
 
 	@Test(expected = MembershipPolicyException.class)

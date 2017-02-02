@@ -1694,7 +1694,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 				Assert.assertEquals(
-					1, foldersAndFileEntriesAndFileShortcuts.size());
+					foldersAndFileEntriesAndFileShortcuts.toString(), 1,
+					foldersAndFileEntriesAndFileShortcuts.size());
 			}
 			finally {
 				UserLocalServiceUtil.deleteUser(user.getUserId());
@@ -1730,7 +1731,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					QueryUtil.ALL_POS);
 
 			Assert.assertEquals(
-				2, foldersAndFileEntriesAndFileShortcuts.size());
+				foldersAndFileEntriesAndFileShortcuts.toString(), 2,
+				foldersAndFileEntriesAndFileShortcuts.size());
 		}
 
 	}

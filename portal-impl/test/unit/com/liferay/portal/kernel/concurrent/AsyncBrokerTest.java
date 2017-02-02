@@ -75,7 +75,7 @@ public class AsyncBrokerTest {
 
 		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
-		Assert.assertEquals(1, map.size());
+		Assert.assertEquals(map.toString(), 1, map.size());
 		Assert.assertSame(noticeableFuture, map.get(_KEY));
 
 		noticeableFuture.cancel(true);
@@ -149,7 +149,7 @@ public class AsyncBrokerTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -185,7 +185,7 @@ public class AsyncBrokerTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -233,10 +233,14 @@ public class AsyncBrokerTest {
 
 		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
-		Assert.assertEquals(1, defaultNoticeableFutures.size());
+		Assert.assertEquals(
+			defaultNoticeableFutures.toString(), 1,
+			defaultNoticeableFutures.size());
 		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_KEY));
 		Assert.assertSame(noticeableFuture, asyncBroker.post(_KEY));
-		Assert.assertEquals(1, defaultNoticeableFutures.size());
+		Assert.assertEquals(
+			defaultNoticeableFutures.toString(), 1,
+			defaultNoticeableFutures.size());
 		Assert.assertTrue(noticeableFuture.cancel(true));
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
 	}
@@ -255,7 +259,7 @@ public class AsyncBrokerTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -285,7 +289,9 @@ public class AsyncBrokerTest {
 
 		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
-		Assert.assertEquals(1, defaultNoticeableFutures.size());
+		Assert.assertEquals(
+			defaultNoticeableFutures.toString(), 1,
+			defaultNoticeableFutures.size());
 		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_KEY));
 		Assert.assertSame(noticeableFuture, asyncBroker.take(_KEY));
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
@@ -309,7 +315,9 @@ public class AsyncBrokerTest {
 
 		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
-		Assert.assertEquals(1, defaultNoticeableFutures.size());
+		Assert.assertEquals(
+			defaultNoticeableFutures.toString(), 1,
+			defaultNoticeableFutures.size());
 		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_KEY));
 		Assert.assertTrue(asyncBroker.takeWithException(_KEY, exception));
 
@@ -340,7 +348,9 @@ public class AsyncBrokerTest {
 
 		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
-		Assert.assertEquals(1, defaultNoticeableFutures.size());
+		Assert.assertEquals(
+			defaultNoticeableFutures.toString(), 1,
+			defaultNoticeableFutures.size());
 		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_KEY));
 		Assert.assertTrue(asyncBroker.takeWithResult(_KEY, _VALUE));
 		Assert.assertEquals(_VALUE, noticeableFuture.get());
@@ -372,7 +382,8 @@ public class AsyncBrokerTest {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			if (withLog) {
-				Assert.assertEquals(1, logRecords.size());
+				Assert.assertEquals(
+					logRecords.toString(), 1, logRecords.size());
 
 				LogRecord logRecord = logRecords.get(0);
 

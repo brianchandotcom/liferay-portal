@@ -157,7 +157,8 @@ public class ThemeBuilderCompareTest {
 			warDir.toPath(), excludePatterns);
 
 		Assert.assertEquals(
-			outputFileNameDigests.size(), warFileNameDigests.size());
+			warFileNameDigests.toString(), outputFileNameDigests.size(),
+			warFileNameDigests.size());
 
 		for (Map.Entry<String, byte[]> entry :
 				outputFileNameDigests.entrySet()) {

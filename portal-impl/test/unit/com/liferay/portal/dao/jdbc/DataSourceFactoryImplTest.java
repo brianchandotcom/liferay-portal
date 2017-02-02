@@ -173,7 +173,8 @@ public class DataSourceFactoryImplTest {
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
 
-			Assert.assertEquals(4, loggingEvents.size());
+			Assert.assertEquals(
+				loggingEvents.toString(), 4, loggingEvents.size());
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 

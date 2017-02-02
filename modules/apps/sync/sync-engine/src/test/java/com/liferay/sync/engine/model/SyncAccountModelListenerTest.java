@@ -58,13 +58,15 @@ public class SyncAccountModelListenerTest extends BaseTestCase {
 		Set<Long> activeSyncAccountIds =
 			SyncAccountService.getActiveSyncAccountIds();
 
-		Assert.assertEquals(1, activeSyncAccountIds.size());
+		Assert.assertEquals(
+			activeSyncAccountIds.toString(), 1, activeSyncAccountIds.size());
 
 		SyncAccountService.deleteSyncAccount(syncAccount.getSyncAccountId());
 
 		activeSyncAccountIds = SyncAccountService.getActiveSyncAccountIds();
 
-		Assert.assertEquals(0, activeSyncAccountIds.size());
+		Assert.assertEquals(
+			activeSyncAccountIds.toString(), 0, activeSyncAccountIds.size());
 	}
 
 	@Test
@@ -72,7 +74,8 @@ public class SyncAccountModelListenerTest extends BaseTestCase {
 		Set<Long> activeSyncAccountIds =
 			SyncAccountService.getActiveSyncAccountIds();
 
-		Assert.assertEquals(1, activeSyncAccountIds.size());
+		Assert.assertEquals(
+			activeSyncAccountIds.toString(), 1, activeSyncAccountIds.size());
 
 		syncAccount.setActive(false);
 
@@ -80,7 +83,8 @@ public class SyncAccountModelListenerTest extends BaseTestCase {
 
 		activeSyncAccountIds = SyncAccountService.getActiveSyncAccountIds();
 
-		Assert.assertEquals(0, activeSyncAccountIds.size());
+		Assert.assertEquals(
+			activeSyncAccountIds.toString(), 0, activeSyncAccountIds.size());
 	}
 
 	private SyncAccountModelListener _syncAccountModelListener;

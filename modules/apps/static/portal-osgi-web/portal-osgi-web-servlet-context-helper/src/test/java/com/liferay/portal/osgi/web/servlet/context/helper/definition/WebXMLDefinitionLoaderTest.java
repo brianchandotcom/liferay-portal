@@ -221,7 +221,9 @@ public class WebXMLDefinitionLoaderTest {
 			OrderUtil.getOrderedWebXMLDefinitions(
 				webXMLDefinitions, webXMLDefinition.getAbsoluteOrderingNames());
 
-		Assert.assertEquals(3, orderedWebXMLDefinitions.size());
+		Assert.assertEquals(
+			orderedWebXMLDefinitions.toString(), 3,
+			orderedWebXMLDefinitions.size());
 
 		WebXMLDefinition firstWebXMLDefinition = orderedWebXMLDefinitions.get(
 			0);
@@ -260,7 +262,9 @@ public class WebXMLDefinitionLoaderTest {
 			OrderUtil.getOrderedWebXMLDefinitions(
 				webXMLDefinitions, webXMLDefinition.getAbsoluteOrderingNames());
 
-		Assert.assertEquals(2, orderedWebXMLDefinitions.size());
+		Assert.assertEquals(
+			orderedWebXMLDefinitions.toString(), 2,
+			orderedWebXMLDefinitions.size());
 
 		WebXMLDefinition firstWebXMLDefinition = orderedWebXMLDefinitions.get(
 			0);
@@ -293,7 +297,9 @@ public class WebXMLDefinitionLoaderTest {
 			OrderUtil.getOrderedWebXMLDefinitions(
 				webXMLDefinitions, webXMLDefinition.getAbsoluteOrderingNames());
 
-		Assert.assertEquals(3, orderedWebXMLDefinitions.size());
+		Assert.assertEquals(
+			orderedWebXMLDefinitions.toString(), 3,
+			orderedWebXMLDefinitions.size());
 
 		WebXMLDefinition firstWebXMLDefinition = orderedWebXMLDefinitions.get(
 			0);
@@ -332,7 +338,9 @@ public class WebXMLDefinitionLoaderTest {
 			OrderUtil.getOrderedWebXMLDefinitions(
 				webXMLDefinitions, webXMLDefinition.getAbsoluteOrderingNames());
 
-		Assert.assertEquals(3, orderedWebXMLDefinitions.size());
+		Assert.assertEquals(
+			orderedWebXMLDefinitions.toString(), 3,
+			orderedWebXMLDefinitions.size());
 
 		WebXMLDefinition firstWebXMLDefinition = orderedWebXMLDefinitions.get(
 			0);
@@ -369,7 +377,9 @@ public class WebXMLDefinitionLoaderTest {
 			OrderUtil.getOrderedWebXMLDefinitions(
 				webXMLDefinitions, webXMLDefinition.getAbsoluteOrderingNames());
 
-		Assert.assertEquals(2, orderedWebXMLDefinitions.size());
+		Assert.assertEquals(
+			orderedWebXMLDefinitions.toString(), 2,
+			orderedWebXMLDefinitions.size());
 
 		WebXMLDefinition firstWebXMLDefinition = orderedWebXMLDefinitions.get(
 			0);
@@ -447,7 +457,8 @@ public class WebXMLDefinitionLoaderTest {
 			webXMLDefinition.getListenerDefinitions();
 
 		Assert.assertEquals(
-			listenerDefinitionsCount, listenerDefinitions.size());
+			listenerDefinitions.toString(), listenerDefinitionsCount,
+			listenerDefinitions.size());
 
 		for (ListenerDefinition listenerDefinition : listenerDefinitions) {
 			EventListener eventListener = listenerDefinition.getEventListener();
@@ -458,12 +469,16 @@ public class WebXMLDefinitionLoaderTest {
 		Map<String, ServletDefinition> servletDefinitions =
 			webXMLDefinition.getServletDefinitions();
 
-		Assert.assertEquals(servletDefinitionsCount, servletDefinitions.size());
+		Assert.assertEquals(
+			servletDefinitions.toString(), servletDefinitionsCount,
+			servletDefinitions.size());
 
 		Map<String, FilterDefinition> filterDefinitions =
 			webXMLDefinition.getFilterDefinitions();
 
-		Assert.assertEquals(filterDefinitionsCount, filterDefinitions.size());
+		Assert.assertEquals(
+			filterDefinitions.toString(), filterDefinitionsCount,
+			filterDefinitions.size());
 	}
 
 	@Mock

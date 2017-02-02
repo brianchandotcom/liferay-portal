@@ -242,7 +242,7 @@ public class MPIHelperUtilTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -340,7 +340,7 @@ public class MPIHelperUtilTest {
 			Assert.assertTrue(
 				MPIHelperUtil.registerSPIProvider(mockSPIProvider1));
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord1 = logRecords.get(0);
 
@@ -370,7 +370,7 @@ public class MPIHelperUtilTest {
 			Assert.assertFalse(
 				MPIHelperUtil.registerSPIProvider(mockSPIProvider3));
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord1 = logRecords.get(0);
 
@@ -402,7 +402,8 @@ public class MPIHelperUtilTest {
 
 			List<SPIProvider> spiProviders = MPIHelperUtil.getSPIProviders();
 
-			Assert.assertEquals(2, spiProviders.size());
+			Assert.assertEquals(
+				spiProviders.toString(), 2, spiProviders.size());
 			Assert.assertTrue(spiProviders.contains(mockSPIProvider1));
 			Assert.assertTrue(spiProviders.contains(mockSPIProvider2));
 
@@ -427,7 +428,7 @@ public class MPIHelperUtilTest {
 			Assert.assertFalse(
 				MPIHelperUtil.unregisterSPIProvider(mockSPIProvider3));
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord1 = logRecords.get(0);
 
@@ -454,7 +455,7 @@ public class MPIHelperUtilTest {
 			Assert.assertFalse(
 				MPIHelperUtil.unregisterSPIProvider(
 					new MockSPIProvider(name2)));
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord1 = logRecords.get(0);
 
@@ -501,7 +502,7 @@ public class MPIHelperUtilTest {
 					oldSPIProviderContainers);
 			}
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord1 = logRecords.get(0);
 
@@ -546,7 +547,7 @@ public class MPIHelperUtilTest {
 
 			Assert.assertTrue(
 				MPIHelperUtil.unregisterSPIProvider(mockSPIProvider2));
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord1 = logRecords.get(0);
 
@@ -596,7 +597,7 @@ public class MPIHelperUtilTest {
 			Assert.assertFalse(mockSPI1.stopped);
 			Assert.assertFalse(mockSPI2.destroyed);
 			Assert.assertFalse(mockSPI2.stopped);
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord1 = logRecords.get(0);
 
@@ -698,7 +699,7 @@ public class MPIHelperUtilTest {
 			Assert.assertTrue(mockSPI1.stopped);
 			Assert.assertFalse(mockSPI2.destroyed);
 			Assert.assertFalse(mockSPI2.stopped);
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			logRecord1 = logRecords.get(0);
 
@@ -784,7 +785,7 @@ public class MPIHelperUtilTest {
 
 			Assert.assertFalse(MPIHelperUtil.registerSPI(mockSPI1));
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.get(0);
 
@@ -826,7 +827,7 @@ public class MPIHelperUtilTest {
 			logRecords = captureHandler.resetLogLevel(Level.INFO);
 
 			Assert.assertTrue(MPIHelperUtil.registerSPI(mockSPI1));
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.get(0);
 
@@ -875,7 +876,7 @@ public class MPIHelperUtilTest {
 			logRecords = captureHandler.resetLogLevel(Level.WARNING);
 
 			Assert.assertFalse(MPIHelperUtil.registerSPI(mockSPI1));
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.get(0);
 
@@ -930,13 +931,13 @@ public class MPIHelperUtilTest {
 
 			List<SPI> spis = MPIHelperUtil.getSPIs();
 
-			Assert.assertEquals(1, spis.size());
+			Assert.assertEquals(spis.toString(), 1, spis.size());
 
 			mockSPI1 = (MockSPI)spis.get(0);
 
 			Assert.assertEquals(name, mockSPI1.spiProviderName);
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.get(0);
 
@@ -959,7 +960,7 @@ public class MPIHelperUtilTest {
 
 			spis = MPIHelperUtil.getSPIs(name);
 
-			Assert.assertEquals(1, spis.size());
+			Assert.assertEquals(spis.toString(), 1, spis.size());
 
 			mockSPI1 = (MockSPI)spis.get(0);
 
@@ -1001,7 +1002,7 @@ public class MPIHelperUtilTest {
 
 			Assert.assertFalse(MPIHelperUtil.unregisterSPI(mockSPI1));
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.get(0);
 
@@ -1028,7 +1029,7 @@ public class MPIHelperUtilTest {
 
 			Assert.assertFalse(MPIHelperUtil.unregisterSPI(mockSPI1));
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.get(0);
 
@@ -1063,7 +1064,7 @@ public class MPIHelperUtilTest {
 
 			Assert.assertFalse(MPIHelperUtil.unregisterSPI(mockSPI1));
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.get(0);
 
@@ -1093,7 +1094,7 @@ public class MPIHelperUtilTest {
 			logRecords = captureHandler.resetLogLevel(Level.INFO);
 
 			Assert.assertTrue(MPIHelperUtil.unregisterSPI(mockSPI1));
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.get(0);
 

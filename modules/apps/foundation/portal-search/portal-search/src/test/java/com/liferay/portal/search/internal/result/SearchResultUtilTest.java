@@ -66,7 +66,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
 			searchResultTranslator);
 
-		Assert.assertEquals(0, searchResults.size());
+		Assert.assertEquals(searchResults.toString(), 0, searchResults.size());
 	}
 
 	@Test
@@ -148,7 +148,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
 			searchResultTranslator, document1, document2);
 
-		Assert.assertEquals(1, searchResults.size());
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
 
 		SearchResult searchResult = searchResults.get(0);
 

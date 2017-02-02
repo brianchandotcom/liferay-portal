@@ -83,7 +83,9 @@ public class NamedConfigurationPathContentFactoryTest {
 		List<NamedConfigurationContent> namedConfigurationContents =
 			namedConfigurationContentFactory.create(bundleStorage);
 
-		Assert.assertEquals(1, namedConfigurationContents.size());
+		Assert.assertEquals(
+			namedConfigurationContents.toString(), 1,
+			namedConfigurationContents.size());
 
 		NamedConfigurationContent namedConfigurationContent =
 			namedConfigurationContents.get(0);
@@ -117,7 +119,9 @@ public class NamedConfigurationPathContentFactoryTest {
 		List<NamedConfigurationContent> namedConfigurationContents =
 			namedConfigurationContentFactory.create(bundleStorage);
 
-		Assert.assertEquals(2, namedConfigurationContents.size());
+		Assert.assertEquals(
+			namedConfigurationContents.toString(), 2,
+			namedConfigurationContents.size());
 
 		NamedConfigurationContent namedConfigurationContent =
 			namedConfigurationContents.get(0);
@@ -162,7 +166,9 @@ public class NamedConfigurationPathContentFactoryTest {
 		List<NamedConfigurationContent> namedConfigurationContents =
 			namedConfigurationContentFactory.create(bundleStorage);
 
-		Assert.assertEquals(2, namedConfigurationContents.size());
+		Assert.assertEquals(
+			namedConfigurationContents.toString(), 2,
+			namedConfigurationContents.size());
 
 		NamedConfigurationContent namedConfigurationContent =
 			namedConfigurationContents.get(0);

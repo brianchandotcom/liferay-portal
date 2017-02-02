@@ -134,7 +134,7 @@ public class BaseModelHintsImplTest {
 		Map<String, String> defaultHints = _testBaseModelHints.getDefaultHints(
 			_MODEL);
 
-		Assert.assertEquals(1, defaultHints.size());
+		Assert.assertEquals(defaultHints.toString(), 1, defaultHints.size());
 		Assert.assertEquals("210", defaultHints.get("display-width"));
 	}
 
@@ -185,7 +185,7 @@ public class BaseModelHintsImplTest {
 	public void testGetModels() {
 		List<String> models = _testBaseModelHints.getModels();
 
-		Assert.assertEquals(1, models.size());
+		Assert.assertEquals(models.toString(), 1, models.size());
 
 		Assert.assertEquals(_MODEL, models.get(0));
 	}
@@ -211,7 +211,8 @@ public class BaseModelHintsImplTest {
 		List<Tuple> sanitizedTuples = _testBaseModelHints.getSanitizeTuples(
 			_MODEL);
 
-		Assert.assertEquals(2, sanitizedTuples.size());
+		Assert.assertEquals(
+			sanitizedTuples.toString(), 2, sanitizedTuples.size());
 
 		Tuple sanitizeFieldTuple = sanitizedTuples.get(0);
 
@@ -254,7 +255,7 @@ public class BaseModelHintsImplTest {
 		validators = _testBaseModelHints.getValidators(
 			_MODEL, "validatorField");
 
-		Assert.assertEquals(2, validators.size());
+		Assert.assertEquals(validators.toString(), 2, validators.size());
 
 		Tuple emailValidator = validators.get(0);
 
@@ -268,7 +269,7 @@ public class BaseModelHintsImplTest {
 
 		validators = _testBaseModelHints.getValidators(_MODEL, "combinedField");
 
-		Assert.assertEquals(1, validators.size());
+		Assert.assertEquals(validators.toString(), 1, validators.size());
 
 		requiredValidator = validators.get(0);
 

@@ -96,7 +96,9 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 		List<String> actualChildrenFieldNames = structure.getChildrenFieldNames(
 			"field1");
 
-		Assert.assertEquals(2, actualChildrenFieldNames.size());
+		Assert.assertEquals(
+			actualChildrenFieldNames.toString(), 2,
+			actualChildrenFieldNames.size());
 		Assert.assertTrue(actualChildrenFieldNames.contains("child1Field1"));
 		Assert.assertTrue(actualChildrenFieldNames.contains("child2Field1"));
 	}

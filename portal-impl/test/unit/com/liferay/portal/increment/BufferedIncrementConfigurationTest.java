@@ -60,7 +60,7 @@ public class BufferedIncrementConfigurationTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			LogRecord logRecord1 = logRecords.get(0);
 

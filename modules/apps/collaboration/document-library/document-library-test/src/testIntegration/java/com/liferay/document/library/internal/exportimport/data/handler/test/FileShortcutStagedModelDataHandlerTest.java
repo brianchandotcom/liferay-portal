@@ -154,7 +154,9 @@ public class FileShortcutStagedModelDataHandlerTest
 		List<StagedModel> fileEntryDependentStagedModels =
 			dependentStagedModelsMap.get(DLFileEntry.class.getSimpleName());
 
-		Assert.assertEquals(1, fileEntryDependentStagedModels.size());
+		Assert.assertEquals(
+			fileEntryDependentStagedModels.toString(), 1,
+			fileEntryDependentStagedModels.size());
 
 		FileEntry fileEntry = (FileEntry)fileEntryDependentStagedModels.get(0);
 
@@ -164,7 +166,9 @@ public class FileShortcutStagedModelDataHandlerTest
 		List<StagedModel> folderDependentStagedModels =
 			dependentStagedModelsMap.get(DLFolder.class.getSimpleName());
 
-		Assert.assertEquals(1, folderDependentStagedModels.size());
+		Assert.assertEquals(
+			folderDependentStagedModels.toString(), 1,
+			folderDependentStagedModels.size());
 
 		Folder folder = (Folder)folderDependentStagedModels.get(0);
 

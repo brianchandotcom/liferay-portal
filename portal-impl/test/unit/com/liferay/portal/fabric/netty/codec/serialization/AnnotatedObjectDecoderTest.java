@@ -255,7 +255,7 @@ public class AnnotatedObjectDecoderTest {
 	private void _assertChannelPipeline(ChannelHandler... channelHandlers) {
 		Map<String, ChannelHandler> map = _innerChannelPipeline.toMap();
 
-		Assert.assertEquals(channelHandlers.length, map.size());
+		Assert.assertEquals(map.toString(), channelHandlers.length, map.size());
 		Assert.assertEquals(
 			Arrays.asList(channelHandlers),
 			new ArrayList<ChannelHandler>(map.values()));

@@ -194,7 +194,7 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 			WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(2, templates.size());
+		Assert.assertEquals(templates.toString(), 2, templates.size());
 	}
 
 	@Test
@@ -215,7 +215,7 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(1, templates.size());
+		Assert.assertEquals(templates.toString(), 1, templates.size());
 
 		DDMTemplate template = templates.get(0);
 
@@ -238,7 +238,7 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 			WorkflowConstants.STATUS_DRAFT, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(1, templates.size());
+		Assert.assertEquals(templates.toString(), 1, templates.size());
 	}
 
 	@Test
@@ -256,7 +256,7 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new TemplateIdComparator(true));
 
-		Assert.assertEquals(1, templates.size());
+		Assert.assertEquals(templates.toString(), 1, templates.size());
 		Assert.assertEquals(
 			"Event Template", getTemplateName(templates.get(0)));
 
@@ -290,7 +290,7 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(1, templates.size());
+		Assert.assertEquals(templates.toString(), 1, templates.size());
 		Assert.assertEquals("Event", getTemplateName(templates.get(0)));
 	}
 
@@ -312,7 +312,7 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(0, templates.size());
+		Assert.assertEquals(templates.toString(), 0, templates.size());
 	}
 
 	@Test

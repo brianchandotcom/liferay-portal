@@ -115,7 +115,7 @@ public class KBArchiveFactoryTest {
 
 		Collection<KBArchive.Folder> folders = kbArchive.getFolders();
 
-		Assert.assertEquals(3, folders.size());
+		Assert.assertEquals(folders.toString(), 3, folders.size());
 
 		Iterator<KBArchive.Folder> folderIterator = folders.iterator();
 
@@ -165,7 +165,7 @@ public class KBArchiveFactoryTest {
 
 		Collection<KBArchive.Folder> folders = kbArchive.getFolders();
 
-		Assert.assertEquals(1, folders.size());
+		Assert.assertEquals(folders.toString(), 1, folders.size());
 
 		KBArchive.Folder folder = folders.iterator().next();
 
@@ -173,7 +173,7 @@ public class KBArchiveFactoryTest {
 
 		Collection<KBArchive.File> files = folder.getFiles();
 
-		Assert.assertEquals(2, files.size());
+		Assert.assertEquals(files.toString(), 2, files.size());
 
 		Iterator<KBArchive.File> iterator = files.iterator();
 

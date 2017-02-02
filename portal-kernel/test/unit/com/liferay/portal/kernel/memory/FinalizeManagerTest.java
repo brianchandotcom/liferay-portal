@@ -148,7 +148,8 @@ public class FinalizeManagerTest {
 			ReflectionTestUtil.getFieldValue(
 				FinalizeManager.class, "_finalizeActions");
 
-		Assert.assertEquals(1, finalizeActions.size());
+		Assert.assertEquals(
+			finalizeActions.toString(), 1, finalizeActions.size());
 		Assert.assertTrue(finalizeActions.containsKey(reference1));
 
 		Reference<?> reference2 = FinalizeManager.register(
@@ -158,26 +159,30 @@ public class FinalizeManagerTest {
 		Assert.assertEquals(reference1, reference2);
 		Assert.assertNotSame(reference1, reference2);
 
-		Assert.assertEquals(2, finalizeActions.size());
+		Assert.assertEquals(
+			finalizeActions.toString(), 2, finalizeActions.size());
 		Assert.assertTrue(finalizeActions.containsKey(reference1));
 		Assert.assertTrue(finalizeActions.containsKey(reference2));
 
 		reference2.clear();
 
-		Assert.assertEquals(1, finalizeActions.size());
+		Assert.assertEquals(
+			finalizeActions.toString(), 1, finalizeActions.size());
 		Assert.assertTrue(finalizeActions.containsKey(reference1));
 
 		reference2 = FinalizeManager.register(
 			new String(testString), markFinalizeAction,
 			FinalizeManager.SOFT_REFERENCE_FACTORY);
 
-		Assert.assertEquals(2, finalizeActions.size());
+		Assert.assertEquals(
+			finalizeActions.toString(), 2, finalizeActions.size());
 		Assert.assertTrue(finalizeActions.containsKey(reference1));
 		Assert.assertTrue(finalizeActions.containsKey(reference2));
 
 		reference2.clear();
 
-		Assert.assertEquals(1, finalizeActions.size());
+		Assert.assertEquals(
+			finalizeActions.toString(), 1, finalizeActions.size());
 		Assert.assertTrue(finalizeActions.containsKey(reference1));
 
 		reference1.clear();

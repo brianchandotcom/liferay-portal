@@ -172,7 +172,7 @@ public class MBMessageLocalServiceTest {
 			PortletFileRepositoryUtil.getPortletFileEntries(
 				message.getGroupId(), message.getAttachmentsFolderId());
 
-		Assert.assertEquals(1, fileEntries.size());
+		Assert.assertEquals(fileEntries.toString(), 1, fileEntries.size());
 
 		FileEntry fileEntry = fileEntries.get(0);
 
@@ -216,7 +216,7 @@ public class MBMessageLocalServiceTest {
 		List<MBMessage> messages =
 			MBMessageLocalServiceUtil.getNoAssetMessages();
 
-		Assert.assertEquals(1, messages.size());
+		Assert.assertEquals(messages.toString(), 1, messages.size());
 		Assert.assertEquals(message, messages.get(0));
 	}
 

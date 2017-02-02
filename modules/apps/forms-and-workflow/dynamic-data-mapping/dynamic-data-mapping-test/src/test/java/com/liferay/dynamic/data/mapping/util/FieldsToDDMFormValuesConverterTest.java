@@ -135,7 +135,8 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(2, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 2, ddmFormFieldValues.size());
 
 		DDMFormFieldValue paulDDMFormFieldValue = ddmFormFieldValues.get(0);
 
@@ -144,7 +145,9 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> paulNestedDDMFormFieldValues =
 			paulDDMFormFieldValue.getNestedDDMFormFieldValues();
 
-		Assert.assertEquals(2, paulNestedDDMFormFieldValues.size());
+		Assert.assertEquals(
+			paulNestedDDMFormFieldValues.toString(), 2,
+			paulNestedDDMFormFieldValues.size());
 
 		testDDMFormFieldValue(
 			"ovho", "Paul's Phone 1", "Telefone de Paulo 1",
@@ -161,7 +164,9 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> joeNestedDDMFormFieldValues =
 			joeDDMFormFieldValue.getNestedDDMFormFieldValues();
 
-		Assert.assertEquals(3, joeNestedDDMFormFieldValues.size());
+		Assert.assertEquals(
+			joeNestedDDMFormFieldValues.toString(), 3,
+			joeNestedDDMFormFieldValues.size());
 
 		testDDMFormFieldValue(
 			"latb", "Joe's Phone 1", "Telefone de Joao 1",
@@ -200,7 +205,8 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 
 		testDDMFormFieldValue(
 			"rztm", "Name 1", "Nome 1", ddmFormFieldValues.get(0));
@@ -243,7 +249,8 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(2, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 2, ddmFormFieldValues.size());
 
 		testDDMFormFieldValue(
 			"rztm", "Title Example", "Titulo Exemplo",

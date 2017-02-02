@@ -427,7 +427,8 @@ public class RemoteSPITest {
 		List<Class<?>> exceptionTypes = Arrays.asList(
 			readObjectMethod.getExceptionTypes());
 
-		Assert.assertEquals(2, exceptionTypes.size());
+		Assert.assertEquals(
+			exceptionTypes.toString(), 2, exceptionTypes.size());
 		Assert.assertTrue(
 			exceptionTypes.contains(ClassNotFoundException.class));
 		Assert.assertTrue(exceptionTypes.contains(IOException.class));
@@ -501,7 +502,7 @@ public class RemoteSPITest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(3, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 3, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -634,7 +635,7 @@ public class RemoteSPITest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -680,7 +681,7 @@ public class RemoteSPITest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -764,7 +765,7 @@ public class RemoteSPITest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -838,7 +839,7 @@ public class RemoteSPITest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 

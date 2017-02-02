@@ -97,7 +97,8 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(2, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 2, ddmFormFieldValues.size());
 		Assert.assertEquals(
 			"Joe Bloggs", getValueString(ddmFormFieldValues.get(0)));
 		Assert.assertEquals(
@@ -139,7 +140,8 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(2, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 2, ddmFormFieldValues.size());
 		Assert.assertEquals(
 			"Joe Bloggs", getValueString(ddmFormFieldValues.get(0)));
 		Assert.assertEquals(
@@ -178,7 +180,8 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
 		Assert.assertEquals("true", getValueString(ddmFormFieldValues.get(0)));
 	}
 
@@ -209,7 +212,8 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
 		Assert.assertEquals("false", getValueString(ddmFormFieldValues.get(0)));
 	}
 
@@ -245,7 +249,8 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
 		Assert.assertEquals(
 			"[\"REQUEST_HEADER\"]", getValueString(ddmFormFieldValues.get(0)));
 	}
@@ -277,7 +282,8 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(2, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 2, ddmFormFieldValues.size());
 		Assert.assertEquals(
 			"Joe Bloggs", getValueString(ddmFormFieldValues.get(0)));
 		Assert.assertEquals(
@@ -309,7 +315,8 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
 		Assert.assertEquals(
 			StringPool.BLANK, getValueString(ddmFormFieldValues.get(0)));
 	}

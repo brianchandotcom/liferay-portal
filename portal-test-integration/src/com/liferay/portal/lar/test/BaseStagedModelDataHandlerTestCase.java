@@ -676,7 +676,9 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			AssetCategoryLocalServiceUtil.getEntryCategories(
 				importedAssetEntry.getEntryId());
 
-		Assert.assertEquals(2, importedAssetCategories.size());
+		Assert.assertEquals(
+			importedAssetCategories.toString(), 2,
+			importedAssetCategories.size());
 
 		AssetCategory stagedAssetCategory =
 			stagedModelAssets.getAssetCategory();
@@ -705,7 +707,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			AssetTagLocalServiceUtil.getEntryTags(
 				importedAssetEntry.getEntryId());
 
-		Assert.assertEquals(1, importedAssetTags.size());
+		Assert.assertEquals(
+			importedAssetTags.toString(), 1, importedAssetTags.size());
 
 		AssetTag assetTag = stagedModelAssets.getAssetTag();
 		AssetTag importedAssetTag = importedAssetTags.get(0);
@@ -809,7 +812,9 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 			List<Element> elements = stagedModelGroupElement.elements();
 
-			Assert.assertEquals(dependentStagedModels.size(), elements.size());
+			Assert.assertEquals(
+				elements.toString(), dependentStagedModels.size(),
+				elements.size());
 
 			for (Element element : elements) {
 				String path = element.attributeValue("path");
@@ -899,7 +904,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 				WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(
-			ratingsEntries.size(), importedRatingsEntries.size());
+			importedRatingsEntries.toString(), ratingsEntries.size(),
+			importedRatingsEntries.size());
 
 		for (RatingsEntry ratingsEntry : ratingsEntries) {
 			Iterator<RatingsEntry> iterator = importedRatingsEntries.iterator();

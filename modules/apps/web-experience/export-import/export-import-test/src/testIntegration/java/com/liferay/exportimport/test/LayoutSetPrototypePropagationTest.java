@@ -202,6 +202,7 @@ public class LayoutSetPrototypePropagationTest
 			SitesUtil.getMergeFailFriendlyURLLayouts(layoutSet);
 
 		Assert.assertEquals(
+			mergeFailFriendlyURLLayouts.toString(),
 			initialMergeFailFriendlyURLLayouts.size() + 1,
 			mergeFailFriendlyURLLayouts.size());
 	}

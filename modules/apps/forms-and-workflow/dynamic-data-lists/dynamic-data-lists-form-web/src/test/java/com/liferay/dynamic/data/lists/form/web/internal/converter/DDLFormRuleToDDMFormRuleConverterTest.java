@@ -180,6 +180,7 @@ public class DDLFormRuleToDDMFormRuleConverterTest
 				StringPool.EQUAL);
 
 		Assert.assertEquals(
+			actualParametersExpressionMap.toString(),
 			expectedParametersExpressionMap.size(),
 			actualParametersExpressionMap.size());
 

@@ -228,7 +228,8 @@ public class DLFileEntryTypeFinderTest {
 				_DL_FILE_ENTRY_TYPE_NAME, true, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(1, fileEntryTypes.size());
+		Assert.assertEquals(
+			fileEntryTypes.toString(), 1, fileEntryTypes.size());
 		Assert.assertTrue(fileEntryTypes.contains(fileEntryType));
 	}
 
@@ -257,7 +258,8 @@ public class DLFileEntryTypeFinderTest {
 					_DL_FILE_ENTRY_TYPE_NAME, true, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 
-			Assert.assertEquals(1, fileEntryTypes.size());
+			Assert.assertEquals(
+				fileEntryTypes.toString(), 1, fileEntryTypes.size());
 			Assert.assertTrue(fileEntryTypes.contains(fileEntryType));
 		}
 		finally {
@@ -296,7 +298,8 @@ public class DLFileEntryTypeFinderTest {
 					_DL_FILE_ENTRY_TYPE_NAME, true, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 
-			Assert.assertEquals(0, fileEntryTypes.size());
+			Assert.assertEquals(
+				fileEntryTypes.toString(), 0, fileEntryTypes.size());
 			Assert.assertFalse(fileEntryTypes.contains(fileEntryType));
 		}
 		finally {
@@ -319,7 +322,8 @@ public class DLFileEntryTypeFinderTest {
 				StringPool.BLANK, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 
-		Assert.assertEquals(2, fileEntryTypes.size());
+		Assert.assertEquals(
+			fileEntryTypes.toString(), 2, fileEntryTypes.size());
 		Assert.assertTrue(fileEntryTypes.contains(fileEntryType));
 
 		DLFileEntryType basicFileEntryType =
@@ -339,7 +343,8 @@ public class DLFileEntryTypeFinderTest {
 				StringPool.BLANK, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 
-		Assert.assertEquals(1, fileEntryTypes.size());
+		Assert.assertEquals(
+			fileEntryTypes.toString(), 1, fileEntryTypes.size());
 
 		DLFileEntryType basicFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
@@ -364,7 +369,8 @@ public class DLFileEntryTypeFinderTest {
 				StringPool.BLANK, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 
-		Assert.assertEquals(1, fileEntryTypes.size());
+		Assert.assertEquals(
+			fileEntryTypes.toString(), 1, fileEntryTypes.size());
 		Assert.assertTrue(fileEntryTypes.contains(fileEntryType));
 	}
 

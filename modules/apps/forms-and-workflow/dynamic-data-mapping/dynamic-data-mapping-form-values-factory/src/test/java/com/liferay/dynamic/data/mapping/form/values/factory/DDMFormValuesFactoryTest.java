@@ -605,7 +605,9 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		List<DDMFormFieldValue> actualDDMFormFieldValues =
 			actualDDMFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(2, actualDDMFormFieldValues.size());
+		Assert.assertEquals(
+			actualDDMFormFieldValues.toString(), 2,
+			actualDDMFormFieldValues.size());
 
 		DDMFormFieldValue fieldset1DDMFormFieldValue =
 			actualDDMFormFieldValues.get(0);
@@ -753,7 +755,9 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		List<DDMFormFieldValue> actualDDMFormFieldValues =
 			actualDDMFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(2, actualDDMFormFieldValues.size());
+		Assert.assertEquals(
+			actualDDMFormFieldValues.toString(), 2,
+			actualDDMFormFieldValues.size());
 
 		assertEquals("Joe", actualDDMFormFieldValues.get(0), LocaleUtil.US);
 		assertEquals("false", actualDDMFormFieldValues.get(1), LocaleUtil.US);
@@ -782,7 +786,8 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 1, ddmFormFieldValues.size());
 
 		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 
@@ -836,7 +841,9 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		List<DDMFormFieldValue> actualDDMFormFieldValues =
 			actualDDMFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(2, actualDDMFormFieldValues.size());
+		Assert.assertEquals(
+			actualDDMFormFieldValues.toString(), 2,
+			actualDDMFormFieldValues.size());
 
 		assertEquals("false", actualDDMFormFieldValues.get(0), LocaleUtil.US);
 		assertEquals("Baz", actualDDMFormFieldValues.get(1), LocaleUtil.US);

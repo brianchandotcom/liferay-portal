@@ -229,7 +229,7 @@ public class AntlrCreoleParserTest {
 
 		List<ASTNode> astNodes = paragraphNode.getChildASTNodes();
 
-		Assert.assertEquals(10, astNodes.size());
+		Assert.assertEquals(astNodes.toString(), 10, astNodes.size());
 
 		for (int i = 0; i < astNodes.size(); i++) {
 			ASTNode astNode = astNodes.get(i);
@@ -533,7 +533,7 @@ public class AntlrCreoleParserTest {
 
 		List<ASTNode> astNodes = paragraphNode.getChildASTNodes();
 
-		Assert.assertEquals(1, astNodes.size());
+		Assert.assertEquals(astNodes.toString(), 1, astNodes.size());
 
 		LineNode lineNode = (LineNode)paragraphNode.getChildASTNode(0);
 
@@ -674,13 +674,13 @@ public class AntlrCreoleParserTest {
 
 		List<ASTNode> astNodes = wikiPageNode.getChildASTNodes();
 
-		Assert.assertEquals(1, astNodes.size());
+		Assert.assertEquals(astNodes.toString(), 1, astNodes.size());
 
 		ParagraphNode paragraphNode = (ParagraphNode)astNodes.get(0);
 
 		astNodes = paragraphNode.getChildASTNodes();
 
-		Assert.assertEquals(1, astNodes.size());
+		Assert.assertEquals(astNodes.toString(), 1, astNodes.size());
 
 		LineNode lineNode = (LineNode)paragraphNode.getChildASTNode(0);
 

@@ -36,7 +36,8 @@ public class AnnotatedSettingsDescriptorTest {
 			"boolean", "long", "string", "stringArray1", "stringArray2",
 			"unrenamedProperty");
 
-		Assert.assertEquals(expectedAllKeys.size(), allKeys.size());
+		Assert.assertEquals(
+			allKeys.toString(), expectedAllKeys.size(), allKeys.size());
 		Assert.assertTrue(allKeys.containsAll(expectedAllKeys));
 	}
 
@@ -49,7 +50,8 @@ public class AnnotatedSettingsDescriptorTest {
 			"stringArray1", "stringArray2");
 
 		Assert.assertEquals(
-			expectedMultiValuedKeys.size(), multiValuedKeys.size());
+			multiValuedKeys.toString(), expectedMultiValuedKeys.size(),
+			multiValuedKeys.size());
 		Assert.assertTrue(multiValuedKeys.containsAll(expectedMultiValuedKeys));
 	}
 

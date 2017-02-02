@@ -180,7 +180,8 @@ public class ResourcesImporterTest {
 
 		_layoutPrototypes = getLayoutPrototypes();
 
-		Assert.assertEquals(2, _layoutPrototypes.size());
+		Assert.assertEquals(
+			_layoutPrototypes.toString(), 2, _layoutPrototypes.size());
 
 		validateLayouts(_importedGroup);
 
@@ -306,7 +307,7 @@ public class ResourcesImporterTest {
 				importedGroup.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		Assert.assertEquals(1, dlFileEntries.size());
+		Assert.assertEquals(dlFileEntries.toString(), 1, dlFileEntries.size());
 
 		DLFileEntry dlFileEntry = dlFileEntries.get(0);
 
@@ -322,7 +323,7 @@ public class ResourcesImporterTest {
 			importedGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		Assert.assertEquals(1, dlFolders.size());
+		Assert.assertEquals(dlFolders.toString(), 1, dlFolders.size());
 
 		DLFolder dlFolder = dlFolders.get(0);
 
@@ -338,7 +339,8 @@ public class ResourcesImporterTest {
 			JournalArticleLocalServiceUtil.getArticles(
 				importedGroup.getGroupId());
 
-		Assert.assertEquals(5, journalArticles.size());
+		Assert.assertEquals(
+			journalArticles.toString(), 5, journalArticles.size());
 
 		int ddmStructuresCount =
 			DDMStructureLocalServiceUtil.getStructuresCount(
@@ -370,7 +372,7 @@ public class ResourcesImporterTest {
 		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getEntryTags(
 			assetEntry.getEntryId());
 
-		Assert.assertEquals(1, assetTags.size());
+		Assert.assertEquals(assetTags.toString(), 1, assetTags.size());
 
 		JournalFolder parentJournalFolder =
 			JournalFolderLocalServiceUtil.fetchFolder(
@@ -425,7 +427,7 @@ public class ResourcesImporterTest {
 
 		List<Portlet> portlets = layoutTypePortlet.getAllPortlets();
 
-		Assert.assertEquals(7, portlets.size());
+		Assert.assertEquals(portlets.toString(), 7, portlets.size());
 
 		UnicodeProperties layoutTypeSettingsProperties =
 			layout.getTypeSettingsProperties();

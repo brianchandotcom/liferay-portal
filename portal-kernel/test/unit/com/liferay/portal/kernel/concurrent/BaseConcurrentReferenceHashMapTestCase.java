@@ -62,13 +62,15 @@ public class BaseConcurrentReferenceHashMapTestCase {
 		Assert.assertTrue(concurrentMap.containsKey(testKey));
 		Assert.assertSame(testValue1, concurrentMap.get(testKey));
 		Assert.assertTrue(concurrentMap.containsValue(testValue1));
-		Assert.assertEquals(1, finalizeActions.size());
+		Assert.assertEquals(
+			finalizeActions.toString(), 1, finalizeActions.size());
 		Assert.assertSame(testValue1, concurrentMap.put(testKey, testValue2));
 		Assert.assertTrue(concurrentMap.containsKey(testKey));
 		Assert.assertSame(testValue2, concurrentMap.get(testKey));
 		Assert.assertFalse(concurrentMap.containsValue(testValue1));
 		Assert.assertTrue(concurrentMap.containsValue(testValue2));
-		Assert.assertEquals(1, finalizeActions.size());
+		Assert.assertEquals(
+			finalizeActions.toString(), 1, finalizeActions.size());
 
 		Set<String> keySet = concurrentMap.keySet();
 
@@ -84,8 +86,9 @@ public class BaseConcurrentReferenceHashMapTestCase {
 
 		Assert.assertSame(
 			testValue2, concurrentMap.replace(testKey, new Object()));
-		Assert.assertEquals(1, finalizeActions.size());
-		Assert.assertEquals(1, concurrentMap.size());
+		Assert.assertEquals(
+			finalizeActions.toString(), 1, finalizeActions.size());
+		Assert.assertEquals(concurrentMap.toString(), 1, concurrentMap.size());
 
 		testKey = null;
 

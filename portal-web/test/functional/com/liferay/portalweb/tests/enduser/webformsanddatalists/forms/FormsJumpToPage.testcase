@@ -86,8 +86,8 @@
 		<execute macro="FormRules#configureActionOptions">
 			<var name="action" value="Jump to Page" />
 			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Page 1" />
-			<var name="actionTarget2" value="Page 3" />
+			<var name="actionTarget" value="1 Page 1" />
+			<var name="actionTarget2" value="3 Page 3" />
 		</execute>
 
 		<execute macro="FormRules#save" />
@@ -105,8 +105,8 @@
 		<execute macro="FormRules#configureActionOptions">
 			<var name="action" value="Jump to Page" />
 			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Page 1" />
-			<var name="actionTarget2" value="Page 4" />
+			<var name="actionTarget" value="1 Page 1" />
+			<var name="actionTarget2" value="4 Page 4" />
 		</execute>
 
 		<execute macro="FormRules#save" />
@@ -145,8 +145,8 @@
 
 		<execute macro="FormRules#viewSummary">
 			<var name="action" value="Jump from page" />
-			<var name="actionTarget" value="Page 1" />
-			<var name="actionTarget2" value="Page 3" />
+			<var name="actionTarget" value="1 Page 1" />
+			<var name="actionTarget2" value="3 Page 3" />
 			<var name="conditionField" value="Choose Your Destiny" />
 			<var name="conditionFieldConstant" value="Destiny 2" />
 			<var name="conditionOperator" value="equal to" />
@@ -155,8 +155,8 @@
 
 		<execute macro="FormRules#viewSummary">
 			<var name="action" value="Jump from page" />
-			<var name="actionTarget" value="Page 1" />
-			<var name="actionTarget2" value="Page 4" />
+			<var name="actionTarget" value="1 Page 1" />
+			<var name="actionTarget2" value="4 Page 4" />
 			<var name="conditionField" value="Choose Your Destiny" />
 			<var name="conditionFieldConstant" value="Destiny 3" />
 			<var name="conditionOperator" value="equal to" />

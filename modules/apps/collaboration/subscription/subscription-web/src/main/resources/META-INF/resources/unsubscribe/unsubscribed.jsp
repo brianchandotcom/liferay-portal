@@ -22,7 +22,11 @@ long userId = ParamUtil.getLong(request, "userId");
 
 User unsubscribedUser = UserLocalServiceUtil.getUser(userId);
 
-PortletURL manageSubscriptionsURL = SubscriptionUtil.getManageSubscriptionsURL(request);
+PortletURL manageSubscriptionsURL = PortletProviderUtil.getPortletURL(request, Subscription.class.getName(), PortletProvider.Action.MANAGE);
+
+if (manageSubscriptionsURL != null) {
+	manageSubscriptionsURL.setWindowState(LiferayWindowState.MAXIMIZED);
+}
 %>
 
 <div class="successful">
@@ -51,7 +55,7 @@ PortletURL manageSubscriptionsURL = SubscriptionUtil.getManageSubscriptionsURL(r
 		<liferay-ui:message arguments="<%= unsubscribedUser.getEmailAddress() %>" key="we-wont-send-you-mails-to-x-anymore" />
 	</p>
 
-	<c:if test="<%= Validator.isNotNull(manageSubscriptionsURL) %>">
+	<c:if test="<%= manageSubscriptionsURL != null %>">
 		<p class="help">
 			<h4>
 				<liferay-ui:message key="did-you-unsubscribe-by-accident" />

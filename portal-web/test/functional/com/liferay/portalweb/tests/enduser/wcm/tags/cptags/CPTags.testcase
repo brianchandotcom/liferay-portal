@@ -370,6 +370,62 @@
 		</execute>
 	</command>
 
+	<command name="EmergeTagsLocatedOnDifferentPages" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<var name="count" value="1" />
+
+		<while>
+			<not>
+				<equals arg1="${count}" arg2="8" />
+			</not>
+			<then>
+				<execute macro="ProductMenu#gotoSitesContent">
+					<var name="portlet" value="Tags" />
+				</execute>
+
+				<execute macro="Tag#addCP">
+					<var name="tagName" value="tag name ${count}" />
+				</execute>
+
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
+			</then>
+		</while>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Pagination#changePagination">
+			<var name="itemsPerPage" value="5" />
+		</execute>
+
+		<execute macro="Pagination#viewResults">
+			<var name="results" value="Showing 1 to 5 of 7 entries." />
+		</execute>
+
+		<execute macro="Tag#mergeTags">
+			<var name="mergeConfirmation"><![CDATA[Are you sure you want to merge "tag name 1,tag name 2,tag name 3" into "tag name 6"? This will change all items tagged with "tag name 1,tag name 2,tag name 3" to instead be tagged with "tag name 6".]]></var>
+			<var name="SelectTagName" value="tag name 6" />
+			<var name="selectTagToEmergeTo" value="tag name 6" />
+			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tag name 6" />
+		</execute>
+
+		<for list="tag name 1,tag name 2,tag name 3" param="tagName">
+			<execute macro="Tag#viewEmergedTagsCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="MergeMultipleTags" priority="3">
 		<execute macro="Navigator#openURL" />
 

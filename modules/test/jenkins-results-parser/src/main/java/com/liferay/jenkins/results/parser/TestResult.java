@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -183,12 +182,8 @@ public class TestResult {
 			liferayLog = JenkinsResultsParserUtil.toString(
 				getLiferayLogURL(), false, 0, 0, 0);
 		}
-		catch (FileNotFoundException fnfe) {
-			return false;
-		}
 		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to verify existence of Liferay log");
+			return false;
 		}
 
 		return !liferayLog.isEmpty();

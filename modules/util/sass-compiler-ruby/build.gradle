@@ -5,6 +5,10 @@ dependencies {
 	compileInclude group: "com.liferay", name: "com.liferay.ruby.gems", version: "1.0.1"
 }
 
+liferayOSGi {
+	expandCompileInclude = true
+}
+
 processTestResources {
 	dependsOn ":util:sass-compiler-jni:downloadSassSpec"
 }

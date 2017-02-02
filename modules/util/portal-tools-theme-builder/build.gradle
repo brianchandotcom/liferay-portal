@@ -64,6 +64,10 @@ liferay {
 	deployDir = "../../../tools/sdk/dependencies/com.liferay.portal.tools.theme.builder/lib"
 }
 
+liferayOSGi {
+	expandCompileInclude = true
+}
+
 test {
 	dependsOn install
 	dependsOn writeParentThemeDependencies

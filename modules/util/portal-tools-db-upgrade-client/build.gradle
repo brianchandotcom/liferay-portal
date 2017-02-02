@@ -8,3 +8,7 @@ deploy {
 		include "*.properties"
 	}
 }
+
+liferayOSGi {
+	expandCompileInclude = true
+}

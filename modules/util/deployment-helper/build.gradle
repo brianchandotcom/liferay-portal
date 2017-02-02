@@ -27,6 +27,10 @@ formatSource {
 	mustRunAfter formatXML
 }
 
+liferayOSGi {
+	expandCompileInclude = true
+}
+
 updateFileVersions {
 	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
 }

@@ -297,6 +297,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CONTENT_VIDEO_LINK-->
+<tr>
+	<td>CONTENT_VIDEO_LINK_IMAGE</td>
+	<td>//img[contains(@class,'video')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--RESOURCES_BROWSER-->
 <tr>
 	<td>RESOURCES_BROWSER_DOCUMENTS_AND_MEDIA_DOCUMENT_PNG</td>

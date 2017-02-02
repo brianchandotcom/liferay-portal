@@ -233,15 +233,13 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			IndexerRequestBuffer indexerRequestBuffer)
 		throws Exception {
 
-		indexerRequestBuffer.add(indexerRequest);
+		IndexerRequestBufferHandler indexerRequestBufferHandler =
+			new IndexerRequestBufferHandler(
+				_indexerRequestBufferOverflowHandler,
+				_indexerRegistryConfiguration);
 
-		if (indexerRequestBuffer.size() >
-				_indexerRegistryConfiguration.maxBufferSize()) {
-
-			_indexerRequestBufferOverflowHandler.bufferOverflowed(
-				indexerRequestBuffer,
-				_indexerRegistryConfiguration.maxBufferSize());
-		}
+		indexerRequestBufferHandler.bufferRequest(
+			indexerRequest, indexerRequestBuffer);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

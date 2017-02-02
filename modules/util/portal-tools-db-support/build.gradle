@@ -26,6 +26,10 @@ formatSource {
 	mustRunAfter formatXML
 }
 
+liferayOSGi {
+	expandCompileInclude = true
+}
+
 test {
 	dependsOn jar
 	systemProperty "db.support.classpath", jar.archivePath

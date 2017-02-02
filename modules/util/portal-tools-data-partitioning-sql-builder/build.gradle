@@ -5,3 +5,7 @@ dependencies {
 
 	provided fileTree(dir: "third-party", include: "*.jar")
 }
+
+liferayOSGi {
+	expandCompileInclude = true
+}

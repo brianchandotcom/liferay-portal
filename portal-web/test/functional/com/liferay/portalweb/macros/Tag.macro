@@ -139,28 +139,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="mergeMultipleTags">
-		<execute function="Check#checkAll" locator1="Tags#ALL_TAGS_CHECKBOX" />
-
-		<execute function="Click" locator1="Icon#MERGE" />
-
-		<execute function="Select" locator1="Tags#MERGE_TAGS_INTO_THIS_TAG_SELECT" value1="${tagName2}" />
-
-		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
-
-		<execute function="Confirm#assertPartialConfirmation" locator1="${mergeConfirmation}" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<var name="key_tagName" value="${tagName2}" />
-
-		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName2}" />
-
-		<var name="key_tagName" value="${tagName1}" />
-
-		<execute function="AssertTextNotPresent" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName1}" />
-	</command>
-
 	<command name="mergeSingleTagWarning">
 		<var name="key_tagName" value="${tagName}" />
 
@@ -171,6 +149,49 @@
 		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="Confirm" value1="Please choose at least 2 tags." />
+	</command>
+
+	<command name="mergeTags">
+		<if>
+			<isset var="tagNameList" />
+			<then>
+				<for list="${tagNameList}" param="tagName">
+					<execute function="Check" locator1="Tags#TAG_ENTRY_TABLE_CHECKBOX">
+						<var name="key_tagName" value="${tagName}" />
+					</execute>
+				</for>
+			</then>
+			<else>
+				<execute function="Check#checkAll" locator1="Tags#ALL_TAGS_CHECKBOX" />
+			</else>
+		</if>
+
+		<execute function="Click" locator1="Icon#MERGE" />
+
+		<if>
+			<isset var="SelectTagName" />
+			<then>
+				<execute function="Click" locator1="Button#SELECT" value1="Select" />
+
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+				<execute function="Check" locator1="Tags#TAG_ENTRY_TABLE_CHECKBOX">
+					<var name="key_tagName" value="${SelectTagName}" />
+				</execute>
+
+				<execute function="SelectFrameTop" />
+
+				<execute macro="Button#clickDone" />
+			</then>
+		</if>
+
+		<execute function="Select" locator1="Tags#MERGE_TAGS_INTO_THIS_TAG_SELECT" value1="${selectTagToEmergeTo}" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="Confirm#assertPartialConfirmation" locator1="${mergeConfirmation}" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="searchTagCP">
@@ -224,6 +245,12 @@
 		<var name="key_tagName" value="${tagName}" />
 
 		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
+	</command>
+
+	<command name="viewEmergedTagsCP">
+		<execute function="AssertTextNotPresent" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName}">
+			<var name="key_tagName" value="${tagName}" />
+		</execute>
 	</command>
 
 	<command name="viewTagsCP">

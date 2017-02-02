@@ -25,6 +25,6 @@ public enum Lifecycle {
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
-		SESSION
+	SESSION
 
 }

@@ -15,15 +15,12 @@
 package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.assignment;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.BaseTaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilder;
+import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.KaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
-
-import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -54,24 +51,14 @@ public class ScriptingLanguagesTaskAssignmentSelector
 			ExecutionContext executionContext)
 		throws PortalException {
 
-		Map<String, Object> inputObjects =
-			_scriptingContextBuilder.buildScriptingContext(executionContext);
-
 		String assigneeScript = kaleoTaskAssignment.getAssigneeScript();
 
 		String assigneeScriptingLanguage =
 			kaleoTaskAssignment.getAssigneeScriptLanguage();
 
-		Map<String, Object> results = _scripting.eval(
-			null, inputObjects, _outputNames, assigneeScriptingLanguage,
+		Map<String, Object> results = _kaleoScriptingEvaluator.execute(
+			executionContext, _outputNames, assigneeScriptingLanguage,
 			assigneeScript);
-
-		Map<String, Serializable> resultsWorkflowContext =
-			(Map<String, Serializable>)results.get(
-				WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
-
-		WorkflowContextUtil.mergeWorkflowContexts(
-			executionContext, resultsWorkflowContext);
 
 		return getKaleoTaskAssignments(results);
 	}
@@ -85,9 +72,6 @@ public class ScriptingLanguagesTaskAssignmentSelector
 	}
 
 	@Reference
-	private Scripting _scripting;
-
-	@Reference
-	private ScriptingContextBuilder _scriptingContextBuilder;
+	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;
 
 }

@@ -15,12 +15,11 @@
 package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.notification.recipient.script;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.NotificationRecipientEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.ScriptingNotificationRecipientConstants;
-import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilder;
+import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.KaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.util.HashSet;
@@ -51,13 +50,12 @@ public class ScriptingNotificationRecipientEvaluator
 			ExecutionContext executionContext)
 		throws PortalException {
 
-		Map<String, Object> inputObjects =
-			_scriptingContextBuilder.buildScriptingContext(executionContext);
-
-		return _scripting.eval(
-			null, inputObjects, _outputNames,
+		Map<String, Object> results = _kaleoScriptingEvaluator.execute(
+			executionContext, _outputNames,
 			kaleoNotificationRecipient.getRecipientScriptLanguage(),
 			kaleoNotificationRecipient.getRecipientScript());
+
+		return results;
 	}
 
 	private static final Set<String> _outputNames = new HashSet<>();
@@ -71,9 +69,6 @@ public class ScriptingNotificationRecipientEvaluator
 	}
 
 	@Reference
-	private Scripting _scripting;
-
-	@Reference
-	private ScriptingContextBuilder _scriptingContextBuilder;
+	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;
 
 }

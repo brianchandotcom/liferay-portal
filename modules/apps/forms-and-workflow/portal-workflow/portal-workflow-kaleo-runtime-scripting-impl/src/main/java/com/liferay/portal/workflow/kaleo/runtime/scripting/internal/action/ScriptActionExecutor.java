@@ -14,18 +14,14 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.action;
 
-import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutorException;
-import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilder;
+import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.KaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
-import java.io.Serializable;
-
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -72,27 +68,14 @@ public class ScriptActionExecutor implements ActionExecutor {
 			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws Exception {
 
-		Map<String, Object> inputObjects =
-			_scriptingContextBuilder.buildScriptingContext(executionContext);
-
-		Map<String, Object> results = _scripting.eval(
-			null, inputObjects, _outputObjects, kaleoAction.getScriptLanguage(),
+		_kaleoScriptingEvaluator.execute(
+			executionContext, _outputObjects, kaleoAction.getScriptLanguage(),
 			kaleoAction.getScript());
-
-		Map<String, Serializable> resultsWorkflowContext =
-			(Map<String, Serializable>)results.get(
-				WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
-
-		WorkflowContextUtil.mergeWorkflowContexts(
-			executionContext, resultsWorkflowContext);
 	}
 
+	@Reference
+	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;
+
 	private final Set<String> _outputObjects = new HashSet<>();
-
-	@Reference
-	private Scripting _scripting;
-
-	@Reference
-	private ScriptingContextBuilder _scriptingContextBuilder;
 
 }

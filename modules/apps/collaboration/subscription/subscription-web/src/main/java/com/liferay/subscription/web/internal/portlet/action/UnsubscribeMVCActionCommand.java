@@ -21,16 +21,19 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.subscription.web.constants.SubscriptionConstants;
 import com.liferay.subscription.web.constants.SubscriptionPortletKeys;
 import com.liferay.subscription.web.internal.util.SubscriptionUtil;
-import com.liferay.subscription.web.internal.util.UnsubscribeUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -73,7 +76,7 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 		portletURL.setParameter("userId", String.valueOf(userId));
 
 		try {
-			UnsubscribeUtil.checkUser(userId, actionRequest);
+			_checkUser(userId, actionRequest);
 
 			Subscription subscription = _unsubscribe(key, userId);
 
@@ -97,10 +100,43 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private void _checkUser(long userId, ActionRequest actionRequest)
+		throws PortalException {
+
+		User user = PortalUtil.getUser(actionRequest);
+
+		if ((user != null) && (userId != user.getUserId())) {
+			throw new PrincipalException();
+		}
+	}
+
+	private void _checkUser(long userId, Subscription subscription)
+		throws PrincipalException {
+
+		if ((subscription != null) && (subscription.getUserId() != userId)) {
+			throw new PrincipalException();
+		}
+	}
+
+	private Ticket _getTicket(String key) throws PortalException {
+		Ticket ticket = _ticketLocalService.getTicket(key);
+
+		if (ticket.getType() != SubscriptionConstants.TICKET_TYPE) {
+			throw new NoSuchTicketException("Invalid type " + ticket.getType());
+		}
+
+		if (!Subscription.class.getName().equals(ticket.getClassName())) {
+			throw new NoSuchTicketException(
+				"Invalid className " + ticket.getClassName());
+		}
+
+		return ticket;
+	}
+
 	private Subscription _unsubscribe(String key, long userId)
 		throws PortalException {
 
-		Ticket ticket = UnsubscribeUtil.getTicket(_ticketLocalService, key);
+		Ticket ticket = _getTicket(key);
 
 		long subscriptionId = ticket.getClassPK();
 
@@ -113,7 +149,7 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 		Subscription subscription = _subscriptionLocalService.getSubscription(
 			subscriptionId);
 
-		UnsubscribeUtil.checkUser(userId, subscription);
+		_checkUser(userId, subscription);
 
 		_subscriptionLocalService.deleteSubscription(subscription);
 

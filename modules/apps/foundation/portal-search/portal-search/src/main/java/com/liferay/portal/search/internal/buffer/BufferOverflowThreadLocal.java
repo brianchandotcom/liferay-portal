@@ -12,17 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.search.buffer;
+package com.liferay.portal.search.internal.buffer;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface IndexerRequestBufferOverflowHandler {
+public class BufferOverflowThreadLocal {
 
-	public boolean bufferOverflowed(
-		IndexerRequestBuffer indexerRequestBuffer, int maxBufferSize);
+	public static boolean isOverflowMode() {
+		return _overflowMode.get();
+	}
+
+	public static void setOverflowMode(boolean overflowMode) {
+		_overflowMode.set(overflowMode);
+	}
+
+	private static final ThreadLocal<Boolean> _overflowMode =
+		new AutoResetThreadLocal<>(
+			BufferOverflowThreadLocal.class + "._overflowMode", false);
 
 }

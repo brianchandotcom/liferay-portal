@@ -52,6 +52,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -208,38 +210,39 @@ public class RoleLocalServiceTest {
 			companyId, null, excludedRoleNames, roleTypes, 0, groupId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		List<Role> allRoles = RoleLocalServiceUtil.getRoles(companyId);
+		Stream<Role> expectedRolesStream = RoleLocalServiceUtil.getRoles(
+			companyId).stream();
 
-		List<Role> expectedRoles = new ArrayList<>();
-
-		for (Role role : allRoles) {
-			String name = role.getName();
-
-			if (name.equals(RoleConstants.ADMINISTRATOR) ||
-				name.equals(RoleConstants.GUEST)) {
-
-				continue;
-			}
-
-			int type = role.getType();
-
-			if ((type == RoleConstants.TYPE_REGULAR) ||
-				(type == RoleConstants.TYPE_ORGANIZATION)) {
-
-				expectedRoles.add(role);
-			}
-			else if ((type == RoleConstants.TYPE_PROVIDER) && role.isTeam()) {
-				Team team = TeamLocalServiceUtil.getTeam(role.getClassPK());
-
-				if (team.getGroupId() == groupId) {
-					expectedRoles.add(role);
+		expectedRolesStream = expectedRolesStream.filter(
+			role -> !excludedRoleNames.contains(role.getName()));
+		expectedRolesStream = expectedRolesStream.filter(
+			role -> role.getType() != RoleConstants.TYPE_SITE);
+		expectedRolesStream = expectedRolesStream.filter(
+			role -> {
+				if (role.getType() != RoleConstants.TYPE_PROVIDER) {
+					return true;
 				}
-			}
-		}
+
+				if (!role.isTeam()) {
+					return false;
+				}
+
+				Team team = TeamLocalServiceUtil.fetchTeam(role.getClassPK());
+
+				if (team == null) {
+					return false;
+				}
+
+				return team.getGroupId() == groupId;
+			});
+
+		List<Role> expectedRoles = expectedRolesStream.collect(
+			Collectors.toList());
 
 		Assert.assertEquals(expectedRoles.size(), count);
 
 		actualRoles = new ArrayList(actualRoles);
+		expectedRoles = new ArrayList(expectedRoles);
 
 		Comparator roleIdComparator = new RoleRoleIdComparator();
 

@@ -29,10 +29,6 @@ dependencies {
 	testCompile project(":apps:foundation:portal-search:portal-search-test-util")
 }
 
-liferayOSGi {
-	expandCompileInclude = false
-}
-
 test {
 	systemProperty "com.liferay.portal.search.solr.test.unit.started", System.getProperty("com.liferay.portal.search.solr.test.unit.started")
 }

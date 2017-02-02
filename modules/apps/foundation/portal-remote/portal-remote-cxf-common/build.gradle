@@ -32,7 +32,3 @@ deployDependencies {
 	rename(/stax2-api-(.+)\.jar/, "org.codehaus.stax2" + renameSuffix)
 	rename(/woodstox-core-asl-(.+)\.jar/, "com.ctc.wstx" + renameSuffix)
 }
-
-liferayOSGi {
-	expandCompileInclude = false
-}

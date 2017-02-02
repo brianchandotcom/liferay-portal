@@ -64,6 +64,10 @@ AUI.add(
 						value: ''
 					},
 
+					getRolesURL: {
+						value: ''
+					},
+
 					layout: {
 					},
 

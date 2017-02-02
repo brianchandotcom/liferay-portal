@@ -215,6 +215,8 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getFieldSettingsDDMFormContext" var="getFieldSettingsDDMFormContext" />
 
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getRoles" var="getRoles" />
+
 		<aui:script>
 			var initHandler = Liferay.after(
 				'form:registered',
@@ -258,6 +260,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 											getDataProviderParametersSettingsURL: '<%= getDataProviderParametersSettings.toString() %>',
 											getDataProviderInstancesURL: '<%= getDataProviderInstancesURL.toString() %>',
 											getFieldTypeSettingFormContextURL: '<%= getFieldSettingsDDMFormContext.toString() %>',
+											getRolesURL: '<%= getRoles.toString() %>',
 											layout: <%= ddlFormAdminDisplayContext.getSerializedDDMFormLayout() %>,
 											name: '<%= HtmlUtil.escapeJS(name) %>',
 											namespace: '<portlet:namespace />',

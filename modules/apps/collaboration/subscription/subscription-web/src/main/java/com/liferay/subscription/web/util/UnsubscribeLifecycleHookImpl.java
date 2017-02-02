@@ -108,8 +108,6 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 			return;
 		}
 
-		Locale locale = subscriptionSender.getServiceContext().getLocale();
-
 		User user = _userLocalService.getUserByEmailAddress(
 			subscriptionSender.getCompanyId(),
 			mailMessage.getTo()[0].getAddress());
@@ -122,7 +120,7 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 					subscriptionSender, user, ticket);
 
 				_addUnsubscribeHeader(mailMessage, unsubscribeURL);
-				_addUnsubscribeLink(mailMessage, locale, unsubscribeURL);
+				_addUnsubscribeLink(mailMessage, unsubscribeURL);
 			}
 			finally {
 				_cache.remove(user.getUserId());
@@ -142,7 +140,7 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 	}
 
 	private void _addUnsubscribeLink(
-			MailMessage mailMessage, Locale locale, String unsubscribeURL)
+			MailMessage mailMessage, String unsubscribeURL)
 		throws IOException {
 
 		MailTemplateContextBuilder mailTemplateContextBuilder =
@@ -158,7 +156,7 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 				mailMessage.getBody(), true);
 
 		String processedBody = bodyMailTemplate.renderAsString(
-			locale, mailTemplateContext);
+			Locale.US, mailTemplateContext);
 
 		mailMessage.setBody(processedBody);
 	}

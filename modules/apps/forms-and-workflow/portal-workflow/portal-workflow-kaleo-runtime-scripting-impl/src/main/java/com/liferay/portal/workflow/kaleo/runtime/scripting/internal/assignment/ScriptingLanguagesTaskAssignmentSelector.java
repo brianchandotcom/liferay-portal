@@ -15,18 +15,14 @@
 package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.assignment;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.BaseTaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilder;
+import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.KaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
-import java.io.Serializable;
-
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -55,41 +51,14 @@ public class ScriptingLanguagesTaskAssignmentSelector
 			ExecutionContext executionContext)
 		throws PortalException {
 
-		Map<String, Object> inputObjects =
-			_scriptingContextBuilder.buildScriptingContext(executionContext);
-
 		String assigneeScript = kaleoTaskAssignment.getAssigneeScript();
 
 		String assigneeScriptingLanguage =
 			kaleoTaskAssignment.getAssigneeScriptLanguage();
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Map<String, Object> results = null;
-
-		try {
-			currentThread.setContextClassLoader(classLoader);
-
-			results = _scripting.eval(
-				null, inputObjects, _outputNames, assigneeScriptingLanguage,
-				assigneeScript);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
-
-		Map<String, Serializable> resultsWorkflowContext =
-			(Map<String, Serializable>)results.get(
-				WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
-
-		WorkflowContextUtil.mergeWorkflowContexts(
-			executionContext, resultsWorkflowContext);
+		Map<String, Object> results = _kaleoScriptingEvaluator.execute(
+			executionContext, _outputNames, assigneeScriptingLanguage,
+			assigneeScript);
 
 		return getKaleoTaskAssignments(results);
 	}
@@ -103,9 +72,6 @@ public class ScriptingLanguagesTaskAssignmentSelector
 	}
 
 	@Reference
-	private Scripting _scripting;
-
-	@Reference
-	private ScriptingContextBuilder _scriptingContextBuilder;
+	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;
 
 }

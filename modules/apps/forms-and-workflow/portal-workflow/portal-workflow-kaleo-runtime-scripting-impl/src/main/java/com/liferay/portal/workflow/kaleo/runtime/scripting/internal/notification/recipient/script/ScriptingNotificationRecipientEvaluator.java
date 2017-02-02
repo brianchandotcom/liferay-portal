@@ -15,15 +15,13 @@
 package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.notification.recipient.script;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.NotificationRecipientEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.ScriptingNotificationRecipientConstants;
-import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilder;
+import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.KaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -52,37 +50,10 @@ public class ScriptingNotificationRecipientEvaluator
 			ExecutionContext executionContext)
 		throws PortalException {
 
-		Map<String, Object> inputObjects =
-			_scriptingContextBuilder.buildScriptingContext(executionContext);
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Map<String, Object> results = null;
-
-		try {
-			currentThread.setContextClassLoader(classLoader);
-
-			results = _scripting.eval(
-				null, inputObjects, _outputNames,
-				kaleoNotificationRecipient.getRecipientScriptLanguage(),
-				kaleoNotificationRecipient.getRecipientScript());
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
-
-		Map<String, Serializable> resultsWorkflowContext =
-			(Map<String, Serializable>)results.get(
-				WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
-
-		WorkflowContextUtil.mergeWorkflowContexts(
-			executionContext, resultsWorkflowContext);
+		Map<String, Object> results = _kaleoScriptingEvaluator.execute(
+			executionContext, _outputNames,
+			kaleoNotificationRecipient.getRecipientScriptLanguage(),
+			kaleoNotificationRecipient.getRecipientScript());
 
 		return results;
 	}
@@ -98,9 +69,6 @@ public class ScriptingNotificationRecipientEvaluator
 	}
 
 	@Reference
-	private Scripting _scripting;
-
-	@Reference
-	private ScriptingContextBuilder _scriptingContextBuilder;
+	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;
 
 }

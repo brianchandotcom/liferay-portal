@@ -23,6 +23,7 @@ import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.S
 import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilder;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -62,10 +63,12 @@ public class ScriptingNotificationRecipientEvaluator
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
+		Map<String, Object> results = null;
+
 		try {
 			currentThread.setContextClassLoader(classLoader);
 
-			return _scripting.eval(
+			results = _scripting.eval(
 				null, inputObjects, _outputNames,
 				kaleoNotificationRecipient.getRecipientScriptLanguage(),
 				kaleoNotificationRecipient.getRecipientScript());
@@ -73,6 +76,15 @@ public class ScriptingNotificationRecipientEvaluator
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
+
+		Map<String, Serializable> resultsWorkflowContext =
+			(Map<String, Serializable>)results.get(
+				WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
+
+		WorkflowContextUtil.mergeWorkflowContexts(
+			executionContext, resultsWorkflowContext);
+
+		return results;
 	}
 
 	private static final Set<String> _outputNames = new HashSet<>();

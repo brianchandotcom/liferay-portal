@@ -496,6 +496,7 @@ public class IndentationCheck extends AbstractCheck {
 				(parentAST.getType() == TokenTypes.ANNOTATION_FIELD_DEF) ||
 				(parentAST.getType() == TokenTypes.CLASS_DEF) ||
 				(parentAST.getType() == TokenTypes.CTOR_DEF) ||
+				(parentAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) ||
 				(parentAST.getType() == TokenTypes.ENUM_DEF) ||
 				(parentAST.getType() == TokenTypes.INTERFACE_DEF) ||
 				(parentAST.getType() == TokenTypes.METHOD_DEF) ||
@@ -515,6 +516,7 @@ public class IndentationCheck extends AbstractCheck {
 				}
 
 				if ((parentAST.getType() == TokenTypes.CLASS_DEF) ||
+					(parentAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) ||
 					(parentAST.getType() == TokenTypes.ENUM_DEF) ||
 					(parentAST.getType() == TokenTypes.INTERFACE_DEF)) {
 

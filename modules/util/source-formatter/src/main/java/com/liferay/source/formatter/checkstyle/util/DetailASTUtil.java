@@ -210,6 +210,21 @@ public class DetailASTUtil {
 		return false;
 	}
 
+	public static boolean isArray(DetailAST detailAST) {
+		if (detailAST.getType() != TokenTypes.TYPE) {
+			return false;
+		}
+
+		DetailAST arrayDeclaratorAST = detailAST.findFirstToken(
+			TokenTypes.ARRAY_DECLARATOR);
+
+		if (arrayDeclaratorAST != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isCollection(DetailAST detailAST) {
 		if (detailAST.getType() != TokenTypes.TYPE) {
 			return false;

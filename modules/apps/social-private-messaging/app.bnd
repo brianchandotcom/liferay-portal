@@ -1,4 +1,4 @@
-Liferay-Releng-App-Description:The Private Messaging app allows you to send email-like messages to other users within the portal. Providing a similar interface to that of an email client, you can compose and delete messages, and mark them as read or unread. As with email, you can add a subject, message body, and add attachments to messages.
+Liferay-Releng-App-Description: The Private Messaging app allows you to send email-like messages to other users within the portal. Providing a similar interface to that of an email client, you can compose and delete messages, and mark them as read or unread. As with email, you can add a subject, message body, and add attachments to messages.
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Private Messaging
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Communication

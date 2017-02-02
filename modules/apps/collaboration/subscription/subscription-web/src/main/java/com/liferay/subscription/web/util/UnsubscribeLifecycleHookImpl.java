@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.InternetHeaders;
 
 /**
@@ -96,7 +97,7 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 				calendar.getTime());
 		}
 
-		_cache.put(subscription.getUserId(), ticket);
+		_userTicketMap.put(subscription.getUserId(), ticket);
 	}
 
 	@Override
@@ -108,23 +109,10 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 			return;
 		}
 
-		User user = _userLocalService.getUserByEmailAddress(
-			subscriptionSender.getCompanyId(),
-			mailMessage.getTo()[0].getAddress());
+		InternetAddress[] toAddresses = mailMessage.getTo();
 
-		Ticket ticket = _cache.get(user.getUserId());
-
-		if (ticket != null) {
-			try {
-				String unsubscribeURL = _getUnsubscribeURL(
-					subscriptionSender, user, ticket);
-
-				_addUnsubscribeHeader(mailMessage, unsubscribeURL);
-				_addUnsubscribeLink(mailMessage, unsubscribeURL);
-			}
-			finally {
-				_cache.remove(user.getUserId());
-			}
+		for (InternetAddress toAddress : toAddresses) {
+			_processMailMessage(subscriptionSender, mailMessage, toAddress);
 		}
 	}
 
@@ -176,9 +164,37 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 		return sb.toString();
 	}
 
-	private final Map<Long, Ticket> _cache = new HashMap<>();
+	private void _processMailMessage(
+			SubscriptionSender subscriptionSender, MailMessage mailMessage,
+			InternetAddress toAddress)
+		throws IOException {
+
+		User user = _userLocalService.fetchUserByEmailAddress(
+			subscriptionSender.getCompanyId(), toAddress.getAddress());
+
+		if (user == null) {
+			return;
+		}
+
+		Ticket ticket = _userTicketMap.get(user.getUserId());
+
+		if (ticket != null) {
+			try {
+				String unsubscribeURL = _getUnsubscribeURL(
+					subscriptionSender, user, ticket);
+
+				_addUnsubscribeHeader(mailMessage, unsubscribeURL);
+				_addUnsubscribeLink(mailMessage, unsubscribeURL);
+			}
+			finally {
+				_userTicketMap.remove(user.getUserId());
+			}
+		}
+	}
+
 	private final SubscriptionConfiguration _configuration;
 	private final TicketLocalService _ticketLocalService;
 	private final UserLocalService _userLocalService;
+	private final Map<Long, Ticket> _userTicketMap = new HashMap<>();
 
 }

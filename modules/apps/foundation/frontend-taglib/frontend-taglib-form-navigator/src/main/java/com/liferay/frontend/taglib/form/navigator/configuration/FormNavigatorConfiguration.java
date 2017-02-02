@@ -35,7 +35,10 @@ public interface FormNavigatorConfiguration {
 	@Meta.AD(required = true)
 	public String formNavigatorId();
 
-	@Meta.AD(required = true)
-	public String[] hiddenFormNavigatorEntryQueries();
+	@Meta.AD(
+		description = "form-navigator-entries-for-category-lines-description",
+		required = true
+	)
+	public String[] formNavigatorEntriesForCategoryLines();
 
 }

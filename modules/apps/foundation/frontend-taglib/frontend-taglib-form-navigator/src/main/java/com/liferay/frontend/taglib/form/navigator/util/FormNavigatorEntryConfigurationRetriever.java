@@ -76,7 +76,9 @@ public class FormNavigatorEntryConfigurationRetriever {
 		StringBuilder propertiesString,
 		FormNavigatorConfiguration configuration) {
 
-		for (String line : configuration.hiddenFormNavigatorEntryQueries()) {
+		String[] lines = configuration.formNavigatorEntriesForCategoryLines();
+
+		for (String line : lines) {
 			propertiesString.append(line);
 			propertiesString.append("\n");
 		}

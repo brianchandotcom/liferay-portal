@@ -350,14 +350,15 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 	}
 
 	private static Configuration _createMockConfig(
-		String formNavigatorId, String[] hiddenFormNavigatorEntryQueries) {
+		String formNavigatorId, String[] formNavigatorEntriesForCategoryLines) {
 
 		Configuration mock = Mockito.mock(Configuration.class);
 		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put("formNavigatorId", formNavigatorId);
 		properties.put(
-			"hiddenFormNavigatorEntryQueries", hiddenFormNavigatorEntryQueries);
+			"formNavigatorEntriesForCategoryLines",
+			formNavigatorEntriesForCategoryLines);
 
 		Mockito.when(mock.getProperties()).thenReturn(properties);
 

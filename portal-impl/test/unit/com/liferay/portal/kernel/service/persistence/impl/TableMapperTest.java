@@ -1758,6 +1758,10 @@ public class TableMapperTest {
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
 
+			if (methodName.equals("toString")) {
+				return String.valueOf(_primaryKey);
+			}
+
 			if (methodName.equals("getPrimaryKeyObj")) {
 				return _primaryKey;
 			}

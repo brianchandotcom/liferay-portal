@@ -881,6 +881,8 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 			serialDestination.setName(destinationName);
 
+			serialDestination.afterPropertiesSet();
+
 			serialDestination.open();
 
 			MessageBusUtil.addDestination(serialDestination);

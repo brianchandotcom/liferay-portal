@@ -17,8 +17,10 @@ package com.liferay.subscription.web.internal.portlet.action;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
@@ -26,14 +28,18 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.subscription.web.constants.SubscriptionConstants;
 import com.liferay.subscription.web.constants.SubscriptionPortletKeys;
-import com.liferay.subscription.web.internal.util.SubscriptionUtil;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -82,8 +88,7 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 
 			portletURL.setParameter(
 				"subscriptionTitle",
-				SubscriptionUtil.getTitle(
-					actionRequest.getLocale(), subscription));
+				_getTitle(actionRequest.getLocale(), subscription));
 
 			actionResponse.sendRedirect(portletURL.toString());
 		}
@@ -133,6 +138,18 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 		return ticket;
 	}
 
+	private String _getTitle(Locale locale, Subscription subscription)
+		throws PortalException {
+
+		Group group = _groupLocalService.fetchGroup(subscription.getClassPK());
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.format(
+			resourceBundle, "blog-at-x", group.getDescriptiveName(locale));
+	}
+
 	private Subscription _unsubscribe(String key, long userId)
 		throws PortalException {
 
@@ -158,6 +175,9 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UnsubscribeMVCActionCommand.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

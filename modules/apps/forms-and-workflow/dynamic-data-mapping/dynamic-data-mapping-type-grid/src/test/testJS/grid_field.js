@@ -147,7 +147,7 @@ describe(
 					function(done) {
 						gridField = createGridField();
 
-						gridField.setValue({A: '1', B: '2', C: '3'});
+						gridField.setValue({A: '1', B: '2'});
 
 						assert.isObject(gridField.getValue());
 

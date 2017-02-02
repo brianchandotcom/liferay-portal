@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIDEO_BUTTON</td>
+	<td>//a[@title='Video']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -1336,6 +1336,20 @@
 		<execute macro="IFrame#selectTopFrame" />
 	</command>
 
+	<command name="uploadVideo">
+		<execute function="Click#pauseClickAt" locator1="WCEditWebContent#VIDEO_BUTTON" />
+
+		<execute macro="ItemSelector#addFromURL">
+			<var name="imageSourceURL" value="${dmDocumentURL}" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
+
+		<execute function="AssertElementPresent" locator1="CKEditor#CONTENT_VIDEO_LINK_IMAGE" />
+
+		<execute macro="IFrame#selectTopFrame" />
+	</command>
+
 	<command name="viewApprovedStatus">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

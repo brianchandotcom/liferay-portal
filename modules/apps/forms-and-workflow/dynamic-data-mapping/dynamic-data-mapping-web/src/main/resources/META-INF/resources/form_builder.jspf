@@ -163,7 +163,11 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 		content = content.replace(/nestedFields/g, 'fields');
 
-		content = formBuilder.deserializeDefinitionFields(JSON.parse(content));
+		content = JSON.parse(content);
+
+		formBuilder.translationManager.set('availableLocales', content.availableLanguageIds);
+
+		content = formBuilder.deserializeDefinitionFields(content);
 
 		formBuilder.set('fields', content);
 	};

@@ -39,7 +39,7 @@ public class DefaultIndexerRequestBufferOverflowHandler
 
 		if (numRequests > 0) {
 			IndexerRequestBufferExecutor indexerRequestBufferExecutor =
-				_indexerRequestBufferExecutorWatcher.
+				indexerRequestBufferExecutorWatcher.
 					getIndexerRequestBufferExecutor();
 
 			indexerRequestBufferExecutor.execute(
@@ -48,7 +48,7 @@ public class DefaultIndexerRequestBufferOverflowHandler
 	}
 
 	@Reference
-	private IndexerRequestBufferExecutorWatcher
-		_indexerRequestBufferExecutorWatcher;
+	protected IndexerRequestBufferExecutorWatcher
+		indexerRequestBufferExecutorWatcher;
 
 }

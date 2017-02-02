@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.settings;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Assert;
@@ -47,7 +48,7 @@ public class MemorySettingsTest extends PowerMockito {
 
 		String[] values = _memorySettings.getValues("key", null);
 
-		Assert.assertEquals(2, values.length);
+		Assert.assertEquals(Arrays.toString(values), 2, values.length);
 		Assert.assertEquals("value1", values[0]);
 		Assert.assertEquals("value2", values[1]);
 

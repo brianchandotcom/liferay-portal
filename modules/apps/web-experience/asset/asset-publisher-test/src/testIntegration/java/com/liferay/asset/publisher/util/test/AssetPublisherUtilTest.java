@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -74,7 +75,8 @@ public class AssetPublisherUtilTest {
 		long[] assetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
 			portletPreferences);
 
-		Assert.assertEquals(2, assetCategoryIds.length);
+		Assert.assertEquals(
+			Arrays.toString(assetCategoryIds), 2, assetCategoryIds.length);
 
 		Assert.assertEquals(assetCategoryId1, assetCategoryIds[0]);
 		Assert.assertEquals(assetCategoryId2, assetCategoryIds[1]);
@@ -98,7 +100,8 @@ public class AssetPublisherUtilTest {
 		long[] assetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
 			portletPreferences);
 
-		Assert.assertEquals(1, assetCategoryIds.length);
+		Assert.assertEquals(
+			Arrays.toString(assetCategoryIds), 1, assetCategoryIds.length);
 
 		Assert.assertEquals(assetCategoryId, assetCategoryIds[0]);
 	}
@@ -127,7 +130,8 @@ public class AssetPublisherUtilTest {
 		long[] assetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
 			portletPreferences);
 
-		Assert.assertEquals(0, assetCategoryIds.length);
+		Assert.assertEquals(
+			Arrays.toString(assetCategoryIds), 0, assetCategoryIds.length);
 	}
 
 	@Test
@@ -148,7 +152,8 @@ public class AssetPublisherUtilTest {
 		long[] assetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
 			portletPreferences);
 
-		Assert.assertEquals(1, assetCategoryIds.length);
+		Assert.assertEquals(
+			Arrays.toString(assetCategoryIds), 1, assetCategoryIds.length);
 
 		Assert.assertEquals(assetCategoryId, assetCategoryIds[0]);
 	}
@@ -177,7 +182,8 @@ public class AssetPublisherUtilTest {
 		long[] assetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
 			portletPreferences);
 
-		Assert.assertEquals(0, assetCategoryIds.length);
+		Assert.assertEquals(
+			Arrays.toString(assetCategoryIds), 0, assetCategoryIds.length);
 	}
 
 	@Test
@@ -200,7 +206,8 @@ public class AssetPublisherUtilTest {
 		long[] assetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
 			portletPreferences);
 
-		Assert.assertEquals(0, assetCategoryIds.length);
+		Assert.assertEquals(
+			Arrays.toString(assetCategoryIds), 0, assetCategoryIds.length);
 	}
 
 	@Test
@@ -227,7 +234,8 @@ public class AssetPublisherUtilTest {
 		long[] assetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
 			portletPreferences);
 
-		Assert.assertEquals(0, assetCategoryIds.length);
+		Assert.assertEquals(
+			Arrays.toString(assetCategoryIds), 0, assetCategoryIds.length);
 	}
 
 	@Test
@@ -250,7 +258,8 @@ public class AssetPublisherUtilTest {
 		long[] assetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
 			portletPreferences);
 
-		Assert.assertEquals(0, assetCategoryIds.length);
+		Assert.assertEquals(
+			Arrays.toString(assetCategoryIds), 0, assetCategoryIds.length);
 	}
 
 	@Test
@@ -270,7 +279,8 @@ public class AssetPublisherUtilTest {
 		String[] assetTagNames = AssetPublisherUtil.getAssetTagNames(
 			portletPreferences);
 
-		Assert.assertEquals(1, assetTagNames.length);
+		Assert.assertEquals(
+			Arrays.toString(assetTagNames), 1, assetTagNames.length);
 
 		Assert.assertEquals(assetTagName, assetTagNames[0]);
 	}
@@ -294,7 +304,8 @@ public class AssetPublisherUtilTest {
 		String[] assetTagNames = AssetPublisherUtil.getAssetTagNames(
 			portletPreferences);
 
-		Assert.assertEquals(2, assetTagNames.length);
+		Assert.assertEquals(
+			Arrays.toString(assetTagNames), 2, assetTagNames.length);
 
 		Assert.assertEquals(assetTagName1, assetTagNames[0]);
 		Assert.assertEquals(assetTagName2, assetTagNames[1]);
@@ -317,7 +328,8 @@ public class AssetPublisherUtilTest {
 		String[] assetTagNames = AssetPublisherUtil.getAssetTagNames(
 			portletPreferences);
 
-		Assert.assertEquals(1, assetTagNames.length);
+		Assert.assertEquals(
+			Arrays.toString(assetTagNames), 1, assetTagNames.length);
 
 		Assert.assertEquals(assetTagName, assetTagNames[0]);
 	}
@@ -341,7 +353,8 @@ public class AssetPublisherUtilTest {
 		String[] assetTagNames = AssetPublisherUtil.getAssetTagNames(
 			portletPreferences);
 
-		Assert.assertEquals(0, assetTagNames.length);
+		Assert.assertEquals(
+			Arrays.toString(assetTagNames), 0, assetTagNames.length);
 	}
 
 	@Test
@@ -361,7 +374,8 @@ public class AssetPublisherUtilTest {
 		String[] assetTagNames = AssetPublisherUtil.getAssetTagNames(
 			portletPreferences);
 
-		Assert.assertEquals(0, assetTagNames.length);
+		Assert.assertEquals(
+			Arrays.toString(assetTagNames), 0, assetTagNames.length);
 	}
 
 	@Test
@@ -383,7 +397,8 @@ public class AssetPublisherUtilTest {
 		String[] assetTagNames = AssetPublisherUtil.getAssetTagNames(
 			portletPreferences);
 
-		Assert.assertEquals(0, assetTagNames.length);
+		Assert.assertEquals(
+			Arrays.toString(assetTagNames), 0, assetTagNames.length);
 	}
 
 	@Test
@@ -403,7 +418,8 @@ public class AssetPublisherUtilTest {
 		String[] assetTagNames = AssetPublisherUtil.getAssetTagNames(
 			portletPreferences);
 
-		Assert.assertEquals(0, assetTagNames.length);
+		Assert.assertEquals(
+			Arrays.toString(assetTagNames), 0, assetTagNames.length);
 	}
 
 	@Test
@@ -425,7 +441,8 @@ public class AssetPublisherUtilTest {
 		String[] assetTagNames = AssetPublisherUtil.getAssetTagNames(
 			portletPreferences);
 
-		Assert.assertEquals(0, assetTagNames.length);
+		Assert.assertEquals(
+			Arrays.toString(assetTagNames), 0, assetTagNames.length);
 	}
 
 	protected PortletPreferences getAssetPublisherPortletPreferences(

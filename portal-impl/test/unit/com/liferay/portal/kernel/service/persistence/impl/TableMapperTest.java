@@ -48,6 +48,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1114,7 +1115,8 @@ public class TableMapperTest {
 		long[] leftPrimaryKeys = _tableMapperImpl.getLeftPrimaryKeys(
 			rightPrimaryKey);
 
-		Assert.assertEquals(0, leftPrimaryKeys.length);
+		Assert.assertEquals(
+			Arrays.toString(leftPrimaryKeys), 0, leftPrimaryKeys.length);
 
 		// Hit cache
 
@@ -1301,7 +1303,8 @@ public class TableMapperTest {
 		long[] rightPrimaryKeys = _tableMapperImpl.getRightPrimaryKeys(
 			leftPrimaryKey);
 
-		Assert.assertEquals(0, rightPrimaryKeys.length);
+		Assert.assertEquals(
+			Arrays.toString(rightPrimaryKeys), 0, rightPrimaryKeys.length);
 
 		// Hit cache
 

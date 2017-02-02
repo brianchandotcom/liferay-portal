@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -161,13 +163,13 @@ public class OutputBlobTest {
 
 		byte[] bytes = outputBlob.getBytes(1, 6);
 
-		Assert.assertEquals(6, bytes.length);
+		Assert.assertEquals(Arrays.toString(bytes), 6, bytes.length);
 
 		// Short read
 
 		bytes = outputBlob.getBytes(1, 6);
 
-		Assert.assertEquals(4, bytes.length);
+		Assert.assertEquals(Arrays.toString(bytes), 4, bytes.length);
 	}
 
 	@Test

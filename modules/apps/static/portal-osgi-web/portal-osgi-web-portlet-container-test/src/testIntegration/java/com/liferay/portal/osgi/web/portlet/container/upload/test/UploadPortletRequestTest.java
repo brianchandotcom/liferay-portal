@@ -31,6 +31,7 @@ import com.liferay.portal.util.test.PortletContainerTestUtil;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -677,9 +678,12 @@ public class UploadPortletRequestTest {
 
 				FileItem[] fileItems = entry.getValue();
 
-				Assert.assertEquals(fileItems.length, fileNames.length);
+				Assert.assertEquals(
+					Arrays.toString(fileNames), fileItems.length,
+					fileNames.length);
 
-				Assert.assertEquals(2, fileNames.length);
+				Assert.assertEquals(
+					Arrays.toString(fileNames), 2, fileNames.length);
 
 				for (int i = 0; i < fileNames.length; i++) {
 					Assert.assertEquals(
@@ -822,9 +826,10 @@ public class UploadPortletRequestTest {
 
 				FileItem[] fileItems = entry.getValue();
 
-				Assert.assertEquals(fileItems.length, files.length);
+				Assert.assertEquals(
+					Arrays.toString(files), fileItems.length, files.length);
 
-				Assert.assertEquals(2, files.length);
+				Assert.assertEquals(Arrays.toString(files), 2, files.length);
 
 				for (int i = 0; i < files.length; i++) {
 					File storeLocation = fileItems[i].getStoreLocation();
@@ -924,9 +929,12 @@ public class UploadPortletRequestTest {
 
 				FileItem[] fileItems = entry.getValue();
 
-				Assert.assertEquals(fileItems.length, inputStreams.length);
+				Assert.assertEquals(
+					Arrays.toString(inputStreams), fileItems.length,
+					inputStreams.length);
 
-				Assert.assertEquals(2, inputStreams.length);
+				Assert.assertEquals(
+					Arrays.toString(inputStreams), 2, inputStreams.length);
 
 				for (int i = 0; i < inputStreams.length; i++) {
 					Assert.assertTrue(

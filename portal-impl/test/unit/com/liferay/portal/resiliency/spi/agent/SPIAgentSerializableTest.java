@@ -682,7 +682,8 @@ public class SPIAgentSerializableTest {
 			threadLocalDistributor, "_threadLocalValues");
 
 		Assert.assertNotNull(serializables);
-		Assert.assertEquals(1, serializables.length);
+		Assert.assertEquals(
+			Arrays.toString(serializables), 1, serializables.length);
 		Assert.assertNull(serializables[0]);
 
 		String threadLocalValue = "threadLocalValue";
@@ -700,14 +701,17 @@ public class SPIAgentSerializableTest {
 			agentSerializable.threadLocalDistributors;
 
 		Assert.assertNotNull(threadLocalDistributors);
-		Assert.assertEquals(1, threadLocalDistributors.length);
+		Assert.assertEquals(
+			Arrays.toString(threadLocalDistributors), 1,
+			threadLocalDistributors.length);
 		Assert.assertSame(threadLocalDistributor, threadLocalDistributors[0]);
 
 		serializables = ReflectionTestUtil.getFieldValue(
 			threadLocalDistributor, "_threadLocalValues");
 
 		Assert.assertNotNull(serializables);
-		Assert.assertEquals(1, serializables.length);
+		Assert.assertEquals(
+			Arrays.toString(serializables), 1, serializables.length);
 		Assert.assertEquals(threadLocalValue, serializables[0]);
 
 		_threadLocal.remove();

@@ -287,7 +287,9 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 
 		String[] responseBodies = StringUtil.split(responseBody, boundary);
 
-		Assert.assertEquals(ranges.size() + 2, responseBodies.length);
+		Assert.assertEquals(
+			Arrays.toString(responseBodies), ranges.size() + 2,
+			responseBodies.length);
 		Assert.assertEquals(StringPool.DOUBLE_DASH, responseBodies[0]);
 		Assert.assertEquals(
 			StringPool.DOUBLE_DASH, responseBodies[ranges.size() + 1]);

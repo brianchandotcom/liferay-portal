@@ -84,6 +84,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -229,7 +230,8 @@ public class ExportImportHelperUtilTest {
 
 		String[] exportedURLs = content.split(StringPool.NEW_LINE);
 
-		Assert.assertEquals(urls.size(), exportedURLs.length);
+		Assert.assertEquals(
+			Arrays.toString(exportedURLs), urls.size(), exportedURLs.length);
 
 		for (int i = 0; i < urls.size(); i++) {
 			String exportedUrl = exportedURLs[i];

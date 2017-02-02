@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -83,7 +84,7 @@ public class PortletDataContextZipWriterTest {
 
 		Object[] arguments = methodHandler.getArguments();
 
-		Assert.assertEquals(2, arguments.length);
+		Assert.assertEquals(Arrays.toString(arguments), 2, arguments.length);
 		Assert.assertSame(_PATH, arguments[0]);
 		Assert.assertSame(bytes, arguments[1]);
 
@@ -118,7 +119,7 @@ public class PortletDataContextZipWriterTest {
 
 		Object[] arguments = methodHandler.getArguments();
 
-		Assert.assertEquals(2, arguments.length);
+		Assert.assertEquals(Arrays.toString(arguments), 2, arguments.length);
 		Assert.assertSame(_PATH, arguments[0]);
 		Assert.assertSame(is, arguments[1]);
 
@@ -151,7 +152,7 @@ public class PortletDataContextZipWriterTest {
 
 		Object[] arguments = methodHandler.getArguments();
 
-		Assert.assertEquals(2, arguments.length);
+		Assert.assertEquals(Arrays.toString(arguments), 2, arguments.length);
 		Assert.assertSame(_PATH, arguments[0]);
 		Assert.assertSame(string, arguments[1]);
 

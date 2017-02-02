@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.extender.internal.hibernate.configuration;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,7 +29,9 @@ public class ModuleHibernateConfigurationTest {
 		String[] configurationResources =
 			_moduleHibernateConfiguration.getConfigurationResources();
 
-		Assert.assertEquals(1, configurationResources.length);
+		Assert.assertEquals(
+			Arrays.toString(configurationResources), 1,
+			configurationResources.length);
 		Assert.assertEquals(
 			"META-INF/module-hbm.xml", configurationResources[0]);
 	}

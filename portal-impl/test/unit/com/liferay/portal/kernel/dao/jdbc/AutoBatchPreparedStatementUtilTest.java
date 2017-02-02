@@ -43,6 +43,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -214,7 +215,8 @@ public class AutoBatchPreparedStatementUtilTest {
 
 			Throwable[] throwables = t.getSuppressed();
 
-			Assert.assertEquals(1, throwables.length);
+			Assert.assertEquals(
+				Arrays.toString(throwables), 1, throwables.length);
 
 			Throwable throwable = throwables[0];
 
@@ -272,7 +274,9 @@ public class AutoBatchPreparedStatementUtilTest {
 
 			Throwable[] suppressedThrowables = t.getSuppressed();
 
-			Assert.assertEquals(1, suppressedThrowables.length);
+			Assert.assertEquals(
+				Arrays.toString(suppressedThrowables), 1,
+				suppressedThrowables.length);
 			Assert.assertTrue(throwables.contains(suppressedThrowables[0]));
 
 			return;

@@ -16,6 +16,8 @@ package com.liferay.portlet.asset.util;
 
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -32,7 +34,8 @@ public class AssetVocabularySettingsHelperTest {
 		long[] classNameIds = vocabularySettingsHelper.getClassNameIds();
 
 		Assert.assertNotNull(classNameIds);
-		Assert.assertEquals(1, classNameIds.length);
+		Assert.assertEquals(
+			Arrays.toString(classNameIds), 1, classNameIds.length);
 		Assert.assertEquals(1, classNameIds[0]);
 
 		vocabularySettingsHelper = new AssetVocabularySettingsHelper(
@@ -41,7 +44,8 @@ public class AssetVocabularySettingsHelperTest {
 		classNameIds = vocabularySettingsHelper.getClassNameIds();
 
 		Assert.assertNotNull(classNameIds);
-		Assert.assertEquals(1, classNameIds.length);
+		Assert.assertEquals(
+			Arrays.toString(classNameIds), 1, classNameIds.length);
 		Assert.assertEquals(1, classNameIds[0]);
 	}
 
@@ -53,7 +57,8 @@ public class AssetVocabularySettingsHelperTest {
 		long[] classTypePKs = vocabularySettingsHelper.getClassTypePKs();
 
 		Assert.assertNotNull(classTypePKs);
-		Assert.assertEquals(1, classTypePKs.length);
+		Assert.assertEquals(
+			Arrays.toString(classTypePKs), 1, classTypePKs.length);
 		Assert.assertEquals(2, classTypePKs[0]);
 
 		vocabularySettingsHelper = new AssetVocabularySettingsHelper(
@@ -62,7 +67,8 @@ public class AssetVocabularySettingsHelperTest {
 		classTypePKs = vocabularySettingsHelper.getClassTypePKs();
 
 		Assert.assertNotNull(classTypePKs);
-		Assert.assertEquals(1, classTypePKs.length);
+		Assert.assertEquals(
+			Arrays.toString(classTypePKs), 1, classTypePKs.length);
 		Assert.assertEquals(
 			AssetCategoryConstants.ALL_CLASS_TYPE_PK, classTypePKs[0]);
 	}
@@ -76,7 +82,8 @@ public class AssetVocabularySettingsHelperTest {
 			vocabularySettingsHelper.getRequiredClassNameIds();
 
 		Assert.assertNotNull(classNameIds);
-		Assert.assertEquals(1, classNameIds.length);
+		Assert.assertEquals(
+			Arrays.toString(classNameIds), 1, classNameIds.length);
 		Assert.assertEquals(1, classNameIds[0]);
 
 		vocabularySettingsHelper = getVocabularySettingsHelper(1, 2, false);
@@ -84,7 +91,8 @@ public class AssetVocabularySettingsHelperTest {
 		classNameIds = vocabularySettingsHelper.getRequiredClassNameIds();
 
 		Assert.assertNotNull(classNameIds);
-		Assert.assertEquals(0, classNameIds.length);
+		Assert.assertEquals(
+			Arrays.toString(classNameIds), 0, classNameIds.length);
 
 		vocabularySettingsHelper = getVocabularySettingsHelper(
 			false, new long[] {1, 2}, new long[] {1, 2},
@@ -93,7 +101,8 @@ public class AssetVocabularySettingsHelperTest {
 		classNameIds = vocabularySettingsHelper.getRequiredClassNameIds();
 
 		Assert.assertNotNull(classNameIds);
-		Assert.assertEquals(1, classNameIds.length);
+		Assert.assertEquals(
+			Arrays.toString(classNameIds), 1, classNameIds.length);
 		Assert.assertEquals(1, classNameIds[0]);
 	}
 
@@ -106,7 +115,8 @@ public class AssetVocabularySettingsHelperTest {
 			vocabularySettingsHelper.getRequiredClassTypePKs();
 
 		Assert.assertNotNull(classTypePKs);
-		Assert.assertEquals(1, classTypePKs.length);
+		Assert.assertEquals(
+			Arrays.toString(classTypePKs), 1, classTypePKs.length);
 		Assert.assertEquals(2, classTypePKs[0]);
 	}
 

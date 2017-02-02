@@ -105,7 +105,9 @@ public class DynamicDataSourceAdviceTest {
 			registeredAnnotationChainableMethodAdvices.get(
 				MasterDataSource.class);
 
-		Assert.assertEquals(1, annotationChainableMethodAdvices.length);
+		Assert.assertEquals(
+			Arrays.toString(annotationChainableMethodAdvices), 1,
+			annotationChainableMethodAdvices.length);
 		Assert.assertNull(annotationChainableMethodAdvices[0]);
 		Assert.assertSame(
 			annotationChainableMethodAdvices,

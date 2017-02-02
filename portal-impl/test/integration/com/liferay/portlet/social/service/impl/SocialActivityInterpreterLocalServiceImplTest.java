@@ -21,6 +21,7 @@ import com.liferay.portlet.social.service.impl.bundle.socialactivityinterpreterl
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.kernel.service.SocialActivityInterpreterLocalServiceUtil;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +64,7 @@ public class SocialActivityInterpreterLocalServiceImplTest {
 
 		String[] classNames = socialActivityInterpreter.getClassNames();
 
-		Assert.assertEquals(1, classNames.length);
+		Assert.assertEquals(Arrays.toString(classNames), 1, classNames.length);
 		Assert.assertEquals(
 			TestSocialActivityInterpreter.class.getName(), classNames[0]);
 	}
@@ -86,7 +87,7 @@ public class SocialActivityInterpreterLocalServiceImplTest {
 
 		String[] classNames = socialActivityInterpreter.getClassNames();
 
-		Assert.assertEquals(1, classNames.length);
+		Assert.assertEquals(Arrays.toString(classNames), 1, classNames.length);
 		Assert.assertEquals(
 			TestSocialActivityInterpreter.class.getName(), classNames[0]);
 	}

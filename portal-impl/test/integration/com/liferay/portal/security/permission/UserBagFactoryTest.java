@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -130,7 +131,7 @@ public class UserBagFactoryTest {
 
 		long[] roleIds = ListUtil.toLongArray(roles, Role.ROLE_ID_ACCESSOR);
 
-		Assert.assertEquals(4, roleIds.length);
+		Assert.assertEquals(Arrays.toString(roleIds), 4, roleIds.length);
 		Assert.assertTrue(ArrayUtil.contains(roleIds, regularRole.getRoleId()));
 		Assert.assertTrue(ArrayUtil.contains(roleIds, groupRoleId));
 		Assert.assertTrue(ArrayUtil.contains(roleIds, organizationRoleId));

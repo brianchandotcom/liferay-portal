@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.Assert;
@@ -62,7 +63,8 @@ public class RestrictedByteArrayCacheOutputStreamTest {
 		byte[] unsafeGetByteArray =
 			restrictedByteArrayCacheOutputStream.unsafeGetByteArray();
 
-		Assert.assertEquals(18, unsafeGetByteArray.length);
+		Assert.assertEquals(
+			Arrays.toString(unsafeGetByteArray), 18, unsafeGetByteArray.length);
 
 		for (int i = 0; i < 10; i++) {
 			Assert.assertEquals(bytes[i], unsafeGetByteArray[i]);
@@ -245,7 +247,8 @@ public class RestrictedByteArrayCacheOutputStreamTest {
 		byte[] unsafeGetByteArray =
 			restrictedByteArrayCacheOutputStream.unsafeGetByteArray();
 
-		Assert.assertEquals(27, unsafeGetByteArray.length);
+		Assert.assertEquals(
+			Arrays.toString(unsafeGetByteArray), 27, unsafeGetByteArray.length);
 
 		for (int i = 0; i < 26; i++) {
 			Assert.assertEquals(expectedBytesResult[i], unsafeGetByteArray[i]);

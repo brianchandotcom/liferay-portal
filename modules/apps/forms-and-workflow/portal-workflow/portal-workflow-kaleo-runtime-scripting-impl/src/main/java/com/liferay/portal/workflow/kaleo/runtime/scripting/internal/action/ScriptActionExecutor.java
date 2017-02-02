@@ -84,7 +84,7 @@ public class ScriptActionExecutor implements ActionExecutor {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		Map<String, Object> results = new HashMap<>();
+		Map<String, Object> results = null;
 
 		try {
 			currentThread.setContextClassLoader(classLoader);

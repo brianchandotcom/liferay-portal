@@ -434,7 +434,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			String definitionKey = entry.getValue();
 
 			Pattern pattern = Pattern.compile(
-				"[\\A\n]" + definitionKey + ":[^ \\\\\n]");
+				"(\\A|\n)" + definitionKey + ":[^ \\\\\n]");
 
 			Matcher matcher = pattern.matcher(content);
 

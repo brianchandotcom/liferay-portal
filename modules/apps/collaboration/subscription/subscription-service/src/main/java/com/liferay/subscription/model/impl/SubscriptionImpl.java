@@ -22,11 +22,6 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class SubscriptionImpl extends SubscriptionBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a subscription model instance should use the {@link com.liferay.subscription.model.Subscription} interface instead.
-	 */
 	public SubscriptionImpl() {
 	}
 

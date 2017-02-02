@@ -45,7 +45,3 @@ dependencies {
 	testCompile project(":apps:foundation:portal-search:portal-search")
 	testCompile project(":apps:foundation:portal-search:portal-search-test-util")
 }
-
-liferayOSGi {
-	expandCompileInclude = false
-}

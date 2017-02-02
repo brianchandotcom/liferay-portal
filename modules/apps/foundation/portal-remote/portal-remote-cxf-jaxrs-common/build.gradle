@@ -18,7 +18,3 @@ deployDependencies {
 	from configurations.provided
 	include "validation-api-*.jar"
 }
-
-liferayOSGi {
-	expandCompileInclude = false
-}

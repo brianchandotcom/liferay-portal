@@ -439,12 +439,24 @@
 			</execute>
 		</for>
 
-		<execute macro="Tag#mergeMultipleTags">
+		<execute macro="Tag#mergeTags">
 			<var name="mergeConfirmation"><![CDATA[Are you sure you want to merge "tag name 1,tag name 2,tag name 3" into "tag name 2"? This will change all items tagged with "tag name 1,tag name 2,tag name 3" to instead be tagged with "tag name 2".]]></var>
-			<var name="tagName1" value="tag name 1" />
-			<var name="tagName2" value="tag name 2" />
-			<var name="tagName3" value="tag name 3" />
+			<var name="selectTagToEmergeTo" value="tag name 2" />
 		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tag name 2" />
+		</execute>
+
+		<for list="tag name 1,tag name 3" param="tagName">
+			<execute macro="Tag#viewEmergedTagsCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="MergeSingleTagWarning" priority="3">

@@ -140,6 +140,10 @@ public class MaxFreePhysicalMemoryFabricAgentSelectorTest {
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
 
+			if (methodName.equals("toString")) {
+				return String.valueOf(_freePhysicalMemorySize);
+			}
+
 			if (!methodName.equals("getFreePhysicalMemorySize")) {
 				throw new UnsupportedOperationException();
 			}
@@ -161,6 +165,10 @@ public class MaxFreePhysicalMemoryFabricAgentSelectorTest {
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
+
+			if (methodName.equals("toString")) {
+				return String.valueOf(_freePhysicalMemorySize);
+			}
 
 			if (!methodName.equals("getFabricStatus")) {
 				throw new UnsupportedOperationException();
@@ -186,6 +194,10 @@ public class MaxFreePhysicalMemoryFabricAgentSelectorTest {
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
+
+			if (methodName.equals("toString")) {
+				return String.valueOf(_freePhysicalMemorySize);
+			}
 
 			if (!methodName.equals("getAdvancedOperatingSystemMXBean")) {
 				throw new UnsupportedOperationException();

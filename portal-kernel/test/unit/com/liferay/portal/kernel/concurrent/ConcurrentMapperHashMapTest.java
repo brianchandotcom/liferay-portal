@@ -271,7 +271,11 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
-		Assert.assertEquals(keySet.toString(), 1, keySet.size());
+		String keySetString = keySet.toString();
+
+		_assertEventQueue(Event.UNMAP_KEY_FOR_QUERY);
+
+		Assert.assertEquals(keySetString, 1, keySet.size());
 		Assert.assertTrue(keySet.contains(_testKey));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY);
@@ -284,7 +288,11 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
-		Assert.assertEquals(keySet.toString(), 1, keySet.size());
+		keySetString = keySet.toString();
+
+		_assertEventQueue(Event.UNMAP_KEY_FOR_QUERY);
+
+		Assert.assertEquals(keySetString, 1, keySet.size());
 		Assert.assertEquals(SetUtil.fromArray(new Key[] {_testKey}), keySet);
 
 		_assertEventQueue(Event.UNMAP_KEY_FOR_QUERY);
@@ -708,7 +716,11 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
-		Assert.assertEquals(values.toString(), 1, values.size());
+		String valuesString = values.toString();
+
+		_assertEventQueue(Event.UNMAP_VALUE_FOR_QUERY);
+
+		Assert.assertEquals(valuesString, 1, values.size());
 		Assert.assertTrue(values.contains(_testValue));
 
 		_assertEventQueue(Event.MAP_VALUE_FOR_QUERY);
@@ -899,9 +911,10 @@ public class ConcurrentMapperHashMapTest {
 		return map;
 	}
 
-	private void _assertEventQueue(Event... events) {
+	private void _assertEventQueue(Event... expectedEvents) {
 		Assert.assertArrayEquals(
-			_eventQueue.toArray(new Event[_eventQueue.size()]), events);
+			_eventQueue.toString(), expectedEvents,
+			_eventQueue.toArray(new Event[_eventQueue.size()]));
 
 		_eventQueue.clear();
 	}

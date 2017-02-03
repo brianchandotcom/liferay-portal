@@ -140,15 +140,15 @@ public class MaxFreePhysicalMemoryFabricAgentSelectorTest {
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
 
+			if (methodName.equals("getFreePhysicalMemorySize")) {
+				return _freePhysicalMemorySize;
+			}
+
 			if (methodName.equals("toString")) {
 				return String.valueOf(_freePhysicalMemorySize);
 			}
 
-			if (!methodName.equals("getFreePhysicalMemorySize")) {
-				throw new UnsupportedOperationException();
-			}
-
-			return _freePhysicalMemorySize;
+			throw new UnsupportedOperationException();
 		}
 
 		private final Long _freePhysicalMemorySize;
@@ -166,18 +166,18 @@ public class MaxFreePhysicalMemoryFabricAgentSelectorTest {
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
 
+			if (methodName.equals("getFabricStatus")) {
+				return ProxyUtil.newProxyInstance(
+					FabricStatus.class.getClassLoader(),
+					new Class<?>[] {FabricStatus.class},
+					new FabricStatusInvocationHandler(_freePhysicalMemorySize));
+			}
+
 			if (methodName.equals("toString")) {
 				return String.valueOf(_freePhysicalMemorySize);
 			}
 
-			if (!methodName.equals("getFabricStatus")) {
-				throw new UnsupportedOperationException();
-			}
-
-			return ProxyUtil.newProxyInstance(
-				FabricStatus.class.getClassLoader(),
-				new Class<?>[] {FabricStatus.class},
-				new FabricStatusInvocationHandler(_freePhysicalMemorySize));
+			throw new UnsupportedOperationException();
 		}
 
 		private final Long _freePhysicalMemorySize;
@@ -195,19 +195,19 @@ public class MaxFreePhysicalMemoryFabricAgentSelectorTest {
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
 
+			if (methodName.equals("getAdvancedOperatingSystemMXBean")) {
+				return ProxyUtil.newProxyInstance(
+					AdvancedOperatingSystemMXBean.class.getClassLoader(),
+					new Class<?>[] {AdvancedOperatingSystemMXBean.class},
+					new AdvancedOperatingSystemMXBeanInvocationHandler(
+						_freePhysicalMemorySize));
+			}
+
 			if (methodName.equals("toString")) {
 				return String.valueOf(_freePhysicalMemorySize);
 			}
 
-			if (!methodName.equals("getAdvancedOperatingSystemMXBean")) {
-				throw new UnsupportedOperationException();
-			}
-
-			return ProxyUtil.newProxyInstance(
-				AdvancedOperatingSystemMXBean.class.getClassLoader(),
-				new Class<?>[] {AdvancedOperatingSystemMXBean.class},
-				new AdvancedOperatingSystemMXBeanInvocationHandler(
-					_freePhysicalMemorySize));
+			throw new UnsupportedOperationException();
 		}
 
 		private final Long _freePhysicalMemorySize;

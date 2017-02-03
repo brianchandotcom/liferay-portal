@@ -1000,6 +1000,9 @@ test compile and runtime classpaths.
 setting the property `project.group` in a `gradle.properties` file contained in
 any parent directory of the project.
 
+### Changed
+- [LPS-69271]: Update the [Liferay Gradle Plugins] dependency to version 3.1.7.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

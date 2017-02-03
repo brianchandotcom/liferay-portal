@@ -80,7 +80,17 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 			portletPreferences.getValue(
 				"resourceClassNameId", StringPool.BLANK));
 
-		String resourceClassName = PortalUtil.getClassName(resourceClassNameId);
+		final String resourceClassName;
+
+		if ((resourcePrimKey ==
+				KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY) &&
+			(resourceClassNameId == 0)) {
+
+			resourceClassName = KBFolderConstants.getClassName();
+		}
+		else {
+			resourceClassName = PortalUtil.getClassName(resourceClassNameId);
+		}
 
 		try {
 			portletPreferences.setValue(

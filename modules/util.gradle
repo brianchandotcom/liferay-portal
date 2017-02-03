@@ -130,9 +130,9 @@ set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% "-Dgradle.user.home=%APP_HOME%\\.gradle"
 	scriptFile = new File(wrapperDir, "gradlew")
 }
 
-_createSetUpTasks()
+_createSetUpPortalToolTasks()
 
-private void _createSetUpTasks() {
+private void _createSetUpPortalToolTasks() {
 	FileTree ivyXmlFileTree = fileTree(dir: "../tools/sdk", includes: ["ivy.xml", "dependencies/*/ivy.xml"])
 
 	XmlSlurper xmlSlurper = new XmlSlurper()

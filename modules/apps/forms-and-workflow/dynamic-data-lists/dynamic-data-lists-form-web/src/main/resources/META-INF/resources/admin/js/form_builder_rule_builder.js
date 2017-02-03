@@ -4,6 +4,7 @@ AUI.add(
 		var SoyTemplateUtil = Liferay.DDM.SoyTemplateUtil;
 
 		var MAP_ACTION_DESCRIPTIONS = {
+			'auto-fill': 'auto-fill',
 			enable: 'enable-field',
 			'jump-to-page': 'jump-from-page-to-page',
 			require: 'require-field',
@@ -21,12 +22,25 @@ AUI.add(
 						value: []
 					},
 
+					getDataProviderParametersSettingsURL: {
+						value: ''
+					},
+
+					getDataProviderInstancesURL: {
+						value: ''
+					},
+
+					portletNamespace: {
+						value: ''
+					},
+
 					rules: {
 						value: []
 					},
 
 					strings: {
 						value: {
+							'auto-fill': Liferay.Language.get('autofill-x-from-data-provider-x'),
 							contains: Liferay.Language.get('contains'),
 							delete: Liferay.Language.get('delete'),
 							edit: Liferay.Language.get('edit'),
@@ -163,6 +177,9 @@ AUI.add(
 									contentBox: instance.get('contentBox'),
 									fields: instance.getFields(),
 									functionsMetadata: instance.get('functionsMetadata'),
+									getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
+									getDataProviderInstancesURL: instance.get('getDataProviderInstancesURL'),
+									portletNamespace: instance.get('portletNamespace'),
 									pages: instance.getPages()
 								}
 							);
@@ -211,6 +228,31 @@ AUI.add(
 										}
 									)
 								];
+							}
+							else if (type === 'auto-fill') {
+								data = [];
+
+								var fieldListDescription = [];
+
+								for (var output in action.outputs) {
+									fieldListDescription.push(
+										badgeTemplate(
+											{
+												content: action.outputs[output]
+											}
+										)
+									);
+								}
+
+								data.push(fieldListDescription.join(', '));
+
+								data.push(
+									badgeTemplate(
+										{
+											content: action.ddmDataProviderInstanceUUID
+										}
+									)
+								);
 							}
 							else {
 								data = [

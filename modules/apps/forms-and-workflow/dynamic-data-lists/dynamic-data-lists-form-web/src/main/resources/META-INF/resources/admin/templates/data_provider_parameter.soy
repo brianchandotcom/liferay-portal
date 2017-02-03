@@ -1,0 +1,19 @@
+{namespace ddl.data_provider_parameter}
+
+/**
+ * Prints the DDL Data Provider settings.
+ *
+ * @param strings
+ */
+{template .settings autoescape="deprecated-contextual"}
+	<div class="data-provider-parameter-input-container">
+		<p class="data-provider-parameter-input-required-field">{$strings.requiredField}</p>
+		<p class="data-provider-parameter-input-description">{$strings.dataProviderParameterInputDescription}</p>
+		<div class="data-provider-parameter-input-list"></div>
+	</div>
+
+	<div class="data-provider-parameter-output-container">
+		<p class="data-provider-parameter-output-description">{$strings.dataProviderParameterOutputDescription}</p>
+		<div class="data-provider-parameter-output-list"></div>
+	</div>
+{/template}

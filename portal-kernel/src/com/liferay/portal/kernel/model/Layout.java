@@ -234,6 +234,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*/
 	public LayoutType getLayoutType();
 
+	public LayoutTypeController getLayoutTypeController();
+
 	/**
 	* Returns the current layout's linked layout.
 	*

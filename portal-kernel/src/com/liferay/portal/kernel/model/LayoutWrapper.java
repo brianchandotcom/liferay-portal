@@ -350,6 +350,11 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		return _layout.getLayoutType();
 	}
 
+	@Override
+	public LayoutTypeController getLayoutTypeController() {
+		return _layout.getLayoutTypeController();
+	}
+
 	/**
 	* Returns the current layout's theme, or the layout set's theme if no
 	* layout theme is configured.

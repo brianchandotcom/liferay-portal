@@ -94,15 +94,13 @@ describe(
 			'.setValue()',
 			function() {
 				it(
-					'should return empty value if set an empty object value',
+					'should return empty object if set an empty object value',
 					function(done) {
 						gridField = createGridField();
 
 						gridField.setValue({});
 
-						assert.equal(gridField.getValue().A, undefined);
-
-						assert.equal(gridField.getValue().B, undefined);
+						assert.equal((Object.getOwnPropertyNames(gridField.getValue())).length, 0);
 
 						done();
 					}
@@ -126,7 +124,7 @@ describe(
 				);
 
 				it(
-					'should return object values if set an only option',
+					'should return only one object value',
 					function(done) {
 						gridField = createGridField();
 
@@ -221,11 +219,18 @@ describe(
 					function(done) {
 						gridField = createGridField(
 							{
-								value: {A: '2', B: '1'}
+								context: {
+									value: {
+										A: '2', 
+										B: '1'
+									}
+								}
 							}
 						);
 
-						var value = gridField.get('value');
+						var context = gridField.get('context');
+
+						var value = context.value;
 
 						assert.isObject(value);
 
@@ -256,6 +261,29 @@ describe(
 						assert.isObject(gridField.getValue());
 
 						assert.equal(gridField.getValue().A, '2');
+
+						done();
+					}
+				);
+
+				it(
+					'should change value after click in another radio input column value',
+					function(done) {
+						gridField = createGridField();
+
+						gridField.setValue({A: '2'});
+
+						var container = gridField.get('container');
+
+						var input = container.one('tr[name="A"]').one('input[value="1"]');
+
+						input.simulate('click');
+
+						assert.isObject(gridField.getValue());
+
+						assert.notEqual(gridField.getValue().A, '2');
+
+						assert.equal(gridField.getValue().A, '1');
 
 						done();
 					}

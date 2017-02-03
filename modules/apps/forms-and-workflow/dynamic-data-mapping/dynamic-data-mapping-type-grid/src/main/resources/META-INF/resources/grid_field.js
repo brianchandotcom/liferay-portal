@@ -1,10 +1,6 @@
 AUI.add(
 	'liferay-ddm-form-field-grid',
 	function(A) {
-		var Lang = A.Lang;
-
-		var TPL_QUERY_INPUT_CHECKED = 'input[name="{name}"]:checked';
-
 		var GridField = A.Component.create(
 			{
 				ATTRS: {
@@ -24,6 +20,10 @@ AUI.add(
 
 					type: {
 						value: 'grid'
+					},
+
+					value: {
+						value: {}
 					}
 				},
 
@@ -56,30 +56,7 @@ AUI.add(
 					getValue: function() {
 						var instance = this;
 
-						var gridRowsNode = instance._getGridRowsNode();
-
-						var value = {};
-
-						for (var i = 0; i < gridRowsNode.size(); i++) {
-							var gridRow = gridRowsNode.item(i);
-
-							var rowName = gridRow.attr('name');
-
-							var queryChecked = Lang.sub(
-								TPL_QUERY_INPUT_CHECKED,
-								{
-									name: rowName
-								}
-							);
-
-							var inputChecked = gridRow.one(queryChecked);
-
-							if (inputChecked) {
-								value[rowName] = inputChecked.val();
-							}
-						}
-
-						return value;
+						return instance.get('value');
 					},
 
 					setValue: function(value) {
@@ -103,7 +80,7 @@ AUI.add(
 					_getFocusTarget: function() {
 						var instance = this;
 
-						return instance.focusTarget;
+						return instance._focusTarget;
 					},
 
 					_getGridRowsNode: function() {
@@ -139,10 +116,6 @@ AUI.add(
 
 						var value = instance.get('value');
 
-						if (!value) {
-							value = {};
-						}
-
 						value[target.attr('name')] = target.attr('value');
 
 						instance._setFocusTarget(target);
@@ -165,7 +138,7 @@ AUI.add(
 
 						focusTarget.index = target.attr('data-row-index');
 
-						instance.focusTarget = focusTarget;
+						instance._focusTarget = focusTarget;
 					},
 
 					_setRows: function(rows) {

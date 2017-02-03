@@ -140,15 +140,15 @@ public class MinSystemCPULoadFabricAgentSelectorTest {
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
 
+			if (methodName.equals("getSystemCpuLoad")) {
+				return _systemCpuLoad;
+			}
+
 			if (methodName.equals("toString")) {
 				return String.valueOf(_systemCpuLoad);
 			}
 
-			if (!methodName.equals("getSystemCpuLoad")) {
-				throw new UnsupportedOperationException();
-			}
-
-			return _systemCpuLoad;
+			throw new UnsupportedOperationException();
 		}
 
 		private final Double _systemCpuLoad;
@@ -166,18 +166,18 @@ public class MinSystemCPULoadFabricAgentSelectorTest {
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
 
+			if (methodName.equals("getFabricStatus")) {
+				return ProxyUtil.newProxyInstance(
+					FabricStatus.class.getClassLoader(),
+					new Class<?>[] {FabricStatus.class},
+					new FabricStatusInvocationHandler(_systemCpuLoad));
+			}
+
 			if (methodName.equals("toString")) {
 				return String.valueOf(_systemCpuLoad);
 			}
 
-			if (!methodName.equals("getFabricStatus")) {
-				throw new UnsupportedOperationException();
-			}
-
-			return ProxyUtil.newProxyInstance(
-				FabricStatus.class.getClassLoader(),
-				new Class<?>[] {FabricStatus.class},
-				new FabricStatusInvocationHandler(_systemCpuLoad));
+			throw new UnsupportedOperationException();
 		}
 
 		private final Double _systemCpuLoad;
@@ -195,19 +195,19 @@ public class MinSystemCPULoadFabricAgentSelectorTest {
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
 
+			if (methodName.equals("getAdvancedOperatingSystemMXBean")) {
+				return ProxyUtil.newProxyInstance(
+					AdvancedOperatingSystemMXBean.class.getClassLoader(),
+					new Class<?>[] {AdvancedOperatingSystemMXBean.class},
+					new AdvancedOperatingSystemMXBeanInvocationHandler(
+						_systemCpuLoad));
+			}
+
 			if (methodName.equals("toString")) {
 				return String.valueOf(_systemCpuLoad);
 			}
 
-			if (!methodName.equals("getAdvancedOperatingSystemMXBean")) {
-				throw new UnsupportedOperationException();
-			}
-
-			return ProxyUtil.newProxyInstance(
-				AdvancedOperatingSystemMXBean.class.getClassLoader(),
-				new Class<?>[] {AdvancedOperatingSystemMXBean.class},
-				new AdvancedOperatingSystemMXBeanInvocationHandler(
-					_systemCpuLoad));
+			throw new UnsupportedOperationException();
 		}
 
 		private final Double _systemCpuLoad;

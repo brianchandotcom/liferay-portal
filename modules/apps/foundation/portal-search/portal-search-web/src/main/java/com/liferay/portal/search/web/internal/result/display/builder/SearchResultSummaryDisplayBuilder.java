@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -174,7 +173,7 @@ public class SearchResultSummaryDisplayBuilder {
 			searchResultSummaryDisplayContext.setUserPortraitVisible(true);
 		}
 
-		searchResultSummaryDisplayContext.setViewURL(checkViewURL(viewURL));
+		searchResultSummaryDisplayContext.setViewURL(viewURL);
 
 		searchResultSummaryDisplayContext.setHighlightedTitle(
 			summary.getHighlightedTitle());
@@ -285,23 +284,6 @@ public class SearchResultSummaryDisplayBuilder {
 		}
 
 		return searchResultFieldDisplayContexts;
-	}
-
-	protected String checkViewURL(String viewURL) {
-		if (Validator.isNotNull(viewURL) &&
-			viewURL.startsWith(_themeDisplay.getURLPortal())) {
-
-			viewURL = HttpUtil.setParameter(
-				viewURL, "inheritRedirect",
-				_searchResultPreferences.isViewInContext());
-
-			if (!_searchResultPreferences.isViewInContext()) {
-				viewURL = HttpUtil.setParameter(
-					viewURL, "redirect", _currentURL);
-			}
-		}
-
-		return viewURL;
 	}
 
 	protected long getAssetEntryUserId(AssetEntry assetEntry) {

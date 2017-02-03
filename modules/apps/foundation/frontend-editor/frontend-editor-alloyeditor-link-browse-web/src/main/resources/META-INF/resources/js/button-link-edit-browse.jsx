@@ -27,11 +27,6 @@
 			key: 'linkEditBrowse'
 		},
 
-		componentWillUnmount: function() {
-			console.log('unmount');
-		},
-
-
 		/**
          * Lifecycle. Invoked once before the component is mounted.
          * The return value will be used as the initial value of this.state.
@@ -48,10 +43,16 @@
             };
         },
 
-		render() {
+        /**
+         * Lifecycle. Renders the UI of the button.
+         *
+         * @method render
+         * @return {Object} The content which should be rendered.
+         */
+		render: function() {
 			return (
 				<div>
-					<AlloyEditor.ButtonLinkEdit {...this.props} />
+					<AlloyEditor.ButtonLinkEdit ref='linkEditButton' {...this.props} />
 					<button aria-label="Browse" className="ae-button" onClick={this._browseClick} title="browse">
 						Browse
 					</button>
@@ -59,12 +60,20 @@
 			);
 		},
 
-		_browseClick: function(event) {
+		/**
+         * Opens an item selector dialog.
+         *
+         * @protected
+         * @method _browseClick
+         */
+		_browseClick: function() {
 			var editor = this.props.editor.get('nativeEditor');
 
 			var url = editor.config.documentBrowseLinkUrl;
 
 			var instance = this;
+
+			var linkTarget = this.refs.linkEditButton.state.linkTarget;
 
 			AUI().use('liferay-item-selector-dialog', (A) => {
 				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
@@ -74,7 +83,7 @@
 								var selectedItem = event.newVal;
 
 								if (selectedItem) {
-						            instance._updateLink(selectedItem.value);
+						            instance._updateLink(selectedItem.value, linkTarget);
 								}
 							}
 						},
@@ -93,12 +102,14 @@
          *
          * @protected
          * @method _updateLink
+         * @param {String} linkHref href value for the link
+         * @param {String} linkTarget target value for the link
          */
-        _updateLink: function(linkHref) {
+        _updateLink: function(linkHref, linkTarget) {
             var editor = this.props.editor.get('nativeEditor');
             var linkUtils = new CKEDITOR.Link(editor, {appendProtocol: false});
             var linkAttrs = {
-                target: '_blank'
+                target: linkTarget
             };
             var modifySelection = { advance: true };
 

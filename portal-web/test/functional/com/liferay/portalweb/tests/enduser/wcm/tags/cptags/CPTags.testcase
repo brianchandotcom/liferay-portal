@@ -454,7 +454,7 @@
 		</execute>
 
 		<execute macro="Tag#mergeTags">
-			<var name="mergeConfirmation"><![CDATA[Are you sure you want to merge "tag name 1,tag name 2,tag name 3" into "tag name 6"? This will change all items tagged with "tag name 1,tag name 2,tag name 3" to instead be tagged with "tag name 6".]]></var>
+			<var name="mergeConfirmation"><![CDATA[Are you sure you want to merge "tag name 1,tag name 2,tag name 3,tag name 6" into "tag name 6"? This will change all items tagged with "tag name 1,tag name 2,tag name 3,tag name 6" to instead be tagged with "tag name 6".]]></var>
 			<var name="selectTagName" value="tag name 6" />
 			<var name="selectTagToMergeTo" value="tag name 6" />
 			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />

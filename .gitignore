@@ -2,6 +2,8 @@
 **/.gradle
 **/.settings
 **/.sonar
+**/liferay/logs/*.log
+**/liferay/logs/*.xml
 **/pmd-reports
 *.bak
 *.iml

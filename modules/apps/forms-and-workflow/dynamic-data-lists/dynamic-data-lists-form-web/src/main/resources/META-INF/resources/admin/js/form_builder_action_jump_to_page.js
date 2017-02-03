@@ -48,14 +48,16 @@ AUI.add(
 					render: function() {
 						var instance = this;
 
-						var boundingBox = instance.get('boundingBox');
-
 						var strings = instance.get('strings');
 
-						instance._createLabel(strings.from);
-						instance._createSourceField().render(boundingBox);
-						instance._createLabel(strings.to);
-						instance._createTargetField().render(boundingBox);
+						var index = instance.get('index');
+
+						var fieldsListContainer = instance.get('boundingBox').one('.target-' + index);
+
+						fieldsListContainer.append(instance._createLabel(strings.from));
+						instance._createSourceField().render(fieldsListContainer);
+						fieldsListContainer.append(instance._createLabel(strings.do));
+						instance._createTargetField().render(fieldsListContainer);
 					},
 
 					_createLabel: function(text) {
@@ -72,7 +74,7 @@ AUI.add(
 							)
 						);
 
-						boundingBox.append(label);
+						return label;
 					},
 
 					_createSourceField: function() {

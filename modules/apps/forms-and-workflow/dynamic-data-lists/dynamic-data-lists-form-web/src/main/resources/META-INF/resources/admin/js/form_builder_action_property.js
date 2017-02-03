@@ -40,7 +40,11 @@ AUI.add(
 					render: function() {
 						var instance = this;
 
-						instance._createField().render(instance.get('boundingBox'));
+						var index = instance.get('index');
+
+						var fieldsListContainer = instance.get('boundingBox').one('.target-' + index);
+
+						instance._createField().render(fieldsListContainer);
 					},
 
 					_createField: function() {

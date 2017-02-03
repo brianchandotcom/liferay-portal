@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.theme;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutType;
+import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -324,9 +324,10 @@ public class NavItem implements Serializable {
 	}
 
 	public boolean isBrowsable() {
-		LayoutType layoutType = _layout.getLayoutType();
+		LayoutTypeController layoutTypeController =
+			_layout.getLayoutTypeController();
 
-		return layoutType.isBrowsable();
+		return layoutTypeController.isBrowsable();
 	}
 
 	public boolean isChildSelected() throws PortalException {

@@ -169,14 +169,14 @@
 		<execute function="Click" locator1="Icon#MERGE" />
 
 		<if>
-			<isset var="SelectTagName" />
+			<isset var="selectTagName" />
 			<then>
 				<execute function="Click" locator1="Button#SELECT" value1="Select" />
 
 				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 				<execute function="Check" locator1="Tags#TAG_ENTRY_TABLE_CHECKBOX">
-					<var name="key_tagName" value="${SelectTagName}" />
+					<var name="key_tagName" value="${selectTagName}" />
 				</execute>
 
 				<execute function="SelectFrameTop" />

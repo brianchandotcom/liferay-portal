@@ -257,7 +257,9 @@ public class DDLFormEmailNotificationSender {
 				}
 			}
 
-			sb.append(renderDDMFormFieldValue(ddmFormFieldValue, locale));
+			if (ddmFormFieldValue.getValue() != null) {
+				sb.append(renderDDMFormFieldValue(ddmFormFieldValue, locale));
+			}
 
 			if (i < (ddmFormFieldValues.size() - 1)) {
 				sb.append(StringPool.COMMA_AND_SPACE);

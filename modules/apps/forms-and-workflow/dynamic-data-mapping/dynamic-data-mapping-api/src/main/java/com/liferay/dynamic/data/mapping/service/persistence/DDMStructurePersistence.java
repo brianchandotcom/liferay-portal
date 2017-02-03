@@ -2078,6 +2078,264 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 		java.lang.String description);
 
 	/**
+	* Returns all the ddm structures where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @return the matching ddm structures
+	*/
+	public java.util.List<DDMStructure> findByG_C_N_D(long groupId,
+		long classNameId, java.lang.String name, java.lang.String description);
+
+	/**
+	* Returns a range of all the ddm structures where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @param start the lower bound of the range of ddm structures
+	* @param end the upper bound of the range of ddm structures (not inclusive)
+	* @return the range of matching ddm structures
+	*/
+	public java.util.List<DDMStructure> findByG_C_N_D(long groupId,
+		long classNameId, java.lang.String name, java.lang.String description,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the ddm structures where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @param start the lower bound of the range of ddm structures
+	* @param end the upper bound of the range of ddm structures (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching ddm structures
+	*/
+	public java.util.List<DDMStructure> findByG_C_N_D(long groupId,
+		long classNameId, java.lang.String name, java.lang.String description,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the ddm structures where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @param start the lower bound of the range of ddm structures
+	* @param end the upper bound of the range of ddm structures (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching ddm structures
+	*/
+	public java.util.List<DDMStructure> findByG_C_N_D(long groupId,
+		long classNameId, java.lang.String name, java.lang.String description,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first ddm structure in the ordered set where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ddm structure
+	* @throws NoSuchStructureException if a matching ddm structure could not be found
+	*/
+	public DDMStructure findByG_C_N_D_First(long groupId, long classNameId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException;
+
+	/**
+	* Returns the first ddm structure in the ordered set where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
+	*/
+	public DDMStructure fetchByG_C_N_D_First(long groupId, long classNameId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure> orderByComparator);
+
+	/**
+	* Returns the last ddm structure in the ordered set where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ddm structure
+	* @throws NoSuchStructureException if a matching ddm structure could not be found
+	*/
+	public DDMStructure findByG_C_N_D_Last(long groupId, long classNameId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException;
+
+	/**
+	* Returns the last ddm structure in the ordered set where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
+	*/
+	public DDMStructure fetchByG_C_N_D_Last(long groupId, long classNameId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure> orderByComparator);
+
+	/**
+	* Returns the ddm structures before and after the current ddm structure in the ordered set where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* @param structureId the primary key of the current ddm structure
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next ddm structure
+	* @throws NoSuchStructureException if a ddm structure with the primary key could not be found
+	*/
+	public DDMStructure[] findByG_C_N_D_PrevAndNext(long structureId,
+		long groupId, long classNameId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException;
+
+	/**
+	* Returns all the ddm structures that the user has permission to view where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @return the matching ddm structures that the user has permission to view
+	*/
+	public java.util.List<DDMStructure> filterFindByG_C_N_D(long groupId,
+		long classNameId, java.lang.String name, java.lang.String description);
+
+	/**
+	* Returns a range of all the ddm structures that the user has permission to view where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @param start the lower bound of the range of ddm structures
+	* @param end the upper bound of the range of ddm structures (not inclusive)
+	* @return the range of matching ddm structures that the user has permission to view
+	*/
+	public java.util.List<DDMStructure> filterFindByG_C_N_D(long groupId,
+		long classNameId, java.lang.String name, java.lang.String description,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the ddm structures that the user has permissions to view where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @param start the lower bound of the range of ddm structures
+	* @param end the upper bound of the range of ddm structures (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching ddm structures that the user has permission to view
+	*/
+	public java.util.List<DDMStructure> filterFindByG_C_N_D(long groupId,
+		long classNameId, java.lang.String name, java.lang.String description,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure> orderByComparator);
+
+	/**
+	* Returns the ddm structures before and after the current ddm structure in the ordered set of ddm structures that the user has permission to view where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* @param structureId the primary key of the current ddm structure
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next ddm structure
+	* @throws NoSuchStructureException if a ddm structure with the primary key could not be found
+	*/
+	public DDMStructure[] filterFindByG_C_N_D_PrevAndNext(long structureId,
+		long groupId, long classNameId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException;
+
+	/**
+	* Removes all the ddm structures where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	*/
+	public void removeByG_C_N_D(long groupId, long classNameId,
+		java.lang.String name, java.lang.String description);
+
+	/**
+	* Returns the number of ddm structures where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @return the number of matching ddm structures
+	*/
+	public int countByG_C_N_D(long groupId, long classNameId,
+		java.lang.String name, java.lang.String description);
+
+	/**
+	* Returns the number of ddm structures that the user has permission to view where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @param description the description
+	* @return the number of matching ddm structures that the user has permission to view
+	*/
+	public int filterCountByG_C_N_D(long groupId, long classNameId,
+		java.lang.String name, java.lang.String description);
+
+	/**
 	* Caches the ddm structure in the entity cache if it is enabled.
 	*
 	* @param ddmStructure the ddm structure

@@ -325,6 +325,16 @@ public class DDMStructurePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_N_D() throws Exception {
+		_persistence.countByG_C_N_D(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
+
+		_persistence.countByG_C_N_D(0L, 0L, StringPool.NULL, StringPool.NULL);
+
+		_persistence.countByG_C_N_D(0L, 0L, (String)null, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDMStructure newDDMStructure = addDDMStructure();
 

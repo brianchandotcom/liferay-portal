@@ -1065,6 +1065,15 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructures(
+		long groupId, long classNameId, java.lang.String name,
+		java.lang.String description, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> orderByComparator) {
+		return _ddmStructureLocalService.getStructures(groupId, classNameId,
+			name, description, start, end, orderByComparator);
+	}
+
 	/**
 	* Returns all the structures belonging to the groups.
 	*

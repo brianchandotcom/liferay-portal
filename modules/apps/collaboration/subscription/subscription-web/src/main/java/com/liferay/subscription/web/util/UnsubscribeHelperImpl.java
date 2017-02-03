@@ -14,10 +14,13 @@
 
 package com.liferay.subscription.web.util;
 
+import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.subscription.util.UnsubscribeLifecycleHookFactory;
+import com.liferay.portal.kernel.util.SubscriptionSender;
+import com.liferay.subscription.util.UnsubscribeHelper;
 import com.liferay.subscription.web.configuration.SubscriptionConfiguration;
 
 import java.util.Map;
@@ -32,15 +35,23 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.subscription.web.configuration.SubscriptionConfiguration",
-	immediate = true, service = UnsubscribeLifecycleHookFactory.class
+	immediate = true, service = UnsubscribeHelper.class
 )
-public class UnsubscribeLifecycleHookFactoryImpl
-	implements UnsubscribeLifecycleHookFactory {
+public class UnsubscribeHelperImpl implements UnsubscribeHelper {
 
 	@Override
-	public UnsubscribeLifecycleHookImpl create() {
-		return new UnsubscribeLifecycleHookImpl(
-			_configuration, _ticketLocalService, _userLocalService);
+	public void registerHooks(SubscriptionSender subscriptionSender) {
+		UnsubscribeHooks unsubscribeHooks = new UnsubscribeHooks(
+			_configuration, _ticketLocalService, _userLocalService,
+			subscriptionSender);
+
+		subscriptionSender.addHook(
+			SubscriptionSender.Hook.Event.NOTIFY, Subscription.class,
+			unsubscribeHooks::beforeSendNotificationToPersistedSubscriber);
+
+		subscriptionSender.addHook(
+			SubscriptionSender.Hook.Event.PROCESS, MailMessage.class,
+			unsubscribeHooks::processMailMessage);
 	}
 
 	@Activate

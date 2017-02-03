@@ -14,11 +14,13 @@
 
 package com.liferay.subscription.util;
 
+import com.liferay.portal.kernel.util.SubscriptionSender;
+
 /**
  * @author Alejandro Tardín
  */
-public interface UnsubscribeLifecycleHookFactory {
+public interface UnsubscribeHelper {
 
-	public UnsubscribeLifecycleHook create();
+	public void registerHooks(SubscriptionSender subscriptionSender);
 
 }

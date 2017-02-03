@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SubscriptionSender;
-import com.liferay.subscription.util.UnsubscribeLifecycleHook;
 import com.liferay.subscription.web.configuration.SubscriptionConfiguration;
 import com.liferay.subscription.web.constants.SubscriptionConstants;
 
@@ -47,24 +46,24 @@ import javax.mail.internet.InternetHeaders;
 /**
  * @author Alejandro Tardín
  */
-public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
+public class UnsubscribeHooks {
 
-	public UnsubscribeLifecycleHookImpl(
+	public UnsubscribeHooks(
 		SubscriptionConfiguration configuration,
 		TicketLocalService ticketLocalService,
-		UserLocalService userLocalService) {
+		UserLocalService userLocalService,
+		SubscriptionSender subscriptionSender) {
 
 		_configuration = configuration;
 		_ticketLocalService = ticketLocalService;
 		_userLocalService = userLocalService;
+		_subscriptionSender = subscriptionSender;
 	}
 
-	@Override
 	public void beforeSendNotificationToPersistedSubscriber(
-			SubscriptionSender subscriptionSender, Subscription subscription)
-		throws PortalException {
+		Subscription subscription) {
 
-		if (subscriptionSender.isBulk()) {
+		if (_subscriptionSender.isBulk()) {
 			return;
 		}
 
@@ -85,34 +84,41 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 				subscription.getCompanyId(), Subscription.class.getName(),
 				subscription.getSubscriptionId(),
 				SubscriptionConstants.TICKET_TYPE, StringPool.BLANK,
-				calendar.getTime(), subscriptionSender.getServiceContext());
+				calendar.getTime(), _subscriptionSender.getServiceContext());
 		}
 		else {
 			ticket = tickets.get(0);
 
-			ticket = _ticketLocalService.updateTicket(
-				ticket.getTicketId(), Subscription.class.getName(),
-				subscription.getSubscriptionId(),
-				SubscriptionConstants.TICKET_TYPE, StringPool.BLANK,
-				calendar.getTime());
+			try {
+				ticket = _ticketLocalService.updateTicket(
+					ticket.getTicketId(), Subscription.class.getName(),
+					subscription.getSubscriptionId(),
+					SubscriptionConstants.TICKET_TYPE, StringPool.BLANK,
+					calendar.getTime());
+			}
+			catch (PortalException pe) {
+				pe.printStackTrace();
+			}
 		}
 
 		_userTicketMap.put(subscription.getUserId(), ticket);
 	}
 
-	@Override
-	public void processMailMessage(
-			SubscriptionSender subscriptionSender, MailMessage mailMessage)
-		throws IOException, PortalException {
-
-		if (subscriptionSender.isBulk()) {
+	public void processMailMessage(MailMessage mailMessage) {
+		if (_subscriptionSender.isBulk()) {
 			return;
 		}
 
 		InternetAddress[] toAddresses = mailMessage.getTo();
 
 		for (InternetAddress toAddress : toAddresses) {
-			_processMailMessage(subscriptionSender, mailMessage, toAddress);
+			try {
+				_processMailMessage(
+					_subscriptionSender, mailMessage, toAddress);
+			}
+			catch (PortalException pe) {
+				pe.printStackTrace();
+			}
 		}
 	}
 
@@ -167,7 +173,7 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 	private void _processMailMessage(
 			SubscriptionSender subscriptionSender, MailMessage mailMessage,
 			InternetAddress toAddress)
-		throws IOException {
+		throws PortalException {
 
 		User user = _userLocalService.fetchUserByEmailAddress(
 			subscriptionSender.getCompanyId(), toAddress.getAddress());
@@ -186,6 +192,9 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 				_addUnsubscribeHeader(mailMessage, unsubscribeURL);
 				_addUnsubscribeLink(mailMessage, unsubscribeURL);
 			}
+			catch (IOException ioe) {
+				throw new PortalException(ioe);
+			}
 			finally {
 				_userTicketMap.remove(user.getUserId());
 			}
@@ -193,6 +202,7 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 	}
 
 	private final SubscriptionConfiguration _configuration;
+	private final SubscriptionSender _subscriptionSender;
 	private final TicketLocalService _ticketLocalService;
 	private final UserLocalService _userLocalService;
 	private final Map<Long, Ticket> _userTicketMap = new HashMap<>();

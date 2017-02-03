@@ -14,6 +14,8 @@
 
 package com.liferay.captcha.simplecaptcha;
 
+import com.liferay.captcha.configuration.CaptchaConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
@@ -25,7 +27,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -50,12 +51,14 @@ import nl.captcha.text.renderer.WordRenderer;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Daniel Sanz
  */
 @Component(
+	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
 	immediate = true,
 	property = {
 		"captcha.engine.impl=com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl"
@@ -111,7 +114,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			return false;
 		}
 
-		if (PropsValues.CAPTCHA_MAX_CHALLENGES >= 0) {
+		if (_captchaConfiguration.maxChallenges() >= 0) {
 			return true;
 		}
 		else {
@@ -125,7 +128,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			return false;
 		}
 
-		if (PropsValues.CAPTCHA_MAX_CHALLENGES >= 0) {
+		if (_captchaConfiguration.maxChallenges() >= 0) {
 			return true;
 		}
 		else {
@@ -169,13 +172,21 @@ public class SimpleCaptchaImpl implements Captcha {
 			simpleCaptcha.getImage());
 	}
 
-	@Activate
 	protected void activate() {
 		initBackgroundProducers();
 		initGimpyRenderers();
 		initNoiseProducers();
 		initTextProducers();
 		initWordRenderers();
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_captchaConfiguration = ConfigurableUtil.createConfigurable(
+			CaptchaConfiguration.class, properties);
+
+		activate();
 	}
 
 	protected BackgroundProducer getBackgroundProducer() {
@@ -199,7 +210,7 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected int getHeight() {
-		return PropsValues.CAPTCHA_ENGINE_SIMPLECAPTCHA_HEIGHT;
+		return _captchaConfiguration.simpleCaptchaHeight();
 	}
 
 	protected NoiseProducer getNoiseProducer() {
@@ -236,7 +247,7 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected int getWidth() {
-		return PropsValues.CAPTCHA_ENGINE_SIMPLECAPTCHA_WIDTH;
+		return _captchaConfiguration.simpleCaptchaWidth();
 	}
 
 	protected WordRenderer getWordRenderer() {
@@ -250,7 +261,7 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void incrementCounter(HttpServletRequest request) {
-		if ((PropsValues.CAPTCHA_MAX_CHALLENGES > 0) &&
+		if ((_captchaConfiguration.maxChallenges() > 0) &&
 			Validator.isNotNull(request.getRemoteUser())) {
 
 			HttpSession session = request.getSession();
@@ -275,7 +286,7 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void incrementCounter(PortletRequest portletRequest) {
-		if ((PropsValues.CAPTCHA_MAX_CHALLENGES > 0) &&
+		if ((_captchaConfiguration.maxChallenges() > 0) &&
 			Validator.isNotNull(portletRequest.getRemoteUser())) {
 
 			PortletSession portletSession = portletRequest.getPortletSession();
@@ -290,7 +301,7 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	protected void initBackgroundProducers() {
 		String[] backgroundProducerClassNames =
-			PropsValues.CAPTCHA_ENGINE_SIMPLECAPTCHA_BACKGROUND_PRODUCERS;
+			_captchaConfiguration.simpleCaptchaBackgroundProducers();
 
 		_backgroundProducers = new BackgroundProducer[
 			backgroundProducerClassNames.length];
@@ -306,7 +317,7 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	protected void initGimpyRenderers() {
 		String[] gimpyRendererClassNames =
-			PropsValues.CAPTCHA_ENGINE_SIMPLECAPTCHA_GIMPY_RENDERERS;
+			_captchaConfiguration.simpleCaptchaGimpyRenderers();
 
 		_gimpyRenderers = new GimpyRenderer[gimpyRendererClassNames.length];
 
@@ -320,7 +331,7 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	protected void initNoiseProducers() {
 		String[] noiseProducerClassNames =
-			PropsValues.CAPTCHA_ENGINE_SIMPLECAPTCHA_NOISE_PRODUCERS;
+			_captchaConfiguration.simpleCaptchaNoiseProducers();
 
 		_noiseProducers = new NoiseProducer[noiseProducerClassNames.length];
 
@@ -334,7 +345,7 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	protected void initTextProducers() {
 		String[] textProducerClassNames =
-			PropsValues.CAPTCHA_ENGINE_SIMPLECAPTCHA_TEXT_PRODUCERS;
+			_captchaConfiguration.simpleCaptchaTextProducers();
 
 		_textProducers = new TextProducer[textProducerClassNames.length];
 
@@ -348,7 +359,7 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	protected void initWordRenderers() {
 		String[] wordRendererClassNames =
-			PropsValues.CAPTCHA_ENGINE_SIMPLECAPTCHA_WORD_RENDERERS;
+			_captchaConfiguration.simpleCaptchaWordRenderers();
 
 		_wordRenderers = new WordRenderer[wordRendererClassNames.length];
 
@@ -361,7 +372,7 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected boolean isExceededMaxChallenges(HttpServletRequest request) {
-		if (PropsValues.CAPTCHA_MAX_CHALLENGES > 0) {
+		if (_captchaConfiguration.maxChallenges() > 0) {
 			HttpSession session = request.getSession();
 
 			Integer count = (Integer)session.getAttribute(
@@ -374,7 +385,9 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected boolean isExceededMaxChallenges(Integer count) {
-		if ((count != null) && (count >= PropsValues.CAPTCHA_MAX_CHALLENGES)) {
+		if ((count != null) &&
+			(count >= _captchaConfiguration.maxChallenges())) {
+
 			return true;
 		}
 
@@ -382,7 +395,7 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected boolean isExceededMaxChallenges(PortletRequest portletRequest) {
-		if (PropsValues.CAPTCHA_MAX_CHALLENGES > 0) {
+		if (_captchaConfiguration.maxChallenges() > 0) {
 			PortletSession portletSession = portletRequest.getPortletSession();
 
 			Integer count = (Integer)portletSession.getAttribute(
@@ -509,6 +522,7 @@ public class SimpleCaptchaImpl implements Captcha {
 		SimpleCaptchaImpl.class);
 
 	private BackgroundProducer[] _backgroundProducers;
+	private volatile CaptchaConfiguration _captchaConfiguration;
 	private GimpyRenderer[] _gimpyRenderers;
 	private final Map<String, Object> _instances = new ConcurrentHashMap<>();
 	private NoiseProducer[] _noiseProducers;

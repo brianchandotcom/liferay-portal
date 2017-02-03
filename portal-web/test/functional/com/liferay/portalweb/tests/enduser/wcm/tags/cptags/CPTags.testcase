@@ -385,7 +385,7 @@
 
 		<execute macro="Tag#mergeTags">
 			<var name="mergeConfirmation"><![CDATA[Are you sure you want to merge "tag name 1,tag name 2,tag name 3" into "tag name 2"? This will change all items tagged with "tag name 1,tag name 2,tag name 3" to instead be tagged with "tag name 2".]]></var>
-			<var name="selectTagToEmergeTo" value="tag name 2" />
+			<var name="selectTagToMergeTo" value="tag name 2" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -397,7 +397,7 @@
 		</execute>
 
 		<for list="tag name 1,tag name 3" param="tagName">
-			<execute macro="Tag#viewEmergedTagsCP">
+			<execute macro="Tag#viewMergedTagsCP">
 				<var name="tagName" value="${tagName}" />
 			</execute>
 		</for>

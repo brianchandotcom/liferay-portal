@@ -30,6 +30,7 @@ import java.sql.BatchUpdateException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -143,7 +144,12 @@ public class LockLocalServiceTest {
 		String key = "testKey";
 		String owner1 = "testOwner1";
 
-		Lock lock1 = LockLocalServiceUtil.lock(className, key, owner1);
+		Optional<Lock> lock = LockLocalServiceUtil.tryLock(
+			className, key, owner1);
+
+		Assert.assertTrue(lock.isPresent());
+
+		Lock lock1 = lock.get();
 
 		Assert.assertEquals(owner1, lock1.getOwner());
 
@@ -151,14 +157,22 @@ public class LockLocalServiceTest {
 
 		String owner2 = "owner2";
 
-		Lock lock2 = LockLocalServiceUtil.lock(className, key, owner2);
+		lock = LockLocalServiceUtil.tryLock(className, key, owner2);
+
+		Assert.assertTrue(lock.isPresent());
+
+		Lock lock2 = lock.get();
 
 		Assert.assertEquals(owner1, lock2.getOwner());
 		Assert.assertFalse(lock2.isNew());
 
 		LockLocalServiceUtil.unlock(className, key, owner1);
 
-		lock2 = LockLocalServiceUtil.lock(className, key, owner2);
+		lock = LockLocalServiceUtil.tryLock(className, key, owner2);
+
+		Assert.assertTrue(lock.isPresent());
+
+		lock2 = lock.get();
 
 		Assert.assertEquals(owner2, lock2.getOwner());
 		Assert.assertTrue(lock2.isNew());
@@ -174,8 +188,10 @@ public class LockLocalServiceTest {
 
 			while (true) {
 				try {
-					Lock lock = LockLocalServiceUtil.lock(
+					Optional<Lock> optionalLock = LockLocalServiceUtil.tryLock(
 						_className, _key, _owner);
+
+					Lock lock = optionalLock.get();
 
 					if (lock.isNew()) {
 

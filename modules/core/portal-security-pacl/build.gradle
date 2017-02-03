@@ -18,3 +18,7 @@ dependencies {
 liferay {
 	deployDir = file("${liferayHome}/osgi/core")
 }
+
+liferayOSGi {
+	expandCompileInclude = true
+}

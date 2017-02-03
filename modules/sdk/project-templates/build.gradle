@@ -54,6 +54,10 @@ dependencies {
 	testCompile project(":test:maven-executor")
 }
 
+liferayOSGi {
+	expandCompileInclude = true
+}
+
 processResources {
 	from configurations.projectTemplates
 }

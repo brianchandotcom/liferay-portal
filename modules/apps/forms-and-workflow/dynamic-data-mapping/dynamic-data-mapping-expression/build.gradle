@@ -77,3 +77,7 @@ generateGrammarSource {
 	maxHeapSize = "1512m"
 	outputDirectory = new File(temporaryDir, "generated")
 }
+
+liferayOSGi {
+	expandCompileInclude = true
+}

@@ -138,6 +138,10 @@ generateJNALibrary {
 	}
 }
 
+liferayOSGi {
+	expandCompileInclude = true
+}
+
 processTestResources {
 	dependsOn downloadSassSpec
 }

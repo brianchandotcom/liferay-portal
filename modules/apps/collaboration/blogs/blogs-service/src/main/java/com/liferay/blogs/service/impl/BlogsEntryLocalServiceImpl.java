@@ -101,7 +101,7 @@ import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.social.kernel.model.SocialActivityConstants;
-import com.liferay.subscription.util.UnsubscribeLifecycleHookFactory;
+import com.liferay.subscription.util.UnsubscribeHelper;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
@@ -1956,8 +1956,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 
-		subscriptionSender.addLifecycleHook(
-			unsubscribeLifecycleHookFactory.create());
+		unsubscribeLifecycleHookFactory.registerHooks(subscriptionSender);
 
 		subscriptionSender.addPersistedSubscribers(
 			BlogsEntry.class.getName(), entry.getGroupId());
@@ -2295,8 +2294,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	@ServiceReference(type = FriendlyURLLocalService.class)
 	protected FriendlyURLLocalService friendlyURLLocalService;
 
-	@ServiceReference(type = UnsubscribeLifecycleHookFactory.class)
-	protected UnsubscribeLifecycleHookFactory unsubscribeLifecycleHookFactory;
+	@ServiceReference(type = UnsubscribeHelper.class)
+	protected UnsubscribeHelper unsubscribeLifecycleHookFactory;
 
 	private String _getGroupDescriptiveName(Group group, Locale locale) {
 		try {

@@ -2550,7 +2550,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  .json,com.liferay.portal.kernel.messaging",com.liferay.portal.kernel.
  license.util;version="1.0.0";uses:="com.liferay.portal.kernel.json,co
  m.liferay.portal.kernel.license",com.liferay.portal.kernel.lock;versi
- on="7.0.0";uses:="com.liferay.portal.kernel.exception",com.liferay.po
+ on="7.1.0";uses:="com.liferay.portal.kernel.exception",com.liferay.po
  rtal.kernel.log;version="7.0.0",com.liferay.portal.kernel.lpkg;versio
  n="1.0.0",com.liferay.portal.kernel.management;version="7.0.0";uses:=
  "com.liferay.portal.kernel.cluster,com.liferay.portal.kernel.exceptio

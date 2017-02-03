@@ -45,7 +45,7 @@
 		<execute function="Click" locator1="Icon#BACK" />
 	</command>
 
-	<command name="gotoDescriptiveViewEntry">
+	<command name="gotoEntryInDescriptiveView">
 		<var name="key_siteName" value="${entryName}" />
 
 		<execute function="AssertClick" locator1="SitesDirectory#DESCRIPTIVE_SITE_ENTRY" value1="${entryName}" />

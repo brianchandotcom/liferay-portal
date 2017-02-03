@@ -874,9 +874,7 @@
 			<var name="portlet" value="Roles" />
 		</execute>
 
-		<execute macro="RoleNavigator#gotoRoleType">
-			<var name="roleType" value="Regular" />
-		</execute>
+		<execute macro="RoleNavigator#gotoRoleType" />
 
 		<execute macro="Role#add">
 			<var name="roleDescription" value="This is the technical writer role" />

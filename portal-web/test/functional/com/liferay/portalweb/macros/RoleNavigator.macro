@@ -1,6 +1,6 @@
 <definition>
 	<command name="gotoAssignees">
-		<execute macro="Navigator#gotoDescriptiveViewEntry">
+		<execute macro="Navigator#gotoEntryInDescriptiveView">
 			<var name="entryName" value="${roleTitle}" />
 		</execute>
 

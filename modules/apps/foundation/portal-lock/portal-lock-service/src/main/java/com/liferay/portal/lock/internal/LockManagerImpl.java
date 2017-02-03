@@ -25,6 +25,7 @@ import com.liferay.portal.lock.service.LockLocalService;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -170,6 +171,41 @@ public class LockManagerImpl implements LockManager {
 		catch (PortalException pe) {
 			throw translate(pe);
 		}
+	}
+
+	@Override
+	public Optional<Lock> tryLock(
+		long userId, String className, long key, String owner,
+		boolean inheritable, long expirationTime) {
+
+		return _lockLocalService.tryLock(
+			userId, className, key, owner, inheritable,
+			expirationTime).map(LockImpl::new);
+	}
+
+	@Override
+	public Optional<Lock> tryLock(
+		long userId, String className, String key, String owner,
+		boolean inheritable, long expirationTime) {
+
+		return _lockLocalService.tryLock(
+			userId, className, key, owner, inheritable,
+			expirationTime).map(LockImpl::new);
+	}
+
+	@Override
+	public Optional<Lock> tryLock(String className, String key, String owner) {
+		return _lockLocalService.tryLock(
+			className, key, owner).map(LockImpl::new);
+	}
+
+	@Override
+	public Optional<Lock> tryLock(
+		String className, String key, String expectedOwner,
+		String updatedOwner) {
+
+		return _lockLocalService.tryLock(
+			className, key, expectedOwner, updatedOwner).map(LockImpl::new);
 	}
 
 	@Override

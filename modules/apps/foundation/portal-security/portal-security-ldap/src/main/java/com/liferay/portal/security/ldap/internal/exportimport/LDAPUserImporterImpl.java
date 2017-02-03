@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -87,6 +88,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 
@@ -365,33 +367,32 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		try {
 			long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
-			if (_lockManager.hasLock(
-					defaultUserId, UserImporter.class.getName(), companyId)) {
+			LDAPImportConfiguration ldapImportConfiguration =
+				_ldapImportConfigurationProvider.getConfiguration(companyId);
 
+			Optional<Lock> tryLock = _lockManager.tryLock(
+				defaultUserId, UserImporter.class.getName(), companyId,
+				LDAPUserImporterImpl.class.getName(), false,
+				ldapImportConfiguration.importLockExpirationTime());
+
+			if (tryLock.isPresent()) {
+				Collection<LDAPServerConfiguration> ldapServerConfigurations =
+					_ldapServerConfigurationProvider.getConfigurations(
+						companyId);
+
+				for (LDAPServerConfiguration ldapServerConfiguration :
+						ldapServerConfigurations) {
+
+					importUsers(
+						ldapServerConfiguration.ldapServerId(), companyId);
+				}
+			}
+			else {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Skipping LDAP import for company " + companyId +
 							" because another LDAP import is in process");
 				}
-
-				return;
-			}
-
-			LDAPImportConfiguration ldapImportConfiguration =
-				_ldapImportConfigurationProvider.getConfiguration(companyId);
-
-			_lockManager.lock(
-				defaultUserId, UserImporter.class.getName(), companyId,
-				LDAPUserImporterImpl.class.getName(), false,
-				ldapImportConfiguration.importLockExpirationTime());
-
-			Collection<LDAPServerConfiguration> ldapServerConfigurations =
-				_ldapServerConfigurationProvider.getConfigurations(companyId);
-
-			for (LDAPServerConfiguration ldapServerConfiguration :
-					ldapServerConfigurations) {
-
-				importUsers(ldapServerConfiguration.ldapServerId(), companyId);
 			}
 		}
 		finally {

@@ -20,3 +20,7 @@ deployTool {
 		"com.liferay.portal.target.platform.indexer.jar"
 	}
 }
+
+liferayOSGi {
+	expandCompileInclude = true
+}

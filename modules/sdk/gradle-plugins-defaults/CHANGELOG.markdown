@@ -990,6 +990,11 @@ test compile and runtime classpaths.
 
 ## 2.4.24 - 2017-02-02
 
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 3.1.6.
+
+## 2.4.25 - 2017-02-03
+
 ### Added
 - [LPS-70424]: Add the ability to set a custom value for the project group by
 setting the property `project.group` in a `gradle.properties` file contained in

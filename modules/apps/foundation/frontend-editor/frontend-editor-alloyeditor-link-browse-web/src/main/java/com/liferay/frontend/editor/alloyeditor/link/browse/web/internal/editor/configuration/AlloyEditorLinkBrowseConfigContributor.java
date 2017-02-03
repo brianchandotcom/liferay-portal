@@ -74,12 +74,16 @@ public class AlloyEditorLinkBrowseConfigContributor
 			"selections");
 
 		for (int i = 0; i < selectionsJSONArray.length(); i++) {
-			JSONObject selection = selectionsJSONArray.getJSONObject(i);
+			JSONObject selectionJSONObject = selectionsJSONArray.getJSONObject(
+				i);
 
-			if (Objects.equals(selection.get("name"), "text")) {
-				JSONArray buttons = selection.getJSONArray("buttons");
+			if (Objects.equals(selectionJSONObject.get("name"), "text") ||
+				Objects.equals(selectionJSONObject.get("name"), "link")) {
+				JSONArray buttonsJSONArray = selectionJSONObject.getJSONArray(
+					"buttons");
 
-				buttons.put("linkBrowse");
+				selectionJSONObject.put(
+					"buttons", updateButtonsJSONArray(buttonsJSONArray));
 			}
 		}
 
@@ -131,6 +135,33 @@ public class AlloyEditorLinkBrowseConfigContributor
 			documentsItemSelectorCriterion);
 
 		jsonObject.put("documentBrowseLinkUrl", itemSelectorURL.toString());
+	}
+
+	protected JSONArray updateButtonsJSONArray(JSONArray oldButtonsJSONArray) {
+		JSONArray newButtonsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (int j = 0; j < oldButtonsJSONArray.length(); j++) {
+			JSONObject buttonJSONObject = oldButtonsJSONArray.getJSONObject(j);
+
+			if (buttonJSONObject == null) {
+				String buttonName = oldButtonsJSONArray.getString(j);
+
+				if (buttonName.equals("link")) {
+					newButtonsJSONArray.put("linkBrowse");
+				}
+				else if (buttonName.equals("linkEdit")) {
+					newButtonsJSONArray.put("linkEditBrowse");
+				}
+				else {
+					newButtonsJSONArray.put(buttonName);
+				}
+			}
+			else {
+				newButtonsJSONArray.put(buttonJSONObject);
+			}
+		}
+
+		return newButtonsJSONArray;
 	}
 
 	private ItemSelector _itemSelector;

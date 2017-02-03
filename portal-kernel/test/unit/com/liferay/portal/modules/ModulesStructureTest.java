@@ -41,6 +41,8 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -597,10 +599,18 @@ public class ModulesStructureTest {
 			gradleProperties.trim(), gradleProperties);
 
 		String previousKey = null;
+		String projectGroup = null;
 		String projectPathPrefix = null;
 
-		for (String line : StringUtil.split(
-				gradleProperties, CharPool.NEW_LINE)) {
+		String[] lines = StringUtil.split(gradleProperties, CharPool.NEW_LINE);
+
+		for (int i = 0; i < lines.length; i++) {
+			String line = lines[i];
+
+			Assert.assertEquals(
+				"Forbidden leading or trailing whitespaces in line " + (i + 1) +
+					" of " + gradlePropertiesPath,
+				line.trim(), line);
 
 			Assert.assertFalse(
 				"Forbbiden empty line in " + gradlePropertiesPath,
@@ -614,14 +624,18 @@ public class ModulesStructureTest {
 				pos != -1);
 
 			String key = line.substring(0, pos);
+			String value = line.substring(pos + 1);
 
 			Assert.assertTrue(
 				gradlePropertiesPath +
 					" contains duplicate lines or is not sorted",
 				(previousKey == null) || (key.compareTo(previousKey) > 0));
 
-			if (key.equals(_GIT_REPO_GRADLE_PROJECT_PATH_PREFIX_KEY)) {
-				projectPathPrefix = line.substring(pos + 1);
+			if (key.equals(_GIT_REPO_GRADLE_PROJECT_GROUP_KEY)) {
+				projectGroup = value;
+			}
+			else if (key.equals(_GIT_REPO_GRADLE_PROJECT_PATH_PREFIX_KEY)) {
+				projectPathPrefix = value;
 			}
 			else {
 				Assert.assertTrue(
@@ -632,6 +646,11 @@ public class ModulesStructureTest {
 
 			previousKey = key;
 		}
+
+		_testGitRepoProjectGroup(
+			"Property \"" + _GIT_REPO_GRADLE_PROJECT_GROUP_KEY + "\" in " +
+				gradlePropertiesPath,
+			projectGroup);
 
 		Assert.assertEquals(
 			"Incorrect \"" + _GIT_REPO_GRADLE_PROJECT_PATH_PREFIX_KEY +
@@ -669,6 +688,29 @@ public class ModulesStructureTest {
 		Assert.assertEquals(
 			"Incorrect " + gitIgnorePath,
 			_getAntPluginsGitIgnore(dirPath, gitIgnoreTemplate), gitIgnore);
+	}
+
+	private void _testGitRepoProjectGroup(
+		String messagePrefix, String projectGroup) {
+
+		if (Validator.isNull(projectGroup)) {
+			return;
+		}
+
+		for (String prefix : _GIT_REPO_GRADLE_PROJECT_GROUP_RESERVED_PREFIXES) {
+			Assert.assertFalse(
+				messagePrefix + " cannot start with the reserved prefix \"" +
+					prefix + "\"",
+				projectGroup.startsWith(prefix));
+		}
+
+		Matcher matcher = _gitRepoGradleProjectGroupPattern.matcher(
+			projectGroup);
+
+		Assert.assertTrue(
+			messagePrefix + " must match pattern \"" +
+				_gitRepoGradleProjectGroupPattern.pattern() + "\"",
+			matcher.matches());
 	}
 
 	private void _testThemeBuildScripts(Path dirPath) throws IOException {
@@ -709,12 +751,22 @@ public class ModulesStructureTest {
 	private static final String _APP_BUILD_GRADLE =
 		"apply plugin: \"com.liferay.app.defaults.plugin\"";
 
+	private static final String _GIT_REPO_GRADLE_PROJECT_GROUP_KEY =
+		"project.group";
+
+	private static final String[]
+		_GIT_REPO_GRADLE_PROJECT_GROUP_RESERVED_PREFIXES = {
+			"com.liferay.plugins", "com.liferay.portal"
+		};
+
 	private static final String _GIT_REPO_GRADLE_PROJECT_PATH_PREFIX_KEY =
 		"project.path.prefix";
 
 	private static final String _SOURCE_FORMATTER_IGNORE_FILE_NAME =
 		"source_formatter.ignore";
 
+	private static final Pattern _gitRepoGradleProjectGroupPattern =
+		Pattern.compile("com\\.liferay(?:\\.[a-z]+)+");
 	private static final Set<String> _gitRepoGradlePropertiesKeys =
 		Collections.singleton("com.liferay.source.formatter.version");
 	private static Path _modulesDirPath;

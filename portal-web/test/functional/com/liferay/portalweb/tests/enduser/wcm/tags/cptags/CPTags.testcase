@@ -370,7 +370,56 @@
 		</execute>
 	</command>
 
-	<command name="EmergeTagsLocatedOnDifferentPages" priority="4">
+	<command name="MergeMultipleTags" priority="3">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<for list="1,2,3" param="n">
+			<execute macro="Tag#addCP">
+				<var name="tagName" value="tag name ${n}" />
+			</execute>
+		</for>
+
+		<execute macro="Tag#mergeTags">
+			<var name="mergeConfirmation"><![CDATA[Are you sure you want to merge "tag name 1,tag name 2,tag name 3" into "tag name 2"? This will change all items tagged with "tag name 1,tag name 2,tag name 3" to instead be tagged with "tag name 2".]]></var>
+			<var name="selectTagToMergeTo" value="tag name 2" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tag name 2" />
+		</execute>
+
+		<for list="tag name 1,tag name 3" param="tagName">
+			<execute macro="Tag#viewMergedTagsCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="MergeSingleTagWarning" priority="3">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag name" />
+		</execute>
+
+		<execute macro="Tag#mergeSingleTagWarning">
+			<var name="tagName" value="tag name" />
+		</execute>
+	</command>
+
+	<command name="MergeTagsLocatedOnDifferentPages" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<var name="count" value="1" />
@@ -407,7 +456,7 @@
 		<execute macro="Tag#mergeTags">
 			<var name="mergeConfirmation"><![CDATA[Are you sure you want to merge "tag name 1,tag name 2,tag name 3" into "tag name 6"? This will change all items tagged with "tag name 1,tag name 2,tag name 3" to instead be tagged with "tag name 6".]]></var>
 			<var name="selectTagName" value="tag name 6" />
-			<var name="selectTagToEmergeTo" value="tag name 6" />
+			<var name="selectTagToMergeTo" value="tag name 6" />
 			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
 		</execute>
 
@@ -420,59 +469,10 @@
 		</execute>
 
 		<for list="tag name 1,tag name 2,tag name 3" param="tagName">
-			<execute macro="Tag#viewEmergedTagsCP">
+			<execute macro="Tag#viewMergedTagsCP">
 				<var name="tagName" value="${tagName}" />
 			</execute>
 		</for>
-	</command>
-
-	<command name="MergeMultipleTags" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Tags" />
-		</execute>
-
-		<for list="1,2,3" param="n">
-			<execute macro="Tag#addCP">
-				<var name="tagName" value="tag name ${n}" />
-			</execute>
-		</for>
-
-		<execute macro="Tag#mergeTags">
-			<var name="mergeConfirmation"><![CDATA[Are you sure you want to merge "tag name 1,tag name 2,tag name 3" into "tag name 2"? This will change all items tagged with "tag name 1,tag name 2,tag name 3" to instead be tagged with "tag name 2".]]></var>
-			<var name="selectTagToEmergeTo" value="tag name 2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Tags" />
-		</execute>
-
-		<execute macro="Tag#viewCP">
-			<var name="tagName" value="tag name 2" />
-		</execute>
-
-		<for list="tag name 1,tag name 3" param="tagName">
-			<execute macro="Tag#viewEmergedTagsCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="MergeSingleTagWarning" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Tags" />
-		</execute>
-
-		<execute macro="Tag#addCP">
-			<var name="tagName" value="tag name" />
-		</execute>
-
-		<execute macro="Tag#mergeSingleTagWarning">
-			<var name="tagName" value="tag name" />
-		</execute>
 	</command>
 
 	<command name="SearchTag" priority="5">

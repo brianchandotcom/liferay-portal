@@ -59,7 +59,8 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	protected JSONObject createParametersJSONObject(
-		DDMDataProvider ddmDataProvider, DDMFormValues ddmFormValues) {
+			DDMDataProvider ddmDataProvider, DDMFormValues ddmFormValues)
+		throws Exception {
 
 		JSONObject parametersJSONObject = _jsonFactory.createJSONObject();
 
@@ -109,6 +110,12 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 			resourceRequest, resourceResponse, parametersJSONObject);
 	}
 
+	protected String extractType(String type) throws Exception {
+		JSONArray typeJSONArray = _jsonFactory.createJSONArray(type);
+
+		return typeJSONArray.getString(0);
+	}
+
 	protected DDMFormValues getDataProviderFormValues(
 			DDMDataProvider ddmDataProvider,
 			DDMDataProviderInstance ddmDataProviderInstance)
@@ -132,8 +139,9 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 	}
 
 	protected JSONArray getInputParametersJSONObject(
-		DDMDataProviderInputParametersSettings[]
-			ddmDataProviderInputParametersSettings) {
+			DDMDataProviderInputParametersSettings[]
+				ddmDataProviderInputParametersSettings)
+		throws Exception {
 
 		JSONArray inputsJSONArray = _jsonFactory.createJSONArray();
 
@@ -158,7 +166,7 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 				"required",
 				ddmDataProviderInputParameterSetting.inputParameterRequired());
 
-			inputJSONObject.put("type", type);
+			inputJSONObject.put("type", extractType(type));
 
 			inputsJSONArray.put(inputJSONObject);
 		}
@@ -167,8 +175,9 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 	}
 
 	protected JSONArray getOutputParametersJSONObject(
-		DDMDataProviderOutputParametersSettings[]
-			ddmDataProviderOutputParametersSettings) {
+			DDMDataProviderOutputParametersSettings[]
+				ddmDataProviderOutputParametersSettings)
+		throws Exception {
 
 		JSONArray outputsJSONArray = _jsonFactory.createJSONArray();
 
@@ -188,7 +197,7 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 			JSONObject outputJSONObject = _jsonFactory.createJSONObject();
 
 			outputJSONObject.put("name", name);
-			outputJSONObject.put("type", type);
+			outputJSONObject.put("type", extractType(type));
 
 			outputsJSONArray.put(outputJSONObject);
 		}

@@ -84,6 +84,10 @@
 				</gradle-execute>
 			</sequential>
 
+			<gradle-execute task="cleanLibs">
+				<arg value="--build-file=${project.dir}/modules/util.gradle" />
+			</gradle-execute>
+
 			<delete failonerror="false" includeemptydirs="true">
 				<fileset dir="." includes="*.ear,*.jar,*.war,*.zip" />
 				<fileset dir="test-coverage" />
@@ -158,6 +162,7 @@
 	</target>
 
 	<target name="compile">
+		<setup-libs />
 		<setup-sdk />
 
 		<delete file="javac.output.txt" />
@@ -212,6 +217,7 @@
 	</target>
 
 	<target name="deploy">
+		<setup-libs />
 		<setup-sdk />
 
 		<if>
@@ -842,6 +848,10 @@
 		<echo append="true" file="portal-impl/src/system-ext.properties" message="liferay.lib.portal.dir=${app.server.lib.portal.dir}" />
 
 		<copy file="portal-impl/src/system-ext.properties" overwrite="true" tofile="portal-impl/classes/system-ext.properties" />
+	</target>
+
+	<target name="setup-libs">
+		<setup-libs />
 	</target>
 
 	<target name="setup-sdk">

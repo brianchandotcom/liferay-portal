@@ -41,11 +41,14 @@
 /classes/Test.class
 /dist
 /intellij
+/lib/development/appium.jar
 /lib/development/db2jcc.jar
 /lib/development/db2jcc_license_cu.jar
 /lib/development/ojdbc14.jar
 /lib/development/ojdbc5.jar
 /lib/development/ojdbc6.jar
+/lib/portal/abdera.jar
+/lib/portal/ant.jar
 /nbproject/private
 /out
 /portal-client/*.ipr

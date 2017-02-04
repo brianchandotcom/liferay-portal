@@ -1089,7 +1089,7 @@ Error-Prone was automatically installed. Please rerun your task.
 
 			<update-gradle-properties />
 
-			<gradle-execute task="setupPortalTools">
+			<gradle-execute task="setUpPortalTools">
 				<arg value="--build-file=${project.dir}/modules/util.gradle" />
 			</gradle-execute>
 		</sequential>

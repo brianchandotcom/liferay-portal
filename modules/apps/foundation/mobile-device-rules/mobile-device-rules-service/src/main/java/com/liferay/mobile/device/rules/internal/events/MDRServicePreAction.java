@@ -52,29 +52,30 @@ public class MDRServicePreAction extends Action {
 
 	@Override
 	public void run(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Device device = null;
 
 		if (PropsValues.MOBILE_DEVICE_SESSION_CACHE_ENABLED) {
+			HttpSession session = request.getSession();
+
 			TransientValue<Device> transientValue =
 				(TransientValue<Device>)session.getAttribute(WebKeys.DEVICE);
 
 			if (transientValue != null) {
 				device = transientValue.getValue();
 			}
-		}
 
-		if (device == null) {
-			device = DeviceDetectionUtil.detectDevice(request);
+			if (device == null) {
+				device = DeviceDetectionUtil.detectDevice(request);
 
-			if (PropsValues.MOBILE_DEVICE_SESSION_CACHE_ENABLED) {
 				session.setAttribute(
 					WebKeys.DEVICE, new TransientValue<>(device));
 			}
+		}
+		else {
+			device = DeviceDetectionUtil.detectDevice(request);
 		}
 
 		themeDisplay.setDevice(device);

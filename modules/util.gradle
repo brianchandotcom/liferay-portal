@@ -13,8 +13,17 @@ buildscript {
 task buildFixPackChangeLog(type: BuildChangeLogTask)
 task cleanReleng
 task cleanVersionOverride
+task setUpLibs
 task setUpPortalTools
 task wrapper(type: Wrapper)
+
+FileTree libDependenciesFileTree = fileTree(dir: "../lib", include: "*/dependencies.properties")
+
+Map<File, Properties> libDependenciesMap = libDependenciesFileTree.collectEntries {
+	Properties properties = GUtil.loadProperties(it)
+
+	[it.parentFile, properties]
+}
 
 buildFixPackChangeLog {
 	changeLogHeader = {
@@ -130,7 +139,35 @@ set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% "-Dgradle.user.home=%APP_HOME%\\.gradle"
 	scriptFile = new File(wrapperDir, "gradlew")
 }
 
+_createSetUpLibTasks(libDependenciesMap)
 _createSetUpPortalToolTasks()
+
+private void _createSetUpLibTasks(Map<File, Properties> libDependenciesMap) {
+	libDependenciesMap.each {
+		File dir, Properties properties ->
+
+		String libSuffix = StringUtil.capitalize(dir.name)
+
+		Configuration libConfiguration = configurations.create("lib" + libSuffix)
+
+		libConfiguration.transitive = false
+
+		Task libTask = tasks.create(name: "setUpLib" + libSuffix, type: Copy) {
+			from libConfiguration
+			into dir
+		}
+
+		for (String fileTitle in properties.stringPropertyNames()) {
+			String dependencyNotation = properties.getProperty(fileTitle)
+
+			Dependency dependency = dependencies.add(libConfiguration.name, dependencyNotation)
+
+			libTask.rename "${dependency.name}-${dependency.version}.jar", "${fileTitle}.jar"
+		}
+
+		setUpLibs.dependsOn libTask
+	}
+}
 
 private void _createSetUpPortalToolTasks() {
 	FileTree ivyXmlFileTree = fileTree(dir: "../tools/sdk", includes: ["ivy.xml", "dependencies/*/ivy.xml"])

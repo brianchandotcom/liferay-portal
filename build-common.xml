@@ -1060,6 +1060,14 @@ Error-Prone was automatically installed. Please rerun your task.
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-libs">
+		<sequential>
+			<gradle-execute task="setUpLibs">
+				<arg value="--build-file=${project.dir}/modules/util.gradle" />
+			</gradle-execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-sdk">
 		<sequential>
 			<if>

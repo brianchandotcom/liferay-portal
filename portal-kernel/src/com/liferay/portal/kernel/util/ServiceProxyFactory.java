@@ -39,12 +39,30 @@ public class ServiceProxyFactory {
 		boolean blocking) {
 
 		return newServiceTrackedInstance(
-			serviceClass, declaringClass, fieldName, null, blocking);
+			serviceClass, declaringClass, fieldName, null, blocking, false);
+	}
+
+	public static <T> T newServiceTrackedInstance(
+		Class<T> serviceClass, Class<?> declaringClass, String fieldName,
+		boolean blocking, boolean useNullAsDummyService) {
+
+		return newServiceTrackedInstance(
+			serviceClass, declaringClass, fieldName, null, blocking,
+			useNullAsDummyService);
 	}
 
 	public static <T> T newServiceTrackedInstance(
 		Class<T> serviceClass, Class<?> declaringClass, String fieldName,
 		String filterString, boolean blocking) {
+
+		return newServiceTrackedInstance(
+			serviceClass, declaringClass, fieldName, filterString, blocking,
+			false);
+	}
+
+	public static <T> T newServiceTrackedInstance(
+		Class<T> serviceClass, Class<?> declaringClass, String fieldName,
+		String filterString, boolean blocking, boolean useNullAsDummyService) {
 
 		try {
 			Field field = declaringClass.getDeclaredField(fieldName);
@@ -75,9 +93,13 @@ public class ServiceProxyFactory {
 						field, null, awaitService, realServiceSet, lock);
 			}
 			else {
-				T dummyService = ProxyFactory.newDummyInstance(serviceClass);
+				T dummyService = null;
 
-				field.set(null, dummyService);
+				if (!useNullAsDummyService) {
+					dummyService = ProxyFactory.newDummyInstance(serviceClass);
+
+					field.set(null, dummyService);
+				}
 
 				serviceTrackerCustomizer =
 					new ServiceTrackerFieldUpdaterCustomizer<>(

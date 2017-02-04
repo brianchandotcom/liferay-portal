@@ -197,9 +197,11 @@ public class LibraryReferenceTest {
 	}
 
 	private static void _initLibJars() throws IOException {
+		Path libDirPath = Paths.get(_LIB_DIR_NAME);
+
 		for (String line :
 				Files.readAllLines(
-					Paths.get(_LIB_DIR_NAME, "/versions-ignore.txt"),
+					libDirPath.resolve("versions-ignore.txt"),
 					Charset.forName("UTF-8"))) {
 
 			line = line.trim();
@@ -210,7 +212,7 @@ public class LibraryReferenceTest {
 		}
 
 		Files.walkFileTree(
-			Paths.get(_LIB_DIR_NAME),
+			libDirPath,
 			new SimpleFileVisitor<Path>() {
 
 				@Override

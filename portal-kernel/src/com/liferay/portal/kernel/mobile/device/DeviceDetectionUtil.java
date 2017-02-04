@@ -17,13 +17,7 @@ package com.liferay.portal.kernel.mobile.device;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Map;
 import java.util.Set;
@@ -39,7 +33,7 @@ public class DeviceDetectionUtil {
 
 	public static Device detectDevice(HttpServletRequest request) {
 		DeviceRecognitionProvider deviceRecognitionProvider =
-			getDeviceRecognitionProvider();
+			_deviceRecognitionProvider;
 
 		if (deviceRecognitionProvider == null) {
 			return UnknownDevice.getInstance();
@@ -51,11 +45,7 @@ public class DeviceDetectionUtil {
 	public static DeviceRecognitionProvider getDeviceRecognitionProvider() {
 		PortalRuntimePermission.checkGetBeanProperty(DeviceDetectionUtil.class);
 
-		if (_instance._deviceRecognitionProvider != null) {
-			return _instance._deviceRecognitionProvider;
-		}
-
-		return _instance._defaultDeviceRecognitionProvider;
+		return _deviceRecognitionProvider;
 	}
 
 	public static Set<VersionableName> getKnownBrands() {
@@ -96,92 +86,21 @@ public class DeviceDetectionUtil {
 		return knownDevices.getPointingMethods();
 	}
 
-	public DeviceDetectionUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			DeviceRecognitionProvider.class,
-			new DeviceRecognitionProviderServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
 	protected static KnownDevices getKnownDevices() {
 		DeviceRecognitionProvider deviceRecognitionProvider =
-			getDeviceRecognitionProvider();
-
-		KnownDevices knownDevices = null;
+			_deviceRecognitionProvider;
 
 		if (deviceRecognitionProvider == null) {
-			knownDevices = NoKnownDevices.getInstance();
-		}
-		else {
-			knownDevices = deviceRecognitionProvider.getKnownDevices();
+			return NoKnownDevices.getInstance();
 		}
 
-		return knownDevices;
+		return deviceRecognitionProvider.getKnownDevices();
 	}
 
-	private static final DeviceDetectionUtil _instance =
-		new DeviceDetectionUtil();
-
-	private volatile DeviceRecognitionProvider
-		_defaultDeviceRecognitionProvider;
-	private volatile DeviceRecognitionProvider _deviceRecognitionProvider;
-	private final ServiceTracker
-		<DeviceRecognitionProvider, DeviceRecognitionProvider> _serviceTracker;
-
-	private class DeviceRecognitionProviderServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<DeviceRecognitionProvider, DeviceRecognitionProvider> {
-
-		@Override
-		public DeviceRecognitionProvider addingService(
-			ServiceReference<DeviceRecognitionProvider> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			DeviceRecognitionProvider deviceRecognitionProvider =
-				registry.getService(serviceReference);
-
-			String type = GetterUtil.getString(
-				serviceReference.getProperty("type"));
-
-			if (type.equals("default")) {
-				_defaultDeviceRecognitionProvider = deviceRecognitionProvider;
-			}
-			else {
-				_deviceRecognitionProvider = deviceRecognitionProvider;
-			}
-
-			return deviceRecognitionProvider;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<DeviceRecognitionProvider> serviceReference,
-			DeviceRecognitionProvider deviceRecognitionProvider) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<DeviceRecognitionProvider> serviceReference,
-			DeviceRecognitionProvider deviceRecognitionProvider) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			String type = (String)serviceReference.getProperty("type");
-
-			if (Validator.isNotNull(type) && type.equals("default")) {
-				_defaultDeviceRecognitionProvider = null;
-			}
-			else {
-				_deviceRecognitionProvider = null;
-			}
-
-			registry.ungetService(serviceReference);
-		}
-
-	}
+	private static volatile DeviceRecognitionProvider
+		_deviceRecognitionProvider =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				DeviceRecognitionProvider.class, DeviceDetectionUtil.class,
+				"_deviceRecognitionProvider", false, true);
 
 }

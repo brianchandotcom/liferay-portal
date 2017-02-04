@@ -104,18 +104,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/appium.jar</file-name>
-				<version>1.6.2</version>
-				<project-name>Appium</project-name>
-				<project-url>http://appium.io</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/bsh.jar</file-name>
 				<version>2.0 B4</version>
 				<project-name>BeanShell</project-name>
@@ -928,30 +916,6 @@
 					<license>
 						<license-name>IBM Java Portlet Specification 2.0 License</license-name>
 						<license-url>http://www.jcp.org/en/jsr/detail?id=286</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/abdera.jar</file-name>
-				<version>1.1.2</version>
-				<project-name>Abdera</project-name>
-				<project-url>http://abdera.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/ant.jar</file-name>
-				<version>1.8.2</version>
-				<project-name>Ant</project-name>
-				<project-url>http://ant.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>

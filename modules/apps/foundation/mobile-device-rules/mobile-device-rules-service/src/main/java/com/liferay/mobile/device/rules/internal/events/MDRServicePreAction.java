@@ -73,7 +73,7 @@ public class MDRServicePreAction extends Action {
 
 			if (PropsValues.MOBILE_DEVICE_SESSION_CACHE_ENABLED) {
 				session.setAttribute(
-					WebKeys.DEVICE, new TransientValue<Device>(device));
+					WebKeys.DEVICE, new TransientValue<>(device));
 			}
 		}
 

@@ -15,10 +15,13 @@
 package com.liferay.portal.library;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.nio.charset.Charset;
 import java.nio.file.FileVisitResult;
@@ -29,6 +32,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -126,7 +130,8 @@ public class LibraryReferenceTest {
 	protected void testMissingJarReferences(Set<String> jars, String fileName) {
 		for (String jar : _libJars) {
 			if (fileName.equals(_VERSIONS_FILE_NAME) &&
-				_excludeJars.contains(jar)) {
+				(_excludeJars.contains(jar) ||
+				_libDependencyJars.contains(jar))) {
 
 				continue;
 			}
@@ -151,6 +156,12 @@ public class LibraryReferenceTest {
 		Set<String> jars, String fileName) {
 
 		for (String jar : jars) {
+			if (fileName.equals(_VERSIONS_FILE_NAME)) {
+				Assert.assertFalse(
+					fileName + " has a forbidden reference to " + jar,
+					_libDependencyJars.contains(jar));
+			}
+
 			Assert.assertTrue(
 				fileName + " has a nonexistent reference to " + jar,
 				_libJars.contains(jar));
@@ -214,6 +225,43 @@ public class LibraryReferenceTest {
 		Files.walkFileTree(
 			libDirPath,
 			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path path = dirPath.resolve("dependencies.properties");
+
+					if (Files.notExists(path)) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					Properties properties;
+
+					try (InputStream inputStream = Files.newInputStream(path)) {
+						properties = PropertiesUtil.load(
+							inputStream, StringPool.UTF8);
+					}
+
+					String dirPathString = dirPath.toString();
+
+					if (File.separatorChar != CharPool.SLASH) {
+						dirPathString = dirPathString.replace(
+							File.separatorChar, CharPool.SLASH);
+					}
+
+					dirPathString += CharPool.SLASH;
+
+					for (String fileTitle : properties.stringPropertyNames()) {
+						String jar = dirPathString + fileTitle + ".jar";
+
+						_libDependencyJars.add(jar);
+						_libJars.add(jar);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
 
 				@Override
 				public FileVisitResult visitFile(
@@ -337,6 +385,7 @@ public class LibraryReferenceTest {
 	private static final Set<String> _eclipseJars = new HashSet<>();
 	private static final Set<String> _eclipseModuleSourceDirs = new HashSet<>();
 	private static final Set<String> _excludeJars = new HashSet<>();
+	private static final Set<String> _libDependencyJars = new HashSet<>();
 	private static final Set<String> _libJars = new HashSet<>();
 	private static final Set<String> _moduleSourceDirs = new HashSet<>();
 	private static final Set<String> _netBeansJars = new HashSet<>();

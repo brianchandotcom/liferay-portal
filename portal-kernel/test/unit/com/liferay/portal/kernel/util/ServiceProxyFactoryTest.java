@@ -116,6 +116,32 @@ public class ServiceProxyFactoryTest {
 		_testNonBlockingProxy(true);
 	}
 
+	@Test
+	public void testNullDummyService() throws Exception {
+		TestService testService = ServiceProxyFactory.newServiceTrackedInstance(
+			TestService.class, TestServiceUtil.class, "testService", false,
+			true);
+
+		Assert.assertNull(testService);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<TestService> serviceRegistration =
+			registry.registerService(TestService.class, new TestServiceImpl());
+
+		TestService newTestService = TestServiceUtil.testService;
+
+		Assert.assertEquals(
+			_TEST_SERVICE_NAME, newTestService.getTestServiceName());
+		Assert.assertEquals(
+			_TEST_SERVICE_ID, newTestService.getTestServiceId());
+
+		Assert.assertFalse(ProxyUtil.isProxyClass(newTestService.getClass()));
+		Assert.assertSame(TestServiceImpl.class, newTestService.getClass());
+
+		serviceRegistration.unregister();
+	}
+
 	@Rule
 	public final TestRule testRule = TimeoutTestRule.INSTANCE;
 

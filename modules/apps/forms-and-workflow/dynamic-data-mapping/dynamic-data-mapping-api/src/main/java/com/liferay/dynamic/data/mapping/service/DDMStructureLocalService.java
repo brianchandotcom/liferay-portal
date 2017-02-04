@@ -850,6 +850,11 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public List<DDMStructure> getStructures(long groupId, long classNameId,
 		int start, int end, OrderByComparator<DDMStructure> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMStructure> getStructures(long groupId, long classNameId,
+		java.lang.String name, java.lang.String description, int start,
+		int end, OrderByComparator<DDMStructure> orderByComparator);
+
 	/**
 	* Returns an ordered range of all the structures matching the group,
 	* class name ID, name, and description.

@@ -14,12 +14,14 @@
 
 package com.liferay.portal.library;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -59,6 +61,7 @@ public class LibraryReferenceTest {
 	public static void setUpClass() throws Exception {
 		_portalPath = Paths.get(System.getProperty("user.dir"));
 
+		_initGitIgnoreJars();
 		_initLibJars();
 		_initModuleSourceDirs();
 
@@ -82,6 +85,11 @@ public class LibraryReferenceTest {
 	public void testEclipseSourceDirsInModules() {
 		testNonexistentModuleSourceDirReferences(
 			_eclipseModuleSourceDirs, _ECLIPSE_FILE_NAME);
+	}
+
+	@Test
+	public void testLibDependencyJarsInGitIgnore() {
+		testMissingJarReferences(_gitIgnoreJars, _GIT_IGNORE_FILE_NAME);
 	}
 
 	@Test
@@ -128,16 +136,28 @@ public class LibraryReferenceTest {
 	}
 
 	protected void testMissingJarReferences(Set<String> jars, String fileName) {
-		for (String jar : _libJars) {
+		Set<String> libJars = _libJars;
+
+		if (fileName.equals(_GIT_IGNORE_FILE_NAME)) {
+			libJars = _libDependencyJars;
+		}
+
+		for (String jar : libJars) {
 			if (fileName.equals(_VERSIONS_FILE_NAME) &&
 				(_excludeJars.contains(jar) ||
-				_libDependencyJars.contains(jar))) {
+				 _libDependencyJars.contains(jar))) {
 
 				continue;
 			}
 
+			String referenceJar = jar;
+
+			if (fileName.equals(_GIT_IGNORE_FILE_NAME)) {
+				referenceJar = CharPool.SLASH + referenceJar;
+			}
+
 			Assert.assertTrue(
-				fileName + " is missing a reference to " + jar,
+				fileName + " is missing a reference to " + referenceJar,
 				jars.contains(jar));
 		}
 	}
@@ -202,6 +222,23 @@ public class LibraryReferenceTest {
 			else if (kind.equals("src")) {
 				if (path.startsWith(_MODULES_DIR_NAME + CharPool.SLASH)) {
 					_eclipseModuleSourceDirs.add(path);
+				}
+			}
+		}
+	}
+
+	private static void _initGitIgnoreJars() throws IOException {
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new FileReader(new File(_GIT_IGNORE_FILE_NAME)))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.startsWith(
+						CharPool.SLASH + _LIB_DIR_NAME + CharPool.SLASH)) {
+
+					_gitIgnoreJars.add(line.substring(1));
 				}
 			}
 		}
@@ -371,6 +408,8 @@ public class LibraryReferenceTest {
 
 	private static final String _ECLIPSE_FILE_NAME = ".classpath";
 
+	private static final String _GIT_IGNORE_FILE_NAME = ".gitignore";
+
 	private static final String _LIB_DIR_NAME = "lib";
 
 	private static final String _MODULES_DIR_NAME = "modules";
@@ -385,6 +424,7 @@ public class LibraryReferenceTest {
 	private static final Set<String> _eclipseJars = new HashSet<>();
 	private static final Set<String> _eclipseModuleSourceDirs = new HashSet<>();
 	private static final Set<String> _excludeJars = new HashSet<>();
+	private static final Set<String> _gitIgnoreJars = new HashSet<>();
 	private static final Set<String> _libDependencyJars = new HashSet<>();
 	private static final Set<String> _libJars = new HashSet<>();
 	private static final Set<String> _moduleSourceDirs = new HashSet<>();

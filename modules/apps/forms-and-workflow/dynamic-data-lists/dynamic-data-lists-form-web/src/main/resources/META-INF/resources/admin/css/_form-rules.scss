@@ -37,17 +37,66 @@
 	}
 
 	&.liferay-ddl-form-builder-rule-action-list {
+		.action-rule-data-provider {
+			background-color: #F8F8F8;
+			margin-top: 15px;
+
+			p {
+				display: inline-block;
+			}
+
+			.data-provider-label-container {
+				margin-bottom: 15px;
+			}
+
+			.data-provider-parameter-output, .data-provider-parameter-input {
+				margin-right: 10px;
+			}
+
+			.data-provider-parameter-output-container, .data-provider-parameter-input-container {
+				padding: 20px 55px;
+			}
+
+			.data-provider-parameter-output-container {
+				border-top: 1px solid #DCE0E3;
+			}
+
+			.data-provider-parameter-output-list, .data-provider-parameter-input-list {
+				.container-input-field {
+					margin-bottom: 10px;
+				}
+
+				.container-input-label {
+					margin-top: 10px;
+				}
+			}
+
+			.no-padding {
+				padding: 0;
+			}
+		}
+
 		.lfr-ddm-form-field-container-inline {
 			display: inline-block;
 		}
 
-		.timeline-item:last-child:before {
-			bottom: 42px;
+		.timeline-item {
+			&:last-child:before {
+				bottom: 42px;
+			}
+
+			.lfr-ddm-form-field-container {
+				padding: 0;
+			}
 		}
 
 		& + div div:before {
 			bottom: 20px;
 			top: -72px;
+		}
+
+		& .timeline-item .panel .no-padding-bottom {
+			padding-bottom: 0;
 		}
 	}
 
@@ -70,6 +119,10 @@
 
 	&.liferay-ddl-form-builder-rule-condition-list {
 		.timeline-item {
+			.lfr-ddm-form-field-container {
+				padding: 0;
+			}
+
 			&:first-child:before {
 				top: 35px;
 			}

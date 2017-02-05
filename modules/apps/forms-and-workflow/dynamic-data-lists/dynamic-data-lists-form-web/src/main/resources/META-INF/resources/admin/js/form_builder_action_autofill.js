@@ -3,7 +3,9 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var TPL_ACTION_FIELD_LABEL = '<label class="lfr-ddm-form-field-container-inline">{message}</label>';
+		var TPL_CONTAINER_INPUT_OUTPUT_COMPONENT = '<div class="col-md-9 container-input-field container-input-field-{index}"></div>';
+
+		var TPL_CONTAINER_INPUT_OUTPUT_FIELD = '<div class="col-md-3 container-input-label">{field}</div>';
 
 		var FormBuilderActionAutofill = A.Component.create(
 			{
@@ -38,10 +40,12 @@ AUI.add(
 
 					strings: {
 						value: {
-							fromDataProvider: Liferay.Language.get('from-data-provider'),
-							requiredField: Liferay.Language.get('required-field'),
+							dataProviderParameterInput: Liferay.Language.get('data-provider-parameter-input'),
 							dataProviderParameterInputDescription: Liferay.Language.get('data-provider-parameter-input-description'),
-							dataProviderParameterOutputDescription: Liferay.Language.get('data-provider-parameter-output-description')
+							dataProviderParameterOutput: Liferay.Language.get('data-provider-parameter-output'),
+							dataProviderParameterOutputDescription: Liferay.Language.get('data-provider-parameter-output-description'),
+							fromDataProvider: Liferay.Language.get('from-data-provider'),
+							requiredField: Liferay.Language.get('required-field')
 						}
 					}
 				},
@@ -77,11 +81,9 @@ AUI.add(
 
 						var boundingBox = instance.get('boundingBox');
 
-						var strings = instance.get('strings');
-						
 						var index = instance.get('index');
 
-						var fieldsListContainer = instance.get('boundingBox').one('.target-' + index);
+						var fieldsListContainer = boundingBox.one('.target-' + index);
 
 						instance._createDataProviderList().render(fieldsListContainer);
 					},
@@ -135,7 +137,23 @@ AUI.add(
 
 							value = null;
 
-							inputParametersContainer.append(name);
+							inputParametersContainer.append(
+								Lang.sub(
+									TPL_CONTAINER_INPUT_OUTPUT_FIELD,
+									{
+										field: name
+									}
+								)
+							);
+
+							inputParametersContainer.append(
+								Lang.sub(
+									TPL_CONTAINER_INPUT_OUTPUT_COMPONENT,
+									{
+										index: i
+									}
+								)
+							);
 
 							if (action && action.inputs && action.inputs[name]) {
 								value = action.inputs[name];
@@ -144,12 +162,12 @@ AUI.add(
 							inputParameterField = new Liferay.DDM.Field.Select(
 								{
 									fieldName: instance.get('index') + '-action',
-									options: instance.getFieldsByType(inputParameterField[i].type),
+									options: instance.getFieldsByType(inputParameters[i].type),
 									showLabel: false,
 									value: value,
 									visible: true
 								}
-							).render(inputParametersContainer);
+							).render(inputParametersContainer.one('.container-input-field-' + i));
 
 							instance._inputParameters.push(
 								{
@@ -200,7 +218,23 @@ AUI.add(
 
 							value = null;
 
-							outputParametersContainer.append(name);
+							outputParametersContainer.append(
+								Lang.sub(
+									TPL_CONTAINER_INPUT_OUTPUT_FIELD,
+									{
+										field: name
+									}
+								)
+							);
+
+							outputParametersContainer.append(
+								Lang.sub(
+									TPL_CONTAINER_INPUT_OUTPUT_COMPONENT,
+									{
+										index: i
+									}
+								)
+							);
 
 							if (action && action.outputs && action.outputs[name]) {
 								value = action.outputs[name];
@@ -215,7 +249,7 @@ AUI.add(
 									value: value,
 									visible: true
 								}
-							).render(outputParametersContainer);
+							).render(outputParametersContainer.one('.container-input-field-' + i));
 
 							instance._outputParameters.push(
 								{
@@ -264,7 +298,7 @@ AUI.add(
 						var portletNamespace = instance.get('portletNamespace');
 
 						var payload = Liferay.Util.ns(
-							portletNamespace, 
+							portletNamespace,
 							{
 								ddmDataProviderInstanceId: ddmDataProviderInstanceId
 							}

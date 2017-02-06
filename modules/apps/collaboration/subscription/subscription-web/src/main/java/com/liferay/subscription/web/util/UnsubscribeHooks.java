@@ -78,10 +78,11 @@ public class UnsubscribeHooks {
 		InternetAddress[] toAddresses = mailMessage.getTo();
 
 		if (toAddresses.length > 0) {
-			String toAddress = toAddresses[0].getAddress();
+			InternetAddress toAddress = toAddresses[0];
 
 			User user = _userLocalService.fetchUserByEmailAddress(
-				_subscriptionSender.getCompanyId(), toAddress);
+				_subscriptionSender.getCompanyId(),
+				toAddress.getAddress());
 
 			if (user == null) {
 				return;

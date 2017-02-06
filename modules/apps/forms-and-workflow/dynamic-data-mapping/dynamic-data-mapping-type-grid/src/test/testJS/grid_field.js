@@ -35,6 +35,25 @@ var createGridField = function(config) {
 	).render(document.body);
 };
 
+var compareObject = function(objA, objB) {
+	var aProps = Object.getOwnPropertyNames(objA);
+	var bProps = Object.getOwnPropertyNames(objB);
+
+	if (aProps.length != bProps.length) {
+		return false;
+	}
+
+	for (var i = 0; i < aProps.length; i++) {
+		var propName = aProps[i];
+
+		if (objA[propName] !== objB[propName]) {
+			return false;
+		}
+	}
+
+	return true;
+};
+
 describe(
 	'Liferay.DDM.Field.Grid',
 	function() {
@@ -111,13 +130,13 @@ describe(
 					function(done) {
 						gridField = createGridField();
 
-						gridField.setValue({A: '1', B: '2'});
+						var newValue = {A: '1', B: '2'};
+
+						gridField.setValue(newValue);
 
 						assert.isObject(gridField.getValue());
 
-						assert.equal(gridField.getValue().A, '1');
-
-						assert.equal(gridField.getValue().B, '2');
+						assert.isTrue(compareObject(newValue, gridField.getValue()));
 
 						done();
 					}
@@ -128,13 +147,20 @@ describe(
 					function(done) {
 						gridField = createGridField();
 
-						gridField.setValue({A: '1'});
+						var newValue = {A: '1'};
+
+						gridField.setValue(newValue);
 
 						assert.isObject(gridField.getValue());
 
-						assert.equal(gridField.getValue().A, '1');
+						assert.isTrue(compareObject(newValue, gridField.getValue()));
 
-						assert.equal(gridField.getValue().B, undefined);
+						assert.isFalse(
+							compareObject(
+								{B: '1'},
+								gridField.getValue()
+							)
+						);
 
 						done();
 					}
@@ -145,23 +171,31 @@ describe(
 					function(done) {
 						gridField = createGridField();
 
-						gridField.setValue({A: '1', B: '2'});
+						var newValue = {A: '1', B: '2'};
+
+						gridField.setValue(newValue);
 
 						assert.isObject(gridField.getValue());
 
-						assert.equal(gridField.getValue().A, '1');
+						assert.isTrue(compareObject(newValue, gridField.getValue()));
 
-						assert.equal(gridField.getValue().B, '2');
-
-						assert.equal(gridField.getValue().C, undefined);
+						assert.isFalse(
+							compareObject(
+								{A: '1', C: '2'},
+								gridField.getValue()
+							)
+						);
 
 						assert.isObject(gridField.get('value'));
 
-						assert.equal(gridField.get('value').A, '1');
+						assert.isTrue(compareObject(newValue, gridField.get('value')));
 
-						assert.equal(gridField.get('value').B, '2');
-
-						assert.equal(gridField.get('value').C, undefined);
+						assert.isFalse(
+							compareObject(
+								{A: '1', C: '2'},
+								gridField.get('value')
+							)
+						);
 
 						done();
 					}
@@ -175,17 +209,17 @@ describe(
 				it(
 					'should return object value if grid has a value in context',
 					function(done) {
+						var newValue = {B: '2'};
+
 						gridField = createGridField(
 							{
-								value: {B: '2'}
+								value: newValue
 							}
 						);
 
-						var value = gridField.getValue();
+						assert.isObject(gridField.getValue());
 
-						assert.isObject(value);
-
-						assert.equal(value.B, '2');
+						assert.isTrue(compareObject(newValue, gridField.getValue()));
 
 						done();
 					}
@@ -200,15 +234,20 @@ describe(
 							}
 						);
 
-						gridField.setValue({A: '2'});
+						var newValue = {A: '2'};
 
-						var value = gridField.getValue();
+						gridField.setValue(newValue);
 
-						assert.isObject(value);
+						assert.isObject(gridField.getValue());
 
-						assert.equal(value.A, '2');
+						assert.isTrue(compareObject(newValue, gridField.getValue()));
 
-						assert.equal(value.B, undefined);
+						assert.isFalse(
+							compareObject(
+								{A: '1', B: '1'},
+								gridField.getValue()
+							)
+						);
 
 						done();
 					}
@@ -217,13 +256,12 @@ describe(
 				it(
 					'should return the same context value if the grid began with value in context',
 					function(done) {
+						var contextValue = {A: '2', B: '1'};
+
 						gridField = createGridField(
 							{
 								context: {
-									value: {
-										A: '2', 
-										B: '1'
-									}
+									value: contextValue
 								}
 							}
 						);
@@ -234,9 +272,7 @@ describe(
 
 						assert.isObject(value);
 
-						assert.equal(value.A, '2');
-
-						assert.equal(value.B, '1');
+						assert.isTrue(compareObject(value, contextValue));
 
 						done();
 					}
@@ -260,7 +296,12 @@ describe(
 
 						assert.isObject(gridField.getValue());
 
-						assert.equal(gridField.getValue().A, '2');
+						assert.isTrue(
+							compareObject(
+								gridField.getValue(),
+								{A: '2'}
+							)
+						);
 
 						done();
 					}
@@ -281,9 +322,19 @@ describe(
 
 						assert.isObject(gridField.getValue());
 
-						assert.notEqual(gridField.getValue().A, '2');
+						assert.isFalse(
+							compareObject(
+								{A: '2'},
+								gridField.getValue()
+							)
+						);
 
-						assert.equal(gridField.getValue().A, '1');
+						assert.isTrue(
+							compareObject(
+								{A: '1'},
+								gridField.getValue()
+							)
+						);
 
 						done();
 					}

@@ -212,9 +212,12 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (portalSource && !fileName.contains("/samples/") &&
-			fileName.endsWith("Language.properties") &&
-			!isExcludedPath(LANGUAGE_KEYS_CHECK_EXCLUDES, absolutePath)) {
+		if (fileName.endsWith("/dependencies.properties")) {
+			newContent = formatDependenciesProperties(content);
+		}
+		else if (portalSource && !fileName.contains("/samples/") &&
+				 fileName.endsWith("Language.properties") &&
+				 !isExcludedPath(LANGUAGE_KEYS_CHECK_EXCLUDES, absolutePath)) {
 
 			checkLanguageProperties(fileName);
 		}
@@ -246,7 +249,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	protected String[] doGetIncludes() {
 		if (portalSource) {
 			return new String[] {
-				"**/Language.properties",
+				"**/lib/*/dependencies.properties", "**/Language.properties",
 				"**/liferay-plugin-package.properties", "**/portal.properties",
 				"**/portal-ext.properties", "**/portal-legacy-*.properties",
 				"**/portlet.properties", "**/source-formatter.properties"
@@ -288,6 +291,34 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		return StringUtil.replace(
 			content, "licenses=" + licenses, "licenses=" + expectedLicenses,
 			matcher.start());
+	}
+
+	protected String formatDependenciesProperties(String content) {
+		List<String> lines = ListUtil.fromString(content);
+
+		StringBundler sb = new StringBundler(content.length() * 2 - 1);
+
+		lines = ListUtil.sort(lines);
+
+		boolean first = true;
+
+		for (String line : lines) {
+			line = StringUtil.removeChar(line, CharPool.SPACE);
+
+			if (Validator.isNull(line) || (line.charAt(0) == CharPool.POUND)) {
+				continue;
+			}
+
+			if (!first) {
+				sb.append(CharPool.NEW_LINE);
+			}
+
+			first = false;
+
+			sb.append(line);
+		}
+
+		return sb.toString();
 	}
 
 	protected void formatDuplicateLanguageKeys() throws Exception {

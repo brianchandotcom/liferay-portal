@@ -9,10 +9,11 @@
  * @param id
  * @param message
  * @param pathThemeImages
+ * @param title
  */
 {template .render}
 	{let $tooltip: not $label and $message!='' /}
-	<div class="taglib-flags" id="{$id}">
+	<div class="taglib-flags" id="{$id}" title="{$title}">
 		<span class="{$cssClass} {if $tooltip}lfr-portal-tooltip{/if}" {if $tooltip}title="{$message}"{/if}>
 			{if not $inTrash}
 				<a class="taglib-icon" href="javascript:;" data-onclick="openReportDialog" >

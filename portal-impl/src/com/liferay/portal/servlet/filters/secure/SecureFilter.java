@@ -95,6 +95,11 @@ public class SecureFilter extends BasePortalFilter {
 			filterConfig.getInitParameter("use_permission_checker"));
 	}
 
+	@Override
+	public boolean isFilterEnabled() {
+		return true;
+	}
+
 	protected HttpServletRequest basicAuth(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {

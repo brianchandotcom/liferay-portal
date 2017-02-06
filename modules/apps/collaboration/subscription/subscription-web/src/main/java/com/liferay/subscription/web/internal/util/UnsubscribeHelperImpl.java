@@ -46,11 +46,11 @@ public class UnsubscribeHelperImpl implements UnsubscribeHelper {
 			subscriptionSender);
 
 		subscriptionSender.addHook(
-			SubscriptionSender.Hook.Event.NOTIFY, Subscription.class,
+			SubscriptionSender.Hook.Event.NOTIFY,
 			unsubscribeHooks::beforeSendNotificationToPersistedSubscriber);
 
 		subscriptionSender.addHook(
-			SubscriptionSender.Hook.Event.PROCESS, MailMessage.class,
+			SubscriptionSender.Hook.Event.PROCESS,
 			unsubscribeHooks::processMailMessage);
 	}
 

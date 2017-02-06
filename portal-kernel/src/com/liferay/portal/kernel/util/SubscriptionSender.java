@@ -93,8 +93,8 @@ public class SubscriptionSender implements Serializable {
 		fileAttachments.add(attachment);
 	}
 
-	public <T> void addHook(Hook.Event event, Class<T> clazz, Hook<T> hook) {
-		List<Hook> hooks = _getHooks(event, clazz);
+	public <T> void addHook(Hook.Event<T> event, Hook<T> hook) {
+		List<Hook<T>> hooks = _getHooks(event);
 
 		hooks.add(hook);
 	}
@@ -503,9 +503,13 @@ public class SubscriptionSender implements Serializable {
 
 		public void process(T payload);
 
-		public enum Event {
+		public interface Event<S> {
 
-			NOTIFY, PROCESS
+			public static final Event<Subscription> NOTIFY =
+				new Event<Subscription>() {};
+
+			public static final Event<MailMessage> PROCESS =
+				new Event<MailMessage>() {};
 
 		}
 
@@ -645,7 +649,7 @@ public class SubscriptionSender implements Serializable {
 			return;
 		}
 
-		_notifyHooks(Hook.Event.NOTIFY, Subscription.class, subscription);
+		_notifyHooks(Hook.Event.NOTIFY, subscription);
 
 		sendNotification(user);
 	}
@@ -730,7 +734,7 @@ public class SubscriptionSender implements Serializable {
 
 		mailMessage.setBody(processedBody);
 
-		_notifyHooks(Hook.Event.PROCESS, MailMessage.class, mailMessage);
+		_notifyHooks(Hook.Event.PROCESS, mailMessage);
 	}
 
 	/**
@@ -962,11 +966,8 @@ public class SubscriptionSender implements Serializable {
 			_getBasicMailTemplateContext(locale));
 	}
 
-	private List<Hook> _getHooks(Hook.Event event, Class<?> clazz) {
-		Map<Class<?>, List<Hook>> hooksMap =
-			_hooks.computeIfAbsent(event, (key) -> new HashMap<>());
-
-		return hooksMap.computeIfAbsent(clazz, (key) -> new ArrayList<>());
+	private <T> List<Hook<T>> _getHooks(Hook.Event<T> event) {
+		return (List)_hooks.computeIfAbsent(event, key -> new ArrayList<>());
 	}
 
 	private String _getLocalizedValue(
@@ -992,8 +993,10 @@ public class SubscriptionSender implements Serializable {
 			localizedPortletTitleMap, locale, portletName);
 	}
 
-	private <T> void _notifyHooks(Hook.Event event, Class<T> clazz, T payload) {
-		List<Hook> hooks = _getHooks(event, clazz);
+	private <T> void _notifyHooks(
+		Hook.Event<T> event, T payload) {
+
+		List<Hook<T>> hooks = _getHooks(event);
 
 		hooks.forEach(hook -> hook.process(payload));
 	}
@@ -1036,7 +1039,7 @@ public class SubscriptionSender implements Serializable {
 	private String _contextCreatorUserPrefix;
 	private String _entryTitle;
 	private String _entryURL;
-	private final Map<Hook.Event, Map<Class<?>, List<Hook>>> _hooks =
+	private final Map<Hook.Event<?>, List<Hook<?>>> _hooks =
 		new HashMap<>();
 	private boolean _initialized;
 	private final Map<String, EscapableLocalizableFunction> _localizedContext =

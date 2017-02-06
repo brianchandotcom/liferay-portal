@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.subscription.web.util;
+package com.liferay.subscription.web.internal.util;
 
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.template.MailTemplate;

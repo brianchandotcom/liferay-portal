@@ -244,8 +244,7 @@ public class AlloyEditorCreoleConfigContributor
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		jsonArray.put("h1");
-		jsonArray.put("h2");
+		jsonArray.put(getStyleFormatsJSONObject(locale));
 
 		jsonObject.put("buttons", jsonArray);
 

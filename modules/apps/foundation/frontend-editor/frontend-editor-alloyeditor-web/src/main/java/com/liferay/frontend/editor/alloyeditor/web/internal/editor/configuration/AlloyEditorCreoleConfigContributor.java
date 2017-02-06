@@ -18,16 +18,25 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -104,6 +113,80 @@ public class AlloyEditorCreoleConfigContributor
 
 		jsonObject.put(
 			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
+	}
+
+	protected JSONObject getStyleFormatJSONObject(
+		String styleFormatName, String element, int type) {
+
+		JSONObject styleJSONObject = JSONFactoryUtil.createJSONObject();
+
+		styleJSONObject.put("element", element);
+		styleJSONObject.put("type", type);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("name", styleFormatName);
+		jsonObject.put("style", styleJSONObject);
+
+		return jsonObject;
+	}
+
+	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		ResourceBundle resourceBundle = null;
+
+		try {
+			resourceBundle = _resourceBundleLoader.loadResourceBundle(
+				LocaleUtil.toLanguageId(locale));
+		}
+		catch (MissingResourceException mre) {
+			resourceBundle = ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE;
+		}
+
+		jsonArray.put(
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "normal"), "p",
+				_CKEDITOR_STYLE_BLOCK));
+		jsonArray.put(
+			getStyleFormatJSONObject(
+				LanguageUtil.format(resourceBundle, "heading-x", "1"), "h1",
+				_CKEDITOR_STYLE_BLOCK));
+		jsonArray.put(
+			getStyleFormatJSONObject(
+				LanguageUtil.format(resourceBundle, "heading-x", "2"), "h2",
+				_CKEDITOR_STYLE_BLOCK));
+		jsonArray.put(
+			getStyleFormatJSONObject(
+				LanguageUtil.format(resourceBundle, "heading-x", "3"), "h3",
+				_CKEDITOR_STYLE_BLOCK));
+		jsonArray.put(
+			getStyleFormatJSONObject(
+				LanguageUtil.format(resourceBundle, "heading-x", "4"), "h4",
+				_CKEDITOR_STYLE_BLOCK));
+		jsonArray.put(
+			getStyleFormatJSONObject(
+				LanguageUtil.format(resourceBundle, "heading-x", "5"), "h5",
+				_CKEDITOR_STYLE_BLOCK));
+		jsonArray.put(
+			getStyleFormatJSONObject(
+				LanguageUtil.format(resourceBundle, "heading-x", "6"), "h6",
+				_CKEDITOR_STYLE_BLOCK));
+
+		return jsonArray;
+	}
+
+	protected JSONObject getStyleFormatsJSONObject(Locale locale) {
+		JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();
+
+		stylesJSONObject.put("styles", getStyleFormatsJSONArray(locale));
+
+		JSONObject styleFormatsJSONObject = JSONFactoryUtil.createJSONObject();
+
+		styleFormatsJSONObject.put("cfg", stylesJSONObject);
+		styleFormatsJSONObject.put("name", "styles");
+
+		return styleFormatsJSONObject;
 	}
 
 	protected JSONObject getToolbarsAddJSONObject() {
@@ -232,6 +315,7 @@ public class AlloyEditorCreoleConfigContributor
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		jsonArray.put(getStyleFormatsJSONObject(locale));
 		jsonArray.put("bold");
 		jsonArray.put("italic");
 		jsonArray.put("ul");
@@ -246,5 +330,28 @@ public class AlloyEditorCreoleConfigContributor
 
 		return jsonObject;
 	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.frontend.editor.lang)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		ClassLoader classLoader =
+			AlloyEditorConfigContributor.class.getClassLoader();
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			ResourceBundleUtil.getResourceBundleLoader(
+				"content.Language", classLoader),
+			resourceBundleLoader,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+	}
+
+	private static final int _CKEDITOR_STYLE_BLOCK = 1;
+
+	private static final int _CKEDITOR_STYLE_INLINE = 2;
+
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

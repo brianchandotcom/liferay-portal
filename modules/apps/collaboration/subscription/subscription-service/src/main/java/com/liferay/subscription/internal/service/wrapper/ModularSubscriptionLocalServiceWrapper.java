@@ -14,9 +14,9 @@
 
 package com.liferay.subscription.internal.service.wrapper;
 
+import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
-import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.SubscriptionLocalServiceWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -52,10 +52,9 @@ public class ModularSubscriptionLocalServiceWrapper
 		throws PortalException {
 
 		return ModelAdapterUtil.adapt(
+			Subscription.class,
 			_subscriptionLocalService.addSubscription(
-				userId, groupId, className, classPK),
-			com.liferay.subscription.model.Subscription.class,
-			Subscription.class);
+				userId, groupId, className, classPK));
 	}
 
 	@Override
@@ -65,10 +64,9 @@ public class ModularSubscriptionLocalServiceWrapper
 		throws PortalException {
 
 		return ModelAdapterUtil.adapt(
+			Subscription.class,
 			_subscriptionLocalService.addSubscription(
-				userId, groupId, className, classPK, frequency),
-			com.liferay.subscription.model.Subscription.class,
-			Subscription.class);
+				userId, groupId, className, classPK, frequency));
 	}
 
 	@Override
@@ -76,9 +74,8 @@ public class ModularSubscriptionLocalServiceWrapper
 		throws PortalException {
 
 		return ModelAdapterUtil.adapt(
-			_subscriptionLocalService.deleteSubscription(subscriptionId),
-			com.liferay.subscription.model.Subscription.class,
-			Subscription.class);
+			Subscription.class,
+			_subscriptionLocalService.deleteSubscription(subscriptionId));
 	}
 
 	@Override
@@ -94,10 +91,9 @@ public class ModularSubscriptionLocalServiceWrapper
 		throws PortalException {
 
 		return ModelAdapterUtil.adapt(
+			Subscription.class,
 			_subscriptionLocalService.deleteSubscription(
-				subscription.getSubscriptionId()),
-			com.liferay.subscription.model.Subscription.class,
-			Subscription.class);
+				subscription.getSubscriptionId()));
 	}
 
 	@Override
@@ -126,10 +122,9 @@ public class ModularSubscriptionLocalServiceWrapper
 		long companyId, long userId, String className, long classPK) {
 
 		return ModelAdapterUtil.adapt(
+			Subscription.class,
 			_subscriptionLocalService.fetchSubscription(
-				companyId, userId, className, classPK),
-			com.liferay.subscription.model.Subscription.class,
-			Subscription.class);
+				companyId, userId, className, classPK));
 	}
 
 	@Override
@@ -143,10 +138,9 @@ public class ModularSubscriptionLocalServiceWrapper
 		throws PortalException {
 
 		return ModelAdapterUtil.adapt(
+			Subscription.class,
 			_subscriptionLocalService.getSubscription(
-				companyId, userId, className, classPK),
-			com.liferay.subscription.model.Subscription.class,
-			Subscription.class);
+				companyId, userId, className, classPK));
 	}
 
 	@Override
@@ -154,10 +148,9 @@ public class ModularSubscriptionLocalServiceWrapper
 		long companyId, long userId, String className, long[] classPKs) {
 
 		return ModelAdapterUtil.adapt(
+			Subscription.class,
 			_subscriptionLocalService.getSubscriptions(
-				companyId, userId, className, classPKs),
-			com.liferay.subscription.model.Subscription.class,
-			Subscription.class);
+				companyId, userId, className, classPKs));
 	}
 
 	@Override
@@ -165,10 +158,9 @@ public class ModularSubscriptionLocalServiceWrapper
 		long companyId, String className, long classPK) {
 
 		return ModelAdapterUtil.adapt(
+			Subscription.class,
 			_subscriptionLocalService.getSubscriptions(
-				companyId, className, classPK),
-			com.liferay.subscription.model.Subscription.class,
-			Subscription.class);
+				companyId, className, classPK));
 	}
 
 	@Override
@@ -177,11 +169,10 @@ public class ModularSubscriptionLocalServiceWrapper
 		OrderByComparator<Subscription> orderByComparator) {
 
 		return ModelAdapterUtil.adapt(
+			Subscription.class,
 			_subscriptionLocalService.getUserSubscriptions(
 				userId, start, end,
-				new SubscriptionOrderByComparatorAdapter(orderByComparator)),
-			com.liferay.subscription.model.Subscription.class,
-			Subscription.class);
+				new SubscriptionOrderByComparatorAdapter(orderByComparator)));
 	}
 
 	@Override
@@ -189,9 +180,8 @@ public class ModularSubscriptionLocalServiceWrapper
 		long userId, String className) {
 
 		return ModelAdapterUtil.adapt(
-			_subscriptionLocalService.getUserSubscriptions(userId, className),
-			com.liferay.subscription.model.Subscription.class,
-			Subscription.class);
+			Subscription.class,
+			_subscriptionLocalService.getUserSubscriptions(userId, className));
 	}
 
 	@Override
@@ -239,7 +229,7 @@ public class ModularSubscriptionLocalServiceWrapper
 		public Subscription adapt(
 			com.liferay.subscription.model.Subscription subscription) {
 
-			return ModelAdapterUtil.adapt(subscription, Subscription.class);
+			return ModelAdapterUtil.adapt(Subscription.class, subscription);
 		}
 
 	}

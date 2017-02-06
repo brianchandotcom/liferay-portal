@@ -355,7 +355,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		if (permissionChecker.isSignedIn()) {
-			if (sb.index() > 0) {
+			if (roleIds.length > 0) {
 				sb.append(" OR ");
 			}
 			else {
@@ -376,7 +376,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 		}
-		else if (sb.index() > 0) {
+		else if (roleIds.length > 0) {
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 		}
 

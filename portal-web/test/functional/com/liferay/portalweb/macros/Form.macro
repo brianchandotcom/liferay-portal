@@ -268,7 +268,7 @@
 	</command>
 
 	<command name="viewSaveNotification">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Form#SAVE_NOTIFICATION" value1="Draft saved at" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Form#SAVE_NOTIFICATION" value1="Draft saved on" />
 	</command>
 
 	<command name="viewSidebarTitle">

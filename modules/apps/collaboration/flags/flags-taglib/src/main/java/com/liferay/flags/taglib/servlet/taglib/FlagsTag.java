@@ -82,6 +82,17 @@ public class FlagsTag extends TemplateRendererTag {
 
 			putValue("pathThemeImages", themeDisplay.getPathThemeImages());
 
+			String title = message;
+
+			if (inTrash) {
+				title = LanguageUtil.get(
+					request,
+					"flags-are-disabled-because-this-entry-is-in-the-recycle-" +
+						"bin");
+			}
+
+			putValue("title", title);
+
 			putValue("uri", _getUri());
 		}
 		catch (Exception e) {

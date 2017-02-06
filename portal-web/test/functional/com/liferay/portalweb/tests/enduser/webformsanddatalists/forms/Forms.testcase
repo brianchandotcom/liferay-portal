@@ -1521,6 +1521,99 @@
 		</execute>
 	</command>
 
+	<command name="EditFormWithUpdatedSiteAndUserLocale" priority="2">
+		<description message="This is a use case for LPS-69100 and LPS-69334." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="Account Settings" />
+		</execute>
+
+		<execute macro="MyAccount#changeUserLanguage">
+			<var name="languageName" value="español (España)" />
+			<var name="saveButton" value="Save" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
+			<var name="category" value="Contenido" />
+			<var name="portlet" value="Formularios" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoEditFormByName" />
+
+		<execute macro="Form#editNameLocalized">
+			<var name="formName" value="User Locale Edit Form Name" />
+			<var name="localizedText" value="Editor de texto enriquecido" />
+		</execute>
+
+		<execute macro="Form#editDescription">
+			<var name="formDescription" value="User Locale Edit Form Description" />
+		</execute>
+
+		<execute macro="Form#saveLocalized">
+			<var name="saveButton" value="Guardar formulario" />
+		</execute>
+
+		<execute macro="MyAccount#configureDisplaySettingsLanguageLocalized">
+			<var name="category" value="Mi cuenta" />
+			<var name="languageName" value="English (United States)" />
+			<var name="portlet" value="Mi cuenta" />
+			<var name="saveButton" value="Guardar" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#configureCurrentLanguagesCP">
+			<var name="defaultSiteLanguage" value="Spanish (Spain)" />
+			<var name="displaySettings" value="Display Settings" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoEditFormByName">
+			<var name="formName" value="User Locale Edit Form Name" />
+		</execute>
+
+		<execute macro="Form#editName">
+			<var name="formName" value="Site Locale Edit Form Name" />
+		</execute>
+
+		<execute macro="Form#editDescription">
+			<var name="formDescription" value="Site Locale Edit Form Description" />
+		</execute>
+
+		<execute macro="Form#save" />
+	</command>
+
 	<command name="NavigateToCorrectForm" priority="5">
 		<description message="This is a use case for LPS-59331" />
 		<property name="portal.acceptance" value="true" />

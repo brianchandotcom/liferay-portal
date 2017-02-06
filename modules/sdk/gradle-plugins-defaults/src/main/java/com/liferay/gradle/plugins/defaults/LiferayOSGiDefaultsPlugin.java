@@ -1729,6 +1729,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			_configureConfigurationTransitive(
 				project, JavaPlugin.COMPILE_CONFIGURATION_NAME, false);
+			_configureConfigurationTransitive(
+				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
+				false);
 		}
 
 		_configureDependenciesTransitive(

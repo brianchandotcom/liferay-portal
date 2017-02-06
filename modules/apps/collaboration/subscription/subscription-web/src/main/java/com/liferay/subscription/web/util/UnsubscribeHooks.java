@@ -111,13 +111,31 @@ public class UnsubscribeHooks {
 
 		InternetAddress[] toAddresses = mailMessage.getTo();
 
-		for (InternetAddress toAddress : toAddresses) {
-			try {
-				_processMailMessage(
-					_subscriptionSender, mailMessage, toAddress);
+		if (toAddresses.length > 0) {
+			String toAddress = toAddresses[0].getAddress();
+
+			User user = _userLocalService.fetchUserByEmailAddress(
+				_subscriptionSender.getCompanyId(), toAddress);
+
+			if (user == null) {
+				return;
 			}
-			catch (PortalException pe) {
-				pe.printStackTrace();
+
+			Ticket ticket = _userTicketMap.get(user.getUserId());
+
+			if (ticket != null) {
+				try {
+					String unsubscribeURL = _getUnsubscribeURL(user, ticket);
+
+					_addUnsubscribeHeader(mailMessage, unsubscribeURL);
+					_addUnsubscribeLink(mailMessage, unsubscribeURL);
+				}
+				catch (IOException ioe) {
+					throw new RuntimeException(ioe);
+				}
+				finally {
+					_userTicketMap.remove(user.getUserId());
+				}
 			}
 		}
 	}
@@ -155,12 +173,10 @@ public class UnsubscribeHooks {
 		mailMessage.setBody(processedBody);
 	}
 
-	private String _getUnsubscribeURL(
-		SubscriptionSender sender, User user, Ticket ticket) {
-
+	private String _getUnsubscribeURL(User user, Ticket ticket) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(sender.getContextAttribute("[$PORTAL_URL$]"));
+		sb.append(_subscriptionSender.getContextAttribute("[$PORTAL_URL$]"));
 		sb.append(PortalUtil.getPathMain());
 		sb.append("/portal/unsubscribe?key=");
 		sb.append(ticket.getKey());
@@ -168,37 +184,6 @@ public class UnsubscribeHooks {
 		sb.append(user.getUserId());
 
 		return sb.toString();
-	}
-
-	private void _processMailMessage(
-			SubscriptionSender subscriptionSender, MailMessage mailMessage,
-			InternetAddress toAddress)
-		throws PortalException {
-
-		User user = _userLocalService.fetchUserByEmailAddress(
-			subscriptionSender.getCompanyId(), toAddress.getAddress());
-
-		if (user == null) {
-			return;
-		}
-
-		Ticket ticket = _userTicketMap.get(user.getUserId());
-
-		if (ticket != null) {
-			try {
-				String unsubscribeURL = _getUnsubscribeURL(
-					subscriptionSender, user, ticket);
-
-				_addUnsubscribeHeader(mailMessage, unsubscribeURL);
-				_addUnsubscribeLink(mailMessage, unsubscribeURL);
-			}
-			catch (IOException ioe) {
-				throw new PortalException(ioe);
-			}
-			finally {
-				_userTicketMap.remove(user.getUserId());
-			}
-		}
 	}
 
 	private final SubscriptionConfiguration _configuration;

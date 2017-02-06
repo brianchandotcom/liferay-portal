@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.form.navigator.util;
 
+import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorContextConstants;
 import com.liferay.frontend.taglib.form.navigator.exception.NoSuchFormNavigatorEntryException;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -93,7 +94,11 @@ public class FormNavigatorEntryConfigurationHelperImpl
 			return formNavigatorContextProvider.getContext(formModelBean);
 		}
 
-		return null;
+		if (formModelBean == null) {
+			return FormNavigatorContextConstants.CONTEXT_ADD;
+		}
+
+		return FormNavigatorContextConstants.CONTEXT_UPDATE;
 	}
 
 	private <T> FormNavigatorEntry<T> _getFormNavigatorEntry(

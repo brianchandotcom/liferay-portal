@@ -505,10 +505,10 @@ public class SubscriptionSender implements Serializable {
 
 		public interface Event<S> {
 
-			public static final Event<Subscription> NOTIFY =
+			public static final Event<Subscription> PERSISTED_SUBSCRIBER_FOUND =
 				new Event<Subscription>() {};
 
-			public static final Event<MailMessage> PROCESS =
+			public static final Event<MailMessage> MAIL_MESSAGE_CREATED =
 				new Event<MailMessage>() {};
 
 		}
@@ -649,7 +649,7 @@ public class SubscriptionSender implements Serializable {
 			return;
 		}
 
-		_notifyHooks(Hook.Event.NOTIFY, subscription);
+		_notifyHooks(Hook.Event.PERSISTED_SUBSCRIBER_FOUND, subscription);
 
 		sendNotification(user);
 	}
@@ -734,7 +734,7 @@ public class SubscriptionSender implements Serializable {
 
 		mailMessage.setBody(processedBody);
 
-		_notifyHooks(Hook.Event.PROCESS, mailMessage);
+		_notifyHooks(Hook.Event.MAIL_MESSAGE_CREATED, mailMessage);
 	}
 
 	/**

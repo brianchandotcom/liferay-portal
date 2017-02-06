@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.internal.instance.lifecycle;
 
+import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -29,6 +30,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -58,7 +60,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -66,12 +70,19 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Pastor
  * @author Roberto Díaz
  */
-@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+@Component(
+	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
+	immediate = true, service = PortalInstanceLifecycleListener.class
+)
 public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+		if (!_dlConfiguration.addDefaultStructures()) {
+			return;
+		}
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGuestPermissions(true);
@@ -98,6 +109,13 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 		addDLRawMetadataStructures(
 			defaultUserId, group.getGroupId(), serviceContext);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_dlConfiguration = ConfigurableUtil.createConfigurable(
+			DLConfiguration.class, properties);
 	}
 
 	protected void addDLFileEntryType(
@@ -390,6 +408,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private volatile DLConfiguration _dlConfiguration;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private GroupLocalService _groupLocalService;
 

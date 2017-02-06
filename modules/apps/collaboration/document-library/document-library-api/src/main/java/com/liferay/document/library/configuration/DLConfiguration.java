@@ -28,6 +28,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DLConfiguration {
 
+	@Meta.AD(deflt = "true", required = false)
+	public boolean addDefaultStructures();
+
 	@Meta.AD(
 		deflt = "text/asp|text/css|text/ecmascript|text/html|text/javascript|text/x-c|text/x-fortran|text/x-java-source|text/x-pascal|text/x-script.perl|text/x-script.perl-module|text/xml",
 		required = false

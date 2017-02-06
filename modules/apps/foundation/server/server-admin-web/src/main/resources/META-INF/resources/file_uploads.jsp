@@ -36,10 +36,6 @@
 
 				<aui:input cssClass="lfr-input-text-container" label="allowed-file-extensions" name="dlFileExtensions" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.DL_FILE_EXTENSIONS) %>" />
 			</liferay-ui:panel>
-
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminUserImagesPanel" markupView="lexicon" persistState="<%= true %>" title="user-images">
-				<aui:input cssClass="lfr-input-text-container" label="maximum-file-size" name="usersImageMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) %>" />
-			</liferay-ui:panel>
 		</liferay-ui:panel-container>
 	</aui:fieldset>
 </div>

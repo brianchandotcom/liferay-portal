@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAME_FIELD_LOCALIZED</td>
+	<td>//div[contains(@id,'nameEditor') and contains(@aria-label,'${key_localizedText}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBTITLE_FIELD</td>
 	<td>//div[contains(@id,'subtitleEditor') and contains(@aria-label,'Rich Text Editor')]</td>
 	<td></td>

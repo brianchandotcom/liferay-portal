@@ -142,6 +142,22 @@
 		<execute function="Type#typeEditor" locator1="AlloyEditor#NAME_FIELD" value1="${formName}" />
 	</command>
 
+	<command name="editNameLocalized">
+		<var name="key_columnSize" value="${columnSize}" />
+
+		<execute function="AssertVisible" locator1="Form#ADD_FIELD" />
+		<execute function="AssertVisible" locator1="Form#NAME_FIELD" />
+		<execute function="AssertVisible" locator1="Form#DESCRIPTION_FIELD" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute function="Click" locator1="Form#NAME_FIELD" />
+
+		<var name="key_localizedText" value="${localizedText}" />
+
+		<execute function="Type#typeEditor" locator1="AlloyEditor#NAME_FIELD_LOCALIZED" value1="${formName}" />
+	</command>
+
 	<command name="editPageDescription">
 		<execute function="Type" locator1="Form#PAGE_DESCRIPTION_FIELD" value1="${formPageDescription}" />
 	</command>

@@ -89,7 +89,7 @@ public class RPCResponseTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -137,7 +137,7 @@ public class RPCResponseTest {
 			}
 
 			Assert.assertTrue(noticeableFuture.isCancelled());
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.remove(0);
 
@@ -157,7 +157,7 @@ public class RPCResponseTest {
 
 			rpcResponse.execute(_embeddedChannel);
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.remove(0);
 

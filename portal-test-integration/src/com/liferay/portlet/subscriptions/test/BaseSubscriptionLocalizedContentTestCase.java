@@ -80,7 +80,7 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 		List<MailMessage> messages = MailServiceTestUtil.getMailMessages(
 			"Body", GERMAN_BODY);
 
-		Assert.assertEquals(1, messages.size());
+		Assert.assertEquals(messages.toString(), 1, messages.size());
 
 		localizedContents = previousLocalizedContents;
 	}
@@ -110,7 +110,7 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 		List<MailMessage> messages = MailServiceTestUtil.getMailMessages(
 			"Body", SPANISH_BODY);
 
-		Assert.assertEquals(1, messages.size());
+		Assert.assertEquals(messages.toString(), 1, messages.size());
 
 		localizedContents = previousLocalizedContents;
 	}

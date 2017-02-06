@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.test.AssertUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -341,7 +342,7 @@ public class ArrayUtilTest {
 		double[] array = ArrayUtil.filter(
 			new double[] {0.1, 0.2, 1.2, 1.3}, _doublePredicateFilter);
 
-		Assert.assertEquals(2, array.length);
+		Assert.assertEquals(Arrays.toString(array), 2, array.length);
 		AssertUtils.assertEquals(new double[] {1.2, 1.3}, array);
 	}
 
@@ -350,7 +351,7 @@ public class ArrayUtilTest {
 		double[] array = ArrayUtil.filter(
 			new double[0], _doublePredicateFilter);
 
-		Assert.assertEquals(0, array.length);
+		Assert.assertEquals(Arrays.toString(array), 0, array.length);
 		AssertUtils.assertEquals(new double[0], array);
 	}
 
@@ -369,7 +370,7 @@ public class ArrayUtilTest {
 		int[] array = ArrayUtil.filter(
 			new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, _integerPredicateFilter);
 
-		Assert.assertEquals(5, array.length);
+		Assert.assertEquals(Arrays.toString(array), 5, array.length);
 		Assert.assertArrayEquals(new int[] {5, 6, 7, 8, 9}, array);
 	}
 
@@ -377,7 +378,7 @@ public class ArrayUtilTest {
 	public void testFilterIntegerEmptyArray() {
 		int[] array = ArrayUtil.filter(new int[0], _integerPredicateFilter);
 
-		Assert.assertEquals(0, array.length);
+		Assert.assertEquals(Arrays.toString(array), 0, array.length);
 		Assert.assertArrayEquals(new int[0], array);
 	}
 
@@ -396,7 +397,7 @@ public class ArrayUtilTest {
 			new User[] {new User("james", 17), new User("john", 26)},
 			_userPredicateFilter);
 
-		Assert.assertEquals(1, array.length);
+		Assert.assertEquals(Arrays.toString(array), 1, array.length);
 
 		Assert.assertEquals("john", array[0].getName());
 		Assert.assertEquals(26, array[0].getAge());
@@ -406,7 +407,7 @@ public class ArrayUtilTest {
 	public void testFilterUserEmptyArray() {
 		User[] array = ArrayUtil.filter(new User[0], _userPredicateFilter);
 
-		Assert.assertEquals(0, array.length);
+		Assert.assertEquals(Arrays.toString(array), 0, array.length);
 	}
 
 	@Test
@@ -901,7 +902,7 @@ public class ArrayUtilTest {
 
 		double[] array = ArrayUtil.toDoubleArray(list);
 
-		Assert.assertEquals(array.length, list.size());
+		Assert.assertEquals(list.toString(), array.length, list.size());
 
 		for (int i = 0; i < list.size(); i++) {
 			Double value = list.get(i);
@@ -919,7 +920,7 @@ public class ArrayUtilTest {
 
 		float[] array = ArrayUtil.toFloatArray(list);
 
-		Assert.assertEquals(array.length, list.size());
+		Assert.assertEquals(list.toString(), array.length, list.size());
 
 		for (int i = 0; i < list.size(); i++) {
 			Float value = list.get(i);
@@ -937,7 +938,7 @@ public class ArrayUtilTest {
 
 		int[] array = ArrayUtil.toIntArray(list);
 
-		Assert.assertEquals(array.length, list.size());
+		Assert.assertEquals(list.toString(), array.length, list.size());
 
 		for (int i = 0; i < list.size(); i++) {
 			Integer value = list.get(i);
@@ -955,7 +956,7 @@ public class ArrayUtilTest {
 
 		long[] array = ArrayUtil.toLongArray(list);
 
-		Assert.assertEquals(array.length, list.size());
+		Assert.assertEquals(list.toString(), array.length, list.size());
 
 		for (int i = 0; i < list.size(); i++) {
 			Long value = list.get(i);

@@ -86,6 +86,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.Arquillian">
 			<message key="import.invalid" value="Use import ''com.liferay.arquillian.extension.junit.bridge.junit.Arquillian'' instead of ''org.jboss.arquillian.junit.Arquillian'', see LPS-68945" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.AssertEquals">
+			<message key="assert.add.information" value="Add ''{0}'' as extra parameter at the beginning of the ''Assert.assertEquals'' call to provide more information to the test. See LPS-70411." />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.Chaining">
 			<property name="chainingAllowedFormat" value="(^|.*\.)(bind|stream)\..*" />
 			<message key="chaining.avoid" value="Avoid chaining on method ''{0}'" />

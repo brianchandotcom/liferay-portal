@@ -137,7 +137,9 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		List<LayoutFriendlyURL> layoutLayoutFriendlyURLs =
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(plid);
 
-		Assert.assertEquals(1, layoutLayoutFriendlyURLs.size());
+		Assert.assertEquals(
+			layoutLayoutFriendlyURLs.toString(), 1,
+			layoutLayoutFriendlyURLs.size());
 
 		layoutFriendlyURLs.add(layoutLayoutFriendlyURLs.get(0));
 	}
@@ -156,7 +158,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			_layoutPrototype.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		Assert.assertEquals(1, layouts.size());
+		Assert.assertEquals(layouts.toString(), 1, layouts.size());
 
 		Layout layout = layouts.get(0);
 
@@ -168,7 +170,8 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
 				layout.getPlid());
 
-		Assert.assertEquals(1, layoutFriendlyURLs.size());
+		Assert.assertEquals(
+			layoutFriendlyURLs.toString(), 1, layoutFriendlyURLs.size());
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, LayoutFriendlyURL.class,
@@ -192,7 +195,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			_layoutSetPrototype.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		Assert.assertEquals(1, layouts.size());
+		Assert.assertEquals(layouts.toString(), 1, layouts.size());
 
 		Layout layout = layouts.get(0);
 
@@ -231,7 +234,9 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		List<StagedModel> dependentLayoutPrototypeStagedModels =
 			dependentStagedModelsMap.get(LayoutPrototype.class.getSimpleName());
 
-		Assert.assertEquals(1, dependentLayoutPrototypeStagedModels.size());
+		Assert.assertEquals(
+			dependentLayoutPrototypeStagedModels.toString(), 1,
+			dependentLayoutPrototypeStagedModels.size());
 
 		LayoutPrototype layoutPrototype =
 			(LayoutPrototype)dependentLayoutPrototypeStagedModels.get(0);
@@ -316,7 +321,8 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			}
 		}
 
-		Assert.assertEquals(1, importedLayouts.size());
+		Assert.assertEquals(
+			importedLayouts.toString(), 1, importedLayouts.size());
 
 		try {
 			return importedLayouts.get(0);

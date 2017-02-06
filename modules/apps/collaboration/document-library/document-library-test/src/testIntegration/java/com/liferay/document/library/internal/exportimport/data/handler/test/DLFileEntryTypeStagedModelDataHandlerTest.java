@@ -135,7 +135,8 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
 			ddmStructureClass.getSimpleName());
 
-		Assert.assertEquals(1, dependentStagedModels.size());
+		Assert.assertEquals(
+			dependentStagedModels.toString(), 1, dependentStagedModels.size());
 
 		DDMStructure ddmStructure = (DDMStructure)dependentStagedModels.get(0);
 

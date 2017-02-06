@@ -143,7 +143,9 @@ public class MDRActionStagedModelDataHandlerTest
 		List<StagedModel> ruleGroupDependentStagedModels =
 			dependentStagedModelsMap.get(MDRRuleGroup.class.getSimpleName());
 
-		Assert.assertEquals(1, ruleGroupDependentStagedModels.size());
+		Assert.assertEquals(
+			ruleGroupDependentStagedModels.toString(), 1,
+			ruleGroupDependentStagedModels.size());
 
 		MDRRuleGroup ruleGroup =
 			(MDRRuleGroup)ruleGroupDependentStagedModels.get(0);
@@ -155,7 +157,9 @@ public class MDRActionStagedModelDataHandlerTest
 			dependentStagedModelsMap.get(
 				MDRRuleGroupInstance.class.getSimpleName());
 
-		Assert.assertEquals(1, ruleGroupInstanceDependentStagedModels.size());
+		Assert.assertEquals(
+			ruleGroupInstanceDependentStagedModels.toString(), 1,
+			ruleGroupInstanceDependentStagedModels.size());
 
 		MDRRuleGroupInstance ruleGroupInstance =
 			(MDRRuleGroupInstance)ruleGroupInstanceDependentStagedModels.get(0);

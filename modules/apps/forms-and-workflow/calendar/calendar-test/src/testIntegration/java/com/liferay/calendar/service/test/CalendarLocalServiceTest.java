@@ -95,7 +95,8 @@ public class CalendarLocalServiceTest {
 			nameMap.get(locale), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new CalendarNameComparator());
 
-		Assert.assertEquals(1, actualCalendars.size());
+		Assert.assertEquals(
+			actualCalendars.toString(), 1, actualCalendars.size());
 
 		Calendar actualCalendar = actualCalendars.get(0);
 

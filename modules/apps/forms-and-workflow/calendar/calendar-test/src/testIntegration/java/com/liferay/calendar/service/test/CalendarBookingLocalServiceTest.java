@@ -194,7 +194,7 @@ public class CalendarBookingLocalServiceTest {
 		List<com.dumbster.smtp.MailMessage> mailMessages =
 			MailServiceTestUtil.getMailMessages("Subject", mailMessageSubject);
 
-		Assert.assertEquals(2, mailMessages.size());
+		Assert.assertEquals(mailMessages.toString(), 2, mailMessages.size());
 	}
 
 	@Test
@@ -467,7 +467,7 @@ public class CalendarBookingLocalServiceTest {
 			CalendarBookingLocalServiceUtil.getRecurringCalendarBookings(
 				calendarBooking);
 
-		Assert.assertEquals(3, instances.size());
+		Assert.assertEquals(instances.toString(), 3, instances.size());
 
 		for (CalendarBooking instance : instances) {
 			if (instance.getCalendarBookingId() ==
@@ -527,7 +527,7 @@ public class CalendarBookingLocalServiceTest {
 			CalendarBookingLocalServiceUtil.getRecurringCalendarBookings(
 				calendarBooking, firstInstancStartTime + 1);
 
-		Assert.assertEquals(1, instances.size());
+		Assert.assertEquals(instances.toString(), 1, instances.size());
 
 		CalendarBooking instance = instances.get(0);
 

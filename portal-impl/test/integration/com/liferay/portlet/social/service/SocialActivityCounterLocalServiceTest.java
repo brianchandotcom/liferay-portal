@@ -128,7 +128,7 @@ public class SocialActivityCounterLocalServiceTest
 				group.getGroupId(), "asset.test.2",
 				SocialCounterPeriodUtil.getStartPeriod(), -1);
 
-		Assert.assertEquals(1, counters.size());
+		Assert.assertEquals(counters.toString(), 1, counters.size());
 
 		SocialActivityCounterLocalServiceUtil.disableActivityCounters(
 			assetEntry.getClassName(), assetEntry.getClassPK());
@@ -152,7 +152,7 @@ public class SocialActivityCounterLocalServiceTest
 				group.getGroupId(), "asset.test.2",
 				SocialCounterPeriodUtil.getStartPeriod(), -1);
 
-		Assert.assertEquals(0, counters.size());
+		Assert.assertEquals(counters.toString(), 0, counters.size());
 
 		SocialActivityCounterLocalServiceUtil.enableActivityCounters(
 			assetEntry.getClassName(), assetEntry.getClassPK());
@@ -175,7 +175,7 @@ public class SocialActivityCounterLocalServiceTest
 				group.getGroupId(), "asset.test.2",
 				SocialCounterPeriodUtil.getStartPeriod(), -1);
 
-		Assert.assertEquals(1, counters.size());
+		Assert.assertEquals(counters.toString(), 1, counters.size());
 	}
 
 }

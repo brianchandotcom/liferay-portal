@@ -26,6 +26,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -80,7 +81,7 @@ public class ThreadLocalDistributorTest {
 
 			threadLocalDistributor.afterPropertiesSet();
 
-			Assert.assertEquals(3, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 3, logRecords.size());
 
 			LogRecord logRecord1 = logRecords.get(0);
 
@@ -102,7 +103,8 @@ public class ThreadLocalDistributorTest {
 				ReflectionTestUtil.getFieldValue(
 					threadLocalDistributor, "_threadLocals");
 
-			Assert.assertEquals(1, threadLocals.size());
+			Assert.assertEquals(
+				threadLocals.toString(), 1, threadLocals.size());
 			Assert.assertSame(TestClass._threadLocal, threadLocals.get(0));
 
 			// Without log
@@ -121,7 +123,8 @@ public class ThreadLocalDistributorTest {
 			threadLocals = ReflectionTestUtil.getFieldValue(
 				threadLocalDistributor, "_threadLocals");
 
-			Assert.assertEquals(1, threadLocals.size());
+			Assert.assertEquals(
+				threadLocals.toString(), 1, threadLocals.size());
 			Assert.assertSame(TestClass._threadLocal, threadLocals.get(0));
 		}
 	}
@@ -155,7 +158,7 @@ public class ThreadLocalDistributorTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(3, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 3, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -183,7 +186,8 @@ public class ThreadLocalDistributorTest {
 		Serializable[] threadLocalValues = ReflectionTestUtil.getFieldValue(
 			threadLocalDistributor, "_threadLocalValues");
 
-		Assert.assertEquals(1, threadLocalValues.length);
+		Assert.assertEquals(
+			Arrays.toString(threadLocalValues), 1, threadLocalValues.length);
 		Assert.assertSame(testValue, threadLocalValues[0]);
 
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =

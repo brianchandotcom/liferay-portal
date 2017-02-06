@@ -120,7 +120,9 @@ public class AssetCategoryStagedModelDataHandlerTest
 		List<StagedModel> categoryDependentStagedModels =
 			dependentStagedModelsMap.get(AssetCategory.class.getSimpleName());
 
-		Assert.assertEquals(1, categoryDependentStagedModels.size());
+		Assert.assertEquals(
+			categoryDependentStagedModels.toString(), 1,
+			categoryDependentStagedModels.size());
 
 		AssetCategory category =
 			(AssetCategory)categoryDependentStagedModels.get(0);
@@ -131,7 +133,9 @@ public class AssetCategoryStagedModelDataHandlerTest
 		List<StagedModel> vocabularyDependentStagedModels =
 			dependentStagedModelsMap.get(AssetVocabulary.class.getSimpleName());
 
-		Assert.assertEquals(1, vocabularyDependentStagedModels.size());
+		Assert.assertEquals(
+			vocabularyDependentStagedModels.toString(), 1,
+			vocabularyDependentStagedModels.size());
 
 		AssetVocabulary vocabulary =
 			(AssetVocabulary)vocabularyDependentStagedModels.get(0);

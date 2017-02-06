@@ -113,7 +113,7 @@ public class DDMStructureLinkLocalServiceTest extends BaseDDMServiceTestCase {
 			DDMStructureLinkLocalServiceUtil.getStructureLinkStructures(
 				_classNameId, _classPK, "Abc");
 
-		Assert.assertEquals(2, ddmStructures.size());
+		Assert.assertEquals(ddmStructures.toString(), 2, ddmStructures.size());
 		Assert.assertTrue(ddmStructures.contains(ddmStructure1));
 		Assert.assertTrue(ddmStructures.contains(ddmStructure2));
 
@@ -121,7 +121,7 @@ public class DDMStructureLinkLocalServiceTest extends BaseDDMServiceTestCase {
 			DDMStructureLinkLocalServiceUtil.getStructureLinkStructures(
 				_classNameId, _classPK, "Test1");
 
-		Assert.assertEquals(1, ddmStructures.size());
+		Assert.assertEquals(ddmStructures.toString(), 1, ddmStructures.size());
 		Assert.assertTrue(ddmStructures.contains(ddmStructure1));
 	}
 
@@ -147,7 +147,7 @@ public class DDMStructureLinkLocalServiceTest extends BaseDDMServiceTestCase {
 				QueryUtil.ALL_POS,
 				new StructureLinkStructureNameComparator(true));
 
-		Assert.assertEquals(2, ddmStructures.size());
+		Assert.assertEquals(ddmStructures.toString(), 2, ddmStructures.size());
 		Assert.assertEquals(ddmStructure1, ddmStructures.get(0));
 		Assert.assertEquals(ddmStructure2, ddmStructures.get(1));
 	}
@@ -173,7 +173,7 @@ public class DDMStructureLinkLocalServiceTest extends BaseDDMServiceTestCase {
 				_classNameId, _classPK, "Test", QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new StructureLinkStructureNameComparator());
 
-		Assert.assertEquals(2, ddmStructures.size());
+		Assert.assertEquals(ddmStructures.toString(), 2, ddmStructures.size());
 		Assert.assertEquals(ddmStructure1, ddmStructures.get(1));
 		Assert.assertEquals(ddmStructure2, ddmStructures.get(0));
 	}

@@ -447,7 +447,7 @@ public class LocalProcessExecutorTest {
 			Assert.assertFalse(future.isCancelled());
 			Assert.assertTrue(future.isDone());
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			String message = logRecords.get(0).getMessage();
 
@@ -790,7 +790,7 @@ public class LocalProcessExecutorTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -970,7 +970,7 @@ public class LocalProcessExecutorTest {
 			Assert.assertFalse(future.isCancelled());
 			Assert.assertTrue(future.isDone());
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -996,7 +996,7 @@ public class LocalProcessExecutorTest {
 			Assert.assertFalse(future.isCancelled());
 			Assert.assertTrue(future.isDone());
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			LogRecord logRecord1 = logRecords.get(0);
 
@@ -1029,7 +1029,7 @@ public class LocalProcessExecutorTest {
 			Assert.assertFalse(future.isCancelled());
 			Assert.assertTrue(future.isDone());
 
-			Assert.assertEquals(0, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
 		}
 	}
 
@@ -1153,7 +1153,7 @@ public class LocalProcessExecutorTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -1329,7 +1329,7 @@ public class LocalProcessExecutorTest {
 
 			Set<Process> processes = _localProcessExecutor.destroy();
 
-			Assert.assertEquals(1, processes.size());
+			Assert.assertEquals(processes.toString(), 1, processes.size());
 
 			try {
 				future.get();
@@ -1384,7 +1384,8 @@ public class LocalProcessExecutorTest {
 
 				List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-				Assert.assertEquals(1, logRecords.size());
+				Assert.assertEquals(
+					logRecords.toString(), 1, logRecords.size());
 
 				LogRecord logRecord = logRecords.get(0);
 

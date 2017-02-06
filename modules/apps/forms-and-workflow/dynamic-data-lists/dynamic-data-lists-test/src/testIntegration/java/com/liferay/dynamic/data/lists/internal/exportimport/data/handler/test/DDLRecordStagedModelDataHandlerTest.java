@@ -296,7 +296,9 @@ public class DDLRecordStagedModelDataHandlerTest
 		List<StagedModel> ddmStructureDependentStagedModels =
 			dependentStagedModelsMap.get(DDMStructure.class.getSimpleName());
 
-		Assert.assertEquals(1, ddmStructureDependentStagedModels.size());
+		Assert.assertEquals(
+			ddmStructureDependentStagedModels.toString(), 1,
+			ddmStructureDependentStagedModels.size());
 
 		DDMStructure ddmStructure =
 			(DDMStructure)ddmStructureDependentStagedModels.get(0);
@@ -307,7 +309,9 @@ public class DDLRecordStagedModelDataHandlerTest
 		List<StagedModel> ddmTemplateDependentStagedModels =
 			dependentStagedModelsMap.get(DDMTemplate.class.getSimpleName());
 
-		Assert.assertEquals(2, ddmTemplateDependentStagedModels.size());
+		Assert.assertEquals(
+			ddmTemplateDependentStagedModels.toString(), 2,
+			ddmTemplateDependentStagedModels.size());
 
 		for (StagedModel ddmTemplateDependentStagedModel :
 				ddmTemplateDependentStagedModels) {
@@ -319,7 +323,9 @@ public class DDLRecordStagedModelDataHandlerTest
 		List<StagedModel> recordSetDependentStagedModels =
 			dependentStagedModelsMap.get(DDLRecordSet.class.getSimpleName());
 
-		Assert.assertEquals(1, recordSetDependentStagedModels.size());
+		Assert.assertEquals(
+			recordSetDependentStagedModels.toString(), 1,
+			recordSetDependentStagedModels.size());
 
 		DDLRecordSet recordSet =
 			(DDLRecordSet)recordSetDependentStagedModels.get(0);

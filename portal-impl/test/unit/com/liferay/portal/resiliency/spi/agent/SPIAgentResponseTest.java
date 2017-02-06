@@ -142,7 +142,9 @@ public class SPIAgentResponseTest {
 		Map<String, Serializable> distributedRequestAttributes =
 			spiAgentResponse.distributedRequestAttributes;
 
-		Assert.assertEquals(2, distributedRequestAttributes.size());
+		Assert.assertEquals(
+			distributedRequestAttributes.toString(), 2,
+			distributedRequestAttributes.size());
 		Assert.assertEquals(
 			RequestAttributes.ATTRIBUTE_1,
 			distributedRequestAttributes.get(RequestAttributes.ATTRIBUTE_1));
@@ -153,7 +155,9 @@ public class SPIAgentResponseTest {
 		Map<String, Serializable> deltaSessionAttributes =
 			spiAgentResponse.deltaSessionAttributes;
 
-		Assert.assertEquals(3, deltaSessionAttributes.size());
+		Assert.assertEquals(
+			deltaSessionAttributes.toString(), 3,
+			deltaSessionAttributes.size());
 		Assert.assertEquals(
 			_SESSION_ATTRIBUTE_1,
 			deltaSessionAttributes.get(_SESSION_ATTRIBUTE_1));
@@ -396,7 +400,8 @@ public class SPIAgentResponseTest {
 		List<String> requestAttributeNames = ListUtil.fromEnumeration(
 			requestAttributeNameEnumeration);
 
-		Assert.assertEquals(2, requestAttributeNames.size());
+		Assert.assertEquals(
+			requestAttributeNames.toString(), 2, requestAttributeNames.size());
 		Assert.assertTrue(
 			requestAttributeNames.contains(RequestAttributes.ATTRIBUTE_1));
 		Assert.assertTrue(

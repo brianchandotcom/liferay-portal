@@ -78,14 +78,16 @@ public class SyncSiteModelListenerTest extends BaseTestCase {
 		Set<Long> activeSyncSiteIds = SyncSiteService.getActiveSyncSiteIds(
 			syncAccount.getSyncAccountId());
 
-		Assert.assertEquals(1, activeSyncSiteIds.size());
+		Assert.assertEquals(
+			activeSyncSiteIds.toString(), 1, activeSyncSiteIds.size());
 
 		SyncSiteService.deleteSyncSite(_syncSite.getSyncSiteId());
 
 		activeSyncSiteIds = SyncSiteService.getActiveSyncSiteIds(
 			syncAccount.getSyncAccountId());
 
-		Assert.assertEquals(0, activeSyncSiteIds.size());
+		Assert.assertEquals(
+			activeSyncSiteIds.toString(), 0, activeSyncSiteIds.size());
 	}
 
 	@Test
@@ -93,7 +95,8 @@ public class SyncSiteModelListenerTest extends BaseTestCase {
 		Set<Long> activeSyncSiteIds = SyncSiteService.getActiveSyncSiteIds(
 			syncAccount.getSyncAccountId());
 
-		Assert.assertEquals(1, activeSyncSiteIds.size());
+		Assert.assertEquals(
+			activeSyncSiteIds.toString(), 1, activeSyncSiteIds.size());
 
 		_syncSite.setActive(false);
 
@@ -102,7 +105,8 @@ public class SyncSiteModelListenerTest extends BaseTestCase {
 		activeSyncSiteIds = SyncSiteService.getActiveSyncSiteIds(
 			syncAccount.getSyncAccountId());
 
-		Assert.assertEquals(0, activeSyncSiteIds.size());
+		Assert.assertEquals(
+			activeSyncSiteIds.toString(), 0, activeSyncSiteIds.size());
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

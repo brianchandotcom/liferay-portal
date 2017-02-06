@@ -57,7 +57,9 @@ public class FolderSearchFacetDisplayContextTest {
 			folderSearchFacetTermDisplayContexts =
 				folderSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(0, folderSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			folderSearchFacetTermDisplayContexts.toString(), 0,
+			folderSearchFacetTermDisplayContexts.size());
 
 		Assert.assertEquals(
 			facetParam,
@@ -82,7 +84,9 @@ public class FolderSearchFacetDisplayContextTest {
 			folderSearchFacetTermDisplayContexts =
 				folderSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(1, folderSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			folderSearchFacetTermDisplayContexts.toString(), 1,
+			folderSearchFacetTermDisplayContexts.size());
 
 		FolderSearchFacetTermDisplayContext
 			folderSearchFacetTermDisplayContext =
@@ -125,7 +129,9 @@ public class FolderSearchFacetDisplayContextTest {
 			folderSearchFacetTermDisplayContexts =
 				folderSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(1, folderSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			folderSearchFacetTermDisplayContexts.toString(), 1,
+			folderSearchFacetTermDisplayContexts.size());
 
 		FolderSearchFacetTermDisplayContext
 			folderSearchFacetTermDisplayContext =
@@ -168,7 +174,9 @@ public class FolderSearchFacetDisplayContextTest {
 			folderSearchFacetTermDisplayContexts =
 				folderSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(1, folderSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			folderSearchFacetTermDisplayContexts.toString(), 1,
+			folderSearchFacetTermDisplayContexts.size());
 
 		FolderSearchFacetTermDisplayContext
 			folderSearchFacetTermDisplayContext =

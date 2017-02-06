@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -68,7 +69,9 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 		String[] actualAvailableLanguageIds =
 			structure.getAvailableLanguageIds();
 
-		Assert.assertEquals(2, actualAvailableLanguageIds.length);
+		Assert.assertEquals(
+			Arrays.toString(actualAvailableLanguageIds), 2,
+			actualAvailableLanguageIds.length);
 
 		for (String actualAvailableLanguageId : actualAvailableLanguageIds) {
 			Locale actualAvailableLocale = LocaleUtil.fromLanguageId(
@@ -96,7 +99,9 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 		List<String> actualChildrenFieldNames = structure.getChildrenFieldNames(
 			"field1");
 
-		Assert.assertEquals(2, actualChildrenFieldNames.size());
+		Assert.assertEquals(
+			actualChildrenFieldNames.toString(), 2,
+			actualChildrenFieldNames.size());
 		Assert.assertTrue(actualChildrenFieldNames.contains("child1Field1"));
 		Assert.assertTrue(actualChildrenFieldNames.contains("child2Field1"));
 	}

@@ -93,7 +93,8 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 					Map<String, Hits> groupedHitsMap = searchGroups(
 						searchContext);
 
-					Assert.assertEquals(3, groupedHitsMap.size());
+					Assert.assertEquals(
+						groupedHitsMap.toString(), 3, groupedHitsMap.size());
 
 					assertGroup("sixteen", 16, groupedHitsMap);
 					assertGroup("three", 3, groupedHitsMap);

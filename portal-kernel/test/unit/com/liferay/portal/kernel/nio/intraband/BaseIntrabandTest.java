@@ -93,7 +93,9 @@ public class BaseIntrabandTest {
 		DatagramReceiveHandler[] datagramReceiveHandlers =
 			datagramReceiveHandlersReference.get();
 
-		Assert.assertEquals(256, datagramReceiveHandlers.length);
+		Assert.assertEquals(
+			Arrays.toString(datagramReceiveHandlers), 256,
+			datagramReceiveHandlers.length);
 
 		// Copy
 
@@ -287,7 +289,7 @@ public class BaseIntrabandTest {
 				new MockScatteringByteChannel(false), channelContext);
 
 			Assert.assertFalse(mockRegistrationReference.isValid());
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -311,7 +313,7 @@ public class BaseIntrabandTest {
 				new MockScatteringByteChannel(true), channelContext);
 
 			Assert.assertFalse(mockRegistrationReference.isValid());
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.get(0);
 
@@ -401,7 +403,8 @@ public class BaseIntrabandTest {
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
 
-				Assert.assertEquals(1, logRecords.size());
+				Assert.assertEquals(
+					logRecords.toString(), 1, logRecords.size());
 
 				logRecord = logRecords.get(0);
 
@@ -448,7 +451,8 @@ public class BaseIntrabandTest {
 				_mockIntraband.handleReading(sourceChannel, channelContext);
 
 				Assert.assertTrue(receiveDatagram.isAckResponse());
-				Assert.assertEquals(1, logRecords.size());
+				Assert.assertEquals(
+					logRecords.toString(), 1, logRecords.size());
 
 				logRecord = logRecords.get(0);
 
@@ -525,7 +529,8 @@ public class BaseIntrabandTest {
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
 
-				Assert.assertEquals(1, logRecords.size());
+				Assert.assertEquals(
+					logRecords.toString(), 1, logRecords.size());
 
 				logRecord = logRecords.get(0);
 
@@ -628,7 +633,8 @@ public class BaseIntrabandTest {
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
 
-				Assert.assertEquals(1, logRecords.size());
+				Assert.assertEquals(
+					logRecords.toString(), 1, logRecords.size());
 
 				logRecord = logRecords.get(0);
 
@@ -706,7 +712,8 @@ public class BaseIntrabandTest {
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
 
-				Assert.assertEquals(1, logRecords.size());
+				Assert.assertEquals(
+					logRecords.toString(), 1, logRecords.size());
 
 				logRecord = logRecords.get(0);
 
@@ -769,7 +776,8 @@ public class BaseIntrabandTest {
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
 
-				Assert.assertEquals(1, logRecords.size());
+				Assert.assertEquals(
+					logRecords.toString(), 1, logRecords.size());
 
 				logRecord = logRecords.get(0);
 
@@ -859,7 +867,7 @@ public class BaseIntrabandTest {
 				_mockIntraband.handleWriting(
 					new MockGatheringByteChannel(), channelContext));
 			Assert.assertFalse(mockRegistrationReference.isValid());
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -886,7 +894,7 @@ public class BaseIntrabandTest {
 				_mockIntraband.handleWriting(
 					new MockGatheringByteChannel(), channelContext));
 			Assert.assertFalse(mockRegistrationReference.isValid());
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.get(0);
 
@@ -1035,14 +1043,16 @@ public class BaseIntrabandTest {
 		Map<Long, Datagram> responseWaitingMap =
 			_mockIntraband.responseWaitingMap;
 
-		Assert.assertEquals(1, responseWaitingMap.size());
+		Assert.assertEquals(
+			responseWaitingMap.toString(), 1, responseWaitingMap.size());
 		Assert.assertSame(requestDatagram, responseWaitingMap.get(sequenceId));
 
 		Map<Long, Long> timeoutMap = _mockIntraband.timeoutMap;
 
 		Collection<Long> timeoutSequenceIds = timeoutMap.values();
 
-		Assert.assertEquals(1, timeoutSequenceIds.size());
+		Assert.assertEquals(
+			timeoutSequenceIds.toString(), 1, timeoutSequenceIds.size());
 		Assert.assertTrue(timeoutSequenceIds.contains(sequenceId));
 
 		// Remove, hit
@@ -1102,12 +1112,14 @@ public class BaseIntrabandTest {
 
 			_mockIntraband.addResponseWaitingDatagram(requestDatagram2);
 
-			Assert.assertEquals(2, responseWaitingMap.size());
+			Assert.assertEquals(
+				responseWaitingMap.toString(), 2, responseWaitingMap.size());
 			Assert.assertSame(
 				requestDatagram1, responseWaitingMap.get(sequenceId));
 			Assert.assertSame(
 				requestDatagram2, responseWaitingMap.get(sequenceId + 1));
-			Assert.assertEquals(2, timeoutSequenceIds.size());
+			Assert.assertEquals(
+				timeoutSequenceIds.toString(), 2, timeoutSequenceIds.size());
 			Assert.assertTrue(timeoutSequenceIds.contains(sequenceId));
 			Assert.assertTrue(timeoutSequenceIds.contains(sequenceId + 1));
 
@@ -1115,7 +1127,7 @@ public class BaseIntrabandTest {
 
 			_mockIntraband.cleanUpTimeoutResponseWaitingDatagrams();
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			assertMessageStartWith(
 				logRecords.get(0),
@@ -1157,12 +1169,14 @@ public class BaseIntrabandTest {
 
 			_mockIntraband.addResponseWaitingDatagram(requestDatagram2);
 
-			Assert.assertEquals(2, responseWaitingMap.size());
+			Assert.assertEquals(
+				responseWaitingMap.toString(), 2, responseWaitingMap.size());
 			Assert.assertSame(
 				requestDatagram1, responseWaitingMap.get(sequenceId));
 			Assert.assertSame(
 				requestDatagram2, responseWaitingMap.get(sequenceId + 1));
-			Assert.assertEquals(2, timeoutSequenceIds.size());
+			Assert.assertEquals(
+				timeoutSequenceIds.toString(), 2, timeoutSequenceIds.size());
 			Assert.assertTrue(timeoutSequenceIds.contains(sequenceId));
 			Assert.assertTrue(timeoutSequenceIds.contains(sequenceId + 1));
 
@@ -1301,7 +1315,8 @@ public class BaseIntrabandTest {
 		Map<Long, Datagram> responseWaitingMap =
 			_mockIntraband.responseWaitingMap;
 
-		Assert.assertEquals(1, responseWaitingMap.size());
+		Assert.assertEquals(
+			responseWaitingMap.toString(), 1, responseWaitingMap.size());
 		Assert.assertSame(
 			requestDatagram,
 			responseWaitingMap.remove(requestDatagram.getSequenceId()));
@@ -1310,7 +1325,8 @@ public class BaseIntrabandTest {
 
 		Collection<Long> timeoutSequenceIds = timeoutMap.values();
 
-		Assert.assertEquals(1, timeoutSequenceIds.size());
+		Assert.assertEquals(
+			timeoutSequenceIds.toString(), 1, timeoutSequenceIds.size());
 		Assert.assertTrue(
 			timeoutSequenceIds.remove(requestDatagram.getSequenceId()));
 
@@ -1325,11 +1341,13 @@ public class BaseIntrabandTest {
 
 		Assert.assertEquals(2000, sentDatagram.timeout);
 
-		Assert.assertEquals(1, responseWaitingMap.size());
+		Assert.assertEquals(
+			responseWaitingMap.toString(), 1, responseWaitingMap.size());
 		Assert.assertSame(
 			requestDatagram,
 			responseWaitingMap.remove(requestDatagram.getSequenceId()));
-		Assert.assertEquals(1, timeoutSequenceIds.size());
+		Assert.assertEquals(
+			timeoutSequenceIds.toString(), 1, timeoutSequenceIds.size());
 		Assert.assertTrue(
 			timeoutSequenceIds.remove(requestDatagram.getSequenceId()));
 

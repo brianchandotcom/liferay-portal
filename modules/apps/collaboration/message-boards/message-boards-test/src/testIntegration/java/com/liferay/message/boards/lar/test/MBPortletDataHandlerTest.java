@@ -105,7 +105,7 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
 			group.getGroupId());
 
-		Assert.assertEquals(0, categories.size());
+		Assert.assertEquals(categories.toString(), 0, categories.size());
 	}
 
 	@Override

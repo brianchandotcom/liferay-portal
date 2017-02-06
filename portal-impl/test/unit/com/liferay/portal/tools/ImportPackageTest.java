@@ -40,7 +40,8 @@ public class ImportPackageTest {
 			importPackages.add(importPackage2);
 		}
 
-		Assert.assertEquals(1, importPackages.size());
+		Assert.assertEquals(
+			importPackages.toString(), 1, importPackages.size());
 	}
 
 	@Test

@@ -122,6 +122,7 @@ public class AssetPublisherServiceTest {
 			new long[] {_group.getGroupId()}, false, false);
 
 		Assert.assertEquals(
+			assetEntries.toString(),
 			_assetEntries.size() + expectedAssetEntries.size(),
 			assetEntries.size());
 
@@ -158,6 +159,7 @@ public class AssetPublisherServiceTest {
 			new long[] {_group.getGroupId()}, false, false);
 
 		Assert.assertEquals(
+			assetEntries.toString(),
 			_assetEntries.size() + expectedAssetEntries.size(),
 			assetEntries.size());
 
@@ -185,6 +187,7 @@ public class AssetPublisherServiceTest {
 			new long[] {_group.getGroupId()}, false, false);
 
 		Assert.assertEquals(
+			assetEntries.toString(),
 			_assetEntries.size() + expectedAssetEntries.size(),
 			assetEntries.size());
 

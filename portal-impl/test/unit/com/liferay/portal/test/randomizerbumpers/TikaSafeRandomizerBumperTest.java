@@ -139,7 +139,8 @@ public class TikaSafeRandomizerBumperTest {
 				List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 				if (level == Level.INFO) {
-					Assert.assertEquals(1, logRecords.size());
+					Assert.assertEquals(
+						logRecords.toString(), 1, logRecords.size());
 
 					LogRecord logRecord = logRecords.get(0);
 

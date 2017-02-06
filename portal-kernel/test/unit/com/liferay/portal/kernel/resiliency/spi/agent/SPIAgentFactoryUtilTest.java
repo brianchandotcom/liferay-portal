@@ -122,7 +122,8 @@ public class SPIAgentFactoryUtilTest {
 			ReflectionTestUtil.getFieldValue(
 				SPIAgentFactoryUtil.class, "_spiAgentClasses");
 
-		Assert.assertEquals(2, spiAgentClasses.size());
+		Assert.assertEquals(
+			spiAgentClasses.toString(), 2, spiAgentClasses.size());
 		Assert.assertSame(
 			BadMockSPIAgent.class,
 			spiAgentClasses.get(BadMockSPIAgent.class.getName()));
@@ -135,7 +136,8 @@ public class SPIAgentFactoryUtilTest {
 		Set<String> spiAgentClassNames =
 			SPIAgentFactoryUtil.getSPIAgentClassNames();
 
-		Assert.assertEquals(2, spiAgentClassNames.size());
+		Assert.assertEquals(
+			spiAgentClassNames.toString(), 2, spiAgentClassNames.size());
 		Assert.assertTrue(
 			spiAgentClassNames.contains(BadMockSPIAgent.class.getName()));
 		Assert.assertTrue(

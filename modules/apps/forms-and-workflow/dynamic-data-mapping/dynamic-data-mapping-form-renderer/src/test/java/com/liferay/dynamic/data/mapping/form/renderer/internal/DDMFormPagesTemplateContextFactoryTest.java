@@ -149,7 +149,8 @@ public class DDMFormPagesTemplateContextFactoryTest {
 		List<Object> pagesTemplateContext =
 			ddmFormPagesTemplateContextFactory.create();
 
-		Assert.assertEquals(3, pagesTemplateContext.size());
+		Assert.assertEquals(
+			pagesTemplateContext.toString(), 3, pagesTemplateContext.size());
 
 		Map<String, Object> page1TemplateContext =
 			(Map<String, Object>)pagesTemplateContext.get(0);
@@ -213,7 +214,7 @@ public class DDMFormPagesTemplateContextFactoryTest {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Assert.assertEquals(1, pages.size());
+		Assert.assertEquals(pages.toString(), 1, pages.size());
 
 		Map<String, Object> page1 = (Map<String, Object>)pages.get(0);
 
@@ -222,13 +223,13 @@ public class DDMFormPagesTemplateContextFactoryTest {
 
 		List<Object> rows = (List<Object>)page1.get("rows");
 
-		Assert.assertEquals(3, rows.size());
+		Assert.assertEquals(rows.toString(), 3, rows.size());
 
 		Map<String, Object> row1 = (Map<String, Object>)rows.get(0);
 
 		List<Object> columnsRow1 = (List<Object>)row1.get("columns");
 
-		Assert.assertEquals(2, columnsRow1.size());
+		Assert.assertEquals(columnsRow1.toString(), 2, columnsRow1.size());
 
 		assertColumnSize(6, (Map<String, Object>)columnsRow1.get(0));
 		assertColumnSize(6, (Map<String, Object>)columnsRow1.get(1));
@@ -237,7 +238,7 @@ public class DDMFormPagesTemplateContextFactoryTest {
 
 		List<Object> columnsRow2 = (List<Object>)row2.get("columns");
 
-		Assert.assertEquals(1, columnsRow2.size());
+		Assert.assertEquals(columnsRow2.toString(), 1, columnsRow2.size());
 
 		assertColumnSize(12, (Map<String, Object>)columnsRow2.get(0));
 
@@ -245,7 +246,7 @@ public class DDMFormPagesTemplateContextFactoryTest {
 
 		List<Object> columnsRow3 = (List<Object>)row3.get("columns");
 
-		Assert.assertEquals(1, columnsRow3.size());
+		Assert.assertEquals(columnsRow3.toString(), 1, columnsRow3.size());
 
 		assertColumnSize(12, (Map<String, Object>)columnsRow3.get(0));
 	}
@@ -306,7 +307,8 @@ public class DDMFormPagesTemplateContextFactoryTest {
 		List<Object> pagesTemplateContext =
 			ddmFormPagesTemplateContextFactory.create();
 
-		Assert.assertEquals(2, pagesTemplateContext.size());
+		Assert.assertEquals(
+			pagesTemplateContext.toString(), 2, pagesTemplateContext.size());
 
 		Map<String, Object> page1TemplateContext =
 			(Map<String, Object>)pagesTemplateContext.get(0);
@@ -379,7 +381,8 @@ public class DDMFormPagesTemplateContextFactoryTest {
 		List<Object> pagesTemplateContext =
 			ddmFormPagesTemplateContextFactory.create();
 
-		Assert.assertEquals(2, pagesTemplateContext.size());
+		Assert.assertEquals(
+			pagesTemplateContext.toString(), 2, pagesTemplateContext.size());
 
 		Map<String, Object> page1TemplateContext =
 			(Map<String, Object>)pagesTemplateContext.get(0);

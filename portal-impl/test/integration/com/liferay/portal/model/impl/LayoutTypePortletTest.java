@@ -173,7 +173,7 @@ public class LayoutTypePortletTest {
 
 		String column1 = columns.get(0);
 
-		Assert.assertEquals(2, columns.size());
+		Assert.assertEquals(columns.toString(), 2, columns.size());
 
 		portletId = _layoutTypePortlet.addPortletId(
 			_user.getUserId(), portletId);
@@ -182,7 +182,7 @@ public class LayoutTypePortletTest {
 
 		List<Portlet> portlets = _layoutTypePortlet.getAllPortlets(column1);
 
-		Assert.assertEquals(1, portlets.size());
+		Assert.assertEquals(portlets.toString(), 1, portlets.size());
 	}
 
 	@Test
@@ -197,7 +197,7 @@ public class LayoutTypePortletTest {
 
 		List<String> columns = layoutTemplate.getColumns();
 
-		Assert.assertEquals(2, columns.size());
+		Assert.assertEquals(columns.toString(), 2, columns.size());
 
 		String column1 = columns.get(0);
 		String column2 = columns.get(1);
@@ -209,11 +209,11 @@ public class LayoutTypePortletTest {
 
 		List<Portlet> portlets = _layoutTypePortlet.getAllPortlets(column1);
 
-		Assert.assertEquals(0, portlets.size());
+		Assert.assertEquals(portlets.toString(), 0, portlets.size());
 
 		portlets = _layoutTypePortlet.getAllPortlets(column2);
 
-		Assert.assertEquals(1, portlets.size());
+		Assert.assertEquals(portlets.toString(), 1, portlets.size());
 	}
 
 	@Test
@@ -259,7 +259,8 @@ public class LayoutTypePortletTest {
 
 		List<Portlet> portlets = _layoutTypePortlet.getAllPortlets();
 
-		Assert.assertEquals(initialPortletsSize + 1, portlets.size());
+		Assert.assertEquals(
+			portlets.toString(), initialPortletsSize + 1, portlets.size());
 
 		final long companyId = TestPropsValues.getCompanyId();
 
@@ -304,7 +305,8 @@ public class LayoutTypePortletTest {
 		try {
 			portlets = _layoutTypePortlet.getAllPortlets();
 
-			Assert.assertEquals(initialPortletsSize + 1, portlets.size());
+			Assert.assertEquals(
+				portlets.toString(), initialPortletsSize + 1, portlets.size());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

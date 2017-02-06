@@ -124,12 +124,16 @@ public class LocalizationImplTest {
 		String[] documentAvailableLanguageIds =
 			LocalizationUtil.getAvailableLanguageIds(document);
 
-		Assert.assertEquals(2, documentAvailableLanguageIds.length);
+		Assert.assertEquals(
+			Arrays.toString(documentAvailableLanguageIds), 2,
+			documentAvailableLanguageIds.length);
 
 		String[] xmlAvailableLanguageIds =
 			LocalizationUtil.getAvailableLanguageIds(_xml);
 
-		Assert.assertEquals(2, xmlAvailableLanguageIds.length);
+		Assert.assertEquals(
+			Arrays.toString(xmlAvailableLanguageIds), 2,
+			xmlAvailableLanguageIds.length);
 
 		Arrays.sort(documentAvailableLanguageIds);
 		Arrays.sort(xmlAvailableLanguageIds);
@@ -161,7 +165,7 @@ public class LocalizationImplTest {
 
 		Map<Locale, String> map = LocalizationUtil.getMap(localizedValuesMap);
 
-		Assert.assertEquals(1, map.size());
+		Assert.assertEquals(map.toString(), 1, map.size());
 		Assert.assertEquals("defaultValue", map.get(LocaleUtil.getDefault()));
 	}
 
@@ -179,7 +183,7 @@ public class LocalizationImplTest {
 
 		Map<Locale, String> map = LocalizationUtil.getMap(localizedValuesMap);
 
-		Assert.assertEquals(locales.size(), map.size());
+		Assert.assertEquals(map.toString(), locales.size(), map.size());
 		Assert.assertEquals(_GERMAN_HELLO, map.get(LocaleUtil.GERMANY));
 		Assert.assertEquals(_ENGLISH_HELLO, map.get(LocaleUtil.US));
 	}

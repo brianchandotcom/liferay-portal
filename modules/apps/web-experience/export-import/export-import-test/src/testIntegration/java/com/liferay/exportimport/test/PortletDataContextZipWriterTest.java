@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -68,7 +69,8 @@ public class PortletDataContextZipWriterTest {
 		List<MethodHandler> methodHandlers =
 			_recorderZipWriter.getMethodHandlers();
 
-		Assert.assertEquals(1, methodHandlers.size());
+		Assert.assertEquals(
+			methodHandlers.toString(), 1, methodHandlers.size());
 
 		MethodHandler methodHandler = methodHandlers.remove(0);
 
@@ -82,7 +84,7 @@ public class PortletDataContextZipWriterTest {
 
 		Object[] arguments = methodHandler.getArguments();
 
-		Assert.assertEquals(2, arguments.length);
+		Assert.assertEquals(Arrays.toString(arguments), 2, arguments.length);
 		Assert.assertSame(_PATH, arguments[0]);
 		Assert.assertSame(bytes, arguments[1]);
 
@@ -102,7 +104,8 @@ public class PortletDataContextZipWriterTest {
 		List<MethodHandler> methodHandlers =
 			_recorderZipWriter.getMethodHandlers();
 
-		Assert.assertEquals(1, methodHandlers.size());
+		Assert.assertEquals(
+			methodHandlers.toString(), 1, methodHandlers.size());
 
 		MethodHandler methodHandler = methodHandlers.remove(0);
 
@@ -116,7 +119,7 @@ public class PortletDataContextZipWriterTest {
 
 		Object[] arguments = methodHandler.getArguments();
 
-		Assert.assertEquals(2, arguments.length);
+		Assert.assertEquals(Arrays.toString(arguments), 2, arguments.length);
 		Assert.assertSame(_PATH, arguments[0]);
 		Assert.assertSame(is, arguments[1]);
 
@@ -134,7 +137,8 @@ public class PortletDataContextZipWriterTest {
 		List<MethodHandler> methodHandlers =
 			_recorderZipWriter.getMethodHandlers();
 
-		Assert.assertEquals(1, methodHandlers.size());
+		Assert.assertEquals(
+			methodHandlers.toString(), 1, methodHandlers.size());
 
 		MethodHandler methodHandler = methodHandlers.remove(0);
 
@@ -148,7 +152,7 @@ public class PortletDataContextZipWriterTest {
 
 		Object[] arguments = methodHandler.getArguments();
 
-		Assert.assertEquals(2, arguments.length);
+		Assert.assertEquals(Arrays.toString(arguments), 2, arguments.length);
 		Assert.assertSame(_PATH, arguments[0]);
 		Assert.assertSame(string, arguments[1]);
 

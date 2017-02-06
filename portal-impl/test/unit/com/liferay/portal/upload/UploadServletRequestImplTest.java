@@ -58,7 +58,8 @@ public class UploadServletRequestImplTest extends PowerMockito {
 
 		List<FileItem> sortedFileItems = uploadServletRequest.sort(_fileItems);
 
-		Assert.assertEquals(10, sortedFileItems.size());
+		Assert.assertEquals(
+			sortedFileItems.toString(), 10, sortedFileItems.size());
 
 		String previousFieldName = StringPool.BLANK;
 		long previousSize = 0;

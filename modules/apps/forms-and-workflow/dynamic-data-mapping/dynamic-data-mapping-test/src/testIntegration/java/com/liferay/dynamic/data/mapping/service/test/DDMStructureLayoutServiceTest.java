@@ -72,7 +72,8 @@ public class DDMStructureLayoutServiceTest extends BaseDDMServiceTestCase {
 		List<DDMFormLayoutColumn> ddmFormLayoutColumns =
 			ddmFormLayoutRow.getDDMFormLayoutColumns();
 
-		Assert.assertEquals(2, ddmFormLayoutColumns.size());
+		Assert.assertEquals(
+			ddmFormLayoutColumns.toString(), 2, ddmFormLayoutColumns.size());
 
 		Assert.assertEquals(
 			"Text1",

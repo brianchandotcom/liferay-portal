@@ -108,7 +108,8 @@ public class ItemSelectorCriterionSerializerTest {
 						getDesiredItemSelectorReturnTypes();
 
 			Assert.assertEquals(
-				1, deserializedDesiredItemSelectorReturnTypes.size());
+				deserializedDesiredItemSelectorReturnTypes.toString(), 1,
+				deserializedDesiredItemSelectorReturnTypes.size());
 
 			ItemSelectorReturnType deserializedItemSelectorReturnType =
 				deserializedDesiredItemSelectorReturnTypes.get(0);

@@ -110,7 +110,8 @@ public class PollsChoiceStagedModelDataHandlerTest
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
 			PollsQuestion.class.getSimpleName());
 
-		Assert.assertEquals(1, dependentStagedModels.size());
+		Assert.assertEquals(
+			dependentStagedModels.toString(), 1, dependentStagedModels.size());
 
 		PollsQuestion question = (PollsQuestion)dependentStagedModels.get(0);
 

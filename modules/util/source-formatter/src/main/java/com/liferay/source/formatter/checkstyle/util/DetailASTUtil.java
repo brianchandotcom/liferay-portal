@@ -210,21 +210,34 @@ public class DetailASTUtil {
 		return false;
 	}
 
-	public static boolean isCollection(DetailAST detailAST) {
-		if (detailAST.getType() != TokenTypes.VARIABLE_DEF) {
+	public static boolean isArray(DetailAST detailAST) {
+		if (detailAST.getType() != TokenTypes.TYPE) {
 			return false;
 		}
 
-		DetailAST typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
+		DetailAST arrayDeclaratorAST = detailAST.findFirstToken(
+			TokenTypes.ARRAY_DECLARATOR);
 
-		DetailAST typeArgumentsAST = typeAST.findFirstToken(
+		if (arrayDeclaratorAST != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isCollection(DetailAST detailAST) {
+		if (detailAST.getType() != TokenTypes.TYPE) {
+			return false;
+		}
+
+		DetailAST typeArgumentsAST = detailAST.findFirstToken(
 			TokenTypes.TYPE_ARGUMENTS);
 
 		if (typeArgumentsAST == null) {
 			return false;
 		}
 
-		DetailAST nameAST = typeAST.findFirstToken(TokenTypes.IDENT);
+		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 		String name = nameAST.getText();
 

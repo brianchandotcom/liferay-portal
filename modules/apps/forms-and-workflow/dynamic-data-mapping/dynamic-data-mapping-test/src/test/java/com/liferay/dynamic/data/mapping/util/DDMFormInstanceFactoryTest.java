@@ -20,6 +20,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -209,7 +211,9 @@ public class DDMFormInstanceFactoryTest {
 				dynamicFormWithRepeatablePrimitiveArrayTypesFieldSet.
 					primitiveArrayTypes();
 
-		Assert.assertEquals(2, dynamicFormWithPrimitiveArrayTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(dynamicFormWithPrimitiveArrayTypes), 2,
+			dynamicFormWithPrimitiveArrayTypes.length);
 
 		Assert.assertArrayEquals(
 			new Boolean[] {true, false},

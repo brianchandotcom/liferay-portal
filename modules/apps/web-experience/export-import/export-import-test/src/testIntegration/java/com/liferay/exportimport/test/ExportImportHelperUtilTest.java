@@ -84,6 +84,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -229,7 +230,8 @@ public class ExportImportHelperUtilTest {
 
 		String[] exportedURLs = content.split(StringPool.NEW_LINE);
 
-		Assert.assertEquals(urls.size(), exportedURLs.length);
+		Assert.assertEquals(
+			Arrays.toString(exportedURLs), urls.size(), exportedURLs.length);
 
 		for (int i = 0; i < urls.size(); i++) {
 			String exportedUrl = exportedURLs[i];
@@ -269,11 +271,12 @@ public class ExportImportHelperUtilTest {
 
 		List<String> entries = testReaderWriter.getEntries();
 
-		Assert.assertEquals(1, entries.size());
+		Assert.assertEquals(entries.toString(), 1, entries.size());
 
 		List<String> binaryEntries = testReaderWriter.getBinaryEntries();
 
-		Assert.assertEquals(binaryEntries.size(), entries.size());
+		Assert.assertEquals(
+			entries.toString(), binaryEntries.size(), entries.size());
 
 		for (String entry : testReaderWriter.getEntries()) {
 			Assert.assertTrue(
@@ -693,8 +696,11 @@ public class ExportImportHelperUtilTest {
 		Map<String, MissingReference> weakMissingReferences =
 			missingReferences.getWeakMissingReferences();
 
-		Assert.assertEquals(2, dependencyMissingReferences.size());
-		Assert.assertEquals(1, weakMissingReferences.size());
+		Assert.assertEquals(
+			dependencyMissingReferences.toString(), 2,
+			dependencyMissingReferences.size());
+		Assert.assertEquals(
+			weakMissingReferences.toString(), 1, weakMissingReferences.size());
 
 		FileUtil.delete(zipWriter.getFile());
 

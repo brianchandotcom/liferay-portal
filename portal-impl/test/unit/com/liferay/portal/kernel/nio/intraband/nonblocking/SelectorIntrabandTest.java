@@ -130,7 +130,7 @@ public class SelectorIntrabandTest {
 
 			pollingThread.join();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			String pollingThreadName = pollingThread.getName();
 
@@ -208,7 +208,7 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilWarnCalled();
 			}
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
 				logRecords.get(0), "Dropped ownerless ACK response ");
@@ -274,7 +274,7 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilWarnCalled();
 			}
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
 				logRecords.get(0), "Dropped ownerless response ");
@@ -361,7 +361,7 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilWarnCalled();
 			}
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
 				logRecords.get(0), "Dropped unconcerned response ");
@@ -431,7 +431,7 @@ public class SelectorIntrabandTest {
 
 			Assert.assertEquals(0, dataByteBuffer.capacity());
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
 				logRecords.get(0), "Dropped ownerless request ");
@@ -489,7 +489,7 @@ public class SelectorIntrabandTest {
 
 			Assert.assertArrayEquals(_data, dataByteBuffer.array());
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
 				logRecords.get(0), "Unable to dispatch");
@@ -965,7 +965,7 @@ public class SelectorIntrabandTest {
 
 			Assert.assertSame(
 				attachment, recordCompletionHandler.getAttachment());
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
 				logRecords.get(0), "Removed timeout response waiting datagram");
@@ -1031,7 +1031,8 @@ public class SelectorIntrabandTest {
 					List<LogRecord> logRecords2 =
 						captureHandler2.getLogRecords();
 
-					Assert.assertEquals(1, logRecords2.size());
+					Assert.assertEquals(
+						logRecords2.toString(), 1, logRecords2.size());
 
 					LogRecord logRecord = logRecords2.get(0);
 
@@ -1044,7 +1045,7 @@ public class SelectorIntrabandTest {
 			}
 
 			Assert.assertFalse(selector.isOpen());
-			Assert.assertEquals(1, logRecords1.size());
+			Assert.assertEquals(logRecords1.toString(), 1, logRecords1.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
 				logRecords1.get(0),

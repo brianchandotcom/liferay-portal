@@ -251,7 +251,9 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		List<DDMFormFieldValue> updatedDDMFormFieldValues =
 			updatedDDMFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(1, updatedDDMFormFieldValues.size());
+		Assert.assertEquals(
+			updatedDDMFormFieldValues.toString(), 1,
+			updatedDDMFormFieldValues.size());
 
 		DDMFormFieldValue updatedDDMFormFieldValue =
 			updatedDDMFormFieldValues.get(0);
@@ -728,7 +730,9 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 
 		int expectedDataValuesSize = expectedDataValues.size();
 
-		Assert.assertEquals(expectedDataValuesSize, actualDataValues.size());
+		Assert.assertEquals(
+			actualDataValues.toString(), expectedDataValuesSize,
+			actualDataValues.size());
 
 		for (int i = 0; i < expectedDataValuesSize; i++) {
 			Assert.assertEquals(

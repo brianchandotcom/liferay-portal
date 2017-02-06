@@ -95,7 +95,7 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
-		Assert.assertEquals(0, roleNames.size());
+		Assert.assertEquals(roleNames.toString(), 0, roleNames.size());
 	}
 
 	@Test
@@ -108,7 +108,7 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
-		Assert.assertEquals(1, roleNames.size());
+		Assert.assertEquals(roleNames.toString(), 1, roleNames.size());
 
 		String roleName = roleNames.iterator().next();
 
@@ -129,12 +129,13 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
-		Assert.assertEquals(2, roleNames.size());
+		Assert.assertEquals(roleNames.toString(), 2, roleNames.size());
 
 		Collection<String> viewActionIdRoleNames =
 			modelPermissions.getRoleNames(ActionKeys.VIEW);
 
-		Assert.assertEquals(2, viewActionIdRoleNames.size());
+		Assert.assertEquals(
+			viewActionIdRoleNames.toString(), 2, viewActionIdRoleNames.size());
 	}
 
 	@Test
@@ -147,7 +148,7 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
-		Assert.assertEquals(1, roleNames.size());
+		Assert.assertEquals(roleNames.toString(), 1, roleNames.size());
 
 		String roleName = roleNames.iterator().next();
 
@@ -178,7 +179,7 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
-		Assert.assertEquals(0, roleNames.size());
+		Assert.assertEquals(roleNames.toString(), 0, roleNames.size());
 	}
 
 	@Test
@@ -197,7 +198,7 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
-		Assert.assertEquals(1, roleNames.size());
+		Assert.assertEquals(roleNames.toString(), 1, roleNames.size());
 
 		String roleName = roleNames.iterator().next();
 
@@ -226,7 +227,7 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
-		Assert.assertEquals(2, roleNames.size());
+		Assert.assertEquals(roleNames.toString(), 2, roleNames.size());
 
 		String roleName = roleNames.iterator().next();
 

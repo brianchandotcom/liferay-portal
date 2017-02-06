@@ -183,7 +183,7 @@ public class FIFOUtilTest {
 				System.setProperty("java.io.tmpdir", oldTmpDirName);
 			}
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 

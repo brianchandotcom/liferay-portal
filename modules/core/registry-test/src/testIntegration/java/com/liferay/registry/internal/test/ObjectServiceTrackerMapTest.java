@@ -484,12 +484,16 @@ public class ObjectServiceTrackerMapTest {
 			Collection<AtomicInteger> serviceReferenceCounts =
 				serviceReferenceCountsMap.values();
 
-			Assert.assertEquals(0, serviceReferenceCounts.size());
+			Assert.assertEquals(
+				serviceReferenceCounts.toString(), 0,
+				serviceReferenceCounts.size());
 
 			serviceRegistration1.unregister();
 			serviceRegistration2.unregister();
 
-			Assert.assertEquals(0, serviceReferenceCounts.size());
+			Assert.assertEquals(
+				serviceReferenceCounts.toString(), 0,
+				serviceReferenceCounts.size());
 		}
 		finally {
 			RegistryUtil.setRegistry(registryWrapper.getWrappedRegistry());

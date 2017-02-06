@@ -31,6 +31,7 @@ import com.liferay.portal.util.test.PortletContainerTestUtil;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -297,7 +298,9 @@ public class UploadPortletRequestTest {
 			Map<String, FileItem[]> multipartParameterMap =
 				uploadPortletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, multipartParameterMap.size());
+			Assert.assertEquals(
+				multipartParameterMap.toString(), 1,
+				multipartParameterMap.size());
 
 			for (Map.Entry<String, FileItem[]> entry :
 					multipartParameterMap.entrySet()) {
@@ -368,7 +371,7 @@ public class UploadPortletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadPortletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, map.size());
+			Assert.assertEquals(map.toString(), 1, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();
@@ -465,7 +468,9 @@ public class UploadPortletRequestTest {
 			Map<String, FileItem[]> multipartParametersMap =
 				uploadPortletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, multipartParametersMap.size());
+			Assert.assertEquals(
+				multipartParametersMap.toString(), 1,
+				multipartParametersMap.size());
 
 			for (Map.Entry<String, FileItem[]> entry :
 					multipartParametersMap.entrySet()) {
@@ -567,7 +572,7 @@ public class UploadPortletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadPortletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, map.size());
+			Assert.assertEquals(map.toString(), 1, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();
@@ -660,7 +665,9 @@ public class UploadPortletRequestTest {
 			Map<String, FileItem[]> multipartParameterMap =
 				uploadPortletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(10, multipartParameterMap.size());
+			Assert.assertEquals(
+				multipartParameterMap.toString(), 10,
+				multipartParameterMap.size());
 
 			for (Map.Entry<String, FileItem[]> entry :
 					multipartParameterMap.entrySet()) {
@@ -671,9 +678,12 @@ public class UploadPortletRequestTest {
 
 				FileItem[] fileItems = entry.getValue();
 
-				Assert.assertEquals(fileItems.length, fileNames.length);
+				Assert.assertEquals(
+					Arrays.toString(fileNames), fileItems.length,
+					fileNames.length);
 
-				Assert.assertEquals(2, fileNames.length);
+				Assert.assertEquals(
+					Arrays.toString(fileNames), 2, fileNames.length);
 
 				for (int i = 0; i < fileNames.length; i++) {
 					Assert.assertEquals(
@@ -803,7 +813,9 @@ public class UploadPortletRequestTest {
 			Map<String, FileItem[]> multipartParameterMap =
 				uploadPortletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(10, multipartParameterMap.size());
+			Assert.assertEquals(
+				multipartParameterMap.toString(), 10,
+				multipartParameterMap.size());
 
 			for (Map.Entry<String, FileItem[]> entry :
 					multipartParameterMap.entrySet()) {
@@ -814,9 +826,10 @@ public class UploadPortletRequestTest {
 
 				FileItem[] fileItems = entry.getValue();
 
-				Assert.assertEquals(fileItems.length, files.length);
+				Assert.assertEquals(
+					Arrays.toString(files), fileItems.length, files.length);
 
-				Assert.assertEquals(2, files.length);
+				Assert.assertEquals(Arrays.toString(files), 2, files.length);
 
 				for (int i = 0; i < files.length; i++) {
 					File storeLocation = fileItems[i].getStoreLocation();
@@ -906,7 +919,7 @@ public class UploadPortletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadPortletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(10, map.size());
+			Assert.assertEquals(map.toString(), 10, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();
@@ -916,9 +929,12 @@ public class UploadPortletRequestTest {
 
 				FileItem[] fileItems = entry.getValue();
 
-				Assert.assertEquals(fileItems.length, inputStreams.length);
+				Assert.assertEquals(
+					Arrays.toString(inputStreams), fileItems.length,
+					inputStreams.length);
 
-				Assert.assertEquals(2, inputStreams.length);
+				Assert.assertEquals(
+					Arrays.toString(inputStreams), 2, inputStreams.length);
 
 				for (int i = 0; i < inputStreams.length; i++) {
 					Assert.assertTrue(
@@ -965,7 +981,9 @@ public class UploadPortletRequestTest {
 			Map<String, FileItem[]> multipartParameterMap =
 				uploadPortletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, multipartParameterMap.size());
+			Assert.assertEquals(
+				multipartParameterMap.toString(), 1,
+				multipartParameterMap.size());
 
 			for (Map.Entry<String, FileItem[]> entry :
 					multipartParameterMap.entrySet()) {
@@ -1270,7 +1288,7 @@ public class UploadPortletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadPortletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, map.size());
+			Assert.assertEquals(map.toString(), 1, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();
@@ -1365,7 +1383,7 @@ public class UploadPortletRequestTest {
 			Map<String, FileItem[]> map =
 				uploadPortletRequest.getMultipartParameterMap();
 
-			Assert.assertEquals(1, map.size());
+			Assert.assertEquals(map.toString(), 1, map.size());
 
 			for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 				String key = entry.getKey();

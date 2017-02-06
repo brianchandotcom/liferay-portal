@@ -33,7 +33,7 @@ public class TestPortalCacheListener<K extends Serializable, V>
 	implements PortalCacheListener<K, V> {
 
 	public void assertActionsCount(int count) {
-		Assert.assertEquals(count, _actions.size());
+		Assert.assertEquals(_actions.toString(), count, _actions.size());
 	}
 
 	public void assertEvicted(K key, V value, int timeToLive) {

@@ -336,7 +336,8 @@ public class DLFileEntryLocalServiceTest {
 			List<DLFileEntry> dlFileEntries =
 				DLFileEntryLocalServiceUtil.getMisversionedFileEntries();
 
-			Assert.assertEquals(1, dlFileEntries.size());
+			Assert.assertEquals(
+				dlFileEntries.toString(), 1, dlFileEntries.size());
 			Assert.assertEquals(dlFileEntry, dlFileEntries.get(0));
 		}
 		finally {
@@ -390,7 +391,7 @@ public class DLFileEntryLocalServiceTest {
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.getNoAssetFileEntries();
 
-		Assert.assertEquals(1, dlFileEntries.size());
+		Assert.assertEquals(dlFileEntries.toString(), 1, dlFileEntries.size());
 
 		DLFileEntry dlFileEntry = dlFileEntries.get(0);
 
@@ -434,7 +435,8 @@ public class DLFileEntryLocalServiceTest {
 			List<DLFileEntry> dlFileEntries =
 				DLFileEntryLocalServiceUtil.getOrphanedFileEntries();
 
-			Assert.assertEquals(1, dlFileEntries.size());
+			Assert.assertEquals(
+				dlFileEntries.toString(), 1, dlFileEntries.size());
 			Assert.assertEquals(dlFileEntry, dlFileEntries.get(0));
 		}
 		finally {

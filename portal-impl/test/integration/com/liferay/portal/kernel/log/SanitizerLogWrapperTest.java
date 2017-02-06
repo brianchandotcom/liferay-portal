@@ -153,7 +153,8 @@ public class SanitizerLogWrapperTest {
 				_captureAppender.getLoggingEvents();
 
 			Assert.assertNotNull(loggingEvents);
-			Assert.assertEquals(12, loggingEvents.size());
+			Assert.assertEquals(
+				loggingEvents.toString(), 12, loggingEvents.size());
 
 			for (LoggingEvent loggingEvent : loggingEvents) {
 				String message = loggingEvent.getRenderedMessage();
@@ -192,7 +193,8 @@ public class SanitizerLogWrapperTest {
 			_log.warn(_message, exception);
 
 			Assert.assertNotNull(loggingEvents);
-			Assert.assertEquals(12, loggingEvents.size());
+			Assert.assertEquals(
+				loggingEvents.toString(), 12, loggingEvents.size());
 
 			for (LoggingEvent loggingEvent : loggingEvents) {
 				String message = loggingEvent.getRenderedMessage();
@@ -234,7 +236,8 @@ public class SanitizerLogWrapperTest {
 				_captureAppender.getLoggingEvents();
 
 			Assert.assertNotNull(loggingEvents);
-			Assert.assertEquals(12, loggingEvents.size());
+			Assert.assertEquals(
+				loggingEvents.toString(), 12, loggingEvents.size());
 
 			for (LoggingEvent loggingEvent : loggingEvents) {
 				ThrowableInformation throwableInformation =
@@ -280,7 +283,8 @@ public class SanitizerLogWrapperTest {
 				_captureAppender.getLoggingEvents();
 
 			Assert.assertNotNull(loggingEvents);
-			Assert.assertEquals(12, loggingEvents.size());
+			Assert.assertEquals(
+				loggingEvents.toString(), 12, loggingEvents.size());
 
 			for (LoggingEvent loggingEvent : loggingEvents) {
 				String message = loggingEvent.getRenderedMessage();

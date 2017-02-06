@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -89,7 +90,9 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 
 		String[] responseBodies = StringUtil.split(responseBody, boundary);
 
-		Assert.assertEquals(ranges.length + 2, responseBodies.length);
+		Assert.assertEquals(
+			Arrays.toString(responseBodies), ranges.length + 2,
+			responseBodies.length);
 		Assert.assertEquals(StringPool.DOUBLE_DASH, responseBodies[0]);
 		Assert.assertEquals(
 			StringPool.DOUBLE_DASH, responseBodies[ranges.length + 1]);

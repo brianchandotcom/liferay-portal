@@ -123,7 +123,9 @@ public class PollsVoteStagedModelDataHandlerTest
 		List<StagedModel> choiceDependentStagedModels =
 			dependentStagedModelsMap.get(PollsChoice.class.getSimpleName());
 
-		Assert.assertEquals(1, choiceDependentStagedModels.size());
+		Assert.assertEquals(
+			choiceDependentStagedModels.toString(), 1,
+			choiceDependentStagedModels.size());
 
 		PollsChoice choice = (PollsChoice)choiceDependentStagedModels.get(0);
 
@@ -133,7 +135,9 @@ public class PollsVoteStagedModelDataHandlerTest
 		List<StagedModel> questionDependentStagedModels =
 			dependentStagedModelsMap.get(PollsQuestion.class.getSimpleName());
 
-		Assert.assertEquals(1, questionDependentStagedModels.size());
+		Assert.assertEquals(
+			questionDependentStagedModels.toString(), 1,
+			questionDependentStagedModels.size());
 
 		PollsQuestion question =
 			(PollsQuestion)questionDependentStagedModels.get(0);

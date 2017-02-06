@@ -151,7 +151,7 @@ public class WikiPageLocalServiceTest {
 			childPage.getNodeId(), childPage.getTitle(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		Assert.assertEquals(3, pages.size());
+		Assert.assertEquals(pages.toString(), 3, pages.size());
 
 		for (WikiPage curWikiPage : pages) {
 			Assert.assertEquals("ParentPage2", curWikiPage.getParentTitle());
@@ -214,7 +214,7 @@ public class WikiPageLocalServiceTest {
 				childPage.getNodeId(), childPage.getTitle(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-			Assert.assertEquals(2, pages.size());
+			Assert.assertEquals(pages.toString(), 2, pages.size());
 
 			for (WikiPage curWikiPage : pages) {
 				Assert.assertEquals(
@@ -245,6 +245,7 @@ public class WikiPageLocalServiceTest {
 			copyPage.getAttachmentsFileEntries();
 
 		Assert.assertEquals(
+			attachmentsFileEntries.toString(),
 			copyAttachmentsFileEntries.size(), attachmentsFileEntries.size());
 
 		FileEntry fileEntry = attachmentsFileEntries.get(0);
@@ -468,7 +469,8 @@ public class WikiPageLocalServiceTest {
 
 		List<WikiPage> pages = WikiPageLocalServiceUtil.getNoAssetPages();
 
-		Assert.assertEquals(initialPages.size() + 1, pages.size());
+		Assert.assertEquals(
+			pages.toString(), initialPages.size() + 1, pages.size());
 		Assert.assertEquals(page, pages.get(pages.size() - 1));
 	}
 

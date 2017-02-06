@@ -130,7 +130,8 @@ public class ConfiguratorExtensionTest {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
 
-		Assert.assertEquals(1, configurations.length);
+		Assert.assertEquals(
+			Arrays.toString(configurations), 1, configurations.length);
 	}
 
 	@Test
@@ -143,7 +144,8 @@ public class ConfiguratorExtensionTest {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
 
-		Assert.assertEquals(1, configurations.length);
+		Assert.assertEquals(
+			Arrays.toString(configurations), 1, configurations.length);
 	}
 
 	@Test
@@ -167,7 +169,8 @@ public class ConfiguratorExtensionTest {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
 
-		Assert.assertEquals(2, configurations.length);
+		Assert.assertEquals(
+			Arrays.toString(configurations), 2, configurations.length);
 
 		Assert.assertNotNull(
 			_configurationAdmin.listConfigurations("(key=value)"));
@@ -190,7 +193,8 @@ public class ConfiguratorExtensionTest {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
 
-		Assert.assertEquals(2, configurations.length);
+		Assert.assertEquals(
+			Arrays.toString(configurations), 2, configurations.length);
 	}
 
 	@Test
@@ -207,7 +211,8 @@ public class ConfiguratorExtensionTest {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
 
-		Assert.assertEquals(1, configurations.length);
+		Assert.assertEquals(
+			Arrays.toString(configurations), 1, configurations.length);
 
 		Dictionary<String, Object> properties =
 			configurations[0].getProperties();
@@ -232,7 +237,8 @@ public class ConfiguratorExtensionTest {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
 
-		Assert.assertEquals(2, configurations.length);
+		Assert.assertEquals(
+			Arrays.toString(configurations), 2, configurations.length);
 	}
 
 	@Test
@@ -244,7 +250,8 @@ public class ConfiguratorExtensionTest {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
 
-		Assert.assertEquals(1, configurations.length);
+		Assert.assertEquals(
+			Arrays.toString(configurations), 1, configurations.length);
 	}
 
 	@Test
@@ -269,7 +276,8 @@ public class ConfiguratorExtensionTest {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
 
-		Assert.assertEquals(1, configurations.length);
+		Assert.assertEquals(
+			Arrays.toString(configurations), 1, configurations.length);
 
 		Dictionary<String, Object> properties =
 			configurations[0].getProperties();
@@ -290,7 +298,8 @@ public class ConfiguratorExtensionTest {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
 
-		Assert.assertEquals(1, configurations.length);
+		Assert.assertEquals(
+			Arrays.toString(configurations), 1, configurations.length);
 
 		Dictionary<String, Object> properties =
 			configurations[0].getProperties();
@@ -314,7 +323,8 @@ public class ConfiguratorExtensionTest {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
 
-		Assert.assertEquals(1, configurations.length);
+		Assert.assertEquals(
+			Arrays.toString(configurations), 1, configurations.length);
 
 		Dictionary<String, Object> properties =
 			configurations[0].getProperties();
@@ -333,7 +343,8 @@ public class ConfiguratorExtensionTest {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
 
-		Assert.assertEquals(2, configurations.length);
+		Assert.assertEquals(
+			Arrays.toString(configurations), 2, configurations.length);
 	}
 
 	private void _startExtension(

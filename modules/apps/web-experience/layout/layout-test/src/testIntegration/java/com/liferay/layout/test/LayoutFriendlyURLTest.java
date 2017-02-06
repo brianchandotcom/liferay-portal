@@ -172,7 +172,9 @@ public class LayoutFriendlyURLTest {
 			List<Exception> layoutFriendlyURLExceptions =
 				ListUtil.fromCollection(localizedExceptionsMap.values());
 
-			Assert.assertEquals(1, layoutFriendlyURLExceptions.size());
+			Assert.assertEquals(
+				layoutFriendlyURLExceptions.toString(), 1,
+				layoutFriendlyURLExceptions.size());
 
 			LayoutFriendlyURLException layoutFriendlyURLException =
 				(LayoutFriendlyURLException)layoutFriendlyURLExceptions.get(0);
@@ -197,7 +199,9 @@ public class LayoutFriendlyURLTest {
 			List<Exception> layoutFriendlyURLExceptions =
 				ListUtil.fromCollection(localizedExceptionsMap.values());
 
-			Assert.assertEquals(1, layoutFriendlyURLExceptions.size());
+			Assert.assertEquals(
+				layoutFriendlyURLExceptions.toString(), 1,
+				layoutFriendlyURLExceptions.size());
 
 			LayoutFriendlyURLException layoutFriendlyURLException =
 				(LayoutFriendlyURLException)layoutFriendlyURLExceptions.get(0);
@@ -222,7 +226,9 @@ public class LayoutFriendlyURLTest {
 			List<Exception> layoutFriendlyURLExceptions =
 				ListUtil.fromCollection(localizedExceptionsMap.values());
 
-			Assert.assertEquals(1, layoutFriendlyURLExceptions.size());
+			Assert.assertEquals(
+				layoutFriendlyURLExceptions.toString(), 1,
+				layoutFriendlyURLExceptions.size());
 
 			LayoutFriendlyURLException layoutFriendlyURLException =
 				(LayoutFriendlyURLException)layoutFriendlyURLExceptions.get(0);
@@ -247,7 +253,9 @@ public class LayoutFriendlyURLTest {
 			List<Exception> layoutFriendlyURLExceptions =
 				ListUtil.fromCollection(localizedExceptionsMap.values());
 
-			Assert.assertEquals(1, layoutFriendlyURLExceptions.size());
+			Assert.assertEquals(
+				layoutFriendlyURLExceptions.toString(), 1,
+				layoutFriendlyURLExceptions.size());
 
 			LayoutFriendlyURLException layoutFriendlyURLException =
 				(LayoutFriendlyURLException)layoutFriendlyURLExceptions.get(0);
@@ -320,7 +328,9 @@ public class LayoutFriendlyURLTest {
 			List<Exception> layoutFriendlyURLExceptions =
 				ListUtil.fromCollection(localizedExceptionsMap.values());
 
-			Assert.assertEquals(2, layoutFriendlyURLExceptions.size());
+			Assert.assertEquals(
+				layoutFriendlyURLExceptions.toString(), 2,
+				layoutFriendlyURLExceptions.size());
 
 			for (Exception e : layoutFriendlyURLExceptions) {
 				String keywordsConflict =

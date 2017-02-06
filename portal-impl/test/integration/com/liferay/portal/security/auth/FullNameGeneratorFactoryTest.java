@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -73,7 +74,8 @@ public class FullNameGeneratorFactoryTest {
 		String[] splitFullName = fullNameGenerator.splitFullName(
 			"John Stephen Piper");
 
-		Assert.assertEquals(3, splitFullName.length);
+		Assert.assertEquals(
+			Arrays.toString(splitFullName), 3, splitFullName.length);
 	}
 
 }

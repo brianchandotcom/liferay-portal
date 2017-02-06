@@ -224,7 +224,8 @@ public class WikiPageStagedModelDataHandlerTest
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
 			WikiNode.class.getSimpleName());
 
-		Assert.assertEquals(1, dependentStagedModels.size());
+		Assert.assertEquals(
+			dependentStagedModels.toString(), 1, dependentStagedModels.size());
 
 		WikiNode node = (WikiNode)dependentStagedModels.get(0);
 
@@ -247,7 +248,8 @@ public class WikiPageStagedModelDataHandlerTest
 		List<FileEntry> attachmentFileEntries =
 			page.getAttachmentsFileEntries();
 
-		Assert.assertEquals(1, attachmentFileEntries.size());
+		Assert.assertEquals(
+			attachmentFileEntries.toString(), 1, attachmentFileEntries.size());
 
 		validateImport(dependentStagedModelsMap, group);
 	}

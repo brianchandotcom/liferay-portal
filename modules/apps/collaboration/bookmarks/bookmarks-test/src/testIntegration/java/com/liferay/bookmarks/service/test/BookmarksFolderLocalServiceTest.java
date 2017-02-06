@@ -122,7 +122,7 @@ public class BookmarksFolderLocalServiceTest {
 		List<BookmarksFolder> folders =
 			BookmarksFolderLocalServiceUtil.getNoAssetFolders();
 
-		Assert.assertEquals(1, folders.size());
+		Assert.assertEquals(folders.toString(), 1, folders.size());
 		Assert.assertEquals(folder, folders.get(0));
 	}
 

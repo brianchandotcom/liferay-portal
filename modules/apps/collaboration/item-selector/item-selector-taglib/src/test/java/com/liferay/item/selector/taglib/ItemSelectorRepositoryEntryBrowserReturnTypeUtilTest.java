@@ -91,7 +91,9 @@ public class ItemSelectorRepositoryEntryBrowserReturnTypeUtilTest {
 			getFirstAvailableExistingFileEntryReturnType(
 				itemSelectorReturnTypes);
 
-		Assert.assertEquals(3, itemSelectorReturnTypes.size());
+		Assert.assertEquals(
+			itemSelectorReturnTypes.toString(), 3,
+			itemSelectorReturnTypes.size());
 	}
 
 }

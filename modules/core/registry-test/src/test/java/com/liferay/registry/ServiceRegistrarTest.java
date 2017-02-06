@@ -49,11 +49,13 @@ public class ServiceRegistrarTest {
 			Collection<ServiceRegistration<Foo>> serviceRegistrations =
 				serviceRegistrar.getServiceRegistrations();
 
-			Assert.assertEquals(2, serviceRegistrations.size());
+			Assert.assertEquals(
+				serviceRegistrations.toString(), 2,
+				serviceRegistrations.size());
 
 			Collection<Foo> services = registry.getServices(Foo.class, null);
 
-			Assert.assertEquals(2, services.size());
+			Assert.assertEquals(services.toString(), 2, services.size());
 
 			serviceRegistrar.destroy();
 

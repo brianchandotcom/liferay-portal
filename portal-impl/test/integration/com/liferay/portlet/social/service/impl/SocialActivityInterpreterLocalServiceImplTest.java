@@ -21,6 +21,7 @@ import com.liferay.portlet.social.service.impl.bundle.socialactivityinterpreterl
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.kernel.service.SocialActivityInterpreterLocalServiceUtil;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +51,9 @@ public class SocialActivityInterpreterLocalServiceImplTest {
 		List<SocialActivityInterpreter> socialActivityInterpreters =
 			activityInterpreters.get(TestSocialActivityInterpreter.SELECTOR);
 
-		Assert.assertEquals(1, socialActivityInterpreters.size());
+		Assert.assertEquals(
+			socialActivityInterpreters.toString(), 1,
+			socialActivityInterpreters.size());
 
 		SocialActivityInterpreter socialActivityInterpreter =
 			socialActivityInterpreters.get(0);
@@ -61,7 +64,7 @@ public class SocialActivityInterpreterLocalServiceImplTest {
 
 		String[] classNames = socialActivityInterpreter.getClassNames();
 
-		Assert.assertEquals(1, classNames.length);
+		Assert.assertEquals(Arrays.toString(classNames), 1, classNames.length);
 		Assert.assertEquals(
 			TestSocialActivityInterpreter.class.getName(), classNames[0]);
 	}
@@ -72,7 +75,8 @@ public class SocialActivityInterpreterLocalServiceImplTest {
 			SocialActivityInterpreterLocalServiceUtil.getActivityInterpreters(
 				TestSocialActivityInterpreter.SELECTOR);
 
-		Assert.assertEquals(1, activityInterpreters.size());
+		Assert.assertEquals(
+			activityInterpreters.toString(), 1, activityInterpreters.size());
 
 		SocialActivityInterpreter socialActivityInterpreter =
 			activityInterpreters.get(0);
@@ -83,7 +87,7 @@ public class SocialActivityInterpreterLocalServiceImplTest {
 
 		String[] classNames = socialActivityInterpreter.getClassNames();
 
-		Assert.assertEquals(1, classNames.length);
+		Assert.assertEquals(Arrays.toString(classNames), 1, classNames.length);
 		Assert.assertEquals(
 			TestSocialActivityInterpreter.class.getName(), classNames[0]);
 	}

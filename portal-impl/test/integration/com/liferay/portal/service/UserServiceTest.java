@@ -139,7 +139,8 @@ public class UserServiceTest {
 				UserGroupRoleLocalServiceUtil.getUserGroupRoles(
 					_user.getUserId(), groupId);
 
-			Assert.assertEquals(1, userGroupRoles.size());
+			Assert.assertEquals(
+				userGroupRoles.toString(), 1, userGroupRoles.size());
 
 			UserGroupRole userGroupRole = userGroupRoles.get(0);
 

@@ -4,3 +4,6 @@ create index IX_56FC929A on FriendlyURL (groupId, companyId, classNameId, classP
 create index IX_53418A03 on FriendlyURL (groupId, companyId, classNameId, urlTitle[$COLUMN_LENGTH:255$]);
 create index IX_BBBC6ADE on FriendlyURL (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_1C7E10E0 on FriendlyURL (uuid_[$COLUMN_LENGTH:75$], groupId);
+
+create unique index IX_4690312F on FriendlyURLLocalization (groupId, friendlyURLId, languageId[$COLUMN_LENGTH:75$]);
+create unique index IX_A9FD5E8B on FriendlyURLLocalization (groupId, urlTitle[$COLUMN_LENGTH:255$], languageId[$COLUMN_LENGTH:75$]);

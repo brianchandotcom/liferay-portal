@@ -57,7 +57,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testReturnsEmptyList() {
 			List<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationHelper.
+				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertTrue(formNavigatorEntryKeys.isEmpty());
@@ -94,7 +94,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testContainsValuesForLine1() {
 			List<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationHelper.
+				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(3, formNavigatorEntryKeys.size());
@@ -109,7 +109,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testContainsValuesForLine2() {
 			List<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationHelper.
+				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "update").
 					get();
 
@@ -142,7 +142,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testTheyAreTrimmed() {
 			List<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationHelper.
+				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(2, formNavigatorEntryKeys.size());
@@ -172,7 +172,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testReturnsTheKeysInThatLineWhenAskedForAVariant() {
 			List<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationHelper.
+				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(2, formNavigatorEntryKeys.size());
@@ -185,7 +185,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testReturnsTheKeysInThatLineWhenAskedForNoVariant() {
 			List<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationHelper.
+				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", null).get();
 
 			Assert.assertEquals(2, formNavigatorEntryKeys.size());
@@ -225,7 +225,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testContainsValuesForEntry1() {
 			List<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationHelper.
+				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(3, formNavigatorEntryKeys.size());
@@ -240,7 +240,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testContainsValuesForEntry2() {
 			List<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationHelper.
+				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "update").
 					get();
 
@@ -256,7 +256,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownCategory() {
 			Optional<List<String>> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationHelper.
+				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys(
 						"form1", "unknownCategory", "add");
 
@@ -266,7 +266,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownContext() {
 			Optional<List<String>> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationHelper.
+				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys(
 						"form1", "general", "unknownContext");
 
@@ -276,7 +276,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownFormId() {
 			Optional<List<String>> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationHelper.
+				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("unknownForm", "general", "add");
 
 			Assert.assertFalse(formNavigatorEntryKeys.isPresent());
@@ -296,7 +296,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 			throws InvalidSyntaxException, IOException {
 
 			Optional<List<String>> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationHelper.
+				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys(
 						"formNavigatorId", "categoryKey", "context");
 
@@ -334,7 +334,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testTheLastOneHasPrecedence() {
 			List<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationHelper.
+				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(3, formNavigatorEntryKeys.size());
@@ -373,14 +373,14 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 					FormNavigatorConfiguration.class.getName() +
 						")")).thenReturn(configurations);
 
-		_formNavigatorEntryConfigurationHelper.setConfigurationAdmin(
+		_formNavigatorEntryConfigurationRetriever.setConfigurationAdmin(
 			_configurationAdmin);
 	}
 
 	private static final ConfigurationAdmin _configurationAdmin = Mockito.mock(
 		ConfigurationAdmin.class);
 	private static final FormNavigatorEntryConfigurationRetriever
-		_formNavigatorEntryConfigurationHelper =
+		_formNavigatorEntryConfigurationRetriever =
 			new FormNavigatorEntryConfigurationRetriever();
 
 }

@@ -94,7 +94,9 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	public <T> void addHook(Hook.Event event, Class<T> clazz, Hook<T> hook) {
-		_getHooks(event, clazz).add(hook);
+		List<Hook> hooks = _getHooks(event, clazz);
+
+		hooks.add(hook);
 	}
 
 	public void addPersistedSubscribers(String className, long classPK) {
@@ -991,7 +993,9 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	private <T> void _notifyHooks(Hook.Event event, Class<T> clazz, T payload) {
-		_getHooks(event, clazz).forEach(hook -> hook.process(payload));
+		List<Hook> hooks = _getHooks(event, clazz);
+
+		hooks.forEach(hook -> hook.process(payload));
 	}
 
 	private void readObject(ObjectInputStream objectInputStream)

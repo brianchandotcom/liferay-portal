@@ -364,13 +364,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 			long userId = permissionChecker.getUserId();
 
-			if (Validator.isNotNull(userIdField)) {
-				sb.append(userIdField);
-				sb.append(" = ");
+			if (Validator.isNull(userIdField)) {
+				sb.append("ResourcePermission.ownerId = ");
 				sb.append(userId);
 			}
 			else {
-				sb.append("ResourcePermission.ownerId = ");
+				sb.append(userIdField);
+				sb.append(" = ");
 				sb.append(userId);
 			}
 

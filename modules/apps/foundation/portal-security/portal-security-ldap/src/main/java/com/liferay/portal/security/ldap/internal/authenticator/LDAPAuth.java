@@ -723,7 +723,7 @@ public class LDAPAuth implements Authenticator {
 		_ldapSettings = ldapSettings;
 	}
 
-	@Reference(policyOption=ReferencePolicyOption.GREEDY, unbind = "-")
+	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
 	protected void setLdapUserImporter(LDAPUserImporter ldapUserImporter) {
 		_ldapUserImporter = ldapUserImporter;
 	}
@@ -738,7 +738,7 @@ public class LDAPAuth implements Authenticator {
 		_passwordEncryptor = passwordEncryptor;
 	}
 
-	@Reference(unbind = "-")
+	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
 	protected void setPortalLDAP(PortalLDAP portalLDAP) {
 		_portalLDAP = portalLDAP;
 	}

@@ -133,7 +133,7 @@ public class UserImportMessageListener
 		_ldapImportConfigurationProvider = ldapImportConfigurationProvider;
 	}
 
-	@Reference(policyOption=ReferencePolicyOption.GREEDY, unbind = "-")
+	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
 	protected void setLdapUserImporter(LDAPUserImporter ldapUserImporter) {
 		_ldapUserImporter = ldapUserImporter;
 	}

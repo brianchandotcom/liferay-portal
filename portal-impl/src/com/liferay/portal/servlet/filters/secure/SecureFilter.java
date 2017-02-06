@@ -93,6 +93,8 @@ public class SecureFilter extends BasePortalFilter {
 
 		_usePermissionChecker = GetterUtil.getBoolean(
 			filterConfig.getInitParameter("use_permission_checker"));
+
+		setFilterEnabled(true);
 	}
 
 	@Override

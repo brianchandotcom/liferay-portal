@@ -1956,7 +1956,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 
-		unsubscribeLifecycleHookFactory.registerHooks(subscriptionSender);
+		unsubscribeHelper.registerHooks(subscriptionSender);
 
 		subscriptionSender.addPersistedSubscribers(
 			BlogsEntry.class.getName(), entry.getGroupId());
@@ -2295,7 +2295,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	protected FriendlyURLLocalService friendlyURLLocalService;
 
 	@ServiceReference(type = UnsubscribeHelper.class)
-	protected UnsubscribeHelper unsubscribeLifecycleHookFactory;
+	protected UnsubscribeHelper unsubscribeHelper;
 
 	private String _getGroupDescriptiveName(Group group, Locale locale) {
 		try {

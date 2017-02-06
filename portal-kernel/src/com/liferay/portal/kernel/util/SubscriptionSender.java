@@ -961,15 +961,10 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	private List<Hook> _getHooks(Hook.Event event, Class<?> clazz) {
-		if (!_hooks.containsKey(event)) {
-			_hooks.put(event, new HashMap<>());
-		}
+		Map<Class<?>, List<Hook>> hooksMap =
+			_hooks.computeIfAbsent(event, (key) -> new HashMap<>());
 
-		if (!_hooks.get(event).containsKey(clazz)) {
-			_hooks.get(event).put(clazz, new ArrayList<>());
-		}
-
-		return _hooks.get(event).get(clazz);
+		return hooksMap.computeIfAbsent(clazz, (key) -> new ArrayList<>());
 	}
 
 	private String _getLocalizedValue(

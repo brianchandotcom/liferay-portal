@@ -170,7 +170,7 @@ public class UnsubscribeHooks {
 					calendar.getTime());
 			}
 			catch (PortalException pe) {
-				pe.printStackTrace();
+				throw new RuntimeException(pe);
 			}
 		}
 

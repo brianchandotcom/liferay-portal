@@ -5,7 +5,18 @@
 
 	var React = AlloyEditor.React;
 
+	/**
+	 * The FolderIconSvg class renders a folder icon.
+	 *
+	 * @class FolderIconSvg
+	 */
 	var FolderIconSvg = React.createClass({
+		/**
+         * Lifecycle. Renders the UI of the button.
+         *
+         * @method render
+         * @return {Object} The content which should be rendered.
+         */
 		render: function() {
 			return (
 				<svg width="19px" height="16px" viewBox="0 0 19 16" version="1.1">
@@ -22,6 +33,17 @@
 		}
 	});
 
+ 	/**
+     * The ButtonLinkEditBrowse class provides functionality for creating and editing a link in a document,
+     * and also allows to link to an existing file in DM.
+     * Provides UI for creating, editing and removing a link.
+     *
+     * @uses WidgetDropdown
+     * @uses WidgetFocusManager
+     * @uses ButtonCfgProps
+     *
+     * @class ButtonLinkEditBrowse
+     */
 	var ButtonLinkEditBrowse = React.createClass({
 		// Allows validating props being passed to the component.
         propTypes: {

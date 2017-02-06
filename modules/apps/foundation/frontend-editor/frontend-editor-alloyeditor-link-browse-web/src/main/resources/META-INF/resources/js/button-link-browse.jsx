@@ -5,6 +5,20 @@
 
     var React = AlloyEditor.React;
 
+    /**
+     * The ButtonLinkBrowse class provides functionality for creating and editing a link in a document,
+     * and also allows to link to an existing file in DM.
+     * ButtonLinkBrowse renders in two different modes:
+     *
+     * - Normal: Just a button that allows to switch to the edition mode
+     * - Exclusive: The ButtonLinkEditBrowse UI with all the link edition controls.
+     *
+     * @uses ButtonKeystroke
+     * @uses ButtonStateClasses
+     * @uses ButtonCfgProps
+     *
+     * @class ButtonLinkBrowse
+     */
 	var ButtonLinkBrowse = React.createClass({
         mixins: [AlloyEditor.ButtonKeystroke, AlloyEditor.ButtonStateClasses, AlloyEditor.ButtonCfgProps],
 
@@ -53,6 +67,12 @@
             };
         },
 
+        /**
+         * Lifecycle. Renders the UI of the button.
+         *
+         * @method render
+         * @return {Object} The content which should be rendered.
+         */
     	render() {
             if (this.props.renderExclusive) {
                 var props = this.mergeButtonCfgProps();

@@ -138,7 +138,10 @@ public class GroupSearchProvider {
 		User user = themeDisplay.getUser();
 
 		groups = user.getMySiteGroups(
-			new String[] {Group.class.getName(), Organization.class.getName()},
+			new String[] {
+				Company.class.getName(), Group.class.getName(),
+				Organization.class.getName()
+			},
 			QueryUtil.ALL_POS);
 
 		long groupId = ParamUtil.getLong(

@@ -643,7 +643,7 @@ public class SubscriptionSender implements Serializable {
 			return;
 		}
 
-		_notifyHooks(Hook.Event.NOTIFY, subscription);
+		_notifyHooks(Hook.Event.NOTIFY, Subscription.class, subscription);
 
 		sendNotification(user);
 	}
@@ -728,7 +728,7 @@ public class SubscriptionSender implements Serializable {
 
 		mailMessage.setBody(processedBody);
 
-		_notifyHooks(Hook.Event.PROCESS, mailMessage);
+		_notifyHooks(Hook.Event.PROCESS, MailMessage.class, mailMessage);
 	}
 
 	/**
@@ -995,9 +995,8 @@ public class SubscriptionSender implements Serializable {
 			localizedPortletTitleMap, locale, portletName);
 	}
 
-	private void _notifyHooks(Hook.Event event, Object payload) {
-		_getHooks(
-			event, payload.getClass()).forEach(hook -> hook.process(payload));
+	private <T> void _notifyHooks(Hook.Event event, Class<T> clazz, T payload) {
+		_getHooks(event, clazz).forEach(hook -> hook.process(payload));
 	}
 
 	private void readObject(ObjectInputStream objectInputStream)

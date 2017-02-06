@@ -115,6 +115,14 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="gotoEditTemplate">
+		<var name="key_rowEntry" value="${templateName}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="Click" locator1="MenuItem#EDIT" value1="Edit" />
+	</command>
+
 	<command name="gotoFeeds">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 

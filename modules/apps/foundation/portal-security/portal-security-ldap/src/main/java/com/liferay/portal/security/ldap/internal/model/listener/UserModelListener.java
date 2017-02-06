@@ -40,6 +40,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Scott Lee
@@ -149,7 +150,7 @@ public class UserModelListener extends BaseModelListener<User> {
 	@Reference
 	private MembershipRequestLocalService _membershipRequestLocalService;
 
-	@Reference
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
 	private UserExporter _userExporter;
 
 	@Reference

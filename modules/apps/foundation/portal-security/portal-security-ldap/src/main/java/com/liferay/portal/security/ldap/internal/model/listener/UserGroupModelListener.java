@@ -26,6 +26,7 @@ import com.liferay.portal.security.ldap.internal.UserImportTransactionThreadLoca
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -97,7 +98,7 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserGroupModelListener.class);
 
-	@Reference
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
 	private UserExporter _userExporter;
 
 }

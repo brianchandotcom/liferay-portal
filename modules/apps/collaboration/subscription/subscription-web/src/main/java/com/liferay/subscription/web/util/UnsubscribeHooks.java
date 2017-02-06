@@ -67,41 +67,7 @@ public class UnsubscribeHooks {
 			return;
 		}
 
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.add(
-			Calendar.DATE, _configuration.unsubscriptionTicketExpirationTime());
-
-		List<Ticket> tickets = _ticketLocalService.getTickets(
-			subscription.getCompanyId(), Subscription.class.getName(),
-			subscription.getSubscriptionId(),
-			SubscriptionConstants.TICKET_TYPE);
-
-		Ticket ticket;
-
-		if (ListUtil.isEmpty(tickets)) {
-			ticket = _ticketLocalService.addTicket(
-				subscription.getCompanyId(), Subscription.class.getName(),
-				subscription.getSubscriptionId(),
-				SubscriptionConstants.TICKET_TYPE, StringPool.BLANK,
-				calendar.getTime(), _subscriptionSender.getServiceContext());
-		}
-		else {
-			ticket = tickets.get(0);
-
-			try {
-				ticket = _ticketLocalService.updateTicket(
-					ticket.getTicketId(), Subscription.class.getName(),
-					subscription.getSubscriptionId(),
-					SubscriptionConstants.TICKET_TYPE, StringPool.BLANK,
-					calendar.getTime());
-			}
-			catch (PortalException pe) {
-				pe.printStackTrace();
-			}
-		}
-
-		_userTicketMap.put(subscription.getUserId(), ticket);
+		_userTicketMap.put(subscription.getUserId(), _getTicket(subscription));
 	}
 
 	public void processMailMessage(MailMessage mailMessage) {
@@ -171,6 +137,44 @@ public class UnsubscribeHooks {
 			Locale.US, mailTemplateContext);
 
 		mailMessage.setBody(processedBody);
+	}
+
+	private Ticket _getTicket(Subscription subscription) {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.add(
+			Calendar.DATE, _configuration.unsubscriptionTicketExpirationTime());
+
+		List<Ticket> tickets = _ticketLocalService.getTickets(
+			subscription.getCompanyId(), Subscription.class.getName(),
+			subscription.getSubscriptionId(),
+			SubscriptionConstants.TICKET_TYPE);
+
+		Ticket ticket;
+
+		if (ListUtil.isEmpty(tickets)) {
+			ticket = _ticketLocalService.addTicket(
+				subscription.getCompanyId(), Subscription.class.getName(),
+				subscription.getSubscriptionId(),
+				SubscriptionConstants.TICKET_TYPE, StringPool.BLANK,
+				calendar.getTime(), _subscriptionSender.getServiceContext());
+		}
+		else {
+			ticket = tickets.get(0);
+
+			try {
+				ticket = _ticketLocalService.updateTicket(
+					ticket.getTicketId(), Subscription.class.getName(),
+					subscription.getSubscriptionId(),
+					SubscriptionConstants.TICKET_TYPE, StringPool.BLANK,
+					calendar.getTime());
+			}
+			catch (PortalException pe) {
+				pe.printStackTrace();
+			}
+		}
+
+		return ticket;
 	}
 
 	private String _getUnsubscribeURL(User user, Ticket ticket) {

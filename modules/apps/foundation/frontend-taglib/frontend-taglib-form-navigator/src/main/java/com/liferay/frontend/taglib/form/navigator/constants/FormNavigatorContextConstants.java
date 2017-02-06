@@ -23,4 +23,6 @@ public class FormNavigatorContextConstants {
 
 	public static final String CONTEXT_UPDATE = "update";
 
+	public static final String FORM_NAVIGATOR_ID = "formNavigatorId";
+
 }

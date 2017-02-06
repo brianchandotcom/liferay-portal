@@ -69,7 +69,7 @@ public class FormNavigatorEntryConfigurationHelperImpl
 		_formNavigatorContextProviderMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, FormNavigatorContextProvider.class,
-				FormNavigatorContextProvider.ID_KEY);
+				FormNavigatorContextConstants.FORM_NAVIGATOR_ID);
 	}
 
 	@Deactivate

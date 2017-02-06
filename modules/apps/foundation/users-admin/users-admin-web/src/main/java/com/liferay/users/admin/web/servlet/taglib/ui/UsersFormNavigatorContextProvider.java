@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.web.servlet.taglib.ui;
 
+import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorContextConstants;
 import com.liferay.frontend.taglib.form.navigator.util.FormNavigatorContextProvider;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -29,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(
-	property = FormNavigatorContextProvider.ID_KEY + "=" + FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS,
+	property = FormNavigatorContextConstants.FORM_NAVIGATOR_ID + "=" + FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS,
 	service = FormNavigatorContextProvider.class
 )
 public class UsersFormNavigatorContextProvider

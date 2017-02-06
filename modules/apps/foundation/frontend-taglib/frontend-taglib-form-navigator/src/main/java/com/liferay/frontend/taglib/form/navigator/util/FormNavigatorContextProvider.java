@@ -21,6 +21,4 @@ public interface FormNavigatorContextProvider<T> {
 
 	public String getContext(T formModelBean);
 
-	public String ID_KEY = "id";
-
 }

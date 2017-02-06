@@ -30,4 +30,20 @@
 
 		<execute function="SelectFrameTop" />
 	</command>
+
+	<command name="viewSite">
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<execute macro="SiteSelector#_searchSite">
+			<var name="site" value="${site}" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK">
+			<var name="key_rowEntry" value="${site}" />
+		</execute>
+
+		<execute function="SelectFrameTop" />
+	</command>
 </definition>

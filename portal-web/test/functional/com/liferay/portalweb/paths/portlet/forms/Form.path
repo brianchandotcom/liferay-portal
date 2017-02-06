@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_FORM_BUTTON_LOCALIZED</td>
+	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(.,'${key_saveButton}') and not (contains(@class,'disabled'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON_DISABLED</td>
 	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(.,'Save') and contains(@class,'disabled')]</td>
 	<td></td>

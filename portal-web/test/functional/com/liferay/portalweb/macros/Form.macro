@@ -243,6 +243,14 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="saveLocalized">
+		<var name="key_saveButton" value="${saveButton}" />
+
+		<execute function="AssertClick" locator1="Form#SAVE_FORM_BUTTON_LOCALIZED" value1="${saveButton}" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="submitFormPublish">
 		<execute macro="Form#viewFormPublish">
 			<var name="fieldLabel" value="${fieldLabel}" />

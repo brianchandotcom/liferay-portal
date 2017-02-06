@@ -63,8 +63,6 @@ AUI.add(
 					_createLabel: function(text) {
 						var instance = this;
 
-						var boundingBox = instance.get('boundingBox');
-
 						var label =	A.Node.create(
 							Lang.sub(
 								TPL_ACTION_FIELD_LABEL,

@@ -22,11 +22,11 @@ AUI.add(
 						value: []
 					},
 
-					getDataProviderParametersSettingsURL: {
+					getDataProviderInstancesURL: {
 						value: ''
 					},
 
-					getDataProviderInstancesURL: {
+					getDataProviderParametersSettingsURL: {
 						value: ''
 					},
 
@@ -177,10 +177,10 @@ AUI.add(
 									contentBox: instance.get('contentBox'),
 									fields: instance.getFields(),
 									functionsMetadata: instance.get('functionsMetadata'),
-									getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
 									getDataProviderInstancesURL: instance.get('getDataProviderInstancesURL'),
-									portletNamespace: instance.get('portletNamespace'),
-									pages: instance.getPages()
+									getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
+									pages: instance.getPages(),
+									portletNamespace: instance.get('portletNamespace')
 								}
 							);
 						}

@@ -771,8 +771,8 @@ AUI.add(
 							{
 								formBuilder: instance.get('formBuilder'),
 								functionsMetadata: instance.get('functionsMetadata'),
-								getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
 								getDataProviderInstancesURL: instance.get('getDataProviderInstancesURL'),
+								getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
 								portletNamespace: instance.get('namespace'),
 								rules: instance.get('rules'),
 								visible: false

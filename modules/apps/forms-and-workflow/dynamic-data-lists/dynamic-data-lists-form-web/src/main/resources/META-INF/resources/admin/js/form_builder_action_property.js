@@ -26,6 +26,18 @@ AUI.add(
 				NAME: 'liferay-ddl-form-builder-action-property',
 
 				prototype: {
+					destructor: function() {
+						var instance = this;
+
+						var boundingBox = instance.get('boundingBox');
+
+						var index = instance.get('index');
+
+						boundingBox.one('.additional-info-' + index).empty();
+
+						boundingBox.one('.target-' + index).empty();
+					},
+
 					getValue: function() {
 						var instance = this;
 

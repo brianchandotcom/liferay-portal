@@ -14,9 +14,7 @@
 
 package com.liferay.subscription.web.internal.util;
 
-import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.SubscriptionSender;
@@ -46,12 +44,12 @@ public class UnsubscribeHelperImpl implements UnsubscribeHelper {
 			subscriptionSender);
 
 		subscriptionSender.addHook(
-			SubscriptionSender.Hook.Event.NOTIFY,
-			unsubscribeHooks::beforeSendNotificationToPersistedSubscriber);
+			SubscriptionSender.Hook.Event.PERSISTED_SUBSCRIBER_FOUND,
+			unsubscribeHooks::createUnsubscriptionTicket);
 
 		subscriptionSender.addHook(
-			SubscriptionSender.Hook.Event.PROCESS,
-			unsubscribeHooks::processMailMessage);
+			SubscriptionSender.Hook.Event.MAIL_MESSAGE_CREATED,
+			unsubscribeHooks::addUnsubscriptionLinks);
 	}
 
 	@Activate

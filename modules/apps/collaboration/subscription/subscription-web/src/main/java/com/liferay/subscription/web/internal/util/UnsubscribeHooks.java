@@ -60,17 +60,7 @@ public class UnsubscribeHooks {
 		_subscriptionSender = subscriptionSender;
 	}
 
-	public void beforeSendNotificationToPersistedSubscriber(
-		Subscription subscription) {
-
-		if (_subscriptionSender.isBulk()) {
-			return;
-		}
-
-		_userTicketMap.put(subscription.getUserId(), _getTicket(subscription));
-	}
-
-	public void processMailMessage(MailMessage mailMessage) {
+	public void addUnsubscriptionLinks(MailMessage mailMessage) {
 		if (_subscriptionSender.isBulk()) {
 			return;
 		}
@@ -81,8 +71,7 @@ public class UnsubscribeHooks {
 			InternetAddress toAddress = toAddresses[0];
 
 			User user = _userLocalService.fetchUserByEmailAddress(
-				_subscriptionSender.getCompanyId(),
-				toAddress.getAddress());
+				_subscriptionSender.getCompanyId(), toAddress.getAddress());
 
 			if (user == null) {
 				return;
@@ -105,6 +94,14 @@ public class UnsubscribeHooks {
 				}
 			}
 		}
+	}
+
+	public void createUnsubscriptionTicket(Subscription subscription) {
+		if (_subscriptionSender.isBulk()) {
+			return;
+		}
+
+		_userTicketMap.put(subscription.getUserId(), _getTicket(subscription));
 	}
 
 	private void _addUnsubscribeHeader(

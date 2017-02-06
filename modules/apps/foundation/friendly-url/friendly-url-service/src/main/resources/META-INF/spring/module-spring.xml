@@ -3,4 +3,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean class="com.liferay.friendly.url.service.impl.FriendlyURLLocalServiceImpl" id="com.liferay.friendly.url.service.FriendlyURLLocalService" />
 	<bean class="com.liferay.friendly.url.service.persistence.impl.FriendlyURLPersistenceImpl" id="com.liferay.friendly.url.service.persistence.FriendlyURLPersistence" parent="basePersistence" />
+	<bean class="com.liferay.friendly.url.service.impl.FriendlyURLLocalizationLocalServiceImpl" id="com.liferay.friendly.url.service.FriendlyURLLocalizationLocalService" />
+	<bean class="com.liferay.friendly.url.service.persistence.impl.FriendlyURLLocalizationPersistenceImpl" id="com.liferay.friendly.url.service.persistence.FriendlyURLLocalizationPersistence" parent="basePersistence" />
 </beans>

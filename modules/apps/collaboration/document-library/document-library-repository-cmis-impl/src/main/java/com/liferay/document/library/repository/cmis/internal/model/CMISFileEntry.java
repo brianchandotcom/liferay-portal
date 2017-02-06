@@ -405,12 +405,12 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	@Override
 	public Class<?> getModelClass() {
-		return CMISFileEntry.class;
+		return FileEntry.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return CMISFileEntry.class.getName();
+		return FileEntry.class.getName();
 	}
 
 	@Override

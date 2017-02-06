@@ -20,26 +20,31 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
 import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 import com.liferay.portlet.PortletURLImpl;
-import junit.framework.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import java.util.HashMap;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
+
+import junit.framework.Assert;
+
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Daniel Sanz
@@ -94,29 +99,6 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 		_testPortletTrackerRegistration("simplename", "simplename");
 	}
 
-	private void _testPortletTrackerRegistration(String expectedPortletId)
-		throws Exception {
-
-		// make PortletTracker register portlet using class name
-		registerService(
-			javax.portlet.Portlet.class, _internalClassPortlet,
-			new HashMapDictionary<String, Object>());
-
-		_testPortletIsAvailable(expectedPortletId);
-	}
-
-	private void _testPortletTrackerRegistration(
-			String givenPortletId, String expectedPortletId)
-		throws Exception {
-
-		// make PortletTracker register portlet using actualPortletId
-		setUpPortlet(
-			_internalClassPortlet, new HashMapDictionary<String, Object>(),
-			givenPortletId, false);
-
-		_testPortletIsAvailable(expectedPortletId);
-	}
-
 	private void _testPortletIsAvailable(String expectedPortletId)
 		throws Exception {
 
@@ -146,6 +128,38 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 		_internalClassPortlet.reset();
 	}
 
+	private void _testPortletTrackerRegistration(String expectedPortletId)
+		throws Exception {
+
+		// make PortletTracker register portlet using class name
+
+		registerService(
+			javax.portlet.Portlet.class, _internalClassPortlet,
+			new HashMapDictionary<String, Object>());
+
+		_testPortletIsAvailable(expectedPortletId);
+	}
+
+	private void _testPortletTrackerRegistration(
+			String givenPortletId, String expectedPortletId)
+		throws Exception {
+
+		// make PortletTracker register portlet using actualPortletId
+
+		setUpPortlet(
+			_internalClassPortlet, new HashMapDictionary<String, Object>(),
+			givenPortletId, false);
+
+		_testPortletIsAvailable(expectedPortletId);
+	}
+
+	private static final String _INTERNAL_CLASS_PORTLET_ID =
+		"com_liferay_portal_osgi_web_portlet_container_test_" +
+			"PortletTrackerTest_InternalClassPortlet";
+
+	private final InternalClassPortlet _internalClassPortlet =
+		new InternalClassPortlet();
+
 	private class InternalClassPortlet extends TestPortlet {
 
 		@Override
@@ -163,10 +177,4 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 	}
 
-	private InternalClassPortlet _internalClassPortlet =
-		new InternalClassPortlet();
-
-	private static final String _INTERNAL_CLASS_PORTLET_ID =
-		"com_liferay_portal_osgi_web_portlet_container_test_" +
-			"PortletTrackerTest_InternalClassPortlet";
 }

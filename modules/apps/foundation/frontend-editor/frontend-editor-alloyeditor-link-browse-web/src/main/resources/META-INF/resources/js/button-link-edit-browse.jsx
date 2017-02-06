@@ -5,6 +5,23 @@
 
 	var React = AlloyEditor.React;
 
+	var FolderIconSvg = React.createClass({
+		render: function() {
+			return (
+				<svg width="19px" height="16px" viewBox="0 0 19 16" version="1.1">
+				    <title>folder_icon</title>
+				    <desc>Created with Sketch.</desc>
+				    <defs></defs>
+				    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+				        <g id="folder_icon" fill-rule="nonzero" fill="#FFFFFF">
+				            <path d="M1.16154142e-20,3.2 L7.82504921e-20,13.8932647 C8.51581999e-20,15.0017792 0.890925393,15.9004077 1.99742191,15.9004077 L17.0025781,15.9004077 C18.1057238,15.9004077 19,15.0109745 19,13.8961809 L19,5.25591756 C19,4.14901366 18.1131578,3.24410791 16.9941243,3.2350902 C16.9941243,3.2350902 13.9000228,3.20635475 11.1841707,3.2 L5.55111512e-16,3.2 Z M0.00476820776,1.92 C0.0763137892,0.875650807 0.944078934,0.0525431571 2.00404495,0.0525431571 L6.37206813,0.0525431571 C7.69758986,0.0525431571 8.07530451,1.04873135 8.52730884,1.92 L0.00476820776,1.92 Z" id="Combined-Shape"></path>
+				        </g>
+				    </g>
+				</svg>
+			)
+		}
+	});
+
 	var ButtonLinkEditBrowse = React.createClass({
 		// Allows validating props being passed to the component.
         propTypes: {
@@ -54,7 +71,7 @@
 				<div>
 					<AlloyEditor.ButtonLinkEdit ref='linkEditButton' {...this.props} />
 					<button aria-label="Browse" className="ae-button" onClick={this._browseClick} title="browse">
-						Browse
+						<FolderIconSvg />
 					</button>
 				</div>
 			);

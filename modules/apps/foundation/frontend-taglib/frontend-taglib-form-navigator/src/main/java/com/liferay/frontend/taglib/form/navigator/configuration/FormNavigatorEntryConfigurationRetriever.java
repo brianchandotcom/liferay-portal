@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.form.navigator.util;
+package com.liferay.frontend.taglib.form.navigator.configuration;
 
-import com.liferay.frontend.taglib.form.navigator.configuration.FormNavigatorConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

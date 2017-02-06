@@ -15,7 +15,7 @@
 package com.liferay.users.admin.web.servlet.taglib.ui;
 
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorContextConstants;
-import com.liferay.frontend.taglib.form.navigator.util.FormNavigatorContextProvider;
+import com.liferay.frontend.taglib.form.navigator.context.FormNavigatorContextProvider;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;

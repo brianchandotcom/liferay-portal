@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.form.navigator.util;
+package com.liferay.frontend.taglib.form.navigator.context;
 
 /**
  * @author Alejandro Tardín

@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.form.navigator.util;
+package com.liferay.frontend.taglib.form.navigator.configuration;
 
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorContextConstants;
+import com.liferay.frontend.taglib.form.navigator.context.FormNavigatorContextProvider;
 import com.liferay.frontend.taglib.form.navigator.exception.NoSuchFormNavigatorEntryException;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;

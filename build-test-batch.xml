@@ -2525,6 +2525,8 @@ information. Make sure to commit in all build services results.
 				<fail message="${failure.property}" />
 			</catch>
 			<finally>
+				<merge-test-results />
+
 				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
 			</finally>
 		</trycatch>

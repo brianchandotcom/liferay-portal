@@ -308,6 +308,6 @@
 
 		<var name="key_actionRowNumber" value="1" />
 
-		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_ACTION_TARGET_FIELD_2" value1="Renamed Page" />
+		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_ACTION_TARGET_FIELD_2" value1="3 Renamed Page" />
 	</command>
 </definition>

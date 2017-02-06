@@ -150,31 +150,26 @@ public class UnsubscribeHooks {
 			subscription.getSubscriptionId(),
 			SubscriptionConstants.TICKET_TYPE);
 
-		Ticket ticket;
-
 		if (ListUtil.isEmpty(tickets)) {
-			ticket = _ticketLocalService.addTicket(
+			return _ticketLocalService.addTicket(
 				subscription.getCompanyId(), Subscription.class.getName(),
 				subscription.getSubscriptionId(),
 				SubscriptionConstants.TICKET_TYPE, StringPool.BLANK,
 				calendar.getTime(), _subscriptionSender.getServiceContext());
 		}
-		else {
-			ticket = tickets.get(0);
 
-			try {
-				ticket = _ticketLocalService.updateTicket(
-					ticket.getTicketId(), Subscription.class.getName(),
-					subscription.getSubscriptionId(),
-					SubscriptionConstants.TICKET_TYPE, StringPool.BLANK,
-					calendar.getTime());
-			}
-			catch (PortalException pe) {
-				throw new RuntimeException(pe);
-			}
+		try {
+			Ticket ticket = tickets.get(0);
+
+			return _ticketLocalService.updateTicket(
+				ticket.getTicketId(), Subscription.class.getName(),
+				subscription.getSubscriptionId(),
+				SubscriptionConstants.TICKET_TYPE, StringPool.BLANK,
+				calendar.getTime());
 		}
-
-		return ticket;
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
 	}
 
 	private String _getUnsubscribeURL(User user, Ticket ticket) {

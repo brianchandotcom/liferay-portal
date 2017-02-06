@@ -20,7 +20,9 @@ import com.liferay.taglib.aui.base.BaseToolTagImpl;
 /**
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class ToolTagImpl extends BaseToolTagImpl implements ToolTag {
 
 	@Override

@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.servlet.taglib.aui;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public interface ToolTag {
 
 	public void cleanUp();

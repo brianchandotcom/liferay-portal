@@ -73,7 +73,7 @@
 		</if>
 	</tear-down>
 
-	<command name="EditSingleApproverDefinitionDeleteTaskNode" priority="5">
+	<command name="DeleteTaskNode" priority="5">
 		<execute macro="KaleoDesigner#editWorkflowDefinitionTitleViaWorkflowCP">
 			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
 		</execute>
@@ -154,7 +154,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSingleApproverUserNotificationOption" priority="3">
+	<command name="ViewUserNotificationOption" priority="3">
 		<description message="This is a use case for LPS-46605." />
 
 		<execute macro="KaleoDesigner#selectNode">

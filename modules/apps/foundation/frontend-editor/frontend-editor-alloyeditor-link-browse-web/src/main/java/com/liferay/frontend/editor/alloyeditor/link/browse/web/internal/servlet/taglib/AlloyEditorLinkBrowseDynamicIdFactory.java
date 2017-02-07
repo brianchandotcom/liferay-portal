@@ -16,13 +16,11 @@ package com.liferay.frontend.editor.alloyeditor.link.browse.web.internal.servlet
 
 import com.liferay.portal.kernel.servlet.taglib.TagDynamicIdFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrín Chaudhary
@@ -44,8 +42,5 @@ public class AlloyEditorLinkBrowseDynamicIdFactory
 
 		return editorName;
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

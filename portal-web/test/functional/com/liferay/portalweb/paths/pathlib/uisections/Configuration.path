@@ -143,6 +143,11 @@
 	<td>//select[contains(@id,'rssFeedType')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FIELDS_ENTRY</td>
+	<td>//div[@id='fieldsContent']//span[contains(@class,'palette-item') and contains(.,'${kay_fieldEntry}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

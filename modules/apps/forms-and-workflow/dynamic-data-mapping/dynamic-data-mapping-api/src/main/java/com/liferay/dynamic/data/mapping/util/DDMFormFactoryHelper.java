@@ -28,11 +28,11 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -94,7 +94,7 @@ public class DDMFormFactoryHelper {
 	}
 
 	protected Collection<Method> getDDMFormFieldMethods() {
-		Map<String, Method> methodsMap = new HashMap<>();
+		Map<String, Method> methodsMap = new TreeMap<>();
 
 		collectDDMFormFieldMethodsMap(_clazz, methodsMap);
 

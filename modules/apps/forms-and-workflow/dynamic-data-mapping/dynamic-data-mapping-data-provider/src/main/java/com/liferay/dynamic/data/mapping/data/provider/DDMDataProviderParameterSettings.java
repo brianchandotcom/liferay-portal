@@ -21,10 +21,16 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
  */
 public interface DDMDataProviderParameterSettings {
 
-	@DDMFormField(label = "%input-parameters")
+	@DDMFormField(
+		label = "%input-parameters",
+		properties = "nestedFieldNames=inputParameterName,inputParameterType,inputParameterRequired"
+	)
 	public DDMDataProviderInputParametersSettings[] inputParameters();
 
-	@DDMFormField(label = "%output-parameters")
+	@DDMFormField(
+		label = "%output-parameters",
+		properties = "nestedFieldNames=outputParameterName,outputParameterPath,outputParameterType"
+	)
 	public DDMDataProviderOutputParametersSettings[] outputParameters();
 
 }

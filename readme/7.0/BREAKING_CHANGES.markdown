@@ -4344,8 +4344,33 @@ configuration changes.
 
 ---------------------------------------
 
+### Deprecated the aui:tool Tag with No Direct Replacement
+- **Date:** 2017-Feb-02
+- **JIRA Ticket:** LPS-70422
+
+#### What changed?
+
+The `aui:tool` tag has been deprecated with no direct
+replacement.
+
+#### Who is affected?
+
+Plugins or templates that are using the `aui:tool` tag must
+remove their usage of the tag.
+
+#### How should I update my code?
+
+There is no direct replacement. You should remove all usages of the
+`aui:tool` tag.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to deprecate unused tags.
+
+---------------------------------------
+
 ### Moved Users File Uploads Portlet Properties to OSGi Configuration
-- **Date:** 2017-Jan-13
+- **Date:** 2017-Feb-06
 - **JIRA Ticket:** LPS-69211
 
 #### What changed?

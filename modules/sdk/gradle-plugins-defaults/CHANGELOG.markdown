@@ -1003,6 +1003,12 @@ any parent directory of the project.
 ### Changed
 - [LPS-69271]: Update the [Liferay Gradle Plugins] dependency to version 3.1.7.
 
+## 2.4.26 - 2017-02-04
+
+### Changed
+- [LPS-69926]: Set the `liferayOSGi.expandCompileInclude` property to `false` by
+default.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

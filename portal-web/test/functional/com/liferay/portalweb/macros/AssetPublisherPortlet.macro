@@ -14,15 +14,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_SITES" />
 
-		<var name="key_siteName" value="${siteName}" />
-
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-
-		<execute function="AssertTextEquals" locator1="APConfigurationSites#SITES_TABLE_NAME" value1="${siteName}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute macro="SiteSelector#viewSite">
+			<var name="site" value="${siteName}" />
+		</execute>
 	</command>
 
 	<command name="configureAddSiteScopes">

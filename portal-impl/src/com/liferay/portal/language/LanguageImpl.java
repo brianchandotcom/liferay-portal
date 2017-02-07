@@ -441,22 +441,16 @@ public class LanguageImpl implements Language, Serializable {
 			if (ArrayUtil.isNotEmpty(arguments)) {
 				pattern = _escapePattern(pattern);
 
-				Object[] formattedArguments = new Object[arguments.length];
-
 				for (int i = 0; i < arguments.length; i++) {
 					if (translateArguments) {
-						formattedArguments[i] = get(
-							request, arguments[i].toString());
-					}
-					else {
-						formattedArguments[i] = arguments[i];
+						arguments[i] = get(request, arguments[i].toString());
 					}
 				}
 
 				MessageFormat messageFormat = decorateMessageFormat(
-					request, pattern, formattedArguments);
+					request, pattern, arguments);
 
-				value = messageFormat.format(formattedArguments);
+				value = messageFormat.format(arguments);
 			}
 			else {
 				value = pattern;
@@ -631,22 +625,16 @@ public class LanguageImpl implements Language, Serializable {
 			if (ArrayUtil.isNotEmpty(arguments)) {
 				pattern = _escapePattern(pattern);
 
-				Object[] formattedArguments = new Object[arguments.length];
-
 				for (int i = 0; i < arguments.length; i++) {
 					if (translateArguments) {
-						formattedArguments[i] = get(
-							locale, arguments[i].toString());
-					}
-					else {
-						formattedArguments[i] = arguments[i];
+						arguments[i] = get(locale, arguments[i].toString());
 					}
 				}
 
 				MessageFormat messageFormat = decorateMessageFormat(
-					locale, pattern, formattedArguments);
+					locale, pattern, arguments);
 
-				value = messageFormat.format(formattedArguments);
+				value = messageFormat.format(arguments);
 			}
 			else {
 				value = pattern;
@@ -780,22 +768,17 @@ public class LanguageImpl implements Language, Serializable {
 			if (ArrayUtil.isNotEmpty(arguments)) {
 				pattern = _escapePattern(pattern);
 
-				Object[] formattedArguments = new Object[arguments.length];
-
 				for (int i = 0; i < arguments.length; i++) {
 					if (translateArguments) {
-						formattedArguments[i] = get(
+						arguments[i] = get(
 							resourceBundle, arguments[i].toString());
-					}
-					else {
-						formattedArguments[i] = arguments[i];
 					}
 				}
 
 				MessageFormat messageFormat = decorateMessageFormat(
-					resourceBundle.getLocale(), pattern, formattedArguments);
+					resourceBundle.getLocale(), pattern, arguments);
 
-				value = messageFormat.format(formattedArguments);
+				value = messageFormat.format(arguments);
 			}
 			else {
 				value = pattern;

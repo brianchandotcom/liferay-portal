@@ -623,7 +623,7 @@ if (!portletDisplay.isRestoreCurrentView()) {
 	lifecycle = PortletRequest.ACTION_PHASE;
 }
 
-PortletURLImpl urlMax = (PortletURLImpl)PortletURLFactoryUtil.create(request, portletDisplay.getId(), lifecycle);
+LiferayPortletURL urlMax = PortletURLFactoryUtil.create(request, portletDisplay.getId(), lifecycle);
 
 if (portletDisplay.isStateMax()) {
 	urlMax.setWindowState(WindowState.NORMAL);
@@ -632,7 +632,12 @@ else {
 	urlMax.setWindowState(WindowState.MAXIMIZED);
 }
 
-urlMax.setWindowStateRestoreCurrentView(true);
+try {
+	BeanPropertiesUtil.setProperty(urlMax, "windowStateRestoreCurrentView", true);
+}
+catch (Exception e) {
+	_log.error(ClassUtil.getClassName(urlMax) + " must implement the method setWindowStateRestoreCurrentView(boolean)", e);
+}
 
 urlMax.setEscapeXml(false);
 

@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CACHEABLE_CHECKBOX</td>
+	<td>//input[contains(@id,'DDMPortlet_cacheable')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS</td>
 	<td>//div[@id='templateDetailsSectionPanel']/div/div/a</td>
 	<td></td>

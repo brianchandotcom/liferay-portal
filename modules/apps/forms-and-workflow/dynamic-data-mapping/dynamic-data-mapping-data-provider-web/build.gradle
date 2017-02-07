@@ -2,7 +2,6 @@ apply plugin: "com.liferay.lang.merger"
 
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.application.list.api", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.values.factory", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.service", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.exportimport.api", version: "2.0.0"
@@ -14,6 +13,7 @@ dependencies {
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-data-provider")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-renderer")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")

@@ -110,6 +110,9 @@ public class DDMFormFieldTemplateContextFactory {
 			ddmFormFieldTemplateContext, ddmFormField.getDataType());
 
 		setDDMFormFieldTemplateContextDir(ddmFormFieldTemplateContext);
+		setDDMFormFieldTemplateContextEvaluable(
+			ddmFormFieldTemplateContext, ddmFormFieldEvaluationResult,
+			ddmFormField.getProperty("evaluable"));
 		setDDMFormFieldTemplateContextLocalizedValue(
 			ddmFormFieldTemplateContext, "label", ddmFormField.getLabel());
 		setDDMFormFieldTemplateContextLocalizedValue(
@@ -122,13 +125,10 @@ public class DDMFormFieldTemplateContextFactory {
 		setDDMFormFieldTemplateContextName(
 			ddmFormFieldTemplateContext, ddmFormFieldParameterName);
 
-		List<Object> nestedDDMFormFieldTemplateContext =
+		Map<String, Object> nestedDDMFormFieldTemplateContext =
 			createNestedDDMFormFieldTemplateContext(
 				ddmFormFieldValue, ddmFormFieldParameterName);
 
-		setDDMFormFieldTemplateContextEvaluable(
-			ddmFormFieldTemplateContext, ddmFormFieldEvaluationResult,
-			ddmFormField.getProperty("evaluable"));
 		setDDMFormFieldTemplateContextNestedTemplateContexts(
 			ddmFormFieldTemplateContext, nestedDDMFormFieldTemplateContext);
 
@@ -184,15 +184,14 @@ public class DDMFormFieldTemplateContextFactory {
 		return ddmFormFieldTemplateContexts;
 	}
 
-	protected List<Object> createNestedDDMFormFieldTemplateContext(
+	protected Map<String, Object> createNestedDDMFormFieldTemplateContext(
 		DDMFormFieldValue parentDDMFormFieldValue,
 		String parentDDMFormFieldParameterName) {
 
+		Map<String, Object> nestedDDMFormFieldTemplateContext = new HashMap<>();
+
 		Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap =
 			parentDDMFormFieldValue.getNestedDDMFormFieldValuesMap();
-
-		List<Object> nestedDDMFormFieldTemplateContext = new ArrayList<>(
-			nestedDDMFormFieldValuesMap.size());
 
 		for (DDMFormFieldValue nestedDDMFormFieldValue :
 				parentDDMFormFieldValue.getNestedDDMFormFieldValues()) {
@@ -201,7 +200,8 @@ public class DDMFormFieldTemplateContextFactory {
 				nestedDDMFormFieldValuesMap.get(
 					nestedDDMFormFieldValue.getName());
 
-			nestedDDMFormFieldTemplateContext.addAll(
+			nestedDDMFormFieldTemplateContext.put(
+				nestedDDMFormFieldValue.getName(),
 				createDDMFormFieldTemplateContexts(
 					nestedDDMFormFieldValues, parentDDMFormFieldParameterName));
 		}
@@ -371,7 +371,7 @@ public class DDMFormFieldTemplateContextFactory {
 
 	protected void setDDMFormFieldTemplateContextNestedTemplateContexts(
 		Map<String, Object> ddmFormFieldRenderingContext,
-		List<Object> nestedDDMFormFieldTemplateContexts) {
+		Map<String, Object> nestedDDMFormFieldTemplateContexts) {
 
 		if (nestedDDMFormFieldTemplateContexts.isEmpty()) {
 			return;

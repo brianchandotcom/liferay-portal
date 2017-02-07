@@ -1699,6 +1699,10 @@ public class StringUtil {
 			return StringPool.BLANK;
 		}
 
+		if (array.length == 1) {
+			return String.valueOf(array[0]);
+		}
+
 		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
@@ -1742,6 +1746,10 @@ public class StringUtil {
 
 		if (array.length == 0) {
 			return StringPool.BLANK;
+		}
+
+		if (array.length == 1) {
+			return String.valueOf(array[0]);
 		}
 
 		StringBundler sb = new StringBundler(2 * array.length - 1);
@@ -1836,6 +1844,10 @@ public class StringUtil {
 			return StringPool.BLANK;
 		}
 
+		if (array.length == 1) {
+			return String.valueOf(array[0]);
+		}
+
 		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
@@ -1879,6 +1891,10 @@ public class StringUtil {
 
 		if (array.length == 0) {
 			return StringPool.BLANK;
+		}
+
+		if (array.length == 1) {
+			return String.valueOf(array[0]);
 		}
 
 		StringBundler sb = new StringBundler(2 * array.length - 1);
@@ -1926,6 +1942,10 @@ public class StringUtil {
 			return StringPool.BLANK;
 		}
 
+		if (array.length == 1) {
+			return String.valueOf(array[0]);
+		}
+
 		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
@@ -1969,6 +1989,10 @@ public class StringUtil {
 
 		if (array.length == 0) {
 			return StringPool.BLANK;
+		}
+
+		if (array.length == 1) {
+			return String.valueOf(array[0]);
 		}
 
 		StringBundler sb = new StringBundler(2 * array.length - 1);
@@ -2016,6 +2040,10 @@ public class StringUtil {
 			return StringPool.BLANK;
 		}
 
+		if (array.length == 1) {
+			return String.valueOf(array[0]);
+		}
+
 		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
@@ -2059,6 +2087,10 @@ public class StringUtil {
 
 		if (array.length == 0) {
 			return StringPool.BLANK;
+		}
+
+		if (array.length == 1) {
+			return String.valueOf(array[0]);
 		}
 
 		StringBundler sb = new StringBundler(2 * array.length - 1);

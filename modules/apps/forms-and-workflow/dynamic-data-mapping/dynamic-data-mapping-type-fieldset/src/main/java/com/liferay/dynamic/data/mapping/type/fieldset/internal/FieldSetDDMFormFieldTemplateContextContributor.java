@@ -20,11 +20,15 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -48,14 +52,23 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 
 		Map<String, Object> parameters = new HashMap<>();
 
-		List<Object> nestedFields =
-			(List<Object>)ddmFormFieldRenderingContext.getProperty(
+		Map<String, List<Object>> nestedFieldsMap =
+			(Map<String, List<Object>>)ddmFormFieldRenderingContext.getProperty(
 				"nestedFields");
+
+		String[] nestedFieldNames = getNestedFieldNames(
+			GetterUtil.getString(ddmFormField.getProperty("nestedFieldNames")),
+			nestedFieldsMap.keySet());
+
+		List<Object> nestedFields = getNestedFields(
+			nestedFieldsMap, nestedFieldNames);
+
+		parameters.put("nestedFields", nestedFields);
 
 		String orientation = GetterUtil.getString(
 			ddmFormField.getProperty("orientation"), "horizontal");
 
-		int columnSize = getColumnSize(nestedFields, orientation);
+		int columnSize = getColumnSize(nestedFields.size(), orientation);
 
 		parameters.put("columnSize", columnSize);
 
@@ -72,16 +85,39 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 		return parameters;
 	}
 
-	protected int getColumnSize(List<Object> nestedFields, String orientation) {
+	protected int getColumnSize(int nestedFieldsSize, String orientation) {
 		if (Objects.equals(orientation, "vertical")) {
 			return DDMFormLayoutColumn.FULL;
 		}
 
-		if (nestedFields.isEmpty()) {
+		if (nestedFieldsSize == 0) {
 			return 0;
 		}
 
-		return 12 / nestedFields.size();
+		return 12 / nestedFieldsSize;
+	}
+
+	protected String[] getNestedFieldNames(
+		String nestedFieldNames, Set<String> defaultNestedFieldNames) {
+
+		if (Validator.isNotNull(nestedFieldNames)) {
+			return StringUtil.split(nestedFieldNames);
+		}
+
+		return defaultNestedFieldNames.toArray(
+			new String[defaultNestedFieldNames.size()]);
+	}
+
+	protected List<Object> getNestedFields(
+		Map<String, List<Object>> nestedFieldsMap, String[] nestedFieldNames) {
+
+		List<Object> nestedFields = new ArrayList<>();
+
+		for (String nestedFieldName : nestedFieldNames) {
+			nestedFields.addAll(nestedFieldsMap.get(nestedFieldName));
+		}
+
+		return nestedFields;
 	}
 
 }

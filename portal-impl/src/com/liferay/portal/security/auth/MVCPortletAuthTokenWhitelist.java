@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.auth.BaseAuthTokenWhitelist;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -103,8 +102,8 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		else if (themeDisplay.isLifecycleRender()) {
 			String namespace = PortalUtil.getPortletNamespace(portletId);
 
-			String mvcRenderCommandName = ParamUtil.getString(
-				request, namespace + "mvcRenderCommandName");
+			String mvcRenderCommandName = request.getParameter(
+				namespace.concat("mvcRenderCommandName"));
 
 			return _contains(
 				portletId, _portletInvocationWhitelistRender,
@@ -112,14 +111,14 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		}
 
 		else if (themeDisplay.isLifecycleResource()) {
-			String ppid = ParamUtil.getString(request, "p_p_id");
+			String ppid = request.getParameter("p_p_id");
 
 			if (!portletId.equals(ppid)) {
 				return false;
 			}
 
-			String mvcResourceCommandName = ParamUtil.getString(
-				request, "p_p_resource_id");
+			String mvcResourceCommandName = request.getParameter(
+				"p_p_resource_id");
 
 			return _contains(
 				portletId, _portletInvocationWhitelistResource,
@@ -183,8 +182,8 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 		String namespace = PortalUtil.getPortletNamespace(portletId);
 
-		String[] actionNames = ParamUtil.getParameterValues(
-			request, namespace + ActionRequest.ACTION_NAME);
+		String[] actionNames = request.getParameterValues(
+			namespace.concat(ActionRequest.ACTION_NAME));
 
 		String actions = StringUtil.merge(actionNames);
 
@@ -207,7 +206,7 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	protected String getWhitelistValue(
 		String portletName, String whitelistAction) {
 
-		return portletName + StringPool.POUND + whitelistAction;
+		return portletName.concat(StringPool.POUND).concat(whitelistAction);
 	}
 
 	protected void trackWhitelistServices(

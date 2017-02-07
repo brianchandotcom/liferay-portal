@@ -15,11 +15,13 @@
 package com.liferay.mail.reader.web.portlet.action;
 
 import com.liferay.mail.reader.model.Account;
+import com.liferay.mail.reader.service.AccountLocalService;
 import com.liferay.mail.reader.web.util.MailManager;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
 
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Scott Lee
@@ -53,13 +56,26 @@ public class LoginPostAction extends Action {
 	protected void initiateSynchronization(HttpServletRequest request)
 		throws PortalException {
 
-		MailManager mailManager = MailManager.getInstance(request);
+		long userId = PortalUtil.getUserId(request);
 
-		List<Account> accounts = mailManager.getAccounts();
+		if (userId <= 0) {
+			return;
+		}
+
+		List<Account> accounts = _accountLocalService.getAccounts(userId);
+
+		if (accounts.isEmpty()) {
+			return;
+		}
+
+		MailManager mailManager = MailManager.getInstance(request);
 
 		for (Account account : accounts) {
 			mailManager.synchronizeAccount(account.getAccountId());
 		}
 	}
+
+	@Reference
+	private AccountLocalService _accountLocalService;
 
 }

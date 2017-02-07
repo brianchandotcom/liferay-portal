@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -34,29 +33,29 @@ import org.junit.Test;
 public class FieldSetDDMFormFieldTemplateContextContributorTest {
 
 	@Test
-	public void testGetColumnSizeWithEmptyList() {
+	public void testGetColumnSizeWithNestedFields() {
 		FieldSetDDMFormFieldTemplateContextContributor
 			fieldSetDDMFormFieldTemplateContextContributor =
 				new FieldSetDDMFormFieldTemplateContextContributor();
 
 		int columnSize =
 			fieldSetDDMFormFieldTemplateContextContributor.getColumnSize(
-				new ArrayList<>(), "horizontal");
+				2, "horizontal");
 
-		Assert.assertEquals(0, columnSize);
+		Assert.assertEquals(6, columnSize);
 	}
 
 	@Test
-	public void testGetColumnSizeWithList() {
+	public void testGetColumnSizeWithoutNestedFields() {
 		FieldSetDDMFormFieldTemplateContextContributor
 			fieldSetDDMFormFieldTemplateContextContributor =
 				new FieldSetDDMFormFieldTemplateContextContributor();
 
 		int columnSize =
 			fieldSetDDMFormFieldTemplateContextContributor.getColumnSize(
-				Arrays.asList(new Object(), new Object()), "horizontal");
+				0, "horizontal");
 
-		Assert.assertEquals(6, columnSize);
+		Assert.assertEquals(0, columnSize);
 	}
 
 	@Test
@@ -78,18 +77,18 @@ public class FieldSetDDMFormFieldTemplateContextContributorTest {
 
 		Map<String, Object> nestedField0 = new HashMap<>();
 
-		nestedField0.put("name", "field1");
+		nestedField0.put("name", "field0");
 		nestedField0.put("type", "text");
 
 		Map<String, Object> nestedField1 = new HashMap<>();
 
-		nestedField1.put("name", "field2");
+		nestedField1.put("name", "field1");
 		nestedField1.put("type", "checkbox");
 
-		List<Object> nestedFields = new ArrayList<>();
+		Map<String, List<Object>> nestedFields = new HashMap<>();
 
-		nestedFields.add(nestedField0);
-		nestedFields.add(nestedField1);
+		nestedFields.put("field0", Arrays.<Object>asList(nestedField0));
+		nestedFields.put("field1", Arrays.<Object>asList(nestedField1));
 
 		Map<String, Object> properties = new HashMap<>();
 
@@ -137,24 +136,24 @@ public class FieldSetDDMFormFieldTemplateContextContributorTest {
 
 		Map<String, Object> nestedField0 = new HashMap<>();
 
-		nestedField0.put("name", "field1");
+		nestedField0.put("name", "field0");
 		nestedField0.put("type", "text");
 
 		Map<String, Object> nestedField1 = new HashMap<>();
 
-		nestedField1.put("name", "field2");
+		nestedField1.put("name", "field1");
 		nestedField1.put("type", "checkbox");
 
 		Map<String, Object> nestedField2 = new HashMap<>();
 
-		nestedField2.put("name", "field3");
+		nestedField2.put("name", "field2");
 		nestedField2.put("type", "select");
 
-		List<Object> nestedFields = new ArrayList<>();
+		Map<String, List<Object>> nestedFields = new HashMap<>();
 
-		nestedFields.add(nestedField0);
-		nestedFields.add(nestedField1);
-		nestedFields.add(nestedField2);
+		nestedFields.put("field0", Arrays.<Object>asList(nestedField0));
+		nestedFields.put("field1", Arrays.<Object>asList(nestedField1));
+		nestedFields.put("field2", Arrays.<Object>asList(nestedField2));
 
 		Map<String, Object> properties = new HashMap<>();
 

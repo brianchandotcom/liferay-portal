@@ -1884,7 +1884,7 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Organization Name" />
+			<var name="siteName" value="Organization Name 1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

@@ -15,6 +15,7 @@
 package com.liferay.portal.background.task.upgrade;
 
 import com.liferay.portal.background.task.internal.upgrade.v1_0_0.UpgradeBackgroundTask;
+import com.liferay.portal.background.task.internal.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,7 +29,11 @@ public class BackgroundTaskServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.portal.background.task.service", "0.0.1", "1.0.0",
+			"com.liferay.portal.background.task.service", "0.0.1", "0.0.2",
+			new UpgradeSchema());
+
+		registry.register(
+			"com.liferay.portal.background.task.service", "0.0.2", "1.0.0",
 			new UpgradeBackgroundTask());
 	}
 

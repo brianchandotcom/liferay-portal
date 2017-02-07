@@ -40,7 +40,7 @@
 
 	<command name="viewLoggerNameInSolrAdminLogging">
 		<for list="LogUpdateProcessor,SolrCore,UpdateHandler" param="loggerName">
-			<var name="key_coreName" value="${loggerName}" />
+			<var name="key_loggerName" value="${loggerName}" />
 
 			<execute function="AssertTextEquals" locator1="SolrAdminDashboard#LOGGING_TABLE_LOGGER_NAME" value1="${loggerName}" />
 		</for>

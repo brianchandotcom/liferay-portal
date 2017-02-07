@@ -34,7 +34,7 @@
 			<var name="portletName" value="Breadcrumb" />
 		</execute>
 
-		<execute macro="ApplicationDisplayTemplates#addADTViaBreadcrumb">
+		<execute macro="ApplicationDisplayTemplates#addPortletADTWithFieldEntry">
 			<var name="fieldName" value="Breadcrumb Entry" />
 			<var name="portletName" value="Breadcrumb" />
 		</execute>
@@ -43,7 +43,7 @@
 			<var name="pageName" value="Page Name" />
 		</execute>
 
-		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
+		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
 			<var name="adtType" value="Breadcrumb" />
 			<var name="portletName" value="Breadcrumb" />
 		</execute>

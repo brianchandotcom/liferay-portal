@@ -334,7 +334,7 @@
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
+		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
 			<var name="adtType" value="Blogs" />
 		</execute>
 

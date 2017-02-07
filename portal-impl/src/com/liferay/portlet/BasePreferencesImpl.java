@@ -86,11 +86,11 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 		Preference preference = preferences.get(key);
 
-		String[] values = null;
-
-		if (preference != null) {
-			values = preference.getValues();
+		if (preference == null) {
+			return getActualValue(def);
 		}
+
+		String[] values = preference.getValues();
 
 		if (isNull(values)) {
 			return getActualValue(def);
@@ -108,11 +108,11 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 		Preference preference = preferences.get(key);
 
-		String[] values = null;
-
-		if (preference != null) {
-			values = preference.getValues();
+		if (preference == null) {
+			return getActualValues(def);
 		}
+
+		String[] values = preference.getValues();
 
 		if (isNull(values)) {
 			return getActualValues(def);

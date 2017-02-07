@@ -25,6 +25,54 @@
 		</if>
 	</tear-down>
 
+	<command name="AddADTViaBreadcrumb" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Page Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Breadcrumb" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Breadcrumb" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addADTViaBreadcrumb">
+			<var name="adtType" value="Breadcrumb" />
+			<var name="fieldEntry" value="Breadcrumb Entry" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Page Name" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
+			<var name="adtType" value="Breadcrumb" />
+			<var name="portletName" value="Breadcrumb" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Page Name" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Breadcrumb" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<execute function="AssertElementPresent" locator1="Select#DISPLAY_TEMPLATE" value1="Breadcrumb Test ADT" />
+	</command>
+
 	<command name="ConfigureNoSave" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />

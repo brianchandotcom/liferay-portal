@@ -69,21 +69,14 @@ public class SearchDisplayContextTest {
 
 	@Test
 	public void testConfigurationKeywordsEmptySkipsSearch() throws Exception {
-		SearchDisplayContext searchDisplayContext = createSearchDisplayContext(
+		assertSearchSkippedAndNullResults(
 			null,
 			new ConfigurationRenderRequest(renderRequest, portletPreferences));
-
-		Assert.assertNull(searchDisplayContext.getHits());
-		Assert.assertNull(searchDisplayContext.getKeywords());
-		Assert.assertNull(searchDisplayContext.getSearchContainer());
-		Assert.assertNull(searchDisplayContext.getSearchContext());
-
-		Mockito.verifyZeroInteractions(facetedSearcher);
 	}
 
 	@Test
 	public void testSearchKeywordsBlank() throws Exception {
-		assertSearchKeywords(StringPool.BLANK, StringPool.BLANK);
+		assertSearchSkipped(StringPool.BLANK, StringPool.BLANK);
 	}
 
 	@Test
@@ -93,14 +86,12 @@ public class SearchDisplayContextTest {
 
 	@Test
 	public void testSearchKeywordsSpaces() throws Exception {
-		assertSearchKeywords(StringPool.DOUBLE_SPACE, StringPool.BLANK);
+		assertSearchSkipped(StringPool.DOUBLE_SPACE, StringPool.BLANK);
 	}
 
 	protected void assertSearchKeywords(
 			String requestKeywords, String searchDisplayContextKeywords)
 		throws Exception {
-
-		setUpRequestKeywords(requestKeywords);
 
 		SearchDisplayContext searchDisplayContext = createSearchDisplayContext(
 			requestKeywords, renderRequest);
@@ -110,10 +101,46 @@ public class SearchDisplayContextTest {
 
 		SearchContext searchContext = searchDisplayContext.getSearchContext();
 
-		Mockito.verify(facetedSearcher).search(searchContext);
+		Mockito.verify(
+			facetedSearcher
+		).search(
+			searchContext
+		);
 
 		Assert.assertEquals(
 			searchDisplayContextKeywords, searchContext.getKeywords());
+	}
+
+	protected void assertSearchSkipped(
+			String requestKeywords, String searchDisplayContextKeywords)
+		throws Exception {
+
+		SearchDisplayContext searchDisplayContext = createSearchDisplayContext(
+			requestKeywords, renderRequest);
+
+		Assert.assertEquals(
+			searchDisplayContextKeywords, searchDisplayContext.getKeywords());
+
+		Assert.assertNotNull(searchDisplayContext.getHits());
+		Assert.assertNotNull(searchDisplayContext.getSearchContainer());
+		Assert.assertNotNull(searchDisplayContext.getSearchContext());
+
+		Mockito.verifyZeroInteractions(facetedSearcher);
+	}
+
+	protected void assertSearchSkippedAndNullResults(
+			String requestKeywords, RenderRequest renderRequest)
+		throws Exception {
+
+		SearchDisplayContext searchDisplayContext = createSearchDisplayContext(
+			requestKeywords, renderRequest);
+
+		Assert.assertNull(searchDisplayContext.getHits());
+		Assert.assertNull(searchDisplayContext.getKeywords());
+		Assert.assertNull(searchDisplayContext.getSearchContainer());
+		Assert.assertNull(searchDisplayContext.getSearchContext());
+
+		Mockito.verifyZeroInteractions(facetedSearcher);
 	}
 
 	protected JSONArray createJSONArray() {
@@ -190,6 +217,8 @@ public class SearchDisplayContextTest {
 	protected SearchDisplayContext createSearchDisplayContext(
 			String keywords, RenderRequest renderRequest)
 		throws Exception {
+
+		setUpRequestKeywords(keywords);
 
 		PropsUtil.setProps(Mockito.mock(Props.class));
 

@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.service.persistence.test;
+package com.liferay.subscription.service.persistence.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -20,11 +22,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
-import com.liferay.portal.kernel.model.Subscription;
-import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.SubscriptionPersistence;
-import com.liferay.portal.kernel.service.persistence.SubscriptionUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -37,12 +34,20 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import com.liferay.subscription.exception.NoSuchSubscriptionException;
+import com.liferay.subscription.model.Subscription;
+import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
+import com.liferay.subscription.service.persistence.SubscriptionPersistence;
+import com.liferay.subscription.service.persistence.SubscriptionUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
@@ -56,12 +61,14 @@ import java.util.Set;
 /**
  * @generated
  */
+@RunWith(Arquillian.class)
 public class SubscriptionPersistenceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED));
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.subscription.service"));
 
 	@Before
 	public void setUp() {

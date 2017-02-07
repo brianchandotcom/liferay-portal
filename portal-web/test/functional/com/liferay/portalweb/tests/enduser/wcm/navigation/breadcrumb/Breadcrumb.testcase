@@ -39,11 +39,6 @@
 			<var name="portletName" value="Breadcrumb" />
 		</execute>
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Breadcrumb" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
 		<execute macro="ApplicationDisplayTemplates#addADTViaBreadcrumb">
 			<var name="adtType" value="Breadcrumb" />
 			<var name="fieldEntry" value="Breadcrumb Entry" />

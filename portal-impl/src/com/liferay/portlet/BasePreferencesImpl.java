@@ -47,9 +47,13 @@ public abstract class BasePreferencesImpl implements Serializable {
 	}
 
 	public Map<String, String[]> getMap() {
-		Map<String, String[]> map = new HashMap<>();
-
 		Map<String, Preference> preferences = getPreferences();
+
+		if (preferences.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, String[]> map = new HashMap<>();
 
 		for (Map.Entry<String, Preference> entry : preferences.entrySet()) {
 			String key = entry.getKey();

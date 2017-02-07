@@ -84,7 +84,7 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		_configureArtifacts(project);
 		_configureTaskClean(project);
 		_configureTaskDeploy(project);
-		_configureTasksExecuteGulp(project, createLiferayThemeJsonTask);
+		_configureTasksExecuteGulp(createLiferayThemeJsonTask);
 	}
 
 	private Task _addTaskCreateLiferayThemeJson(
@@ -205,7 +205,9 @@ public class LiferayThemePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksExecuteGulp(
-		Project project, final Task createLiferayThemeJsonTask) {
+		final Task createLiferayThemeJsonTask) {
+
+		Project project = createLiferayThemeJsonTask.getProject();
 
 		TaskContainer taskContainer = project.getTasks();
 

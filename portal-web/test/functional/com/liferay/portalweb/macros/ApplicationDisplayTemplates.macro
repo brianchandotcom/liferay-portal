@@ -15,7 +15,7 @@
 
 		<execute function="SelectFrame" locator1="ApplicationDisplayTemplates#ADT_IFRAME" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertVisible" locator1="ApplicationDisplayTemplates#PORTLET_PREFERENCES" />
 		<execute function="AssertElementPresent" locator1="ApplicationDisplayTemplates#PORTLET_PREFERENCES" />
@@ -24,8 +24,8 @@
 			<var name="key_adtType" value="${adtType}" />
 		</execute>
 
-		<execute function="Click" locator1="Configuration#FIELDS_ENTRY" value1="$fieldEntry}">
-			<var name="kay_fieldEntry" value="${fieldEntry}" />
+		<execute function="Click" locator1="DDMEditTemplate#SCRIPT_FIELD">
+			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />

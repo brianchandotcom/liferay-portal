@@ -667,14 +667,14 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			true);
 
 		for (String fileName : modulesLanguagePropertiesNames) {
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
 			if (isExcludedPath(LANGUAGE_KEYS_CHECK_EXCLUDES, fileName)) {
 				continue;
 			}
 
 			Properties properties = new Properties();
-
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			InputStream inputStream = new FileInputStream(fileName);
 

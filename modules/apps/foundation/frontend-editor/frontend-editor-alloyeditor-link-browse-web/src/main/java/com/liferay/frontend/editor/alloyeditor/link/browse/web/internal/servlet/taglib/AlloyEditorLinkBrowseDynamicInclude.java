@@ -72,18 +72,15 @@ public class AlloyEditorLinkBrowseDynamicInclude implements TagDynamicInclude {
 		TagDynamicInclude.TagDynamicIncludeRegistry tagDynamicIncludeRegistry) {
 
 		tagDynamicIncludeRegistry.register(
-			"com.liferay.taglib.ui.InputEditorTag",
-			"com.liferay.taglib.ui.InputEditorTag-alloyeditor",
+			"com.liferay.taglib.ui.InputEditorTag", "alloyeditor",
 			"doEndTag#before");
 
 		tagDynamicIncludeRegistry.register(
-			"com.liferay.taglib.ui.InputEditorTag",
-			"com.liferay.taglib.ui.InputEditorTag-alloyeditor_bbcode",
+			"com.liferay.taglib.ui.InputEditorTag", "alloyeditor_bbcode",
 			"doEndTag#before");
 
 		tagDynamicIncludeRegistry.register(
-			"com.liferay.taglib.ui.InputEditorTag",
-			"com.liferay.taglib.ui.InputEditorTag-alloyeditor_creole",
+			"com.liferay.taglib.ui.InputEditorTag", "alloyeditor_creole",
 			"doEndTag#before");
 	}
 

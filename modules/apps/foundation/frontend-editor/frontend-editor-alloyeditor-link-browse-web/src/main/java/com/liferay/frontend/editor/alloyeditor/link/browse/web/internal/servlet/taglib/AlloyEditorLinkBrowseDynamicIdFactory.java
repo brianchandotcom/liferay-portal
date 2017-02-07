@@ -17,8 +17,6 @@ package com.liferay.frontend.editor.alloyeditor.link.browse.web.internal.servlet
 import com.liferay.portal.kernel.servlet.taglib.TagDynamicIdFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,22 +39,10 @@ public class AlloyEditorLinkBrowseDynamicIdFactory
 	public String getTagDynamicId(
 		HttpServletRequest request, HttpServletResponse response, Object tag) {
 
-		Class<?> tagClass = tag.getClass();
-
-		String tagClassName = tagClass.getName();
-
-		if (Validator.isNull(tagClassName)) {
-			return null;
-		}
-
 		String editorName = GetterUtil.getString(
 			(String)request.getAttribute("liferay-ui:input-editor:editorName"));
 
-		if (Validator.isNull(editorName)) {
-			return null;
-		}
-
-		return tagClassName.concat(StringPool.DASH).concat(editorName);
+		return editorName;
 	}
 
 	@Reference

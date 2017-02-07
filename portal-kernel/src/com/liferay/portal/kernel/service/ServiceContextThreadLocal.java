@@ -38,7 +38,11 @@ public class ServiceContextThreadLocal {
 			return null;
 		}
 
-		return serviceContextStack.pop();
+		ServiceContext serviceContext = serviceContextStack.pop();
+
+		ServiceContextCallbackUtil.runPopCallbacks();
+
+		return serviceContext;
 	}
 
 	public static void pushServiceContext(ServiceContext serviceContext) {
@@ -46,6 +50,8 @@ public class ServiceContextThreadLocal {
 			_serviceContextThreadLocal.get();
 
 		serviceContextStack.push(serviceContext);
+
+		ServiceContextCallbackUtil.runPushCallbacks();
 	}
 
 	private static final ThreadLocal<LinkedList<ServiceContext>>

@@ -17,7 +17,7 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${portletName} Test ADT" />
 
 		<execute function="Click" locator1="DDMEditTemplate#SCRIPT_FIELD">
 			<var name="key_fieldName" value="${fieldName}" />

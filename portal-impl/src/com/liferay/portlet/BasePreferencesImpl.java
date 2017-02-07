@@ -163,6 +163,8 @@ public abstract class BasePreferencesImpl implements Serializable {
 			preference = new Preference(key, value);
 
 			modifiedPreferences.put(key, preference);
+
+			return;
 		}
 
 		if (preference.isReadOnly()) {
@@ -194,6 +196,8 @@ public abstract class BasePreferencesImpl implements Serializable {
 			preference = new Preference(key, values);
 
 			modifiedPreferences.put(key, preference);
+
+			return;
 		}
 
 		if (preference.isReadOnly()) {

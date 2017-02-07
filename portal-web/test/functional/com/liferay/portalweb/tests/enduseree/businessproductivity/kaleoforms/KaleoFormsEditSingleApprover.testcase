@@ -300,7 +300,7 @@
 			<var name="roleName" value="Updater Name" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoFormsAdmin#publishWorkflow" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="edit" value="true" />
@@ -515,7 +515,7 @@
 			<var name="nodeNotificationsType" value="User Notification" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoFormsAdmin#publishWorkflow" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="edit" value="true" />
@@ -694,7 +694,7 @@
 			<var name="nodeNotificationsType" value="Email" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoFormsAdmin#publishWorkflow" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="edit" value="true" />

@@ -120,21 +120,19 @@ public class AlloyEditorLinkBrowseConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String eventName) {
 
-		List<ItemSelectorReturnType> documentsDesiredItemSelectorReturnTypes =
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
-		documentsDesiredItemSelectorReturnTypes.add(
-			new URLItemSelectorReturnType());
+		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
 
-		ItemSelectorCriterion documentsItemSelectorCriterion =
+		ItemSelectorCriterion itemSelectorCriterion =
 			new FileItemSelectorCriterion();
 
-		documentsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			documentsDesiredItemSelectorReturnTypes);
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, eventName,
-			documentsItemSelectorCriterion);
+			requestBackedPortletURLFactory, eventName, itemSelectorCriterion);
 
 		jsonObject.put("documentBrowseLinkUrl", itemSelectorURL.toString());
 	}
@@ -142,11 +140,12 @@ public class AlloyEditorLinkBrowseConfigContributor
 	protected JSONArray updateButtonsJSONArray(JSONArray oldButtonsJSONArray) {
 		JSONArray newButtonsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		for (int j = 0; j < oldButtonsJSONArray.length(); j++) {
-			JSONObject buttonJSONObject = oldButtonsJSONArray.getJSONObject(j);
+		for (int i = 0; i < oldButtonsJSONArray.length(); i++) {
+			JSONObject oldButtonJSONObject = oldButtonsJSONArray.getJSONObject(
+				i);
 
-			if (buttonJSONObject == null) {
-				String buttonName = oldButtonsJSONArray.getString(j);
+			if (oldButtonJSONObject == null) {
+				String buttonName = oldButtonsJSONArray.getString(i);
 
 				if (buttonName.equals("link")) {
 					newButtonsJSONArray.put("linkBrowse");
@@ -159,7 +158,7 @@ public class AlloyEditorLinkBrowseConfigContributor
 				}
 			}
 			else {
-				newButtonsJSONArray.put(buttonJSONObject);
+				newButtonsJSONArray.put(oldButtonJSONObject);
 			}
 		}
 

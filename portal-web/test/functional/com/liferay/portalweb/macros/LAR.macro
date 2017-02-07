@@ -21,7 +21,7 @@
 					<var name="panelHeading" value="Deletions" />
 				</execute>
 
-				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#REPLICATE_INDIVIDUAL_DELETIONS" />
+				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#EXPORT_INDIVIDUAL_DELETIONS" />
 			</then>
 		</if>
 
@@ -61,7 +61,7 @@
 					<var name="panelHeading" value="Deletions" />
 				</execute>
 
-				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#REPLICATE_INDIVIDUAL_DELETIONS" />
+				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#EXPORT_INDIVIDUAL_DELETIONS" />
 			</then>
 		</if>
 

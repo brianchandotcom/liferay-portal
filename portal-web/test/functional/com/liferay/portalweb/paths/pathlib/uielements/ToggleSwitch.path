@@ -64,7 +64,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REPLICATE_INDIVIDUAL_DELETIONS</td>
+	<td>EXPORT_INDIVIDUAL_DELETIONS</td>
 	<td>//label[contains(.,'Export Individual Deletions')]//input</td>
 	<td></td>
 </tr>

@@ -91,7 +91,7 @@ public class WikiPageFinderTest {
 			QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(1, count);
-		Assert.assertEquals(count, pages.size());
+		Assert.assertEquals(pages.toString(), count, pages.size());
 	}
 
 	@Test
@@ -112,7 +112,7 @@ public class WikiPageFinderTest {
 			QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(2, count);
-		Assert.assertEquals(count, pages.size());
+		Assert.assertEquals(pages.toString(), count, pages.size());
 	}
 
 	@Test
@@ -129,7 +129,7 @@ public class WikiPageFinderTest {
 			QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(2, count);
-		Assert.assertEquals(count, pages.size());
+		Assert.assertEquals(pages.toString(), count, pages.size());
 	}
 
 	@DeleteAfterTestRun

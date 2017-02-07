@@ -207,7 +207,8 @@ public class SearchResultUtilDLFileEntryTest
 		List<RelatedSearchResult<FileEntry>> relatedSearchResults =
 			searchResult.getFileEntryRelatedSearchResults();
 
-		Assert.assertEquals(1, relatedSearchResults.size());
+		Assert.assertEquals(
+			relatedSearchResults.toString(), 1, relatedSearchResults.size());
 
 		RelatedSearchResult<FileEntry> relatedSearchResult =
 			relatedSearchResults.get(0);
@@ -307,7 +308,7 @@ public class SearchResultUtilDLFileEntryTest
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 

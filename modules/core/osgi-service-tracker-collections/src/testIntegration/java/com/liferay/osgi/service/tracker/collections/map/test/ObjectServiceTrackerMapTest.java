@@ -570,7 +570,9 @@ public class ObjectServiceTrackerMapTest {
 		Collection<AtomicInteger> serviceReferenceCounts =
 			serviceReferenceCountsMap.values();
 
-		Assert.assertEquals(3, serviceReferenceCounts.size());
+		Assert.assertEquals(
+			serviceReferenceCounts.toString(), 3,
+			serviceReferenceCounts.size());
 
 		for (AtomicInteger serviceReferenceCount : serviceReferenceCounts) {
 			Assert.assertEquals(0, serviceReferenceCount.get());
@@ -649,12 +651,16 @@ public class ObjectServiceTrackerMapTest {
 		Collection<AtomicInteger> serviceReferenceCounts =
 			serviceReferenceCountsMap.values();
 
-		Assert.assertEquals(0, serviceReferenceCounts.size());
+		Assert.assertEquals(
+			serviceReferenceCounts.toString(), 0,
+			serviceReferenceCounts.size());
 
 		serviceRegistration1.unregister();
 		serviceRegistration2.unregister();
 
-		Assert.assertEquals(0, serviceReferenceCounts.size());
+		Assert.assertEquals(
+			serviceReferenceCounts.toString(), 0,
+			serviceReferenceCounts.size());
 
 		serviceTrackerMap.close();
 	}

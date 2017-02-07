@@ -75,7 +75,9 @@ public abstract class BaseUserNotificationTestCase {
 			getUserNotificationEventsJSONObjects(
 				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
 
-		Assert.assertEquals(1, userNotificationEventsJSONObjects.size());
+		Assert.assertEquals(
+			userNotificationEventsJSONObjects.toString(), 1,
+			userNotificationEventsJSONObjects.size());
 
 		for (JSONObject userNotificationEventsJSONObject :
 				userNotificationEventsJSONObjects) {
@@ -108,7 +110,9 @@ public abstract class BaseUserNotificationTestCase {
 			getUserNotificationEventsJSONObjects(
 				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
 
-		Assert.assertEquals(1, userNotificationEventsJSONObjects.size());
+		Assert.assertEquals(
+			userNotificationEventsJSONObjects.toString(), 1,
+			userNotificationEventsJSONObjects.size());
 
 		for (JSONObject userNotificationEventsJSONObject :
 				userNotificationEventsJSONObjects) {
@@ -139,7 +143,9 @@ public abstract class BaseUserNotificationTestCase {
 			getUserNotificationEventsJSONObjects(
 				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
 
-		Assert.assertEquals(0, userNotificationEventsJSONObjects.size());
+		Assert.assertEquals(
+			userNotificationEventsJSONObjects.toString(), 0,
+			userNotificationEventsJSONObjects.size());
 	}
 
 	@Test
@@ -160,7 +166,9 @@ public abstract class BaseUserNotificationTestCase {
 			getUserNotificationEventsJSONObjects(
 				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
 
-		Assert.assertEquals(0, userNotificationEventsJSONObjects.size());
+		Assert.assertEquals(
+			userNotificationEventsJSONObjects.toString(), 0,
+			userNotificationEventsJSONObjects.size());
 	}
 
 	@Test
@@ -177,7 +185,9 @@ public abstract class BaseUserNotificationTestCase {
 			getUserNotificationEventsJSONObjects(
 				user.getUserId(), (Long)updatedBasemodel.getPrimaryKeyObj());
 
-		Assert.assertEquals(1, userNotificationEventsJSONObjects.size());
+		Assert.assertEquals(
+			userNotificationEventsJSONObjects.toString(), 1,
+			userNotificationEventsJSONObjects.size());
 
 		int notificationType = -1;
 
@@ -221,7 +231,9 @@ public abstract class BaseUserNotificationTestCase {
 			getUserNotificationEventsJSONObjects(
 				user.getUserId(), (Long)updatedBasemodel.getPrimaryKeyObj());
 
-		Assert.assertEquals(1, userNotificationEventsJSONObjects.size());
+		Assert.assertEquals(
+			userNotificationEventsJSONObjects.toString(), 1,
+			userNotificationEventsJSONObjects.size());
 
 		int notificationType = -1;
 
@@ -260,7 +272,9 @@ public abstract class BaseUserNotificationTestCase {
 			getUserNotificationEventsJSONObjects(
 				user.getUserId(), (Long)updatedBasemodel.getPrimaryKeyObj());
 
-		Assert.assertEquals(0, userNotificationEventsJSONObjects.size());
+		Assert.assertEquals(
+			userNotificationEventsJSONObjects.toString(), 0,
+			userNotificationEventsJSONObjects.size());
 	}
 
 	@Test
@@ -286,7 +300,9 @@ public abstract class BaseUserNotificationTestCase {
 			getUserNotificationEventsJSONObjects(
 				user.getUserId(), (Long)updatedBasemodel.getPrimaryKeyObj());
 
-		Assert.assertEquals(0, userNotificationEventsJSONObjects.size());
+		Assert.assertEquals(
+			userNotificationEventsJSONObjects.toString(), 0,
+			userNotificationEventsJSONObjects.size());
 	}
 
 	protected abstract BaseModel<?> addBaseModel() throws Exception;

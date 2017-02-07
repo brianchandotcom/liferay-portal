@@ -163,6 +163,7 @@ public class AssetTagFinderTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
+			scopeGroupAssetTags.toString(),
 			initialScopeGroupAssetTags.size() + 1, scopeGroupAssetTags.size());
 
 		List<AssetTag> siteGroupAssetTags = AssetTagFinderUtil.findByG_C_N(
@@ -170,7 +171,8 @@ public class AssetTagFinderTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
-			initialSiteGroupAssetTags.size(), siteGroupAssetTags.size());
+			siteGroupAssetTags.toString(), initialSiteGroupAssetTags.size(),
+			siteGroupAssetTags.size());
 	}
 
 	protected void addMBMessage(long groupId, String assetTagName)

@@ -213,7 +213,7 @@ public class DLContentLocalServiceTest {
 		List<DLContent> dlContents = _dlContentLocalService.getContents(
 			_companyId, _repositoryId);
 
-		Assert.assertEquals(3, dlContents.size());
+		Assert.assertEquals(dlContents.toString(), 3, dlContents.size());
 		Assert.assertTrue(dlContents.contains(dlContent1));
 		Assert.assertTrue(dlContents.contains(dlContent2));
 		Assert.assertTrue(dlContents.contains(dlContent3));
@@ -237,13 +237,13 @@ public class DLContentLocalServiceTest {
 			_dlContentLocalService.getContentsByDirectory(
 				_companyId, _repositoryId, path1);
 
-		Assert.assertEquals(1, dlContents.size());
+		Assert.assertEquals(dlContents.toString(), 1, dlContents.size());
 		Assert.assertTrue(dlContents.contains(dlContent1));
 
 		dlContents = _dlContentLocalService.getContentsByDirectory(
 			_companyId, _repositoryId, path2);
 
-		Assert.assertEquals(1, dlContents.size());
+		Assert.assertEquals(dlContents.toString(), 1, dlContents.size());
 		Assert.assertEquals(dlContent2, dlContents.get(0));
 	}
 
@@ -266,14 +266,14 @@ public class DLContentLocalServiceTest {
 		List<DLContent> dlContents1 = _dlContentLocalService.getContents(
 			_companyId, _repositoryId, path1);
 
-		Assert.assertEquals(2, dlContents1.size());
+		Assert.assertEquals(dlContents1.toString(), 2, dlContents1.size());
 		Assert.assertTrue(dlContents1.contains(dlContent1));
 		Assert.assertTrue(dlContents1.contains(dlContent2));
 
 		List<DLContent> dlContents2 = _dlContentLocalService.getContents(
 			_companyId, _repositoryId, path2);
 
-		Assert.assertEquals(2, dlContents2.size());
+		Assert.assertEquals(dlContents2.toString(), 2, dlContents2.size());
 		Assert.assertTrue(dlContents2.contains(dlContent3));
 		Assert.assertTrue(dlContents2.contains(dlContent4));
 	}

@@ -167,7 +167,8 @@ public class DDMStructureManagerUtilTest {
 			_group.getCompanyId(), _classNameId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		Assert.assertEquals(initialSize + 1, structures.size());
+		Assert.assertEquals(
+			structures.toString(), initialSize + 1, structures.size());
 	}
 
 	@Test
@@ -185,7 +186,8 @@ public class DDMStructureManagerUtilTest {
 			_group.getCompanyId(), _classNameId,
 			DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY);
 
-		Assert.assertEquals(initialSize + 1, structures.size());
+		Assert.assertEquals(
+			structures.toString(), initialSize + 1, structures.size());
 	}
 
 	@Test
@@ -203,7 +205,8 @@ public class DDMStructureManagerUtilTest {
 		structures = DDMStructureManagerUtil.getClassStructures(
 			_group.getCompanyId(), _classNameId);
 
-		Assert.assertEquals(initialSize + 1, structures.size());
+		Assert.assertEquals(
+			structures.toString(), initialSize + 1, structures.size());
 	}
 
 	@Test

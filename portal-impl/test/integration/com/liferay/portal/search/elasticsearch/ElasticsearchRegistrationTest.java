@@ -43,7 +43,7 @@ public class ElasticsearchRegistrationTest {
 		Collection<SearchEngine> searchEngines = registry.getServices(
 			SearchEngine.class, "(search.engine.id=SYSTEM_ENGINE)");
 
-		Assert.assertEquals(1, searchEngines.size());
+		Assert.assertEquals(searchEngines.toString(), 1, searchEngines.size());
 
 		for (SearchEngine searchEngine : searchEngines) {
 			Class<? extends SearchEngine> searchEngineClass =

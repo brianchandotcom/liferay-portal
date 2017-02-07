@@ -55,7 +55,7 @@ public class FilterDefinitionTest {
 
 		urlPatterns = _filterDefinition.getURLPatterns();
 
-		Assert.assertEquals(10, urlPatterns.size());
+		Assert.assertEquals(urlPatterns.toString(), 10, urlPatterns.size());
 
 		for (int i = 0; i < 10; i++) {
 			Assert.assertEquals(urlPattern + "/" + i, urlPatterns.get(i));
@@ -70,7 +70,7 @@ public class FilterDefinitionTest {
 
 		List<String> urlPatterns = _filterDefinition.getURLPatterns();
 
-		Assert.assertEquals(1, urlPatterns.size());
+		Assert.assertEquals(urlPatterns.toString(), 1, urlPatterns.size());
 		Assert.assertEquals(urlPattern, urlPatterns.get(0));
 	}
 
@@ -102,7 +102,8 @@ public class FilterDefinitionTest {
 
 		initParameters = _filterDefinition.getInitParameters();
 
-		Assert.assertEquals(10, initParameters.size());
+		Assert.assertEquals(
+			initParameters.toString(), 10, initParameters.size());
 
 		for (int i = 0; i < 10; i++) {
 			String expectedValue = String.valueOf(i);
@@ -122,7 +123,8 @@ public class FilterDefinitionTest {
 		Map<String, String> initParameters =
 			_filterDefinition.getInitParameters();
 
-		Assert.assertEquals(1, initParameters.size());
+		Assert.assertEquals(
+			initParameters.toString(), 1, initParameters.size());
 		Assert.assertEquals(value, initParameters.get(key));
 	}
 

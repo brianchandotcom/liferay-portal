@@ -170,7 +170,7 @@ public class JSONFactoryTest {
 				"\",\"foo\": \"boo\"}");
 
 		Assert.assertNotNull(map);
-		Assert.assertEquals(2, map.size());
+		Assert.assertEquals(map.toString(), 2, map.size());
 		Assert.assertEquals(
 			"com.liferay.portal.kernel.json.JSONFactoryUtil", map.get("class"));
 		Assert.assertEquals("boo", map.get("foo"));
@@ -181,14 +181,14 @@ public class JSONFactoryTest {
 					JSONFactoryImpl.class.getName() + "\"}}");
 
 		Assert.assertNotNull(map);
-		Assert.assertEquals(3, map.size());
+		Assert.assertEquals(map.toString(), 3, map.size());
 		Assert.assertEquals(JSONFactoryUtil.class.getName(), map.get("class"));
 		Assert.assertEquals("boo", map.get("foo"));
 
 		map = (Map<?, ?>)map.get("jsonFactory");
 
 		Assert.assertNotNull(map);
-		Assert.assertEquals(1, map.size());
+		Assert.assertEquals(map.toString(), 1, map.size());
 		Assert.assertEquals(JSONFactoryImpl.class.getName(), map.get("class"));
 	}
 

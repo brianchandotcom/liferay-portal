@@ -89,7 +89,8 @@ public class AssetEntryServiceTest {
 			assetEntryQuery);
 
 		Assert.assertEquals(
-			initialAssetEntries.size() + 1, assetEntries.size());
+			assetEntries.toString(), initialAssetEntries.size() + 1,
+			assetEntries.size());
 
 		AssetEntry assetEntry = assetEntries.get(0);
 
@@ -173,7 +174,8 @@ public class AssetEntryServiceTest {
 		List<AssetEntry> actualAssetEntries) {
 
 		Assert.assertEquals(
-			expectedAssetEntries.size(), actualAssetEntries.size());
+			actualAssetEntries.toString(), expectedAssetEntries.size(),
+			actualAssetEntries.size());
 
 		for (int i = 0; i < expectedAssetEntries.size(); i++) {
 			AssetEntry expectedAssetEntry = expectedAssetEntries.get(i);

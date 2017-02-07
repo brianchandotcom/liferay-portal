@@ -59,7 +59,9 @@ public class UserSearchFacetDisplayContextTest {
 			userSearchFacetTermDisplayContexts =
 				userSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(0, userSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			userSearchFacetTermDisplayContexts.toString(), 0,
+			userSearchFacetTermDisplayContexts.size());
 
 		Assert.assertEquals(
 			paramValue, userSearchFacetDisplayContext.getParamValue());
@@ -80,7 +82,9 @@ public class UserSearchFacetDisplayContextTest {
 			userSearchFacetTermDisplayContexts =
 				userSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(1, userSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			userSearchFacetTermDisplayContexts.toString(), 1,
+			userSearchFacetTermDisplayContexts.size());
 
 		UserSearchFacetTermDisplayContext userSearchFacetTermDisplayContext =
 			userSearchFacetTermDisplayContexts.get(0);
@@ -116,7 +120,9 @@ public class UserSearchFacetDisplayContextTest {
 			userSearchFacetTermDisplayContexts =
 				userSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(1, userSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			userSearchFacetTermDisplayContexts.toString(), 1,
+			userSearchFacetTermDisplayContexts.size());
 
 		UserSearchFacetTermDisplayContext userSearchFacetTermDisplayContext =
 			userSearchFacetTermDisplayContexts.get(0);
@@ -152,7 +158,9 @@ public class UserSearchFacetDisplayContextTest {
 			userSearchFacetTermDisplayContexts =
 				userSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(1, userSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			userSearchFacetTermDisplayContexts.toString(), 1,
+			userSearchFacetTermDisplayContexts.size());
 
 		UserSearchFacetTermDisplayContext userSearchFacetTermDisplayContext =
 			userSearchFacetTermDisplayContexts.get(0);

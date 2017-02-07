@@ -188,7 +188,7 @@ public class SiteMembershipPolicyMembershipsTest
 
 		List<Group> groups = user.getGroups();
 
-		Assert.assertEquals(1, groups.size());
+		Assert.assertEquals(groups.toString(), 1, groups.size());
 
 		long[] userGroupIds = ArrayUtil.append(
 			standardGroupIds, requiredGroupIds, new long[] {user.getGroupId()});
@@ -199,7 +199,8 @@ public class SiteMembershipPolicyMembershipsTest
 
 		groups = user.getGroups();
 
-		Assert.assertEquals(userGroupIds.length, groups.size());
+		Assert.assertEquals(
+			groups.toString(), userGroupIds.length, groups.size());
 
 		MembershipPolicyTestUtil.updateUser(
 			user, null, null, standardGroupIds, null,
@@ -207,7 +208,8 @@ public class SiteMembershipPolicyMembershipsTest
 
 		groups = user.getGroups();
 
-		Assert.assertEquals(userGroupIds.length - 1, groups.size());
+		Assert.assertEquals(
+			groups.toString(), userGroupIds.length - 1, groups.size());
 	}
 
 	@Test
@@ -220,7 +222,7 @@ public class SiteMembershipPolicyMembershipsTest
 
 		List<Group> groups = user.getGroups();
 
-		Assert.assertEquals(1, groups.size());
+		Assert.assertEquals(groups.toString(), 1, groups.size());
 
 		long[] userGroupIds = ArrayUtil.append(
 			standardGroupIds, requiredGroupIds, new long[] {user.getGroupId()});
@@ -231,7 +233,8 @@ public class SiteMembershipPolicyMembershipsTest
 
 		groups = user.getGroups();
 
-		Assert.assertEquals(userGroupIds.length, groups.size());
+		Assert.assertEquals(
+			groups.toString(), userGroupIds.length, groups.size());
 
 		MembershipPolicyTestUtil.updateUser(
 			user, null, null, requiredGroupIds, null,
@@ -239,7 +242,8 @@ public class SiteMembershipPolicyMembershipsTest
 
 		groups = user.getGroups();
 
-		Assert.assertEquals(requiredGroupIds.length, groups.size());
+		Assert.assertEquals(
+			groups.toString(), requiredGroupIds.length, groups.size());
 	}
 
 	@Test

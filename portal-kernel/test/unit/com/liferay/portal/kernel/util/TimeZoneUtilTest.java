@@ -102,7 +102,7 @@ public class TimeZoneUtilTest {
 
 		Assert.assertSame(timeZone, TimeZoneUtil.getTimeZone("PST"));
 
-		Assert.assertEquals(1, timeZones.size());
+		Assert.assertEquals(timeZones.toString(), 1, timeZones.size());
 		Assert.assertSame(timeZone, timeZones.get("PST"));
 	}
 

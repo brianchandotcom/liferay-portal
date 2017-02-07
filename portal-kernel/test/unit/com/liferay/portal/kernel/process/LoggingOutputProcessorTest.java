@@ -68,7 +68,7 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 			Assert.assertNull(
 				loggingOutputProcessor.processStdErr(
 					new UnsyncByteArrayInputStream(stdErrBytes)));
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -92,7 +92,7 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 			Assert.assertNull(
 				loggingOutputProcessor.processStdOut(
 					new UnsyncByteArrayInputStream(stdOutBytes)));
-			Assert.assertEquals(1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			logRecord = logRecords.get(0);
 

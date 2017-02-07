@@ -92,7 +92,8 @@ public class DB2DialectTest {
 				q, _sessionFactory.getDialect(), start, end);
 
 			Assert.assertNotNull(result);
-			Assert.assertEquals(expectedResultSize, result.size());
+			Assert.assertEquals(
+				result.toString(), expectedResultSize, result.size());
 		}
 		finally {
 			_sessionFactory.closeSession(session);

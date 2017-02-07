@@ -60,7 +60,9 @@ public class ScopeSearchFacetDisplayContextTest {
 			scopeSearchFacetTermDisplayContexts =
 				scopeSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(0, scopeSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			scopeSearchFacetTermDisplayContexts.toString(), 0,
+			scopeSearchFacetTermDisplayContexts.size());
 
 		Assert.assertEquals(
 			facetParam,
@@ -85,7 +87,9 @@ public class ScopeSearchFacetDisplayContextTest {
 			scopeSearchFacetTermDisplayContexts =
 				scopeSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(1, scopeSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			scopeSearchFacetTermDisplayContexts.toString(), 1,
+			scopeSearchFacetTermDisplayContexts.size());
 
 		ScopeSearchFacetTermDisplayContext scopeSearchFacetTermDisplayContext =
 			scopeSearchFacetTermDisplayContexts.get(0);
@@ -125,7 +129,9 @@ public class ScopeSearchFacetDisplayContextTest {
 			scopeSearchFacetTermDisplayContexts =
 				scopeSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(1, scopeSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			scopeSearchFacetTermDisplayContexts.toString(), 1,
+			scopeSearchFacetTermDisplayContexts.size());
 
 		ScopeSearchFacetTermDisplayContext scopeSearchFacetTermDisplayContext =
 			scopeSearchFacetTermDisplayContexts.get(0);
@@ -166,7 +172,9 @@ public class ScopeSearchFacetDisplayContextTest {
 			scopeSearchFacetTermDisplayContexts =
 				scopeSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(1, scopeSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			scopeSearchFacetTermDisplayContexts.toString(), 1,
+			scopeSearchFacetTermDisplayContexts.size());
 
 		ScopeSearchFacetTermDisplayContext scopeSearchFacetTermDisplayContext =
 			scopeSearchFacetTermDisplayContexts.get(0);

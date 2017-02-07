@@ -392,7 +392,8 @@ public class CompanyLocalServiceTest {
 			LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypes(
 				company.getCompanyId());
 
-		Assert.assertEquals(0, layoutSetPrototypes.size());
+		Assert.assertEquals(
+			layoutSetPrototypes.toString(), 0, layoutSetPrototypes.size());
 	}
 
 	@Test
@@ -503,7 +504,7 @@ public class CompanyLocalServiceTest {
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
 			company.getCompanyId());
 
-		Assert.assertEquals(0, roles.size());
+		Assert.assertEquals(roles.toString(), 0, roles.size());
 	}
 
 	@Test
@@ -515,7 +516,7 @@ public class CompanyLocalServiceTest {
 		List<User> users = UserLocalServiceUtil.getCompanyUsers(
 			company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(0, users.size());
+		Assert.assertEquals(users.toString(), 0, users.size());
 	}
 
 	@Test(expected = NoSuchVirtualHostException.class)

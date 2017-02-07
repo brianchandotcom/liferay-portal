@@ -68,7 +68,8 @@ public class PortletDataContextZipWriterTest {
 		List<MethodHandler> methodHandlers =
 			_recorderZipWriter.getMethodHandlers();
 
-		Assert.assertEquals(1, methodHandlers.size());
+		Assert.assertEquals(
+			methodHandlers.toString(), 1, methodHandlers.size());
 
 		MethodHandler methodHandler = methodHandlers.remove(0);
 
@@ -102,7 +103,8 @@ public class PortletDataContextZipWriterTest {
 		List<MethodHandler> methodHandlers =
 			_recorderZipWriter.getMethodHandlers();
 
-		Assert.assertEquals(1, methodHandlers.size());
+		Assert.assertEquals(
+			methodHandlers.toString(), 1, methodHandlers.size());
 
 		MethodHandler methodHandler = methodHandlers.remove(0);
 
@@ -134,7 +136,8 @@ public class PortletDataContextZipWriterTest {
 		List<MethodHandler> methodHandlers =
 			_recorderZipWriter.getMethodHandlers();
 
-		Assert.assertEquals(1, methodHandlers.size());
+		Assert.assertEquals(
+			methodHandlers.toString(), 1, methodHandlers.size());
 
 		MethodHandler methodHandler = methodHandlers.remove(0);
 

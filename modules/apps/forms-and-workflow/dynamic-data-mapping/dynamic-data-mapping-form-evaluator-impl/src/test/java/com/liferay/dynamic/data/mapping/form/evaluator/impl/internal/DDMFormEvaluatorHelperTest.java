@@ -121,7 +121,9 @@ public class DDMFormEvaluatorHelperTest {
 			ddmFormFieldEvaluationResultMap =
 				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
 
-		Assert.assertEquals(1, ddmFormFieldEvaluationResultMap.size());
+		Assert.assertEquals(
+			ddmFormFieldEvaluationResultMap.toString(), 1,
+			ddmFormFieldEvaluationResultMap.size());
 
 		DDMFormFieldEvaluationResult field0DDMFormFieldEvaluationResult =
 			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
@@ -218,7 +220,9 @@ public class DDMFormEvaluatorHelperTest {
 			ddmFormFieldEvaluationResultMap =
 				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
 
-		Assert.assertEquals(1, ddmFormFieldEvaluationResultMap.size());
+		Assert.assertEquals(
+			ddmFormFieldEvaluationResultMap.toString(), 1,
+			ddmFormFieldEvaluationResultMap.size());
 
 		DDMFormFieldEvaluationResult field0DDMFormFieldEvaluationResult =
 			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
@@ -298,7 +302,9 @@ public class DDMFormEvaluatorHelperTest {
 			ddmFormFieldEvaluationResultMap =
 				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
 
-		Assert.assertEquals(1, ddmFormFieldEvaluationResultMap.size());
+		Assert.assertEquals(
+			ddmFormFieldEvaluationResultMap.toString(), 1,
+			ddmFormFieldEvaluationResultMap.size());
 
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
 			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
@@ -350,7 +356,9 @@ public class DDMFormEvaluatorHelperTest {
 			ddmFormFieldEvaluationResultMap =
 				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
 
-		Assert.assertEquals(2, ddmFormFieldEvaluationResultMap.size());
+		Assert.assertEquals(
+			ddmFormFieldEvaluationResultMap.toString(), 2,
+			ddmFormFieldEvaluationResultMap.size());
 
 		DDMFormFieldEvaluationResult field1DDMFormFieldEvaluationResult =
 			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
@@ -408,7 +416,9 @@ public class DDMFormEvaluatorHelperTest {
 			ddmFormFieldEvaluationResultMap =
 				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
 
-		Assert.assertEquals(2, ddmFormFieldEvaluationResultMap.size());
+		Assert.assertEquals(
+			ddmFormFieldEvaluationResultMap.toString(), 2,
+			ddmFormFieldEvaluationResultMap.size());
 
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
 			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
@@ -451,7 +461,9 @@ public class DDMFormEvaluatorHelperTest {
 			ddmFormFieldEvaluationResultMap =
 				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
 
-		Assert.assertEquals(1, ddmFormFieldEvaluationResultMap.size());
+		Assert.assertEquals(
+			ddmFormFieldEvaluationResultMap.toString(), 1,
+			ddmFormFieldEvaluationResultMap.size());
 
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
 			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
@@ -515,7 +527,9 @@ public class DDMFormEvaluatorHelperTest {
 			ddmFormFieldEvaluationResultMap =
 				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
 
-		Assert.assertEquals(3, ddmFormFieldEvaluationResultMap.size());
+		Assert.assertEquals(
+			ddmFormFieldEvaluationResultMap.toString(), 3,
+			ddmFormFieldEvaluationResultMap.size());
 
 		// Field 0
 
@@ -609,7 +623,9 @@ public class DDMFormEvaluatorHelperTest {
 			ddmFormFieldEvaluationResultMap =
 				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
 
-		Assert.assertEquals(3, ddmFormFieldEvaluationResultMap.size());
+		Assert.assertEquals(
+			ddmFormFieldEvaluationResultMap.toString(), 3,
+			ddmFormFieldEvaluationResultMap.size());
 
 		// Field 0
 
@@ -685,7 +701,9 @@ public class DDMFormEvaluatorHelperTest {
 			ddmFormFieldEvaluationResultMap =
 				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
 
-		Assert.assertEquals(1, ddmFormFieldEvaluationResultMap.size());
+		Assert.assertEquals(
+			ddmFormFieldEvaluationResultMap.toString(), 1,
+			ddmFormFieldEvaluationResultMap.size());
 
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
 			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
@@ -734,7 +752,9 @@ public class DDMFormEvaluatorHelperTest {
 			ddmFormFieldEvaluationResultMap =
 				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
 
-		Assert.assertEquals(1, ddmFormFieldEvaluationResultMap.size());
+		Assert.assertEquals(
+			ddmFormFieldEvaluationResultMap.toString(), 1,
+			ddmFormFieldEvaluationResultMap.size());
 
 		DDMFormFieldEvaluationResult actualDDMFormFieldEvaluationResult =
 			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
@@ -785,7 +805,9 @@ public class DDMFormEvaluatorHelperTest {
 			ddmFormFieldEvaluationResultMap =
 				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
 
-		Assert.assertEquals(2, ddmFormFieldEvaluationResultMap.size());
+		Assert.assertEquals(
+			ddmFormFieldEvaluationResultMap.toString(), 2,
+			ddmFormFieldEvaluationResultMap.size());
 
 		DDMFormFieldEvaluationResult field1DDMFormFieldEvaluationResult =
 			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(

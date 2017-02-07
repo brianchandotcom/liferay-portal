@@ -317,7 +317,7 @@ public class OrganizationLocalServiceTest {
 		List<Organization> organizations =
 			OrganizationLocalServiceUtil.getNoAssetOrganizations();
 
-		Assert.assertEquals(1, organizations.size());
+		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organizationB, organizations.get(0));
 	}
 
@@ -340,7 +340,7 @@ public class OrganizationLocalServiceTest {
 
 		List<Object> results = getOrganizationsAndUsers(organization);
 
-		Assert.assertEquals(2, results.size());
+		Assert.assertEquals(results.toString(), 2, results.size());
 		Assert.assertTrue(results.contains(suborganization));
 		Assert.assertTrue(results.contains(TestPropsValues.getUser()));
 
@@ -363,7 +363,7 @@ public class OrganizationLocalServiceTest {
 
 		List<Object> results = getOrganizationsAndUsers(organization);
 
-		Assert.assertEquals(1, results.size());
+		Assert.assertEquals(results.toString(), 1, results.size());
 		Assert.assertTrue(results.contains(TestPropsValues.getUser()));
 
 		UserLocalServiceUtil.deleteOrganizationUser(
@@ -386,7 +386,7 @@ public class OrganizationLocalServiceTest {
 
 		List<Object> results = getOrganizationsAndUsers(organization);
 
-		Assert.assertEquals(1, results.size());
+		Assert.assertEquals(results.toString(), 1, results.size());
 		Assert.assertTrue(results.contains(suborganization));
 	}
 

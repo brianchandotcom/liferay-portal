@@ -114,8 +114,8 @@ public class ClassLoaderPoolTest {
 
 		ClassLoaderPool.register(_CONTEXT_NAME, classLoader);
 
-		Assert.assertEquals(1, _contextNames.size());
-		Assert.assertEquals(1, _classLoaders.size());
+		Assert.assertEquals(_contextNames.toString(), 1, _contextNames.size());
+		Assert.assertEquals(_classLoaders.toString(), 1, _classLoaders.size());
 		Assert.assertSame(classLoader, _classLoaders.get(_CONTEXT_NAME));
 		Assert.assertEquals(_CONTEXT_NAME, _contextNames.get(classLoader));
 	}

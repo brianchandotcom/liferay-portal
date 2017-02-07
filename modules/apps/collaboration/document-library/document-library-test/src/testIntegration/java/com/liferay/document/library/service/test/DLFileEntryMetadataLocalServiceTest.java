@@ -145,7 +145,9 @@ public class DLFileEntryMetadataLocalServiceTest {
 				DLFileEntryMetadataLocalServiceUtil.
 					getMismatchedCompanyIdFileEntryMetadatas();
 
-			Assert.assertEquals(1, dlFileEntryMetadatas.size());
+			Assert.assertEquals(
+				dlFileEntryMetadatas.toString(), 1,
+				dlFileEntryMetadatas.size());
 			Assert.assertEquals(
 				dlFileEntryMetadata, dlFileEntryMetadatas.get(0));
 		}
@@ -174,7 +176,9 @@ public class DLFileEntryMetadataLocalServiceTest {
 				DLFileEntryMetadataLocalServiceUtil.
 					getNoStructuresFileEntryMetadatas();
 
-			Assert.assertEquals(1, dlFileEntryMetadatas.size());
+			Assert.assertEquals(
+				dlFileEntryMetadatas.toString(), 1,
+				dlFileEntryMetadatas.size());
 			Assert.assertEquals(
 				dlFileEntryMetadata, dlFileEntryMetadatas.get(0));
 		}

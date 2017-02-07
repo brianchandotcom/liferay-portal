@@ -314,7 +314,7 @@ public class DLFolderFinderTest {
 			_group.getGroupId(), _folder.getFolderId(),
 			new String[] {ContentTypes.TEXT_PLAIN}, false, queryDefinition);
 
-		Assert.assertEquals(3, results.size());
+		Assert.assertEquals(results.toString(), 3, results.size());
 
 		for (Object result : results) {
 			Assert.assertTrue(
@@ -346,7 +346,7 @@ public class DLFolderFinderTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			null, true, queryDefinition);
 
-		Assert.assertEquals(2, results.size());
+		Assert.assertEquals(results.toString(), 2, results.size());
 
 		boolean assertMountPointFolder = false;
 		boolean assertRegularFolder = false;

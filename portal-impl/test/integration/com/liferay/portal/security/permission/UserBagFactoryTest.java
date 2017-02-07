@@ -80,7 +80,7 @@ public class UserBagFactoryTest {
 	public void testGetGroups() throws Exception {
 		Collection<Group> groups = getGroups();
 
-		Assert.assertEquals(1, groups.size());
+		Assert.assertEquals(groups.toString(), 1, groups.size());
 
 		Collection<Group> userGroups = getUserGroups();
 
@@ -91,20 +91,22 @@ public class UserBagFactoryTest {
 
 		groups = getGroups();
 
-		Assert.assertEquals(5, groups.size());
+		Assert.assertEquals(groups.toString(), 5, groups.size());
 
-		Assert.assertEquals(2, userGroups.size());
-		Assert.assertEquals(2, userOrgGroups.size());
-		Assert.assertEquals(1, userUserGroupGroups.size());
+		Assert.assertEquals(userGroups.toString(), 2, userGroups.size());
+		Assert.assertEquals(userOrgGroups.toString(), 2, userOrgGroups.size());
+		Assert.assertEquals(
+			userUserGroupGroups.toString(), 1, userUserGroupGroups.size());
 
 		groups = new HashSet<>(groups);
 		userGroups = new HashSet<>(userGroups);
 		userOrgGroups = new HashSet<>(userOrgGroups);
 
-		Assert.assertEquals(5, groups.size());
-		Assert.assertEquals(2, userGroups.size());
-		Assert.assertEquals(2, userOrgGroups.size());
-		Assert.assertEquals(1, userUserGroupGroups.size());
+		Assert.assertEquals(groups.toString(), 5, groups.size());
+		Assert.assertEquals(userGroups.toString(), 2, userGroups.size());
+		Assert.assertEquals(userOrgGroups.toString(), 2, userOrgGroups.size());
+		Assert.assertEquals(
+			userUserGroupGroups.toString(), 1, userUserGroupGroups.size());
 	}
 
 	@Test
@@ -138,7 +140,7 @@ public class UserBagFactoryTest {
 	public void testGetUserGroups() throws Exception {
 		Collection<Group> userGroups = getUserGroups();
 
-		Assert.assertEquals(2, userGroups.size());
+		Assert.assertEquals(userGroups.toString(), 2, userGroups.size());
 		Assert.assertTrue(userGroups.contains(_childGroup));
 		Assert.assertFalse(userGroups.contains(_parentGroup));
 	}
@@ -154,7 +156,7 @@ public class UserBagFactoryTest {
 	public void testGetUserOrgGroups() throws Exception {
 		Collection<Group> groups = getUserOrgGroups();
 
-		Assert.assertEquals(2, groups.size());
+		Assert.assertEquals(groups.toString(), 2, groups.size());
 		Assert.assertTrue(groups.contains(_childOrganization.getGroup()));
 		Assert.assertTrue(groups.contains(_parentOrganization.getGroup()));
 	}
@@ -163,7 +165,7 @@ public class UserBagFactoryTest {
 	public void testGetUserOrgs() throws Exception {
 		Collection<Organization> organizations = getUserOrgs();
 
-		Assert.assertEquals(2, organizations.size());
+		Assert.assertEquals(organizations.toString(), 2, organizations.size());
 		Assert.assertTrue(organizations.contains(_childOrganization));
 		Assert.assertTrue(organizations.contains(_parentOrganization));
 	}

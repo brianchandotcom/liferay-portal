@@ -1008,7 +1008,7 @@ public class TableMapperTest {
 		lefts = _tableMapperImpl.getLeftBaseModels(
 			rightPrimaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(1, lefts.size());
+		Assert.assertEquals(lefts.toString(), 1, lefts.size());
 
 		Left left1 = lefts.get(0);
 
@@ -1026,7 +1026,7 @@ public class TableMapperTest {
 		lefts = _tableMapperImpl.getLeftBaseModels(
 			rightPrimaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(2, lefts.size());
+		Assert.assertEquals(lefts.toString(), 2, lefts.size());
 
 		left1 = lefts.get(0);
 		Left left2 = lefts.get(1);
@@ -1055,7 +1055,7 @@ public class TableMapperTest {
 
 			});
 
-		Assert.assertEquals(2, lefts.size());
+		Assert.assertEquals(lefts.toString(), 2, lefts.size());
 
 		left1 = lefts.get(0);
 		left2 = lefts.get(1);
@@ -1075,7 +1075,7 @@ public class TableMapperTest {
 
 		lefts = _tableMapperImpl.getLeftBaseModels(rightPrimaryKey, 1, 2, null);
 
-		Assert.assertEquals(1, lefts.size());
+		Assert.assertEquals(lefts.toString(), 1, lefts.size());
 
 		Left left = lefts.get(0);
 
@@ -1194,7 +1194,7 @@ public class TableMapperTest {
 		rights = _tableMapperImpl.getRightBaseModels(
 			leftPrimaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(1, rights.size());
+		Assert.assertEquals(rights.toString(), 1, rights.size());
 
 		Right right1 = rights.get(0);
 
@@ -1212,7 +1212,7 @@ public class TableMapperTest {
 		rights = _tableMapperImpl.getRightBaseModels(
 			leftPrimaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(2, rights.size());
+		Assert.assertEquals(rights.toString(), 2, rights.size());
 
 		right1 = rights.get(0);
 		Right right2 = rights.get(1);
@@ -1241,7 +1241,7 @@ public class TableMapperTest {
 
 			});
 
-		Assert.assertEquals(2, rights.size());
+		Assert.assertEquals(rights.toString(), 2, rights.size());
 
 		right1 = rights.get(0);
 		right2 = rights.get(1);
@@ -1262,7 +1262,7 @@ public class TableMapperTest {
 		rights = _tableMapperImpl.getRightBaseModels(
 			leftPrimaryKey, 1, 2, null);
 
-		Assert.assertEquals(1, rights.size());
+		Assert.assertEquals(rights.toString(), 1, rights.size());
 
 		Right right = rights.get(0);
 
@@ -1480,7 +1480,7 @@ public class TableMapperTest {
 				_RIGHT_COLUMN_NAME, _leftBasePersistence,
 				_rightBasePersistence);
 
-		Assert.assertEquals(1, tableMappers.size());
+		Assert.assertEquals(tableMappers.toString(), 1, tableMappers.size());
 		Assert.assertSame(tableMapper, tableMappers.get(_TABLE_NAME));
 
 		TableMapper<Right, Left> reverseTableMapper =
@@ -1549,7 +1549,7 @@ public class TableMapperTest {
 		Map<String, PortalCache<?, ?>> portalCaches =
 			ReflectionTestUtil.getFieldValue(multiVMPool, "_portalCaches");
 
-		Assert.assertEquals(2, portalCaches.size());
+		Assert.assertEquals(portalCaches.toString(), 2, portalCaches.size());
 
 		if (tableMapper instanceof ReverseTableMapper) {
 			Assert.assertSame(

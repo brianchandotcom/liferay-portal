@@ -619,7 +619,9 @@ public class KBArticleLocalServiceTest {
 				WorkflowConstants.STATUS_APPROVED,
 				new KBArticlePriorityComparator(true));
 
-		Assert.assertEquals(5, kbArticleAndAllDescendantKBArticles.size());
+		Assert.assertEquals(
+			kbArticleAndAllDescendantKBArticles.toString(), 5,
+			kbArticleAndAllDescendantKBArticles.size());
 
 		KBArticle currentChildKBArticle =
 			kbArticleAndAllDescendantKBArticles.get(0);
@@ -697,7 +699,9 @@ public class KBArticleLocalServiceTest {
 				WorkflowConstants.STATUS_APPROVED,
 				new KBArticlePriorityComparator(true));
 
-		Assert.assertEquals(6, kbArticleAndAllDescendantKBArticles.size());
+		Assert.assertEquals(
+			kbArticleAndAllDescendantKBArticles.toString(), 6,
+			kbArticleAndAllDescendantKBArticles.size());
 
 		KBArticle currentParentKBArticle =
 			kbArticleAndAllDescendantKBArticles.get(0);

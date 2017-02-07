@@ -58,7 +58,9 @@ public class AssetTagsSearchFacetDisplayContextTest {
 			assetTagsSearchFacetTermDisplayContexts =
 				assetTagsSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(0, assetTagsSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			assetTagsSearchFacetTermDisplayContexts.toString(), 0,
+			assetTagsSearchFacetTermDisplayContexts.size());
 
 		Assert.assertEquals(
 			facetParam,
@@ -81,7 +83,9 @@ public class AssetTagsSearchFacetDisplayContextTest {
 			assetTagsSearchFacetTermDisplayContexts =
 				assetTagsSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(1, assetTagsSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			assetTagsSearchFacetTermDisplayContexts.toString(), 1,
+			assetTagsSearchFacetTermDisplayContexts.size());
 
 		AssetTagsSearchFacetTermDisplayContext
 			assetTagsSearchFacetTermDisplayContext =
@@ -122,7 +126,9 @@ public class AssetTagsSearchFacetDisplayContextTest {
 			assetTagsSearchFacetTermDisplayContexts =
 				assetTagsSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(1, assetTagsSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			assetTagsSearchFacetTermDisplayContexts.toString(), 1,
+			assetTagsSearchFacetTermDisplayContexts.size());
 
 		AssetTagsSearchFacetTermDisplayContext
 			assetTagsSearchFacetTermDisplayContext =
@@ -163,7 +169,9 @@ public class AssetTagsSearchFacetDisplayContextTest {
 			assetTagsSearchFacetTermDisplayContexts =
 				assetTagsSearchFacetDisplayContext.getTermDisplayContexts();
 
-		Assert.assertEquals(1, assetTagsSearchFacetTermDisplayContexts.size());
+		Assert.assertEquals(
+			assetTagsSearchFacetTermDisplayContexts.toString(), 1,
+			assetTagsSearchFacetTermDisplayContexts.size());
 
 		AssetTagsSearchFacetTermDisplayContext
 			assetTagsSearchFacetTermDisplayContext =

@@ -60,7 +60,7 @@ public class SocialActivityLocalServiceTest extends BaseSocialActivityTestCase {
 			SocialActivityLocalServiceUtil.getGroupActivities(
 				group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(1, activities.size());
+		Assert.assertEquals(activities.toString(), 1, activities.size());
 
 		SocialActivity activity = activities.get(0);
 

@@ -146,7 +146,7 @@ public class UserFinderTest {
 			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
 			new long[] {groupId});
 
-		Assert.assertEquals(1, counts.size());
+		Assert.assertEquals(counts.toString(), 1, counts.size());
 		Assert.assertEquals(2, (int)counts.get(groupId));
 
 		GroupLocalServiceUtil.addOrganizationGroup(
@@ -156,7 +156,7 @@ public class UserFinderTest {
 			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
 			new long[] {groupId});
 
-		Assert.assertEquals(1, counts.size());
+		Assert.assertEquals(counts.toString(), 1, counts.size());
 		Assert.assertEquals(3, (int)counts.get(groupId));
 
 		GroupLocalServiceUtil.addUserGroupGroup(
@@ -166,7 +166,7 @@ public class UserFinderTest {
 			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
 			new long[] {groupId});
 
-		Assert.assertEquals(1, counts.size());
+		Assert.assertEquals(counts.toString(), 1, counts.size());
 		Assert.assertEquals(4, (int)counts.get(groupId));
 
 		long organizationGroupId = _organization.getGroupId();
@@ -175,7 +175,7 @@ public class UserFinderTest {
 			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
 			new long[] {groupId, organizationGroupId});
 
-		Assert.assertEquals(2, counts.size());
+		Assert.assertEquals(counts.toString(), 2, counts.size());
 		Assert.assertEquals(1, (int)counts.get(organizationGroupId));
 	}
 
@@ -277,7 +277,8 @@ public class UserFinderTest {
 		Assert.assertTrue(users.contains(_organizationUser));
 		Assert.assertTrue(users.contains(_userGroupUser));
 		Assert.assertTrue(users.contains(TestPropsValues.getUser()));
-		Assert.assertEquals(_inheritedUserGroupsExpectedCount, users.size());
+		Assert.assertEquals(
+			users.toString(), _inheritedUserGroupsExpectedCount, users.size());
 	}
 
 	@Test
@@ -299,7 +300,8 @@ public class UserFinderTest {
 		Assert.assertTrue(users.contains(_organizationUser));
 		Assert.assertTrue(users.contains(_userGroupUser));
 		Assert.assertTrue(users.contains(TestPropsValues.getUser()));
-		Assert.assertEquals(expectedUsers.size() + 2, users.size());
+		Assert.assertEquals(
+			users.toString(), expectedUsers.size() + 2, users.size());
 	}
 
 	@Test
@@ -325,7 +327,8 @@ public class UserFinderTest {
 		Assert.assertTrue(users.contains(_organizationUser));
 		Assert.assertTrue(users.contains(_userGroupUser));
 		Assert.assertTrue(users.contains(TestPropsValues.getUser()));
-		Assert.assertEquals(expectedUsers.size() + 2, users.size());
+		Assert.assertEquals(
+			users.toString(), expectedUsers.size() + 2, users.size());
 	}
 
 	@Test
@@ -336,7 +339,7 @@ public class UserFinderTest {
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new UserFirstNameComparator(true));
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 	}
 
 	private static Group _group;

@@ -58,15 +58,15 @@ public class MailEngineTest {
 			MailServiceTestUtil.getMailMessages(
 				"Body", "My name is Inigo Montoya.");
 
-		Assert.assertEquals(1, mailMessages.size());
+		Assert.assertEquals(mailMessages.toString(), 1, mailMessages.size());
 
 		mailMessages = MailServiceTestUtil.getMailMessages("Subject", "Hello");
 
-		Assert.assertEquals(1, mailMessages.size());
+		Assert.assertEquals(mailMessages.toString(), 1, mailMessages.size());
 
 		mailMessages = MailServiceTestUtil.getMailMessages("To", "to@test.com");
 
-		Assert.assertEquals(1, mailMessages.size());
+		Assert.assertEquals(mailMessages.toString(), 1, mailMessages.size());
 	}
 
 }

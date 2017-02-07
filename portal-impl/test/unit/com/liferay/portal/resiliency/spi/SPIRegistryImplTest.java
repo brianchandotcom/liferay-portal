@@ -91,7 +91,8 @@ public class SPIRegistryImplTest {
 
 		_spiRegistryImpl.addExcludedPortletId(portlet1);
 
-		Assert.assertEquals(1, _excludedPortletIds.size());
+		Assert.assertEquals(
+			_excludedPortletIds.toString(), 1, _excludedPortletIds.size());
 		Assert.assertTrue(_excludedPortletIds.contains(portlet1));
 
 		String portlet2 = "portlet2";
@@ -161,7 +162,8 @@ public class SPIRegistryImplTest {
 
 			_spiRegistryImpl.registerSPI(mockSPI);
 
-			Assert.assertEquals(3, _portletSPIs.size());
+			Assert.assertEquals(
+				_portletSPIs.toString(), 3, _portletSPIs.size());
 			Assert.assertEquals(mockSPI, _portletSPIs.remove("portlet1"));
 			Assert.assertEquals(mockSPI, _portletSPIs.remove("portlet3"));
 			Assert.assertEquals(mockSPI, _portletSPIs.remove("portlet4"));
@@ -193,7 +195,7 @@ public class SPIRegistryImplTest {
 			Assert.assertTrue(portletIds.contains("portlet3"));
 			Assert.assertTrue(portletIds.contains("portlet4"));
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			LogRecord logRecord1 = logRecords.get(0);
 
@@ -212,7 +214,8 @@ public class SPIRegistryImplTest {
 
 			_spiRegistryImpl.registerSPI(mockSPI);
 
-			Assert.assertEquals(3, _portletSPIs.size());
+			Assert.assertEquals(
+				_portletSPIs.toString(), 3, _portletSPIs.size());
 			Assert.assertEquals(mockSPI, _portletSPIs.remove("portlet1"));
 			Assert.assertEquals(mockSPI, _portletSPIs.remove("portlet3"));
 			Assert.assertEquals(mockSPI, _portletSPIs.remove("portlet4"));
@@ -239,7 +242,7 @@ public class SPIRegistryImplTest {
 			catch (RuntimeException re) {
 			}
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			logRecord1 = logRecords.get(0);
 
@@ -262,7 +265,7 @@ public class SPIRegistryImplTest {
 
 			_spiRegistryImpl.registerSPI(mockSPI);
 
-			Assert.assertEquals(2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			logRecord1 = logRecords.get(0);
 

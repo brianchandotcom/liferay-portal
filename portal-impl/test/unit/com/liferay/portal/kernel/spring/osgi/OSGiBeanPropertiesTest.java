@@ -63,7 +63,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(1, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 1, interfaceClasses.size());
 	}
 
 	@Test
@@ -78,7 +79,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(1, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 1, interfaceClasses.size());
 	}
 
 	@Test
@@ -93,7 +95,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(1, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 1, interfaceClasses.size());
 	}
 
 	@Test
@@ -105,7 +108,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(1, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 1, interfaceClasses.size());
 	}
 
 	@Test
@@ -117,7 +121,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(1, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 1, interfaceClasses.size());
 	}
 
 	@Test(expected = ClassCastException.class)
@@ -129,7 +134,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(1, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 1, interfaceClasses.size());
 	}
 
 	@Test(expected = ClassCastException.class)
@@ -141,7 +147,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(1, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 1, interfaceClasses.size());
 	}
 
 	@Test
@@ -153,7 +160,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(0, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 0, interfaceClasses.size());
 	}
 
 	@Test
@@ -168,7 +176,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(1, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 1, interfaceClasses.size());
 	}
 
 	@Test
@@ -183,7 +192,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(2, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 2, interfaceClasses.size());
 	}
 
 	@Test
@@ -195,7 +205,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(1, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 1, interfaceClasses.size());
 	}
 
 	@Test
@@ -207,7 +218,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(2, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 2, interfaceClasses.size());
 	}
 
 	@Test
@@ -218,7 +230,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(0, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 0, interfaceClasses.size());
 	}
 
 	@Test
@@ -232,7 +245,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(1, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 1, interfaceClasses.size());
 	}
 
 	@Test
@@ -246,7 +260,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(2, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 2, interfaceClasses.size());
 	}
 
 	@Test
@@ -257,7 +272,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(1, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 1, interfaceClasses.size());
 	}
 
 	@Test
@@ -268,7 +284,8 @@ public class OSGiBeanPropertiesTest {
 		Set<Class<?>> interfaceClasses = OSGiBeanProperties.Service.interfaces(
 			new C());
 
-		Assert.assertEquals(2, interfaceClasses.size());
+		Assert.assertEquals(
+			interfaceClasses.toString(), 2, interfaceClasses.size());
 	}
 
 	@Test
@@ -564,7 +581,7 @@ public class OSGiBeanPropertiesTest {
 
 		Assert.assertNotNull(properties);
 		Assert.assertFalse(properties.isEmpty());
-		Assert.assertEquals(2, properties.size());
+		Assert.assertEquals(properties.toString(), 2, properties.size());
 		Assert.assertEquals("value1", properties.get("key1"));
 	}
 
@@ -596,7 +613,7 @@ public class OSGiBeanPropertiesTest {
 
 		Assert.assertNotNull(properties);
 		Assert.assertFalse(properties.isEmpty());
-		Assert.assertEquals(1, properties.size());
+		Assert.assertEquals(properties.toString(), 1, properties.size());
 		Assert.assertEquals("value", properties.get("key"));
 	}
 

@@ -175,7 +175,8 @@ public class EmbeddedPortletTest {
 				PortletPreferencesLocalServiceUtil.getPortletPreferences(
 					_layout.getPlid(), portlet.getPortletId());
 
-			Assert.assertEquals(1, portletPreferences.size());
+			Assert.assertEquals(
+				portletPreferences.toString(), 1, portletPreferences.size());
 
 			PortletPreferences embeddedPortletPreference =
 				portletPreferences.get(0);
@@ -288,7 +289,8 @@ public class EmbeddedPortletTest {
 				PortletPreferencesLocalServiceUtil.getPortletPreferences(
 					layout.getPlid(), _testNonembeddedPortlet.getPortletId());
 
-			Assert.assertEquals(1, portletPreferences.size());
+			Assert.assertEquals(
+				portletPreferences.toString(), 1, portletPreferences.size());
 
 			PortletPreferences embeddedPortletPreference =
 				portletPreferences.get(0);

@@ -77,7 +77,7 @@ public class UserGroupLocalServiceTest {
 
 		List<UserGroup> userGroups = _search(keywords, userGroupParams);
 
-		Assert.assertEquals(1, userGroups.size());
+		Assert.assertEquals(userGroups.toString(), 1, userGroups.size());
 	}
 
 	@Test
@@ -92,7 +92,7 @@ public class UserGroupLocalServiceTest {
 
 		List<UserGroup> userGroups = _search(keywords, userGroupParams);
 
-		Assert.assertEquals(1, userGroups.size());
+		Assert.assertEquals(userGroups.toString(), 1, userGroups.size());
 	}
 
 	@Test
@@ -107,7 +107,7 @@ public class UserGroupLocalServiceTest {
 
 		List<UserGroup> userGroups = _search(keywords, userGroupParams);
 
-		Assert.assertEquals(0, userGroups.size());
+		Assert.assertEquals(userGroups.toString(), 0, userGroups.size());
 	}
 
 	@Test
@@ -118,7 +118,8 @@ public class UserGroupLocalServiceTest {
 
 		List<UserGroup> userGroups = _search(keywords, emptyParams);
 
-		Assert.assertEquals(_count + 2, userGroups.size());
+		Assert.assertEquals(
+			userGroups.toString(), _count + 2, userGroups.size());
 	}
 
 	@Test
@@ -129,7 +130,7 @@ public class UserGroupLocalServiceTest {
 
 		List<UserGroup> userGroups = _search(keywords, emptyParams);
 
-		Assert.assertEquals(1, userGroups.size());
+		Assert.assertEquals(userGroups.toString(), 1, userGroups.size());
 	}
 
 	private List<UserGroup> _search(

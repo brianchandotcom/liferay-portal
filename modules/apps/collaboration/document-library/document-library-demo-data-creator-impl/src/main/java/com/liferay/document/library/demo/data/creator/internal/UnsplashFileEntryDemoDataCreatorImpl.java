@@ -78,17 +78,17 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 
 	@Override
 	public void delete() throws PortalException {
-		try {
-			for (long fileEntryId : _fileEntryIds) {
-				_fileEntryIds.remove(fileEntryId);
-
+		for (long fileEntryId : _fileEntryIds) {
+			try {
 				_dlAppLocalService.deleteFileEntry(fileEntryId);
 			}
-		}
-		catch (NoSuchFileEntryException nsfee) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsfee, nsfee);
+			catch (NoSuchFileEntryException nsfee) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(nsfee, nsfee);
+				}
 			}
+
+			_fileEntryIds.remove(fileEntryId);
 		}
 	}
 

@@ -28,18 +28,18 @@ ddm.grid = function(opt_data, opt_ignored) {
     output += '<th>' + soy.$$escapeHtml(columnData35.label) + '</th>';
   }
   output += '</tr></thead><tbody>';
-  var rowList65 = opt_data.rows;
-  var rowListLen65 = rowList65.length;
-  for (var rowIndex65 = 0; rowIndex65 < rowListLen65; rowIndex65++) {
-    var rowData65 = rowList65[rowIndex65];
-    output += '<tr name="' + soy.$$escapeHtmlAttribute(rowData65.value) + '"><td>' + soy.$$escapeHtml(rowData65.label) + '</td>';
-    var columnList62 = opt_data.columns;
-    var columnListLen62 = columnList62.length;
-    for (var columnIndex62 = 0; columnIndex62 < columnListLen62; columnIndex62++) {
-      var columnData62 = columnList62[columnIndex62];
-      var checked__soy43 = columnData62.value == opt_data.value[rowData65.value] ? 'checked' : '';
-      var autoFocus__soy44 = opt_data.focusTarget && (opt_data.focusTarget.row == rowData65.value && opt_data.focusTarget.index == columnIndex62) ? 'autofocus' : '';
-      output += '<td><input ' + soy.$$filterHtmlAttributes(autoFocus__soy44) + ' ' + soy.$$filterHtmlAttributes(checked__soy43) + ' class="form-builder-grid-field" data-row-index="' + soy.$$escapeHtmlAttribute(columnIndex62) + '" ' + ((opt_data.readOnly) ? 'disabled' : '') + ' name="' + soy.$$escapeHtmlAttribute(rowData65.value) + '" tabindex="' + soy.$$escapeHtmlAttribute(columnIndex62 + 1) + '" type="radio" value="' + soy.$$escapeHtmlAttribute(columnData62.value) + '" /></td>';
+  var rowList63 = opt_data.rows;
+  var rowListLen63 = rowList63.length;
+  for (var rowIndex63 = 0; rowIndex63 < rowListLen63; rowIndex63++) {
+    var rowData63 = rowList63[rowIndex63];
+    output += '<tr name="' + soy.$$escapeHtmlAttribute(rowData63.value) + '"><td>' + soy.$$escapeHtml(rowData63.label) + '</td>';
+    var columnList60 = opt_data.columns;
+    var columnListLen60 = columnList60.length;
+    for (var columnIndex60 = 0; columnIndex60 < columnListLen60; columnIndex60++) {
+      var columnData60 = columnList60[columnIndex60];
+      var checked__soy43 = columnData60.value == opt_data.value[rowData63.value] ? 'checked' : '';
+      var autoFocus__soy44 = opt_data.focusTarget && (opt_data.focusTarget.row == rowData63.value && opt_data.focusTarget.index == columnIndex60) ? 'autofocus' : '';
+      output += '<td><input ' + soy.$$filterHtmlAttributes(autoFocus__soy44) + ' ' + soy.$$filterHtmlAttributes(checked__soy43) + ' class="form-builder-grid-field" data-row-index="' + soy.$$escapeHtmlAttribute(columnIndex60) + '" ' + ((opt_data.readOnly) ? 'disabled' : '') + ' name="' + soy.$$escapeHtmlAttribute(rowData63.value) + '" type="radio" value="' + soy.$$escapeHtmlAttribute(columnData60.value) + '" /></td>';
     }
     output += '</tr>';
   }
@@ -53,12 +53,12 @@ if (goog.DEBUG) {
 
 ddm.hidden_grid = function(opt_data, opt_ignored) {
   var output = '';
-  var rowList86 = opt_data.rows;
-  var rowListLen86 = rowList86.length;
-  for (var rowIndex86 = 0; rowIndex86 < rowListLen86; rowIndex86++) {
-    var rowData86 = rowList86[rowIndex86];
-    var inputValue__soy74 = opt_data.value[rowData86.value] ? rowData86.value + ';' + opt_data.value[rowData86.value] : '';
-    output += '<input class="form-control" dir="' + soy.$$escapeHtmlAttribute(opt_data.dir) + '" name="' + soy.$$escapeHtmlAttribute(opt_data.name) + '" type="hidden" ' + ((inputValue__soy74) ? 'value="' + soy.$$escapeHtmlAttribute(inputValue__soy74) + '"' : '') + '/>';
+  var rowList84 = opt_data.rows;
+  var rowListLen84 = rowList84.length;
+  for (var rowIndex84 = 0; rowIndex84 < rowListLen84; rowIndex84++) {
+    var rowData84 = rowList84[rowIndex84];
+    var inputValue__soy72 = opt_data.value[rowData84.value] ? rowData84.value + ';' + opt_data.value[rowData84.value] : '';
+    output += '<input class="form-control" dir="' + soy.$$escapeHtmlAttribute(opt_data.dir) + '" name="' + soy.$$escapeHtmlAttribute(opt_data.name) + '" type="hidden" ' + ((inputValue__soy72) ? 'value="' + soy.$$escapeHtmlAttribute(inputValue__soy72) + '"' : '') + '/>';
   }
   return output;
 };

@@ -16,6 +16,7 @@ package com.liferay.comment.demo.data.creator.internal;
 
 import com.liferay.comment.demo.data.creator.CommentDemoDataCreator;
 import com.liferay.comment.demo.data.creator.MultipleCommentDemoDataCreator;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.security.RandomUtil;
@@ -38,7 +39,7 @@ public class MultipleCommentDemoDataCreatorImpl
 
 		int commentsCount = RandomUtil.nextInt(_MAX_COMMENTS);
 
-		_addComments(userIds, classedModel, commentsCount);
+		_addComments(userIds, classedModel, _ROOT_COMMENT, commentsCount, 1);
 	}
 
 	@Override
@@ -53,19 +54,40 @@ public class MultipleCommentDemoDataCreatorImpl
 		_commentDemoDataCreator = commentDemoDataCreator;
 	}
 
-	private void _addComments(
-			List<Long> userIds, ClassedModel classedModel, int commentsCount)
+	private int _addComments(
+			List<Long> userIds, ClassedModel classedModel, long commentId,
+			int commentsCount, int level)
 		throws PortalException {
 
 		int commentsCreated = 0;
 
-		while (commentsCount > commentsCreated) {
+		int repliesCount = RandomUtil.nextInt(_MAX_REPLIES / level);
+
+		while ((commentsCount > commentsCreated) && (repliesCount != 0)) {
 			long userId = _getRandomElement(userIds);
 
-			_commentDemoDataCreator.create(userId, classedModel);
+			Comment comment = null;
+
+			if (commentId == _ROOT_COMMENT) {
+				comment = _commentDemoDataCreator.create(userId, classedModel);
+			}
+			else {
+				comment = _commentDemoDataCreator.create(userId, commentId);
+				repliesCount--;
+			}
 
 			commentsCreated++;
+
+			if (level < _MAX_LEVEL) {
+				int maxComments = commentsCount - commentsCreated;
+
+				commentsCreated += _addComments(
+					userIds, classedModel, comment.getCommentId(), maxComments,
+					level + 1);
+			}
 		}
+
+		return commentsCreated;
 	}
 
 	private <T> T _getRandomElement(List<T> list) {
@@ -73,6 +95,12 @@ public class MultipleCommentDemoDataCreatorImpl
 	}
 
 	private static final int _MAX_COMMENTS = 100;
+
+	private static final int _MAX_LEVEL = 3;
+
+	private static final int _MAX_REPLIES = 10;
+
+	private static final int _ROOT_COMMENT = 0;
 
 	private CommentDemoDataCreator _commentDemoDataCreator;
 

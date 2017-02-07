@@ -43,10 +43,10 @@ public class UsersFormNavigatorContextProvider
 		}
 
 		if (selectedUser == null) {
-			return "add";
+			return FormNavigatorContextConstants.CONTEXT_ADD;
 		}
 
-		return "update";
+		return FormNavigatorContextConstants.CONTEXT_UPDATE;
 	}
 
 	private String _getPortletName() {

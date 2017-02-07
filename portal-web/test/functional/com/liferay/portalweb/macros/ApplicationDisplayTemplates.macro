@@ -1,4 +1,33 @@
 <definition>
+	<command name="addADTViaBreadcrumb">
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="SelectFrame" locator1="ApplicationDisplayTemplates#ADT_IFRAME" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertVisible" locator1="ApplicationDisplayTemplates#PORTLET_PREFERENCES" />
+		<execute function="AssertElementPresent" locator1="ApplicationDisplayTemplates#PORTLET_PREFERENCES" />
+
+		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT">
+			<var name="key_adtType" value="${adtType}" />
+		</execute>
+
+		<execute function="Click" locator1="Configuration#FIELDS_ENTRY" value1="$fieldEntry}">
+			<var name="kay_fieldEntry" value="${fieldEntry}" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+	</command>
+
 	<command name="addADTviaPortletPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="${portletName}" />

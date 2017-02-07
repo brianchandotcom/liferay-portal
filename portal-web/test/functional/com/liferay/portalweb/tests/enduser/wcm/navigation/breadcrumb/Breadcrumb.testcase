@@ -35,8 +35,8 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addADTViaBreadcrumb">
-			<var name="adtType" value="Breadcrumb" />
-			<var name="fieldEntry" value="Breadcrumb Entry" />
+			<var name="fieldName" value="Breadcrumb Entry" />
+			<var name="portletName" value="Breadcrumb" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

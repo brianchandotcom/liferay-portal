@@ -709,7 +709,6 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-tags-selector</code>]]>.</description>
 		<name>asset-tags-navigation</name>
 		<tag-class>com.liferay.taglib.ui.AssetTagsNavigationTag</tag-class>
 		<body-content>JSP</body-content>
@@ -745,6 +744,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-tags-selector</code>]]>.</description>
 		<description>Creates a <![CDATA[<code>Liferay.AssetTagsSelector</code>]]> component to create and select tags to add to an asset, such as a blog entry, bookmark, or wiki page.</description>
 		<name>asset-tags-selector</name>
 		<tag-class>com.liferay.taglib.ui.AssetTagsSelectorTag</tag-class>

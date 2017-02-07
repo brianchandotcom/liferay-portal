@@ -64,7 +64,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 			map.put(key, actualValues);
 		}
 
-		return Collections.unmodifiableMap(map);
+		return map;
 	}
 
 	public Enumeration<String> getNames() {

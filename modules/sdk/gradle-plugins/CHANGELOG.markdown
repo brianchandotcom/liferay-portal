@@ -699,8 +699,8 @@ to version 1.1.0.
 ## 3.0.46 - 2016-12-03
 
 ### Added
-- [LPS-69518]: Automatically delete the `liferay/logs` dir generated during the
-execution of the `autoUpdateXml` task.
+- [LPS-69518]: Automatically delete the `liferay/logs` directory generated
+during the execution of the `autoUpdateXml` task.
 
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
@@ -712,7 +712,7 @@ to version 1.0.56.
 
 ### Added
 - [LPS-69501]: Allow portal tool versions to be overridden in a
-`gradle.properties` file contained in any parent directory of the project. For
+`gradle.properties` file located in any parent directory of the project. For
 example,
 
 		com.liferay.source.formatter.version=1.0.300

@@ -997,7 +997,7 @@ test compile and runtime classpaths.
 
 ### Added
 - [LPS-70424]: Add the ability to set a custom value for the project group by
-setting the property `project.group` in a `gradle.properties` file contained in
+setting the property `project.group` in a `gradle.properties` file located in
 any parent directory of the project.
 
 ### Changed

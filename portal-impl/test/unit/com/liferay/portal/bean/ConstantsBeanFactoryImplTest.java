@@ -112,7 +112,7 @@ public class ConstantsBeanFactoryImplTest {
 
 		Method[] methods = constantsBeanClass.getDeclaredMethods();
 
-		Assert.assertEquals(12, methods.length);
+		Assert.assertEquals(Arrays.toString(methods), 12, methods.length);
 
 		Arrays.sort(
 			methods,
@@ -138,7 +138,8 @@ public class ConstantsBeanFactoryImplTest {
 
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
-		Assert.assertEquals(0, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 0, parameterTypes.length);
 
 		// public byte getBYTE_VALUE();
 
@@ -150,7 +151,8 @@ public class ConstantsBeanFactoryImplTest {
 
 		parameterTypes = method.getParameterTypes();
 
-		Assert.assertEquals(0, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 0, parameterTypes.length);
 
 		// public char getCHAR_VALUE();
 
@@ -162,7 +164,8 @@ public class ConstantsBeanFactoryImplTest {
 
 		parameterTypes = method.getParameterTypes();
 
-		Assert.assertEquals(0, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 0, parameterTypes.length);
 
 		// public double getDOUBLE_VALUE();
 
@@ -174,7 +177,8 @@ public class ConstantsBeanFactoryImplTest {
 
 		parameterTypes = method.getParameterTypes();
 
-		Assert.assertEquals(0, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 0, parameterTypes.length);
 
 		// public float getFLOAT_VALUE();
 
@@ -186,7 +190,8 @@ public class ConstantsBeanFactoryImplTest {
 
 		parameterTypes = method.getParameterTypes();
 
-		Assert.assertEquals(0, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 0, parameterTypes.length);
 
 		// public int getINT_VALUE();
 
@@ -198,7 +203,8 @@ public class ConstantsBeanFactoryImplTest {
 
 		parameterTypes = method.getParameterTypes();
 
-		Assert.assertEquals(0, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 0, parameterTypes.length);
 
 		// public long getLONG_VALUE();
 
@@ -210,7 +216,8 @@ public class ConstantsBeanFactoryImplTest {
 
 		parameterTypes = method.getParameterTypes();
 
-		Assert.assertEquals(0, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 0, parameterTypes.length);
 
 		// public Object getOBJECT_VALUE();
 
@@ -222,7 +229,8 @@ public class ConstantsBeanFactoryImplTest {
 
 		parameterTypes = method.getParameterTypes();
 
-		Assert.assertEquals(0, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 0, parameterTypes.length);
 
 		// public short getSHORT_VALUE();
 
@@ -234,7 +242,8 @@ public class ConstantsBeanFactoryImplTest {
 
 		parameterTypes = method.getParameterTypes();
 
-		Assert.assertEquals(0, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 0, parameterTypes.length);
 
 		// public int get_Int(int)
 
@@ -247,7 +256,8 @@ public class ConstantsBeanFactoryImplTest {
 
 		parameterTypes = method.getParameterTypes();
 
-		Assert.assertEquals(1, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 1, parameterTypes.length);
 		Assert.assertSame(int.class, parameterTypes[0]);
 
 		Assert.assertEquals(10, method.invoke(null, 10));
@@ -263,7 +273,8 @@ public class ConstantsBeanFactoryImplTest {
 
 		parameterTypes = method.getParameterTypes();
 
-		Assert.assertEquals(1, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 1, parameterTypes.length);
 		Assert.assertSame(Object.class, parameterTypes[0]);
 
 		Object obj = new Object();
@@ -281,7 +292,8 @@ public class ConstantsBeanFactoryImplTest {
 
 		parameterTypes = method.getParameterTypes();
 
-		Assert.assertEquals(0, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 0, parameterTypes.length);
 
 		// Ensure reuse of cached generated class
 

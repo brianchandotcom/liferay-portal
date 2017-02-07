@@ -331,7 +331,9 @@ public class IntrabandProxyUtilTest {
 
 		String[] proxyMethodSignatures = methodsBag.proxyMethodSignatures;
 
-		Assert.assertEquals(2, proxyMethodSignatures.length);
+		Assert.assertEquals(
+			Arrays.toString(proxyMethodSignatures), 2,
+			proxyMethodSignatures.length);
 		Assert.assertEquals("doStuff1-()V", proxyMethodSignatures[0]);
 		Assert.assertEquals("doStuff2-()V", proxyMethodSignatures[1]);
 	}
@@ -1774,7 +1776,8 @@ public class IntrabandProxyUtilTest {
 
 		Constructor<?>[] constructors = skeletonClass.getConstructors();
 
-		Assert.assertEquals(1, constructors.length);
+		Assert.assertEquals(
+			Arrays.toString(constructors), 1, constructors.length);
 
 		Constructor<?> constructor = constructors[0];
 
@@ -1815,7 +1818,8 @@ public class IntrabandProxyUtilTest {
 
 		Method[] declaredMethods = skeletonClass.getDeclaredMethods();
 
-		Assert.assertEquals(6, declaredMethods.length);
+		Assert.assertEquals(
+			Arrays.toString(declaredMethods), 6, declaredMethods.length);
 	}
 
 	private void _doTestGenerateStubClassStructure(
@@ -1872,13 +1876,14 @@ public class IntrabandProxyUtilTest {
 
 		Field[] fields = stubClass.getDeclaredFields();
 
-		Assert.assertEquals(6, fields.length);
+		Assert.assertEquals(Arrays.toString(fields), 6, fields.length);
 
 		// Constructors
 
 		Constructor<?>[] constructors = stubClass.getConstructors();
 
-		Assert.assertEquals(1, constructors.length);
+		Assert.assertEquals(
+			Arrays.toString(constructors), 1, constructors.length);
 
 		Constructor<?> constructor = constructors[0];
 
@@ -1932,6 +1937,7 @@ public class IntrabandProxyUtilTest {
 		Method[] declaredMethods = stubClass.getDeclaredMethods();
 
 		Assert.assertEquals(
+			Arrays.toString(declaredMethods),
 			3 + idMethods.size() + proxyMethods.size() + emptyMethods.size(),
 			declaredMethods.length);
 	}

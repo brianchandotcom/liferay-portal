@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -39,7 +41,9 @@ public class ThreadLocalDistributorRegistryTest {
 		ThreadLocalDistributor[] threadLocalDistributors =
 			ThreadLocalDistributorRegistry.getThreadLocalDistributors();
 
-		Assert.assertEquals(0, threadLocalDistributors.length);
+		Assert.assertEquals(
+			Arrays.toString(threadLocalDistributors), 0,
+			threadLocalDistributors.length);
 
 		ThreadLocalDistributor threadLocalDistributor1 =
 			new ThreadLocalDistributor();

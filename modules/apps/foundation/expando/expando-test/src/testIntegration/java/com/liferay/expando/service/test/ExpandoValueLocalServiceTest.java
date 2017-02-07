@@ -35,6 +35,7 @@ import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -91,12 +92,12 @@ public class ExpandoValueLocalServiceTest {
 
 		String[] enValues = stringArrayMap.get(_enLocale);
 
-		Assert.assertEquals(3, enValues.length);
+		Assert.assertEquals(Arrays.toString(enValues), 3, enValues.length);
 		Assert.assertEquals("two", enValues[1]);
 
 		String[] ptValues = stringArrayMap.get(_ptLocale);
 
-		Assert.assertEquals(3, ptValues.length);
+		Assert.assertEquals(Arrays.toString(ptValues), 3, ptValues.length);
 		Assert.assertEquals("tres", ptValues[2]);
 	}
 
@@ -136,7 +137,7 @@ public class ExpandoValueLocalServiceTest {
 
 		String[] data = value.getStringArray();
 
-		Assert.assertEquals(2, data.length);
+		Assert.assertEquals(Arrays.toString(data), 2, data.length);
 		Assert.assertEquals("one", data[0]);
 		Assert.assertEquals("two, three", data[1]);
 	}
@@ -271,7 +272,7 @@ public class ExpandoValueLocalServiceTest {
 
 		String[] enValues = dataMap.get(_enLocale);
 
-		Assert.assertEquals(2, enValues.length);
+		Assert.assertEquals(Arrays.toString(enValues), 2, enValues.length);
 		Assert.assertEquals("Hi, Joe", enValues[1]);
 	}
 

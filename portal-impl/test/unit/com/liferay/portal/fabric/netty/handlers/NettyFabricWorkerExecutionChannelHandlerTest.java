@@ -374,7 +374,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		URL[] urls = urlClassLoader.getURLs();
 
-		Assert.assertEquals(2, urls.length);
+		Assert.assertEquals(Arrays.toString(urls), 2, urls.length);
 
 		File file = new File(newBootstrapClassPath);
 

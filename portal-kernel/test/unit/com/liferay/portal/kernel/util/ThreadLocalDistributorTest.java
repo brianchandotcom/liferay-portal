@@ -26,6 +26,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -185,7 +186,8 @@ public class ThreadLocalDistributorTest {
 		Serializable[] threadLocalValues = ReflectionTestUtil.getFieldValue(
 			threadLocalDistributor, "_threadLocalValues");
 
-		Assert.assertEquals(1, threadLocalValues.length);
+		Assert.assertEquals(
+			Arrays.toString(threadLocalValues), 1, threadLocalValues.length);
 		Assert.assertSame(testValue, threadLocalValues[0]);
 
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =

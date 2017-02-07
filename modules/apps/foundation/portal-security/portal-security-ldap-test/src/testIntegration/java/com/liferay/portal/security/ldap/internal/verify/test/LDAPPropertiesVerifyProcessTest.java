@@ -39,6 +39,7 @@ import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.List;
 
@@ -164,7 +165,7 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 	}
 
 	protected void assertArrayLength(Object[] array, int length) {
-		Assert.assertEquals(length, array.length);
+		Assert.assertEquals(Arrays.toString(array), length, array.length);
 	}
 
 	protected void assertContainsAll(Object[] array1, Object[] array2) {

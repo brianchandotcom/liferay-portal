@@ -40,6 +40,7 @@ import java.nio.IntBuffer;
 import java.nio.LongBuffer;
 import java.nio.ShortBuffer;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -345,7 +346,8 @@ public class SerializerTest {
 
 		byte[] newBytes = serializer.getBuffer(1);
 
-		Assert.assertEquals(bytes.length * 2, newBytes.length);
+		Assert.assertEquals(
+			Arrays.toString(newBytes), bytes.length * 2, newBytes.length);
 
 		for (int i = 0; i < bytes.length; i++) {
 			Assert.assertEquals(bytes[i], newBytes[i]);
@@ -362,7 +364,8 @@ public class SerializerTest {
 
 		newBytes = serializer.getBuffer(_COUNT + 1);
 
-		Assert.assertEquals(bytes.length * 2 + 1, newBytes.length);
+		Assert.assertEquals(
+			Arrays.toString(newBytes), bytes.length * 2 + 1, newBytes.length);
 
 		for (int i = 0; i < bytes.length; i++) {
 			Assert.assertEquals(bytes[i], newBytes[i]);

@@ -421,7 +421,8 @@ public class RemoteSPITest {
 
 		Class<?>[] parameterTypes = readObjectMethod.getParameterTypes();
 
-		Assert.assertEquals(1, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 1, parameterTypes.length);
 		Assert.assertSame(ObjectInputStream.class, parameterTypes[0]);
 
 		List<Class<?>> exceptionTypes = Arrays.asList(
@@ -444,12 +445,14 @@ public class RemoteSPITest {
 
 		parameterTypes = writeObjectMethod.getParameterTypes();
 
-		Assert.assertEquals(1, parameterTypes.length);
+		Assert.assertEquals(
+			Arrays.toString(parameterTypes), 1, parameterTypes.length);
 		Assert.assertSame(ObjectOutputStream.class, parameterTypes[0]);
 
 		Class<?>[] exceptionTypeArray = writeObjectMethod.getExceptionTypes();
 
-		Assert.assertEquals(1, exceptionTypeArray.length);
+		Assert.assertEquals(
+			Arrays.toString(exceptionTypeArray), 1, exceptionTypeArray.length);
 		Assert.assertSame(IOException.class, exceptionTypeArray[0]);
 	}
 

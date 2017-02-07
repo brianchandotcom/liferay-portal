@@ -18,6 +18,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -63,7 +65,7 @@ public class FlashMagicBytesUtilTest {
 		int length = returnedInputStream.read(buffer);
 
 		if (length == _EOF) {
-			Assert.assertEquals(0, bytes.length);
+			Assert.assertEquals(Arrays.toString(bytes), 0, bytes.length);
 
 			return;
 		}

@@ -9,7 +9,7 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates" />
 
 		<execute function="SelectFrameTop" />
 

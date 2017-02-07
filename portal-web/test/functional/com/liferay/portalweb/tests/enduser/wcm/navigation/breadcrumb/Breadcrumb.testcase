@@ -26,11 +26,6 @@
 	</tear-down>
 
 	<command name="AddADTViaBreadcrumb" priority="4">
-		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
 		<execute macro="Page#add">
 			<var name="pageName" value="Page Name" />
 		</execute>
@@ -42,7 +37,6 @@
 		<execute macro="ApplicationDisplayTemplates#addADTViaBreadcrumb">
 			<var name="adtType" value="Breadcrumb" />
 			<var name="fieldEntry" value="Breadcrumb Entry" />
-			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

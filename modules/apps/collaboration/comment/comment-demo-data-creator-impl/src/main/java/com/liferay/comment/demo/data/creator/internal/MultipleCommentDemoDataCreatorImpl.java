@@ -18,6 +18,7 @@ import com.liferay.comment.demo.data.creator.CommentDemoDataCreator;
 import com.liferay.comment.demo.data.creator.MultipleCommentDemoDataCreator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.security.RandomUtil;
 
 import java.util.List;
 
@@ -34,10 +35,15 @@ public class MultipleCommentDemoDataCreatorImpl
 	@Override
 	public void create(List<Long> userIds, ClassedModel classedModel)
 		throws PortalException {
+
+		int commentsCount = RandomUtil.nextInt(_MAX_COMMENTS);
+
+		_addComments(userIds, classedModel, commentsCount);
 	}
 
 	@Override
 	public void delete() throws PortalException {
+		_commentDemoDataCreator.delete();
 	}
 
 	@Reference(unbind = "-")
@@ -46,6 +52,27 @@ public class MultipleCommentDemoDataCreatorImpl
 
 		_commentDemoDataCreator = commentDemoDataCreator;
 	}
+
+	private void _addComments(
+			List<Long> userIds, ClassedModel classedModel, int commentsCount)
+		throws PortalException {
+
+		int commentsCreated = 0;
+
+		while (commentsCount > commentsCreated) {
+			long userId = _getRandomElement(userIds);
+
+			_commentDemoDataCreator.create(userId, classedModel);
+
+			commentsCreated++;
+		}
+	}
+
+	private <T> T _getRandomElement(List<T> list) {
+		return list.get(RandomUtil.nextInt(list.size()));
+	}
+
+	private static final int _MAX_COMMENTS = 100;
 
 	private CommentDemoDataCreator _commentDemoDataCreator;
 

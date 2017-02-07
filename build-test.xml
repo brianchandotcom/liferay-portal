@@ -2498,6 +2498,148 @@ ${tomcat-gc-log}
 		</sequential>
 	</macrodef>
 
+	<macrodef name="request-cmis-repository-vm">
+		<attribute name="cmis.repository.type" />
+
+		<sequential>
+			<local name="cmis.repository.lease.time" />
+
+			<property name="cmis.repository.lease.time" value="1200000" />
+
+			<beanshell>
+				<![CDATA[
+					import org.json.JSONObject;
+
+					public JSONObject toJSONObject(String url) {
+						return new JSONObject(toString(url));
+					}
+
+					public String toString(String url) {
+						int retryCount = 0;
+
+						while (true) {
+							try {
+								System.out.println("Downloading URL " + url);
+
+								StringBuilder sb = new StringBuilder();
+
+								URL urlObject = new URL(url);
+
+								HttpURLConnection httpURLConnection = (HttpURLConnection)urlObject.openConnection();
+
+								httpURLConnection.setRequestMethod("GET");
+								httpURLConnection.setRequestProperty("Content-Type", "application/json");
+
+								InputStream inputStream = httpURLConnection.getInputStream();
+
+								InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+
+								BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+								String line = null;
+
+								while ((line = bufferedReader.readLine()) != null) {
+									sb.append(line);
+								}
+
+								bufferedReader.close();
+
+								System.out.println(sb.toString());
+
+								return sb.toString();
+							}
+							catch (Exception e) {
+								if (retryCount >= 5) {
+									throw e;
+								}
+
+								System.out.println("Retry in 5 seconds: " + e.getMessage());
+
+								retryCount++;
+
+								Thread.sleep(5000);
+							}
+						}
+					}
+
+					String cmisRepositoryLeaseTime = project.getProperty("cmis.repository.lease.time");
+					String cmisRepositoryType = project.getProperty("cmis.repository.type");
+					String cmisRepositoryVMHostName = "";
+					int minutes = 0;
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=");
+					sb.append(cmisRepositoryLeaseTime);
+					sb.append("&resourceType=qa.");
+					sb.append(cmisRepositoryType);
+
+					while (true) {
+						JSONObject jsonObject = toJSONObject(sb.toString());
+
+						if (minutes >= 30) {
+							throw new Exception("No available CMIS servers");
+						}
+
+						if (!jsonObject.has("hostname")) {
+							System.out.println("Waiting for next available CMIS server: " + cmisRepositoryType);
+
+							Thread.sleep(60000);
+
+							minutes++;
+
+							continue;
+						}
+
+						cmisRepositoryVMHostName = jsonObject.get("hostname");
+
+						break;
+					}
+
+					System.out.println("Borrowing " + cmisRepositoryVMHostName);
+
+					project.setProperty("cmis.repository.vm.host.name", cmisRepositoryVMHostName);
+				]]>
+			</beanshell>
+
+			<if>
+				<equals arg1="@{cmis.repository.type}" arg2="documentum6" />
+				<then>
+					<replace
+						file="${project.dir}/modules/private/apps/documentum/documentum-hook/docroot/WEB-INF/src/dfc.properties"
+						token="dfc.docbroker.host[0]=localhost"
+						value="dfc.docbroker.host[0]=${cmis.repository.vm.host.name}"
+					/>
+				</then>
+			</if>
+
+			<if>
+				<equals arg1="@{cmis.repository.type}" arg2="documentum6" />
+				<then>
+					<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
+
+					<gradle-execute dir="${project.dir}/modules/private/apps/documentum/documentum-hook" task="deploy">
+						<arg value="clean" />
+					</gradle-execute>
+				</then>
+			</if>
+
+			<if>
+				<or>
+					<equals arg1="@{cmis.repository.type}" arg2="sharepoint2010" />
+					<equals arg1="@{cmis.repository.type}" arg2="sharepoint2013" />
+				</or>
+				<then>
+					<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
+
+					<gradle-execute dir="${project.dir}/modules/private/apps/sharepoint/sharepoint-hook" task="deploy">
+						<arg value="clean" />
+					</gradle-execute>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="rsync">
 		<attribute name="rsync.dest" />
 		<attribute name="rsync.src" />
@@ -8898,141 +9040,9 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<equals arg1="${cmis.repository.type}" arg2="sharepoint2013" />
 			</or>
 			<then>
-				<local name="cmis.repository.lease.time" />
-
-				<property name="cmis.repository.lease.time" value="1200000" />
-
-				<beanshell>
-					<![CDATA[
-						import org.json.JSONObject;
-
-						public JSONObject toJSONObject(String url) {
-							return new JSONObject(toString(url));
-						}
-
-						public String toString(String url) {
-							int retryCount = 0;
-
-							while (true) {
-								try {
-									System.out.println("Downloading URL " + url);
-
-									StringBuilder sb = new StringBuilder();
-
-									URL urlObject = new URL(url);
-
-									HttpURLConnection httpURLConnection = (HttpURLConnection)urlObject.openConnection();
-
-									httpURLConnection.setRequestMethod("GET");
-									httpURLConnection.setRequestProperty("Content-Type", "application/json");
-
-									InputStream inputStream = httpURLConnection.getInputStream();
-
-									InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-
-									BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-									String line = null;
-
-									while ((line = bufferedReader.readLine()) != null) {
-										sb.append(line);
-									}
-
-									bufferedReader.close();
-
-									System.out.println(sb.toString());
-
-									return sb.toString();
-								}
-								catch (Exception e) {
-									if (retryCount >= 5) {
-										throw e;
-									}
-
-									System.out.println("Retry in 5 seconds: " + e.getMessage());
-
-									retryCount++;
-
-									Thread.sleep(5000);
-								}
-							}
-						}
-
-						String cmisRepositoryLeaseTime = project.getProperty("cmis.repository.lease.time");
-						String cmisRepositoryType = project.getProperty("cmis.repository.type");
-						String cmisRepositoryVMHostName = "";
-						int minutes = 0;
-
-						StringBuilder sb = new StringBuilder();
-
-						sb.append("http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=");
-						sb.append(cmisRepositoryLeaseTime);
-						sb.append("&resourceType=qa.");
-						sb.append(cmisRepositoryType);
-
-						while (true) {
-							JSONObject jsonObject = toJSONObject(sb.toString());
-
-							if (minutes >= 30) {
-								throw new Exception("No available CMIS servers");
-							}
-
-							if (!jsonObject.has("hostname")) {
-								System.out.println("Waiting for next available CMIS server: " + cmisRepositoryType);
-
-								Thread.sleep(60000);
-
-								minutes++;
-
-								continue;
-							}
-
-							cmisRepositoryVMHostName = jsonObject.get("hostname");
-
-							break;
-						}
-
-						System.out.println("Borrowing " + cmisRepositoryVMHostName);
-
-						project.setProperty("cmis.repository.vm.host.name", cmisRepositoryVMHostName);
-					]]>
-				</beanshell>
-
-				<if>
-					<equals arg1="${cmis.repository.type}" arg2="documentum6" />
-					<then>
-						<replace
-							file="${project.dir}/modules/private/apps/documentum/documentum-hook/docroot/WEB-INF/src/dfc.properties"
-							token="dfc.docbroker.host[0]=localhost"
-							value="dfc.docbroker.host[0]=${cmis.repository.vm.host.name}"
-						/>
-					</then>
-				</if>
-
-				<if>
-					<equals arg1="${cmis.repository.type}" arg2="documentum6" />
-					<then>
-						<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
-
-						<gradle-execute dir="${project.dir}/modules/private/apps/documentum/documentum-hook" task="deploy">
-							<arg value="clean" />
-						</gradle-execute>
-					</then>
-				</if>
-
-				<if>
-					<or>
-						<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
-						<equals arg1="${cmis.repository.type}" arg2="sharepoint2013" />
-					</or>
-					<then>
-						<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
-
-						<gradle-execute dir="${project.dir}/modules/private/apps/sharepoint/sharepoint-hook" task="deploy">
-							<arg value="clean" />
-						</gradle-execute>
-					</then>
-				</if>
+				<request-cmis-repository-vm
+					cmis.repository.type="${cmis.repository.type}"
+				/>
 			</then>
 		</if>
 

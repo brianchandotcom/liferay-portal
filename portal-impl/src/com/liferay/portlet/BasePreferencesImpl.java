@@ -92,12 +92,11 @@ public abstract class BasePreferencesImpl implements Serializable {
 			values = preference.getValues();
 		}
 
-		if (!isNull(values)) {
-			return getActualValue(values[0]);
-		}
-		else {
+		if (isNull(values)) {
 			return getActualValue(def);
 		}
+
+		return getActualValue(values[0]);
 	}
 
 	public String[] getValues(String key, String[] def) {
@@ -115,12 +114,11 @@ public abstract class BasePreferencesImpl implements Serializable {
 			values = preference.getValues();
 		}
 
-		if (!isNull(values)) {
-			return getActualValues(values);
-		}
-		else {
+		if (isNull(values)) {
 			return getActualValues(def);
 		}
+
+		return getActualValues(values);
 	}
 
 	public boolean isReadOnly(String key) {

@@ -158,42 +158,6 @@
 	</attribute>
 </tag>
 <tag>
-	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-tags-selector</code>]]>.</description>
-	<name>asset-tags-navigation</name>
-	<tag-class>com.liferay.taglib.ui.AssetTagsNavigationTag</tag-class>
-	<body-content>JSP</body-content>
-	<attribute>
-		<name>classNameId</name>
-		<required>false</required>
-		<rtexprvalue>true</rtexprvalue>
-	</attribute>
-	<attribute>
-		<name>displayStyle</name>
-		<required>false</required>
-		<rtexprvalue>true</rtexprvalue>
-	</attribute>
-	<attribute>
-		<name>hidePortletWhenEmpty</name>
-		<required>false</required>
-		<rtexprvalue>true</rtexprvalue>
-	</attribute>
-	<attribute>
-		<name>maxAssetTags</name>
-		<required>false</required>
-		<rtexprvalue>true</rtexprvalue>
-	</attribute>
-	<attribute>
-		<name>showAssetCount</name>
-		<required>false</required>
-		<rtexprvalue>true</rtexprvalue>
-	</attribute>
-	<attribute>
-		<name>showZeroAssetCount</name>
-		<required>false</required>
-		<rtexprvalue>true</rtexprvalue>
-	</attribute>
-</tag>
-<tag>
 	<description>Deprecated as of 7.0.0, with no direct replacement. Creates a calendar with configurable events.</description>
 	<name>calendar</name>
 	<tag-class>com.liferay.taglib.ui.CalendarTag</tag-class>

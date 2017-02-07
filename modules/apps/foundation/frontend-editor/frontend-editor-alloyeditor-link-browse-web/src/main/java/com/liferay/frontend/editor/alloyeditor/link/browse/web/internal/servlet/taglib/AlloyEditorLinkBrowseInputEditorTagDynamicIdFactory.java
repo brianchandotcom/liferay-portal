@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"tagClassName=com.liferay.taglib.ui.InputEditorTag"},
 	service = TagDynamicIdFactory.class
 )
-public class AlloyEditorLinkBrowseDynamicIdFactory
+public class AlloyEditorLinkBrowseInputEditorTagDynamicIdFactory
 	implements TagDynamicIdFactory {
 
 	@Override

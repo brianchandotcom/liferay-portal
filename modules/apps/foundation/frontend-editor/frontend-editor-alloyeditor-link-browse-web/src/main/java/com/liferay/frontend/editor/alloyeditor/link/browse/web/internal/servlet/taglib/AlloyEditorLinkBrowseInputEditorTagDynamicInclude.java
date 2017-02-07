@@ -34,7 +34,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ambrín Chaudhary
  */
 @Component(immediate = true, service = TagDynamicInclude.class)
-public class AlloyEditorLinkBrowseDynamicInclude implements TagDynamicInclude {
+public class AlloyEditorLinkBrowseInputEditorTagDynamicInclude
+	implements TagDynamicInclude {
 
 	@Activate
 	public void activate() {

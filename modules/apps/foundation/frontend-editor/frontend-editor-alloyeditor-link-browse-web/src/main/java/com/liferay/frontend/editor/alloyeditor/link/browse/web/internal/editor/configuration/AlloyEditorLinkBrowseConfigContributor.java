@@ -73,9 +73,10 @@ public class AlloyEditorLinkBrowseConfigContributor
 		JSONArray selectionsJSONArray = stylesJSONObject.getJSONArray(
 			"selections");
 
-		for (int i = 0; i < selectionsJSONArray.length(); i++) {
-			JSONObject selectionJSONObject = selectionsJSONArray.getJSONObject(
-				i);
+		if (selectionsJSONArray != null) {
+			for (int i = 0; i < selectionsJSONArray.length(); i++) {
+				JSONObject selectionJSONObject =
+					selectionsJSONArray.getJSONObject(i);
 
 			if (Objects.equals(selectionJSONObject.get("name"), "text") ||
 				Objects.equals(selectionJSONObject.get("name"), "link")) {
@@ -85,9 +86,9 @@ public class AlloyEditorLinkBrowseConfigContributor
 				selectionJSONObject.put(
 					"buttons", updateButtonsJSONArray(buttonsJSONArray));
 			}
-		}
 
-		stylesJSONObject.put("selections", selectionsJSONArray);
+			stylesJSONObject.put("selections", selectionsJSONArray);
+		}
 
 		toolbarsJSONObject.put("styles", stylesJSONObject);
 

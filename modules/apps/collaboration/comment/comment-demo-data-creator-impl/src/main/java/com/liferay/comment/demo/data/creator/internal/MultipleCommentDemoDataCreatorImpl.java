@@ -19,9 +19,13 @@ import com.liferay.comment.demo.data.creator.MultipleCommentDemoDataCreator;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.security.RandomUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,10 +38,15 @@ public class MultipleCommentDemoDataCreatorImpl
 	implements MultipleCommentDemoDataCreator {
 
 	@Override
-	public void create(List<Long> userIds, ClassedModel classedModel)
-		throws PortalException {
-
+	public void create(ClassedModel classedModel) throws PortalException {
 		int commentsCount = RandomUtil.nextInt(_MAX_COMMENTS);
+
+		int totalUsers = _userLocalService.getUsersCount();
+
+		List<Long> userIds =
+			_userLocalService.getUsers(0, totalUsers).stream().filter(
+				user -> !_excludedUsers.contains(user.getEmailAddress())).map(
+				UserModel::getUserId).collect(Collectors.toList());
 
 		_addComments(userIds, classedModel, _ROOT_COMMENT, commentsCount, 1);
 	}
@@ -45,6 +54,11 @@ public class MultipleCommentDemoDataCreatorImpl
 	@Override
 	public void delete() throws PortalException {
 		_commentDemoDataCreator.delete();
+	}
+
+	@Reference(unbind = "-")
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -102,6 +116,14 @@ public class MultipleCommentDemoDataCreatorImpl
 
 	private static final int _ROOT_COMMENT = 0;
 
+	private static final List<String> _excludedUsers = new ArrayList<>();
+
+	static {
+		_excludedUsers.add("test@liferay.com");
+		_excludedUsers.add("default@liferay.com");
+	}
+
 	private CommentDemoDataCreator _commentDemoDataCreator;
+	private UserLocalService _userLocalService;
 
 }

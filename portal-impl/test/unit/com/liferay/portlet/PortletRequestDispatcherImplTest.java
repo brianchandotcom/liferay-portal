@@ -128,10 +128,6 @@ public class PortletRequestDispatcherImplTest {
 		portletRequestDispatcher.include(_portletRequest, _portletResponse);
 	}
 
-	static {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-	}
-
 	private static final Portlet _portlet = new PortletImpl() {
 
 		@Override
@@ -181,6 +177,10 @@ public class PortletRequestDispatcherImplTest {
 			}
 
 		};
+
+	static {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+	}
 
 	private static class TestPortletRequest extends RenderRequestImpl {
 

@@ -19,12 +19,6 @@
 <%
 String redirect = request.getParameter("redirect");
 
-String workflowEnabledRedirect = ParamUtil.getString(request, "workflowEnabledRedirect");
-
-if (workflowEnabledRedirect != null) {
-	redirect = workflowEnabledRedirect;
-}
-
 redirect = PortalUtil.escapeRedirect(redirect);
 
 Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());

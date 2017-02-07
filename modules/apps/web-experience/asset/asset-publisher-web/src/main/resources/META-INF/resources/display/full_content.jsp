@@ -53,12 +53,8 @@ assetPublisherDisplayContext.setLayoutAssetEntry(assetEntry);
 
 assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 
-request.setAttribute("view.jsp-fullContentRedirect", currentURL);
+request.setAttribute("view.jsp-fullContentRedirect", workflowEnabled ? redirect : currentURL);
 request.setAttribute("view.jsp-showIconLabel", true);
-
-if (workflowEnabled) {
-	request.setAttribute("view.jsp-workflowEnabledRedirect", redirect);
-}
 %>
 
 <div class="h2">

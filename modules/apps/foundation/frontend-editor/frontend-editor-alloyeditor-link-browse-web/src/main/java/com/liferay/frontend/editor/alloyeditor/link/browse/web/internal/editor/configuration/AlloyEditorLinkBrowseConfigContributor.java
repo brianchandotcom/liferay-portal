@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -78,13 +77,15 @@ public class AlloyEditorLinkBrowseConfigContributor
 				JSONObject selectionJSONObject =
 					selectionsJSONArray.getJSONObject(i);
 
-			if (Objects.equals(selectionJSONObject.get("name"), "text") ||
-				Objects.equals(selectionJSONObject.get("name"), "link")) {
-				JSONArray buttonsJSONArray = selectionJSONObject.getJSONArray(
-					"buttons");
+				String name = selectionJSONObject.getString("name");
 
-				selectionJSONObject.put(
-					"buttons", updateButtonsJSONArray(buttonsJSONArray));
+				if (name.equals("text") || name.equals("link")) {
+					JSONArray buttonsJSONArray =
+						selectionJSONObject.getJSONArray("buttons");
+
+					selectionJSONObject.put(
+						"buttons", updateButtonsJSONArray(buttonsJSONArray));
+				}
 			}
 
 			stylesJSONObject.put("selections", selectionsJSONArray);

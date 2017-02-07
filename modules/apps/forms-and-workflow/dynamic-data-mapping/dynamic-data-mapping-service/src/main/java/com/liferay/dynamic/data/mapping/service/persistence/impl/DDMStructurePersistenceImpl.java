@@ -8738,6 +8738,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_N_D = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_N_D",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName()
+			});
 
 	/**
 	 * Returns all the ddm structures where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
@@ -9715,6 +9722,453 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
+	 * Returns all the ddm structures that the user has permission to view where groupId = any &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param name the name
+	 * @param description the description
+	 * @return the matching ddm structures that the user has permission to view
+	 */
+	@Override
+	public List<DDMStructure> filterFindByG_C_N_D(long[] groupIds,
+		long classNameId, String name, String description) {
+		return filterFindByG_C_N_D(groupIds, classNameId, name, description,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the ddm structures that the user has permission to view where groupId = any &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param name the name
+	 * @param description the description
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures that the user has permission to view
+	 */
+	@Override
+	public List<DDMStructure> filterFindByG_C_N_D(long[] groupIds,
+		long classNameId, String name, String description, int start, int end) {
+		return filterFindByG_C_N_D(groupIds, classNameId, name, description,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm structures that the user has permission to view where groupId = any &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param name the name
+	 * @param description the description
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm structures that the user has permission to view
+	 */
+	@Override
+	public List<DDMStructure> filterFindByG_C_N_D(long[] groupIds,
+		long classNameId, String name, String description, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+			return findByG_C_N_D(groupIds, classNameId, name, description,
+				start, end, orderByComparator);
+		}
+
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else if (groupIds.length > 1) {
+			groupIds = ArrayUtil.unique(groupIds);
+
+			Arrays.sort(groupIds);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DDMSTRUCTURE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		if (groupIds.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_G_C_N_D_GROUPID_7);
+
+			query.append(StringUtil.merge(groupIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_N_D_CLASSNAMEID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_C_N_D_NAME_1);
+		}
+		else if (name.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_C_N_D_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_C_N_D_NAME_2);
+		}
+
+		boolean bindDescription = false;
+
+		if (description == null) {
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_1);
+		}
+		else if (description.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3);
+		}
+		else {
+			bindDescription = true;
+
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(DDMStructureModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(DDMStructureModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				DDMStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, DDMStructureImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, DDMStructureImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+
+			if (bindName) {
+				qPos.add(name);
+			}
+
+			if (bindDescription) {
+				qPos.add(description);
+			}
+
+			return (List<DDMStructure>)QueryUtil.list(q, getDialect(), start,
+				end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns all the ddm structures where groupId = any &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param name the name
+	 * @param description the description
+	 * @return the matching ddm structures
+	 */
+	@Override
+	public List<DDMStructure> findByG_C_N_D(long[] groupIds, long classNameId,
+		String name, String description) {
+		return findByG_C_N_D(groupIds, classNameId, name, description,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the ddm structures where groupId = any &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param name the name
+	 * @param description the description
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures
+	 */
+	@Override
+	public List<DDMStructure> findByG_C_N_D(long[] groupIds, long classNameId,
+		String name, String description, int start, int end) {
+		return findByG_C_N_D(groupIds, classNameId, name, description, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm structures where groupId = any &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param name the name
+	 * @param description the description
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm structures
+	 */
+	@Override
+	public List<DDMStructure> findByG_C_N_D(long[] groupIds, long classNameId,
+		String name, String description, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator) {
+		return findByG_C_N_D(groupIds, classNameId, name, description, start,
+			end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm structures where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param name the name
+	 * @param description the description
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching ddm structures
+	 */
+	@Override
+	public List<DDMStructure> findByG_C_N_D(long[] groupIds, long classNameId,
+		String name, String description, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean retrieveFromCache) {
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else if (groupIds.length > 1) {
+			groupIds = ArrayUtil.unique(groupIds);
+
+			Arrays.sort(groupIds);
+		}
+
+		if (groupIds.length == 1) {
+			return findByG_C_N_D(groupIds[0], classNameId, name, description,
+				start, end, orderByComparator);
+		}
+
+		boolean pagination = true;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderArgs = new Object[] {
+					StringUtil.merge(groupIds), classNameId, name, description
+				};
+		}
+		else {
+			finderArgs = new Object[] {
+					StringUtil.merge(groupIds), classNameId, name, description,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<DDMStructure> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<DDMStructure>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_N_D,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if (!ArrayUtil.contains(groupIds, ddmStructure.getGroupId()) ||
+							(classNameId != ddmStructure.getClassNameId()) ||
+							!Objects.equals(name, ddmStructure.getName()) ||
+							!Objects.equals(description,
+								ddmStructure.getDescription())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_DDMSTRUCTURE_WHERE);
+
+			if (groupIds.length > 0) {
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				query.append(_FINDER_COLUMN_G_C_N_D_GROUPID_7);
+
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_G_C_N_D_CLASSNAMEID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_C_N_D_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_N_D_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_C_N_D_NAME_2);
+			}
+
+			boolean bindDescription = false;
+
+			if (description == null) {
+				query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_1);
+			}
+			else if (description.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3);
+			}
+			else {
+				bindDescription = true;
+
+				query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2);
+			}
+
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(DDMStructureModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(classNameId);
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				if (bindDescription) {
+					qPos.add(description);
+				}
+
+				if (!pagination) {
+					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_N_D,
+					finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_N_D,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
 	 * Removes all the ddm structures where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -9829,6 +10283,126 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
+	 * Returns the number of ddm structures where groupId = any &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param name the name
+	 * @param description the description
+	 * @return the number of matching ddm structures
+	 */
+	@Override
+	public int countByG_C_N_D(long[] groupIds, long classNameId, String name,
+		String description) {
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else if (groupIds.length > 1) {
+			groupIds = ArrayUtil.unique(groupIds);
+
+			Arrays.sort(groupIds);
+		}
+
+		Object[] finderArgs = new Object[] {
+				StringUtil.merge(groupIds), classNameId, name, description
+			};
+
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_N_D,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_COUNT_DDMSTRUCTURE_WHERE);
+
+			if (groupIds.length > 0) {
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				query.append(_FINDER_COLUMN_G_C_N_D_GROUPID_7);
+
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_G_C_N_D_CLASSNAMEID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_C_N_D_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_N_D_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_C_N_D_NAME_2);
+			}
+
+			boolean bindDescription = false;
+
+			if (description == null) {
+				query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_1);
+			}
+			else if (description.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3);
+			}
+			else {
+				bindDescription = true;
+
+				query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2);
+			}
+
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(classNameId);
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				if (bindDescription) {
+					qPos.add(description);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_N_D,
+					finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_N_D,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
 	 * Returns the number of ddm structures that the user has permission to view where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -9920,7 +10494,122 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		}
 	}
 
+	/**
+	 * Returns the number of ddm structures that the user has permission to view where groupId = any &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param name the name
+	 * @param description the description
+	 * @return the number of matching ddm structures that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_C_N_D(long[] groupIds, long classNameId,
+		String name, String description) {
+		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+			return countByG_C_N_D(groupIds, classNameId, name, description);
+		}
+
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else if (groupIds.length > 1) {
+			groupIds = ArrayUtil.unique(groupIds);
+
+			Arrays.sort(groupIds);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_DDMSTRUCTURE_WHERE);
+
+		if (groupIds.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_G_C_N_D_GROUPID_7);
+
+			query.append(StringUtil.merge(groupIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_N_D_CLASSNAMEID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_C_N_D_NAME_1);
+		}
+		else if (name.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_C_N_D_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_C_N_D_NAME_2);
+		}
+
+		boolean bindDescription = false;
+
+		if (description == null) {
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_1);
+		}
+		else if (description.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_3);
+		}
+		else {
+			bindDescription = true;
+
+			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				DDMStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+
+			if (bindName) {
+				qPos.add(name);
+			}
+
+			if (bindDescription) {
+				qPos.add(description);
+			}
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	private static final String _FINDER_COLUMN_G_C_N_D_GROUPID_2 = "ddmStructure.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_N_D_GROUPID_7 = "ddmStructure.groupId IN (";
 	private static final String _FINDER_COLUMN_G_C_N_D_CLASSNAMEID_2 = "ddmStructure.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_N_D_NAME_1 = "ddmStructure.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_C_N_D_NAME_2 = "ddmStructure.name = ? AND ";

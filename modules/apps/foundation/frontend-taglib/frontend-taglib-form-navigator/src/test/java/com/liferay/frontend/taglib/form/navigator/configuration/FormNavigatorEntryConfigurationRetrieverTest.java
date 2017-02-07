@@ -305,6 +305,31 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
+	public static class WhenThereIsNoConfigAtAll {
+
+		@Before
+		public void setUp() throws InvalidSyntaxException, IOException {
+			Mockito.when(
+				_configurationAdmin.listConfigurations(
+					"(service.factoryPid=" +
+						FormNavigatorConfiguration.class.getName() +
+							")")).thenReturn(null);
+
+			_formNavigatorEntryConfigurationRetriever.setConfigurationAdmin(
+				_configurationAdmin);
+		}
+
+		@Test
+		public void testReturnsEmptyOptional() {
+			Optional<List<String>> formNavigatorEntryKeys =
+				_formNavigatorEntryConfigurationRetriever.
+					getFormNavigatorEntryKeys("form1", "general", "add");
+
+			Assert.assertFalse(formNavigatorEntryKeys.isPresent());
+		}
+
+	}
+
 	public static class WhenThereIsOneConfigurationWithTwoLinesForSameTarget {
 
 		@Before

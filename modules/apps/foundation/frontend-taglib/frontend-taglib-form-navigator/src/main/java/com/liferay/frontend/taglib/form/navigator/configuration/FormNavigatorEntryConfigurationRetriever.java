@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.form.navigator.configuration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -90,7 +91,7 @@ public class FormNavigatorEntryConfigurationRetriever {
 			"(service.factoryPid=" +
 				FormNavigatorConfiguration.class.getName() + ")");
 
-		return Arrays.stream(configurations).map(
+		return ListUtil.toList(configurations).stream().map(
 			configuration -> ConfigurableUtil.createConfigurable(
 				FormNavigatorConfiguration.class,
 				configuration.getProperties())).collect(Collectors.toList());

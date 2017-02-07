@@ -612,7 +612,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleTitle" value="aleoSubmitRole Name" />
+			<var name="roleTitle" value="KaleoSubmitRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -632,7 +632,7 @@
 			<var name="permissionDefinitionValue" value="Submit" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleTitle" value="aleoSubmitRole Name" />
+			<var name="roleTitle" value="KaleoSubmitRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -644,7 +644,7 @@
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleTitle" value="aleoSubmitRole Name" />
+			<var name="roleTitle" value="KaleoSubmitRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -656,7 +656,7 @@
 			<var name="permissionDefinitionValue" value="Access in Site Administration" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleTitle" value="aleoSubmitRole Name" />
+			<var name="roleTitle" value="KaleoSubmitRole Name" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -742,7 +742,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleTitle" value="aleoSubmitRole Name" />
+			<var name="roleTitle" value="KaleoSubmitRole Name" />
 			<var name="userScreenName" value="kaloesubmitter" />
 		</execute>
 

@@ -106,15 +106,6 @@ public class AlloyEditorLinkBrowseConfigContributor
 			namespace + name + "selectDocument");
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
-	protected ItemSelector getItemSelector() {
-		return _itemSelector;
-	}
-
 	protected void populateFileBrowserURL(
 		JSONObject jsonObject,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
@@ -135,6 +126,11 @@ public class AlloyEditorLinkBrowseConfigContributor
 			requestBackedPortletURLFactory, eventName, itemSelectorCriterion);
 
 		jsonObject.put("documentBrowseLinkUrl", itemSelectorURL.toString());
+	}
+
+	@Reference(unbind = "-")
+	protected void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
 	}
 
 	protected JSONArray updateButtonsJSONArray(JSONArray oldButtonsJSONArray) {

@@ -34,8 +34,18 @@ import org.junit.Assert;
 public class FieldMappingAssert {
 
 	public static void assertAnalyzer(
-			final String analyzer, final String field, final String type,
-			final String index, final IndicesAdminClient indicesAdminClient)
+			String expectedValue, String field, String type, String index,
+			IndicesAdminClient indicesAdminClient)
+		throws Exception {
+
+		assertFieldMappingMetaData(
+			expectedValue, "analyzer", field, type, index, indicesAdminClient);
+	}
+
+	public static void assertFieldMappingMetaData(
+			final String expectedValue, final String key, final String field,
+			final String type, final String index,
+			final IndicesAdminClient indicesAdminClient)
 		throws Exception {
 
 		IdempotentRetryAssert.retryAssert(
@@ -44,11 +54,9 @@ public class FieldMappingAssert {
 
 				@Override
 				public Void call() throws Exception {
-					FieldMappingMetaData fieldMappingMetaData = getFieldMapping(
-						field, type, index, indicesAdminClient);
-
-					Assert.assertEquals(
-						analyzer, getAnalyzer(fieldMappingMetaData, field));
+					doAssertFieldMappingMetaData(
+						expectedValue, key, field, type, index,
+						indicesAdminClient);
 
 					return null;
 				}
@@ -56,18 +64,29 @@ public class FieldMappingAssert {
 			});
 	}
 
-	@SuppressWarnings("unchecked")
-	public static String getAnalyzer(
-		FieldMappingMetaData fieldMappingMetaData, String field) {
+	public static void assertType(
+			String expectedValue, String field, String type, String index,
+			IndicesAdminClient indicesAdminClient)
+		throws Exception {
 
-		Map<String, Object> mappings = fieldMappingMetaData.sourceAsMap();
-
-		Map<String, Object> mapping = (Map<String, Object>)mappings.get(field);
-
-		return (String)mapping.get("analyzer");
+		assertFieldMappingMetaData(
+			expectedValue, "type", field, type, index, indicesAdminClient);
 	}
 
-	public static FieldMappingMetaData getFieldMapping(
+	protected static void doAssertFieldMappingMetaData(
+		String expectedValue, String key, String field, String type,
+		String index, IndicesAdminClient indicesAdminClient) {
+
+		FieldMappingMetaData fieldMappingMetaData = getFieldMapping(
+			field, type, index, indicesAdminClient);
+
+		String value = getFieldMappingMetaDataValue(
+			fieldMappingMetaData, field, key);
+
+		Assert.assertEquals(expectedValue, value);
+	}
+
+	protected static FieldMappingMetaData getFieldMapping(
 		String field, String type, String index,
 		IndicesAdminClient indicesAdminClient) {
 
@@ -81,6 +100,17 @@ public class FieldMappingAssert {
 			getFieldMappingsRequestBuilder.get();
 
 		return getFieldMappingsResponse.fieldMappings(index, type, field);
+	}
+
+	@SuppressWarnings("unchecked")
+	protected static String getFieldMappingMetaDataValue(
+		FieldMappingMetaData fieldMappingMetaData, String field, String key) {
+
+		Map<String, Object> mappings = fieldMappingMetaData.sourceAsMap();
+
+		Map<String, Object> mapping = (Map<String, Object>)mappings.get(field);
+
+		return (String)mapping.get(key);
 	}
 
 }

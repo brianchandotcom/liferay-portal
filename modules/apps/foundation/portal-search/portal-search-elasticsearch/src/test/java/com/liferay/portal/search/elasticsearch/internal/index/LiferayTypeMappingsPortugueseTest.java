@@ -31,13 +31,14 @@ import org.junit.rules.TestName;
 /**
  * @author André de Oliveira
  */
-public class LiferayTypeMappingsTest {
+public class LiferayTypeMappingsPortugueseTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Class<?> clazz = getClass();
+
 		_liferayIndexFixture = new LiferayIndexFixture(
-			LiferayTypeMappingsTest.class.getSimpleName(),
-			new IndexName(testName.getMethodName()));
+			clazz.getSimpleName(), new IndexName(testName.getMethodName()));
 
 		_liferayIndexFixture.setUp();
 

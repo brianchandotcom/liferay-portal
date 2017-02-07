@@ -505,11 +505,11 @@ public class SubscriptionSender implements Serializable {
 
 		public interface Event<S> {
 
-			public static final Event<Subscription> PERSISTED_SUBSCRIBER_FOUND =
-				new Event<Subscription>() {};
-
 			public static final Event<MailMessage> MAIL_MESSAGE_CREATED =
 				new Event<MailMessage>() {};
+
+			public static final Event<Subscription> PERSISTED_SUBSCRIBER_FOUND =
+				new Event<Subscription>() {};
 
 		}
 
@@ -993,9 +993,7 @@ public class SubscriptionSender implements Serializable {
 			localizedPortletTitleMap, locale, portletName);
 	}
 
-	private <T> void _notifyHooks(
-		Hook.Event<T> event, T payload) {
-
+	private <T> void _notifyHooks(Hook.Event<T> event, T payload) {
 		List<Hook<T>> hooks = _getHooks(event);
 
 		hooks.forEach(hook -> hook.process(payload));
@@ -1039,8 +1037,7 @@ public class SubscriptionSender implements Serializable {
 	private String _contextCreatorUserPrefix;
 	private String _entryTitle;
 	private String _entryURL;
-	private final Map<Hook.Event<?>, List<Hook<?>>> _hooks =
-		new HashMap<>();
+	private final Map<Hook.Event<?>, List<Hook<?>>> _hooks = new HashMap<>();
 	private boolean _initialized;
 	private final Map<String, EscapableLocalizableFunction> _localizedContext =
 		new HashMap<>();

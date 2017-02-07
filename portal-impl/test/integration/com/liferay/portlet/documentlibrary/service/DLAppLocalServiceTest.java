@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -118,6 +120,52 @@ public class DLAppLocalServiceTest {
 
 			Assert.assertTrue(folder != null);
 		}
+
+		@DeleteAfterTestRun
+		private Group _group;
+
+	}
+
+	@Sync
+	public static class WhenDeletingAFolder {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(),
+				SynchronousDestinationTestRule.INSTANCE);
+
+		@Before
+		public void setUp() throws Exception {
+			_group = GroupTestUtil.addGroup();
+
+			_folder = addFolder(_group.getGroupId(), true);
+		}
+
+		@Test
+		public void shouldDeleteSubscriptions() throws Exception {
+			DLAppLocalServiceUtil.subscribeFolder(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_folder.getFolderId());
+
+			Subscription subscription =
+				SubscriptionLocalServiceUtil.fetchSubscription(
+					_group.getCompanyId(), TestPropsValues.getUserId(),
+					DLFolderConstants.getClassName(), _folder.getFolderId());
+
+			Assert.assertNotNull(subscription);
+
+			DLAppLocalServiceUtil.deleteFolder(_folder.getFolderId());
+
+			subscription = SubscriptionLocalServiceUtil.fetchSubscription(
+				_group.getCompanyId(), TestPropsValues.getUserId(),
+				DLFolderConstants.getClassName(), _folder.getFolderId());
+
+			Assert.assertNull(subscription);
+		}
+
+		private Folder _folder;
 
 		@DeleteAfterTestRun
 		private Group _group;

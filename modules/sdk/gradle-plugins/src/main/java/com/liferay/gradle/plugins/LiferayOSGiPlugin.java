@@ -136,6 +136,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	public void apply(final Project project) {
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
 
+		LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
 		final LiferayOSGiExtension liferayOSGiExtension =
 			GradleUtil.addExtension(
 				project, PLUGIN_NAME, LiferayOSGiExtension.class);
@@ -152,6 +155,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		_configureArchivesBaseName(project);
 		_configureDescription(project);
+		_configureLiferay(project, liferayExtension);
 		_configureSourceSetMain(project);
 		_configureTaskClean(project);
 		_configureTaskJar(project);
@@ -794,6 +798,25 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		if (Validator.isNotNull(description)) {
 			project.setDescription(description);
 		}
+	}
+
+	private void _configureLiferay(
+		final Project project, final LiferayExtension liferayExtension) {
+
+		liferayExtension.setDeployDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					File dir = new File(
+						liferayExtension.getAppServerParentDir(),
+						"osgi/modules");
+
+					return GradleUtil.getProperty(
+						project, "auto.deploy.dir", dir);
+				}
+
+			});
 	}
 
 	private void _configureSourceSetMain(Project project) {

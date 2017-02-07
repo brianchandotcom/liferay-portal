@@ -57,8 +57,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	public static final String FIND_BY_RESOURCE_BLOCK_ID =
 		InlineSQLHelper.class.getName() + ".findByResourceBlockId";
 
-	public static final String JOIN_RESOURCE_PERMISSION =
-		InlineSQLHelper.class.getName() + ".joinResourcePermission";
+	public static final String FIND_BY_RESOURCE_PERMISSION =
+		InlineSQLHelper.class.getName() + ".findByResourcePermission";
 
 	@Override
 	public boolean isEnabled() {
@@ -324,6 +324,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	protected long[] getRoleIds(long[] groupIds) {
+		if (groupIds.length == 1) {
+			return getRoleIds(groupIds[0]);
+		}
+
 		Set<Long> roleIds = new HashSet<>();
 
 		for (long groupId : groupIds) {
@@ -339,42 +343,42 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		PermissionChecker permissionChecker, long[] groupIds,
 		String userIdField) {
 
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringPool.OPEN_PARENTHESIS);
-
-		sb.append("ResourcePermission.roleId IN (");
+		StringBundler sb = new StringBundler(9);
 
 		long[] roleIds = getRoleIds(groupIds);
 
-		if (roleIds.length == 0) {
-			roleIds = _NO_ROLE_IDS;
+		if (roleIds.length > 0) {
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append("ResourcePermission.roleId IN (");
+			sb.append(StringUtil.merge(roleIds));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 		}
 
-		sb.append(StringUtil.merge(roleIds));
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
 		if (permissionChecker.isSignedIn()) {
-			sb.append(" OR ");
+			if (roleIds.length > 0) {
+				sb.append(" OR ");
+			}
+			else {
+				sb.append(StringPool.OPEN_PARENTHESIS);
+			}
 
 			long userId = permissionChecker.getUserId();
 
-			if (Validator.isNotNull(userIdField)) {
-				sb.append(StringPool.OPEN_PARENTHESIS);
+			if (Validator.isNull(userIdField)) {
+				sb.append("ResourcePermission.ownerId = ");
+				sb.append(userId);
+			}
+			else {
 				sb.append(userIdField);
 				sb.append(" = ");
 				sb.append(userId);
-				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
-			else {
-				sb.append("(ResourcePermission.ownerId = ");
-				sb.append(userId);
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
-		}
 
-		sb.append(StringPool.CLOSE_PARENTHESIS);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+		else if (roleIds.length > 0) {
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
 
 		return sb.toString();
 	}
@@ -564,12 +568,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 								companyId, className,
 								ResourceConstants.SCOPE_GROUP,
 								String.valueOf(groupId), roleIds,
-								ActionKeys.VIEW)) {
-
-						return sql;
-					}
-
-					if (ResourcePermissionLocalServiceUtil.
+								ActionKeys.VIEW) ||
+						ResourcePermissionLocalServiceUtil.
 							hasResourcePermission(
 								companyId, className,
 								ResourceConstants.SCOPE_GROUP_TEMPLATE,
@@ -634,127 +634,114 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			}
 		}
 
-		String permissionJoin = StringPool.BLANK;
+		String permissionQuery = CustomSQLUtil.get(FIND_BY_RESOURCE_PERMISSION);
 
 		if (Validator.isNotNull(bridgeJoin)) {
-			permissionJoin = bridgeJoin;
-		}
-
-		permissionJoin += CustomSQLUtil.get(JOIN_RESOURCE_PERMISSION);
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append("((ResourcePermission.primKeyId = ");
-		sb.append(classPKField);
-
-		if (Validator.isNotNull(groupIdField) && (groupIds.length > 0)) {
-			sb.append(") AND (");
-
-			sb.append(groupIdField);
-
-			if (groupIds.length > 1) {
-				sb.append(" IN (");
-				sb.append(StringUtil.merge(groupIds));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
-			else {
-				sb.append(" = ");
-				sb.append(groupIds[0]);
-			}
-		}
-
-		sb.append("))");
-
-		StringBundler groupAdminResourcePermissionSB = new StringBundler(3);
-
-		if (Validator.isNotNull(groupIdField) && (groupIds.length > 1)) {
-			boolean groupAdmin = false;
-
-			StringBundler sb1 = new StringBundler(4);
-
-			sb1.append("(ResourcePermission.primKeyId = 0) AND ");
-			sb1.append("(ResourcePermission.roleId = ");
-			sb1.append(permissionChecker.getOwnerRoleId());
-			sb1.append(")");
-
-			StringBundler sb2 = new StringBundler(groupIds.length);
-
-			sb2.append(groupIdField);
-			sb2.append(" IN (");
-
-			for (int i = 0; i < groupIds.length; i++) {
-				if (!isEnabled(0, groupIds[i])) {
-					sb2.append(groupIds[i]);
-					sb2.append(", ");
-
-					groupAdmin = true;
-				}
-			}
-
-			sb2.setIndex(sb2.index() - 1);
-
-			sb2.append(")");
-
-			if (groupAdmin) {
-				groupAdminResourcePermissionSB.append(sb1);
-				groupAdminResourcePermissionSB.append(" AND ");
-				groupAdminResourcePermissionSB.append(sb2);
-			}
-			else {
-				groupAdminResourcePermissionSB.append("[$FALSE$] <> [$FALSE$]");
-			}
-		}
-		else {
-			groupAdminResourcePermissionSB.append("[$FALSE$] <> [$FALSE$]");
+			permissionQuery = bridgeJoin.concat(permissionQuery);
 		}
 
 		String roleIdsOrOwnerIdSQL = getRoleIdsOrOwnerIdSQL(
 			permissionChecker, groupIds, userIdField);
 
+		StringBundler groupAdminResourcePermissionSB = null;
+
+		for (long groupId : groupIds) {
+			if (!isEnabled(groupId)) {
+				groupAdminResourcePermissionSB = new StringBundler(5);
+
+				if (!roleIdsOrOwnerIdSQL.isEmpty()) {
+					groupAdminResourcePermissionSB.append(" OR ");
+				}
+
+				groupAdminResourcePermissionSB.append(
+					"((ResourcePermission.primKeyId = 0) AND ");
+
+				groupAdminResourcePermissionSB.append(
+					"(ResourcePermission.roleId = ");
+
+				groupAdminResourcePermissionSB.append(
+					permissionChecker.getOwnerRoleId());
+
+				groupAdminResourcePermissionSB.append("))");
+
+				break;
+			}
+		}
+
 		int scope = ResourceConstants.SCOPE_INDIVIDUAL;
 
-		permissionJoin = StringUtil.replace(
-			permissionJoin,
+		String groupAdminSQL = StringPool.BLANK;
+
+		if (groupAdminResourcePermissionSB != null) {
+			groupAdminSQL = groupAdminResourcePermissionSB.toString();
+		}
+
+		permissionQuery = StringUtil.replace(
+			permissionQuery,
 			new String[] {
 				"[$CLASS_NAME$]", "[$COMPANY_ID$]",
-				"[$GROUP_ADMIN_RESOURCE_PERMISSION$]", "[$PRIM_KEYS$]",
+				"[$GROUP_ADMIN_RESOURCE_PERMISSION$]",
 				"[$RESOURCE_SCOPE_INDIVIDUAL$]", "[$ROLE_IDS_OR_OWNER_ID$]"
 			},
 			new String[] {
-				className, String.valueOf(companyId),
-				groupAdminResourcePermissionSB.toString(), sb.toString(),
+				className, String.valueOf(companyId), groupAdminSQL,
 				String.valueOf(scope), roleIdsOrOwnerIdSQL
 			});
 
+		StringBundler sb = new StringBundler(8);
+
 		int pos = sql.indexOf(_WHERE_CLAUSE);
 
-		if (pos != -1) {
-			return sql.substring(0, pos + 1).concat(permissionJoin).concat(
-				sql.substring(pos + 1));
+		if (pos == -1) {
+			pos = sql.indexOf(_GROUP_BY_CLAUSE);
+
+			if (pos == -1) {
+				pos = sql.indexOf(_ORDER_BY_CLAUSE);
+			}
+
+			if (pos == -1) {
+				sb.append(sql);
+			}
+			else {
+				sb.append(sql.substring(0, pos));
+			}
+
+			sb.append(_WHERE_CLAUSE);
+
+			_appendPermissionQuery(sb, classPKField, permissionQuery);
+
+			if (pos != -1) {
+				sb.append(sql.substring(pos));
+			}
+		}
+		else {
+			pos += _WHERE_CLAUSE.length();
+
+			sb.append(sql.substring(0, pos));
+
+			_appendPermissionQuery(sb, classPKField, permissionQuery);
+
+			sb.append("AND ");
+
+			sb.append(sql.substring(pos));
 		}
 
-		pos = sql.indexOf(_GROUP_BY_CLAUSE);
+		return sb.toString();
+	}
 
-		if (pos != -1) {
-			return sql.substring(0, pos + 1).concat(permissionJoin).concat(
-				sql.substring(pos + 1));
-		}
+	private void _appendPermissionQuery(
+		StringBundler sb, String classPKField, String permissionQuery) {
 
-		pos = sql.indexOf(_ORDER_BY_CLAUSE);
-
-		if (pos != -1) {
-			return sql.substring(0, pos + 1).concat(permissionJoin).concat(
-				sql.substring(pos + 1));
-		}
-
-		return sql.concat(StringPool.SPACE).concat(permissionJoin);
+		sb.append("(");
+		sb.append(classPKField);
+		sb.append(" IN (");
+		sb.append(permissionQuery);
+		sb.append(")) ");
 	}
 
 	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";
 
 	private static final long _NO_RESOURCE_BLOCKS_ID = -1;
-
-	private static final long[] _NO_ROLE_IDS = {0};
 
 	private static final String _ORDER_BY_CLAUSE = " ORDER BY ";
 

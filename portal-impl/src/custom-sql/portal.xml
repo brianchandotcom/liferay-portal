@@ -39,19 +39,20 @@
 				(resourceBlock.name = '[$RESOURCE_BLOCK_NAME$]')
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.joinResourcePermission">
+	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.findByResourcePermission">
 		<![CDATA[
-			INNER JOIN ResourcePermission ON
+			SELECT DISTINCT
+				ResourcePermission.primKeyId
+			FROM
+				ResourcePermission
+			WHERE
 				(ResourcePermission.companyId = [$COMPANY_ID$]) AND
 				(ResourcePermission.name = '[$CLASS_NAME$]') AND
 				(ResourcePermission.scope = [$RESOURCE_SCOPE_INDIVIDUAL$]) AND
 				(ResourcePermission.viewActionId = [$TRUE$]) AND
 				(
-					(
-						[$ROLE_IDS_OR_OWNER_ID$] AND
-						[$PRIM_KEYS$]
-					) OR
-					([$GROUP_ADMIN_RESOURCE_PERMISSION$])
+					[$ROLE_IDS_OR_OWNER_ID$]
+					[$GROUP_ADMIN_RESOURCE_PERMISSION$]
 				)
 		]]>
 	</sql>

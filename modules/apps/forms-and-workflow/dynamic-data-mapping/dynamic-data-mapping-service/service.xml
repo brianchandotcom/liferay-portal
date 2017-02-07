@@ -201,7 +201,7 @@
 			<finder-column name="description" />
 		</finder>
 		<finder db-index="false" name="G_C_N_D" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="name" />
 			<finder-column name="description" />

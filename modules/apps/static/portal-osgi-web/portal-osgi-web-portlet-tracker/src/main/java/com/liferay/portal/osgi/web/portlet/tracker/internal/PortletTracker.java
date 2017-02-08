@@ -121,10 +121,10 @@ public class PortletTracker
 			portletName = clazz.getName();
 		}
 
-		String portletId = _portal.getJsSafePortletId(portletName);
+		String portletId = StringUtil.replace(
+			portletName, new char[] {'.', '$'}, new char[] {'_', '_'});
 
-		portletId = StringUtil.replace(
-			portletId, new char[] {'$'}, new char[] {'_'});
+		portletId = _portal.getJsSafePortletId(portletId);
 
 		if (portletId.length() >
 				PortletInstance.PORTLET_INSTANCE_KEY_MAX_LENGTH) {

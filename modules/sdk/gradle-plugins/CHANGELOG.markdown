@@ -1042,7 +1042,7 @@ to version 1.0.80.
 - [LPS-69271]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 1.0.81.
 
-## 3.1.8 - 2017-02-07
+## 3.1.8 - 2017-02-08
 
 ### Changed
 - [LPS-70510]: Deploy theme projects to the

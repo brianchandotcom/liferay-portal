@@ -73,7 +73,7 @@ default repository for module and WAR projects.
 - [LPS-70353]: Update the [Gradle Download Task] dependency to version 3.2.0.
 - [LPS-70362]: Use the Liferay CDN to download bundles by default.
 
-## 1.2.5 - 2017-02-07
+## 1.2.5 - 2017-02-08
 
 ### Changed
 - [LPS-70510]: Update the [Liferay Gradle Plugins] dependency to version 3.1.8.

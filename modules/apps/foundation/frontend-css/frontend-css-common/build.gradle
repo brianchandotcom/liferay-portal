@@ -45,6 +45,10 @@ classes {
 	dependsOn buildCssCommon
 }
 
+clean {
+	delete "tmp"
+}
+
 dependencies {
 	bourbon group: "org.webjars.bower", name: "bourbon", transitive: false, version: bourbonVersion
 }

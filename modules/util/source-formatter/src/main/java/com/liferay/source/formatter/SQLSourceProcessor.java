@@ -90,7 +90,8 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
-		return getFileNames(new String[0], getIncludes());
+		return getFileNames(
+			new String[0], filterIncludes(new String[] {"**/sql/*.sql"}));
 	}
 
 	@Override
@@ -98,6 +99,6 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	private static final String[] _INCLUDES = new String[] {"**/sql/*.sql"};
+	private static final String[] _INCLUDES = new String[] {"**/*.sql"};
 
 }

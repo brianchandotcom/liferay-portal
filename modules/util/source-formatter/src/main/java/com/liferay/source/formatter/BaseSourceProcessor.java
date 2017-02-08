@@ -156,26 +156,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public String[] getIncludes() {
-		String[] includes = doGetIncludes();
-
-		List<String> fileExtensions = sourceFormatterArgs.getFileExtensions();
-
-		if (fileExtensions.isEmpty()) {
-			return includes;
-		}
-
-		String[] filteredIncludes = new String[0];
-
-		for (String include : includes) {
-			for (String fileExtension : fileExtensions) {
-				if (include.endsWith(fileExtension)) {
-					filteredIncludes = ArrayUtil.append(
-						filteredIncludes, include);
-				}
-			}
-		}
-
-		return filteredIncludes;
+		return filterIncludes(doGetIncludes());
 	}
 
 	@Override
@@ -819,6 +800,27 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected abstract List<String> doGetFileNames() throws Exception;
 
 	protected abstract String[] doGetIncludes();
+
+	protected String[] filterIncludes(String[] includes) {
+		List<String> fileExtensions = sourceFormatterArgs.getFileExtensions();
+
+		if (fileExtensions.isEmpty()) {
+			return includes;
+		}
+
+		String[] filteredIncludes = new String[0];
+
+		for (String include : includes) {
+			for (String fileExtension : fileExtensions) {
+				if (include.endsWith(fileExtension)) {
+					filteredIncludes = ArrayUtil.append(
+						filteredIncludes, include);
+				}
+			}
+		}
+
+		return filteredIncludes;
+	}
 
 	protected String fixCompatClassImports(String absolutePath, String content)
 		throws Exception {

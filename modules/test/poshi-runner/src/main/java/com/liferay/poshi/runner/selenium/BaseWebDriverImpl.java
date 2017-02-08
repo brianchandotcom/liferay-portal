@@ -2692,10 +2692,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void waitForPageToLoad(String timeout) {
-	}
-
-	@Override
 	public void waitForPartialText(String locator, String value)
 		throws Exception {
 

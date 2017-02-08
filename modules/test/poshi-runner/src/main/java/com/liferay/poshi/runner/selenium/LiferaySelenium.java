@@ -464,8 +464,6 @@ public interface LiferaySelenium {
 
 	public void waitForNotVisible(String locator) throws Exception;
 
-	public void waitForPageToLoad(String timeout);
-
 	public void waitForPartialText(String locator, String value)
 		throws Exception;
 

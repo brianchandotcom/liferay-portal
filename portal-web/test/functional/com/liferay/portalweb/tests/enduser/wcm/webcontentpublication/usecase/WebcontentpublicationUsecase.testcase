@@ -1234,6 +1234,11 @@
 	</command>
 
 	<command name="AssetPublisherTogglingBetweenSites" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -1251,7 +1256,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="Liferay,Site Name,Global" param="siteName">
+		<for list="${siteName},Site Name,Global" param="siteName">
 			<execute macro="ProductMenu#gotoSite">
 				<var name="site" value="${siteName}" />
 			</execute>
@@ -1313,7 +1318,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="otherSite" value="Liferay" />
+			<var name="otherSite" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -1331,8 +1336,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="Liferay WC Content" />
-			<var name="assetTitle" value="Liferay WC Title" />
+			<var name="assetContent" value="${siteName} WC Content" />
+			<var name="assetTitle" value="${siteName} WC Title" />
 		</execute>
 	</command>
 

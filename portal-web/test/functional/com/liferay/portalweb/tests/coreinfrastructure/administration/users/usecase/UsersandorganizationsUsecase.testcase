@@ -1163,6 +1163,10 @@
 			<var name="roleTitle" value="Canada Orgrole" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Roles" />
+		</execute>
+
 		<execute macro="RoleNavigator#gotoRoleType">
 			<var name="roleType" value="Organization" />
 		</execute>

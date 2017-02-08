@@ -2603,13 +2603,90 @@ ${tomcat-gc-log}
 			</beanshell>
 
 			<if>
-				<equals arg1="@{cmis.repository.type}" arg2="documentum6" />
+				<contains string="@{cmis.repository.type}" substring="documentum" />
 				<then>
-					<replace
-						file="${project.dir}/modules/private/apps/documentum/documentum-hook/docroot/WEB-INF/src/dfc.properties"
-						token="dfc.docbroker.host[0]=localhost"
-						value="dfc.docbroker.host[0]=${cmis.repository.vm.host.name}"
-					/>
+					<get-testcase-property property.name="osgi.app.includes" />
+
+					<if>
+						<contains string="${osgi.app.includes}" substring="documentum" />
+						<then>
+							<pathconvert property="app.bnd.file">
+								<fileset dir="modules" includes="private/apps/documentum/app.bnd" />
+							</pathconvert>
+
+							<loadproperties srcFile="${app.bnd.file}">
+								<filterchain>
+									<linecontains>
+										<contains value="Liferay-Releng-App-Title" />
+									</linecontains>
+								</filterchain>
+							</loadproperties>
+
+							<if>
+								<available file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg" />
+								<then>
+									<property name="lpkg.path" value="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg" />
+								</then>
+								<elseif>
+									<available file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+									<then>
+										<property name="lpkg.path" value="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+									</then>
+								</elseif>
+							</if>
+
+							<if>
+								<isset property="lpkg.path" />
+								<then>
+									<tstamp>
+										<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+									</tstamp>
+
+									<mkdir dir="${tstamp.value}" />
+
+									<unzip dest="${tstamp.value}" src="${lpkg.path}">
+										<patternset>
+											<include name="documentum-hook-*.war" />
+										</patternset>
+									</unzip>
+
+									<pathconvert property="war.path" setonempty="false">
+										<path>
+											<fileset dir="${tstamp.value}" includes="documentum-hook-*.war" />
+										</path>
+									</pathconvert>
+
+									<unzip dest="${tstamp.value}" src="${war.path}">
+										<flattenmapper />
+										<patternset>
+											<include name="WEB-INF/src/dfc.properties" />
+										</patternset>
+									</unzip>
+
+									<propertyfile file="${tstamp.value}/dfc.properties">
+										<entry key="dfc.docbroker.host[0]" value="${cmis.repository.vm.host.name}" />
+									</propertyfile>
+
+									<war destfile="${war.path}" update="true">
+										<zipfileset file="${tstamp.value}/dfc.properties" fullpath="WEB-INF/src/dfc.properties" />
+									</war>
+
+									<delete file="${tstamp.value}/dfc.properties" />
+
+									<zip destfile="${lpkg.path}" update="true">
+										<zipfileset dir="${tstamp.value}" includes="documentum-hook-*.war" />
+									</zip>
+
+									<delete dir="${tstamp.value}" />
+								</then>
+							</if>
+						</then>
+						<else>
+							<propertyfile file="${project.dir}/modules/private/apps/documentum/documentum-hook/docroot/WEB-INF/src/dfc.properties">
+								<entry key="dfc.docbroker.host[0]" value="${cmis.repository.vm.host.name}" />
+							</propertyfile>
+						</else>
+					</if>
 				</then>
 			</if>
 		</sequential>
@@ -4944,6 +5021,13 @@ go]]></replacevalue>
 												<dirname file="@{osgi.module.bnd.file}" property="osgi.module.dir" />
 
 												<gradle-execute dir="${osgi.module.dir}" task="deploy" />
+
+												<ant antfile="build.xml" dir="modules" target="build-app-lpkg">
+													<property name="app.name" value="${osgi.app.name}" />
+													<property name="liferay.home" value="${liferay.home}/bundles" />
+													<property name="project.dir" value="." />
+													<property name="osgi.dir" value="${liferay.home}/bundles/osgi" />
+												</ant>
 											</sequential>
 										</for>
 									</else>
@@ -9006,21 +9090,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="cmis.repository.type" />
-
-		<if>
-			<or>
-				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
-				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
-				<equals arg1="${cmis.repository.type}" arg2="sharepoint2013" />
-			</or>
-			<then>
-				<request-cmis-repository-vm
-					cmis.repository.type="${cmis.repository.type}"
-				/>
-			</then>
-		</if>
-
 		<get-testcase-property property.name="apacheds.blank.user.password.enabled" />
 		<get-testcase-property property.name="apacheds.enabled" />
 
@@ -9085,6 +9154,21 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<equals arg1="${test.latest.marketplace.apps}" arg2="true" />
 			<then>
 				<antcall target="deploy-latest-marketplace-apps" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="cmis.repository.type" />
+
+		<if>
+			<or>
+				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2013" />
+			</or>
+			<then>
+				<request-cmis-repository-vm
+					cmis.repository.type="${cmis.repository.type}"
+				/>
 			</then>
 		</if>
 

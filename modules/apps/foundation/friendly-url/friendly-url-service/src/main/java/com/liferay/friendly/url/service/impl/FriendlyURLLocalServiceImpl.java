@@ -105,7 +105,7 @@ public class FriendlyURLLocalServiceImpl
 			companyId, groupId, classNameId, classPK);
 
 		for (FriendlyURL friendlyURL : friendlyURLs) {
-			friendlyURLLocalizationPersistence.removeByG_F(
+			friendlyURLTitleLocalizationPersistence.removeByG_F(
 				groupId, friendlyURL.getFriendlyURLId());
 		}
 
@@ -133,7 +133,7 @@ public class FriendlyURLLocalServiceImpl
 		FriendlyURL friendlyURL = friendlyURLPersistence.removeByC_G_C_C_U(
 			companyId, groupId, classNameId, classPK, urlTitle);
 
-		friendlyURLLocalizationPersistence.removeByG_F(
+		friendlyURLTitleLocalizationPersistence.removeByG_F(
 			groupId, friendlyURL.getFriendlyURLId());
 
 		List<FriendlyURL> friendlyURLs = friendlyURLPersistence.findByC_G_C_C(
@@ -177,7 +177,7 @@ public class FriendlyURLLocalServiceImpl
 				public void performAction(FriendlyURL friendlyURL)
 					throws PortalException {
 
-					friendlyURLLocalizationPersistence.removeByG_F(
+					friendlyURLTitleLocalizationPersistence.removeByG_F(
 						groupId, friendlyURL.getFriendlyURLId());
 
 					friendlyURLPersistence.remove(friendlyURL);

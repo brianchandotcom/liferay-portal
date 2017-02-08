@@ -47,17 +47,24 @@ public class FormNavigatorEntryConfigurationRetriever {
 		String formNavigatorId, String categoryKey, String context) {
 
 		try {
-			String expectedKey = _getExpectedKey(categoryKey, context);
-			Properties properties = _getFormNavigatorEntryKeys(formNavigatorId);
+			Properties formNavigatorEntryKeysProperties =
+				_getFormNavigatorEntryKeysProperties(formNavigatorId);
 
-			String entryKeys = properties.getProperty(expectedKey);
+			String formNavigatorEntryKeys = null;
 
-			if (entryKeys == null) {
-				entryKeys = properties.getProperty(categoryKey);
+			if (Validator.isNotNull(context)) {
+				formNavigatorEntryKeys =
+					formNavigatorEntryKeysProperties.getProperty(
+						context + StringPool.PERIOD + categoryKey);
 			}
 
-			if (entryKeys != null) {
-				return Optional.of(_splitKeys(entryKeys));
+			if (formNavigatorEntryKeys == null) {
+				formNavigatorEntryKeys =
+					formNavigatorEntryKeysProperties.getProperty(context);
+			}
+
+			if (formNavigatorEntryKeys != null) {
+				return Optional.of(_splitKeys(formNavigatorEntryKeys));
 			}
 		}
 		catch (Exception e) {
@@ -73,14 +80,15 @@ public class FormNavigatorEntryConfigurationRetriever {
 	}
 
 	private void _addProperties(
-		StringBuilder propertiesString,
-		FormNavigatorConfiguration configuration) {
+		StringBuilder sb,
+		FormNavigatorConfiguration formNavigatorConfiguration) {
 
-		String[] lines = configuration.formNavigatorEntriesForCategoryLines();
+		String[] formNavigatorEntryKeys =
+			formNavigatorConfiguration.formNavigatorEntryKeys();
 
-		for (String line : lines) {
-			propertiesString.append(line);
-			propertiesString.append("\n");
+		for (String line : formNavigatorEntryKeys) {
+			sb.append(line);
+			sb.append(StringPool.NEW_LINE);
 		}
 	}
 
@@ -97,34 +105,31 @@ public class FormNavigatorEntryConfigurationRetriever {
 				configuration.getProperties())).collect(Collectors.toList());
 	}
 
-	private String _getExpectedKey(String categoryKey, String context) {
-		if (Validator.isNull(context)) {
-			return categoryKey;
-		}
-		else {
-			return context + StringPool.PERIOD + categoryKey;
-		}
-	}
-
-	private Properties _getFormNavigatorEntryKeys(String formNavigatorId)
+	private Properties _getFormNavigatorEntryKeysProperties(
+			String formNavigatorId)
 		throws InvalidSyntaxException, IOException {
 
-		Properties properties = new Properties();
 		StringBuilder sb = new StringBuilder();
 
-		for (FormNavigatorConfiguration configuration : _getConfigurations()) {
-			if (configuration.formNavigatorId().equals(formNavigatorId)) {
+		List<FormNavigatorConfiguration> configurations = _getConfigurations();
+
+		for (FormNavigatorConfiguration configuration : configurations) {
+			String curFormNavigatorId = configuration.formNavigatorId();
+
+			if (curFormNavigatorId.equals(formNavigatorId)) {
 				_addProperties(sb, configuration);
 			}
 		}
+
+		Properties properties = new Properties();
 
 		properties.load(new StringReader(sb.toString()));
 
 		return properties;
 	}
 
-	private List<String> _splitKeys(String entryKeys) {
-		return Arrays.stream(StringUtil.split(entryKeys)).map(
+	private List<String> _splitKeys(String formNavigatorEntryKeys) {
+		return Arrays.stream(StringUtil.split(formNavigatorEntryKeys)).map(
 			String::trim).collect(Collectors.toList());
 	}
 

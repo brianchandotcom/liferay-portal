@@ -47,8 +47,9 @@ public class FormNavigatorEntryConfigurationHelperImpl
 		String context = _getContext(formNavigatorId, formModelBean);
 
 		return _formNavigatorEntryConfigurationRetriever.
-			getFormNavigatorEntryKeys(formNavigatorId, categoryKey, context).
-				map(keys -> _convertKeysToServices(formNavigatorId, keys));
+			getFormNavigatorEntryKeys(
+				formNavigatorId, categoryKey, context).map(
+				keys -> _convertKeysToServices(formNavigatorId, keys));
 	}
 
 	@Activate
@@ -56,7 +57,6 @@ public class FormNavigatorEntryConfigurationHelperImpl
 		_formNavigatorEntriesMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, FormNavigatorEntry.class, null,
 			(serviceReference, emitter) -> {
-
 				FormNavigatorEntry service = bundleContext.getService(
 					serviceReference);
 

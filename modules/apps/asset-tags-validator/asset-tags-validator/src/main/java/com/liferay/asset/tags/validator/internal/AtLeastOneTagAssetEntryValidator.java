@@ -18,6 +18,8 @@ import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.validator.AssetEntryValidator;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,6 +40,8 @@ public class AtLeastOneTagAssetEntryValidator implements AssetEntryValidator {
 		throws PortalException {
 
 		if (!className.equals(MBDiscussion.class.getName()) &&
+			!className.equals(Layout.class.getName()) &&
+			!className.equals(User.class.getName()) &&
 			ArrayUtil.isEmpty(tagNames)) {
 
 			throw new AssetTagException(AssetTagException.AT_LEAST_ONE_TAG);

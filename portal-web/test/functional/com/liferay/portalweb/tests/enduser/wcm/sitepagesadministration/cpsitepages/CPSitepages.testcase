@@ -46,9 +46,7 @@
 			<var name="pageName" value="Site Page 3" />
 		</execute>
 
-		<execute macro="Page#tearDownPG">
-			<var name="site" value="${siteName}" />
-		</execute>
+		<execute macro="Page#tearDownPG" />
 	</command>
 
 	<command name="AddPagesFullPageApplication" priority="4">

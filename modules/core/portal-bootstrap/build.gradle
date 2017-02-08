@@ -35,7 +35,11 @@ buildSystemPackagesExtraManifest {
 		jarBuilder.withName "system.packages.extra"
 		jarBuilder.withProperties properties
 		jarBuilder.withResources new File[0]
-		jarBuilder.withSourcepath sourceSets.main.allSource.srcDirs
+
+		jarBuilder.withSourcepath sourceSets.main.allSource.srcDirs.findAll {
+			it.directory
+		}
+
 		jarBuilder.withTrace false
 		jarBuilder.withVersion project.version
 

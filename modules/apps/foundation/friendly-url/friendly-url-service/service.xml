@@ -59,7 +59,7 @@
 			<finder-column name="main" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="FriendlyURLLocalization" remote-service="false">
+	<entity local-service="true" name="FriendlyURLTitleLocalization" remote-service="false">
 
 		<!-- PK fields -->
 

@@ -249,6 +249,12 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</antcall>
 	</target>
 
+	<target name="build-service-portal-route">
+		<antcall target="build-service">
+			<param name="service.file" value="${basedir}/src/com/liferay/portal/route/service.xml" />
+		</antcall>
+	</target>
+
 	<target name="build-service-portlet-announcements">
 		<antcall target="build-service">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/announcements/service.xml" />
@@ -318,6 +324,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	<target name="build-services">
 		<antcall target="build-service-counter" />
 		<antcall target="build-service-portal" />
+		<antcall target="build-service-portal-route" />
 		<antcall target="build-service-portlets" />
 
 		<gradle-execute dir="../modules" task="buildService">

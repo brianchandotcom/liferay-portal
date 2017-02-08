@@ -93,6 +93,12 @@ public class SubscriptionSender implements Serializable {
 		fileAttachments.add(attachment);
 	}
 
+	public <T> void addHook(Hook.Event<T> event, Hook<T> hook) {
+		List<Hook<T>> hooks = _getHooks(event);
+
+		hooks.add(hook);
+	}
+
 	public void addPersistedSubscribers(String className, long classPK) {
 		ObjectValuePair<String, Long> ovp = new ObjectValuePair<>(
 			className, classPK);
@@ -224,6 +230,10 @@ public class SubscriptionSender implements Serializable {
 			});
 	}
 
+	public long getCompanyId() {
+		return companyId;
+	}
+
 	public Object getContextAttribute(String key) {
 		return _context.get(key);
 	}
@@ -234,6 +244,10 @@ public class SubscriptionSender implements Serializable {
 
 	public String getMailId() {
 		return mailId;
+	}
+
+	public ServiceContext getServiceContext() {
+		return serviceContext;
 	}
 
 	/**
@@ -286,6 +300,10 @@ public class SubscriptionSender implements Serializable {
 
 		mailId = PortalUtil.getMailId(
 			company.getMx(), _mailIdPopPortletPrefix, _mailIdIds);
+	}
+
+	public boolean isBulk() {
+		return bulk;
 	}
 
 	public void setBody(String body) {
@@ -481,6 +499,22 @@ public class SubscriptionSender implements Serializable {
 		setCurrentUserId(userId);
 	}
 
+	public interface Hook<T> {
+
+		public void process(T payload);
+
+		public interface Event<S> {
+
+			public static final Event<MailMessage> MAIL_MESSAGE_CREATED =
+				new Event<MailMessage>() {};
+
+			public static final Event<Subscription> PERSISTED_SUBSCRIBER_FOUND =
+				new Event<Subscription>() {};
+
+		}
+
+	}
+
 	protected void deleteSubscription(Subscription subscription)
 		throws Exception {
 
@@ -615,6 +649,8 @@ public class SubscriptionSender implements Serializable {
 			return;
 		}
 
+		_notifyHooks(Hook.Event.PERSISTED_SUBSCRIBER_FOUND, subscription);
+
 		sendNotification(user);
 	}
 
@@ -697,6 +733,8 @@ public class SubscriptionSender implements Serializable {
 			locale, mailTemplateContext);
 
 		mailMessage.setBody(processedBody);
+
+		_notifyHooks(Hook.Event.MAIL_MESSAGE_CREATED, mailMessage);
 	}
 
 	/**
@@ -928,6 +966,10 @@ public class SubscriptionSender implements Serializable {
 			_getBasicMailTemplateContext(locale));
 	}
 
+	private <T> List<Hook<T>> _getHooks(Hook.Event<T> event) {
+		return (List)_hooks.computeIfAbsent(event, key -> new ArrayList<>());
+	}
+
 	private String _getLocalizedValue(
 		Map<Locale, String> localizedValueMap, Locale locale,
 		String defaultValue) {
@@ -949,6 +991,12 @@ public class SubscriptionSender implements Serializable {
 	private String _getPortletTitle(String portletName, Locale locale) {
 		return _getLocalizedValue(
 			localizedPortletTitleMap, locale, portletName);
+	}
+
+	private <T> void _notifyHooks(Hook.Event<T> event, T payload) {
+		List<Hook<T>> hooks = _getHooks(event);
+
+		hooks.forEach(hook -> hook.process(payload));
 	}
 
 	private void readObject(ObjectInputStream objectInputStream)
@@ -989,6 +1037,7 @@ public class SubscriptionSender implements Serializable {
 	private String _contextCreatorUserPrefix;
 	private String _entryTitle;
 	private String _entryURL;
+	private final Map<Hook.Event<?>, List<Hook<?>>> _hooks = new HashMap<>();
 	private boolean _initialized;
 	private final Map<String, EscapableLocalizableFunction> _localizedContext =
 		new HashMap<>();

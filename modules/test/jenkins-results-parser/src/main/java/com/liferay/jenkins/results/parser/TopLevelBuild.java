@@ -70,6 +70,14 @@ public class TopLevelBuild extends BaseBuild {
 		}
 	}
 
+	public Map<String, String> getBaseGitRepositoryDetailsTempMap() {
+		String repositoryType = getBaseRepositoryType();
+
+		String tempMapName = "git." + repositoryType + ".properties";
+
+		return getTempMap(tempMapName);
+	}
+
 	@Override
 	public String getDisplayName() {
 		String displayName = super.getDisplayName();
@@ -91,16 +99,6 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		return super.getGitHubMessageElement();
-	}
-
-	public Map<String, String> getGitRepositoryDetailsTempMap(
-		String repositoryName) {
-
-		String repositoryType = getRepositoryType(repositoryName);
-
-		String tempMapName = "git." + repositoryType + ".properties";
-
-		return getTempMap(tempMapName);
 	}
 
 	public String getJenkinsReport() {
@@ -207,37 +205,38 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected Element getBaseBranchDetailsElement() {
 		String baseBranchURL =
-			"https://github.com/liferay/" + getRepositoryName() + "/tree/" +
+			"https://github.com/liferay/" + getBaseRepositoryName() + "/tree/" +
 				getBranchName();
 
-		String repositoryName = getRepositoryName();
+		String baseRepositoryName = getBaseRepositoryName();
 
-		String repositorySHA = null;
+		String baseRepositorySHA = null;
 
-		if (!repositoryName.equals("liferay-jenkins-ee") &&
-			repositoryName.endsWith("-ee")) {
+		if (!baseRepositoryName.equals("liferay-jenkins-ee") &&
+			baseRepositoryName.endsWith("-ee")) {
 
-			repositorySHA = getRepositorySHA(
-				repositoryName.substring(0, repositoryName.length() - 3));
+			baseRepositorySHA = getBaseRepositorySHA(
+				baseRepositoryName.substring(
+					0, baseRepositoryName.length() - 3));
 		}
 		else {
-			repositorySHA = getRepositorySHA(repositoryName);
+			baseRepositorySHA = getBaseRepositorySHA(baseRepositoryName);
 		}
 
-		String repositoryCommitURL =
-			"https://github.com/liferay/" + repositoryName + "/commit/" +
-				repositorySHA;
+		String baseRepositoryCommitURL =
+			"https://github.com/liferay/" + baseRepositoryName + "/commit/" +
+				baseRepositorySHA;
 
 		Element baseBranchDetailsElement = Dom4JUtil.getNewElement(
 			"p", null, "Branch Name: ",
 			Dom4JUtil.getNewAnchorElement(baseBranchURL, getBranchName()));
 
-		if (repositorySHA != null) {
+		if (baseRepositorySHA != null) {
 			Dom4JUtil.addToElement(
 				baseBranchDetailsElement, Dom4JUtil.getNewElement("br"),
 				"Branch GIT ID: ",
 				Dom4JUtil.getNewAnchorElement(
-					repositoryCommitURL, repositorySHA));
+					baseRepositoryCommitURL, baseRepositorySHA));
 		}
 
 		return baseBranchDetailsElement;

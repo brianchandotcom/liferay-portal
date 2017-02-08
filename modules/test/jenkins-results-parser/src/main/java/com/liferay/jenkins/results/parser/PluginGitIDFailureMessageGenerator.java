@@ -89,7 +89,7 @@ public class PluginGitIDFailureMessageGenerator
 	protected Element getPluginsBranchAnchorElement(
 		TopLevelBuild topLevelBuild) {
 
-		String repositoryName = topLevelBuild.getRepositoryName();
+		String repositoryName = topLevelBuild.getBaseRepositoryName();
 
 		String pluginsRepositoryName = "liferay-plugins";
 
@@ -98,7 +98,7 @@ public class PluginGitIDFailureMessageGenerator
 		}
 
 		Map<String, String> pluginsRepositoryGitDetailsTempMap =
-			topLevelBuild.getGitRepositoryDetailsTempMap(pluginsRepositoryName);
+			topLevelBuild.getBaseGitRepositoryDetailsTempMap();
 
 		StringBuilder sb = new StringBuilder();
 

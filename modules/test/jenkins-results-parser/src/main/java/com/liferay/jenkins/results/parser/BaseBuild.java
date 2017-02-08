@@ -155,6 +155,53 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getBaseRepositoryName() {
+		if (repositoryName == null) {
+			Properties buildProperties = null;
+
+			try {
+				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Unable to get build.properties", ioe);
+			}
+
+			TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+			repositoryName = buildProperties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"repository[", topLevelBuild.getJobName(), "]"));
+
+			if (repositoryName == null) {
+				throw new RuntimeException(
+					"Unable to get repository name for job " +
+						topLevelBuild.getJobName());
+			}
+		}
+
+		return repositoryName;
+	}
+
+	@Override
+	public String getBaseRepositorySHA(String repositoryName) {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (repositoryName.equals("liferay-jenkins-ee")) {
+			Map<String, String> topLevelBuildStartPropertiesTempMap =
+				topLevelBuild.getStartPropertiesTempMap();
+
+			return topLevelBuildStartPropertiesTempMap.get(
+				"JENKINS_GITHUB_UPSTREAM_SHA");
+		}
+
+		Map<String, String> repositoryGitDetailsTempMap =
+			topLevelBuild.getBaseGitRepositoryDetailsTempMap();
+
+		return repositoryGitDetailsTempMap.get("github.upstream.branch.sha");
+	}
+
+	@Override
 	public String getBranchName() {
 		return branchName;
 	}
@@ -467,53 +514,6 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public Build getParentBuild() {
 		return _parentBuild;
-	}
-
-	@Override
-	public String getRepositoryName() {
-		if (repositoryName == null) {
-			Properties buildProperties = null;
-
-			try {
-				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(
-					"Unable to get build.properties", ioe);
-			}
-
-			TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-			repositoryName = buildProperties.getProperty(
-				JenkinsResultsParserUtil.combine(
-					"repository[", topLevelBuild.getJobName(), "]"));
-
-			if (repositoryName == null) {
-				throw new RuntimeException(
-					"Unable to get repository name for job " +
-						topLevelBuild.getJobName());
-			}
-		}
-
-		return repositoryName;
-	}
-
-	@Override
-	public String getRepositorySHA(String repositoryName) {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		if (repositoryName.equals("liferay-jenkins-ee")) {
-			Map<String, String> topLevelBuildStartPropertiesTempMap =
-				topLevelBuild.getStartPropertiesTempMap();
-
-			return topLevelBuildStartPropertiesTempMap.get(
-				"JENKINS_GITHUB_UPSTREAM_SHA");
-		}
-
-		Map<String, String> repositoryGitDetailsTempMap =
-			topLevelBuild.getGitRepositoryDetailsTempMap(repositoryName);
-
-		return repositoryGitDetailsTempMap.get("github.upstream.branch.sha");
 	}
 
 	@Override
@@ -1091,6 +1091,18 @@ public abstract class BaseBuild implements Build {
 		return foundDownstreamBuildURLs;
 	}
 
+	protected String getBaseRepositoryType() {
+		if (jobName.contains("portal")) {
+			return "portal";
+		}
+
+		if (jobName.contains("plugins")) {
+			return "plugins";
+		}
+
+		return "jenkins";
+	}
+
 	protected JSONObject getBuildJSONObject(String tree) {
 		if (getBuildURL() == null) {
 			return null;
@@ -1359,28 +1371,6 @@ public abstract class BaseBuild implements Build {
 		sb.append(getInvocationURL());
 
 		return sb.toString();
-	}
-
-	protected String getRepositoryType(String repositoryName) {
-		try {
-			Properties buildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
-
-			String repositoryType = buildProperties.getProperty(
-				JenkinsResultsParserUtil.combine(
-					"repository.type[", repositoryName, "]"));
-
-			if ((repositoryType == null) || repositoryType.isEmpty()) {
-				throw new RuntimeException(
-					"Unable to find repository type for repository " +
-						repositoryName);
-			}
-
-			return repositoryType;
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get build properties");
-		}
 	}
 
 	protected JSONObject getRunningBuildJSONObject() throws Exception {

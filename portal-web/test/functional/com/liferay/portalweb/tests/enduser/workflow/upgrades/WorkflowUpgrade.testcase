@@ -12,32 +12,26 @@
 		<execute macro="Upgrade#reindexSearches" />
 	</set-up>
 
-	<!-- LPS-66598 -->
-
-	<!--<command name="ViewWorkflowArchive6012" priority="5">
+	<command name="ViewWorkflowArchive6012" priority="5">
 		<property name="data.archive.type" value="data-archive-workflow" />
 		<property name="portal.version" value="6.0.12" />
 
 		<execute macro="Upgrade#approveWorkflow" />
-	</command>-->
+	</command>
 
-	<!-- LPS-66598 -->
-
-	<!--<command name="ViewWorkflowArchive612" priority="5">
+	<command name="ViewWorkflowArchive612" priority="5">
 		<property name="data.archive.type" value="data-archive-workflow" />
 		<property name="portal.version" value="6.1.2" />
 
 		<execute macro="Upgrade#approveWorkflow" />
-	</command>-->
+	</command>
 
-	<!-- LPS-66598 -->
-
-	<!--<command name="ViewWorkflowArchive6130" priority="5">
+	<command name="ViewWorkflowArchive6130" priority="5">
 		<property name="data.archive.type" value="data-archive-workflow" />
 		<property name="portal.version" value="6.1.30" />
 
 		<execute macro="Upgrade#approveWorkflow" />
-	</command>-->
+	</command>
 
 	<command name="ViewWorkflowArchive621015" priority="5">
 		<property name="data.archive.type" value="data-archive-workflow" />

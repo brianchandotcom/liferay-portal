@@ -31,7 +31,7 @@ import org.dom4j.Element;
 public class TLDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	public String[] getIncludes() {
+	protected String[] doGetIncludes() {
 		return _INCLUDES;
 	}
 

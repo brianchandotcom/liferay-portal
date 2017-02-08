@@ -54,7 +54,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		com.liferay.portal.tools.LangBuilder.AUTOMATIC_TRANSLATION;
 
 	@Override
-	public String[] getIncludes() {
+	protected String[] doGetIncludes() {
 		if (portalSource) {
 			return new String[] {
 				"**/Language.properties",

@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 public class CSSSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	public String[] getIncludes() {
+	protected String[] doGetIncludes() {
 		return _INCLUDES;
 	}
 

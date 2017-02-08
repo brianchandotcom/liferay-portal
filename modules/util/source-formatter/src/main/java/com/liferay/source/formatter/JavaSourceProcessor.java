@@ -52,7 +52,7 @@ import org.apache.maven.artifact.versioning.ComparableVersion;
 public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	public String[] getIncludes() {
+	protected String[] doGetIncludes() {
 		return _INCLUDES;
 	}
 

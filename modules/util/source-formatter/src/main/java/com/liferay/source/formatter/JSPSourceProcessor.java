@@ -59,7 +59,7 @@ import org.dom4j.Element;
 public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	public String[] getIncludes() {
+	protected String[] doGetIncludes() {
 		return _INCLUDES;
 	}
 

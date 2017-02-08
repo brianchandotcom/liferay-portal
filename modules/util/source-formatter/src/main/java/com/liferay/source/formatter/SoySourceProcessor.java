@@ -24,7 +24,7 @@ import java.util.List;
 public class SoySourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	public String[] getIncludes() {
+	protected String[] doGetIncludes() {
 		return _INCLUDES;
 	}
 

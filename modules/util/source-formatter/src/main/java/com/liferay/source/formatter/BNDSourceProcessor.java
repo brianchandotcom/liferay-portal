@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
 public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	public String[] getIncludes() {
+	protected String[] doGetIncludes() {
 		return _INCLUDES;
 	}
 

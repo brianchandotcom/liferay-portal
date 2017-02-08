@@ -25,7 +25,7 @@ import java.util.List;
 public class GroovySourceProcessor extends JavaSourceProcessor {
 
 	@Override
-	public String[] getIncludes() {
+	protected String[] doGetIncludes() {
 		return _INCLUDES;
 	}
 

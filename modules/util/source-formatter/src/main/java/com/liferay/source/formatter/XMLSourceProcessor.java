@@ -235,7 +235,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	public String[] getIncludes() {
+	protected String[] doGetIncludes() {
 		return _INCLUDES;
 	}
 

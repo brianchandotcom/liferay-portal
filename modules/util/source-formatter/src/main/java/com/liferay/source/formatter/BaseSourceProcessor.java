@@ -155,6 +155,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
+	public String[] getIncludes() {
+		return doGetIncludes();
+	}
+
+	@Override
 	public List<String> getModifiedFileNames() {
 		return _modifiedFileNames;
 	}
@@ -793,6 +798,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		throws Exception;
 
 	protected abstract List<String> doGetFileNames() throws Exception;
+
+	protected abstract String[] doGetIncludes();
 
 	protected String fixCompatClassImports(String absolutePath, String content)
 		throws Exception {

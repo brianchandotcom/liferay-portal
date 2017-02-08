@@ -1832,6 +1832,11 @@
 	</command>
 
 	<command name="XSSScriptWebContent" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1905,7 +1910,7 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Asset Publisher Test Page" />
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

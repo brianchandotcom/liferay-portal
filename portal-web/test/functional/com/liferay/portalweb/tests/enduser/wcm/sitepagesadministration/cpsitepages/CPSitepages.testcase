@@ -27,6 +27,11 @@
 	</tear-down>
 
 	<command name="AddPageMultiplePagesToSite" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
@@ -42,7 +47,7 @@
 		</execute>
 
 		<execute macro="Page#tearDownPG">
-			<var name="site" value="Liferay" />
+			<var name="site" value="${siteName}" />
 		</execute>
 	</command>
 

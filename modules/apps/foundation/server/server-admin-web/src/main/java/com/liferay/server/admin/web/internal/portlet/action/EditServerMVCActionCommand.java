@@ -612,8 +612,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "uploadServletRequestImplMaxSize");
 		String uploadServletRequestImplTempDir = ParamUtil.getString(
 			actionRequest, "uploadServletRequestImplTempDir");
-		long usersImageMaxSize = ParamUtil.getLong(
-			actionRequest, "usersImageMaxSize");
 
 		portletPreferences.setValue(
 			PropsKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE,
@@ -640,9 +638,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			UploadServletRequestImpl.setTempDir(
 				new File(uploadServletRequestImplTempDir));
 		}
-
-		portletPreferences.setValue(
-			PropsKeys.USERS_IMAGE_MAX_SIZE, String.valueOf(usersImageMaxSize));
 
 		portletPreferences.store();
 	}

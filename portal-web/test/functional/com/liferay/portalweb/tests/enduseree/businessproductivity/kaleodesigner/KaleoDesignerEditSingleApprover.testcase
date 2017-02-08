@@ -92,7 +92,7 @@
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
 
-		<execute macro="Workflow#viewDefinition">
+		<execute macro="KaleoDesigner#viewTableDefinitionPublishedViaKDCP">
 			<var name="workflowDefinitionName" value="Single Approver" />
 			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
 			<var name="workflowDefinitionVersionNumber" value="2" />

@@ -43,6 +43,15 @@
 		<execute function="Type#clickAtType" locator1="FormFields#FIELD_NAME_EDIT" value1="${fieldValue}" />
 	</command>
 
+	<command name="editGridOptions">
+		<var name="key_gridField" value="${gridField}" />
+		<var name="key_rowNumber" value="${rowNumber}" />
+
+		<execute function="Type" locator1="FormFields#GRID_OPTIONS_OPTION_VALUE_FIELD" value1="${optionValue}" />
+
+		<execute function="AssertElementPresent" locator1="FormFields#GRID_OPTIONS_OPTION_NAME_FIELD" />
+	</command>
+
 	<command name="editOptionsRow">
 		<var name="key_rowNumber" value="${rowNumber}" />
 

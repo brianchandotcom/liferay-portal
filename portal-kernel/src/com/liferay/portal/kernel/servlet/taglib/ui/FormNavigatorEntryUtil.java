@@ -128,32 +128,37 @@ public class FormNavigatorEntryUtil {
 	private static <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean) {
 
-		return _getFormNavigatorEntriesFromConfig(
-			formNavigatorId, categoryKey,
-			formModelBean).orElse(
-				(List)_instance._formNavigatorEntries.getService(
-					_getKey(formNavigatorId, categoryKey)));
+		Optional<List<FormNavigatorEntry<T>>> formNavigationEntriesOptional =
+			_getFormNavigatorEntriesFromConfiguration(
+				formNavigatorId, categoryKey, formModelBean);
+
+		return formNavigationEntriesOptional.orElse(
+			(List)_instance._formNavigatorEntries.getService(
+				_getKey(formNavigatorId, categoryKey)));
 	}
 
 	private static <T> Optional<List<FormNavigatorEntry<T>>>
-		_getFormNavigatorEntriesFromConfig(
+		_getFormNavigatorEntriesFromConfiguration(
 			String formNavigatorId, String categoryKey, T formModelBean) {
 
-		Optional<FormNavigatorEntryConfigurationHelper> helperOptional =
-			_getFormNavigatorEntryConfigurationHelper();
+		Optional<FormNavigatorEntryConfigurationHelper>
+			formNavigatorEntryConfigurationHelperOptional =
+				_getFormNavigatorEntryConfigurationHelper();
 
-		return helperOptional.map(
-			helper -> helper.getFormNavigatorEntries(
-				formNavigatorId, categoryKey, formModelBean)).orElse(
-				Optional.empty());
+		return formNavigatorEntryConfigurationHelperOptional.map(
+			formNavigatorEntryConfigurationHelper ->
+				formNavigatorEntryConfigurationHelper.getFormNavigatorEntries(
+					formNavigatorId, categoryKey, formModelBean)).orElse(
+					Optional.empty());
 	}
 
 	private static Optional<FormNavigatorEntryConfigurationHelper>
 		_getFormNavigatorEntryConfigurationHelper() {
 
+		Registry registry = RegistryUtil.getRegistry();
+
 		return Optional.ofNullable(
-			RegistryUtil.getRegistry().getService(
-				FormNavigatorEntryConfigurationHelper.class));
+			registry.getService(FormNavigatorEntryConfigurationHelper.class));
 	}
 
 	private static String _getKey(String formNavigatorId, String categoryKey) {

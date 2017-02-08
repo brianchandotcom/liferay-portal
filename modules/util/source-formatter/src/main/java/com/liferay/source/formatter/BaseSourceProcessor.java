@@ -93,9 +93,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public final void format() throws Exception {
-		preFormat();
-
 		List<String> fileNames = getFileNames();
+
+		if (fileNames.isEmpty()) {
+			return;
+		}
+
+		preFormat();
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());

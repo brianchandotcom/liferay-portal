@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.form.navigator.configuration;
+package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;

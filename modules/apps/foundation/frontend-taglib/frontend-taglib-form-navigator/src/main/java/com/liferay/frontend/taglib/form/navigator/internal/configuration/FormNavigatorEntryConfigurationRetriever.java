@@ -18,6 +18,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -80,7 +81,7 @@ public class FormNavigatorEntryConfigurationRetriever {
 	}
 
 	private void _addProperties(
-		StringBuilder sb,
+		StringBundler sb,
 		FormNavigatorConfiguration formNavigatorConfiguration) {
 
 		String[] formNavigatorEntryKeys =
@@ -109,7 +110,7 @@ public class FormNavigatorEntryConfigurationRetriever {
 			String formNavigatorId)
 		throws InvalidSyntaxException, IOException {
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		List<FormNavigatorConfiguration> configurations = _getConfigurations();
 

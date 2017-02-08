@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
@@ -45,13 +46,8 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Before
 		public void setUp() throws InvalidSyntaxException, IOException {
-			StringBuilder line1 = new StringBuilder();
-
-			line1.append("add.general");
-			line1.append(StringPool.EQUAL);
-
 			_setMockConfigurations(
-				_createMockConfig("form1", new String[] {line1.toString()}));
+				_createMockConfig("form1", new String[] {"add.general="}));
 		}
 
 		@Test
@@ -69,23 +65,23 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Before
 		public void setUp() throws InvalidSyntaxException, IOException {
-			StringBuilder line1 = new StringBuilder();
+			StringBundler sb1 = new StringBundler(5);
 
-			line1.append("add.general");
-			line1.append(StringPool.EQUAL);
-			line1.append("formNavigatorEntryKey1,");
-			line1.append("formNavigatorEntryKey2,");
-			line1.append("formNavigatorEntryKey3");
+			sb1.append("add.general");
+			sb1.append(StringPool.EQUAL);
+			sb1.append("formNavigatorEntryKey1,");
+			sb1.append("formNavigatorEntryKey2,");
+			sb1.append("formNavigatorEntryKey3");
 
-			StringBuilder line2 = new StringBuilder();
+			StringBundler sb2 = new StringBundler(5);
 
-			line2.append("update.general");
-			line2.append(StringPool.EQUAL);
-			line2.append("formNavigatorEntryKey1,");
-			line2.append("formNavigatorEntryKey4,");
-			line2.append("formNavigatorEntryKey5");
+			sb2.append("update.general");
+			sb2.append(StringPool.EQUAL);
+			sb2.append("formNavigatorEntryKey1,");
+			sb2.append("formNavigatorEntryKey4,");
+			sb2.append("formNavigatorEntryKey5");
 
-			String config = line1.toString() + "\n" + line2.toString();
+			String config = sb1.toString() + "\n" + sb2.toString();
 
 			_setMockConfigurations(
 				_createMockConfig("form1", new String[] {config}));
@@ -128,15 +124,15 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Before
 		public void setUp() throws InvalidSyntaxException, IOException {
-			StringBuilder line = new StringBuilder();
+			StringBundler sb = new StringBundler(4);
 
-			line.append("add.general");
-			line.append(StringPool.EQUAL);
-			line.append("   formNavigatorEntryKey1,  ");
-			line.append("  formNavigatorEntryKey2  ");
+			sb.append("add.general");
+			sb.append(StringPool.EQUAL);
+			sb.append("  formNavigatorEntryKey1,   ");
+			sb.append("formNavigatorEntryKey2  ");
 
 			_setMockConfigurations(
-				_createMockConfig("form1", new String[] {line.toString()}));
+				_createMockConfig("form1", new String[] {sb.toString()}));
 		}
 
 		@Test
@@ -158,15 +154,15 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Before
 		public void setUp() throws InvalidSyntaxException, IOException {
-			StringBuilder line1 = new StringBuilder();
+			StringBundler sb1 = new StringBundler(4);
 
-			line1.append("general");
-			line1.append(StringPool.EQUAL);
-			line1.append("formNavigatorEntryKey1,");
-			line1.append("formNavigatorEntryKey2");
+			sb1.append("general");
+			sb1.append(StringPool.EQUAL);
+			sb1.append("formNavigatorEntryKey1,");
+			sb1.append("formNavigatorEntryKey2");
 
 			_setMockConfigurations(
-				_createMockConfig("form1", new String[] {line1.toString()}));
+				_createMockConfig("form1", new String[] {sb1.toString()}));
 		}
 
 		@Test
@@ -201,25 +197,25 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Before
 		public void setUp() throws InvalidSyntaxException, IOException {
-			StringBuilder line1 = new StringBuilder();
+			StringBundler sb1 = new StringBundler(5);
 
-			line1.append("add.general");
-			line1.append(StringPool.EQUAL);
-			line1.append("formNavigatorEntryKey1,");
-			line1.append("formNavigatorEntryKey2,");
-			line1.append("formNavigatorEntryKey3");
+			sb1.append("add.general");
+			sb1.append(StringPool.EQUAL);
+			sb1.append("formNavigatorEntryKey1,");
+			sb1.append("formNavigatorEntryKey2,");
+			sb1.append("formNavigatorEntryKey3");
 
-			StringBuilder line2 = new StringBuilder();
+			StringBundler sb2 = new StringBundler(5);
 
-			line2.append("update.general");
-			line2.append(StringPool.EQUAL);
-			line2.append("formNavigatorEntryKey1,");
-			line2.append("formNavigatorEntryKey4,");
-			line2.append("formNavigatorEntryKey5");
+			sb2.append("update.general");
+			sb2.append(StringPool.EQUAL);
+			sb2.append("formNavigatorEntryKey1,");
+			sb2.append("formNavigatorEntryKey4,");
+			sb2.append("formNavigatorEntryKey5");
 
 			_setMockConfigurations(
-				_createMockConfig("form1", new String[] {line1.toString()}),
-				_createMockConfig("form1", new String[] {line2.toString()}));
+				_createMockConfig("form1", new String[] {sb1.toString()}),
+				_createMockConfig("form1", new String[] {sb2.toString()}));
 		}
 
 		@Test
@@ -334,26 +330,25 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Before
 		public void setUp() throws InvalidSyntaxException, IOException {
-			StringBuilder line1 = new StringBuilder();
+			StringBundler sb1 = new StringBundler(5);
 
-			line1.append("add.general");
-			line1.append(StringPool.EQUAL);
-			line1.append("formNavigatorEntryKey1,");
-			line1.append("formNavigatorEntryKey2,");
-			line1.append("formNavigatorEntryKey3");
+			sb1.append("add.general");
+			sb1.append(StringPool.EQUAL);
+			sb1.append("formNavigatorEntryKey1,");
+			sb1.append("formNavigatorEntryKey2,");
+			sb1.append("formNavigatorEntryKey3");
 
-			StringBuilder line2 = new StringBuilder();
+			StringBundler sb2 = new StringBundler(5);
 
-			line2.append("add.general");
-			line2.append(StringPool.EQUAL);
-			line2.append("formNavigatorEntryKey1,");
-			line2.append("formNavigatorEntryKey4,");
-			line2.append("formNavigatorEntryKey5");
+			sb2.append("add.general");
+			sb2.append(StringPool.EQUAL);
+			sb2.append("formNavigatorEntryKey1,");
+			sb2.append("formNavigatorEntryKey4,");
+			sb2.append("formNavigatorEntryKey5");
 
 			_setMockConfigurations(
 				_createMockConfig(
-					"form1",
-					new String[] {line1.toString(), line2.toString()}));
+					"form1", new String[] {sb1.toString(), sb2.toString()}));
 		}
 
 		@Test

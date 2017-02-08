@@ -48,6 +48,10 @@ classes {
 	dependsOn buildAlloyEditor
 }
 
+clean {
+	delete "tmp"
+}
+
 configJSModules {
 	enabled = false
 }

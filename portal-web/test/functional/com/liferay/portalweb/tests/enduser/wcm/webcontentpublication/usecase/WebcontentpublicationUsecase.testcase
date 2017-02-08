@@ -1256,9 +1256,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="${siteName},Site Name,Global" param="siteName">
+		<for list="${siteName},Site Name,Global" param="siteName1">
 			<execute macro="ProductMenu#gotoSite">
-				<var name="site" value="${siteName}" />
+				<var name="site" value="${siteName1}" />
 			</execute>
 
 			<execute macro="ProductMenu#gotoSitesContent">
@@ -1268,8 +1268,8 @@
 			<execute macro="WebContentNavigator#gotoAddCP" />
 
 			<execute macro="WebContent#addCP">
-				<var name="webContentContent" value="${siteName} WC Content" />
-				<var name="webContentTitle" value="${siteName} WC Title" />
+				<var name="webContentContent" value="${siteName1} WC Content" />
+				<var name="webContentTitle" value="${siteName1} WC Title" />
 			</execute>
 
 			<execute macro="PortletEntry#publish" />

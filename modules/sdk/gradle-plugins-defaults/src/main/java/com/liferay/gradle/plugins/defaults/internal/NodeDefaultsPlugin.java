@@ -23,6 +23,8 @@ import java.util.Collections;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.tasks.Delete;
 
 /**
  * @author Andrea Di Giorgi
@@ -33,6 +35,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 	@Override
 	protected void configureDefaults(Project project, NodePlugin nodePlugin) {
+		_configureTaskClean(project);
 		_configureTaskNpmShrinkwrap(project);
 	}
 
@@ -42,6 +45,17 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	}
 
 	private NodeDefaultsPlugin() {
+	}
+
+	private void _configureTaskClean(Project project) {
+		boolean cleanNodeModules = Boolean.getBoolean("clean.node.modules");
+
+		if (cleanNodeModules) {
+			Delete delete = (Delete)GradleUtil.getTask(
+				project, BasePlugin.CLEAN_TASK_NAME);
+
+			delete.delete("node_modules");
+		}
 	}
 
 	private void _configureTaskNpmShrinkwrap(Project project) {

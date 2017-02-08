@@ -98,7 +98,7 @@
 			<var name="workflowDefinitionVersionNumber" value="2" />
 		</execute>
 
-		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaKDCP">
 			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
 		</execute>
 

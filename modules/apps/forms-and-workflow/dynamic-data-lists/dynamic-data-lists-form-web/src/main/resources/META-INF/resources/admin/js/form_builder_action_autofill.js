@@ -44,7 +44,6 @@ AUI.add(
 							dataProviderParameterInputDescription: Liferay.Language.get('data-provider-parameter-input-description'),
 							dataProviderParameterOutput: Liferay.Language.get('data-provider-parameter-output'),
 							dataProviderParameterOutputDescription: Liferay.Language.get('data-provider-parameter-output-description'),
-							fromDataProvider: Liferay.Language.get('from-data-provider'),
 							requiredField: Liferay.Language.get('required-field')
 						}
 					}

@@ -19,3 +19,12 @@ create table FriendlyURLLocalization (
 	urlTitle VARCHAR(255) null,
 	languageId VARCHAR(75) null
 );
+
+create table FriendlyURLTitleLocalization (
+	friendlyURLLocalizationId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	friendlyURLId LONG,
+	urlTitle VARCHAR(255) null,
+	languageId VARCHAR(75) null
+);

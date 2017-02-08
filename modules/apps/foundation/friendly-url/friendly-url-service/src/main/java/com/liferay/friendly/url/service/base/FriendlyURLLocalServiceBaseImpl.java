@@ -24,8 +24,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.friendly.url.model.FriendlyURL;
 import com.liferay.friendly.url.service.FriendlyURLLocalService;
-import com.liferay.friendly.url.service.persistence.FriendlyURLLocalizationPersistence;
 import com.liferay.friendly.url.service.persistence.FriendlyURLPersistence;
+import com.liferay.friendly.url.service.persistence.FriendlyURLTitleLocalizationPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -489,41 +489,41 @@ public abstract class FriendlyURLLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the friendly url localization local service.
+	 * Returns the friendly url title localization local service.
 	 *
-	 * @return the friendly url localization local service
+	 * @return the friendly url title localization local service
 	 */
-	public com.liferay.friendly.url.service.FriendlyURLLocalizationLocalService getFriendlyURLLocalizationLocalService() {
-		return friendlyURLLocalizationLocalService;
+	public com.liferay.friendly.url.service.FriendlyURLTitleLocalizationLocalService getFriendlyURLTitleLocalizationLocalService() {
+		return friendlyURLTitleLocalizationLocalService;
 	}
 
 	/**
-	 * Sets the friendly url localization local service.
+	 * Sets the friendly url title localization local service.
 	 *
-	 * @param friendlyURLLocalizationLocalService the friendly url localization local service
+	 * @param friendlyURLTitleLocalizationLocalService the friendly url title localization local service
 	 */
-	public void setFriendlyURLLocalizationLocalService(
-		com.liferay.friendly.url.service.FriendlyURLLocalizationLocalService friendlyURLLocalizationLocalService) {
-		this.friendlyURLLocalizationLocalService = friendlyURLLocalizationLocalService;
+	public void setFriendlyURLTitleLocalizationLocalService(
+		com.liferay.friendly.url.service.FriendlyURLTitleLocalizationLocalService friendlyURLTitleLocalizationLocalService) {
+		this.friendlyURLTitleLocalizationLocalService = friendlyURLTitleLocalizationLocalService;
 	}
 
 	/**
-	 * Returns the friendly url localization persistence.
+	 * Returns the friendly url title localization persistence.
 	 *
-	 * @return the friendly url localization persistence
+	 * @return the friendly url title localization persistence
 	 */
-	public FriendlyURLLocalizationPersistence getFriendlyURLLocalizationPersistence() {
-		return friendlyURLLocalizationPersistence;
+	public FriendlyURLTitleLocalizationPersistence getFriendlyURLTitleLocalizationPersistence() {
+		return friendlyURLTitleLocalizationPersistence;
 	}
 
 	/**
-	 * Sets the friendly url localization persistence.
+	 * Sets the friendly url title localization persistence.
 	 *
-	 * @param friendlyURLLocalizationPersistence the friendly url localization persistence
+	 * @param friendlyURLTitleLocalizationPersistence the friendly url title localization persistence
 	 */
-	public void setFriendlyURLLocalizationPersistence(
-		FriendlyURLLocalizationPersistence friendlyURLLocalizationPersistence) {
-		this.friendlyURLLocalizationPersistence = friendlyURLLocalizationPersistence;
+	public void setFriendlyURLTitleLocalizationPersistence(
+		FriendlyURLTitleLocalizationPersistence friendlyURLTitleLocalizationPersistence) {
+		this.friendlyURLTitleLocalizationPersistence = friendlyURLTitleLocalizationPersistence;
 	}
 
 	/**
@@ -695,10 +695,10 @@ public abstract class FriendlyURLLocalServiceBaseImpl
 	protected FriendlyURLLocalService friendlyURLLocalService;
 	@BeanReference(type = FriendlyURLPersistence.class)
 	protected FriendlyURLPersistence friendlyURLPersistence;
-	@BeanReference(type = com.liferay.friendly.url.service.FriendlyURLLocalizationLocalService.class)
-	protected com.liferay.friendly.url.service.FriendlyURLLocalizationLocalService friendlyURLLocalizationLocalService;
-	@BeanReference(type = FriendlyURLLocalizationPersistence.class)
-	protected FriendlyURLLocalizationPersistence friendlyURLLocalizationPersistence;
+	@BeanReference(type = com.liferay.friendly.url.service.FriendlyURLTitleLocalizationLocalService.class)
+	protected com.liferay.friendly.url.service.FriendlyURLTitleLocalizationLocalService friendlyURLTitleLocalizationLocalService;
+	@BeanReference(type = FriendlyURLTitleLocalizationPersistence.class)
+	protected FriendlyURLTitleLocalizationPersistence friendlyURLTitleLocalizationPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

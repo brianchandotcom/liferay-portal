@@ -7,3 +7,6 @@ create unique index IX_1C7E10E0 on FriendlyURL (uuid_[$COLUMN_LENGTH:75$], group
 
 create unique index IX_4690312F on FriendlyURLLocalization (groupId, friendlyURLId, languageId[$COLUMN_LENGTH:75$]);
 create unique index IX_A9FD5E8B on FriendlyURLLocalization (groupId, urlTitle[$COLUMN_LENGTH:255$], languageId[$COLUMN_LENGTH:75$]);
+
+create unique index IX_2116649F on FriendlyURLTitleLocalization (groupId, friendlyURLId, languageId[$COLUMN_LENGTH:75$]);
+create unique index IX_F960C51B on FriendlyURLTitleLocalization (groupId, urlTitle[$COLUMN_LENGTH:255$], languageId[$COLUMN_LENGTH:75$]);

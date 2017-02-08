@@ -15,11 +15,23 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradeCompanyId;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class UpgradeCompanyId extends BaseUpgradeCompanyId {
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		super.doUpgrade();
+
+		String template = StringUtil.read(
+			UpgradeSchema.class.getResourceAsStream(
+				"dependencies/update-company-indexes.sql"));
+
+		runSQLTemplateString(template, false, false);
+	}
 
 	@Override
 	protected TableUpdater[] getTableUpdaters() {

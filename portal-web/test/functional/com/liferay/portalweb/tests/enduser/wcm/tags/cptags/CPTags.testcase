@@ -283,6 +283,20 @@
 		</execute>
 	</command>
 
+	<command name="AddTagWithUTF8Encoding" priority="4">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="標籤名稱" />
+		</execute>
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="標籤名稱" />
+		</execute>
+	</command>
+
 	<command name="DeleteTagFromList" priority="4">
 		<execute macro="Navigator#openURL" />
 

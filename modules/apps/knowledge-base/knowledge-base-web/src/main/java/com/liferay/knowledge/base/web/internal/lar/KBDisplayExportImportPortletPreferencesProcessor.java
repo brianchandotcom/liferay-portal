@@ -134,6 +134,17 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 				KBFolder rootFolder = _kbFolderLocalService.fetchKBFolder(
 					resourcePrimKey);
 
+				if (rootFolder == null) {
+					StringBundler sb = new StringBundler(4);
+
+					sb.append("KB Display portlet with ID ");
+					sb.append(portletDataContext.getPortletId());
+					sb.append(" refers to an inexistent root folder: ");
+					sb.append(resourcePrimKey);
+
+					throw new PortletDataException(sb.toString());
+				}
+
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, portletDataContext.getPortletId(),
 					rootFolder);

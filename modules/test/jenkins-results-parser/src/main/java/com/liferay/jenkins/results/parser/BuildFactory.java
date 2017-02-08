@@ -63,7 +63,9 @@ public class BuildFactory {
 
 		String jobName = topLevelBuild.getJobName();
 
-		if (jobName.equals("test-portal-acceptance-pullrequest(ee-6.2.x)")) {
+		if ((parentBuild != null) &&
+			jobName.equals("test-portal-acceptance-pullrequest(ee-6.2.x)")) {
+
 			String jenkinsJobVariant = topLevelBuild.getParameterValue(
 				"JENKINS_JOB_VARIANT");
 

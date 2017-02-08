@@ -1061,6 +1061,16 @@ public abstract class BaseBuild implements Build {
 	protected List<String> findDownstreamBuildsInConsoleText() {
 		List<String> foundDownstreamBuildURLs = new ArrayList<>();
 
+		Set<String> downstreamBuildURLs = new HashSet<>();
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			String downstreamBuildURL = downstreamBuild.getBuildURL();
+
+			if (downstreamBuildURL != null) {
+				downstreamBuildURLs.add(downstreamBuildURL);
+			}
+		}
+
 		if (getBuildURL() != null) {
 			String consoleText = getConsoleText();
 
@@ -1083,7 +1093,9 @@ public abstract class BaseBuild implements Build {
 					url = reinvocationMatcher.group("url");
 				}
 
-				if (!foundDownstreamBuildURLs.contains(url)) {
+				if (!foundDownstreamBuildURLs.contains(url) &&
+					!downstreamBuildURLs.contains(url)) {
+
 					foundDownstreamBuildURLs.add(url);
 				}
 			}

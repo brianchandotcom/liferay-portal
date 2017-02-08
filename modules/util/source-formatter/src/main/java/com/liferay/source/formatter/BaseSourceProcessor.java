@@ -156,7 +156,25 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public String[] getIncludes() {
-		return doGetIncludes();
+		String[] includes = doGetIncludes();
+
+		List<String> fileExtensions = sourceFormatterArgs.getFileExtensions();
+
+		if (fileExtensions.isEmpty()) {
+			return includes;
+		}
+
+		String[] filteredIncludes = new String[0];
+
+		for (String include : includes) {
+			for (String fileExtension : fileExtensions) {
+				if (include.endsWith(fileExtension)) {
+					ArrayUtil.append(filteredIncludes, include);
+				}
+			}
+		}
+
+		return filteredIncludes;
 	}
 
 	@Override

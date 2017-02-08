@@ -42,9 +42,6 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 	redirectURL.setWindowState(LiferayWindowState.POP_UP);
 
 	editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, LiferayWindowState.POP_UP, redirectURL);
-
-	editPortletURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
-	editPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
 }
 %>
 
@@ -52,6 +49,9 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 	<div class="pull-right">
 
 		<%
+		editPortletURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
+		editPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
+
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		data.put("destroyOnHide", true);

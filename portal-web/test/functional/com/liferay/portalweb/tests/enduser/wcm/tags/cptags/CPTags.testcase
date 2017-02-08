@@ -35,6 +35,10 @@
 		<execute macro="Tag#addCP">
 			<var name="tagName" value="tag name" />
 		</execute>
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tag name" />
+		</execute>
 	</command>
 
 	<command name="AddTagInvalidCharacters" priority="4">

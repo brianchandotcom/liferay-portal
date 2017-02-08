@@ -299,18 +299,16 @@ public class TopLevelBuild extends BaseBuild {
 		int failCount = getDownstreamBuildCount(null) - successCount + 1;
 
 		return Dom4JUtil.getNewElement(
-			"div", null,
+			"div", null, Dom4JUtil.getNewElement("h6", null, "Job Results:"),
 			Dom4JUtil.getNewElement(
-				"h6", null, "Job Results:",
-				Dom4JUtil.getNewElement(
-					"p", null, Integer.toString(successCount),
-					JenkinsResultsParserUtil.getNounForm(
-						successCount, " Jobs", " Job"),
-					" Passed.", Dom4JUtil.getNewElement("br"),
-					Integer.toString(failCount),
-					JenkinsResultsParserUtil.getNounForm(
-						failCount, " Jobs", " Job"),
-					" Failed.")));
+				"p", null, Integer.toString(successCount),
+				JenkinsResultsParserUtil.getNounForm(
+					successCount, " Jobs", " Job"),
+				" Passed.", Dom4JUtil.getNewElement("br"),
+				Integer.toString(failCount),
+				JenkinsResultsParserUtil.getNounForm(
+					failCount, " Jobs", " Job"),
+				" Failed."));
 	}
 
 	protected String getGitRepositoryDetailsPropertiesTempMapURL(

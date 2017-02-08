@@ -164,6 +164,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GRID_RADIO_OPTIONS</td>
+	<td>//div[contains(@class,'field-grid')]//tr[@name='${key_optionRowName}']//input[@value='${key_categoryColumnName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

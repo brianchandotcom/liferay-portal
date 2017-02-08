@@ -160,6 +160,13 @@
 		<execute function="AssertClick" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST" value1="${outputParameterType}" />
 	</command>
 
+	<command name="selectGridRadioOption">
+		<var name="key_categoryColumnName" value="${categoryColumnName}" />
+		<var name="key_optionRowName" value="${optionRowName}" />
+
+		<execute function="Click" locator1="FormFields#GRID_RADIO_OPTIONS" />
+	</command>
+
 	<command name="selectRadioOption">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_radioOption" value="${radioOption}" />

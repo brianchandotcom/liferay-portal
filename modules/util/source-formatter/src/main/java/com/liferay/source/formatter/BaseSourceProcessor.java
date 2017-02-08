@@ -169,7 +169,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		for (String include : includes) {
 			for (String fileExtension : fileExtensions) {
 				if (include.endsWith(fileExtension)) {
-					ArrayUtil.append(filteredIncludes, include);
+					filteredIncludes = ArrayUtil.append(
+						filteredIncludes, include);
 				}
 			}
 		}

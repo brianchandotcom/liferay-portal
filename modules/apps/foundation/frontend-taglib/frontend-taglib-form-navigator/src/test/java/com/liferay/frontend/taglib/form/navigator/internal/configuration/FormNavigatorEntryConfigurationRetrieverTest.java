@@ -17,8 +17,6 @@ package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.io.IOException;
-
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
@@ -32,7 +30,6 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -45,7 +42,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 	public static class WhenAConfigurationEntryHasOneLineWithNoKeys {
 
 		@Before
-		public void setUp() throws InvalidSyntaxException, IOException {
+		public void setUp() throws Exception {
 			_setMockConfigurations(
 				_createMockConfig("form1", new String[] {"add.general="}));
 		}
@@ -64,7 +61,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 	public static class WhenAConfigurationEntryHasSeveralLines {
 
 		@Before
-		public void setUp() throws InvalidSyntaxException, IOException {
+		public void setUp() throws Exception {
 			StringBundler sb1 = new StringBundler(5);
 
 			sb1.append("add.general");
@@ -123,7 +120,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 	public static class WhenAKeyHasLeadingOrTrailingSpaces {
 
 		@Before
-		public void setUp() throws InvalidSyntaxException, IOException {
+		public void setUp() throws Exception {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("add.general");
@@ -150,10 +147,10 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
-	public static class WhenNoVariantIsSet {
+	public static class WhenNoContextIsSet {
 
 		@Before
-		public void setUp() throws InvalidSyntaxException, IOException {
+		public void setUp() throws Exception {
 			StringBundler sb1 = new StringBundler(4);
 
 			sb1.append("general");
@@ -166,7 +163,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		}
 
 		@Test
-		public void testReturnsTheKeysInThatLineWhenAskedForAVariant() {
+		public void testReturnsTheKeysInThatLineWhenAskedForAContext() {
 			List<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
@@ -179,7 +176,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		}
 
 		@Test
-		public void testReturnsTheKeysInThatLineWhenAskedForNoVariant() {
+		public void testReturnsTheKeysInThatLineWhenAskedForNoConext() {
 			List<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", null).get();
@@ -196,7 +193,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 	public static class WhenThereAreSeveralConfigurations {
 
 		@Before
-		public void setUp() throws InvalidSyntaxException, IOException {
+		public void setUp() throws Exception {
 			StringBundler sb1 = new StringBundler(5);
 
 			sb1.append("add.general");
@@ -283,13 +280,13 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 	public static class WhenThereIsNoConfig {
 
 		@Before
-		public void setUp() throws InvalidSyntaxException, IOException {
+		public void setUp() throws Exception {
 			_setMockConfigurations();
 		}
 
 		@Test
 		public void testGetFormNavigatorEntriesReturnsEmptyOptional()
-			throws InvalidSyntaxException, IOException {
+			throws Exception {
 
 			Optional<List<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
@@ -304,7 +301,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 	public static class WhenThereIsNoConfigAtAll {
 
 		@Before
-		public void setUp() throws InvalidSyntaxException, IOException {
+		public void setUp() throws Exception {
 			Mockito.when(
 				_configurationAdmin.listConfigurations(
 					"(service.factoryPid=" +
@@ -329,7 +326,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 	public static class WhenThereIsOneConfigurationWithTwoLinesForSameTarget {
 
 		@Before
-		public void setUp() throws InvalidSyntaxException, IOException {
+		public void setUp() throws Exception {
 			StringBundler sb1 = new StringBundler(5);
 
 			sb1.append("add.general");
@@ -383,7 +380,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 	}
 
 	private static void _setMockConfigurations(Configuration... configurations)
-		throws InvalidSyntaxException, IOException {
+		throws Exception {
 
 		Mockito.when(
 			_configurationAdmin.listConfigurations(

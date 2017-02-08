@@ -533,7 +533,33 @@ AUI.add(
 
 		Liferay.Scheduler = Scheduler;
 
-		Liferay.SchedulerDayView = A.SchedulerDayView;
+		var SchedulerDayView = A.Component.create(
+			{
+				EXTENDS: A.SchedulerDayView,
+
+				NAME: 'scheduler-day-view',
+
+				ATTRS: {
+					navigationDateFormatter: {
+						value: function(date) {
+							var options = { 
+									weekday: 'long',
+									year: 'numeric',
+									month: 'long',
+									day: 'numeric' 
+							};
+
+							var language = A.config.lang;
+
+							return date.toLocaleString(language, options);
+						},
+						validator: isFunction
+					}
+				}
+			}
+		);
+
+		Liferay.SchedulerDayView = SchedulerDayView;
 
 		Liferay.SchedulerWeekView = A.SchedulerWeekView;
 

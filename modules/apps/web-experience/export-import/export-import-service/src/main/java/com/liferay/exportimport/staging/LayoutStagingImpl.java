@@ -199,9 +199,14 @@ public class LayoutStagingImpl implements LayoutStaging {
 			return false;
 		}
 
-		LayoutRevision layoutRevision =
-			_layoutRevisionLocalService.fetchLayoutRevision(
-				layoutSetBranchId, true, layout.getPlid());
+		LayoutRevision layoutRevision = getLayoutRevision(layout);
+
+		if (layoutRevision != null) {
+			return true;
+		}
+
+		layoutRevision = _layoutRevisionLocalService.fetchLayoutRevision(
+			layoutSetBranchId, true, layout.getPlid());
 
 		if (layoutRevision == null) {
 			return false;

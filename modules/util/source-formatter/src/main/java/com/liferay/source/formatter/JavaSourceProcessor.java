@@ -51,11 +51,6 @@ import org.apache.maven.artifact.versioning.ComparableVersion;
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
 
-	@Override
-	protected String[] doGetIncludes() {
-		return _INCLUDES;
-	}
-
 	protected String applyDiamondOperator(String content) {
 		Matcher matcher = _diamondOperatorPattern.matcher(content);
 
@@ -1348,6 +1343,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return new ArrayList<>(fileNames);
+	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
 	}
 
 	protected String fixDataAccessConnection(String className, String content) {

@@ -53,24 +53,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	public static final String AUTOMATIC_TRANSLATION =
 		com.liferay.portal.tools.LangBuilder.AUTOMATIC_TRANSLATION;
 
-	@Override
-	protected String[] doGetIncludes() {
-		if (portalSource) {
-			return new String[] {
-				"**/Language.properties",
-				"**/liferay-plugin-package.properties", "**/portal.properties",
-				"**/portal-ext.properties", "**/portal-legacy-*.properties",
-				"**/portlet.properties", "**/source-formatter.properties"
-			};
-		}
-
-		return new String[] {
-			"**/liferay-plugin-package.properties", "**/portal.properties",
-			"**/portal-ext.properties", "**/portlet.properties",
-			"**/source-formatter.properties"
-		};
-	}
-
 	protected void addDuplicateLanguageKey(
 		String fileName, String key, String value) {
 
@@ -258,6 +240,24 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(new String[0], getIncludes());
+	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		if (portalSource) {
+			return new String[] {
+				"**/Language.properties",
+				"**/liferay-plugin-package.properties", "**/portal.properties",
+				"**/portal-ext.properties", "**/portal-legacy-*.properties",
+				"**/portlet.properties", "**/source-formatter.properties"
+			};
+		}
+
+		return new String[] {
+			"**/liferay-plugin-package.properties", "**/portal.properties",
+			"**/portal-ext.properties", "**/portlet.properties",
+			"**/source-formatter.properties"
+		};
 	}
 
 	protected String fixIncorrectLicenses(String absolutePath, String content) {

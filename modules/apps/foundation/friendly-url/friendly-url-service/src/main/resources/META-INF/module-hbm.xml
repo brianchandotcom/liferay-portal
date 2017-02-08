@@ -19,7 +19,7 @@
 		<property name="main" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.friendly.url.model.impl.FriendlyURLTitleLocalizationImpl" table="FriendlyURLTitleLocalization">
-		<id name="friendlyURLLocalizationId" type="long">
+		<id name="friendlyURLTitleLocalizationId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

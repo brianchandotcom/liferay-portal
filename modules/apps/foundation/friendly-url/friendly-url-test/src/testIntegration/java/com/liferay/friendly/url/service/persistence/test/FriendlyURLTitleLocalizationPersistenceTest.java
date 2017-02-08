@@ -139,8 +139,8 @@ public class FriendlyURLTitleLocalizationPersistenceTest {
 
 		FriendlyURLTitleLocalization existingFriendlyURLTitleLocalization = _persistence.findByPrimaryKey(newFriendlyURLTitleLocalization.getPrimaryKey());
 
-		Assert.assertEquals(existingFriendlyURLTitleLocalization.getFriendlyURLLocalizationId(),
-			newFriendlyURLTitleLocalization.getFriendlyURLLocalizationId());
+		Assert.assertEquals(existingFriendlyURLTitleLocalization.getFriendlyURLTitleLocalizationId(),
+			newFriendlyURLTitleLocalization.getFriendlyURLTitleLocalizationId());
 		Assert.assertEquals(existingFriendlyURLTitleLocalization.getGroupId(),
 			newFriendlyURLTitleLocalization.getGroupId());
 		Assert.assertEquals(existingFriendlyURLTitleLocalization.getCompanyId(),
@@ -206,8 +206,9 @@ public class FriendlyURLTitleLocalizationPersistenceTest {
 
 	protected OrderByComparator<FriendlyURLTitleLocalization> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("FriendlyURLTitleLocalization",
-			"friendlyURLLocalizationId", true, "groupId", true, "companyId",
-			true, "friendlyURLId", true, "urlTitle", true, "languageId", true);
+			"friendlyURLTitleLocalizationId", true, "groupId", true,
+			"companyId", true, "friendlyURLId", true, "urlTitle", true,
+			"languageId", true);
 	}
 
 	@Test
@@ -350,8 +351,8 @@ public class FriendlyURLTitleLocalizationPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
-				"friendlyURLLocalizationId",
-				newFriendlyURLTitleLocalization.getFriendlyURLLocalizationId()));
+				"friendlyURLTitleLocalizationId",
+				newFriendlyURLTitleLocalization.getFriendlyURLTitleLocalizationId()));
 
 		List<FriendlyURLTitleLocalization> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -369,7 +370,7 @@ public class FriendlyURLTitleLocalizationPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
-				"friendlyURLLocalizationId", RandomTestUtil.nextLong()));
+				"friendlyURLTitleLocalizationId", RandomTestUtil.nextLong()));
 
 		List<FriendlyURLTitleLocalization> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -385,22 +386,22 @@ public class FriendlyURLTitleLocalizationPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"friendlyURLLocalizationId"));
+				"friendlyURLTitleLocalizationId"));
 
-		Object newFriendlyURLLocalizationId = newFriendlyURLTitleLocalization.getFriendlyURLLocalizationId();
+		Object newFriendlyURLTitleLocalizationId = newFriendlyURLTitleLocalization.getFriendlyURLTitleLocalizationId();
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in(
-				"friendlyURLLocalizationId",
-				new Object[] { newFriendlyURLLocalizationId }));
+				"friendlyURLTitleLocalizationId",
+				new Object[] { newFriendlyURLTitleLocalizationId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		Object existingFriendlyURLLocalizationId = result.get(0);
+		Object existingFriendlyURLTitleLocalizationId = result.get(0);
 
-		Assert.assertEquals(existingFriendlyURLLocalizationId,
-			newFriendlyURLLocalizationId);
+		Assert.assertEquals(existingFriendlyURLTitleLocalizationId,
+			newFriendlyURLTitleLocalizationId);
 	}
 
 	@Test
@@ -409,10 +410,10 @@ public class FriendlyURLTitleLocalizationPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"friendlyURLLocalizationId"));
+				"friendlyURLTitleLocalizationId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in(
-				"friendlyURLLocalizationId",
+				"friendlyURLTitleLocalizationId",
 				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);

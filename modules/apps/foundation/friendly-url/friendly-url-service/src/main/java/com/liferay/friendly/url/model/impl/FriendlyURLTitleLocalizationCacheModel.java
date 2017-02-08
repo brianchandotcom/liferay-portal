@@ -51,7 +51,7 @@ public class FriendlyURLTitleLocalizationCacheModel implements CacheModel<Friend
 		FriendlyURLTitleLocalizationCacheModel friendlyURLTitleLocalizationCacheModel =
 			(FriendlyURLTitleLocalizationCacheModel)obj;
 
-		if (friendlyURLLocalizationId == friendlyURLTitleLocalizationCacheModel.friendlyURLLocalizationId) {
+		if (friendlyURLTitleLocalizationId == friendlyURLTitleLocalizationCacheModel.friendlyURLTitleLocalizationId) {
 			return true;
 		}
 
@@ -60,15 +60,15 @@ public class FriendlyURLTitleLocalizationCacheModel implements CacheModel<Friend
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, friendlyURLLocalizationId);
+		return HashUtil.hash(0, friendlyURLTitleLocalizationId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);
 
-		sb.append("{friendlyURLLocalizationId=");
-		sb.append(friendlyURLLocalizationId);
+		sb.append("{friendlyURLTitleLocalizationId=");
+		sb.append(friendlyURLTitleLocalizationId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -88,7 +88,7 @@ public class FriendlyURLTitleLocalizationCacheModel implements CacheModel<Friend
 	public FriendlyURLTitleLocalization toEntityModel() {
 		FriendlyURLTitleLocalizationImpl friendlyURLTitleLocalizationImpl = new FriendlyURLTitleLocalizationImpl();
 
-		friendlyURLTitleLocalizationImpl.setFriendlyURLLocalizationId(friendlyURLLocalizationId);
+		friendlyURLTitleLocalizationImpl.setFriendlyURLTitleLocalizationId(friendlyURLTitleLocalizationId);
 		friendlyURLTitleLocalizationImpl.setGroupId(groupId);
 		friendlyURLTitleLocalizationImpl.setCompanyId(companyId);
 		friendlyURLTitleLocalizationImpl.setFriendlyURLId(friendlyURLId);
@@ -114,7 +114,7 @@ public class FriendlyURLTitleLocalizationCacheModel implements CacheModel<Friend
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		friendlyURLLocalizationId = objectInput.readLong();
+		friendlyURLTitleLocalizationId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -128,7 +128,7 @@ public class FriendlyURLTitleLocalizationCacheModel implements CacheModel<Friend
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(friendlyURLLocalizationId);
+		objectOutput.writeLong(friendlyURLTitleLocalizationId);
 
 		objectOutput.writeLong(groupId);
 
@@ -151,7 +151,7 @@ public class FriendlyURLTitleLocalizationCacheModel implements CacheModel<Friend
 		}
 	}
 
-	public long friendlyURLLocalizationId;
+	public long friendlyURLTitleLocalizationId;
 	public long groupId;
 	public long companyId;
 	public long friendlyURLId;

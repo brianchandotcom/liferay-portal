@@ -80,11 +80,11 @@ public interface FriendlyURLTitleLocalizationLocalService
 	/**
 	* Creates a new friendly url title localization with the primary key. Does not add the friendly url title localization to the database.
 	*
-	* @param friendlyURLLocalizationId the primary key for the new friendly url title localization
+	* @param friendlyURLTitleLocalizationId the primary key for the new friendly url title localization
 	* @return the new friendly url title localization
 	*/
 	public FriendlyURLTitleLocalization createFriendlyURLTitleLocalization(
-		long friendlyURLLocalizationId);
+		long friendlyURLTitleLocalizationId);
 
 	public FriendlyURLTitleLocalization deleteFriendlyURLTitleLocalization(
 		FriendlyURL friendlyURL, java.lang.String languageId)
@@ -103,13 +103,13 @@ public interface FriendlyURLTitleLocalizationLocalService
 	/**
 	* Deletes the friendly url title localization with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param friendlyURLLocalizationId the primary key of the friendly url title localization
+	* @param friendlyURLTitleLocalizationId the primary key of the friendly url title localization
 	* @return the friendly url title localization that was removed
 	* @throws PortalException if a friendly url title localization with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public FriendlyURLTitleLocalization deleteFriendlyURLTitleLocalization(
-		long friendlyURLLocalizationId) throws PortalException;
+		long friendlyURLTitleLocalizationId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FriendlyURLTitleLocalization fetchFriendlyURLTitleLocalization(
@@ -122,18 +122,18 @@ public interface FriendlyURLTitleLocalizationLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FriendlyURLTitleLocalization fetchFriendlyURLTitleLocalization(
-		long friendlyURLLocalizationId);
+		long friendlyURLTitleLocalizationId);
 
 	/**
 	* Returns the friendly url title localization with the primary key.
 	*
-	* @param friendlyURLLocalizationId the primary key of the friendly url title localization
+	* @param friendlyURLTitleLocalizationId the primary key of the friendly url title localization
 	* @return the friendly url title localization
 	* @throws PortalException if a friendly url title localization with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FriendlyURLTitleLocalization getFriendlyURLTitleLocalization(
-		long friendlyURLLocalizationId) throws PortalException;
+		long friendlyURLTitleLocalizationId) throws PortalException;
 
 	/**
 	* Updates the friendly url title localization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

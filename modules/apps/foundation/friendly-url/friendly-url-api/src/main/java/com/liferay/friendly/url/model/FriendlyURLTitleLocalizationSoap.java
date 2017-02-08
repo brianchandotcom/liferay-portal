@@ -33,7 +33,7 @@ public class FriendlyURLTitleLocalizationSoap implements Serializable {
 		FriendlyURLTitleLocalization model) {
 		FriendlyURLTitleLocalizationSoap soapModel = new FriendlyURLTitleLocalizationSoap();
 
-		soapModel.setFriendlyURLLocalizationId(model.getFriendlyURLLocalizationId());
+		soapModel.setFriendlyURLTitleLocalizationId(model.getFriendlyURLTitleLocalizationId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setFriendlyURLId(model.getFriendlyURLId());
@@ -87,19 +87,20 @@ public class FriendlyURLTitleLocalizationSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _friendlyURLLocalizationId;
+		return _friendlyURLTitleLocalizationId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setFriendlyURLLocalizationId(pk);
+		setFriendlyURLTitleLocalizationId(pk);
 	}
 
-	public long getFriendlyURLLocalizationId() {
-		return _friendlyURLLocalizationId;
+	public long getFriendlyURLTitleLocalizationId() {
+		return _friendlyURLTitleLocalizationId;
 	}
 
-	public void setFriendlyURLLocalizationId(long friendlyURLLocalizationId) {
-		_friendlyURLLocalizationId = friendlyURLLocalizationId;
+	public void setFriendlyURLTitleLocalizationId(
+		long friendlyURLTitleLocalizationId) {
+		_friendlyURLTitleLocalizationId = friendlyURLTitleLocalizationId;
 	}
 
 	public long getGroupId() {
@@ -142,7 +143,7 @@ public class FriendlyURLTitleLocalizationSoap implements Serializable {
 		_languageId = languageId;
 	}
 
-	private long _friendlyURLLocalizationId;
+	private long _friendlyURLTitleLocalizationId;
 	private long _groupId;
 	private long _companyId;
 	private long _friendlyURLId;

@@ -16,7 +16,7 @@
 		<field name="main" type="boolean" />
 	</model>
 	<model name="com.liferay.friendly.url.model.FriendlyURLTitleLocalization">
-		<field name="friendlyURLLocalizationId" type="long" />
+		<field name="friendlyURLTitleLocalizationId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="friendlyURLId" type="long" />

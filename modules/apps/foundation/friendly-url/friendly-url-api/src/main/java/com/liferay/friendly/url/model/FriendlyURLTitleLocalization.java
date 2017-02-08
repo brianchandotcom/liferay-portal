@@ -38,12 +38,12 @@ public interface FriendlyURLTitleLocalization
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.friendly.url.model.impl.FriendlyURLTitleLocalizationImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<FriendlyURLTitleLocalization, Long> FRIENDLY_URL_LOCALIZATION_ID_ACCESSOR =
+	public static final Accessor<FriendlyURLTitleLocalization, Long> FRIENDLY_URL_TITLE_LOCALIZATION_ID_ACCESSOR =
 		new Accessor<FriendlyURLTitleLocalization, Long>() {
 			@Override
 			public Long get(
 				FriendlyURLTitleLocalization friendlyURLTitleLocalization) {
-				return friendlyURLTitleLocalization.getFriendlyURLLocalizationId();
+				return friendlyURLTitleLocalization.getFriendlyURLTitleLocalizationId();
 			}
 
 			@Override

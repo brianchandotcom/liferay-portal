@@ -419,7 +419,7 @@ public class FriendlyURLTitleLocalizationPersistenceImpl
 	/**
 	 * Returns the friendly url title localizations before and after the current friendly url title localization in the ordered set where groupId = &#63; and friendlyURLId = &#63;.
 	 *
-	 * @param friendlyURLLocalizationId the primary key of the current friendly url title localization
+	 * @param friendlyURLTitleLocalizationId the primary key of the current friendly url title localization
 	 * @param groupId the group ID
 	 * @param friendlyURLId the friendly url ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -428,10 +428,10 @@ public class FriendlyURLTitleLocalizationPersistenceImpl
 	 */
 	@Override
 	public FriendlyURLTitleLocalization[] findByG_F_PrevAndNext(
-		long friendlyURLLocalizationId, long groupId, long friendlyURLId,
+		long friendlyURLTitleLocalizationId, long groupId, long friendlyURLId,
 		OrderByComparator<FriendlyURLTitleLocalization> orderByComparator)
 		throws NoSuchFriendlyURLTitleLocalizationException {
-		FriendlyURLTitleLocalization friendlyURLTitleLocalization = findByPrimaryKey(friendlyURLLocalizationId);
+		FriendlyURLTitleLocalization friendlyURLTitleLocalization = findByPrimaryKey(friendlyURLTitleLocalizationId);
 
 		Session session = null;
 
@@ -1444,15 +1444,16 @@ public class FriendlyURLTitleLocalizationPersistenceImpl
 	/**
 	 * Creates a new friendly url title localization with the primary key. Does not add the friendly url title localization to the database.
 	 *
-	 * @param friendlyURLLocalizationId the primary key for the new friendly url title localization
+	 * @param friendlyURLTitleLocalizationId the primary key for the new friendly url title localization
 	 * @return the new friendly url title localization
 	 */
 	@Override
-	public FriendlyURLTitleLocalization create(long friendlyURLLocalizationId) {
+	public FriendlyURLTitleLocalization create(
+		long friendlyURLTitleLocalizationId) {
 		FriendlyURLTitleLocalization friendlyURLTitleLocalization = new FriendlyURLTitleLocalizationImpl();
 
 		friendlyURLTitleLocalization.setNew(true);
-		friendlyURLTitleLocalization.setPrimaryKey(friendlyURLLocalizationId);
+		friendlyURLTitleLocalization.setPrimaryKey(friendlyURLTitleLocalizationId);
 
 		friendlyURLTitleLocalization.setCompanyId(companyProvider.getCompanyId());
 
@@ -1462,14 +1463,15 @@ public class FriendlyURLTitleLocalizationPersistenceImpl
 	/**
 	 * Removes the friendly url title localization with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param friendlyURLLocalizationId the primary key of the friendly url title localization
+	 * @param friendlyURLTitleLocalizationId the primary key of the friendly url title localization
 	 * @return the friendly url title localization that was removed
 	 * @throws NoSuchFriendlyURLTitleLocalizationException if a friendly url title localization with the primary key could not be found
 	 */
 	@Override
-	public FriendlyURLTitleLocalization remove(long friendlyURLLocalizationId)
+	public FriendlyURLTitleLocalization remove(
+		long friendlyURLTitleLocalizationId)
 		throws NoSuchFriendlyURLTitleLocalizationException {
-		return remove((Serializable)friendlyURLLocalizationId);
+		return remove((Serializable)friendlyURLTitleLocalizationId);
 	}
 
 	/**
@@ -1630,7 +1632,7 @@ public class FriendlyURLTitleLocalizationPersistenceImpl
 		friendlyURLTitleLocalizationImpl.setNew(friendlyURLTitleLocalization.isNew());
 		friendlyURLTitleLocalizationImpl.setPrimaryKey(friendlyURLTitleLocalization.getPrimaryKey());
 
-		friendlyURLTitleLocalizationImpl.setFriendlyURLLocalizationId(friendlyURLTitleLocalization.getFriendlyURLLocalizationId());
+		friendlyURLTitleLocalizationImpl.setFriendlyURLTitleLocalizationId(friendlyURLTitleLocalization.getFriendlyURLTitleLocalizationId());
 		friendlyURLTitleLocalizationImpl.setGroupId(friendlyURLTitleLocalization.getGroupId());
 		friendlyURLTitleLocalizationImpl.setCompanyId(friendlyURLTitleLocalization.getCompanyId());
 		friendlyURLTitleLocalizationImpl.setFriendlyURLId(friendlyURLTitleLocalization.getFriendlyURLId());
@@ -1668,15 +1670,15 @@ public class FriendlyURLTitleLocalizationPersistenceImpl
 	/**
 	 * Returns the friendly url title localization with the primary key or throws a {@link NoSuchFriendlyURLTitleLocalizationException} if it could not be found.
 	 *
-	 * @param friendlyURLLocalizationId the primary key of the friendly url title localization
+	 * @param friendlyURLTitleLocalizationId the primary key of the friendly url title localization
 	 * @return the friendly url title localization
 	 * @throws NoSuchFriendlyURLTitleLocalizationException if a friendly url title localization with the primary key could not be found
 	 */
 	@Override
 	public FriendlyURLTitleLocalization findByPrimaryKey(
-		long friendlyURLLocalizationId)
+		long friendlyURLTitleLocalizationId)
 		throws NoSuchFriendlyURLTitleLocalizationException {
-		return findByPrimaryKey((Serializable)friendlyURLLocalizationId);
+		return findByPrimaryKey((Serializable)friendlyURLTitleLocalizationId);
 	}
 
 	/**
@@ -1732,13 +1734,13 @@ public class FriendlyURLTitleLocalizationPersistenceImpl
 	/**
 	 * Returns the friendly url title localization with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param friendlyURLLocalizationId the primary key of the friendly url title localization
+	 * @param friendlyURLTitleLocalizationId the primary key of the friendly url title localization
 	 * @return the friendly url title localization, or <code>null</code> if a friendly url title localization with the primary key could not be found
 	 */
 	@Override
 	public FriendlyURLTitleLocalization fetchByPrimaryKey(
-		long friendlyURLLocalizationId) {
-		return fetchByPrimaryKey((Serializable)friendlyURLLocalizationId);
+		long friendlyURLTitleLocalizationId) {
+		return fetchByPrimaryKey((Serializable)friendlyURLTitleLocalizationId);
 	}
 
 	@Override
@@ -2055,7 +2057,7 @@ public class FriendlyURLTitleLocalizationPersistenceImpl
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_FRIENDLYURLTITLELOCALIZATION = "SELECT friendlyURLTitleLocalization FROM FriendlyURLTitleLocalization friendlyURLTitleLocalization";
 	private static final String _SQL_SELECT_FRIENDLYURLTITLELOCALIZATION_WHERE_PKS_IN =
-		"SELECT friendlyURLTitleLocalization FROM FriendlyURLTitleLocalization friendlyURLTitleLocalization WHERE friendlyURLLocalizationId IN (";
+		"SELECT friendlyURLTitleLocalization FROM FriendlyURLTitleLocalization friendlyURLTitleLocalization WHERE friendlyURLTitleLocalizationId IN (";
 	private static final String _SQL_SELECT_FRIENDLYURLTITLELOCALIZATION_WHERE = "SELECT friendlyURLTitleLocalization FROM FriendlyURLTitleLocalization friendlyURLTitleLocalization WHERE ";
 	private static final String _SQL_COUNT_FRIENDLYURLTITLELOCALIZATION = "SELECT COUNT(friendlyURLTitleLocalization) FROM FriendlyURLTitleLocalization friendlyURLTitleLocalization";
 	private static final String _SQL_COUNT_FRIENDLYURLTITLELOCALIZATION_WHERE = "SELECT COUNT(friendlyURLTitleLocalization) FROM FriendlyURLTitleLocalization friendlyURLTitleLocalization WHERE ";

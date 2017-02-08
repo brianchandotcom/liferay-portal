@@ -63,18 +63,19 @@ public interface FriendlyURLTitleLocalizationModel extends BaseModel<FriendlyURL
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the friendly url localization ID of this friendly url title localization.
+	 * Returns the friendly url title localization ID of this friendly url title localization.
 	 *
-	 * @return the friendly url localization ID of this friendly url title localization
+	 * @return the friendly url title localization ID of this friendly url title localization
 	 */
-	public long getFriendlyURLLocalizationId();
+	public long getFriendlyURLTitleLocalizationId();
 
 	/**
-	 * Sets the friendly url localization ID of this friendly url title localization.
+	 * Sets the friendly url title localization ID of this friendly url title localization.
 	 *
-	 * @param friendlyURLLocalizationId the friendly url localization ID of this friendly url title localization
+	 * @param friendlyURLTitleLocalizationId the friendly url title localization ID of this friendly url title localization
 	 */
-	public void setFriendlyURLLocalizationId(long friendlyURLLocalizationId);
+	public void setFriendlyURLTitleLocalizationId(
+		long friendlyURLTitleLocalizationId);
 
 	/**
 	 * Returns the group ID of this friendly url title localization.

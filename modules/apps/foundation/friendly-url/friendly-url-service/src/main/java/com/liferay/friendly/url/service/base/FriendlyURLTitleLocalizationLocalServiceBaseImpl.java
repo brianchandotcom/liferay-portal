@@ -93,27 +93,27 @@ public abstract class FriendlyURLTitleLocalizationLocalServiceBaseImpl
 	/**
 	 * Creates a new friendly url title localization with the primary key. Does not add the friendly url title localization to the database.
 	 *
-	 * @param friendlyURLLocalizationId the primary key for the new friendly url title localization
+	 * @param friendlyURLTitleLocalizationId the primary key for the new friendly url title localization
 	 * @return the new friendly url title localization
 	 */
 	@Override
 	public FriendlyURLTitleLocalization createFriendlyURLTitleLocalization(
-		long friendlyURLLocalizationId) {
-		return friendlyURLTitleLocalizationPersistence.create(friendlyURLLocalizationId);
+		long friendlyURLTitleLocalizationId) {
+		return friendlyURLTitleLocalizationPersistence.create(friendlyURLTitleLocalizationId);
 	}
 
 	/**
 	 * Deletes the friendly url title localization with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param friendlyURLLocalizationId the primary key of the friendly url title localization
+	 * @param friendlyURLTitleLocalizationId the primary key of the friendly url title localization
 	 * @return the friendly url title localization that was removed
 	 * @throws PortalException if a friendly url title localization with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public FriendlyURLTitleLocalization deleteFriendlyURLTitleLocalization(
-		long friendlyURLLocalizationId) throws PortalException {
-		return friendlyURLTitleLocalizationPersistence.remove(friendlyURLLocalizationId);
+		long friendlyURLTitleLocalizationId) throws PortalException {
+		return friendlyURLTitleLocalizationPersistence.remove(friendlyURLTitleLocalizationId);
 	}
 
 	/**
@@ -214,21 +214,21 @@ public abstract class FriendlyURLTitleLocalizationLocalServiceBaseImpl
 
 	@Override
 	public FriendlyURLTitleLocalization fetchFriendlyURLTitleLocalization(
-		long friendlyURLLocalizationId) {
-		return friendlyURLTitleLocalizationPersistence.fetchByPrimaryKey(friendlyURLLocalizationId);
+		long friendlyURLTitleLocalizationId) {
+		return friendlyURLTitleLocalizationPersistence.fetchByPrimaryKey(friendlyURLTitleLocalizationId);
 	}
 
 	/**
 	 * Returns the friendly url title localization with the primary key.
 	 *
-	 * @param friendlyURLLocalizationId the primary key of the friendly url title localization
+	 * @param friendlyURLTitleLocalizationId the primary key of the friendly url title localization
 	 * @return the friendly url title localization
 	 * @throws PortalException if a friendly url title localization with the primary key could not be found
 	 */
 	@Override
 	public FriendlyURLTitleLocalization getFriendlyURLTitleLocalization(
-		long friendlyURLLocalizationId) throws PortalException {
-		return friendlyURLTitleLocalizationPersistence.findByPrimaryKey(friendlyURLLocalizationId);
+		long friendlyURLTitleLocalizationId) throws PortalException {
+		return friendlyURLTitleLocalizationPersistence.findByPrimaryKey(friendlyURLTitleLocalizationId);
 	}
 
 	@Override
@@ -240,7 +240,7 @@ public abstract class FriendlyURLTitleLocalizationLocalServiceBaseImpl
 		actionableDynamicQuery.setModelClass(FriendlyURLTitleLocalization.class);
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"friendlyURLLocalizationId");
+			"friendlyURLTitleLocalizationId");
 
 		return actionableDynamicQuery;
 	}
@@ -254,7 +254,7 @@ public abstract class FriendlyURLTitleLocalizationLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(FriendlyURLTitleLocalization.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"friendlyURLLocalizationId");
+			"friendlyURLTitleLocalizationId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -266,7 +266,7 @@ public abstract class FriendlyURLTitleLocalizationLocalServiceBaseImpl
 		actionableDynamicQuery.setModelClass(FriendlyURLTitleLocalization.class);
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"friendlyURLLocalizationId");
+			"friendlyURLTitleLocalizationId");
 	}
 
 	/**

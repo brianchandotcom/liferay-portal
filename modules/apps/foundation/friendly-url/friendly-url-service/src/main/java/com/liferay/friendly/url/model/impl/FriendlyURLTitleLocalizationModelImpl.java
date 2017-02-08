@@ -61,7 +61,7 @@ public class FriendlyURLTitleLocalizationModelImpl extends BaseModelImpl<Friendl
 	 */
 	public static final String TABLE_NAME = "FriendlyURLTitleLocalization";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "friendlyURLLocalizationId", Types.BIGINT },
+			{ "friendlyURLTitleLocalizationId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "friendlyURLId", Types.BIGINT },
@@ -71,7 +71,7 @@ public class FriendlyURLTitleLocalizationModelImpl extends BaseModelImpl<Friendl
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("friendlyURLLocalizationId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("friendlyURLTitleLocalizationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("friendlyURLId", Types.BIGINT);
@@ -79,10 +79,10 @@ public class FriendlyURLTitleLocalizationModelImpl extends BaseModelImpl<Friendl
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FriendlyURLTitleLocalization (friendlyURLLocalizationId LONG not null primary key,groupId LONG,companyId LONG,friendlyURLId LONG,urlTitle VARCHAR(255) null,languageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table FriendlyURLTitleLocalization (friendlyURLTitleLocalizationId LONG not null primary key,groupId LONG,companyId LONG,friendlyURLId LONG,urlTitle VARCHAR(255) null,languageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table FriendlyURLTitleLocalization";
-	public static final String ORDER_BY_JPQL = " ORDER BY friendlyURLTitleLocalization.friendlyURLLocalizationId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY FriendlyURLTitleLocalization.friendlyURLLocalizationId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY friendlyURLTitleLocalization.friendlyURLTitleLocalizationId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY FriendlyURLTitleLocalization.friendlyURLTitleLocalizationId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -99,7 +99,7 @@ public class FriendlyURLTitleLocalizationModelImpl extends BaseModelImpl<Friendl
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long LANGUAGEID_COLUMN_BITMASK = 4L;
 	public static final long URLTITLE_COLUMN_BITMASK = 8L;
-	public static final long FRIENDLYURLLOCALIZATIONID_COLUMN_BITMASK = 16L;
+	public static final long FRIENDLYURLTITLELOCALIZATIONID_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.friendly.url.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.friendly.url.model.FriendlyURLTitleLocalization"));
 
@@ -108,17 +108,17 @@ public class FriendlyURLTitleLocalizationModelImpl extends BaseModelImpl<Friendl
 
 	@Override
 	public long getPrimaryKey() {
-		return _friendlyURLLocalizationId;
+		return _friendlyURLTitleLocalizationId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setFriendlyURLLocalizationId(primaryKey);
+		setFriendlyURLTitleLocalizationId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _friendlyURLLocalizationId;
+		return _friendlyURLTitleLocalizationId;
 	}
 
 	@Override
@@ -140,8 +140,8 @@ public class FriendlyURLTitleLocalizationModelImpl extends BaseModelImpl<Friendl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("friendlyURLLocalizationId",
-			getFriendlyURLLocalizationId());
+		attributes.put("friendlyURLTitleLocalizationId",
+			getFriendlyURLTitleLocalizationId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("friendlyURLId", getFriendlyURLId());
@@ -156,11 +156,11 @@ public class FriendlyURLTitleLocalizationModelImpl extends BaseModelImpl<Friendl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long friendlyURLLocalizationId = (Long)attributes.get(
-				"friendlyURLLocalizationId");
+		Long friendlyURLTitleLocalizationId = (Long)attributes.get(
+				"friendlyURLTitleLocalizationId");
 
-		if (friendlyURLLocalizationId != null) {
-			setFriendlyURLLocalizationId(friendlyURLLocalizationId);
+		if (friendlyURLTitleLocalizationId != null) {
+			setFriendlyURLTitleLocalizationId(friendlyURLTitleLocalizationId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -195,13 +195,14 @@ public class FriendlyURLTitleLocalizationModelImpl extends BaseModelImpl<Friendl
 	}
 
 	@Override
-	public long getFriendlyURLLocalizationId() {
-		return _friendlyURLLocalizationId;
+	public long getFriendlyURLTitleLocalizationId() {
+		return _friendlyURLTitleLocalizationId;
 	}
 
 	@Override
-	public void setFriendlyURLLocalizationId(long friendlyURLLocalizationId) {
-		_friendlyURLLocalizationId = friendlyURLLocalizationId;
+	public void setFriendlyURLTitleLocalizationId(
+		long friendlyURLTitleLocalizationId) {
+		_friendlyURLTitleLocalizationId = friendlyURLTitleLocalizationId;
 	}
 
 	@Override
@@ -339,7 +340,7 @@ public class FriendlyURLTitleLocalizationModelImpl extends BaseModelImpl<Friendl
 	public Object clone() {
 		FriendlyURLTitleLocalizationImpl friendlyURLTitleLocalizationImpl = new FriendlyURLTitleLocalizationImpl();
 
-		friendlyURLTitleLocalizationImpl.setFriendlyURLLocalizationId(getFriendlyURLLocalizationId());
+		friendlyURLTitleLocalizationImpl.setFriendlyURLTitleLocalizationId(getFriendlyURLTitleLocalizationId());
 		friendlyURLTitleLocalizationImpl.setGroupId(getGroupId());
 		friendlyURLTitleLocalizationImpl.setCompanyId(getCompanyId());
 		friendlyURLTitleLocalizationImpl.setFriendlyURLId(getFriendlyURLId());
@@ -429,7 +430,7 @@ public class FriendlyURLTitleLocalizationModelImpl extends BaseModelImpl<Friendl
 		FriendlyURLTitleLocalizationCacheModel friendlyURLTitleLocalizationCacheModel =
 			new FriendlyURLTitleLocalizationCacheModel();
 
-		friendlyURLTitleLocalizationCacheModel.friendlyURLLocalizationId = getFriendlyURLLocalizationId();
+		friendlyURLTitleLocalizationCacheModel.friendlyURLTitleLocalizationId = getFriendlyURLTitleLocalizationId();
 
 		friendlyURLTitleLocalizationCacheModel.groupId = getGroupId();
 
@@ -460,8 +461,8 @@ public class FriendlyURLTitleLocalizationModelImpl extends BaseModelImpl<Friendl
 	public String toString() {
 		StringBundler sb = new StringBundler(13);
 
-		sb.append("{friendlyURLLocalizationId=");
-		sb.append(getFriendlyURLLocalizationId());
+		sb.append("{friendlyURLTitleLocalizationId=");
+		sb.append(getFriendlyURLTitleLocalizationId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -486,8 +487,8 @@ public class FriendlyURLTitleLocalizationModelImpl extends BaseModelImpl<Friendl
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>friendlyURLLocalizationId</column-name><column-value><![CDATA[");
-		sb.append(getFriendlyURLLocalizationId());
+			"<column><column-name>friendlyURLTitleLocalizationId</column-name><column-value><![CDATA[");
+		sb.append(getFriendlyURLTitleLocalizationId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -519,7 +520,7 @@ public class FriendlyURLTitleLocalizationModelImpl extends BaseModelImpl<Friendl
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			FriendlyURLTitleLocalization.class
 		};
-	private long _friendlyURLLocalizationId;
+	private long _friendlyURLTitleLocalizationId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;

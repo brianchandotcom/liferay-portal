@@ -160,7 +160,7 @@ public interface FriendlyURLTitleLocalizationPersistence extends BasePersistence
 	/**
 	* Returns the friendly url title localizations before and after the current friendly url title localization in the ordered set where groupId = &#63; and friendlyURLId = &#63;.
 	*
-	* @param friendlyURLLocalizationId the primary key of the current friendly url title localization
+	* @param friendlyURLTitleLocalizationId the primary key of the current friendly url title localization
 	* @param groupId the group ID
 	* @param friendlyURLId the friendly url ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -168,7 +168,7 @@ public interface FriendlyURLTitleLocalizationPersistence extends BasePersistence
 	* @throws NoSuchFriendlyURLTitleLocalizationException if a friendly url title localization with the primary key could not be found
 	*/
 	public FriendlyURLTitleLocalization[] findByG_F_PrevAndNext(
-		long friendlyURLLocalizationId, long groupId, long friendlyURLId,
+		long friendlyURLTitleLocalizationId, long groupId, long friendlyURLId,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLTitleLocalization> orderByComparator)
 		throws NoSuchFriendlyURLTitleLocalizationException;
 
@@ -328,19 +328,21 @@ public interface FriendlyURLTitleLocalizationPersistence extends BasePersistence
 	/**
 	* Creates a new friendly url title localization with the primary key. Does not add the friendly url title localization to the database.
 	*
-	* @param friendlyURLLocalizationId the primary key for the new friendly url title localization
+	* @param friendlyURLTitleLocalizationId the primary key for the new friendly url title localization
 	* @return the new friendly url title localization
 	*/
-	public FriendlyURLTitleLocalization create(long friendlyURLLocalizationId);
+	public FriendlyURLTitleLocalization create(
+		long friendlyURLTitleLocalizationId);
 
 	/**
 	* Removes the friendly url title localization with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param friendlyURLLocalizationId the primary key of the friendly url title localization
+	* @param friendlyURLTitleLocalizationId the primary key of the friendly url title localization
 	* @return the friendly url title localization that was removed
 	* @throws NoSuchFriendlyURLTitleLocalizationException if a friendly url title localization with the primary key could not be found
 	*/
-	public FriendlyURLTitleLocalization remove(long friendlyURLLocalizationId)
+	public FriendlyURLTitleLocalization remove(
+		long friendlyURLTitleLocalizationId)
 		throws NoSuchFriendlyURLTitleLocalizationException;
 
 	public FriendlyURLTitleLocalization updateImpl(
@@ -349,22 +351,22 @@ public interface FriendlyURLTitleLocalizationPersistence extends BasePersistence
 	/**
 	* Returns the friendly url title localization with the primary key or throws a {@link NoSuchFriendlyURLTitleLocalizationException} if it could not be found.
 	*
-	* @param friendlyURLLocalizationId the primary key of the friendly url title localization
+	* @param friendlyURLTitleLocalizationId the primary key of the friendly url title localization
 	* @return the friendly url title localization
 	* @throws NoSuchFriendlyURLTitleLocalizationException if a friendly url title localization with the primary key could not be found
 	*/
 	public FriendlyURLTitleLocalization findByPrimaryKey(
-		long friendlyURLLocalizationId)
+		long friendlyURLTitleLocalizationId)
 		throws NoSuchFriendlyURLTitleLocalizationException;
 
 	/**
 	* Returns the friendly url title localization with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param friendlyURLLocalizationId the primary key of the friendly url title localization
+	* @param friendlyURLTitleLocalizationId the primary key of the friendly url title localization
 	* @return the friendly url title localization, or <code>null</code> if a friendly url title localization with the primary key could not be found
 	*/
 	public FriendlyURLTitleLocalization fetchByPrimaryKey(
-		long friendlyURLLocalizationId);
+		long friendlyURLTitleLocalizationId);
 
 	@Override
 	public java.util.Map<java.io.Serializable, FriendlyURLTitleLocalization> fetchByPrimaryKeys(

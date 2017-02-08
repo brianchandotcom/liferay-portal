@@ -21,7 +21,7 @@ create table FriendlyURLLocalization (
 );
 
 create table FriendlyURLTitleLocalization (
-	friendlyURLLocalizationId LONG not null primary key,
+	friendlyURLTitleLocalizationId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	friendlyURLId LONG,

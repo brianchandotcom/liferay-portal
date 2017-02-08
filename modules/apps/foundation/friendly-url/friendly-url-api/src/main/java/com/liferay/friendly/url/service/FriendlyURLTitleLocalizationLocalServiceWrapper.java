@@ -58,13 +58,13 @@ public class FriendlyURLTitleLocalizationLocalServiceWrapper
 	/**
 	* Creates a new friendly url title localization with the primary key. Does not add the friendly url title localization to the database.
 	*
-	* @param friendlyURLLocalizationId the primary key for the new friendly url title localization
+	* @param friendlyURLTitleLocalizationId the primary key for the new friendly url title localization
 	* @return the new friendly url title localization
 	*/
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURLTitleLocalization createFriendlyURLTitleLocalization(
-		long friendlyURLLocalizationId) {
-		return _friendlyURLTitleLocalizationLocalService.createFriendlyURLTitleLocalization(friendlyURLLocalizationId);
+		long friendlyURLTitleLocalizationId) {
+		return _friendlyURLTitleLocalizationLocalService.createFriendlyURLTitleLocalization(friendlyURLTitleLocalizationId);
 	}
 
 	@Override
@@ -91,15 +91,15 @@ public class FriendlyURLTitleLocalizationLocalServiceWrapper
 	/**
 	* Deletes the friendly url title localization with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param friendlyURLLocalizationId the primary key of the friendly url title localization
+	* @param friendlyURLTitleLocalizationId the primary key of the friendly url title localization
 	* @return the friendly url title localization that was removed
 	* @throws PortalException if a friendly url title localization with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURLTitleLocalization deleteFriendlyURLTitleLocalization(
-		long friendlyURLLocalizationId)
+		long friendlyURLTitleLocalizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _friendlyURLTitleLocalizationLocalService.deleteFriendlyURLTitleLocalization(friendlyURLLocalizationId);
+		return _friendlyURLTitleLocalizationLocalService.deleteFriendlyURLTitleLocalization(friendlyURLTitleLocalizationId);
 	}
 
 	@Override
@@ -120,22 +120,22 @@ public class FriendlyURLTitleLocalizationLocalServiceWrapper
 
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURLTitleLocalization fetchFriendlyURLTitleLocalization(
-		long friendlyURLLocalizationId) {
-		return _friendlyURLTitleLocalizationLocalService.fetchFriendlyURLTitleLocalization(friendlyURLLocalizationId);
+		long friendlyURLTitleLocalizationId) {
+		return _friendlyURLTitleLocalizationLocalService.fetchFriendlyURLTitleLocalization(friendlyURLTitleLocalizationId);
 	}
 
 	/**
 	* Returns the friendly url title localization with the primary key.
 	*
-	* @param friendlyURLLocalizationId the primary key of the friendly url title localization
+	* @param friendlyURLTitleLocalizationId the primary key of the friendly url title localization
 	* @return the friendly url title localization
 	* @throws PortalException if a friendly url title localization with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURLTitleLocalization getFriendlyURLTitleLocalization(
-		long friendlyURLLocalizationId)
+		long friendlyURLTitleLocalizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _friendlyURLTitleLocalizationLocalService.getFriendlyURLTitleLocalization(friendlyURLLocalizationId);
+		return _friendlyURLTitleLocalizationLocalService.getFriendlyURLTitleLocalization(friendlyURLTitleLocalizationId);
 	}
 
 	/**

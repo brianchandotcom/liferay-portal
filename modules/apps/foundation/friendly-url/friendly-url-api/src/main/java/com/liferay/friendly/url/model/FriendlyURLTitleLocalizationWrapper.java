@@ -59,8 +59,8 @@ public class FriendlyURLTitleLocalizationWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("friendlyURLLocalizationId",
-			getFriendlyURLLocalizationId());
+		attributes.put("friendlyURLTitleLocalizationId",
+			getFriendlyURLTitleLocalizationId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("friendlyURLId", getFriendlyURLId());
@@ -72,11 +72,11 @@ public class FriendlyURLTitleLocalizationWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long friendlyURLLocalizationId = (Long)attributes.get(
-				"friendlyURLLocalizationId");
+		Long friendlyURLTitleLocalizationId = (Long)attributes.get(
+				"friendlyURLTitleLocalizationId");
 
-		if (friendlyURLLocalizationId != null) {
-			setFriendlyURLLocalizationId(friendlyURLLocalizationId);
+		if (friendlyURLTitleLocalizationId != null) {
+			setFriendlyURLTitleLocalizationId(friendlyURLTitleLocalizationId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -217,13 +217,13 @@ public class FriendlyURLTitleLocalizationWrapper
 	}
 
 	/**
-	* Returns the friendly url localization ID of this friendly url title localization.
+	* Returns the friendly url title localization ID of this friendly url title localization.
 	*
-	* @return the friendly url localization ID of this friendly url title localization
+	* @return the friendly url title localization ID of this friendly url title localization
 	*/
 	@Override
-	public long getFriendlyURLLocalizationId() {
-		return _friendlyURLTitleLocalization.getFriendlyURLLocalizationId();
+	public long getFriendlyURLTitleLocalizationId() {
+		return _friendlyURLTitleLocalization.getFriendlyURLTitleLocalizationId();
 	}
 
 	/**
@@ -293,13 +293,14 @@ public class FriendlyURLTitleLocalizationWrapper
 	}
 
 	/**
-	* Sets the friendly url localization ID of this friendly url title localization.
+	* Sets the friendly url title localization ID of this friendly url title localization.
 	*
-	* @param friendlyURLLocalizationId the friendly url localization ID of this friendly url title localization
+	* @param friendlyURLTitleLocalizationId the friendly url title localization ID of this friendly url title localization
 	*/
 	@Override
-	public void setFriendlyURLLocalizationId(long friendlyURLLocalizationId) {
-		_friendlyURLTitleLocalization.setFriendlyURLLocalizationId(friendlyURLLocalizationId);
+	public void setFriendlyURLTitleLocalizationId(
+		long friendlyURLTitleLocalizationId) {
+		_friendlyURLTitleLocalization.setFriendlyURLTitleLocalizationId(friendlyURLTitleLocalizationId);
 	}
 
 	/**

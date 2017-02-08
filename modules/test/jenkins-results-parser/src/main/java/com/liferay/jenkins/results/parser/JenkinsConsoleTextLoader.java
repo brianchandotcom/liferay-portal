@@ -65,7 +65,8 @@ public class JenkinsConsoleTextLoader {
 				buildURL + "/logText/progressiveHtml?start=" + serverLogSize;
 
 			try {
-				URL urlObject = new URL(url);
+				URL urlObject = new URL(
+					JenkinsResultsParserUtil.getLocalURL(url));
 
 				HttpURLConnection httpURLConnection =
 					(HttpURLConnection)urlObject.openConnection();

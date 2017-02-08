@@ -215,7 +215,9 @@ public abstract class BaseBuild implements Build {
 	public JSONObject getBuildJSONObject() {
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
-				getBuildURL() + "api/json", false);
+				JenkinsResultsParserUtil.getLocalURL(
+					getBuildURL() + "api/json"),
+				false);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException("Unable to get build JSON object", ioe);
@@ -473,7 +475,8 @@ public abstract class BaseBuild implements Build {
 
 		try {
 			return JenkinsResultsParserUtil.encode(
-				"http://" + master + "/job/" + jobName);
+				JenkinsResultsParserUtil.combine(
+					"https://", master, ".liferay.com/job/", jobName));
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -518,9 +521,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getResult() {
-		String buildURL = getBuildURL();
-
-		if ((result == null) && (buildURL != null)) {
+		if ((result == null) && (getBuildURL() != null)) {
 			try {
 				JSONObject resultJSONObject = getBuildJSONObject("result");
 
@@ -1197,8 +1198,10 @@ public abstract class BaseBuild implements Build {
 
 	protected JSONArray getBuildsJSONArray() throws Exception {
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			getJobURL() + "/api/json?tree=builds[actions[parameters" +
-				"[name,type,value]],building,duration,number,result,url]",
+			JenkinsResultsParserUtil.getLocalURL(
+				JenkinsResultsParserUtil.combine(
+					getJobURL(), "/api/json?tree=builds[actions[parameters",
+					"[name,type,value]],building,duration,number,result,url]")),
 			false);
 
 		return jsonObject.getJSONArray("builds");
@@ -1254,8 +1257,10 @@ public abstract class BaseBuild implements Build {
 
 		try {
 			jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				getJobURL() + "/api/json?tree=actions[parameterDefinitions" +
-					"[name,type,value]]");
+				JenkinsResultsParserUtil.getLocalURL(
+					JenkinsResultsParserUtil.combine(
+						getJobURL(), "/api/json?tree=actions[",
+						"parameterDefinitions[name,type,value]]")));
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException("Unable to get build JSON", ioe);

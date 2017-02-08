@@ -38,11 +38,6 @@ import java.util.regex.Pattern;
  */
 public class BNDSourceProcessor extends BaseSourceProcessor {
 
-	@Override
-	public String[] getIncludes() {
-		return _INCLUDES;
-	}
-
 	protected void checkDirectoryAndBundleName(
 		String fileName, String absolutePath, String content) {
 
@@ -269,6 +264,11 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(new String[0], getIncludes());
+	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
 	}
 
 	protected String formatBundleClassPath(String content) {

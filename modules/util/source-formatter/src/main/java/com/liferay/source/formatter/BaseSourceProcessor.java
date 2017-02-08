@@ -93,9 +93,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public final void format() throws Exception {
-		preFormat();
-
 		List<String> fileNames = getFileNames();
+
+		if (fileNames.isEmpty()) {
+			return;
+		}
+
+		preFormat();
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());
@@ -148,6 +152,30 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	@Override
 	public SourceMismatchException getFirstSourceMismatchException() {
 		return _firstSourceMismatchException;
+	}
+
+	@Override
+	public String[] getIncludes() {
+		String[] includes = doGetIncludes();
+
+		List<String> fileExtensions = sourceFormatterArgs.getFileExtensions();
+
+		if (fileExtensions.isEmpty()) {
+			return includes;
+		}
+
+		String[] filteredIncludes = new String[0];
+
+		for (String include : includes) {
+			for (String fileExtension : fileExtensions) {
+				if (include.endsWith(fileExtension)) {
+					filteredIncludes = ArrayUtil.append(
+						filteredIncludes, include);
+				}
+			}
+		}
+
+		return filteredIncludes;
 	}
 
 	@Override
@@ -789,6 +817,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		throws Exception;
 
 	protected abstract List<String> doGetFileNames() throws Exception;
+
+	protected abstract String[] doGetIncludes();
 
 	protected String fixCompatClassImports(String absolutePath, String content)
 		throws Exception {

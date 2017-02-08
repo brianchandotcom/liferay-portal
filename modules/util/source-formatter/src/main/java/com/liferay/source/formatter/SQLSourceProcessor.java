@@ -32,11 +32,6 @@ import java.util.List;
 public class SQLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	public String[] getIncludes() {
-		return _INCLUDES;
-	}
-
-	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
@@ -95,9 +90,14 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
-		return getFileNames(new String[0], new String[] {"**/sql/*.sql"});
+		return getFileNames(new String[0], getIncludes());
 	}
 
-	private static final String[] _INCLUDES = new String[] {"**/*.sql"};
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
+	}
+
+	private static final String[] _INCLUDES = new String[] {"**/sql/*.sql"};
 
 }

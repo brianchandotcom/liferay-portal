@@ -51,11 +51,6 @@ import org.apache.maven.artifact.versioning.ComparableVersion;
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
 
-	@Override
-	public String[] getIncludes() {
-		return _INCLUDES;
-	}
-
 	protected String applyDiamondOperator(String content) {
 		Matcher matcher = _diamondOperatorPattern.matcher(content);
 
@@ -1334,20 +1329,31 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
+		String[] includes = getIncludes();
+
+		if (ArrayUtil.isEmpty(includes)) {
+			return new ArrayList<>();
+		}
+
 		Collection<String> fileNames = null;
 
 		if (portalSource || subrepository) {
-			fileNames = getPortalJavaFiles();
+			fileNames = getPortalJavaFiles(includes);
 
 			_checkRegistryInTestClasses = GetterUtil.getBoolean(
 				System.getProperty(
 					"source.formatter.check.registry.in.test.classes"));
 		}
 		else {
-			fileNames = getPluginJavaFiles();
+			fileNames = getPluginJavaFiles(includes);
 		}
 
 		return new ArrayList<>(fileNames);
+	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
 	}
 
 	protected String fixDataAccessConnection(String className, String content) {
@@ -4126,11 +4132,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		};
 	}
 
-	protected Collection<String> getPluginJavaFiles() throws Exception {
+	protected Collection<String> getPluginJavaFiles(String[] includes)
+		throws Exception {
+
 		Collection<String> fileNames = new TreeSet<>();
 
 		String[] excludes = getPluginExcludes(StringPool.BLANK);
-		String[] includes = new String[] {"**/*.java"};
 
 		fileNames.addAll(getFileNames(excludes, includes));
 
@@ -4163,7 +4170,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return _portalCustomSQLContent;
 	}
 
-	protected Collection<String> getPortalJavaFiles() throws Exception {
+	protected Collection<String> getPortalJavaFiles(String[] includes)
+		throws Exception {
+
 		Collection<String> fileNames = new TreeSet<>();
 
 		String[] excludes = new String[] {
@@ -4177,8 +4186,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			excludes = ArrayUtil.append(
 				excludes, getPluginExcludes("**" + directoryName));
 		}
-
-		String[] includes = getIncludes();
 
 		fileNames.addAll(getFileNames(excludes, includes));
 

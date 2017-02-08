@@ -35,11 +35,6 @@ import java.util.regex.Pattern;
  */
 public class FTLSourceProcessor extends BaseSourceProcessor {
 
-	@Override
-	public String[] getIncludes() {
-		return _INCLUDES;
-	}
-
 	protected void checkIfStatement(
 		String line, String fileName, int lineCount) {
 
@@ -168,6 +163,11 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		};
 
 		return getFileNames(excludes, getIncludes());
+	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
 	}
 
 	protected String formatAssignTags(String content) {

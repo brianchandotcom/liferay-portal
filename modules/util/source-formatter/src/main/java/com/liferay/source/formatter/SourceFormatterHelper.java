@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -80,6 +81,10 @@ public class SourceFormatterHelper {
 			String[] excludes, String[] includes,
 			boolean includeSubrepositories)
 		throws Exception {
+
+		if (ArrayUtil.isEmpty(includes)) {
+			return new ArrayList<>();
+		}
 
 		List<PathMatcher> excludeDirPathMatchers = new ArrayList<>();
 		List<PathMatcher> excludeFilePathMatchers = new ArrayList<>();

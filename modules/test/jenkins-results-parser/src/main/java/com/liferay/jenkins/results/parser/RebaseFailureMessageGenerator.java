@@ -89,9 +89,8 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 				" on ",
 				Dom4JUtil.getNewElement(
 					"strong", null,
-					getBaseBranchAnchorElement(build.getTopLevelBuild()),
-					getConsoleOutputSnippetElement(
-						consoleText, true, start, end))));
+					getBaseBranchAnchorElement(build.getTopLevelBuild())),
+				getConsoleOutputSnippetElement(consoleText, true, start, end)));
 	}
 
 	private static final String _REBASE_END_STRING =

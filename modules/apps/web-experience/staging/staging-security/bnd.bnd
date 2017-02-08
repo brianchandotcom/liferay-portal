@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Staging Security
 Bundle-SymbolicName: com.liferay.staging.security
 Bundle-Version: 2.0.20
-Import-Package: com.liferay.portal.kernel.security.permission;version="${range;[=,=+)}",*
+Import-Package: com.liferay.portal.kernel.security.permission;version="[1.0.0,2)",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management

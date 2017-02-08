@@ -164,6 +164,8 @@
 	</command>
 
 	<command name="chooseForm">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
 		<var name="key_kfFormName" value="${kfFormName}" />
 
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME_LINK" value1="${kfFormName}" />

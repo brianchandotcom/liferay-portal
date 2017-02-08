@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -88,27 +89,43 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 				stopPropertiesTempMap = getStopPropertiesTempMap();
 			}
 
-			StringBuilder sb = new StringBuilder();
+			Element rootElement = null;
 
-			sb.append("http://mirrors-no-cache.lax.liferay.com/");
-			sb.append("github.com/liferay/liferay-jenkins-ee/tests/");
-			sb.append(getJobName());
+			File reportFile = new File(
+				JenkinsResultsParserUtil.combine(
+					"/opt/dev/projects/github/liferay-jenkins-ee/tests/",
+					"test-portal-acceptance-pullrequest(ee-6.2.x)/",
+					"rebase-error/report.html"));
 
-			String jenkinsJobVariant = getParameterValue("JENKINS_JOB_VARIANT");
-
-			if (jenkinsJobVariant != null) {
-				sb.append("/");
-				sb.append(jenkinsJobVariant);
+			if (reportFile.exists()) {
+				rootElement = getElement(
+					JenkinsResultsParserUtil.read(reportFile));
 			}
 
-			sb.append("/report.html");
+			if (rootElement == null) {
+				StringBuilder sb = new StringBuilder();
 
-			Element rootElement = getElement(
-				JenkinsResultsParserUtil.toString(sb.toString()));
+				sb.append("http://mirrors-no-cache.lax.liferay.com/");
+				sb.append("github.com/liferay/liferay-jenkins-ee/tests/");
+				sb.append(getJobName());
+
+				String jenkinsJobVariant = getParameterValue(
+					"JENKINS_JOB_VARIANT");
+
+				if (jenkinsJobVariant != null) {
+					sb.append("/");
+					sb.append(jenkinsJobVariant);
+				}
+
+				sb.append("/report.html");
+
+				rootElement = getElement(
+					JenkinsResultsParserUtil.toString(sb.toString()));
+			}
 
 			List<String> expectedCommentTokens = getCommentTokens(rootElement);
 
-			sb = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 
 			sb.append("https://api.github.com/repos/");
 			sb.append(getParameterValue("GITHUB_RECEIVER_USERNAME"));
@@ -132,12 +149,14 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 				System.out.println();
 				System.out.println("Test " + i);
 
-				Pattern pattern = Pattern.compile(expectedCommentTokens.get(i));
+				Pattern pattern = Pattern.compile(
+					expectedCommentTokens.get(i).replaceAll("\\s+", "\\\\s+"));
 
 				Matcher matcher = pattern.matcher(actualCommentTokens.get(i));
 
-				System.out.println(expectedCommentTokens.get(i));
-				System.out.println(actualCommentTokens.get(i));
+				System.out.println("'" + expectedCommentTokens.get(i) + "'");
+				System.out.println("pattern: " + pattern.pattern());
+				System.out.println("'" + actualCommentTokens.get(i) + "'");
 
 				if (matcher.find()) {
 					System.out.println("Tokens matched.");
@@ -169,7 +188,7 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 	protected List<String> getCommentTokens(Element element) {
 		List<String> tokens = new ArrayList<>();
 
-		tokens.add("text: " + removeWhitespace(element.getText()));
+		tokens.add("tag: " + element.getName() + " text: " + element.getText());
 
 		List<?> elementObjects = element.elements();
 
@@ -182,7 +201,9 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 		for (Object attributeObject : attributeObjects) {
 			Attribute attribute = (Attribute)attributeObject;
 
-			tokens.add("attribute: " + removeWhitespace(attribute.getValue()));
+			tokens.add(
+				"tag: " + element.getName() + " attribute: " +
+					attribute.getName() + " text: " + attribute.getValue());
 		}
 
 		return tokens;
@@ -233,13 +254,6 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 		bufferedReader.close();
 
 		return new JSONObject(sb.toString());
-	}
-
-	protected String removeWhitespace(String s) {
-		s = s.replaceAll("\n", "");
-		s = s.replaceAll("\t", "");
-
-		return s;
 	}
 
 	private boolean _validResult;

@@ -13,6 +13,8 @@ buildSystemPackagesExtraManifest {
 	dependsOn copySystemPackagesExtraLibs
 
 	doLast {
+		Clock clock = new Clock()
+
 		JarBuilder jarBuilder = bundle.jarBuilderFactory.create()
 
 		jarBuilder.withBase projectDir
@@ -43,6 +45,8 @@ buildSystemPackagesExtraManifest {
 		systemPackagesExtraManifestFile.withOutputStream {
 			jarBuilder.writeManifestTo it
 		}
+
+		println "Building the system.packages.extra.mf file took ${clock.time}"
 	}
 }
 

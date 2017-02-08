@@ -54,6 +54,7 @@
 		<gradle-execute dir="modules" task="clean">
 			<arg value="--parallel" />
 			<arg value="-Dbuild.profile=portal-pre" />
+			<arg value="-Dclean.node.modules=${clean.node.modules}" />
 		</gradle-execute>
 
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
@@ -81,6 +82,7 @@
 
 				<gradle-execute dir="${project.dir}/modules" task="clean">
 					<arg value="-Dbuild.profile=${build.profile}" />
+					<arg value="-Dclean.node.modules=${clean.node.modules}" />
 				</gradle-execute>
 			</sequential>
 

@@ -705,7 +705,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_VIEW</td>
-	<td>//input[contains(@value,'KaleoProcessVIEW')]</td>
+	<td>//h5[contains(.,'Forms')]/../div[contains(@class,'search-container')]/following-sibling::div[contains(@class,'search-container')]//input[contains(@value,'KaleoProcessVIEW')]</td>
 	<td></td>
 </tr>
 <tr>

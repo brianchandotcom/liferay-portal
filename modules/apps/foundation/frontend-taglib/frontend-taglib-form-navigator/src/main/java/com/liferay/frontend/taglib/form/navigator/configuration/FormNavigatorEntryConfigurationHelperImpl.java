@@ -16,17 +16,16 @@ package com.liferay.frontend.taglib.form.navigator.configuration;
 
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorContextConstants;
 import com.liferay.frontend.taglib.form.navigator.context.FormNavigatorContextProvider;
-import com.liferay.frontend.taglib.form.navigator.exception.NoSuchFormNavigatorEntryException;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryConfigurationHelper;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -54,7 +53,7 @@ public class FormNavigatorEntryConfigurationHelperImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_formNavigatorEntriesMap = ServiceTrackerMapFactory.openMultiValueMap(
+		_formNavigatorEntriesMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, FormNavigatorEntry.class, null,
 			(serviceReference, emitter) -> {
 
@@ -82,9 +81,11 @@ public class FormNavigatorEntryConfigurationHelperImpl
 	private <T> List<FormNavigatorEntry<T>> _convertKeysToServices(
 		String formNavigatorId, List<String> formNavigatorEntryKeys) {
 
-		return formNavigatorEntryKeys.stream().map(
-			key -> this.<T>_getFormNavigatorEntry(key, formNavigatorId)).
-				collect(Collectors.toList());
+		Stream<FormNavigatorEntry<T>> formNavigatorEntryStream =
+			formNavigatorEntryKeys.stream().flatMap(
+				key -> Stream.of(_getFormNavigatorEntry(key, formNavigatorId)));
+
+		return formNavigatorEntryStream.collect(Collectors.toList());
 	}
 
 	private <T> String _getContext(String formNavigatorId, T formModelBean) {
@@ -105,15 +106,8 @@ public class FormNavigatorEntryConfigurationHelperImpl
 	private <T> FormNavigatorEntry<T> _getFormNavigatorEntry(
 		String key, String formNavigatorId) {
 
-		List<FormNavigatorEntry> formNavigatorEntries =
-			(List)_formNavigatorEntriesMap.getService(
-				_getKey(key, formNavigatorId));
-
-		if (ListUtil.isEmpty(formNavigatorEntries)) {
-			throw new NoSuchFormNavigatorEntryException(formNavigatorId, key);
-		}
-
-		return formNavigatorEntries.get(0);
+		return _formNavigatorEntriesMap.getService(
+			_getKey(key, formNavigatorId));
 	}
 
 	private String _getKey(String key, String formNavigatorId) {
@@ -122,7 +116,7 @@ public class FormNavigatorEntryConfigurationHelperImpl
 
 	private ServiceTrackerMap<String, FormNavigatorContextProvider>
 		_formNavigatorContextProviderMap;
-	private ServiceTrackerMap<String, List<FormNavigatorEntry>>
+	private ServiceTrackerMap<String, FormNavigatorEntry>
 		_formNavigatorEntriesMap;
 
 	@Reference

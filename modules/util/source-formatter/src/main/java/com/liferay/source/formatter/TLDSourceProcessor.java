@@ -31,11 +31,6 @@ import org.dom4j.Element;
 public class TLDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	public String[] getIncludes() {
-		return _INCLUDES;
-	}
-
-	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
@@ -83,6 +78,11 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 		String[] excludes = new String[] {"**/WEB-INF/tld/**", "**/test_*.tld"};
 
 		return getFileNames(excludes, getIncludes());
+	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.tld"};

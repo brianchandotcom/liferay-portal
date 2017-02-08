@@ -25,11 +25,6 @@ import java.util.List;
 public class GroovySourceProcessor extends JavaSourceProcessor {
 
 	@Override
-	public String[] getIncludes() {
-		return _INCLUDES;
-	}
-
-	@Override
 	protected void checkInefficientStringMethods(
 		String line, String fileName, String absolutePath, int lineCount,
 		boolean javaSource) {
@@ -46,6 +41,11 @@ public class GroovySourceProcessor extends JavaSourceProcessor {
 		}
 
 		return getFileNames(new String[0], getIncludes());
+	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
 	}
 
 	@Override

@@ -58,11 +58,6 @@ import org.dom4j.Element;
  */
 public class JSPSourceProcessor extends BaseSourceProcessor {
 
-	@Override
-	public String[] getIncludes() {
-		return _INCLUDES;
-	}
-
 	protected void addImportCounts(String content) {
 		Matcher matcher = _importsPattern.matcher(content);
 
@@ -567,6 +562,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return fileNames;
+	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
 	}
 
 	protected String fixEmptyJavaSourceTag(String content) {

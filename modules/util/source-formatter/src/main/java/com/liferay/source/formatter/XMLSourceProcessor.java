@@ -234,11 +234,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	@Override
-	public String[] getIncludes() {
-		return _INCLUDES;
-	}
-
 	protected void checkAntXMLProjectName(String fileName, Document document) {
 		Matcher matcher = _projectNamePattern.matcher(fileName);
 
@@ -505,6 +500,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		};
 
 		return getFileNames(excludes, getIncludes());
+	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
 	}
 
 	protected String fixPoshiXMLElementWithNoChild(String content) {

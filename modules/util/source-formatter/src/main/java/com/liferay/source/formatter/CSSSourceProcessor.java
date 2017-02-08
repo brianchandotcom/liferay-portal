@@ -35,11 +35,6 @@ import java.util.regex.Pattern;
 public class CSSSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	public String[] getIncludes() {
-		return _INCLUDES;
-	}
-
-	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
@@ -67,6 +62,11 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 		};
 
 		return getFileNames(excludes, getIncludes());
+	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
 	}
 
 	protected String fixHexColors(String content) {

@@ -34,11 +34,6 @@ import java.util.regex.Pattern;
  */
 public class GradleSourceProcessor extends BaseSourceProcessor {
 
-	@Override
-	public String[] getIncludes() {
-		return _INCLUDES;
-	}
-
 	protected void checkDefaultVersion(String fileName, String content) {
 		Matcher matcher = _defaultVersionPattern.matcher(content);
 
@@ -72,6 +67,11 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(new String[0], getIncludes());
+	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
 	}
 
 	protected String formatDependencies(String absolutePath, String content) {

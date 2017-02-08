@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,6 +57,10 @@ public class SourceFormatterArgs {
 
 	public String getCopyrightFileName() {
 		return _copyrightFileName;
+	}
+
+	public List<String> getFileExtensions() {
+		return _fileExtensions;
 	}
 
 	public List<String> getFileNames() {
@@ -130,6 +135,10 @@ public class SourceFormatterArgs {
 		_copyrightFileName = copyrightFileName;
 	}
 
+	public void setFileExtensions(List<String> fileExtensions) {
+		_fileExtensions = fileExtensions;
+	}
+
 	public void setFileNames(List<String> fileNames) {
 		if (_fileNames != null) {
 			throw new RuntimeException("File names are already initialized");
@@ -190,6 +199,7 @@ public class SourceFormatterArgs {
 	private boolean _autoFix = AUTO_FIX;
 	private String _baseDirName = BASE_DIR_NAME;
 	private String _copyrightFileName = COPYRIGHT_FILE_NAME;
+	private List<String> _fileExtensions = new ArrayList<>();
 	private List<String> _fileNames;
 	private boolean _formatCurrentBranch = FORMAT_CURRENT_BRANCH;
 	private boolean _formatLatestAuthor = FORMAT_LATEST_AUTHOR;

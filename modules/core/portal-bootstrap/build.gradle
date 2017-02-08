@@ -30,6 +30,7 @@ buildSystemPackagesExtraManifest {
 		Map<String, String> properties = liferayOSGi.bundleDefaultInstructions
 
 		properties["-check"] = "imports"
+		properties["-fixupmessages"] = '"Classpath is empty. Private-Package ...";is:=ignore'
 		properties["-include"] = relativePath(systemPackagesExtraBndFile)
 
 		jarBuilder.withClasspath new File[0]

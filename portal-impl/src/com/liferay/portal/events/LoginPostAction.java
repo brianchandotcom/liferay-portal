@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -59,6 +60,14 @@ public class LoginPostAction extends Action {
 			// Language
 
 			session.removeAttribute(Globals.LOCALE_KEY);
+
+			// Password Expiring Check
+
+			if (UserLocalServiceUtil.isPasswordExpiringSoon(
+					PortalUtil.getUser(request))) {
+
+				SessionMessages.add(request, "passwordExpiringSoon");
+			}
 
 			// Live users
 

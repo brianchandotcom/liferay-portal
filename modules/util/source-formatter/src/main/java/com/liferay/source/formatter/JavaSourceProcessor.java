@@ -4130,7 +4130,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Collection<String> fileNames = new TreeSet<>();
 
 		String[] excludes = getPluginExcludes(StringPool.BLANK);
-		String[] includes = new String[] {"**/*.java"};
+		String[] includes = getIncludes();
 
 		fileNames.addAll(getFileNames(excludes, includes));
 

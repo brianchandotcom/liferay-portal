@@ -68,11 +68,6 @@ public class BaseSourceProcessorTest {
 		_baseSourceProcessor = new BaseSourceProcessor() {
 
 			@Override
-			public String[] getIncludes() {
-				return null;
-			}
-
-			@Override
 			protected String doFormat(
 					File file, String fileName, String absolutePath,
 					String content)
@@ -83,6 +78,11 @@ public class BaseSourceProcessorTest {
 
 			@Override
 			protected List<String> doGetFileNames() throws Exception {
+				return null;
+			}
+
+			@Override
+			protected String[] doGetIncludes() {
 				return null;
 			}
 

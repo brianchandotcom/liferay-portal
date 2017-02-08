@@ -110,12 +110,6 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 			resourceRequest, resourceResponse, parametersJSONObject);
 	}
 
-	protected String extractType(String type) throws Exception {
-		JSONArray typeJSONArray = _jsonFactory.createJSONArray(type);
-
-		return typeJSONArray.getString(0);
-	}
-
 	protected DDMFormValues getDataProviderFormValues(
 			DDMDataProvider ddmDataProvider,
 			DDMDataProviderInstance ddmDataProviderInstance)
@@ -151,8 +145,8 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 
 			String name =
 				ddmDataProviderInputParameterSetting.inputParameterName();
-			String type =
-				ddmDataProviderInputParameterSetting.inputParameterType();
+			String type = getType(
+				ddmDataProviderInputParameterSetting.inputParameterType());
 
 			if (Validator.isNull(name) || Validator.isNull(type)) {
 				continue;
@@ -166,7 +160,7 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 				"required",
 				ddmDataProviderInputParameterSetting.inputParameterRequired());
 
-			inputJSONObject.put("type", extractType(type));
+			inputJSONObject.put("type", type);
 
 			inputsJSONArray.put(inputJSONObject);
 		}
@@ -187,8 +181,8 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 
 			String name =
 				ddmDataProviderOutputParameterSetting.outputParameterName();
-			String type =
-				ddmDataProviderOutputParameterSetting.outputParameterType();
+			String type = getType(
+				ddmDataProviderOutputParameterSetting.outputParameterType());
 
 			if (Validator.isNull(name) || Validator.isNull(type)) {
 				continue;
@@ -197,12 +191,18 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 			JSONObject outputJSONObject = _jsonFactory.createJSONObject();
 
 			outputJSONObject.put("name", name);
-			outputJSONObject.put("type", extractType(type));
+			outputJSONObject.put("type", type);
 
 			outputsJSONArray.put(outputJSONObject);
 		}
 
 		return outputsJSONArray;
+	}
+
+	protected String getType(String type) throws Exception {
+		JSONArray typeJSONArray = _jsonFactory.createJSONArray(type);
+
+		return typeJSONArray.getString(0);
 	}
 
 	@Reference

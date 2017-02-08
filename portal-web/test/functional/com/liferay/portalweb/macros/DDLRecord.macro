@@ -452,6 +452,8 @@
 
 		<var name="key_pageName" value="${ddlRecordFieldData}" />
 
+		<execute function="RunScript" locator1="$('.top-ended').scrollTop(1000)" />
+
 		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
 	</command>
 

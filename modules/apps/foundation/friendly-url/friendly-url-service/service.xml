@@ -63,7 +63,7 @@
 
 		<!-- PK fields -->
 
-		<column name="friendlyURLLocalizationId" primary="true" type="long" />
+		<column name="friendlyURLTitleLocalizationId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -83,12 +83,12 @@
 			<finder-column name="groupId" />
 			<finder-column name="friendlyURLId" />
 		</finder>
-		<finder name="G_F_L" return-type="FriendlyURLLocalization" unique="true">
+		<finder name="G_F_L" return-type="FriendlyURLTitleLocalization" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="friendlyURLId" />
 			<finder-column name="languageId" />
 		</finder>
-		<finder name="G_U_L" return-type="FriendlyURLLocalization" unique="true">
+		<finder name="G_U_L" return-type="FriendlyURLTitleLocalization" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="urlTitle" />
 			<finder-column name="languageId" />

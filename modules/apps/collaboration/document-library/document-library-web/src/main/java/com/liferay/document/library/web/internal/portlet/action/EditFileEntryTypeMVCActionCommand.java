@@ -145,33 +145,6 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		return StringUtil.split(GetterUtil.getString(value), 0L);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMBeanTranslator(DDMBeanTranslator ddmBeanTranslator) {
-		_ddmBeanTranslator = ddmBeanTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFileEntryTypeService(
-		DLFileEntryTypeService dlFileEntryTypeService) {
-
-		_dlFileEntryTypeService = dlFileEntryTypeService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	protected void subscribeFileEntryType(ActionRequest actionRequest)
 		throws Exception {
 
@@ -250,10 +223,19 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference
 	private DDM _ddm;
+
+	@Reference
 	private DDMBeanTranslator _ddmBeanTranslator;
+
+	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
 	private DLFileEntryTypeService _dlFileEntryTypeService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference

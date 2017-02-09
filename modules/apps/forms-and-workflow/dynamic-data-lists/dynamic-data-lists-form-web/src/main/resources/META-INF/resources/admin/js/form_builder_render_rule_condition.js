@@ -303,17 +303,9 @@ AUI.add(
 				var secondOperandOptions = instance._getSecondOperand(index, 'options');
 				var secondOperandsInput = instance._getSecondOperand(index, 'input');
 
-				if (secondOperandFields) {
-					secondOperandFields.set('visible', false);
-				}
-
-				if (secondOperandOptions) {
-					secondOperandOptions.set('visible', false);
-				}
-
-				if (secondOperandsInput) {
-					secondOperandsInput.set('visible', false);
-				}
+				instance._setVisibleToOperandField(secondOperandFields);
+				instance._setVisibleToOperandField(secondOperandOptions);
+				instance._setVisibleToOperandField(secondOperandsInput);
 			},
 
 			_isBinaryCondition: function(index) {
@@ -560,6 +552,12 @@ AUI.add(
 				field.render(container);
 
 				instance._conditions[index + '-condition-second-operand-type'] = field;
+			},
+
+			_setVisibleToOperandField: function(field) {
+				if (field) {
+					field.set('visible', false);
+				}
 			},
 
 			_updateOperatorList: function(dataType, conditionIndex) {

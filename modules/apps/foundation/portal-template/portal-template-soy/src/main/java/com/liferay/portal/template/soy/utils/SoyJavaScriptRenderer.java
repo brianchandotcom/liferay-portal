@@ -16,6 +16,7 @@ package com.liferay.portal.template.soy.utils;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
@@ -29,7 +30,6 @@ import java.util.Set;
 public class SoyJavaScriptRenderer {
 
 	public SoyJavaScriptRenderer() throws Exception {
-		_javaScriptTPL = _getJavaScriptTPL();
 		_jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 	}
 
@@ -45,16 +45,29 @@ public class SoyJavaScriptRenderer {
 			new String[] {contextString, id, modulesString});
 	}
 
-	private String _getJavaScriptTPL() throws Exception {
-		Class<?> clazz = getClass();
+	private static String _getJavaScriptTPL() {
+		Class<?> clazz = SoyJavaScriptRenderer.class;
 
 		InputStream inputStream = clazz.getResourceAsStream(
 			"dependencies/bootstrap.js.tpl");
 
-		return StringUtil.read(inputStream);
+		String js = StringPool.BLANK;
+
+		try {
+			js = StringUtil.read(inputStream);
+		} catch (Exception e) {
+
+		}
+
+		return js;
 	}
 
-	private final String _javaScriptTPL;
+	private static String _javaScriptTPL;
+
 	private final JSONSerializer _jsonSerializer;
+
+	static {
+		_javaScriptTPL = _getJavaScriptTPL();
+	}
 
 }

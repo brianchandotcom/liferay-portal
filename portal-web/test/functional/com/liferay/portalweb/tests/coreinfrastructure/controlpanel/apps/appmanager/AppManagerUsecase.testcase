@@ -34,6 +34,8 @@
 			<var name="appName" value="Independent Modules" />
 		</execute>
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute macro="AppManager#viewNoAppCP">
 			<var name="appName" value="Independent Modules" />
 		</execute>

@@ -10,6 +10,16 @@
 <tbody>
 <!--LANGUAGE_MENU-->
 <tr>
+	<td>SITE_NAME_TRANSLATION</td>
+	<td>//div[contains(@id,'nameContentBox')]//a[contains(@data-languageid,'${key_language}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_LANGUAGE</td>
+	<td>//*[name()='svg'][@message='${key_language}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LANGUAGE_MENU_ARABIC</td>
 	<td>//a[@lang='ar-SA']/img</td>
 	<td></td>

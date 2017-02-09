@@ -232,6 +232,8 @@ public class LDAPUserExporterImpl implements UserExporter {
 				throw sve;
 			}
 
+			_log.error(sve, sve);
+
 			String fullGroupDN = _portalLDAP.getNameInNamespace(
 				ldapServerId, companyId, binding);
 

@@ -1015,6 +1015,14 @@
 		</for>
 	</command>
 
+	<command name="viewSiteNameTranslationsPG">
+		<execute function="Click" locator1="Language#SELECT_LANGUAGE" value1="${language}">
+			<var name="key_language" value="${language}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
+	</command>
+
 	<command name="viewSiteTemplatePages">
 		<var name="key_siteName" value="${siteName}" />
 

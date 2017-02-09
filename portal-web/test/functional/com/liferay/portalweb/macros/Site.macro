@@ -177,6 +177,14 @@
 		</execute>
 	</command>
 
+	<command name="addSiteNameTranslation">
+		<execute function="Click" locator1="Language#SITE_NAME_TRANSLATION">
+			<var name="key_language" value="${language}" />
+		</execute>
+
+		<execute function="Type" locator1="TextInput#NAME" value1="${siteName}" />
+	</command>
+
 	<command name="addSiteTemplateCP">
 		<execute macro="Site#addCP">
 			<var name="membershipType" value="${membershipType}" />

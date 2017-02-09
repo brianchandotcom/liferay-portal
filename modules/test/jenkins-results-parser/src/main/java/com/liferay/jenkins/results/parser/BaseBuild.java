@@ -280,10 +280,20 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getConsoleText() {
+		if (_consoleText != null) {
+			return _consoleText;
+		}
+
 		JenkinsConsoleTextLoader jenkinsConsoleTextLoader =
 			new JenkinsConsoleTextLoader(getBuildURL());
 
-		return jenkinsConsoleTextLoader.getConsoleText();
+		String consoleText = jenkinsConsoleTextLoader.getConsoleText();
+
+		if (consoleText.contains("\nFinished:") && (getParentBuild() == null)) {
+			_consoleText = consoleText;
+		}
+
+		return consoleText;
 	}
 
 	@Override
@@ -1728,6 +1738,7 @@ public abstract class BaseBuild implements Build {
 
 	private int _buildNumber = -1;
 	private int _consoleReadCursor;
+	private String _consoleText;
 	private Map<String, String> _parameters = new HashMap<>();
 	private final Build _parentBuild;
 	private String _status;

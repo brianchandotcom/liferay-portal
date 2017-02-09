@@ -284,16 +284,24 @@ public abstract class BaseBuild implements Build {
 			return _consoleText;
 		}
 
-		JenkinsConsoleTextLoader jenkinsConsoleTextLoader =
-			new JenkinsConsoleTextLoader(getBuildURL());
+		String buildURL = getBuildURL();
 
-		String consoleText = jenkinsConsoleTextLoader.getConsoleText();
+		if (buildURL != null) {
+			JenkinsConsoleTextLoader jenkinsConsoleTextLoader =
+				new JenkinsConsoleTextLoader(getBuildURL());
 
-		if (consoleText.contains("\nFinished:") && (getParentBuild() == null)) {
-			_consoleText = consoleText;
+			String consoleText = jenkinsConsoleTextLoader.getConsoleText();
+
+			if (consoleText.contains("\nFinished:") &&
+				(getParentBuild() == null)) {
+
+				_consoleText = consoleText;
+			}
+
+			return consoleText;
 		}
 
-		return consoleText;
+		return "";
 	}
 
 	@Override
@@ -964,14 +972,16 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
-	protected void checkForReinvocation() {
+	protected void checkForReinvocation(String consoleText) {
+		if ((consoleText == null) || consoleText.isEmpty()) {
+			return;
+		}
+
 		TopLevelBuild topLevelBuild = (TopLevelBuild)getTopLevelBuild();
 
 		if ((topLevelBuild == null) || topLevelBuild.fromArchive) {
 			return;
 		}
-
-		String consoleText = topLevelBuild.getConsoleText();
 
 		if (consoleText.contains(getReinvokedMessage())) {
 			reset();
@@ -1017,8 +1027,10 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void findDownstreamBuilds() {
+		String consoleText = getConsoleText();
+
 		List<String> foundDownstreamBuildURLs = new ArrayList<>(
-			findDownstreamBuildsInConsoleText());
+			findDownstreamBuildsInConsoleText(consoleText));
 
 		JSONObject buildJSONObject;
 
@@ -1052,10 +1064,22 @@ public abstract class BaseBuild implements Build {
 		addDownstreamBuilds(
 			foundDownstreamBuildURLs.toArray(
 				new String[foundDownstreamBuildURLs.size()]));
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
+
+			downstreamBaseBuild.checkForReinvocation(consoleText);
+		}
 	}
 
-	protected List<String> findDownstreamBuildsInConsoleText() {
+	protected List<String> findDownstreamBuildsInConsoleText(
+		String consoleText) {
+
 		List<String> foundDownstreamBuildURLs = new ArrayList<>();
+
+		if ((consoleText == null) || consoleText.isEmpty()) {
+			return foundDownstreamBuildURLs;
+		}
 
 		Set<String> downstreamBuildURLs = new HashSet<>();
 
@@ -1068,8 +1092,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		if (getBuildURL() != null) {
-			String consoleText = getConsoleText();
-
 			int i = consoleText.lastIndexOf("\nstop-current-job:");
 
 			if (i != -1) {
@@ -1570,8 +1592,6 @@ public abstract class BaseBuild implements Build {
 
 		if (_buildNumber != -1) {
 			setStatus("running");
-
-			checkForReinvocation();
 		}
 	}
 
@@ -1625,8 +1645,6 @@ public abstract class BaseBuild implements Build {
 		_consoleReadCursor = 0;
 
 		setStatus("running");
-
-		checkForReinvocation();
 	}
 
 	protected void setInvocationURL(String invocationURL) {

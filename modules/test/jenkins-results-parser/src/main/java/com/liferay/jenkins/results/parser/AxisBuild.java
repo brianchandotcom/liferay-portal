@@ -339,7 +339,7 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
-	protected void checkForReinvocation() {
+	protected void checkForReinvocation(String consoleText) {
 	}
 
 	@Override

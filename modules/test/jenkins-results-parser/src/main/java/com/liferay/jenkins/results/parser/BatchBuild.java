@@ -193,7 +193,9 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	@Override
-	protected List<String> findDownstreamBuildsInConsoleText() {
+	protected List<String> findDownstreamBuildsInConsoleText(
+		String consoleText) {
+
 		return Collections.emptyList();
 	}
 

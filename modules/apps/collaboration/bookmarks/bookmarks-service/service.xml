@@ -99,7 +99,6 @@
 
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
-		<reference entity="Subscription" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
@@ -186,7 +185,6 @@
 		<!-- References -->
 
 		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Subscription" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />

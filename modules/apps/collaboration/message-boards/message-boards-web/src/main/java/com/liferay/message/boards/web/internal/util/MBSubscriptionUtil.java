@@ -16,8 +16,8 @@ package com.liferay.message.boards.web.internal.util;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.portal.kernel.model.Subscription;
-import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
+import com.liferay.subscription.model.Subscription;
+import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 
 import java.util.HashSet;
 import java.util.List;

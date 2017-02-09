@@ -1,6 +1,10 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
+configurations {
+	tinyMCE
+}
+
 task buildTinyMCE(type: Copy)
 
 String tinyMCEVersion = "4.3.12"
@@ -21,18 +25,25 @@ buildTinyMCE {
 
 	from new File(editorSrcDir, "_diffs")
 
-	from(zipTree(tinyMCEZipFile)) {
-		eachFile new StripPathSegmentsAction(3)
-		exclude "**/moxieplayer.swf"
-		include "tinymce/js/tinymce/"
+	from  {
+		zipTree(configurations.tinyMCE.singleFile)
+	} {
+		eachFile new StripPathSegmentsAction(5)
+
+		exclude "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/plugins/media/moxieplayer.swf"
+		exclude "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/tinymce.jquery.min.js"
+
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/*.min.js"
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/license.txt"
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/plugins/**/*.css"
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/plugins/**/*.gif"
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/plugins/**/*.min.js"
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/skins/"
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/themes/**/*.min.js"
 	}
 
 	includeEmptyDirs = false
 	into tinyMCEDestinationDir
-
-	onlyIf {
-		!FileUtil.isUpToDate(project, tinyMCEZipFile, tinyMCEDestinationDir)
-	}
 }
 
 classes {
@@ -52,4 +63,6 @@ dependencies {
 	provided group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+
+	tinyMCE group: "org.webjars.bower", name: "tinymce", transitive: false, version: tinyMCEVersion
 }

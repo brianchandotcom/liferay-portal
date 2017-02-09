@@ -1025,7 +1025,7 @@ runtime classpaths of the `test` and `testIntegration` source sets.
 the `node_modules` directory of a project with the `clean` task.
 
 ### Changed
-- [LPS-69920]: Update the [Liferay Gradle Plugins] dependency to version 3.1.9.
+- [LPS-70451]: Update the [Liferay Gradle Plugins] dependency to version 3.1.9.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1123,6 +1123,7 @@ the `node_modules` directory of a project with the `clean` task.
 [LPS-70336]: https://issues.liferay.com/browse/LPS-70336
 [LPS-70379]: https://issues.liferay.com/browse/LPS-70379
 [LPS-70424]: https://issues.liferay.com/browse/LPS-70424
+[LPS-70451]: https://issues.liferay.com/browse/LPS-70451
 [LPS-70486]: https://issues.liferay.com/browse/LPS-70486
 [LPS-70515]: https://issues.liferay.com/browse/LPS-70515
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594

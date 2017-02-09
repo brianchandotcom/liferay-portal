@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.google.internal.web.portlet.path;
+package com.liferay.subscription.web.internal.auth.path;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Alejandro Tardín
  */
 @Component(
-	immediate = true, property = {"auth.public.path=/portal/google_login"},
+	immediate = true, property = {"auth.public.path=/portal/unsubscribe"},
 	service = Object.class
 )
 public class AuthPublicPath {

@@ -12,18 +12,19 @@
  * details.
  */
 
-package com.liferay.comment.taglib.internal.portlet.path;
+package com.liferay.bookmarks.web.internal.auth.path;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Adolfo Pérez
+ * @author Sergio González
  */
 @Component(
 	immediate = true,
 	property = {
-		"auth.public.path=/portal/comment/discussion/edit",
-		"auth.public.path=/portal/comment/discussion/get_comments"
+		"auth.public.path=/bookmarks/find_entry",
+		"auth.public.path=/bookmarks/find_folder",
+		"auth.public.path=/bookmarks/open_entry"
 	},
 	service = Object.class
 )

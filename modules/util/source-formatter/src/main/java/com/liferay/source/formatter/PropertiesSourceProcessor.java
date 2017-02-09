@@ -296,26 +296,23 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	protected String formatDependenciesProperties(String content) {
 		List<String> lines = ListUtil.fromString(content);
 
-		StringBundler sb = new StringBundler(content.length() * 2 - 1);
-
 		lines = ListUtil.sort(lines);
 
-		boolean first = true;
+		StringBundler sb = new StringBundler(content.length() * 2);
 
 		for (String line : lines) {
 			line = StringUtil.removeChar(line, CharPool.SPACE);
 
-			if (Validator.isNull(line) || (line.charAt(0) == CharPool.POUND)) {
-				continue;
-			}
+			if (Validator.isNotNull(line) &&
+				(line.charAt(0) != CharPool.POUND)) {
 
-			if (!first) {
+				sb.append(line);
 				sb.append(CharPool.NEW_LINE);
 			}
+		}
 
-			first = false;
-
-			sb.append(line);
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		return sb.toString();

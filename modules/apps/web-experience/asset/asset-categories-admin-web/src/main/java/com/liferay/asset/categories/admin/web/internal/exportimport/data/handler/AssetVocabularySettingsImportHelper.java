@@ -159,7 +159,7 @@ public class AssetVocabularySettingsImportHelper
 		}
 
 		if (_log.isWarnEnabled()) {
-			_log.warn("No class type found for " + className);
+			_log.warn("No class type found for " + classTypeName);
 		}
 
 		return AssetCategoryConstants.ALL_CLASS_TYPE_PK;

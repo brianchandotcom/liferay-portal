@@ -183,4 +183,34 @@ public class CalendarBookingTestUtil {
 			endTime, null, 0, null, 0, null, serviceContext);
 	}
 
+	public static CalendarBooking updateCalendarBookingInstance(
+			User user, CalendarBooking calendarBooking, int instanceIndex,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			long instanceStartTime, long instanceEndTime,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
+			user.getUserId(), calendarBooking.getCalendarBookingId(),
+			instanceIndex, calendarBooking.getCalendarId(), titleMap,
+			descriptionMap, calendarBooking.getLocation(), instanceStartTime,
+			instanceEndTime, false, null, false, 0, null, 0, null,
+			serviceContext);
+	}
+
+	public static CalendarBooking updateCalendarBookingInstanceAndAllFollowing(
+			User user, CalendarBooking calendarBooking, int instanceIndex,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			long instanceStartTime, long instanceEndTime,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
+			user.getUserId(), calendarBooking.getCalendarBookingId(),
+			instanceIndex, calendarBooking.getCalendarId(), titleMap,
+			descriptionMap, calendarBooking.getLocation(), instanceStartTime,
+			instanceEndTime, false, null, true, 0, null, 0, null,
+			serviceContext);
+	}
+
 }

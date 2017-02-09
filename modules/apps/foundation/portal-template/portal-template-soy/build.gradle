@@ -1,4 +1,7 @@
 dependencies {
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.8.6"
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.8.6"
+
 	compileInclude group: "aopalliance", name: "aopalliance", version: "1.0"
 	compileInclude group: "args4j", name: "args4j", version: "2.0.16"
 	compileInclude group: "asm", name: "asm", version: "3.1"

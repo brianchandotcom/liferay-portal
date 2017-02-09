@@ -20,6 +20,7 @@ package com.liferay.portal.workflow.kaleo.definition;
 public enum NotificationType {
 
 	EMAIL("email"), IM("im"), PRIVATE_MESSAGE("private-message"),
+	PUSH_NOTIFICATION("push-notification"),
 	USER_NOTIFICATION("user-notification");
 
 	public static NotificationType parse(String value) {
@@ -31,6 +32,9 @@ public enum NotificationType {
 		}
 		else if (PRIVATE_MESSAGE.getValue().equals(value)) {
 			return PRIVATE_MESSAGE;
+		}
+		else if (PUSH_NOTIFICATION.getValue().equals(value)) {
+			return PUSH_NOTIFICATION;
 		}
 		else if (USER_NOTIFICATION.getValue().equals(value)) {
 			return USER_NOTIFICATION;

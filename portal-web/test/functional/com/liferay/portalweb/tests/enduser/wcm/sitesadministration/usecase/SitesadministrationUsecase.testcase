@@ -229,7 +229,7 @@
 
 		<execute macro="PortletEntry#inputLocalizedName">
 			<var name="language" value="es_ES" />
-			<var name="localizedName" value="Sitio Llama" />
+			<var name="localizedName" value="Nombre del Sitio" />
 		</execute>
 
 		<execute macro="PortletEntry#inputLocalizedName">
@@ -259,7 +259,7 @@
 
 		<execute macro="Page#viewSiteNameTranslationsPG">
 			<var name="language" value="español" />
-			<var name="siteName" value="Sitio Llama" />
+			<var name="siteName" value="Nombre del Sitio" />
 		</execute>
 
 		<execute macro="Page#viewSiteNameTranslationsPG">

@@ -980,7 +980,7 @@
 	</command>
 
 	<command name="viewSiteNameTranslationsPG">
-		<execute function="Click" locator1="Language#SELECT_LANGUAGE" value1="${language}">
+		<execute function="Click" locator1="Language#SELECT_LANGUAGE">
 			<var name="key_language" value="${language}" />
 		</execute>
 

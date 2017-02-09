@@ -1729,6 +1729,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
 	</target>
 
+	<target name="gradle-plugins-test-jdk8">
+		<gradle-execute dir="modules/sdk" task="gradleTest" />
+	</target>
+
 	<target name="integration-db2105-jdk8">
 		<run-integration-test database.type="db2" />
 	</target>

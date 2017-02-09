@@ -183,19 +183,19 @@ public class UpgradeCompanyId
 
 			runSQL(connection, updateSQL);
 
-			// User_
-
-			updateSQL = _getUpdateSQL(
-				"User_", "userId", "ownerId",
-				PortletKeys.PREFS_OWNER_TYPE_USER);
-
-			runSQL(connection, updateSQL);
-
 			// PortletItem
 
 			updateSQL = _getUpdateSQL(
 				"PortletItem", "portletItemId", "ownerId",
 				PortletKeys.PREFS_OWNER_TYPE_ARCHIVED);
+
+			runSQL(connection, updateSQL);
+
+			// User_
+
+			updateSQL = _getUpdateSQL(
+				"User_", "userId", "ownerId",
+				PortletKeys.PREFS_OWNER_TYPE_USER);
 
 			runSQL(connection, updateSQL);
 		}

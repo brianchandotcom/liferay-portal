@@ -14,19 +14,8 @@
 
 package com.liferay.portal.tools.soy.builder.commands;
 
-import com.liferay.portal.tools.soy.builder.util.FileTestUtil;
-
 import java.io.File;
-import java.io.InputStream;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
@@ -35,7 +24,7 @@ import org.junit.runners.Parameterized.Parameters;
  * @author Andrea Di Giorgi
  */
 @RunWith(Parameterized.class)
-public class ReplaceTranslationCommandTest {
+public class ReplaceTranslationCommandTest extends BaseSoyJsCommandTestCase {
 
 	@Parameters(name = "{0}")
 	public static String[] getTestDirNames() {
@@ -43,49 +32,25 @@ public class ReplaceTranslationCommandTest {
 	}
 
 	public ReplaceTranslationCommandTest(String testDirName) {
-		_testDirName = testDirName;
+		_testDirName =
+			"com/liferay/portal/tools/soy/builder/commands/dependencies" +
+				"/replace_translation/" + testDirName + "/";
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		File dir = temporaryFolder.getRoot();
-
-		Path dirPath = dir.toPath();
-
-		for (String fileName : _FILE_NAMES) {
-			try (InputStream inputStream =
-					ReplaceTranslationCommand.class.getResourceAsStream(
-						"dependencies/replace_translation/" + _testDirName +
-							"/" + fileName)) {
-
-				Files.copy(inputStream, dirPath.resolve(fileName));
-			}
-		}
+	@Override
+	protected String getTestDirName() {
+		return _testDirName;
 	}
 
-	@Test
-	public void testReplaceTranslation() throws Exception {
-		File dir = temporaryFolder.getRoot();
-
-		replaceTranslation(dir);
-
-		Path dirPath = dir.toPath();
-
-		for (String fileName : _FILE_NAMES) {
-			String content = FileTestUtil.read(dirPath.resolve(fileName));
-			String expectedContent = FileTestUtil.read(
-				ReplaceTranslationCommandTest.class,
-				"dependencies/replace_translation/" + _testDirName +
-					"/expected/" + fileName);
-
-			Assert.assertEquals(expectedContent, content);
-		}
+	@Override
+	protected String[] getTestFileNames() {
+		return new String[] {
+			"footer.soy.js", "header.soy.js", "navigation.soy.js", "view.soy.js"
+		};
 	}
 
-	@Rule
-	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
-
-	protected void replaceTranslation(File dir) throws Exception {
+	@Override
+	protected void testSoyJs(File dir) throws Exception {
 		ReplaceTranslationCommand replaceTranslationCommand =
 			new ReplaceTranslationCommand();
 
@@ -93,10 +58,6 @@ public class ReplaceTranslationCommandTest {
 
 		replaceTranslationCommand.execute();
 	}
-
-	private static final String[] _FILE_NAMES = {
-		"footer.soy.js", "header.soy.js", "navigation.soy.js", "view.soy.js"
-	};
 
 	private final String _testDirName;
 

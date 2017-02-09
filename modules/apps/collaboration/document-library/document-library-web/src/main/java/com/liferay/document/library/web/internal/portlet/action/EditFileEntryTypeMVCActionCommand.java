@@ -120,7 +120,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (DuplicateFileEntryTypeException | NoSuchMetadataSetException |
-			   StructureDefinitionException |
+			   RequiredStructureException | StructureDefinitionException |
 			   StructureDuplicateElementException | StructureNameException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
@@ -132,9 +132,6 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/document_library/error.jsp");
-		}
-		catch (RequiredStructureException rse) {
-			SessionErrors.add(actionRequest, rse.getClass());
 		}
 	}
 

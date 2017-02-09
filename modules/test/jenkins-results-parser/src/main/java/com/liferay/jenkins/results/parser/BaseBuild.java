@@ -1060,6 +1060,12 @@ public abstract class BaseBuild implements Build {
 		if (getBuildURL() != null) {
 			String consoleText = getConsoleText();
 
+			int i = consoleText.lastIndexOf("\nstop-current-job:");
+
+			if (i != -1) {
+				consoleText = consoleText.substring(0, i);
+			}
+
 			Matcher downstreamBuildURLMatcher =
 				downstreamBuildURLPattern.matcher(
 					consoleText.substring(_consoleReadCursor));

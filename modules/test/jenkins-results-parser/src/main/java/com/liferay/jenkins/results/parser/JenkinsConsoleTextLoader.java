@@ -31,13 +31,23 @@ import java.util.regex.Pattern;
 public class JenkinsConsoleTextLoader {
 
 	public JenkinsConsoleTextLoader(String buildURL) {
-		this.buildURL = buildURL;
+		this.buildURL = JenkinsResultsParserUtil.getLocalURL(buildURL);
 
 		logStringBuilder = new StringBuilder();
 		serverLogSize = 0;
 	}
 
 	public String getConsoleText() {
+		if (buildURL.startsWith("file:") || buildURL.contains("mirrors")) {
+			try {
+				return JenkinsResultsParserUtil.toString(
+					buildURL + "/consoleText");
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
+		}
+
 		update();
 
 		return logStringBuilder.toString();

@@ -280,24 +280,10 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getConsoleText() {
-		String status = getStatus();
+		JenkinsConsoleTextLoader jenkinsConsoleTextLoader =
+			new JenkinsConsoleTextLoader(getBuildURL());
 
-		if (status.equals("running")) {
-			JenkinsConsoleTextLoader jenkinsConsoleTextLoader =
-				new JenkinsConsoleTextLoader(getBuildURL());
-
-			return jenkinsConsoleTextLoader.getConsoleText();
-		}
-
-		try {
-			return JenkinsResultsParserUtil.toString(
-				JenkinsResultsParserUtil.getLocalURL(
-					getBuildURL() + "/consoleText"),
-				false);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		return jenkinsConsoleTextLoader.getConsoleText();
 	}
 
 	@Override

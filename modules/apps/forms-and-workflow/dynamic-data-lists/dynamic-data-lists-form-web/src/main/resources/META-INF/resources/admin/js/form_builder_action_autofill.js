@@ -7,6 +7,8 @@ AUI.add(
 
 		var TPL_CONTAINER_INPUT_OUTPUT_FIELD = '<div class="col-md-3 container-input-label">{field}</div>';
 
+		var TPL_LABEL_ACTION = '<h4>{message}</h4>';
+
 		var FormBuilderActionAutofill = A.Component.create(
 			{
 				ATTRS: {
@@ -83,6 +85,15 @@ AUI.add(
 						var index = instance.get('index');
 
 						var fieldsListContainer = boundingBox.one('.target-' + index);
+
+						fieldsListContainer.append(
+							Lang.sub(
+								TPL_LABEL_ACTION,
+								{
+									message: Liferay.Language.get('from-data-provider')
+								}
+							)
+						);
 
 						instance._createDataProviderList().render(fieldsListContainer);
 					},

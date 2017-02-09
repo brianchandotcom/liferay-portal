@@ -14,19 +14,13 @@
 
 package com.liferay.portal.tools.soy.builder.commands;
 
-import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-import com.beust.jcommander.converters.FileConverter;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,38 +32,10 @@ import java.util.regex.Pattern;
 	commandDescription = "Replace 'goog.getMsg' definitions.",
 	commandNames = "replace-translation"
 )
-public class ReplaceTranslationCommand implements Command {
+public class ReplaceTranslationCommand extends BaseSoyJsCommand {
 
 	@Override
-	public void execute() throws Exception {
-		File dir = getDir();
-
-		Files.walkFileTree(
-			dir.toPath(),
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					String fileName = String.valueOf(path.getFileName());
-
-					if (fileName.endsWith(".soy.js")) {
-						replaceTranslation(path);
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-	}
-
-	public File getDir() {
-		return _dir;
-	}
-
-	public void replaceTranslation(Path path) throws IOException {
+	public void execute(Path path) throws IOException {
 		String content = new String(
 			Files.readAllBytes(path), StandardCharsets.UTF_8);
 
@@ -96,10 +62,6 @@ public class ReplaceTranslationCommand implements Command {
 
 			Files.write(path, content.getBytes(StandardCharsets.UTF_8));
 		}
-	}
-
-	public void setDir(File dir) {
-		_dir = dir;
 	}
 
 	protected String getReplacement(
@@ -180,12 +142,5 @@ public class ReplaceTranslationCommand implements Command {
 	private static final Pattern _pattern = Pattern.compile(
 		"var (MSG_EXTERNAL_\\d+) = goog\\.getMsg\\(\\s*'([\\w-\\{\\}\\$]+)'" +
 			"\\s*(?:,\\s*\\{([\\s\\S]+?)\\})?\\);");
-
-	@Parameter(
-		converter = FileConverter.class,
-		description = "The directory containing the .soy.js files to process.",
-		names = {"-d", "--directory"}, required = true
-	)
-	private File _dir;
 
 }

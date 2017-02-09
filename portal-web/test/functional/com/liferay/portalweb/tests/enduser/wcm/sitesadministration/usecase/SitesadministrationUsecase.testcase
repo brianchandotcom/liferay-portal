@@ -266,6 +266,8 @@
 			<var name="language" value="中文" />
 			<var name="siteName" value="站点名称" />
 		</execute>
+
+		<execute macro="LanguagePortlet#tearDownLanguagePG" />
 	</command>
 
 	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="3">

@@ -415,7 +415,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Forbidden" />
 
 		<execute function="AssertTextNotPresent" locator1="Home#BREADCRUMB_2" value1="Site Page" />
 

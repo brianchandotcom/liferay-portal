@@ -89,14 +89,9 @@ public class CaptchaUtil {
 	public void setCaptcha(Captcha captcha) throws Exception {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences();
-
 		Class<?> clazz = captcha.getClass();
 
-		portletPreferences.setValue(
-			PropsKeys.CAPTCHA_ENGINE_IMPL, clazz.getName());
-
-		portletPreferences.store();
+		_captchaSettings.setCaptchaEngine(clazz.getName());
 	}
 
 	private static volatile CaptchaSettings _captchaSettings =

@@ -12,14 +12,9 @@ AUI.add(
 						value: []
 					},
 
-					getDataProviderParametersSettingsURL: {
-						value: ''
-					},
-
 					getDataProviderInstancesURL: {
 						value: ''
 					},
-
 
 					getDataProviderParametersSettingsURL: {
 						value: ''

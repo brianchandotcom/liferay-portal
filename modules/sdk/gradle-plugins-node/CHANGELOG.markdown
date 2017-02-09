@@ -71,7 +71,7 @@ and the `npm-shrinkwrap.json` file from the project, if present.
 ### Added
 - [LPS-69920]: Retry `npm install` automatically if it fails.
 
-## 1.5.2 - 2017-02-08
+## 1.5.2 - 2017-02-09
 
 ### Removed
 - [LPS-69920]: Remove up-to-date check from all tasks that extend

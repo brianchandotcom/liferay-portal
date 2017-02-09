@@ -60,7 +60,7 @@
 - [LPS-69920]: Update the [Liferay Gradle Plugins Node] dependency to version
 1.5.1.
 
-## 2.0.9 - 2016-02-08
+## 2.0.9 - 2017-02-09
 
 ### Changed
 - [LPS-69920]: Update the [Liferay Gradle Plugins Node] dependency to version

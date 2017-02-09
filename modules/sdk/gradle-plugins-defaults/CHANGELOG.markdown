@@ -1018,7 +1018,7 @@ Liferay apps.
 runtime classpaths of the `test` and `testIntegration` source sets.
 - [LPS-70515]: Update the [Liferay Gradle Plugins] dependency to version 3.1.8.
 
-## 2.4.27 - 2017-02-08
+## 2.4.28 - 2017-02-09
 
 ### Added
 - [LPS-69920]: Set the system property `clean.node.modules` to `true` to delete

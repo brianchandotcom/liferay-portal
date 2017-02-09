@@ -12,20 +12,16 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.internal.portlet.path;
+package com.liferay.portal.security.sso.facebook.connect.internal.auth.publicpath;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Stian Sigvartsen
  */
 @Component(
 	immediate = true,
-	property = {
-		"auth.public.path=/bookmarks/find_entry",
-		"auth.public.path=/bookmarks/find_folder",
-		"auth.public.path=/bookmarks/open_entry"
-	},
+	property = {"auth.public.path=/portal/facebook_connect_oauth"},
 	service = Object.class
 )
 public class AuthPublicPath {

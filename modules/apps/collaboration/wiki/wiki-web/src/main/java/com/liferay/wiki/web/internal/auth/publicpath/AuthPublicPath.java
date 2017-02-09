@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.portlet.path;
+package com.liferay.wiki.web.internal.auth.publicpath;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -22,9 +22,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"auth.public.path=/blogs/find_entry", "auth.public.path=/blogs/rss",
-		"auth.public.path=/blogs/trackback",
-		"auth.public.path=/blogs_aggregator/rss"
+		"auth.public.path=/wiki/edit_page_attachment",
+		"auth.public.path=/wiki/edit_page",
+		"auth.public.path=/wiki/edit_page_discussion",
+		"auth.public.path=/wiki/find_page",
+		"auth.public.path=/wiki/get_page_attachment",
+		"auth.public.path=/wiki/rss"
 	},
 	service = Object.class
 )

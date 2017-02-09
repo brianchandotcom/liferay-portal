@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.facebook.connect.internal.web.portlet.path;
+package com.liferay.portal.security.sso.google.internal.auth.publicpath;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Stian Sigvartsen
+ * @author Sergio González
  */
 @Component(
-	immediate = true,
-	property = {"auth.public.path=/portal/facebook_connect_oauth"},
+	immediate = true, property = {"auth.public.path=/portal/google_login"},
 	service = Object.class
 )
 public class AuthPublicPath {

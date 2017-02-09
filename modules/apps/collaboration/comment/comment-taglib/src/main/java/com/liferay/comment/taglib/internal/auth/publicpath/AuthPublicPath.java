@@ -12,15 +12,19 @@
  * details.
  */
 
-package com.liferay.subscription.web.internal.portlet.path;
+package com.liferay.comment.taglib.internal.auth.publicpath;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alejandro Tardín
+ * @author Adolfo Pérez
  */
 @Component(
-	immediate = true, property = {"auth.public.path=/portal/unsubscribe"},
+	immediate = true,
+	property = {
+		"auth.public.path=/portal/comment/discussion/edit",
+		"auth.public.path=/portal/comment/discussion/get_comments"
+	},
 	service = Object.class
 )
 public class AuthPublicPath {

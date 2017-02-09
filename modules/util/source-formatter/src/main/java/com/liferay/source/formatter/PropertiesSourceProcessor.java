@@ -216,23 +216,23 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			newContent = formatDependenciesProperties(content);
 		}
 		else if (portalSource && !fileName.contains("/samples/") &&
-				 fileName.endsWith("Language.properties") &&
+				 fileName.endsWith("/Language.properties") &&
 				 !isExcludedPath(LANGUAGE_KEYS_CHECK_EXCLUDES, absolutePath)) {
 
 			checkLanguageProperties(fileName);
 		}
-		else if (fileName.endsWith("liferay-plugin-package.properties")) {
+		else if (fileName.endsWith("/liferay-plugin-package.properties")) {
 			newContent = formatPluginPackageProperties(
 				fileName, absolutePath, content);
 		}
-		else if (fileName.endsWith("portlet.properties")) {
+		else if (fileName.endsWith("/portlet.properties")) {
 			newContent = formatPortletProperties(fileName, content);
 		}
-		else if (fileName.endsWith("source-formatter.properties")) {
+		else if (fileName.endsWith("/source-formatter.properties")) {
 			formatSourceFormatterProperties(fileName, content);
 		}
 		else if ((!portalSource && !subrepository) ||
-				 !fileName.endsWith("portal.properties")) {
+				 !fileName.endsWith("/portal.properties")) {
 
 			formatPortalProperties(fileName, content);
 		}

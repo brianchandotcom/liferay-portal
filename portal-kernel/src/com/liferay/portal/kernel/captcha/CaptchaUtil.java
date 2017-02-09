@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.captcha;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
@@ -55,8 +55,7 @@ public class CaptchaUtil {
 			return null;
 		}
 
-		String captchaClassName = PrefsPropsUtil.getString(
-			PropsKeys.CAPTCHA_ENGINE_IMPL, _CAPTCHA_ENGINE_IMPL);
+		String captchaClassName = _captchaSettings.getCaptchaEngine();
 
 		return _serviceTrackerMap.getService(captchaClassName);
 	}
@@ -100,8 +99,10 @@ public class CaptchaUtil {
 		portletPreferences.store();
 	}
 
-	private static final String _CAPTCHA_ENGINE_IMPL = PropsUtil.get(
-		PropsKeys.CAPTCHA_ENGINE_IMPL);
+	private static volatile CaptchaSettings _captchaSettings =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			CaptchaSettings.class, CaptchaUtil.class, "_captchaSettings",
+			false);
 
 	private static final ServiceTrackerMap<String, Captcha> _serviceTrackerMap =
 		ServiceTrackerCollections.openSingleValueMap(

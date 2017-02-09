@@ -22,10 +22,22 @@ import com.liferay.portal.kernel.upgrade.BaseUpgradeCompanyId;
 public class UpgradeCompanyId extends BaseUpgradeCompanyId {
 
 	@Override
+	protected void doUpgrade() throws Exception {
+		super.doUpgrade();
+
+		String template = "create index IX_13319367 on WikiPageResource " +
+			"(uuid_[$COLUMN_LENGTH:75$], companyId);";
+
+		runSQLTemplateString(template, false, false);
+	}
+
+	@Override
 	protected TableUpdater[] getTableUpdaters() {
 		return new TableUpdater[] {
 			new TableUpdater("WikiPageResource", "WikiNode", "nodeId")
 		};
 	}
+
+
 
 }

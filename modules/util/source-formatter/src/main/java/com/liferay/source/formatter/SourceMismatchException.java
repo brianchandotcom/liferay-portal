@@ -15,6 +15,9 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringPool;
+
+import org.junit.Assert;
 
 /**
  * @author André de Oliveira
@@ -38,9 +41,31 @@ public class SourceMismatchException extends PortalException {
 		return _formattedSource;
 	}
 
+	@Override
+	public String getMessage() {
+		try {
+			Assert.assertEquals(_fileName, _formattedSource, _originalSource);
+		}
+		catch (AssertionError ae) {
+			String message = ae.getMessage();
+
+			if (message.length() >= _MAX_MESSAGE_SIZE) {
+				message =
+					"Truncated message :\n" +
+						message.substring(0, _MAX_MESSAGE_SIZE);
+			}
+
+			return message;
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public String getOriginalSource() {
 		return _originalSource;
 	}
+
+	private static final int _MAX_MESSAGE_SIZE = 10000;
 
 	private final String _fileName;
 	private final String _formattedSource;

@@ -1073,6 +1073,10 @@ to version 1.0.83.
 deployed by the `deploy` task by passing a closure to the
 `liferay.deployedFileNameClosure` property.
 
+### Changed
+- [LPS-69926]: Embed the `compileInclude` dependency JAR files, instead of
+expanding them.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

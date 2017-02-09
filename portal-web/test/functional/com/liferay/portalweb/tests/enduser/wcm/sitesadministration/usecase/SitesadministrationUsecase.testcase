@@ -214,6 +214,63 @@
 		</execute>
 	</command>
 
+	<command name="AddSiteNameTranslations" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="AssertClick" locator1="MenuItem#BLANK_SITE" value1="Blank Site" />
+
+		<execute macro="Site#addSiteNameTranslation">
+			<var name="language" value="en_US" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#addSiteNameTranslation">
+			<var name="language" value="es_ES" />
+			<var name="siteName" value="Sitio Llama" />
+		</execute>
+
+		<execute macro="Site#addSiteNameTranslation">
+			<var name="language" value="zh_CN" />
+			<var name="siteName" value="站点名称" />
+		</execute>
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Page Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language Selector" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#viewSiteNameTranslationsPG">
+			<var name="language" value="English" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#viewSiteNameTranslationsPG">
+			<var name="language" value="español" />
+			<var name="siteName" value="Sitio Llama" />
+		</execute>
+
+		<execute macro="Page#viewSiteNameTranslationsPG">
+			<var name="language" value="中文" />
+			<var name="siteName" value="站点名称" />
+		</execute>
+	</command>
+
 	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="3">
 		<for list="Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name" param="siteNameListsCount" >
 			<execute macro="ProductMenu#gotoControlPanelSites">

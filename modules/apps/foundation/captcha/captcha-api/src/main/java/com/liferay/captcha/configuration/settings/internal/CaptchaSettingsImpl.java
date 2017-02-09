@@ -18,11 +18,16 @@ import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.CaptchaSettings;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Map;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -123,6 +128,18 @@ public class CaptchaSettingsImpl implements CaptchaSettings {
 		return _captchaConfiguration.sendPasswordCaptchaEnabled();
 	}
 
+	@Override
+	public void setCaptchaEngine(String className) throws Exception {
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			"com.liferay.captcha.configuration.CaptchaConfiguration");
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("captchaEngine", className);
+
+		configuration.update(properties);
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -131,5 +148,8 @@ public class CaptchaSettingsImpl implements CaptchaSettings {
 	}
 
 	private CaptchaConfiguration _captchaConfiguration;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 }

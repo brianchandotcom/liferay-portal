@@ -58,4 +58,6 @@ public interface CaptchaSettings {
 
 	public boolean isSendPasswordCaptchaEnabled();
 
+	public void setCaptchaEngine(String className) throws Exception;
+
 }

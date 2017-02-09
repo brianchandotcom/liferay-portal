@@ -228,14 +228,14 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Site#addSiteNameTranslation">
+		<execute macro="PortletEntry#inputLocalizedName">
 			<var name="language" value="es_ES" />
-			<var name="siteName" value="Sitio Llama" />
+			<var name="localizedName" value="Sitio Llama" />
 		</execute>
 
-		<execute macro="Site#addSiteNameTranslation">
+		<execute macro="PortletEntry#inputLocalizedName">
 			<var name="language" value="zh_CN" />
-			<var name="siteName" value="站点名称" />
+			<var name="localizedName" value="站点名称" />
 		</execute>
 
 		<execute macro="Button#clickSave" />

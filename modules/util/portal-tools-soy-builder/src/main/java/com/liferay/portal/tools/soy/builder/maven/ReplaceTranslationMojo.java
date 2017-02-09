@@ -16,40 +16,18 @@ package com.liferay.portal.tools.soy.builder.maven;
 
 import com.liferay.portal.tools.soy.builder.commands.ReplaceTranslationCommand;
 
-import java.io.File;
-
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-
 /**
  * Replace 'goog.getMsg' definitions.
  *
  * @author Andrea Di Giorgi
  * @goal replace-translation
  */
-public class ReplaceTranslationMojo extends AbstractMojo {
+public class ReplaceTranslationMojo
+	extends BaseSoyJsMojo<ReplaceTranslationCommand> {
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		try {
-			_replaceTranslationCommand.execute();
-		}
-		catch (Exception e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		}
+	protected ReplaceTranslationCommand createCommand() {
+		return new ReplaceTranslationCommand();
 	}
-
-	/**
-	 * The directory containing the .soy.js files to process.
-	 *
-	 * @parameter
-	 * @required
-	 */
-	public void setDir(File dir) {
-		_replaceTranslationCommand.setDir(dir);
-	}
-
-	private final ReplaceTranslationCommand _replaceTranslationCommand =
-		new ReplaceTranslationCommand();
 
 }

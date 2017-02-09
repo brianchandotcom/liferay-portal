@@ -223,9 +223,8 @@
 			<var name="menuItem" value="Blank Site" />
 		</execute>
 
-		<execute macro="Site#addSiteNameTranslation">
-			<var name="language" value="en_US" />
-			<var name="siteName" value="Site Name" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="Site Name" />
 		</execute>
 
 		<execute macro="PortletEntry#inputLocalizedName">

@@ -169,7 +169,7 @@ public class LiferayOSGiExtension {
 	private boolean _autoUpdateXml = true;
 	private final Map<String, Object> _bundleDefaultInstructions =
 		new HashMap<>();
-	private boolean _expandCompileInclude = true;
+	private boolean _expandCompileInclude;
 	private final Project _project;
 
 }

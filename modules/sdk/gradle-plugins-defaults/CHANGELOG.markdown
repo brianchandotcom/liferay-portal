@@ -1018,14 +1018,19 @@ Liferay apps.
 runtime classpaths of the `test` and `testIntegration` source sets.
 - [LPS-70515]: Update the [Liferay Gradle Plugins] dependency to version 3.1.8.
 
-## 2.4.27 - 2017-02-08
+## 2.4.28 - 2017-02-09
 
 ### Added
 - [LPS-69920]: Set the system property `clean.node.modules` to `true` to delete
 the `node_modules` directory of a project with the `clean` task.
 
 ### Changed
-- [LPS-69920]: Update the [Liferay Gradle Plugins] dependency to version 3.1.9.
+- [LPS-70451]: Update the [Liferay Gradle Plugins] dependency to version 3.1.9.
+
+## 2.4.29 - 2017-02-09
+
+### Changed
+- [LPS-70555]: Update the [Liferay Gradle Plugins] dependency to version 3.2.0.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1123,8 +1128,10 @@ the `node_modules` directory of a project with the `clean` task.
 [LPS-70336]: https://issues.liferay.com/browse/LPS-70336
 [LPS-70379]: https://issues.liferay.com/browse/LPS-70379
 [LPS-70424]: https://issues.liferay.com/browse/LPS-70424
+[LPS-70451]: https://issues.liferay.com/browse/LPS-70451
 [LPS-70486]: https://issues.liferay.com/browse/LPS-70486
 [LPS-70515]: https://issues.liferay.com/browse/LPS-70515
+[LPS-70555]: https://issues.liferay.com/browse/LPS-70555
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

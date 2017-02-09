@@ -28,6 +28,7 @@ import java.util.Map;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.ModuleVersionSelector;
+import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 
 /**
  * @author Andrea Di Giorgi
@@ -39,6 +40,25 @@ public class LiferayExtension {
 
 		_appServers = project.container(
 			AppServer.class, new AppServerFactory(project));
+
+		_deployedFileNameClosure = new Closure<String>(project) {
+
+			@SuppressWarnings("unused")
+			public String doCall(AbstractArchiveTask abstractArchiveTask) {
+				String fileName = abstractArchiveTask.getBaseName();
+
+				String appendix = abstractArchiveTask.getAppendix();
+
+				if (Validator.isNotNull(appendix)) {
+					fileName += "-" + appendix;
+				}
+
+				fileName += "." + abstractArchiveTask.getExtension();
+
+				return fileName;
+			}
+
+		};
 	}
 
 	public void appServers(Closure<?> closure) {
@@ -135,6 +155,10 @@ public class LiferayExtension {
 		return project.file(_deployDir);
 	}
 
+	public Closure<String> getDeployedFileNameClosure() {
+		return _deployedFileNameClosure;
+	}
+
 	public int getJmxRemotePort() {
 		Integer jmxRemotePort = GradleUtil.toInteger(_jmxRemotePort);
 
@@ -161,6 +185,12 @@ public class LiferayExtension {
 		_deployDir = deployDir;
 	}
 
+	public void setDeployedFileNameClosure(
+		Closure<String> deployedFileNameClosure) {
+
+		_deployedFileNameClosure = deployedFileNameClosure;
+	}
+
 	public void setJmxRemotePort(Object jmxRemotePort) {
 		_jmxRemotePort = jmxRemotePort;
 	}
@@ -180,6 +210,7 @@ public class LiferayExtension {
 	private String _appServerType;
 	private final Map<String, Object> _defaultVersions = new HashMap<>();
 	private Object _deployDir;
+	private Closure<String> _deployedFileNameClosure;
 	private Object _jmxRemotePort;
 	private Object _liferayHome;
 

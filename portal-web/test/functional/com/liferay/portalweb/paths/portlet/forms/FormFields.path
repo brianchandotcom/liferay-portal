@@ -152,6 +152,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--GRID-->
+<tr>
+	<td>GRID_OPTIONS_OPTION_VALUE_FIELD</td>
+	<td>//div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GRID_OPTIONS_OPTION_NAME_FIELD</td>
+	<td>//div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//div[contains(@class, 'key-value-editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GRID_RADIO_OPTIONS</td>
+	<td>//div[contains(@class,'field-grid')]//tr[@name='${key_optionRowName}']//input[@value='${key_categoryColumnName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--RADIO-->
 <tr>
 	<td>RADIO_OPTION</td>

@@ -43,6 +43,15 @@
 		<execute function="Type#clickAtType" locator1="FormFields#FIELD_NAME_EDIT" value1="${fieldValue}" />
 	</command>
 
+	<command name="editGridOptions">
+		<var name="key_gridField" value="${gridField}" />
+		<var name="key_rowNumber" value="${rowNumber}" />
+
+		<execute function="Type" locator1="FormFields#GRID_OPTIONS_OPTION_VALUE_FIELD" value1="${optionValue}" />
+
+		<execute function="AssertElementPresent" locator1="FormFields#GRID_OPTIONS_OPTION_NAME_FIELD" />
+	</command>
+
 	<command name="editOptionsRow">
 		<var name="key_rowNumber" value="${rowNumber}" />
 
@@ -149,6 +158,13 @@
 		<var name="key_outputParameterType" value="${outputParameterType}" />
 
 		<execute function="AssertClick" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST" value1="${outputParameterType}" />
+	</command>
+
+	<command name="selectGridRadioOption">
+		<var name="key_categoryColumnName" value="${categoryColumnName}" />
+		<var name="key_optionRowName" value="${optionRowName}" />
+
+		<execute function="Click" locator1="FormFields#GRID_RADIO_OPTIONS" />
 	</command>
 
 	<command name="selectRadioOption">

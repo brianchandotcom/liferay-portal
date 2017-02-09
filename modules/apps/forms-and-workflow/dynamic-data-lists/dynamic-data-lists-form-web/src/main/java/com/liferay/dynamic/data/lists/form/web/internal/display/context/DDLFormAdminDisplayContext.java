@@ -594,6 +594,7 @@ public class DDLFormAdminDisplayContext {
 
 			jsonObject.put("localizable", ddmFormField.isLocalizable());
 			jsonObject.put("name", ddmFormField.getName());
+			jsonObject.put("type", ddmFormField.getType());
 
 			jsonArray.put(jsonObject);
 		}

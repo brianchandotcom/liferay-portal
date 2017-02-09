@@ -1,0 +1,101 @@
+{namespace ddm}
+
+/**
+ * Defines the delegated template for the grid field.
+ */
+{deltemplate ddm.field autoescape="deprecated-contextual" variant="'grid'"}
+	{call .grid data="all" /}
+{/deltemplate}
+
+/**
+ * Prints the DDM form grid field.
+ *
+ * @param columns
+ * @param? childElementsHTML
+ * @param dir
+ * @param? focusTarget
+ * @param label
+ * @param name
+ * @param rows
+ * @param readOnly
+ * @param required
+ * @param showLabel
+ * @param tip
+ * @param value
+ * @param visible
+ */
+{template .grid autoescape="deprecated-contextual"}
+	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
+		{if $showLabel}
+			<label class="control-label">
+				{$label}
+
+				{if $required}
+					<span class="icon-asterisk text-warning"></span>
+				{/if}
+			</label>
+
+			{if $tip}
+				<p class="liferay-ddm-form-field-tip">{$tip}</p>
+			{/if}
+		{/if}
+
+		<div class="liferay-ddm-form-field-grid table-responsive">
+			{if not $readOnly}
+				{call .hidden_grid data="all"}
+					{param dir: $dir /}
+					{param name: $name /}
+					{param rows: $rows /}
+					{param value: $value /}
+				{/call}
+			{/if}
+
+			<table class="table table-autofit table-list table-striped">
+				<thead>
+					<tr>
+						<th></th>
+						{foreach $column in $columns}
+							<th>{$column.label}</th>
+						{/foreach}
+					</tr>
+				</thead>
+				<tbody>
+					{foreach $row in $rows}
+						<tr name="{$row.value}">
+							<td>{$row.label}</td>
+							{foreach $column in $columns}
+								{let $checked: $column.value == $value[$row.value] ? 'checked' : '' /}
+
+								{let $autoFocus: $focusTarget and ($focusTarget.row == $row.value and $focusTarget.index == index($column)) ? 'autofocus' : ''/}
+
+								<td>
+									<input {$autoFocus} {$checked} class="form-builder-grid-field" data-row-index="{index($column)}" {if $readOnly}disabled{/if} name="{$row.value}" type="radio" value="{$column.value}" />
+								</td>
+							{/foreach}
+						</tr>
+					{/foreach}
+				</tbody>
+			</table>
+		</div>
+
+		{if $childElementsHTML}
+			{$childElementsHTML|noAutoescape}
+		{/if}
+	</div>
+{/template}
+
+/**
+ * Prints the hidden input to send the values to the backend.
+ *
+ * @param dir
+ * @param name
+ * @param rows
+ * @param value
+ */
+{template .hidden_grid autoescape="deprecated-contextual"}
+	{foreach $row in $rows}
+		{let $inputValue: $value[$row.value] ? $row.value + ';' + $value[$row.value] : '' /}
+
+		<input class="form-control" dir="{$dir}" name="{$name}" type="hidden" {if $inputValue}value="{$inputValue}"{/if}/>
+	{/foreach}
+{/template}

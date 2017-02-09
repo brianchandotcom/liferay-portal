@@ -93,6 +93,12 @@
 	<td>//*[@data-qa-id='addButton' and contains(@id,'DDMDataProviderPortlet')]</td>
 	<td></td>
 </tr>
+<!--GRID_FIELD-->
+<tr>
+	<td>GRID_FIELD_FORM_ENTRY_TABLE_ENTRY</td>
+	<td>//tbody//td[@class=' lfr-${key_fieldLabel}-column']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

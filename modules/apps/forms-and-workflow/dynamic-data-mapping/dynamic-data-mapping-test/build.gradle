@@ -33,6 +33,7 @@ dependencies {
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-checkbox")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-checkbox-multiple")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-date")
+	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-grid")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-key-value")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-paragraph")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-radio")

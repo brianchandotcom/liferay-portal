@@ -15,7 +15,6 @@
 package com.liferay.portal.tools.soy.builder.commands;
 
 import com.beust.jcommander.Parameter;
-import com.beust.jcommander.converters.FileConverter;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +66,6 @@ public abstract class BaseSoyJsCommand implements Command {
 	}
 
 	@Parameter(
-		converter = FileConverter.class,
 		description = "The directory containing the .soy.js files to process.",
 		names = {"-d", "--directory"}, required = true
 	)

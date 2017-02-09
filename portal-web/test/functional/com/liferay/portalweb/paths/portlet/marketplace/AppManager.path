@@ -11,7 +11,7 @@
 <!--APP-->
 <tr>
 	<td>APP_NAME</td>
-	<td>//div[contains(@class,'content')]//a[contains(.,'${key_appName}')]</td>
+	<td>//div[contains(@class,'content')]//li[contains(@class,'list-group-item')]//a[contains(.,'${key_appName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -42,7 +42,7 @@ public class ReplaceTranslationTaskTest extends ReplaceTranslationCommandTest {
 		super.setUp();
 
 		URL url = ReplaceTranslationTaskTest.class.getResource(
-			"dependencies/replace-translation/build.xml");
+			"dependencies/replace_translation/build.xml");
 
 		File buildXmlFile = new File(url.toURI());
 

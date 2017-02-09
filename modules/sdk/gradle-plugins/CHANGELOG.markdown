@@ -1066,6 +1066,13 @@ version 2.3.6.
 - [LPS-70451]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 1.0.83.
 
+## 3.2.0 - 2017-02-09
+
+### Added
+- [LPS-70555]: Add the ability to configure the file name of the JAR files
+deployed by the `deploy` task by passing a closure to the
+`liferay.deployedFileNameClosure` property.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1165,4 +1172,5 @@ to version 1.0.83.
 [LPS-70451]: https://issues.liferay.com/browse/LPS-70451
 [LPS-70510]: https://issues.liferay.com/browse/LPS-70510
 [LPS-70515]: https://issues.liferay.com/browse/LPS-70515
+[LPS-70555]: https://issues.liferay.com/browse/LPS-70555
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

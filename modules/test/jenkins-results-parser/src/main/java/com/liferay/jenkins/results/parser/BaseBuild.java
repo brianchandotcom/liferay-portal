@@ -192,7 +192,7 @@ public abstract class BaseBuild implements Build {
 				topLevelBuild.getStartPropertiesTempMap();
 
 			return topLevelBuildStartPropertiesTempMap.get(
-				"JENKINS_GITHUB_UPSTREAM_SHA");
+				"JENKINS_GITHUB_UPSTREAM_BRANCH_SHA");
 		}
 
 		Map<String, String> repositoryGitDetailsTempMap =

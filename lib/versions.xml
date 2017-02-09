@@ -5,18 +5,6 @@
 	<version>
 		<libraries>
 			<library>
-				<file-name>lib/development/alloy-taglib.jar</file-name>
-				<version>1.1.10</version>
-				<project-name>Alloy TagLibs</project-name>
-				<project-url>https://github.com/liferay/alloy-taglibs</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/ant-contrib.jar</file-name>
 				<version>1.0 B3</version>
 				<project-name>Ant-Contrib Tasks</project-name>
@@ -68,43 +56,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/deployment.jar</file-name>
-				<version>1.2-rev-1</version>
-				<project-name>J2EE Application Deployment Library</project-name>
-				<project-url>http://java.sun.com/j2ee/tools/deployment</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/dtdparser.jar</file-name>
-				<version>1.21</version>
-				<project-name>DTDParser</project-name>
-				<project-url>http://sourceforge.net/projects/dtdparser</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-
-			<library>
-				<file-name>lib/development/dumbster.jar</file-name>
-				<version>02856255a6cc7f</version>
-				<project-name>Dumbster</project-name>
-				<project-url>https://github.com/rjo1970/dumbster</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/hsql.jar</file-name>
 				<version>2.3.3</version>
 				<project-name>HSQL Database Engine</project-name>
@@ -120,70 +71,10 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/development/j2h.jar</file-name>
-				<version>1.5</version>
-				<project-name>Java2HTML</project-name>
-				<project-url>http://www.java2html.com</project-url>
-				<licenses>
-					<license>
-						<license-name>GPL 2.0</license-name>
-						<license-url>http://www.gnu.org/licenses/gpl-2.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jargs.jar</file-name>
-				<version>1.0</version>
-				<project-name>JArgs</project-name>
-				<project-url>http://jargs.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/jarjar.jar</file-name>
 				<version>1.2</version>
 				<project-name>Jar Jar Links</project-name>
 				<project-url>http://code.google.com/p/jarjar</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jbi_rt.jar</file-name>
-				<version>2.4.3</version>
-				<project-name>Glassfish</project-name>
-				<project-url>http://glassfish.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jndi.jar</file-name>
-				<version>1.2.1</version>
-				<project-name>Java Naming and Directory Interface</project-name>
-				<project-url>http://java.sun.com/products/jndi</project-url>
-				<licenses>
-					<license>
-						<license-name>Sun Binary Code License Agreement</license-name>
-						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jserrorcollector.jar</file-name>
-				<version>c7d2d9161321e9</version>
-				<project-name>JSErrorCollector</project-name>
-				<project-url>https://github.com/mguillem/JSErrorCollector</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>
@@ -215,58 +106,6 @@
 					</license>
 				</licenses>
 			</library>
-			<library>
-				<file-name>lib/development/persistence.jar</file-name>
-				<version>2.1.1</version>
-				<project-name>Java Persistence</project-name>
-				<project-url>http://java.sun.com/javaee/overview/faq/persistence.jsp</project-url>
-				<licenses>
-					<license>
-						<license-name>Sun Binary Code License Agreement</license-name>
-						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
--				<file-name>lib/development/resin.jar</file-name>
--				<version>4.0.44</version>
--				<project-name>Resin</project-name>
--				<project-url>http://www.caucho.com/resin-4.0</project-url>
--				<licenses>
--					<license>
--						<license-name>GPL 2.0</license-name>
--						<license-url>http://www.gnu.org/licenses/gpl-2.0.html</license-url>
--					</license>
--				</licenses>
--				<comments>
--					See LEP-5048 and LPS-15805.
--				</comments>
--			</library>
-			<library>
-				<file-name>lib/development/sdk-addon-api-0.2.jar</file-name>
-				<version>0.2</version>
-				<project-name>Glassfish</project-name>
-				<project-url>http://glassfish.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/smtp.jar</file-name>
-				<version>1.5.4</version>
-				<project-name>JavaMail</project-name>
-				<project-url>http://java.sun.com/products/javamail</project-url>
-				<licenses>
-					<license>
-						<license-name>Sun Binary Code License Agreement</license-name>
-						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/xmltask.jar</file-name>
 				<version>1.16</version>
 				<project-name>XMLTask</project-name>

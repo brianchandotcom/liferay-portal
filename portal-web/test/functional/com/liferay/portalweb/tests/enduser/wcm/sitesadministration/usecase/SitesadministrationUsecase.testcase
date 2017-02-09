@@ -219,9 +219,9 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="AssertClick" locator1="MenuItem#BLANK_SITE" value1="Blank Site" />
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Blank Site" />
+		</execute>
 
 		<execute macro="Site#addSiteNameTranslation">
 			<var name="language" value="en_US" />
@@ -238,9 +238,7 @@
 			<var name="localizedName" value="站点名称" />
 		</execute>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Page Name" />

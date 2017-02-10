@@ -86,6 +86,10 @@
 				</gradle-execute>
 			</sequential>
 
+			<gradle-execute task="cleanLibs">
+				<arg value="--build-file=${project.dir}/modules/util.gradle" />
+			</gradle-execute>
+
 			<delete failonerror="false" includeemptydirs="true">
 				<fileset dir="." includes="*.ear,*.jar,*.war,*.zip" />
 				<fileset dir="test-coverage" />

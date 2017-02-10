@@ -14,20 +14,27 @@
 
 package com.liferay.login.web.internal.portlet.action;
 
+import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Map;
+
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Peter Fellwock
  */
 @Component(
+	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
 	property = {
 		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
 		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
@@ -46,7 +53,19 @@ public class CreateAccountMVCRenderCommand implements MVCRenderCommand {
 
 		renderResponse.setTitle(themeDisplay.translate("create-account"));
 
+		renderRequest.setAttribute(
+			CaptchaConfiguration.class.getName(), _captchaConfiguration);
+
 		return "/create_account.jsp";
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_captchaConfiguration = ConfigurableUtil.createConfigurable(
+			CaptchaConfiguration.class, properties);
+	}
+
+	private volatile CaptchaConfiguration _captchaConfiguration;
 
 }

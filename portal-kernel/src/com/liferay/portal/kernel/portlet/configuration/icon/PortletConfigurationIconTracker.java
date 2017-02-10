@@ -104,11 +104,11 @@ public class PortletConfigurationIconTracker {
 			String path = portletConfigurationIconLocator.getPath(
 				portletRequest);
 
-			List<String> defaultViews =
-				portletConfigurationIconLocator.getDefaultViews(portletId);
-
 			if (Validator.isNotNull(path)) {
 				paths.add(path);
+
+				List<String> defaultViews =
+					portletConfigurationIconLocator.getDefaultViews(portletId);
 
 				if (defaultViews.contains(path)) {
 					paths.add(StringPool.DASH);

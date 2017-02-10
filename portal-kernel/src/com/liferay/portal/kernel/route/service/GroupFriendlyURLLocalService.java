@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -39,6 +40,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for GroupFriendlyURL. Methods of this
@@ -96,6 +99,11 @@ public interface GroupFriendlyURLLocalService extends BaseLocalService,
 	public GroupFriendlyURL addGroupFriendlyURL(
 		GroupFriendlyURL groupFriendlyURL);
 
+	public GroupFriendlyURL addGroupFriendlyURL(long userId, long companyId,
+		long groupId, java.lang.String friendlyURL,
+		java.lang.String languageId, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new group friendly url with the primary key. Does not add the group friendly url to the database.
 	*
@@ -114,6 +122,9 @@ public interface GroupFriendlyURLLocalService extends BaseLocalService,
 	public GroupFriendlyURL deleteGroupFriendlyURL(
 		GroupFriendlyURL groupFriendlyURL);
 
+	public GroupFriendlyURL deleteGroupFriendlyURL(long companyId,
+		long groupId, java.lang.String languageId) throws PortalException;
+
 	/**
 	* Deletes the group friendly url with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -126,7 +137,15 @@ public interface GroupFriendlyURLLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public GroupFriendlyURL fetchGroupFriendlyURL(long companyId, long groupId,
+		java.lang.String languageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public GroupFriendlyURL fetchGroupFriendlyURL(long groupFriendlyURLId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public GroupFriendlyURL fetchGroupFriendlyURLByFriendlyURL(long companyId,
+		java.lang.String friendlyURL);
 
 	/**
 	* Returns the group friendly url matching the UUID and group.
@@ -172,6 +191,11 @@ public interface GroupFriendlyURLLocalService extends BaseLocalService,
 	public GroupFriendlyURL updateGroupFriendlyURL(
 		GroupFriendlyURL groupFriendlyURL);
 
+	public GroupFriendlyURL updateGroupFriendlyURL(long userId, long companyId,
+		long groupId, java.lang.String friendlyURL,
+		java.lang.String languageId, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Returns the number of group friendly urls.
 	*
@@ -186,6 +210,11 @@ public interface GroupFriendlyURLLocalService extends BaseLocalService,
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public List<GroupFriendlyURL> addGroupFriendlyURLs(long userId,
+		long companyId, long groupId,
+		Map<Locale, java.lang.String> friendlyURLMap,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -240,6 +269,10 @@ public interface GroupFriendlyURLLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<GroupFriendlyURL> getGroupFriendlyURLs(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<GroupFriendlyURL> getGroupFriendlyURLs(long companyId,
+		long groupId);
+
 	/**
 	* Returns all the group friendly urls matching the UUID and company.
 	*
@@ -266,6 +299,11 @@ public interface GroupFriendlyURLLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<GroupFriendlyURL> orderByComparator);
 
+	public List<GroupFriendlyURL> updateGroupFriendlyURLs(long userId,
+		long companyId, long groupId,
+		Map<Locale, java.lang.String> friendlyURLMap,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -283,4 +321,6 @@ public interface GroupFriendlyURLLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteGroupFriendlyURLs(long companyId, long groupId);
 }

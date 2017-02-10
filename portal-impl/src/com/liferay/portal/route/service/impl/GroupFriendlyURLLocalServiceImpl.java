@@ -31,28 +31,11 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The implementation of the group friendly url local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portal.kernel.route.service.GroupFriendlyURLLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see GroupFriendlyURLLocalServiceBaseImpl
- * @see com.liferay.portal.kernel.route.service.GroupFriendlyURLLocalServiceUtil
+ * @author Pavel Savinov
  */
 @ProviderType
 public class GroupFriendlyURLLocalServiceImpl
 	extends GroupFriendlyURLLocalServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.portal.kernel.route.service.GroupFriendlyURLLocalServiceUtil} to access the group friendly url local service.
-	 */
 
 	@Override
 	public GroupFriendlyURL addGroupFriendlyURL(
@@ -118,20 +101,20 @@ public class GroupFriendlyURLLocalServiceImpl
 			long companyId, long groupId, String languageId)
 		throws PortalException {
 
-		return groupFriendlyURLPersistence.removeByC_G_L(
+		return groupFriendlyURLPersistence.removeByG_C_L(
 			companyId, groupId, languageId);
 	}
 
 	@Override
 	public void deleteGroupFriendlyURLs(long companyId, long groupId) {
-		groupFriendlyURLPersistence.removeByC_G(companyId, groupId);
+		groupFriendlyURLPersistence.removeByG_C(companyId, groupId);
 	}
 
 	@Override
 	public GroupFriendlyURL fetchGroupFriendlyURL(
 		long companyId, long groupId, String languageId) {
 
-		return groupFriendlyURLPersistence.fetchByC_G_L(
+		return groupFriendlyURLPersistence.fetchByG_C_L(
 			companyId, groupId, languageId);
 	}
 
@@ -146,7 +129,7 @@ public class GroupFriendlyURLLocalServiceImpl
 	public List<GroupFriendlyURL> getGroupFriendlyURLs(
 		long companyId, long groupId) {
 
-		return groupFriendlyURLPersistence.findByC_G(companyId, groupId);
+		return groupFriendlyURLPersistence.findByG_C(companyId, groupId);
 	}
 
 	@Override
@@ -156,7 +139,7 @@ public class GroupFriendlyURLLocalServiceImpl
 		throws PortalException {
 
 		GroupFriendlyURL groupFriendlyURL =
-			groupFriendlyURLPersistence.fetchByC_G_L(
+			groupFriendlyURLPersistence.fetchByG_C_L(
 				companyId, groupId, languageId);
 
 		if (groupFriendlyURL == null) {
@@ -196,9 +179,6 @@ public class GroupFriendlyURLLocalServiceImpl
 					LocaleUtil.toLanguageId(locale), serviceContext);
 
 				groupFriendlyURLs.add(groupFriendlyURL);
-			}
-			else {
-				continue;
 			}
 		}
 

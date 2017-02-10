@@ -27,11 +27,4 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class GroupFriendlyURLImpl extends GroupFriendlyURLBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a group friendly url model instance should use the {@link com.liferay.portal.kernel.route.model.GroupFriendlyURL} interface instead.
-	 */
-	public GroupFriendlyURLImpl() {
-	}
 }

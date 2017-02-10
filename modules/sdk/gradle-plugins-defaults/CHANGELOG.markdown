@@ -1174,6 +1174,13 @@ task executable.
 ### Changed
 - [LPS-71048]: Update the [Liferay Gradle Plugins] dependency to version 3.2.14.
 
+## 3.2.4 - 2017-03-07
+
+### Changed
+- [LPS-70604]: Check whether `:util:` or `:private:util:` projects have all
+their dependencies already published before enabling the
+`printArtifactPublishCommands` task.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -1279,6 +1286,7 @@ task executable.
 [LPS-70515]: https://issues.liferay.com/browse/LPS-70515
 [LPS-70555]: https://issues.liferay.com/browse/LPS-70555
 [LPS-70584]: https://issues.liferay.com/browse/LPS-70584
+[LPS-70604]: https://issues.liferay.com/browse/LPS-70604
 [LPS-70618]: https://issues.liferay.com/browse/LPS-70618
 [LPS-70677]: https://issues.liferay.com/browse/LPS-70677
 [LPS-70699]: https://issues.liferay.com/browse/LPS-70699

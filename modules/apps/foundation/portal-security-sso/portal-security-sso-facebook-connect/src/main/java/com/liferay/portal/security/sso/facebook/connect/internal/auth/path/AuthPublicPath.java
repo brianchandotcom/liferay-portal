@@ -12,23 +12,16 @@
  * details.
  */
 
-package com.liferay.wiki.web.internal.portlet.path;
+package com.liferay.portal.security.sso.facebook.connect.internal.auth.path;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Stian Sigvartsen
  */
 @Component(
 	immediate = true,
-	property = {
-		"auth.public.path=/wiki/edit_page_attachment",
-		"auth.public.path=/wiki/edit_page",
-		"auth.public.path=/wiki/edit_page_discussion",
-		"auth.public.path=/wiki/find_page",
-		"auth.public.path=/wiki/get_page_attachment",
-		"auth.public.path=/wiki/rss"
-	},
+	property = {"auth.public.path=/portal/facebook_connect_oauth"},
 	service = Object.class
 )
 public class AuthPublicPath {

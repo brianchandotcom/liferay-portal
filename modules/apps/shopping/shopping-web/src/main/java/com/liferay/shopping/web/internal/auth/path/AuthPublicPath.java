@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.subscription.web.internal.portlet.path;
+package com.liferay.shopping.web.internal.auth.path;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alejandro Tardín
+ * @author Raymond Augé
  */
 @Component(
-	immediate = true, property = {"auth.public.path=/portal/unsubscribe"},
+	immediate = true, property = {"auth.public.path=/shopping/notify"},
 	service = Object.class
 )
 public class AuthPublicPath {

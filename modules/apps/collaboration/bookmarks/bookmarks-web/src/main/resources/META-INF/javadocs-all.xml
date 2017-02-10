@@ -627,7 +627,7 @@
 	</javadoc>
 	<javadoc>
 		<name>AuthPublicPath</name>
-		<type>com.liferay.bookmarks.web.internal.portlet.path.AuthPublicPath</type>
+		<type>com.liferay.bookmarks.web.internal.auth.path.AuthPublicPath</type>
 		<author><![CDATA[Sergio González]]></author>
 	</javadoc>
 	<javadoc>

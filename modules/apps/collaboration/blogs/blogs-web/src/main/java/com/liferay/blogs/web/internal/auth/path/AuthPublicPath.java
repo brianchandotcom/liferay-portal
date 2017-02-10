@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.internal.portlet.path;
+package com.liferay.blogs.web.internal.auth.path;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -22,9 +22,9 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"auth.public.path=/bookmarks/find_entry",
-		"auth.public.path=/bookmarks/find_folder",
-		"auth.public.path=/bookmarks/open_entry"
+		"auth.public.path=/blogs/find_entry", "auth.public.path=/blogs/rss",
+		"auth.public.path=/blogs/trackback",
+		"auth.public.path=/blogs_aggregator/rss"
 	},
 	service = Object.class
 )

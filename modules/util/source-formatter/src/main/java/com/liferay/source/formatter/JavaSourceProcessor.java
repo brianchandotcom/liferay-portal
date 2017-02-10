@@ -55,9 +55,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _diamondOperatorPattern.matcher(content);
 
 		while (matcher.find()) {
+			String className = matcher.group(3);
+			String parameterType = matcher.group(5);
+
+			// LPS-70579
+
+			if ((className.equals("AutoResetThreadLocal") ||
+				 className.equals("InitialThreadLocal")) &&
+				(parameterType.startsWith("Map<") ||
+				 parameterType.startsWith("Set<"))) {
+
+				continue;
+			}
+
 			String match = matcher.group();
 			String whitespace = matcher.group(4);
-			String parameterType = matcher.group(5);
 
 			String replacement = StringUtil.replaceFirst(
 				match, whitespace + "<" + parameterType + ">", "<>");

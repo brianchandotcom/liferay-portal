@@ -118,10 +118,10 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 		<div class="divider"></div>
 
 		<div class="panel-body">
-			<div class="card-row card-row-padded">
+			<div class="card-row card-row-padded message-content" id="<%= liferayPortletResponse.getNamespace() + "addQuickReply" + replyToMessageId %>">
 				<portlet:actionURL name="/message_boards/edit_message" var="editMessageURL" />
 
-				<aui:form action="<%= editMessageURL %>" method="post" name='<%= "addQuickReplyFm" + replyToMessageId %>' onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveReplyMessage" + replyToMessageId +"();" %>'>
+				<aui:form action="<%= editMessageURL %>" method="post" name='<%= "addQuickReplyFm" + replyToMessageId %>' onSubmit='<%= "event.preventDefault(); " %>'>
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 					<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
@@ -155,7 +155,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 						<liferay-captcha:captcha url="<%= captchaURL %>" />
 					</c:if>
 
-					<aui:button cssClass="advanced-reply btn btn-link btn-sm" onClick='<%= liferayPortletResponse.getNamespace() + "advancedReply" + replyToMessageId + "();" %>' value="advanced-reply" />
+					<aui:button cssClass="advanced-reply btn btn-link btn-sm" value="advanced-reply" />
 
 					<c:if test="<%= themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
 						<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type='<%= (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) ? "checkbox" : "hidden" %>' value="<%= subscribeByDefault %>" />
@@ -203,30 +203,24 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 	<portlet:param name="priority" value="<%= String.valueOf(message.getPriority()) %>" />
 </portlet:renderURL>
 
+<aui:script require="message-boards-web/message_boards/js/MBPortlet.es">
+	new messageBoardsWebMessage_boardsJsMBPortletEs.default(
+		{
+			advancedReplyUrl: '<%= advancedReplyURL.toString() %>',
+			constants: {
+				'ACTION_PUBLISH': '<%= WorkflowConstants.ACTION_PUBLISH %>',
+				'CMD': '<%= Constants.CMD %>'
+			},
+			currentAction: '<%= Constants.ADD %>',
+			namespace: '<portlet:namespace />',
+			replyToMessageId: '<%= replyToMessageId %>',
+			rootNode: '#<portlet:namespace/>addQuickReply<%= replyToMessageId %>'
+		}
+	);
+</aui:script>
+
 <aui:script>
-	function <portlet:namespace />saveReplyMessage<%= replyToMessageId %>() {
-		var form = AUI.$('#<portlet:namespace />addQuickReplyFm<%= replyToMessageId %>');
-
-		form.fm('body').val(window['<portlet:namespace />replyMessageBody<%= replyToMessageId %>'].getHTML());
-
-		submitForm(form);
-	}
-
 	window['<portlet:namespace />replyMessageOnChange' + <%= replyToMessageId %>] = function(html) {
 		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton<%= replyToMessageId %>', html === '');
 	};
-
-	function <portlet:namespace />advancedReply<%= replyToMessageId %>() {
-		var inputNode = AUI.$('#<portlet:namespace />addQuickReplyFm<%= replyToMessageId %>').fm('body');
-
-		inputNode.val(window['<portlet:namespace />replyMessageBody<%= replyToMessageId %>'].getHTML());
-
-		var form = document.createElement('form');
-
-		form.appendChild(inputNode.clone().get(0));
-		form.setAttribute('action', '<%= advancedReplyURL.toString() %>');
-		form.setAttribute('method', 'post');
-
-		submitForm(form);
-	}
 </aui:script>

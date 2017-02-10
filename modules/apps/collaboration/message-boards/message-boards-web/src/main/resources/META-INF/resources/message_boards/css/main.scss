@@ -61,10 +61,6 @@
 			list-style: none;
 		}
 
-		.message-attachment {
-			padding: 0.5em;
-		}
-
 		.deleted-input {
 			margin-left: -2em;
 			padding: 0;
@@ -94,12 +90,6 @@
 			padding-left: 0;
 		}
 
-		.message-content {
-			img {
-				max-width: 100%;
-			}
-		}
-
 		.reply-to-main-thread-container {
 			text-align: center;
 		}
@@ -107,6 +97,12 @@
 
 	.message-container {
 		padding-left: 10px;
+	}
+
+	.message-content {
+		img {
+			max-width: 100%;
+		}
 	}
 
 	.thread-bottom, .thread-top {
@@ -232,7 +228,6 @@
 	}
 
 	.thread-controls {
-		border: 1px solid #CCC;
 		margin-bottom: 5px;
 		padding: 3px 5px;
 	}

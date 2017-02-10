@@ -15,46 +15,61 @@
 package com.liferay.message.boards.editor.configuration.internal;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorOptions;
+import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Ambrin Chaudhary
+ * @author Ambrín Chaudhary
  */
 @Component(
 	property = {
 		"editor.name=alloyeditor", "editor.name=alloyeditor_bbcode",
+		"editor.name=ckeditor", "editor.name=ckeditor_bbcode",
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN
 	},
-	service = EditorConfigContributor.class
+	service = EditorOptionsContributor.class
 )
-public class MBEditorConfigContributor extends BaseEditorConfigContributor {
+public class MBEditorOptionsContributor implements EditorOptionsContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void populateEditorOptions(
+		EditorOptions editorOptions,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		String removePlugins = jsonObject.getString("removePlugins");
+		PortletURL portletURL = requestBackedPortletURLFactory.createActionURL(
+			PortletKeys.MESSAGE_BOARDS);
 
-		if (Validator.isNotNull(removePlugins)) {
-			removePlugins += ",ae_addimages";
-		}
-		else {
-			removePlugins = "ae_addimages";
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "/message_boards/upload_temp_image");
+
+		Map<String, String> fileBrowserParamsMap =
+			(Map<String, String>)inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:fileBrowserParams");
+
+		long categoryId = 0;
+
+		if (fileBrowserParamsMap != null) {
+			categoryId = GetterUtil.getLong(
+				fileBrowserParamsMap.get("categoryId"));
 		}
 
-		jsonObject.put("removePlugins", removePlugins);
+		portletURL.setParameter("categoryId", String.valueOf(categoryId));
+
+		editorOptions.setUploadURL(portletURL.toString());
 	}
 
 }

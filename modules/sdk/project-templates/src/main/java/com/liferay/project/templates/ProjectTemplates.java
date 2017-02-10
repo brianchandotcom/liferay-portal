@@ -178,14 +178,31 @@ public class ProjectTemplates {
 			Files.deleteIfExists(templateDirPath.resolve("settings.gradle"));
 		}
 		else {
-			FileUtil.extractDirectory("gradle-wrapper", templateDirPath);
+			if (projectTemplatesArgs.isGradle()) {
+				FileUtil.extractDirectory("gradle-wrapper", templateDirPath);
 
-			FileUtil.setPosixFilePermissions(
-				templateDirPath.resolve("gradlew"),
-				_wrapperPosixFilePermissions);
+				FileUtil.setPosixFilePermissions(
+					templateDirPath.resolve("gradlew"),
+					_wrapperPosixFilePermissions);
+			}
+
+			if (projectTemplatesArgs.isMaven()) {
+				FileUtil.extractDirectory("maven-wrapper", templateDirPath);
+
+				FileUtil.setPosixFilePermissions(
+					templateDirPath.resolve("mvnw"),
+					_wrapperPosixFilePermissions);
+			}
 		}
 
-		FileUtil.deleteFiles(templateDirPath, "pom.xml");
+		if (!projectTemplatesArgs.isGradle()) {
+			FileUtil.deleteFiles(
+				templateDirPath, "build.gradle", "settings.gradle");
+		}
+
+		if (!projectTemplatesArgs.isMaven()) {
+			FileUtil.deleteFiles(templateDirPath, "pom.xml");
+		}
 	}
 
 	private static void _printHelp(JCommander jCommander) throws Exception {

@@ -72,6 +72,14 @@ public class ProjectTemplatesArgs {
 		return _force;
 	}
 
+	public boolean isGradle() {
+		return _gradle;
+	}
+
+	public boolean isMaven() {
+		return _maven;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -88,12 +96,20 @@ public class ProjectTemplatesArgs {
 		_force = force;
 	}
 
+	public void setGradle(boolean gradle) {
+		_gradle = gradle;
+	}
+
 	public void setHostBundleSymbolicName(String hostBundleSymbolicName) {
 		_hostBundleSymbolicName = hostBundleSymbolicName;
 	}
 
 	public void setHostBundleVersion(String hostBundleVersion) {
 		_hostBundleVersion = hostBundleVersion;
+	}
+
+	public void setMaven(boolean maven) {
+		_maven = maven;
 	}
 
 	public void setName(String name) {
@@ -151,6 +167,13 @@ public class ProjectTemplatesArgs {
 	private boolean _force;
 
 	@Parameter(
+		arity = 1,
+		description = "Add the Gradle build script and the Gradle Wrapper to the new project.",
+		names = "--gradle"
+	)
+	private boolean _gradle = true;
+
+	@Parameter(
 		description = "Print this message.", help = true,
 		names = {"-h", "--help"}
 	)
@@ -173,6 +196,12 @@ public class ProjectTemplatesArgs {
 		help = true, names = "--list"
 	)
 	private boolean _list;
+
+	@Parameter(
+		description = "Add the Maven POM file and the Maven Wrapper to the new project.",
+		names = "--maven"
+	)
+	private boolean _maven;
 
 	@Parameter(
 		description = "The name of the new project.", names = "--name",

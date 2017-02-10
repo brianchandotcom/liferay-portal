@@ -201,11 +201,11 @@ public class GroupFriendlyURLPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_G() throws Exception {
-		_persistence.countByC_G(RandomTestUtil.nextLong(),
+	public void testCountByG_C() throws Exception {
+		_persistence.countByG_C(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByC_G(0L, 0L);
+		_persistence.countByG_C(0L, 0L);
 	}
 
 	@Test
@@ -218,13 +218,13 @@ public class GroupFriendlyURLPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_G_L() throws Exception {
-		_persistence.countByC_G_L(RandomTestUtil.nextLong(),
+	public void testCountByG_C_L() throws Exception {
+		_persistence.countByG_C_L(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), StringPool.BLANK);
 
-		_persistence.countByC_G_L(0L, 0L, StringPool.NULL);
+		_persistence.countByG_C_L(0L, 0L, StringPool.NULL);
 
-		_persistence.countByC_G_L(0L, 0L, (String)null);
+		_persistence.countByG_C_L(0L, 0L, (String)null);
 	}
 
 	@Test
@@ -485,13 +485,13 @@ public class GroupFriendlyURLPersistenceTest {
 				ReflectionTestUtil.invoke(existingGroupFriendlyURL,
 					"getOriginalFriendlyURL", new Class<?>[0])));
 
+		Assert.assertEquals(Long.valueOf(existingGroupFriendlyURL.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingGroupFriendlyURL,
+				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(
 				existingGroupFriendlyURL.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(existingGroupFriendlyURL,
 				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(existingGroupFriendlyURL.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingGroupFriendlyURL,
-				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Objects.equals(
 				existingGroupFriendlyURL.getLanguageId(),
 				ReflectionTestUtil.invoke(existingGroupFriendlyURL,

@@ -162,7 +162,7 @@ create index IX_38FA468D on ExportImportConfiguration (groupId, status);
 create index IX_47CC6234 on ExportImportConfiguration (groupId, type_, status);
 
 create unique index IX_1641E337 on GroupFriendlyURL (companyId, friendlyURL[$COLUMN_LENGTH:75$]);
-create unique index IX_3A4F3A34 on GroupFriendlyURL (companyId, groupId, languageId[$COLUMN_LENGTH:75$]);
+create unique index IX_536DC3F0 on GroupFriendlyURL (groupId, companyId, languageId[$COLUMN_LENGTH:75$]);
 create index IX_5F45589F on GroupFriendlyURL (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_1397AE1 on GroupFriendlyURL (uuid_[$COLUMN_LENGTH:75$], groupId);
 

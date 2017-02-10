@@ -1485,90 +1485,90 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "groupFriendlyURL.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(groupFriendlyURL.uuid IS NULL OR groupFriendlyURL.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "groupFriendlyURL.companyId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_G = new FinderPath(GroupFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C = new FinderPath(GroupFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			GroupFriendlyURLModelImpl.FINDER_CACHE_ENABLED,
 			GroupFriendlyURLImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByC_G",
+			"findByG_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_G = new FinderPath(GroupFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C = new FinderPath(GroupFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			GroupFriendlyURLModelImpl.FINDER_CACHE_ENABLED,
 			GroupFriendlyURLImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_G",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
 			new String[] { Long.class.getName(), Long.class.getName() },
-			GroupFriendlyURLModelImpl.COMPANYID_COLUMN_BITMASK |
-			GroupFriendlyURLModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_G = new FinderPath(GroupFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+			GroupFriendlyURLModelImpl.GROUPID_COLUMN_BITMASK |
+			GroupFriendlyURLModelImpl.COMPANYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C = new FinderPath(GroupFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			GroupFriendlyURLModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns all the group friendly urls where companyId = &#63; and groupId = &#63;.
+	 * Returns all the group friendly urls where groupId = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @return the matching group friendly urls
 	 */
 	@Override
-	public List<GroupFriendlyURL> findByC_G(long companyId, long groupId) {
-		return findByC_G(companyId, groupId, QueryUtil.ALL_POS,
+	public List<GroupFriendlyURL> findByG_C(long groupId, long companyId) {
+		return findByG_C(groupId, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the group friendly urls where companyId = &#63; and groupId = &#63;.
+	 * Returns a range of all the group friendly urls where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param start the lower bound of the range of group friendly urls
 	 * @param end the upper bound of the range of group friendly urls (not inclusive)
 	 * @return the range of matching group friendly urls
 	 */
 	@Override
-	public List<GroupFriendlyURL> findByC_G(long companyId, long groupId,
+	public List<GroupFriendlyURL> findByG_C(long groupId, long companyId,
 		int start, int end) {
-		return findByC_G(companyId, groupId, start, end, null);
+		return findByG_C(groupId, companyId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the group friendly urls where companyId = &#63; and groupId = &#63;.
+	 * Returns an ordered range of all the group friendly urls where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param start the lower bound of the range of group friendly urls
 	 * @param end the upper bound of the range of group friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching group friendly urls
 	 */
 	@Override
-	public List<GroupFriendlyURL> findByC_G(long companyId, long groupId,
+	public List<GroupFriendlyURL> findByG_C(long groupId, long companyId,
 		int start, int end,
 		OrderByComparator<GroupFriendlyURL> orderByComparator) {
-		return findByC_G(companyId, groupId, start, end, orderByComparator, true);
+		return findByG_C(groupId, companyId, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the group friendly urls where companyId = &#63; and groupId = &#63;.
+	 * Returns an ordered range of all the group friendly urls where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param start the lower bound of the range of group friendly urls
 	 * @param end the upper bound of the range of group friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1576,7 +1576,7 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 	 * @return the ordered range of matching group friendly urls
 	 */
 	@Override
-	public List<GroupFriendlyURL> findByC_G(long companyId, long groupId,
+	public List<GroupFriendlyURL> findByG_C(long groupId, long companyId,
 		int start, int end,
 		OrderByComparator<GroupFriendlyURL> orderByComparator,
 		boolean retrieveFromCache) {
@@ -1587,13 +1587,13 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_G;
-			finderArgs = new Object[] { companyId, groupId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C;
+			finderArgs = new Object[] { groupId, companyId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_G;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C;
 			finderArgs = new Object[] {
-					companyId, groupId,
+					groupId, companyId,
 					
 					start, end, orderByComparator
 				};
@@ -1607,8 +1607,8 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 			if ((list != null) && !list.isEmpty()) {
 				for (GroupFriendlyURL groupFriendlyURL : list) {
-					if ((companyId != groupFriendlyURL.getCompanyId()) ||
-							(groupId != groupFriendlyURL.getGroupId())) {
+					if ((groupId != groupFriendlyURL.getGroupId()) ||
+							(companyId != groupFriendlyURL.getCompanyId())) {
 						list = null;
 
 						break;
@@ -1630,9 +1630,9 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 			query.append(_SQL_SELECT_GROUPFRIENDLYURL_WHERE);
 
-			query.append(_FINDER_COLUMN_C_G_COMPANYID_2);
+			query.append(_FINDER_COLUMN_G_C_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_C_G_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1654,9 +1654,9 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(companyId);
-
 				qPos.add(groupId);
+
+				qPos.add(companyId);
 
 				if (!pagination) {
 					list = (List<GroupFriendlyURL>)QueryUtil.list(q,
@@ -1689,20 +1689,20 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 	}
 
 	/**
-	 * Returns the first group friendly url in the ordered set where companyId = &#63; and groupId = &#63;.
+	 * Returns the first group friendly url in the ordered set where groupId = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching group friendly url
 	 * @throws NoSuchGroupFriendlyURLException if a matching group friendly url could not be found
 	 */
 	@Override
-	public GroupFriendlyURL findByC_G_First(long companyId, long groupId,
+	public GroupFriendlyURL findByG_C_First(long groupId, long companyId,
 		OrderByComparator<GroupFriendlyURL> orderByComparator)
 		throws NoSuchGroupFriendlyURLException {
-		GroupFriendlyURL groupFriendlyURL = fetchByC_G_First(companyId,
-				groupId, orderByComparator);
+		GroupFriendlyURL groupFriendlyURL = fetchByG_C_First(groupId,
+				companyId, orderByComparator);
 
 		if (groupFriendlyURL != null) {
 			return groupFriendlyURL;
@@ -1712,11 +1712,11 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", groupId=");
+		msg.append("groupId=");
 		msg.append(groupId);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -1724,17 +1724,17 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 	}
 
 	/**
-	 * Returns the first group friendly url in the ordered set where companyId = &#63; and groupId = &#63;.
+	 * Returns the first group friendly url in the ordered set where groupId = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching group friendly url, or <code>null</code> if a matching group friendly url could not be found
 	 */
 	@Override
-	public GroupFriendlyURL fetchByC_G_First(long companyId, long groupId,
+	public GroupFriendlyURL fetchByG_C_First(long groupId, long companyId,
 		OrderByComparator<GroupFriendlyURL> orderByComparator) {
-		List<GroupFriendlyURL> list = findByC_G(companyId, groupId, 0, 1,
+		List<GroupFriendlyURL> list = findByG_C(groupId, companyId, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1745,19 +1745,19 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 	}
 
 	/**
-	 * Returns the last group friendly url in the ordered set where companyId = &#63; and groupId = &#63;.
+	 * Returns the last group friendly url in the ordered set where groupId = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching group friendly url
 	 * @throws NoSuchGroupFriendlyURLException if a matching group friendly url could not be found
 	 */
 	@Override
-	public GroupFriendlyURL findByC_G_Last(long companyId, long groupId,
+	public GroupFriendlyURL findByG_C_Last(long groupId, long companyId,
 		OrderByComparator<GroupFriendlyURL> orderByComparator)
 		throws NoSuchGroupFriendlyURLException {
-		GroupFriendlyURL groupFriendlyURL = fetchByC_G_Last(companyId, groupId,
+		GroupFriendlyURL groupFriendlyURL = fetchByG_C_Last(groupId, companyId,
 				orderByComparator);
 
 		if (groupFriendlyURL != null) {
@@ -1768,11 +1768,11 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", groupId=");
+		msg.append("groupId=");
 		msg.append(groupId);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -1780,23 +1780,23 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 	}
 
 	/**
-	 * Returns the last group friendly url in the ordered set where companyId = &#63; and groupId = &#63;.
+	 * Returns the last group friendly url in the ordered set where groupId = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching group friendly url, or <code>null</code> if a matching group friendly url could not be found
 	 */
 	@Override
-	public GroupFriendlyURL fetchByC_G_Last(long companyId, long groupId,
+	public GroupFriendlyURL fetchByG_C_Last(long groupId, long companyId,
 		OrderByComparator<GroupFriendlyURL> orderByComparator) {
-		int count = countByC_G(companyId, groupId);
+		int count = countByG_C(groupId, companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<GroupFriendlyURL> list = findByC_G(companyId, groupId, count - 1,
+		List<GroupFriendlyURL> list = findByG_C(groupId, companyId, count - 1,
 				count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1807,18 +1807,18 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 	}
 
 	/**
-	 * Returns the group friendly urls before and after the current group friendly url in the ordered set where companyId = &#63; and groupId = &#63;.
+	 * Returns the group friendly urls before and after the current group friendly url in the ordered set where groupId = &#63; and companyId = &#63;.
 	 *
 	 * @param groupFriendlyURLId the primary key of the current group friendly url
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next group friendly url
 	 * @throws NoSuchGroupFriendlyURLException if a group friendly url with the primary key could not be found
 	 */
 	@Override
-	public GroupFriendlyURL[] findByC_G_PrevAndNext(long groupFriendlyURLId,
-		long companyId, long groupId,
+	public GroupFriendlyURL[] findByG_C_PrevAndNext(long groupFriendlyURLId,
+		long groupId, long companyId,
 		OrderByComparator<GroupFriendlyURL> orderByComparator)
 		throws NoSuchGroupFriendlyURLException {
 		GroupFriendlyURL groupFriendlyURL = findByPrimaryKey(groupFriendlyURLId);
@@ -1830,13 +1830,13 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 			GroupFriendlyURL[] array = new GroupFriendlyURLImpl[3];
 
-			array[0] = getByC_G_PrevAndNext(session, groupFriendlyURL,
-					companyId, groupId, orderByComparator, true);
+			array[0] = getByG_C_PrevAndNext(session, groupFriendlyURL, groupId,
+					companyId, orderByComparator, true);
 
 			array[1] = groupFriendlyURL;
 
-			array[2] = getByC_G_PrevAndNext(session, groupFriendlyURL,
-					companyId, groupId, orderByComparator, false);
+			array[2] = getByG_C_PrevAndNext(session, groupFriendlyURL, groupId,
+					companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -1848,8 +1848,8 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 		}
 	}
 
-	protected GroupFriendlyURL getByC_G_PrevAndNext(Session session,
-		GroupFriendlyURL groupFriendlyURL, long companyId, long groupId,
+	protected GroupFriendlyURL getByG_C_PrevAndNext(Session session,
+		GroupFriendlyURL groupFriendlyURL, long groupId, long companyId,
 		OrderByComparator<GroupFriendlyURL> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -1864,9 +1864,9 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 		query.append(_SQL_SELECT_GROUPFRIENDLYURL_WHERE);
 
-		query.append(_FINDER_COLUMN_C_G_COMPANYID_2);
+		query.append(_FINDER_COLUMN_G_C_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_C_G_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1936,9 +1936,9 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(companyId);
-
 		qPos.add(groupId);
+
+		qPos.add(companyId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(groupFriendlyURL);
@@ -1959,31 +1959,31 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 	}
 
 	/**
-	 * Removes all the group friendly urls where companyId = &#63; and groupId = &#63; from the database.
+	 * Removes all the group friendly urls where groupId = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 */
 	@Override
-	public void removeByC_G(long companyId, long groupId) {
-		for (GroupFriendlyURL groupFriendlyURL : findByC_G(companyId, groupId,
+	public void removeByG_C(long groupId, long companyId) {
+		for (GroupFriendlyURL groupFriendlyURL : findByG_C(groupId, companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(groupFriendlyURL);
 		}
 	}
 
 	/**
-	 * Returns the number of group friendly urls where companyId = &#63; and groupId = &#63;.
+	 * Returns the number of group friendly urls where groupId = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @return the number of matching group friendly urls
 	 */
 	@Override
-	public int countByC_G(long companyId, long groupId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_G;
+	public int countByG_C(long groupId, long companyId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C;
 
-		Object[] finderArgs = new Object[] { companyId, groupId };
+		Object[] finderArgs = new Object[] { groupId, companyId };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1992,9 +1992,9 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 			query.append(_SQL_COUNT_GROUPFRIENDLYURL_WHERE);
 
-			query.append(_FINDER_COLUMN_C_G_COMPANYID_2);
+			query.append(_FINDER_COLUMN_G_C_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_C_G_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_COMPANYID_2);
 
 			String sql = query.toString();
 
@@ -2007,9 +2007,9 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(companyId);
-
 				qPos.add(groupId);
+
+				qPos.add(companyId);
 
 				count = (Long)q.uniqueResult();
 
@@ -2028,8 +2028,8 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_G_COMPANYID_2 = "groupFriendlyURL.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_GROUPID_2 = "groupFriendlyURL.groupId = ?";
+	private static final String _FINDER_COLUMN_G_C_GROUPID_2 = "groupFriendlyURL.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_COMPANYID_2 = "groupFriendlyURL.companyId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_F = new FinderPath(GroupFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			GroupFriendlyURLModelImpl.FINDER_CACHE_ENABLED,
 			GroupFriendlyURLImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_F",
@@ -2286,38 +2286,38 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 	private static final String _FINDER_COLUMN_C_F_FRIENDLYURL_1 = "groupFriendlyURL.friendlyURL IS NULL";
 	private static final String _FINDER_COLUMN_C_F_FRIENDLYURL_2 = "groupFriendlyURL.friendlyURL = ?";
 	private static final String _FINDER_COLUMN_C_F_FRIENDLYURL_3 = "(groupFriendlyURL.friendlyURL IS NULL OR groupFriendlyURL.friendlyURL = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_G_L = new FinderPath(GroupFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_L = new FinderPath(GroupFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			GroupFriendlyURLModelImpl.FINDER_CACHE_ENABLED,
 			GroupFriendlyURLImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_G_L",
+			"fetchByG_C_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			GroupFriendlyURLModelImpl.COMPANYID_COLUMN_BITMASK |
 			GroupFriendlyURLModelImpl.GROUPID_COLUMN_BITMASK |
+			GroupFriendlyURLModelImpl.COMPANYID_COLUMN_BITMASK |
 			GroupFriendlyURLModelImpl.LANGUAGEID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_G_L = new FinderPath(GroupFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_L = new FinderPath(GroupFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			GroupFriendlyURLModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_L",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			});
 
 	/**
-	 * Returns the group friendly url where companyId = &#63; and groupId = &#63; and languageId = &#63; or throws a {@link NoSuchGroupFriendlyURLException} if it could not be found.
+	 * Returns the group friendly url where groupId = &#63; and companyId = &#63; and languageId = &#63; or throws a {@link NoSuchGroupFriendlyURLException} if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param languageId the language ID
 	 * @return the matching group friendly url
 	 * @throws NoSuchGroupFriendlyURLException if a matching group friendly url could not be found
 	 */
 	@Override
-	public GroupFriendlyURL findByC_G_L(long companyId, long groupId,
+	public GroupFriendlyURL findByG_C_L(long groupId, long companyId,
 		String languageId) throws NoSuchGroupFriendlyURLException {
-		GroupFriendlyURL groupFriendlyURL = fetchByC_G_L(companyId, groupId,
+		GroupFriendlyURL groupFriendlyURL = fetchByG_C_L(groupId, companyId,
 				languageId);
 
 		if (groupFriendlyURL == null) {
@@ -2325,11 +2325,11 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", groupId=");
+			msg.append("groupId=");
 			msg.append(groupId);
+
+			msg.append(", companyId=");
+			msg.append(companyId);
 
 			msg.append(", languageId=");
 			msg.append(languageId);
@@ -2347,45 +2347,45 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 	}
 
 	/**
-	 * Returns the group friendly url where companyId = &#63; and groupId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the group friendly url where groupId = &#63; and companyId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param languageId the language ID
 	 * @return the matching group friendly url, or <code>null</code> if a matching group friendly url could not be found
 	 */
 	@Override
-	public GroupFriendlyURL fetchByC_G_L(long companyId, long groupId,
+	public GroupFriendlyURL fetchByG_C_L(long groupId, long companyId,
 		String languageId) {
-		return fetchByC_G_L(companyId, groupId, languageId, true);
+		return fetchByG_C_L(groupId, companyId, languageId, true);
 	}
 
 	/**
-	 * Returns the group friendly url where companyId = &#63; and groupId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the group friendly url where groupId = &#63; and companyId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param languageId the language ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching group friendly url, or <code>null</code> if a matching group friendly url could not be found
 	 */
 	@Override
-	public GroupFriendlyURL fetchByC_G_L(long companyId, long groupId,
+	public GroupFriendlyURL fetchByG_C_L(long groupId, long companyId,
 		String languageId, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { companyId, groupId, languageId };
+		Object[] finderArgs = new Object[] { groupId, companyId, languageId };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_G_L,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_C_L,
 					finderArgs, this);
 		}
 
 		if (result instanceof GroupFriendlyURL) {
 			GroupFriendlyURL groupFriendlyURL = (GroupFriendlyURL)result;
 
-			if ((companyId != groupFriendlyURL.getCompanyId()) ||
-					(groupId != groupFriendlyURL.getGroupId()) ||
+			if ((groupId != groupFriendlyURL.getGroupId()) ||
+					(companyId != groupFriendlyURL.getCompanyId()) ||
 					!Objects.equals(languageId, groupFriendlyURL.getLanguageId())) {
 				result = null;
 			}
@@ -2396,22 +2396,22 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 			query.append(_SQL_SELECT_GROUPFRIENDLYURL_WHERE);
 
-			query.append(_FINDER_COLUMN_C_G_L_COMPANYID_2);
+			query.append(_FINDER_COLUMN_G_C_L_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_C_G_L_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_L_COMPANYID_2);
 
 			boolean bindLanguageId = false;
 
 			if (languageId == null) {
-				query.append(_FINDER_COLUMN_C_G_L_LANGUAGEID_1);
+				query.append(_FINDER_COLUMN_G_C_L_LANGUAGEID_1);
 			}
 			else if (languageId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_G_L_LANGUAGEID_3);
+				query.append(_FINDER_COLUMN_G_C_L_LANGUAGEID_3);
 			}
 			else {
 				bindLanguageId = true;
 
-				query.append(_FINDER_COLUMN_C_G_L_LANGUAGEID_2);
+				query.append(_FINDER_COLUMN_G_C_L_LANGUAGEID_2);
 			}
 
 			String sql = query.toString();
@@ -2425,9 +2425,9 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(companyId);
-
 				qPos.add(groupId);
+
+				qPos.add(companyId);
 
 				if (bindLanguageId) {
 					qPos.add(languageId);
@@ -2436,7 +2436,7 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 				List<GroupFriendlyURL> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_L,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_L,
 						finderArgs, list);
 				}
 				else {
@@ -2446,17 +2446,17 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 					cacheResult(groupFriendlyURL);
 
-					if ((groupFriendlyURL.getCompanyId() != companyId) ||
-							(groupFriendlyURL.getGroupId() != groupId) ||
+					if ((groupFriendlyURL.getGroupId() != groupId) ||
+							(groupFriendlyURL.getCompanyId() != companyId) ||
 							(groupFriendlyURL.getLanguageId() == null) ||
 							!groupFriendlyURL.getLanguageId().equals(languageId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_L,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_L,
 							finderArgs, groupFriendlyURL);
 					}
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_L, finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_L, finderArgs);
 
 				throw processException(e);
 			}
@@ -2474,35 +2474,35 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 	}
 
 	/**
-	 * Removes the group friendly url where companyId = &#63; and groupId = &#63; and languageId = &#63; from the database.
+	 * Removes the group friendly url where groupId = &#63; and companyId = &#63; and languageId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param languageId the language ID
 	 * @return the group friendly url that was removed
 	 */
 	@Override
-	public GroupFriendlyURL removeByC_G_L(long companyId, long groupId,
+	public GroupFriendlyURL removeByG_C_L(long groupId, long companyId,
 		String languageId) throws NoSuchGroupFriendlyURLException {
-		GroupFriendlyURL groupFriendlyURL = findByC_G_L(companyId, groupId,
+		GroupFriendlyURL groupFriendlyURL = findByG_C_L(groupId, companyId,
 				languageId);
 
 		return remove(groupFriendlyURL);
 	}
 
 	/**
-	 * Returns the number of group friendly urls where companyId = &#63; and groupId = &#63; and languageId = &#63;.
+	 * Returns the number of group friendly urls where groupId = &#63; and companyId = &#63; and languageId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param companyId the company ID
 	 * @param languageId the language ID
 	 * @return the number of matching group friendly urls
 	 */
 	@Override
-	public int countByC_G_L(long companyId, long groupId, String languageId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_G_L;
+	public int countByG_C_L(long groupId, long companyId, String languageId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_L;
 
-		Object[] finderArgs = new Object[] { companyId, groupId, languageId };
+		Object[] finderArgs = new Object[] { groupId, companyId, languageId };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -2511,22 +2511,22 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 			query.append(_SQL_COUNT_GROUPFRIENDLYURL_WHERE);
 
-			query.append(_FINDER_COLUMN_C_G_L_COMPANYID_2);
+			query.append(_FINDER_COLUMN_G_C_L_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_C_G_L_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_L_COMPANYID_2);
 
 			boolean bindLanguageId = false;
 
 			if (languageId == null) {
-				query.append(_FINDER_COLUMN_C_G_L_LANGUAGEID_1);
+				query.append(_FINDER_COLUMN_G_C_L_LANGUAGEID_1);
 			}
 			else if (languageId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_G_L_LANGUAGEID_3);
+				query.append(_FINDER_COLUMN_G_C_L_LANGUAGEID_3);
 			}
 			else {
 				bindLanguageId = true;
 
-				query.append(_FINDER_COLUMN_C_G_L_LANGUAGEID_2);
+				query.append(_FINDER_COLUMN_G_C_L_LANGUAGEID_2);
 			}
 
 			String sql = query.toString();
@@ -2540,9 +2540,9 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(companyId);
-
 				qPos.add(groupId);
+
+				qPos.add(companyId);
 
 				if (bindLanguageId) {
 					qPos.add(languageId);
@@ -2565,11 +2565,11 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_G_L_COMPANYID_2 = "groupFriendlyURL.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_L_GROUPID_2 = "groupFriendlyURL.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_L_LANGUAGEID_1 = "groupFriendlyURL.languageId IS NULL";
-	private static final String _FINDER_COLUMN_C_G_L_LANGUAGEID_2 = "groupFriendlyURL.languageId = ?";
-	private static final String _FINDER_COLUMN_C_G_L_LANGUAGEID_3 = "(groupFriendlyURL.languageId IS NULL OR groupFriendlyURL.languageId = '')";
+	private static final String _FINDER_COLUMN_G_C_L_GROUPID_2 = "groupFriendlyURL.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_L_COMPANYID_2 = "groupFriendlyURL.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_L_LANGUAGEID_1 = "groupFriendlyURL.languageId IS NULL";
+	private static final String _FINDER_COLUMN_G_C_L_LANGUAGEID_2 = "groupFriendlyURL.languageId = ?";
+	private static final String _FINDER_COLUMN_G_C_L_LANGUAGEID_3 = "(groupFriendlyURL.languageId IS NULL OR groupFriendlyURL.languageId = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_F_L = new FinderPath(GroupFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			GroupFriendlyURLModelImpl.FINDER_CACHE_ENABLED,
 			GroupFriendlyURLImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -2915,9 +2915,9 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 				groupFriendlyURL.getFriendlyURL()
 			}, groupFriendlyURL);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_L,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_L,
 			new Object[] {
-				groupFriendlyURL.getCompanyId(), groupFriendlyURL.getGroupId(),
+				groupFriendlyURL.getGroupId(), groupFriendlyURL.getCompanyId(),
 				groupFriendlyURL.getLanguageId()
 			}, groupFriendlyURL);
 
@@ -3023,14 +3023,14 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 			groupFriendlyURLModelImpl, false);
 
 		args = new Object[] {
-				groupFriendlyURLModelImpl.getCompanyId(),
 				groupFriendlyURLModelImpl.getGroupId(),
+				groupFriendlyURLModelImpl.getCompanyId(),
 				groupFriendlyURLModelImpl.getLanguageId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_L, args,
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_L, args,
 			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_L, args,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_L, args,
 			groupFriendlyURLModelImpl, false);
 
 		args = new Object[] {
@@ -3092,25 +3092,25 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					groupFriendlyURLModelImpl.getCompanyId(),
 					groupFriendlyURLModelImpl.getGroupId(),
+					groupFriendlyURLModelImpl.getCompanyId(),
 					groupFriendlyURLModelImpl.getLanguageId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_L, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_L, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_L, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_L, args);
 		}
 
 		if ((groupFriendlyURLModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_C_G_L.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_G_C_L.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
-					groupFriendlyURLModelImpl.getOriginalCompanyId(),
 					groupFriendlyURLModelImpl.getOriginalGroupId(),
+					groupFriendlyURLModelImpl.getOriginalCompanyId(),
 					groupFriendlyURLModelImpl.getOriginalLanguageId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_L, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_L, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_L, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_L, args);
 		}
 
 		if (clearCurrent) {
@@ -3348,23 +3348,23 @@ public class GroupFriendlyURLPersistenceImpl extends BasePersistenceImpl<GroupFr
 			}
 
 			if ((groupFriendlyURLModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_G.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						groupFriendlyURLModelImpl.getOriginalCompanyId(),
-						groupFriendlyURLModelImpl.getOriginalGroupId()
+						groupFriendlyURLModelImpl.getOriginalGroupId(),
+						groupFriendlyURLModelImpl.getOriginalCompanyId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_G,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
 					args);
 
 				args = new Object[] {
-						groupFriendlyURLModelImpl.getCompanyId(),
-						groupFriendlyURLModelImpl.getGroupId()
+						groupFriendlyURLModelImpl.getGroupId(),
+						groupFriendlyURLModelImpl.getCompanyId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_G,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
 					args);
 			}
 		}

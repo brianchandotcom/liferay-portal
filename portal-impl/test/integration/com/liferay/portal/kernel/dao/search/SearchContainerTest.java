@@ -143,7 +143,7 @@ public class SearchContainerTest {
 
 		PortletURL portletURL = PowerMockito.mock(PortletURL.class);
 
-		_searchContainer = new SearchContainer<Object>(
+		_searchContainer = new SearchContainer<>(
 			portletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, cur,
 			_DEFAULT_DELTA, portletURL, null, null);
 	}

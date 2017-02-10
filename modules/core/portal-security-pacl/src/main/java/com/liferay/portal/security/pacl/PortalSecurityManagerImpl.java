@@ -566,7 +566,7 @@ public class PortalSecurityManagerImpl
 		PortalSecurityManagerImpl.class.getName());
 
 	private static final ThreadLocal<ClassLoader>
-		_checkMemberAccessClassLoader = new AutoResetThreadLocal<ClassLoader>(
+		_checkMemberAccessClassLoader = new AutoResetThreadLocal<>(
 			PortalSecurityManagerImpl.class +
 				"._checkMembersAccessClassLoader");
 	private static final RuntimePermission _checkMemberAccessPermission =

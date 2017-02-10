@@ -161,7 +161,7 @@ public class LiferayActivityService implements ActivityService {
 			activities.addAll(personActivities);
 		}
 
-		return new RestfulCollection<Activity>(
+		return new RestfulCollection<>(
 			activities, collectionOptions.getFirst(), activities.size(),
 			collectionOptions.getMax());
 	}
@@ -178,7 +178,7 @@ public class LiferayActivityService implements ActivityService {
 
 		List<Activity> activities = getActivities(themeDisplay, userIdLong);
 
-		return new RestfulCollection<Activity>(
+		return new RestfulCollection<>(
 			activities, collectionOptions.getFirst(), activities.size(),
 			collectionOptions.getMax());
 	}

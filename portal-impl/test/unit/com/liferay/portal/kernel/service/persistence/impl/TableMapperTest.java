@@ -130,7 +130,7 @@ public class TableMapperTest {
 
 		_rightBasePersistence.setDataSource(_dataSource);
 
-		_tableMapperImpl = new TableMapperImpl<Left, Right>(
+		_tableMapperImpl = new TableMapperImpl<>(
 			_TABLE_NAME, _COMPANY_COLUMN_NAME, _LEFT_COLUMN_NAME,
 			_RIGHT_COLUMN_NAME, _leftBasePersistence, _rightBasePersistence);
 	}

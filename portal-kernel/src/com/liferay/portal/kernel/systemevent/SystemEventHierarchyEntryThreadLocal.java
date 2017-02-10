@@ -164,10 +164,9 @@ public class SystemEventHierarchyEntryThreadLocal {
 	}
 
 	private static final ThreadLocal<Stack<SystemEventHierarchyEntry>>
-		_systemEventHierarchyEntries =
-			new AutoResetThreadLocal<Stack<SystemEventHierarchyEntry>>(
-				SystemEventHierarchyEntryThreadLocal.class +
-					"._systemEventHierarchyEntries",
-				new Stack<SystemEventHierarchyEntry>());
+		_systemEventHierarchyEntries = new AutoResetThreadLocal<>(
+			SystemEventHierarchyEntryThreadLocal.class +
+				"._systemEventHierarchyEntries",
+			new Stack<SystemEventHierarchyEntry>());
 
 }

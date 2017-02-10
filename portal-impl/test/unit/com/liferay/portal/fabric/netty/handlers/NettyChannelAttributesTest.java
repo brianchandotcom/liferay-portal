@@ -97,10 +97,8 @@ public class NettyChannelAttributesTest {
 		DefaultNoticeableFuture<Serializable> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<>();
 
-		FabricWorker<Serializable> fabricWorker =
-			new LocalFabricWorker<Serializable>(
-				new EmbeddedProcessChannel<Serializable>(
-					defaultNoticeableFuture));
+		FabricWorker<Serializable> fabricWorker = new LocalFabricWorker<>(
+			new EmbeddedProcessChannel<Serializable>(defaultNoticeableFuture));
 
 		NettyChannelAttributes.putFabricWorker(
 			_embeddedChannel, 0, fabricWorker);
@@ -138,10 +136,8 @@ public class NettyChannelAttributesTest {
 		DefaultNoticeableFuture<Serializable> defaultNoticeableFuture1 =
 			new DefaultNoticeableFuture<>();
 
-		FabricWorker<Serializable> fabricWorker1 =
-			new LocalFabricWorker<Serializable>(
-				new EmbeddedProcessChannel<Serializable>(
-					defaultNoticeableFuture1));
+		FabricWorker<Serializable> fabricWorker1 = new LocalFabricWorker<>(
+			new EmbeddedProcessChannel<Serializable>(defaultNoticeableFuture1));
 
 		NettyChannelAttributes.putFabricWorker(
 			_embeddedChannel, 0, fabricWorker1);
@@ -158,10 +154,8 @@ public class NettyChannelAttributesTest {
 		DefaultNoticeableFuture<Serializable> defaultNoticeableFuture2 =
 			new DefaultNoticeableFuture<>();
 
-		FabricWorker<Serializable> fabricWorker2 =
-			new LocalFabricWorker<Serializable>(
-				new EmbeddedProcessChannel<Serializable>(
-					defaultNoticeableFuture2));
+		FabricWorker<Serializable> fabricWorker2 = new LocalFabricWorker<>(
+			new EmbeddedProcessChannel<Serializable>(defaultNoticeableFuture2));
 
 		NettyChannelAttributes.putFabricWorker(
 			_embeddedChannel, 1, fabricWorker2);

@@ -38,12 +38,12 @@ public class PortalContextLoaderLifecycleThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _destroying =
-		new InitialThreadLocal<Boolean>(
+		new InitialThreadLocal<>(
 			PortalContextLoaderLifecycleThreadLocal.class +
 				"._destroying",
 			Boolean.FALSE);
 	private static final ThreadLocal<Boolean> _initializing =
-		new InitialThreadLocal<Boolean>(
+		new InitialThreadLocal<>(
 			PortalContextLoaderLifecycleThreadLocal.class +
 				"._initializing",
 			Boolean.FALSE);

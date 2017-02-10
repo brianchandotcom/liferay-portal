@@ -39,7 +39,7 @@ public class BufferedIncreasableEntry<K, T>
 
 	@Override
 	public BufferedIncreasableEntry<K, T> increase(Increment<T> deltaValue) {
-		return new BufferedIncreasableEntry<K, T>(
+		return new BufferedIncreasableEntry<>(
 			_methodInvocation, key,
 			value.increaseForNew(deltaValue.getValue()));
 	}

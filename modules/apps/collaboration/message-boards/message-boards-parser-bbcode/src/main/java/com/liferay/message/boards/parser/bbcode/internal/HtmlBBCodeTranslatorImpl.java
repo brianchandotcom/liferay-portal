@@ -95,7 +95,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		_excludeNewLineTypes.put("th", BBCodeParser.TYPE_TAG_START_END);
 		_excludeNewLineTypes.put("tr", BBCodeParser.TYPE_TAG_START_END);
 
-		_imageAttributes = new HashSet<String>(
+		_imageAttributes = new HashSet<>(
 			Arrays.asList(
 				"alt", "class", "dir", "height", "id", "lang", "longdesc",
 				"style", "title", "width"));

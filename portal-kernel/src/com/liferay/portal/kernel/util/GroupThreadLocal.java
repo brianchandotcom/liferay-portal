@@ -61,7 +61,7 @@ public class GroupThreadLocal {
 		new AutoResetThreadLocal<>(
 			GroupThreadLocal.class + "._deleteInProcess", false);
 	private static final ThreadLocal<Long> _groupId =
-		new AutoResetThreadLocal<Long>(
+		new AutoResetThreadLocal<>(
 			GroupThreadLocal.class + "._groupId",
 			GroupConstants.DEFAULT_LIVE_GROUP_ID);
 

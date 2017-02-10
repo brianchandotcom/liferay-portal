@@ -317,7 +317,7 @@ public class LiferayMediaItemService implements MediaItemService {
 			}
 		}
 
-		return new RestfulCollection<MediaItem>(
+		return new RestfulCollection<>(
 			mediaItems, collectionOptions.getFirst(), mediaItems.size(),
 			collectionOptions.getMax());
 	}
@@ -334,7 +334,7 @@ public class LiferayMediaItemService implements MediaItemService {
 		List<MediaItem> mediaItems = new ArrayList<>();
 
 		if (!ShindigUtil.isValidUser(user)) {
-			return new RestfulCollection<MediaItem>(
+			return new RestfulCollection<>(
 				mediaItems, collectionOptions.getFirst(), mediaItems.size(),
 				collectionOptions.getMax());
 		}
@@ -361,7 +361,7 @@ public class LiferayMediaItemService implements MediaItemService {
 			mediaItems.add(mediaItem);
 		}
 
-		return new RestfulCollection<MediaItem>(
+		return new RestfulCollection<>(
 			mediaItems, collectionOptions.getFirst(), mediaItems.size(),
 			collectionOptions.getMax());
 	}
@@ -379,7 +379,7 @@ public class LiferayMediaItemService implements MediaItemService {
 		List<MediaItem> mediaItems = new ArrayList<>();
 
 		if (!ShindigUtil.isValidUser(user)) {
-			return new RestfulCollection<MediaItem>(
+			return new RestfulCollection<>(
 				mediaItems, collectionOptions.getFirst(), mediaItems.size(),
 				collectionOptions.getMax());
 		}
@@ -408,7 +408,7 @@ public class LiferayMediaItemService implements MediaItemService {
 			}
 		}
 
-		return new RestfulCollection<MediaItem>(
+		return new RestfulCollection<>(
 			mediaItems, collectionOptions.getFirst(), mediaItems.size(),
 			collectionOptions.getMax());
 	}

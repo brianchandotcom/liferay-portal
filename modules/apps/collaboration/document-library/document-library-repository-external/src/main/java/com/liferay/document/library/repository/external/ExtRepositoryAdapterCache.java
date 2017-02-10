@@ -117,10 +117,9 @@ public class ExtRepositoryAdapterCache implements Cloneable {
 		ExtRepositoryAdapterCache.class);
 
 	private static final ThreadLocal<ExtRepositoryAdapterCache>
-		_extRepositoryAdapterThreadLocal =
-			new AutoResetThreadLocal<ExtRepositoryAdapterCache>(
-				ExtRepositoryAdapterCache.class.getName(),
-				new ExtRepositoryAdapterCache());
+		_extRepositoryAdapterThreadLocal = new AutoResetThreadLocal<>(
+			ExtRepositoryAdapterCache.class.getName(),
+			new ExtRepositoryAdapterCache());
 
 	private Map<String, ExtRepositoryModelAdapter<?>> _extRepositoryAdapters;
 

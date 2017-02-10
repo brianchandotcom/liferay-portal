@@ -98,7 +98,7 @@ public class NettyFabricWorkerStubTest {
 		Assert.assertFalse(channelFuture.isDone());
 
 		NettyFabricWorkerStub<String> nettyFabricWorkerStub =
-			new NettyFabricWorkerStub<String>(
+			new NettyFabricWorkerStub<>(
 				0, channel, new MockRepository<Channel>(),
 				Collections.<Path, Path>emptyMap(), 0);
 
@@ -121,7 +121,7 @@ public class NettyFabricWorkerStubTest {
 
 		Assert.assertFalse(channelFuture.isDone());
 
-		nettyFabricWorkerStub = new NettyFabricWorkerStub<String>(
+		nettyFabricWorkerStub = new NettyFabricWorkerStub<>(
 			0, channel, new MockRepository<Channel>(),
 			Collections.<Path, Path>emptyMap(), 0);
 
@@ -141,7 +141,7 @@ public class NettyFabricWorkerStubTest {
 	@Test
 	public void testGetFabricStatus() {
 		NettyFabricWorkerStub<String> nettyFabricWorkerStub =
-			new NettyFabricWorkerStub<String>(
+			new NettyFabricWorkerStub<>(
 				0, NettyTestUtil.createEmptyEmbeddedChannel(),
 				new MockRepository<Channel>(),
 				Collections.<Path, Path>emptyMap(), 0);
@@ -154,7 +154,7 @@ public class NettyFabricWorkerStubTest {
 	@Test
 	public void testSetCancellation() throws Exception {
 		NettyFabricWorkerStub<String> nettyFabricWorkerStub =
-			new NettyFabricWorkerStub<String>(
+			new NettyFabricWorkerStub<>(
 				0, NettyTestUtil.createEmptyEmbeddedChannel(),
 				new MockRepository<Channel>(),
 				Collections.<Path, Path>emptyMap(), 0);
@@ -170,7 +170,7 @@ public class NettyFabricWorkerStubTest {
 	@Test
 	public void testSetException() throws InterruptedException {
 		NettyFabricWorkerStub<String> nettyFabricWorkerStub =
-			new NettyFabricWorkerStub<String>(
+			new NettyFabricWorkerStub<>(
 				0, NettyTestUtil.createEmptyEmbeddedChannel(),
 				new MockRepository<Channel>(),
 				Collections.<Path, Path>emptyMap(), 0);
@@ -309,7 +309,7 @@ public class NettyFabricWorkerStubTest {
 			NettyRPCChannelHandler.INSTANCE);
 
 		NettyFabricWorkerStub<String> nettyFabricWorkerStub =
-			new NettyFabricWorkerStub<String>(
+			new NettyFabricWorkerStub<>(
 				0, embeddedChannel, new MockRepository<Channel>(),
 				Collections.<Path, Path>emptyMap(), 0);
 

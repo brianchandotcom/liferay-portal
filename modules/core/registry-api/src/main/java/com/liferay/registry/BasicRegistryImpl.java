@@ -198,7 +198,7 @@ public class BasicRegistryImpl implements Registry {
 		Class<T> clazz, T service) {
 
 		BasicServiceReference<T> basicServiceReference =
-			new BasicServiceReference<T>(
+			new BasicServiceReference<>(
 				clazz.getName(), _serviceIdCounter.incrementAndGet(), 0,
 				new HashMap<String, Object>());
 
@@ -218,7 +218,7 @@ public class BasicRegistryImpl implements Registry {
 		}
 
 		BasicServiceReference<T> basicServiceReference =
-			new BasicServiceReference<T>(
+			new BasicServiceReference<>(
 				clazz.getName(), _serviceIdCounter.incrementAndGet(),
 				serviceRanking.intValue(), properties);
 
@@ -232,7 +232,7 @@ public class BasicRegistryImpl implements Registry {
 		String className, T service) {
 
 		BasicServiceReference<T> basicServiceReference =
-			new BasicServiceReference<T>(
+			new BasicServiceReference<>(
 				className, _serviceIdCounter.incrementAndGet(), 0,
 				new HashMap<String, Object>());
 
@@ -252,7 +252,7 @@ public class BasicRegistryImpl implements Registry {
 		}
 
 		BasicServiceReference<T> basicServiceReference =
-			new BasicServiceReference<T>(
+			new BasicServiceReference<>(
 				className, _serviceIdCounter.incrementAndGet(),
 				serviceRanking.intValue(), properties);
 
@@ -274,7 +274,7 @@ public class BasicRegistryImpl implements Registry {
 		properties.put("objectClass", classNames);
 
 		BasicServiceReference<T> basicServiceReference =
-			new BasicServiceReference<T>(
+			new BasicServiceReference<>(
 				classNames[0], _serviceIdCounter.incrementAndGet(), 0,
 				properties);
 
@@ -300,7 +300,7 @@ public class BasicRegistryImpl implements Registry {
 		}
 
 		BasicServiceReference<T> basicServiceReference =
-			new BasicServiceReference<T>(
+			new BasicServiceReference<>(
 				classNames[0], _serviceIdCounter.incrementAndGet(),
 				serviceRanking.intValue(), properties);
 

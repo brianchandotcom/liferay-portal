@@ -161,10 +161,9 @@ public class SelectorIntraband extends BaseIntraband {
 		readSelectableChannel.configureBlocking(false);
 		writeSelectableChannel.configureBlocking(false);
 
-		FutureTask<RegistrationReference> registerFutureTask =
-			new FutureTask<RegistrationReference>(
-				new RegisterCallable(
-					readSelectableChannel, writeSelectableChannel));
+		FutureTask<RegistrationReference> registerFutureTask = new FutureTask<>(
+			new RegisterCallable(
+				readSelectableChannel, writeSelectableChannel));
 
 		registerQueue.offer(registerFutureTask);
 

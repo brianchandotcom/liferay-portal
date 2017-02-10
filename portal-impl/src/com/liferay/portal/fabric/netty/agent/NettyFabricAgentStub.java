@@ -109,7 +109,7 @@ public class NettyFabricAgentStub implements FabricAgent {
 			processCallable, fabricPathMappingVisitor);
 
 		NettyFabricWorkerStub<T> nettyFabricWorkerStub =
-			new NettyFabricWorkerStub<T>(
+			new NettyFabricWorkerStub<>(
 				id, _channel, _repository,
 				fabricPathMappingVisitor.getPathMap(), _rpcRelayTimeout);
 

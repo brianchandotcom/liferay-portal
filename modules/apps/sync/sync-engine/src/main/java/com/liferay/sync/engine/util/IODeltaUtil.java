@@ -272,7 +272,7 @@ public class IODeltaUtil {
 		IODeltaUtil.class);
 
 	private static final Set<String> _syncFilePatchingIgnoreFileExtensions =
-		new HashSet<String>(
+		new HashSet<>(
 			Arrays.asList(
 				PropsValues.SYNC_FILE_PATCHING_IGNORE_FILE_EXTENSIONS));
 

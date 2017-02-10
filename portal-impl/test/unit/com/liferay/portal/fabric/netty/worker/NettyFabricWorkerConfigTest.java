@@ -85,7 +85,7 @@ public class NettyFabricWorkerConfigTest {
 		}
 
 		NettyFabricWorkerConfig<String> nettyFabricWorkerConfig =
-			new NettyFabricWorkerConfig<String>(
+			new NettyFabricWorkerConfig<>(
 				id, processConfig, processCallable,
 				Collections.<Path, Path>emptyMap());
 

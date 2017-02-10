@@ -148,7 +148,7 @@ public class UpgradeOracle extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeOracle.class);
 
-	private static final Set<String> _tableNames = new HashSet<String>(
+	private static final Set<String> _tableNames = new HashSet<>(
 		Arrays.asList(
 			"account_", "address", "announcementsdelivery",
 			"announcementsentry", "announcementsflag", "assetcategory",

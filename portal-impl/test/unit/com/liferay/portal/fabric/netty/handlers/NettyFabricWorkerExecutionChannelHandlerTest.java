@@ -931,10 +931,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		DefaultNoticeableFuture<Serializable> processNoticeableFuture =
 			new DefaultNoticeableFuture<>();
 
-		FabricWorker<Serializable> fabricWorker =
-			new LocalFabricWorker<Serializable>(
-				new EmbeddedProcessChannel<Serializable>(
-					processNoticeableFuture));
+		FabricWorker<Serializable> fabricWorker = new LocalFabricWorker<>(
+			new EmbeddedProcessChannel<Serializable>(processNoticeableFuture));
 
 		defaultPromise.setSuccess(fabricWorker);
 
@@ -1273,7 +1271,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		builder.setBootstrapClassPath(StringPool.BLANK);
 		builder.setRuntimeClassPath(StringPool.BLANK);
 
-		return new NettyFabricWorkerConfig<Serializable>(
+		return new NettyFabricWorkerConfig<>(
 			0, builder.build(), new ReturnProcessCallable<Serializable>(null),
 			Collections.<Path, Path>emptyMap());
 	}
@@ -1300,7 +1298,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 				nettyFabricAgentStub, "_nettyFabricWorkerStubs");
 
 		NettyFabricWorkerStub<Serializable> nettyFabricWorkerStub =
-			new NettyFabricWorkerStub<Serializable>(
+			new NettyFabricWorkerStub<>(
 				0, _embeddedChannel, new MockRepository<Channel>(),
 				Collections.<Path, Path>emptyMap(), 0);
 

@@ -274,7 +274,7 @@ public class LiferayAlbumService implements AlbumService {
 			}
 		}
 
-		return new RestfulCollection<Album>(
+		return new RestfulCollection<>(
 			albums, collectionOptions.getFirst(), albums.size(),
 			collectionOptions.getMax());
 	}
@@ -296,7 +296,7 @@ public class LiferayAlbumService implements AlbumService {
 			albums.add(album);
 		}
 
-		return new RestfulCollection<Album>(
+		return new RestfulCollection<>(
 			albums, collectionOptions.getFirst(), albums.size(),
 			collectionOptions.getMax());
 	}

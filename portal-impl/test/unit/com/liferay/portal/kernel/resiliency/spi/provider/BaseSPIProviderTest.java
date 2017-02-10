@@ -232,7 +232,7 @@ public class BaseSPIProviderTest {
 			defaultNoticeableFuture.set((T)mockSPI);
 
 			try {
-				return new LocalProcessChannel<T>(
+				return new LocalProcessChannel<>(
 					defaultNoticeableFuture,
 					new ObjectOutputStream(new DummyOutputStream()),
 					new AsyncBroker<Long, Serializable>());

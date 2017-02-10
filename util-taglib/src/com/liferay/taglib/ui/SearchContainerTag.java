@@ -88,7 +88,7 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 			}
 
 			if (_searchContainer == null) {
-				_searchContainer = new SearchContainer<R>(
+				_searchContainer = new SearchContainer<>(
 					portletRequest, _displayTerms, _searchTerms, getCurParam(),
 					getDelta(), _iteratorURL, null, _emptyResultsMessage);
 			}

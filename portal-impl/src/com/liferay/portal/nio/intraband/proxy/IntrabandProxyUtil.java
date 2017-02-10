@@ -1034,10 +1034,9 @@ public class IntrabandProxyUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IntrabandProxyUtil.class);
 
-	private static final Set<String> _annotationDescriptors =
-		new HashSet<String>(
-			Arrays.asList(
-				Type.getDescriptor(Id.class), Type.getDescriptor(Proxy.class)));
+	private static final Set<String> _annotationDescriptors = new HashSet<>(
+		Arrays.asList(
+			Type.getDescriptor(Id.class), Type.getDescriptor(Proxy.class)));
 	private static final Method _defineClassMethod;
 	private static final Comparator<Method> _methodComparator =
 		new MethodComparator();

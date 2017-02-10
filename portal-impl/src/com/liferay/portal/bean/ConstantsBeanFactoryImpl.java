@@ -180,7 +180,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 	}
 
 	protected static ConcurrentMap<Class<?>, Object> constantsBeans =
-		new ConcurrentReferenceKeyHashMap<Class<?>, Object>(
+		new ConcurrentReferenceKeyHashMap<>(
 			new ConcurrentReferenceValueHashMap<Reference<Class<?>>, Object>(
 				FinalizeManager.WEAK_REFERENCE_FACTORY),
 			FinalizeManager.WEAK_REFERENCE_FACTORY);

@@ -49,7 +49,7 @@ public class ConcurrentMapperHashMapCombinationTest {
 		Object testValue2 = new Object();
 
 		ConcurrentMap<String, Object> concurrentMap =
-			new ConcurrentIdentityHashMap<String, Object>(
+			new ConcurrentIdentityHashMap<>(
 				new ConcurrentReferenceValueHashMap
 					<IdentityKey<String>, Object>(
 						FinalizeManager.WEAK_REFERENCE_FACTORY));
@@ -96,7 +96,7 @@ public class ConcurrentMapperHashMapCombinationTest {
 		Object testValue2 = new Object();
 
 		ConcurrentMap<String, Object> concurrentReferenceMap =
-			new ConcurrentReferenceKeyHashMap<String, Object>(
+			new ConcurrentReferenceKeyHashMap<>(
 				new ConcurrentReferenceValueHashMap<Reference<String>, Object>(
 					FinalizeManager.WEAK_REFERENCE_FACTORY),
 				FinalizeManager.SOFT_REFERENCE_FACTORY);

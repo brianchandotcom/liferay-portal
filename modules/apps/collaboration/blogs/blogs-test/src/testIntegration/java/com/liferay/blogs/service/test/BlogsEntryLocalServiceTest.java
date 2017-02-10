@@ -1106,15 +1106,15 @@ public class BlogsEntryLocalServiceTest {
 	private User _organizationUser;
 
 	private final QueryDefinition<BlogsEntry> _statusAnyQueryDefinition =
-		new QueryDefinition<BlogsEntry>(
+		new QueryDefinition<>(
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	private final QueryDefinition<BlogsEntry> _statusApprovedQueryDefinition =
-		new QueryDefinition<BlogsEntry>(
+		new QueryDefinition<>(
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	private final QueryDefinition<BlogsEntry> _statusInTrashQueryDefinition =
-		new QueryDefinition<BlogsEntry>(
+		new QueryDefinition<>(
 			WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	private User _user;

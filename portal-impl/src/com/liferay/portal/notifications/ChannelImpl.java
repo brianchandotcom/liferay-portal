@@ -469,7 +469,7 @@ public class ChannelImpl extends BaseChannelImpl {
 			_getUnconfirmedNotificationEvents();
 
 		List<NotificationEvent> notificationEvents =
-			new ArrayList<NotificationEvent>(
+			new ArrayList<>(
 				notificationEventsSet.size() +
 					unconfirmedNotificationEvents.size());
 

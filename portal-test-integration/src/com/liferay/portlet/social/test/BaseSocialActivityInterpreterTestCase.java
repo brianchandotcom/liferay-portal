@@ -177,7 +177,7 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 	}
 
 	protected List<SocialActivity> getActivities() throws Exception {
-		List<SocialActivity> activities = new ArrayList<SocialActivity>(
+		List<SocialActivity> activities = new ArrayList<>(
 			SocialActivityLocalServiceUtil.getGroupActivities(
 				group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 

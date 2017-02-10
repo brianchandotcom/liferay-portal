@@ -150,7 +150,7 @@ public class LiferayPersonService implements PersonService {
 			}
 		}
 
-		return new RestfulCollection<Person>(
+		return new RestfulCollection<>(
 			people, collectionOptions.getFirst(), people.size(),
 			collectionOptions.getMax());
 	}

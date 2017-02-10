@@ -30,7 +30,7 @@ public class UserGroupImportTransactionThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _originatesFromImport =
-		new InitialThreadLocal<Boolean>(
+		new InitialThreadLocal<>(
 			UserGroupImportTransactionThreadLocal.class +
 				"._originatesFromImport",
 			false);

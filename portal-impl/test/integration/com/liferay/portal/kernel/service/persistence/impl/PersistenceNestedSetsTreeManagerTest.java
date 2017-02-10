@@ -80,11 +80,10 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 		_assetCategoryPersistence.setRebuildTreeEnabled(false);
 
-		_nestedSetsTreeManager =
-			new PersistenceNestedSetsTreeManager<AssetCategory>(
-				(BasePersistenceImpl<?>)_assetCategoryPersistence,
-				"AssetCategory", "AssetCategory", AssetCategoryImpl.class,
-				"categoryId", "groupId", "leftCategoryId", "rightCategoryId");
+		_nestedSetsTreeManager = new PersistenceNestedSetsTreeManager<>(
+			(BasePersistenceImpl<?>)_assetCategoryPersistence, "AssetCategory",
+			"AssetCategory", AssetCategoryImpl.class, "categoryId", "groupId",
+			"leftCategoryId", "rightCategoryId");
 
 		_group = GroupTestUtil.addGroup();
 

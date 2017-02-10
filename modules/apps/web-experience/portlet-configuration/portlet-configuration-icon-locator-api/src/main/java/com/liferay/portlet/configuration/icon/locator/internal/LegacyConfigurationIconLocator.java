@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +41,7 @@ public class LegacyConfigurationIconLocator
 
 	@Override
 	public List<String> getDefaultViews(String portletId) {
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	@Override

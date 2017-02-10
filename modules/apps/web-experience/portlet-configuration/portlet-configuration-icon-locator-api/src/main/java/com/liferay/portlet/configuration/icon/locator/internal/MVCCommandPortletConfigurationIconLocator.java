@@ -17,11 +17,11 @@ package com.liferay.portlet.configuration.icon.locator.internal;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -39,20 +39,17 @@ public class MVCCommandPortletConfigurationIconLocator
 
 	@Override
 	public List<String> getDefaultViews(String portletId) {
-		List<String> defaultViews = new ArrayList<>();
-
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 		if (portlet == null) {
-			return defaultViews;
+			return Collections.emptyList();
 		}
 
 		Map<String, String> initParams = portlet.getInitParams();
 
-		String[] mvcCommandNamesDefaultViews = StringUtil.split(
-			initParams.get("mvc-command-names-default-views"));
-
-		return ListUtil.fromArray(mvcCommandNamesDefaultViews);
+		return Arrays.asList(
+			StringUtil.split(
+				initParams.get("mvc-command-names-default-views")));
 	}
 
 	@Override

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -38,12 +38,10 @@ public class MVCPortletConfigurationIconLocator
 
 	@Override
 	public List<String> getDefaultViews(String portletId) {
-		List<String> defaultViews = new ArrayList<>();
-
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 		if (portlet == null) {
-			return defaultViews;
+			return Collections.emptyList();
 		}
 
 		Map<String, String> initParams = portlet.getInitParams();
@@ -51,10 +49,10 @@ public class MVCPortletConfigurationIconLocator
 		String viewTemplate = initParams.get("view-template");
 
 		if (Validator.isNotNull(viewTemplate)) {
-			defaultViews.add(viewTemplate);
+			return Collections.singletonList(viewTemplate);
 		}
 
-		return defaultViews;
+		return Collections.emptyList();
 	}
 
 	@Override

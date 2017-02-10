@@ -134,20 +134,12 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
-		String descriptionDefaultLanguageId =
-			LocalizationUtil.getDefaultLanguageId(
-				calendarBooking.getDescription());
-
 		String[] descriptionLanguageIds = getLanguageIds(
 			defaultLanguageId, calendarBooking.getDescription());
 
 		for (String descriptionLanguageId : descriptionLanguageIds) {
 			String description = calendarBooking.getDescription(
 				descriptionLanguageId);
-
-			if (descriptionLanguageId.equals(descriptionDefaultLanguageId)) {
-				document.addText(Field.DESCRIPTION, description);
-			}
 
 			document.addText(
 				Field.DESCRIPTION.concat(StringPool.UNDERLINE).concat(
@@ -157,18 +149,11 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 
 		document.addKeyword(Field.RELATED_ENTRY, true);
 
-		String titleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-			calendarBooking.getTitle());
-
 		String[] titleLanguageIds = getLanguageIds(
 			defaultLanguageId, calendarBooking.getTitle());
 
 		for (String titleLanguageId : titleLanguageIds) {
 			String title = calendarBooking.getTitle(titleLanguageId);
-
-			if (titleLanguageId.equals(titleDefaultLanguageId)) {
-				document.addText(Field.TITLE, title);
-			}
 
 			document.addText(
 				Field.TITLE.concat(StringPool.UNDERLINE).concat(

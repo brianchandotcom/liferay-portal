@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<taskdef classpath="${db.support.classpath}" resource="com/liferay/portal/tools/db/support/ant/taskdefs.properties" />
+	<taskdef resource="com/liferay/portal/tools/db/support/ant/taskdefs.properties" />
 
 	<target name="clean-service-builder">
 		<clean-service-builder

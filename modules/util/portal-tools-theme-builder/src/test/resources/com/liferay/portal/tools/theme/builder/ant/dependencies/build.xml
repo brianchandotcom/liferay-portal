@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project xmlns:if="ant:if" xmlns:unless="ant:unless">
-	<taskdef classpath="${theme.builder.classpath}" resource="com/liferay/portal/tools/theme/builder/ant/taskdefs.properties" />
+	<taskdef resource="com/liferay/portal/tools/theme/builder/ant/taskdefs.properties" />
 
 	<target name="build-theme">
 		<build-theme

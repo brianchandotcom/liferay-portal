@@ -1146,6 +1146,10 @@ public class ProjectTemplatesTest {
 			}
 		}
 
+		_testNotExists(projectDir, ".mvn/wrapper/maven-wrapper.jar");
+		_testNotExists(projectDir, ".mvn/wrapper/maven-wrapper.properties");
+		_testNotExists(projectDir, "mvnw");
+		_testNotExists(projectDir, "mvnw.cmd");
 		_testNotExists(projectDir, "pom.xml");
 
 		return projectDir;

@@ -1032,6 +1032,12 @@ the `node_modules` directory of a project with the `clean` task.
 ### Changed
 - [LPS-70555]: Update the [Liferay Gradle Plugins] dependency to version 3.2.0.
 
+## 2.4.30 - 2017-02-10
+
+### Fixed
+- [LPS-70584]: Avoid requiring an Internet connection while parsing
+`service.xml` files.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -1132,6 +1138,7 @@ the `node_modules` directory of a project with the `clean` task.
 [LPS-70486]: https://issues.liferay.com/browse/LPS-70486
 [LPS-70515]: https://issues.liferay.com/browse/LPS-70515
 [LPS-70555]: https://issues.liferay.com/browse/LPS-70555
+[LPS-70584]: https://issues.liferay.com/browse/LPS-70584
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

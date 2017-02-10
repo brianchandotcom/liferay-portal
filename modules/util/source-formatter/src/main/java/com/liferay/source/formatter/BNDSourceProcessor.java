@@ -160,6 +160,16 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkRange(String fileName, String content) {
+		int pos = content.indexOf("\"${range");
+
+		if (pos != -1) {
+			processMessage(
+				fileName, "Do not use range expression, see LPS-70519",
+				getLineCount(content, pos));
+		}
+	}
+
 	protected void checkWildcardImports(
 		String fileName, String absolutePath, String content, Pattern pattern) {
 
@@ -251,6 +261,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		content = formatLineBreaks(shortFileName, content);
 		content = formatWhitespace(shortFileName, content);
+
+		checkRange(fileName, content);
 
 		if ((portalSource || subrepository) && isModulesFile(absolutePath) &&
 			!fileName.endsWith("test-bnd.bnd")) {

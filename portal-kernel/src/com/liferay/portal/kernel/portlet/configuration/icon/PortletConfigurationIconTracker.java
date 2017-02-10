@@ -106,11 +106,14 @@ public class PortletConfigurationIconTracker {
 			if (!path.isEmpty()) {
 				paths.add(path);
 
-				List<String> defaultViews =
-					portletConfigurationIconLocator.getDefaultViews(portletId);
+				if (!path.equals(StringPool.DASH)) {
+					List<String> defaultViews =
+						portletConfigurationIconLocator.getDefaultViews(
+							portletId);
 
-				if (defaultViews.contains(path)) {
-					paths.add(StringPool.DASH);
+					if (defaultViews.contains(path)) {
+						paths.add(StringPool.DASH);
+					}
 				}
 			}
 		}

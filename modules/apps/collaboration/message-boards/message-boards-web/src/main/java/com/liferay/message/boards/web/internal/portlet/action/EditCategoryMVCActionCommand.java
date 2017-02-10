@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.internal.portlet.action;
 
+import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.message.boards.kernel.exception.CategoryNameException;
 import com.liferay.message.boards.kernel.exception.MailingListEmailAddressException;
 import com.liferay.message.boards.kernel.exception.MailingListInServerNameException;
@@ -25,6 +26,7 @@ import com.liferay.message.boards.kernel.exception.NoSuchCategoryException;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.service.MBCategoryService;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
@@ -40,17 +42,19 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -58,6 +62,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Sanz
  */
 @Component(
+	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
 	property = {
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
@@ -66,6 +71,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_captchaConfiguration = ConfigurableUtil.createConfigurable(
+			CaptchaConfiguration.class, properties);
+	}
 
 	protected void deleteCategories(
 			ActionRequest actionRequest, boolean moveToTrash)
@@ -243,8 +255,8 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 			MBCategory.class.getName(), actionRequest);
 
 		if (categoryId <= 0) {
-			if (PropsValues.
-					CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_CATEGORY) {
+			if (_captchaConfiguration.
+					messageBoardsEditCategoryCaptchaEnabled()) {
 
 				CaptchaUtil.check(actionRequest);
 			}
@@ -272,6 +284,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private volatile CaptchaConfiguration _captchaConfiguration;
 	private MBCategoryService _mbCategoryService;
 	private TrashEntryService _trashEntryService;
 

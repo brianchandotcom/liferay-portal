@@ -468,7 +468,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		String projectPath = project.getPath();
 
 		if (projectPath.startsWith(":apps:") ||
-			projectPath.startsWith(":private:apps:")) {
+			projectPath.startsWith(":private:apps:") ||
+			projectPath.startsWith(":private:util:") ||
+			projectPath.startsWith(":util:")) {
 
 			writeArtifactPublishCommandsTask.onlyIf(
 				new Spec<Task>() {

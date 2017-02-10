@@ -89,7 +89,7 @@ public class PortletConfigurationIconTracker {
 	}
 
 	protected static String getKey(String portletId, String path) {
-		return portletId + StringPool.COLON + path;
+		return portletId.concat(StringPool.COLON).concat(path);
 	}
 
 	protected static Set<String> getPaths(

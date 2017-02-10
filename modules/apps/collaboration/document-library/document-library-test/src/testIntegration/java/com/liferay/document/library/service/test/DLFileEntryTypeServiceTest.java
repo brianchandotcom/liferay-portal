@@ -144,7 +144,7 @@ public class DLFileEntryTypeServiceTest {
 
 		int fileEntryTypesCount =
 			DLFileEntryTypeServiceUtil.getFileEntryTypesCount(
-				new long[]{TestPropsValues.getGroupId()});
+				new long[] {TestPropsValues.getGroupId()});
 
 		DLFileEntryTypeServiceUtil.addFileEntryType(
 			TestPropsValues.getGroupId(), StringUtil.randomString(),

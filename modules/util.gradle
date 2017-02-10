@@ -11,6 +11,7 @@ buildscript {
 }
 
 task buildFixPackChangeLog(type: BuildChangeLogTask)
+task cleanLibs(type: Delete)
 task cleanReleng
 task cleanVersionOverride
 task setUpLibs
@@ -42,6 +43,18 @@ buildFixPackChangeLog {
 	}
 
 	ticketIdPrefixes "LRQA"
+}
+
+cleanLibs {
+	delete libDependenciesMap.collectMany {
+		File dir, Properties properties ->
+
+		Set<String> fileTitles = properties.stringPropertyNames()
+
+		fileTitles.collect {
+			new File(dir, it + ".jar")
+		}
+	}
 }
 
 cleanReleng {

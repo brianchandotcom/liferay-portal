@@ -17,13 +17,13 @@ package com.liferay.portal.kernel.portlet.configuration.icon;
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -95,7 +95,7 @@ public class PortletConfigurationIconTracker {
 	protected static Set<String> getPaths(
 		String portletId, PortletRequest portletRequest) {
 
-		Set<String> paths = new HashSet<>();
+		Set<String> paths = _defaultPaths;
 
 		for (PortletConfigurationIconLocator portletConfigurationIconLocator :
 				_serviceTrackerList) {
@@ -103,28 +103,27 @@ public class PortletConfigurationIconTracker {
 			String path = portletConfigurationIconLocator.getPath(
 				portletRequest);
 
-			if (!path.isEmpty()) {
+			if (!path.isEmpty() && !path.equals(StringPool.DASH)) {
+				if (paths == _defaultPaths) {
+					paths = new HashSet<>();
+				}
+
 				paths.add(path);
 
-				if (!path.equals(StringPool.DASH)) {
-					List<String> defaultViews =
-						portletConfigurationIconLocator.getDefaultViews(
-							portletId);
+				List<String> defaultViews =
+					portletConfigurationIconLocator.getDefaultViews(portletId);
 
-					if (defaultViews.contains(path)) {
-						paths.add(StringPool.DASH);
-					}
+				if (defaultViews.contains(path)) {
+					paths.add(StringPool.DASH);
 				}
 			}
-		}
-
-		if (SetUtil.isEmpty(paths)) {
-			paths.add(StringPool.DASH);
 		}
 
 		return paths;
 	}
 
+	private static final Set<String> _defaultPaths = Collections.singleton(
+		StringPool.DASH);
 	private static final ServiceTrackerList<PortletConfigurationIconLocator>
 		_serviceTrackerList = ServiceTrackerCollections.openList(
 			PortletConfigurationIconLocator.class);

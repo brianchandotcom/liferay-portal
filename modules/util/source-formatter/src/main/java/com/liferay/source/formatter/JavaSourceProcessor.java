@@ -55,6 +55,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _diamondOperatorPattern.matcher(content);
 
 		while (matcher.find()) {
+			String match = matcher.group();
+
+			if (match.contains("{\n")) {
+				continue;
+			}
+
 			String className = matcher.group(3);
 			String parameterType = matcher.group(5);
 
@@ -68,7 +74,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
-			String match = matcher.group();
 			String whitespace = matcher.group(4);
 
 			String replacement = StringUtil.replaceFirst(
@@ -4700,7 +4705,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"(\n\\s*\\* @deprecated)( As of ([0-9\\.]+)(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
 	private final Pattern _diamondOperatorPattern = Pattern.compile(
-		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*.*\\);\n");
+		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<([^>][^;]*?)>" +
+			"\\(\n*\t*.*?\\);\n",
+		Pattern.DOTALL);
 	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
 	private final Pattern _ifStatementCriteriaPattern = Pattern.compile(

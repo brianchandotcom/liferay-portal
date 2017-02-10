@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -108,14 +107,10 @@ public class PortletConfigurationIconTracker {
 			List<String> defaultViews =
 				portletConfigurationIconLocator.getDefaultViews(portletId);
 
-			String[] defaultViewsArray = ArrayUtil.toStringArray(defaultViews);
-
 			if (Validator.isNotNull(path)) {
 				paths.add(path);
 
-				if (ArrayUtil.isNotEmpty(defaultViewsArray) &&
-					ArrayUtil.contains(defaultViewsArray, path)) {
-
+				if (defaultViews.contains(path)) {
 					paths.add(StringPool.DASH);
 				}
 			}

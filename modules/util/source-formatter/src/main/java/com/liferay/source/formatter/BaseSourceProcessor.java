@@ -2646,6 +2646,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		for (String exclude : excludes) {
+			if (Validator.isNull(exclude)) {
+				continue;
+			}
+
 			if (exclude.startsWith("**")) {
 				exclude = exclude.substring(2);
 			}

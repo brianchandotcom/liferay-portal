@@ -17,12 +17,12 @@ package com.liferay.friendly.url.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Pavel Savinov
  */
 @ProviderType
-public class FriendlyURLImpl extends FriendlyURLBaseImpl {
+public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 
-	public FriendlyURLImpl() {
+	public FriendlyURLEntryImpl() {
 	}
 
 }

@@ -1730,7 +1730,29 @@ app.server.type=@{app.server.type}]]></echo>
 	</target>
 
 	<target name="gradle-plugins-test-jdk8">
-		<gradle-execute dir="modules/sdk" task="gradleTest" />
+		<run-batch-test>
+			<test-action>
+				<property name="gradle.test.excludes" value="gradle-plugins-gulp,gradle-plugins-js-module-config-generator,gradle-plugins-js-transpiler,gradle-plugins-node,gradle-plugins-workspace" />
+
+				<for param="gradle.plugin.dir">
+					<path>
+						<dirset
+							dir="modules/sdk"
+							excludes="${gradle.test.excludes}"
+							includes="gradle-plugins-*"
+						/>
+					</path>
+					<sequential>
+						<if>
+							<resourcecontains resource="@{gradle.plugin.dir}/build.gradle" substring="gradleTest" />
+							<then>
+								<gradle-execute dir="@{gradle.plugin.dir}" task="gradleTest" />
+							</then>
+						</if>
+					</sequential>
+				</for>
+			</test-action>
+		</run-batch-test>
 	</target>
 
 	<target name="integration-db2105-jdk8">

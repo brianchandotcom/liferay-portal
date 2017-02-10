@@ -897,6 +897,18 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateWithGradle() throws Exception {
+		_buildTemplateWithGradle(
+			temporaryFolder.newFolder(), null, "foo-portlet", false, false);
+		_buildTemplateWithGradle(
+			temporaryFolder.newFolder(), null, "foo-portlet", false, true);
+		_buildTemplateWithGradle(
+			temporaryFolder.newFolder(), null, "foo-portlet", true, false);
+		_buildTemplateWithGradle(
+			temporaryFolder.newFolder(), null, "foo-portlet", true, true);
+	}
+
+	@Test
 	public void testBuildTemplateWithPackageName() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"", "barfoo", "--package-name", "foo.bar");
@@ -1105,13 +1117,23 @@ public class ProjectTemplatesTest {
 	}
 
 	private static File _buildTemplateWithGradle(
-			File destinationDir, String template, String name, String... args)
+			File destinationDir, String template, String name, boolean gradle,
+			boolean maven, String... args)
 		throws Exception {
 
 		List<String> completeArgs = new ArrayList<>(args.length + 6);
 
 		completeArgs.add("--destination");
 		completeArgs.add(destinationDir.getPath());
+
+		if (!gradle) {
+			completeArgs.add("--gradle");
+			completeArgs.add(String.valueOf(gradle));
+		}
+
+		if (maven) {
+			completeArgs.add("--maven");
+		}
 
 		if (Validator.isNotNull(name)) {
 			completeArgs.add("--name");
@@ -1133,28 +1155,60 @@ public class ProjectTemplatesTest {
 		File projectDir = new File(destinationDir, name);
 
 		_testExists(projectDir, ".gitignore");
-		_testExists(projectDir, "build.gradle");
 
-		if (WorkspaceUtil.isWorkspace(destinationDir)) {
-			for (String fileName : _STANDALONE_ONLY_FILE_NAMES) {
-				_testNotExists(projectDir, fileName);
-			}
+		if (gradle) {
+			_testExists(projectDir, "build.gradle");
 		}
 		else {
-			for (String fileName : _STANDALONE_ONLY_FILE_NAMES) {
+			_testNotExists(projectDir, "build.gradle");
+		}
+
+		if (maven) {
+			_testExists(projectDir, "pom.xml");
+		}
+		else {
+			_testNotExists(projectDir, "pom.xml");
+		}
+
+		boolean workspace = WorkspaceUtil.isWorkspace(destinationDir);
+
+		if (gradle && !workspace) {
+			for (String fileName : _GRADLE_WRAPPER_FILE_NAMES) {
 				_testExists(projectDir, fileName);
 			}
 
 			_testExecutable(projectDir, "gradlew");
 		}
+		else {
+			for (String fileName : _GRADLE_WRAPPER_FILE_NAMES) {
+				_testNotExists(projectDir, fileName);
+			}
 
-		_testNotExists(projectDir, ".mvn/wrapper/maven-wrapper.jar");
-		_testNotExists(projectDir, ".mvn/wrapper/maven-wrapper.properties");
-		_testNotExists(projectDir, "mvnw");
-		_testNotExists(projectDir, "mvnw.cmd");
-		_testNotExists(projectDir, "pom.xml");
+			_testNotExists(projectDir, "settings.gradle");
+		}
+
+		if (maven && !workspace) {
+			for (String fileName : _MAVEN_WRAPPER_FILE_NAMES) {
+				_testExists(projectDir, fileName);
+			}
+
+			_testExecutable(projectDir, "mvnw");
+		}
+		else {
+			for (String fileName : _MAVEN_WRAPPER_FILE_NAMES) {
+				_testNotExists(projectDir, fileName);
+			}
+		}
 
 		return projectDir;
+	}
+
+	private static File _buildTemplateWithGradle(
+			File destinationDir, String template, String name, String... args)
+		throws Exception {
+
+		return _buildTemplateWithGradle(
+			destinationDir, template, name, true, false, args);
 	}
 
 	private static File _buildTemplateWithMaven(
@@ -1581,19 +1635,24 @@ public class ProjectTemplatesTest {
 	private static final String _GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING =
 		":checkSourceFormatting";
 
+	private static final String[] _GRADLE_WRAPPER_FILE_NAMES = {
+		"gradlew", "gradlew.bat", "gradle/wrapper/gradle-wrapper.jar",
+		"gradle/wrapper/gradle-wrapper.properties"
+	};
+
 	private static final String _MAVEN_GOAL_BUILD_SERVICE =
 		"liferay:build-service";
 
 	private static final String _MAVEN_GOAL_PACKAGE = "package";
 
+	private static final String[] _MAVEN_WRAPPER_FILE_NAMES = {
+		"mvnw", "mvnw.cmd", ".mvn/wrapper/maven-wrapper.jar",
+		".mvn/wrapper/maven-wrapper.properties"
+	};
+
 	private static final String _REPOSITORY_CDN_URL =
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
 			"/public";
-
-	private static final String[] _STANDALONE_ONLY_FILE_NAMES = {
-		"gradlew", "gradlew.bat", "gradle/wrapper/gradle-wrapper.jar",
-		"gradle/wrapper/gradle-wrapper.properties"
-	};
 
 	private static URI _gradleDistribution;
 	private static Properties _projectTemplateVersions;

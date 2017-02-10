@@ -1144,6 +1144,8 @@ public class ProjectTemplatesTest {
 			for (String fileName : _STANDALONE_ONLY_FILE_NAMES) {
 				_testExists(projectDir, fileName);
 			}
+
+			_testExecutable(projectDir, "gradlew");
 		}
 
 		_testNotExists(projectDir, ".mvn/wrapper/maven-wrapper.jar");
@@ -1322,6 +1324,14 @@ public class ProjectTemplatesTest {
 			Assert.assertTrue(
 				"Not found in " + fileName + ": " + s, content.contains(s));
 		}
+
+		return file;
+	}
+
+	private static File _testExecutable(File dir, String fileName) {
+		File file = _testExists(dir, fileName);
+
+		Assert.assertTrue(fileName + " is not executable", file.canExecute());
 
 		return file;
 	}

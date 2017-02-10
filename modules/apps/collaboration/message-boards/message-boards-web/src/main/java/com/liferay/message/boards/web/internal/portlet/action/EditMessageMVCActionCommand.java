@@ -34,6 +34,10 @@ import com.liferay.message.boards.kernel.service.MBMessageService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadService;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandler;
+import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandlerProvider;
+import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
+import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryUtil;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
@@ -41,6 +45,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -455,6 +462,20 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 						inputStreamOVPs, anonymous, priority, allowPingbacks,
 						serviceContext);
 				}
+
+				MBMessageFormatUploadHandler formatHandler =
+					_formatHandlerProvider.provide(message.getFormat());
+
+				if (formatHandler != null) {
+					body = _addBodyAttachmentTempFiles(
+						themeDisplay, body, message, new ArrayList<String>(),
+						formatHandler);
+
+					_mbMessageService.updateMessage(
+						message.getMessageId(), message.getSubject(), body,
+						null, null, message.getPriority(),
+						message.getAllowPingbacks(), serviceContext);
+				}
 			}
 			else {
 				List<String> existingFiles = new ArrayList<>();
@@ -466,6 +487,17 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 					if (Validator.isNotNull(path)) {
 						existingFiles.add(path);
 					}
+				}
+
+				message = _mbMessageService.getMessage(messageId);
+
+				MBMessageFormatUploadHandler formatHandler =
+					_formatHandlerProvider.provide(message.getFormat());
+
+				if (formatHandler != null) {
+					body = _addBodyAttachmentTempFiles(
+						themeDisplay, body, message, existingFiles,
+						formatHandler);
 				}
 
 				// Update message
@@ -505,6 +537,50 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 	}
+
+	private String _addBodyAttachmentTempFiles(
+			ThemeDisplay themeDisplay, String body, MBMessage message,
+			List<String> existingFiles,
+			MBMessageFormatUploadHandler formatHandler)
+		throws PortalException {
+
+		List<FileEntry> tempMBAttachmentFileEntries =
+			MBAttachmentFileEntryUtil.getTempMBAttachmentFileEntries(body);
+
+		if (!tempMBAttachmentFileEntries.isEmpty()) {
+			Folder folder = message.addAttachmentsFolder();
+
+			List<MBAttachmentFileEntryReference>
+				mbAttachmentFileEntryReferences =
+					MBAttachmentFileEntryUtil.addMBAttachmentFileEntries(
+						message.getGroupId(), themeDisplay.getUserId(),
+						message.getMessageId(), folder.getFolderId(),
+						tempMBAttachmentFileEntries);
+
+			for (MBAttachmentFileEntryReference mbAttachmentFileEntryReference :
+					mbAttachmentFileEntryReferences) {
+
+				FileEntry mbAttachmentFileEntry =
+					mbAttachmentFileEntryReference.getMBAttachmentFileEntry();
+
+				existingFiles.add(
+					String.valueOf(mbAttachmentFileEntry.getFileEntryId()));
+			}
+
+			body = formatHandler.replaceImageReferences(
+				body, mbAttachmentFileEntryReferences);
+
+			for (FileEntry tempMBAttachment : tempMBAttachmentFileEntries) {
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					tempMBAttachment.getFileEntryId());
+			}
+		}
+
+		return body;
+	}
+
+	@Reference
+	private MBMessageFormatUploadHandlerProvider _formatHandlerProvider;
 
 	private MBCategoryService _mbCategoryService;
 	private MBMessageService _mbMessageService;

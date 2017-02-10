@@ -1,0 +1,12 @@
+{
+	"dependencies": {
+		"metal": "^2.6.0",
+		"metal-events": "^2.6.0"
+	},
+	"devDependencies": {
+		"liferay-module-config-generator": "^1.1.10",
+		"metal-cli": "^2.1.2"
+	},
+	"name": "message-boards-web",
+	"version": "1.2.10"
+}

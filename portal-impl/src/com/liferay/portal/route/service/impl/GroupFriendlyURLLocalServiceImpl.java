@@ -35,9 +35,4 @@ import com.liferay.portal.route.service.base.GroupFriendlyURLLocalServiceBaseImp
 @ProviderType
 public class GroupFriendlyURLLocalServiceImpl
 	extends GroupFriendlyURLLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.portal.kernel.route.service.GroupFriendlyURLLocalServiceUtil} to access the group friendly url local service.
-	 */
 }

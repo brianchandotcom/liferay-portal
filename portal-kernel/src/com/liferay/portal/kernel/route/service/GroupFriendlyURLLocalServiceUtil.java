@@ -84,6 +84,21 @@ public class GroupFriendlyURLLocalServiceUtil {
 	}
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link GroupFriendlyURLLocalServiceUtil} to access the group friendly url local service.
+	*/
+	public static com.liferay.portal.kernel.route.model.GroupFriendlyURL addGroupFriendlyURL(
+		long userId, long companyId, long groupId,
+		java.lang.String friendlyURL, java.lang.String languageId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addGroupFriendlyURL(userId, companyId, groupId,
+			friendlyURL, languageId, serviceContext);
+	}
+
+	/**
 	* Creates a new group friendly url with the primary key. Does not add the group friendly url to the database.
 	*
 	* @param groupFriendlyURLId the primary key for the new group friendly url
@@ -105,6 +120,13 @@ public class GroupFriendlyURLLocalServiceUtil {
 		return getService().deleteGroupFriendlyURL(groupFriendlyURL);
 	}
 
+	public static com.liferay.portal.kernel.route.model.GroupFriendlyURL deleteGroupFriendlyURL(
+		long companyId, long groupId, java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteGroupFriendlyURL(companyId, groupId, languageId);
+	}
+
 	/**
 	* Deletes the group friendly url with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -119,8 +141,19 @@ public class GroupFriendlyURLLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.route.model.GroupFriendlyURL fetchGroupFriendlyURL(
+		long companyId, long groupId, java.lang.String languageId) {
+		return getService().fetchGroupFriendlyURL(companyId, groupId, languageId);
+	}
+
+	public static com.liferay.portal.kernel.route.model.GroupFriendlyURL fetchGroupFriendlyURL(
 		long groupFriendlyURLId) {
 		return getService().fetchGroupFriendlyURL(groupFriendlyURLId);
+	}
+
+	public static com.liferay.portal.kernel.route.model.GroupFriendlyURL fetchGroupFriendlyURLByFriendlyURL(
+		long companyId, java.lang.String friendlyURL) {
+		return getService()
+				   .fetchGroupFriendlyURLByFriendlyURL(companyId, friendlyURL);
 	}
 
 	/**
@@ -173,6 +206,16 @@ public class GroupFriendlyURLLocalServiceUtil {
 		return getService().updateGroupFriendlyURL(groupFriendlyURL);
 	}
 
+	public static com.liferay.portal.kernel.route.model.GroupFriendlyURL updateGroupFriendlyURL(
+		long userId, long companyId, long groupId,
+		java.lang.String friendlyURL, java.lang.String languageId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateGroupFriendlyURL(userId, companyId, groupId,
+			friendlyURL, languageId, serviceContext);
+	}
+
 	/**
 	* Returns the number of group friendly urls.
 	*
@@ -189,6 +232,16 @@ public class GroupFriendlyURLLocalServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.route.model.GroupFriendlyURL> addGroupFriendlyURLs(
+		long userId, long companyId, long groupId,
+		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addGroupFriendlyURLs(userId, companyId, groupId,
+			friendlyURLMap, serviceContext);
 	}
 
 	/**
@@ -257,6 +310,11 @@ public class GroupFriendlyURLLocalServiceUtil {
 		return getService().getGroupFriendlyURLs(start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.route.model.GroupFriendlyURL> getGroupFriendlyURLs(
+		long companyId, long groupId) {
+		return getService().getGroupFriendlyURLs(companyId, groupId);
+	}
+
 	/**
 	* Returns all the group friendly urls matching the UUID and company.
 	*
@@ -288,6 +346,16 @@ public class GroupFriendlyURLLocalServiceUtil {
 			start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.route.model.GroupFriendlyURL> updateGroupFriendlyURLs(
+		long userId, long companyId, long groupId,
+		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateGroupFriendlyURLs(userId, companyId, groupId,
+			friendlyURLMap, serviceContext);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -310,6 +378,10 @@ public class GroupFriendlyURLLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteGroupFriendlyURLs(long companyId, long groupId) {
+		getService().deleteGroupFriendlyURLs(companyId, groupId);
 	}
 
 	public static GroupFriendlyURLLocalService getService() {

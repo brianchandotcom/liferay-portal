@@ -19,7 +19,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.friendly.url.model.FriendlyURL;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -34,13 +34,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = StagedModelDataHandler.class)
-public class FriendlyURLStagedModelDataHandler
-	extends BaseStagedModelDataHandler<FriendlyURL> {
+public class FriendlyURLEntryStagedModelDataHandler
+	extends BaseStagedModelDataHandler<FriendlyURLEntry> {
 
-	public static final String[] CLASS_NAMES = {FriendlyURL.class.getName()};
+	public static final String[] CLASS_NAMES =
+		{FriendlyURLEntry.class.getName()};
 
 	@Override
-	public List<FriendlyURL> fetchStagedModelsByUuidAndCompanyId(
+	public List<FriendlyURLEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return _stagedModelRepository.fetchStagedModelsByUuidAndCompanyId(
@@ -53,40 +54,44 @@ public class FriendlyURLStagedModelDataHandler
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.friendly.url.model.FriendlyURL)",
+		target = "(model.class.name=com.liferay.friendly.url.model.FriendlyURLEntry)",
 		unbind = "-"
 	)
 	public void setStagedModelRepository(
-		StagedModelRepository<FriendlyURL> stagedModelRepository) {
+		StagedModelRepository<FriendlyURLEntry> stagedModelRepository) {
 
 		_stagedModelRepository = stagedModelRepository;
 	}
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, FriendlyURL friendlyURL)
+			PortletDataContext portletDataContext,
+			FriendlyURLEntry friendlyURLEntry)
 		throws Exception {
 
-		Element friendlyURLElement = portletDataContext.getExportDataElement(
-			friendlyURL);
+		Element friendlyURLEntryElement =
+			portletDataContext.getExportDataElement(friendlyURLEntry);
 
-		friendlyURLElement.addAttribute(
-			"resource-class-name", friendlyURL.getClassName());
+		friendlyURLEntryElement.addAttribute(
+			"resource-class-name", friendlyURLEntry.getClassName());
 
 		portletDataContext.addClassedModel(
-			friendlyURLElement, ExportImportPathUtil.getModelPath(friendlyURL),
-			friendlyURL);
+			friendlyURLEntryElement,
+			ExportImportPathUtil.getModelPath(friendlyURLEntry),
+			friendlyURLEntry);
 	}
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, FriendlyURL friendlyURL)
+			PortletDataContext portletDataContext,
+			FriendlyURLEntry friendlyURLEntry)
 		throws Exception {
 
-		Element friendlyURLElement =
-			portletDataContext.getImportDataStagedModelElement(friendlyURL);
+		Element friendlyURLEntryElement =
+			portletDataContext.getImportDataStagedModelElement(
+				friendlyURLEntry);
 
-		String className = friendlyURLElement.attributeValue(
+		String className = friendlyURLEntryElement.attributeValue(
 			"resource-class-name");
 
 		long classNameId = _classNameLocalService.getClassNameId(className);
@@ -95,35 +100,40 @@ public class FriendlyURLStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(className);
 
 		long classPK = MapUtil.getLong(
-			newPrimaryKeysMap, friendlyURL.getClassPK());
+			newPrimaryKeysMap, friendlyURLEntry.getClassPK());
 
-		FriendlyURL existingFriendlyURL = fetchStagedModelByUuidAndGroupId(
-			friendlyURL.getUuid(), friendlyURL.getGroupId());
+		FriendlyURLEntry existingFriendlyURLEntry =
+			fetchStagedModelByUuidAndGroupId(
+				friendlyURLEntry.getUuid(), friendlyURLEntry.getGroupId());
 
-		if ((existingFriendlyURL == null) ||
+		if ((existingFriendlyURLEntry == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
 
-			FriendlyURL importedFriendlyURL = (FriendlyURL)friendlyURL.clone();
+			FriendlyURLEntry importedFriendlyURLEntry =
+				(FriendlyURLEntry)friendlyURLEntry.clone();
 
-			importedFriendlyURL.setGroupId(
+			importedFriendlyURLEntry.setGroupId(
 				portletDataContext.getScopeGroupId());
-			importedFriendlyURL.setCompanyId(portletDataContext.getCompanyId());
-			importedFriendlyURL.setClassNameId(classNameId);
-			importedFriendlyURL.setClassPK(classPK);
+			importedFriendlyURLEntry.setCompanyId(
+				portletDataContext.getCompanyId());
+			importedFriendlyURLEntry.setClassNameId(classNameId);
+			importedFriendlyURLEntry.setClassPK(classPK);
 
 			_stagedModelRepository.addStagedModel(
-				portletDataContext, importedFriendlyURL);
+				portletDataContext, importedFriendlyURLEntry);
 		}
 		else {
-			existingFriendlyURL.setMain(friendlyURL.isMain());
+			existingFriendlyURLEntry.setMain(friendlyURLEntry.isMain());
 
 			_stagedModelRepository.updateStagedModel(
-				portletDataContext, existingFriendlyURL);
+				portletDataContext, existingFriendlyURLEntry);
 		}
 	}
 
 	@Override
-	protected StagedModelRepository<FriendlyURL> getStagedModelRepository() {
+	protected StagedModelRepository<FriendlyURLEntry>
+		getStagedModelRepository() {
+
 		return _stagedModelRepository;
 	}
 
@@ -135,6 +145,6 @@ public class FriendlyURLStagedModelDataHandler
 	}
 
 	private ClassNameLocalService _classNameLocalService;
-	private StagedModelRepository<FriendlyURL> _stagedModelRepository;
+	private StagedModelRepository<FriendlyURLEntry> _stagedModelRepository;
 
 }

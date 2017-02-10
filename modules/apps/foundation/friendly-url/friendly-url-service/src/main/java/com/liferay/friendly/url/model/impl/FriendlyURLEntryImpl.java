@@ -23,12 +23,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import java.util.Locale;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Pavel Savinov
  */
 @ProviderType
-public class FriendlyURLImpl extends FriendlyURLBaseImpl {
+public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 
-	public FriendlyURLImpl() {
+	public FriendlyURLEntryImpl() {
 	}
 
 	@Override

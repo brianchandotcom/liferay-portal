@@ -40,7 +40,7 @@ public class ReplaceSoyTranslationTask extends SourceTask {
 	@TaskAction
 	public void replaceSoyTranslation() throws IOException {
 		for (File file : getSource()) {
-			_replaceTranslationCommand.replaceTranslation(file.toPath());
+			_replaceTranslationCommand.execute(file.toPath());
 		}
 	}
 

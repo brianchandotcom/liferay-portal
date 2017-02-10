@@ -153,7 +153,7 @@ public class ProjectTemplateFilesTest {
 		}
 
 		Assert.assertFalse(
-			"Forbidden Gradle wrapper in " + archetypeResourcesDirPath,
+			"Forbidden Gradle Wrapper in " + archetypeResourcesDirPath,
 			Files.exists(archetypeResourcesDirPath.resolve("gradlew")));
 
 		Path pomXmlPath = archetypeResourcesDirPath.resolve("pom.xml");

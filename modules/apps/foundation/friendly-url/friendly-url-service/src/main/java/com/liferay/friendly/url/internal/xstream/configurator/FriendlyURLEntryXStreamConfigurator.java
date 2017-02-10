@@ -17,7 +17,7 @@ package com.liferay.friendly.url.internal.xstream.configurator;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
-import com.liferay.friendly.url.model.impl.FriendlyURLImpl;
+import com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl;
 import com.liferay.xstream.configurator.XStreamConfigurator;
 
 import java.util.Arrays;
@@ -30,7 +30,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = XStreamConfigurator.class)
-public class FriendlyURLXStreamConfigurator implements XStreamConfigurator {
+public class FriendlyURLEntryXStreamConfigurator
+	implements XStreamConfigurator {
 
 	@Override
 	public List<XStreamType> getAllowedXStreamTypes() {
@@ -48,8 +49,8 @@ public class FriendlyURLXStreamConfigurator implements XStreamConfigurator {
 	}
 
 	private final List<XStreamAlias> _xStreamAliases = Arrays.asList(
-		new XStreamAlias(FriendlyURLImpl.class, "FriendlyURL"));
+		new XStreamAlias(FriendlyURLEntryImpl.class, "FriendlyURLEntry"));
 	private final List<XStreamType> _xStreamTypes = Arrays.asList(
-		new XStreamType(FriendlyURLImpl.class));
+		new XStreamType(FriendlyURLEntryImpl.class));
 
 }

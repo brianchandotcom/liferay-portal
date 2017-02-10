@@ -16,7 +16,7 @@ package com.liferay.friendly.url.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.friendly.url.model.FriendlyURL;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLLocalization;
 import com.liferay.friendly.url.service.base.FriendlyURLLocalizationLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,15 +39,16 @@ public class FriendlyURLLocalizationLocalServiceImpl
 
 	@Override
 	public FriendlyURLLocalization addFriendlyURLLocalization(
-			FriendlyURL friendlyURL, String urlTitle, String languageId)
+			FriendlyURLEntry friendlyURLEntry, String urlTitle,
+			String languageId)
 		throws PortalException {
 
-		if (friendlyURL == null) {
+		if (friendlyURLEntry == null) {
 			return null;
 		}
 
-		long companyId = friendlyURL.getCompanyId();
-		long groupId = friendlyURL.getGroupId();
+		long companyId = friendlyURLEntry.getCompanyId();
+		long groupId = friendlyURLEntry.getGroupId();
 
 		long friendlyURLLocalizationId = counterLocalService.increment();
 
@@ -57,8 +58,8 @@ public class FriendlyURLLocalizationLocalServiceImpl
 
 		friendlyURLLocalization.setCompanyId(companyId);
 		friendlyURLLocalization.setGroupId(groupId);
-		friendlyURLLocalization.setFriendlyURLId(
-			friendlyURL.getFriendlyURLId());
+		friendlyURLLocalization.setFriendlyURLEntryId(
+			friendlyURLEntry.getFriendlyURLEntryId());
 		friendlyURLLocalization.setUrlTitle(urlTitle);
 		friendlyURLLocalization.setLanguageId(languageId);
 
@@ -69,41 +70,43 @@ public class FriendlyURLLocalizationLocalServiceImpl
 
 	@Override
 	public FriendlyURLLocalization deleteFriendlyURLLocalization(
-			FriendlyURL friendlyURL, String languageId)
+			FriendlyURLEntry friendlyURLEntry, String languageId)
 		throws PortalException {
 
-		if (friendlyURL == null) {
+		if (friendlyURLEntry == null) {
 			return null;
 		}
 
 		return friendlyURLLocalizationPersistence.removeByG_F_L(
-			friendlyURL.getGroupId(), friendlyURL.getFriendlyURLId(),
-			languageId);
+			friendlyURLEntry.getGroupId(),
+			friendlyURLEntry.getFriendlyURLEntryId(), languageId);
 	}
 
 	@Override
-	public void deleteFriendlyURLLocalizations(FriendlyURL friendlyURL)
+	public void deleteFriendlyURLLocalizations(
+			FriendlyURLEntry friendlyURLEntry)
 		throws PortalException {
 
-		if (friendlyURL == null) {
+		if (friendlyURLEntry == null) {
 			return;
 		}
 
 		friendlyURLLocalizationPersistence.removeByG_F(
-			friendlyURL.getGroupId(), friendlyURL.getFriendlyURLId());
+			friendlyURLEntry.getGroupId(),
+			friendlyURLEntry.getFriendlyURLEntryId());
 	}
 
 	@Override
 	public FriendlyURLLocalization fetchFriendlyURLLocalization(
-		FriendlyURL friendlyURL, String languageId) {
+		FriendlyURLEntry friendlyURLEntry, String languageId) {
 
-		if (friendlyURL == null) {
+		if (friendlyURLEntry == null) {
 			return null;
 		}
 
 		return friendlyURLLocalizationPersistence.fetchByG_F_L(
-			friendlyURL.getGroupId(), friendlyURL.getFriendlyURLId(),
-			languageId);
+			friendlyURLEntry.getGroupId(),
+			friendlyURLEntry.getFriendlyURLEntryId(), languageId);
 	}
 
 	@Override
@@ -111,40 +114,44 @@ public class FriendlyURLLocalizationLocalServiceImpl
 		long companyId, long groupId, long classNameId, long classPK,
 		String languageId) {
 
-		FriendlyURL friendlyURL = friendlyURLPersistence.fetchByC_G_C_C_M(
-			companyId, groupId, classNameId, classPK, true);
+		FriendlyURLEntry friendlyURLEntry =
+			friendlyURLEntryPersistence.fetchByG_C_C_C_M(
+				groupId, companyId, classNameId, classPK, true);
 
-		if (friendlyURL == null) {
+		if (friendlyURLEntry == null) {
 			return null;
 		}
 
 		return friendlyURLLocalizationPersistence.fetchByG_F_L(
-			groupId, friendlyURL.getFriendlyURLId(), languageId);
+			groupId, friendlyURLEntry.getFriendlyURLEntryId(), languageId);
 	}
 
 	@Override
-	public int getFriendlyURLLocalizationCount(FriendlyURL friendlyURL) {
-		if (friendlyURL == null) {
+	public int getFriendlyURLLocalizationCount(
+		FriendlyURLEntry friendlyURLEntry) {
+
+		if (friendlyURLEntry == null) {
 			return 0;
 		}
 
 		return friendlyURLLocalizationPersistence.countByG_F(
-			friendlyURL.getGroupId(), friendlyURL.getFriendlyURLId());
+			friendlyURLEntry.getGroupId(),
+			friendlyURLEntry.getFriendlyURLEntryId());
 	}
 
 	@Override
 	public List<FriendlyURLLocalization> updateFriendlyURLLocalizations(
-			FriendlyURL friendlyURL, Map<Locale, String> urlTitleMap)
+			FriendlyURLEntry friendlyURLEntry, Map<Locale, String> urlTitleMap)
 		throws PortalException {
 
-		if (friendlyURL == null) {
+		if (friendlyURLEntry == null) {
 			return Collections.emptyList();
 		}
 
 		List<FriendlyURLLocalization> friendlyURLLocalizations =
 			new ArrayList<>();
 
-		long groupId = friendlyURL.getGroupId();
+		long groupId = friendlyURLEntry.getGroupId();
 
 		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
 			String urlTitle = urlTitleMap.get(locale);
@@ -152,7 +159,7 @@ public class FriendlyURLLocalizationLocalServiceImpl
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			if (Validator.isNull(urlTitle)) {
-				deleteFriendlyURLLocalization(friendlyURL, languageId);
+				deleteFriendlyURLLocalization(friendlyURLEntry, languageId);
 
 				continue;
 			}
@@ -168,7 +175,7 @@ public class FriendlyURLLocalizationLocalServiceImpl
 			}
 
 			friendlyURLLocalization = addFriendlyURLLocalization(
-				friendlyURL, urlTitle, languageId);
+				friendlyURLEntry, urlTitle, languageId);
 
 			friendlyURLLocalizations.add(friendlyURLLocalization);
 		}

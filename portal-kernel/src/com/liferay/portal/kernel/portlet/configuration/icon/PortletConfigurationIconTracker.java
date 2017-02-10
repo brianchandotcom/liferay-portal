@@ -15,8 +15,6 @@
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
@@ -39,28 +37,7 @@ public class PortletConfigurationIconTracker {
 	public static List<PortletConfigurationIcon> getPortletConfigurationIcons(
 		String portletId, PortletRequest portletRequest) {
 
-		Set<PortletConfigurationIcon> portletConfigurationIcons =
-			new HashSet<>();
-
-		for (String path : getPaths(portletId, portletRequest)) {
-			List<PortletConfigurationIcon> portletPortletConfigurationIcons =
-				_serviceTrackerMap.getService(getKey(StringPool.STAR, path));
-
-			if (portletPortletConfigurationIcons != null) {
-				portletConfigurationIcons.addAll(
-					portletPortletConfigurationIcons);
-			}
-
-			portletPortletConfigurationIcons = _serviceTrackerMap.getService(
-				getKey(portletId, path));
-
-			if (portletPortletConfigurationIcons != null) {
-				portletConfigurationIcons.addAll(
-					portletPortletConfigurationIcons);
-			}
-		}
-
-		return new ArrayList<>(portletConfigurationIcons);
+		return _getPortletConfigurationIcons(portletId, portletRequest, false);
 	}
 
 	public static List<PortletConfigurationIcon> getPortletConfigurationIcons(
@@ -68,20 +45,9 @@ public class PortletConfigurationIconTracker {
 		Comparator<?> comparator) {
 
 		List<PortletConfigurationIcon> portletConfigurationIcons =
-			ListUtil.filter(
-				getPortletConfigurationIcons(portletId, portletRequest),
-				new PredicateFilter<PortletConfigurationIcon>() {
+			_getPortletConfigurationIcons(portletId, portletRequest, true);
 
-					@Override
-					public boolean filter(
-						PortletConfigurationIcon portletConfigurationIcon) {
-
-						return portletConfigurationIcon.isShow(portletRequest);
-					}
-
-				});
-
-		portletConfigurationIcons = ListUtil.sort(
+		Collections.sort(
 			portletConfigurationIcons,
 			(Comparator<PortletConfigurationIcon>)comparator);
 
@@ -120,6 +86,51 @@ public class PortletConfigurationIconTracker {
 		}
 
 		return paths;
+	}
+
+	private static List<PortletConfigurationIcon> _getPortletConfigurationIcons(
+		String portletId, PortletRequest portletRequest, boolean filter) {
+
+		List<PortletConfigurationIcon> portletConfigurationIcons =
+			new ArrayList<>();
+
+		for (String path : getPaths(portletId, portletRequest)) {
+			List<PortletConfigurationIcon> portletPortletConfigurationIcons =
+				_serviceTrackerMap.getService(getKey(StringPool.STAR, path));
+
+			if (portletPortletConfigurationIcons != null) {
+				for (PortletConfigurationIcon portletConfigurationIcon :
+						portletPortletConfigurationIcons) {
+
+					if (!filter ||
+						portletConfigurationIcon.isShow(portletRequest)) {
+
+						portletConfigurationIcons.add(portletConfigurationIcon);
+					}
+				}
+			}
+
+			portletPortletConfigurationIcons = _serviceTrackerMap.getService(
+				getKey(portletId, path));
+
+			if (portletPortletConfigurationIcons == null) {
+				continue;
+			}
+
+			for (PortletConfigurationIcon portletConfigurationIcon :
+					portletPortletConfigurationIcons) {
+
+				if (!portletConfigurationIcons.contains(
+						portletConfigurationIcon) &&
+					(!filter ||
+					 portletConfigurationIcon.isShow(portletRequest))) {
+
+					portletConfigurationIcons.add(portletConfigurationIcon);
+				}
+			}
+		}
+
+		return portletConfigurationIcons;
 	}
 
 	private static final Set<String> _defaultPaths = Collections.singleton(

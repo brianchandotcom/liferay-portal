@@ -31,28 +31,11 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The implementation of the group friendly url local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portal.kernel.route.service.GroupFriendlyURLLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see GroupFriendlyURLLocalServiceBaseImpl
- * @see com.liferay.portal.kernel.route.service.GroupFriendlyURLLocalServiceUtil
+ * @author Pavel Savinov
  */
 @ProviderType
 public class GroupFriendlyURLLocalServiceImpl
 	extends GroupFriendlyURLLocalServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.portal.kernel.route.service.GroupFriendlyURLLocalServiceUtil} to access the group friendly url local service.
-	 */
 
 	@Override
 	public GroupFriendlyURL addGroupFriendlyURL(
@@ -196,9 +179,6 @@ public class GroupFriendlyURLLocalServiceImpl
 					LocaleUtil.toLanguageId(locale), serviceContext);
 
 				groupFriendlyURLs.add(groupFriendlyURL);
-			}
-			else {
-				continue;
 			}
 		}
 

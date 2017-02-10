@@ -100,6 +100,7 @@
 	<import class="com.liferay.portal.kernel.model.Website" />
 	<import class="com.liferay.portal.kernel.model.WorkflowDefinitionLink" />
 	<import class="com.liferay.portal.kernel.model.WorkflowInstanceLink" />
+	<import class="com.liferay.portal.kernel.route.model.GroupFriendlyURL" />
 	<import class="com.liferay.portlet.flags.model.FlagsEntry" />
 	<import class="com.liferay.ratings.kernel.model.RatingsEntry" />
 	<import class="com.liferay.ratings.kernel.model.RatingsStats" />
@@ -113,7 +114,6 @@
 	<import class="com.liferay.social.kernel.model.SocialRequest" />
 	<import class="com.liferay.trash.kernel.model.TrashEntry" />
 	<import class="com.liferay.trash.kernel.model.TrashVersion" />
-	<import class="com.liferay.portal.kernel.route.model.GroupFriendlyURL" />
 	<class name="com.liferay.counter.model.impl.CounterImpl" table="Counter">
 		<id name="name" type="java.lang.String">
 			<generator class="assigned" />

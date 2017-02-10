@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -104,7 +103,7 @@ public class PortletConfigurationIconTracker {
 			String path = portletConfigurationIconLocator.getPath(
 				portletRequest);
 
-			if (Validator.isNotNull(path)) {
+			if (!path.isEmpty()) {
 				paths.add(path);
 
 				List<String> defaultViews =

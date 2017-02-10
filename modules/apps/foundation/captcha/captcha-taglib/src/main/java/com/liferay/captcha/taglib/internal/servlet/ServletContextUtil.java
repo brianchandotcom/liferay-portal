@@ -14,25 +14,42 @@
 
 package com.liferay.captcha.taglib.internal.servlet;
 
+import com.liferay.captcha.configuration.CaptchaConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true)
+@Component(
+	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
+	immediate = true
+)
 public class ServletContextUtil {
+
+	public static final CaptchaConfiguration getCaptchaConfiguration() {
+		return _captchaConfiguration;
+	}
 
 	public static final ServletContext getServletContext() {
 		return _instance._getServletContext();
 	}
 
 	@Activate
-	protected void activate() {
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_captchaConfiguration = ConfigurableUtil.createConfigurable(
+			CaptchaConfiguration.class, properties);
+
 		_instance = this;
 	}
 
@@ -54,6 +71,8 @@ public class ServletContextUtil {
 	}
 
 	private static ServletContextUtil _instance;
+
+	private static volatile CaptchaConfiguration _captchaConfiguration;
 
 	private ServletContext _servletContext;
 

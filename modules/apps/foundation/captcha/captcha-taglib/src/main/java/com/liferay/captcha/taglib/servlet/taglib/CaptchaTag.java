@@ -48,6 +48,9 @@ public class CaptchaTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-captcha:captcha:captchaConfiguration",
+			ServletContextUtil.getCaptchaConfiguration());
 		request.setAttribute("liferay-captcha:captcha:url", _url);
 	}
 

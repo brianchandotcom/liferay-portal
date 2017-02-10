@@ -330,4 +330,6 @@
 	<bean class="com.liferay.portlet.trash.service.persistence.impl.TrashEntryPersistenceImpl" id="com.liferay.trash.kernel.service.persistence.TrashEntryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl" id="com.liferay.trash.kernel.service.TrashVersionLocalService" />
 	<bean class="com.liferay.portlet.trash.service.persistence.impl.TrashVersionPersistenceImpl" id="com.liferay.trash.kernel.service.persistence.TrashVersionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.route.service.impl.GroupFriendlyURLLocalServiceImpl" id="com.liferay.portal.kernel.route.service.GroupFriendlyURLLocalService" />
+	<bean class="com.liferay.portal.route.service.persistence.impl.GroupFriendlyURLPersistenceImpl" id="com.liferay.portal.kernel.route.service.persistence.GroupFriendlyURLPersistence" parent="basePersistence" />
 </beans>

@@ -38,6 +38,7 @@ page import="com.liferay.asset.kernel.model.AssetTag" %><%@
 page import="com.liferay.asset.kernel.service.AssetEntryServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetTagLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.persistence.AssetEntryQuery" %><%@
+page import="com.liferay.captcha.configuration.CaptchaConfiguration" %><%@
 page import="com.liferay.document.library.kernel.antivirus.AntivirusScannerException" %><%@
 page import="com.liferay.document.library.kernel.exception.DuplicateFileEntryException" %><%@
 page import="com.liferay.document.library.kernel.exception.FileExtensionException" %><%@
@@ -187,6 +188,8 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 Locale currentLocale = LocaleUtil.fromLanguageId(currentLanguageId);
 Locale defaultLocale = themeDisplay.getSiteDefaultLocale();
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+CaptchaConfiguration captchaConfiguration = (CaptchaConfiguration)request.getAttribute(CaptchaConfiguration.class.getName());
 
 MBGroupServiceSettings mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSiteGroupId());
 

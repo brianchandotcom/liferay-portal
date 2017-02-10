@@ -38,10 +38,7 @@ public class GitHubMessageTest extends BaseJenkinsResultsParserTestCase {
 			JenkinsResultsParserUtil.getBuildProperties());
 
 		downloadSample(
-			"test-jenkins-acceptance-pullrequest_generic-failure", "42",
-			"test-jenkins-acceptance-pullrequest", "test-1-13");
-		downloadSample(
-			"test-jenkins-acceptance-pullrequest_passed", "84",
+			"test-jenkins-acceptance-pullrequest_passed", "88",
 			"test-jenkins-acceptance-pullrequest", "test-1-4");
 		downloadSample(
 			"test-plugins-acceptance-pullrequest(ee-6.2.x)_passed", "66",

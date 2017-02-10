@@ -32,6 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -178,13 +180,8 @@ public class ProjectTemplates {
 
 		FileUtil.extractDirectory("gradle-wrapper", templateDirPath);
 
-		try {
-			Files.setPosixFilePermissions(
-				templateDirPath.resolve("gradlew"),
-				PosixFilePermissions.fromString("rwxrwxr--"));
-		}
-		catch (UnsupportedOperationException uoe) {
-		}
+		FileUtil.setPosixFilePermissions(
+			templateDirPath.resolve("gradlew"), _wrapperPosixFilePermissions);
 
 		if (WorkspaceUtil.isWorkspace(destinationDir)) {
 			FileUtil.deleteDir(templateDirPath.resolve("gradle"));
@@ -345,5 +342,8 @@ public class ProjectTemplates {
 
 		return name.toLowerCase();
 	}
+
+	private static final Set<PosixFilePermission> _wrapperPosixFilePermissions =
+		PosixFilePermissions.fromString("rwxrwxr--");
 
 }

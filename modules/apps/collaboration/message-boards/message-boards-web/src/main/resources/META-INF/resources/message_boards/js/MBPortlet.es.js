@@ -3,7 +3,8 @@ import { EventHandler } from 'metal-events';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
 /**
- * MBPortlet
+ * MBPortlet handles the actions of replying or editing a
+ * message board.
  *
  * @abstract
  * @extends {PortletBase}
@@ -37,6 +38,7 @@ class MBPortlet extends PortletBase {
 		}
 
 		let advancedReplyLink = this.one('.advanced-reply');
+
 		if (advancedReplyLink) {
 			this.eventHandler_.add(advancedReplyLink.addEventListener('click', (e) => {
 				this.openAdvancedReply_(e);
@@ -82,15 +84,13 @@ class MBPortlet extends PortletBase {
 	}
 
 	/**
-	 * Checks if there are images that have not been uploaded yet.
-	 * In that case, it removes them after asking
-	 * confirmation to the user.
+	 * Save the message. Before doing that, checks if there are
+	 * images that have not been uploaded yet. In that case,
+	 * it removes them after asking confirmation to the user.
 	 *
 	 * @protected
-	 * @return {Boolean} False if there are temporal images and
-	 * user does not confirm she wants to lose them. True in other case.
 	 */
-	removeTempImages_() {
+	save_() {
 		let tempImages = this.all('img[data-random-id]');
 
 		if (tempImages.length > 0) {
@@ -100,12 +100,13 @@ class MBPortlet extends PortletBase {
 						node.parentElement.remove();
 					}
 				);
-			} else {
-				return false;
+
+				this.submitForm_();
 			}
 		}
-
-		return true;
+		else {
+			this.submitForm_();
+		}
 	}
 
 	/**
@@ -113,20 +114,18 @@ class MBPortlet extends PortletBase {
 	 *
 	 * @protected
 	 */
-	save_() {
-		if (this.removeTempImages_()) {
-			this.one('#' + this.constants.CMD).value = this.currentAction;
+	submitForm_() {
+		this.one('#' + this.constants.CMD).value = this.currentAction;
 
-			if (this.replyToMessageId) {
-				this.one('#body').value = window[this.ns('replyMessageBody' + this.replyToMessageId)].getHTML();
+		if (this.replyToMessageId) {
+			this.one('#body').value = window[this.ns('replyMessageBody' + this.replyToMessageId)].getHTML();
 
-				submitForm(document[this.ns('addQuickReplyFm' + this.replyToMessageId)]);
-			}
-			else {
-				this.one('#body').value = window[this.ns('bodyEditor')].getHTML();
+			submitForm(document[this.ns('addQuickReplyFm' + this.replyToMessageId)]);
+		}
+		else {
+			this.one('#body').value = window[this.ns('bodyEditor')].getHTML();
 
-				submitForm(document[this.ns('fm')]);
-			}
+			submitForm(document[this.ns('fm')]);
 		}
 	}
 

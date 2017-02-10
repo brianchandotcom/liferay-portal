@@ -7,7 +7,6 @@ configurations {
 }
 
 task buildBourbon(type: Copy)
-task buildCssCommon(type: Copy)
 task publishNodeModule(type: PublishNodeModuleTask)
 
 String bourbonVersion = "4.2.3"
@@ -35,14 +34,8 @@ buildBourbon {
 	}
 }
 
-buildCssCommon {
-	dependsOn buildBourbon
-	from commonCssDestinationDir
-	into new File(liferay.appServerPortalDir, "html/css/common")
-}
-
 classes {
-	dependsOn buildCssCommon
+	dependsOn buildBourbon
 }
 
 clean {

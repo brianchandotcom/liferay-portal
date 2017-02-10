@@ -4343,7 +4343,6 @@ This change was made as part of the modularization efforts to ease portal
 configuration changes.
 
 ---------------------------------------
-
 ### Deprecated the aui:tool Tag with No Direct Replacement
 - **Date:** 2017-Feb-02
 - **JIRA Ticket:** LPS-70422
@@ -4365,5 +4364,42 @@ tag.
 #### Why was this change made?
 
 This change was made as a part of the ongoing strategy to deprecate unused tags.
+
+---------------------------------------
+
+### Moved Users File Uploads Portlet Properties to OSGi Configuration
+- **Date:** 2017-Feb-06
+- **JIRA Ticket:** LPS-69211
+
+#### What changed?
+
+The Users file uploads portlet properties have been moved from Server
+Administration to an OSGI configuration named `UserFileUploadsConfiguration`
+in the `users-admin-api` module.
+
+#### Who is affected?
+
+This affects anyone who is using the following portlet properties:
+
+- `users.image.check.token`
+- `users.image.max.size`
+- `users.image.max.height`
+- `users.image.max.width`
+
+#### How should I update my code?
+
+Instead of overriding the `portal.properties` file, you can manage the
+properties from Portal's configuration administrator. This can be accessed by
+navigating to Liferay's Control Panel &rarr; *Configuration* &rarr; *System
+Settings* &rarr; *Foundation* &rarr; *User Images* and editing the settings there.
+
+If you would like to include the new configuration in your application, follow
+the instructions for
+[making your applications configurable in Liferay 7.0](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
+
+#### Why was this change made?
+
+This change was made as part of the modularization efforts to ease portal
+configuration changes.
 
 ---------------------------------------

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
@@ -61,13 +62,15 @@ public class BaseMentionsEditorConfigContributor
 		triggerJSONObject.put("term", "@");
 		triggerJSONObject.put("tplReplace", "{mention}");
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("<div class=\"nameplate\"><div class=\"nameplate-field\">");
 		sb.append("<div class=\"user-icon\"><img class=\"img-circle\" ");
 		sb.append("src=\"{portraitURL}\" height=\"32px\" width=\"32px\">");
 		sb.append("</img></div></div><div class=\"nameplate-content\"><h4>");
-		sb.append("{fullName}<small>@{screenName}</small></h4></div></div>");
+		sb.append("{fullName}");
+		sb.append(StringPool.SPACE);
+		sb.append("<small>@{screenName}</small></h4></div></div>");
 
 		triggerJSONObject.put("tplResults", sb.toString());
 

@@ -102,54 +102,54 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
 			new String[] { Long.class.getName(), Long.class.getName() },
 			FriendlyURLLocalizationModelImpl.GROUPID_COLUMN_BITMASK |
-			FriendlyURLLocalizationModelImpl.FRIENDLYURLID_COLUMN_BITMASK);
+			FriendlyURLLocalizationModelImpl.FRIENDLYURLENTRYID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_F = new FinderPath(FriendlyURLLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			FriendlyURLLocalizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns all the friendly url localizations where groupId = &#63; and friendlyURLId = &#63;.
+	 * Returns all the friendly url localizations where groupId = &#63; and friendlyURLEntryId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @return the matching friendly url localizations
 	 */
 	@Override
 	public List<FriendlyURLLocalization> findByG_F(long groupId,
-		long friendlyURLId) {
-		return findByG_F(groupId, friendlyURLId, QueryUtil.ALL_POS,
+		long friendlyURLEntryId) {
+		return findByG_F(groupId, friendlyURLEntryId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the friendly url localizations where groupId = &#63; and friendlyURLId = &#63;.
+	 * Returns a range of all the friendly url localizations where groupId = &#63; and friendlyURLEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLLocalizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param start the lower bound of the range of friendly url localizations
 	 * @param end the upper bound of the range of friendly url localizations (not inclusive)
 	 * @return the range of matching friendly url localizations
 	 */
 	@Override
 	public List<FriendlyURLLocalization> findByG_F(long groupId,
-		long friendlyURLId, int start, int end) {
-		return findByG_F(groupId, friendlyURLId, start, end, null);
+		long friendlyURLEntryId, int start, int end) {
+		return findByG_F(groupId, friendlyURLEntryId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the friendly url localizations where groupId = &#63; and friendlyURLId = &#63;.
+	 * Returns an ordered range of all the friendly url localizations where groupId = &#63; and friendlyURLEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLLocalizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param start the lower bound of the range of friendly url localizations
 	 * @param end the upper bound of the range of friendly url localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -157,21 +157,21 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public List<FriendlyURLLocalization> findByG_F(long groupId,
-		long friendlyURLId, int start, int end,
+		long friendlyURLEntryId, int start, int end,
 		OrderByComparator<FriendlyURLLocalization> orderByComparator) {
-		return findByG_F(groupId, friendlyURLId, start, end, orderByComparator,
-			true);
+		return findByG_F(groupId, friendlyURLEntryId, start, end,
+			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the friendly url localizations where groupId = &#63; and friendlyURLId = &#63;.
+	 * Returns an ordered range of all the friendly url localizations where groupId = &#63; and friendlyURLEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLLocalizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param start the lower bound of the range of friendly url localizations
 	 * @param end the upper bound of the range of friendly url localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -180,7 +180,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public List<FriendlyURLLocalization> findByG_F(long groupId,
-		long friendlyURLId, int start, int end,
+		long friendlyURLEntryId, int start, int end,
 		OrderByComparator<FriendlyURLLocalization> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -191,12 +191,12 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F;
-			finderArgs = new Object[] { groupId, friendlyURLId };
+			finderArgs = new Object[] { groupId, friendlyURLEntryId };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_F;
 			finderArgs = new Object[] {
-					groupId, friendlyURLId,
+					groupId, friendlyURLEntryId,
 					
 					start, end, orderByComparator
 				};
@@ -211,7 +211,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 			if ((list != null) && !list.isEmpty()) {
 				for (FriendlyURLLocalization friendlyURLLocalization : list) {
 					if ((groupId != friendlyURLLocalization.getGroupId()) ||
-							(friendlyURLId != friendlyURLLocalization.getFriendlyURLId())) {
+							(friendlyURLEntryId != friendlyURLLocalization.getFriendlyURLEntryId())) {
 						list = null;
 
 						break;
@@ -235,7 +235,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 
 			query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_F_FRIENDLYURLID_2);
+			query.append(_FINDER_COLUMN_G_F_FRIENDLYURLENTRYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -259,7 +259,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 
 				qPos.add(groupId);
 
-				qPos.add(friendlyURLId);
+				qPos.add(friendlyURLEntryId);
 
 				if (!pagination) {
 					list = (List<FriendlyURLLocalization>)QueryUtil.list(q,
@@ -292,21 +292,21 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Returns the first friendly url localization in the ordered set where groupId = &#63; and friendlyURLId = &#63;.
+	 * Returns the first friendly url localization in the ordered set where groupId = &#63; and friendlyURLEntryId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching friendly url localization
 	 * @throws NoSuchFriendlyURLLocalizationException if a matching friendly url localization could not be found
 	 */
 	@Override
 	public FriendlyURLLocalization findByG_F_First(long groupId,
-		long friendlyURLId,
+		long friendlyURLEntryId,
 		OrderByComparator<FriendlyURLLocalization> orderByComparator)
 		throws NoSuchFriendlyURLLocalizationException {
 		FriendlyURLLocalization friendlyURLLocalization = fetchByG_F_First(groupId,
-				friendlyURLId, orderByComparator);
+				friendlyURLEntryId, orderByComparator);
 
 		if (friendlyURLLocalization != null) {
 			return friendlyURLLocalization;
@@ -319,8 +319,8 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(", friendlyURLId=");
-		msg.append(friendlyURLId);
+		msg.append(", friendlyURLEntryId=");
+		msg.append(friendlyURLEntryId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -328,19 +328,19 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Returns the first friendly url localization in the ordered set where groupId = &#63; and friendlyURLId = &#63;.
+	 * Returns the first friendly url localization in the ordered set where groupId = &#63; and friendlyURLEntryId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching friendly url localization, or <code>null</code> if a matching friendly url localization could not be found
 	 */
 	@Override
 	public FriendlyURLLocalization fetchByG_F_First(long groupId,
-		long friendlyURLId,
+		long friendlyURLEntryId,
 		OrderByComparator<FriendlyURLLocalization> orderByComparator) {
-		List<FriendlyURLLocalization> list = findByG_F(groupId, friendlyURLId,
-				0, 1, orderByComparator);
+		List<FriendlyURLLocalization> list = findByG_F(groupId,
+				friendlyURLEntryId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -350,21 +350,21 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Returns the last friendly url localization in the ordered set where groupId = &#63; and friendlyURLId = &#63;.
+	 * Returns the last friendly url localization in the ordered set where groupId = &#63; and friendlyURLEntryId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching friendly url localization
 	 * @throws NoSuchFriendlyURLLocalizationException if a matching friendly url localization could not be found
 	 */
 	@Override
 	public FriendlyURLLocalization findByG_F_Last(long groupId,
-		long friendlyURLId,
+		long friendlyURLEntryId,
 		OrderByComparator<FriendlyURLLocalization> orderByComparator)
 		throws NoSuchFriendlyURLLocalizationException {
 		FriendlyURLLocalization friendlyURLLocalization = fetchByG_F_Last(groupId,
-				friendlyURLId, orderByComparator);
+				friendlyURLEntryId, orderByComparator);
 
 		if (friendlyURLLocalization != null) {
 			return friendlyURLLocalization;
@@ -377,8 +377,8 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(", friendlyURLId=");
-		msg.append(friendlyURLId);
+		msg.append(", friendlyURLEntryId=");
+		msg.append(friendlyURLEntryId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -386,25 +386,25 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Returns the last friendly url localization in the ordered set where groupId = &#63; and friendlyURLId = &#63;.
+	 * Returns the last friendly url localization in the ordered set where groupId = &#63; and friendlyURLEntryId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching friendly url localization, or <code>null</code> if a matching friendly url localization could not be found
 	 */
 	@Override
 	public FriendlyURLLocalization fetchByG_F_Last(long groupId,
-		long friendlyURLId,
+		long friendlyURLEntryId,
 		OrderByComparator<FriendlyURLLocalization> orderByComparator) {
-		int count = countByG_F(groupId, friendlyURLId);
+		int count = countByG_F(groupId, friendlyURLEntryId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<FriendlyURLLocalization> list = findByG_F(groupId, friendlyURLId,
-				count - 1, count, orderByComparator);
+		List<FriendlyURLLocalization> list = findByG_F(groupId,
+				friendlyURLEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -414,18 +414,18 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Returns the friendly url localizations before and after the current friendly url localization in the ordered set where groupId = &#63; and friendlyURLId = &#63;.
+	 * Returns the friendly url localizations before and after the current friendly url localization in the ordered set where groupId = &#63; and friendlyURLEntryId = &#63;.
 	 *
 	 * @param friendlyURLLocalizationId the primary key of the current friendly url localization
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next friendly url localization
 	 * @throws NoSuchFriendlyURLLocalizationException if a friendly url localization with the primary key could not be found
 	 */
 	@Override
 	public FriendlyURLLocalization[] findByG_F_PrevAndNext(
-		long friendlyURLLocalizationId, long groupId, long friendlyURLId,
+		long friendlyURLLocalizationId, long groupId, long friendlyURLEntryId,
 		OrderByComparator<FriendlyURLLocalization> orderByComparator)
 		throws NoSuchFriendlyURLLocalizationException {
 		FriendlyURLLocalization friendlyURLLocalization = findByPrimaryKey(friendlyURLLocalizationId);
@@ -438,12 +438,12 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 			FriendlyURLLocalization[] array = new FriendlyURLLocalizationImpl[3];
 
 			array[0] = getByG_F_PrevAndNext(session, friendlyURLLocalization,
-					groupId, friendlyURLId, orderByComparator, true);
+					groupId, friendlyURLEntryId, orderByComparator, true);
 
 			array[1] = friendlyURLLocalization;
 
 			array[2] = getByG_F_PrevAndNext(session, friendlyURLLocalization,
-					groupId, friendlyURLId, orderByComparator, false);
+					groupId, friendlyURLEntryId, orderByComparator, false);
 
 			return array;
 		}
@@ -457,7 +457,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 
 	protected FriendlyURLLocalization getByG_F_PrevAndNext(Session session,
 		FriendlyURLLocalization friendlyURLLocalization, long groupId,
-		long friendlyURLId,
+		long friendlyURLEntryId,
 		OrderByComparator<FriendlyURLLocalization> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -475,7 +475,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 
 		query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_F_FRIENDLYURLID_2);
+		query.append(_FINDER_COLUMN_G_F_FRIENDLYURLENTRYID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -547,7 +547,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 
 		qPos.add(groupId);
 
-		qPos.add(friendlyURLId);
+		qPos.add(friendlyURLEntryId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(friendlyURLLocalization);
@@ -568,32 +568,32 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Removes all the friendly url localizations where groupId = &#63; and friendlyURLId = &#63; from the database.
+	 * Removes all the friendly url localizations where groupId = &#63; and friendlyURLEntryId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 */
 	@Override
-	public void removeByG_F(long groupId, long friendlyURLId) {
+	public void removeByG_F(long groupId, long friendlyURLEntryId) {
 		for (FriendlyURLLocalization friendlyURLLocalization : findByG_F(
-				groupId, friendlyURLId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null)) {
+				groupId, friendlyURLEntryId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
 			remove(friendlyURLLocalization);
 		}
 	}
 
 	/**
-	 * Returns the number of friendly url localizations where groupId = &#63; and friendlyURLId = &#63;.
+	 * Returns the number of friendly url localizations where groupId = &#63; and friendlyURLEntryId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @return the number of matching friendly url localizations
 	 */
 	@Override
-	public int countByG_F(long groupId, long friendlyURLId) {
+	public int countByG_F(long groupId, long friendlyURLEntryId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_F;
 
-		Object[] finderArgs = new Object[] { groupId, friendlyURLId };
+		Object[] finderArgs = new Object[] { groupId, friendlyURLEntryId };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -604,7 +604,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 
 			query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_F_FRIENDLYURLID_2);
+			query.append(_FINDER_COLUMN_G_F_FRIENDLYURLENTRYID_2);
 
 			String sql = query.toString();
 
@@ -619,7 +619,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 
 				qPos.add(groupId);
 
-				qPos.add(friendlyURLId);
+				qPos.add(friendlyURLEntryId);
 
 				count = (Long)q.uniqueResult();
 
@@ -639,7 +639,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	private static final String _FINDER_COLUMN_G_F_GROUPID_2 = "friendlyURLLocalization.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_F_FRIENDLYURLID_2 = "friendlyURLLocalization.friendlyURLId = ?";
+	private static final String _FINDER_COLUMN_G_F_FRIENDLYURLENTRYID_2 = "friendlyURLLocalization.friendlyURLEntryId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_F_L = new FinderPath(FriendlyURLLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			FriendlyURLLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			FriendlyURLLocalizationImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -649,7 +649,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 				String.class.getName()
 			},
 			FriendlyURLLocalizationModelImpl.GROUPID_COLUMN_BITMASK |
-			FriendlyURLLocalizationModelImpl.FRIENDLYURLID_COLUMN_BITMASK |
+			FriendlyURLLocalizationModelImpl.FRIENDLYURLENTRYID_COLUMN_BITMASK |
 			FriendlyURLLocalizationModelImpl.LANGUAGEID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_F_L = new FinderPath(FriendlyURLLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			FriendlyURLLocalizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
@@ -660,20 +660,20 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 			});
 
 	/**
-	 * Returns the friendly url localization where groupId = &#63; and friendlyURLId = &#63; and languageId = &#63; or throws a {@link NoSuchFriendlyURLLocalizationException} if it could not be found.
+	 * Returns the friendly url localization where groupId = &#63; and friendlyURLEntryId = &#63; and languageId = &#63; or throws a {@link NoSuchFriendlyURLLocalizationException} if it could not be found.
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param languageId the language ID
 	 * @return the matching friendly url localization
 	 * @throws NoSuchFriendlyURLLocalizationException if a matching friendly url localization could not be found
 	 */
 	@Override
 	public FriendlyURLLocalization findByG_F_L(long groupId,
-		long friendlyURLId, String languageId)
+		long friendlyURLEntryId, String languageId)
 		throws NoSuchFriendlyURLLocalizationException {
 		FriendlyURLLocalization friendlyURLLocalization = fetchByG_F_L(groupId,
-				friendlyURLId, languageId);
+				friendlyURLEntryId, languageId);
 
 		if (friendlyURLLocalization == null) {
 			StringBundler msg = new StringBundler(8);
@@ -683,8 +683,8 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 			msg.append("groupId=");
 			msg.append(groupId);
 
-			msg.append(", friendlyURLId=");
-			msg.append(friendlyURLId);
+			msg.append(", friendlyURLEntryId=");
+			msg.append(friendlyURLEntryId);
 
 			msg.append(", languageId=");
 			msg.append(languageId);
@@ -702,32 +702,34 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Returns the friendly url localization where groupId = &#63; and friendlyURLId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the friendly url localization where groupId = &#63; and friendlyURLEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param languageId the language ID
 	 * @return the matching friendly url localization, or <code>null</code> if a matching friendly url localization could not be found
 	 */
 	@Override
 	public FriendlyURLLocalization fetchByG_F_L(long groupId,
-		long friendlyURLId, String languageId) {
-		return fetchByG_F_L(groupId, friendlyURLId, languageId, true);
+		long friendlyURLEntryId, String languageId) {
+		return fetchByG_F_L(groupId, friendlyURLEntryId, languageId, true);
 	}
 
 	/**
-	 * Returns the friendly url localization where groupId = &#63; and friendlyURLId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the friendly url localization where groupId = &#63; and friendlyURLEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param languageId the language ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching friendly url localization, or <code>null</code> if a matching friendly url localization could not be found
 	 */
 	@Override
 	public FriendlyURLLocalization fetchByG_F_L(long groupId,
-		long friendlyURLId, String languageId, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { groupId, friendlyURLId, languageId };
+		long friendlyURLEntryId, String languageId, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] {
+				groupId, friendlyURLEntryId, languageId
+			};
 
 		Object result = null;
 
@@ -740,7 +742,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 			FriendlyURLLocalization friendlyURLLocalization = (FriendlyURLLocalization)result;
 
 			if ((groupId != friendlyURLLocalization.getGroupId()) ||
-					(friendlyURLId != friendlyURLLocalization.getFriendlyURLId()) ||
+					(friendlyURLEntryId != friendlyURLLocalization.getFriendlyURLEntryId()) ||
 					!Objects.equals(languageId,
 						friendlyURLLocalization.getLanguageId())) {
 				result = null;
@@ -754,7 +756,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 
 			query.append(_FINDER_COLUMN_G_F_L_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_F_L_FRIENDLYURLID_2);
+			query.append(_FINDER_COLUMN_G_F_L_FRIENDLYURLENTRYID_2);
 
 			boolean bindLanguageId = false;
 
@@ -783,7 +785,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 
 				qPos.add(groupId);
 
-				qPos.add(friendlyURLId);
+				qPos.add(friendlyURLEntryId);
 
 				if (bindLanguageId) {
 					qPos.add(languageId);
@@ -803,7 +805,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 					cacheResult(friendlyURLLocalization);
 
 					if ((friendlyURLLocalization.getGroupId() != groupId) ||
-							(friendlyURLLocalization.getFriendlyURLId() != friendlyURLId) ||
+							(friendlyURLLocalization.getFriendlyURLEntryId() != friendlyURLEntryId) ||
 							(friendlyURLLocalization.getLanguageId() == null) ||
 							!friendlyURLLocalization.getLanguageId()
 														.equals(languageId)) {
@@ -831,36 +833,39 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Removes the friendly url localization where groupId = &#63; and friendlyURLId = &#63; and languageId = &#63; from the database.
+	 * Removes the friendly url localization where groupId = &#63; and friendlyURLEntryId = &#63; and languageId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param languageId the language ID
 	 * @return the friendly url localization that was removed
 	 */
 	@Override
 	public FriendlyURLLocalization removeByG_F_L(long groupId,
-		long friendlyURLId, String languageId)
+		long friendlyURLEntryId, String languageId)
 		throws NoSuchFriendlyURLLocalizationException {
 		FriendlyURLLocalization friendlyURLLocalization = findByG_F_L(groupId,
-				friendlyURLId, languageId);
+				friendlyURLEntryId, languageId);
 
 		return remove(friendlyURLLocalization);
 	}
 
 	/**
-	 * Returns the number of friendly url localizations where groupId = &#63; and friendlyURLId = &#63; and languageId = &#63;.
+	 * Returns the number of friendly url localizations where groupId = &#63; and friendlyURLEntryId = &#63; and languageId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param friendlyURLId the friendly url ID
+	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param languageId the language ID
 	 * @return the number of matching friendly url localizations
 	 */
 	@Override
-	public int countByG_F_L(long groupId, long friendlyURLId, String languageId) {
+	public int countByG_F_L(long groupId, long friendlyURLEntryId,
+		String languageId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_F_L;
 
-		Object[] finderArgs = new Object[] { groupId, friendlyURLId, languageId };
+		Object[] finderArgs = new Object[] {
+				groupId, friendlyURLEntryId, languageId
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -871,7 +876,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 
 			query.append(_FINDER_COLUMN_G_F_L_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_F_L_FRIENDLYURLID_2);
+			query.append(_FINDER_COLUMN_G_F_L_FRIENDLYURLENTRYID_2);
 
 			boolean bindLanguageId = false;
 
@@ -900,7 +905,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 
 				qPos.add(groupId);
 
-				qPos.add(friendlyURLId);
+				qPos.add(friendlyURLEntryId);
 
 				if (bindLanguageId) {
 					qPos.add(languageId);
@@ -924,7 +929,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	private static final String _FINDER_COLUMN_G_F_L_GROUPID_2 = "friendlyURLLocalization.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_F_L_FRIENDLYURLID_2 = "friendlyURLLocalization.friendlyURLId = ? AND ";
+	private static final String _FINDER_COLUMN_G_F_L_FRIENDLYURLENTRYID_2 = "friendlyURLLocalization.friendlyURLEntryId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_L_LANGUAGEID_1 = "friendlyURLLocalization.languageId IS NULL";
 	private static final String _FINDER_COLUMN_G_F_L_LANGUAGEID_2 = "friendlyURLLocalization.languageId = ?";
 	private static final String _FINDER_COLUMN_G_F_L_LANGUAGEID_3 = "(friendlyURLLocalization.languageId IS NULL OR friendlyURLLocalization.languageId = '')";
@@ -1266,7 +1271,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 		finderCache.putResult(FINDER_PATH_FETCH_BY_G_F_L,
 			new Object[] {
 				friendlyURLLocalization.getGroupId(),
-				friendlyURLLocalization.getFriendlyURLId(),
+				friendlyURLLocalization.getFriendlyURLEntryId(),
 				friendlyURLLocalization.getLanguageId()
 			}, friendlyURLLocalization);
 
@@ -1357,7 +1362,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 		FriendlyURLLocalizationModelImpl friendlyURLLocalizationModelImpl) {
 		Object[] args = new Object[] {
 				friendlyURLLocalizationModelImpl.getGroupId(),
-				friendlyURLLocalizationModelImpl.getFriendlyURLId(),
+				friendlyURLLocalizationModelImpl.getFriendlyURLEntryId(),
 				friendlyURLLocalizationModelImpl.getLanguageId()
 			};
 
@@ -1384,7 +1389,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					friendlyURLLocalizationModelImpl.getGroupId(),
-					friendlyURLLocalizationModelImpl.getFriendlyURLId(),
+					friendlyURLLocalizationModelImpl.getFriendlyURLEntryId(),
 					friendlyURLLocalizationModelImpl.getLanguageId()
 				};
 
@@ -1396,7 +1401,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 				FINDER_PATH_FETCH_BY_G_F_L.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					friendlyURLLocalizationModelImpl.getOriginalGroupId(),
-					friendlyURLLocalizationModelImpl.getOriginalFriendlyURLId(),
+					friendlyURLLocalizationModelImpl.getOriginalFriendlyURLEntryId(),
 					friendlyURLLocalizationModelImpl.getOriginalLanguageId()
 				};
 
@@ -1573,7 +1578,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						friendlyURLLocalizationModelImpl.getOriginalGroupId(),
-						friendlyURLLocalizationModelImpl.getOriginalFriendlyURLId()
+						friendlyURLLocalizationModelImpl.getOriginalFriendlyURLEntryId()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
@@ -1582,7 +1587,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 
 				args = new Object[] {
 						friendlyURLLocalizationModelImpl.getGroupId(),
-						friendlyURLLocalizationModelImpl.getFriendlyURLId()
+						friendlyURLLocalizationModelImpl.getFriendlyURLEntryId()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
@@ -1618,7 +1623,7 @@ public class FriendlyURLLocalizationPersistenceImpl extends BasePersistenceImpl<
 		friendlyURLLocalizationImpl.setFriendlyURLLocalizationId(friendlyURLLocalization.getFriendlyURLLocalizationId());
 		friendlyURLLocalizationImpl.setGroupId(friendlyURLLocalization.getGroupId());
 		friendlyURLLocalizationImpl.setCompanyId(friendlyURLLocalization.getCompanyId());
-		friendlyURLLocalizationImpl.setFriendlyURLId(friendlyURLLocalization.getFriendlyURLId());
+		friendlyURLLocalizationImpl.setFriendlyURLEntryId(friendlyURLLocalization.getFriendlyURLEntryId());
 		friendlyURLLocalizationImpl.setUrlTitle(friendlyURLLocalization.getUrlTitle());
 		friendlyURLLocalizationImpl.setLanguageId(friendlyURLLocalization.getLanguageId());
 

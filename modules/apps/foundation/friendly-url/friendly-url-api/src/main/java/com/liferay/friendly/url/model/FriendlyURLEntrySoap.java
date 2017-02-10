@@ -29,12 +29,12 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-public class FriendlyURLSoap implements Serializable {
-	public static FriendlyURLSoap toSoapModel(FriendlyURL model) {
-		FriendlyURLSoap soapModel = new FriendlyURLSoap();
+public class FriendlyURLEntrySoap implements Serializable {
+	public static FriendlyURLEntrySoap toSoapModel(FriendlyURLEntry model) {
+		FriendlyURLEntrySoap soapModel = new FriendlyURLEntrySoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setFriendlyURLId(model.getFriendlyURLId());
+		soapModel.setFriendlyURLEntryId(model.getFriendlyURLEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -47,8 +47,8 @@ public class FriendlyURLSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static FriendlyURLSoap[] toSoapModels(FriendlyURL[] models) {
-		FriendlyURLSoap[] soapModels = new FriendlyURLSoap[models.length];
+	public static FriendlyURLEntrySoap[] toSoapModels(FriendlyURLEntry[] models) {
+		FriendlyURLEntrySoap[] soapModels = new FriendlyURLEntrySoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -57,14 +57,15 @@ public class FriendlyURLSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static FriendlyURLSoap[][] toSoapModels(FriendlyURL[][] models) {
-		FriendlyURLSoap[][] soapModels = null;
+	public static FriendlyURLEntrySoap[][] toSoapModels(
+		FriendlyURLEntry[][] models) {
+		FriendlyURLEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new FriendlyURLSoap[models.length][models[0].length];
+			soapModels = new FriendlyURLEntrySoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new FriendlyURLSoap[0][0];
+			soapModels = new FriendlyURLEntrySoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -74,25 +75,26 @@ public class FriendlyURLSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static FriendlyURLSoap[] toSoapModels(List<FriendlyURL> models) {
-		List<FriendlyURLSoap> soapModels = new ArrayList<FriendlyURLSoap>(models.size());
+	public static FriendlyURLEntrySoap[] toSoapModels(
+		List<FriendlyURLEntry> models) {
+		List<FriendlyURLEntrySoap> soapModels = new ArrayList<FriendlyURLEntrySoap>(models.size());
 
-		for (FriendlyURL model : models) {
+		for (FriendlyURLEntry model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new FriendlyURLSoap[soapModels.size()]);
+		return soapModels.toArray(new FriendlyURLEntrySoap[soapModels.size()]);
 	}
 
-	public FriendlyURLSoap() {
+	public FriendlyURLEntrySoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _friendlyURLId;
+		return _friendlyURLEntryId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setFriendlyURLId(pk);
+		setFriendlyURLEntryId(pk);
 	}
 
 	public String getUuid() {
@@ -103,12 +105,12 @@ public class FriendlyURLSoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getFriendlyURLId() {
-		return _friendlyURLId;
+	public long getFriendlyURLEntryId() {
+		return _friendlyURLEntryId;
 	}
 
-	public void setFriendlyURLId(long friendlyURLId) {
-		_friendlyURLId = friendlyURLId;
+	public void setFriendlyURLEntryId(long friendlyURLEntryId) {
+		_friendlyURLEntryId = friendlyURLEntryId;
 	}
 
 	public long getGroupId() {
@@ -180,7 +182,7 @@ public class FriendlyURLSoap implements Serializable {
 	}
 
 	private String _uuid;
-	private long _friendlyURLId;
+	private long _friendlyURLEntryId;
 	private long _groupId;
 	private long _companyId;
 	private Date _createDate;

@@ -16,7 +16,7 @@ package com.liferay.friendly.url.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.friendly.url.model.FriendlyURL;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLLocalization;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -64,7 +64,7 @@ public interface FriendlyURLLocalizationLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link FriendlyURLLocalizationLocalServiceUtil} to access the friendly url localization local service. Add custom service methods to {@link com.liferay.friendly.url.service.impl.FriendlyURLLocalizationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public FriendlyURLLocalization addFriendlyURLLocalization(
-		FriendlyURL friendlyURL, java.lang.String urlTitle,
+		FriendlyURLEntry friendlyURLEntry, java.lang.String urlTitle,
 		java.lang.String languageId) throws PortalException;
 
 	/**
@@ -87,7 +87,7 @@ public interface FriendlyURLLocalizationLocalService extends BaseLocalService,
 		long friendlyURLLocalizationId);
 
 	public FriendlyURLLocalization deleteFriendlyURLLocalization(
-		FriendlyURL friendlyURL, java.lang.String languageId)
+		FriendlyURLEntry friendlyURLEntry, java.lang.String languageId)
 		throws PortalException;
 
 	/**
@@ -113,7 +113,7 @@ public interface FriendlyURLLocalizationLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FriendlyURLLocalization fetchFriendlyURLLocalization(
-		FriendlyURL friendlyURL, java.lang.String languageId);
+		FriendlyURLEntry friendlyURLEntry, java.lang.String languageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FriendlyURLLocalization fetchFriendlyURLLocalization(
@@ -166,7 +166,8 @@ public interface FriendlyURLLocalizationLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFriendlyURLLocalizationCount(FriendlyURL friendlyURL);
+	public int getFriendlyURLLocalizationCount(
+		FriendlyURLEntry friendlyURLEntry);
 
 	/**
 	* Returns the number of friendly url localizations.
@@ -238,8 +239,8 @@ public interface FriendlyURLLocalizationLocalService extends BaseLocalService,
 		int start, int end);
 
 	public List<FriendlyURLLocalization> updateFriendlyURLLocalizations(
-		FriendlyURL friendlyURL, Map<Locale, java.lang.String> urlTitleMap)
-		throws PortalException;
+		FriendlyURLEntry friendlyURLEntry,
+		Map<Locale, java.lang.String> urlTitleMap) throws PortalException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -259,6 +260,6 @@ public interface FriendlyURLLocalizationLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	public void deleteFriendlyURLLocalizations(FriendlyURL friendlyURL)
-		throws PortalException;
+	public void deleteFriendlyURLLocalizations(
+		FriendlyURLEntry friendlyURLEntry) throws PortalException;
 }

@@ -18,8 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.friendly.url.model.FriendlyURLLocalization;
 import com.liferay.friendly.url.service.FriendlyURLLocalizationLocalService;
+import com.liferay.friendly.url.service.persistence.FriendlyURLEntryPersistence;
 import com.liferay.friendly.url.service.persistence.FriendlyURLLocalizationPersistence;
-import com.liferay.friendly.url.service.persistence.FriendlyURLPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -324,41 +324,41 @@ public abstract class FriendlyURLLocalizationLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the friendly url local service.
+	 * Returns the friendly url entry local service.
 	 *
-	 * @return the friendly url local service
+	 * @return the friendly url entry local service
 	 */
-	public com.liferay.friendly.url.service.FriendlyURLLocalService getFriendlyURLLocalService() {
-		return friendlyURLLocalService;
+	public com.liferay.friendly.url.service.FriendlyURLEntryLocalService getFriendlyURLEntryLocalService() {
+		return friendlyURLEntryLocalService;
 	}
 
 	/**
-	 * Sets the friendly url local service.
+	 * Sets the friendly url entry local service.
 	 *
-	 * @param friendlyURLLocalService the friendly url local service
+	 * @param friendlyURLEntryLocalService the friendly url entry local service
 	 */
-	public void setFriendlyURLLocalService(
-		com.liferay.friendly.url.service.FriendlyURLLocalService friendlyURLLocalService) {
-		this.friendlyURLLocalService = friendlyURLLocalService;
+	public void setFriendlyURLEntryLocalService(
+		com.liferay.friendly.url.service.FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
+		this.friendlyURLEntryLocalService = friendlyURLEntryLocalService;
 	}
 
 	/**
-	 * Returns the friendly url persistence.
+	 * Returns the friendly url entry persistence.
 	 *
-	 * @return the friendly url persistence
+	 * @return the friendly url entry persistence
 	 */
-	public FriendlyURLPersistence getFriendlyURLPersistence() {
-		return friendlyURLPersistence;
+	public FriendlyURLEntryPersistence getFriendlyURLEntryPersistence() {
+		return friendlyURLEntryPersistence;
 	}
 
 	/**
-	 * Sets the friendly url persistence.
+	 * Sets the friendly url entry persistence.
 	 *
-	 * @param friendlyURLPersistence the friendly url persistence
+	 * @param friendlyURLEntryPersistence the friendly url entry persistence
 	 */
-	public void setFriendlyURLPersistence(
-		FriendlyURLPersistence friendlyURLPersistence) {
-		this.friendlyURLPersistence = friendlyURLPersistence;
+	public void setFriendlyURLEntryPersistence(
+		FriendlyURLEntryPersistence friendlyURLEntryPersistence) {
+		this.friendlyURLEntryPersistence = friendlyURLEntryPersistence;
 	}
 
 	/**
@@ -564,10 +564,10 @@ public abstract class FriendlyURLLocalizationLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.friendly.url.service.FriendlyURLLocalService.class)
-	protected com.liferay.friendly.url.service.FriendlyURLLocalService friendlyURLLocalService;
-	@BeanReference(type = FriendlyURLPersistence.class)
-	protected FriendlyURLPersistence friendlyURLPersistence;
+	@BeanReference(type = com.liferay.friendly.url.service.FriendlyURLEntryLocalService.class)
+	protected com.liferay.friendly.url.service.FriendlyURLEntryLocalService friendlyURLEntryLocalService;
+	@BeanReference(type = FriendlyURLEntryPersistence.class)
+	protected FriendlyURLEntryPersistence friendlyURLEntryPersistence;
 	@BeanReference(type = FriendlyURLLocalizationLocalService.class)
 	protected FriendlyURLLocalizationLocalService friendlyURLLocalizationLocalService;
 	@BeanReference(type = FriendlyURLLocalizationPersistence.class)

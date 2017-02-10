@@ -64,7 +64,7 @@ public class FriendlyURLLocalizationModelImpl extends BaseModelImpl<FriendlyURLL
 			{ "friendlyURLLocalizationId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
-			{ "friendlyURLId", Types.BIGINT },
+			{ "friendlyURLEntryId", Types.BIGINT },
 			{ "urlTitle", Types.VARCHAR },
 			{ "languageId", Types.VARCHAR }
 		};
@@ -74,12 +74,12 @@ public class FriendlyURLLocalizationModelImpl extends BaseModelImpl<FriendlyURLL
 		TABLE_COLUMNS_MAP.put("friendlyURLLocalizationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("friendlyURLId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("friendlyURLEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FriendlyURLLocalization (friendlyURLLocalizationId LONG not null primary key,groupId LONG,companyId LONG,friendlyURLId LONG,urlTitle VARCHAR(255) null,languageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table FriendlyURLLocalization (friendlyURLLocalizationId LONG not null primary key,groupId LONG,companyId LONG,friendlyURLEntryId LONG,urlTitle VARCHAR(255) null,languageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table FriendlyURLLocalization";
 	public static final String ORDER_BY_JPQL = " ORDER BY friendlyURLLocalization.friendlyURLLocalizationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FriendlyURLLocalization.friendlyURLLocalizationId ASC";
@@ -95,7 +95,7 @@ public class FriendlyURLLocalizationModelImpl extends BaseModelImpl<FriendlyURLL
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.friendly.url.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.friendly.url.model.FriendlyURLLocalization"),
 			true);
-	public static final long FRIENDLYURLID_COLUMN_BITMASK = 1L;
+	public static final long FRIENDLYURLENTRYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long LANGUAGEID_COLUMN_BITMASK = 4L;
 	public static final long URLTITLE_COLUMN_BITMASK = 8L;
@@ -144,7 +144,7 @@ public class FriendlyURLLocalizationModelImpl extends BaseModelImpl<FriendlyURLL
 			getFriendlyURLLocalizationId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("friendlyURLId", getFriendlyURLId());
+		attributes.put("friendlyURLEntryId", getFriendlyURLEntryId());
 		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("languageId", getLanguageId());
 
@@ -175,10 +175,10 @@ public class FriendlyURLLocalizationModelImpl extends BaseModelImpl<FriendlyURLL
 			setCompanyId(companyId);
 		}
 
-		Long friendlyURLId = (Long)attributes.get("friendlyURLId");
+		Long friendlyURLEntryId = (Long)attributes.get("friendlyURLEntryId");
 
-		if (friendlyURLId != null) {
-			setFriendlyURLId(friendlyURLId);
+		if (friendlyURLEntryId != null) {
+			setFriendlyURLEntryId(friendlyURLEntryId);
 		}
 
 		String urlTitle = (String)attributes.get("urlTitle");
@@ -237,25 +237,25 @@ public class FriendlyURLLocalizationModelImpl extends BaseModelImpl<FriendlyURLL
 	}
 
 	@Override
-	public long getFriendlyURLId() {
-		return _friendlyURLId;
+	public long getFriendlyURLEntryId() {
+		return _friendlyURLEntryId;
 	}
 
 	@Override
-	public void setFriendlyURLId(long friendlyURLId) {
-		_columnBitmask |= FRIENDLYURLID_COLUMN_BITMASK;
+	public void setFriendlyURLEntryId(long friendlyURLEntryId) {
+		_columnBitmask |= FRIENDLYURLENTRYID_COLUMN_BITMASK;
 
-		if (!_setOriginalFriendlyURLId) {
-			_setOriginalFriendlyURLId = true;
+		if (!_setOriginalFriendlyURLEntryId) {
+			_setOriginalFriendlyURLEntryId = true;
 
-			_originalFriendlyURLId = _friendlyURLId;
+			_originalFriendlyURLEntryId = _friendlyURLEntryId;
 		}
 
-		_friendlyURLId = friendlyURLId;
+		_friendlyURLEntryId = friendlyURLEntryId;
 	}
 
-	public long getOriginalFriendlyURLId() {
-		return _originalFriendlyURLId;
+	public long getOriginalFriendlyURLEntryId() {
+		return _originalFriendlyURLEntryId;
 	}
 
 	@Override
@@ -342,7 +342,7 @@ public class FriendlyURLLocalizationModelImpl extends BaseModelImpl<FriendlyURLL
 		friendlyURLLocalizationImpl.setFriendlyURLLocalizationId(getFriendlyURLLocalizationId());
 		friendlyURLLocalizationImpl.setGroupId(getGroupId());
 		friendlyURLLocalizationImpl.setCompanyId(getCompanyId());
-		friendlyURLLocalizationImpl.setFriendlyURLId(getFriendlyURLId());
+		friendlyURLLocalizationImpl.setFriendlyURLEntryId(getFriendlyURLEntryId());
 		friendlyURLLocalizationImpl.setUrlTitle(getUrlTitle());
 		friendlyURLLocalizationImpl.setLanguageId(getLanguageId());
 
@@ -411,9 +411,9 @@ public class FriendlyURLLocalizationModelImpl extends BaseModelImpl<FriendlyURLL
 
 		friendlyURLLocalizationModelImpl._setOriginalGroupId = false;
 
-		friendlyURLLocalizationModelImpl._originalFriendlyURLId = friendlyURLLocalizationModelImpl._friendlyURLId;
+		friendlyURLLocalizationModelImpl._originalFriendlyURLEntryId = friendlyURLLocalizationModelImpl._friendlyURLEntryId;
 
-		friendlyURLLocalizationModelImpl._setOriginalFriendlyURLId = false;
+		friendlyURLLocalizationModelImpl._setOriginalFriendlyURLEntryId = false;
 
 		friendlyURLLocalizationModelImpl._originalUrlTitle = friendlyURLLocalizationModelImpl._urlTitle;
 
@@ -432,7 +432,7 @@ public class FriendlyURLLocalizationModelImpl extends BaseModelImpl<FriendlyURLL
 
 		friendlyURLLocalizationCacheModel.companyId = getCompanyId();
 
-		friendlyURLLocalizationCacheModel.friendlyURLId = getFriendlyURLId();
+		friendlyURLLocalizationCacheModel.friendlyURLEntryId = getFriendlyURLEntryId();
 
 		friendlyURLLocalizationCacheModel.urlTitle = getUrlTitle();
 
@@ -463,8 +463,8 @@ public class FriendlyURLLocalizationModelImpl extends BaseModelImpl<FriendlyURLL
 		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
-		sb.append(", friendlyURLId=");
-		sb.append(getFriendlyURLId());
+		sb.append(", friendlyURLEntryId=");
+		sb.append(getFriendlyURLEntryId());
 		sb.append(", urlTitle=");
 		sb.append(getUrlTitle());
 		sb.append(", languageId=");
@@ -495,8 +495,8 @@ public class FriendlyURLLocalizationModelImpl extends BaseModelImpl<FriendlyURLL
 		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>friendlyURLId</column-name><column-value><![CDATA[");
-		sb.append(getFriendlyURLId());
+			"<column><column-name>friendlyURLEntryId</column-name><column-value><![CDATA[");
+		sb.append(getFriendlyURLEntryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>urlTitle</column-name><column-value><![CDATA[");
@@ -521,9 +521,9 @@ public class FriendlyURLLocalizationModelImpl extends BaseModelImpl<FriendlyURLL
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _friendlyURLId;
-	private long _originalFriendlyURLId;
-	private boolean _setOriginalFriendlyURLId;
+	private long _friendlyURLEntryId;
+	private long _originalFriendlyURLEntryId;
+	private boolean _setOriginalFriendlyURLEntryId;
 	private String _urlTitle;
 	private String _originalUrlTitle;
 	private String _languageId;

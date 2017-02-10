@@ -72,8 +72,8 @@ public class FriendlyURLLocalizationCacheModel implements CacheModel<FriendlyURL
 		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
-		sb.append(", friendlyURLId=");
-		sb.append(friendlyURLId);
+		sb.append(", friendlyURLEntryId=");
+		sb.append(friendlyURLEntryId);
 		sb.append(", urlTitle=");
 		sb.append(urlTitle);
 		sb.append(", languageId=");
@@ -90,7 +90,7 @@ public class FriendlyURLLocalizationCacheModel implements CacheModel<FriendlyURL
 		friendlyURLLocalizationImpl.setFriendlyURLLocalizationId(friendlyURLLocalizationId);
 		friendlyURLLocalizationImpl.setGroupId(groupId);
 		friendlyURLLocalizationImpl.setCompanyId(companyId);
-		friendlyURLLocalizationImpl.setFriendlyURLId(friendlyURLId);
+		friendlyURLLocalizationImpl.setFriendlyURLEntryId(friendlyURLEntryId);
 
 		if (urlTitle == null) {
 			friendlyURLLocalizationImpl.setUrlTitle(StringPool.BLANK);
@@ -119,7 +119,7 @@ public class FriendlyURLLocalizationCacheModel implements CacheModel<FriendlyURL
 
 		companyId = objectInput.readLong();
 
-		friendlyURLId = objectInput.readLong();
+		friendlyURLEntryId = objectInput.readLong();
 		urlTitle = objectInput.readUTF();
 		languageId = objectInput.readUTF();
 	}
@@ -133,7 +133,7 @@ public class FriendlyURLLocalizationCacheModel implements CacheModel<FriendlyURL
 
 		objectOutput.writeLong(companyId);
 
-		objectOutput.writeLong(friendlyURLId);
+		objectOutput.writeLong(friendlyURLEntryId);
 
 		if (urlTitle == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -153,7 +153,7 @@ public class FriendlyURLLocalizationCacheModel implements CacheModel<FriendlyURL
 	public long friendlyURLLocalizationId;
 	public long groupId;
 	public long companyId;
-	public long friendlyURLId;
+	public long friendlyURLEntryId;
 	public String urlTitle;
 	public String languageId;
 }

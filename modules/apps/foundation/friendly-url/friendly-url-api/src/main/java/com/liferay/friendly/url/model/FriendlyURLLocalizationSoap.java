@@ -36,7 +36,7 @@ public class FriendlyURLLocalizationSoap implements Serializable {
 		soapModel.setFriendlyURLLocalizationId(model.getFriendlyURLLocalizationId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
-		soapModel.setFriendlyURLId(model.getFriendlyURLId());
+		soapModel.setFriendlyURLEntryId(model.getFriendlyURLEntryId());
 		soapModel.setUrlTitle(model.getUrlTitle());
 		soapModel.setLanguageId(model.getLanguageId());
 
@@ -118,12 +118,12 @@ public class FriendlyURLLocalizationSoap implements Serializable {
 		_companyId = companyId;
 	}
 
-	public long getFriendlyURLId() {
-		return _friendlyURLId;
+	public long getFriendlyURLEntryId() {
+		return _friendlyURLEntryId;
 	}
 
-	public void setFriendlyURLId(long friendlyURLId) {
-		_friendlyURLId = friendlyURLId;
+	public void setFriendlyURLEntryId(long friendlyURLEntryId) {
+		_friendlyURLEntryId = friendlyURLEntryId;
 	}
 
 	public String getUrlTitle() {
@@ -145,7 +145,7 @@ public class FriendlyURLLocalizationSoap implements Serializable {
 	private long _friendlyURLLocalizationId;
 	private long _groupId;
 	private long _companyId;
-	private long _friendlyURLId;
+	private long _friendlyURLEntryId;
 	private String _urlTitle;
 	private String _languageId;
 }

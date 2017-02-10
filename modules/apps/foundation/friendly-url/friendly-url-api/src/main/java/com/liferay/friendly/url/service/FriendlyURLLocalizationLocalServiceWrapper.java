@@ -36,10 +36,10 @@ public class FriendlyURLLocalizationLocalServiceWrapper
 
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURLLocalization addFriendlyURLLocalization(
-		com.liferay.friendly.url.model.FriendlyURL friendlyURL,
+		com.liferay.friendly.url.model.FriendlyURLEntry friendlyURLEntry,
 		java.lang.String urlTitle, java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _friendlyURLLocalizationLocalService.addFriendlyURLLocalization(friendlyURL,
+		return _friendlyURLLocalizationLocalService.addFriendlyURLLocalization(friendlyURLEntry,
 			urlTitle, languageId);
 	}
 
@@ -69,10 +69,10 @@ public class FriendlyURLLocalizationLocalServiceWrapper
 
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURLLocalization deleteFriendlyURLLocalization(
-		com.liferay.friendly.url.model.FriendlyURL friendlyURL,
+		com.liferay.friendly.url.model.FriendlyURLEntry friendlyURLEntry,
 		java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _friendlyURLLocalizationLocalService.deleteFriendlyURLLocalization(friendlyURL,
+		return _friendlyURLLocalizationLocalService.deleteFriendlyURLLocalization(friendlyURLEntry,
 			languageId);
 	}
 
@@ -104,9 +104,9 @@ public class FriendlyURLLocalizationLocalServiceWrapper
 
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURLLocalization fetchFriendlyURLLocalization(
-		com.liferay.friendly.url.model.FriendlyURL friendlyURL,
+		com.liferay.friendly.url.model.FriendlyURLEntry friendlyURLEntry,
 		java.lang.String languageId) {
-		return _friendlyURLLocalizationLocalService.fetchFriendlyURLLocalization(friendlyURL,
+		return _friendlyURLLocalizationLocalService.fetchFriendlyURLLocalization(friendlyURLEntry,
 			languageId);
 	}
 
@@ -184,8 +184,8 @@ public class FriendlyURLLocalizationLocalServiceWrapper
 
 	@Override
 	public int getFriendlyURLLocalizationCount(
-		com.liferay.friendly.url.model.FriendlyURL friendlyURL) {
-		return _friendlyURLLocalizationLocalService.getFriendlyURLLocalizationCount(friendlyURL);
+		com.liferay.friendly.url.model.FriendlyURLEntry friendlyURLEntry) {
+		return _friendlyURLLocalizationLocalService.getFriendlyURLLocalizationCount(friendlyURLEntry);
 	}
 
 	/**
@@ -282,10 +282,10 @@ public class FriendlyURLLocalizationLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.friendly.url.model.FriendlyURLLocalization> updateFriendlyURLLocalizations(
-		com.liferay.friendly.url.model.FriendlyURL friendlyURL,
+		com.liferay.friendly.url.model.FriendlyURLEntry friendlyURLEntry,
 		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _friendlyURLLocalizationLocalService.updateFriendlyURLLocalizations(friendlyURL,
+		return _friendlyURLLocalizationLocalService.updateFriendlyURLLocalizations(friendlyURLEntry,
 			urlTitleMap);
 	}
 
@@ -318,9 +318,9 @@ public class FriendlyURLLocalizationLocalServiceWrapper
 
 	@Override
 	public void deleteFriendlyURLLocalizations(
-		com.liferay.friendly.url.model.FriendlyURL friendlyURL)
+		com.liferay.friendly.url.model.FriendlyURLEntry friendlyURLEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_friendlyURLLocalizationLocalService.deleteFriendlyURLLocalizations(friendlyURL);
+		_friendlyURLLocalizationLocalService.deleteFriendlyURLLocalizations(friendlyURLEntry);
 	}
 
 	@Override

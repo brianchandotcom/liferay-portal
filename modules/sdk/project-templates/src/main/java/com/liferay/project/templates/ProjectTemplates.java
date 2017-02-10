@@ -178,16 +178,15 @@ public class ProjectTemplates {
 		templateDirPath = templateDirPath.resolve(
 			projectTemplatesArgs.getName());
 
-		FileUtil.extractDirectory("gradle-wrapper", templateDirPath);
-
-		FileUtil.setPosixFilePermissions(
-			templateDirPath.resolve("gradlew"), _wrapperPosixFilePermissions);
-
 		if (WorkspaceUtil.isWorkspace(destinationDir)) {
-			FileUtil.deleteDir(templateDirPath.resolve("gradle"));
-			Files.delete(templateDirPath.resolve("gradlew"));
-			Files.delete(templateDirPath.resolve("gradlew.bat"));
 			Files.deleteIfExists(templateDirPath.resolve("settings.gradle"));
+		}
+		else {
+			FileUtil.extractDirectory("gradle-wrapper", templateDirPath);
+
+			FileUtil.setPosixFilePermissions(
+				templateDirPath.resolve("gradlew"),
+				_wrapperPosixFilePermissions);
 		}
 
 		Files.walkFileTree(

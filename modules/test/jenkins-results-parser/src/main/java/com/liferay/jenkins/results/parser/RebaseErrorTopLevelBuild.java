@@ -95,7 +95,7 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 				JenkinsResultsParserUtil.combine(
 					"/opt/dev/projects/github/liferay-jenkins-ee/tests/",
 					"test-portal-acceptance-pullrequest(ee-6.2.x)/",
-					"rebase-error/report.html"));
+					"rebase-error/report2.html"));
 
 			if (reportFile.exists()) {
 				rootElement = getElement(

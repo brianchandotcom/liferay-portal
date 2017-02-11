@@ -87,6 +87,11 @@ public interface DB {
 
 	public boolean isSupportsUpdateWithInnerJoin();
 
+	public void runIndexSQL(Connection con, String sql)
+		throws IOException, SQLException;
+
+	public void runIndexSQL(String sql) throws IOException, SQLException;
+
 	public default void runSQL(Connection con, DBTypeToSQLMap dbTypeToSQLMap)
 		throws IOException, SQLException {
 

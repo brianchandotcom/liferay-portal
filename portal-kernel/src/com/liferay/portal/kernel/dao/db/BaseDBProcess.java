@@ -32,6 +32,17 @@ public abstract class BaseDBProcess implements DBProcess {
 	public BaseDBProcess() {
 	}
 
+	public void runIndexSQL(String template) throws IOException, SQLException {
+		DB db = DBManagerUtil.getDB();
+
+		if (connection == null) {
+			db.runIndexSQL(template);
+		}
+		else {
+			db.runIndexSQL(connection, template);
+		}
+	}
+
 	@Override
 	public void runSQL(Connection connection, String template)
 		throws IOException, SQLException {

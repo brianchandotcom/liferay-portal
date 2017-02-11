@@ -80,7 +80,7 @@ List groupNames = (List)objArray[8];
 			AUI.$('#<portlet:namespace /><%= HtmlUtil.escapeJS(targetId) %>').on(
 				'click',
 				function(event) {
-					var selectedGroupIds = AUI.$('#<portlet:namespace />groupIds<%= HtmlUtil.escapeAttribute(target) %>').val() || [];
+					var selectedGroupIds = AUI.$('#<portlet:namespace />groupIds<%= HtmlUtil.escapeJS(targetId) %>').val() || [];
 
 					if (selectedGroupIds.length) {
 						selectedGroupIds = selectedGroupIds.split(',');

@@ -3290,6 +3290,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		DocumentBuilderFactory documentBuilderFactory =
 			DocumentBuilderFactory.newInstance();
 
+		documentBuilderFactory.setFeature(
+			"http://apache.org/xml/features/nonvalidating/load-external-dtd",
+			false);
+
 		DocumentBuilder documentBuilder =
 			documentBuilderFactory.newDocumentBuilder();
 

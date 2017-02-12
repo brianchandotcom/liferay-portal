@@ -12,22 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.tools.soy.builder.maven;
+package com.liferay.portal.tools.soy.builder.ant;
 
-import com.liferay.portal.tools.soy.builder.commands.ReplaceTranslationCommand;
+import com.liferay.portal.tools.soy.builder.commands.WrapAlloyTemplateCommand;
+
+import org.apache.tools.ant.BuildException;
 
 /**
- * Replace 'goog.getMsg' definitions.
- *
  * @author Andrea Di Giorgi
- * @goal replace-translation
  */
-public class ReplaceTranslationMojo
-	extends BaseSoyJsMojo<ReplaceTranslationCommand> {
+public class WrapAlloyTemplateTask extends WrapAlloyTemplateCommand {
 
 	@Override
-	protected ReplaceTranslationCommand createCommand() {
-		return new ReplaceTranslationCommand();
+	public void execute() {
+		try {
+			super.execute();
+		}
+		catch (Exception e) {
+			throw new BuildException(e);
+		}
 	}
 
 }

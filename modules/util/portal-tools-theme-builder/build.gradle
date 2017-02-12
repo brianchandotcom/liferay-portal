@@ -77,7 +77,6 @@ test {
 		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
 	}
 
-	systemProperty "theme.builder.classpath", jar.archivePath
 	systemProperty "theme.builder.version", jar.version
 }
 

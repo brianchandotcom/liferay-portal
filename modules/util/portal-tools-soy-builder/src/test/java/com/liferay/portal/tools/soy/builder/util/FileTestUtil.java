@@ -27,11 +27,13 @@ import java.nio.file.Path;
  */
 public class FileTestUtil {
 
-	public static String read(Class<?> clazz, String name) throws IOException {
+	public static String read(ClassLoader classLoader, String name)
+		throws IOException {
+
 		StringBuilder sb = new StringBuilder();
 
 		try (BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(clazz.getResourceAsStream(name)))) {
+				new InputStreamReader(classLoader.getResourceAsStream(name)))) {
 
 			String line = null;
 

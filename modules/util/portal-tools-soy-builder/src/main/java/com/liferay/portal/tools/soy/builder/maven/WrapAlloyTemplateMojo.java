@@ -14,20 +14,40 @@
 
 package com.liferay.portal.tools.soy.builder.maven;
 
-import com.liferay.portal.tools.soy.builder.commands.ReplaceTranslationCommand;
+import com.liferay.portal.tools.soy.builder.commands.WrapAlloyTemplateCommand;
 
 /**
- * Replace 'goog.getMsg' definitions.
+ * Wrap Soy templates into AlloyUI modules.
  *
  * @author Andrea Di Giorgi
- * @goal replace-translation
+ * @goal wrap-alloy-template
  */
-public class ReplaceTranslationMojo
-	extends BaseSoyJsMojo<ReplaceTranslationCommand> {
+public class WrapAlloyTemplateMojo
+	extends BaseSoyJsMojo<WrapAlloyTemplateCommand> {
+
+	/**
+	 * The AlloyUI module name.
+	 *
+	 * @parameter
+	 * @required
+	 */
+	public void setModuleName(String moduleName) {
+		command.setModuleName(moduleName);
+	}
+
+	/**
+	 * The Soy template namespace.
+	 *
+	 * @parameter
+	 * @required
+	 */
+	public void setNamespace(String namespace) {
+		command.setNamespace(namespace);
+	}
 
 	@Override
-	protected ReplaceTranslationCommand createCommand() {
-		return new ReplaceTranslationCommand();
+	protected WrapAlloyTemplateCommand createCommand() {
+		return new WrapAlloyTemplateCommand();
 	}
 
 }

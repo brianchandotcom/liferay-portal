@@ -1613,8 +1613,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 
-	private static class PortletPreferenceElementComparator
-		extends ElementComparator {
+	private class PortletPreferenceElementComparator extends ElementComparator {
 
 		@Override
 		protected String getElementName(Element preferenceElement) {
@@ -1625,7 +1624,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private static class ResourceActionActionKeyElementComparator
+	private class ResourceActionActionKeyElementComparator
 		extends ElementComparator {
 
 		@Override
@@ -1635,7 +1634,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private static class ResourceActionResourceElementComparator
+	private class ResourceActionResourceElementComparator
 		extends ElementComparator {
 
 		public ResourceActionResourceElementComparator(String nameAttribute) {
@@ -1656,8 +1655,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private static class ServiceExceptionElementComparator
-		extends ElementComparator {
+	private class ServiceExceptionElementComparator extends ElementComparator {
 
 		@Override
 		protected String getElementName(Element exceptionElement) {
@@ -1666,8 +1664,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private static class ServiceReferenceElementComparator
-		extends ElementComparator {
+	private class ServiceReferenceElementComparator extends ElementComparator {
 
 		public ServiceReferenceElementComparator(String nameAttribute) {
 			super(nameAttribute);
@@ -1694,7 +1691,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private static class SpringBeanElementComparator extends ElementComparator {
+	private class SpringBeanElementComparator extends ElementComparator {
 
 		public SpringBeanElementComparator(String nameAttribute) {
 			super(nameAttribute);
@@ -1760,7 +1757,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			return springBeanServiceElemen1.compareTo(springBeanServiceElemen2);
 		}
 
-		private static class SpringBeanServiceElement
+		private class SpringBeanServiceElement
 			implements Comparable<SpringBeanServiceElement> {
 
 			public SpringBeanServiceElement(String name) {
@@ -1851,8 +1848,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private static class StrutsActionElementComparator
-		extends ElementComparator {
+	private class StrutsActionElementComparator extends ElementComparator {
 
 		public StrutsActionElementComparator(String nameAttribute) {
 			super(nameAttribute);
@@ -1876,8 +1872,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private static class TilesDefinitionElementComparator
-		extends ElementComparator {
+	private class TilesDefinitionElementComparator extends ElementComparator {
 
 		@Override
 		public int compare(

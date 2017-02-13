@@ -942,8 +942,11 @@ public class CalendarBookingLocalServiceTest {
 			}
 		}
 
-		Assert.assertEquals(1, earlierCalendarBookings.size());
-		Assert.assertEquals(2, laterCalendarBookings.size());
+		Assert.assertEquals(
+			earlierCalendarBookings.toString(), 1,
+			earlierCalendarBookings.size());
+		Assert.assertEquals(
+			laterCalendarBookings.toString(), 2, laterCalendarBookings.size());
 
 		for (CalendarBooking earlierCalendarBooking : earlierCalendarBookings) {
 			Assert.assertEquals(
@@ -1004,7 +1007,9 @@ public class CalendarBookingLocalServiceTest {
 			CalendarBookingLocalServiceUtil.getRecurringCalendarBookings(
 				calendarBooking, endTime);
 
-		Assert.assertEquals(2, recurringCalendarBookings.size());
+		Assert.assertEquals(
+			recurringCalendarBookings.toString(), 2,
+			recurringCalendarBookings.size());
 
 		calendarBookingInstance = recurringCalendarBookings.get(0);
 
@@ -1111,7 +1116,9 @@ public class CalendarBookingLocalServiceTest {
 			CalendarBookingLocalServiceUtil.getRecurringCalendarBookings(
 				calendarBooking, endTime);
 
-		Assert.assertEquals(2, recurringCalendarBookings.size());
+		Assert.assertEquals(
+			recurringCalendarBookings.toString(), 2,
+			recurringCalendarBookings.size());
 
 		calendarBookingInstance = recurringCalendarBookings.get(0);
 

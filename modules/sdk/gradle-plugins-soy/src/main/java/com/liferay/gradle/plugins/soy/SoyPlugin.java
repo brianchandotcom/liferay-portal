@@ -14,7 +14,9 @@
 
 package com.liferay.gradle.plugins.soy;
 
+import com.liferay.gradle.plugins.soy.internal.SoyPluginConstants;
 import com.liferay.gradle.plugins.soy.tasks.BuildSoyTask;
+import com.liferay.gradle.plugins.soy.tasks.WrapSoyAlloyTemplateTask;
 import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
@@ -27,6 +29,7 @@ import java.util.concurrent.Callable;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
@@ -35,6 +38,7 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -46,11 +50,15 @@ public class SoyPlugin implements Plugin<Project> {
 
 	public static final String CONFIGURATION_NAME = "soy";
 
+	public static final String WRAP_SOY_ALLOY_TEMPLATE_TASK_NAME =
+		"wrapSoyAlloyTemplate";
+
 	@Override
 	public void apply(Project project) {
 		Configuration soyConfiguration = _addConfigurationSoy(project);
 
 		_addTaskBuildSoy(project);
+		_addTaskWrapSoyAlloyTemplate(project);
 
 		_configureTasksBuildSoy(project, soyConfiguration);
 	}
@@ -107,6 +115,63 @@ public class SoyPlugin implements Plugin<Project> {
 		return buildSoyTask;
 	}
 
+	@SuppressWarnings("rawtypes")
+	private WrapSoyAlloyTemplateTask _addTaskWrapSoyAlloyTemplate(
+		Project project) {
+
+		final WrapSoyAlloyTemplateTask wrapSoyAlloyTemplateTask =
+			GradleUtil.addTask(
+				project, WRAP_SOY_ALLOY_TEMPLATE_TASK_NAME,
+				WrapSoyAlloyTemplateTask.class);
+
+		wrapSoyAlloyTemplateTask.setDescription(
+			"Wraps the Javascript functions compiled from Closure Templates " +
+				"into AlloyUI modules.");
+		wrapSoyAlloyTemplateTask.setEnabled(false);
+		wrapSoyAlloyTemplateTask.setIncludes(
+			Collections.singleton("**/*.soy.js"));
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withId(
+			SoyPluginConstants.JS_MODULE_CONFIG_GENERATOR_PLUGIN_ID,
+			new Action<Plugin>() {
+
+				@Override
+				public void execute(Plugin plugin) {
+					wrapSoyAlloyTemplateTask.dependsOn(
+						SoyPluginConstants.CONFIG_JS_MODULES_TASK_NAME);
+				}
+
+			});
+
+		pluginContainer.withId(
+			SoyPluginConstants.JS_TRANSPILER_PLUGIN_ID,
+			new Action<Plugin>() {
+
+				@Override
+				public void execute(Plugin plugin) {
+					wrapSoyAlloyTemplateTask.dependsOn(
+						SoyPluginConstants.TRANSPILE_JS_TASK_NAME);
+				}
+
+			});
+
+		pluginContainer.withType(
+			JavaPlugin.class,
+			new Action<JavaPlugin>() {
+
+				@Override
+				public void execute(JavaPlugin javaPlugin) {
+					_configureTaskWrapSoyAlloyTemplateForJavaPlugin(
+						wrapSoyAlloyTemplateTask);
+				}
+
+			});
+
+		return wrapSoyAlloyTemplateTask;
+	}
+
 	private void _configureTaskBuildSoyClasspath(
 		BuildSoyTask buildSoyTask, FileCollection fileCollection) {
 
@@ -143,6 +208,35 @@ public class SoyPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _configureTaskWrapSoyAlloyTemplateForJavaPlugin(
+		final WrapSoyAlloyTemplateTask wrapSoyAlloyTemplateTask) {
+
+		wrapSoyAlloyTemplateTask.dependsOn(
+			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		wrapSoyAlloyTemplateTask.setSource(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					SourceSet sourceSet = GradleUtil.getSourceSet(
+						wrapSoyAlloyTemplateTask.getProject(),
+						SourceSet.MAIN_SOURCE_SET_NAME);
+
+					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+					return sourceSetOutput.getResourcesDir();
+				}
+
+			});
+
+		Task classesTask = GradleUtil.getTask(
+			wrapSoyAlloyTemplateTask.getProject(),
+			JavaPlugin.CLASSES_TASK_NAME);
+
+		classesTask.dependsOn(wrapSoyAlloyTemplateTask);
 	}
 
 	private File _getResourcesDir(Project project) {

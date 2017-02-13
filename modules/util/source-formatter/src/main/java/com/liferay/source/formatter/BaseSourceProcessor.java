@@ -2615,7 +2615,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected boolean isExcludedPath(
-		String property, String path, int lineCount, String javaTermName) {
+		String property, String path, int lineCount, String parameter) {
 
 		if (property == null) {
 			return false;
@@ -2633,10 +2633,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return false;
 		}
 
-		String pathWithJavaTermName = null;
+		String pathWithParameter = null;
 
-		if (Validator.isNotNull(javaTermName)) {
-			pathWithJavaTermName = path + StringPool.AT + javaTermName;
+		if (Validator.isNotNull(parameter)) {
+			pathWithParameter = path + StringPool.AT + parameter;
 		}
 
 		String pathWithLineCount = null;
@@ -2665,8 +2665,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			if (path.endsWith(exclude) ||
-				((pathWithJavaTermName != null) &&
-				 pathWithJavaTermName.endsWith(exclude)) ||
+				((pathWithParameter != null) &&
+				 pathWithParameter.endsWith(exclude)) ||
 				((pathWithLineCount != null) &&
 				 pathWithLineCount.endsWith(exclude))) {
 

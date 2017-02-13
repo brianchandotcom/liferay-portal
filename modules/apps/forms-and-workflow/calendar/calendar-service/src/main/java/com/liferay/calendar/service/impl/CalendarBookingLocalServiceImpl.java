@@ -21,6 +21,8 @@ import com.liferay.calendar.exception.CalendarBookingRecurrenceException;
 import com.liferay.calendar.exporter.CalendarDataFormat;
 import com.liferay.calendar.exporter.CalendarDataHandler;
 import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
+import com.liferay.calendar.internal.recurrence.RecurrenceSplit;
+import com.liferay.calendar.internal.recurrence.RecurrenceSplitter;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
@@ -58,6 +60,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -73,6 +76,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
@@ -484,7 +488,7 @@ public class CalendarBookingLocalServiceImpl
 		if (allFollowing) {
 			if (deleteRecurringCalendarBookings) {
 				List<CalendarBooking> recurringCalendarBookings =
-					getRecurringCalendarBookings(calendarBooking, startTime);
+					splitCalendarBookingInstances(calendarBooking, startTime);
 
 				for (CalendarBooking recurringCalendarBooking :
 						recurringCalendarBookings) {
@@ -777,7 +781,7 @@ public class CalendarBookingLocalServiceImpl
 
 			if (allFollowing) {
 				List<CalendarBooking> recurringCalendarBookings =
-					getRecurringCalendarBookings(calendarBooking, startTime);
+					splitCalendarBookingInstances(calendarBooking, startTime);
 
 				for (CalendarBooking recurringCalendarBooking :
 						recurringCalendarBookings) {
@@ -1256,7 +1260,7 @@ public class CalendarBookingLocalServiceImpl
 			Calendar calendar = calendarLocalService.getCalendar(calendarId);
 
 			List<CalendarBooking> recurringCalendarBookings =
-				getRecurringCalendarBookings(calendarBooking, startTime);
+				splitCalendarBookingInstances(calendarBooking, startTime);
 
 			List<String> unmodifiedAttributesNames =
 				getUnmodifiedAttributesNames(
@@ -1767,6 +1771,108 @@ public class CalendarBookingLocalServiceImpl
 		}
 	}
 
+	protected CalendarBooking splitCalendarBookingInstance(
+			CalendarBooking calendarBooking, long startTime,
+			Recurrence recurrence)
+		throws PortalException {
+
+		long[] childCalendarIds = getChildCalendarIds(
+			calendarBooking.getCalendarBookingId(),
+			calendarBooking.getCalendarId());
+
+		long duration =
+			calendarBooking.getEndTime() - calendarBooking.getStartTime();
+
+		long endTime = startTime + duration;
+
+		CalendarBooking calendarBookingInstance = addCalendarBooking(
+			calendarBooking.getUserId(), calendarBooking.getCalendarId(),
+			childCalendarIds,
+			CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+			calendarBooking.getRecurringCalendarBookingId(),
+			calendarBooking.getTitleMap(), calendarBooking.getDescriptionMap(),
+			calendarBooking.getLocation(), startTime, endTime,
+			calendarBooking.getAllDay(),
+			RecurrenceSerializer.serialize(recurrence),
+			calendarBooking.getFirstReminder(),
+			calendarBooking.getFirstReminderType(),
+			calendarBooking.getSecondReminder(),
+			calendarBooking.getSecondReminderType(),
+			ServiceContextThreadLocal.getServiceContext());
+
+		deleteCalendarBookingInstance(calendarBooking, startTime, true, false);
+
+		return calendarBookingInstance;
+	}
+
+	protected List<CalendarBooking> splitCalendarBookingInstances(
+			CalendarBooking calendarBooking, long startTime)
+		throws PortalException {
+
+		List<CalendarBooking> recurringCalendarBookings =
+			getRecurringCalendarBookings(calendarBooking);
+
+		List<CalendarBooking> followingRecurringCalendarBookings =
+			new ArrayList<>();
+
+		java.util.Calendar splitJCalendar = null;
+
+		boolean singleInstance = false;
+
+		if (Validator.isNull(calendarBooking.getRecurrence())) {
+			singleInstance = true;
+
+			TimeZone timeZone = getTimeZone(
+				calendarBooking.getCalendar(), calendarBooking.isAllDay());
+
+			splitJCalendar = JCalendarUtil.getJCalendar(
+				calendarBooking.getStartTime(), timeZone);
+
+			splitJCalendar.add(java.util.Calendar.DATE, 1);
+		}
+
+		for (CalendarBooking recurringCalendarBooking :
+				recurringCalendarBookings) {
+
+			if (recurringCalendarBooking.getStartTime() > startTime) {
+				followingRecurringCalendarBookings.add(
+					recurringCalendarBooking);
+			}
+			else if (singleInstance) {
+				Recurrence recurrenceObj =
+					recurringCalendarBooking.getRecurrenceObj();
+
+				if (Validator.isNotNull(recurrenceObj)) {
+					java.util.Calendar startTimeJCalendar =
+						JCalendarUtil.getJCalendar(
+							recurringCalendarBooking.getStartTime(),
+							recurringCalendarBooking.getTimeZone());
+
+					RecurrenceSplit recurrenceSplit = recurrenceSplitter.split(
+						recurrenceObj, startTimeJCalendar, splitJCalendar);
+
+					if (recurrenceSplit.isSplit()) {
+						java.util.Calendar newStartTimeJCalendar =
+							JCalendarUtil.mergeJCalendar(
+								splitJCalendar, startTimeJCalendar,
+								recurringCalendarBooking.getTimeZone());
+
+						CalendarBooking newCalendarBooking =
+							splitCalendarBookingInstance(
+								recurringCalendarBooking,
+								newStartTimeJCalendar.getTimeInMillis(),
+								recurrenceSplit.getSecondRecurrence());
+
+						followingRecurringCalendarBookings.add(
+							newCalendarBooking);
+					}
+				}
+			}
+		}
+
+		return followingRecurringCalendarBookings;
+	}
+
 	protected void updateCalendarBookingsByChanges(
 			long userId, long calendarId, long[] childCalendarIds,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
@@ -1888,6 +1994,9 @@ public class CalendarBookingLocalServiceImpl
 			throw new CalendarBookingRecurrenceException();
 		}
 	}
+
+	@ServiceReference(type = RecurrenceSplitter.class)
+	protected RecurrenceSplitter recurrenceSplitter;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingLocalServiceImpl.class);

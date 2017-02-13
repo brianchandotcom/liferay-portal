@@ -1032,15 +1032,20 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				serviceFinderColumnElementComparator =
 					new ServiceFinderColumnElementComparator(columnNames);
 
-			for (Element finderElement :
-					(List<Element>)entityElement.elements("finder")) {
+			if (!isExcludedPath(
+					_SERVICE_FINDER_COLUMN_SORT_EXCLUDES, absolutePath,
+					entityName)) {
 
-				String finderName = finderElement.attributeValue("name");
+				for (Element finderElement :
+						(List<Element>)entityElement.elements("finder")) {
 
-				checkOrder(
-					fileName, finderElement, "finder-column",
-					entityName + "#" + finderName,
-					serviceFinderColumnElementComparator);
+					String finderName = finderElement.attributeValue("name");
+
+					checkOrder(
+						fileName, finderElement, "finder-column",
+						entityName + "#" + finderName,
+						serviceFinderColumnElementComparator);
+				}
 			}
 
 			checkOrder(
@@ -1575,6 +1580,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	private static final String _NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES =
 		"numerical.portlet.name.element.excludes";
+
+	private static final String _SERVICE_FINDER_COLUMN_SORT_EXCLUDES =
+		"service.finder.column.sort.excludes";
 
 	private static final String _XML_EXCLUDES = "xml.excludes";
 

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.model.User;
  */
 public interface SiteAdminUserDemoDataCreator extends UserDemoDataCreator {
 
+	public User create(long groupId) throws PortalException;
+
 	public User create(long groupId, String emailAddress)
 		throws PortalException;
 

@@ -261,8 +261,6 @@
 
 		<execute macro="Form#editName" />
 
-		<execute macro="Form#editDescription" />
-
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
 		</execute>
@@ -348,8 +346,6 @@
 		<execute macro="FormsAdminNavigator#gotoAddForm" />
 
 		<execute macro="Form#editName" />
-
-		<execute macro="Form#editDescription" />
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />

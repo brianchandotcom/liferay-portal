@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.soy;
 
+import com.liferay.gradle.plugins.soy.internal.SoyPluginConstants;
 import com.liferay.gradle.plugins.soy.tasks.ReplaceSoyTranslationTask;
 import com.liferay.gradle.util.GradleUtil;
 
@@ -63,25 +64,25 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withId(
-			_JS_MODULE_CONFIG_GENERATOR_PLUGIN_ID,
+			SoyPluginConstants.JS_MODULE_CONFIG_GENERATOR_PLUGIN_ID,
 			new Action<Plugin>() {
 
 				@Override
 				public void execute(Plugin plugin) {
 					replaceSoyTranslationTask.dependsOn(
-						_CONFIG_JS_MODULES_TASK_NAME);
+						SoyPluginConstants.CONFIG_JS_MODULES_TASK_NAME);
 				}
 
 			});
 
 		pluginContainer.withId(
-			_JS_TRANSPILER_PLUGIN_ID,
+			SoyPluginConstants.JS_TRANSPILER_PLUGIN_ID,
 			new Action<Plugin>() {
 
 				@Override
 				public void execute(Plugin plugin) {
 					replaceSoyTranslationTask.dependsOn(
-						_TRANSPILE_JS_TASK_NAME);
+						SoyPluginConstants.TRANSPILE_JS_TASK_NAME);
 				}
 
 			});
@@ -129,16 +130,5 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 
 		classesTask.dependsOn(replaceSoyTranslationTask);
 	}
-
-	private static final String _CONFIG_JS_MODULES_TASK_NAME =
-		"configJSModules";
-
-	private static final String _JS_MODULE_CONFIG_GENERATOR_PLUGIN_ID =
-		"com.liferay.js.module.config.generator";
-
-	private static final String _JS_TRANSPILER_PLUGIN_ID =
-		"com.liferay.js.transpiler";
-
-	private static final String _TRANSPILE_JS_TASK_NAME = "transpileJS";
 
 }

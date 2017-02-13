@@ -12,21 +12,21 @@
 		<execute macro="Upgrade#reindexSearches" />
 	</set-up>
 
-	<command name="ViewWorkflowArchive6012" priority="5">
+	<command ignore="true" name="ViewWorkflowArchive6012" priority="5">
 		<property name="data.archive.type" value="data-archive-workflow" />
 		<property name="portal.version" value="6.0.12" />
 
 		<execute macro="Upgrade#approveWorkflow" />
 	</command>
 
-	<command name="ViewWorkflowArchive612" priority="5">
+	<command ignore="true" name="ViewWorkflowArchive612" priority="5">
 		<property name="data.archive.type" value="data-archive-workflow" />
 		<property name="portal.version" value="6.1.2" />
 
 		<execute macro="Upgrade#approveWorkflow" />
 	</command>
 
-	<command name="ViewWorkflowArchive6130" priority="5">
+	<command ignore="true" name="ViewWorkflowArchive6130" priority="5">
 		<property name="data.archive.type" value="data-archive-workflow" />
 		<property name="portal.version" value="6.1.30" />
 

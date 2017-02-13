@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.subscription.constants;
+package com.liferay.subscription.model;
 
 /**
  * @author Alexander Chow

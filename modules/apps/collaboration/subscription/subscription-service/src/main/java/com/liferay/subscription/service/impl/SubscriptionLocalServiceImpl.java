@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.social.kernel.model.SocialActivityConstants;
-import com.liferay.subscription.constants.SubscriptionConstants;
 import com.liferay.subscription.model.Subscription;
+import com.liferay.subscription.model.SubscriptionConstants;
 import com.liferay.subscription.service.base.SubscriptionLocalServiceBaseImpl;
 
 import java.util.List;

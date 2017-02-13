@@ -135,6 +135,33 @@ public class DLFileEntryTypeServiceTest {
 	}
 
 	@Test
+	public void testAddFileEntryTypeWithEmptyDDMForm() throws Exception {
+		int fileEntryTypesCount =
+			DLFileEntryTypeServiceUtil.getFileEntryTypesCount(
+				new long[] {_group.getGroupId()});
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		serviceContext.setAttribute(
+			"ddmForm", DDMBeanTranslatorUtil.translate(new DDMForm()));
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), DLFileEntryMetadata.class.getName());
+
+		DLFileEntryTypeServiceUtil.addFileEntryType(
+			_group.getGroupId(), StringUtil.randomString(),
+			StringUtil.randomString(),
+			new long[] {ddmStructure.getStructureId()}, serviceContext);
+
+		Assert.assertEquals(
+			fileEntryTypesCount + 1,
+			DLFileEntryTypeServiceUtil.getFileEntryTypesCount(
+				new long[] {_group.getGroupId()}));
+	}
+
+	@Test
 	public void testAddFileEntryTypeWithNonEmptyDDMForm() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -184,33 +211,6 @@ public class DLFileEntryTypeServiceTest {
 		Assert.assertTrue(hasUserLocale);
 
 		DLFileEntryTypeLocalServiceUtil.deleteDLFileEntryType(dlFileEntryType);
-	}
-
-	@Test
-	public void testAddFileEntryTypeWithEmptyDDMForm() throws Exception {
-		int fileEntryTypesCount =
-			DLFileEntryTypeServiceUtil.getFileEntryTypesCount(
-				new long[] {_group.getGroupId()});
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		serviceContext.setAttribute(
-			"ddmForm", DDMBeanTranslatorUtil.translate(new DDMForm()));
-
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), DLFileEntryMetadata.class.getName());
-
-		DLFileEntryTypeServiceUtil.addFileEntryType(
-			_group.getGroupId(), StringUtil.randomString(),
-			StringUtil.randomString(),
-			new long[] {ddmStructure.getStructureId()}, serviceContext);
-
-		Assert.assertEquals(
-			fileEntryTypesCount + 1,
-			DLFileEntryTypeServiceUtil.getFileEntryTypesCount(
-				new long[] {_group.getGroupId()}));
 	}
 
 	@Test

@@ -1077,6 +1077,22 @@ deployed by the `deploy` task by passing a closure to the
 - [LPS-69926]: Embed the `compileInclude` dependency JAR files, instead of
 expanding them.
 
+## 3.2.1 - 2017-02-12
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.84.
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.351.
+
+## 3.2.2 - 2017-02-12
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.85.
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.352.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

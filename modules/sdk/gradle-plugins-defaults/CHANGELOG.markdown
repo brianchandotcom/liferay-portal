@@ -1032,11 +1032,19 @@ the `node_modules` directory of a project with the `clean` task.
 ### Changed
 - [LPS-70555]: Update the [Liferay Gradle Plugins] dependency to version 3.2.0.
 
-## 2.4.30 - 2017-02-10
+## 2.4.30 - 2017-02-12
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 3.2.1.
 
 ### Fixed
 - [LPS-70584]: Avoid requiring an Internet connection while parsing
 `service.xml` files.
+
+## 2.4.31 - 2017-02-12
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 3.2.2.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

@@ -28,7 +28,7 @@
 				"template_geolocation": {
 					"mapping": {
 						"index": "not_analyzed",
-					 	"lat_lon": true,
+						"lat_lon": true,
 						"store": true,
 						"type": "geo_point"
 					},

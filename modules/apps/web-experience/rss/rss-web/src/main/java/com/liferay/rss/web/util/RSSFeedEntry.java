@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.rss.web.internal.util;
+package com.liferay.rss.web.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

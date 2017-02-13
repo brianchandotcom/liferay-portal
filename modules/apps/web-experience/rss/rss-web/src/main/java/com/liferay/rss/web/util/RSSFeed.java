@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.rss.web.internal.util;
+package com.liferay.rss.web.util;
 
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.rss.web.configuration.RSSWebCacheConfiguration;
+import com.liferay.rss.web.internal.util.RSSWebCacheItem;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;

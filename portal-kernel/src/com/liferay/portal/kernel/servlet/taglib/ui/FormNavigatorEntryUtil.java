@@ -149,7 +149,7 @@ public class FormNavigatorEntryUtil {
 			formNavigatorEntryConfigurationHelper ->
 				formNavigatorEntryConfigurationHelper.getFormNavigatorEntries(
 					formNavigatorId, categoryKey, formModelBean)).orElse(
-					Optional.empty());
+				Optional.empty());
 	}
 
 	private static Optional<FormNavigatorEntryConfigurationHelper>

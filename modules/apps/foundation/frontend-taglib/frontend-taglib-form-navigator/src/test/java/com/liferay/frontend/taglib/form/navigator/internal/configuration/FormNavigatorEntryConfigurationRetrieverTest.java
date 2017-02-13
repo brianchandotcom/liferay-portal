@@ -90,7 +90,9 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
-			Assert.assertEquals(3, formNavigatorEntryKeys.size());
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 3,
+				formNavigatorEntryKeys.size());
 			Assert.assertEquals(
 				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
 			Assert.assertEquals(
@@ -106,7 +108,9 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 					getFormNavigatorEntryKeys("form1", "general", "update").
 					get();
 
-			Assert.assertEquals(3, formNavigatorEntryKeys.size());
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 3,
+				formNavigatorEntryKeys.size());
 			Assert.assertEquals(
 				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
 			Assert.assertEquals(
@@ -138,7 +142,9 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
-			Assert.assertEquals(2, formNavigatorEntryKeys.size());
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 2,
+				formNavigatorEntryKeys.size());
 			Assert.assertEquals(
 				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
 			Assert.assertEquals(
@@ -168,7 +174,9 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
-			Assert.assertEquals(2, formNavigatorEntryKeys.size());
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 2,
+				formNavigatorEntryKeys.size());
 			Assert.assertEquals(
 				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
 			Assert.assertEquals(
@@ -181,7 +189,9 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", null).get();
 
-			Assert.assertEquals(2, formNavigatorEntryKeys.size());
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 2,
+				formNavigatorEntryKeys.size());
 			Assert.assertEquals(
 				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
 			Assert.assertEquals(
@@ -221,7 +231,9 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
-			Assert.assertEquals(3, formNavigatorEntryKeys.size());
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 3,
+				formNavigatorEntryKeys.size());
 			Assert.assertEquals(
 				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
 			Assert.assertEquals(
@@ -237,7 +249,9 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 					getFormNavigatorEntryKeys("form1", "general", "update").
 					get();
 
-			Assert.assertEquals(3, formNavigatorEntryKeys.size());
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 3,
+				formNavigatorEntryKeys.size());
 			Assert.assertEquals(
 				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
 			Assert.assertEquals(
@@ -354,7 +368,9 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
-			Assert.assertEquals(3, formNavigatorEntryKeys.size());
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 3,
+				formNavigatorEntryKeys.size());
 			Assert.assertEquals(
 				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
 			Assert.assertEquals(

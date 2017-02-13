@@ -792,18 +792,6 @@ version 1.0.137.
 - [LPS-69730]: Update the [Liferay Source Formatter] dependency to version
 1.0.327.
 
-## 3.0.53 - 2016-12-18
-
-### Changed
-- [LPS-69730]: Update the [Liferay Gradle Plugins Service Builder] dependency to
-version 1.0.22.
-- [LPS-69730]: Update the [Liferay Gradle Plugins Source Formatter] dependency
-to version 1.0.61.
-- [LPS-69730]: Update the [Liferay Portal Tools Service Builder] dependency to
-version 1.0.137.
-- [LPS-69730]: Update the [Liferay Source Formatter] dependency to version
-1.0.327.
-
 ## 3.0.54 - 2016-12-18
 
 ### Changed

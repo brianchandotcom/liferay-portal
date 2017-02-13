@@ -1038,8 +1038,8 @@ the `node_modules` directory of a project with the `clean` task.
 - [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 3.2.1.
 
 ### Fixed
-- [LPS-70584]: Avoid requiring an Internet connection while parsing
-`service.xml` files.
+- [LPS-70584]: Avoid internet connection requirement when parsing `service.xml`
+files.
 
 ## 2.4.31 - 2017-02-12
 

@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
@@ -133,7 +135,34 @@ public class DLFileEntryTypeServiceTest {
 	}
 
 	@Test
-	public void testAddFileEntryType() throws Exception {
+	public void testAddFileEntryTypeWithEmptyDDMForm() throws Exception {
+		int fileEntryTypesCount =
+			DLFileEntryTypeServiceUtil.getFileEntryTypesCount(
+				new long[] {_group.getGroupId()});
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		serviceContext.setAttribute(
+			"ddmForm", DDMBeanTranslatorUtil.translate(new DDMForm()));
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), DLFileEntryMetadata.class.getName());
+
+		DLFileEntryTypeServiceUtil.addFileEntryType(
+			_group.getGroupId(), StringUtil.randomString(),
+			StringUtil.randomString(),
+			new long[] {ddmStructure.getStructureId()}, serviceContext);
+
+		Assert.assertEquals(
+			fileEntryTypesCount + 1,
+			DLFileEntryTypeServiceUtil.getFileEntryTypesCount(
+				new long[] {_group.getGroupId()}));
+	}
+
+	@Test
+	public void testAddFileEntryTypeWithNonEmptyDDMForm() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
 		byte[] testFileBytes = FileUtil.getBytes(

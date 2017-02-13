@@ -17,9 +17,9 @@ package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.Assert;
@@ -27,11 +27,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
-
-import org.mockito.Mockito;
-
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Alejandro Tardín
@@ -291,39 +286,12 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
-	public static class WhenThereIsNoConfig {
-
-		@Before
-		public void setUp() throws Exception {
-			_setMockConfigurations();
-		}
-
-		@Test
-		public void testGetFormNavigatorEntriesReturnsEmptyOptional()
-			throws Exception {
-
-			Optional<List<String>> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
-					getFormNavigatorEntryKeys(
-						"formNavigatorId", "categoryKey", "context");
-
-			Assert.assertFalse(formNavigatorEntryKeys.isPresent());
-		}
-
-	}
-
 	public static class WhenThereIsNoConfigAtAll {
 
 		@Before
 		public void setUp() throws Exception {
-			Mockito.when(
-				_configurationAdmin.listConfigurations(
-					"(service.factoryPid=" +
-						FormNavigatorConfiguration.class.getName() +
-							")")).thenReturn(null);
-
-			_formNavigatorEntryConfigurationRetriever.setConfigurationAdmin(
-				_configurationAdmin);
+			_formNavigatorEntryConfigurationRetriever =
+				new FormNavigatorEntryConfigurationRetriever();
 		}
 
 		@Test
@@ -381,36 +349,34 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
-	private static Configuration _createMockConfig(
+	private static FormNavigatorEntryConfigurationParser _createMockConfig(
 		String formNavigatorId, String[] formNavigatorEntryKeys) {
 
-		Configuration mock = Mockito.mock(Configuration.class);
-		Dictionary<String, Object> properties = new Hashtable<>();
+		Map<String, Object> properties = new HashMap<>();
 
-		properties.put("formNavigatorId", formNavigatorId);
 		properties.put("formNavigatorEntryKeys", formNavigatorEntryKeys);
+		properties.put("formNavigatorId", formNavigatorId);
 
-		Mockito.when(mock.getProperties()).thenReturn(properties);
+		FormNavigatorEntryConfigurationParser
+			formNavigatorEntryConfigurationParser =
+				new FormNavigatorEntryConfigurationParser();
 
-		return mock;
+		formNavigatorEntryConfigurationParser.activate(properties);
+
+		return formNavigatorEntryConfigurationParser;
 	}
 
-	private static void _setMockConfigurations(Configuration... configurations)
+	private static void _setMockConfigurations(
+			FormNavigatorEntryConfigurationParser... parsers)
 		throws Exception {
 
-		Mockito.when(
-			_configurationAdmin.listConfigurations(
-				"(service.factoryPid=" +
-					FormNavigatorConfiguration.class.getName() +
-						")")).thenReturn(configurations);
-
-		_formNavigatorEntryConfigurationRetriever.setConfigurationAdmin(
-			_configurationAdmin);
+		for (FormNavigatorEntryConfigurationParser parser : parsers) {
+			_formNavigatorEntryConfigurationRetriever.
+				setFormNavigatorEntryConfigurationParser(parser);
+		}
 	}
 
-	private static final ConfigurationAdmin _configurationAdmin = Mockito.mock(
-		ConfigurationAdmin.class);
-	private static final FormNavigatorEntryConfigurationRetriever
+	private static FormNavigatorEntryConfigurationRetriever
 		_formNavigatorEntryConfigurationRetriever =
 			new FormNavigatorEntryConfigurationRetriever();
 

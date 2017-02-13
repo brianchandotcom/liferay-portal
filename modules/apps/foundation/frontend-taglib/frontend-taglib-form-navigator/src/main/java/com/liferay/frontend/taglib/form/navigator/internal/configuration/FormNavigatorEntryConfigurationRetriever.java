@@ -14,29 +14,16 @@
 
 package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.io.IOException;
-import java.io.StringReader;
-
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
-import java.util.stream.Collectors;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Alejandro Tardín
@@ -47,96 +34,53 @@ public class FormNavigatorEntryConfigurationRetriever {
 	public Optional<List<String>> getFormNavigatorEntryKeys(
 		String formNavigatorId, String categoryKey, String context) {
 
-		try {
-			Properties formNavigatorEntryKeysProperties =
-				_getFormNavigatorEntryKeysProperties(formNavigatorId);
-
-			String formNavigatorEntryKeys = null;
-
-			if (Validator.isNotNull(context)) {
-				formNavigatorEntryKeys =
-					formNavigatorEntryKeysProperties.getProperty(
-						context + StringPool.PERIOD + categoryKey);
-			}
-
-			if (formNavigatorEntryKeys == null) {
-				formNavigatorEntryKeys =
-					formNavigatorEntryKeysProperties.getProperty(categoryKey);
-			}
-
-			if (formNavigatorEntryKeys != null) {
-				return Optional.of(_splitKeys(formNavigatorEntryKeys));
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return Optional.empty();
+		return _getFormNavigatorEntryConfigurationParsers(
+			formNavigatorId).stream().map(
+				retriever -> retriever.getFormNavigatorEntryKeys(
+					categoryKey, context)).reduce(
+				Optional.empty(), this::_preferLast);
 	}
 
-	@Reference(bind = "-", unbind = "-")
-	public void setConfigurationAdmin(ConfigurationAdmin configurationAdmin) {
-		_configurationAdmin = configurationAdmin;
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC
+	)
+	public void setFormNavigatorEntryConfigurationParser(
+		FormNavigatorEntryConfigurationParser
+			formNavigatorEntryConfigurationParser) {
+
+		_getFormNavigatorEntryConfigurationParsers(
+			formNavigatorEntryConfigurationParser.getFormNavigatorId()).add(
+			formNavigatorEntryConfigurationParser);
 	}
 
-	private void _addProperties(
-		StringBundler sb,
-		FormNavigatorConfiguration formNavigatorConfiguration) {
+	public void unsetFormNavigatorEntryConfigurationParser(
+		FormNavigatorEntryConfigurationParser
+			formNavigatorEntryConfigurationParser) {
 
-		String[] formNavigatorEntryKeys =
-			formNavigatorConfiguration.formNavigatorEntryKeys();
-
-		for (String line : formNavigatorEntryKeys) {
-			sb.append(line);
-			sb.append(StringPool.NEW_LINE);
-		}
+		_getFormNavigatorEntryConfigurationParsers(
+			formNavigatorEntryConfigurationParser.getFormNavigatorId()).remove(
+			formNavigatorEntryConfigurationParser);
 	}
 
-	private List<FormNavigatorConfiguration> _getConfigurations()
-		throws InvalidSyntaxException, IOException {
+	private List<FormNavigatorEntryConfigurationParser>
+		_getFormNavigatorEntryConfigurationParsers(String formNavigatorId) {
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			"(service.factoryPid=" +
-				FormNavigatorConfiguration.class.getName() + ")");
-
-		return ListUtil.toList(configurations).stream().map(
-			configuration -> ConfigurableUtil.createConfigurable(
-				FormNavigatorConfiguration.class,
-				configuration.getProperties())).collect(Collectors.toList());
+		return _formNavigatorEntryConfigurationParserMap.computeIfAbsent(
+			formNavigatorId, key -> new CopyOnWriteArrayList<>());
 	}
 
-	private Properties _getFormNavigatorEntryKeysProperties(
-			String formNavigatorId)
-		throws InvalidSyntaxException, IOException {
+	private Optional<List<String>> _preferLast(
+		Optional<List<String>> previous, Optional<List<String>> current) {
 
-		StringBundler sb = new StringBundler();
-
-		List<FormNavigatorConfiguration> configurations = _getConfigurations();
-
-		for (FormNavigatorConfiguration configuration : configurations) {
-			String curFormNavigatorId = configuration.formNavigatorId();
-
-			if (curFormNavigatorId.equals(formNavigatorId)) {
-				_addProperties(sb, configuration);
-			}
+		if (current.isPresent()) {
+			return current;
 		}
 
-		Properties properties = new Properties();
-
-		properties.load(new StringReader(sb.toString()));
-
-		return properties;
+		return previous;
 	}
 
-	private List<String> _splitKeys(String formNavigatorEntryKeys) {
-		return Arrays.stream(StringUtil.split(formNavigatorEntryKeys)).map(
-			String::trim).collect(Collectors.toList());
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FormNavigatorEntryConfigurationRetriever.class);
-
-	private ConfigurationAdmin _configurationAdmin;
+	private volatile Map<String, List<FormNavigatorEntryConfigurationParser>>
+		_formNavigatorEntryConfigurationParserMap = new ConcurrentHashMap<>();
 
 }

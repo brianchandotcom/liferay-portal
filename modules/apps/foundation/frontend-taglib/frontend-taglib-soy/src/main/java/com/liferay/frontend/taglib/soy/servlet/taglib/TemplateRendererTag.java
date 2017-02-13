@@ -205,11 +205,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	private SoyJavaScriptRenderer _getJavaScriptComponentRenderer()
 		throws Exception {
 
-		if (_soyJavaScriptRenderer == null) {
-			_soyJavaScriptRenderer = new SoyJavaScriptRenderer();
-		}
-
-		return _soyJavaScriptRenderer;
+		return new SoyJavaScriptRenderer();
 	}
 
 	private Template _getTemplate() throws TemplateException {
@@ -225,7 +221,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	private String _componentId;
 	private Map<String, Object> _context;
 	private String _module;
-	private SoyJavaScriptRenderer _soyJavaScriptRenderer;
 	private Template _template;
 	private String _templateNamespace;
 

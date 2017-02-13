@@ -1552,8 +1552,7 @@ public class JavaClass {
 		String javaTermName = javaTerm.getName();
 
 		if (_javaSourceProcessor.isExcludedPath(
-				javaTermSortExcludesProperty, _absolutePath, -1,
-				javaTermName)) {
+				javaTermSortExcludesProperty, _absolutePath, javaTermName)) {
 
 			return;
 		}

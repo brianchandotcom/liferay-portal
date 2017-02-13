@@ -32,28 +32,28 @@
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 		</finder>
-		<finder name="C_G_C_C" return-type="Collection">
-			<finder-column name="companyId" />
+		<finder name="G_C_C_C" return-type="Collection">
 			<finder-column name="groupId" />
+			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="C_G_C_U" return-type="FriendlyURL">
-			<finder-column name="companyId" />
+		<finder name="G_C_C_U" return-type="FriendlyURL">
 			<finder-column name="groupId" />
+			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="urlTitle" />
 		</finder>
-		<finder name="C_G_C_C_U" return-type="FriendlyURL">
-			<finder-column name="companyId" />
+		<finder name="G_C_C_C_U" return-type="FriendlyURL">
 			<finder-column name="groupId" />
+			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="urlTitle" />
 		</finder>
-		<finder name="C_G_C_C_M" return-type="FriendlyURL">
-			<finder-column name="companyId" />
+		<finder name="G_C_C_C_M" return-type="FriendlyURL">
 			<finder-column name="groupId" />
+			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="main" />

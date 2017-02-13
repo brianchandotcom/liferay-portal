@@ -18,9 +18,12 @@ import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorContext
 import com.liferay.frontend.taglib.form.navigator.context.FormNavigatorContextProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryConfigurationHelper;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Optional;
@@ -82,8 +85,9 @@ public class FormNavigatorEntryConfigurationHelperImpl
 		String formNavigatorId, List<String> formNavigatorEntryKeys) {
 
 		Stream<FormNavigatorEntry<T>> formNavigatorEntryStream =
-			formNavigatorEntryKeys.stream().flatMap(
-				key -> Stream.of(_getFormNavigatorEntry(key, formNavigatorId)));
+			formNavigatorEntryKeys.stream().map(
+				key -> this.<T>_getFormNavigatorEntry(
+					key, formNavigatorId)).filter(Validator::isNotNull);
 
 		return formNavigatorEntryStream.collect(Collectors.toList());
 	}
@@ -106,13 +110,26 @@ public class FormNavigatorEntryConfigurationHelperImpl
 	private <T> FormNavigatorEntry<T> _getFormNavigatorEntry(
 		String key, String formNavigatorId) {
 
-		return _formNavigatorEntriesMap.getService(
-			_getKey(key, formNavigatorId));
+		FormNavigatorEntry formNavigatorEntry =
+			_formNavigatorEntriesMap.getService(_getKey(key, formNavigatorId));
+
+		if ((formNavigatorEntry == null) && _log.isWarnEnabled()) {
+			_log.warn(
+				String.format(
+					"There is no form navigator entry for the form '%s' with " +
+						"key '%'",
+					formNavigatorId, key));
+		}
+
+		return formNavigatorEntry;
 	}
 
 	private String _getKey(String key, String formNavigatorId) {
 		return formNavigatorId + StringPool.PERIOD + key;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FormNavigatorEntryConfigurationHelperImpl.class);
 
 	private ServiceTrackerMap<String, FormNavigatorContextProvider>
 		_formNavigatorContextProviderMap;

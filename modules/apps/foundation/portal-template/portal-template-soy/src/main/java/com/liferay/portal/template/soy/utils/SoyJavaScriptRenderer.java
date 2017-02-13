@@ -16,6 +16,8 @@ package com.liferay.portal.template.soy.utils;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -55,19 +57,25 @@ public class SoyJavaScriptRenderer {
 
 		try {
 			js = StringUtil.read(inputStream);
-		} catch (Exception e) {
-
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to read template.");
+			}
 		}
 
 		return js;
 	}
 
-	private static String _javaScriptTPL;
+	private static final Log _log = LogFactoryUtil.getLog(
+		SoyJavaScriptRenderer.class);
 
-	private final JSONSerializer _jsonSerializer;
+	private static final String _javaScriptTPL;
 
 	static {
 		_javaScriptTPL = _getJavaScriptTPL();
 	}
+
+	private final JSONSerializer _jsonSerializer;
 
 }

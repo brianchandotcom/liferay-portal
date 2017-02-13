@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Gradle Plugins Soy
 Bundle-SymbolicName: com.liferay.gradle.plugins.soy
-Bundle-Version: 3.0.2
+Bundle-Version: 3.1.0
 Export-Package:\
 	com.liferay.gradle.plugins.soy,\
 	com.liferay.gradle.plugins.soy.tasks

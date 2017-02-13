@@ -1471,19 +1471,6 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.portal.kernel.model.Subscription">
-		<field name="mvccVersion" type="long" />
-		<field name="subscriptionId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field name="frequency" type="String" />
-	</model>
 	<model name="com.liferay.portal.kernel.model.SystemEvent">
 		<field name="mvccVersion" type="long" />
 		<field name="systemEventId" type="long" />

@@ -7,4 +7,5 @@ dependencies {
 	testIntegrationCompile project(":apps:collaboration:blogs:blogs-api")
 	testIntegrationCompile project(":apps:collaboration:blogs:blogs-service")
 	testIntegrationCompile project(":apps:collaboration:blogs:blogs-test-util")
+	testIntegrationCompile project(":apps:collaboration:subscription:subscription-api")
 }

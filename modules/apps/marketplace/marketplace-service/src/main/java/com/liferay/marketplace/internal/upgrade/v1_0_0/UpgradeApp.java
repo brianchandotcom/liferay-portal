@@ -48,10 +48,6 @@ public class UpgradeApp extends UpgradeProcess {
 		if (!hasColumn("Marketplace_App", "version")) {
 			runSQL("alter table Marketplace_App add version VARCHAR(75)");
 		}
-
-		if (!hasColumn("Marketplace_App", "required")) {
-			runSQL("alter table Marketplace_App add required BOOLEAN");
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeApp.class);

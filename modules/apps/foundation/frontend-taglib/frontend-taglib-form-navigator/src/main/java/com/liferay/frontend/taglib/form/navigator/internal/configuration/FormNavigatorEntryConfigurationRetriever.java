@@ -61,7 +61,7 @@ public class FormNavigatorEntryConfigurationRetriever {
 
 			if (formNavigatorEntryKeys == null) {
 				formNavigatorEntryKeys =
-					formNavigatorEntryKeysProperties.getProperty(context);
+					formNavigatorEntryKeysProperties.getProperty(categoryKey);
 			}
 
 			if (formNavigatorEntryKeys != null) {

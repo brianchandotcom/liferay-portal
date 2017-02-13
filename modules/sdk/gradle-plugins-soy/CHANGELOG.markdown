@@ -28,9 +28,20 @@ package to the `com.liferay.gradle.plugins.soy.tasks` package.
 ### Changed
 - [LPS-70036]: Reuse logic from [Liferay Portal Tools Soy Builder].
 
+## 3.1.0 - 2017-02-13
+
+### Added
+- [LPS-69139]: Add task `wrapSoyAlloyTemplate`, disabled by default, to wrap the
+Javascript functions compiled from Closure Templates into AlloyUI modules.
+
+### Changed
+- [LPS-69139]: Update the [Liferay Portal Tools Soy Builder] dependency to
+version 2.0.0.
+
 [Command Line Tools for Metal.js]: https://github.com/metal/metal-cli
 [Liferay Portal Tools Soy Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-soy-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-67766]: https://issues.liferay.com/browse/LPS-67766
+[LPS-69139]: https://issues.liferay.com/browse/LPS-69139
 [LPS-70036]: https://issues.liferay.com/browse/LPS-70036
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092

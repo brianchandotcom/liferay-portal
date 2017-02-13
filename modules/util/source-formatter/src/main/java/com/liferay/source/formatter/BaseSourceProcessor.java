@@ -2677,6 +2677,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
+	protected boolean isExcludedPath(
+		String property, String path, String parameter) {
+
+		return isExcludedPath(property, path, -1, parameter);
+	}
+
 	protected boolean isModulesFile(String absolutePath) {
 		return isModulesFile(absolutePath, false);
 	}

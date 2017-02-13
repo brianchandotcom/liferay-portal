@@ -34,6 +34,11 @@ public class SiteAdminUserDemoDataCreatorImpl
 	extends BaseUserDemoDataCreator implements SiteAdminUserDemoDataCreator {
 
 	@Override
+	public User create(long groupId) throws PortalException {
+		return create(groupId, null);
+	}
+
+	@Override
 	public User create(long groupId, String emailAddress)
 		throws PortalException {
 

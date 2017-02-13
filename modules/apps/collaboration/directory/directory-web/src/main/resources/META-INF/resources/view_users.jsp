@@ -17,6 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 String viewUsersRedirect = ParamUtil.getString(request, "viewUsersRedirect");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");

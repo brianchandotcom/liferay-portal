@@ -1,7 +1,9 @@
 Bundle-Name: Liferay Flags Taglib
 Bundle-SymbolicName: com.liferay.flags.taglib
-Bundle-Version: 3.0.0
-Export-Package: com.liferay.flags.taglib.servlet.taglib
+Bundle-Version: 2.0.4
+Export-Package:\
+	com.liferay.flags.taglib.servlet.taglib,\
+	com.liferay.flags.taglib.servlet.taglib.soy
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

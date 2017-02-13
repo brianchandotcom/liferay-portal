@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.SubscriptionLocalServiceWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorAdapter;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.List;
@@ -172,7 +171,7 @@ public class ModularSubscriptionLocalServiceWrapper
 			Subscription.class,
 			_subscriptionLocalService.getUserSubscriptions(
 				userId, start, end,
-				new SubscriptionOrderByComparatorAdapter(orderByComparator)));
+				ModelAdapterUtil.adapt(Subscription.class, orderByComparator)));
 	}
 
 	@Override
@@ -213,25 +212,5 @@ public class ModularSubscriptionLocalServiceWrapper
 	}
 
 	private SubscriptionLocalService _subscriptionLocalService;
-
-	private static class SubscriptionOrderByComparatorAdapter
-		extends
-			OrderByComparatorAdapter
-				<com.liferay.subscription.model.Subscription, Subscription> {
-
-		public SubscriptionOrderByComparatorAdapter(
-			OrderByComparator<Subscription> orderByComparator) {
-
-			super(orderByComparator);
-		}
-
-		@Override
-		public Subscription adapt(
-			com.liferay.subscription.model.Subscription subscription) {
-
-			return ModelAdapterUtil.adapt(Subscription.class, subscription);
-		}
-
-	}
 
 }

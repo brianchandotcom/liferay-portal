@@ -2,7 +2,9 @@
 	<command name="addCP">
 		<var name="key_adtType" value="${adtType}" />
 
-		<execute macro="Portlet#viewEmptyMessage" />
+		<execute macro="Portlet#viewEmptyMessage">
+			<var name="message" value="There are no results." />
+		</execute>
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -224,7 +226,9 @@
 			</then>
 		</if>
 
-		<execute macro="Portlet#viewEmptyMessage" />
+		<execute macro="Portlet#viewEmptyMessage">
+			<var name="message" value="There are no results." />
+		</execute>
 	</command>
 
 	<command name="viewADTviaPortletPG">

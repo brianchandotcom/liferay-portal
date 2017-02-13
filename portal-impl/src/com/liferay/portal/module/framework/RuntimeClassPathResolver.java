@@ -22,6 +22,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * @author Raymond Augé
@@ -55,7 +56,7 @@ public class RuntimeClassPathResolver implements ClassPathResolver {
 				path = StringPool.SLASH + path;
 			}
 
-			urls[i] = new URL("file", null, path);
+			urls[i] = new URL("file", null, URLEncoder.encode(path, "UTF-8"));
 		}
 
 		return urls;

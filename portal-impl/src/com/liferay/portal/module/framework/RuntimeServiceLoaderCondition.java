@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.UnsupportedEncodingException;
+
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * @author Raymond Augé
@@ -40,6 +43,14 @@ public class RuntimeServiceLoaderCondition implements ServiceLoaderCondition {
 		String moduleFrameworkBaseDirName =
 			PropsValues.MODULE_FRAMEWORK_BASE_DIR.replace(
 				StringPool.DOUBLE_SLASH, StringPool.SLASH);
+
+		try {
+			moduleFrameworkBaseDirName = URLEncoder.encode(
+				moduleFrameworkBaseDirName, "UTF-8");
+		}
+		catch (UnsupportedEncodingException uee) {
+			return false;
+		}
 
 		return path.contains(moduleFrameworkBaseDirName);
 	}

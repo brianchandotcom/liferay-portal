@@ -60,11 +60,7 @@ import java.util.Map;
 	PortalException.class, SystemException.class})
 public interface GroupFriendlyURLLocalService extends BaseLocalService,
 	PersistedModelLocalService {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link GroupFriendlyURLLocalServiceUtil} to access the group friendly url local service. Add custom service methods to {@link com.liferay.portal.route.service.impl.GroupFriendlyURLLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -99,11 +95,6 @@ public interface GroupFriendlyURLLocalService extends BaseLocalService,
 	public GroupFriendlyURL addGroupFriendlyURL(
 		GroupFriendlyURL groupFriendlyURL);
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this class directly. Always use {@link GroupFriendlyURLLocalServiceUtil} to access the group friendly url local service.
-	*/
 	public GroupFriendlyURL addGroupFriendlyURL(long userId, long companyId,
 		long groupId, java.lang.String friendlyURL,
 		java.lang.String languageId, ServiceContext serviceContext)

@@ -35,11 +35,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class GroupFriendlyURLLocalServiceUtil {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.route.service.impl.GroupFriendlyURLLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
-	 */
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -83,11 +79,6 @@ public class GroupFriendlyURLLocalServiceUtil {
 		return getService().addGroupFriendlyURL(groupFriendlyURL);
 	}
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this class directly. Always use {@link GroupFriendlyURLLocalServiceUtil} to access the group friendly url local service.
-	*/
 	public static com.liferay.portal.kernel.route.model.GroupFriendlyURL addGroupFriendlyURL(
 		long userId, long companyId, long groupId,
 		java.lang.String friendlyURL, java.lang.String languageId,

@@ -84,11 +84,6 @@ public class GroupFriendlyURLLocalServiceWrapper
 		return _groupFriendlyURLLocalService.addGroupFriendlyURL(groupFriendlyURL);
 	}
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this class directly. Always use {@link GroupFriendlyURLLocalServiceUtil} to access the group friendly url local service.
-	*/
 	@Override
 	public com.liferay.portal.kernel.route.model.GroupFriendlyURL addGroupFriendlyURL(
 		long userId, long companyId, long groupId,

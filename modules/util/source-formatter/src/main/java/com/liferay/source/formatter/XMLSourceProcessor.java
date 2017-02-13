@@ -1613,6 +1613,88 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 
+	private class CustomSQLElementComparator extends ElementComparator {
+
+		public CustomSQLElementComparator(String nameAttribute) {
+			super(nameAttribute);
+		}
+
+		@Override
+		public int compare(Element sqlElement1, Element sqlElement2) {
+			String sqlElementName1 = getElementName(sqlElement1);
+			String sqlElementName2 = getElementName(sqlElement2);
+
+			String finderObjectName1 = _getFinderObjectName(sqlElementName1);
+			String finderObjectName2 = _getFinderObjectName(sqlElementName2);
+
+			if ((finderObjectName1 == null) || (finderObjectName2 == null)) {
+				return 0;
+			}
+
+			int value = finderObjectName1.compareToIgnoreCase(
+				finderObjectName2);
+
+			if (value != 0) {
+				return value;
+			}
+
+			String finderKeyName1 = _getFinderKeyName(sqlElementName1);
+			String finderKeyName2 = _getFinderKeyName(sqlElementName2);
+
+			int startsWithWeight = StringUtil.startsWithWeight(
+				finderKeyName1, finderKeyName2);
+
+			if (startsWithWeight == 0) {
+				return finderKeyName1.compareTo(finderKeyName2);
+			}
+
+			String startFinder = finderKeyName1.substring(0, startsWithWeight);
+
+			if (!startFinder.contains("By")) {
+				NaturalOrderStringComparator comparator =
+					new NaturalOrderStringComparator();
+
+				return comparator.compare(finderKeyName1, finderKeyName2);
+			}
+
+			int columnCount1 = StringUtil.count(
+				sqlElementName1, CharPool.UNDERLINE);
+			int columnCount2 = StringUtil.count(
+				sqlElementName2, CharPool.UNDERLINE);
+
+			return columnCount1 - columnCount2;
+		}
+
+		private String _getFinderKeyName(String elementName) {
+			if (Validator.isNull(elementName)) {
+				return null;
+			}
+
+			int pos = elementName.lastIndexOf(StringPool.PERIOD);
+
+			if (pos == -1) {
+				return null;
+			}
+
+			return elementName.substring(pos + 1);
+		}
+
+		private String _getFinderObjectName(String elementName) {
+			if (Validator.isNull(elementName)) {
+				return null;
+			}
+
+			int pos = elementName.lastIndexOf(StringPool.PERIOD);
+
+			if (pos == -1) {
+				return null;
+			}
+
+			return elementName.substring(0, pos);
+		}
+
+	}
+
 	private class PortletPreferenceElementComparator extends ElementComparator {
 
 		@Override
@@ -1661,6 +1743,78 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		protected String getElementName(Element exceptionElement) {
 			return exceptionElement.getStringValue();
 		}
+
+	}
+
+	private class ServiceFinderElementComparator extends ElementComparator {
+
+		public ServiceFinderElementComparator(List<String> columnNames) {
+			_columnNames = columnNames;
+		}
+
+		@Override
+		public int compare(Element finderElement1, Element finderElement2) {
+			List<Element> finderColumnElements1 = finderElement1.elements(
+				"finder-column");
+			List<Element> finderColumnElements2 = finderElement2.elements(
+				"finder-column");
+
+			int finderColumnCount1 = finderColumnElements1.size();
+			int finderColumnCount2 = finderColumnElements2.size();
+
+			if (finderColumnCount1 != finderColumnCount2) {
+				return finderColumnCount1 - finderColumnCount2;
+			}
+
+			for (int i = 0; i < finderColumnCount1; i++) {
+				Element finderColumnElement1 = finderColumnElements1.get(i);
+				Element finderColumnElement2 = finderColumnElements2.get(i);
+
+				String finderColumnName1 = finderColumnElement1.attributeValue(
+					"name");
+				String finderColumnName2 = finderColumnElement2.attributeValue(
+					"name");
+
+				int index1 = _columnNames.indexOf(finderColumnName1);
+				int index2 = _columnNames.indexOf(finderColumnName2);
+
+				if (index1 != index2) {
+					return index1 - index2;
+				}
+			}
+
+			String finderName1 = finderElement1.attributeValue("name");
+			String finderName2 = finderElement2.attributeValue("name");
+
+			int startsWithWeight = StringUtil.startsWithWeight(
+				finderName1, finderName2);
+
+			String strippedFinderName1 = finderName1.substring(
+				startsWithWeight);
+			String strippedFinderName2 = finderName2.substring(
+				startsWithWeight);
+
+			if (strippedFinderName1.startsWith("Gt") ||
+				strippedFinderName1.startsWith("Like") ||
+				strippedFinderName1.startsWith("Lt") ||
+				strippedFinderName1.startsWith("Not")) {
+
+				if (!strippedFinderName2.startsWith("Gt") &&
+					!strippedFinderName2.startsWith("Like") &&
+					!strippedFinderName2.startsWith("Lt") &&
+					!strippedFinderName2.startsWith("Not")) {
+
+					return 1;
+				}
+				else {
+					return strippedFinderName1.compareTo(strippedFinderName2);
+				}
+			}
+
+			return 0;
+		}
+
+		private final List<String> _columnNames;
 
 	}
 
@@ -1886,160 +2040,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			return super.compare(definitionElement1, definitionElement2);
 		}
-
-	}
-
-	private class CustomSQLElementComparator extends ElementComparator {
-
-		public CustomSQLElementComparator(String nameAttribute) {
-			super(nameAttribute);
-		}
-
-		@Override
-		public int compare(Element sqlElement1, Element sqlElement2) {
-			String sqlElementName1 = getElementName(sqlElement1);
-			String sqlElementName2 = getElementName(sqlElement2);
-
-			String finderObjectName1 = _getFinderObjectName(sqlElementName1);
-			String finderObjectName2 = _getFinderObjectName(sqlElementName2);
-
-			if ((finderObjectName1 == null) || (finderObjectName2 == null)) {
-				return 0;
-			}
-
-			int value = finderObjectName1.compareToIgnoreCase(
-				finderObjectName2);
-
-			if (value != 0) {
-				return value;
-			}
-
-			String finderKeyName1 = _getFinderKeyName(sqlElementName1);
-			String finderKeyName2 = _getFinderKeyName(sqlElementName2);
-
-			int startsWithWeight = StringUtil.startsWithWeight(
-				finderKeyName1, finderKeyName2);
-
-			if (startsWithWeight == 0) {
-				return finderKeyName1.compareTo(finderKeyName2);
-			}
-
-			String startFinder = finderKeyName1.substring(0, startsWithWeight);
-
-			if (!startFinder.contains("By")) {
-				NaturalOrderStringComparator comparator =
-					new NaturalOrderStringComparator();
-
-				return comparator.compare(finderKeyName1, finderKeyName2);
-			}
-
-			int columnCount1 = StringUtil.count(
-				sqlElementName1, CharPool.UNDERLINE);
-			int columnCount2 = StringUtil.count(
-				sqlElementName2, CharPool.UNDERLINE);
-
-			return columnCount1 - columnCount2;
-		}
-
-		private String _getFinderKeyName(String elementName) {
-			if (Validator.isNull(elementName)) {
-				return null;
-			}
-
-			int pos = elementName.lastIndexOf(StringPool.PERIOD);
-
-			if (pos == -1) {
-				return null;
-			}
-
-			return elementName.substring(pos + 1);
-		}
-
-		private String _getFinderObjectName(String elementName) {
-			if (Validator.isNull(elementName)) {
-				return null;
-			}
-
-			int pos = elementName.lastIndexOf(StringPool.PERIOD);
-
-			if (pos == -1) {
-				return null;
-			}
-
-			return elementName.substring(0, pos);
-		}
-
-	}
-
-	private class ServiceFinderElementComparator extends ElementComparator {
-
-		public ServiceFinderElementComparator(List<String> columnNames) {
-			_columnNames = columnNames;
-		}
-
-		@Override
-		public int compare(Element finderElement1, Element finderElement2) {
-			List<Element> finderColumnElements1 = finderElement1.elements(
-				"finder-column");
-			List<Element> finderColumnElements2 = finderElement2.elements(
-				"finder-column");
-
-			int finderColumnCount1 = finderColumnElements1.size();
-			int finderColumnCount2 = finderColumnElements2.size();
-
-			if (finderColumnCount1 != finderColumnCount2) {
-				return finderColumnCount1 - finderColumnCount2;
-			}
-
-			for (int i = 0; i < finderColumnCount1; i++) {
-				Element finderColumnElement1 = finderColumnElements1.get(i);
-				Element finderColumnElement2 = finderColumnElements2.get(i);
-
-				String finderColumnName1 = finderColumnElement1.attributeValue(
-					"name");
-				String finderColumnName2 = finderColumnElement2.attributeValue(
-					"name");
-
-				int index1 = _columnNames.indexOf(finderColumnName1);
-				int index2 = _columnNames.indexOf(finderColumnName2);
-
-				if (index1 != index2) {
-					return index1 - index2;
-				}
-			}
-
-			String finderName1 = finderElement1.attributeValue("name");
-			String finderName2 = finderElement2.attributeValue("name");
-
-			int startsWithWeight = StringUtil.startsWithWeight(
-				finderName1, finderName2);
-
-			String strippedFinderName1 = finderName1.substring(
-				startsWithWeight);
-			String strippedFinderName2 = finderName2.substring(
-				startsWithWeight);
-
-			if (strippedFinderName1.startsWith("Gt") ||
-				strippedFinderName1.startsWith("Like") ||
-				strippedFinderName1.startsWith("Lt") ||
-				strippedFinderName1.startsWith("Not")) {
-
-				if (!strippedFinderName2.startsWith("Gt") &&
-					!strippedFinderName2.startsWith("Like") &&
-					!strippedFinderName2.startsWith("Lt") &&
-					!strippedFinderName2.startsWith("Not")) {
-
-					return 1;
-				}
-				else {
-					return strippedFinderName1.compareTo(strippedFinderName2);
-				}
-			}
-
-			return 0;
-		}
-
-		private final List<String> _columnNames;
 
 	}
 

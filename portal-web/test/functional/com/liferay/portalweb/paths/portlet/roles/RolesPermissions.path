@@ -817,12 +817,12 @@
 <!--SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_CATEGORY_CHECKBOX</td>
-	<td>//label/input[contains(@value,'assetADD_CATEGORY')]</td>
+	<td>//label/input[contains(@value,'categoriesADD_CATEGORY')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_VOCABULARY_CHECKBOX</td>
-	<td>//input[contains(@value,'assetADD_VOCABULARY')]</td>
+	<td>//input[contains(@value,'categoriesADD_VOCABULARY')]</td>
 	<td></td>
 </tr>
 <tr>

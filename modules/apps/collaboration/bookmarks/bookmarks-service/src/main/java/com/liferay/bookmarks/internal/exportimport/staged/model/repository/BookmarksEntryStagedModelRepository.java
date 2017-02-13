@@ -21,7 +21,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepository;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
+ * @author Mate Thurzo
  */
 @Component(
 	immediate = true,
@@ -44,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = StagedModelRepository.class
 )
 public class BookmarksEntryStagedModelRepository
-	extends BaseStagedModelRepository<BookmarksEntry> {
+	implements StagedModelRepository<BookmarksEntry> {
 
 	@Override
 	public BookmarksEntry addStagedModel(
@@ -98,6 +99,13 @@ public class BookmarksEntryStagedModelRepository
 	}
 
 	@Override
+	public BookmarksEntry fetchMissingReference(String uuid, long groupId) {
+		return
+			(BookmarksEntry)_stagedModelRepositoryHelper.fetchMissingReference(
+				uuid, groupId, this);
+	}
+
+	@Override
 	public BookmarksEntry fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
@@ -137,7 +145,8 @@ public class BookmarksEntryStagedModelRepository
 				bookmarksEntry.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingBookmarksEntry == null) ||
-			!isStagedModelInTrash(existingBookmarksEntry)) {
+			!_stagedModelRepositoryHelper.isStagedModelInTrash(
+				existingBookmarksEntry)) {
 
 			return;
 		}
@@ -194,5 +203,8 @@ public class BookmarksEntryStagedModelRepository
 		BookmarksEntryStagedModelRepository.class);
 
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
+
+	@Reference
+	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;
 
 }

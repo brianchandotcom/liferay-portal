@@ -570,6 +570,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected void checkPackagePath(String fileName, String packagePath) {
 		if (Validator.isNull(packagePath)) {
 			processMessage(fileName, "Missing package");
+
+			return;
 		}
 
 		int pos = fileName.lastIndexOf(CharPool.SLASH);
@@ -582,6 +584,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName,
 				"The declared package '" + packagePath +
 					"' does not match the expected package");
+
+			return;
+		}
+
+		if (packagePath.matches(".*\\.internal\\.([\\w.]+\\.)?impl")) {
+			processMessage(
+				fileName, "Do not use 'impl' inside 'internal', see LPS-70113");
 		}
 	}
 

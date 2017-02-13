@@ -1991,7 +1991,7 @@ public class FileSystemImporter extends BaseImporter {
 				"language_entry",
 				"com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"
 			},
-			{"rss_feed", "com.liferay.rss.web.internal.util.RSSFeed"},
+			{"rss_feed", "com.liferay.rss.web.util.RSSFeed"},
 			{"site_map", "com.liferay.portal.kernel.model.LayoutSet"},
 			{"site_navigation", "com.liferay.portal.kernel.theme.NavItem"},
 			{"wiki_page", "com.liferay.wiki.model.WikiPage"}

@@ -1017,16 +1017,31 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Element rootElement = document.getRootElement();
 
-		List<Element> entityElements = rootElement.elements("entity");
-
 		ServiceReferenceElementComparator serviceReferenceElementComparator =
 			new ServiceReferenceElementComparator("entity");
 
-		for (Element entityElement : entityElements) {
+		for (Element entityElement :
+				(List<Element>)rootElement.elements("entity")) {
+
 			String entityName = entityElement.attributeValue("name");
 
 			List<String> columnNames = getColumnNames(
 				fileName, absolutePath, entityName);
+
+			ServiceFinderColumnElementComparator
+				serviceFinderColumnElementComparator =
+					new ServiceFinderColumnElementComparator(columnNames);
+
+			for (Element finderElement :
+					(List<Element>)entityElement.elements("finder")) {
+
+				String finderName = finderElement.attributeValue("name");
+
+				checkOrder(
+					fileName, finderElement, "finder-column",
+					entityName + "#" + finderName,
+					serviceFinderColumnElementComparator);
+			}
 
 			checkOrder(
 				fileName, entityElement, "finder", entityName,
@@ -1743,6 +1758,32 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		protected String getElementName(Element exceptionElement) {
 			return exceptionElement.getStringValue();
 		}
+
+	}
+
+	private class ServiceFinderColumnElementComparator
+		extends ElementComparator {
+
+		public ServiceFinderColumnElementComparator(List<String> columnNames) {
+			_columnNames = columnNames;
+		}
+
+		@Override
+		public int compare(
+			Element finderColumnElement1, Element finderColumnElement2) {
+
+			String finderColumnName1 = finderColumnElement1.attributeValue(
+				"name");
+			String finderColumnName2 = finderColumnElement2.attributeValue(
+				"name");
+
+			int index1 = _columnNames.indexOf(finderColumnName1);
+			int index2 = _columnNames.indexOf(finderColumnName2);
+
+			return index1 - index2;
+		}
+
+		private final List<String> _columnNames;
 
 	}
 

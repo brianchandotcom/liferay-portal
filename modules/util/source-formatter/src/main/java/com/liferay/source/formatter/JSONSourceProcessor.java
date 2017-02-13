@@ -33,10 +33,40 @@ import java.util.regex.Pattern;
  */
 public class JSONSourceProcessor extends BaseSourceProcessor {
 
+	protected void checkIndentation(
+		String line, String fileName, int expectedTabCount, int lineCount) {
+
+		if (Validator.isNull(line)) {
+			return;
+		}
+
+		int leadingTabCount = getLeadingTabCount(line);
+
+		if (line.matches("\t*[\\}\\]].*")) {
+			expectedTabCount -= 1;
+		}
+
+		if (leadingTabCount == expectedTabCount) {
+			return;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("Line starts with '");
+		sb.append(leadingTabCount);
+		sb.append("' tabs, but '");
+		sb.append(expectedTabCount);
+		sb.append("' tabs are expected");
+
+		processMessage(fileName, sb.toString(), lineCount);
+	}
+
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
+
+		int expectedTabCount = 0;
 
 		StringBundler sb = new StringBundler();
 
@@ -45,8 +75,14 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 
 			String line = null;
 
+			int lineCount = 0;
+
 			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineCount++;
+
 				line = trimLine(line, true);
+
+				checkIndentation(line, fileName, expectedTabCount, lineCount);
 
 				while (true) {
 					Matcher matcher = _leadingSpacesPattern.matcher(line);
@@ -64,6 +100,16 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 				sb.append(line);
 
 				sb.append("\n");
+
+				expectedTabCount = getLevel(
+					line,
+					new String[] {
+						StringPool.OPEN_BRACKET, StringPool.OPEN_CURLY_BRACE
+					},
+					new String[] {
+						StringPool.CLOSE_BRACKET, StringPool.CLOSE_CURLY_BRACE
+					},
+					expectedTabCount);
 			}
 		}
 

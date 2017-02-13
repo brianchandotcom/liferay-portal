@@ -5021,13 +5021,6 @@ go]]></replacevalue>
 												<dirname file="@{osgi.module.bnd.file}" property="osgi.module.dir" />
 
 												<gradle-execute dir="${osgi.module.dir}" task="deploy" />
-
-												<ant antfile="build.xml" dir="modules" target="build-app-lpkg">
-													<property name="app.name" value="${osgi.app.name}" />
-													<property name="liferay.home" value="${liferay.home}/bundles" />
-													<property name="project.dir" value="." />
-													<property name="osgi.dir" value="${liferay.home}/bundles/osgi" />
-												</ant>
 											</sequential>
 										</for>
 									</else>

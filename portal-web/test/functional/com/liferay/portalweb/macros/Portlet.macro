@@ -363,7 +363,7 @@
 	</command>
 
 	<command name="viewEmptyMessage">
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no results." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="${message}" />
 	</command>
 
 	<command name="viewNoPortletsPresentPG">

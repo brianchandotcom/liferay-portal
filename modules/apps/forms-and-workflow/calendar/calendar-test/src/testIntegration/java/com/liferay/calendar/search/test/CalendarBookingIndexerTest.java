@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -98,22 +97,30 @@ public class CalendarBookingIndexerTest {
 	public void testSearch() throws Exception {
 		setUpSearchContext(_group, TestPropsValues.getUser());
 
-		String title = RandomTestUtil.randomString();
+		Map<Locale, String> titleMap = new HashMap<>();
 
-		addCalendarBooking(title);
+		titleMap.put(LocaleUtil.US, "calendar event");
+		titleMap.put(LocaleUtil.JAPAN, "カレンダーイベント");
 
-		assertSearchHitsLength(title, 1);
+		addCalendarBooking(titleMap);
+
+		//assertSearchHitsLength("calendar event", 1, LocaleUtil.US);
+		assertSearchHitsLength("カレンダーイベント", 1, LocaleUtil.JAPAN);
 	}
 
 	@Test
 	public void testSearchNotAdmin() throws Exception {
 		setUpSearchContext(_group, _user);
 
-		String title = RandomTestUtil.randomString();
+		Map<Locale, String> titleMap = new HashMap<>();
 
-		addCalendarBooking(title);
+		titleMap.put(LocaleUtil.US, "calendar event");
+		titleMap.put(LocaleUtil.JAPAN, "カレンダーイベント");
 
-		assertSearchHitsLength(title, 1);
+		addCalendarBooking(titleMap);
+
+		//assertSearchHitsLength("calendar event", 1, LocaleUtil.US);
+		assertSearchHitsLength("カレンダーイベント", 1, LocaleUtil.JAPAN);
 	}
 
 	protected static SearchContext getSearchContext(Group group, User user)
@@ -127,7 +134,9 @@ public class CalendarBookingIndexerTest {
 		return searchContext;
 	}
 
-	protected void addCalendarBooking(String title) throws PortalException {
+	protected void addCalendarBooking(Map<Locale, String> titleMap)
+		throws PortalException {
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		CalendarResource calendarResource =
@@ -141,10 +150,6 @@ public class CalendarBookingIndexerTest {
 			RandomTestUtil.randomLocaleStringMap(), StringPool.UTC,
 			RandomTestUtil.randomInt(0, 255), false, false, false,
 			serviceContext);
-
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(LocaleUtil.getDefault(), title);
 
 		long startTime = DateUtil.newTime() + RandomTestUtil.randomInt();
 
@@ -160,14 +165,19 @@ public class CalendarBookingIndexerTest {
 	}
 
 	protected void assertSearchHitsLength(
-			final String keywords, final int expectedLength)
+			final String keywords, final int expectedLength, Locale locale)
 		throws Exception {
 
-		_searchContext.setKeywords(StringUtil.toLowerCase(keywords));
+		Locale currentLocale = _searchContext.getLocale();
+
+		_searchContext.setLocale(locale);
+		_searchContext.setKeywords(keywords);
 
 		Indexer<CalendarBooking> indexer = new CalendarBookingIndexer();
 
 		Hits hits = indexer.search(_searchContext);
+
+		_searchContext.setLocale(currentLocale);
 
 		Assert.assertEquals(hits.toString(), expectedLength, hits.getLength());
 	}

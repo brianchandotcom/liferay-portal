@@ -15,15 +15,12 @@
 package com.liferay.portal.kernel.captcha;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.io.IOException;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -98,7 +95,6 @@ public class CaptchaUtil {
 		ServiceProxyFactory.newServiceTrackedInstance(
 			CaptchaSettings.class, CaptchaUtil.class, "_captchaSettings",
 			false);
-
 	private static final ServiceTrackerMap<String, Captcha> _serviceTrackerMap =
 		ServiceTrackerCollections.openSingleValueMap(
 			Captcha.class, "captcha.engine.impl");

@@ -14,7 +14,6 @@
 
 package com.liferay.asset.publisher.web;
 
-import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.model.Layout;
@@ -30,9 +29,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portlet.asset.util.AssetUtil;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * Provides the implementation of <code>PortletLayoutListener</code> (in
  * <code>com.liferay.portal.kernel</code>) for the Asset Publisher portlet so
@@ -40,14 +36,9 @@ import org.osgi.service.component.annotations.Reference;
  * the page.
  *
  * @author Zsolt Berentey
+ * @deprecated As of 2.0.0, with not direct replacement
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER
-	},
-	service = PortletLayoutListener.class
-)
+@Deprecated
 public class AssetPublisherPortletLayoutListener
 	implements PortletLayoutListener {
 
@@ -111,21 +102,18 @@ public class AssetPublisherPortletLayoutListener
 		}
 	}
 
-	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
 
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
-	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
 		_layoutLocalService = layoutLocalService;
 	}
 
-	@Reference(unbind = "-")
 	protected void setSubscriptionLocalService(
 		SubscriptionLocalService subscriptionLocalService) {
 

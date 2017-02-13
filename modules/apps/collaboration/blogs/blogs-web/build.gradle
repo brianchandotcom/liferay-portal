@@ -25,6 +25,7 @@ dependencies {
 	provided project(":apps:collaboration:blogs:blogs-service")
 	provided project(":apps:collaboration:comment:comment-taglib")
 	provided project(":apps:collaboration:item-selector:item-selector-criteria-api")
+	provided project(":apps:collaboration:subscription:subscription-api")
 	provided project(":apps:foundation:friendly-url:friendly-url-api")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
 	provided project(":apps:web-experience:asset:asset-taglib")

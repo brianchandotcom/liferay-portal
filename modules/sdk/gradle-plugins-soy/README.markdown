@@ -93,7 +93,7 @@ The Soy Translation plugin adds one task to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`replaceSoyTranslation` | - `configJSModules` if [`com.liferay.js.module.config.generator`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-module-config-generator) is applied <br> - `processResources` if `java` is applied <br> - `transpileJS` if [`com.liferay.js.transpiler`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-transpiler is applied) | [`ReplaceSoyTranslationTask`](#replacesoytranslationtask) | Replaces `goog.getMsg` definitions with `Liferay.Language.get` calls.
+`replaceSoyTranslation` | - `configJSModules` if [`com.liferay.js.module.config.generator`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-module-config-generator) is applied <br> - `processResources` if `java` is applied <br> - `transpileJS` if [`com.liferay.js.transpiler`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-transpiler) is applied | [`ReplaceSoyTranslationTask`](#replacesoytranslationtask) | Replaces `goog.getMsg` definitions with `Liferay.Language.get` calls.
 
 The plugin also adds the following dependencies to tasks defined by the `java`
 plugin:

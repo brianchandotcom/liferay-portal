@@ -245,8 +245,6 @@
 	<bean class="com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl" id="com.liferay.portal.kernel.service.ServiceComponentLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentFinderImpl" id="com.liferay.portal.kernel.service.persistence.ServiceComponentFinder" parent="basePersistence" />
-	<bean class="com.liferay.portal.service.impl.SubscriptionLocalServiceImpl" id="com.liferay.portal.kernel.service.SubscriptionLocalService" />
-	<bean class="com.liferay.portal.service.persistence.impl.SubscriptionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.SubscriptionPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.impl.SystemEventLocalServiceImpl" id="com.liferay.portal.kernel.service.SystemEventLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.SystemEventPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.SystemEventPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.impl.TeamLocalServiceImpl" id="com.liferay.portal.kernel.service.TeamLocalService" />

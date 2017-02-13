@@ -87,7 +87,6 @@
 		<!-- References -->
 
 		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Subscription" package-path="com.liferay.portal" />
 		<reference entity="UserNotificationEvent" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />

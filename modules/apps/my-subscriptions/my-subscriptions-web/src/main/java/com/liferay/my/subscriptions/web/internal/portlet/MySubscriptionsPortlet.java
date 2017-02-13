@@ -15,14 +15,14 @@
 package com.liferay.my.subscriptions.web.internal.portlet;
 
 import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
-import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.subscription.model.Subscription;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

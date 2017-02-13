@@ -1,0 +1,149 @@
+<definition component-name="portal-tags">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Tags" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Tag#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="AddMultipleTags" priority="4">
+		<for list="tagname1,tagname2,tagname3" param="tagName">
+			<execute macro="Tag#addCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+
+			<execute macro="Tag#viewCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="AddTagWithAllowableSpecialCharacters" priority="4">
+		<var name="allowableCharacters"><![CDATA[-,_,^,(,),!,$]]></var>
+
+		<for list="${allowableCharacters}" param="allowableCharacter">
+			<execute macro="Tag#addCP">
+				<var name="tagName" value="${allowableCharacter}tag${allowableCharacter}" />
+			</execute>
+
+			<execute macro="Tag#viewCP">
+				<var name="tagName" value="${allowableCharacter}tag${allowableCharacter}" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="AddTagWithMultipleWords" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag name" />
+		</execute>
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tag name" />
+		</execute>
+	</command>
+
+	<command name="AddTagWithSingleWord" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tagname" />
+		</execute>
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tagname" />
+		</execute>
+	</command>
+
+	<command name="AddTagWithUTF8Encoding" priority="4">
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="標籤名稱" />
+		</execute>
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="標籤名稱" />
+		</execute>
+	</command>
+
+	<command name="CannotAddDuplicateTag" priority="4">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tagname" />
+		</execute>
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tagname" />
+		</execute>
+
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName" value="tagname" />
+		</execute>
+	</command>
+
+	<command name="CannotAddNullTag" priority="4">
+		<execute macro="Tag#addWithNullTitleCP">
+			<var name="tagName" value=" " />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Portlet#viewEmptyMessage">
+			<var name="message" value="There are no tags." />
+		</execute>
+	</command>
+
+	<command name="CannotAddTagWithInvalidCharacters" priority="4">
+		<var name="invalidCharacters"><![CDATA[&,',@,\,[,{,:,=,>,/,>,],},%,|,+,#,?,",;,*,~,`]]></var>
+
+		<for list="${invalidCharacters}" param="invalidCharacter">
+			<execute macro="Tag#addInvalidCP">
+				<var name="tagName" value="${invalidCharacter}tag${invalidCharacter}" />
+			</execute>
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Tags" />
+			</execute>
+
+			<execute macro="Portlet#viewEmptyMessage">
+				<var name="message" value="There are no tags." />
+			</execute>
+		</for>
+
+		<execute macro="Tag#addInvalidCP">
+			<var name="tagName" value=",tag," />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Portlet#viewEmptyMessage">
+			<var name="message" value="There are no tags." />
+		</execute>
+	</command>
+</definition>

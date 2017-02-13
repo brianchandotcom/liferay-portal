@@ -269,7 +269,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_CATEGORY_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add Category" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
-			<var name="permissionNavigationValue" value="Tags" />
+			<var name="permissionNavigationValue" value="Categories" />
 			<var name="roleTitle" value="Category Role Name" />
 			<var name="roleType" value="Site" />
 		</execute>
@@ -282,7 +282,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_VOCABULARY_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add Vocabulary" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
-			<var name="permissionNavigationValue" value="Tags" />
+			<var name="permissionNavigationValue" value="Categories" />
 			<var name="roleTitle" value="Category Role Name" />
 			<var name="roleType" value="Site" />
 		</execute>

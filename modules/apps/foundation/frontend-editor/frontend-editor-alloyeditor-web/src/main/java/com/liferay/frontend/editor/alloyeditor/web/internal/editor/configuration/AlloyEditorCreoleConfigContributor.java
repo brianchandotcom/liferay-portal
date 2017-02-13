@@ -91,6 +91,7 @@ public class AlloyEditorCreoleConfigContributor
 
 		String extraPlugins = jsonObject.getString("extraPlugins");
 
+		extraPlugins = extraPlugins.replace(",ae_dragresize", StringPool.BLANK);
 		extraPlugins = extraPlugins.replace(
 			",ae_tableresize", StringPool.BLANK);
 		extraPlugins = extraPlugins.concat(",creole,itemselector,media");

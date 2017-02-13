@@ -22,6 +22,10 @@ import com.liferay.friendly.url.exception.NoSuchFriendlyURLException;
 import com.liferay.friendly.url.model.FriendlyURL;
 import com.liferay.friendly.url.service.base.FriendlyURLLocalServiceBaseImpl;
 import com.liferay.friendly.url.util.comparator.FriendlyURLCreateDateComparator;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -97,6 +101,14 @@ public class FriendlyURLLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
+		List<FriendlyURL> friendlyURLs = friendlyURLPersistence.findByC_G_C_C(
+			companyId, groupId, classNameId, classPK);
+
+		for (FriendlyURL friendlyURL : friendlyURLs) {
+			friendlyURLLocalizationPersistence.removeByG_F(
+				groupId, friendlyURL.getFriendlyURLId());
+		}
+
 		friendlyURLPersistence.removeByC_G_C_C(
 			companyId, groupId, classNameId, classPK);
 	}
@@ -118,15 +130,18 @@ public class FriendlyURLLocalServiceImpl
 			String urlTitle)
 		throws NoSuchFriendlyURLException {
 
-		friendlyURLPersistence.removeByC_G_C_C_U(
+		FriendlyURL friendlyURL = friendlyURLPersistence.removeByC_G_C_C_U(
 			companyId, groupId, classNameId, classPK, urlTitle);
+
+		friendlyURLLocalizationPersistence.removeByG_F(
+			groupId, friendlyURL.getFriendlyURLId());
 
 		List<FriendlyURL> friendlyURLs = friendlyURLPersistence.findByC_G_C_C(
 			companyId, groupId, classNameId, classPK, 0, 1,
 			new FriendlyURLCreateDateComparator());
 
 		if (!friendlyURLs.isEmpty()) {
-			FriendlyURL friendlyURL = friendlyURLs.get(0);
+			friendlyURL = friendlyURLs.get(0);
 
 			friendlyURL.setMain(true);
 
@@ -135,8 +150,40 @@ public class FriendlyURLLocalServiceImpl
 	}
 
 	@Override
-	public void deleteGroupFriendlyURLs(long groupId, long classNameId) {
-		friendlyURLPersistence.removeByG_C(groupId, classNameId);
+	public void deleteGroupFriendlyURLs(
+		final long groupId, final long classNameId) {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
+
+		actionableDynamicQuery.setGroupId(groupId);
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
+
+					dynamicQuery.add(classNameIdProperty.eq(classNameId));
+				}
+
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<FriendlyURL>() {
+
+				@Override
+				public void performAction(FriendlyURL friendlyURL)
+					throws PortalException {
+
+					friendlyURLLocalizationPersistence.removeByG_F(
+						groupId, friendlyURL.getFriendlyURLId());
+
+					friendlyURLPersistence.remove(friendlyURL);
+				}
+
+			});
 	}
 
 	@Override

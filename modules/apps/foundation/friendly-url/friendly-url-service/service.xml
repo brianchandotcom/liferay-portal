@@ -59,6 +59,43 @@
 			<finder-column name="main" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="FriendlyURLLocalization" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="friendlyURLLocalizationId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="friendlyURLId" type="long" />
+		<column name="urlTitle" type="String" />
+		<column name="languageId" type="String" />
+
+		<finder name="G_F" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="friendlyURLId" />
+		</finder>
+		<finder name="G_F_L" return-type="FriendlyURLLocalization" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="friendlyURLId" />
+			<finder-column name="languageId" />
+		</finder>
+		<finder name="G_U_L" return-type="FriendlyURLLocalization" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="urlTitle" />
+			<finder-column name="languageId" />
+		</finder>
+
+		<reference entity="FriendlyURL" package-path="com.liferay.friendly.url" />
+	</entity>
 	<exceptions>
 		<exception>DuplicateFriendlyURL</exception>
 		<exception>FriendlyURLLength</exception>

@@ -181,14 +181,8 @@
 			<var name="pageName" value="Web Content Display Page3" />
 		</execute>
 
-		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewConfigureScopePG">
-			<var name="scopeSelection" value="${siteName}" />
-			<var name="scopeSelectionDefault" value="true" />
+		<execute macro="WebContentDisplayPortlet#configureScopePG">
+			<var name="scopeSelection" value="Web Content Display Page3" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

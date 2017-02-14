@@ -72,6 +72,8 @@ public class DBUtil {
 		}
 		catch (SQLException sqle) {
 			sqle.printStackTrace();
+
+			throw sqle;
 		}
 
 		return queryResultMap;

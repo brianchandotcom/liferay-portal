@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Journal Terms Of Use
 Bundle-SymbolicName: com.liferay.journal.terms.of.use
-Bundle-Version: 2.0.22
+Bundle-Version: 2.0.23
 Import-Package:\
 	com.liferay.portal.kernel.exception;version="[7.0.0,8.0.0)",\
 	com.liferay.portal.kernel.model;version="[1.0.0,2.0.0)",\

@@ -365,6 +365,13 @@
 					<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE" value1="An unexpected error occurred while uploading your file." />
 				</then>
 			</elseif>
+			<elseif>
+				<isset var="import6210buildNumber" />
+				<then>
+					<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
+					<execute function="AssertTextPresent" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE" value1="LAR build number 6210 does not match portal build number" />
+				</then>
+			</elseif>
 			<else>
 				<execute function="AssertClickNoError" locator1="Button#CONTINUE" value1="Continue" />
 

@@ -534,9 +534,8 @@
 			<var name="pageName" value="AP Test Page" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
-			<var name="siteName" value="Site Name" />
-			<var name="siteScopeType" value="Site" />
+		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
+			<var name="otherSite" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

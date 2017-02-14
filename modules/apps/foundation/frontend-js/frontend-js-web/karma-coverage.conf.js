@@ -9,7 +9,9 @@ module.exports = function(config) {
 	config.plugins.push(karmaHtml2JsPreprocessor);
 
 	config.files = [
+		'node_modules/html2incdom/src/*.js',
 		'node_modules/metal*/src/**/*.js',
+		'node_modules/metal-soy-bundle/build/bundle.js',
 		'src/**/*.es.js',
 		'test/**/*.js',
 		'test/**/fixtures/*.html'

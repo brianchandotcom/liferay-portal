@@ -12,24 +12,24 @@
 	</command>
 
 	<command name="gotoEntry">
-		<var name="key_rowEntry" value="${rowEntry}" />
-
-		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${rowEntry}" />
+		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${rowEntry}">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
 	</command>
 
 	<command name="gotoEntryMenuItem">
-		<var name="key_rowEntry" value="${rowEntry}" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<var name="key_menuItem" value="${menuItem}" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
+			<var name="key_menuItem" value="${menuItem}" />
+		</execute>
 	</command>
 
 	<command name="selectEntry">
-		<var name="key_rowEntry" value="${rowEntry}" />
-
-		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX" />
+		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
 	</command>
 </definition>

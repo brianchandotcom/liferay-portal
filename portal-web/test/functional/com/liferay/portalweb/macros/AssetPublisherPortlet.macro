@@ -893,6 +893,10 @@
 
 				<var name="key_siteName" value="${liferaySiteName}" />
 
+				<execute macro="Portlet#changeDisplayStyle">
+					<var name="displayStyle" value="list" />
+				</execute>
+
 				<if>
 					<isset var="currentSite" />
 					<then>

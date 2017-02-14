@@ -140,6 +140,30 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
+	public String getStatusSummary() {
+		long currentTimeMillis = System.currentTimeMillis();
+
+		if ((currentTimeMillis - _DOWNSTREAM_BUILDS_LISTING_INTERVAL) >=
+				_lastDownstreamBuildsListingTimestamp) {
+
+			StringBuilder sb = new StringBuilder(super.getStatusSummary());
+
+			sb.append("\nRunning Builds: ");
+
+			_lastDownstreamBuildsListingTimestamp = System.currentTimeMillis();
+
+			for (Build downstreamBuild : getDownstreamBuilds("running")) {
+				sb.append("\n");
+				sb.append(downstreamBuild.getBuildURL());
+			}
+
+			return sb.toString();
+		}
+
+		return super.getStatusSummary();
+	}
+
+	@Override
 	public JSONObject getTestReportJSONObject() {
 		return null;
 	}
@@ -517,6 +541,9 @@ public class TopLevelBuild extends BaseBuild {
 	protected static final Pattern gitRepositoryTempMapNamePattern =
 		Pattern.compile("git\\.(?<repositoryType>.*)\\.properties");
 
+	private static final long _DOWNSTREAM_BUILDS_LISTING_INTERVAL =
+		1000 * 60 * 5;
+
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
 			new PoshiValidationFailureMessageGenerator(),
@@ -525,6 +552,7 @@ public class TopLevelBuild extends BaseBuild {
 			new GenericFailureMessageGenerator()
 		};
 
+	private long _lastDownstreamBuildsListingTimestamp = -1L;
 	private long _updateDuration;
 
 }

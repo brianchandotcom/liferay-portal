@@ -1,6 +1,6 @@
 Bundle-Name: Liferay RSS Web
 Bundle-SymbolicName: com.liferay.rss.web
-Bundle-Version: 2.1.4
+Bundle-Version: 2.2.0
 Export-Package:\
 	com.liferay.rss.web.configuration,\
 	com.liferay.rss.web.constants,\

@@ -47,19 +47,19 @@ public class FriendlyURLLocalServiceWrapper implements FriendlyURLLocalService,
 
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURL addFriendlyURL(
-		long companyId, long groupId, java.lang.Class<?> clazz, long classPK,
+		long groupId, long companyId, java.lang.Class<?> clazz, long classPK,
 		java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _friendlyURLLocalService.addFriendlyURL(companyId, groupId,
+		return _friendlyURLLocalService.addFriendlyURL(groupId, companyId,
 			clazz, classPK, urlTitle);
 	}
 
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURL addFriendlyURL(
-		long companyId, long groupId, long classNameId, long classPK,
+		long groupId, long companyId, long classNameId, long classPK,
 		java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _friendlyURLLocalService.addFriendlyURL(companyId, groupId,
+		return _friendlyURLLocalService.addFriendlyURL(groupId, companyId,
 			classNameId, classPK, urlTitle);
 	}
 
@@ -103,24 +103,24 @@ public class FriendlyURLLocalServiceWrapper implements FriendlyURLLocalService,
 
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURL fetchFriendlyURL(
-		long companyId, long groupId, java.lang.Class<?> clazz,
+		long friendlyURLId) {
+		return _friendlyURLLocalService.fetchFriendlyURL(friendlyURLId);
+	}
+
+	@Override
+	public com.liferay.friendly.url.model.FriendlyURL fetchFriendlyURL(
+		long groupId, long companyId, java.lang.Class<?> clazz,
 		java.lang.String urlTitle) {
-		return _friendlyURLLocalService.fetchFriendlyURL(companyId, groupId,
+		return _friendlyURLLocalService.fetchFriendlyURL(groupId, companyId,
 			clazz, urlTitle);
 	}
 
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURL fetchFriendlyURL(
-		long companyId, long groupId, long classNameId,
+		long groupId, long companyId, long classNameId,
 		java.lang.String urlTitle) {
-		return _friendlyURLLocalService.fetchFriendlyURL(companyId, groupId,
+		return _friendlyURLLocalService.fetchFriendlyURL(groupId, companyId,
 			classNameId, urlTitle);
-	}
-
-	@Override
-	public com.liferay.friendly.url.model.FriendlyURL fetchFriendlyURL(
-		long friendlyURLId) {
-		return _friendlyURLLocalService.fetchFriendlyURL(friendlyURLId);
 	}
 
 	/**
@@ -169,17 +169,17 @@ public class FriendlyURLLocalServiceWrapper implements FriendlyURLLocalService,
 
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURL getMainFriendlyURL(
-		long companyId, long groupId, java.lang.Class<?> clazz, long classPK)
+		long groupId, long companyId, java.lang.Class<?> clazz, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _friendlyURLLocalService.getMainFriendlyURL(companyId, groupId,
+		return _friendlyURLLocalService.getMainFriendlyURL(groupId, companyId,
 			clazz, classPK);
 	}
 
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURL getMainFriendlyURL(
-		long companyId, long groupId, long classNameId, long classPK)
+		long groupId, long companyId, long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _friendlyURLLocalService.getMainFriendlyURL(companyId, groupId,
+		return _friendlyURLLocalService.getMainFriendlyURL(groupId, companyId,
 			classNameId, classPK);
 	}
 
@@ -254,9 +254,9 @@ public class FriendlyURLLocalServiceWrapper implements FriendlyURLLocalService,
 	}
 
 	@Override
-	public java.lang.String getUniqueUrlTitle(long companyId, long groupId,
+	public java.lang.String getUniqueUrlTitle(long groupId, long companyId,
 		long classNameId, long classPK, java.lang.String urlTitle) {
-		return _friendlyURLLocalService.getUniqueUrlTitle(companyId, groupId,
+		return _friendlyURLLocalService.getUniqueUrlTitle(groupId, companyId,
 			classNameId, classPK, urlTitle);
 	}
 
@@ -332,8 +332,8 @@ public class FriendlyURLLocalServiceWrapper implements FriendlyURLLocalService,
 
 	@Override
 	public java.util.List<com.liferay.friendly.url.model.FriendlyURL> getFriendlyURLs(
-		long companyId, long groupId, long classNameId, long classPK) {
-		return _friendlyURLLocalService.getFriendlyURLs(companyId, groupId,
+		long groupId, long companyId, long classNameId, long classPK) {
+		return _friendlyURLLocalService.getFriendlyURLs(groupId, companyId,
 			classNameId, classPK);
 	}
 
@@ -397,25 +397,25 @@ public class FriendlyURLLocalServiceWrapper implements FriendlyURLLocalService,
 	}
 
 	@Override
-	public void deleteFriendlyURL(long companyId, long groupId,
+	public void deleteFriendlyURL(long groupId, long companyId,
 		java.lang.Class<?> clazz, long classPK) {
-		_friendlyURLLocalService.deleteFriendlyURL(companyId, groupId, clazz,
+		_friendlyURLLocalService.deleteFriendlyURL(groupId, companyId, clazz,
 			classPK);
 	}
 
 	@Override
-	public void deleteFriendlyURL(long companyId, long groupId,
+	public void deleteFriendlyURL(long groupId, long companyId,
 		java.lang.Class<?> clazz, long classPK, java.lang.String urlTitle)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
-		_friendlyURLLocalService.deleteFriendlyURL(companyId, groupId, clazz,
+		_friendlyURLLocalService.deleteFriendlyURL(groupId, companyId, clazz,
 			classPK, urlTitle);
 	}
 
 	@Override
-	public void deleteFriendlyURL(long companyId, long groupId,
+	public void deleteFriendlyURL(long groupId, long companyId,
 		long classNameId, long classPK, java.lang.String urlTitle)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
-		_friendlyURLLocalService.deleteFriendlyURL(companyId, groupId,
+		_friendlyURLLocalService.deleteFriendlyURL(groupId, companyId,
 			classNameId, classPK, urlTitle);
 	}
 
@@ -425,18 +425,18 @@ public class FriendlyURLLocalServiceWrapper implements FriendlyURLLocalService,
 	}
 
 	@Override
-	public void validate(long companyId, long groupId, long classNameId,
+	public void validate(long groupId, long companyId, long classNameId,
 		java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_friendlyURLLocalService.validate(companyId, groupId, classNameId,
+		_friendlyURLLocalService.validate(groupId, companyId, classNameId,
 			urlTitle);
 	}
 
 	@Override
-	public void validate(long companyId, long groupId, long classNameId,
+	public void validate(long groupId, long companyId, long classNameId,
 		long classPK, java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_friendlyURLLocalService.validate(companyId, groupId, classNameId,
+		_friendlyURLLocalService.validate(groupId, companyId, classNameId,
 			classPK, urlTitle);
 	}
 

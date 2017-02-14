@@ -9,6 +9,30 @@
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
+	<command name="deleteViaMenuItem">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
+
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
+
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+	</command>
+
+	<command name="deleteViaToolbar">
+		<for list="${rowEntries}" param="rowEntry">
+			<execute macro="LexiconEntry#selectEntry">
+				<var name="key_rowEntry" value="${rowEntry}" />
+			</execute>
+		</for>
+
+		<execute function="ClickNoError" locator1="Icon#DELETE" />
+
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+	</command>
+
 	<command name="inputLocalizedName">
 		<execute function="Click" locator1="Language#SITE_NAME_TRANSLATION">
 			<var name="key_language" value="${language}" />

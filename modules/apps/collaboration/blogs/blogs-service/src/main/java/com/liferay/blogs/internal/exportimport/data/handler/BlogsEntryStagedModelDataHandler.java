@@ -510,7 +510,7 @@ public class BlogsEntryStagedModelDataHandler
 
 		List<FriendlyURL> friendlyURLs =
 			_friendlyURLLocalService.getFriendlyURLs(
-				blogsEntry.getCompanyId(), blogsEntry.getGroupId(), classNameId,
+				blogsEntry.getGroupId(), blogsEntry.getCompanyId(), classNameId,
 				blogsEntry.getEntryId());
 
 		for (FriendlyURL friendlyURL : friendlyURLs) {

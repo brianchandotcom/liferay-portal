@@ -52,7 +52,7 @@ public class FriendlyURLLocalServiceTest {
 		String urlTitle = "url title with spaces";
 
 		String uniqueUrlTitle = FriendlyURLLocalServiceUtil.getUniqueUrlTitle(
-			_group.getCompanyId(), _group.getGroupId(), classNameId,
+			_group.getGroupId(), _group.getCompanyId(), classNameId,
 			TestPropsValues.getUserId(), urlTitle);
 
 		Assert.assertEquals("url-title-with-spaces", uniqueUrlTitle);
@@ -64,11 +64,11 @@ public class FriendlyURLLocalServiceTest {
 		String urlTitle = "existing-url-title";
 
 		FriendlyURLLocalServiceUtil.addFriendlyURL(
-			_group.getCompanyId(), _group.getGroupId(), classNameId,
+			_group.getGroupId(), _group.getCompanyId(), classNameId,
 			TestPropsValues.getUserId(), urlTitle);
 
 		String uniqueUrlTitle = FriendlyURLLocalServiceUtil.getUniqueUrlTitle(
-			_group.getCompanyId(), _group.getGroupId(), classNameId,
+			_group.getGroupId(), _group.getCompanyId(), classNameId,
 			_user.getUserId(), urlTitle);
 
 		Assert.assertEquals("existing-url-title-1", uniqueUrlTitle);
@@ -80,11 +80,11 @@ public class FriendlyURLLocalServiceTest {
 		String urlTitle = "existing-url-title";
 
 		FriendlyURLLocalServiceUtil.addFriendlyURL(
-			_group.getCompanyId(), _group.getGroupId(), classNameId,
+			_group.getGroupId(), _group.getCompanyId(), classNameId,
 			TestPropsValues.getUserId(), urlTitle);
 
 		String uniqueUrlTitle = FriendlyURLLocalServiceUtil.getUniqueUrlTitle(
-			_group.getCompanyId(), _group.getGroupId(), classNameId,
+			_group.getGroupId(), _group.getCompanyId(), classNameId,
 			TestPropsValues.getUserId(), urlTitle);
 
 		Assert.assertEquals(urlTitle, uniqueUrlTitle);
@@ -100,7 +100,7 @@ public class FriendlyURLLocalServiceTest {
 		String urlTitle = StringUtil.randomString(maxLength + 1);
 
 		String uniqueUrlTitle = FriendlyURLLocalServiceUtil.getUniqueUrlTitle(
-			_group.getCompanyId(), _group.getGroupId(), classNameId,
+			_group.getGroupId(), _group.getCompanyId(), classNameId,
 			TestPropsValues.getUserId(), urlTitle);
 
 		Assert.assertEquals(maxLength, uniqueUrlTitle.length());
@@ -116,11 +116,11 @@ public class FriendlyURLLocalServiceTest {
 		String urlTitle = StringUtil.randomString(maxLength);
 
 		FriendlyURLLocalServiceUtil.addFriendlyURL(
-			_group.getCompanyId(), _group.getGroupId(), classNameId,
+			_group.getGroupId(), _group.getCompanyId(), classNameId,
 			TestPropsValues.getUserId(), urlTitle);
 
 		FriendlyURLLocalServiceUtil.validate(
-			_group.getCompanyId(), _group.getGroupId(), classNameId, urlTitle);
+			_group.getGroupId(), _group.getCompanyId(), classNameId, urlTitle);
 	}
 
 	@Test(expected = DuplicateFriendlyURLException.class)
@@ -133,11 +133,11 @@ public class FriendlyURLLocalServiceTest {
 		String urlTitle = StringUtil.randomString(maxLength);
 
 		FriendlyURLLocalServiceUtil.addFriendlyURL(
-			_group.getCompanyId(), _group.getGroupId(), classNameId,
+			_group.getGroupId(), _group.getCompanyId(), classNameId,
 			TestPropsValues.getUserId(), urlTitle);
 
 		FriendlyURLLocalServiceUtil.validate(
-			_group.getCompanyId(), _group.getGroupId(), classNameId,
+			_group.getGroupId(), _group.getCompanyId(), classNameId,
 			_user.getUserId(), urlTitle);
 	}
 
@@ -151,11 +151,11 @@ public class FriendlyURLLocalServiceTest {
 		String urlTitle = StringUtil.randomString(maxLength);
 
 		FriendlyURLLocalServiceUtil.addFriendlyURL(
-			_group.getCompanyId(), _group.getGroupId(), classNameId,
+			_group.getGroupId(), _group.getCompanyId(), classNameId,
 			TestPropsValues.getUserId(), urlTitle);
 
 		FriendlyURLLocalServiceUtil.validate(
-			_group.getCompanyId(), _group.getGroupId(), classNameId,
+			_group.getGroupId(), _group.getCompanyId(), classNameId,
 			TestPropsValues.getUserId(), urlTitle);
 	}
 
@@ -169,7 +169,7 @@ public class FriendlyURLLocalServiceTest {
 		String urlTitle = StringUtil.randomString(maxLength + 1);
 
 		FriendlyURLLocalServiceUtil.validate(
-			_group.getCompanyId(), _group.getGroupId(), classNameId, urlTitle);
+			_group.getGroupId(), _group.getCompanyId(), classNameId, urlTitle);
 	}
 
 	@Test
@@ -182,7 +182,7 @@ public class FriendlyURLLocalServiceTest {
 		String urlTitle = StringUtil.randomString(maxLength);
 
 		FriendlyURLLocalServiceUtil.validate(
-			_group.getCompanyId(), _group.getGroupId(), classNameId, urlTitle);
+			_group.getGroupId(), _group.getCompanyId(), classNameId, urlTitle);
 	}
 
 	@DeleteAfterTestRun

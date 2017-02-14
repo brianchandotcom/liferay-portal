@@ -312,7 +312,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				BlogsEntry.class);
 
 			friendlyURLLocalService.validate(
-				user.getCompanyId(), groupId, classNameId, urlTitle);
+				groupId, user.getCompanyId(), classNameId, urlTitle);
 		}
 
 		BlogsEntry entry = blogsEntryPersistence.create(entryId);
@@ -330,7 +330,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
-			user.getCompanyId(), groupId, BlogsEntry.class, entryId, urlTitle);
+			groupId, user.getCompanyId(), BlogsEntry.class, entryId, urlTitle);
 
 		entry.setUrlTitle(friendlyURL.getUrlTitle());
 
@@ -668,7 +668,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		// Friendly URL
 
 		friendlyURLLocalService.deleteFriendlyURL(
-			entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
+			entry.getGroupId(), entry.getCompanyId(), BlogsEntry.class,
 			entry.getEntryId());
 
 		// Ratings
@@ -727,7 +727,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		Group group = groupLocalService.fetchGroup(groupId);
 
 		FriendlyURL friendlyURL = friendlyURLLocalService.fetchFriendlyURL(
-			group.getCompanyId(), groupId, BlogsEntry.class, urlTitle);
+			groupId, group.getCompanyId(), BlogsEntry.class, urlTitle);
 
 		if (friendlyURL != null) {
 			return blogsEntryPersistence.fetchByPrimaryKey(
@@ -810,7 +810,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		Group group = groupLocalService.fetchGroup(groupId);
 
 		FriendlyURL friendlyURL = friendlyURLLocalService.fetchFriendlyURL(
-			group.getCompanyId(), groupId, BlogsEntry.class, urlTitle);
+			groupId, group.getCompanyId(), BlogsEntry.class, urlTitle);
 
 		if (friendlyURL != null) {
 			return blogsEntryPersistence.findByPrimaryKey(
@@ -1252,7 +1252,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				BlogsEntry.class);
 
 			friendlyURLLocalService.validate(
-				entry.getCompanyId(), entry.getGroupId(), classNameId, entryId,
+				entry.getGroupId(), entry.getCompanyId(), classNameId, entryId,
 				urlTitle);
 		}
 		else {
@@ -1268,7 +1268,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			!urlTitle.equals(entry.getUrlTitle())) {
 
 			FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
-				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
+				entry.getGroupId(), entry.getCompanyId(), BlogsEntry.class,
 				entry.getEntryId(), urlTitle);
 
 			entry.setUrlTitle(friendlyURL.getUrlTitle());
@@ -1488,7 +1488,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			String uniqueUrlTitle = _getUniqueUrlTitle(entry);
 
 			FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
-				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
+				entry.getGroupId(), entry.getCompanyId(), BlogsEntry.class,
 				entry.getEntryId(), uniqueUrlTitle);
 
 			entry.setUrlTitle(friendlyURL.getUrlTitle());
@@ -2328,7 +2328,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry.class);
 
 		return friendlyURLLocalService.getUniqueUrlTitle(
-			entry.getCompanyId(), entry.getGroupId(), classNameId,
+			entry.getGroupId(), entry.getCompanyId(), classNameId,
 			entry.getEntryId(), urlTitle);
 	}
 

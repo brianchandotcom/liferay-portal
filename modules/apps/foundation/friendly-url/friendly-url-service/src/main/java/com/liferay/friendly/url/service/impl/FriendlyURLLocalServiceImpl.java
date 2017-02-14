@@ -45,7 +45,7 @@ public class FriendlyURLLocalServiceImpl
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
 		return addFriendlyURL(
-			companyId, groupId, classNameId, classPK, urlTitle);
+			groupId, companyId, classNameId, classPK, urlTitle);
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class FriendlyURLLocalServiceImpl
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
 			urlTitle);
 
-		validate(companyId, groupId, classNameId, classPK, normalizedUrlTitle);
+		validate(groupId, companyId, classNameId, classPK, normalizedUrlTitle);
 
 		FriendlyURL mainFriendlyURL = friendlyURLPersistence.fetchByG_C_C_C_M(
 			groupId, companyId, classNameId, classPK, true);
@@ -109,7 +109,7 @@ public class FriendlyURLLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
-		deleteFriendlyURL(companyId, groupId, classNameId, classPK, urlTitle);
+		deleteFriendlyURL(groupId, companyId, classNameId, classPK, urlTitle);
 	}
 
 	@Override
@@ -145,7 +145,7 @@ public class FriendlyURLLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
-		return fetchFriendlyURL(companyId, groupId, classNameId, urlTitle);
+		return fetchFriendlyURL(groupId, companyId, classNameId, urlTitle);
 	}
 
 	@Override
@@ -171,7 +171,7 @@ public class FriendlyURLLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
-		return getMainFriendlyURL(companyId, groupId, classNameId, classPK);
+		return getMainFriendlyURL(groupId, companyId, classNameId, classPK);
 	}
 
 	@Override
@@ -199,7 +199,7 @@ public class FriendlyURLLocalServiceImpl
 
 		for (int i = 1;; i++) {
 			FriendlyURL curFriendlyURL = fetchFriendlyURL(
-				companyId, groupId, classNameId, curUrlTitle);
+				groupId, companyId, classNameId, curUrlTitle);
 
 			if ((curFriendlyURL == null) ||
 				(curFriendlyURL.getClassPK() == classPK)) {
@@ -258,7 +258,7 @@ public class FriendlyURLLocalServiceImpl
 			long groupId, long companyId, long classNameId, String urlTitle)
 		throws PortalException {
 
-		validate(companyId, groupId, classNameId, 0, urlTitle);
+		validate(groupId, companyId, classNameId, 0, urlTitle);
 	}
 
 }

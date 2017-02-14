@@ -46,7 +46,7 @@ public class FriendlyURLStagedModelRepository
 		throws PortalException {
 
 		return _friendlyURLLocalService.addFriendlyURL(
-			friendlyURL.getCompanyId(), friendlyURL.getGroupId(),
+			friendlyURL.getGroupId(), friendlyURL.getCompanyId(),
 			friendlyURL.getClassNameId(), friendlyURL.getClassPK(),
 			friendlyURL.getUrlTitle());
 	}
@@ -56,7 +56,7 @@ public class FriendlyURLStagedModelRepository
 		throws PortalException {
 
 		_friendlyURLLocalService.deleteFriendlyURL(
-			friendlyURL.getCompanyId(), friendlyURL.getGroupId(),
+			friendlyURL.getGroupId(), friendlyURL.getCompanyId(),
 			friendlyURL.getClassNameId(), friendlyURL.getClassPK(),
 			friendlyURL.getUrlTitle());
 	}
@@ -111,7 +111,7 @@ public class FriendlyURLStagedModelRepository
 		if (friendlyURL.isMain()) {
 			FriendlyURL mainFriendlyURL =
 				_friendlyURLLocalService.getMainFriendlyURL(
-					friendlyURL.getCompanyId(), friendlyURL.getGroupId(),
+					friendlyURL.getGroupId(), friendlyURL.getCompanyId(),
 					friendlyURL.getClassNameId(), friendlyURL.getClassPK());
 
 			if (!mainFriendlyURL.equals(friendlyURL)) {
@@ -123,7 +123,7 @@ public class FriendlyURLStagedModelRepository
 
 		friendlyURL.setUrlTitle(
 			_friendlyURLLocalService.getUniqueUrlTitle(
-				friendlyURL.getCompanyId(), friendlyURL.getGroupId(),
+				friendlyURL.getGroupId(), friendlyURL.getCompanyId(),
 				friendlyURL.getClassNameId(), friendlyURL.getClassPK(),
 				friendlyURL.getUrlTitle()));
 

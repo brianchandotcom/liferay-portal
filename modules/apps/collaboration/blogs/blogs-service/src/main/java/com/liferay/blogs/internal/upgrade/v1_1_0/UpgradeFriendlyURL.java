@@ -45,7 +45,7 @@ public class UpgradeFriendlyURL extends UpgradeProcess {
 				String urlTitle = rs.getString(4);
 
 				_friendlyURLLocalService.addFriendlyURL(
-					companyId, groupId, BlogsEntry.class, classPK, urlTitle);
+					groupId, companyId, BlogsEntry.class, classPK, urlTitle);
 			}
 		}
 	}

@@ -409,7 +409,17 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<antcall inheritAll="false" target="compile" />
 
-			<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-@{app.server.type}" />
+			<if>
+				<equals arg1="@{app.server.type}" arg2="websphere" />
+				<then>
+					<antcall inheritAll="false" target="prepare-test-build-custom">
+						<param name="app.server.type" value="@{app.server.type}" />
+					</antcall>
+				</then>
+				<else>
+					<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-@{app.server.type}" />
+				</else>
+			</if>
 
 			<antcall inheritAll="false" target="prepare-portal-ext-properties" />
 

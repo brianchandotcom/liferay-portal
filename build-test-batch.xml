@@ -1732,8 +1732,6 @@ app.server.type=@{app.server.type}]]></echo>
 	<target name="gradle-plugins-test-jdk8">
 		<run-batch-test>
 			<test-action>
-				<property name="gradle.test.excludes" value="gradle-plugins-gulp,gradle-plugins-js-module-config-generator,gradle-plugins-js-transpiler,gradle-plugins-node,gradle-plugins-workspace" />
-
 				<for param="gradle.plugin.dir">
 					<path>
 						<dirset

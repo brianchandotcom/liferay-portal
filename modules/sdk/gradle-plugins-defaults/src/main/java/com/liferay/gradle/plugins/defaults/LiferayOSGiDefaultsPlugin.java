@@ -263,11 +263,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, LiferayExtension.class);
 
 		final GitRepo gitRepo = _getGitRepo(project.getProjectDir());
+		boolean testProject = GradleUtil.isTestProject(project);
 
 		File versionOverrideFile = _getVersionOverrideFile(project, gitRepo);
 
 		boolean syncReleaseVersions = _syncReleaseVersions(
-			project, portalRootDir, versionOverrideFile);
+			project, portalRootDir, versionOverrideFile, testProject);
 
 		_applyVersionOverrides(project, versionOverrideFile);
 
@@ -280,7 +281,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		List<String> taskNames = startParameter.getTaskNames();
 
 		final boolean publishing = _isPublishing(project);
-		boolean testProject = GradleUtil.isTestProject(project);
 
 		boolean deployToAppServerLibs = false;
 		boolean deployToTools = false;
@@ -3483,7 +3483,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private boolean _syncReleaseVersions(
-		Project project, File portalRootDir, File versionOverrideFile) {
+		Project project, File portalRootDir, File versionOverrideFile,
+		boolean testProject) {
 
 		boolean syncRelease = false;
 
@@ -3492,7 +3493,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, SYNC_RELEASE_PROPERTY_NAME, true);
 		}
 
-		if ((portalRootDir == null) || !syncRelease ||
+		if ((portalRootDir == null) || !syncRelease || testProject ||
 			!GradleUtil.hasStartParameterTask(
 				project, BaselinePlugin.BASELINE_TASK_NAME)) {
 

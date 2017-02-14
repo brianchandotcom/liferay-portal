@@ -38,7 +38,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public FriendlyURL addFriendlyURL(
-			long companyId, long groupId, Class<?> clazz, long classPK,
+			long groupId, long companyId, Class<?> clazz, long classPK,
 			String urlTitle)
 		throws PortalException {
 
@@ -50,7 +50,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public FriendlyURL addFriendlyURL(
-			long companyId, long groupId, long classNameId, long classPK,
+			long groupId, long companyId, long classNameId, long classPK,
 			String urlTitle)
 		throws PortalException {
 
@@ -93,7 +93,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public void deleteFriendlyURL(
-		long companyId, long groupId, Class<?> clazz, long classPK) {
+		long groupId, long companyId, Class<?> clazz, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
@@ -103,7 +103,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public void deleteFriendlyURL(
-			long companyId, long groupId, Class<?> clazz, long classPK,
+			long groupId, long companyId, Class<?> clazz, long classPK,
 			String urlTitle)
 		throws NoSuchFriendlyURLException {
 
@@ -114,7 +114,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public void deleteFriendlyURL(
-			long companyId, long groupId, long classNameId, long classPK,
+			long groupId, long companyId, long classNameId, long classPK,
 			String urlTitle)
 		throws NoSuchFriendlyURLException {
 
@@ -141,7 +141,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public FriendlyURL fetchFriendlyURL(
-		long companyId, long groupId, Class<?> clazz, String urlTitle) {
+		long groupId, long companyId, Class<?> clazz, String urlTitle) {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
@@ -150,7 +150,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public FriendlyURL fetchFriendlyURL(
-		long companyId, long groupId, long classNameId, String urlTitle) {
+		long groupId, long companyId, long classNameId, String urlTitle) {
 
 		return friendlyURLPersistence.fetchByG_C_C_U(
 			groupId, companyId, classNameId, urlTitle);
@@ -158,7 +158,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public List<FriendlyURL> getFriendlyURLs(
-		long companyId, long groupId, long classNameId, long classPK) {
+		long groupId, long companyId, long classNameId, long classPK) {
 
 		return friendlyURLPersistence.findByG_C_C_C(
 			groupId, companyId, classNameId, classPK);
@@ -166,7 +166,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public FriendlyURL getMainFriendlyURL(
-			long companyId, long groupId, Class<?> clazz, long classPK)
+			long groupId, long companyId, Class<?> clazz, long classPK)
 		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
@@ -176,7 +176,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public FriendlyURL getMainFriendlyURL(
-			long companyId, long groupId, long classNameId, long classPK)
+			long groupId, long companyId, long classNameId, long classPK)
 		throws PortalException {
 
 		return friendlyURLPersistence.findByG_C_C_C_M(
@@ -185,7 +185,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public String getUniqueUrlTitle(
-		long companyId, long groupId, long classNameId, long classPK,
+		long groupId, long companyId, long classNameId, long classPK,
 		String urlTitle) {
 
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
@@ -222,7 +222,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public void validate(
-			long companyId, long groupId, long classNameId, long classPK,
+			long groupId, long companyId, long classNameId, long classPK,
 			String urlTitle)
 		throws PortalException {
 
@@ -255,7 +255,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public void validate(
-			long companyId, long groupId, long classNameId, String urlTitle)
+			long groupId, long companyId, long classNameId, String urlTitle)
 		throws PortalException {
 
 		validate(companyId, groupId, classNameId, 0, urlTitle);

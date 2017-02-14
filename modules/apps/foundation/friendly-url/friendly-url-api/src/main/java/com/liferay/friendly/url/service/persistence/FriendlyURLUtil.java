@@ -675,51 +675,51 @@ public class FriendlyURLUtil {
 	}
 
 	/**
-	* Returns all the friendly urls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns all the friendly urls where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @return the matching friendly urls
 	*/
-	public static List<FriendlyURL> findByC_G_C_C(long companyId, long groupId,
+	public static List<FriendlyURL> findByG_C_C_C(long groupId, long companyId,
 		long classNameId, long classPK) {
 		return getPersistence()
-				   .findByC_G_C_C(companyId, groupId, classNameId, classPK);
+				   .findByG_C_C_C(groupId, companyId, classNameId, classPK);
 	}
 
 	/**
-	* Returns a range of all the friendly urls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns a range of all the friendly urls where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param start the lower bound of the range of friendly urls
 	* @param end the upper bound of the range of friendly urls (not inclusive)
 	* @return the range of matching friendly urls
 	*/
-	public static List<FriendlyURL> findByC_G_C_C(long companyId, long groupId,
+	public static List<FriendlyURL> findByG_C_C_C(long groupId, long companyId,
 		long classNameId, long classPK, int start, int end) {
 		return getPersistence()
-				   .findByC_G_C_C(companyId, groupId, classNameId, classPK,
+				   .findByG_C_C_C(groupId, companyId, classNameId, classPK,
 			start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the friendly urls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns an ordered range of all the friendly urls where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param start the lower bound of the range of friendly urls
@@ -727,23 +727,23 @@ public class FriendlyURLUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching friendly urls
 	*/
-	public static List<FriendlyURL> findByC_G_C_C(long companyId, long groupId,
+	public static List<FriendlyURL> findByG_C_C_C(long groupId, long companyId,
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<FriendlyURL> orderByComparator) {
 		return getPersistence()
-				   .findByC_G_C_C(companyId, groupId, classNameId, classPK,
+				   .findByG_C_C_C(groupId, companyId, classNameId, classPK,
 			start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the friendly urls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns an ordered range of all the friendly urls where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param start the lower bound of the range of friendly urls
@@ -752,397 +752,397 @@ public class FriendlyURLUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching friendly urls
 	*/
-	public static List<FriendlyURL> findByC_G_C_C(long companyId, long groupId,
+	public static List<FriendlyURL> findByG_C_C_C(long groupId, long companyId,
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<FriendlyURL> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByC_G_C_C(companyId, groupId, classNameId, classPK,
+				   .findByG_C_C_C(groupId, companyId, classNameId, classPK,
 			start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first friendly url in the ordered set where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns the first friendly url in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching friendly url
 	* @throws NoSuchFriendlyURLException if a matching friendly url could not be found
 	*/
-	public static FriendlyURL findByC_G_C_C_First(long companyId, long groupId,
+	public static FriendlyURL findByG_C_C_C_First(long groupId, long companyId,
 		long classNameId, long classPK,
 		OrderByComparator<FriendlyURL> orderByComparator)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
 		return getPersistence()
-				   .findByC_G_C_C_First(companyId, groupId, classNameId,
+				   .findByG_C_C_C_First(groupId, companyId, classNameId,
 			classPK, orderByComparator);
 	}
 
 	/**
-	* Returns the first friendly url in the ordered set where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns the first friendly url in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching friendly url, or <code>null</code> if a matching friendly url could not be found
 	*/
-	public static FriendlyURL fetchByC_G_C_C_First(long companyId,
-		long groupId, long classNameId, long classPK,
+	public static FriendlyURL fetchByG_C_C_C_First(long groupId,
+		long companyId, long classNameId, long classPK,
 		OrderByComparator<FriendlyURL> orderByComparator) {
 		return getPersistence()
-				   .fetchByC_G_C_C_First(companyId, groupId, classNameId,
+				   .fetchByG_C_C_C_First(groupId, companyId, classNameId,
 			classPK, orderByComparator);
 	}
 
 	/**
-	* Returns the last friendly url in the ordered set where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns the last friendly url in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching friendly url
 	* @throws NoSuchFriendlyURLException if a matching friendly url could not be found
 	*/
-	public static FriendlyURL findByC_G_C_C_Last(long companyId, long groupId,
+	public static FriendlyURL findByG_C_C_C_Last(long groupId, long companyId,
 		long classNameId, long classPK,
 		OrderByComparator<FriendlyURL> orderByComparator)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
 		return getPersistence()
-				   .findByC_G_C_C_Last(companyId, groupId, classNameId,
+				   .findByG_C_C_C_Last(groupId, companyId, classNameId,
 			classPK, orderByComparator);
 	}
 
 	/**
-	* Returns the last friendly url in the ordered set where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns the last friendly url in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching friendly url, or <code>null</code> if a matching friendly url could not be found
 	*/
-	public static FriendlyURL fetchByC_G_C_C_Last(long companyId, long groupId,
+	public static FriendlyURL fetchByG_C_C_C_Last(long groupId, long companyId,
 		long classNameId, long classPK,
 		OrderByComparator<FriendlyURL> orderByComparator) {
 		return getPersistence()
-				   .fetchByC_G_C_C_Last(companyId, groupId, classNameId,
+				   .fetchByG_C_C_C_Last(groupId, companyId, classNameId,
 			classPK, orderByComparator);
 	}
 
 	/**
-	* Returns the friendly urls before and after the current friendly url in the ordered set where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns the friendly urls before and after the current friendly url in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param friendlyURLId the primary key of the current friendly url
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next friendly url
 	* @throws NoSuchFriendlyURLException if a friendly url with the primary key could not be found
 	*/
-	public static FriendlyURL[] findByC_G_C_C_PrevAndNext(long friendlyURLId,
-		long companyId, long groupId, long classNameId, long classPK,
+	public static FriendlyURL[] findByG_C_C_C_PrevAndNext(long friendlyURLId,
+		long groupId, long companyId, long classNameId, long classPK,
 		OrderByComparator<FriendlyURL> orderByComparator)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
 		return getPersistence()
-				   .findByC_G_C_C_PrevAndNext(friendlyURLId, companyId,
-			groupId, classNameId, classPK, orderByComparator);
+				   .findByG_C_C_C_PrevAndNext(friendlyURLId, groupId,
+			companyId, classNameId, classPK, orderByComparator);
 	}
 
 	/**
-	* Removes all the friendly urls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	* Removes all the friendly urls where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	*/
-	public static void removeByC_G_C_C(long companyId, long groupId,
+	public static void removeByG_C_C_C(long groupId, long companyId,
 		long classNameId, long classPK) {
 		getPersistence()
-			.removeByC_G_C_C(companyId, groupId, classNameId, classPK);
+			.removeByG_C_C_C(groupId, companyId, classNameId, classPK);
 	}
 
 	/**
-	* Returns the number of friendly urls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns the number of friendly urls where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @return the number of matching friendly urls
 	*/
-	public static int countByC_G_C_C(long companyId, long groupId,
+	public static int countByG_C_C_C(long groupId, long companyId,
 		long classNameId, long classPK) {
 		return getPersistence()
-				   .countByC_G_C_C(companyId, groupId, classNameId, classPK);
+				   .countByG_C_C_C(groupId, companyId, classNameId, classPK);
 	}
 
 	/**
-	* Returns the friendly url where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
+	* Returns the friendly url where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param urlTitle the url title
 	* @return the matching friendly url
 	* @throws NoSuchFriendlyURLException if a matching friendly url could not be found
 	*/
-	public static FriendlyURL findByC_G_C_U(long companyId, long groupId,
+	public static FriendlyURL findByG_C_C_U(long groupId, long companyId,
 		long classNameId, java.lang.String urlTitle)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
 		return getPersistence()
-				   .findByC_G_C_U(companyId, groupId, classNameId, urlTitle);
+				   .findByG_C_C_U(groupId, companyId, classNameId, urlTitle);
 	}
 
 	/**
-	* Returns the friendly url where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the friendly url where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param urlTitle the url title
 	* @return the matching friendly url, or <code>null</code> if a matching friendly url could not be found
 	*/
-	public static FriendlyURL fetchByC_G_C_U(long companyId, long groupId,
+	public static FriendlyURL fetchByG_C_C_U(long groupId, long companyId,
 		long classNameId, java.lang.String urlTitle) {
 		return getPersistence()
-				   .fetchByC_G_C_U(companyId, groupId, classNameId, urlTitle);
+				   .fetchByG_C_C_U(groupId, companyId, classNameId, urlTitle);
 	}
 
 	/**
-	* Returns the friendly url where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the friendly url where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param urlTitle the url title
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching friendly url, or <code>null</code> if a matching friendly url could not be found
 	*/
-	public static FriendlyURL fetchByC_G_C_U(long companyId, long groupId,
+	public static FriendlyURL fetchByG_C_C_U(long groupId, long companyId,
 		long classNameId, java.lang.String urlTitle, boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByC_G_C_U(companyId, groupId, classNameId, urlTitle,
+				   .fetchByG_C_C_U(groupId, companyId, classNameId, urlTitle,
 			retrieveFromCache);
 	}
 
 	/**
-	* Removes the friendly url where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63; from the database.
+	* Removes the friendly url where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63; from the database.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param urlTitle the url title
 	* @return the friendly url that was removed
 	*/
-	public static FriendlyURL removeByC_G_C_U(long companyId, long groupId,
+	public static FriendlyURL removeByG_C_C_U(long groupId, long companyId,
 		long classNameId, java.lang.String urlTitle)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
 		return getPersistence()
-				   .removeByC_G_C_U(companyId, groupId, classNameId, urlTitle);
+				   .removeByG_C_C_U(groupId, companyId, classNameId, urlTitle);
 	}
 
 	/**
-	* Returns the number of friendly urls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	* Returns the number of friendly urls where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param urlTitle the url title
 	* @return the number of matching friendly urls
 	*/
-	public static int countByC_G_C_U(long companyId, long groupId,
+	public static int countByG_C_C_U(long groupId, long companyId,
 		long classNameId, java.lang.String urlTitle) {
 		return getPersistence()
-				   .countByC_G_C_U(companyId, groupId, classNameId, urlTitle);
+				   .countByG_C_C_U(groupId, companyId, classNameId, urlTitle);
 	}
 
 	/**
-	* Returns the friendly url where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
+	* Returns the friendly url where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param urlTitle the url title
 	* @return the matching friendly url
 	* @throws NoSuchFriendlyURLException if a matching friendly url could not be found
 	*/
-	public static FriendlyURL findByC_G_C_C_U(long companyId, long groupId,
+	public static FriendlyURL findByG_C_C_C_U(long groupId, long companyId,
 		long classNameId, long classPK, java.lang.String urlTitle)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
 		return getPersistence()
-				   .findByC_G_C_C_U(companyId, groupId, classNameId, classPK,
+				   .findByG_C_C_C_U(groupId, companyId, classNameId, classPK,
 			urlTitle);
 	}
 
 	/**
-	* Returns the friendly url where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the friendly url where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param urlTitle the url title
 	* @return the matching friendly url, or <code>null</code> if a matching friendly url could not be found
 	*/
-	public static FriendlyURL fetchByC_G_C_C_U(long companyId, long groupId,
+	public static FriendlyURL fetchByG_C_C_C_U(long groupId, long companyId,
 		long classNameId, long classPK, java.lang.String urlTitle) {
 		return getPersistence()
-				   .fetchByC_G_C_C_U(companyId, groupId, classNameId, classPK,
+				   .fetchByG_C_C_C_U(groupId, companyId, classNameId, classPK,
 			urlTitle);
 	}
 
 	/**
-	* Returns the friendly url where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the friendly url where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param urlTitle the url title
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching friendly url, or <code>null</code> if a matching friendly url could not be found
 	*/
-	public static FriendlyURL fetchByC_G_C_C_U(long companyId, long groupId,
+	public static FriendlyURL fetchByG_C_C_C_U(long groupId, long companyId,
 		long classNameId, long classPK, java.lang.String urlTitle,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByC_G_C_C_U(companyId, groupId, classNameId, classPK,
+				   .fetchByG_C_C_C_U(groupId, companyId, classNameId, classPK,
 			urlTitle, retrieveFromCache);
 	}
 
 	/**
-	* Removes the friendly url where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; from the database.
+	* Removes the friendly url where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; from the database.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param urlTitle the url title
 	* @return the friendly url that was removed
 	*/
-	public static FriendlyURL removeByC_G_C_C_U(long companyId, long groupId,
+	public static FriendlyURL removeByG_C_C_C_U(long groupId, long companyId,
 		long classNameId, long classPK, java.lang.String urlTitle)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
 		return getPersistence()
-				   .removeByC_G_C_C_U(companyId, groupId, classNameId, classPK,
+				   .removeByG_C_C_C_U(groupId, companyId, classNameId, classPK,
 			urlTitle);
 	}
 
 	/**
-	* Returns the number of friendly urls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63;.
+	* Returns the number of friendly urls where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63;.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param urlTitle the url title
 	* @return the number of matching friendly urls
 	*/
-	public static int countByC_G_C_C_U(long companyId, long groupId,
+	public static int countByG_C_C_C_U(long groupId, long companyId,
 		long classNameId, long classPK, java.lang.String urlTitle) {
 		return getPersistence()
-				   .countByC_G_C_C_U(companyId, groupId, classNameId, classPK,
+				   .countByG_C_C_C_U(groupId, companyId, classNameId, classPK,
 			urlTitle);
 	}
 
 	/**
-	* Returns the friendly url where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
+	* Returns the friendly url where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
 	* @return the matching friendly url
 	* @throws NoSuchFriendlyURLException if a matching friendly url could not be found
 	*/
-	public static FriendlyURL findByC_G_C_C_M(long companyId, long groupId,
+	public static FriendlyURL findByG_C_C_C_M(long groupId, long companyId,
 		long classNameId, long classPK, boolean main)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
 		return getPersistence()
-				   .findByC_G_C_C_M(companyId, groupId, classNameId, classPK,
+				   .findByG_C_C_C_M(groupId, companyId, classNameId, classPK,
 			main);
 	}
 
 	/**
-	* Returns the friendly url where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the friendly url where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
 	* @return the matching friendly url, or <code>null</code> if a matching friendly url could not be found
 	*/
-	public static FriendlyURL fetchByC_G_C_C_M(long companyId, long groupId,
+	public static FriendlyURL fetchByG_C_C_C_M(long groupId, long companyId,
 		long classNameId, long classPK, boolean main) {
 		return getPersistence()
-				   .fetchByC_G_C_C_M(companyId, groupId, classNameId, classPK,
+				   .fetchByG_C_C_C_M(groupId, companyId, classNameId, classPK,
 			main);
 	}
 
 	/**
-	* Returns the friendly url where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the friendly url where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching friendly url, or <code>null</code> if a matching friendly url could not be found
 	*/
-	public static FriendlyURL fetchByC_G_C_C_M(long companyId, long groupId,
+	public static FriendlyURL fetchByG_C_C_C_M(long groupId, long companyId,
 		long classNameId, long classPK, boolean main, boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByC_G_C_C_M(companyId, groupId, classNameId, classPK,
+				   .fetchByG_C_C_C_M(groupId, companyId, classNameId, classPK,
 			main, retrieveFromCache);
 	}
 
 	/**
-	* Removes the friendly url where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63; from the database.
+	* Removes the friendly url where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63; from the database.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
 	* @return the friendly url that was removed
 	*/
-	public static FriendlyURL removeByC_G_C_C_M(long companyId, long groupId,
+	public static FriendlyURL removeByG_C_C_C_M(long groupId, long companyId,
 		long classNameId, long classPK, boolean main)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
 		return getPersistence()
-				   .removeByC_G_C_C_M(companyId, groupId, classNameId, classPK,
+				   .removeByG_C_C_C_M(groupId, companyId, classNameId, classPK,
 			main);
 	}
 
 	/**
-	* Returns the number of friendly urls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	* Returns the number of friendly urls where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	*
-	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
 	* @return the number of matching friendly urls
 	*/
-	public static int countByC_G_C_C_M(long companyId, long groupId,
+	public static int countByG_C_C_C_M(long groupId, long companyId,
 		long classNameId, long classPK, boolean main) {
 		return getPersistence()
-				   .countByC_G_C_C_M(companyId, groupId, classNameId, classPK,
+				   .countByG_C_C_C_M(groupId, companyId, classNameId, classPK,
 			main);
 	}
 

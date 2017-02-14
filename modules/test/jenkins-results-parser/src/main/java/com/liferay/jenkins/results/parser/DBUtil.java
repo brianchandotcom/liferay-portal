@@ -38,47 +38,33 @@ public class DBUtil {
 
 		List<Map<String, Object>> queryResult = new ArrayList<>();
 
-		Connection connection = null;
-		PreparedStatement ps = null;
+		Class.forName(dbType);
 
-		try {
-			Class.forName(dbType);
+		try (Connection connection =
+				DriverManager.getConnection(url, userName, password)) {
 
-			connection = DriverManager.getConnection(url, userName, password);
-
-			ps = connection.prepareStatement(query);
-
-			for (int i = 0; i < arguments.size(); i++) {
-				ps.setObject(i + 1, arguments.get(i));
-			}
-
-			ResultSet rs = ps.executeQuery();
-
-			ResultSetMetaData rsmd = rs.getMetaData();
-
-			while (rs.next()) {
-				Map<String, Object> row = new HashMap<>();
-
-				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-					row.put(rsmd.getColumnName(i), rs.getObject(i));
+			try (PreparedStatement ps = connection.prepareStatement(query)) {
+				for (int i = 0; i < arguments.size(); i++) {
+					ps.setObject(i + 1, arguments.get(i));
 				}
 
-				queryResult.add(row);
-			}
+				try (ResultSet rs = ps.executeQuery()) {
+					ResultSetMetaData rsmd = rs.getMetaData();
 
-			rs.close();
+					while (rs.next()) {
+						Map<String, Object> row = new HashMap<>();
+
+						for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+							row.put(rsmd.getColumnName(i), rs.getObject(i));
+						}
+
+						queryResult.add(row);
+					}
+				}
+			}
 		}
 		catch (SQLException sqle) {
 			sqle.printStackTrace();
-		}
-		finally {
-			if (ps != null) {
-				ps.close();
-			}
-
-			if (connection != null) {
-				connection.close();
-			}
 		}
 
 		return queryResult;

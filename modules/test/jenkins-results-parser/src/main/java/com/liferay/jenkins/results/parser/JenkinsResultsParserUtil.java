@@ -69,6 +69,20 @@ public class JenkinsResultsParserUtil {
 			"/liferay-portal/test.properties"
 	};
 
+	public static String combine(String...strings) {
+		if ((strings == null) || (strings.length == 0)) {
+			return "";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (String string : strings) {
+			sb.append(string);
+		}
+
+		return sb.toString();
+	}
+
 	public static JSONObject createJSONObject(String jsonString)
 		throws IOException {
 
@@ -912,7 +926,7 @@ public class JenkinsResultsParserUtil {
 
 	protected static final String DEPENDENCIES_URL_HTTP =
 		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
-			"/liferay-jenkins-results-parser-samples-ee/1/";
+			"/liferay-jenkins-results-parser-samples-ee/4/";
 
 	static {
 		File dependenciesDir = new File("src/test/resources/dependencies/");

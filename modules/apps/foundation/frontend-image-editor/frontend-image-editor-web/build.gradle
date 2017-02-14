@@ -8,6 +8,7 @@ cache {
 		skipTaskDependency configJSModules
 		skipTaskDependency replaceSoyTranslation
 		skipTaskDependency transpileJS
+		skipTaskDependency wrapSoyAlloyTemplate
 
 		testFile "build.gradle"
 		testFile "package.json"

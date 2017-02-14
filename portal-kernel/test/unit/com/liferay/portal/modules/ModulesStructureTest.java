@@ -152,6 +152,9 @@ public class ModulesStructureTest {
 		final String themeGitIgnoreTemplate = StringUtil.read(
 			classLoader,
 			"com/liferay/portal/modules/dependencies/theme_gitignore.tmpl");
+		final String themeNpmIgnoreTemplate = StringUtil.read(
+			classLoader,
+			"com/liferay/portal/modules/dependencies/theme_npmignore.tmpl");
 
 		Files.walkFileTree(
 			_modulesDirPath,
@@ -182,7 +185,9 @@ public class ModulesStructureTest {
 					else if (dirName.startsWith("frontend-theme-") &&
 							 Files.exists(dirPath.resolve("gulpfile.js"))) {
 
-						_testThemeIgnoreFiles(dirPath, themeGitIgnoreTemplate);
+						_testThemeIgnoreFiles(
+							dirPath, themeGitIgnoreTemplate,
+							themeNpmIgnoreTemplate);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -726,7 +731,8 @@ public class ModulesStructureTest {
 			"Missing " + gulpfileJsPath, Files.exists(gulpfileJsPath));
 	}
 
-	private void _testThemeIgnoreFiles(Path dirPath, String gitIgnoreTemplate)
+	private void _testThemeIgnoreFiles(
+			Path dirPath, String gitIgnoreTemplate, String npmIgnoreTemplate)
 		throws IOException {
 
 		Path resourcesImporterDirPath = dirPath.resolve("resources-importer");
@@ -746,6 +752,13 @@ public class ModulesStructureTest {
 
 		Assert.assertEquals(
 			"Incorrect " + gitIgnorePath, gitIgnoreTemplate, gitIgnore);
+
+		Path npmIgnorePath = dirPath.resolve(".npmignore");
+
+		String npmIgnore = _read(npmIgnorePath);
+
+		Assert.assertEquals(
+			"Incorrect " + npmIgnorePath, npmIgnoreTemplate, npmIgnore);
 	}
 
 	private static final String _APP_BUILD_GRADLE =

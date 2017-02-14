@@ -190,10 +190,16 @@
 			<var name="portlet" value="Tags" />
 		</execute>
 
-		<execute macro="Tag#editCP">
-			<var name="tagName" value="tag name" />
-			<var name="tagNameEdit" value="tag name edit" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="tag name" />
 		</execute>
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="tag name edit" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />

@@ -414,7 +414,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 	private void _configureTaskExecuteGulp(
 		ExecuteGulpTask executeGulpTask, final Copy expandFrontendCSSCommonTask,
-		Task zipResourcesImporterLARsTask, Project frontendThemeStyledProject,
+		Task zipResourcesImporterArchivesTask,
+		Project frontendThemeStyledProject,
 		Project frontendThemeUnstyledProject) {
 
 		executeGulpTask.args(
@@ -431,7 +432,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			});
 
 		executeGulpTask.dependsOn(
-			expandFrontendCSSCommonTask, zipResourcesImporterLARsTask);
+			expandFrontendCSSCommonTask, zipResourcesImporterArchivesTask);
 
 		_configureTaskExecuteGulpParentTheme(
 			executeGulpTask, frontendThemeStyledProject, "styled");
@@ -466,7 +467,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 	private void _configureTasksExecuteGulp(
 		Project project, final Copy expandFrontendCSSCommonTask,
-		final Task assembleResourcesImporterArchivesTask,
+		final Task zipResourcesImporterArchivesTask,
 		final Project frontendThemeStyledProject,
 		final Project frontendThemeUnstyledProject) {
 
@@ -480,7 +481,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 				public void execute(ExecuteGulpTask executeGulpTask) {
 					_configureTaskExecuteGulp(
 						executeGulpTask, expandFrontendCSSCommonTask,
-						assembleResourcesImporterArchivesTask,
+						zipResourcesImporterArchivesTask,
 						frontendThemeStyledProject,
 						frontendThemeUnstyledProject);
 				}

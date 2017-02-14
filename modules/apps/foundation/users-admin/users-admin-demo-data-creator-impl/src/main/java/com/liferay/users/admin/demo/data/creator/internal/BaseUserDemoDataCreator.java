@@ -16,18 +16,36 @@ package com.liferay.users.admin.demo.data.creator.internal;
 
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.users.admin.demo.data.creator.BasicUserDemoDataCreator;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.users.admin.demo.data.creator.UserDemoDataCreator;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URL;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -37,11 +55,47 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-public abstract class BaseUserDemoDataCreator
-	implements BasicUserDemoDataCreator {
+public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 
 	public User createUser(long companyId, String emailAddress)
 		throws PortalException {
+
+		Date birthDate = new Date();
+		boolean male = true;
+
+		byte[] portraitBytes = null;
+
+		try (InputStream is = (new URL(_RANDOM_USER_API)).openStream()) {
+			String json = StringUtil.read(is);
+
+			JSONObject rootJsonObject = JSONFactoryUtil.createJSONObject(json);
+
+			JSONObject userJsonObject = rootJsonObject.getJSONArray(
+				"results").getJSONObject(0);
+
+			emailAddress = _getEmailAddress(emailAddress, userJsonObject);
+
+			male = StringUtil.equalsIgnoreCase(
+				userJsonObject.getString("gender"), "male");
+
+			birthDate = _getBirthDate(birthDate, userJsonObject);
+
+			JSONObject pictureJSONObject = userJsonObject.getJSONObject(
+				"picture");
+
+			String portraitURL = pictureJSONObject.getString("large");
+
+			portraitBytes = _getBytes(new URL(portraitURL));
+		}
+		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
+
+			if (Validator.isNull(emailAddress)) {
+				emailAddress = StringUtil.randomString().concat("@liferay.com");
+			}
+		}
 
 		User user = userLocalService.fetchUserByEmailAddress(
 			companyId, emailAddress);
@@ -50,40 +104,13 @@ public abstract class BaseUserDemoDataCreator
 			return user;
 		}
 
-		String[] fullNameArray = getFullNameArray(emailAddress);
-
-		String firstName = fullNameArray[0];
-		String lastName = fullNameArray[1];
-
-		boolean autoPassword = false;
-		String password1 = "test";
-		String password2 = "test";
-		long facebookId = 0;
-		String openId = StringPool.BLANK;
-		Locale locale = LocaleUtil.SPAIN;
-		String middleName = StringPool.BLANK;
-		long prefixId = 0;
-		long suffixId = 0;
-		boolean male = true;
-		int birthdayMonth = Calendar.JANUARY;
-		int birthdayDay = 1;
-		int birthdayYear = 1970;
-		String jobTitle = StringUtil.randomString();
-		long[] groupIds = null;
-		long[] organizationIds = null;
-		long[] roleIds = null;
-		long[] userGroupIds = null;
-		boolean sendMail = false;
-
-		user = userLocalService.addUser(
-			UserConstants.USER_ID_DEFAULT, companyId, autoPassword, password1,
-			password2, true, StringPool.BLANK, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendMail,
-			new ServiceContext());
+		user = _createBasicUser(companyId, emailAddress, male, birthDate);
 
 		_userIds.add(user.getUserId());
+
+		if (portraitBytes != null) {
+			userLocalService.updatePortrait(user.getUserId(), portraitBytes);
+		}
 
 		return user;
 	}
@@ -132,8 +159,114 @@ public abstract class BaseUserDemoDataCreator
 
 	protected UserLocalService userLocalService;
 
+	private static List<String> _read(String fileName) {
+		return Arrays.asList(
+			StringUtil.split(
+				StringUtil.read(
+					BaseUserDemoDataCreator.class,
+					"dependencies/" + fileName + ".txt"),
+				CharPool.NEW_LINE));
+	}
+
+	private User _createBasicUser(
+			long companyId, String emailAddress, boolean male, Date birthDate)
+		throws PortalException {
+
+		String[] fullNameArray = getFullNameArray(emailAddress);
+
+		String firstName = fullNameArray[0];
+		String lastName = fullNameArray[1];
+
+		boolean autoPassword = false;
+		String password1 = "test";
+		String password2 = "test";
+		long facebookId = 0;
+		String openId = StringPool.BLANK;
+		Locale locale = LocaleUtil.SPAIN;
+		String middleName = StringPool.BLANK;
+		long prefixId = 0;
+		long suffixId = 0;
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(birthDate);
+
+		int birthdayMonth = calendar.get(Calendar.MONTH);
+		int birthdayDay = calendar.get(Calendar.DATE);
+		int birthdayYear = calendar.get(Calendar.YEAR);
+
+		String jobTitle = _getRandomElement(_jobTitles);
+		long[] groupIds = null;
+		long[] organizationIds = null;
+		long[] roleIds = null;
+		long[] userGroupIds = null;
+		boolean sendMail = false;
+
+		return userLocalService.addUser(
+			UserConstants.USER_ID_DEFAULT, companyId, autoPassword, password1,
+			password2, true, StringPool.BLANK, emailAddress, facebookId, openId,
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendMail,
+			new ServiceContext());
+	}
+
+	private Date _getBirthDate(Date birthDate, JSONObject userJsonObject) {
+		String dob = userJsonObject.getString("dob");
+
+		try {
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss");
+
+			birthDate = dateFormat.parse(dob);
+		}
+		catch (ParseException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+		}
+
+		return birthDate;
+	}
+
+	private byte[] _getBytes(URL url) throws IOException {
+		try (InputStream is = url.openStream()) {
+			return FileUtil.getBytes(is);
+		}
+	}
+
+	private String _getEmailAddress(
+		String emailAddress, JSONObject userJsonObject) {
+
+		if (Validator.isNull(emailAddress)) {
+			emailAddress = userJsonObject.getString("email");
+		}
+
+		if (!Validator.isEmailAddress(emailAddress)) {
+			String[] emailComponents = StringUtil.split(
+				emailAddress, CharPool.AT);
+
+			String normalizedEmail = FriendlyURLNormalizerUtil.normalize(
+				emailComponents[0]);
+
+			emailAddress = String.format(
+				"%s@%s", normalizedEmail, emailComponents[1]);
+		}
+
+		return emailAddress;
+	}
+
+	private String _getRandomElement(List<String> list) {
+		return list.get(RandomUtil.nextInt(list.size()));
+	}
+
+	private static final String _RANDOM_USER_API =
+		"https://randomuser.me/api?inc=email,gender,dob,picture&noinfo";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUserDemoDataCreator.class);
+
+	private static final List<String> _jobTitles = _read("job_titles");
 
 	private final List<Long> _userIds = new CopyOnWriteArrayList<>();
 

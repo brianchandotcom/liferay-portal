@@ -16,8 +16,8 @@ package com.liferay.exportimport.lifecycle;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.exportimport.kernel.lifecycle.BaseProcessExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
+import com.liferay.exportimport.kernel.lifecycle.ProcessAwareExportImportLifecycleListener;
 import com.liferay.exportimport.lar.ExportImportProcessCallbackUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ExportImportLifecycleListener.class)
 @ProviderType
 public class ExportImportProcessCallbackLifecycleListener
-	extends BaseProcessExportImportLifecycleListener {
+	implements ProcessAwareExportImportLifecycleListener {
 
 	@Override
 	public boolean isParallel() {
@@ -43,21 +43,21 @@ public class ExportImportProcessCallbackLifecycleListener
 	}
 
 	@Override
-	protected void onProcessFailed(List<Serializable> attributes)
+	public void onProcessFailed(List<Serializable> attributes)
 		throws Exception {
 
 		ExportImportProcessCallbackUtil.popCallbackList();
 	}
 
 	@Override
-	protected void onProcessStarted(List<Serializable> attributes)
+	public void onProcessStarted(List<Serializable> attributes)
 		throws Exception {
 
 		ExportImportProcessCallbackUtil.pushCallbackList();
 	}
 
 	@Override
-	protected void onProcessSucceeded(List<Serializable> attributes)
+	public void onProcessSucceeded(List<Serializable> attributes)
 		throws Exception {
 
 		List<Callable<?>> callables =

@@ -14,13 +14,17 @@
 
 package com.liferay.document.library.web.internal.exportimport.lifecycle;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lifecycle.BaseExportImportLifecycleListener;
+import com.liferay.exportimport.kernel.lifecycle.EventAwareExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -36,12 +40,208 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mate Thurzo
  */
 @Component(service = ExportImportLifecycleListener.class)
+@ProviderType
 public class CascadeFileEntryTypesExportImportLifecycleListener
-	extends BaseExportImportLifecycleListener {
+	implements EventAwareExportImportLifecycleListener {
 
 	@Override
 	public boolean isParallel() {
 		return true;
+	}
+
+	@Override
+	public void onLayoutExportFailed(
+			PortletDataContext portletDataContext, Throwable throwable)
+		throws Exception {
+	}
+
+	@Override
+	public void onLayoutExportStarted(PortletDataContext portletDataContext)
+		throws Exception {
+	}
+
+	@Override
+	public void onLayoutExportSucceeded(PortletDataContext portletDataContext)
+		throws Exception {
+	}
+
+	@Override
+	public void onLayoutImportFailed(
+			PortletDataContext portletDataContext, Throwable throwable)
+		throws Exception {
+	}
+
+	@Override
+	public void onLayoutImportProcessFinished(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		_importedFolderIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DLFolder.class);
+
+		if (MapUtil.isEmpty(_importedFolderIds)) {
+			return;
+		}
+
+		_processedFolderIds = new HashSet<>();
+
+		processFolderIds(_importedFolderIds.values());
+	}
+
+	@Override
+	public void onLayoutImportStarted(PortletDataContext portletDataContext)
+		throws Exception {
+	}
+
+	@Override
+	public void onLayoutImportSucceeded(PortletDataContext portletDataContext)
+		throws Exception {
+	}
+
+	@Override
+	public void onLayoutLocalPublicationFailed(
+			ExportImportConfiguration exportImportConfiguration,
+			Throwable throwable)
+		throws Exception {
+	}
+
+	@Override
+	public void onLayoutLocalPublicationStarted(
+			ExportImportConfiguration exportImportConfiguration)
+		throws Exception {
+	}
+
+	@Override
+	public void onLayoutLocalPublicationSucceeded(
+			ExportImportConfiguration exportImportConfiguration)
+		throws Exception {
+	}
+
+	@Override
+	public void onLayoutRemotePublicationFailed(
+			ExportImportConfiguration exportImportConfiguration,
+			Throwable throwable)
+		throws Exception {
+	}
+
+	@Override
+	public void onLayoutRemotePublicationStarted(
+			ExportImportConfiguration exportImportConfiguration)
+		throws Exception {
+	}
+
+	@Override
+	public void onLayoutRemotePublicationSucceeded(
+			ExportImportConfiguration exportImportConfiguration)
+		throws Exception {
+	}
+
+	@Override
+	public void onPortletExportFailed(
+			PortletDataContext portletDataContext, Throwable throwable)
+		throws Exception {
+	}
+
+	@Override
+	public void onPortletExportStarted(PortletDataContext portletDataContext)
+		throws Exception {
+	}
+
+	@Override
+	public void onPortletExportSucceeded(PortletDataContext portletDataContext)
+		throws Exception {
+	}
+
+	@Override
+	public void onPortletImportFailed(
+			PortletDataContext portletDataContext, Throwable throwable)
+		throws Exception {
+	}
+
+	@Override
+	public void onPortletImportProcessFinished(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		_importedFolderIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DLFolder.class);
+
+		if (MapUtil.isEmpty(_importedFolderIds)) {
+			return;
+		}
+
+		_processedFolderIds = new HashSet<>();
+
+		processFolderIds(_importedFolderIds.values());
+	}
+
+	@Override
+	public void onPortletImportStarted(PortletDataContext portletDataContext)
+		throws Exception {
+	}
+
+	@Override
+	public void onPortletImportSucceeded(PortletDataContext portletDataContext)
+		throws Exception {
+	}
+
+	@Override
+	public void onPortletPublicationFailed(
+			ExportImportConfiguration exportImportConfiguration,
+			Throwable throwable)
+		throws Exception {
+	}
+
+	@Override
+	public void onPortletPublicationStarted(
+			ExportImportConfiguration exportImportConfiguration)
+		throws Exception {
+	}
+
+	@Override
+	public void onPortletPublicationSucceeded(
+			ExportImportConfiguration exportImportConfiguration)
+		throws Exception {
+	}
+
+	@Override
+	public void onStagedModelExportFailed(
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			Throwable throwable)
+		throws Exception {
+	}
+
+	@Override
+	public void onStagedModelExportStarted(
+			PortletDataContext portletDataContext, StagedModel stagedModel)
+		throws Exception {
+	}
+
+	@Override
+	public void onStagedModelExportSucceeded(
+			PortletDataContext portletDataContext, StagedModel stagedModel)
+		throws Exception {
+	}
+
+	@Override
+	public void onStagedModelImportFailed(
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			Throwable throwable)
+		throws Exception {
+	}
+
+	@Override
+	public void onStagedModelImportStarted(
+			PortletDataContext portletDataContext, StagedModel stagedModel)
+		throws Exception {
+	}
+
+	@Override
+	public void onStagedModelImportSucceeded(
+			PortletDataContext portletDataContext, StagedModel stagedModel)
+		throws Exception {
 	}
 
 	protected DLFolder getProcessableRootFolder(DLFolder dlFolder)
@@ -64,42 +264,6 @@ public class CascadeFileEntryTypesExportImportLifecycleListener
 		}
 
 		return getProcessableRootFolder(parentFolder);
-	}
-
-	@Override
-	protected void onLayoutImportProcessFinished(
-			PortletDataContext portletDataContext)
-		throws Exception {
-
-		_importedFolderIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DLFolder.class);
-
-		if (MapUtil.isEmpty(_importedFolderIds)) {
-			return;
-		}
-
-		_processedFolderIds = new HashSet<>();
-
-		processFolderIds(_importedFolderIds.values());
-	}
-
-	@Override
-	protected void onPortletImportProcessFinished(
-			PortletDataContext portletDataContext)
-		throws Exception {
-
-		_importedFolderIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DLFolder.class);
-
-		if (MapUtil.isEmpty(_importedFolderIds)) {
-			return;
-		}
-
-		_processedFolderIds = new HashSet<>();
-
-		processFolderIds(_importedFolderIds.values());
 	}
 
 	protected void processFolderIds(Collection<Long> folderIds)

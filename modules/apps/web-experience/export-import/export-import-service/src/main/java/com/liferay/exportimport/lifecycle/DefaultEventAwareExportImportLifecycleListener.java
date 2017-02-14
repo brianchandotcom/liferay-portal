@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.kernel.lifecycle;
+package com.liferay.exportimport.lifecycle;
 
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_FAILED;
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_STARTED;
@@ -46,7 +46,12 @@ import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleCon
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS;
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lifecycle.EventAwareExportImportLifecycleListener;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.TransientValue;
@@ -57,19 +62,34 @@ import java.util.List;
 
 /**
  * @author Daniel Kocsis
- * @author Mate Thurzo
- *
- * @deprecated As of 7.0.0
  */
-@Deprecated
-public abstract class BaseExportImportLifecycleListener
+@ProviderType
+public class DefaultEventAwareExportImportLifecycleListener
 	implements ExportImportLifecycleListener {
 
+	public DefaultEventAwareExportImportLifecycleListener(
+		EventAwareExportImportLifecycleListener lifecycleListener) {
+
+		_lifecycleListener = lifecycleListener;
+	}
+
 	@Override
-	public abstract boolean isParallel();
+	public boolean isParallel() {
+		return _lifecycleListener.isParallel();
+	}
 
 	@Override
 	public void onExportImportLifecycleEvent(
+			ExportImportLifecycleEvent exportImportLifecycleEvent)
+		throws Exception {
+
+		_lifecycleListener.onExportImportLifecycleEvent(
+			exportImportLifecycleEvent);
+
+		callEventHandlers(exportImportLifecycleEvent);
+	}
+
+	protected void callEventHandlers(
 			ExportImportLifecycleEvent exportImportLifecycleEvent)
 		throws Exception {
 
@@ -261,147 +281,222 @@ public abstract class BaseExportImportLifecycleListener
 	protected void onLayoutExportFailed(
 			PortletDataContext portletDataContext, Throwable throwable)
 		throws Exception {
+
+		_lifecycleListener.onLayoutExportFailed(portletDataContext, throwable);
 	}
 
 	protected void onLayoutExportStarted(PortletDataContext portletDataContext)
 		throws Exception {
+
+		_lifecycleListener.onLayoutExportStarted(portletDataContext);
 	}
 
 	protected void onLayoutExportSucceeded(
 			PortletDataContext portletDataContext)
 		throws Exception {
+
+		_lifecycleListener.onLayoutExportSucceeded(portletDataContext);
 	}
 
 	protected void onLayoutImportFailed(
 			PortletDataContext portletDataContext, Throwable throwable)
 		throws Exception {
+
+		_lifecycleListener.onLayoutImportFailed(portletDataContext, throwable);
 	}
 
 	protected void onLayoutImportProcessFinished(
 			PortletDataContext portletDataContext)
 		throws Exception {
+
+		_lifecycleListener.onLayoutImportProcessFinished(portletDataContext);
 	}
 
 	protected void onLayoutImportStarted(PortletDataContext portletDataContext)
 		throws Exception {
+
+		_lifecycleListener.onLayoutImportStarted(portletDataContext);
 	}
 
 	protected void onLayoutImportSucceeded(
 			PortletDataContext portletDataContext)
 		throws Exception {
+
+		_lifecycleListener.onLayoutImportSucceeded(portletDataContext);
 	}
 
 	protected void onLayoutLocalPublicationFailed(
 			ExportImportConfiguration exportImportConfiguration,
 			Throwable throwable)
 		throws Exception {
+
+		_lifecycleListener.onLayoutLocalPublicationFailed(
+			exportImportConfiguration, throwable);
 	}
 
 	protected void onLayoutLocalPublicationStarted(
 			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
+
+		_lifecycleListener.onLayoutLocalPublicationStarted(
+			exportImportConfiguration);
 	}
 
 	protected void onLayoutLocalPublicationSucceeded(
 			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
+
+		_lifecycleListener.onLayoutLocalPublicationSucceeded(
+			exportImportConfiguration);
 	}
 
 	protected void onLayoutRemotePublicationFailed(
 			ExportImportConfiguration exportImportConfiguration,
 			Throwable throwable)
 		throws Exception {
+
+		_lifecycleListener.onLayoutRemotePublicationFailed(
+			exportImportConfiguration, throwable);
 	}
 
 	protected void onLayoutRemotePublicationStarted(
 			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
+
+		_lifecycleListener.onLayoutRemotePublicationStarted(
+			exportImportConfiguration);
 	}
 
 	protected void onLayoutRemotePublicationSucceeded(
 			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
+
+		_lifecycleListener.onLayoutRemotePublicationSucceeded(
+			exportImportConfiguration);
 	}
 
 	protected void onPortletExportFailed(
 			PortletDataContext portletDataContext, Throwable throwable)
 		throws Exception {
+
+		_lifecycleListener.onPortletExportFailed(portletDataContext, throwable);
 	}
 
 	protected void onPortletExportStarted(PortletDataContext portletDataContext)
 		throws Exception {
+
+		_lifecycleListener.onPortletExportStarted(portletDataContext);
 	}
 
 	protected void onPortletExportSucceeded(
 			PortletDataContext portletDataContext)
 		throws Exception {
+
+		_lifecycleListener.onPortletExportSucceeded(portletDataContext);
 	}
 
 	protected void onPortletImportFailed(
 			PortletDataContext portletDataContext, Throwable throwable)
 		throws Exception {
+
+		_lifecycleListener.onPortletImportFailed(portletDataContext, throwable);
 	}
 
 	protected void onPortletImportProcessFinished(
 			PortletDataContext portletDataContext)
 		throws Exception {
+
+		_lifecycleListener.onPortletImportProcessFinished(portletDataContext);
 	}
 
 	protected void onPortletImportStarted(PortletDataContext portletDataContext)
 		throws Exception {
+
+		_lifecycleListener.onPortletImportStarted(portletDataContext);
 	}
 
 	protected void onPortletImportSucceeded(
 			PortletDataContext portletDataContext)
 		throws Exception {
+
+		_lifecycleListener.onPortletImportSucceeded(portletDataContext);
 	}
 
 	protected void onPortletPublicationFailed(
 			ExportImportConfiguration exportImportConfiguration,
 			Throwable throwable)
 		throws Exception {
+
+		_lifecycleListener.onPortletPublicationFailed(
+			exportImportConfiguration, throwable);
 	}
 
 	protected void onPortletPublicationStarted(
 			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
+
+		_lifecycleListener.onPortletPublicationStarted(
+			exportImportConfiguration);
 	}
 
 	protected void onPortletPublicationSucceeded(
 			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
+
+		_lifecycleListener.onPortletPublicationSucceeded(
+			exportImportConfiguration);
 	}
 
 	protected void onStagedModelExportFailed(
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			Throwable throwable)
 		throws Exception {
+
+		_lifecycleListener.onStagedModelExportFailed(
+			portletDataContext, stagedModel, throwable);
 	}
 
 	protected void onStagedModelExportStarted(
 			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
+
+		_lifecycleListener.onStagedModelExportStarted(
+			portletDataContext, stagedModel);
 	}
 
 	protected void onStagedModelExportSucceeded(
 			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
+
+		_lifecycleListener.onStagedModelExportSucceeded(
+			portletDataContext, stagedModel);
 	}
 
 	protected void onStagedModelImportFailed(
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			Throwable throwable)
 		throws Exception {
+
+		_lifecycleListener.onStagedModelImportFailed(
+			portletDataContext, stagedModel, throwable);
 	}
 
 	protected void onStagedModelImportStarted(
 			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
+
+		_lifecycleListener.onStagedModelImportStarted(
+			portletDataContext, stagedModel);
 	}
 
 	protected void onStagedModelImportSucceeded(
 			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
+
+		_lifecycleListener.onStagedModelImportSucceeded(
+			portletDataContext, stagedModel);
 	}
+
+	private final EventAwareExportImportLifecycleListener _lifecycleListener;
 
 }

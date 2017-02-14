@@ -2194,7 +2194,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  feray.portal.kernel.service,com.liferay.portal.kernel.theme,com.lifer
  ay.portal.kernel.util,com.liferay.portal.kernel.xml,com.liferay.porta
  l.kernel.zip,com.liferay.ratings.kernel.model,javax.portlet",com.life
- ray.exportimport.kernel.lifecycle;version="1.0.1";uses:="com.liferay.
+ ray.exportimport.kernel.lifecycle;version="1.1.0";uses:="com.liferay.
  exportimport.kernel.lar,com.liferay.exportimport.kernel.model,com.lif
  eray.portal.kernel.model",com.liferay.exportimport.kernel.model;versi
  on="1.0.0";uses:="com.liferay.expando.kernel.model,com.liferay.portal

@@ -142,6 +142,23 @@ public class ExportImportLifecycleEventListenerRegistryUtil {
 			ExportImportLifecycleListener exportImportLifecycleListener =
 				registry.getService(serviceReference);
 
+			if (exportImportLifecycleListener instanceof
+					ProcessAwareExportImportLifecycleListener) {
+
+				exportImportLifecycleListener =
+					ExportImportLifecycleListenerFactoryUtil.create(
+						(ProcessAwareExportImportLifecycleListener)
+							exportImportLifecycleListener);
+			}
+			else if (exportImportLifecycleListener instanceof
+						EventAwareExportImportLifecycleListener) {
+
+				exportImportLifecycleListener =
+					ExportImportLifecycleListenerFactoryUtil.create(
+						(EventAwareExportImportLifecycleListener)
+							exportImportLifecycleListener);
+			}
+
 			if (exportImportLifecycleListener.isParallel()) {
 				_asyncExportImportLifecycleListeners.add(
 					exportImportLifecycleListener);

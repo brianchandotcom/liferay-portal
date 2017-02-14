@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.kernel.lifecycle;
+package com.liferay.exportimport.lifecycle;
 
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_FAILED;
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_STARTED;
@@ -42,24 +42,46 @@ import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleCon
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS;
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
+import com.liferay.exportimport.kernel.lifecycle.ProcessAwareExportImportLifecycleListener;
+
 import java.io.Serializable;
 
 import java.util.List;
 
 /**
  * @author Daniel Kocsis
- *
- * @deprecated As of 7.0.0
  */
-@Deprecated
-public abstract class BaseProcessExportImportLifecycleListener
+@ProviderType
+public class DefaultProcessAwareExportImportLifecycleListener
 	implements ExportImportLifecycleListener {
 
+	public DefaultProcessAwareExportImportLifecycleListener(
+		ProcessAwareExportImportLifecycleListener lifecycleListener) {
+
+		_lifecycleListener = lifecycleListener;
+	}
+
 	@Override
-	public abstract boolean isParallel();
+	public boolean isParallel() {
+		return _lifecycleListener.isParallel();
+	}
 
 	@Override
 	public void onExportImportLifecycleEvent(
+			ExportImportLifecycleEvent exportImportLifecycleEvent)
+		throws Exception {
+
+		_lifecycleListener.onExportImportLifecycleEvent(
+			exportImportLifecycleEvent);
+
+		callProcessHandlers(exportImportLifecycleEvent);
+	}
+
+	protected void callProcessHandlers(
 			ExportImportLifecycleEvent exportImportLifecycleEvent)
 		throws Exception {
 
@@ -142,14 +164,22 @@ public abstract class BaseProcessExportImportLifecycleListener
 
 	protected void onProcessFailed(List<Serializable> attributes)
 		throws Exception {
+
+		_lifecycleListener.onProcessFailed(attributes);
 	}
 
 	protected void onProcessStarted(List<Serializable> attributes)
 		throws Exception {
+
+		_lifecycleListener.onProcessStarted(attributes);
 	}
 
 	protected void onProcessSucceeded(List<Serializable> attributes)
 		throws Exception {
+
+		_lifecycleListener.onProcessSucceeded(attributes);
 	}
+
+	private final ProcessAwareExportImportLifecycleListener _lifecycleListener;
 
 }

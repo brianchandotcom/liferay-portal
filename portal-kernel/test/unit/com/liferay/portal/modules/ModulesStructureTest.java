@@ -753,12 +753,14 @@ public class ModulesStructureTest {
 		Assert.assertEquals(
 			"Incorrect " + gitIgnorePath, gitIgnoreTemplate, gitIgnore);
 
-		Path npmIgnorePath = dirPath.resolve(".npmignore");
+		if (!dirPath.startsWith("private")) {
+			Path npmIgnorePath = dirPath.resolve(".npmignore");
 
-		String npmIgnore = _read(npmIgnorePath);
+			String npmIgnore = _read(npmIgnorePath);
 
-		Assert.assertEquals(
-			"Incorrect " + npmIgnorePath, npmIgnoreTemplate, npmIgnore);
+			Assert.assertEquals(
+				"Incorrect " + npmIgnorePath, npmIgnoreTemplate, npmIgnore);
+		}
 	}
 
 	private static final String _APP_BUILD_GRADLE =

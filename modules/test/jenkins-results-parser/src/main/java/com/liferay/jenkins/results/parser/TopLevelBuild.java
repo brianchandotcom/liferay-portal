@@ -70,6 +70,14 @@ public class TopLevelBuild extends BaseBuild {
 		}
 	}
 
+	public Map<String, String> getBaseGitRepositoryDetailsTempMap() {
+		String repositoryType = getBaseRepositoryType();
+
+		String tempMapName = "git." + repositoryType + ".properties";
+
+		return getTempMap(tempMapName);
+	}
+
 	@Override
 	public String getDisplayName() {
 		String displayName = super.getDisplayName();
@@ -93,16 +101,6 @@ public class TopLevelBuild extends BaseBuild {
 		return super.getGitHubMessageElement();
 	}
 
-	public Map<String, String> getGitRepositoryDetailsTempMap(
-		String repositoryName) {
-
-		String repositoryType = getRepositoryType(repositoryName);
-
-		String tempMapName = "git." + repositoryType + ".properties";
-
-		return getTempMap(tempMapName);
-	}
-
 	public String getJenkinsReport() {
 		try {
 			return JenkinsResultsParserUtil.toString(
@@ -118,18 +116,10 @@ public class TopLevelBuild extends BaseBuild {
 			return getBuildURL() + "/jenkins-report.html";
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("https://");
-		sb.append(getMaster());
-		sb.append(".liferay.com/");
-		sb.append("userContent/jobs/");
-		sb.append(getJobName());
-		sb.append("/builds/");
-		sb.append(getBuildNumber());
-		sb.append("/jenkins-report.html");
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			"https://", getMaster(), ".liferay.com/", "userContent/jobs/",
+			getJobName(), "/builds/", Integer.toString(getBuildNumber()),
+			"/jenkins-report.html");
 	}
 
 	@Override
@@ -147,6 +137,30 @@ public class TopLevelBuild extends BaseBuild {
 
 		return statusReport + "Update took " + _updateDuration +
 			" milliseconds.\n";
+	}
+
+	@Override
+	public String getStatusSummary() {
+		long currentTimeMillis = System.currentTimeMillis();
+
+		if ((currentTimeMillis - _DOWNSTREAM_BUILDS_LISTING_INTERVAL) >=
+				_lastDownstreamBuildsListingTimestamp) {
+
+			StringBuilder sb = new StringBuilder(super.getStatusSummary());
+
+			sb.append("\nRunning Builds: ");
+
+			_lastDownstreamBuildsListingTimestamp = System.currentTimeMillis();
+
+			for (Build downstreamBuild : getDownstreamBuilds("running")) {
+				sb.append("\n");
+				sb.append(downstreamBuild.getBuildURL());
+			}
+
+			return sb.toString();
+		}
+
+		return super.getStatusSummary();
 	}
 
 	@Override
@@ -215,37 +229,38 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected Element getBaseBranchDetailsElement() {
 		String baseBranchURL =
-			"https://github.com/liferay/" + getRepositoryName() + "/tree/" +
+			"https://github.com/liferay/" + getBaseRepositoryName() + "/tree/" +
 				getBranchName();
 
-		String repositoryName = getRepositoryName();
+		String baseRepositoryName = getBaseRepositoryName();
 
-		String repositorySHA = null;
+		String baseRepositorySHA = null;
 
-		if (!repositoryName.equals("liferay-jenkins-ee") &&
-			repositoryName.endsWith("-ee")) {
+		if (!baseRepositoryName.equals("liferay-jenkins-ee") &&
+			baseRepositoryName.endsWith("-ee")) {
 
-			repositorySHA = getRepositorySHA(
-				repositoryName.substring(0, repositoryName.length() - 3));
+			baseRepositorySHA = getBaseRepositorySHA(
+				baseRepositoryName.substring(
+					0, baseRepositoryName.length() - 3));
 		}
 		else {
-			repositorySHA = getRepositorySHA(repositoryName);
+			baseRepositorySHA = getBaseRepositorySHA(baseRepositoryName);
 		}
 
-		String repositoryCommitURL =
-			"https://github.com/liferay/" + repositoryName + "/commit/" +
-				repositorySHA;
+		String baseRepositoryCommitURL =
+			"https://github.com/liferay/" + baseRepositoryName + "/commit/" +
+				baseRepositorySHA;
 
 		Element baseBranchDetailsElement = Dom4JUtil.getNewElement(
 			"p", null, "Branch Name: ",
 			Dom4JUtil.getNewAnchorElement(baseBranchURL, getBranchName()));
 
-		if (repositorySHA != null) {
+		if (baseRepositorySHA != null) {
 			Dom4JUtil.addToElement(
 				baseBranchDetailsElement, Dom4JUtil.getNewElement("br"),
 				"Branch GIT ID: ",
 				Dom4JUtil.getNewAnchorElement(
-					repositoryCommitURL, repositorySHA));
+					baseRepositoryCommitURL, baseRepositorySHA));
 		}
 
 		return baseBranchDetailsElement;
@@ -298,11 +313,7 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	protected FailureMessageGenerator[] getFailureMessageGenerators() {
-		if (getParentBuild() == null) {
-			return _FAILURE_MESSAGE_GENERATORS;
-		}
-
-		return super.getFailureMessageGenerators();
+		return _FAILURE_MESSAGE_GENERATORS;
 	}
 
 	@Override
@@ -312,56 +323,33 @@ public class TopLevelBuild extends BaseBuild {
 		int failCount = getDownstreamBuildCount(null) - successCount + 1;
 
 		return Dom4JUtil.getNewElement(
-			"div", null,
+			"div", null, Dom4JUtil.getNewElement("h6", null, "Job Results:"),
 			Dom4JUtil.getNewElement(
-				"h6", null, "Job Results:",
-				Dom4JUtil.getNewElement(
-					"p", null, Integer.toString(successCount),
-					JenkinsResultsParserUtil.getNounForm(
-						successCount, " Jobs", " Job"),
-					" Passed.", Dom4JUtil.getNewElement("br"),
-					Integer.toString(failCount),
-					JenkinsResultsParserUtil.getNounForm(
-						failCount, " Jobs", " Job"),
-					" Failed.")));
+				"p", null, Integer.toString(successCount),
+				JenkinsResultsParserUtil.getNounForm(
+					successCount, " Jobs", " Job"),
+				" Passed.", Dom4JUtil.getNewElement("br"),
+				Integer.toString(failCount),
+				JenkinsResultsParserUtil.getNounForm(
+					failCount, " Jobs", " Job"),
+				" Failed."));
 	}
 
 	protected String getGitRepositoryDetailsPropertiesTempMapURL(
 		String repositoryType) {
 
 		if (fromArchive) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(getBuildURL());
-			sb.append("git.");
-			sb.append(repositoryType);
-			sb.append(".properties.json");
-
-			return sb.toString();
+			return JenkinsResultsParserUtil.combine(
+				getBuildURL(), "git.", repositoryType, ".properties.json");
 		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(tempMapBaseURL);
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		sb.append(topLevelBuild.getMaster());
-
-		sb.append("/");
-		sb.append(topLevelBuild.getJobName());
-
-		sb.append("/");
-		sb.append(topLevelBuild.getBuildNumber());
-
-		sb.append("/");
-		sb.append(topLevelBuild.getJobName());
-
-		sb.append("/git.");
-		sb.append(repositoryType);
-		sb.append(".properties");
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			tempMapBaseURL, topLevelBuild.getMaster(), "/",
+			topLevelBuild.getJobName(), "/",
+			Integer.toString(topLevelBuild.getBuildNumber()), "/",
+			topLevelBuild.getJobName(), "/git.", repositoryType, ".properties");
 	}
 
 	protected Element getJobSummaryListElement() {
@@ -413,20 +401,10 @@ public class TopLevelBuild extends BaseBuild {
 			return getBuildURL() + "/start.properties.json";
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(tempMapBaseURL);
-		sb.append(getMaster());
-		sb.append("/");
-		sb.append(getJobName());
-		sb.append("/");
-		sb.append(getBuildNumber());
-		sb.append("/");
-		sb.append(getJobName());
-		sb.append("/");
-		sb.append("start.properties");
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			tempMapBaseURL, getMaster(), "/", getJobName(), "/",
+			Integer.toString(getBuildNumber()), "/", getJobName(), "/",
+			"start.properties");
 	}
 
 	@Override
@@ -435,20 +413,10 @@ public class TopLevelBuild extends BaseBuild {
 			return getBuildURL() + "/stop.properties.json";
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(tempMapBaseURL);
-		sb.append(getMaster());
-		sb.append("/");
-		sb.append(getJobName());
-		sb.append("/");
-		sb.append(getBuildNumber());
-		sb.append("/");
-		sb.append(getJobName());
-		sb.append("/");
-		sb.append("stop.properties");
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			tempMapBaseURL, getMaster(), "/", getJobName(), "/",
+			Integer.toString(getBuildNumber()), "/", getJobName(), "/",
+			"stop.properties");
 	}
 
 	@Override
@@ -532,21 +500,19 @@ public class TopLevelBuild extends BaseBuild {
 			String jobName = getJobName();
 
 			if (jobName.contains("pullrequest")) {
-				StringBuilder sb = new StringBuilder();
-
-				sb.append("https://test-1-1.liferay.com/job/");
-				sb.append(jobName.replace("pullrequest", "upstream"));
+				String url = JenkinsResultsParserUtil.combine(
+					"https://test-1-1.liferay.com/job/",
+					jobName.replace("pullrequest", "upstream"));
 
 				try {
 					JenkinsResultsParserUtil.toString(
-						JenkinsResultsParserUtil.getLocalURL(sb.toString()),
-						false, 0, 0, 0);
+						JenkinsResultsParserUtil.getLocalURL(url), false, 0, 0,
+						0);
 
 					Dom4JUtil.addToElement(
 						Dom4JUtil.getNewElement("h5", rootElement),
 						"For upstream results, click ",
-						Dom4JUtil.getNewAnchorElement(sb.toString(), "here"),
-						".");
+						Dom4JUtil.getNewAnchorElement(url, "here"), ".");
 				}
 				catch (IOException ioe) {
 					System.out.println("No upstream build detected.");
@@ -575,6 +541,9 @@ public class TopLevelBuild extends BaseBuild {
 	protected static final Pattern gitRepositoryTempMapNamePattern =
 		Pattern.compile("git\\.(?<repositoryType>.*)\\.properties");
 
+	private static final long _DOWNSTREAM_BUILDS_LISTING_INTERVAL =
+		1000 * 60 * 5;
+
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
 			new PoshiValidationFailureMessageGenerator(),
@@ -583,6 +552,7 @@ public class TopLevelBuild extends BaseBuild {
 			new GenericFailureMessageGenerator()
 		};
 
+	private long _lastDownstreamBuildsListingTimestamp = -1L;
 	private long _updateDuration;
 
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+<project default="default">
+	<path id="lib.classpath">
+		<fileset dir="classes" />
+	</path>
+
+	<taskdef classname="com.liferay.ant.mirrors.get.MirrorsGetTask" classpath="classes" name="mirrors-get" />
+
+	<target name="default">
+		<mirrors-get
+			dest="test"
+			force="true"
+			src="http://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/owaspantisamy/antisamy-ebay-1.3.xml"
+			trylocalnetwork="true"
+			verbose="true" />
+
+		<!--
+
+
+		<mirrors-get
+			dest="test"
+			force="true"
+			src="http://mirrors.lax.liferay.com/dtb5pzswcit1e.cloudfront.net/product_files/Pivotal-tc-Server/pivotal-tc-server-developer-3.1.2.RELEASE.zip"
+			trylocalnetwork="true"
+			verbose="true" />
+
+
+		<mirrors-get
+			dest="test"
+			force="true"
+			src="http://dtb5pzswcit1e.cloudfront.net/product_files/Pivotal-tc-Server/pivotal-tc-server-developer-3.1.2.RELEASE.zip"
+			trylocalnetwork="false"
+			verbose="true" />
+
+		<mirrors-get dest="test" force="true" src="abc" verbose="true" />
+		-->
+
+
+
+	</target>
+</project>

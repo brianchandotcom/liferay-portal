@@ -36,6 +36,10 @@ public interface Build {
 
 	public List<String> getBadBuildURLs();
 
+	public String getBaseRepositoryName();
+
+	public String getBaseRepositorySHA(String repositoryName);
+
 	public String getBranchName();
 
 	public String getBrowser();
@@ -83,10 +87,6 @@ public interface Build {
 	public String getParameterValue(String name);
 
 	public Build getParentBuild();
-
-	public String getRepositoryName();
-
-	public String getRepositorySHA(String repositoryName);
 
 	public String getResult();
 

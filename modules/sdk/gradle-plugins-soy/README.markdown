@@ -159,7 +159,7 @@ Property Name | Type | Default Value | Description
 `namespace` | `String` | `null` | The namespace of the Closure Templates of the project.
 
 It is possible to use Closures and Callables as values for the `String`
-properties, to defer evaluation until task execution.
+properties to defer evaluation until task execution.
 
 ### ReplaceSoyTranslationTask
 
@@ -187,4 +187,4 @@ are available.
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-<a name="replacementclosure"></a>`replacementClosure` | `Closure<String>` | `null` | The closure invoked in order to get the replacement for `goog.getMsg` definitions. The given closure is passed the *variable name*, *language key*, and *arguments object* as its parameters.
+<a name="replacementclosure"></a>`replacementClosure` | `Closure<String>` | `null` | The Closure invoked in order to get the replacement for `goog.getMsg` definitions. The given Closure is passed the *variable name*, *language key*, and *arguments object* as its parameters.

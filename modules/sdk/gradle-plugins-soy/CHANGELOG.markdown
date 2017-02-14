@@ -31,8 +31,8 @@ package to the `com.liferay.gradle.plugins.soy.tasks` package.
 ## 3.1.0 - 2017-02-13
 
 ### Added
-- [LPS-69139]: Add task `wrapSoyAlloyTemplate`, disabled by default, to wrap the
-Javascript functions compiled from Closure Templates into AlloyUI modules.
+- [LPS-69139]: Add task `wrapSoyAlloyTemplate` (disabled by default) to wrap the
+JavaScript functions compiled from Closure Templates into AlloyUI modules.
 
 ### Changed
 - [LPS-69139]: Update the [Liferay Portal Tools Soy Builder] dependency to

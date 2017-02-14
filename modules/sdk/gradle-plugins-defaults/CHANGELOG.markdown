@@ -1049,7 +1049,7 @@ files.
 ## 2.4.32 - 2017-02-13
 
 ### Changed
-- [LPS-69139]: Update the [Liferay Gradle Plugins] dependency to version 3.2.3.
+- [LPS-70618]: Update the [Liferay Gradle Plugins] dependency to version 3.2.3.
 
 ## 2.4.33 - 2017-02-14
 
@@ -1119,7 +1119,6 @@ process.
 [LPS-68980]: https://issues.liferay.com/browse/LPS-68980
 [LPS-69013]: https://issues.liferay.com/browse/LPS-69013
 [LPS-69026]: https://issues.liferay.com/browse/LPS-69026
-[LPS-69139]: https://issues.liferay.com/browse/LPS-69139
 [LPS-69223]: https://issues.liferay.com/browse/LPS-69223
 [LPS-69271]: https://issues.liferay.com/browse/LPS-69271
 [LPS-69288]: https://issues.liferay.com/browse/LPS-69288
@@ -1159,6 +1158,7 @@ process.
 [LPS-70515]: https://issues.liferay.com/browse/LPS-70515
 [LPS-70555]: https://issues.liferay.com/browse/LPS-70555
 [LPS-70584]: https://issues.liferay.com/browse/LPS-70584
+[LPS-70618]: https://issues.liferay.com/browse/LPS-70618
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

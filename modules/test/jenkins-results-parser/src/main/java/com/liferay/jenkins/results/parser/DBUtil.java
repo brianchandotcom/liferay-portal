@@ -32,33 +32,40 @@ import java.util.Map;
 public class DBUtil {
 
 	public static List<Map<String, Object>> executeQuery(
-			List<Object> arguments, String dbType, String url, String userName,
-			String password, String query)
+			List<Object> arguments, String dbDriverClassName, String url,
+			String userName, String password, String query)
 		throws ClassNotFoundException, SQLException {
 
-		List<Map<String, Object>> queryResult = new ArrayList<>();
+		List<Map<String, Object>> queryResultMap = new ArrayList<>();
 
-		Class.forName(dbType);
+		Class.forName(dbDriverClassName);
 
 		try (Connection connection =
 				DriverManager.getConnection(url, userName, password)) {
 
-			try (PreparedStatement ps = connection.prepareStatement(query)) {
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(query)) {
+
 				for (int i = 0; i < arguments.size(); i++) {
-					ps.setObject(i + 1, arguments.get(i));
+					preparedStatement.setObject(i + 1, arguments.get(i));
 				}
 
-				try (ResultSet rs = ps.executeQuery()) {
-					ResultSetMetaData rsmd = rs.getMetaData();
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					ResultSetMetaData resultSetMetaData =
+						resultSet.getMetaData();
 
-					while (rs.next()) {
+					while (resultSet.next()) {
 						Map<String, Object> row = new HashMap<>();
 
-						for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-							row.put(rsmd.getColumnName(i), rs.getObject(i));
+						for (int i = 1;
+							i <= resultSetMetaData.getColumnCount(); i++) {
+
+							row.put(
+								resultSetMetaData.getColumnName(i),
+								resultSet.getObject(i));
 						}
 
-						queryResult.add(row);
+						queryResultMap.add(row);
 					}
 				}
 			}
@@ -67,7 +74,7 @@ public class DBUtil {
 			sqle.printStackTrace();
 		}
 
-		return queryResult;
+		return queryResultMap;
 	}
 
 }

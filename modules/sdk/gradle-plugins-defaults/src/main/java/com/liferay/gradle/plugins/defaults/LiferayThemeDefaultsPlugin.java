@@ -464,7 +464,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskUploadArchives(
-		final Project project, Task updateThemeVersionTask) {
+		final Project project, Task updateVersionTask) {
 
 		Task uploadArchivesTask = GradleUtil.getTask(
 			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
@@ -484,7 +484,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		}
 
 		if (!GradleUtil.isSnapshot(project)) {
-			uploadArchivesTask.finalizedBy(updateThemeVersionTask);
+			uploadArchivesTask.finalizedBy(updateVersionTask);
 		}
 	}
 

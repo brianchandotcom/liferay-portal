@@ -1230,6 +1230,20 @@ to version 1.0.96.
 - [LPS-68405]: Update the [Liferay Gradle Plugins JS Module Config Generator]
 dependency to version 2.1.9.
 
+## 3.2.17 - 2017-03-08
+
+### Added
+- [LPS-70634]: Use the `liferayTheme.distName` property in the `package.json`
+file as value of the `archivesBaseName` property of theme projects, if present.
+
+### Changed
+- [LPS-70634]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.11.
+- [LPS-70634]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.10.
+- [LPS-70634]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.3.8.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1339,6 +1353,7 @@ dependency to version 2.1.9.
 [LPS-70515]: https://issues.liferay.com/browse/LPS-70515
 [LPS-70555]: https://issues.liferay.com/browse/LPS-70555
 [LPS-70618]: https://issues.liferay.com/browse/LPS-70618
+[LPS-70634]: https://issues.liferay.com/browse/LPS-70634
 [LPS-70677]: https://issues.liferay.com/browse/LPS-70677
 [LPS-70707]: https://issues.liferay.com/browse/LPS-70707
 [LPS-70870]: https://issues.liferay.com/browse/LPS-70870

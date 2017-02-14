@@ -100,8 +100,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		Copy expandFrontendCSSCommonTask = _addTaskExpandFrontendCSSCommon(
 			project, frontendCSSCommonConfiguration);
-		final PublishNodeModuleTask publishNodeModuleTask =
-			_addTaskPublishNodeModule(project);
 		final ReplaceRegexTask updateVersionTask = _addTaskUpdateVersion(
 			project, writeDigestTask);
 
@@ -114,6 +112,9 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			project, ZIP_RESOURCES_IMPORTER_ARCHIVES_TASK_NAME,
 			resourcesImporterExpandedArchivesDir, resourcesImporterArchivesDir,
 			"lar");
+
+		final PublishNodeModuleTask publishNodeModuleTask =
+			_addTaskPublishNodeModule(zipResourcesImporterArchivesTask);
 
 		_configureDeployDir(project);
 		_configureProject(project);
@@ -237,7 +238,11 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		return upload;
 	}
 
-	private PublishNodeModuleTask _addTaskPublishNodeModule(Project project) {
+	private PublishNodeModuleTask _addTaskPublishNodeModule(
+		Task zipResourcesImporterArchivesTask) {
+
+		Project project = zipResourcesImporterArchivesTask.getProject();
+
 		String projectPath = project.getPath();
 
 		if (projectPath.startsWith(":private:")) {
@@ -248,6 +253,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			project, PUBLISH_NODE_MODULE_TASK_NAME,
 			PublishNodeModuleTask.class);
 
+		publishNodeModuleTask.dependsOn(zipResourcesImporterArchivesTask);
 		publishNodeModuleTask.setDescription(
 			"Publishes this project to the NPM registry.");
 		publishNodeModuleTask.setGroup(BasePlugin.UPLOAD_GROUP);

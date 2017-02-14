@@ -250,8 +250,6 @@
 				<classpath mode="compile">lib/development/annotations.jar</classpath>
 				<classpath mode="compile">lib/development/ant-apache-bsf.jar</classpath>
 				<classpath mode="compile">lib/development/ant-contrib.jar</classpath>
-				<classpath mode="compile">lib/development/ant-ext.jar</classpath>
-				<classpath mode="compile">lib/development/ant-installer.jar</classpath>
 				<classpath mode="compile">lib/development/antelope.jar</classpath>
 				<classpath mode="compile">lib/development/appium.jar</classpath>
 				<classpath mode="compile">lib/development/bsh.jar</classpath>
@@ -289,14 +287,12 @@
 				<classpath mode="compile">lib/development/jta.jar</classpath>
 				<classpath mode="compile">lib/development/junit.jar</classpath>
 				<classpath mode="compile">lib/development/jutf7.jar</classpath>
-				<classpath mode="compile">lib/development/jymsg.jar</classpath>
 				<classpath mode="compile">lib/development/mail.jar</classpath>
 				<classpath mode="compile">lib/development/mariadb.jar</classpath>
 				<classpath mode="compile">lib/development/maven-ant-tasks.jar</classpath>
 				<classpath mode="compile">lib/development/mockito.jar</classpath>
 				<classpath mode="compile">lib/development/mysql.jar</classpath>
 				<classpath mode="compile">lib/development/objenesis.jar</classpath>
-				<classpath mode="compile">lib/development/orangevolt-ant-tasks.jar</classpath>
 				<classpath mode="compile">lib/development/freemarker.jar</classpath>
 				<classpath mode="compile">lib/development/p6spy.jar</classpath>
 				<classpath mode="compile">lib/development/persistence.jar</classpath>

@@ -139,59 +139,51 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="gotoMerge">
+		<if>
+			<equals arg1="${mergeMethod}" arg2="menuItem" />
+			<then>
+				<execute macro="LexiconEntry#gotoEntryMenuItem">
+					<var name="menuItem" value="Merge" />
+					<var name="rowEntry" value="${tagName}" />
+				</execute>
+			</then>
+			<else>
+				<execute function="Click" locator1="Icon#MERGE" />
+			</else>
+		</if>
+	</command>
+
 	<command name="mergeSingleTagWarning">
-		<var name="key_tagName" value="${tagName}" />
-
-		<execute function="Check" locator1="Tags#TAG_ENTRY_TABLE_CHECKBOX" />
-
-		<execute function="ClickNoError" locator1="Icon#MERGE" />
-
 		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="Confirm" value1="Please choose at least 2 tags." />
 	</command>
 
 	<command name="mergeTags">
-		<if>
-			<isset var="tagNameList" />
-			<then>
-				<for list="${tagNameList}" param="tagName">
-					<execute function="Check" locator1="Tags#TAG_ENTRY_TABLE_CHECKBOX">
-						<var name="key_tagName" value="${tagName}" />
-					</execute>
-				</for>
-			</then>
-			<else>
-				<execute function="Check#checkAll" locator1="Tags#ALL_TAGS_CHECKBOX" />
-			</else>
-		</if>
+		<execute function="ClickNoError" locator1="Button#SAVE" />
 
-		<execute function="Click" locator1="Icon#MERGE" />
+		<var name="message" value="Are you sure you want to merge &quot;${tagNameList}&quot; into &quot;${mergedTag}&quot;? This will change all items tagged with &quot;${tagNameList}&quot; to instead be tagged with &quot;${mergedTag}&quot;." />
 
-		<if>
-			<isset var="selectTagName" />
-			<then>
-				<execute function="Click" locator1="Button#SELECT" value1="Select" />
-
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-				<execute function="Check" locator1="Tags#TAG_ENTRY_TABLE_CHECKBOX">
-					<var name="key_tagName" value="${selectTagName}" />
-				</execute>
-
-				<execute function="SelectFrameTop" />
-
-				<execute macro="Button#clickDone" />
-			</then>
-		</if>
-
-		<execute function="Select" locator1="Tags#MERGE_TAGS_INTO_THIS_TAG_SELECT" value1="${selectTagToMergeTo}" />
-
-		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
-
-		<execute function="Confirm#assertPartialConfirmation" locator1="${mergeConfirmation}" />
+		<execute function="Confirm" value1="${message}" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="mergeTagsSelectAdditionalTags">
+		<execute function="Click" locator1="Button#SELECT" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="LexiconEntry#selectEntry">
+			<var name="rowEntry" value="${tagName}" />
+		</execute>
+
+		<execute function="SelectFrameTop" />
+
+		<execute macro="Button#clickDone" />
 	</command>
 
 	<command name="searchTagCP">

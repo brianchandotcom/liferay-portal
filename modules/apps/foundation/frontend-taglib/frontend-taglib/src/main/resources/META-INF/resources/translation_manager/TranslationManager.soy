@@ -1,0 +1,167 @@
+{namespace TranslationManager}
+
+/**
+ * Translation Manager Component
+ *
+ * @param editingLocale
+ * @param availableLocales
+ * @param changeableDefaultLanguage
+ * @param defaultLocale
+ * @param? elementClasses
+ * @param? id
+ * @param locales
+ *
+ * Function References
+ *
+ * @param? addLocale
+ * @param? changeDefaultLocale
+ * @param? removeAvailableLocale
+ **/
+{template .render}
+	<div class="lfr-translationmanager{$elementClasses ? ' ' + $elementClasses : ''}" id="{$id}">
+		<ul class="nav nav-tabs nav-tabs-default">
+			{call .defaultLocale data="all" /}
+
+			{call .availableLocales data="all" /}
+
+			<li>
+				{call .localesDropdown data="all"}
+					{param onClickDropdownElement: $addLocale /}
+					{param icon: 'plus' /}
+				{/call}
+			</li>
+		</ul>
+	</div>
+{/template}
+
+/**
+ * Renders the default locale element
+ *
+ * @param changeableDefaultLanguage
+ * @param defaultLocale
+ * @param locales
+ *
+ * Function References
+ *
+ * @param? changeDefaultLocale
+ */
+{template .defaultLocale}
+	{let $defaultLocaleObject: $locales[$defaultLocale] /}
+
+	{let $optionIcon kind="html"}
+		{if $changeableDefaultLanguage}
+			{call .localesDropdown data="all"}
+				{param onClickDropdownElement: $changeDefaultLocale /}
+				{param icon: 'change' /}
+			{/call}
+		{/if}
+	{/let}
+
+	{call .locale data="all"}
+		{param locale : $defaultLocaleObject /}
+		{param optionIcon kind="html"}
+			{$optionIcon}
+		{/param}
+	{/call}
+{/template}
+
+/**
+ * Renders the required list of available locale elements
+ *
+ * @param availableLocales
+ * @param defaultLocale
+ * @param locales
+ * @param pathThemeImages
+ *
+ * Function References
+ *
+ * @param? removeAvailableLocale
+ */
+{template .availableLocales}
+	{foreach $availableLocale in $availableLocales}
+		{if $availableLocale != $defaultLocale}
+			{let $locale: $locales[$availableLocale] /}
+
+			{call .locale data="all"}
+				{param locale : $locale /}
+				{param optionIcon kind="html"}
+					<span class="icon-monospaced" data-onclick="{$removeAvailableLocale}" data-locale-id="{$locale.id}" href="javascript:;">
+						<svg class="lexicon-icon">
+						    <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times"></use>
+						</svg>
+					</span>
+				{/param}
+			{/call}
+		{/if}
+	{/foreach}
+{/template}
+
+/**
+ * Renders the required locale element
+ *
+ * @param editingLocale
+ * @param locale
+ * @param pathThemeImages
+ *
+ */
+{template .locale}
+	{@param optionIcon: html}
+
+	<li class="{$editingLocale == $locale.id ? 'active' : ''}">
+		<a href="javascript:;">
+			<span data-onclick="changeLocale" data-locale-id="{$locale.id}">
+				<span class="icon-monospaced">
+					<svg class="lexicon-icon">
+					    <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$locale.icon}"></use>
+					</svg>
+				</span>
+
+				<span class="">{$locale.code}</span>
+			</span>
+
+			{$optionIcon}
+		</a>
+	</li>
+{/template}
+
+/**
+ * Renders a dropdown with require locale elements
+ *
+ * @param icon
+ * @param locales
+ * @param pathThemeImages
+ *
+ * Function References
+ *
+ * @param? onClickDropdownElement
+ */
+{template .localesDropdown}
+	{call Dropdown.render}
+		{param header kind="html"}
+			<a class="icon-monospaced" data-onclick="toggle" href="javascript:;">
+				<svg class="lexicon-icon">
+				    <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$icon}"></use>
+				</svg>
+			</a>
+		{/param}
+
+		{param body kind="html"}
+			{foreach $key in keys($locales)}
+				{let $locale: $locales[$key] /}
+				<li data-onclick="toggle">
+					<a data-onclick="{$onClickDropdownElement ?: ''}" data-locale-id="{$locale.id}" href="javascript:;">
+						<span class="icon-monospaced">
+							<svg class="lexicon-icon">
+							    <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$locale.icon}"></use>
+							</svg>
+						</span>
+						{$locale.name}
+					</a>
+				</li>
+			{/foreach}
+		{/param}
+
+		{param position: 0 /}
+		{param positionClassOnMenu: true /}
+	{/call}
+{/template}

@@ -1373,11 +1373,16 @@ public class StagingImpl implements Staging {
 		String backgroundTaskName = MapUtil.getString(
 			parameterMap, "name", exportImportConfiguration.getName());
 
+		boolean privateLayout = MapUtil.getBoolean(
+			settingsMap, "privateLayout");
+
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
 		taskContextMap.put(
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());
+
+		taskContextMap.put("privateLayout", privateLayout);
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskManagerUtil.addBackgroundTask(

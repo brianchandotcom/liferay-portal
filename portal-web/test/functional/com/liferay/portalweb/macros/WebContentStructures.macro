@@ -248,7 +248,9 @@
 			</then>
 		</while>
 
-		<execute macro="Portlet#viewEmptyMessage" />
+		<execute macro="Portlet#viewEmptyMessage">
+			<var name="message" value="There are no results." />
+		</execute>
 	</command>
 
 	<command name="viewCP">

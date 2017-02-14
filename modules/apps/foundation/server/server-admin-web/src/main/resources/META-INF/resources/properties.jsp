@@ -84,20 +84,16 @@ serverURL.setParameter("tabs2", tabs2);
 		String property = (String)entry.getKey();
 		String value = StringPool.BLANK;
 
-		boolean overriddenPropertyValue = false;
+		boolean overriddenPropertyValue = portalPropertiesTab && (serverPortletPreferencesMap.containsKey(property) || companyPortletPreferencesMap.containsKey(property));
 
 		if (ArrayUtil.contains(PropsValues.ADMIN_OBFUSCATED_PROPERTIES, property)) {
 			value = StringPool.EIGHT_STARS;
 		}
 		else if (portalPropertiesTab && serverPortletPreferencesMap.containsKey(property)) {
 			value = serverPortletPreferences.getValue(property, StringPool.BLANK);
-
-			overriddenPropertyValue = true;
 		}
 		else if (portalPropertiesTab && companyPortletPreferencesMap.containsKey(property)) {
 			value = companyPortletPreferences.getValue(property, StringPool.BLANK);
-
-			overriddenPropertyValue = true;
 		}
 		else {
 			value = (String)entry.getValue();

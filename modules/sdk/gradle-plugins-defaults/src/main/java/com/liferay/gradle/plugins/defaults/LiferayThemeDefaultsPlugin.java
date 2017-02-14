@@ -23,6 +23,7 @@ import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
+import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
@@ -63,6 +64,9 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	public static final String FRONTEND_CSS_COMMON_CONFIGURATION_NAME =
 		"frontendCSSCommon";
 
+	public static final String PUBLISH_NODE_MODULE_TASK_NAME =
+		"publishNodeModule";
+
 	public static final String WRITE_PARENT_THEMES_DIGEST_TASK_NAME =
 		"writeParentThemesDigest";
 
@@ -96,6 +100,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		Copy expandFrontendCSSCommonTask = _addTaskExpandFrontendCSSCommon(
 			project, frontendCSSCommonConfiguration);
+		final PublishNodeModuleTask publishNodeModuleTask =
+			_addTaskPublishNodeModule(project);
 		final ReplaceRegexTask updateVersionTask = _addTaskUpdateVersion(
 			project, writeDigestTask);
 
@@ -133,7 +139,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 					// configureTaskUploadArchives, because the latter one needs
 					// to know if we are publishing a snapshot or not.
 
-					_configureTaskUploadArchives(project, updateVersionTask);
+					_configureTaskUploadArchives(
+						project, publishNodeModuleTask, updateVersionTask);
 				}
 
 			});
@@ -228,6 +235,24 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 				"' artifacts into the local Maven repository.");
 
 		return upload;
+	}
+
+	private PublishNodeModuleTask _addTaskPublishNodeModule(Project project) {
+		String projectPath = project.getPath();
+
+		if (projectPath.startsWith(":private:")) {
+			return null;
+		}
+
+		PublishNodeModuleTask publishNodeModuleTask = GradleUtil.addTask(
+			project, PUBLISH_NODE_MODULE_TASK_NAME,
+			PublishNodeModuleTask.class);
+
+		publishNodeModuleTask.setDescription(
+			"Publishes this project to the NPM registry.");
+		publishNodeModuleTask.setGroup(BasePlugin.UPLOAD_GROUP);
+
+		return publishNodeModuleTask;
 	}
 
 	private ReplaceRegexTask _addTaskUpdateVersion(
@@ -464,26 +489,36 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskUploadArchives(
-		final Project project, Task updateVersionTask) {
+		final Project project, PublishNodeModuleTask publishNodeModuleTask,
+		Task updateVersionTask) {
 
 		Task uploadArchivesTask = GradleUtil.getTask(
 			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 
 		if (FileUtil.exists(project, ".lfrbuild-missing-resources-importer")) {
-			uploadArchivesTask.doFirst(
-				new Action<Task>() {
+			Action<Task> action = new Action<Task>() {
 
-					@Override
-					public void execute(Task task) {
-						throw new GradleException(
-							"Unable to publish " + project +
-								", resources-importer directory is missing");
-					}
+				@Override
+				public void execute(Task task) {
+					throw new GradleException(
+						"Unable to publish " + project +
+							", resources-importer directory is missing");
+				}
 
-				});
+			};
+
+			if (publishNodeModuleTask != null) {
+				publishNodeModuleTask.doFirst(action);
+			}
+
+			uploadArchivesTask.doFirst(action);
 		}
 
 		if (!GradleUtil.isSnapshot(project)) {
+			if (publishNodeModuleTask != null) {
+				uploadArchivesTask.dependsOn(publishNodeModuleTask);
+			}
+
 			uploadArchivesTask.finalizedBy(updateVersionTask);
 		}
 	}

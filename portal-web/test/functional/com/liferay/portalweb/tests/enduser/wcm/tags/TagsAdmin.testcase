@@ -1,0 +1,282 @@
+<definition component-name="portal-tags">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Tags" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Tag#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="CannotMergeSingleTagViewWarning" priority="4">
+		<execute macro="Tag#gotoMerge">
+			<var name="mergeMethod" value="menuItem" />
+			<var name="tagName" value="tagname1" />
+		</execute>
+
+		<execute macro="Tag#mergeSingleTagWarning" />
+	</command>
+
+	<command name="DeleteMultipleTagsFromToolbar" priority="4">
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+
+		<for list="2,3" param="i">
+			<execute macro="Tag#addCP">
+				<var name="tagName" value="tagname${i}" />
+			</execute>
+
+			<execute macro="Tag#viewCP">
+				<var name="tagName" value="tagname${i}" />
+			</execute>
+		</for>
+
+		<execute macro="PortletEntry#deleteViaToolbar">
+			<var name="rowEntries" value="tagname1,tagname2,tagname3" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="Portlet#viewEmptyMessage">
+			<var name="message" value="There are no tags." />
+		</execute>
+	</command>
+
+	<command name="DeleteTagFromMenu" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+
+		<execute macro="PortletEntry#deleteViaMenuItem">
+			<var name="rowEntry" value="tagname1" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="Portlet#viewEmptyMessage">
+			<var name="message" value="There are no tags." />
+		</execute>
+	</command>
+
+	<command name="DeleteTagFromToolbar" priority="4">
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+
+		<execute macro="PortletEntry#deleteViaToolbar">
+			<var name="rowEntries" value="tagname1" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="Portlet#viewEmptyMessage">
+			<var name="message" value="There are no tags." />
+		</execute>
+	</command>
+
+	<command name="EditTagAndCancel" priority="4">
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="tagname1" />
+		</execute>
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="tagname2" />
+		</execute>
+
+		<execute macro="Button#clickCancel" />
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+
+		<execute function="AssertTextNotPresent" value1="tagname2" />
+	</command>
+
+	<command name="EditTagAndSave" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="tagname1" />
+		</execute>
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="tagname2" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tagname2" />
+		</execute>
+
+		<execute function="AssertTextNotPresent" value1="tagname1" />
+	</command>
+
+	<command name="MergeMultipleTags" priority="4">
+		<for list="2,3" param="i">
+			<execute macro="Tag#addCP">
+				<var name="tagName" value="tagname${i}" />
+			</execute>
+
+			<execute macro="Tag#viewCP">
+				<var name="tagName" value="tagname${i}" />
+			</execute>
+		</for>
+
+		<for list="1,2,3" param="i">
+			<execute macro="LexiconEntry#selectEntry">
+				<var name="rowEntry" value="tagname${i}" />
+			</execute>
+		</for>
+
+		<execute macro="Tag#gotoMerge" />
+
+		<execute macro="Tag#mergeTags">
+			<var name="mergedTag" value="tagname1" />
+			<var name="tagNameList" value="tagname1,tagname2,tagname3" />
+		</execute>
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+
+		<for list="2,3" param="i">
+			<execute function="AssertTextNotPresent" value1="tagname${i}" />
+		</for>
+	</command>
+
+	<command name="MergeTagsSelectAdditionalTag" priority="3">
+		<for list="2,3,4,5,6,7" param="i">
+			<execute macro="Tag#addCP">
+				<var name="tagName" value="tagname${i}" />
+			</execute>
+
+			<execute macro="Tag#viewCP">
+				<var name="tagName" value="tagname${i}" />
+			</execute>
+		</for>
+
+		<execute macro="Pagination#changePagination">
+			<var name="itemsPerPage" value="5" />
+		</execute>
+
+		<execute macro="Pagination#viewResults">
+			<var name="results" value="Showing 1 to 5 of 7 entries." />
+		</execute>
+
+		<for list="1,2,3" param="i">
+			<execute macro="LexiconEntry#selectEntry">
+				<var name="rowEntry" value="tagname${i}" />
+			</execute>
+		</for>
+
+		<execute macro="Tag#gotoMerge" />
+
+		<execute macro="Tag#mergeTagsSelectAdditionalTags">
+			<var name="tagName" value="tagname7" />
+		</execute>
+
+		<execute macro="Tag#mergeTags">
+			<var name="mergedTag" value="tagname1" />
+			<var name="tagNameList" value="tagname1,tagname2,tagname3,tagname7" />
+		</execute>
+
+		<for list="1,4,5,6" param="i">
+			<execute macro="Tag#viewCP">
+				<var name="tagName" value="tagname${i}" />
+			</execute>
+		</for>
+
+		<for list="2,3,7" param="i">
+			<execute function="AssertTextNotPresent" value1="tagname${i}" />
+		</for>
+	</command>
+
+	<command name="SearchTags" priority="5">
+		<for list="tag,tag name 1" param="tagName">
+			<execute macro="Tag#addCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+
+			<execute macro="Tag#viewCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="tag" />
+		</execute>
+
+		<for list="tag,tagname1,tag name 1" param="tagName">
+			<execute macro="Tag#viewCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm"><![CDATA["tag"]]></var>
+		</execute>
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tag" />
+		</execute>
+
+		<for list="tagname, tag name 1" param="tagName">
+			<execute function="AssertTextNotPresent" value1="${tagName}" />
+		</for>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="1" />
+		</execute>
+
+		<for list="tagname1,tag name 1" param="tagName">
+			<execute macro="Tag#viewCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="string" />
+		</execute>
+
+		<execute macro="Portlet#viewEmptyMessage">
+			<var name="message" value="There are no tags." />
+		</execute>
+	</command>
+</definition>

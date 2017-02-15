@@ -128,7 +128,7 @@ public class FriendlyURLLocalizationPersistenceTest {
 
 		newFriendlyURLLocalization.setCompanyId(RandomTestUtil.nextLong());
 
-		newFriendlyURLLocalization.setFriendlyURLId(RandomTestUtil.nextLong());
+		newFriendlyURLLocalization.setFriendlyURLEntryId(RandomTestUtil.nextLong());
 
 		newFriendlyURLLocalization.setUrlTitle(RandomTestUtil.randomString());
 
@@ -145,8 +145,8 @@ public class FriendlyURLLocalizationPersistenceTest {
 			newFriendlyURLLocalization.getGroupId());
 		Assert.assertEquals(existingFriendlyURLLocalization.getCompanyId(),
 			newFriendlyURLLocalization.getCompanyId());
-		Assert.assertEquals(existingFriendlyURLLocalization.getFriendlyURLId(),
-			newFriendlyURLLocalization.getFriendlyURLId());
+		Assert.assertEquals(existingFriendlyURLLocalization.getFriendlyURLEntryId(),
+			newFriendlyURLLocalization.getFriendlyURLEntryId());
 		Assert.assertEquals(existingFriendlyURLLocalization.getUrlTitle(),
 			newFriendlyURLLocalization.getUrlTitle());
 		Assert.assertEquals(existingFriendlyURLLocalization.getLanguageId(),
@@ -207,7 +207,8 @@ public class FriendlyURLLocalizationPersistenceTest {
 	protected OrderByComparator<FriendlyURLLocalization> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("FriendlyURLLocalization",
 			"friendlyURLLocalizationId", true, "groupId", true, "companyId",
-			true, "friendlyURLId", true, "urlTitle", true, "languageId", true);
+			true, "friendlyURLEntryId", true, "urlTitle", true, "languageId",
+			true);
 	}
 
 	@Test
@@ -428,9 +429,9 @@ public class FriendlyURLLocalizationPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(existingFriendlyURLLocalization,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(
-				existingFriendlyURLLocalization.getFriendlyURLId()),
+				existingFriendlyURLLocalization.getFriendlyURLEntryId()),
 			ReflectionTestUtil.<Long>invoke(existingFriendlyURLLocalization,
-				"getOriginalFriendlyURLId", new Class<?>[0]));
+				"getOriginalFriendlyURLEntryId", new Class<?>[0]));
 		Assert.assertTrue(Objects.equals(
 				existingFriendlyURLLocalization.getLanguageId(),
 				ReflectionTestUtil.invoke(existingFriendlyURLLocalization,
@@ -460,7 +461,7 @@ public class FriendlyURLLocalizationPersistenceTest {
 
 		friendlyURLLocalization.setCompanyId(RandomTestUtil.nextLong());
 
-		friendlyURLLocalization.setFriendlyURLId(RandomTestUtil.nextLong());
+		friendlyURLLocalization.setFriendlyURLEntryId(RandomTestUtil.nextLong());
 
 		friendlyURLLocalization.setUrlTitle(RandomTestUtil.randomString());
 

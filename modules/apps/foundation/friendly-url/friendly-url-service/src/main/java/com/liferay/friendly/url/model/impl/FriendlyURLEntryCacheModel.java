@@ -16,7 +16,7 @@ package com.liferay.friendly.url.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.friendly.url.model.FriendlyURL;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -31,14 +31,14 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing FriendlyURL in entity cache.
+ * The cache model class for representing FriendlyURLEntry in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see FriendlyURL
+ * @see FriendlyURLEntry
  * @generated
  */
 @ProviderType
-public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
+public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
@@ -46,13 +46,13 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 			return true;
 		}
 
-		if (!(obj instanceof FriendlyURLCacheModel)) {
+		if (!(obj instanceof FriendlyURLEntryCacheModel)) {
 			return false;
 		}
 
-		FriendlyURLCacheModel friendlyURLCacheModel = (FriendlyURLCacheModel)obj;
+		FriendlyURLEntryCacheModel friendlyURLEntryCacheModel = (FriendlyURLEntryCacheModel)obj;
 
-		if (friendlyURLId == friendlyURLCacheModel.friendlyURLId) {
+		if (friendlyURLEntryId == friendlyURLEntryCacheModel.friendlyURLEntryId) {
 			return true;
 		}
 
@@ -61,7 +61,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, friendlyURLId);
+		return HashUtil.hash(0, friendlyURLEntryId);
 	}
 
 	@Override
@@ -70,8 +70,8 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", friendlyURLId=");
-		sb.append(friendlyURLId);
+		sb.append(", friendlyURLEntryId=");
+		sb.append(friendlyURLEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -94,56 +94,56 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 	}
 
 	@Override
-	public FriendlyURL toEntityModel() {
-		FriendlyURLImpl friendlyURLImpl = new FriendlyURLImpl();
+	public FriendlyURLEntry toEntityModel() {
+		FriendlyURLEntryImpl friendlyURLEntryImpl = new FriendlyURLEntryImpl();
 
 		if (uuid == null) {
-			friendlyURLImpl.setUuid(StringPool.BLANK);
+			friendlyURLEntryImpl.setUuid(StringPool.BLANK);
 		}
 		else {
-			friendlyURLImpl.setUuid(uuid);
+			friendlyURLEntryImpl.setUuid(uuid);
 		}
 
-		friendlyURLImpl.setFriendlyURLId(friendlyURLId);
-		friendlyURLImpl.setGroupId(groupId);
-		friendlyURLImpl.setCompanyId(companyId);
+		friendlyURLEntryImpl.setFriendlyURLEntryId(friendlyURLEntryId);
+		friendlyURLEntryImpl.setGroupId(groupId);
+		friendlyURLEntryImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
-			friendlyURLImpl.setCreateDate(null);
+			friendlyURLEntryImpl.setCreateDate(null);
 		}
 		else {
-			friendlyURLImpl.setCreateDate(new Date(createDate));
+			friendlyURLEntryImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			friendlyURLImpl.setModifiedDate(null);
+			friendlyURLEntryImpl.setModifiedDate(null);
 		}
 		else {
-			friendlyURLImpl.setModifiedDate(new Date(modifiedDate));
+			friendlyURLEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		friendlyURLImpl.setClassNameId(classNameId);
-		friendlyURLImpl.setClassPK(classPK);
+		friendlyURLEntryImpl.setClassNameId(classNameId);
+		friendlyURLEntryImpl.setClassPK(classPK);
 
 		if (urlTitle == null) {
-			friendlyURLImpl.setUrlTitle(StringPool.BLANK);
+			friendlyURLEntryImpl.setUrlTitle(StringPool.BLANK);
 		}
 		else {
-			friendlyURLImpl.setUrlTitle(urlTitle);
+			friendlyURLEntryImpl.setUrlTitle(urlTitle);
 		}
 
-		friendlyURLImpl.setMain(main);
+		friendlyURLEntryImpl.setMain(main);
 
-		friendlyURLImpl.resetOriginalValues();
+		friendlyURLEntryImpl.resetOriginalValues();
 
-		return friendlyURLImpl;
+		return friendlyURLEntryImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 
-		friendlyURLId = objectInput.readLong();
+		friendlyURLEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -169,7 +169,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(friendlyURLId);
+		objectOutput.writeLong(friendlyURLEntryId);
 
 		objectOutput.writeLong(groupId);
 
@@ -192,7 +192,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 	}
 
 	public String uuid;
-	public long friendlyURLId;
+	public long friendlyURLEntryId;
 	public long groupId;
 	public long companyId;
 	public long createDate;

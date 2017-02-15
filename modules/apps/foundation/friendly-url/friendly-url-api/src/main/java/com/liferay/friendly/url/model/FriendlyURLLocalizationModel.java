@@ -107,18 +107,18 @@ public interface FriendlyURLLocalizationModel extends BaseModel<FriendlyURLLocal
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the friendly url ID of this friendly url localization.
+	 * Returns the friendly url entry ID of this friendly url localization.
 	 *
-	 * @return the friendly url ID of this friendly url localization
+	 * @return the friendly url entry ID of this friendly url localization
 	 */
-	public long getFriendlyURLId();
+	public long getFriendlyURLEntryId();
 
 	/**
-	 * Sets the friendly url ID of this friendly url localization.
+	 * Sets the friendly url entry ID of this friendly url localization.
 	 *
-	 * @param friendlyURLId the friendly url ID of this friendly url localization
+	 * @param friendlyURLEntryId the friendly url entry ID of this friendly url localization
 	 */
-	public void setFriendlyURLId(long friendlyURLId);
+	public void setFriendlyURLEntryId(long friendlyURLEntryId);
 
 	/**
 	 * Returns the url title of this friendly url localization.

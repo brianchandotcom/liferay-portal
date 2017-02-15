@@ -58,11 +58,13 @@ import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -323,6 +325,16 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
+					Set<Serializable> primaryKeyObjs = portletDataContext.getEntityPrimaryKeyObjs(
+							"MDRRuleGroupInstance");
+
+					if (SetUtil.isNotEmpty(primaryKeyObjs)) {
+						Property primaryKeyProperty = PropertyFactoryUtil.forName(
+								"ruleGroupInstanceId");
+
+						dynamicQuery.add(primaryKeyProperty.in(primaryKeyObjs));
+					}
+
 					portletDataContext.addDateRangeCriteria(dynamicQuery,
 						"modifiedDate");
 

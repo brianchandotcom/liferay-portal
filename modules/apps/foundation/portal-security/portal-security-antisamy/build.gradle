@@ -78,6 +78,15 @@ processSanitizerConfiguration {
 				|			</attribute>
 				|		</tag>""".stripMargin()
 		}
+		else if (line.contains('<tag name="img"')) {
+			line = """
+				|${line}
+				|			<attribute name="data-fileEntryId" onInvalid="removeAttribute">
+				|				<regexp-list>
+				|					<regexp name="positiveInteger"/>
+				|				</regexp-list>
+				|			</attribute>""".stripMargin()
+		}
 
 		return line
 	}

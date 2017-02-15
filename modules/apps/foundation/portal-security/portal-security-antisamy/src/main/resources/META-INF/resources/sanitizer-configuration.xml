@@ -665,7 +665,13 @@ http://www.w3.org/TR/html401/struct/global.html
 
 		<!-- Image & image related tags -->
 
+
 		<tag name="img" action="validate">
+			<attribute name="data-fileEntryId" onInvalid="removeAttribute">
+				<regexp-list>
+					<regexp name="positiveInteger"/>
+				</regexp-list>
+			</attribute>
 			<attribute name="src" onInvalid="removeTag">
 				<regexp-list>
 					<regexp name="onsiteURL"/>

@@ -203,8 +203,8 @@
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WebContent Content" />
-			<var name="webContentTitle" value="WebContent Title" />
+			<var name="webContentContent" value="WC WebContent 1 Content" />
+			<var name="webContentTitle" value="WC WebContent 1 Title" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
@@ -267,33 +267,33 @@
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="fieldName" value="WebContent" />
-			<var name="WebContentSelectWCFile" value="WebContent Title" />
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="WebContentSelectWCFile" value="WC WebContent 1 Title" />
+			<var name="webContentTitle" value="WC WebContent 2 Title" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="WC WebContent 2 Title" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="WC WebContent 2 Title" />
 		</execute>
 
 		<execute macro="WebContent#viewCPWithoutContentField">
 			<var name="field" value="Web Content" />
-			<var name="fieldData" value="WebContent Title" />
+			<var name="fieldData" value="WC WebContent 1 Title" />
 			<var name="fieldFieldLabel" value="Web Content" />
 			<var name="fieldName" value="WebContent" />
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="WC WebContent 2 Title" />
 		</execute>
 
 		<execute macro="WebContent#viewCPWithoutContentField">
 			<var name="field" value="Geolocation" />
 			<var name="fieldFieldLabel" value="Geolocation" />
 			<var name="fieldName" value="Geolocation" />
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="WC WebContent 2 Title" />
 		</execute>
 	</command>
 

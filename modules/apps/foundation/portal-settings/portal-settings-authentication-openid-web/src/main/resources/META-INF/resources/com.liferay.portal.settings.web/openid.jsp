@@ -17,7 +17,7 @@
 <%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
 
 <%
-OpenIdConfiguration openIdConfiguration = ConfigurationProviderUtil.getConfiguration(OpenIdConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), "openid--", new CompanyServiceSettingsLocator(company.getCompanyId(), OpenIdConstants.SERVICE_NAME)));
+OpenIdConfiguration openIdConfiguration = ConfigurationProviderUtil.getConfiguration(OpenIdConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), PortalSettingsOpenIdConstants.PARAMETER_NAMESPACE, new CompanyServiceSettingsLocator(company.getCompanyId(), OpenIdConstants.SERVICE_NAME)));
 
 boolean enabled = openIdConfiguration.enabled();
 %>
@@ -25,5 +25,5 @@ boolean enabled = openIdConfiguration.enabled();
 <aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/openid" />
 
 <aui:fieldset>
-	<aui:input label="enabled" name="openid--enabled" type="checkbox" value="<%= enabled %>" />
+	<aui:input label="enabled" name='<%= PortalSettingsOpenIdConstants.PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />
 </aui:fieldset>

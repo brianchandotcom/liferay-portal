@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.google.constants.GoogleConstants;
+import com.liferay.portal.settings.authentication.google.web.internal.portlet.constants.PortalSettingsGoogleConstants;
 import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 
@@ -64,7 +65,7 @@ public class PortalSettingsGoogleFormMVCActionCommand
 
 	@Override
 	protected String getParameterNamespace() {
-		return "google--";
+		return PortalSettingsGoogleConstants.PARAMETER_NAMESPACE;
 	}
 
 	@Override

@@ -46,12 +46,14 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.sql.DataSource;
 import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
@@ -487,6 +489,15 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 
 							@Override
 							public void addCriteria(DynamicQuery dynamicQuery) {
+
+								Set<Serializable> primaryKeys = portletDataContext.getRegisteredExportingClassedModelPrimaryKeys("${entity.name}");
+
+								if (SetUtil.isNotEmpty(primaryKeys)) {
+									Property primaryKeyProperty = PropertyFactoryUtil.forName("${entity.PKVarName}");
+
+									dynamicQuery.add(primaryKeyProperty.in(primaryKeys));
+								}
+
 								<#if entity.isWorkflowEnabled()>
 									Criterion modifiedDateCriterion = portletDataContext.getDateRangeCriteria("modifiedDate");
 

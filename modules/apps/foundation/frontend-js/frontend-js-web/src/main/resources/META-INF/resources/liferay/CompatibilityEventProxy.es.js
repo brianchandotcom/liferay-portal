@@ -91,7 +91,7 @@ class CompatibilityEventProxy extends State {
 
 				let compatibleEvent = this.checkAttributeEvent_(eventFacade.type);
 
-				if (compatibleEvent != eventFacade.type) {
+				if (compatibleEvent !== eventFacade.type) {
 					eventFacade.type = compatibleEvent;
 					this.host.emit(compatibleEvent, event, eventFacade);
 				}

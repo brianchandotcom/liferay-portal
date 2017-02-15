@@ -9,6 +9,10 @@
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
+	<command name="inputDescription">
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${description}" />
+	</command>
+
 	<command name="inputLocalizedName">
 		<execute function="Click" locator1="Language#SITE_NAME_TRANSLATION">
 			<var name="key_language" value="${language}" />

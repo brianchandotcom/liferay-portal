@@ -1060,6 +1060,11 @@ files.
 - [LPS-67863]: Exclude test projects from `gradlew baseline -PsyncRelease`
 process.
 
+## 2.4.34 - 2017-02-15
+
+### Removed
+- [LPS-70699]: Disable update check when building themes.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -1163,6 +1168,7 @@ process.
 [LPS-70555]: https://issues.liferay.com/browse/LPS-70555
 [LPS-70584]: https://issues.liferay.com/browse/LPS-70584
 [LPS-70618]: https://issues.liferay.com/browse/LPS-70618
+[LPS-70699]: https://issues.liferay.com/browse/LPS-70699
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

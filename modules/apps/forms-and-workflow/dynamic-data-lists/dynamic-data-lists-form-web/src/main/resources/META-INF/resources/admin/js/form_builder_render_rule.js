@@ -12,12 +12,12 @@ AUI.add(
 						value: []
 					},
 
-					getDataProviderInstancesURL: {
+					getDataProviderParametersSettingsURL: {
 						value: ''
 					},
 
-					getDataProviderParametersSettingsURL: {
-						value: ''
+					getDataProviders: {
+						value: []
 					},
 
 					logicOperator: {
@@ -74,8 +74,8 @@ AUI.add(
 						instance._actionFactory = new Liferay.DDL.FormBuilderActionFactory(
 							{
 								fields: instance.get('fields'),
-								getDataProviderInstancesURL: instance.get('getDataProviderInstancesURL'),
 								getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
+								getDataProviders: instance.get('getDataProviders'),
 								pages: instance.get('pages'),
 								portletNamespace: instance.get('portletNamespace')
 							}

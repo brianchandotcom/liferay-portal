@@ -20,12 +20,12 @@ AUI.add(
 						value: []
 					},
 
-					getDataProviderInstancesURL: {
+					getDataProviderParametersSettingsURL: {
 						value: ''
 					},
 
-					getDataProviderParametersSettingsURL: {
-						value: ''
+					getDataProviders: {
+						value: []
 					},
 
 					index: {
@@ -96,6 +96,8 @@ AUI.add(
 						);
 
 						instance._createDataProviderList().render(fieldsListContainer);
+
+						instance._fillDataProvidersSelectField();
 					},
 
 					_afterDataProviderChange: function(event) {
@@ -207,8 +209,6 @@ AUI.add(
 
 						instance._dataProvidersList.after('valueChange', A.bind(instance._afterDataProviderChange, instance));
 
-						instance._fillDataProvidersSelectField();
-
 						return instance._dataProvidersList;
 					},
 
@@ -291,19 +291,7 @@ AUI.add(
 					_fillDataProvidersSelectField: function() {
 						var instance = this;
 
-						A.io.request(
-							instance.get('getDataProviderInstancesURL'),
-							{
-								method: 'GET',
-								on: {
-									success: function(event, id, xhr) {
-										var result = JSON.parse(xhr.responseText);
-
-										instance._renderDataProvidersList(result);
-									}
-								}
-							}
-						);
+						instance._renderDataProvidersList(instance.get('getDataProviders'));
 					},
 
 					_getDataProviderPayload: function(ddmDataProviderInstanceId) {

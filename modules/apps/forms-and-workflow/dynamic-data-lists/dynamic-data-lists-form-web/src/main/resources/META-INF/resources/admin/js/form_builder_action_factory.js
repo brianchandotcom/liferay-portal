@@ -12,12 +12,12 @@ AUI.add(
 						value: []
 					},
 
-					getDataProviderInstancesURL: {
+					getDataProviderParametersSettingsURL: {
 						value: ''
 					},
 
-					getDataProviderParametersSettingsURL: {
-						value: ''
+					getDataProviders: {
+						value: []
 					},
 
 					pages: {
@@ -66,8 +66,8 @@ AUI.add(
 									action: act,
 									boundingBox: container,
 									fields: instance.get('fields'),
-									getDataProviderInstancesURL: instance.get('getDataProviderInstancesURL'),
 									getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
+									getDataProviders: instance.get('getDataProviders'),
 									index: index,
 									options: instance.get('dataProviders'),
 									portletNamespace: instance.get('portletNamespace')

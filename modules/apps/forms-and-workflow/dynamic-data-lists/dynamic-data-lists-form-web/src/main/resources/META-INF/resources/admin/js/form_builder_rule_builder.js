@@ -177,8 +177,8 @@ AUI.add(
 									contentBox: instance.get('contentBox'),
 									fields: instance.getFields(),
 									functionsMetadata: instance.get('functionsMetadata'),
-									getDataProviderInstancesURL: instance.get('getDataProviderInstancesURL'),
 									getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
+									getDataProviders: instance._dataProviders,
 									pages: instance.getPages(),
 									portletNamespace: instance.get('portletNamespace')
 								}

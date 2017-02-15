@@ -87,7 +87,7 @@
 				{param optionIcon kind="html"}
 					<span class="icon-monospaced" data-onclick="{$removeAvailableLocale}" data-locale-id="{$locale.id}" href="javascript:;">
 						<svg class="lexicon-icon">
-						    <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times"></use>
+							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times"></use>
 						</svg>
 					</span>
 				{/param}
@@ -112,7 +112,7 @@
 			<span data-onclick="changeLocale" data-locale-id="{$locale.id}">
 				<span class="icon-monospaced">
 					<svg class="lexicon-icon">
-					    <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$locale.icon}"></use>
+						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$locale.icon}"></use>
 					</svg>
 				</span>
 
@@ -140,7 +140,7 @@
 		{param header kind="html"}
 			<a class="icon-monospaced" data-onclick="toggle" href="javascript:;">
 				<svg class="lexicon-icon">
-				    <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$icon}"></use>
+					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$icon}"></use>
 				</svg>
 			</a>
 		{/param}
@@ -152,7 +152,7 @@
 					<a data-onclick="{$onClickDropdownElement ?: ''}" data-locale-id="{$locale.id}" href="javascript:;">
 						<span class="icon-monospaced">
 							<svg class="lexicon-icon">
-							    <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$locale.icon}"></use>
+								<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$locale.icon}"></use>
 							</svg>
 						</span>
 						{$locale.name}

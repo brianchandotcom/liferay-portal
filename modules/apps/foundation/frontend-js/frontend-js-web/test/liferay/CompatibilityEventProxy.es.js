@@ -212,7 +212,7 @@ describe('CompatibilityEventProxy', () => {
 		let adaptedEventNameToEmit = 'eventChange';
 
 		let mockedTarget = createMockedTarget(eventNameToEmit);
-		
+
 		let spy = sinon.spy(mockedTarget, 'fire');
 
 		let component = new CompatibilityEventProxy({

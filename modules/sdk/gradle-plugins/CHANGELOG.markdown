@@ -1099,6 +1099,14 @@ version 1.0.30.
 - [LPS-70494]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.144.
 
+## 3.2.5 - 2017-02-15
+
+### Changed
+- [LPS-70677]: Exclude `com.liferay.portal` transitive dependencies from the
+`com.liferay.jasper.jspc` default dependency in the `jspCTool` configuration.
+- [LPS-70677]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to
+version 2.0.0.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1107,6 +1115,7 @@ version 1.0.144.
 [Liferay Gradle Plugins Gulp]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-gulp
 [Liferay Gradle Plugins JS Module Config Generator]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-module-config-generator
 [Liferay Gradle Plugins JS Transpiler]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-transpiler
+[Liferay Gradle Plugins Jasper JSPC]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-jasper-jspc
 [Liferay Gradle Plugins Javadoc Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-javadoc-formatter
 [Liferay Gradle Plugins Service Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-service-builder
 [Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
@@ -1202,4 +1211,5 @@ version 1.0.144.
 [LPS-70515]: https://issues.liferay.com/browse/LPS-70515
 [LPS-70555]: https://issues.liferay.com/browse/LPS-70555
 [LPS-70618]: https://issues.liferay.com/browse/LPS-70618
+[LPS-70677]: https://issues.liferay.com/browse/LPS-70677
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

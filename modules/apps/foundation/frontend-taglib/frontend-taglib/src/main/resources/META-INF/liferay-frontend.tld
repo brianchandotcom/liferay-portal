@@ -917,7 +917,7 @@
 	<tag>
 		<description><![CDATA[Creates a UI component for managing translation of associated content.]]></description>
 		<name>translation-manager</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.TranslationManagerTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.soy.TranslationManagerTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description><![CDATA[Available locales of translation languages from which to choose.]]></description>

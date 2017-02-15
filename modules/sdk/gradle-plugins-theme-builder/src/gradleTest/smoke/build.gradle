@@ -5,8 +5,6 @@ apply plugin: "com.liferay.portal.tools.theme.builder"
 task runGradleTest
 
 repositories {
-	mavenLocal()
-
 	maven {
 		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
 	}

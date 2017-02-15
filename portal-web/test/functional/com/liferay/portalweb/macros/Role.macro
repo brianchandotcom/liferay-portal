@@ -51,7 +51,9 @@
 		<if>
 			<isset var="roleTitle" />
 			<then>
-				<execute function="Type" locator1="TextInput#TITLE" value1="${roleTitle}" />
+				<execute macro="PortletEntry#inputTitle">
+					<var name="title" value="${roleTitle}" />
+				</execute>
 			</then>
 		</if>
 
@@ -313,7 +315,9 @@
 				<execute macro="Role#localizeRoleNameCmd" />
 			</then>
 			<else>
-				<execute function="Type" locator1="TextInput#TITLE" value1="${roleName}" />
+				<execute macro="PortletEntry#inputTitle">
+					<var name="title" value="${roleName}" />
+				</execute>
 			</else>
 		</if>
 
@@ -758,21 +762,27 @@
 	<command name="localizeRoleNameCmd">
 		<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_ENGLISH" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${roleName}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${roleName}" />
+		</execute>
 
 		<if>
 			<equals arg1="${language}" arg2="Catalan (Spain)" />
 			<then>
 				<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_CATALAN" />
 
-				<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
+				<execute macro="PortletEntry#inputTitle">
+					<var name="title" value="${roleNameLocalized}" />
+				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${language}" arg2="Chinese (China)" />
 				<then>
 					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_CHINESE" />
 
-					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
+					<execute macro="PortletEntry#inputTitle">
+						<var name="title" value="${roleNameLocalized}" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
@@ -780,7 +790,9 @@
 				<then>
 					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_FINNISH" />
 
-					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
+					<execute macro="PortletEntry#inputTitle">
+						<var name="title" value="${roleNameLocalized}" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
@@ -788,7 +800,9 @@
 				<then>
 					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_FRENCH" />
 
-					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
+					<execute macro="PortletEntry#inputTitle">
+						<var name="title" value="${roleNameLocalized}" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
@@ -796,7 +810,9 @@
 				<then>
 					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_GERMAN" />
 
-					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
+					<execute macro="PortletEntry#inputTitle">
+						<var name="title" value="${roleNameLocalized}" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
@@ -804,7 +820,9 @@
 				<then>
 					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_HEBREW" />
 
-					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
+					<execute macro="PortletEntry#inputTitle">
+						<var name="title" value="${roleNameLocalized}" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
@@ -812,7 +830,9 @@
 				<then>
 					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_HUNGARIAN" />
 
-					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
+					<execute macro="PortletEntry#inputTitle">
+						<var name="title" value="${roleNameLocalized}" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
@@ -820,7 +840,9 @@
 				<then>
 					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_JAPANESE" />
 
-					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
+					<execute macro="PortletEntry#inputTitle">
+						<var name="title" value="${roleNameLocalized}" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
@@ -828,7 +850,9 @@
 				<then>
 					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_PORTUGUESE" />
 
-					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
+					<execute macro="PortletEntry#inputTitle">
+						<var name="title" value="${roleNameLocalized}" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
@@ -836,7 +860,9 @@
 				<then>
 					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_SPANISH" />
 
-					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
+					<execute macro="PortletEntry#inputTitle">
+						<var name="title" value="${roleNameLocalized}" />
+					</execute>
 				</then>
 			</elseif>
 		</if>

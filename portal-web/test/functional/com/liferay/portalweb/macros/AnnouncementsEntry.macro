@@ -6,7 +6,10 @@
 
 		<execute function="Click" locator1="Button#ADD_ENTRY" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${entryTitle}" />
+		</execute>
+
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURL}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${entryContent}" />
 
@@ -51,7 +54,10 @@
 
 		<execute function="AssertClick" locator1="Button#ADD_ENTRY" value1="Add Entry" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${entryTitle}" />
+		</execute>
+
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURL}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${entryContent}" />
 
@@ -119,7 +125,10 @@
 
 		<execute function="AssertTextEquals#assertValue" locator1="TextInput#TITLE" value1="${entryTitle}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitleEdit}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${entryTitleEdit}" />
+		</execute>
+
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURLEdit}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${entryContentEdit}" />
 

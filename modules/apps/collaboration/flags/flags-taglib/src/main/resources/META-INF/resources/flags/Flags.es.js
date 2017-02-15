@@ -18,7 +18,7 @@ class Flags extends Component {
 	 * Opens a dialog where the user can flag the page.
 	 */
 	openReportDialog() {
-		AUI().use('aui-io-plugin-deprecated', (A) => {
+		AUI().use('aui-io-plugin-deprecated', 'liferay-util-window', (A) => {
 			let dialogTitle = Liferay.Language.get('report-inappropriate-content');
 
 			if (this.flagsEnabled) {

@@ -62,7 +62,7 @@ public class FriendlyURLLocalizationWrapper implements FriendlyURLLocalization,
 			getFriendlyURLLocalizationId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("friendlyURLId", getFriendlyURLId());
+		attributes.put("friendlyURLEntryId", getFriendlyURLEntryId());
 		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("languageId", getLanguageId());
 
@@ -90,10 +90,10 @@ public class FriendlyURLLocalizationWrapper implements FriendlyURLLocalization,
 			setCompanyId(companyId);
 		}
 
-		Long friendlyURLId = (Long)attributes.get("friendlyURLId");
+		Long friendlyURLEntryId = (Long)attributes.get("friendlyURLEntryId");
 
-		if (friendlyURLId != null) {
-			setFriendlyURLId(friendlyURLId);
+		if (friendlyURLEntryId != null) {
+			setFriendlyURLEntryId(friendlyURLEntryId);
 		}
 
 		String urlTitle = (String)attributes.get("urlTitle");
@@ -205,13 +205,13 @@ public class FriendlyURLLocalizationWrapper implements FriendlyURLLocalization,
 	}
 
 	/**
-	* Returns the friendly url ID of this friendly url localization.
+	* Returns the friendly url entry ID of this friendly url localization.
 	*
-	* @return the friendly url ID of this friendly url localization
+	* @return the friendly url entry ID of this friendly url localization
 	*/
 	@Override
-	public long getFriendlyURLId() {
-		return _friendlyURLLocalization.getFriendlyURLId();
+	public long getFriendlyURLEntryId() {
+		return _friendlyURLLocalization.getFriendlyURLEntryId();
 	}
 
 	/**
@@ -281,13 +281,13 @@ public class FriendlyURLLocalizationWrapper implements FriendlyURLLocalization,
 	}
 
 	/**
-	* Sets the friendly url ID of this friendly url localization.
+	* Sets the friendly url entry ID of this friendly url localization.
 	*
-	* @param friendlyURLId the friendly url ID of this friendly url localization
+	* @param friendlyURLEntryId the friendly url entry ID of this friendly url localization
 	*/
 	@Override
-	public void setFriendlyURLId(long friendlyURLId) {
-		_friendlyURLLocalization.setFriendlyURLId(friendlyURLId);
+	public void setFriendlyURLEntryId(long friendlyURLEntryId) {
+		_friendlyURLLocalization.setFriendlyURLEntryId(friendlyURLEntryId);
 	}
 
 	/**

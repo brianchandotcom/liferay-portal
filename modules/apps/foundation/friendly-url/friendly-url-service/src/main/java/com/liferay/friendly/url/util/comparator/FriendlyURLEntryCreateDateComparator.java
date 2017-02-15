@@ -14,15 +14,15 @@
 
 package com.liferay.friendly.url.util.comparator;
 
-import com.liferay.friendly.url.model.FriendlyURL;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Sergio González
  */
-public class FriendlyURLCreateDateComparator
-	extends OrderByComparator<FriendlyURL> {
+public class FriendlyURLEntryCreateDateComparator
+	extends OrderByComparator<FriendlyURLEntry> {
 
 	public static final String ORDER_BY_ASC = "FriendlyURL.createDate ASC";
 
@@ -30,18 +30,22 @@ public class FriendlyURLCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public FriendlyURLCreateDateComparator() {
+	public FriendlyURLEntryCreateDateComparator() {
 		this(true);
 	}
 
-	public FriendlyURLCreateDateComparator(boolean ascending) {
+	public FriendlyURLEntryCreateDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
-	public int compare(FriendlyURL friendlyURL1, FriendlyURL friendlyURL2) {
+	public int compare(
+		FriendlyURLEntry friendlyURLEntry1,
+		FriendlyURLEntry friendlyURLEntry2) {
+
 		int value = DateUtil.compareTo(
-			friendlyURL1.getCreateDate(), friendlyURL2.getCreateDate());
+			friendlyURLEntry1.getCreateDate(),
+			friendlyURLEntry2.getCreateDate());
 
 		if (_ascending) {
 			return value;

@@ -14,17 +14,17 @@
 
 package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Alejandro Tardín
@@ -35,49 +35,32 @@ public class FormNavigatorEntryConfigurationRetriever {
 	public Optional<Set<String>> getFormNavigatorEntryKeys(
 		String formNavigatorId, String categoryKey, String context) {
 
-		return _getFormNavigatorEntryConfigurationParsers(
-			formNavigatorId).stream().map(
-				formNavigatorEntryConfigurationParser ->
-					formNavigatorEntryConfigurationParser.
-						getFormNavigatorEntryKeys(categoryKey, context)).reduce(
+		return _serviceTrackerMap.getService(formNavigatorId).stream().map(
+			formNavigatorEntryConfigurationParser ->
+				formNavigatorEntryConfigurationParser.getFormNavigatorEntryKeys(
+					categoryKey, context)).reduce(
 				Optional.empty(), this::_mergeFormNavigatorEntryKeys);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	public void setFormNavigatorEntryConfigurationParser(
-		FormNavigatorEntryConfigurationParser
-			formNavigatorEntryConfigurationParser) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, FormNavigatorEntryConfigurationParser.class, null,
+			(serviceReference, emitter) -> {
+				FormNavigatorEntryConfigurationParser
+					formNavigatorEntryConfigurationParser =
+						bundleContext.getService(serviceReference);
 
-		List<FormNavigatorEntryConfigurationParser>
-			formNavigatorEntryConfigurationParsers =
-				_getFormNavigatorEntryConfigurationParsers(
+				emitter.emit(
 					formNavigatorEntryConfigurationParser.getFormNavigatorId());
 
-		formNavigatorEntryConfigurationParsers.add(
-			formNavigatorEntryConfigurationParser);
+				bundleContext.ungetService(serviceReference);
+			});
 	}
 
-	public void unsetFormNavigatorEntryConfigurationParser(
-		FormNavigatorEntryConfigurationParser
-			formNavigatorEntryConfigurationParser) {
-
-		List<FormNavigatorEntryConfigurationParser>
-			formNavigatorEntryConfigurationParsers =
-				_getFormNavigatorEntryConfigurationParsers(
-					formNavigatorEntryConfigurationParser.getFormNavigatorId());
-
-		formNavigatorEntryConfigurationParsers.remove(
-			formNavigatorEntryConfigurationParser);
-	}
-
-	private List<FormNavigatorEntryConfigurationParser>
-		_getFormNavigatorEntryConfigurationParsers(String formNavigatorId) {
-
-		return _formNavigatorEntryConfigurationParserMap.computeIfAbsent(
-			formNavigatorId, key -> new CopyOnWriteArrayList<>());
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private Optional<Set<String>> _mergeFormNavigatorEntryKeys(
@@ -90,7 +73,8 @@ public class FormNavigatorEntryConfigurationRetriever {
 		return previous;
 	}
 
-	private volatile Map<String, List<FormNavigatorEntryConfigurationParser>>
-		_formNavigatorEntryConfigurationParserMap = new ConcurrentHashMap<>();
+	private ServiceTrackerMap
+		<String, List<FormNavigatorEntryConfigurationParser>>
+			_serviceTrackerMap;
 
 }

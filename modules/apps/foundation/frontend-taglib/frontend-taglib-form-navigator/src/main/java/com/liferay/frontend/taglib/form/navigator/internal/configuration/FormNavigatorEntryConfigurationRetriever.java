@@ -51,8 +51,12 @@ public class FormNavigatorEntryConfigurationRetriever {
 		FormNavigatorEntryConfigurationParser
 			formNavigatorEntryConfigurationParser) {
 
-		_getFormNavigatorEntryConfigurationParsers(
-			formNavigatorEntryConfigurationParser.getFormNavigatorId()).add(
+		List<FormNavigatorEntryConfigurationParser>
+			formNavigatorEntryConfigurationParsers =
+				_getFormNavigatorEntryConfigurationParsers(
+					formNavigatorEntryConfigurationParser.getFormNavigatorId());
+
+		formNavigatorEntryConfigurationParsers.add(
 			formNavigatorEntryConfigurationParser);
 	}
 
@@ -60,8 +64,12 @@ public class FormNavigatorEntryConfigurationRetriever {
 		FormNavigatorEntryConfigurationParser
 			formNavigatorEntryConfigurationParser) {
 
-		_getFormNavigatorEntryConfigurationParsers(
-			formNavigatorEntryConfigurationParser.getFormNavigatorId()).remove(
+		List<FormNavigatorEntryConfigurationParser>
+			formNavigatorEntryConfigurationParsers =
+				_getFormNavigatorEntryConfigurationParsers(
+					formNavigatorEntryConfigurationParser.getFormNavigatorId());
+
+		formNavigatorEntryConfigurationParsers.remove(
 			formNavigatorEntryConfigurationParser);
 	}
 

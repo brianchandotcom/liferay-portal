@@ -371,12 +371,17 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 	}
 
 	private static void _setMockConfigurations(
-			FormNavigatorEntryConfigurationParser... parsers)
+			FormNavigatorEntryConfigurationParser...
+				formNavigatorEntryConfigurationParsers)
 		throws Exception {
 
-		for (FormNavigatorEntryConfigurationParser parser : parsers) {
+		for (FormNavigatorEntryConfigurationParser
+				formNavigatorEntryConfigurationParser :
+					formNavigatorEntryConfigurationParsers) {
+
 			_formNavigatorEntryConfigurationRetriever.
-				setFormNavigatorEntryConfigurationParser(parser);
+				setFormNavigatorEntryConfigurationParser(
+					formNavigatorEntryConfigurationParser);
 		}
 	}
 

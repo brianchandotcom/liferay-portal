@@ -80,9 +80,10 @@ public class FormNavigatorEntryConfigurationParser {
 			Matcher matcher = _LINE_PATTERN.matcher(line);
 
 			while (matcher.find()) {
-				_formNavigatorEntryKeysMap.put(
-					matcher.group("key").trim(),
-					_splitKeys(matcher.group("value")));
+				String key = matcher.group("key");
+				String value = matcher.group("value");
+
+				_formNavigatorEntryKeysMap.put(key.trim(), _splitKeys(value));
 			}
 		}
 	}

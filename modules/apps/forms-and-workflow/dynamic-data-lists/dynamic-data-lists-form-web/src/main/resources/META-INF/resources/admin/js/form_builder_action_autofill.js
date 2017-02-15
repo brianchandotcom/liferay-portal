@@ -103,6 +103,10 @@ AUI.add(
 
 						var ddmDataProviderInstanceId = event.newVal[0];
 
+						if (!ddmDataProviderInstanceId) {
+							return;
+						}
+
 						var boundingBox = instance.get('boundingBox');
 
 						var index = instance.get('index');

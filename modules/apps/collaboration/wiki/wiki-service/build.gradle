@@ -16,7 +16,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.wiki.api", version: "2.2.0"
 	provided group: "com.liferay", name: "com.liferay.xstream.configurator.api", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
 	provided group: "commons-lang", name: "commons-lang", version: "2.6"

@@ -1611,8 +1611,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							"com.liferay.arquillian.arquillian-container-" +
 								"liferay") ||
 						name.equals(
-							"com.liferay.arquillian.extension.junit.bridge") ||
-						name.equals("com.liferay.jasper.jspc")) {
+							"com.liferay.arquillian.extension.junit.bridge")) {
 
 						moduleDependency.exclude(
 							Collections.singletonMap("group", _GROUP_PORTAL));

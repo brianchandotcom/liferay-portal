@@ -17,7 +17,7 @@
 <%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
 
 <%
-GoogleAuthorizationConfiguration googleAuthorizationConfiguration = ConfigurationProviderUtil.getConfiguration(GoogleAuthorizationConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), "google--", new CompanyServiceSettingsLocator(company.getCompanyId(), GoogleConstants.SERVICE_NAME)));
+GoogleAuthorizationConfiguration googleAuthorizationConfiguration = ConfigurationProviderUtil.getConfiguration(GoogleAuthorizationConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), PortalSettingsGoogleConstants.PARAMETER_NAMESPACE, new CompanyServiceSettingsLocator(company.getCompanyId(), GoogleConstants.SERVICE_NAME)));
 
 boolean googleAuthEnabled = googleAuthorizationConfiguration.enabled();
 String googleClientId = googleAuthorizationConfiguration.clientId();
@@ -30,9 +30,9 @@ String googleClientSecret = googleAuthorizationConfiguration.clientSecret();
 <aui:fieldset>
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/google" />
 
-	<aui:input label="enabled" name="google--enabled" type="checkbox" value="<%= googleAuthEnabled %>" />
+	<aui:input label="enabled" name='<%= PortalSettingsGoogleConstants.PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= googleAuthEnabled %>" />
 
-	<aui:input label="google-client-id" name="google--clientId" type="text" value="<%= googleClientId %>" wrapperCssClass="lfr-input-text-container" />
+	<aui:input label="google-client-id" name='<%= PortalSettingsGoogleConstants.PARAMETER_NAMESPACE + "clientId" %>' type="text" value="<%= googleClientId %>" wrapperCssClass="lfr-input-text-container" />
 
-	<aui:input label="google-client-secret" name="google--clientSecret" type="text" value="<%= googleClientSecret %>" wrapperCssClass="lfr-input-text-container" />
+	<aui:input label="google-client-secret" name='<%= PortalSettingsGoogleConstants.PARAMETER_NAMESPACE + "clientSecret" %>' type="text" value="<%= googleClientSecret %>" wrapperCssClass="lfr-input-text-container" />
 </aui:fieldset>

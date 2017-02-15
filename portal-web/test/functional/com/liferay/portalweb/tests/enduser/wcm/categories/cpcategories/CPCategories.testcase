@@ -1316,7 +1316,10 @@
 		</execute>
 
 		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="Type" locator1="TextInput#NAME" value1="Vocabulary Name" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="Vocabulary Name" />
+		</execute>
+
 		<execute function="Click" locator1="Button#CANCEL" />
 
 		<execute macro="Navigator#openURL" />

@@ -405,7 +405,10 @@
 
 		<execute function="Click" locator1="ExportImport#PLUS" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${exportTemplateName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${exportTemplateName}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${exportTemplateDescription}" />
 	</command>
 
@@ -462,7 +465,10 @@
 
 		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${exportTemplateNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${exportTemplateNameEdit}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${exportTemplateDescriptionEdit}" />
 	</command>
 

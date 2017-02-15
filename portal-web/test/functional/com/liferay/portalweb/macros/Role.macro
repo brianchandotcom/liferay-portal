@@ -35,7 +35,9 @@
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="New Role" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${roleName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${roleName}" />
+		</execute>
 
 		<if>
 			<isset var="roleDescription" />

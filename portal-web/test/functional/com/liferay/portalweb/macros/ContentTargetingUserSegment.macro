@@ -54,7 +54,10 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${userSegmentName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${userSegmentName}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${userSegmentDescription}" />
 	</command>
 
@@ -348,7 +351,10 @@
 
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${userSegmentNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${userSegmentNameEdit}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${userSegmentDescriptionEdit}" />
 
 		<if>

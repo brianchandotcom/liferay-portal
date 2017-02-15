@@ -12,7 +12,9 @@
 			<var name="portletTitle" value="New ${adtType} Template" />
 		</execute>
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${adtType} Test ADT" />
+		</execute>
 
 		<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${adtFile}" />
 
@@ -46,7 +48,9 @@
 		<execute function="AssertVisible" locator1="ApplicationDisplayTemplates#RSS_FEEDS" />
 		<execute function="AssertElementPresent" locator1="ApplicationDisplayTemplates#RSS_FEEDS" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="RSS Test ADT" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="RSS Test ADT" />
+		</execute>
 
 		<execute function="Click" locator1="ApplicationDisplayTemplates#RSS_FEEDS" />
 
@@ -93,7 +97,9 @@
 		<execute function="AssertVisible" locator1="ApplicationDisplayTemplates#PORTLET_PREFERENCES" />
 		<execute function="AssertElementPresent" locator1="ApplicationDisplayTemplates#PORTLET_PREFERENCES" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${adtType} Test ADT" />
+		</execute>
 
 		<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${adtFile}" />
 
@@ -122,7 +128,9 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${portletName} Test ADT" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${portletName} Test ADT" />
+		</execute>
 
 		<execute function="Click" locator1="DDMEditTemplate#SCRIPT_FIELD">
 			<var name="key_fieldName" value="${fieldName}" />

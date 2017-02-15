@@ -8,7 +8,9 @@
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="New Metadata Set" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${metadataSetName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${metadataSetName}" />
+		</execute>
 
 		<for list="${dmMetadataSetFieldNames}" param="dmMetadataSetFieldName">
 			<execute macro="DMMetadataSet#addField">

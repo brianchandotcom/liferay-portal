@@ -176,7 +176,9 @@
 
 		<execute function="Click" locator1="SitePages#ADD_CHILD_PAGE" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${siteChildPageName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${siteChildPageName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
@@ -234,7 +236,9 @@
 	</command>
 
 	<command name="addPageTitle">
-		<execute function="Type" locator1="TextInput#NAME" value1="${pageName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${pageName}" />
+		</execute>
 	</command>
 
 	<command name="addPageToSiteTemplates">
@@ -262,7 +266,9 @@
 
 		<execute function="Click" locator1="SitePages#DETAILS_LANGUAGE_TRANSLATIONS" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${pageTranslationName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${pageTranslationName}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -406,7 +412,9 @@
 	</command>
 
 	<command name="editName">
-		<execute function="Type" locator1="TextInput#NAME" value1="${pageNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${pageNameEdit}" />
+		</execute>
 
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 

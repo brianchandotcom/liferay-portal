@@ -11,7 +11,10 @@
 			</then>
 		</if>
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${folderName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${folderName}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
 
 		<execute macro="PortletEntry#save" />
@@ -39,7 +42,10 @@
 
 		<execute function="Click" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${subfolderName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${subfolderName}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subfolderDescription}" />
 
 		<execute macro="Button#clickSave" />

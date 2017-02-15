@@ -97,7 +97,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#COPY" value1="Copy" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${ddlDataDefinitionCopyName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${ddlDataDefinitionCopyName}" />
+		</execute>
 
 		<if>
 			<equals arg1="${copyFormTemplates}" arg2="true" />

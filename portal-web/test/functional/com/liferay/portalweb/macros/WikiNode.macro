@@ -4,7 +4,9 @@
 	<command name="addCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${wikiNodeName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${wikiNodeName}" />
+		</execute>
 
 		<execute macro="Button#clickSave" />
 
@@ -35,7 +37,9 @@
 	</command>
 
 	<command name="addName">
-		<execute function="Type" locator1="TextInput#NAME" value1="${wikiNodeName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${wikiNodeName}" />
+		</execute>
 	</command>
 
 	<command name="deleteCP">
@@ -65,7 +69,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${wikiNodeNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${wikiNodeNameEdit}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${wikiNodeDescriptionEdit}" />
 
 		<execute macro="Button#clickSave" />

@@ -2,7 +2,9 @@
 	<command name="_addCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${tagName}" />
+		</execute>
 	</command>
 
 	<command name="addAutoAssertionTagViaBlogsPG">
@@ -134,7 +136,9 @@
 			<var name="portletTitle" value="${tagName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${tagNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${tagNameEdit}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 	</command>

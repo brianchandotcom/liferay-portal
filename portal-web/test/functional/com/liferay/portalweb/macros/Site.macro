@@ -83,7 +83,9 @@
 			</then>
 		</if>
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${siteName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${siteName}" />
+		</execute>
 
 		<if>
 			<or>
@@ -521,7 +523,9 @@
 	<command name="editCP">
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${siteName}" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${siteNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${siteNameEdit}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 
@@ -1018,7 +1022,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#BLANK_SITE" value1="Blank Site" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${siteName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${siteName}" />
+		</execute>
 
 		<execute function="Click" locator1="Button#SAVE" value1="Save" />
 

@@ -4,7 +4,9 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${userGroupName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${userGroupName}" />
+		</execute>
 
 		<if>
 			<equals arg1="${selectSiteTemplate}" arg2="true" />
@@ -221,7 +223,9 @@
 
 		<execute macro="PortletEntry#clickEditFromEllipsis" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${userGroupNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${userGroupNameEdit}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 	</command>

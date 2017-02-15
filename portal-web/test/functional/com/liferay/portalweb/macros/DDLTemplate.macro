@@ -44,7 +44,9 @@
 
 		<execute function="Click" locator1="TextInput#NAME" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${ddlDisplayTemplateName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${ddlDisplayTemplateName}" />
+		</execute>
 
 		<execute macro="DDLTemplate#_showDetails" />
 
@@ -87,7 +89,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${ddlDisplayTemplateName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${ddlDisplayTemplateName}" />
+		</execute>
 
 		<execute macro="DDLTemplate#_showDetails" />
 
@@ -143,7 +147,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${ddlFormTemplateName}" />
+		</execute>
 	</command>
 
 	<command name="copyCP">
@@ -165,7 +171,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#COPY_STRUCTURE" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${dataDefinitionTemplateCopyName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${dataDefinitionTemplateCopyName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#COPY" value1="Copy" />
 
@@ -245,7 +253,9 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${ddlDisplayTemplateNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${ddlDisplayTemplateNameEdit}" />
+		</execute>
 
 		<execute macro="DDLTemplate#_showDetails" />
 
@@ -277,7 +287,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${ddlFormTemplateNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${ddlFormTemplateNameEdit}" />
+		</execute>
 	</command>
 
 	<command name="editFormTemplateModeCP">
@@ -298,7 +310,9 @@
 	<command name="editFormTemplatePG">
 		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_EDIT_FORM_TEMPLATE" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${ddlFormTemplateNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${ddlFormTemplateNameEdit}" />
+		</execute>
 	</command>
 
 	<command name="saveAndContinueFormTemplateCP">

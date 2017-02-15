@@ -626,7 +626,9 @@
 
 		<execute function="AssertClick" locator1="Configuration#SAVE_CONFIGURATION_TEMPLATE" value1="Save Current Configuration as Template" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${configurationName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${configurationName}" />
+		</execute>
 
 		<execute macro="Button#clickSave" />
 

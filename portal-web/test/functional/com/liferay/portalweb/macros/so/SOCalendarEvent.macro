@@ -7,6 +7,7 @@
 		<execute function="AssertClick" locator1="Calendar#ADD_EVENT_BUTTON" value1="Add Event" />
 
 		<execute function="SelectFrame" locator1="CalendarEditEvent#EDIT_EVENT_IFRAME" />
+
 		<execute macro="PortletEntry#inputTitle">
 			<var name="title" value="${eventTitle}" />
 		</execute>

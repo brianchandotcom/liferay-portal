@@ -33,7 +33,7 @@ runGradleTest {
 	}
 }
 
-wrapAlloyTemplate {
+wrapSoyAlloyTemplate {
 	enabled = true
 	moduleName = "samples-hello-world"
 	namespace = "samples"

@@ -8,7 +8,10 @@
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${dmDocumentTitle}" />
+		</execute>
+
 		<execute macro="PortletEntry#inputDescription">
 			<var name="description" value="${dmDocumentDescription}" />
 		</execute>

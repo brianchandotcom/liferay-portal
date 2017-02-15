@@ -88,7 +88,9 @@
 			</then>
 		</if>
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${dmDocumentTitle}" />
+		</execute>
 
 		<if>
 			<isset var="dmDocumentDescription" />
@@ -111,7 +113,10 @@
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${dmDocumentTitle}" />
+		</execute>
+
 		<execute macro="PortletEntry#inputDescription">
 			<var name="description" value="${dmDocumentDescription}" />
 		</execute>
@@ -170,7 +175,10 @@
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${dmDocumentTitle}" />
+		</execute>
+
 		<execute macro="PortletEntry#inputDescription">
 			<var name="description" value="${dmDocumentDescription}" />
 		</execute>
@@ -522,7 +530,9 @@
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${mgDocumentFile}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${mgDocumentTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${mgDocumentTitle}" />
+		</execute>
 
 		<execute macro="PortletEntry#inputDescription">
 			<var name="description" value="${mgDocumentDescription}" />
@@ -1159,7 +1169,9 @@
 
 		<execute function="Click" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${mgDocumentTitleEdit}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${mgDocumentTitleEdit}" />
+		</execute>
 
 		<execute macro="PortletEntry#inputDescription">
 			<var name="description" value="${mgDocumentDescriptionEdit}" />

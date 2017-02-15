@@ -60,13 +60,17 @@
 	<command name="addNewDefinitionViaKDCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${workflowDefinitionTitle}" />
+		</execute>
 	</command>
 
 	<command name="addNewDefinitionViaWorkflowCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${workflowDefinitionTitle}" />
+		</execute>
 	</command>
 
 	<command name="addNodeSettingsSection">
@@ -415,7 +419,9 @@
 	</command>
 
 	<command name="editWorkflowDefinitionTitleViaWorkflowCP">
-		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${workflowDefinitionTitle}" />
+		</execute>
 	</command>
 
 	<command name="editWorkflowDefinitionViaKDCP">

@@ -627,7 +627,9 @@
 
 		<execute macro="CalendarEvent#selectEventIframe" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${eventTitle}" />
+		</execute>
 
 		<execute macro="CalendarEvent#_viewNewEventIframe" />
 
@@ -1057,7 +1059,9 @@
 
 				<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
 
-				<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitleEdit}" />
+				<execute macro="PortletEntry#inputTitle">
+					<var name="title" value="${eventTitleEdit}" />
+				</execute>
 
 				<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
 				<execute function="AssertElementPresent" locator1="CalendarEditEvent#END_DATE" />
@@ -1077,7 +1081,9 @@
 				<then>
 					<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
 
-					<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitleEdit}" />
+					<execute macro="PortletEntry#inputTitle">
+						<var name="title" value="${eventTitleEdit}" />
+					</execute>
 
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE_TIME" />
@@ -1113,7 +1119,9 @@
 				<then>
 					<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
 
-					<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitleEdit}" />
+					<execute macro="PortletEntry#inputTitle">
+						<var name="title" value="${eventTitleEdit}" />
+					</execute>
 
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE_TIME" />
@@ -1219,7 +1227,9 @@
 	</command>
 
 	<command name="editTitle">
-		<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${eventTitle}" />
+		</execute>
 	</command>
 
 	<command name="editViaAgendaView">
@@ -1261,7 +1271,9 @@
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitleEdit}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${eventTitleEdit}" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE_TIME" />

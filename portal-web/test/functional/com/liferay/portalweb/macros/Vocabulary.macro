@@ -199,7 +199,9 @@
 		<if>
 			<isset var="vocabularyNameEdit" />
 			<then>
-				<execute function="Type" locator1="TextInput#TITLE" value1="${vocabularyNameEdit}" />
+				<execute macro="PortletEntry#inputTitle">
+					<var name="title" value="${vocabularyNameEdit}" />
+				</execute>
 			</then>
 		</if>
 

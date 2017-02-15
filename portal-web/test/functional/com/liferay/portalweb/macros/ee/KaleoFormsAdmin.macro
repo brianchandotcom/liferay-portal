@@ -78,7 +78,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${workflowDefinitionTitle}" />
+		</execute>
 	</command>
 
 	<command name="assignForm">
@@ -416,7 +418,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitleEdit}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${workflowDefinitionTitleEdit}" />
+		</execute>
 	</command>
 
 	<command name="editWorkflowDraft">

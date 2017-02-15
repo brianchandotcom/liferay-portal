@@ -9,13 +9,17 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryName}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${categoryName}" />
+		</execute>
 
 		<var name="key_localizationName" value="${localizationNameKey}" />
 
 		<execute function="Click" locator1="CategoriesEditCategory#LOCALIZATION_NAME" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${localizationName}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${localizationName}" />
+		</execute>
 
 		<if>
 			<isset var="localization2NameKey" />
@@ -24,7 +28,9 @@
 
 				<execute function="Click" locator1="CategoriesEditCategory#LOCALIZATION_NAME" />
 
-				<execute function="Type" locator1="TextInput#TITLE" value1="${localization2Name}" />
+				<execute macro="PortletEntry#inputTitle">
+					<var name="title" value="${localization2Name}" />
+				</execute>
 			</then>
 		</if>
 
@@ -41,7 +47,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryName}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${categoryName}" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Properties" />
@@ -92,7 +100,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryName}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${categoryName}" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Permissions" />
@@ -121,7 +131,9 @@
 			</else>
 		</if>
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryName}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${categoryName}" />
+		</execute>
 
 		<if>
 			<isset var="categoryDescription" />
@@ -144,7 +156,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1=" " />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value=" " />
+		</execute>
 
 		<execute macro="Button#clickSave" />
 
@@ -258,7 +272,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryNameEdit}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${categoryNameEdit}" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Properties" />
@@ -282,7 +298,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryNameEdit}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${categoryNameEdit}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 	</command>

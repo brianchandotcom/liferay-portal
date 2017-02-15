@@ -2,52 +2,65 @@ import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 import org.dm.gradle.plugins.bundle.JarBuilder
 
-task buildSystemPackagesExtraManifest
 task copySystemPackagesExtraLibs(type: Copy)
 task copySystemPackagesExtraManifest(type: Copy)
 
 String buildProfile = System.properties["build.profile"]
 
-buildSystemPackagesExtraManifest {
-	dependsOn classes
-	dependsOn copySystemPackagesExtraLibs
+File systemPackagesExtraManifestFile = file("system.packages.extra.mf")
 
-	doLast {
-		Clock clock = new Clock()
+if (!System.getenv("JENKINS_HOME") || !systemPackagesExtraManifestFile.exists()) {
+	systemPackagesExtraManifestFile = new File(buildDir, "system.packages.extra.mf")
 
-		JarBuilder jarBuilder = bundle.jarBuilderFactory.create()
+	task buildSystemPackagesExtraManifest
 
-		jarBuilder.withBase projectDir
+	buildSystemPackagesExtraManifest {
+		dependsOn classes
+		dependsOn copySystemPackagesExtraLibs
 
-		Map<String, String> properties = liferayOSGi.bundleDefaultInstructions
+		doLast {
+			Clock clock = new Clock()
 
-		properties["-check"] = "imports"
-		properties["-fixupmessages"] = '"Classpath is empty. Private-Package ...";is:=ignore'
-		properties["-include"] = "system.packages.extra.bnd"
+			JarBuilder jarBuilder = bundle.jarBuilderFactory.create()
 
-		jarBuilder.withClasspath new File[0]
-		jarBuilder.withFailOnError true
-		jarBuilder.withName "system.packages.extra"
-		jarBuilder.withProperties properties
-		jarBuilder.withResources new File[0]
+			jarBuilder.withBase projectDir
 
-		jarBuilder.withSourcepath sourceSets.main.allSource.srcDirs.findAll {
-			it.directory
+			Map<String, String> properties = liferayOSGi.bundleDefaultInstructions
+
+			properties["-check"] = "imports"
+			properties["-fixupmessages"] = '"Classpath is empty. Private-Package ...";is:=ignore'
+			properties["-include"] = "system.packages.extra.bnd"
+
+			jarBuilder.withClasspath new File[0]
+			jarBuilder.withFailOnError true
+			jarBuilder.withName "system.packages.extra"
+			jarBuilder.withProperties properties
+			jarBuilder.withResources new File[0]
+
+			jarBuilder.withSourcepath sourceSets.main.allSource.srcDirs.findAll {
+				it.directory
+			}
+
+			jarBuilder.withTrace false
+			jarBuilder.withVersion project.version
+
+			systemPackagesExtraManifestFile.parentFile.mkdirs()
+
+			systemPackagesExtraManifestFile.withOutputStream {
+				jarBuilder.writeManifestTo it
+			}
+
+			println "Building the system.packages.extra.mf file took ${clock.time}"
 		}
-
-		jarBuilder.withTrace false
-		jarBuilder.withVersion project.version
-
-		File systemPackagesExtraManifestFile = file("tmp/META-INF/MANIFEST.MF")
-
-		systemPackagesExtraManifestFile.parentFile.mkdirs()
-
-		systemPackagesExtraManifestFile.withOutputStream {
-			jarBuilder.writeManifestTo it
-		}
-
-		println "Building the system.packages.extra.mf file took ${clock.time}"
 	}
+
+	jar {
+		dependsOn buildSystemPackagesExtraManifest
+	}
+}
+
+bundle {
+	instruction "system.packages.extra.manifest.file", relativePath(systemPackagesExtraManifestFile)
 }
 
 copySystemPackagesExtraLibs {
@@ -78,10 +91,6 @@ if (buildProfile != "slim") {
 		provided project(":core:portal-compat:blogs:portal-impl-blogs-compat")
 		provided project(":core:portal-compat:blogs:portal-kernel-blogs-compat")
 	}
-}
-
-jar {
-	dependsOn buildSystemPackagesExtraManifest
 }
 
 liferay {

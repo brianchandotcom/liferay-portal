@@ -138,6 +138,7 @@
 		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
 
 		<execute function="UploadCommonFile" locator1="DocumentsAndMediaEditDocument#FILE_FIELD" value1="${document}" />
+
 		<execute macro="PortletEntry#inputTitle">
 			<var name="title" value="${kfProcessFieldData}" />
 		</execute>

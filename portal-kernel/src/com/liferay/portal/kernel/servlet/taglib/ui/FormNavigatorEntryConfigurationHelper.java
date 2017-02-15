@@ -14,15 +14,15 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Alejandro Tardín
  */
 public interface FormNavigatorEntryConfigurationHelper {
 
-	public <T> Optional<List<FormNavigatorEntry<T>>> getFormNavigatorEntries(
+	public <T> Optional<Set<FormNavigatorEntry<T>>> getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean);
 
 }

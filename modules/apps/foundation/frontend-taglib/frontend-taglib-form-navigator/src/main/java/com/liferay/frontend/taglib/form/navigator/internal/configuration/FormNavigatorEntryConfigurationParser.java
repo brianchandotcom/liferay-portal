@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -43,10 +43,10 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class FormNavigatorEntryConfigurationParser {
 
-	public Optional<List<String>> getFormNavigatorEntryKeys(
+	public Optional<Set<String>> getFormNavigatorEntryKeys(
 		String categoryKey, String context) {
 
-		List<String> formNavigatorEntryKeys = null;
+		Set<String> formNavigatorEntryKeys = null;
 
 		if (Validator.isNotNull(context)) {
 			formNavigatorEntryKeys = _formNavigatorEntryKeysMap.get(
@@ -87,15 +87,19 @@ public class FormNavigatorEntryConfigurationParser {
 		}
 	}
 
-	private List<String> _splitKeys(String formNavigatorEntryKeys) {
-		return Arrays.stream(StringUtil.split(formNavigatorEntryKeys)).map(
-			String::trim).collect(Collectors.toList());
+	private Set<String> _splitKeys(String formNavigatorEntryKeys) {
+		Set<String> keys = new LinkedHashSet<>();
+
+		Arrays.stream(StringUtil.split(formNavigatorEntryKeys)).map(
+			String::trim).forEach(keys::add);
+
+		return keys;
 	}
 
 	private static final Pattern _LINE_PATTERN = Pattern.compile(
 		"^(?<key>.*)=(?<value>.*)$", Pattern.MULTILINE);
 
 	private FormNavigatorConfiguration _formNavigatorConfiguration;
-	private Map<String, List<String>> _formNavigatorEntryKeysMap;
+	private Map<String, Set<String>> _formNavigatorEntryKeysMap;
 
 }

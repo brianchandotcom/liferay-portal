@@ -23,12 +23,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryConfigurationHelper;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -44,7 +43,7 @@ public class FormNavigatorEntryConfigurationHelperImpl
 	implements FormNavigatorEntryConfigurationHelper {
 
 	@Override
-	public <T> Optional<List<FormNavigatorEntry<T>>> getFormNavigatorEntries(
+	public <T> Optional<Set<FormNavigatorEntry<T>>> getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean) {
 
 		String context = _getContext(formNavigatorId, formModelBean);
@@ -52,7 +51,8 @@ public class FormNavigatorEntryConfigurationHelperImpl
 		return _formNavigatorEntryConfigurationRetriever.
 			getFormNavigatorEntryKeys(
 				formNavigatorId, categoryKey, context).map(
-				keys -> _convertKeysToServices(formNavigatorId, keys));
+				formNavigatorEntryKeys -> _getFormNavigatorEntries(
+					formNavigatorId, formNavigatorEntryKeys));
 	}
 
 	@Activate
@@ -60,11 +60,13 @@ public class FormNavigatorEntryConfigurationHelperImpl
 		_formNavigatorEntriesMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, FormNavigatorEntry.class, null,
 			(serviceReference, emitter) -> {
-				FormNavigatorEntry service = bundleContext.getService(
-					serviceReference);
+				FormNavigatorEntry formNavigatorEntry =
+					bundleContext.getService(serviceReference);
 
 				emitter.emit(
-					_getKey(service.getKey(), service.getFormNavigatorId()));
+					_getKey(
+						formNavigatorEntry.getKey(),
+						formNavigatorEntry.getFormNavigatorId()));
 
 				bundleContext.ungetService(serviceReference);
 			});
@@ -81,17 +83,6 @@ public class FormNavigatorEntryConfigurationHelperImpl
 		_formNavigatorContextProviderMap.close();
 	}
 
-	private <T> List<FormNavigatorEntry<T>> _convertKeysToServices(
-		String formNavigatorId, List<String> formNavigatorEntryKeys) {
-
-		Stream<FormNavigatorEntry<T>> formNavigatorEntryStream =
-			formNavigatorEntryKeys.stream().map(
-				key -> this.<T>_getFormNavigatorEntry(
-					key, formNavigatorId)).filter(Validator::isNotNull);
-
-		return formNavigatorEntryStream.collect(Collectors.toList());
-	}
-
 	private <T> String _getContext(String formNavigatorId, T formModelBean) {
 		FormNavigatorContextProvider<T> formNavigatorContextProvider =
 			_formNavigatorContextProviderMap.getService(formNavigatorId);
@@ -105,6 +96,19 @@ public class FormNavigatorEntryConfigurationHelperImpl
 		}
 
 		return FormNavigatorContextConstants.CONTEXT_UPDATE;
+	}
+
+	private <T> Set<FormNavigatorEntry<T>> _getFormNavigatorEntries(
+		String formNavigatorId, Set<String> formNavigatorEntryKeys) {
+
+		Set<FormNavigatorEntry<T>> formNavigatorEntries = new LinkedHashSet<>();
+
+		formNavigatorEntryKeys.stream().map(
+			key -> this.<T>_getFormNavigatorEntry(
+				key, formNavigatorId)).filter(Objects::nonNull).forEach(
+			formNavigatorEntries::add);
+
+		return formNavigatorEntries;
 	}
 
 	private <T> FormNavigatorEntry<T> _getFormNavigatorEntry(

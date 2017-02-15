@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -31,14 +32,15 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 @Component(service = FormNavigatorEntryConfigurationRetriever.class)
 public class FormNavigatorEntryConfigurationRetriever {
 
-	public Optional<List<String>> getFormNavigatorEntryKeys(
+	public Optional<Set<String>> getFormNavigatorEntryKeys(
 		String formNavigatorId, String categoryKey, String context) {
 
 		return _getFormNavigatorEntryConfigurationParsers(
 			formNavigatorId).stream().map(
-				retriever -> retriever.getFormNavigatorEntryKeys(
-					categoryKey, context)).reduce(
-				Optional.empty(), this::_preferLast);
+				formNavigatorEntryConfigurationParser ->
+					formNavigatorEntryConfigurationParser.
+						getFormNavigatorEntryKeys(categoryKey, context)).reduce(
+				Optional.empty(), this::_mergeFormNavigatorEntryKeys);
 	}
 
 	@Reference(
@@ -70,8 +72,8 @@ public class FormNavigatorEntryConfigurationRetriever {
 			formNavigatorId, key -> new CopyOnWriteArrayList<>());
 	}
 
-	private Optional<List<String>> _preferLast(
-		Optional<List<String>> previous, Optional<List<String>> current) {
+	private Optional<Set<String>> _mergeFormNavigatorEntryKeys(
+		Optional<Set<String>> previous, Optional<Set<String>> current) {
 
 		if (current.isPresent()) {
 			return current;

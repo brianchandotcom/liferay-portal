@@ -18,9 +18,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,7 +45,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsEmptyList() {
-			List<String> formNavigatorEntryKeys =
+			Set<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
@@ -81,24 +82,24 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testContainsValuesForLine1() {
-			List<String> formNavigatorEntryKeys =
+			Set<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(
 				formNavigatorEntryKeys.toString(), 3,
 				formNavigatorEntryKeys.size());
-			Assert.assertEquals(
-				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
-			Assert.assertEquals(
-				"formNavigatorEntryKey2", formNavigatorEntryKeys.get(1));
-			Assert.assertEquals(
-				"formNavigatorEntryKey3", formNavigatorEntryKeys.get(2));
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey1", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey2", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey3", iterator.next());
 		}
 
 		@Test
 		public void testContainsValuesForLine2() {
-			List<String> formNavigatorEntryKeys =
+			Set<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "update").
 					get();
@@ -106,12 +107,12 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 			Assert.assertEquals(
 				formNavigatorEntryKeys.toString(), 3,
 				formNavigatorEntryKeys.size());
-			Assert.assertEquals(
-				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
-			Assert.assertEquals(
-				"formNavigatorEntryKey4", formNavigatorEntryKeys.get(1));
-			Assert.assertEquals(
-				"formNavigatorEntryKey5", formNavigatorEntryKeys.get(2));
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey1", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey4", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey5", iterator.next());
 		}
 
 	}
@@ -133,17 +134,18 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testTheyAreTrimmed() {
-			List<String> formNavigatorEntryKeys =
+			Set<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(
 				formNavigatorEntryKeys.toString(), 2,
 				formNavigatorEntryKeys.size());
-			Assert.assertEquals(
-				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
-			Assert.assertEquals(
-				"formNavigatorEntryKey2", formNavigatorEntryKeys.get(1));
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey1", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey2", iterator.next());
 		}
 
 	}
@@ -165,32 +167,34 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsTheKeysInThatLineWhenAskedForAContext() {
-			List<String> formNavigatorEntryKeys =
+			Set<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(
 				formNavigatorEntryKeys.toString(), 2,
 				formNavigatorEntryKeys.size());
-			Assert.assertEquals(
-				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
-			Assert.assertEquals(
-				"formNavigatorEntryKey2", formNavigatorEntryKeys.get(1));
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey1", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey2", iterator.next());
 		}
 
 		@Test
 		public void testReturnsTheKeysInThatLineWhenAskedForNoConext() {
-			List<String> formNavigatorEntryKeys =
+			Set<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", null).get();
 
 			Assert.assertEquals(
 				formNavigatorEntryKeys.toString(), 2,
 				formNavigatorEntryKeys.size());
-			Assert.assertEquals(
-				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
-			Assert.assertEquals(
-				"formNavigatorEntryKey2", formNavigatorEntryKeys.get(1));
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey1", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey2", iterator.next());
 		}
 
 	}
@@ -222,24 +226,24 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testContainsValuesForEntry1() {
-			List<String> formNavigatorEntryKeys =
+			Set<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(
 				formNavigatorEntryKeys.toString(), 3,
 				formNavigatorEntryKeys.size());
-			Assert.assertEquals(
-				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
-			Assert.assertEquals(
-				"formNavigatorEntryKey2", formNavigatorEntryKeys.get(1));
-			Assert.assertEquals(
-				"formNavigatorEntryKey3", formNavigatorEntryKeys.get(2));
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey1", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey2", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey3", iterator.next());
 		}
 
 		@Test
 		public void testContainsValuesForEntry2() {
-			List<String> formNavigatorEntryKeys =
+			Set<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "update").
 					get();
@@ -247,17 +251,17 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 			Assert.assertEquals(
 				formNavigatorEntryKeys.toString(), 3,
 				formNavigatorEntryKeys.size());
-			Assert.assertEquals(
-				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
-			Assert.assertEquals(
-				"formNavigatorEntryKey4", formNavigatorEntryKeys.get(1));
-			Assert.assertEquals(
-				"formNavigatorEntryKey5", formNavigatorEntryKeys.get(2));
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey1", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey4", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey5", iterator.next());
 		}
 
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownCategory() {
-			Optional<List<String>> formNavigatorEntryKeys =
+			Optional<Set<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys(
 						"form1", "unknownCategory", "add");
@@ -267,7 +271,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownContext() {
-			Optional<List<String>> formNavigatorEntryKeys =
+			Optional<Set<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys(
 						"form1", "general", "unknownContext");
@@ -277,7 +281,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownFormId() {
-			Optional<List<String>> formNavigatorEntryKeys =
+			Optional<Set<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("unknownForm", "general", "add");
 
@@ -296,7 +300,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsEmptyOptional() {
-			Optional<List<String>> formNavigatorEntryKeys =
+			Optional<Set<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add");
 
@@ -332,19 +336,19 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testTheLastOneHasPrecedence() {
-			List<String> formNavigatorEntryKeys =
+			Set<String> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(
 				formNavigatorEntryKeys.toString(), 3,
 				formNavigatorEntryKeys.size());
-			Assert.assertEquals(
-				"formNavigatorEntryKey1", formNavigatorEntryKeys.get(0));
-			Assert.assertEquals(
-				"formNavigatorEntryKey4", formNavigatorEntryKeys.get(1));
-			Assert.assertEquals(
-				"formNavigatorEntryKey5", formNavigatorEntryKeys.get(2));
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey1", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey4", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey5", iterator.next());
 		}
 
 	}

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -150,8 +151,8 @@ public class FormNavigatorEntryUtil {
 			String formNavigatorId, String categoryKey, T formModelBean) {
 
 		Optional<FormNavigatorEntryConfigurationHelper>
-			formNavigatorEntryConfigurationHelperOptional =
-				_getFormNavigatorEntryConfigurationHelper();
+			formNavigatorEntryConfigurationHelperOptional = Optional.ofNullable(
+				_instance._serviceTracker.getService());
 
 		return formNavigatorEntryConfigurationHelperOptional.map(
 			formNavigatorEntryConfigurationHelper ->
@@ -160,21 +161,14 @@ public class FormNavigatorEntryUtil {
 				Optional.empty());
 	}
 
-	private static Optional<FormNavigatorEntryConfigurationHelper>
-		_getFormNavigatorEntryConfigurationHelper() {
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		return Optional.ofNullable(
-			registry.getService(FormNavigatorEntryConfigurationHelper.class));
-	}
-
 	private static String _getKey(String formNavigatorId, String categoryKey) {
 		return formNavigatorId + StringPool.PERIOD + categoryKey;
 	}
 
 	@SuppressWarnings("rawtypes")
 	private FormNavigatorEntryUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
 		_formNavigatorEntries = ServiceTrackerCollections.openMultiValueMap(
 			FormNavigatorEntry.class, null,
 			new ServiceReferenceMapper<String, FormNavigatorEntry>() {
@@ -183,8 +177,6 @@ public class FormNavigatorEntryUtil {
 				public void map(
 					ServiceReference<FormNavigatorEntry> serviceReference,
 					Emitter<String> emitter) {
-
-					Registry registry = RegistryUtil.getRegistry();
 
 					FormNavigatorEntry<?> formNavigatorEntry =
 						registry.getService(serviceReference);
@@ -200,6 +192,11 @@ public class FormNavigatorEntryUtil {
 			},
 			new PropertyServiceReferenceComparator<FormNavigatorEntry>(
 				"form.navigator.entry.order"));
+
+		_serviceTracker = registry.trackServices(
+			FormNavigatorEntryConfigurationHelper.class);
+
+		_serviceTracker.open();
 	}
 
 	private static final FormNavigatorEntryUtil _instance =
@@ -208,6 +205,10 @@ public class FormNavigatorEntryUtil {
 	@SuppressWarnings("rawtypes")
 	private final ServiceTrackerMap<String, List<FormNavigatorEntry>>
 		_formNavigatorEntries;
+
+	private final ServiceTracker
+		<FormNavigatorEntryConfigurationHelper,
+			FormNavigatorEntryConfigurationHelper> _serviceTracker;
 
 	/**
 	 * @see com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator

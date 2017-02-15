@@ -3,5 +3,6 @@ Bundle-SymbolicName: com.liferay.gradle.plugins.workspace
 Bundle-Version: 1.2.6
 Export-Package:\
 	com.liferay.gradle.plugins.workspace,\
+	com.liferay.gradle.plugins.workspace.configurators,\
 	com.liferay.gradle.plugins.workspace.tasks
 -donotcopy: (\.gradle)

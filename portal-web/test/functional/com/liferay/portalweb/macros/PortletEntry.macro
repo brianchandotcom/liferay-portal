@@ -33,6 +33,10 @@
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 	</command>
 
+	<command name="inputDescription">
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${description}" />
+	</command>
+
 	<command name="inputLocalizedName">
 		<execute function="Click" locator1="Language#SITE_NAME_TRANSLATION">
 			<var name="key_language" value="${language}" />

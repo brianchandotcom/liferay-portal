@@ -6,13 +6,14 @@ import Soy from 'metal-soy';
 import templates from './Flags.soy';
 
 /**
- * FlagsPortlet. It opens a dialog where the user can
- * flag the page.
+ * Flags
+ * 
+ * It opens a dialog where the user can flag the page.
  *
  * @abstract
  * @extends {Component}
  */
-class FlagsPortlet extends Component {
+class Flags extends Component {
 	/**
 	 * Opens a dialog where the user can flag the page.
 	 */
@@ -62,11 +63,11 @@ class FlagsPortlet extends Component {
  * @static
  * @type {!Object}
  */
-FlagsPortlet.STATE = {
+Flags.STATE = {
 	/**
 	 * Portlet's data.
 	 * @instance
-	 * @memberof FlagsPortlet
+	 * @memberof Flags
 	 * @type {!Object}
 	 */
 	data: {
@@ -76,7 +77,7 @@ FlagsPortlet.STATE = {
 	/**
 	 * Whether the user is able to flag the page.
 	 * @instance
-	 * @memberof FlagsPortlet
+	 * @memberof Flags
 	 * @type {!Boolean}
 	 */
 	flagsEnabled: {
@@ -87,7 +88,7 @@ FlagsPortlet.STATE = {
 	 * Uri of the page that will be opened
 	 * in the dialog.
 	 * @instance
-	 * @memberof FlagsPortlet
+	 * @memberof Flags
 	 * @type {String}
 	 */
 	uri: {
@@ -96,6 +97,6 @@ FlagsPortlet.STATE = {
 };
 
 // Register component
-Soy.register(FlagsPortlet, templates);
+Soy.register(Flags, templates);
 
-export default FlagsPortlet;
+export default Flags;

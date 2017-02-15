@@ -86,6 +86,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		_configureTaskRunPoshi(project);
 
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+		final JavaCompile compileJSPTask = (JavaCompile)GradleUtil.getTask(
+			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
 
 		_configureRootTaskDistBundle(jar);
 
@@ -94,7 +96,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 				@Override
 				public void execute(Project project) {
-					_configureTaskCompileJSP(project, workspaceExtension);
+					_configureTaskCompileJSP(
+						compileJSPTask, workspaceExtension);
 				}
 
 			});
@@ -186,25 +189,17 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	private void _configureTaskCompileJSP(
-		Project project, WorkspaceExtension workspaceExtension) {
+		JavaCompile compileJSPTask, WorkspaceExtension workspaceExtension) {
 
 		if (!isJspPrecompileEnabled()) {
 			return;
 		}
 
-		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
-			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
+		File dir = new File(
+			workspaceExtension.getHomeDir(),
+			_getCompileJSPDestinationDirName(compileJSPTask.getProject()));
 
-		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
-			project, BasePluginConvention.class);
-
-		String dirName =
-			basePluginConvention.getArchivesBaseName() + "-" +
-				project.getVersion();
-
-		File dir = new File(workspaceExtension.getHomeDir(), "work/" + dirName);
-
-		javaCompile.setDestinationDir(dir);
+		compileJSPTask.setDestinationDir(dir);
 	}
 
 	private void _configureTaskRunPoshi(Project project) {
@@ -212,6 +207,14 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			project, PoshiRunnerPlugin.RUN_POSHI_TASK_NAME);
 
 		task.dependsOn(LiferayBasePlugin.DEPLOY_TASK_NAME);
+	}
+
+	private String _getCompileJSPDestinationDirName(Project project) {
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
+
+		return "work/" + basePluginConvention.getArchivesBaseName() + "-" +
+			project.getVersion();
 	}
 
 	private static final boolean _DEFAULT_JSP_PRECOMPILE_ENABLED = false;

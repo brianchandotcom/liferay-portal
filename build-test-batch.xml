@@ -1736,7 +1736,7 @@ app.server.type=@{app.server.type}]]></echo>
 					<path>
 						<dirset
 							dir="modules/sdk"
-							excludes="${gradle.test.excludes}"
+							excludes="${gradle.plugins.test.excludes}"
 							includes="gradle-plugins-*"
 						/>
 					</path>

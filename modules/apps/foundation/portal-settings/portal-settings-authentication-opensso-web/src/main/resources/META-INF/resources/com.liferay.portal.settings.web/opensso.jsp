@@ -17,7 +17,7 @@
 <%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
 
 <%
-OpenSSOConfiguration openSSOConfiguration = ConfigurationProviderUtil.getConfiguration(OpenSSOConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), "opensso--", new CompanyServiceSettingsLocator(company.getCompanyId(), OpenSSOConstants.SERVICE_NAME)));
+OpenSSOConfiguration openSSOConfiguration = ConfigurationProviderUtil.getConfiguration(OpenSSOConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE, new CompanyServiceSettingsLocator(company.getCompanyId(), OpenSSOConstants.SERVICE_NAME)));
 
 boolean enabled = openSSOConfiguration.enabled();
 boolean importFromLDAP = openSSOConfiguration.importFromLDAP();
@@ -33,19 +33,19 @@ String lastNameAttr = openSSOConfiguration.lastNameAttr();
 <aui:fieldset>
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/opensso" />
 
-	<aui:input label="enabled" name="opensso--enabled" type="checkbox" value="<%= enabled %>" />
+	<aui:input label="enabled" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />
 
-	<aui:input helpMessage="import-opensso-users-from-ldap-help" label="import-opensso-users-from-ldap" name="opensso--importFromLDAP" type="checkbox" value="<%= importFromLDAP %>" />
+	<aui:input helpMessage="import-opensso-users-from-ldap-help" label="import-opensso-users-from-ldap" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "importFromLDAP" %>' type="checkbox" value="<%= importFromLDAP %>" />
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="login-url-for-opensso-help" label="login-url" name="opensso--loginURL" type="text" value="<%= loginURL %>" />
+	<aui:input cssClass="lfr-input-text-container" helpMessage="login-url-for-opensso-help" label="login-url" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "loginURL" %>' type="text" value="<%= loginURL %>" />
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="logout-url-for-opensso-help" label="logout-url" name="opensso--logoutURL" type="text" value="<%= logoutURL %>" />
+	<aui:input cssClass="lfr-input-text-container" helpMessage="logout-url-for-opensso-help" label="logout-url" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "logoutURL" %>' type="text" value="<%= logoutURL %>" />
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="service-url-for-opensso-help" label="service-url" name="opensso--serviceURL" type="text" value="<%= serviceURL %>" />
+	<aui:input cssClass="lfr-input-text-container" helpMessage="service-url-for-opensso-help" label="service-url" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "serviceURL" %>'  type="text" value="<%= serviceURL %>" />
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="mappings-for-opensso-help" label="screen-name-attribute" name="opensso--screenNameAttr" type="text" value="<%= screenNameAttr %>" />
+	<aui:input cssClass="lfr-input-text-container" helpMessage="mappings-for-opensso-help" label="screen-name-attribute" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "screenNameAttr" %>' type="text" value="<%= screenNameAttr %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="email-address-attribute" name="opensso--emailAddressAttr" type="text" value="<%= emailAddressAttr %>" />
+	<aui:input cssClass="lfr-input-text-container" label="email-address-attribute" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "emailAddressAttr" %>' type="text" value="<%= emailAddressAttr %>" />
 
 	<%@ include file="/com.liferay.portal.settings.web/opensso_user_name.jspf" %>
 
@@ -63,13 +63,13 @@ String lastNameAttr = openSSOConfiguration.lastNameAttr();
 
 			var data = {};
 
-			data.<portlet:namespace />openSsoLoginURL = document.<portlet:namespace />fm['<portlet:namespace />opensso--loginURL'].value;
-			data.<portlet:namespace />openSsoLogoutURL = document.<portlet:namespace />fm['<portlet:namespace />opensso--logoutURL'].value;
-			data.<portlet:namespace />openSsoServiceURL = document.<portlet:namespace />fm['<portlet:namespace />opensso--serviceURL'].value;
-			data.<portlet:namespace />openSsoScreenNameAttr = document.<portlet:namespace />fm['<portlet:namespace />opensso--screenNameAttr'].value;
-			data.<portlet:namespace />openSsoEmailAddressAttr = document.<portlet:namespace />fm['<portlet:namespace />opensso--emailAddressAttr'].value;
-			data.<portlet:namespace />openSsoFirstNameAttr = document.<portlet:namespace />fm['<portlet:namespace />opensso--firstNameAttr'].value;
-			data.<portlet:namespace />openSsoLastNameAttr = document.<portlet:namespace />fm['<portlet:namespace />opensso--lastNameAttr'].value;
+			data.<portlet:namespace />openSsoLoginURL = document.<portlet:namespace />fm['<portlet:namespace /><%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE %>loginURL'].value;
+			data.<portlet:namespace />openSsoLogoutURL = document.<portlet:namespace />fm['<portlet:namespace /><%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE %>logoutURL'].value;
+			data.<portlet:namespace />openSsoServiceURL = document.<portlet:namespace />fm['<portlet:namespace /><%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE %>serviceURL'].value;
+			data.<portlet:namespace />openSsoScreenNameAttr = document.<portlet:namespace />fm['<portlet:namespace /><%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE %>screenNameAttr'].value;
+			data.<portlet:namespace />openSsoEmailAddressAttr = document.<portlet:namespace />fm['<portlet:namespace /><%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE %>emailAddressAttr'].value;
+			data.<portlet:namespace />openSsoFirstNameAttr = document.<portlet:namespace />fm['<portlet:namespace /><%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE %>firstNameAttr'].value;
+			data.<portlet:namespace />openSsoLastNameAttr = document.<portlet:namespace />fm['<portlet:namespace /><%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE %>lastNameAttr'].value;
 
 			var url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_opensso" /></portlet:renderURL>';
 

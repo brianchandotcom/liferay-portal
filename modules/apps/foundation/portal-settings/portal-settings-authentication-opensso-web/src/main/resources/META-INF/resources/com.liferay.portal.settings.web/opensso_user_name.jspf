@@ -14,6 +14,6 @@
  */
 --%>
 
-<aui:input cssClass="lfr-input-text-container" label="first-name-attribute" name="opensso--firstNameAttr" type="text" value="<%= firstNameAttr %>" />
+<aui:input cssClass="lfr-input-text-container" label="first-name-attribute" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "firstNameAttr" %>' type="text" value="<%= firstNameAttr %>" />
 
-<aui:input cssClass="lfr-input-text-container" label="last-name-attribute" name="opensso--lastNameAttr" type="text" value="<%= lastNameAttr %>" />
+<aui:input cssClass="lfr-input-text-container" label="last-name-attribute" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "lastNameAttr" %>' type="text" value="<%= lastNameAttr %>" />

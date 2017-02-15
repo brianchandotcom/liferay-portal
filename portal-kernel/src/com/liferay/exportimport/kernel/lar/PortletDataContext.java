@@ -125,6 +125,14 @@ public interface PortletDataContext extends Serializable {
 	public void addDeletionSystemEventStagedModelTypes(
 		StagedModelType... stagedModelTypes);
 
+	/**
+	 * Registers a certain entity to be serialized during the export process.
+	 *
+	 * @param classedModel the entity classedModel to be registered for the
+	 *                     export process
+	 */
+	public void addEntityPrimaryKeyObj(ClassedModel classedModel);
+
 	public void addExpando(
 			Element element, String path, ClassedModel classedModel)
 		throws PortalException;
@@ -303,6 +311,15 @@ public interface PortletDataContext extends Serializable {
 	public Set<StagedModelType> getDeletionSystemEventStagedModelTypes();
 
 	public Date getEndDate();
+
+	/**
+	 * Returns all the registered primary keys for a given model class name. The entites are being registered for the export process. See {@link #addEntityPrimaryKeyObj(ClassedModel)}
+	 *
+	 * @param modelClassName the model class name of the entities we want to
+	 *                       get the primary keys for
+	 * @return a set of primary keys for the given model class name
+	 */
+	public Set<Serializable> getEntityPrimaryKeyObjs(String modelClassName);
 
 	public Map<String, List<ExpandoColumn>> getExpandoColumns();
 

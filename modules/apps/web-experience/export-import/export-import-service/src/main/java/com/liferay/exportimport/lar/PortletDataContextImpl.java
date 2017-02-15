@@ -287,6 +287,25 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public void addEntityPrimaryKeyObj(ClassedModel classedModel) {
+		Serializable primaryKeyObj =
+			ExportImportClassedModelUtil.getPrimaryKeyObj(classedModel);
+		String modelClassName = ExportImportClassedModelUtil.getClassName(
+			classedModel);
+
+		Set<Serializable> primaryKeyObjs = _entityPrimaryKeyObjMap.get(
+			modelClassName);
+
+		if (primaryKeyObjs == null) {
+			primaryKeyObjs = new HashSet<>();
+		}
+
+		primaryKeyObjs.add(primaryKeyObj);
+
+		_entityPrimaryKeyObjMap.put(modelClassName, primaryKeyObjs);
+	}
+
+	@Override
 	public void addExpando(
 		Element element, String path, ClassedModel classedModel) {
 
@@ -825,6 +844,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public Date getEndDate() {
 		return _endDate;
+	}
+
+	@Override
+	public Set<Serializable> getEntityPrimaryKeyObjs(String modelClassName) {
+		if (_entityPrimaryKeyObjMap.containsKey(modelClassName)) {
+			return _entityPrimaryKeyObjMap.get(modelClassName);
+		}
+
+		return Collections.emptySet();
 	}
 
 	@Override
@@ -2744,6 +2772,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private final Set<StagedModelType> _deletionSystemEventModelTypes =
 		new HashSet<>();
 	private Date _endDate;
+	private final Map<String, Set<Serializable>> _entityPrimaryKeyObjMap =
+		new HashMap<>();
 	private final Map<String, List<ExpandoColumn>> _expandoColumnsMap =
 		new HashMap<>();
 	private transient Element _exportDataRootElement;

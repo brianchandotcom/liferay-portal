@@ -79,7 +79,8 @@ public class PortletSharedSearchRequestImpl
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeSearchAwarePortlet"
 	)
 	protected void addSearchAwarePortlet(
 		SearchAwarePortlet searchAwarePortlet) {
@@ -104,14 +105,20 @@ public class PortletSharedSearchRequestImpl
 			searchSettings.getPaginationDelta();
 
 		PortletRequest portletRequest = renderRequest;
+
 		DisplayTerms displayTerms = null;
 		DisplayTerms searchTerms = null;
+
 		String curParam = paginationStartParameterNameOptional.orElse(
 			SearchContainer.DEFAULT_CUR_PARAM);
+
 		int cur = paginationStartOptional.orElse(0);
+
 		int delta = paginationDeltaOptional.orElse(
 			SearchContainer.DEFAULT_DELTA);
-		PortletURL portletURL = new BasePortletURL();
+
+		PortletURL portletURL = new NullPortletURL();
+
 		List<String> headerNames = null;
 		String emptyResultsMessage = null;
 		String cssClass = null;

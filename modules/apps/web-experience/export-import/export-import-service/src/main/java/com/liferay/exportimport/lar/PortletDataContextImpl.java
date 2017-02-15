@@ -1255,6 +1255,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public Set<Serializable> getRegisteredExportingClassedModelPrimaryKeys(
+		String modelClassName) {
+
+		if (_classedModelPrimaryKeyMap.containsKey(modelClassName)) {
+			return _classedModelPrimaryKeyMap.get(modelClassName);
+		}
+
+		return Collections.emptySet();
+	}
+
+	@Override
 	public String getRootPortletId() {
 		return _rootPortletId;
 	}
@@ -1837,6 +1848,25 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public void putNotUniquePerLayout(String dataKey) {
 		_notUniquePerLayout.add(dataKey);
+	}
+
+	@Override
+	public void registerExportingClassedModel(ClassedModel classedModel) {
+		Serializable primaryKeyObj =
+			ExportImportClassedModelUtil.getPrimaryKeyObj(classedModel);
+		String modelClassName = ExportImportClassedModelUtil.getClassName(
+			classedModel);
+
+		Set<Serializable> primaryKeyObjs = _classedModelPrimaryKeyMap.get(
+			modelClassName);
+
+		if (primaryKeyObjs == null) {
+			primaryKeyObjs = new HashSet<>();
+		}
+
+		primaryKeyObjs.add(primaryKeyObj);
+
+		_classedModelPrimaryKeyMap.put(modelClassName, primaryKeyObjs);
 	}
 
 	@Override
@@ -2738,6 +2768,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private final Map<String, long[]> _assetCategoryIdsMap = new HashMap<>();
 	private final Set<Long> _assetLinkIds = new HashSet<>();
 	private final Map<String, String[]> _assetTagNamesMap = new HashMap<>();
+	private final Map<String, Set<Serializable>> _classedModelPrimaryKeyMap =
+		new HashMap<>();
 	private long _companyGroupId;
 	private long _companyId;
 	private String _dataStrategy;

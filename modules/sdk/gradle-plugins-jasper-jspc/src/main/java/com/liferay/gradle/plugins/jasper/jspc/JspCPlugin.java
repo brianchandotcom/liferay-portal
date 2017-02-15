@@ -123,12 +123,8 @@ public class JspCPlugin implements Plugin<Project> {
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		dependencyHandler.add(CONFIGURATION_NAME, sourceSet.getOutput());
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
-
-		dependencyHandler.add(CONFIGURATION_NAME, configuration);
+		dependencyHandler.add(
+			CONFIGURATION_NAME, sourceSet.getCompileClasspath());
 	}
 
 	protected void addDependenciesJspCTool(Project project) {

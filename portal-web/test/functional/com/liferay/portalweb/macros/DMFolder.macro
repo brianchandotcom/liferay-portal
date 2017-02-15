@@ -82,7 +82,9 @@
 			<var name="name" value="${mgFolderName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgFolderDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${mgFolderDescription}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 
@@ -180,7 +182,9 @@
 			<var name="name" value="${mgSubfolderName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgSubfolderDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${mgSubfolderDescription}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -322,7 +326,9 @@
 			<var name="name" value="${dmFolderNameEdit}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${dmFolderDescriptionEdit}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${dmFolderDescriptionEdit}" />
+		</execute>
 
 		<execute macro="Button#clickSave" />
 
@@ -340,7 +346,9 @@
 			<var name="name" value="${mgFolderNameEdit}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgFolderDescriptionEdit}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${mgFolderDescriptionEdit}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 

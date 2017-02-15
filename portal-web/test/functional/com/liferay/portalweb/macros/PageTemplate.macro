@@ -6,7 +6,9 @@
 			<var name="name" value="${pageTemplateName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="This is a page template description" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="This is a page template description" />
+		</execute>
 
 		<if>
 			<equals arg1="${pageTemplateActive}" arg2="No" />
@@ -96,7 +98,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="This is a page template description edit" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="This is a page template description edit" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 	</command>

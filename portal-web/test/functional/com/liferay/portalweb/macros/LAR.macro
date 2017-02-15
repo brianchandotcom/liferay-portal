@@ -437,7 +437,9 @@
 			<var name="name" value="${exportTemplateName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${exportTemplateDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${exportTemplateDescription}" />
+		</execute>
 	</command>
 
 	<command name="configureExportOptions">
@@ -507,7 +509,9 @@
 			<var name="name" value="${exportTemplateNameEdit}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${exportTemplateDescriptionEdit}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${exportTemplateDescriptionEdit}" />
+		</execute>
 	</command>
 
 	<command name="exportDDL">

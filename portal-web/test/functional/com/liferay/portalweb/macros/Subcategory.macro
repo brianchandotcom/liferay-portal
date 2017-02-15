@@ -20,7 +20,9 @@
 		<if>
 			<isset var="subcategoryDescription" />
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subcategoryDescription}" />
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${subcategoryDescription}" />
+				</execute>
 			</then>
 		</if>
 

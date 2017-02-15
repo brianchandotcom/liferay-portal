@@ -37,7 +37,9 @@
 		<if>
 			<isset var="vocabularyDescription" />
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${vocabularyDescription}" />
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${vocabularyDescription}" />
+				</execute>
 			</then>
 		</if>
 

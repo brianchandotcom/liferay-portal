@@ -93,7 +93,9 @@
 		<if>
 			<isset var="dmDocumentDescription" />
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${dmDocumentDescription}" />
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${dmDocumentDescription}" />
+				</execute>
 			</then>
 		</if>
 
@@ -110,7 +112,9 @@
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${dmDocumentDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${dmDocumentDescription}" />
+		</execute>
 
 		<execute function="Select" locator1="DocumentsAndMediaEditMarketingBanner#MARKETING_SELECT" value1="${marketingSelect}" />
 		<execute function="Select" locator1="DocumentsAndMediaEditMarketingBanner#CAMPAIGN_THEME_SELECT" value1="${campaignTheme}" />
@@ -167,7 +171,9 @@
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${dmDocumentDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${dmDocumentDescription}" />
+		</execute>
 
 		<if>
 			<isset var="selectOption" />
@@ -518,7 +524,9 @@
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${mgDocumentTitle}" />
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgDocumentDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${mgDocumentDescription}" />
+		</execute>
 
 		<execute macro="PortletEntry#publish" />
 	</command>
@@ -1008,7 +1016,9 @@
 				<contains string="${dmDocumentDescriptionEdit}" substring="{dmDocumentDescriptionEdit}" />
 			</not>
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${dmDocumentDescriptionEdit}" />
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${dmDocumentDescriptionEdit}" />
+				</execute>
 			</then>
 		</if>
 
@@ -1151,7 +1161,9 @@
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${mgDocumentTitleEdit}" />
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgDocumentDescriptionEdit}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${mgDocumentDescriptionEdit}" />
+		</execute>
 
 		<execute macro="PortletEntry#publish" />
 

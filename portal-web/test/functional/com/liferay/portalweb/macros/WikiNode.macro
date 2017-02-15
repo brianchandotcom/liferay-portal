@@ -16,7 +16,9 @@
 	</command>
 
 	<command name="addDescription">
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${wikiNodeDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${wikiNodeDescription}" />
+		</execute>
 	</command>
 
 	<command name="addMainCP">
@@ -73,7 +75,9 @@
 			<var name="name" value="${wikiNodeNameEdit}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${wikiNodeDescriptionEdit}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${wikiNodeDescriptionEdit}" />
+		</execute>
 
 		<execute macro="Button#clickSave" />
 

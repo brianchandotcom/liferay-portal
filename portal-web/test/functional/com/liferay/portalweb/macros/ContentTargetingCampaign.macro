@@ -10,7 +10,9 @@
 			<var name="name" value="${campaignName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${campaignDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${campaignDescription}" />
+		</execute>
 
 		<if>
 			<isset var="userSegmentSelect" />
@@ -44,7 +46,9 @@
 			<var name="name" value="${reportName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${reportDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${reportDescription}" />
+		</execute>
 	</command>
 
 	<command name="addTrackingActionContentCP">
@@ -191,7 +195,9 @@
 			<var name="name" value="${campaignNameEdit}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${campaignDescriptionEdit}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${campaignDescriptionEdit}" />
+		</execute>
 
 		<if>
 			<isset var="userSegmentSelectEdit" />

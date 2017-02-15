@@ -126,7 +126,9 @@
 		<if>
 			<isset var="categoryDescription" />
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${categoryDescription}" />
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${categoryDescription}" />
+				</execute>
 			</then>
 		</if>
 

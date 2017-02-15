@@ -14,7 +14,9 @@
 			<var name="name" value="${kbFolderName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${kbFolderDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${kbFolderDescription}" />
+		</execute>
 
 		<if>
 			<isset var="customField" />
@@ -65,7 +67,9 @@
 			<var name="name" value="${kbFolderEditedName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${kbFolderDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${kbFolderDescription}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 	</command>

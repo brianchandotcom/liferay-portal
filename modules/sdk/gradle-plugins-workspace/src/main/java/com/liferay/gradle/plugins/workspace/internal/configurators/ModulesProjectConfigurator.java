@@ -89,7 +89,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		final JavaCompile compileJSPTask = (JavaCompile)GradleUtil.getTask(
 			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
 
-		_configureRootTaskDistBundle(jar);
+		_configureRootTaskDistBundle(jar, compileJSPTask);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -169,8 +169,10 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		liferayExtension.setAppServerParentDir(workspaceExtension.getHomeDir());
 	}
 
-	private void _configureRootTaskDistBundle(final Jar jar) {
-		Project project = jar.getProject();
+	private void _configureRootTaskDistBundle(
+		final Jar jar, final JavaCompile compileJSPTask) {
+
+		final Project project = jar.getProject();
 
 		Copy copy = (Copy)GradleUtil.getTask(
 			project.getRootProject(),
@@ -186,6 +188,26 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				}
 
 			});
+
+		if (isJspPrecompileEnabled()) {
+			copy.into(
+				new Closure<String>(project) {
+
+					@SuppressWarnings("unused")
+					public String doCall() {
+						return _getCompileJSPDestinationDirName(project);
+					}
+
+				},
+				new Closure<Void>(project) {
+
+					@SuppressWarnings("unused")
+					public void doCall(CopySourceSpec copySourceSpec) {
+						copySourceSpec.from(compileJSPTask);
+					}
+
+				});
+		}
 	}
 
 	private void _configureTaskCompileJSP(

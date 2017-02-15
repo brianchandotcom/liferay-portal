@@ -2,7 +2,10 @@
 	<command name="addCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${pageTemplateName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${pageTemplateName}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="This is a page template description" />
 
 		<if>
@@ -60,7 +63,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${pageTemplateName} Edit" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${pageTemplateName} Edit" />
+		</execute>
 
 		<if>
 			<equals arg1="${pageTemplateActive}" arg2="No" />

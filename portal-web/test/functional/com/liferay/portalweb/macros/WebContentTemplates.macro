@@ -151,7 +151,9 @@
 		<if>
 			<isset var="templateName" />
 			<then>
-				<execute function="Type" locator1="TextInput#NAME" value1="${templateName}" />
+				<execute macro="PortletEntry#inputName">
+					<var name="name" value="${templateName}" />
+				</execute>
 			</then>
 		</if>
 

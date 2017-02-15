@@ -373,7 +373,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ADD_CHILD_SITE" value1="Add Child Site" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="Child SiteName2" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="Child SiteName2" />
+		</execute>
 
 		<execute function="Click" locator1="Button#SAVE" value1="Save" />
 

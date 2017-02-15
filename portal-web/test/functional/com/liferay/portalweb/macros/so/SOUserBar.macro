@@ -9,7 +9,9 @@
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="ControlMenu#ADD" value1="Add" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${pageName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${pageName}" />
+		</execute>
 
 		<if>
 			<isset var="pageType" />

@@ -23,7 +23,9 @@
 	<command name="addCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${siteTemplateName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${siteTemplateName}" />
+		</execute>
 
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="This is a site template description" />
 
@@ -156,7 +158,9 @@
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${siteTemplateName} Edit" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${siteTemplateName} Edit" />
+		</execute>
 
 		<if>
 			<isset var="siteTemplateDescription" />

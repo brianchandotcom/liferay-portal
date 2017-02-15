@@ -6,7 +6,10 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${campaignName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${campaignName}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${campaignDescription}" />
 
 		<if>
@@ -37,7 +40,10 @@
 	</command>
 
 	<command name="addReportName">
-		<execute function="Type" locator1="TextInput#NAME" value1="${reportName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${reportName}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${reportDescription}" />
 	</command>
 
@@ -181,7 +187,10 @@
 
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${campaignNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${campaignNameEdit}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${campaignDescriptionEdit}" />
 
 		<if>

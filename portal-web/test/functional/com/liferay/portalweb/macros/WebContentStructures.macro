@@ -101,7 +101,9 @@
 		<if>
 			<isset var="structureName" />
 			<then>
-				<execute function="Type" locator1="TextInput#NAME" value1="${structureName}" />
+				<execute macro="PortletEntry#inputName">
+					<var name="name" value="${structureName}" />
+				</execute>
 			</then>
 		</if>
 

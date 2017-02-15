@@ -6,7 +6,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#FOLDER" value1="Folder" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${folderName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${folderName}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
 
 		<execute macro="PortletEntry#save" />
@@ -53,7 +56,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#FOLDER" value1="Folder" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${folderName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${folderName}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
 
 		<execute macro="PortletEntry#save" />
@@ -77,7 +83,10 @@
 
 		<var name="key_folderName" value="${subfolderName}" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${subfolderName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${subfolderName}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subfolderDescription}" />
 
 		<execute macro="PortletEntry#save" />
@@ -95,7 +104,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${folderName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${folderName}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
 
 		<execute macro="PortletEntry#save" />
@@ -134,7 +146,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${folderNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${folderNameEdit}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescriptionEdit}" />
 
 		<execute macro="PortletEntry#save" />
@@ -152,7 +167,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${folderNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${folderNameEdit}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescriptionEdit}" />
 
 		<execute macro="PortletEntry#save" />
@@ -179,7 +197,10 @@
 
 		<var name="key_folderName" value="${editSubfolderName}" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${editSubfolderName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${editSubfolderName}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${editSubfolderDescription}" />
 
 		<execute macro="PortletEntry#save" />

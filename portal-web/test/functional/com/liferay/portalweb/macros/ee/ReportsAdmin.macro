@@ -2,7 +2,10 @@
 	<command name="addReportDefinition">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${reportsDefinitionName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${reportsDefinitionName}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${reportsDefinitionDescription}" />
 
 		<execute function="Select" locator1="ReportsAdminEditReportDefinition#DATA_SOURCE_NAME_SELECT" value1="${dataSource}" />

@@ -78,7 +78,9 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${mgFolderName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${mgFolderName}" />
+		</execute>
 
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgFolderDescription}" />
 
@@ -174,7 +176,9 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${mgSubfolderName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${mgSubfolderName}" />
+		</execute>
 
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgSubfolderDescription}" />
 
@@ -314,7 +318,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${dmFolderNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${dmFolderNameEdit}" />
+		</execute>
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${dmFolderDescriptionEdit}" />
 
 		<execute macro="Button#clickSave" />
@@ -329,7 +336,9 @@
 	<command name="editPGViaMG">
 		<execute macro="PortletEntry#clickEditFromEllipsis" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${mgFolderNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${mgFolderNameEdit}" />
+		</execute>
 
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgFolderDescriptionEdit}" />
 

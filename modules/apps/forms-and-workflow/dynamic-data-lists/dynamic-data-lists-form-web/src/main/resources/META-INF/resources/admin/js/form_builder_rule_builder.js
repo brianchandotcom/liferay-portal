@@ -196,7 +196,32 @@ AUI.add(
 
 						FormBuilderRuleBuilder.superclass.show.apply(instance, arguments);
 
-						instance.syncUI();
+						if (!instance._dataProviders) {
+							instance._fillDataProviders();
+						}
+						else {
+							instance.syncUI();
+						}
+					},
+
+					_fillDataProviders: function() {
+						var instance = this;
+
+						A.io.request(
+							instance.get('getDataProviderInstancesURL'),
+							{
+								method: 'GET',
+								on: {
+									success: function(event, id, xhr) {
+										var result = JSON.parse(xhr.responseText);
+
+										instance._dataProviders = result;
+
+										instance.syncUI();
+									}
+								}
+							}
+						);
 					},
 
 					_getActionDescription: function(type, action) {
@@ -249,7 +274,7 @@ AUI.add(
 								data.push(
 									badgeTemplate(
 										{
-											content: action.ddmDataProviderInstanceUUID
+											content: instance._getDataProviderLabel(action.ddmDataProviderInstanceUUID)
 										}
 									)
 								);
@@ -284,6 +309,18 @@ AUI.add(
 						}
 
 						return actionsDescription;
+					},
+
+					_getDataProviderLabel: function(dataProviderUUID) {
+						var instance = this;
+
+						if (instance._dataProviders) {
+							for (var i = 0; i < instance._dataProviders.length; i++) {
+								if (dataProviderUUID === instance._dataProviders[i].uuid) {
+									return instance._dataProviders[i].name;
+								}
+							}
+						}
 					},
 
 					_getFieldLabel: function(fieldValue) {

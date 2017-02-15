@@ -211,10 +211,6 @@ describe('CompatibilityEventProxy', () => {
 
 		let adaptedEventNameToEmit = 'eventChange';
 
-		let adaptedEventObjectToEmit =  {
-			key: adaptedEventNameToEmit
-		};
-
 		let mockedTarget = createMockedTarget(eventNameToEmit);
 		
 		let spy = sinon.spy(mockedTarget, 'fire');
@@ -231,7 +227,7 @@ describe('CompatibilityEventProxy', () => {
 
 		host.emit(eventNameToEmit, eventObjectToEmit, eventFacadeObjectToEmit);
 
-		assert.strictEqual(true, spy.getCall(0).args[0] == adaptedEventNameToEmit);
+		assert.strictEqual(true, spy.getCall(0).args[0] === adaptedEventNameToEmit);
 
 		done();
 	});

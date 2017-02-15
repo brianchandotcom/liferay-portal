@@ -1,15 +1,15 @@
 {
-  "dependencies": {
-    "metal": "^2.5.18",
-    "metal-component": "^2.4.5",
-    "metal-dropdown": "^2.0.0",
-    "metal-soy": "^2.4.5",
-    "metal-state": "^2.6.0"
-  },
-  "devDependencies": {
-    "liferay-module-config-generator": "^1.1.10",
-    "metal-cli": "^2.1.2"
-  },
-  "name": "frontend-taglib",
-  "version": "2.1.0"
+	"dependencies": {
+		"metal": "^2.5.18",
+		"metal-component": "^2.4.5",
+		"metal-dropdown": "^2.0.0",
+		"metal-soy": "^2.4.5",
+		"metal-state": "^2.6.0"
+	},
+	"devDependencies": {
+		"liferay-module-config-generator": "^1.1.10",
+		"metal-cli": "^2.1.2"
+	},
+	"name": "frontend-taglib",
+	"version": "2.1.0"
 }

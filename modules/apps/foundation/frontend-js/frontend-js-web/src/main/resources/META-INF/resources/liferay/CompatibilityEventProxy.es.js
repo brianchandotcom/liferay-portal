@@ -25,6 +25,7 @@ class CompatibilityEventProxy extends State {
 
 	/**
 	 * Registers another EventTarget as a bubble target.
+	 * 
 	 * @param  {!Object} target YUI component where events will be emited to
 	 * @private
 	 */
@@ -35,6 +36,7 @@ class CompatibilityEventProxy extends State {
 	/**
 	 * Check if the event is an attribute modification event and addapt
 	 * the eventName.
+	 * 
 	 * @param  {!String} eventName
 	 * @private
 	 */
@@ -44,6 +46,7 @@ class CompatibilityEventProxy extends State {
 
 	/**
 	 * Emit the event adapted to yui
+	 * 
 	 * @param  {!String} eventName
 	 * @param  {!Event} event
 	 * @private
@@ -79,6 +82,7 @@ class CompatibilityEventProxy extends State {
 	/**
 	 * Configuration to emit yui-based events to maintain
 	 * backwards compatibility.
+	 * 
 	 * @private
 	 */
 	startCompatibility_() {

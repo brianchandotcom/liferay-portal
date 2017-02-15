@@ -13,7 +13,6 @@ import templates from './TranslationManager.soy';
  *
  * This class adds functionallity to manage existing language options, and
  * create new ones.
- *
  */
 class TranslationManager extends Component {
 	/**
@@ -30,6 +29,7 @@ class TranslationManager extends Component {
 	/**
 	 * Add a language to the available locales list and set it as the
 	 * current editing language.
+	 * 
 	 * @param  {MouseEvent} event
 	 */
 	addLocale(event) {
@@ -46,6 +46,7 @@ class TranslationManager extends Component {
 
 	/**
 	 * Registers another EventTarget as a bubble target.
+	 * 
 	 * @param  {!Object} target YUI component where events will be emited to
 	 */
 	addTarget(target) {
@@ -54,6 +55,7 @@ class TranslationManager extends Component {
 
 	/**
 	 * Change the default language.
+	 * 
 	 * @param  {MouseEvent} event
 	 */
 	changeDefaultLocale(event) {
@@ -66,6 +68,7 @@ class TranslationManager extends Component {
 
 	/**
 	 * Change current editing language.
+	 * 
 	 * @param  {MouseEvent} event
 	 */
 	changeLocale(event) {
@@ -76,6 +79,7 @@ class TranslationManager extends Component {
 
 	/**
 	 * Returns a property.
+	 * 
 	 * @param  {String} attr Name of the attribute wanted to get
 	 */
 	get(attr) {
@@ -85,6 +89,7 @@ class TranslationManager extends Component {
 	/**
 	 * Remove a language from the available locales list and reset the current
 	 * editing language to default if removed one was selected.
+	 * 
 	 * @param  {MouseEvent} event
 	 */
 	removeAvailableLocale(event) {
@@ -110,6 +115,8 @@ class TranslationManager extends Component {
 
 	/**
 	 * Set the current editing locale to the default locale.
+	 * 
+	 * @private
 	 */
 	resetEditingLocale_() {
 		this.editingLocale = this.defaultLocale;
@@ -118,6 +125,8 @@ class TranslationManager extends Component {
 	/**
 	 * Configuration to emit yui-based events to maintain
 	 * backwards compatibility.
+	 * 
+	 * @private
 	 */
 	startCompatibility_() {
 		this.compatibilityEventProxy_ = new CompatibilityEventProxy(

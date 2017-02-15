@@ -393,6 +393,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		Project frontendThemeUnstyledProject) {
 
 		executeGulpTask.args(
+			"--skip-update-check",
 			new Callable<String>() {
 
 				@Override

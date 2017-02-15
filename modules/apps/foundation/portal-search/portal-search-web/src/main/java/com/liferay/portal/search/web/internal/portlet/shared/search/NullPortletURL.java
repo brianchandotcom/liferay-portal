@@ -29,7 +29,7 @@ import javax.portlet.WindowStateException;
 /**
  * @author André de Oliveira
  */
-public class BasePortletURL implements PortletURL {
+public class NullPortletURL implements PortletURL {
 
 	@Override
 	public void addProperty(String key, String value) {

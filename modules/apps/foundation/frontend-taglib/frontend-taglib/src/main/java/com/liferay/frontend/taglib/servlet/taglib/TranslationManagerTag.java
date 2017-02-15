@@ -15,15 +15,15 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
-
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
 import java.util.Locale;
 import java.util.Set;
 
@@ -31,20 +31,25 @@ import java.util.Set;
  * @author Carlos Lancha
  */
 public class TranslationManagerTag extends TemplateRendererTag {
+
 	@Override
 	public int doStartTag() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		Locale locale = themeDisplay.getLocale();
-		Set<Locale> locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
+		Set<Locale> locales = LanguageUtil.getAvailableLocales(
+			themeDisplay.getSiteGroupId());
 		JSONObject localesJSON = JSONFactoryUtil.createJSONObject();
 		JSONArray availableLocalesArray = JSONFactoryUtil.createJSONArray();
 
 		for (Locale curLocale : locales) {
 			JSONObject localeJSON = JSONFactoryUtil.createJSONObject();
 
-			localeJSON.put("icon", LocaleUtil.toW3cLanguageId(curLocale).toLowerCase());
-			localeJSON.put("id", LocaleUtil.toLanguageId(curLocale));
 			localeJSON.put("code", LocaleUtil.toW3cLanguageId(curLocale));
+			localeJSON.put(
+				"icon", LocaleUtil.toW3cLanguageId(curLocale).toLowerCase());
+			localeJSON.put("id", LocaleUtil.toLanguageId(curLocale));
 			localeJSON.put("name", curLocale.getDisplayName(locale));
 
 			if (ArrayUtil.contains(_availableLocales, curLocale)) {
@@ -68,12 +73,14 @@ public class TranslationManagerTag extends TemplateRendererTag {
 		return "frontend-taglib/translation_manager/TranslationManager.es";
 	}
 
-	public void setAvailableLocales(java.util.Locale[] availableLocales) {
+	public void setAvailableLocales(Locale[] availableLocales) {
 		_availableLocales = availableLocales;
 		putValue("availableLocales", availableLocales);
 	}
 
-	public void setChangeableDefaultLanguage(boolean changeableDefaultLanguage) {
+	public void setChangeableDefaultLanguage(
+		boolean changeableDefaultLanguage) {
+
 		putValue("changeableDefaultLanguage", changeableDefaultLanguage);
 	}
 
@@ -101,6 +108,6 @@ public class TranslationManagerTag extends TemplateRendererTag {
 		putValue("readOnly", readOnly);
 	}
 
-	private java.util.Locale[] _availableLocales = null;
+	private Locale[] _availableLocales;
 
 }

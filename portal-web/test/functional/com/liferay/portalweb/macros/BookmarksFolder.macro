@@ -10,7 +10,9 @@
 			<var name="name" value="${folderName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${folderDescription}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 
@@ -60,7 +62,9 @@
 			<var name="name" value="${folderName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${folderDescription}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 
@@ -87,7 +91,9 @@
 			<var name="name" value="${subfolderName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subfolderDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${subfolderDescription}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 
@@ -108,7 +114,9 @@
 			<var name="name" value="${folderName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${folderDescription}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 
@@ -150,7 +158,9 @@
 			<var name="name" value="${folderNameEdit}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescriptionEdit}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${folderDescriptionEdit}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 
@@ -171,7 +181,9 @@
 			<var name="name" value="${folderNameEdit}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescriptionEdit}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${folderDescriptionEdit}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 
@@ -201,7 +213,9 @@
 			<var name="name" value="${editSubfolderName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${editSubfolderDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${editSubfolderDescription}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 

@@ -11,7 +11,9 @@
 		<if>
 			<isset var="templateDescription" />
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${templateDescription}" />
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${templateDescription}" />
+				</execute>
 			</then>
 		</if>
 

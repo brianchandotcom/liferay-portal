@@ -4,7 +4,9 @@
 			<var name="name" value="${teamName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${teamDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${teamDescription}" />
+		</execute>
 	</command>
 
 	<command name="_searchCP">

@@ -27,7 +27,9 @@
 			<var name="name" value="${siteTemplateName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="This is a site template description" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="This is a site template description" />
+		</execute>
 
 		<if>
 			<equals arg1="${siteTemplateActive}" arg2="No" />
@@ -165,7 +167,9 @@
 		<if>
 			<isset var="siteTemplateDescription" />
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${siteTemplateDescription}" />
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${siteTemplateDescription}" />
+				</execute>
 			</then>
 		</if>
 

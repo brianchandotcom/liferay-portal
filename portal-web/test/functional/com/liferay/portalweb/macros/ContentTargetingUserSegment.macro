@@ -58,7 +58,9 @@
 			<var name="name" value="${userSegmentName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${userSegmentDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${userSegmentDescription}" />
+		</execute>
 	</command>
 
 	<command name="addRuleCmdCP">
@@ -355,7 +357,9 @@
 			<var name="name" value="${userSegmentNameEdit}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${userSegmentDescriptionEdit}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${userSegmentDescriptionEdit}" />
+		</execute>
 
 		<if>
 			<isset var="userSegmentRuleDeleteList" />

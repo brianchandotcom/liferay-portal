@@ -140,7 +140,10 @@
 			<var name="name" value="${feedTitle}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${description}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${description}" />
+		</execute>
+
 		<execute function="Type" locator1="TextInput#URL" value1="${targetFriendlyUrl}" />
 
 		<execute macro="Panel#expandPanel">

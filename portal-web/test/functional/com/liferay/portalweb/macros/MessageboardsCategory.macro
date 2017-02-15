@@ -20,7 +20,9 @@
 			<var name="name" value="${categoryNullName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${categoryDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${categoryDescription}" />
+		</execute>
 
 		<execute function="Click" locator1="Button#SAVE" />
 
@@ -37,7 +39,9 @@
 		<if>
 			<equals arg1="${categoryDescriptionEnabled}" arg2="true" />
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${categoryDescription}" />
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${categoryDescription}" />
+				</execute>
 			</then>
 		</if>
 
@@ -73,7 +77,9 @@
 			<var name="name" value="${subCategoryName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${subCategoryDescription}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -91,7 +97,9 @@
 			<var name="name" value="${subCategoryNullName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${subCategoryDescription}" />
+		</execute>
 
 		<execute function="Click" locator1="Button#SAVE" />
 
@@ -109,7 +117,9 @@
 			<var name="name" value="${subCategoryNullName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${subCategoryDescription}" />
+		</execute>
 
 		<execute macro="Button#clickSave" />
 
@@ -127,7 +137,9 @@
 			<var name="name" value="${subCategoryName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${subCategoryDescription}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -147,7 +159,9 @@
 			<var name="name" value="${subCategorySubCategoryName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${subCategoryDescription}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 	</command>

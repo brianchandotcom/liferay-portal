@@ -39,7 +39,9 @@
 		<if>
 			<isset var="ddlListDescription" />
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${ddlListDescription}" />
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${ddlListDescription}" />
+				</execute>
 			</then>
 		</if>
 
@@ -137,7 +139,9 @@
 		<if>
 			<isset var="ddlListDescription" />
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${ddlListDescriptionEdit}" />
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${ddlListDescriptionEdit}" />
+				</execute>
 			</then>
 		</if>
 

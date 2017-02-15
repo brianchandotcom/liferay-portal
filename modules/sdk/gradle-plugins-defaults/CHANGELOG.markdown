@@ -1053,10 +1053,12 @@ files.
 
 ## 2.4.33 - 2017-02-14
 
+### Changed
+- [LPS-70494]: Update the [Liferay Gradle Plugins] dependency to version 3.2.4.
+
 ### Fixed
 - [LPS-67863]: Exclude test projects from `gradlew baseline -PsyncRelease`
 process.
-- [LPS-70494]: Update the [Liferay Gradle Plugins] dependency to version 3.2.4.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

@@ -49,7 +49,7 @@ public class CompileJSPTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		setArgs(getCompleteArgs());
+		setArgs(_getCompleteArgs());
 
 		FileCollection jspCClasspath = getJspCClasspath();
 
@@ -144,7 +144,7 @@ public class CompileJSPTask extends JavaExec {
 		_webAppDir = webAppDir;
 	}
 
-	protected List<String> getCompleteArgs() {
+	private List<String> _getCompleteArgs() {
 		List<String> completeArgs = new ArrayList<>(getArgs());
 
 		completeArgs.add("-d");

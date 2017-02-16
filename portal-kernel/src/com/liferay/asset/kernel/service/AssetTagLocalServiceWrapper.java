@@ -300,6 +300,14 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.asset.kernel.model.AssetTag> searchTags(
+		long[] groupIds, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetTagLocalService.searchTags(groupIds, name, start, end, sort);
+	}
+
+	@Override
 	public int getAssetEntryAssetTagsCount(long entryId) {
 		return _assetTagLocalService.getAssetEntryAssetTagsCount(entryId);
 	}

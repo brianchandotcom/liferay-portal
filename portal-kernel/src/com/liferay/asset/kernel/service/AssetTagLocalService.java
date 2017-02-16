@@ -31,8 +31,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -105,6 +107,7 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param serviceContext the service context to be applied
 	* @return the asset tag that was added
 	*/
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetTag addTag(long userId, long groupId, java.lang.String name,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -124,6 +127,7 @@ public interface AssetTagLocalService extends BaseLocalService,
 	tag had been applied
 	* @return the asset tag
 	*/
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetTag decrementAssetCount(long tagId, long classNameId)
 		throws PortalException;
 
@@ -221,6 +225,7 @@ public interface AssetTagLocalService extends BaseLocalService,
 	tag is being applied
 	* @return the asset tag
 	*/
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetTag incrementAssetCount(long tagId, long classNameId)
 		throws PortalException;
 
@@ -233,6 +238,7 @@ public interface AssetTagLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetTag updateAssetTag(AssetTag assetTag);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetTag updateTag(long userId, long tagId, java.lang.String name,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -258,6 +264,11 @@ public interface AssetTagLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<AssetTag> searchTags(long[] groupIds,
+		java.lang.String name, int start, int end, Sort sort)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

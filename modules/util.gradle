@@ -160,9 +160,16 @@ private void _createSetUpLibTasks(Map<File, Properties> libDependenciesMap) {
 		for (String fileTitle in properties.stringPropertyNames()) {
 			String dependencyNotation = properties.getProperty(fileTitle)
 
-			Dependency dependency = dependencies.add(libConfiguration.name, dependencyNotation)
+			def dependency = dependencies.add(libConfiguration.name, dependencyNotation)
 
-			libTask.rename "${dependency.name}-${dependency.version}.jar", "${fileTitle}.jar"
+			DependencyArtifact dependencyArtifact = dependency.artifacts.find()
+
+			if (dependencyArtifact) {
+				libTask.rename "${dependency.name}-${dependency.version}-${dependencyArtifact.classifier}.jar", "${fileTitle}.jar"
+			}
+			else {
+				libTask.rename "${dependency.name}-${dependency.version}.jar", "${fileTitle}.jar"
+			}
 		}
 
 		setUpLibs.dependsOn libTask

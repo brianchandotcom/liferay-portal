@@ -3,7 +3,7 @@
 <#list blogsEntryModels as blogsEntryModel>
 	${dataFactory.toInsertSQL(blogsEntryModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newFriendlyURLModel(blogsEntryModel))}
+	${dataFactory.toInsertSQL(dataFactory.newFriendlyURLEntryModel(blogsEntryModel))}
 
 	<@insertAssetEntry
 		_entry = blogsEntryModel

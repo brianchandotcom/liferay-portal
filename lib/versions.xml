@@ -5,18 +5,6 @@
 	<version>
 		<libraries>
 			<library>
-				<file-name>lib/development/activation.jar</file-name>
-				<version>1.1</version>
-				<project-name>JavaBeans Activation Framework</project-name>
-				<project-url>http://java.sun.com/products/javabeans/jaf</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/alloy-taglib.jar</file-name>
 				<version>1.1.10</version>
 				<project-name>Alloy TagLibs</project-name>
@@ -25,30 +13,6 @@
 					<license>
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/annotations.jar</file-name>
-				<version>1.0</version>
-				<project-name>Common Annotations</project-name>
-				<project-url>http://jsr250.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/ant-apache-bsf.jar</file-name>
-				<version>1.8.2</version>
-				<project-name>Ant</project-name>
-				<project-url>http://ant.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -104,42 +68,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/bsh.jar</file-name>
-				<version>2.0 B4</version>
-				<project-name>BeanShell</project-name>
-				<project-url>http://www.beanshell.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/catalina.jar</file-name>
-				<version>8.0.32</version>
-				<project-name>Tomcat</project-name>
-				<project-url>http://tomcat.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/cobertura.jar</file-name>
-				<version>1.9.4.1</version>
-				<project-name>Cobertura</project-name>
-				<project-url>http://cobertura.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 1.1</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-1.1</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/deployment.jar</file-name>
 				<version>1.1</version>
 				<project-name>J2EE Application Deployment Library</project-name>
@@ -148,18 +76,6 @@
 					<license>
 						<license-name>CDDL 1.0</license-name>
 						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/dtddoc.jar</file-name>
-				<version>1.1.0</version>
-				<project-name>DTDDoc</project-name>
-				<project-url>http://dtddoc.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>MIT License</license-name>
-						<license-url>http://opensource.org/licenses/MIT</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -175,6 +91,7 @@
 					</license>
 				</licenses>
 			</library>
+
 			<library>
 				<file-name>lib/development/dumbster.jar</file-name>
 				<version>02856255a6cc7f</version>
@@ -184,54 +101,6 @@
 					<license>
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/error-prone-ant.jar</file-name>
-				<version>1.0.8</version>
-				<project-name>Error-Prone</project-name>
-				<project-url>https://code.google.com/p/error-prone</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/gson.jar</file-name>
-				<version>2.2.4</version>
-				<project-name>Gson</project-name>
-				<project-url>http://code.google.com/p/google-gson</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/hamcrest-core.jar</file-name>
-				<version>1.3</version>
-				<project-name>Hamcrest</project-name>
-				<project-url>http://code.google.com/p/hamcrest</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/hamcrest-library.jar</file-name>
-				<version>1.3</version>
-				<project-name>Hamcrest</project-name>
-				<project-url>http://code.google.com/p/hamcrest</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -263,35 +132,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/jasper.jar</file-name>
-				<version>8.0.32</version>
-				<project-name>Tomcat</project-name>
-				<project-url>http://tomcat.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jalopy.jar</file-name>
-				<version>1.5 RC3</version>
-				<project-name>Jalopy</project-name>
-				<project-url>http://jalopy.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-				<comments>
-					This includes modifications to remove extraneous logging.
-					Removed antlr.* because it with the Groovy compiler. See
-					LPS-51450.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/development/jargs.jar</file-name>
 				<version>1.0</version>
 				<project-name>JArgs</project-name>
@@ -316,18 +156,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/jaxb-api.jar</file-name>
-				<version>2.1.9</version>
-				<project-name>Java Architecture for XML Binding</project-name>
-				<project-url>http://jaxb.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/jbi_rt.jar</file-name>
 				<version>2.0 UR1</version>
 				<project-name>Glassfish</project-name>
@@ -336,50 +164,6 @@
 					<license>
 						<license-name>CDDL 1.0</license-name>
 						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jetty-server.jar</file-name>
-				<version>8.1.10</version>
-				<project-name>Jetty</project-name>
-				<project-url>http://www.eclipse.org/jetty</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-					<license>
-						<license-name>Eclipse Public License 1.0</license-name>
-						<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jetty-util.jar</file-name>
-				<version>8.1.10</version>
-				<project-name>Jetty</project-name>
-				<project-url>http://www.eclipse.org/jetty</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-					<license>
-						<license-name>Eclipse Public License 1.0</license-name>
-						<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jms.jar</file-name>
-				<version>1.1</version>
-				<project-name>Java Message Services</project-name>
-				<project-url>http://java.sun.com/products/jms</project-url>
-				<licenses>
-					<license>
-						<license-name>Sun Binary Code License Agreement</license-name>
-						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -396,18 +180,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/jsch.jar</file-name>
-				<version>0.1.51</version>
-				<project-name>JSch</project-name>
-				<project-url>http://www.jcraft.com/jsch</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/jserrorcollector.jar</file-name>
 				<version>c7d2d9161321e9</version>
 				<project-name>JSErrorCollector</project-name>
@@ -416,69 +188,6 @@
 					<license>
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jsonassert.jar</file-name>
-				<version>1.2.3</version>
-				<project-name>JSONassert</project-name>
-				<project-url>http://jsonassert.skyscreamer.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jsp-api.jar</file-name>
-				<version>2.1</version>
-				<project-name>JavaServer Pages</project-name>
-				<project-url>http://java.sun.com/products/jsp</project-url>
-				<licenses>
-					<license>
-						<license-name>Sun Binary Code License Agreement</license-name>
-						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jta.jar</file-name>
-				<version>1.1</version>
-				<project-name>Java Transaction</project-name>
-				<project-url>http://java.sun.com/products/jta</project-url>
-				<licenses>
-					<license>
-						<license-name>Sun Binary Code License Agreement</license-name>
-						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
-					</license>
-				</licenses>
-				<comments>
-					See LPS-27200.
-				</comments>
-			</library>
-			<library>
-				<file-name>lib/development/junit.jar</file-name>
-				<version>4.12</version>
-				<project-name>JUnit</project-name>
-				<project-url>http://www.junit.org/index.htm</project-url>
-				<licenses>
-					<license>
-						<license-name>Common Public License 1.0</license-name>
-						<license-url>http://opensource.org/licenses/cpl1.0.php</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jutf7.jar</file-name>
-				<version></version>
-				<project-name>jutf7</project-name>
-				<project-url>http://jutf7.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>MIT License</license-name>
-						<license-url>http://opensource.org/licenses/MIT</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -495,78 +204,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/mail.jar</file-name>
-				<version>1.4</version>
-				<project-name>JavaMail</project-name>
-				<project-url>http://java.sun.com/products/javamail</project-url>
-				<licenses>
-					<license>
-						<license-name>Sun Binary Code License Agreement</license-name>
-						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/mariadb.jar</file-name>
-				<version>1.1.9</version>
-				<project-name>MariaDB Connector/J</project-name>
-				<project-url>https://downloads.mariadb.org/connector-java</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/maven-ant-tasks.jar</file-name>
-				<version>2.1.3</version>
-				<project-name>Maven Ant Tasks</project-name>
-				<project-url>http://maven.apache.org/ant-tasks</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/mockito.jar</file-name>
-				<version>1.9.5</version>
-				<project-name>Mockito</project-name>
-				<project-url>http://code.google.com/p/mockito</project-url>
-				<licenses>
-					<license>
-						<license-name>MIT License</license-name>
-						<license-url>http://opensource.org/licenses/MIT</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/mysql.jar</file-name>
-				<version>5.1.23</version>
-				<project-name>MySQL Connector/J</project-name>
-				<project-url>http://www.mysql.com/products/connector/j</project-url>
-				<licenses>
-					<license>
-						<license-name>GPL 2.0</license-name>
-						<license-url>http://www.gnu.org/licenses/gpl-2.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/objenesis.jar</file-name>
-				<version>2.1</version>
-				<project-name>Objenesis</project-name>
-				<project-url>http://code.google.com/p/objenesis</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/orangevolt-ant-tasks.jar</file-name>
 				<version>1.3.5</version>
 				<project-name>Orangevolt ANT Tasks</project-name>
@@ -579,30 +216,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/freemarker.jar</file-name>
-				<version>2.3.23</version>
-				<project-name>FreeMarker</project-name>
-				<project-url>http://www.freemarker.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/p6spy.jar</file-name>
-				<version>1.3</version>
-				<project-name>P6Spy</project-name>
-				<project-url>http://sourceforge.net/projects/p6spy</project-url>
-				<licenses>
-					<license>
-						<license-name>P6Spy Software License 1.1</license-name>
-						<license-url>https://wiki.kuali.org/display/KULFOUND/P6Spy+License</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/persistence.jar</file-name>
 				<version>2.0</version>
 				<project-name>Java Persistence</project-name>
@@ -611,103 +224,6 @@
 					<license>
 						<license-name>Sun Binary Code License Agreement</license-name>
 						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/postgresql.jar</file-name>
-				<version>9.4-1201 JDBC 41</version>
-				<project-name>PostgreSQL JDBC Driver</project-name>
-				<project-url>http://jdbc.postgresql.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/powermock-api-mockito.jar</file-name>
-				<version>1.6.1</version>
-				<project-name>Powermock</project-name>
-				<project-url>http://code.google.com/p/powermock</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/powermock-api-support.jar</file-name>
-				<version>1.6.1</version>
-				<project-name>Powermock</project-name>
-				<project-url>http://code.google.com/p/powermock</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/powermock-core.jar</file-name>
-				<version>1.6.1</version>
-				<project-name>Powermock</project-name>
-				<project-url>http://code.google.com/p/powermock</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/powermock-module-junit4.jar</file-name>
-				<version>1.6.1</version>
-				<project-name>Powermock</project-name>
-				<project-url>http://code.google.com/p/powermock</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/powermock-module-junit4-common.jar</file-name>
-				<version>1.6.1</version>
-				<project-name>Powermock</project-name>
-				<project-url>http://code.google.com/p/powermock</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/powermock-reflect.jar</file-name>
-				<version>1.6.1</version>
-				<project-name>Powermock</project-name>
-				<project-url>http://code.google.com/p/powermock</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/qdox.jar</file-name>
-				<version>1.12.1</version>
-				<project-name>QDox</project-name>
-				<project-url>http://qdox.codehaus.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2002-2009 Joe Walnes and QDox Project Team</copyright-notice>
 					</license>
 				</licenses>
 			</library>
@@ -727,17 +243,6 @@
 -				</comments>
 -			</library>
 			<library>
-				<file-name>lib/development/saxpath.jar</file-name>
-				<version>1.0 FCS</version>
-				<project-name>SAXPath</project-name>
-				<project-url>http://sourceforge.net/projects/saxpath</project-url>
-				<licenses>
-					<license>
-						<license-name>Werkin Digital License</license-name>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/sdk-addon-api-0.2.jar</file-name>
 				<version>0.2</version>
 				<project-name>Glassfish</project-name>
@@ -750,18 +255,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/servlet-api.jar</file-name>
-				<version>3.0.1</version>
-				<project-name>Java Servlet</project-name>
-				<project-url>http://java.sun.com/products/servlet</project-url>
-				<licenses>
-					<license>
-						<license-name>Sun Binary Code License Agreement</license-name>
-						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/smtp.jar</file-name>
 				<version>1.4</version>
 				<project-name>JavaMail</project-name>
@@ -770,125 +263,6 @@
 					<license>
 						<license-name>Sun Binary Code License Agreement</license-name>
 						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/spring-instrument.jar</file-name>
-				<version>4.1.9</version>
-				<project-name>Spring</project-name>
-				<project-url>http://www.springframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					This does not include missing OSGi headers. See LPS-49575.
-				</comments>
-			</library>
-			<library>
-				<file-name>lib/development/spring-instrument-tomcat.jar</file-name>
-				<version>4.1.9</version>
-				<project-name>Spring</project-name>
-				<project-url>http://www.springframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					This does not include missing OSGi headers. See LPS-49575.
-				</comments>
-			</library>
-			<library>
-				<file-name>lib/development/spring-test.jar</file-name>
-				<version>4.1.9</version>
-				<project-name>Spring</project-name>
-				<project-url>http://www.springframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					This does not include missing OSGi headers. See LPS-49575.
-				</comments>
-			</library>
-			<library>
-				<file-name>lib/development/tlddoc.jar</file-name>
-				<version>1.3</version>
-				<project-name>Tag Library Documentation Generator</project-name>
-				<project-url>https://taglibrarydoc.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/tomcat-api.jar</file-name>
-				<version>8.0.32</version>
-				<project-name>Tomcat</project-name>
-				<project-url>http://tomcat.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/tomcat-coyote.jar</file-name>
-				<version>8.0.32</version>
-				<project-name>Tomcat</project-name>
-				<project-url>http://tomcat.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/velocity.jar</file-name>
-				<version>1.6.4</version>
-				<project-name>Velocity</project-name>
-				<project-url>http://velocity.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2000-2007 The Apache Software Foundation</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/velocity-tools.jar</file-name>
-				<version>1.4</version>
-				<project-name>Velocity</project-name>
-				<project-url>http://velocity.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2000-2007 The Apache Software Foundation</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/websocket-api.jar</file-name>
-				<version>1.12</version>
-				<project-name>WebSocket</project-name>
-				<project-url>http://www.oracle.com/technetwork/articles/java/jsr356-1937161.html</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.1</license-name>
-						<license-url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</license-url>
 					</license>
 				</licenses>
 			</library>

@@ -93,8 +93,6 @@
 
 	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="${project.dir}/lib/development/xmltask.jar" name="xmltask" />
 
-	<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />
-
 	<condition property="build.profile" value="portal">
 		<not>
 			<isset property="build.profile" />

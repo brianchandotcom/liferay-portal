@@ -121,7 +121,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_EMBEDDED_DESCRIPTION_FIELD</td>
-	<td>//div[@id='embedded']/p[contains(@class,'text')]</td>
+	<td>//div[@class='layout-type']/p[contains(@class,'text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -131,7 +131,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD</td>
-	<td>//div[@id='url']/p[contains(@class,'text')]</td>
+	<td>//div[@class='layout-type']/p[contains(@class,'text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -141,7 +141,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT</td>
-	<td>//div[contains(@class,'link_to_layout')]/div/select[contains(@id,'linkToLayoutId')]</td>
+	<td>//select[contains(@id,'linkToLayoutId')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -13,8 +13,6 @@ dependencies {
 }
 
 repositories {
-	mavenLocal()
-
 	maven {
 		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
 	}

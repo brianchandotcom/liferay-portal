@@ -41,7 +41,7 @@ else if (displayStyle.equals("vertical")) {
 		}
 	</script>
 
-	<script src="<%= HttpUtil.getProtocol(request) %>://connect.facebook.net/<%= locale.getLanguage() %>_<%= locale.getCountry() %>/sdk.js" async data-senna-track="temporary" type="text/javascript"></script>
+	<script async data-senna-track="temporary" src="<%= HttpUtil.getProtocol(request) %>://connect.facebook.net/<%= locale.getLanguage() %>_<%= locale.getCountry() %>/sdk.js" type="text/javascript"></script>
 </liferay-util:html-bottom>
 
 <div id="fb-root"></div>

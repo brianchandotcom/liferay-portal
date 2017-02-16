@@ -34,7 +34,7 @@ else if (displayStyle.equals("vertical")) {
 		}
 	</script>
 
-	<script src="<%= HttpUtil.getProtocol(request) %>://platform.linkedin.com/in.js" async type="text/javascript" data-senna-track="temporary"></script>
+	<script async data-senna-track="temporary" src="<%= HttpUtil.getProtocol(request) %>://platform.linkedin.com/in.js" type="text/javascript" ></script>
 </liferay-util:html-bottom>
 
 <script <%= linkedinDisplayStyle %> data-url="<%= url %>" type="in/share"></script>

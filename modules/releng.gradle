@@ -36,6 +36,7 @@ buildscript {
 apply plugin: "org.ajoberstar.grgit"
 
 task cherryPickArtifacts
+task syncGitRepoReleases
 
 cherryPickArtifacts {
 	description = "Cherry-picks artifact commits from a release branch. Required properties: '-Psince', '-Puntil'."
@@ -60,6 +61,70 @@ cherryPickArtifacts {
 	}
 
 	group = "releng"
+}
+
+syncGitRepoReleases {
+	description = "Runs 'gradlew baseline -PsyncRelease' on every read-only Git subrepository."
+
+	doLast {
+		NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)
+
+		FileTree gitRepoFileTree = fileTree(dir: projectDir, include: "**/.gitrepo")
+
+		gitRepoFileTree.each {
+			File gitRepoFile ->
+
+			if (!gitRepoFile.text.contains("mode = pull")) {
+				return
+			}
+
+			File moduleDir = gitRepoFile.parentFile
+
+			FileTree bndBndFileTree = fileTree(dir: moduleDir, include: "**/bnd.bnd")
+
+			if (bndBndFileTree.empty) {
+				return
+			}
+
+			println "Synchronizing ${relativePath(moduleDir)} with release branch"
+
+			File settingsGradleFile = new File(moduleDir, "settings.gradle")
+			File settingsGradleBackupFile = new File(moduleDir, "settings.gradle.backup")
+
+			GradleLauncher gradleLauncher
+			String syncRelease
+
+			try {
+				assert settingsGradleFile.renameTo(settingsGradleBackupFile)
+
+				syncRelease = System.setProperty("org.gradle.project.syncRelease", "true")
+
+				StartParameter startParameter = gradle.startParameter.newBuild()
+
+				startParameter.currentDir = moduleDir
+				startParameter.projectProperties = ["syncRelease": "true"]
+				startParameter.taskNames = ["baseline"]
+
+				gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
+
+				gradleLauncher.run()
+			}
+			finally {
+				if (gradleLauncher) {
+					gradleLauncher.stop()
+				}
+
+				assert settingsGradleBackupFile.renameTo(settingsGradleFile)
+
+				if (syncRelease) {
+					System.setProperty "org.gradle.project.syncRelease", syncRelease
+				}
+				else {
+					System.properties.remove "org.gradle.project.syncRelease"
+				}
+			}
+		}
+	}
 }
 
 private void _cherryPickPrepNext(Commit commit) {

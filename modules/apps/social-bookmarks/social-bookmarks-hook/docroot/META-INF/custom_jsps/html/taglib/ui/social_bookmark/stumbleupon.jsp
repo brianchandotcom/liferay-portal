@@ -27,7 +27,7 @@ else if (displayStyle.equals("vertical")) {
 }
 %>
 
-<liferay-util:html-top outputKey="taglib_ui_social_bookmark_stumble_upon">
+<liferay-util:html-bottom outputKey="taglib_ui_social_bookmark_stumble_upon">
 	<script data-senna-track="temporary" type="text/javascript">
 		if (window.STMBLPN) {
 			delete window.STMBLPN;
@@ -35,6 +35,6 @@ else if (displayStyle.equals("vertical")) {
 	</script>
 
 	<script data-senna-track="temporary" src="<%= HttpUtil.getProtocol(request) %>://platform.stumbleupon.com/1/widgets.js" type="text/javascript"></script>
-</liferay-util:html-top>
+</liferay-util:html-bottom>
 
 <su:badge layout="<%= stumbleUponDisplayStyle %>" location="<%= HttpUtil.encodeURL(url) %>"></su:badge>

@@ -14,22 +14,11 @@
 
 package com.liferay.portal.settings.authentication.cas.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseFormMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.ModifiableSettings;
-import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsDescriptor;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
+import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 
 import javax.portlet.ActionRequest;
@@ -49,73 +38,25 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class PortalSettingsCASFormMVCActionCommand
-	extends BaseFormMVCActionCommand {
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
-			SessionErrors.add(actionRequest, PrincipalException.class);
-
-			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-
-			return;
-		}
-
-		Settings settings = SettingsFactoryUtil.getSettings(
-			new CompanyServiceSettingsLocator(
-				themeDisplay.getCompanyId(), CASConstants.SERVICE_NAME));
-
-		ModifiableSettings modifiableSettings =
-			settings.getModifiableSettings();
-
-		SettingsDescriptor settingsDescriptor =
-			SettingsFactoryUtil.getSettingsDescriptor(
-				CASConstants.SERVICE_NAME);
-
-		for (String name : settingsDescriptor.getAllKeys()) {
-			String value = ParamUtil.getString(actionRequest, "cas--" + name);
-			String oldValue = settings.getValue(name, null);
-
-			if (!value.equals(oldValue)) {
-				modifiableSettings.setValue(name, value);
-			}
-		}
-
-		modifiableSettings.store();
-	}
+	extends BasePortalSettingsFormMVCActionCommand {
 
 	@Override
 	protected void doValidateForm(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		boolean casEnabled = ParamUtil.getBoolean(
-			actionRequest, "cas--enabled");
+		boolean casEnabled = getBoolean(actionRequest, "enabled");
 
 		if (!casEnabled) {
 			return;
 		}
 
-		String casLoginURL = ParamUtil.getString(
-			actionRequest, "cas--loginURL");
-		String casLogoutURL = ParamUtil.getString(
-			actionRequest, "cas--logoutURL");
-		String casServerName = ParamUtil.getString(
-			actionRequest, "cas--serverName");
-		String casServerURL = ParamUtil.getString(
-			actionRequest, "cas--serverURL");
-		String casServiceURL = ParamUtil.getString(
-			actionRequest, "cas--serviceURL");
-		String casNoSuchUserRedirectURL = ParamUtil.getString(
-			actionRequest, "cas--noSuchUserRedirectURL");
+		String casLoginURL = getString(actionRequest, "loginURL");
+		String casLogoutURL = getString(actionRequest, "logoutURL");
+		String casServerName = getString(actionRequest, "serverName");
+		String casServerURL = getString(actionRequest, "serverURL");
+		String casServiceURL = getString(actionRequest, "serviceURL");
+		String casNoSuchUserRedirectURL = getString(
+			actionRequest, "noSuchUserRedirectURL");
 
 		if (!Validator.isUrl(casLoginURL)) {
 			SessionErrors.add(actionRequest, "casLoginURLInvalid");
@@ -146,4 +87,13 @@ public class PortalSettingsCASFormMVCActionCommand
 		}
 	}
 
+	@Override
+	protected String getParameterNamespace() {
+		return "cas--";
+	}
+
+	@Override
+	protected String getSettingsId() {
+		return CASConstants.SERVICE_NAME;
+	}
 }

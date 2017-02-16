@@ -19,15 +19,19 @@ import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.jasper.jspc.CompileJSPTask;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
+import com.liferay.gradle.plugins.util.PortalTools;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.bundling.Jar;
@@ -59,6 +63,24 @@ public class JspCDefaultsPlugin
 		GradleUtil.addDependency(
 			project, getPortalToolConfigurationName(), "org.apache.ant", "ant",
 			"1.9.4");
+	}
+
+	@Override
+	protected void addPortalToolDependencies(
+		Project project, String configurationName, String portalToolName) {
+
+		String portalToolVersion = PortalTools.getVersion(
+			project, portalToolName);
+
+		if (Validator.isNotNull(portalToolVersion)) {
+			ModuleDependency moduleDependency =
+				(ModuleDependency)GradleUtil.addDependency(
+					project, configurationName, PortalTools.GROUP,
+					portalToolName, portalToolVersion);
+
+			moduleDependency.exclude(
+				Collections.singletonMap("group", "com.liferay.portal"));
+		}
 	}
 
 	@Override

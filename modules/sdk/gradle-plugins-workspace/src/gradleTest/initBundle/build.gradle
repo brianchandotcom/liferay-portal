@@ -3,6 +3,7 @@ task runGradleTest
 gradle.liferayWorkspace {
 	environment = "production"
 	homeDir = new File(buildDir, "bundles")
+	modules.jspPrecompileEnabled = true
 }
 
 runGradleTest {

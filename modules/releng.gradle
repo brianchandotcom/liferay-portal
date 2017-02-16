@@ -17,7 +17,7 @@ import org.eclipse.jgit.treewalk.TreeWalk
 import org.eclipse.jgit.treewalk.filter.PathFilter
 
 import org.gradle.initialization.GradleLauncher
-import org.gradle.initialization.GradleLauncherFactory
+import org.gradle.initialization.NestedBuildFactory
 
 buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
@@ -170,9 +170,9 @@ private void _cherryPickPrepNext(Commit commit) {
 	startParameter.projectProperties = ["forced.update.version": newVersion]
 	startParameter.taskNames = [moduleTaskPrefix + "updateVersion"]
 
-	GradleLauncherFactory gradleLauncherFactory = gradle.services.get(GradleLauncherFactory)
+	NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)
 
-	GradleLauncher gradleLauncher = gradleLauncherFactory.nestedInstance(startParameter)
+	GradleLauncher gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
 
 	try {
 		gradleLauncher.run()

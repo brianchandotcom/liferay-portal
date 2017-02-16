@@ -25,6 +25,7 @@ import org.junit.After;
 import org.junit.Before;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
 
@@ -51,6 +52,8 @@ public abstract class FormNavigatorEntryConfigurationRetrieverBaseTest {
 
 		formNavigatorEntryConfigurationRetriever.activate(
 			_framework.getBundleContext());
+
+		_serviceRegistrationMap.clear();
 	}
 
 	@After
@@ -80,9 +83,16 @@ public abstract class FormNavigatorEntryConfigurationRetrieverBaseTest {
 
 		BundleContext bundleContext = _framework.getBundleContext();
 
-		bundleContext.registerService(
-			FormNavigatorEntryConfigurationParser.class,
-			formNavigatorEntryConfigurationParser, null);
+		ServiceRegistration<FormNavigatorEntryConfigurationParser>
+			serviceRegistration = bundleContext.registerService(
+				FormNavigatorEntryConfigurationParser.class,
+				formNavigatorEntryConfigurationParser, null);
+
+		_serviceRegistrationMap.put(formNavigatorId, serviceRegistration);
+	}
+
+	protected void deleteConfiguration(String formNavigatorId) {
+		_serviceRegistrationMap.get(formNavigatorId).unregister();
 	}
 
 	protected FormNavigatorEntryConfigurationRetriever
@@ -90,5 +100,8 @@ public abstract class FormNavigatorEntryConfigurationRetrieverBaseTest {
 			new FormNavigatorEntryConfigurationRetriever();
 
 	private Framework _framework;
+	private final
+		Map<String, ServiceRegistration<FormNavigatorEntryConfigurationParser>>
+			_serviceRegistrationMap = new HashMap<>();
 
 }

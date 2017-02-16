@@ -204,6 +204,80 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
+	public static class WhenThereAreConfigurationsFormSeveralForms
+		extends FormNavigatorEntryConfigurationRetrieverBaseTest {
+
+		@Override
+		public void setUp() throws Exception {
+			super.setUp();
+
+			StringBundler sb1 = new StringBundler(5);
+
+			sb1.append("general");
+			sb1.append(StringPool.EQUAL);
+			sb1.append("formNavigatorEntryKey1,");
+			sb1.append("formNavigatorEntryKey2,");
+			sb1.append("formNavigatorEntryKey3");
+
+			StringBundler sb2 = new StringBundler(5);
+
+			sb2.append("general");
+			sb2.append(StringPool.EQUAL);
+			sb2.append("formNavigatorEntryKey4,");
+			sb2.append("formNavigatorEntryKey5,");
+			sb2.append("formNavigatorEntryKey6");
+
+			createConfiguration("form1", new String[] {sb1.toString()});
+			createConfiguration("form2", new String[] {sb2.toString()});
+		}
+
+		@Test
+		public void testContainsValuesForForm1() {
+			SortedSet<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
+					getFormNavigatorEntryKeys("form1", "general", "add").get();
+
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 3,
+				formNavigatorEntryKeys.size());
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey1", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey2", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey3", iterator.next());
+		}
+
+		@Test
+		public void testContainsValuesForForm2() {
+			SortedSet<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
+					getFormNavigatorEntryKeys("form2", "general", "add").get();
+
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 3,
+				formNavigatorEntryKeys.size());
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey4", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey5", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey6", iterator.next());
+		}
+
+		@Test
+		public void testDoesContainValuesForEntry2IfItIsDeleted() {
+			deleteConfiguration("form2");
+
+			Optional<SortedSet<String>> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
+					getFormNavigatorEntryKeys("form2", "general", "update");
+
+			Assert.assertFalse(formNavigatorEntryKeys.isPresent());
+		}
+
+	}
+
 	public static class WhenThereAreSeveralConfigurations
 		extends FormNavigatorEntryConfigurationRetrieverBaseTest {
 

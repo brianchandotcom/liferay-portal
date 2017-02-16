@@ -163,9 +163,7 @@
 
 		<execute function="AssertClick" locator1="Mentions#MENTIONS_COMMENT_TAG_LINK" value1="@${mentionsUserScreenName}" />
 
-		<!--LPS-68962-->
-
-		<!--<execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="${mentionsUserFullName}" />-->
+		<execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="${mentionsUserFullName}" />
 	</command>
 
 	<command name="viewDisabledViaPortalSettings">
@@ -196,9 +194,7 @@
 
 		<execute function="AssertClick" locator1="Mentions#MENTIONS_TAG_LINK" value1="@${mentionsUserScreenName}" />
 
-		<!--LPS-68962-->
-
-		<!--<execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="${mentionsUserFullName}" />-->
+		<execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="${mentionsUserFullName}" />
 	</command>
 
 	<command name="viewNoMentionTagLink">

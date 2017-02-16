@@ -127,9 +127,7 @@
 		<execute function="AssertElementNotPresent" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
 	</command>
 
-	<!-- LPS-69070 -->
-
-	<!-- <command name="ViewReportEmailNewConfiguration" priority="4">
+	<command name="ViewReportEmailNewConfiguration" priority="4">
 		<description message="This is a use case for LPS-51009." />
 
 		<property name="test.smtp.server.enabled" value="true" />
@@ -226,7 +224,7 @@ Thanks,<br/>
 		</execute>
 
 		<execute macro="ReportsAdmin#tearDownConfiguration" />
-	</command> -->
+	</command>
 
 	<command name="ViewReportPG" priority="4">
 		<execute macro="Navigator#openURL" />

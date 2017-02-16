@@ -746,7 +746,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="AssetPublisherFilterAndOrderByFieldType" priority="4">
+	<command name="AssetPublisherFilterAndOrderByFieldType" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

@@ -19,6 +19,6 @@ package com.liferay.portal.settings.authentication.cas.web.internal.portlet.cons
  */
 public class PortalSettingsCASConstants {
 
-	public static String PARAMETER_NAMESPACE = "cas_";
+	public static final String PARAMETER_NAMESPACE = "cas_";
 
 }

@@ -41,7 +41,7 @@ String lastNameAttr = openSSOConfiguration.lastNameAttr();
 
 	<aui:input cssClass="lfr-input-text-container" helpMessage="logout-url-for-opensso-help" label="logout-url" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "logoutURL" %>' type="text" value="<%= logoutURL %>" />
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="service-url-for-opensso-help" label="service-url" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "serviceURL" %>'  type="text" value="<%= serviceURL %>" />
+	<aui:input cssClass="lfr-input-text-container" helpMessage="service-url-for-opensso-help" label="service-url" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "serviceURL" %>' type="text" value="<%= serviceURL %>" />
 
 	<aui:input cssClass="lfr-input-text-container" helpMessage="mappings-for-opensso-help" label="screen-name-attribute" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "screenNameAttr" %>' type="text" value="<%= screenNameAttr %>" />
 

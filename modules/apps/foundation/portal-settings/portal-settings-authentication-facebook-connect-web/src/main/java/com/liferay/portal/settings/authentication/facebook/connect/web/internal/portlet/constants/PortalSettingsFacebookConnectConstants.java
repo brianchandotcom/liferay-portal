@@ -19,6 +19,6 @@ package com.liferay.portal.settings.authentication.facebook.connect.web.internal
  */
 public class PortalSettingsFacebookConnectConstants {
 
-	public static String PARAMETER_NAMESPACE = "facebook_";
+	public static final String PARAMETER_NAMESPACE = "facebook_";
 
 }

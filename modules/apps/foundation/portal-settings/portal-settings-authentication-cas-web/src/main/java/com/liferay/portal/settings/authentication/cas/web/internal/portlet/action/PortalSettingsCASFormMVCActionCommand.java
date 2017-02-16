@@ -97,4 +97,5 @@ public class PortalSettingsCASFormMVCActionCommand
 	protected String getSettingsId() {
 		return CASConstants.SERVICE_NAME;
 	}
+
 }

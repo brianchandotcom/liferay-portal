@@ -22,9 +22,12 @@ AUI.add(
 
 					strings: {
 						value: {
-							from: Liferay.Language.get('from'),
 							to: Liferay.Language.get('to')
 						}
+					},
+
+					type: {
+						value: 'jump-to-page'
 					}
 				},
 
@@ -55,14 +58,9 @@ AUI.add(
 
 						var strings = instance.get('strings');
 
-						var index = instance.get('index');
-
-						var fieldsListContainer = instance.get('boundingBox').one('.target-' + index);
-
-						fieldsListContainer.append(instance._createLabel(strings.from));
-						instance._createSourceField().render(fieldsListContainer);
-						fieldsListContainer.append(instance._createLabel(strings.do));
-						instance._createTargetField().render(fieldsListContainer);
+						instance._createSourceField().render(boundingBox);
+						instance._createLabel(strings.to);
+						instance._createTargetField().render(boundingBox);
 					},
 
 					_createLabel: function(text) {
@@ -106,7 +104,7 @@ AUI.add(
 								options: instance.get('options'),
 								showLabel: false,
 								value: value,
-								visible: true
+								visible: false
 							}
 						);
 

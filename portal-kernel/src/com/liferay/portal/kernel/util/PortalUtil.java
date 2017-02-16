@@ -263,6 +263,14 @@ public class PortalUtil {
 		return getPortal().addPreservedParameters(themeDisplay, url);
 	}
 
+	public static String addPreservedParameters(
+		ThemeDisplay themeDisplay, String url, boolean typeControlPanel,
+		boolean doAsUser) {
+
+		return getPortal().addPreservedParameters(
+			themeDisplay, url, typeControlPanel, doAsUser);
+	}
+
 	public static void addUserLocaleOptionsMessage(HttpServletRequest request) {
 		getPortal().addUserLocaleOptionsMessage(request);
 	}

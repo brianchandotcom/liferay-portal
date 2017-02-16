@@ -50,7 +50,9 @@ public class PanelAppTag extends BasePanelTag {
 
 			try {
 				boolean include = _panelApp.include(
-					request, new PipingServletResponse(pageContext));
+					request,
+					PipingServletResponse.createPipingServletResponse(
+						pageContext));
 
 				if (include) {
 					doClearTag();

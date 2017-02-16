@@ -43,7 +43,7 @@ ProductNavigationControlMenuEntryRegistry productNavigationControlMenuEntryRegis
 							productNavigationControlMenuEntriesMap.put(productNavigationControlMenuCategory, productNavigationControlMenuEntries);
 
 							for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
-								if (productNavigationControlMenuEntry.includeIcon(request, new PipingServletResponse(pageContext))) {
+								if (productNavigationControlMenuEntry.includeIcon(request, PipingServletResponse.createPipingServletResponse(pageContext))) {
 									continue;
 								}
 							%>
@@ -82,7 +82,7 @@ ProductNavigationControlMenuEntryRegistry productNavigationControlMenuEntryRegis
 				List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries = productNavigationControlMenuEntriesMap.get(productNavigationControlMenuCategory);
 
 				for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
-					productNavigationControlMenuEntry.includeBody(request, new PipingServletResponse(pageContext));
+					productNavigationControlMenuEntry.includeBody(request, PipingServletResponse.createPipingServletResponse(pageContext));
 				}
 			}
 			%>

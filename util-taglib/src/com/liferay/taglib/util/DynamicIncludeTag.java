@@ -65,9 +65,7 @@ public class DynamicIncludeTag extends TagSupport {
 	}
 
 	protected HttpServletResponse getResponse() {
-		return new PipingServletResponse(
-			(HttpServletResponse)pageContext.getResponse(),
-			pageContext.getOut());
+		return PipingServletResponse.createPipingServletResponse(pageContext);
 	}
 
 	private boolean _ascendingPriority = true;

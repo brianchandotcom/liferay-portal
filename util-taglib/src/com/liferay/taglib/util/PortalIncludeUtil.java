@@ -39,11 +39,10 @@ public class PortalIncludeUtil {
 
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
-		HttpServletResponse response =
-			(HttpServletResponse)pageContext.getResponse();
 
 		htmlRenderer.renderHTML(
-			request, new PipingServletResponse(response, pageContext.getOut()));
+			request,
+			PipingServletResponse.createPipingServletResponse(pageContext));
 	}
 
 	public static void include(PageContext pageContext, String path)
@@ -51,8 +50,6 @@ public class PortalIncludeUtil {
 
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
-		HttpServletResponse response =
-			(HttpServletResponse)pageContext.getResponse();
 
 		ServletContext servletContext = (ServletContext)request.getAttribute(
 			WebKeys.CTX);
@@ -62,7 +59,8 @@ public class PortalIncludeUtil {
 				servletContext, path);
 
 		requestDispatcher.include(
-			request, new PipingServletResponse(response, pageContext.getOut()));
+			request,
+			PipingServletResponse.createPipingServletResponse(pageContext));
 	}
 
 	public interface HTMLRenderer {

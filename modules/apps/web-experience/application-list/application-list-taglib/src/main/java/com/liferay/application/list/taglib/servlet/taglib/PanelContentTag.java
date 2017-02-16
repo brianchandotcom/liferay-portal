@@ -37,7 +37,8 @@ public class PanelContentTag extends BasePanelTag {
 
 		try {
 			boolean include = _panelCategory.include(
-				request, new PipingServletResponse(pageContext));
+				request,
+				PipingServletResponse.createPipingServletResponse(pageContext));
 
 			if (include) {
 				doClearTag();

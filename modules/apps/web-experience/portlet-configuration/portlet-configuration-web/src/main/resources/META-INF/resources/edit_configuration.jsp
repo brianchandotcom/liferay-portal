@@ -28,7 +28,7 @@
 	ConfigurationAction configurationAction = (ConfigurationAction)request.getAttribute(WebKeys.CONFIGURATION_ACTION);
 
 	if (configurationAction != null) {
-		configurationAction.include(portletConfig, request, new PipingServletResponse(pageContext));
+		configurationAction.include(portletConfig, request, PipingServletResponse.createPipingServletResponse(pageContext));
 	}
 	%>
 

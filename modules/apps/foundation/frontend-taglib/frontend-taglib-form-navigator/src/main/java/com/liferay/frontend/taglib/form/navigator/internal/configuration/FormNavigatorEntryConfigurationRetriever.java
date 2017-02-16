@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,10 +36,11 @@ public class FormNavigatorEntryConfigurationRetriever {
 	public Optional<SortedSet<String>> getFormNavigatorEntryKeys(
 		String formNavigatorId, String categoryKey, String context) {
 
-		return _serviceTrackerMap.getService(formNavigatorId).stream().map(
-			formNavigatorEntryConfigurationParser ->
-				formNavigatorEntryConfigurationParser.getFormNavigatorEntryKeys(
-					categoryKey, context)).reduce(
+		return ListUtil.fromCollection(
+			_serviceTrackerMap.getService(formNavigatorId)).stream().map(
+				formNavigatorEntryConfigurationParser ->
+					formNavigatorEntryConfigurationParser.
+						getFormNavigatorEntryKeys(categoryKey, context)).reduce(
 				Optional.empty(), this::_mergeFormNavigatorEntryKeys);
 	}
 

@@ -12,7 +12,7 @@
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portlet.documentlibrary.util.DLFileVersionPolicyImpl" destroy-method="destroy" id="com.liferay.document.library.kernel.util.DLFileVersionPolicy" />
+	<bean class="com.liferay.portlet.documentlibrary.util.DLFileVersionPolicyImpl" depends-on="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil,com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil,com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil,com.liferay.portal.kernel.language.LanguageUtil" destroy-method="destroy" id="com.liferay.document.library.kernel.util.DLFileVersionPolicy" />
 	<bean class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionImpl" id="com.liferay.expando.kernel.service.permission.ExpandoColumnPermission" />
 	<bean class="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil" id="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil">
 		<property name="expandoColumnPermission" ref="com.liferay.expando.kernel.service.permission.ExpandoColumnPermission" />

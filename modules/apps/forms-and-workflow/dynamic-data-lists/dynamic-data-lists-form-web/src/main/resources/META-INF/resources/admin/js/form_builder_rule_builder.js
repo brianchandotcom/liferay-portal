@@ -137,6 +137,7 @@ AUI.add(
 										dataType: field.get('dataType'),
 										label: field.get('label') || field.get('fieldName'),
 										options: field.get('options'),
+										pageIndex: instance.getPageIndex(field),
 										type: field.get('type'),
 										value: field.get('fieldName')
 									}
@@ -145,6 +146,32 @@ AUI.add(
 						);
 
 						return fields;
+					},
+
+					getPageIndex: function (field) {
+						var instance = this;
+
+						var formBuilder = instance.get('formBuilder');
+
+						var layouts = formBuilder.get('layouts');
+
+						for (var h = 0; h < layouts.length; h++) {
+							var rows = layouts[h].get('rows');
+
+							for (var i = 0; i < rows.length; i++) {
+								var cols = rows[i].get('cols');
+
+								for (var j = 0; j < cols.length; j++) {
+									var fieldList = cols[j].get('value').get('fields');
+
+									for (var k = 0; k < fieldList.length; k++) {
+										if (fieldList[k].get('label') === field.get('label')) {
+											return h;
+										}
+									}
+								}
+							}
+						}
 					},
 
 					getPages: function() {

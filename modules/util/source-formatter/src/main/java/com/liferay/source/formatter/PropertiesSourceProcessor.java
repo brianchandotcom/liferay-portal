@@ -252,7 +252,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				"**/lib/*/dependencies.properties", "**/Language.properties",
 				"**/liferay-plugin-package.properties", "**/portal.properties",
 				"**/portal-ext.properties", "**/portal-legacy-*.properties",
-				"**/portlet.properties", "**/source-formatter.properties"
+				"**/portlet.properties", "**/source-formatter.properties",
+				"**/test.properties"
 			};
 		}
 

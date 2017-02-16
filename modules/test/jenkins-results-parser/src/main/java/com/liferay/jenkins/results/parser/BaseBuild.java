@@ -396,11 +396,6 @@ public abstract class BaseBuild implements Build {
 
 		Element messageElement = Dom4JUtil.getNewElement("div");
 
-		if (result.equals("ABORTED")) {
-			messageElement.add(
-				Dom4JUtil.toCodeSnippetElement("Build was aborted"));
-		}
-
 		Dom4JUtil.addToElement(
 			messageElement,
 			Dom4JUtil.getNewElement(
@@ -408,12 +403,17 @@ public abstract class BaseBuild implements Build {
 				Dom4JUtil.getNewAnchorElement(getBuildURL(), getDisplayName())),
 			getGitHubMessageJobResultsElement());
 
-		if (result.equals("FAILURE")) {
-			Element failureMessageElement = getFailureMessageElement();
+		if (result.equals("ABORTED") && (getDownstreamBuildCount(null) == 0)) {
+			messageElement.add(
+				Dom4JUtil.toCodeSnippetElement("Build was aborted"));
 
-			if (failureMessageElement != null) {
-				messageElement.add(failureMessageElement);
-			}
+			return messageElement;
+		}
+
+		Element failureMessageElement = getFailureMessageElement();
+
+		if (failureMessageElement != null) {
+			messageElement.add(failureMessageElement);
 		}
 
 		return messageElement;

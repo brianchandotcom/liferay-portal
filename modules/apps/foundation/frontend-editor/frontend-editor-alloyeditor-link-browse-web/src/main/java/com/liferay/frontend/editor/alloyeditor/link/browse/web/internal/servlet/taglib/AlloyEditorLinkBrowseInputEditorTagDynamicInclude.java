@@ -14,7 +14,8 @@
 
 package com.liferay.frontend.editor.alloyeditor.link.browse.web.internal.servlet.taglib;
 
-import com.liferay.portal.kernel.servlet.taglib.TagDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -33,9 +34,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ambrín Chaudhary
  */
-@Component(immediate = true, service = TagDynamicInclude.class)
+@Component(immediate = true, service = DynamicInclude.class)
 public class AlloyEditorLinkBrowseInputEditorTagDynamicInclude
-	implements TagDynamicInclude {
+	extends BaseDynamicInclude {
 
 	@Activate
 	public void activate() {
@@ -55,7 +56,7 @@ public class AlloyEditorLinkBrowseInputEditorTagDynamicInclude
 	@Override
 	public void include(
 			HttpServletRequest request, HttpServletResponse response,
-			String tagClassName, String tagDynamicId, String tagPoint)
+			String key)
 		throws IOException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -69,20 +70,18 @@ public class AlloyEditorLinkBrowseInputEditorTagDynamicInclude
 	}
 
 	@Override
-	public void register(
-		TagDynamicInclude.TagDynamicIncludeRegistry tagDynamicIncludeRegistry) {
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(
+			"com.liferay.frontend.editor.alloyeditor.web#alloyeditor#" +
+				"additionalResources");
 
-		tagDynamicIncludeRegistry.register(
-			"com.liferay.taglib.ui.InputEditorTag", "alloyeditor",
-			"doEndTag#before");
+		dynamicIncludeRegistry.register(
+			"com.liferay.frontend.editor.alloyeditor.web#alloyeditor_bbcode#" +
+				"additionalResources");
 
-		tagDynamicIncludeRegistry.register(
-			"com.liferay.taglib.ui.InputEditorTag", "alloyeditor_bbcode",
-			"doEndTag#before");
-
-		tagDynamicIncludeRegistry.register(
-			"com.liferay.taglib.ui.InputEditorTag", "alloyeditor_creole",
-			"doEndTag#before");
+		dynamicIncludeRegistry.register(
+			"com.liferay.frontend.editor.alloyeditor.web#alloyeditor_creole#" +
+				"additionalResources");
 	}
 
 	@Reference

@@ -24,10 +24,11 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryConfigurationHelper;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.stream.Collectors;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -43,7 +44,7 @@ public class FormNavigatorEntryConfigurationHelperImpl
 	implements FormNavigatorEntryConfigurationHelper {
 
 	@Override
-	public <T> Optional<Set<FormNavigatorEntry<T>>> getFormNavigatorEntries(
+	public <T> Optional<List<FormNavigatorEntry<T>>> getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean) {
 
 		String context = _getContext(formNavigatorId, formModelBean);
@@ -98,17 +99,13 @@ public class FormNavigatorEntryConfigurationHelperImpl
 		return FormNavigatorContextConstants.CONTEXT_UPDATE;
 	}
 
-	private <T> Set<FormNavigatorEntry<T>> _getFormNavigatorEntries(
-		String formNavigatorId, Set<String> formNavigatorEntryKeys) {
+	private <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
+		String formNavigatorId, SortedSet<String> formNavigatorEntryKeys) {
 
-		Set<FormNavigatorEntry<T>> formNavigatorEntries = new LinkedHashSet<>();
-
-		formNavigatorEntryKeys.stream().map(
+		return formNavigatorEntryKeys.stream().map(
 			key -> this.<T>_getFormNavigatorEntry(
-				key, formNavigatorId)).filter(Objects::nonNull).forEach(
-			formNavigatorEntries::add);
-
-		return formNavigatorEntries;
+				key, formNavigatorId)).filter(Objects::nonNull).collect(
+				Collectors.toList());
 	}
 
 	private <T> FormNavigatorEntry<T> _getFormNavigatorEntry(

@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -261,7 +262,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownCategory() {
-			Optional<Set<String>> formNavigatorEntryKeys =
+			Optional<SortedSet<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys(
 						"form1", "unknownCategory", "add");
@@ -271,7 +272,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownContext() {
-			Optional<Set<String>> formNavigatorEntryKeys =
+			Optional<SortedSet<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys(
 						"form1", "general", "unknownContext");
@@ -281,7 +282,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownFormId() {
-			Optional<Set<String>> formNavigatorEntryKeys =
+			Optional<SortedSet<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("unknownForm", "general", "add");
 
@@ -300,7 +301,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsEmptyOptional() {
-			Optional<Set<String>> formNavigatorEntryKeys =
+			Optional<SortedSet<String>> formNavigatorEntryKeys =
 				_formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add");
 

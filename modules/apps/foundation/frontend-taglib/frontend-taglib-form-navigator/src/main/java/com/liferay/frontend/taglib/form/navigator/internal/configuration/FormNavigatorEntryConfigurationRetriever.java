@@ -19,7 +19,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+import java.util.SortedSet;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(service = FormNavigatorEntryConfigurationRetriever.class)
 public class FormNavigatorEntryConfigurationRetriever {
 
-	public Optional<Set<String>> getFormNavigatorEntryKeys(
+	public Optional<SortedSet<String>> getFormNavigatorEntryKeys(
 		String formNavigatorId, String categoryKey, String context) {
 
 		return _serviceTrackerMap.getService(formNavigatorId).stream().map(
@@ -63,8 +63,9 @@ public class FormNavigatorEntryConfigurationRetriever {
 		_serviceTrackerMap.close();
 	}
 
-	private Optional<Set<String>> _mergeFormNavigatorEntryKeys(
-		Optional<Set<String>> previous, Optional<Set<String>> current) {
+	private Optional<SortedSet<String>> _mergeFormNavigatorEntryKeys(
+		Optional<SortedSet<String>> previous,
+		Optional<SortedSet<String>> current) {
 
 		if (current.isPresent()) {
 			return current;

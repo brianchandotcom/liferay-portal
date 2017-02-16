@@ -33,7 +33,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -130,12 +129,12 @@ public class FormNavigatorEntryUtil {
 	private static <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean) {
 
-		Optional<Set<FormNavigatorEntry<T>>> formNavigationEntriesOptional =
+		Optional<List<FormNavigatorEntry<T>>> formNavigationEntriesOptional =
 			_getFormNavigatorEntriesFromConfiguration(
 				formNavigatorId, categoryKey, formModelBean);
 
 		if (formNavigationEntriesOptional.isPresent()) {
-			Set<FormNavigatorEntry<T>> formNavigatorEntries =
+			List<FormNavigatorEntry<T>> formNavigatorEntries =
 				formNavigationEntriesOptional.get();
 
 			return ListUtil.fromCollection(formNavigatorEntries);
@@ -146,7 +145,7 @@ public class FormNavigatorEntryUtil {
 		}
 	}
 
-	private static <T> Optional<Set<FormNavigatorEntry<T>>>
+	private static <T> Optional<List<FormNavigatorEntry<T>>>
 		_getFormNavigatorEntriesFromConfiguration(
 			String formNavigatorId, String categoryKey, T formModelBean) {
 

@@ -257,9 +257,7 @@ public class DDLFormEmailNotificationSender {
 				}
 			}
 
-			if (ddmFormFieldValue.getValue() != null) {
-				sb.append(renderDDMFormFieldValue(ddmFormFieldValue, locale));
-			}
+			sb.append(renderDDMFormFieldValue(ddmFormFieldValue, locale));
 
 			if (i < (ddmFormFieldValues.size() - 1)) {
 				sb.append(StringPool.COMMA_AND_SPACE);
@@ -459,6 +457,10 @@ public class DDLFormEmailNotificationSender {
 
 	protected String renderDDMFormFieldValue(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
+		if (ddmFormFieldValue.getValue() == null) {
+			return StringPool.BLANK;
+		}
 
 		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(

@@ -47,12 +47,6 @@ AUI.add(
 						};
 					},
 
-					updateSource: function(pages) {
-						var instance = this;
-
-						instance._setSourceField(String(Math.max(pages)));
-					},
-
 					render: function() {
 						var instance = this;
 
@@ -61,6 +55,12 @@ AUI.add(
 						instance._createSourceField().render(boundingBox);
 						instance._createLabel(strings.to);
 						instance._createTargetField().render(boundingBox);
+					},
+
+					updateSource: function(pages) {
+						var instance = this;
+
+						instance._setSourceField(String(Math.max(pages)));
 					},
 
 					_createLabel: function(text) {

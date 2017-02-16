@@ -296,25 +296,13 @@ AUI.add(
 							if (!!conditionKey.match('-condition-second-operand-select') || !!conditionKey.match('-condition-first-operand')) {
 								var fieldName = instance._conditions[conditionKey].getValue();
 
-								if (!!fieldName) {
+								if (fieldName) {
 									fields.push(instance._getFieldPageIndex(fieldName));
 								}
 							}
 						}
 
 						return fields;
-					},
-
-					_getFieldPageIndex: function(fieldName) {
-						var instance = this;
-
-						var field = instance.get('fields').find(
-							function(field) {
-								return field.value === fieldName;
-							}
-						);
-
-						return field.pageIndex;
 					},
 
 					_getFieldDataType: function(fieldName) {
@@ -327,6 +315,18 @@ AUI.add(
 						);
 
 						return field.dataType;
+					},
+
+					_getFieldPageIndex: function(fieldName) {
+						var instance = this;
+
+						var field = instance.get('fields').find(
+							function(field) {
+								return field.value === fieldName;
+							}
+						);
+
+						return field.pageIndex;
 					},
 
 					_getOptionsLabel: function(field, optionValue) {

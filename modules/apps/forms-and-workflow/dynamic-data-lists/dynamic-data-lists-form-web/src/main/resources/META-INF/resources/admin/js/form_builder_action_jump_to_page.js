@@ -44,6 +44,12 @@ AUI.add(
 						};
 					},
 
+					updateSource: function(pages) {
+						var instance = this;
+
+						instance._setSourceField(String(Math.max(pages)));
+					},
+
 					render: function() {
 						var instance = this;
 
@@ -142,6 +148,12 @@ AUI.add(
 						instance._targetField.get('container').addClass('lfr-ddm-form-field-container-inline');
 
 						return instance._targetField;
+					},
+
+					_setSourceField: function(pageIndex) {
+						var instance = this;
+
+						instance._sourceField.setValue(String(pageIndex));
 					}
 				}
 			}

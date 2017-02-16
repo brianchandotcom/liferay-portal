@@ -17,15 +17,11 @@ package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.SortedSet;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -36,18 +32,20 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class FormNavigatorEntryConfigurationRetrieverTest {
 
-	public static class WhenAConfigurationEntryHasOneLineWithNoKeys {
+	public static class WhenAConfigurationEntryHasOneLineWithNoKeys
+		extends FormNavigatorEntryConfigurationRetrieverBaseTest {
 
-		@Before
+		@Override
 		public void setUp() throws Exception {
-			_setMockConfigurations(
-				_createMockConfig("form1", new String[] {"add.general="}));
+			super.setUp();
+
+			createConfiguration("form1", new String[] {"add.general="});
 		}
 
 		@Test
 		public void testReturnsEmptyList() {
-			Set<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
+			SortedSet<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertTrue(formNavigatorEntryKeys.isEmpty());
@@ -55,10 +53,13 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
-	public static class WhenAConfigurationEntryHasSeveralLines {
+	public static class WhenAConfigurationEntryHasSeveralLines
+		extends FormNavigatorEntryConfigurationRetrieverBaseTest {
 
-		@Before
+		@Override
 		public void setUp() throws Exception {
+			super.setUp();
+
 			StringBundler sb1 = new StringBundler(5);
 
 			sb1.append("add.general");
@@ -77,14 +78,13 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 			String config = sb1.toString() + "\n" + sb2.toString();
 
-			_setMockConfigurations(
-				_createMockConfig("form1", new String[] {config}));
+			createConfiguration("form1", new String[] {config});
 		}
 
 		@Test
 		public void testContainsValuesForLine1() {
-			Set<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
+			SortedSet<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(
@@ -100,8 +100,8 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testContainsValuesForLine2() {
-			Set<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
+			SortedSet<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "update").
 					get();
 
@@ -118,10 +118,13 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
-	public static class WhenAKeyHasLeadingOrTrailingSpaces {
+	public static class WhenAKeyHasLeadingOrTrailingSpaces
+		extends FormNavigatorEntryConfigurationRetrieverBaseTest {
 
-		@Before
+		@Override
 		public void setUp() throws Exception {
+			super.setUp();
+
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("add.general");
@@ -129,14 +132,13 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 			sb.append("  formNavigatorEntryKey1,   ");
 			sb.append("formNavigatorEntryKey2  ");
 
-			_setMockConfigurations(
-				_createMockConfig("form1", new String[] {sb.toString()}));
+			createConfiguration("form1", new String[] {sb.toString()});
 		}
 
 		@Test
 		public void testTheyAreTrimmed() {
-			Set<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
+			SortedSet<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(
@@ -151,10 +153,13 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
-	public static class WhenNoContextIsSet {
+	public static class WhenNoContextIsSet
+		extends FormNavigatorEntryConfigurationRetrieverBaseTest {
 
-		@Before
+		@Override
 		public void setUp() throws Exception {
+			super.setUp();
+
 			StringBundler sb1 = new StringBundler(4);
 
 			sb1.append("general");
@@ -162,14 +167,13 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 			sb1.append("formNavigatorEntryKey1,");
 			sb1.append("formNavigatorEntryKey2");
 
-			_setMockConfigurations(
-				_createMockConfig("form1", new String[] {sb1.toString()}));
+			createConfiguration("form1", new String[] {sb1.toString()});
 		}
 
 		@Test
 		public void testReturnsTheKeysInThatLineWhenAskedForAContext() {
-			Set<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
+			SortedSet<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(
@@ -184,8 +188,8 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsTheKeysInThatLineWhenAskedForNoConext() {
-			Set<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
+			SortedSet<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", null).get();
 
 			Assert.assertEquals(
@@ -200,10 +204,13 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
-	public static class WhenThereAreSeveralConfigurations {
+	public static class WhenThereAreSeveralConfigurations
+		extends FormNavigatorEntryConfigurationRetrieverBaseTest {
 
-		@Before
+		@Override
 		public void setUp() throws Exception {
+			super.setUp();
+
 			StringBundler sb1 = new StringBundler(5);
 
 			sb1.append("add.general");
@@ -220,15 +227,14 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 			sb2.append("formNavigatorEntryKey4,");
 			sb2.append("formNavigatorEntryKey5");
 
-			_setMockConfigurations(
-				_createMockConfig("form1", new String[] {sb1.toString()}),
-				_createMockConfig("form1", new String[] {sb2.toString()}));
+			createConfiguration("form1", new String[] {sb1.toString()});
+			createConfiguration("form1", new String[] {sb2.toString()});
 		}
 
 		@Test
 		public void testContainsValuesForEntry1() {
-			Set<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
+			SortedSet<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(
@@ -244,8 +250,8 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testContainsValuesForEntry2() {
-			Set<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
+			SortedSet<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "update").
 					get();
 
@@ -263,7 +269,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownCategory() {
 			Optional<SortedSet<String>> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
+				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys(
 						"form1", "unknownCategory", "add");
 
@@ -273,7 +279,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownContext() {
 			Optional<SortedSet<String>> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
+				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys(
 						"form1", "general", "unknownContext");
 
@@ -283,7 +289,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownFormId() {
 			Optional<SortedSet<String>> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
+				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("unknownForm", "general", "add");
 
 			Assert.assertFalse(formNavigatorEntryKeys.isPresent());
@@ -291,18 +297,13 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
-	public static class WhenThereIsNoConfigAtAll {
-
-		@Before
-		public void setUp() throws Exception {
-			_formNavigatorEntryConfigurationRetriever =
-				new FormNavigatorEntryConfigurationRetriever();
-		}
+	public static class WhenThereIsNoConfigAtAll
+		extends FormNavigatorEntryConfigurationRetrieverBaseTest {
 
 		@Test
 		public void testReturnsEmptyOptional() {
 			Optional<SortedSet<String>> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
+				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add");
 
 			Assert.assertFalse(formNavigatorEntryKeys.isPresent());
@@ -310,10 +311,13 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
-	public static class WhenThereIsOneConfigurationWithTwoLinesForSameTarget {
+	public static class WhenThereIsOneConfigurationWithTwoLinesForSameTarget
+		extends FormNavigatorEntryConfigurationRetrieverBaseTest {
 
-		@Before
+		@Override
 		public void setUp() throws Exception {
+			super.setUp();
+
 			StringBundler sb1 = new StringBundler(5);
 
 			sb1.append("add.general");
@@ -330,15 +334,14 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 			sb2.append("formNavigatorEntryKey4,");
 			sb2.append("formNavigatorEntryKey5");
 
-			_setMockConfigurations(
-				_createMockConfig(
-					"form1", new String[] {sb1.toString(), sb2.toString()}));
+			createConfiguration(
+				"form1", new String[] {sb1.toString(), sb2.toString()});
 		}
 
 		@Test
 		public void testTheLastOneHasPrecedence() {
-			Set<String> formNavigatorEntryKeys =
-				_formNavigatorEntryConfigurationRetriever.
+			SortedSet<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
 			Assert.assertEquals(
@@ -353,41 +356,5 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		}
 
 	}
-
-	private static FormNavigatorEntryConfigurationParser _createMockConfig(
-		String formNavigatorId, String[] formNavigatorEntryKeys) {
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("formNavigatorEntryKeys", formNavigatorEntryKeys);
-		properties.put("formNavigatorId", formNavigatorId);
-
-		FormNavigatorEntryConfigurationParser
-			formNavigatorEntryConfigurationParser =
-				new FormNavigatorEntryConfigurationParser();
-
-		formNavigatorEntryConfigurationParser.activate(properties);
-
-		return formNavigatorEntryConfigurationParser;
-	}
-
-	private static void _setMockConfigurations(
-			FormNavigatorEntryConfigurationParser...
-				formNavigatorEntryConfigurationParsers)
-		throws Exception {
-
-		for (FormNavigatorEntryConfigurationParser
-				formNavigatorEntryConfigurationParser :
-					formNavigatorEntryConfigurationParsers) {
-
-			_formNavigatorEntryConfigurationRetriever.
-				setFormNavigatorEntryConfigurationParser(
-					formNavigatorEntryConfigurationParser);
-		}
-	}
-
-	private static FormNavigatorEntryConfigurationRetriever
-		_formNavigatorEntryConfigurationRetriever =
-			new FormNavigatorEntryConfigurationRetriever();
 
 }

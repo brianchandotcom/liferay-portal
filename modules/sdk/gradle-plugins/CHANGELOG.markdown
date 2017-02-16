@@ -1102,6 +1102,10 @@ version 1.0.144.
 ## 3.2.5 - 2017-02-15
 
 ### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.87.
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.354.
 - [LPS-70677]: Exclude `com.liferay.portal` transitive dependencies from the
 `com.liferay.jasper.jspc` default dependency in the `jspCTool` configuration.
 - [LPS-70677]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to

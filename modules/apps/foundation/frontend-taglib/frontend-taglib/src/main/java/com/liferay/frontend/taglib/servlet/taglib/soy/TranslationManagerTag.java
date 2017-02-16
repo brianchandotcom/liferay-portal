@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -37,26 +38,31 @@ public class TranslationManagerTag extends TemplateRendererTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Locale locale = themeDisplay.getLocale();
 		Set<Locale> locales = LanguageUtil.getAvailableLocales(
 			themeDisplay.getSiteGroupId());
+
 		JSONObject localesJSON = JSONFactoryUtil.createJSONObject();
+
 		JSONArray availableLocalesArray = JSONFactoryUtil.createJSONArray();
 
 		for (Locale curLocale : locales) {
+			String w3cLanguageId = LocaleUtil.toW3cLanguageId(curLocale);
+
+			String languageId = LocaleUtil.toLanguageId(curLocale);
+
 			JSONObject localeJSON = JSONFactoryUtil.createJSONObject();
 
-			localeJSON.put("code", LocaleUtil.toW3cLanguageId(curLocale));
+			localeJSON.put("code", w3cLanguageId);
+			localeJSON.put("icon", StringUtil.toLowerCase(w3cLanguageId));
+			localeJSON.put("id", languageId);
 			localeJSON.put(
-				"icon", LocaleUtil.toW3cLanguageId(curLocale).toLowerCase());
-			localeJSON.put("id", LocaleUtil.toLanguageId(curLocale));
-			localeJSON.put("name", curLocale.getDisplayName(locale));
+				"name", curLocale.getDisplayName(themeDisplay.getLocale()));
+
+			localesJSON.put(languageId, localeJSON);
 
 			if (ArrayUtil.contains(_availableLocales, curLocale)) {
-				availableLocalesArray.put(LocaleUtil.toLanguageId(curLocale));
+				availableLocalesArray.put(languageId);
 			}
-
-			localesJSON.put(LocaleUtil.toLanguageId(curLocale), localeJSON);
 		}
 
 		putValue("availableLocales", availableLocalesArray);

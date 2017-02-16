@@ -1060,7 +1060,7 @@ files.
 - [LPS-67863]: Exclude test projects from `gradlew baseline -PsyncRelease`
 process.
 
-## 2.4.34 - 2017-02-15
+## 2.4.34 - 2017-02-16
 
 ### Removed
 - [LPS-70699]: Disable update check when building themes.

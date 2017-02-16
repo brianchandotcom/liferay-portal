@@ -7,7 +7,7 @@ import templates from './Flags.soy';
 
 /**
  * Flags
- * 
+ *
  * It opens a dialog where the user can flag the page.
  *
  * @abstract

@@ -27,6 +27,12 @@ import javax.naming.NamingException;
  */
 public interface DBProcess {
 
+	public default void runIndexSQL(String template)
+		throws IOException, SQLException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public void runSQL(Connection connection, String template)
 		throws IOException, SQLException;
 

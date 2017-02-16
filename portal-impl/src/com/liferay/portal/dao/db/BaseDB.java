@@ -256,6 +256,24 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
+	public void runIndexSQL(Connection con, String sql)
+		throws IOException, SQLException {
+
+		sql = applyMaxStringIndexLengthLimitation(
+			_columnLengthPattern.matcher(sql));
+
+		runSQL(con, new String[] {sql});
+	}
+
+	@Override
+	public void runIndexSQL(String sql) throws IOException, SQLException {
+		sql = applyMaxStringIndexLengthLimitation(
+			_columnLengthPattern.matcher(sql));
+
+		runSQL(new String[] {sql});
+	}
+
+	@Override
 	public void runSQL(Connection con, String sql)
 		throws IOException, SQLException {
 

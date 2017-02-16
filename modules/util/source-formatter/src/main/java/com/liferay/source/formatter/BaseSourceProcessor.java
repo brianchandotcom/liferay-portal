@@ -2683,6 +2683,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return isExcludedPath(property, path, -1, parameter);
 	}
 
+	protected boolean isModulesApp(String absolutePath) {
+		if (((_projectPathPrefix != null) &&
+				(_projectPathPrefix.startsWith(":apps:") ||
+				 _projectPathPrefix.startsWith(":private:apps")) ||
+			absolutePath.contains("/modules/apps/") ||
+			absolutePath.contains("/modules/private/apps/"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected boolean isModulesFile(String absolutePath) {
 		return isModulesFile(absolutePath, false);
 	}
@@ -2711,6 +2724,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return absolutePath.contains("/modules/");
+	}
+
+	protected boolean isModulesPrivateApp(String absolutePath) {
+		if (((_projectPathPrefix != null) &&
+				_projectPathPrefix.startsWith(":private:apps")) ||
+			absolutePath.contains("/modules/private/apps/")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void postFormat() throws Exception {
@@ -3122,6 +3146,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			portalSource = _isPortalSource();
 			subrepository = _isSubrepository();
 
+			if (subrepository) {
+				File file = getFile("gradle.properties", PORTAL_MAX_DIR_LEVEL);
+
+				if (file.exists()) {
+					Properties properties = new Properties();
+
+					InputStream inputStream = new FileInputStream(file);
+
+					properties.load(inputStream);
+
+					_projectPathPrefix = properties.getProperty(
+						"project.path.prefix");
+				}
+			}
+
 			_sourceFormatterMessagesMap = new HashMap<>();
 		}
 		catch (Exception e) {
@@ -3215,6 +3254,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String _oldCopyright;
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private Properties _portalLanguageProperties;
+	private String _projectPathPrefix;
 	private Properties _properties;
 	private SourceFormatterHelper _sourceFormatterHelper;
 	private Map<String, Set<SourceFormatterMessage>>

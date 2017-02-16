@@ -1308,6 +1308,95 @@
 		</execute>
 	</command>
 
+	<command name="EditBasicWebContentStructureAndTemplate" priority="4">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute macro="WebContentNavigator#gotoEditStructure">
+			<var name="structureName" value="Basic Web Content" />
+		</execute>
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="Basic Web Content Edit" />
+		</execute>
+
+		<for list="Date,Image" param="structureFieldName">
+			<execute macro="DynamicDataMapping#addField">
+				<var name="field" value="${structureFieldName}" />
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
+			</execute>
+		</for>
+
+		<execute macro="WebContentStructures#saveCP">
+			<var name="structureName" value="Basic Web Content Edit" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
+
+		<execute macro="WebContentNavigator#gotoEditTemplate">
+			<var name="templateName" value="Basic Web Content" />
+		</execute>
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="Basic Web Content Edit" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Details" />
+		</execute>
+
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="Basic Web Content Description" />
+		</execute>
+
+		<for list="Date,Image" param="templateFieldName">
+			<execute macro="WebContentTemplates#addField">
+				<var name="fieldName" value="${templateFieldName}" />
+			</execute>
+		</for>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute macro="WebContentNavigator#gotoEditStructure">
+			<var name="structureName" value="Basic Web Content Edit" />
+		</execute>
+
+		<for list="Date,Image" param="structureFieldName">
+			<execute macro="DynamicDataMapping#viewField">
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
+			</execute>
+		</for>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#viewCP">
+			<var name="structureName" value="Basic Web Content Edit" />
+			<var name="templateDescription" value="Basic Web Content Description" />
+			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="Basic Web Content Edit" />
+			<var name="templateScript"><![CDATA[${Image.getData()}]]></var>
+		</execute>
+	</command>
+
 	<command name="EditSubstructureDefaultValues" priority="4">
 		<execute macro="Navigator#openURL" />
 

@@ -27,12 +27,32 @@ import java.io.Writer;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.BodyContent;
 
 /**
  * @author Shuyang Zhou
  */
 public class PipingServletResponse extends HttpServletResponseWrapper {
+
+	public static HttpServletResponse createPipingServletResponse(
+		PageContext pageContext) {
+
+		HttpServletResponse httpServletResponse =
+			(HttpServletResponse)pageContext.getResponse();
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		if (jspWriter instanceof BodyContent) {
+
+			// Unable to unwrap page context with pushed body
+
+			return new PipingServletResponse(httpServletResponse, jspWriter);
+		}
+
+		return httpServletResponse;
+	}
 
 	public PipingServletResponse(
 		HttpServletResponse response, OutputStream outputStream) {
@@ -80,6 +100,11 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 		_printWriter = UnsyncPrintWriterPool.borrow(writer);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #createPipingServletResponseIfNeeded(PageContext)}
+	 */
+	@Deprecated
 	public PipingServletResponse(PageContext pageContext) {
 		this(
 			(HttpServletResponse)pageContext.getResponse(),

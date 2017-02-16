@@ -42,6 +42,14 @@ else {
 
 	selThemeId = layout.getThemeId();
 }
+
+String layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
+
+if (selLayout != null) {
+	LayoutTypePortlet curLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
+
+	layoutTemplateId = curLayoutTypePortlet.getLayoutTemplateId();
+}
 %>
 
 <c:choose>
@@ -52,7 +60,7 @@ else {
 			</p>
 
 			<liferay-ui:layout-templates-list
-				layoutTemplateId="<%= PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID %>"
+				layoutTemplateId="<%= layoutTemplateId %>"
 				layoutTemplateIdPrefix="addLayout"
 				layoutTemplates="<%= LayoutTemplateLocalServiceUtil.getLayoutTemplates(selThemeId) %>"
 			/>

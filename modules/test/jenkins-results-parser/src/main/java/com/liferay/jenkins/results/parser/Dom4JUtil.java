@@ -86,9 +86,7 @@ public class Dom4JUtil {
 
 		xmlWriter.write(element);
 
-		String formattedContent = writer.toString();
-
-		return formattedContent.replace("<code> ", "<code>\n ");
+		return writer.toString();
 	}
 
 	public static Element getNewAnchorElement(

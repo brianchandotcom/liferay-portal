@@ -16,7 +16,6 @@ package com.liferay.calendar.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
-import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.search.CalendarBookingIndexer;
@@ -29,10 +28,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -51,7 +52,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -84,6 +85,8 @@ public class CalendarBookingIndexerTest {
 		_user = UserTestUtil.addUser();
 
 		setUpSearchContext(_group, _user);
+
+		_indexer = new CalendarBookingIndexer();
 	}
 
 	@After
@@ -94,33 +97,109 @@ public class CalendarBookingIndexerTest {
 	}
 
 	@Test
+	public void testIndexedFields() throws Exception {
+		setUpSearchContext(_group, TestPropsValues.getUser());
+
+		String originalTitle = "entity title";
+		String translatedTitle = "entitas neve";
+
+		addCalendarBooking(
+			new LocalizedValuesMap() {
+				{
+					put(LocaleUtil.US, originalTitle);
+					put(LocaleUtil.HUNGARY, translatedTitle);
+				}
+			});
+
+		String searchTerm = "nev";
+
+		assertSearchHitsLength(searchTerm, 1, LocaleUtil.HUNGARY);
+	}
+
+	@Test
+	public void testJapaneseTitle() throws Exception {
+		setUpSearchContext(_group, TestPropsValues.getUser());
+
+		String title = "新規作成";
+
+		addCalendarBooking(
+			new LocalizedValuesMap() {
+				{
+					put(LocaleUtil.JAPAN, title);
+				}
+			});
+
+		String word1 = "新規";
+		String word2 = "作成";
+		String prefix1 = "新";
+		String prefix2 = "作";
+
+		Stream<String> searchTerms = Stream.of(word1, word2, prefix1, prefix2);
+
+		searchTerms.forEach(searchTerm -> {
+			assertSearchHitsLength(searchTerm, 1, LocaleUtil.JAPAN);
+		});
+	}
+
+	@Test
+	public void testJapaneseTitleFullWordOnly() throws Exception {
+		setUpSearchContext(_group, TestPropsValues.getUser());
+
+		String full = "新規作成";
+		String partial1 = "新大阪";
+		String partial2 = "作戦大成功";
+
+		Stream<String> titles = Stream.of(full, partial1, partial2);
+
+		titles.forEach(title -> {
+			addCalendarBooking(
+				new LocalizedValuesMap() {
+					{
+						put(LocaleUtil.JAPAN, title);
+					}
+				});
+		});
+
+		String word1 = "新規";
+		String word2 = "作成";
+
+		Stream<String> searchTerms = Stream.of(word1, word2);
+
+		searchTerms.forEach(searchTerm -> {
+			assertSearchHitsLength(searchTerm, 1, LocaleUtil.JAPAN);
+		});
+	}
+
+	@Test
 	public void testSearch() throws Exception {
 		setUpSearchContext(_group, TestPropsValues.getUser());
 
-		Map<Locale, String> titleMap = new HashMap<>();
+		String title = RandomTestUtil.randomString();
 
-		titleMap.put(LocaleUtil.US, "calendar event");
-		titleMap.put(LocaleUtil.JAPAN, "カレンダーイベント");
+		addCalendarBooking(
+			new LocalizedValuesMap() {
+				{
+					put(LocaleUtil.US, title);
+				}
+			});
 
-		addCalendarBooking(titleMap);
-
-		//assertSearchHitsLength("calendar event", 1, LocaleUtil.US);
-		assertSearchHitsLength("カレンダーイベント", 1, LocaleUtil.JAPAN);
+		assertSearchHitsLength(title, 1, LocaleUtil.US);
 	}
 
 	@Test
 	public void testSearchNotAdmin() throws Exception {
 		setUpSearchContext(_group, _user);
 
-		Map<Locale, String> titleMap = new HashMap<>();
+		String title = RandomTestUtil.randomString();
 
-		titleMap.put(LocaleUtil.US, "calendar event");
-		titleMap.put(LocaleUtil.JAPAN, "カレンダーイベント");
+		addCalendarBooking(
+			new LocalizedValuesMap() {
+				{
+					put(LocaleUtil.US, title);
+				}
+			});
 
-		addCalendarBooking(titleMap);
-
-		//assertSearchHitsLength("calendar event", 1, LocaleUtil.US);
-		assertSearchHitsLength("カレンダーイベント", 1, LocaleUtil.JAPAN);
+		assertSearchHitsLength(title, 1, LocaleUtil.US);
 	}
 
 	protected static SearchContext getSearchContext(Group group, User user)
@@ -134,52 +213,59 @@ public class CalendarBookingIndexerTest {
 		return searchContext;
 	}
 
-	protected void addCalendarBooking(Map<Locale, String> titleMap)
-		throws PortalException {
+	protected void addCalendarBooking(LocalizedValuesMap titleMap) {
+		try {
+			ServiceContext serviceContext = new ServiceContext();
 
-		ServiceContext serviceContext = new ServiceContext();
+			CalendarResource calendarResource =
+				CalendarResourceUtil.getGroupCalendarResource(
+					_group.getGroupId(), serviceContext);
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getGroupCalendarResource(
-				_group.getGroupId(), serviceContext);
+			Calendar calendar = CalendarLocalServiceUtil.addCalendar(
+				_user.getUserId(), _group.getGroupId(),
+				calendarResource.getCalendarResourceId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), StringPool.UTC,
+				RandomTestUtil.randomInt(0, 255), false, false, false,
+				serviceContext);
 
-		Calendar calendar = CalendarLocalServiceUtil.addCalendar(
-			_user.getUserId(), _group.getGroupId(),
-			calendarResource.getCalendarResourceId(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), StringPool.UTC,
-			RandomTestUtil.randomInt(0, 255), false, false, false,
-			serviceContext);
+			long startTime = DateUtil.newTime() + RandomTestUtil.randomInt();
 
-		long startTime = DateUtil.newTime() + RandomTestUtil.randomInt();
+			long endTime = startTime + Time.HOUR;
 
-		long endTime = startTime + Time.HOUR;
+			HashMap<Locale, String> hashMap = new HashMap<>();
 
-		HashMap<Locale, String> hashMap = new HashMap<>();
-
-		CalendarBookingLocalServiceUtil.addCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), new long[0],
-			CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-			titleMap, hashMap, null, startTime, endTime, false, null, 0,
-			"email", 0, "email", serviceContext);
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(), new long[0],
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT, 0,
+				titleMap.getValues(), hashMap, null, startTime, endTime, false,
+				null, 0, "email", 0, "email", serviceContext);
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
 	}
 
 	protected void assertSearchHitsLength(
-			final String keywords, final int expectedLength, Locale locale)
-		throws Exception {
+		final String keywords, final int expectedLength, Locale locale) {
 
 		Locale currentLocale = _searchContext.getLocale();
 
-		_searchContext.setLocale(locale);
-		_searchContext.setKeywords(keywords);
+		try {
+			_searchContext.setLocale(locale);
+			_searchContext.setKeywords(keywords);
 
-		Indexer<CalendarBooking> indexer = new CalendarBookingIndexer();
+			Hits hits = _indexer.search(_searchContext);
 
-		Hits hits = indexer.search(_searchContext);
-
-		_searchContext.setLocale(currentLocale);
-
-		Assert.assertEquals(hits.toString(), expectedLength, hits.getLength());
+			Assert.assertEquals(
+				hits.toString(), expectedLength, hits.getLength());
+		}
+		catch (SearchException se) {
+			throw new RuntimeException(se);
+		}
+		finally {
+			_searchContext.setLocale(currentLocale);
+		}
 	}
 
 	protected void setUpPermissionThreadLocal() throws Exception {
@@ -216,6 +302,7 @@ public class CalendarBookingIndexerTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private Indexer<?> _indexer;
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
 	private SearchContext _searchContext;

@@ -451,15 +451,9 @@ public class DLFileEntryLocalServiceTest {
 		}
 	}
 
-	@Test
+	@Test(expected = NoSuchFolderException.class)
 	public void testMoveFileEntryToInvalidDLFolder() throws Exception {
-		Group destinationGroup = GroupTestUtil.addGroup();
 		DLFolder originFolder = DLTestUtil.addDLFolder(_group.getGroupId());
-		DLFolder destinationFolder = DLTestUtil.addDLFolder(
-			destinationGroup.getGroupId());
-		String title = StringUtil.randomString();
-		Map<String, DDMFormValues> ddmFormValuesMap = Collections.emptyMap();
-		InputStream inputStream = new ByteArrayInputStream(new byte[0]);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -467,32 +461,25 @@ public class DLFileEntryLocalServiceTest {
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), originFolder.getGroupId(),
 			originFolder.getRepositoryId(), originFolder.getFolderId(),
-			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
-			StringPool.BLANK, StringPool.BLANK,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			ddmFormValuesMap, null, inputStream, 0, serviceContext);
+			Collections.emptyMap(), null, new ByteArrayInputStream(new byte[0]),
+			0, serviceContext);
+
+		Group destinationGroup = GroupTestUtil.addGroup();
+
+		DLFolder destinationFolder = DLTestUtil.addDLFolder(
+			destinationGroup.getGroupId());
 
 		try {
 			DLFileEntryLocalServiceUtil.moveFileEntry(
 				TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
 				destinationFolder.getFolderId(), serviceContext);
-
-			Assert.fail();
 		}
-		catch (NoSuchFolderException nsfe) {
+		finally {
+			GroupLocalServiceUtil.deleteGroup(destinationGroup);
 		}
-
-		try {
-			DLFileEntryLocalServiceUtil.moveFileEntry(
-				TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(), -1,
-				serviceContext);
-
-			Assert.fail();
-		}
-		catch (NoSuchFolderException nsfe) {
-		}
-
-		GroupLocalServiceUtil.deleteGroup(destinationGroup);
 	}
 
 	protected DLFileEntry addAndApproveFileEntry(

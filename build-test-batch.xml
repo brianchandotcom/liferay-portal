@@ -409,7 +409,17 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<antcall inheritAll="false" target="compile" />
 
-			<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-@{app.server.type}" />
+			<if>
+				<equals arg1="@{app.server.type}" arg2="websphere" />
+				<then>
+					<antcall inheritAll="false" target="prepare-test-build-custom">
+						<param name="app.server.type" value="@{app.server.type}" />
+					</antcall>
+				</then>
+				<else>
+					<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-@{app.server.type}" />
+				</else>
+			</if>
 
 			<antcall inheritAll="false" target="prepare-portal-ext-properties" />
 
@@ -1621,7 +1631,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="resin" database.type="mysql" />
 	</target>
 
-	<target name="functional-smoke-tcserver26-mysql56-jdk8">
+	<target name="functional-smoke-tcserver31-mysql56-jdk8">
 		<run-functional-test app.server.type="tcserver" database.type="mysql" />
 	</target>
 
@@ -1687,6 +1697,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<target name="functional-upgrade-jboss70-mysql56-jdk8">
 		<run-functional-test app.server.type="jboss" database.type="mysql" />
+	</target>
+
+	<target name="functional-upgrade-tcserver31-mysql56-jdk8">
+		<run-functional-test app.server.type="tcserver" database.type="mysql" />
 	</target>
 
 	<target name="functional-upgrade-tomcat80-mariadb100-jdk8">

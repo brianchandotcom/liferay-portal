@@ -29,6 +29,7 @@ import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ModifiableServl
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ServletContextListenerExceptionAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ServletExceptionAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.registration.FilterRegistrationImpl;
+import com.liferay.portal.osgi.web.wab.extender.internal.registration.ListenerRegistrationComparator;
 import com.liferay.portal.osgi.web.wab.extender.internal.registration.ServletRegistrationImpl;
 
 import java.io.IOException;
@@ -805,7 +806,7 @@ public class WabBundleProcessor {
 	private final Set<ServiceRegistration<Filter>> _filterRegistrations =
 		new ConcurrentSkipListSet<>();
 	private final Set<ServiceRegistration<?>> _listenerRegistrations =
-		new ConcurrentSkipListSet<>();
+		new ConcurrentSkipListSet<>(new ListenerRegistrationComparator());
 	private final Logger _logger;
 	private ServiceReference<ServletContextHelperRegistration>
 		_servletContextHelperRegistrationServiceReference;

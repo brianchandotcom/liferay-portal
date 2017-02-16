@@ -24,7 +24,7 @@ page import="com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator" %
 page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
 page import="com.liferay.portal.security.sso.openid.configuration.OpenIdConfiguration" %><%@
 page import="com.liferay.portal.security.sso.openid.constants.OpenIdConstants" %><%@
-page import="com.liferay.portal.settings.authentication.openid.web.internal.portlet.constants.PortalSettingsOpenIdConstants"%>
+page import="com.liferay.portal.settings.authentication.openid.web.internal.portlet.constants.PortalSettingsOpenIdConstants" %>
 
 <%@ page import="javax.portlet.ActionRequest" %>
 

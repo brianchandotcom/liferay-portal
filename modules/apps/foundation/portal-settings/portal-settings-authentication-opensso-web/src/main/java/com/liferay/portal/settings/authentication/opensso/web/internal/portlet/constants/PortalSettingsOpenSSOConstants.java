@@ -19,6 +19,6 @@ package com.liferay.portal.settings.authentication.opensso.web.internal.portlet.
  */
 public class PortalSettingsOpenSSOConstants {
 
-	public static String PARAMETER_NAMESPACE = "opensso_";
+	public static final String PARAMETER_NAMESPACE = "opensso_";
 
 }

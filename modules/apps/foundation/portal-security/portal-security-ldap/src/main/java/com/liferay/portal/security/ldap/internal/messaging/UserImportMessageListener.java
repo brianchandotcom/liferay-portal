@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
@@ -65,8 +64,8 @@ public class UserImportMessageListener extends BaseMessageListener {
 
 		String className = clazz.getName();
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			className, className, interval, TimeUnit.MINUTE);
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null, interval, TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -164,5 +163,8 @@ public class UserImportMessageListener extends BaseMessageListener {
 		_ldapImportConfigurationProvider;
 	private LDAPUserImporter _ldapUserImporter;
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

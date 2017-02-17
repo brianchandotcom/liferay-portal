@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.kernel.service.TrashEntryLocalService;
 
@@ -51,9 +50,9 @@ public class CheckEntryMessageListener extends BaseMessageListener {
 
 		String className = clazz.getName();
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			className, className, PropsValues.TRASH_ENTRY_CHECK_INTERVAL,
-			TimeUnit.MINUTE);
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
+			PropsValues.TRASH_ENTRY_CHECK_INTERVAL, TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -97,5 +96,8 @@ public class CheckEntryMessageListener extends BaseMessageListener {
 
 	private SchedulerEngineHelper _schedulerEngineHelper;
 	private TrashEntryLocalService _trashEntryLocalService;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

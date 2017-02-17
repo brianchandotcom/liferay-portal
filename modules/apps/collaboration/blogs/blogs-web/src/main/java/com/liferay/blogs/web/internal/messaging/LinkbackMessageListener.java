@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.linkback.LinkbackProducerUtil;
 
 import java.util.Map;
@@ -58,9 +57,9 @@ public class LinkbackMessageListener extends BaseMessageListener {
 
 		String className = clazz.getName();
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			className, className, _blogsConfiguration.linkbackJobInterval(),
-			TimeUnit.MINUTE);
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
+			_blogsConfiguration.linkbackJobInterval(), TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -103,5 +102,8 @@ public class LinkbackMessageListener extends BaseMessageListener {
 	private LinkbackConsumer _linkbackConsumer;
 
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

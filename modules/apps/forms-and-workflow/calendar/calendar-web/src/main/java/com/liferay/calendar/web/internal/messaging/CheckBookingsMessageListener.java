@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -46,8 +45,8 @@ public class CheckBookingsMessageListener extends BaseMessageListener {
 
 		String className = clazz.getName();
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			className, className,
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
 			CalendarServiceConfigurationValues.
 				CALENDAR_NOTIFICATION_CHECK_INTERVAL,
 			TimeUnit.MINUTE);
@@ -94,5 +93,8 @@ public class CheckBookingsMessageListener extends BaseMessageListener {
 
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

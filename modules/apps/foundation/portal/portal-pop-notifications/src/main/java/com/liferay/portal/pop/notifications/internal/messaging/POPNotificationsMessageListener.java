@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -73,8 +72,8 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 
 			String className = clazz.getName();
 
-			Trigger trigger = TriggerFactoryUtil.createTrigger(
-				className, className, 1, TimeUnit.MINUTE);
+			Trigger trigger = _triggerFactory.createTrigger(
+				className, className, null, null, 1, TimeUnit.MINUTE);
 
 			SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 				className, trigger);
@@ -268,5 +267,8 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 	private final Map<MessageListener, MessageListenerWrapper>
 		_messageListenerWrappers = new ConcurrentHashMap<>();
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

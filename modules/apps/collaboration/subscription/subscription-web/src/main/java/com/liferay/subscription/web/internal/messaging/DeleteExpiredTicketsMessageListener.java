@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.subscription.web.configuration.SubscriptionConfiguration;
@@ -61,8 +61,8 @@ public class DeleteExpiredTicketsMessageListener extends BaseMessageListener {
 
 		String className = clazz.getName();
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			className, className,
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
 			_subscriptionConfiguration.deleteExpiredTicketsInterval(),
 			TimeUnit.HOUR);
 
@@ -118,5 +118,8 @@ public class DeleteExpiredTicketsMessageListener extends BaseMessageListener {
 
 	@Reference
 	private TicketLocalService _ticketLocalService;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

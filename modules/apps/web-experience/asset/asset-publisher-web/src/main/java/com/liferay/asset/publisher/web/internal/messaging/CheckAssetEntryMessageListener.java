@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -51,8 +50,8 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 
 		String className = clazz.getName();
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			className, className,
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
 			AssetPublisherWebConfigurationValues.CHECK_INTERVAL, TimeUnit.HOUR);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
@@ -97,5 +96,8 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 
 	private AssetPublisherUtil _assetPublisherUtil;
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

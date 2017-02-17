@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.sync.service.SyncDLFileVersionDiffLocalService;
 import com.liferay.sync.service.SyncDLObjectLocalService;
@@ -58,8 +57,8 @@ public class SyncMaintenanceMessageListener extends BaseMessageListener {
 
 		String className = clazz.getName();
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			className, className, 1, TimeUnit.HOUR);
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null, 1, TimeUnit.HOUR);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -171,5 +170,8 @@ public class SyncMaintenanceMessageListener extends BaseMessageListener {
 	private SyncDLFileVersionDiffLocalService
 		_syncDLFileVersionDiffLocalService;
 	private SyncDLObjectLocalService _syncDLObjectLocalService;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -72,8 +71,8 @@ public class DraftExportImportConfigurationMessageListener
 
 		String className = clazz.getName();
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			className, className,
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
 			ExportImportWebConfigurationValues.
 				DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL,
 			TimeUnit.HOUR);
@@ -290,5 +289,8 @@ public class DraftExportImportConfigurationMessageListener
 		_exportImportConfigurationLocalService;
 	private GroupLocalService _groupLocalService;
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

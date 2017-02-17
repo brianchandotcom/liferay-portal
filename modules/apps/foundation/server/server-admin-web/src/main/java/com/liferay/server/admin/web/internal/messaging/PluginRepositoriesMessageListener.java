@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.server.admin.web.configuration.PluginRepositoriesConfiguration;
@@ -60,8 +59,9 @@ public class PluginRepositoriesMessageListener extends BaseMessageListener {
 
 		String className = clazz.getName();
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			className, className, pluginRepositoriesConfiguration.interval(),
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
+			pluginRepositoriesConfiguration.interval(),
 			pluginRepositoriesConfiguration.timeUnit());
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
@@ -100,5 +100,8 @@ public class PluginRepositoriesMessageListener extends BaseMessageListener {
 	}
 
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

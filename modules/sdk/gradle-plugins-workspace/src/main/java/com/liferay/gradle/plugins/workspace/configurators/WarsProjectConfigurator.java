@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.workspace.internal.configurators;
+package com.liferay.gradle.plugins.workspace.configurators;
 
-import com.liferay.gradle.plugins.LiferayThemePlugin;
-import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
+import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 
 import groovy.lang.Closure;
@@ -32,25 +32,30 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
-import org.gradle.api.Task;
-import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
-import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.ExtensionAware;
+import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.bundling.War;
 
 /**
  * @author Andrea Di Giorgi
- * @author David Truong
  */
-public class ThemesProjectConfigurator extends BaseProjectConfigurator {
+public class WarsProjectConfigurator extends BaseProjectConfigurator {
 
-	public ThemesProjectConfigurator(Settings settings) {
+	public WarsProjectConfigurator(Settings settings) {
 		super(settings);
+
+		_defaultRepositoryEnabled = GradleUtil.getProperty(
+			settings,
+			WorkspacePlugin.PROPERTY_PREFIX + _NAME +
+				".default.repository.enabled",
+			_DEFAULT_REPOSITORY_ENABLED);
 	}
 
 	@Override
@@ -58,19 +63,30 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
-		GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
+		GradleUtil.applyPlugin(project, WarPlugin.class);
 
-		_configureLiferay(project, workspaceExtension);
+		War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
 
-		Task assembleTask = GradleUtil.getTask(
-			project, BasePlugin.ASSEMBLE_TASK_NAME);
+		if (isDefaultRepositoryEnabled()) {
+			GradleUtil.addDefaultRepositories(project);
+		}
 
-		_configureRootTaskDistBundle(assembleTask);
+		_addTaskDeploy(war, workspaceExtension);
+
+		_configureRootTaskDistBundle(war);
 	}
 
 	@Override
 	public String getName() {
 		return _NAME;
+	}
+
+	public boolean isDefaultRepositoryEnabled() {
+		return _defaultRepositoryEnabled;
+	}
+
+	public void setDefaultRepositoryEnabled(boolean defaultRepositoryEnabled) {
+		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
 	@Override
@@ -86,18 +102,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 						Path dirPath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					Path dirNamePath = dirPath.getFileName();
-
-					String dirName = dirNamePath.toString();
-
-					if (dirName.equals("build") ||
-						dirName.equals("build_gradle") ||
-						dirName.equals("node_modules")) {
-
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					if (Files.exists(dirPath.resolve("package.json"))) {
+					if (Files.isDirectory(dirPath.resolve("src"))) {
 						projectDirs.add(dirPath.toFile());
 
 						return FileVisitResult.SKIP_SUBTREE;
@@ -111,51 +116,53 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		return projectDirs;
 	}
 
-	private void _configureLiferay(
-		Project project, WorkspaceExtension workspaceExtension) {
+	private Copy _addTaskDeploy(
+		War war, final WorkspaceExtension workspaceExtension) {
 
-		LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
+		Copy copy = GradleUtil.addTask(
+			war.getProject(), LiferayBasePlugin.DEPLOY_TASK_NAME, Copy.class);
 
-		liferayExtension.setAppServerParentDir(workspaceExtension.getHomeDir());
+		copy.from(war);
+
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(workspaceExtension.getHomeDir(), "deploy");
+				}
+
+			});
+
+		copy.setDescription("Assembles the project and deploys it to Liferay.");
+		copy.setGroup(BasePlugin.BUILD_GROUP);
+
+		return copy;
 	}
 
-	private void _configureRootTaskDistBundle(final Task assembleTask) {
-		Project project = assembleTask.getProject();
+	private void _configureRootTaskDistBundle(final War war) {
+		Project project = war.getProject();
 
 		Copy copy = (Copy)GradleUtil.getTask(
 			project.getRootProject(),
 			RootProjectConfigurator.DIST_BUNDLE_TASK_NAME);
 
-		copy.dependsOn(assembleTask);
-
 		copy.into(
-			"osgi/modules",
+			"osgi/war",
 			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {
-					Project project = assembleTask.getProject();
-
-					ConfigurableFileCollection configurableFileCollection =
-						project.files(_getWarFile(project));
-
-					configurableFileCollection.builtBy(assembleTask);
-
-					copySpec.from(_getWarFile(project));
+					copySpec.from(war);
 				}
 
 			});
 	}
 
-	private File _getWarFile(Project project) {
-		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
-			project, BasePluginConvention.class);
+	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
 
-		return project.file(
-			"dist/" + basePluginConvention.getArchivesBaseName() + ".war");
-	}
+	private static final String _NAME = "wars";
 
-	private static final String _NAME = "themes";
+	private boolean _defaultRepositoryEnabled;
 
 }

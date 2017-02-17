@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.workspace.internal.configurators;
+package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerPlugin;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
@@ -38,13 +39,16 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.CopySourceSpec;
 import org.gradle.api.initialization.Settings;
+import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.jvm.tasks.Jar;
 
 /**
@@ -61,11 +65,15 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			WorkspacePlugin.PROPERTY_PREFIX + _NAME +
 				".default.repository.enabled",
 			_DEFAULT_REPOSITORY_ENABLED);
+		_jspPrecompileEnabled = GradleUtil.getProperty(
+			settings,
+			WorkspacePlugin.PROPERTY_PREFIX + _NAME + ".jsp.precompile.enabled",
+			_DEFAULT_JSP_PRECOMPILE_ENABLED);
 	}
 
 	@Override
 	public void apply(Project project) {
-		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
+		final WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
 		_applyPlugins(project);
@@ -78,8 +86,21 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		_configureTaskRunPoshi(project);
 
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+		final JavaCompile compileJSPTask = (JavaCompile)GradleUtil.getTask(
+			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
 
-		_configureRootTaskDistBundle(jar);
+		_configureRootTaskDistBundle(jar, compileJSPTask);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					_configureTaskCompileJSP(
+						compileJSPTask, workspaceExtension);
+				}
+
+			});
 	}
 
 	@Override
@@ -91,8 +112,16 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		return _defaultRepositoryEnabled;
 	}
 
+	public boolean isJspPrecompileEnabled() {
+		return _jspPrecompileEnabled;
+	}
+
 	public void setDefaultRepositoryEnabled(boolean defaultRepositoryEnabled) {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
+	}
+
+	public void setJspPrecompileEnabled(boolean jspPrecompileEnabled) {
+		_jspPrecompileEnabled = jspPrecompileEnabled;
 	}
 
 	@Override
@@ -140,8 +169,10 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		liferayExtension.setAppServerParentDir(workspaceExtension.getHomeDir());
 	}
 
-	private void _configureRootTaskDistBundle(final Jar jar) {
-		Project project = jar.getProject();
+	private void _configureRootTaskDistBundle(
+		final Jar jar, final JavaCompile compileJSPTask) {
+
+		final Project project = jar.getProject();
 
 		Copy copy = (Copy)GradleUtil.getTask(
 			project.getRootProject(),
@@ -157,6 +188,40 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				}
 
 			});
+
+		if (isJspPrecompileEnabled()) {
+			copy.into(
+				new Closure<String>(project) {
+
+					@SuppressWarnings("unused")
+					public String doCall() {
+						return _getCompileJSPDestinationDirName(project);
+					}
+
+				},
+				new Closure<Void>(project) {
+
+					@SuppressWarnings("unused")
+					public void doCall(CopySourceSpec copySourceSpec) {
+						copySourceSpec.from(compileJSPTask);
+					}
+
+				});
+		}
+	}
+
+	private void _configureTaskCompileJSP(
+		JavaCompile compileJSPTask, WorkspaceExtension workspaceExtension) {
+
+		if (!isJspPrecompileEnabled()) {
+			return;
+		}
+
+		File dir = new File(
+			workspaceExtension.getHomeDir(),
+			_getCompileJSPDestinationDirName(compileJSPTask.getProject()));
+
+		compileJSPTask.setDestinationDir(dir);
 	}
 
 	private void _configureTaskRunPoshi(Project project) {
@@ -166,10 +231,21 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		task.dependsOn(LiferayBasePlugin.DEPLOY_TASK_NAME);
 	}
 
+	private String _getCompileJSPDestinationDirName(Project project) {
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
+
+		return "work/" + basePluginConvention.getArchivesBaseName() + "-" +
+			project.getVersion();
+	}
+
+	private static final boolean _DEFAULT_JSP_PRECOMPILE_ENABLED = false;
+
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
 
 	private static final String _NAME = "modules";
 
 	private boolean _defaultRepositoryEnabled;
+	private boolean _jspPrecompileEnabled;
 
 }

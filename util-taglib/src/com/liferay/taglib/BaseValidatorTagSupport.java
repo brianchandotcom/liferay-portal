@@ -16,14 +16,13 @@ package com.liferay.taglib;
 
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.taglib.aui.FormTag;
 import com.liferay.taglib.aui.ValidatorTagImpl;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 /**
@@ -75,18 +74,11 @@ public abstract class BaseValidatorTagSupport extends IncludeTag {
 			return;
 		}
 
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
+		FormTag formTag = (FormTag)findAncestorWithClass(this, FormTag.class);
 
-		Map<String, List<ValidatorTag>> validatorTagsMap =
-			(Map<String, List<ValidatorTag>>)request.getAttribute(
-				"aui:form:validatorTagsMap");
-
-		if (validatorTagsMap != null) {
-			List<ValidatorTag> validatorTags = ListUtil.fromMapValues(
-				_validatorTags);
-
-			validatorTagsMap.put(getInputName(), validatorTags);
+		if (formTag != null) {
+			formTag.addValidatorTags(
+				getInputName(), ListUtil.fromMapValues(_validatorTags));
 		}
 	}
 

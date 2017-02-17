@@ -9,7 +9,15 @@
 			</then>
 		</while>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<if>
+			<equals arg1="${configurationName}" arg2="Dynamic Data Lists" />
+			<then>
+				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS_2" />
+			</then>
+			<else>
+				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+			</else>
+		</if>
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
@@ -41,7 +49,15 @@
 
 		<var name="key_rowEntry" value="${configurationName}" />
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<if>
+			<equals arg1="${configurationName}" arg2="Dynamic Data Lists" />
+			<then>
+				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS_2" />
+			</then>
+			<else>
+				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+			</else>
+		</if>
 
 		<execute function="AssertClick" locator1="MenuItem#RESET_DEFAULT_VALUES" value1="Reset Default Values" />
 

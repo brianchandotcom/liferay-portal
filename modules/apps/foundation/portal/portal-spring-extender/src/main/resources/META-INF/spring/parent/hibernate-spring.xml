@@ -7,6 +7,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
+	<bean class="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper" factory-method="createVerifySessionFactoryWrapper" id="liferaySessionFactory">
+		<constructor-arg>
+			<bean class="com.liferay.portal.spring.extender.internal.hibernate.session.ModuleSessionFactory">
+				<property name="sessionFactoryImplementor" ref="liferayHibernateSessionFactory" />
+			</bean>
+		</constructor-arg>
+	</bean>
 	<bean class="com.liferay.portal.spring.extender.internal.hibernate.configuration.ModuleHibernateConfiguration" id="liferayHibernateSessionFactory">
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="hibernateProperties">
@@ -14,13 +21,6 @@
 				<prop key="javax.persistence.validation.mode">none</prop>
 			</props>
 		</property>
-	</bean>
-	<bean class="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper" factory-method="createVerifySessionFactoryWrapper" id="liferaySessionFactory">
-		<constructor-arg>
-			<bean class="com.liferay.portal.spring.extender.internal.hibernate.session.ModuleSessionFactory">
-				<property name="sessionFactoryImplementor" ref="liferayHibernateSessionFactory" />
-			</bean>
-		</constructor-arg>
 	</bean>
 	<bean class="com.liferay.portal.spring.hibernate.PortletTransactionManagerFactory" factory-method="create" id="liferayTransactionManager">
 		<constructor-arg ref="liferayDataSource" />

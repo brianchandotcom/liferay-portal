@@ -1057,7 +1057,7 @@ files.
 - [LPS-70494]: Update the [Liferay Gradle Plugins] dependency to version 3.2.4.
 
 ### Fixed
-- [LPS-67863]: Exclude test projects from `gradlew baseline -PsyncRelease`
+- [LPS-67863]: Exclude test projects from the `gradlew baseline -PsyncRelease`
 process.
 
 ## 2.4.34 - 2017-02-16
@@ -1066,11 +1066,12 @@ process.
 - [LPS-70677]: Update the [Liferay Gradle Plugins] dependency to version 3.2.5.
 
 ### Removed
-- [LPS-70699]: Disable update check when building themes.
+- [LPS-70699]: Disable the update check when building themes.
 
 ### Removed
 - [LPS-70677]: Remove exclusion of `com.liferay.portal` transitive dependencies
-from the `com.liferay.jasper.jspc` default dependency.
+from the `com.liferay.jasper.jspc` default dependency in the `jspCTool`
+configuration.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

@@ -102,10 +102,6 @@ public class ServiceContextFactory {
 
 			serviceContext.setScopeGroupId(guestGroup.getGroupId());
 
-			serviceContext.setPlid(
-				LayoutLocalServiceUtil.getDefaultPlid(
-					serviceContext.getScopeGroupId(), false));
-
 			User user = null;
 
 			try {

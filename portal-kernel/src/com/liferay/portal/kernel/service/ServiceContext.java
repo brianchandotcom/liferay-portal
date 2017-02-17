@@ -123,7 +123,11 @@ public class ServiceContext implements Cloneable, Serializable {
 			getPathFriendlyURLPrivateUser());
 		serviceContext.setPathFriendlyURLPublic(getPathFriendlyURLPublic());
 		serviceContext.setPathMain(getPathMain());
-		serviceContext.setPlid(getPlid());
+
+		if (_plid != null) {
+			serviceContext.setPlid(_plid);
+		}
+
 		serviceContext.setPortalURL(getPortalURL());
 		serviceContext.setPortletPreferencesIds(getPortletPreferencesIds());
 		serviceContext.setRemoteAddr(getRemoteAddr());
@@ -545,6 +549,10 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @return the portal layout ID of the current page
 	 */
 	public long getPlid() {
+		if (_plid == null) {
+			_plid = LayoutLocalServiceUtil.getDefaultPlid(_scopeGroupId, false);
+		}
+
 		return _plid;
 	}
 
@@ -1565,7 +1573,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private String _pathFriendlyURLPrivateUser;
 	private String _pathFriendlyURLPublic;
 	private String _pathMain;
-	private long _plid;
+	private Long _plid;
 	private String _portalURL;
 	private String _portletId;
 	private PortletPreferencesIds _portletPreferencesIds;

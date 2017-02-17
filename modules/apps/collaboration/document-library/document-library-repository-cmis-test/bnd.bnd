@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Document Library Repository CMIS Test
-Bundle-SymbolicName: com.liferay.document.library.repository.cmis.test
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Document Library
--includeresource: @lib/chemistry-opencmis-commons-api.jar!/org/apache/chemistry/opencmis/commons/enums/CapabilityQuery.class

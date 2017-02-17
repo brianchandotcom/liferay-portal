@@ -2683,12 +2683,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return isExcludedPath(property, path, -1, parameter);
 	}
 
-	protected boolean isModulesApp(String absolutePath) {
-		if (((_projectPathPrefix != null) &&
-				(_projectPathPrefix.startsWith(":apps:") ||
-				 _projectPathPrefix.startsWith(":private:apps")) ||
-			absolutePath.contains("/modules/apps/") ||
-			absolutePath.contains("/modules/private/apps/"))) {
+	protected boolean isModulesApp(String absolutePath, boolean privateOnly) {
+		if (absolutePath.contains("/modules/private/apps/") ||
+			(!privateOnly && absolutePath.contains("/modules/apps/"))) {
+
+			return true;
+		}
+
+		if (_projectPathPrefix == null) {
+			return false;
+		}
+
+		if (_projectPathPrefix.startsWith(":private:apps") ||
+			(!privateOnly && _projectPathPrefix.startsWith(":apps:"))) {
 
 			return true;
 		}
@@ -2724,17 +2731,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return absolutePath.contains("/modules/");
-	}
-
-	protected boolean isModulesPrivateApp(String absolutePath) {
-		if (((_projectPathPrefix != null) &&
-				_projectPathPrefix.startsWith(":private:apps")) ||
-			absolutePath.contains("/modules/private/apps/")) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	protected void postFormat() throws Exception {

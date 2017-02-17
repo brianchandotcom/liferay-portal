@@ -116,7 +116,9 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 
 			String configuration = dependency.substring(0, pos);
 
-			if (configuration.equals("compile") && isModulesApp(absolutePath)) {
+			if (configuration.equals("compile") &&
+				isModulesApp(absolutePath, false)) {
+
 				dependency = StringUtil.replaceFirst(
 					dependency, "compile", "provided");
 			}

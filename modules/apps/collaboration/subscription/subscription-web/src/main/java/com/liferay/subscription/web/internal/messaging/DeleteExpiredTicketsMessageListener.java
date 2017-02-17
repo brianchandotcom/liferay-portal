@@ -17,14 +17,17 @@ package com.liferay.subscription.web.internal.messaging;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
@@ -44,10 +47,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.subscription.web.configuration.SubscriptionConfiguration",
-	immediate = true, service = BaseSchedulerEntryMessageListener.class
+	immediate = true
 )
-public class DeleteExpiredTicketsMessageListener
-	extends BaseSchedulerEntryMessageListener {
+public class DeleteExpiredTicketsMessageListener extends BaseMessageListener {
 
 	@Activate
 	@Modified
@@ -55,14 +57,20 @@ public class DeleteExpiredTicketsMessageListener
 		_subscriptionConfiguration = ConfigurableUtil.createConfigurable(
 			SubscriptionConfiguration.class, properties);
 
-		schedulerEntryImpl.setTrigger(
-			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(),
-				_subscriptionConfiguration.deleteExpiredTicketsInterval(),
-				TimeUnit.HOUR));
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		Trigger trigger = TriggerFactoryUtil.createTrigger(
+			className, className,
+			_subscriptionConfiguration.deleteExpiredTicketsInterval(),
+			TimeUnit.HOUR);
+
+		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+			className, trigger);
 
 		_schedulerEngineHelper.register(
-			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate

@@ -15,11 +15,14 @@
 package com.liferay.twitter.internal.model.listener;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.twitter.configuration.TwitterGroupServiceConfiguration;
@@ -42,8 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = SynchronizeTwitterMessageListener.class
 )
-public class SynchronizeTwitterMessageListener
-	extends BaseSchedulerEntryMessageListener {
+public class SynchronizeTwitterMessageListener extends BaseMessageListener {
 
 	@Activate
 	@Modified
@@ -51,15 +53,20 @@ public class SynchronizeTwitterMessageListener
 		_twitterGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
 			TwitterGroupServiceConfiguration.class, properties);
 
-		schedulerEntryImpl.setTrigger(
-			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(),
-				_twitterGroupServiceConfiguration.
-					twitterSynchronizationInterval(),
-				TimeUnit.MINUTE));
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		Trigger trigger = TriggerFactoryUtil.createTrigger(
+			className, className,
+			_twitterGroupServiceConfiguration.twitterSynchronizationInterval(),
+			TimeUnit.MINUTE);
+
+		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+			className, trigger);
 
 		_schedulerEngineHelper.register(
-			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Override

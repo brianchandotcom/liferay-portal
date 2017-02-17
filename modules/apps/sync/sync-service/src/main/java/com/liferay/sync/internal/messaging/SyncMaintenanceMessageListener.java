@@ -23,11 +23,14 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -44,21 +47,24 @@ import org.osgi.service.component.annotations.Reference;
  * @author Dennis Ju
  */
 @Component(immediate = true, service = SyncMaintenanceMessageListener.class)
-public class SyncMaintenanceMessageListener
-	extends BaseSchedulerEntryMessageListener {
+public class SyncMaintenanceMessageListener extends BaseMessageListener {
 
 	public static final String DESTINATION_NAME =
 		"liferay/sync_maintenance_processor";
 
 	@Activate
 	protected void activate() {
-		schedulerEntryImpl.setTrigger(
-			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(), 1,
-				TimeUnit.HOUR));
+		Class<?> clazz = getClass();
 
-		_schedulerEngineHelper.register(
-			this, schedulerEntryImpl, DESTINATION_NAME);
+		String className = clazz.getName();
+
+		Trigger trigger = TriggerFactoryUtil.createTrigger(
+			className, className, 1, TimeUnit.HOUR);
+
+		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+			className, trigger);
+
+		_schedulerEngineHelper.register(this, schedulerEntry, DESTINATION_NAME);
 	}
 
 	@Deactivate

@@ -17,12 +17,15 @@ package com.liferay.blogs.web.internal.messaging;
 import com.liferay.blogs.configuration.BlogsConfiguration;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 
@@ -41,8 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.blogs.configuration.BlogsConfiguration",
 	immediate = true, service = CheckEntryMessageListener.class
 )
-public class CheckEntryMessageListener
-	extends BaseSchedulerEntryMessageListener {
+public class CheckEntryMessageListener extends BaseMessageListener {
 
 	@Activate
 	@Modified
@@ -50,13 +52,19 @@ public class CheckEntryMessageListener
 		_blogsConfiguration = ConfigurableUtil.createConfigurable(
 			BlogsConfiguration.class, properties);
 
-		schedulerEntryImpl.setTrigger(
-			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(),
-				_blogsConfiguration.entryCheckInterval(), TimeUnit.MINUTE));
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		Trigger trigger = TriggerFactoryUtil.createTrigger(
+			className, className, _blogsConfiguration.entryCheckInterval(),
+			TimeUnit.MINUTE);
+
+		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+			className, trigger);
 
 		_schedulerEngineHelper.register(
-			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate

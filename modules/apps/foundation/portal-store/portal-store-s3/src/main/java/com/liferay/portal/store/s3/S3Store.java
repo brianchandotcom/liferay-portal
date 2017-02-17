@@ -53,11 +53,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -836,7 +839,7 @@ public class S3Store extends BaseStore {
 	private volatile TriggerFactory _triggerFactory;
 
 	private static class AbortedMultipartUploadCleaner
-		extends BaseSchedulerEntryMessageListener {
+		extends BaseMessageListener {
 
 		public AbortedMultipartUploadCleaner(
 			String bucketName, TransferManager transferManager,
@@ -850,14 +853,18 @@ public class S3Store extends BaseStore {
 		}
 
 		public void start() {
-			schedulerEntryImpl.setTrigger(null);
+			Class<?> clazz = getClass();
 
-			_triggerFactory.createTrigger(
-				getEventListenerClass(), getEventListenerClass(), null, null, 1,
-				TimeUnit.DAY);
+			String className = clazz.getName();
+
+			Trigger trigger = _triggerFactory.createTrigger(
+				className, className, null, null, 1, TimeUnit.DAY);
+
+			SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+				className, trigger);
 
 			_schedulerEngineHelper.register(
-				this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+				this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 		}
 
 		public void stop() {

@@ -3136,6 +3136,24 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return excludesList.toArray(new String[excludesList.size()]);
 	}
 
+	private String _getProjectPathPrefix() throws Exception {
+		if (!subrepository) {
+			return null;
+		}
+
+		File file = getFile("gradle.properties", PORTAL_MAX_DIR_LEVEL);
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		Properties properties = new Properties();
+
+		properties.load(new FileInputStream(file));
+
+		return properties.getProperty("project.path.prefix");
+	}
+
 	private void _init() {
 		try {
 			_sourceFormatterHelper = new SourceFormatterHelper(
@@ -3146,20 +3164,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			portalSource = _isPortalSource();
 			subrepository = _isSubrepository();
 
-			if (subrepository) {
-				File file = getFile("gradle.properties", PORTAL_MAX_DIR_LEVEL);
-
-				if (file.exists()) {
-					Properties properties = new Properties();
-
-					InputStream inputStream = new FileInputStream(file);
-
-					properties.load(inputStream);
-
-					_projectPathPrefix = properties.getProperty(
-						"project.path.prefix");
-				}
-			}
+			_projectPathPrefix = _getProjectPathPrefix();
 
 			_sourceFormatterMessagesMap = new HashMap<>();
 		}

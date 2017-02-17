@@ -458,6 +458,10 @@ public class DDLFormEmailNotificationSender {
 	protected String renderDDMFormFieldValue(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
+		if (ddmFormFieldValue.getValue() == null) {
+			return StringPool.BLANK;
+		}
+
 		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
 				ddmFormFieldValue.getType());

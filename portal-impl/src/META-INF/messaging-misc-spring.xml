@@ -11,15 +11,8 @@
 
 	<!-- Listeners -->
 
-	<bean class="com.liferay.portal.messaging.async.AsyncMessageListener" id="messageListener.async_service" />
 	<bean class="com.liferay.portal.convert.messaging.ConvertProcessMessageListener" id="messageListener.convert_process" />
-	<bean class="com.liferay.portlet.documentlibrary.messaging.AudioProcessorMessageListener" id="messageListener.document_library_audio_processor" />
-	<bean class="com.liferay.portlet.documentlibrary.messaging.ImageProcessorMessageListener" id="messageListener.document_library_image_processor" />
-	<bean class="com.liferay.portlet.documentlibrary.messaging.PDFProcessorMessageListener" id="messageListener.document_library_pdf_processor" />
-	<bean class="com.liferay.portlet.documentlibrary.messaging.RawMetadataProcessorMessageListener" id="messageListener.document_library_raw_metadata_processor" />
-	<bean class="com.liferay.portlet.documentlibrary.messaging.VideoProcessorMessageListener" id="messageListener.document_library_video_processor" />
 	<bean class="com.liferay.portal.deploy.hot.messaging.HotDeployMessageListener" id="messageListener.hot_deploy" />
-	<bean class="com.liferay.portal.liveusers.messaging.LiveUsersMessageListener" id="messageListener.live_users" />
 	<bean class="com.liferay.portal.kernel.cluster.messaging.ClusterBridgeMessageListener" id="messageListener.live_users_cluster">
 		<property name="priority">
 			<util:constant static-field="com.liferay.portal.kernel.cluster.Priority.LEVEL5" />
@@ -30,6 +23,13 @@
 			<bean class="com.liferay.portlet.messageboards.messaging.MailingListMessageListener" />
 		</property>
 	</bean>
+	<bean class="com.liferay.portal.liveusers.messaging.LiveUsersMessageListener" id="messageListener.live_users" />
+	<bean class="com.liferay.portal.messaging.async.AsyncMessageListener" id="messageListener.async_service" />
+	<bean class="com.liferay.portlet.documentlibrary.messaging.AudioProcessorMessageListener" id="messageListener.document_library_audio_processor" />
+	<bean class="com.liferay.portlet.documentlibrary.messaging.ImageProcessorMessageListener" id="messageListener.document_library_image_processor" />
+	<bean class="com.liferay.portlet.documentlibrary.messaging.PDFProcessorMessageListener" id="messageListener.document_library_pdf_processor" />
+	<bean class="com.liferay.portlet.documentlibrary.messaging.RawMetadataProcessorMessageListener" id="messageListener.document_library_raw_metadata_processor" />
+	<bean class="com.liferay.portlet.documentlibrary.messaging.VideoProcessorMessageListener" id="messageListener.document_library_video_processor" />
 
 	<!-- Configurator -->
 

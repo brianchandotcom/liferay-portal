@@ -14,14 +14,6 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean class="com.liferay.portal.kernel.process.ProcessExecutorUtil" id="com.liferay.portal.kernel.process.ProcessExecutorUtil">
-		<property name="processExecutor">
-			<bean class="com.liferay.portal.fabric.FabricProcessExecutorFactory" factory-method="createFabricProcessExecutor">
-				<constructor-arg ref="com.liferay.portal.fabric.agent.FabricAgentRegistry" />
-				<constructor-arg ref="com.liferay.portal.kernel.process.local.LocalProcessExecutor" />
-			</bean>
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.fabric.server.FabricServerUtil">
 		<property name="fabricServer">
 			<bean class="com.liferay.portal.fabric.netty.server.NettyFabricServer">
@@ -29,6 +21,14 @@
 				<constructor-arg>
 					<bean class="com.liferay.portal.fabric.netty.server.NettyFabricServerConfig" />
 				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	<bean class="com.liferay.portal.kernel.process.ProcessExecutorUtil" id="com.liferay.portal.kernel.process.ProcessExecutorUtil">
+		<property name="processExecutor">
+			<bean class="com.liferay.portal.fabric.FabricProcessExecutorFactory" factory-method="createFabricProcessExecutor">
+				<constructor-arg ref="com.liferay.portal.fabric.agent.FabricAgentRegistry" />
+				<constructor-arg ref="com.liferay.portal.kernel.process.local.LocalProcessExecutor" />
 			</bean>
 		</property>
 	</bean>

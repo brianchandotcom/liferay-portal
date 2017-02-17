@@ -7,10 +7,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy" id="counterDataSource">
-		<property name="targetDataSource" ref="counterDataSourceImpl" />
-	</bean>
 	<bean class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean" id="counterDataSourceImpl">
 		<property name="propertyPrefixLookup" value="counter.jdbc.prefix" />
+	</bean>
+	<bean class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy" id="counterDataSource">
+		<property name="targetDataSource" ref="counterDataSourceImpl" />
 	</bean>
 </beans>

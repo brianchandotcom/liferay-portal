@@ -584,7 +584,7 @@ AUI.add(
 				var portletClasses = instance._getCSSClasses(portletBoundary, portlet);
 
 				var portletInfoText = Liferay.Language.get('your-current-portlet-information-is-as-follows') + '<br />' +
-					Liferay.Language.get('portlet-id') + ': <strong>#' + portletId + '</strong><br />' +
+					Liferay.Language.get('portlet-id') + ': <strong>#portlet_' + portletId + '</strong><br />' +
 					Liferay.Language.get('portlet-classes') + ': <strong>' + portletClasses + '</strong>';
 
 				var customNote = A.one('#lfr-refresh-styles');

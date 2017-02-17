@@ -5011,18 +5011,7 @@ go]]></replacevalue>
 									<else>
 										<echo>Deploying all relevant modules that make up ${Liferay-Releng-App-Title}.lpkg.</echo>
 
-										<for param="osgi.module.bnd.file">
-											<fileset dir="@{app.dir}">
-												<include name="**/bnd.bnd" />
-											</fileset>
-											<sequential>
-												<local name="osgi.module.dir" />
-
-												<dirname file="@{osgi.module.bnd.file}" property="osgi.module.dir" />
-
-												<gradle-execute dir="${osgi.module.dir}" task="deploy" />
-											</sequential>
-										</for>
+										<gradle-execute dir="@{app.dir}" task="deploy" />
 									</else>
 								</if>
 							</sequential>

@@ -222,15 +222,6 @@
 
 	<!-- Services -->
 
-	<bean class="com.liferay.portal.service.impl.ClassNameLocalServiceImpl" id="com.liferay.portal.kernel.service.ClassNameLocalService" />
-	<bean class="com.liferay.portal.service.impl.ClassNameServiceImpl" id="com.liferay.portal.kernel.service.ClassNameService" />
-	<bean class="com.liferay.portal.service.persistence.impl.ClassNamePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ClassNamePersistence" parent="basePersistence" />
-	<bean class="com.liferay.slim.runtime.internal.service.SlimRuntimeReleaseLocalServiceImpl" id="com.liferay.portal.kernel.service.ReleaseLocalService" />
-	<bean class="com.liferay.portal.service.persistence.impl.ReleasePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ReleasePersistence" parent="basePersistence" />
-	<bean class="com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl" depends-on="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil" id="com.liferay.portal.kernel.service.ServiceComponentLocalService" />
-	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentFinderImpl" id="com.liferay.portal.kernel.service.persistence.ServiceComponentFinder" parent="basePersistence" />
-
 	<bean class="com.liferay.slim.runtime.internal.util.SlimRuntimeStubFactory" factory-method="createStub" id="com.liferay.expando.kernel.service.ExpandoColumnLocalService">
 		<constructor-arg type="java.lang.Class" value="com.liferay.expando.kernel.service.ExpandoColumnLocalService" />
 	</bean>
@@ -243,15 +234,23 @@
 	<bean class="com.liferay.slim.runtime.internal.util.SlimRuntimeStubFactory" factory-method="createStub" id="com.liferay.expando.kernel.service.ExpandoValueLocalService">
 		<constructor-arg type="java.lang.Class" value="com.liferay.expando.kernel.service.ExpandoValueLocalService" />
 	</bean>
+	<bean class="com.liferay.portal.service.impl.ClassNameLocalServiceImpl" id="com.liferay.portal.kernel.service.ClassNameLocalService" />
+	<bean class="com.liferay.portal.service.impl.ClassNameServiceImpl" id="com.liferay.portal.kernel.service.ClassNameService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ClassNamePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ClassNamePersistence" parent="basePersistence" />
 	<bean class="com.liferay.slim.runtime.internal.util.SlimRuntimeStubFactory" factory-method="createStub" id="com.liferay.portal.kernel.service.PortalPreferencesLocalService">
 		<constructor-arg type="java.lang.Class" value="com.liferay.portal.kernel.service.PortalPreferencesLocalService" />
+	</bean>
+	<bean class="com.liferay.slim.runtime.internal.service.SlimRuntimeReleaseLocalServiceImpl" id="com.liferay.portal.kernel.service.ReleaseLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ReleasePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ReleasePersistence" parent="basePersistence" />
+	<bean class="com.liferay.slim.runtime.internal.util.SlimRuntimeStubFactory" factory-method="createStub" id="com.liferay.portal.kernel.service.ResourceLocalService">
+		<constructor-arg type="java.lang.Class" value="com.liferay.portal.kernel.service.ResourceLocalService" />
 	</bean>
 	<bean class="com.liferay.slim.runtime.internal.util.SlimRuntimeStubFactory" factory-method="createStub" id="com.liferay.portal.kernel.service.ResourceActionLocalService">
 		<constructor-arg type="java.lang.Class" value="com.liferay.portal.kernel.service.ResourceActionLocalService" />
 	</bean>
-	<bean class="com.liferay.slim.runtime.internal.util.SlimRuntimeStubFactory" factory-method="createStub" id="com.liferay.portal.kernel.service.ResourceLocalService">
-		<constructor-arg type="java.lang.Class" value="com.liferay.portal.kernel.service.ResourceLocalService" />
-	</bean>
+	<bean class="com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl" depends-on="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil" id="com.liferay.portal.kernel.service.ServiceComponentLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentFinderImpl" id="com.liferay.portal.kernel.service.persistence.ServiceComponentFinder" parent="basePersistence" />
 	<bean class="com.liferay.slim.runtime.internal.util.SlimRuntimeStubFactory" factory-method="createStub" id="com.liferay.portal.kernel.service.UserLocalService">
 		<constructor-arg type="java.lang.Class" value="com.liferay.portal.kernel.service.UserLocalService" />
 	</bean>
@@ -287,12 +286,12 @@
 
 	<!-- Listeners -->
 
-	<bean class="com.liferay.portal.messaging.async.AsyncMessageListener" id="messageListener.async_service" />
 	<bean class="com.liferay.portal.kernel.cluster.messaging.ClusterBridgeMessageListener" id="messageListener.live_users_cluster">
 		<property name="priority">
 			<util:constant static-field="com.liferay.portal.kernel.cluster.Priority.LEVEL5" />
 		</property>
 	</bean>
+	<bean class="com.liferay.portal.messaging.async.AsyncMessageListener" id="messageListener.async_service" />
 
 	<!-- Configurator -->
 
@@ -329,13 +328,13 @@
 			<bean class="com.liferay.portal.model.DefaultModelHintsImpl" depends-on="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil" />
 		</property>
 	</bean>
+	<bean class="com.liferay.portal.kernel.security.auth.AuthTokenUtil" id="com.liferay.portal.kernel.security.auth.AuthTokenUtil" />
+	<bean class="com.liferay.portal.security.auth.AuthTokenWhitelistImpl" id="com.liferay.portal.kernel.security.auth.AuthTokenWhitelist" />
 	<bean class="com.liferay.portal.kernel.security.auth.AuthenticatedUserUUIDStoreUtil" id="com.liferay.portal.kernel.security.auth.AuthenticatedUserUUIDStoreUtil">
 		<property name="authenticatedUserUUIDStore">
 			<bean class="com.liferay.portal.security.auth.DefaultAuthenticatedUserUUIDStoreImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.security.auth.AuthTokenWhitelistImpl" id="com.liferay.portal.kernel.security.auth.AuthTokenWhitelist" />
-	<bean class="com.liferay.portal.kernel.security.auth.AuthTokenUtil" id="com.liferay.portal.kernel.security.auth.AuthTokenUtil" />
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultEmailAddressGenerator" id="com.liferay.portal.kernel.security.auth.DefaultEmailAddressGenerator" />
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultEmailAddressValidator" id="com.liferay.portal.kernel.security.auth.DefaultEmailAddressValidator" />
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultFullNameGenerator" id="com.liferay.portal.kernel.security.auth.DefaultFullNameGenerator" />

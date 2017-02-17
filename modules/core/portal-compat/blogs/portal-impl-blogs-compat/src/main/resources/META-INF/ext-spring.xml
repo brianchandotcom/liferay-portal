@@ -3,9 +3,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<bean class="com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl" id="com.liferay.blogs.kernel.service.BlogsEntryLocalService" />
 	<bean class="com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl" id="com.liferay.blogs.kernel.service.BlogsEntryService" />
-	<bean class="com.liferay.portlet.blogs.service.impl.BlogsStatsUserLocalServiceImpl" id="com.liferay.blogs.kernel.service.BlogsStatsUserLocalService" />
-	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryFinderImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder" parent="basePersistence" />
 	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryPersistenceImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserFinderImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryFinderImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.blogs.service.impl.BlogsStatsUserLocalServiceImpl" id="com.liferay.blogs.kernel.service.BlogsStatsUserLocalService" />
 	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserPersistenceImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserFinderImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder" parent="basePersistence" />
 </beans>

@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.exception.ImageSizeException;
 import com.liferay.document.library.kernel.exception.InvalidFileEntryTypeException;
 import com.liferay.document.library.kernel.exception.InvalidFileVersionException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
@@ -2065,6 +2066,15 @@ public class DLFileEntryLocalServiceImpl
 			long groupId, long folderId, long fileEntryId, String fileName,
 			String title)
 		throws PortalException {
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			DLFolder dlParentFolder = dlFolderPersistence.findByPrimaryKey(
+				folderId);
+
+			if (groupId != dlParentFolder.getGroupId()) {
+				throw new NoSuchFolderException();
+			}
+		}
 
 		DLFolder dlFolder = dlFolderPersistence.fetchByG_P_N(
 			groupId, folderId, title);

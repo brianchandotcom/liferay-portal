@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.service;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
+import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -446,6 +448,37 @@ public class DLFileEntryLocalServiceTest {
 			}
 
 			IndexWriterHelperUtil.setIndexReadOnly(indexReadOnly);
+		}
+	}
+
+	@Test(expected = NoSuchFolderException.class)
+	public void testMoveFileEntryToInvalidDLFolder() throws Exception {
+		DLFolder originFolder = DLTestUtil.addDLFolder(_group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), originFolder.getGroupId(),
+			originFolder.getRepositoryId(), originFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			Collections.emptyMap(), null, new ByteArrayInputStream(new byte[0]),
+			0, serviceContext);
+
+		Group destinationGroup = GroupTestUtil.addGroup();
+
+		DLFolder destinationFolder = DLTestUtil.addDLFolder(
+			destinationGroup.getGroupId());
+
+		try {
+			DLFileEntryLocalServiceUtil.moveFileEntry(
+				TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
+				destinationFolder.getFolderId(), serviceContext);
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(destinationGroup);
 		}
 	}
 

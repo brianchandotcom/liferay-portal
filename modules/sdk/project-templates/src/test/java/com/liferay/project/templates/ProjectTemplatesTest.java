@@ -70,6 +70,7 @@ import org.junit.rules.TemporaryFolder;
 
 /**
  * @author Lawrence Lee
+ * @author Gregory Amerson
  * @author Andrea Di Giorgi
  */
 public class ProjectTemplatesTest {

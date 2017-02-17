@@ -5089,20 +5089,23 @@ go]]></replacevalue>
 
 				<for list="${osgi.modules.includes}" param="osgi.module">
 					<sequential>
-						<local name="osgi.module.bnd.file" />
+						<local name="osgi.module.build.file" />
 						<local name="osgi.module.dir" />
 
-						<path id="osgi.module.bnd.file">
+						<path id="osgi.module.build.file">
 							<fileset dir="${project.dir}/modules">
-								<include name="**/@{osgi.module}/bnd.bnd" />
+								<include name="**/@{osgi.module}/build.gradle" />
+								<include name="**/@{osgi.module}/build.xml" />
 							</fileset>
 						</path>
 
-						<property name="osgi.module.bnd.file" refid="osgi.module.bnd.file" />
+						<property name="osgi.module.build.file" refid="osgi.module.build.file" />
 
-						<dirname file="${osgi.module.bnd.file}" property="osgi.module.dir" />
+						<dirname file="${osgi.module.build.file}" property="osgi.module.dir" />
 
-						<gradle-execute dir="${osgi.module.dir}" task="deploy" />
+						<gradle-execute dir="${osgi.module.dir}" task="deploy">
+							<arg value="clean" />
+						</gradle-execute>
 					</sequential>
 				</for>
 			</then>

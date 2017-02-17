@@ -54,7 +54,7 @@
 <!--NOTIFICATIONS_EMAIL-->
 <tr>
 	<td>NOTIFICATIONS_EMAIL_SUBJECT_FIELD</td>
-	<td>//input[contains(@id,'emailArticleMovedFromFolderSubject')]</td>
+	<td>//input[contains(@id,'emailNotificationsSubject')]</td>
 	<td></td>
 </tr>
 </tbody>

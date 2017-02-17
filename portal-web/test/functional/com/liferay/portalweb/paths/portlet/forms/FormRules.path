@@ -129,6 +129,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--RULE_BUILDER_AUTOFILL-->
+<tr>
+	<td>RULE_BUILDER_AUTOFILL_OUTPUT_FIELD</td>
+	<td>//div[contains(@class,'action-rule-data-provider')]//div[contains(@class,'parameter-output')]//a[contains(@class,'field-trigger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_AUTOFILL_SELECT_OUTPUT_FIELD</td>
+	<td>//div[contains(@class,'action-rule-data-provider')]//div[contains(@class,'parameter-output')]//a[contains(@id,'action')]/following-sibling::div//li[contains(.,'${key_dataProviderOutput}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--RULE_BUILDER_SUMMARY-->
 <tr>
 	<td>RULE_BUILDER_SUMMARY_CONDITION_FIELD</td>

@@ -4,11 +4,28 @@ AUI.add(
 		var FormBuilderActionFactory = A.Component.create(
 			{
 				ATTRS: {
+					dataProviders: {
+						value: []
+					},
+
 					fields: {
 						value: []
 					},
+
+					getDataProviderParametersSettingsURL: {
+						value: ''
+					},
+
+					getDataProviders: {
+						value: []
+					},
+
 					pages: {
 						value: []
+					},
+
+					portletNamespace: {
+						value: ''
 					}
 				},
 
@@ -40,6 +57,20 @@ AUI.add(
 									boundingBox: container,
 									index: index,
 									options: instance.get('pages')
+								}
+							);
+						}
+						else if (type === 'auto-fill') {
+							action = new Liferay.DDL.FormBuilderActionAutofill(
+								{
+									action: act,
+									boundingBox: container,
+									fields: instance.get('fields'),
+									getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
+									getDataProviders: instance.get('getDataProviders'),
+									index: index,
+									options: instance.get('dataProviders'),
+									portletNamespace: instance.get('portletNamespace')
 								}
 							);
 						}

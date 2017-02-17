@@ -59,7 +59,8 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	protected JSONObject createParametersJSONObject(
-		DDMDataProvider ddmDataProvider, DDMFormValues ddmFormValues) {
+			DDMDataProvider ddmDataProvider, DDMFormValues ddmFormValues)
+		throws Exception {
 
 		JSONObject parametersJSONObject = _jsonFactory.createJSONObject();
 
@@ -132,8 +133,9 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 	}
 
 	protected JSONArray getInputParametersJSONObject(
-		DDMDataProviderInputParametersSettings[]
-			ddmDataProviderInputParametersSettings) {
+			DDMDataProviderInputParametersSettings[]
+				ddmDataProviderInputParametersSettings)
+		throws Exception {
 
 		JSONArray inputsJSONArray = _jsonFactory.createJSONArray();
 
@@ -143,8 +145,8 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 
 			String name =
 				ddmDataProviderInputParameterSetting.inputParameterName();
-			String type =
-				ddmDataProviderInputParameterSetting.inputParameterType();
+			String type = getType(
+				ddmDataProviderInputParameterSetting.inputParameterType());
 
 			if (Validator.isNull(name) || Validator.isNull(type)) {
 				continue;
@@ -167,8 +169,9 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 	}
 
 	protected JSONArray getOutputParametersJSONObject(
-		DDMDataProviderOutputParametersSettings[]
-			ddmDataProviderOutputParametersSettings) {
+			DDMDataProviderOutputParametersSettings[]
+				ddmDataProviderOutputParametersSettings)
+		throws Exception {
 
 		JSONArray outputsJSONArray = _jsonFactory.createJSONArray();
 
@@ -178,8 +181,8 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 
 			String name =
 				ddmDataProviderOutputParameterSetting.outputParameterName();
-			String type =
-				ddmDataProviderOutputParameterSetting.outputParameterType();
+			String type = getType(
+				ddmDataProviderOutputParameterSetting.outputParameterType());
 
 			if (Validator.isNull(name) || Validator.isNull(type)) {
 				continue;
@@ -194,6 +197,12 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 		}
 
 		return outputsJSONArray;
+	}
+
+	protected String getType(String type) throws Exception {
+		JSONArray typeJSONArray = _jsonFactory.createJSONArray(type);
+
+		return typeJSONArray.getString(0);
 	}
 
 	@Reference

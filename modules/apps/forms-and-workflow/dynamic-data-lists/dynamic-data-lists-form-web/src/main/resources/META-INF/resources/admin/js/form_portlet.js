@@ -56,11 +56,11 @@ AUI.add(
 						value: []
 					},
 
-					getDataProviderParametersSettingsURL: {
+					getDataProviderInstancesURL: {
 						value: ''
 					},
 
-					getDataProvidersURL: {
+					getDataProviderParametersSettingsURL: {
 						value: ''
 					},
 
@@ -767,6 +767,9 @@ AUI.add(
 							{
 								formBuilder: instance.get('formBuilder'),
 								functionsMetadata: instance.get('functionsMetadata'),
+								getDataProviderInstancesURL: instance.get('getDataProviderInstancesURL'),
+								getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
+								portletNamespace: instance.get('namespace'),
 								rules: instance.get('rules'),
 								visible: false
 							}

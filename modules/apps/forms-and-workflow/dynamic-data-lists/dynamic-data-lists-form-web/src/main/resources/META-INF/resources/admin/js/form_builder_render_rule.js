@@ -12,13 +12,34 @@ AUI.add(
 						value: []
 					},
 
+					getDataProviderParametersSettingsURL: {
+						value: ''
+					},
+
+					getDataProviders: {
+						value: []
+					},
+
+					logicOperator: {
+						setter: function(val) {
+							return val.toUpperCase();
+						},
+						validator: '_isValidLogicOperator',
+						value: Liferay.Language.get('or')
+					},
+
 					pages: {
 						value: 0
+					},
+
+					portletNamespace: {
+						value: ''
 					},
 
 					strings: {
 						value: {
 							and: Liferay.Language.get('and'),
+							autofill: Liferay.Language.get('autofill'),
 							cancel: Liferay.Language.get('cancel'),
 							description: Liferay.Language.get('define-condition-and-action-to-change-fields-and-elements-on-the-form'),
 							enable: Liferay.Language.get('enable'),
@@ -53,7 +74,10 @@ AUI.add(
 						instance._actionFactory = new Liferay.DDL.FormBuilderActionFactory(
 							{
 								fields: instance.get('fields'),
-								pages: instance.get('pages')
+								getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
+								getDataProviders: instance.get('getDataProviders'),
+								pages: instance.get('pages'),
+								portletNamespace: instance.get('portletNamespace')
 							}
 						);
 					},
@@ -164,9 +188,11 @@ AUI.add(
 
 						var contentBox = instance.get('contentBox');
 
-						var container = contentBox.one('.target-' + index);
+						var container = contentBox.one('.form-builder-rule-action-container-' + index);
 
-						container.empty();
+						container.one('.target-' + index).empty();
+
+						container.one('.additional-info-' + index).empty();
 
 						var target = instance._actionFactory.createAction(type, index, action, container);
 
@@ -185,6 +211,10 @@ AUI.add(
 						var strings = instance.get('strings');
 
 						return [
+							{
+								label: strings.autofill,
+								value: 'auto-fill'
+							},
 							{
 								label: strings.show,
 								value: 'show'
@@ -313,13 +343,19 @@ AUI.add(
 						var index = event.currentTarget.getData('card-id');
 
 						if (instance._actionsIndexes.length > 1) {
-							instance._actions[index + '-action'].destroy();
-							instance._actions[index + '-target'].destroy();
+							var action = instance._actions[index + '-action'];
+
+							if (action) {
+								instance._actions[index + '-action'].destroy();
+							}
+							else {
+								instance._actions[index + '-target'].destroy();
+
+								instance.get('boundingBox').one('.form-builder-rule-action-container-' + index).remove(true);
+							}
 
 							delete instance._actions[index + '-action'];
 							delete instance._actions[index + '-target'];
-
-							instance.get('boundingBox').one('.form-builder-rule-action-container-' + index).remove(true);
 
 							var actionIndex = instance._actionsIndexes.indexOf(Number(index));
 

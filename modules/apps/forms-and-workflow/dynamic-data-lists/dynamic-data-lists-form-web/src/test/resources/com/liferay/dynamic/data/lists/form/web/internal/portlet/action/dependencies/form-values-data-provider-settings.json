@@ -21,7 +21,7 @@
 				{
 					"instanceId": "tret",
 					"name": "inputParameterType",
-					"value": "number"
+					"value": "[\"number\"]"
 				}
 			]
 		},
@@ -42,7 +42,7 @@
 				{
 					"instanceId": "tret",
 					"name": "inputParameterType",
-					"value": "text"
+					"value": "[\"text\"]"
 				}
 			]
 		},
@@ -63,7 +63,7 @@
 				{
 					"instanceId": "weff",
 					"name": "inputParameterType",
-					"value": "text"
+					"value": "[\"text\"]"
 				}
 			]
 		},
@@ -79,7 +79,7 @@
 				{
 					"instanceId": "tregh",
 					"name": "outputParameterType",
-					"value": "text"
+					"value": "[\"text\"]"
 				}
 			]
 		},
@@ -95,7 +95,7 @@
 				{
 					"instanceId": "jjtj",
 					"name": "outputParameterType",
-					"value": "number"
+					"value": "[\"number\"]"
 				}
 			]
 		}

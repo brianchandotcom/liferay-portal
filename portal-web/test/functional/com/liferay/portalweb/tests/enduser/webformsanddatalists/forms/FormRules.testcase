@@ -31,6 +31,144 @@
 		</if>
 	</tear-down>
 
+	<command name="ConfigureAutofillRule" priority="5">
+		<property name="portal.acceptance" value="pending" />
+
+		<description message="This is a use case for LPS-70446." />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoDataProviders" />
+
+		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
+
+		<execute macro="FormsAdmin#editDataProvider">
+			<var name="name" value="Liferay Countries" />
+			<var name="outputParameterName" value="Country Name" />
+			<var name="outputParameterPath" value="nameCurrentValue" />
+			<var name="outputParameterType" value="List" />
+			<var name="password" value="test" />
+			<var name="url" value="${portalURL}/api/jsonws/country/get-countries" />
+			<var name="username" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="FormsAdmin#saveDataProvider" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Select from List" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Countries" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="FormsAdminNavigator#gotoRules" />
+
+		<execute macro="FormRules#addRule" />
+
+		<execute macro="FormRules#configureConditionOptions">
+			<var name="conditionField" value="Text Field" />
+			<var name="conditionFieldValue" value="country" />
+			<var name="conditionOperator" value="Contains" />
+			<var name="conditionRowNumber" value="1" />
+			<var name="conditionValueType" value="Value" />
+		</execute>
+
+		<execute macro="FormRules#configureActionOptions">
+			<var name="action" value="Autofill" />
+			<var name="actionRowNumber" value="1" />
+			<var name="actionTarget" value="Liferay Countries" />
+		</execute>
+
+		<execute macro="FormRules#selectAutofillOutput">
+			<var name="dataProviderOutput" value="Countries" />
+		</execute>
+
+		<execute macro="FormRules#save" />
+
+		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Form Page" />
+			<var name="portletName" value="Form" />
+		</execute>
+
+		<execute macro="FormPortletNavigator#gotoSelectForm" />
+
+		<execute macro="FormPortletConfiguration#selectForm" />
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldName" value="TextField" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="TextField" />
+			<var name="fieldValue" value="test" />
+		</execute>
+
+		<execute macro="FormFields#viewSelectOptionsList">
+			<var name="fieldName" value="Countries" />
+			<var name="selectOption" value="Option" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="TextField" />
+			<var name="fieldValue" value="country" />
+		</execute>
+
+		<execute macro="FormFields#viewSelectOptionsList">
+			<var name="fieldName" value="Countries" />
+			<var name="selectOption" value="Afghanistan" />
+		</execute>
+	</command>
+
 	<command name="ConfigureRequireRule" priority="5">
 		<property name="portal.acceptance" value="pending" />
 

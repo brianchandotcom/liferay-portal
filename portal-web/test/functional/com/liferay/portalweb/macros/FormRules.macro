@@ -113,6 +113,14 @@
 		</if>
 	</command>
 
+	<command name="selectAutofillOutput">
+		<var name="key_dataProviderOutput" value="${dataProviderOutput}" />
+
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_AUTOFILL_OUTPUT_FIELD" />
+
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_AUTOFILL_SELECT_OUTPUT_FIELD" value1="${dataProviderOutput}" />
+	</command>
+
 	<command name="selectConditionField">
 		<var name="key_conditionField" value="${conditionField}" />
 		<var name="key_conditionRowNumber" value="${conditionRowNumber}" />

@@ -105,7 +105,7 @@ if (portletTitleBasedNavigation) {
 		</c:if>
 
 		<div class="lfr-form-content">
-			<liferay-ui:error exception="<%= DuplicateFriendlyURLException.class %>" message="the-url-title-is-already-in-use-please-enter-a-unique-url-title" />
+			<liferay-ui:error exception="<%= DuplicateFriendlyURLEntryException.class %>" message="the-url-title-is-already-in-use-please-enter-a-unique-url-title" />
 			<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
 			<liferay-ui:error exception="<%= EntryCoverImageCropException.class %>" message="an-error-occurred-while-cropping-the-cover-image" />
 			<liferay-ui:error exception="<%= EntryDescriptionException.class %>" message="please-enter-a-valid-abstract" />

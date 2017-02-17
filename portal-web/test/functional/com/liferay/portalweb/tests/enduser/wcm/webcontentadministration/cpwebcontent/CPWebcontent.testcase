@@ -1254,7 +1254,7 @@
 			<execute macro="DynamicDataMapping#addField">
 				<var name="field" value="${structureFieldName}" />
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
+				<var name="fieldName" value="${structureFieldName}" />
 			</execute>
 		</for>
 
@@ -1307,7 +1307,7 @@
 		<for list="Date,Image" param="structureFieldName">
 			<execute macro="DynamicDataMapping#viewField">
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
+				<var name="fieldName" value="${structureFieldName}" />
 			</execute>
 		</for>
 

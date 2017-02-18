@@ -17,6 +17,7 @@ package com.liferay.portal.spring.aop;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +36,8 @@ public class ServiceBeanAopCacheManager {
 		MethodInvocation methodInvocation,
 		Class<? extends Annotation> annotationType, T defaultValue) {
 
-		Annotation[] annotations = _annotations.get(methodInvocation);
+		Annotation[] annotations = _annotations.get(
+			methodInvocation.getMethod());
 
 		if (annotations == _nullAnnotations) {
 			return defaultValue;
@@ -61,20 +63,13 @@ public class ServiceBeanAopCacheManager {
 			annotations = _nullAnnotations;
 		}
 
-		if (methodInvocation instanceof ServiceBeanMethodInvocation) {
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-				(ServiceBeanMethodInvocation)methodInvocation;
-
-			methodInvocation = serviceBeanMethodInvocation.toCacheKeyModel();
-		}
-
-		_annotations.put(methodInvocation, annotations);
+		_annotations.put(methodInvocation.getMethod(), annotations);
 	}
 
 	public MethodInterceptorsBag getMethodInterceptorsBag(
 		MethodInvocation methodInvocation) {
 
-		return _methodInterceptorBags.get(methodInvocation);
+		return _methodInterceptorBags.get(methodInvocation.getMethod());
 	}
 
 	public Map
@@ -94,7 +89,8 @@ public class ServiceBeanAopCacheManager {
 		MethodInvocation methodInvocation,
 		MethodInterceptorsBag methodInterceptorsBag) {
 
-		_methodInterceptorBags.put(methodInvocation, methodInterceptorsBag);
+		_methodInterceptorBags.put(
+			methodInvocation.getMethod(), methodInterceptorsBag);
 	}
 
 	public void registerAnnotationChainableMethodAdvice(
@@ -125,15 +121,10 @@ public class ServiceBeanAopCacheManager {
 		MethodInvocation methodInvocation,
 		MethodInterceptor methodInterceptor) {
 
-		if (!(methodInvocation instanceof ServiceBeanMethodInvocation)) {
-			return;
-		}
-
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			(ServiceBeanMethodInvocation)methodInvocation;
+		Method method = methodInvocation.getMethod();
 
 		MethodInterceptorsBag methodInterceptorsBag =
-			_methodInterceptorBags.get(serviceBeanMethodInvocation);
+			_methodInterceptorBags.get(method);
 
 		if (methodInterceptorsBag == null) {
 			return;
@@ -161,9 +152,7 @@ public class ServiceBeanAopCacheManager {
 				methodInterceptors);
 		}
 
-		_methodInterceptorBags.put(
-			serviceBeanMethodInvocation.toCacheKeyModel(),
-			newMethodInterceptorsBag);
+		_methodInterceptorBags.put(method, newMethodInterceptorsBag);
 	}
 
 	public void reset() {
@@ -171,14 +160,14 @@ public class ServiceBeanAopCacheManager {
 		_methodInterceptorBags.clear();
 	}
 
-	private static final Map<MethodInvocation, Annotation[]> _annotations =
+	private static final Map<Method, Annotation[]> _annotations =
 		new ConcurrentHashMap<>();
 	private static final Annotation[] _nullAnnotations = new Annotation[0];
 
 	private final
 		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			_annotationChainableMethodAdvices = new HashMap<>();
-	private final Map<MethodInvocation, MethodInterceptorsBag>
-		_methodInterceptorBags = new ConcurrentHashMap<>();
+	private final Map<Method, MethodInterceptorsBag> _methodInterceptorBags =
+		new ConcurrentHashMap<>();
 
 }

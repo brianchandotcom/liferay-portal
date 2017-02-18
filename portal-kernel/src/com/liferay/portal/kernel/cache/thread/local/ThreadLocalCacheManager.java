@@ -69,7 +69,7 @@ public class ThreadLocalCacheManager {
 		ThreadLocalCaches threadLocalCaches = _getThreadLocalCaches(lifecycle);
 
 		if (threadLocalCaches != null) {
-			Map<Serializable, ThreadLocalCache<?>> threadLocalCacheMaps =
+			Map<Object, ThreadLocalCache<?>> threadLocalCacheMaps =
 				threadLocalCaches._threadLocalCacheMap;
 
 			threadLocalCacheMaps.clear();
@@ -88,7 +88,7 @@ public class ThreadLocalCacheManager {
 		if (threadLocalCaches != null) {
 			threadLocalCaches._disabled = true;
 
-			Map<Serializable, ThreadLocalCache<?>> threadLocalCacheMaps =
+			Map<Object, ThreadLocalCache<?>> threadLocalCacheMaps =
 				threadLocalCaches._threadLocalCacheMap;
 
 			threadLocalCacheMaps.clear();
@@ -104,7 +104,7 @@ public class ThreadLocalCacheManager {
 	}
 
 	public static <T> ThreadLocalCache<T> getThreadLocalCache(
-		Lifecycle lifecycle, Serializable name) {
+		Lifecycle lifecycle, Object name) {
 
 		ThreadLocalCaches threadLocalCaches = _getThreadLocalCaches(lifecycle);
 
@@ -112,7 +112,7 @@ public class ThreadLocalCacheManager {
 			return (ThreadLocalCache<T>)_emptyThreadLocalCache;
 		}
 
-		Map<Serializable, ThreadLocalCache<?>> threadLocalCacheMap =
+		Map<Object, ThreadLocalCache<?>> threadLocalCacheMap =
 			threadLocalCaches._threadLocalCacheMap;
 
 		ThreadLocalCache<?> threadLocalCache = threadLocalCacheMap.get(name);
@@ -124,6 +124,12 @@ public class ThreadLocalCacheManager {
 		}
 
 		return (ThreadLocalCache<T>)threadLocalCache;
+	}
+
+	public static <T> ThreadLocalCache<T> getThreadLocalCache(
+		Lifecycle lifecycle, Serializable name) {
+
+		return getThreadLocalCache(lifecycle, (Object)name);
 	}
 
 	private static ThreadLocalCaches _getThreadLocalCaches(
@@ -200,8 +206,8 @@ public class ThreadLocalCacheManager {
 	private static class ThreadLocalCaches {
 
 		private boolean _disabled;
-		private final Map<Serializable, ThreadLocalCache<?>>
-			_threadLocalCacheMap = new HashMap<>();
+		private final Map<Object, ThreadLocalCache<?>> _threadLocalCacheMap =
+			new HashMap<>();
 
 	}
 

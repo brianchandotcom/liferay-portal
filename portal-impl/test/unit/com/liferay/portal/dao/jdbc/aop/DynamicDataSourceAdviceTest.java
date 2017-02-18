@@ -148,8 +148,7 @@ public class DynamicDataSourceAdviceTest {
 		Method method = TestClass.class.getMethod(methodName);
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			new ServiceBeanMethodInvocation(
-				testClass, TestClass.class, method, new Object[0]);
+			new ServiceBeanMethodInvocation(testClass, method, new Object[0]);
 
 		MasterDataSource masterDataSource = method.getAnnotation(
 			MasterDataSource.class);

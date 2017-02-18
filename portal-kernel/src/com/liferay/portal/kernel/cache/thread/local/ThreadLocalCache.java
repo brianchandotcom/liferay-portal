@@ -26,9 +26,18 @@ import java.util.Map;
  */
 public class ThreadLocalCache<T> {
 
-	public ThreadLocalCache(Serializable name, Lifecycle lifecycle) {
-		_name = name;
+	public ThreadLocalCache(Object id, Lifecycle lifecycle) {
+		_id = id;
 		_lifecycle = lifecycle;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *			   #ThreadLocalCache(Object, Lifecycle)}
+	 */
+	@Deprecated
+	public ThreadLocalCache(Serializable name, Lifecycle lifecycle) {
+		this((Object)name, lifecycle);
 	}
 
 	public T get(String key) {
@@ -40,12 +49,20 @@ public class ThreadLocalCache<T> {
 		}
 	}
 
+	public Object getId() {
+		return _id;
+	}
+
 	public Lifecycle getLifecycle() {
 		return _lifecycle;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getId()}
+	 */
+	@Deprecated
 	public Serializable getName() {
-		return _name;
+		return _id.toString();
 	}
 
 	public void put(String key, T obj) {
@@ -77,14 +94,14 @@ public class ThreadLocalCache<T> {
 		sb.append(", lifecycle=");
 		sb.append(_lifecycle);
 		sb.append(", name=");
-		sb.append(_name);
+		sb.append(_id);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	private Map<String, T> _cache;
+	private final Object _id;
 	private final Lifecycle _lifecycle;
-	private final Serializable _name;
 
 }

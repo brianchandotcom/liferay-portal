@@ -2464,7 +2464,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  e.configurator;version="1.0.0",com.liferay.portal.kernel.cache.index;
  version="6.2.0";uses:="com.liferay.portal.kernel.cache",com.liferay.p
  ortal.kernel.cache.key;version="6.2.0";uses:="com.liferay.portal.kern
- el.util",com.liferay.portal.kernel.cache.thread.local;version="1.0.0"
+ el.util",com.liferay.portal.kernel.cache.thread.local;version="1.1.0"
  ;uses:="com.liferay.portal.kernel.transaction",com.liferay.portal.ker
  nel.cache.transactional;version="1.0.0";uses:="com.liferay.portal.ker
  nel.cache,com.liferay.portal.kernel.transaction",com.liferay.portal.k
@@ -3349,7 +3349,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ersion="1.0.0",com.liferay.portal.social;uses:="com.liferay.portal.ke
  rnel.bean,com.liferay.portal.kernel.exception,com.liferay.portal.kern
  el.model,com.liferay.portal.kernel.social,com.liferay.social.kernel.s
- ervice";version="1.0.0",com.liferay.portal.spring.aop;version="1.0.2"
+ ervice";version="1.0.0",com.liferay.portal.spring.aop;version="1.1.0"
  ;uses:="com.liferay.portal.kernel.spring.aop,org.aopalliance.intercep
  t,org.springframework.aop,org.springframework.aop.framework,org.sprin
  gframework.aop.framework.autoproxy,org.springframework.beans,org.spri

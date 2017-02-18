@@ -5830,7 +5830,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (resultsMap != null) {
-			resultsMap.put("userId", user.getUserId());
+			resultsMap.put("user", user);
 		}
 
 		if (authResult == Authenticator.SUCCESS) {

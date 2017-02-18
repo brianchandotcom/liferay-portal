@@ -1066,12 +1066,10 @@ process.
 - [LPS-70677]: Update the [Liferay Gradle Plugins] dependency to version 3.2.5.
 
 ### Removed
-- [LPS-70699]: Disable the update check when building themes.
-
-### Removed
 - [LPS-70677]: Remove exclusion of `com.liferay.portal` transitive dependencies
 from the `com.liferay.jasper.jspc` default dependency in the `jspCTool`
 configuration.
+- [LPS-70699]: Disable the update check when building themes.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

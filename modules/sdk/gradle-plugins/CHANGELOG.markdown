@@ -1099,7 +1099,7 @@ version 1.0.30.
 - [LPS-70494]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.144.
 
-## 3.2.5 - 2017-02-15
+## 3.2.5 - 2017-02-16
 
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency

@@ -78,7 +78,7 @@ default repository for module and WAR projects.
 ### Changed
 - [LPS-70515]: Update the [Liferay Gradle Plugins] dependency to version 3.1.8.
 
-## 1.3.0 - 2017-02-16
+## 1.3.0 - *(Unreleased)*
 
 ### Added
 - [LPS-70677]: Add the ability to precompile the JSP files of OSGi modules via

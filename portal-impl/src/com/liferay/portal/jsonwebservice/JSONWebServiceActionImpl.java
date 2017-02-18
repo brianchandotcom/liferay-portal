@@ -143,6 +143,8 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						inputObject, outputObject);
 
 					beanCopy.copy();
+
+					return outputObject;
 				}
 				catch (Exception e) {
 					throw new TypeConversionException(e);

@@ -50,14 +50,12 @@ public class BundleJavaFileManager
 	public static final String OPT_VERBOSE = "-verbose";
 
 	public BundleJavaFileManager(
-		ClassLoader classLoader, Set<String> systemPackageNames,
-		JavaFileManager javaFileManager,
+		ClassLoader classLoader, JavaFileManager javaFileManager,
 		JavaFileObjectResolver javaFileObjectResolver) {
 
 		super(javaFileManager);
 
 		_classLoader = classLoader;
-		_systemPackageNames = systemPackageNames;
 		_javaFileObjectResolver = javaFileObjectResolver;
 	}
 
@@ -136,9 +134,7 @@ public class BundleJavaFileManager
 			Collection<JavaFileObject> javaFileObjects =
 				_javaFileObjectResolver.resolveClasses(recurse, packagePath);
 
-			if (!javaFileObjects.isEmpty() ||
-				!_systemPackageNames.contains(packageName)) {
-
+			if (!javaFileObjects.isEmpty()) {
 				return javaFileObjects;
 			}
 		}
@@ -210,6 +206,5 @@ public class BundleJavaFileManager
 
 	private final ClassLoader _classLoader;
 	private final JavaFileObjectResolver _javaFileObjectResolver;
-	private final Set<String> _systemPackageNames;
 
 }

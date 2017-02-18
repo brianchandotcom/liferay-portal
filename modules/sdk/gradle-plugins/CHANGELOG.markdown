@@ -1111,6 +1111,14 @@ to version 1.0.87.
 - [LPS-70677]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to
 version 2.0.0.
 
+## 3.2.5 - 2017-02-16
+
+### Changed
+- [LPS-70707]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.88.
+- [LPS-70707]: Update the [Liferay Source Formatter] dependency to version
+1.0.355.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1216,4 +1224,5 @@ version 2.0.0.
 [LPS-70555]: https://issues.liferay.com/browse/LPS-70555
 [LPS-70618]: https://issues.liferay.com/browse/LPS-70618
 [LPS-70677]: https://issues.liferay.com/browse/LPS-70677
+[LPS-70707]: https://issues.liferay.com/browse/LPS-70707
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

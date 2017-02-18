@@ -133,7 +133,11 @@ public class CaptchaSettingsImpl implements CaptchaSettings {
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			"com.liferay.captcha.configuration.CaptchaConfiguration");
 
-		Dictionary<String, Object> properties = new Hashtable<>();
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		if (properties == null) {
+			properties = new Hashtable<>();
+		}
 
 		properties.put("captchaEngine", className);
 

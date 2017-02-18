@@ -599,6 +599,8 @@ public interface WebKeys {
 
 	public static final String THEME = "THEME";
 
+	public static final String THEME_DEFINE_OBJECTS = "THEME_DEFINE_OBJECTS";
+
 	public static final String THEME_DISPLAY = "LIFERAY_SHARED_THEME_DISPLAY";
 
 	public static final String TICKET = "TICKET";

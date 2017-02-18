@@ -735,6 +735,18 @@ public class JenkinsResultsParserUtil {
 		return durationString;
 	}
 
+	public static JSONArray toJSONArray(String url, JSONArray jsonArray)
+		throws IOException {
+
+		return new JSONArray(toString(url, jsonArray.toString()));
+	}
+
+	public static JSONArray toJSONArray(String url, JSONObject jsonObject)
+		throws IOException {
+
+		return new JSONArray(toString(url, jsonObject.toString()));
+	}
+
 	public static JSONObject toJSONObject(String url) throws IOException {
 		return toJSONObject(
 			url, true, _MAX_RETRIES_DEFAULT, _RETRY_PERIOD_DEFAULT,
@@ -774,6 +786,18 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return createJSONObject(response);
+	}
+
+	public static JSONObject toJSONObject(String url, JSONArray jsonArray)
+		throws IOException {
+
+		return new JSONObject(toString(url, jsonArray.toString()));
+	}
+
+	public static JSONObject toJSONObject(String url, JSONObject jsonObject)
+		throws IOException {
+
+		return new JSONObject(toString(url, jsonObject.toString()));
 	}
 
 	public static String toString(String url) throws IOException {

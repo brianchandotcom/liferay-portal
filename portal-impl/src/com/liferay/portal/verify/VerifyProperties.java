@@ -1710,6 +1710,7 @@ public class VerifyProperties extends VerifyProcess {
 		"com.liferay.portal.servlet.filters.charbufferpool." +
 			"CharBufferPoolFilter",
 		"com.liferay.portal.servlet.filters.monitoring.MonitoringFilter",
+		"com.liferay.portal.servlet.filters.secure.SecureFilter",
 		"com.liferay.portal.servlet.filters.validhtml.ValidHtmlFilter",
 		"commons.pool.enabled", "company.settings.form.configuration",
 		"company.settings.form.identification",

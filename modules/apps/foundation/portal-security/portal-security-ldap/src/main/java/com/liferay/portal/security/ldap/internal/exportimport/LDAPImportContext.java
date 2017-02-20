@@ -43,11 +43,10 @@ public class LDAPImportContext {
 		_contactExpandoMappings = contactExpandoMappings;
 		_groupMappings = groupMappings;
 		_ldapUserIgnoreAttributes = ldapUserIgnoreAttributes;
-		_importedLdapUsers = new HashMap<>();
 	}
 
 	public void addImportedUser(String fullUserDN, User user) {
-		_importedLdapUsers.put(fullUserDN, user);
+		_importedLdapUsers.put(fullUserDN, user.getUserId());
 	}
 
 	public long getCompanyId() {
@@ -66,7 +65,7 @@ public class LDAPImportContext {
 		return _groupMappings;
 	}
 
-	public User getImportedUser(String fullUserDN) {
+	public Long getImportedUser(String fullUserDN) {
 		return _importedLdapUsers.get(fullUserDN);
 	}
 
@@ -98,7 +97,7 @@ public class LDAPImportContext {
 	private final Properties _contactExpandoMappings;
 	private final Properties _contactMappings;
 	private final Properties _groupMappings;
-	private final Map<String, User> _importedLdapUsers;
+	private final Map<String, Long> _importedLdapUsers = new HashMap<>();
 	private final LdapContext _ldapContext;
 	private final long _ldapServerId;
 	private final Set<String> _ldapUserIgnoreAttributes;

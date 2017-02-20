@@ -66,6 +66,8 @@
 
 		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
 		<execute macro="LAR#viewProcessesInListView" />
 
 		<execute macro="LAR#filterCompletedProcesses" />

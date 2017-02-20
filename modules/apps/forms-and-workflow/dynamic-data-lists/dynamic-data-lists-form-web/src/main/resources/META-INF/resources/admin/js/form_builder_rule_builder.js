@@ -162,11 +162,15 @@ AUI.add(
 								var cols = rows[i].get('cols');
 
 								for (var j = 0; j < cols.length; j++) {
-									var fieldList = cols[j].get('value').get('fields');
+									var fieldList = cols[j].get('value');
 
-									for (var k = 0; k < fieldList.length; k++) {
-										if (fieldList[k].get('label') === field.get('label')) {
-											return h;
+									if (fieldList) {
+										var fields = fieldList.get('fields');
+
+										for (var k = 0; k < fields.length; k++) {
+											if (fields[k].get('label') === field.get('label')) {
+												return h;
+											}
 										}
 									}
 								}

@@ -153,9 +153,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			ldapServerId, companyId);
 
 		LDAPImportContext ldapImportContext = getLDAPImportContext(
-			companyId, contactExpandoMappings, contactMappings, groupMappings,
-			ldapContext, ldapServerId, ldapUserIgnoreAttributes,
-			userExpandoMappings, userMappings);
+			companyId, ldapServerId, ldapContext, userMappings,
+			userExpandoMappings, contactMappings, contactExpandoMappings,
+			groupMappings, ldapUserIgnoreAttributes);
 
 		User user = importUser(
 			ldapImportContext, StringPool.BLANK, attributes, password);
@@ -473,9 +473,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			String importMethod = ldapImportConfiguration.importMethod();
 
 			LDAPImportContext ldapImportContext = getLDAPImportContext(
-				companyId, contactExpandoMappings, contactMappings,
-				groupMappings, ldapContext, ldapServerId,
-				ldapUserIgnoreAttributes, userExpandoMappings, userMappings);
+				companyId, ldapServerId, ldapContext, userMappings,
+				userExpandoMappings, contactMappings, contactExpandoMappings,
+				groupMappings, ldapUserIgnoreAttributes);
 
 			if (importMethod.equals(_IMPORT_BY_GROUP)) {
 				importFromLDAPByGroup(ldapImportContext);
@@ -658,16 +658,15 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	protected LDAPImportContext getLDAPImportContext(
-		long companyId, Properties contactExpandoMappings,
-		Properties contactMappings, Properties groupMappings,
-		LdapContext ldapContext, long ldapServerId,
-		Set<String> ldapUserIgnoreAttributes, Properties userExpandoMappings,
-		Properties userMappings) {
+		long companyId, long ldapServerId, LdapContext ldapContext,
+		Properties userMappings, Properties userExpandoMappings,
+		Properties contactMappings, Properties contactExpandoMappings,
+		Properties groupMappings, Set<String> ldapUserIgnoreAttributes) {
 
 		return new LDAPImportContext(
-			companyId, contactExpandoMappings, contactMappings, groupMappings,
-			ldapContext, ldapServerId, ldapUserIgnoreAttributes,
-			userExpandoMappings, userMappings);
+			companyId, ldapServerId, ldapContext, userMappings,
+			userExpandoMappings, contactMappings, contactExpandoMappings,
+			groupMappings, ldapUserIgnoreAttributes);
 	}
 
 	protected User getUser(long companyId, LDAPUser ldapUser) throws Exception {

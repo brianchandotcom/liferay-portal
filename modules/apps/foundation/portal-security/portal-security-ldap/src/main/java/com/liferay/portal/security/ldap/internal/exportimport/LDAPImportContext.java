@@ -29,22 +29,20 @@ import javax.naming.ldap.LdapContext;
 public class LDAPImportContext {
 
 	public LDAPImportContext(
-		long companyId, Properties contactExpandoMappings,
-		Properties contactMappings, Properties groupMappings,
-		LdapContext ldapContext, long ldapServerId,
-		Set<String> ldapUserIgnoreAttributes, Properties userExpandoMappings,
-		Properties userMappings) {
+		long companyId, long ldapServerId, LdapContext ldapContext,
+		Properties userMappings, Properties userExpandoMappings,
+		Properties contactMappings, Properties contactExpandoMappings,
+		Properties groupMappings, Set<String> ldapUserIgnoreAttributes) {
 
 		_companyId = companyId;
-		_contactExpandoMappings = contactExpandoMappings;
-		_contactMappings = contactMappings;
-		_groupMappings = groupMappings;
-		_ldapContext = ldapContext;
 		_ldapServerId = ldapServerId;
-		_ldapUserIgnoreAttributes = ldapUserIgnoreAttributes;
-		_userExpandoMappings = userExpandoMappings;
+		_ldapContext = ldapContext;
 		_userMappings = userMappings;
-
+		_userExpandoMappings = userExpandoMappings;
+		_contactMappings = contactMappings;
+		_contactExpandoMappings = contactExpandoMappings;
+		_groupMappings = groupMappings;
+		_ldapUserIgnoreAttributes = ldapUserIgnoreAttributes;
 		_importedLdapUsers = new HashMap<>();
 	}
 

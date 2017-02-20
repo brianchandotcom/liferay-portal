@@ -385,7 +385,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
-	public static class WhenThereIsOneConfigurationWithTwoLinesForSameTarget
+	public static class WhenThereIsOneConfigurationWithTwoLinesForSameContext
 		extends FormNavigatorEntryConfigurationRetrieverBaseTest {
 
 		@Override

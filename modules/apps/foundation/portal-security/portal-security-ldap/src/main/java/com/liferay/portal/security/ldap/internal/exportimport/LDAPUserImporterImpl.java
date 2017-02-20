@@ -705,8 +705,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 		long companyId = ldapImportContext.getCompanyId();
 		long ldapServerId = ldapImportContext.getLdapServerId();
-		LdapContext ldapContext = ldapImportContext.getLdapContext();
 		Properties groupMappings = ldapImportContext.getGroupMappings();
+		LdapContext ldapContext = ldapImportContext.getLdapContext();
 
 		Attribute attribute = groupAttributes.get(
 			groupMappings.getProperty("user"));
@@ -750,9 +750,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		while (cookie != null) {
 			List<SearchResult> searchResults = new ArrayList<>();
 
-			Properties groupMappings = ldapImportContext.getGroupMappings();
-			long ldapServerId = ldapImportContext.getLdapServerId();
 			long companyId = ldapImportContext.getCompanyId();
+			long ldapServerId = ldapImportContext.getLdapServerId();
+			Properties groupMappings = ldapImportContext.getGroupMappings();
 			LdapContext ldapContext = ldapImportContext.getLdapContext();
 
 			String groupMappingsGroupName = GetterUtil.getString(
@@ -804,9 +804,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 		byte[] cookie = new byte[0];
 
-		Properties userMappings = ldapImportContext.getUserMappings();
-		long ldapServerId = ldapImportContext.getLdapServerId();
 		long companyId = ldapImportContext.getCompanyId();
+		long ldapServerId = ldapImportContext.getLdapServerId();
+		Properties userMappings = ldapImportContext.getUserMappings();
 		LdapContext ldapContext = ldapImportContext.getLdapContext();
 
 		while (cookie != null) {

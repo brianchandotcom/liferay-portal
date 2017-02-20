@@ -45,8 +45,8 @@ public class LDAPImportContext {
 		_ldapUserIgnoreAttributes = ldapUserIgnoreAttributes;
 	}
 
-	public void addImportedUser(String fullUserDN, User user) {
-		_importedLdapUsers.put(fullUserDN, user.getUserId());
+	public void addImportedUserId(String fullUserDN, long userId) {
+		_importedLdapUsers.put(fullUserDN, userId);
 	}
 
 	public long getCompanyId() {
@@ -65,7 +65,7 @@ public class LDAPImportContext {
 		return _groupMappings;
 	}
 
-	public Long getImportedUser(String fullUserDN) {
+	public Long getImportedUserId(String fullUserDN) {
 		return _importedLdapUsers.get(fullUserDN);
 	}
 

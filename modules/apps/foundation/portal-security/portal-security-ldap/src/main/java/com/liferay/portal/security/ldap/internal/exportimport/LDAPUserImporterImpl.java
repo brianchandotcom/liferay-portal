@@ -1099,7 +1099,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 			updateExpandoAttributes(ldapImportContext, user, ldapUser);
 
-			ldapImportContext.addImportedUser(fullUserDN, user);
+			ldapImportContext.addImportedUserId(fullUserDN, user.getUserId());
 
 			return user;
 		}
@@ -1212,7 +1212,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		for (int i = 0; i < usersLdapAttribute.size(); i++) {
 			String fullUserDN = (String)usersLdapAttribute.get(i);
 
-			Long userId = ldapImportContext.getImportedUser(fullUserDN);
+			Long userId = ldapImportContext.getImportedUserId(fullUserDN);
 
 			if (userId != null) {
 				newUserIds.add(userId);

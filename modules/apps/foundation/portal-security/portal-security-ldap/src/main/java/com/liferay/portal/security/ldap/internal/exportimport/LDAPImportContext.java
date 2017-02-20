@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.ldap.internal.exportimport;
 
-import com.liferay.portal.kernel.model.User;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -47,6 +45,10 @@ public class LDAPImportContext {
 
 	public void addImportedUserId(String fullUserDN, long userId) {
 		_importedLdapUsers.put(fullUserDN, userId);
+	}
+
+	public boolean containsImportedUser(String fullUserDN) {
+		return _importedLdapUsers.containsKey(fullUserDN);
 	}
 
 	public long getCompanyId() {
@@ -87,10 +89,6 @@ public class LDAPImportContext {
 
 	public Properties getUserMappings() {
 		return _userMappings;
-	}
-
-	public boolean isImportedUser(String fullUserDN) {
-		return _importedLdapUsers.containsKey(fullUserDN);
 	}
 
 	private final long _companyId;

@@ -90,17 +90,10 @@ public abstract class BaseJSONWebServiceClientHandler {
 			Map<String, String> headers)
 		throws JSONWebServiceInvocationException {
 
-		String json = doGet(url, parameters, headers);
+		String json = updateJSON(doGet(url, parameters, headers));
 
-		if ((json == null) || json.equals("") || json.equals("{}") ||
-			json.equals("[]")) {
-
+		if (json == null) {
 			return Collections.emptyList();
-		}
-
-		if (json.contains("exception\":\"")) {
-			throw new JSONWebServiceInvocationException(
-				getExceptionMessage(json), getStatus(json));
 		}
 
 		try {
@@ -134,15 +127,10 @@ public abstract class BaseJSONWebServiceClientHandler {
 			Class<T> clazz, String url, String... parametersArray)
 		throws JSONWebServiceInvocationException {
 
-		String json = doGet(url, parametersArray);
+		String json = updateJSON(doGet(url, parametersArray));
 
-		if ((json == null) || json.equals("") || json.equals("{}")) {
+		if (json == null) {
 			return null;
-		}
-
-		if (json.contains("exception\":\"")) {
-			throw new JSONWebServiceInvocationException(
-				getExceptionMessage(json), getStatus(json));
 		}
 
 		try {
@@ -194,15 +182,10 @@ public abstract class BaseJSONWebServiceClientHandler {
 			Class<T> clazz, String url, String... parametersArray)
 		throws JSONWebServiceInvocationException {
 
-		String json = doPost(url, parametersArray);
+		String json = updateJSON(doPost(url, parametersArray));
 
-		if ((json == null) || json.equals("") || json.equals("{}")) {
+		if (json == null) {
 			return null;
-		}
-
-		if (json.contains("exception\":\"")) {
-			throw new JSONWebServiceInvocationException(
-				getExceptionMessage(json), getStatus(json));
 		}
 
 		try {
@@ -252,8 +235,33 @@ public abstract class BaseJSONWebServiceClientHandler {
 		return Integer.parseInt(statusMatcher.group(1));
 	}
 
+	protected String updateJSON(String json)
+		throws JSONWebServiceInvocationException {
+
+		if ((json == null) || json.equals("") || json.equals("{}") ||
+			json.equals("[]")) {
+
+			return null;
+		}
+
+		Matcher matcher = _errorMessagePattern.matcher(json);
+
+		if (matcher.find()) {
+			throw new JSONWebServiceInvocationException(
+				json, Integer.parseInt(matcher.group(2)));
+		}
+		else if (json.contains("exception\":\"")) {
+			throw new JSONWebServiceInvocationException(
+				getExceptionMessage(json), getStatus(json));
+		}
+
+		return json;
+	}
+
 	protected ObjectMapper objectMapper = new ObjectMapper();
 
+	private final Pattern _errorMessagePattern = Pattern.compile(
+		"errorCode\":\\s*(\\d+).+message\":.+status\":\\s*(\\d+)");
 	private final Pattern _statusPattern = Pattern.compile("status\":(\\d+)");
 
 }

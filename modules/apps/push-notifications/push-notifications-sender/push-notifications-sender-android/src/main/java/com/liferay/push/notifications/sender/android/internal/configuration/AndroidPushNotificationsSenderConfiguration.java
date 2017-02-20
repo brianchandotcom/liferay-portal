@@ -30,8 +30,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AndroidPushNotificationsSenderConfiguration {
 
 	@Meta.AD(
-		description = "api.key.description", name = "api.key.name",
-		required = false
+		description = "android.api.key.description",
+		name = "android.api.key.name", required = false
 	)
 	public String apiKey();
 

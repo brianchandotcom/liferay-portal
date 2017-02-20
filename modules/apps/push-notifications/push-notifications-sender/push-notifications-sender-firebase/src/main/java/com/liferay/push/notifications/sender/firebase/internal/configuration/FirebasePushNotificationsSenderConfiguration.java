@@ -19,7 +19,7 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Bruno Faerache
+ * @author Bruno Farache
  */
 @ExtendedObjectClassDefinition(category = "other")
 @Meta.OCD(
@@ -30,8 +30,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface FirebasePushNotificationsSenderConfiguration {
 
 	@Meta.AD(
-		description = "api.key.description", name = "api.key.name",
-		required = false
+		description = "firebase.api.key.description",
+		name = "firebase.api.key.name", required = false
 	)
 	public String apiKey();
 

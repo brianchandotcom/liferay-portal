@@ -48,6 +48,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
+import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 import java.util.regex.Matcher;
@@ -112,6 +113,10 @@ public class LPKGBundleTrackerCustomizer
 					url = enumeration.nextElement();
 
 					if (_checkOverridden(symbolicName, url)) {
+						continue;
+					}
+
+					if (_isBundleInstalled(bundle, url)) {
 						continue;
 					}
 
@@ -278,6 +283,51 @@ public class LPKGBundleTrackerCustomizer
 			}
 
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isBundleInstalled(Bundle bundle, URL url)
+		throws IOException {
+
+		try (InputStream inputStream = url.openStream();
+			JarInputStream jarInputStream = new JarInputStream(inputStream)) {
+
+			Manifest manifest = jarInputStream.getManifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			String symbolicName = attributes.getValue(
+				Constants.BUNDLE_SYMBOLICNAME);
+
+			Version version = new Version(
+				attributes.getValue(Constants.BUNDLE_VERSION));
+
+			String location = url.getPath();
+
+			for (Bundle installedBundle : _bundleContext.getBundles()) {
+				if (symbolicName.equals(installedBundle.getSymbolicName()) &&
+					version.equals(installedBundle.getVersion()) &&
+					!location.equals(installedBundle.getLocation())) {
+
+					if (_log.isInfoEnabled()) {
+						StringBundler sb = new StringBundler();
+
+						sb.append("Skipping installation of \"");
+						sb.append(symbolicName);
+						sb.append("\" with version \"");
+						sb.append(version.toString());
+						sb.append("\" in ");
+						sb.append(bundle.getSymbolicName());
+						sb.append(" because an identical bundle exists");
+
+						_log.info(sb.toString());
+					}
+
+					return true;
+				}
+			}
 		}
 
 		return false;

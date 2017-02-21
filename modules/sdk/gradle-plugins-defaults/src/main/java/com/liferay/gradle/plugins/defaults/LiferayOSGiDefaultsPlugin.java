@@ -1697,6 +1697,18 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							moduleVersionSelector);
 
 						dependencyResolveDetails.useVersion(version);
+
+						if (logger.isLifecycleEnabled()) {
+							File file = GradleUtil.getMavenLocalFile(
+								project, group, name,
+								moduleVersionSelector.getVersion());
+
+							logger.lifecycle(
+								"Compiling JSP files of {} with {} as " +
+									"dependency in place of '{}:{}:{}'",
+								project, file.getAbsolutePath(), group, name,
+								moduleVersionSelector.getVersion());
+						}
 					}
 				}
 

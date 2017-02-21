@@ -20,9 +20,6 @@ import java.io.File;
 
 import java.lang.reflect.Method;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -108,6 +105,31 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 			new File(dir, "gradle.properties"));
 
 		return properties.getProperty(key, defaultValue);
+	}
+
+	public static File getMavenLocalFile(
+		Project project, String group, String name, String version) {
+
+		File dir = _getMavenLocalDir(project);
+
+		if (dir == null) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(group.replace('.', File.separatorChar));
+		sb.append(File.separatorChar);
+		sb.append(name);
+		sb.append(File.separatorChar);
+		sb.append(version);
+		sb.append(File.separatorChar);
+		sb.append(name);
+		sb.append('-');
+		sb.append(version);
+		sb.append(".jar");
+
+		return new File(dir, sb.toString());
 	}
 
 	public static Project getProject(Project rootProject, String name) {
@@ -215,21 +237,9 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 	}
 
 	public static boolean isFromMavenLocal(Project project, File file) {
-		RepositoryHandler repositoryHandler = project.getRepositories();
+		File mavenLocalDir = _getMavenLocalDir(project);
 
-		ArtifactRepository artifactRepository = repositoryHandler.findByName(
-			ArtifactRepositoryContainer.DEFAULT_MAVEN_LOCAL_REPO_NAME);
-
-		if (!(artifactRepository instanceof MavenArtifactRepository)) {
-			return false;
-		}
-
-		MavenArtifactRepository mavenArtifactRepository =
-			(MavenArtifactRepository)artifactRepository;
-
-		Path repositoryPath = Paths.get(mavenArtifactRepository.getUrl());
-
-		if (FileUtil.isChild(file, repositoryPath.toFile())) {
+		if ((mavenLocalDir != null) && FileUtil.isChild(file, mavenLocalDir)) {
 			return true;
 		}
 
@@ -290,6 +300,22 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withType(pluginClass, action);
+	}
+
+	private static File _getMavenLocalDir(Project project) {
+		RepositoryHandler repositoryHandler = project.getRepositories();
+
+		ArtifactRepository artifactRepository = repositoryHandler.findByName(
+			ArtifactRepositoryContainer.DEFAULT_MAVEN_LOCAL_REPO_NAME);
+
+		if (!(artifactRepository instanceof MavenArtifactRepository)) {
+			return null;
+		}
+
+		MavenArtifactRepository mavenArtifactRepository =
+			(MavenArtifactRepository)artifactRepository;
+
+		return new File(mavenArtifactRepository.getUrl());
 	}
 
 }

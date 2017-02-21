@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.model;
 
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
@@ -24,7 +23,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -85,26 +83,7 @@ public class PortletCategory implements Serializable {
 	}
 
 	public Set<String> getFirstChildPortletIds() {
-		Set<String> portletIds = getPortletIds();
-
-		if (!portletIds.isEmpty()) {
-			return portletIds;
-		}
-
-		List<PortletCategory> subcategories = ListUtil.fromCollection(
-			getCategories());
-
-		for (int i = 0; i < subcategories.size(); i++) {
-			PortletCategory portletCategory = subcategories.get(i);
-
-			portletIds = iteratePortletCategories(portletCategory);
-
-			if (!portletIds.isEmpty()) {
-				return portletIds;
-			}
-		}
-
-		return new HashSet<>();
+		return _getFirstChildPortletIds(this);
 	}
 
 	public String getName() {
@@ -172,33 +151,6 @@ public class PortletCategory implements Serializable {
 		_portletIds = portletIds;
 	}
 
-	protected Set<String> iteratePortletCategories(
-		PortletCategory parentCategory) {
-
-		Set<String> portletIds = parentCategory.getPortletIds();
-
-		if (!portletIds.isEmpty()) {
-			return portletIds;
-		}
-
-		List<PortletCategory> subcategories = ListUtil.fromCollection(
-			parentCategory.getCategories());
-
-		for (int i = 0; i < subcategories.size(); i++) {
-			PortletCategory portletCategory = subcategories.get(i);
-
-			if (portletIds.isEmpty()) {
-				portletIds = iteratePortletCategories(portletCategory);
-			}
-
-			if (!portletIds.isEmpty()) {
-				return portletIds;
-			}
-		}
-
-		return new HashSet<>();
-	}
-
 	protected void merge(
 		PortletCategory portletCategory1, PortletCategory portletCategory2) {
 
@@ -229,6 +181,28 @@ public class PortletCategory implements Serializable {
 
 	protected void setPath(String path) {
 		_path = path;
+	}
+
+	private Set<String> _getFirstChildPortletIds(
+		PortletCategory parentCategory) {
+
+		Set<String> portletIds = parentCategory.getPortletIds();
+
+		if (!portletIds.isEmpty()) {
+			return portletIds;
+		}
+
+		for (PortletCategory portletCategory : parentCategory.getCategories()) {
+			portletIds = parentCategory.getPortletIds();
+
+			if (!portletIds.isEmpty()) {
+				return portletIds;
+			}
+
+			_getFirstChildPortletIds(portletCategory);
+		}
+
+		return Collections.emptySet();
 	}
 
 	private static final String _DELIMITER = StringPool.DOUBLE_SLASH;

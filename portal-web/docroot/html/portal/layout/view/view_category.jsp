@@ -25,22 +25,21 @@ portletCategories = ListUtil.sort(portletCategories, new PortletCategoryComparat
 
 List<Portlet> portlets = new ArrayList<Portlet>();
 
-Set<String> currCategoryPortletIds = portletCategory.getPortletIds();
-Set<String> childPortletIds = portletCategory.getFirstChildPortletIds();
+for (String portletId : portletCategory.getPortletIds()) {
+	Portlet portlet = PortletLocalServiceUtil.getPortletById(user.getCompanyId(), portletId);
+
+	if ((portlet != null) && PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.ADD_TO_PAGE)) {
+		portlets.add(portlet);
+	}
+}
 
 String externalPortletCategory = null;
 
-for (String childPortletId : childPortletIds) {
-	Portlet portlet = PortletLocalServiceUtil.getPortletById(user.getCompanyId(), childPortletId);
+for (String portletId : portletCategory.getFirstChildPortletIds()) {
+	Portlet portlet = PortletLocalServiceUtil.getPortletById(user.getCompanyId(), portletId);
 
-	for (String portletId : currCategoryPortletIds) {
-		if (!childPortletId.equals(portletId)) {
-			continue;
-		}
-
-		if ((portlet != null) && PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.ADD_TO_PAGE)) {
-			portlets.add(portlet);
-		}
+	if (portlet != null) {
+		continue;
 	}
 
 	PortletApp portletApp = portlet.getPortletApp();

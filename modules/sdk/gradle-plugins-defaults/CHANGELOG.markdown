@@ -1071,7 +1071,7 @@ from the `com.liferay.jasper.jspc` default dependency in the `jspCTool`
 configuration.
 - [LPS-70699]: Disable the update check when building themes.
 
-## 2.4.35 - 2017-02-16
+## 2.4.35 - 2017-02-17
 
 ### Changed
 - [LPS-70707]: Update the [Liferay Gradle Plugins] dependency to version 3.2.6.

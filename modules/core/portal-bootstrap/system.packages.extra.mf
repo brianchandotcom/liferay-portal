@@ -2885,7 +2885,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  feray.portal.kernel.log,com.liferay.portal.kernel.util,javax.servlet,
  javax.servlet.http",com.liferay.portal.kernel.servlet.taglib.aui;vers
  ion="7.0.0";uses:="com.liferay.portal.kernel.util",com.liferay.portal
- .kernel.servlet.taglib.ui;version="6.3.0";uses:="com.liferay.portal.k
+ .kernel.servlet.taglib.ui;version="6.4.0";uses:="com.liferay.portal.k
  ernel.exception,com.liferay.portal.kernel.model,com.liferay.portal.ke
  rnel.theme,com.liferay.portal.kernel.util,javax.servlet,javax.servlet
  .http",com.liferay.portal.kernel.servlet.taglib.util;version="6.3.0";

@@ -4974,11 +4974,15 @@ go]]></replacevalue>
 			<then>
 				<for list="${osgi.app.includes}" param="osgi.app.name">
 					<sequential>
+						<antelope:stringutil property="osgi.app.name" string="@{osgi.app.name}">
+							<antelope:trim />
+						</antelope:stringutil>
+
 						<for param="app.dir">
 							<path>
 								<dirset dir="modules">
-									<include name="apps/@{osgi.app.name}" />
-									<include name="private/apps/@{osgi.app.name}" />
+									<include name="apps/${osgi.app.name}" />
+									<include name="private/apps/${osgi.app.name}" />
 								</dirset>
 							</path>
 							<sequential>

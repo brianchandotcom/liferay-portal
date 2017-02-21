@@ -146,4 +146,48 @@
 			<var name="message" value="There are no tags." />
 		</execute>
 	</command>
+
+	<command name="ViewTagsPagination" priority="4">
+		<var name="index" value="1" />
+
+		<while>
+			<not>
+				<equals arg1="${index}" arg2="10" />
+			</not>
+			<then>
+				<execute macro="Tag#addCP">
+					<var name="tagName" value="tagname0${index}" />
+				</execute>
+
+				<var method="MathUtil#sum('${index}', '1')" name="index" />
+			</then>
+		</while>
+
+		<while max-iterations="16">
+			<not>
+				<equals arg1="${index}" arg2="26" />
+			</not>
+			<then>
+				<execute macro="Tag#addCP">
+					<var name="tagName" value="tagname${index}" />
+				</execute>
+
+				<var method="MathUtil#sum('${index}', '1')" name="index" />
+			</then>
+		</while>
+
+		<execute function="AssertTextEquals" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="20 Entries" />
+
+		<execute macro="Pagination#viewResults">
+			<var name="results" value="Showing 1 to 20 of 25 entries." />
+		</execute>
+
+		<execute macro="Pagination#changePagination">
+			<var name="itemsPerPage" value="5" />
+		</execute>
+
+		<execute macro="Pagination#viewResults">
+			<var name="results" value="Showing 1 to 5 of 25 entries." />
+		</execute>
+	</command>
 </definition>

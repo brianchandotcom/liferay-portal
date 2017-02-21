@@ -44,8 +44,8 @@ public class GitWorkingDirectory {
 		FileRepositoryBuilder fileRepositoryBuilder =
 			new FileRepositoryBuilder();
 
-		fileRepositoryBuilder.setGitDir(new File(_gitDirectory));
-		fileRepositoryBuilder.setWorkTree(new File(_workingDirectory));
+		fileRepositoryBuilder.setGitDir(_gitDirectory);
+		fileRepositoryBuilder.setWorkTree(_workingDirectory);
 
 		_repository = fileRepositoryBuilder.build();
 
@@ -65,7 +65,7 @@ public class GitWorkingDirectory {
 		sb.append(branchName);
 
 		JenkinsResultsParserUtil.executeBashCommands(
-			true, new File(_workingDirectory), sb.toString());
+			true, _workingDirectory, sb.toString());
 
 		int timeout = 0;
 
@@ -140,7 +140,7 @@ public class GitWorkingDirectory {
 		return _repository.getBranch();
 	}
 
-	public String getWorkingDirectory() {
+	public File getWorkingDirectory() {
 		return _workingDirectory;
 	}
 
@@ -165,7 +165,7 @@ public class GitWorkingDirectory {
 		_clearIndexLock();
 
 		JenkinsResultsParserUtil.executeBashCommands(
-			true, new File(_workingDirectory), "git reset --hard");
+			true, _workingDirectory, "git reset --hard");
 	}
 
 	public void stageFileInCurrentBranch(String fileName)
@@ -207,31 +207,28 @@ public class GitWorkingDirectory {
 	private void _setGitDirectory(String gitDirectory)
 		throws GitAPIException, IOException {
 
-		File file = new File(gitDirectory);
+		_gitDirectory = new File(gitDirectory);
 
-		if (!file.exists()) {
-			throw new FileNotFoundException(gitDirectory + " is unavailable");
+		if (!_gitDirectory.exists()) {
+			throw new FileNotFoundException(
+				_gitDirectory.getPath() + " is unavailable");
 		}
-
-		_gitDirectory = file.getCanonicalPath();
 	}
 
 	private void _setWorkingDirectory(String workingDirectory)
 		throws GitAPIException, IOException {
 
-		File file = new File(workingDirectory);
+		_workingDirectory = new File(workingDirectory);
 
-		if (!file.exists()) {
+		if (!_workingDirectory.exists()) {
 			throw new FileNotFoundException(
-				workingDirectory + " is unavailable");
+				_workingDirectory.getPath() + " is unavailable");
 		}
-
-		_workingDirectory = file.getCanonicalPath();
 	}
 
 	private final Git _git;
-	private String _gitDirectory;
+	private File _gitDirectory;
 	private final Repository _repository;
-	private String _workingDirectory;
+	private File _workingDirectory;
 
 }

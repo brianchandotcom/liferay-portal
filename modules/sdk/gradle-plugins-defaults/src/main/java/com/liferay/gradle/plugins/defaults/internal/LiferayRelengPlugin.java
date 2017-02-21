@@ -26,8 +26,8 @@ import com.liferay.gradle.plugins.defaults.LiferayThemeDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GitUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.defaults.tasks.PrintArtifactPublishCommandsTask;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
+import com.liferay.gradle.plugins.defaults.tasks.WriteArtifactPublishCommandsTask;
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.util.Validator;
 
@@ -76,9 +76,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 	public static final Plugin<Project> INSTANCE = new LiferayRelengPlugin();
 
-	public static final String PRINT_ARTIFACT_PUBLISH_COMMANDS =
-		"printArtifactPublishCommands";
-
 	public static final String PRINT_DEPENDENT_ARTIFACT_TASK_NAME =
 		"printDependentArtifact";
 
@@ -88,6 +85,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	public static final String RECORD_ARTIFACT_TASK_NAME = "recordArtifact";
 
 	public static final String UPDATE_VERSION_TASK_NAME = "updateVersion";
+
+	public static final String WRITE_ARTIFACT_PUBLISH_COMMANDS =
+		"writeArtifactPublishCommands";
 
 	public static File getRelengDir(Project project) {
 		File rootDir = GradleUtil.getRootDir(project, ".releng");
@@ -120,7 +120,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		final WritePropertiesTask recordArtifactTask = _addTaskRecordArtifact(
 			project, relengDir);
 
-		_addTaskPrintArtifactPublishCommands(project, recordArtifactTask);
+		_addTaskWriteArtifactPublishCommands(project, recordArtifactTask);
 		_addTaskPrintStaleArtifact(project, recordArtifactTask);
 
 		_addTaskPrintDependentArtifact(project);
@@ -141,121 +141,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	}
 
 	private LiferayRelengPlugin() {
-	}
-
-	private PrintArtifactPublishCommandsTask
-		_addTaskPrintArtifactPublishCommands(
-			Project project, final WritePropertiesTask recordArtifactTask) {
-
-		final PrintArtifactPublishCommandsTask
-			printArtifactPublishCommandsTask = GradleUtil.addTask(
-				project, PRINT_ARTIFACT_PUBLISH_COMMANDS,
-				PrintArtifactPublishCommandsTask.class);
-
-		printArtifactPublishCommandsTask.setArtifactPropertiesFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return recordArtifactTask.getOutputFile();
-				}
-
-			});
-
-		printArtifactPublishCommandsTask.setDescription(
-			"Prints the artifact publish commands if this project has been " +
-				"changed since the last publish.");
-
-		_configureTaskEnabledIfStale(
-			printArtifactPublishCommandsTask, recordArtifactTask);
-
-		String projectPath = project.getPath();
-
-		if (projectPath.startsWith(":apps:") ||
-			projectPath.startsWith(":private:apps:")) {
-
-			printArtifactPublishCommandsTask.onlyIf(
-				new Spec<Task>() {
-
-					@Override
-					public boolean isSatisfiedBy(Task task) {
-						if (_hasProjectDependencies(task.getProject())) {
-							return false;
-						}
-
-						return true;
-					}
-
-				});
-
-			_configureTaskEnabledIfDependenciesArePublished(
-				printArtifactPublishCommandsTask);
-		}
-
-		GradleUtil.withPlugin(
-			project, LiferayOSGiDefaultsPlugin.class,
-			new Action<LiferayOSGiDefaultsPlugin>() {
-
-				@Override
-				public void execute(
-					LiferayOSGiDefaultsPlugin liferayOSGiDefaultsPlugin) {
-
-					_configureTaskPrintArtifactPublishCommandsForOSGi(
-						printArtifactPublishCommandsTask);
-				}
-
-			});
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					TaskContainer taskContainer = project.getTasks();
-
-					Task task = taskContainer.findByName(
-						UPDATE_VERSION_TASK_NAME);
-
-					if (task instanceof ReplaceRegexTask) {
-						ReplaceRegexTask replaceRegexTask =
-							(ReplaceRegexTask)task;
-
-						Map<String, FileCollection> matches =
-							replaceRegexTask.getMatches();
-
-						printArtifactPublishCommandsTask.prepNextFiles(
-							matches.values());
-					}
-
-					if (GradleUtil.hasPlugin(project, CachePlugin.class)) {
-						CacheExtension cacheExtension = GradleUtil.getExtension(
-							project, CacheExtension.class);
-
-						for (TaskCache taskCache : cacheExtension.getTasks()) {
-							printArtifactPublishCommandsTask.prepNextFiles(
-								new File(
-									taskCache.getCacheDir(),
-									TaskCacheApplicator.DIGEST_FILE_NAME));
-						}
-					}
-
-					if (GradleUtil.hasPlugin(
-							project, LiferayThemeDefaultsPlugin.class)) {
-
-						WriteDigestTask writeDigestTask =
-							(WriteDigestTask)GradleUtil.getTask(
-								project,
-								LiferayThemeDefaultsPlugin.
-									WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
-
-						printArtifactPublishCommandsTask.prepNextCommitFile(
-							"digest", writeDigestTask.getDigestFile());
-					}
-				}
-
-			});
-
-		return printArtifactPublishCommandsTask;
 	}
 
 	private Task _addTaskPrintDependentArtifact(Project project) {
@@ -408,6 +293,121 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		return writePropertiesTask;
 	}
 
+	private WriteArtifactPublishCommandsTask
+		_addTaskWriteArtifactPublishCommands(
+			Project project, final WritePropertiesTask recordArtifactTask) {
+
+		final WriteArtifactPublishCommandsTask
+			writeArtifactPublishCommandsTask = GradleUtil.addTask(
+				project, WRITE_ARTIFACT_PUBLISH_COMMANDS,
+				WriteArtifactPublishCommandsTask.class);
+
+		writeArtifactPublishCommandsTask.setArtifactPropertiesFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return recordArtifactTask.getOutputFile();
+				}
+
+			});
+
+		writeArtifactPublishCommandsTask.setDescription(
+			"Prints the artifact publish commands if this project has been " +
+				"changed since the last publish.");
+
+		_configureTaskEnabledIfStale(
+			writeArtifactPublishCommandsTask, recordArtifactTask);
+
+		String projectPath = project.getPath();
+
+		if (projectPath.startsWith(":apps:") ||
+			projectPath.startsWith(":private:apps:")) {
+
+			writeArtifactPublishCommandsTask.onlyIf(
+				new Spec<Task>() {
+
+					@Override
+					public boolean isSatisfiedBy(Task task) {
+						if (_hasProjectDependencies(task.getProject())) {
+							return false;
+						}
+
+						return true;
+					}
+
+				});
+
+			_configureTaskEnabledIfDependenciesArePublished(
+				writeArtifactPublishCommandsTask);
+		}
+
+		GradleUtil.withPlugin(
+			project, LiferayOSGiDefaultsPlugin.class,
+			new Action<LiferayOSGiDefaultsPlugin>() {
+
+				@Override
+				public void execute(
+					LiferayOSGiDefaultsPlugin liferayOSGiDefaultsPlugin) {
+
+					_configureTaskWriteArtifactPublishCommandsForOSGi(
+						writeArtifactPublishCommandsTask);
+				}
+
+			});
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					TaskContainer taskContainer = project.getTasks();
+
+					Task task = taskContainer.findByName(
+						UPDATE_VERSION_TASK_NAME);
+
+					if (task instanceof ReplaceRegexTask) {
+						ReplaceRegexTask replaceRegexTask =
+							(ReplaceRegexTask)task;
+
+						Map<String, FileCollection> matches =
+							replaceRegexTask.getMatches();
+
+						writeArtifactPublishCommandsTask.prepNextFiles(
+							matches.values());
+					}
+
+					if (GradleUtil.hasPlugin(project, CachePlugin.class)) {
+						CacheExtension cacheExtension = GradleUtil.getExtension(
+							project, CacheExtension.class);
+
+						for (TaskCache taskCache : cacheExtension.getTasks()) {
+							writeArtifactPublishCommandsTask.prepNextFiles(
+								new File(
+									taskCache.getCacheDir(),
+									TaskCacheApplicator.DIGEST_FILE_NAME));
+						}
+					}
+
+					if (GradleUtil.hasPlugin(
+							project, LiferayThemeDefaultsPlugin.class)) {
+
+						WriteDigestTask writeDigestTask =
+							(WriteDigestTask)GradleUtil.getTask(
+								project,
+								LiferayThemeDefaultsPlugin.
+									WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
+
+						writeArtifactPublishCommandsTask.prepNextCommitFile(
+							"digest", writeDigestTask.getDigestFile());
+					}
+				}
+
+			});
+
+		return writeArtifactPublishCommandsTask;
+	}
+
 	private void _configureTaskBuildChangeLog(
 		BuildChangeLogTask buildChangeLogTask, File destinationDir) {
 
@@ -512,19 +512,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskPrintArtifactPublishCommandsForOSGi(
-		PrintArtifactPublishCommandsTask printArtifactPublishCommandsTask) {
-
-		Project project = printArtifactPublishCommandsTask.getProject();
-
-		if (GradleUtil.isTestProject(project)) {
-			printArtifactPublishCommandsTask.setEnabled(false);
-		}
-
-		printArtifactPublishCommandsTask.setFirstPublishExcludedTaskName(
-			LiferayOSGiDefaultsPlugin.UPDATE_FILE_VERSIONS_TASK_NAME);
-	}
-
 	private void _configureTaskPrintStaleArtifactForOSGi(Task task) {
 		if (GradleUtil.isTestProject(task.getProject())) {
 			task.setEnabled(false);
@@ -565,6 +552,19 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		uploadArchivesTask.dependsOn(recordArtifactTask);
 
 		_configureTaskEnabledIfRelease(recordArtifactTask);
+	}
+
+	private void _configureTaskWriteArtifactPublishCommandsForOSGi(
+		WriteArtifactPublishCommandsTask writeArtifactPublishCommandsTask) {
+
+		Project project = writeArtifactPublishCommandsTask.getProject();
+
+		if (GradleUtil.isTestProject(project)) {
+			writeArtifactPublishCommandsTask.setEnabled(false);
+		}
+
+		writeArtifactPublishCommandsTask.setFirstPublishExcludedTaskName(
+			LiferayOSGiDefaultsPlugin.UPDATE_FILE_VERSIONS_TASK_NAME);
 	}
 
 	private StringBuilder _getArtifactRemoteBaseURL(
@@ -683,7 +683,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			}
 
 			if (!line.contains(
-					PrintArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
+					WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
 
 				return true;
 			}

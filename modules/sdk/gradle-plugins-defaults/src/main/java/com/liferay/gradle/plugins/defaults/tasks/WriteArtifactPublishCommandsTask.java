@@ -48,11 +48,11 @@ import org.gradle.util.VersionNumber;
 /**
  * @author Andrea Di Giorgi
  */
-public class PrintArtifactPublishCommandsTask extends DefaultTask {
+public class WriteArtifactPublishCommandsTask extends DefaultTask {
 
 	public static final String IGNORED_MESSAGE_PATTERN = "artifact:ignore";
 
-	public PrintArtifactPublishCommandsTask() {
+	public WriteArtifactPublishCommandsTask() {
 		String firstOnlyString = GradleUtil.getTaskPrefixedProperty(
 			this, "first");
 
@@ -134,7 +134,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		return _gradleDaemon;
 	}
 
-	public PrintArtifactPublishCommandsTask prepNextCommitFile(
+	public WriteArtifactPublishCommandsTask prepNextCommitFile(
 		String message, File file) {
 
 		Set<Object> files = _prepNextCommitFiles.get(message);
@@ -150,7 +150,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		return this;
 	}
 
-	public PrintArtifactPublishCommandsTask prepNextFiles(
+	public WriteArtifactPublishCommandsTask prepNextFiles(
 		Iterable<?> prepNextFiles) {
 
 		GUtil.addToCollection(_prepNextFiles, prepNextFiles);
@@ -158,14 +158,54 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		return this;
 	}
 
-	public PrintArtifactPublishCommandsTask prepNextFiles(
+	public WriteArtifactPublishCommandsTask prepNextFiles(
 		Object... prepNextFiles) {
 
 		return prepNextFiles(Arrays.asList(prepNextFiles));
 	}
 
+	public void setArtifactPropertiesFile(Object artifactPropertiesFile) {
+		_artifactPropertiesFile = artifactPropertiesFile;
+	}
+
+	public void setFirstOnly(boolean firstOnly) {
+		_firstOnly = firstOnly;
+	}
+
+	public void setFirstPublishExcludedTaskName(
+		Object firstPublishExcludedTaskName) {
+
+		_firstPublishExcludedTaskName = firstPublishExcludedTaskName;
+	}
+
+	public void setForcedCache(boolean forcedCache) {
+		_forcedCache = forcedCache;
+	}
+
+	public void setGradleDaemon(boolean gradleDaemon) {
+		_gradleDaemon = gradleDaemon;
+	}
+
+	public void setGradleDir(Object gradleDir) {
+		_gradleDir = gradleDir;
+	}
+
+	public void setLowestPublishedVersion(Object lowestPublishedVersion) {
+		_lowestPublishedVersion = lowestPublishedVersion;
+	}
+
+	public void setPrepNextFiles(Iterable<?> prepNextFiles) {
+		_prepNextFiles.clear();
+
+		prepNextFiles(prepNextFiles);
+	}
+
+	public void setPrepNextFiles(Object... prepNextFiles) {
+		setPrepNextFiles(Arrays.asList(prepNextFiles));
+	}
+
 	@TaskAction
-	public void printArtifactPublishCommands() {
+	public void writeArtifactPublishCommands() {
 		List<String> commands = new ArrayList<>();
 
 		Project project = getProject();
@@ -226,46 +266,6 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		if (isFirstOnly()) {
 			throw new GradleException();
 		}
-	}
-
-	public void setArtifactPropertiesFile(Object artifactPropertiesFile) {
-		_artifactPropertiesFile = artifactPropertiesFile;
-	}
-
-	public void setFirstOnly(boolean firstOnly) {
-		_firstOnly = firstOnly;
-	}
-
-	public void setFirstPublishExcludedTaskName(
-		Object firstPublishExcludedTaskName) {
-
-		_firstPublishExcludedTaskName = firstPublishExcludedTaskName;
-	}
-
-	public void setForcedCache(boolean forcedCache) {
-		_forcedCache = forcedCache;
-	}
-
-	public void setGradleDaemon(boolean gradleDaemon) {
-		_gradleDaemon = gradleDaemon;
-	}
-
-	public void setGradleDir(Object gradleDir) {
-		_gradleDir = gradleDir;
-	}
-
-	public void setLowestPublishedVersion(Object lowestPublishedVersion) {
-		_lowestPublishedVersion = lowestPublishedVersion;
-	}
-
-	public void setPrepNextFiles(Iterable<?> prepNextFiles) {
-		_prepNextFiles.clear();
-
-		prepNextFiles(prepNextFiles);
-	}
-
-	public void setPrepNextFiles(Object... prepNextFiles) {
-		setPrepNextFiles(Arrays.asList(prepNextFiles));
 	}
 
 	private void _addPrepNextCommitCommands(

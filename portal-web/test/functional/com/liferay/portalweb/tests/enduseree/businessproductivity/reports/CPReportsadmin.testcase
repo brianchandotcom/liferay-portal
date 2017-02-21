@@ -614,6 +614,7 @@
 			<var method="TestPropsUtil#get('email.address.2')" name="emailNotificationsAddress" />
 			<var name="emailRecipientAddress" value="test@liferay.com" />
 			<var name="reportFormat" value="pdf" />
+			<var name="reportName" value="Custom Report Name" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
 		</execute>
 
@@ -628,12 +629,12 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="gmailAssetType" value="New Report: Custom Report Name.pdf" />
 			<var name="gmailMessageBody" value="You have a new report." />
-			<var name="gmailMessageTitle" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="gmailMessageTitle" value="New Report: Custom Report Name.pdf" />
 		</execute>
 
-		<var name="key_gmailAssetType" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
+		<var name="key_gmailAssetType" value="New Report: Custom Report Name.pdf" />
 		<var name="key_pageNameURL" value="report" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="report" />
@@ -646,14 +647,14 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.pdf" />
+			<var name="reportsFileName" value="Custom Report Name.pdf" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
 		<execute macro="Gmail#deleteSpecificMail">
-			<var name="gmailMessageTitleList" value="New Report: reports_admin_template_source_sample_class_name.pdf,Your New Account,Your New Password" />
+			<var name="gmailMessageTitleList" value="New Report: Custom Report Name.pdf,Your New Account,Your New Password" />
 		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />

@@ -36,7 +36,6 @@ public class GitWorkingDirectory {
 	public GitWorkingDirectory(String workingDirectory)
 		throws GitAPIException, InterruptedException, IOException {
 
-		_setGitDirectory(workingDirectory + "/.git");
 		_setWorkingDirectory(workingDirectory);
 
 		_clearIndexLock();
@@ -204,17 +203,6 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	private void _setGitDirectory(String gitDirectory)
-		throws GitAPIException, IOException {
-
-		_gitDirectory = new File(gitDirectory);
-
-		if (!_gitDirectory.exists()) {
-			throw new FileNotFoundException(
-				_gitDirectory.getPath() + " is unavailable");
-		}
-	}
-
 	private void _setWorkingDirectory(String workingDirectory)
 		throws GitAPIException, IOException {
 
@@ -223,6 +211,13 @@ public class GitWorkingDirectory {
 		if (!_workingDirectory.exists()) {
 			throw new FileNotFoundException(
 				_workingDirectory.getPath() + " is unavailable");
+		}
+
+		_gitDirectory = new File(workingDirectory, ".git");
+
+		if (!_gitDirectory.exists()) {
+			throw new FileNotFoundException(
+				_gitDirectory.getPath() + " is unavailable");
 		}
 	}
 

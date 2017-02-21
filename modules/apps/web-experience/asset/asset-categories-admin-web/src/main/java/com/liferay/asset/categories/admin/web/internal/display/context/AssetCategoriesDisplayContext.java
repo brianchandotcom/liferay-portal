@@ -30,8 +30,11 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -103,10 +106,22 @@ public class AssetCategoriesDisplayContext {
 					ClassTypeReader classTypeReader =
 						assetRendererFactory.getClassTypeReader();
 
-					ClassType classType = classTypeReader.getClassType(
-						classTypePK, themeDisplay.getLocale());
+					try {
+						ClassType classType = classTypeReader.getClassType(
+							classTypePK, themeDisplay.getLocale());
 
-					name = classType.getName();
+						name = classType.getName();
+					}
+					catch (NoSuchModelException nsme) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Unable to get Asset Type for classTypePK " +
+									classTypePK,
+								nsme);
+						}
+
+						continue;
+					}
 				}
 				else {
 					name = ResourceActionsUtil.getModelResource(
@@ -122,7 +137,11 @@ public class AssetCategoriesDisplayContext {
 				sb.append(StringPool.STAR);
 			}
 
-			sb.append(StringPool.COMMA);
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		if (sb.index() == 0) {
+			return StringPool.BLANK;
 		}
 
 		sb.setIndex(sb.index() - 1);
@@ -610,6 +629,9 @@ public class AssetCategoriesDisplayContext {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetCategoriesDisplayContext.class);
 
 	private SearchContainer _categoriesSearchContainer;
 	private AssetCategory _category;

@@ -279,4 +279,26 @@
 			<var name="message" value="There are no tags." />
 		</execute>
 	</command>
+
+	<command name="ToggleDisplayStyles" priority="4">
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="icon" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Card#GENERIC_LARGE_TEXT" value1="tagname1" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="descriptive" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_DESCRIPTIVE_TITLE" value1="tagname1" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_LIST_COLUMN" value1="tagname1">
+			<var name="key_columnNumber" value="2" />
+		</execute>
+	</command>
 </definition>

@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.upgrade;
 
 import com.liferay.layout.admin.web.internal.upgrade.v_1_0_0.UpgradeLayout;
+import com.liferay.layout.admin.web.internal.upgrade.v_1_0_1.UpgradeLayoutType;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -37,6 +38,10 @@ public class LayoutAdminWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.layout.admin.web", "0.0.1", "1.0.0",
 			new UpgradeLayout());
+
+		registry.register(
+			"com.liferay.layout.admin.web", "1.0.0", "1.0.1",
+			new UpgradeLayoutType());
 	}
 
 }

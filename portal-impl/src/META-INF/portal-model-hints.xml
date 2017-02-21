@@ -440,7 +440,8 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.exportimport.kernel.model.ExportImportConfiguration">
+	<model
+		name="com.liferay.exportimport.kernel.model.ExportImportConfiguration">
 		<field name="mvccVersion" type="long" />
 		<field name="exportImportConfigurationId" type="long" />
 		<field name="groupId" type="long" />
@@ -526,7 +527,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="categoryId" type="long" />
-		<field name="emailAddress" type="String" />
+		<field name="emailAddress" type="String">
+			<hint name="max-length">254</hint>
+		</field>
 		<field name="inProtocol" type="String" />
 		<field name="inServerName" type="String" />
 		<field name="inServerPort" type="int" />
@@ -536,7 +539,9 @@
 			<hint name="secret">true</hint>
 		</field>
 		<field name="inReadInterval" type="int" />
-		<field name="outEmailAddress" type="String" />
+		<field name="outEmailAddress" type="String">
+			<hint name="max-length">254</hint>
+		</field>
 		<field name="outCustom" type="boolean" />
 		<field name="outServerName" type="String" />
 		<field name="outServerPort" type="int" />
@@ -733,7 +738,9 @@
 		<field name="classPK" type="long" />
 		<field name="accountId" type="long" />
 		<field name="parentContactId" type="long" />
-		<field name="emailAddress" type="String" />
+		<field name="emailAddress" type="String">
+			<hint name="max-length">254</hint>
+		</field>
 		<field name="firstName" type="String" />
 		<field name="middleName" type="String" />
 		<field name="lastName" type="String" />
@@ -782,6 +789,7 @@
 		<field name="classPK" type="long" />
 		<field name="address" type="String">
 			<hint name="display-width">210</hint>
+			<hint name="max-length">254</hint>
 			<validator name="email" />
 		</field>
 		<field name="typeId" type="long" />
@@ -1552,6 +1560,7 @@
 		</field>
 		<field name="emailAddress" type="String">
 			<validator name="email" />
+			<hint name="max-length">254</hint>
 		</field>
 		<field name="facebookId" type="long" />
 		<field name="googleUserId" type="String" />

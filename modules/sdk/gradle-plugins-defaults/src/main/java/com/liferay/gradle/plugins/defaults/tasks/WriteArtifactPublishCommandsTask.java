@@ -206,62 +206,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 
 	@TaskAction
 	public void writeArtifactPublishCommands() {
-		List<String> commands = new ArrayList<>();
-
-		Project project = getProject();
-
-		// Move to the root directory
-
-		commands.add("cd " + FileUtil.getAbsolutePath(project.getRootDir()));
-
-		// Publish if the artifact has never been published
-
-		if (!_isPublished()) {
-			_addPublishCommands(commands, true);
-		}
-
-		// Change log
-
-		BuildChangeLogTask buildChangeLogTask = (BuildChangeLogTask)_getTask(
-			ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
-
-		if (buildChangeLogTask != null) {
-			commands.add(_getGradleCommand(buildChangeLogTask));
-
-			commands.add(
-				"git add " +
-					_getRelativePath(buildChangeLogTask.getChangeLogFile()));
-
-			commands.add(_getGitCommitCommand("change log", false, true, true));
-		}
-
-		// Baseline
-
-		Task baselineTask = _getTask(BaselinePlugin.BASELINE_TASK_NAME);
-
-		if (baselineTask != null) {
-			commands.add(_getGradleCommand(baselineTask));
-
-			commands.add(
-				"git add --all " + _getRelativePath(project.getProjectDir()));
-
-			commands.add(
-				_getGitCommitCommand("packageinfo", false, false, true));
-		}
-
-		// Publish the artifact since there will either be change log or
-		// baseline changes
-
-		if ((baselineTask != null) || (buildChangeLogTask != null)) {
-			_addPublishCommands(commands, false);
-		}
-
-		System.out.println();
-
-		for (String command : commands) {
-			System.out.print(" && ");
-			System.out.print(command);
-		}
+		_writeArtifactPublishCommandsStep2();
 
 		if (isFirstOnly()) {
 			throw new GradleException();
@@ -467,6 +412,65 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		}
 
 		return false;
+	}
+
+	private void _writeArtifactPublishCommandsStep2() {
+		List<String> commands = new ArrayList<>();
+
+		Project project = getProject();
+
+		// Move to the root directory
+
+		commands.add("cd " + FileUtil.getAbsolutePath(project.getRootDir()));
+
+		// Publish if the artifact has never been published
+
+		if (!_isPublished()) {
+			_addPublishCommands(commands, true);
+		}
+
+		// Change log
+
+		BuildChangeLogTask buildChangeLogTask = (BuildChangeLogTask)_getTask(
+			ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
+
+		if (buildChangeLogTask != null) {
+			commands.add(_getGradleCommand(buildChangeLogTask));
+
+			commands.add(
+				"git add " +
+					_getRelativePath(buildChangeLogTask.getChangeLogFile()));
+
+			commands.add(_getGitCommitCommand("change log", false, true, true));
+		}
+
+		// Baseline
+
+		Task baselineTask = _getTask(BaselinePlugin.BASELINE_TASK_NAME);
+
+		if (baselineTask != null) {
+			commands.add(_getGradleCommand(baselineTask));
+
+			commands.add(
+				"git add --all " + _getRelativePath(project.getProjectDir()));
+
+			commands.add(
+				_getGitCommitCommand("packageinfo", false, false, true));
+		}
+
+		// Publish the artifact since there will either be change log or
+		// baseline changes
+
+		if ((baselineTask != null) || (buildChangeLogTask != null)) {
+			_addPublishCommands(commands, false);
+		}
+
+		System.out.println();
+
+		for (String command : commands) {
+			System.out.print(" && ");
+			System.out.print(command);
+		}
 	}
 
 	private Object _artifactPropertiesFile;

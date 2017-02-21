@@ -38,7 +38,7 @@ public class GitWorkingDirectory {
 
 		_setWorkingDirectory(workingDirectory);
 
-		_clearIndexLock();
+		_waitForIndexLock();
 
 		FileRepositoryBuilder fileRepositoryBuilder =
 			new FileRepositoryBuilder();
@@ -56,7 +56,7 @@ public class GitWorkingDirectory {
 
 		System.out.println("Checkout branch " + branchName);
 
-		_clearIndexLock();
+		_waitForIndexLock();
 
 		StringBuilder sb = new StringBuilder();
 
@@ -134,7 +134,7 @@ public class GitWorkingDirectory {
 	}
 
 	public String getCurrentBranch() throws InterruptedException, IOException {
-		_clearIndexLock();
+		_waitForIndexLock();
 
 		return _repository.getBranch();
 	}
@@ -161,7 +161,7 @@ public class GitWorkingDirectory {
 
 		System.out.println("Reset hard to HEAD");
 
-		_clearIndexLock();
+		_waitForIndexLock();
 
 		JenkinsResultsParserUtil.executeBashCommands(
 			true, _workingDirectory, "git reset --hard");
@@ -179,24 +179,6 @@ public class GitWorkingDirectory {
 		addCommand.call();
 	}
 
-	private void _clearIndexLock() throws InterruptedException {
-		int timeout = 0;
-
-		File file = new File(_gitDirectory, "index.lock");
-
-		while (file.exists()) {
-			System.out.println("Waiting for index.lock to be cleared.");
-
-			Thread.sleep(5000);
-
-			timeout++;
-
-			if (timeout >= 24) {
-				file.delete();
-			}
-		}
-	}
-
 	private void _setWorkingDirectory(String workingDirectory)
 		throws GitAPIException, IOException {
 
@@ -212,6 +194,24 @@ public class GitWorkingDirectory {
 		if (!_gitDirectory.exists()) {
 			throw new FileNotFoundException(
 				_gitDirectory.getPath() + " is unavailable");
+		}
+	}
+
+	private void _waitForIndexLock() throws InterruptedException {
+		int timeout = 0;
+
+		File file = new File(_gitDirectory, "index.lock");
+
+		while (file.exists()) {
+			System.out.println("Waiting for index.lock to be cleared.");
+
+			Thread.sleep(5000);
+
+			timeout++;
+
+			if (timeout >= 24) {
+				file.delete();
+			}
 		}
 	}
 

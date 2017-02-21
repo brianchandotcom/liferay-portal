@@ -908,10 +908,6 @@ public class JenkinsResultsParserUtil {
 
 					httpURLConnection.setRequestMethod("GET");
 
-					if (postData != null) {
-						httpURLConnection.setRequestMethod("POST");
-					}
-
 					Properties buildProperties = getBuildProperties();
 
 					httpURLConnection.setRequestProperty(
@@ -923,14 +919,17 @@ public class JenkinsResultsParserUtil {
 						"Content-Type", "application/json");
 
 					if (postData != null) {
+						httpURLConnection.setRequestMethod("POST");
+
 						httpURLConnection.setDoOutput(true);
 
-						OutputStream outputStream =
-							httpURLConnection.getOutputStream();
+						try (OutputStream outputStream =
+								httpURLConnection.getOutputStream()) {
 
-						outputStream.write(postData.getBytes("UTF-8"));
+							outputStream.write(postData.getBytes("UTF-8"));
 
-						outputStream.close();
+							outputStream.flush();
+						}
 					}
 				}
 

@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.asset.categories.admin.web.internal.display.context.AssetCategoriesDisplayContext" %><%@
 page import="com.liferay.asset.categories.admin.web.internal.util.AssetCategoryUtil" %><%@
 page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@
+page import="com.liferay.asset.kernel.NoSuchClassTypeException" %><%@
 page import="com.liferay.asset.kernel.exception.AssetCategoryNameException" %><%@
 page import="com.liferay.asset.kernel.exception.CategoryPropertyKeyException" %><%@
 page import="com.liferay.asset.kernel.exception.CategoryPropertyValueException" %><%@

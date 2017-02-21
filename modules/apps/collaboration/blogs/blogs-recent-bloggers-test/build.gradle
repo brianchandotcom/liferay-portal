@@ -1,0 +1,12 @@
+dependencies {
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.blogs.recent.bloggers.web", version: "1.0.0"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testIntegrationCompile project(":apps:collaboration:blogs:blogs-api")
+	testIntegrationCompile project(":apps:collaboration:blogs:blogs-service")
+	testIntegrationCompile project(":apps:collaboration:blogs:blogs-test-util")
+	testIntegrationCompile project(":apps:web-experience:export-import:export-import-api")
+	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
+}

@@ -31,8 +31,9 @@ public class UpgradeModules
 	}
 
 	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
-		"com.liferay.blogs.service", "com.liferay.subscription.service",
-		"com.liferay.portal.workflow.kaleo.forms.web"
+		"com.liferay.blogs.service",
+		"com.liferay.portal.workflow.kaleo.forms.web",
+		"com.liferay.subscription.service"
 	};
 
 	private static final String[][] _CONVERTED_LEGACY_MODULES = {};

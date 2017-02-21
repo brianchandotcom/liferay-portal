@@ -216,19 +216,14 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		long organizationId = GetterUtil.getLong(
-			portletPreferences.getValue("organizationId", null));
+		Company company = _companyLocalService.getCompanyById(
+			portletDataContext.getCompanyId());
 
-		if (organizationId > 0) {
-			Company company = _companyLocalService.getCompanyById(
-				portletDataContext.getCompanyId());
+		Group companyGroup = company.getGroup();
 
-			Group companyGroup = company.getGroup();
-
-			updateImportPortletPreferencesClassPKs(
-				portletDataContext, portletPreferences, "organizationId",
-				Organization.class, companyGroup.getGroupId());
-		}
+		updateImportPortletPreferencesClassPKs(
+			portletDataContext, portletPreferences, "organizationId",
+			Organization.class, companyGroup.getGroupId());
 
 		return portletPreferences;
 	}

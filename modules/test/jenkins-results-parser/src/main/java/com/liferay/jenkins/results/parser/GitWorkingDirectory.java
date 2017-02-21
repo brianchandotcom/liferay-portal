@@ -68,9 +68,9 @@ public class GitWorkingDirectory {
 
 		int timeout = 0;
 
-		while (true) {
-			File file = new File(_gitDirectory + "/HEAD");
+		File file = new File(_gitDirectory, "HEAD");
 
+		while (true) {
 			String content = JenkinsResultsParserUtil.read(file);
 
 			if (content.matches("ref: refs/heads/" + branchName + "\\n")) {

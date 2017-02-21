@@ -1647,6 +1647,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private void _configureConfigurationJspC(
 		final Project project, final LiferayExtension liferayExtension) {
 
+		final Logger logger = project.getLogger();
+
 		final Configuration configuration = GradleUtil.getConfiguration(
 			project, JspCPlugin.CONFIGURATION_NAME);
 
@@ -1739,6 +1741,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							throw new GradleException(
 								"Unable to find " + fileName + " in " +
 									osgiDir);
+						}
+
+						if (logger.isLifecycleEnabled()) {
+							logger.lifecycle(
+								"Compiling JSP files of {} with {} as " +
+									"dependency in place of '{}:{}:{}'",
+								project, file.getAbsolutePath(),
+								externalModuleDependency.getGroup(),
+								externalModuleDependency.getName(),
+								externalModuleDependency.getVersion());
 						}
 
 						GradleUtil.addDependency(

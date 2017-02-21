@@ -182,13 +182,9 @@ public class GitWorkingDirectory {
 	private void _clearIndexLock() throws InterruptedException {
 		int timeout = 0;
 
-		while (true) {
-			File file = new File(_gitDirectory + "/index.lock");
+		File file = new File(_gitDirectory, "index.lock");
 
-			if (!file.exists()) {
-				break;
-			}
-
+		while (file.exists()) {
 			System.out.println("Waiting for index.lock to be cleared.");
 
 			Thread.sleep(5000);
@@ -197,8 +193,6 @@ public class GitWorkingDirectory {
 
 			if (timeout >= 24) {
 				file.delete();
-
-				break;
 			}
 		}
 	}

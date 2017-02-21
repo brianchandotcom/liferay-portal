@@ -1852,6 +1852,8 @@ app.server.type=@{app.server.type}]]></echo>
 					</else>
 				</if>
 
+				<echo>unzip -p liferay-portal-source.zip modules/core/portal-bootstrap/build/system.packages.extra.mf > modules/core/portal-bootstrap/system.packages.extra.mf</echo>
+
 				<execute>
 					<![CDATA[
 						mkdir -p modules/core/portal-bootstrap/

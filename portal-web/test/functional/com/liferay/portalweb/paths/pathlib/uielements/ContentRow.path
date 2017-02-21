@@ -79,6 +79,18 @@
 	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
+<!--ENTRY_CONTENT_LIST-->
+<tr>
+	<td>ENTRY_CONTENT_LIST_COLUMN</td>
+	<td>//tr[@data-qa-id='row']/td[${key_columnNumber}]</td>
+	<td></td>
+</tr>
+<!--ENTRY_CONTENT_DESCRIPTIVE-->
+<tr>
+	<td>ENTRY_CONTENT_DESCRIPTIVE_TITLE</td>
+	<td>//*[@data-qa-id='row']//h5</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

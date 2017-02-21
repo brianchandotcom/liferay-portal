@@ -316,6 +316,11 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			"Prints the artifact publish commands if this project has been " +
 				"changed since the last publish.");
 
+		Project rootProject = project.getRootProject();
+
+		writeArtifactPublishCommandsTask.setOutputDir(
+			rootProject.getBuildDir());
+
 		_configureTaskEnabledIfStale(
 			writeArtifactPublishCommandsTask, recordArtifactTask);
 

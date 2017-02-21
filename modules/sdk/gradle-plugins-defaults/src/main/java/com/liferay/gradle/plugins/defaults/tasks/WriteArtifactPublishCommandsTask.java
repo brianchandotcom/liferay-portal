@@ -21,7 +21,14 @@ import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,6 +101,11 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 	@Input
 	public String getLowestPublishedVersion() {
 		return GradleUtil.toString(_lowestPublishedVersion);
+	}
+
+	@Input
+	public File getOutputDir() {
+		return GradleUtil.toFile(getProject(), _outputDir);
 	}
 
 	@Input
@@ -194,6 +206,10 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		_lowestPublishedVersion = lowestPublishedVersion;
 	}
 
+	public void setOutputDir(Object outputDir) {
+		_outputDir = outputDir;
+	}
+
 	public void setPrepNextFiles(Iterable<?> prepNextFiles) {
 		_prepNextFiles.clear();
 
@@ -205,7 +221,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 	}
 
 	@TaskAction
-	public void writeArtifactPublishCommands() {
+	public void writeArtifactPublishCommands() throws IOException {
 		_writeArtifactPublishCommandsStep2();
 
 		if (isFirstOnly()) {
@@ -375,6 +391,21 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		return _getRelativePath(_getGradleFile());
 	}
 
+	private BufferedWriter _getOutputBufferedWriter(int step)
+		throws IOException {
+
+		File dir = getOutputDir();
+
+		Path dirPath = dir.toPath();
+
+		Files.createDirectories(dirPath);
+
+		return Files.newBufferedWriter(
+			dirPath.resolve(getName() + "-step" + step + ".sh"),
+			StandardCharsets.UTF_8, StandardOpenOption.APPEND,
+			StandardOpenOption.CREATE);
+	}
+
 	private String _getRelativePath(Object object) {
 		Project project = getProject();
 
@@ -414,7 +445,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		return false;
 	}
 
-	private void _writeArtifactPublishCommandsStep2() {
+	private void _writeArtifactPublishCommandsStep2() throws IOException {
 		List<String> commands = new ArrayList<>();
 
 		Project project = getProject();
@@ -465,11 +496,13 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 			_addPublishCommands(commands, false);
 		}
 
-		System.out.println();
+		try (BufferedWriter bufferedWriter = _getOutputBufferedWriter(2)) {
+			bufferedWriter.write(System.lineSeparator());
 
-		for (String command : commands) {
-			System.out.print(" && ");
-			System.out.print(command);
+			for (String command : commands) {
+				bufferedWriter.write(" && ");
+				bufferedWriter.write(command);
+			}
 		}
 	}
 
@@ -480,6 +513,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 	private boolean _gradleDaemon;
 	private Object _gradleDir;
 	private Object _lowestPublishedVersion = "1.0.0";
+	private Object _outputDir;
 	private final Map<String, Set<Object>> _prepNextCommitFiles =
 		new LinkedHashMap<>();
 	private final Set<Object> _prepNextFiles = new LinkedHashSet<>();

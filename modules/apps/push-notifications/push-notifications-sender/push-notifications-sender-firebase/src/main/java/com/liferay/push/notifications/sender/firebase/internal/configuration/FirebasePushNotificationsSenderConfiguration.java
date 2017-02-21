@@ -12,33 +12,27 @@
  * details.
  */
 
-package com.liferay.push.notifications.sender.android.internal.configuration;
+package com.liferay.push.notifications.sender.firebase.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Bruno Farache
  */
 @ExtendedObjectClassDefinition(category = "other")
 @Meta.OCD(
-	id = "com.liferay.push.notifications.sender.android.internal.configuration.AndroidPushNotificationsSenderConfiguration",
+	id = "com.liferay.push.notifications.sender.firebase.internal.configuration.FirebasePushNotificationsSenderConfiguration",
 	localization = "content/Language",
-	name = "android.push.notifications.sender.configuration.name"
+	name = "firebase.push.notifications.sender.configuration.name"
 )
-public interface AndroidPushNotificationsSenderConfiguration {
+public interface FirebasePushNotificationsSenderConfiguration {
 
 	@Meta.AD(
-		description = "android.api.key.description",
-		name = "android.api.key.name", required = false
+		description = "firebase.api.key.description",
+		name = "firebase.api.key.name", required = false
 	)
 	public String apiKey();
-
-	@Meta.AD(
-		description = "retries.description", name = "retries.name",
-		required = false
-	)
-	public int retries();
 
 }

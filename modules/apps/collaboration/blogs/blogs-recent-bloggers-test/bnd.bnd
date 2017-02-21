@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Blogs Recent Bloggers Test
+Bundle-SymbolicName: com.liferay.blogs.recent.bloggers.test
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Blogs
+-includeresource: test-classes/integration

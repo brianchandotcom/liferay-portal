@@ -46,6 +46,8 @@ if (vocabulary != null) {
 }
 %>
 
+<liferay-ui:error exception="<%= NoSuchClassTypeException.class %>" message="one-of-your-associated-asset-types-contains-an-invalid-value.-please-configure-it-again-or-remove-it" />
+
 <aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "extraFields" %>' label="associated-asset-types">
 
 	<%

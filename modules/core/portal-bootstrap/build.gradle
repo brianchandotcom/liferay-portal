@@ -58,6 +58,9 @@ if (!System.getenv("JENKINS_HOME") || !systemPackagesExtraManifestFile.exists())
 		dependsOn buildSystemPackagesExtraManifest
 	}
 }
+else {
+	println "Reusing file ${systemPackagesExtraManifestFile.absolutePath}"
+}
 
 bundle {
 	instruction "system.packages.extra.manifest.file", relativePath(systemPackagesExtraManifestFile)

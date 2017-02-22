@@ -222,6 +222,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 
 	@TaskAction
 	public void writeArtifactPublishCommands() throws IOException {
+		_writeArtifactPublishCommandsStep1();
 		_writeArtifactPublishCommandsStep2();
 
 		if (isFirstOnly()) {
@@ -443,6 +444,19 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		}
 
 		return false;
+	}
+
+	private void _writeArtifactPublishCommandsStep1() throws IOException {
+		Task baselineTask = _getTask(BaselinePlugin.BASELINE_TASK_NAME);
+
+		if (baselineTask == null) {
+			return;
+		}
+
+		try (BufferedWriter bufferedWriter = _getOutputBufferedWriter(1)) {
+			bufferedWriter.write(" && ");
+			bufferedWriter.write(_getGradleCommand(baselineTask));
+		}
 	}
 
 	private void _writeArtifactPublishCommandsStep2() throws IOException {

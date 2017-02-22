@@ -272,7 +272,8 @@ public abstract class BaseDB implements DB {
 			s = con.createStatement();
 
 			for (int i = 0; i < sqls.length; i++) {
-				String sql = buildSQL(sqls[i]);
+				String sql = buildSQL(
+					applyMaxStringIndexLengthLimitation(sqls[i]));
 
 				sql = SQLTransformer.transform(sql.trim());
 

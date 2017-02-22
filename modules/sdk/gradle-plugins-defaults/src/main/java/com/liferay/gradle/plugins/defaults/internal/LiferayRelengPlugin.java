@@ -26,6 +26,7 @@ import com.liferay.gradle.plugins.defaults.LiferayThemeDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GitUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.tasks.MergeFilesTask;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.defaults.tasks.WriteArtifactPublishCommandsTask;
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
@@ -84,6 +85,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 	public static final Plugin<Project> INSTANCE = new LiferayRelengPlugin();
 
+	public static final String MERGE_ARTIFACTS_PUBLISH_COMMANDS =
+		"mergeArtifactsPublishCommands";
+
 	public static final String PRINT_DEPENDENT_ARTIFACT_TASK_NAME =
 		"printDependentArtifact";
 
@@ -131,8 +135,17 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		Delete cleanArtifactsPublishCommandsTask =
 			_addRootTaskCleanArtifactsPublishCommands(project.getRootProject());
 
-		_addTaskWriteArtifactPublishCommands(
-			project, recordArtifactTask, cleanArtifactsPublishCommandsTask);
+		MergeFilesTask mergeArtifactsPublishCommandsTask =
+			_addRootTaskMergeArtifactsPublishCommands(
+				cleanArtifactsPublishCommandsTask);
+
+		WriteArtifactPublishCommandsTask writeArtifactPublishCommandsTask =
+			_addTaskWriteArtifactPublishCommands(
+				project, recordArtifactTask, cleanArtifactsPublishCommandsTask,
+				mergeArtifactsPublishCommandsTask);
+
+		mergeArtifactsPublishCommandsTask.dependsOn(
+			writeArtifactPublishCommandsTask);
 
 		_addTaskPrintStaleArtifact(project, recordArtifactTask);
 
@@ -179,6 +192,45 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				"publish commands.");
 
 		return delete;
+	}
+
+	private MergeFilesTask _addRootTaskMergeArtifactsPublishCommands(
+		Delete cleanArtifactsPublishCommandsTask) {
+
+		Project rootProject = cleanArtifactsPublishCommandsTask.getProject();
+
+		TaskContainer taskContainer = rootProject.getTasks();
+
+		MergeFilesTask mergeFilesTask =
+			(MergeFilesTask)taskContainer.findByName(
+				MERGE_ARTIFACTS_PUBLISH_COMMANDS);
+
+		if (mergeFilesTask != null) {
+			return mergeFilesTask;
+		}
+
+		mergeFilesTask = GradleUtil.addTask(
+			rootProject, MERGE_ARTIFACTS_PUBLISH_COMMANDS,
+			MergeFilesTask.class);
+
+		File dir = GradleUtil.toFile(
+			rootProject,
+			CollectionUtils.first(
+				cleanArtifactsPublishCommandsTask.getDelete()));
+
+		mergeFilesTask.merge(
+			new File(dir, WRITE_ARTIFACT_PUBLISH_COMMANDS + "-step1.sh"), null,
+			null);
+		mergeFilesTask.merge(
+			new File(dir, WRITE_ARTIFACT_PUBLISH_COMMANDS + "-step2.sh"), null,
+			null);
+
+		mergeFilesTask.setDescription("Merges the artifacts publish commands");
+
+		mergeFilesTask.setOutputFile(
+			new File(dir, "artifacts-publish-commands.sh"));
+
+		return mergeFilesTask;
 	}
 
 	private Task _addTaskPrintDependentArtifact(Project project) {
@@ -334,7 +386,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	private WriteArtifactPublishCommandsTask
 		_addTaskWriteArtifactPublishCommands(
 			Project project, final WritePropertiesTask recordArtifactTask,
-			Delete cleanArtifactsPublishCommandsTask) {
+			Delete cleanArtifactsPublishCommandsTask,
+			MergeFilesTask mergeArtifactsPublishCommandsTask) {
 
 		final WriteArtifactPublishCommandsTask
 			writeArtifactPublishCommandsTask = GradleUtil.addTask(
@@ -362,6 +415,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		writeArtifactPublishCommandsTask.finalizedBy(
+			mergeArtifactsPublishCommandsTask);
 
 		writeArtifactPublishCommandsTask.setArtifactPropertiesFile(
 			new Callable<File>() {

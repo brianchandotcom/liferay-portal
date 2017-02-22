@@ -224,6 +224,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 	public void writeArtifactPublishCommands() throws IOException {
 		_writeArtifactPublishCommandsStep1();
 		_writeArtifactPublishCommandsStep2();
+		_writeArtifactPublishCommandsStep3();
 
 		if (isFirstOnly()) {
 			throw new GradleException();
@@ -460,6 +461,35 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 	}
 
 	private void _writeArtifactPublishCommandsStep2() throws IOException {
+		Task baselineTask = _getTask(BaselinePlugin.BASELINE_TASK_NAME);
+
+		if (baselineTask == null) {
+			return;
+		}
+
+		Project project = getProject();
+
+		try (BufferedWriter bufferedWriter = _getOutputBufferedWriter(2)) {
+			bufferedWriter.write(" && ");
+
+			bufferedWriter.write(
+				_getGradleCommand(
+					baselineTask,
+					"-D" + baselineTask.getName() + ".ignoreFailures=true"));
+
+			bufferedWriter.write(" && ");
+
+			bufferedWriter.write(
+				"git add --all " + _getRelativePath(project.getProjectDir()));
+
+			bufferedWriter.write(" && ");
+
+			bufferedWriter.write(
+				_getGitCommitCommand("packageinfo", false, false, true));
+		}
+	}
+
+	private void _writeArtifactPublishCommandsStep3() throws IOException {
 		List<String> commands = new ArrayList<>();
 
 		Project project = getProject();
@@ -510,7 +540,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 			_addPublishCommands(commands, false);
 		}
 
-		try (BufferedWriter bufferedWriter = _getOutputBufferedWriter(2)) {
+		try (BufferedWriter bufferedWriter = _getOutputBufferedWriter(3)) {
 			bufferedWriter.write(System.lineSeparator());
 
 			for (String command : commands) {

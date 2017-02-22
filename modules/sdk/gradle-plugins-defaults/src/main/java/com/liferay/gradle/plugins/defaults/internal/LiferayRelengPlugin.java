@@ -224,7 +224,10 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			new File(dir, WRITE_ARTIFACT_PUBLISH_COMMANDS + "-step1.sh"), null,
 			null);
 		mergeFilesTask.merge(
-			new File(dir, WRITE_ARTIFACT_PUBLISH_COMMANDS + "-step2.sh"), null,
+			new File(dir, WRITE_ARTIFACT_PUBLISH_COMMANDS + "-step2.sh"), "# ",
+			null);
+		mergeFilesTask.merge(
+			new File(dir, WRITE_ARTIFACT_PUBLISH_COMMANDS + "-step3.sh"), null,
 			null);
 
 		mergeFilesTask.setDescription("Merges the artifacts publish commands");

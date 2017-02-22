@@ -9,4 +9,5 @@ dependencies {
 	testIntegrationCompile project(":apps:collaboration:blogs:blogs-test-util")
 	testIntegrationCompile project(":apps:collaboration:subscription:subscription-api")
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-api")
+	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 }

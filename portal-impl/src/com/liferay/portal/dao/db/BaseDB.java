@@ -546,6 +546,10 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected String applyMaxStringIndexLengthLimitation(String template) {
+		if (!template.contains("[$COLUMN_LENGTH:")) {
+			return template;
+		}
+
 		DBType dbType = getDBType();
 
 		int stringIndexMaxLength = GetterUtil.getInteger(

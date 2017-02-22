@@ -35,7 +35,7 @@ for (String portletId : portletCategory.getPortletIds()) {
 
 String externalPortletCategory = null;
 
-for (String portletId : portletCategory.getFirstChildPortletIds()) {
+for (String portletId : PortletCategoryUtil.getFirstChildPortletIds(portletCategory)) {
 	Portlet portlet = PortletLocalServiceUtil.getPortletById(user.getCompanyId(), portletId);
 
 	if (portlet != null) {

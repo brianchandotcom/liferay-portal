@@ -454,9 +454,22 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 			return;
 		}
 
+		Project project = baselineTask.getProject();
+
 		try (BufferedWriter bufferedWriter = _getOutputBufferedWriter(1)) {
+
+			// Move to the root directory
+
+			bufferedWriter.write("cd ");
+			bufferedWriter.write(
+				FileUtil.getAbsolutePath(project.getRootDir()));
+
+			// Baseline
+
 			bufferedWriter.write(" && ");
 			bufferedWriter.write(_getGradleCommand(baselineTask));
+
+			bufferedWriter.write(System.lineSeparator());
 		}
 	}
 
@@ -470,6 +483,19 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		Project project = getProject();
 
 		try (BufferedWriter bufferedWriter = _getOutputBufferedWriter(2)) {
+
+			// Comment
+
+			bufferedWriter.write("# ");
+
+			// Move to the root directory
+
+			bufferedWriter.write("cd ");
+			bufferedWriter.write(
+				FileUtil.getAbsolutePath(project.getRootDir()));
+
+			// Baseline
+
 			bufferedWriter.write(" && ");
 
 			bufferedWriter.write(
@@ -486,6 +512,8 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 
 			bufferedWriter.write(
 				_getGitCommitCommand("packageinfo", false, false, true));
+
+			bufferedWriter.write(System.lineSeparator());
 		}
 	}
 
@@ -541,12 +569,15 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		}
 
 		try (BufferedWriter bufferedWriter = _getOutputBufferedWriter(3)) {
-			bufferedWriter.write(System.lineSeparator());
+			for (int i = 0; i < commands.size(); i++) {
+				if (i > 0) {
+					bufferedWriter.write(" && ");
+				}
 
-			for (String command : commands) {
-				bufferedWriter.write(" && ");
-				bufferedWriter.write(command);
+				bufferedWriter.write(commands.get(i));
 			}
+
+			bufferedWriter.write(System.lineSeparator());
 		}
 	}
 

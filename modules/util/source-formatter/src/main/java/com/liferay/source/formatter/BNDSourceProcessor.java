@@ -510,9 +510,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			"bnd.bnd",
 			populateDefinitionKeysMap(
 				"-metatype-inherit", "Can-Redefine-Classes",
-				"Can-Retransform-Classes", "Implementation-Version",
-				"JPM-Command", "Liferay-Export-JS-Submodules",
-				"Liferay-JS-Config", "Liferay-Releng-App-Description",
+				"Can-Retransform-Classes", "ConfigurationPath",
+				"Implementation-Version", "JPM-Command",
+				"Liferay-Export-JS-Submodules", "Liferay-JS-Config",
+				"Liferay-Releng-App-Description",
 				"Liferay-Releng-Module-Group-Description",
 				"Liferay-Releng-Module-Group-Title",
 				"Liferay-Require-SchemaVersion", "Liferay-Service",

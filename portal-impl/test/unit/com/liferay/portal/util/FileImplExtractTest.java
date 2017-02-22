@@ -106,6 +106,13 @@ public class FileImplExtractTest {
 	}
 
 	@Test
+	public void testTxtEncodedWithShift_JIS() {
+		String text = extractText("test-encoding-Shift_JIS.txt");
+
+		Assert.assertEquals("テキストを抽出する", text);
+	}
+
+	@Test
 	public void testXls() {
 		String text = extractText("test.xls");
 

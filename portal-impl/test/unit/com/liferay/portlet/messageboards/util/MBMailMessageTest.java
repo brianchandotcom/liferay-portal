@@ -36,7 +36,7 @@ public class MBMailMessageTest {
 	public void testAddBytes() throws Exception {
 		MBMailMessage mbMailMessage = new MBMailMessage();
 
-		mbMailMessage.addBytes("=?UTF-8?Q?T=C3=83=C2=ADlde.txt?=", new byte[0]);
+		mbMailMessage.addBytes("=?UTF-8?Q?T=C3=ADlde.txt?=", new byte[0]);
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			mbMailMessage.getInputStreamOVPs();

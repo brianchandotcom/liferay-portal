@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADD</td>
-	<td>//div[contains(@class,'translation-manager')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[contains(@class,'translation-manager')]//a[contains(@class,'dropdown-toggle')] | //div[contains(@class,'translationmanager')]//div[contains(@class,'dropdown')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>CURRENT_LOCALE</td>
-	<td>//span[contains(.,'${key_localizedLanguage}') and contains(@class,'translation')]</td>
+	<td>//span[contains(.,'${key_localizedLanguage}') and contains(@class,'translation')] | //div[contains(@class,'translation') and //li[contains(@class,'active')]]</td>
 	<td></td>
 </tr>
 <tr>

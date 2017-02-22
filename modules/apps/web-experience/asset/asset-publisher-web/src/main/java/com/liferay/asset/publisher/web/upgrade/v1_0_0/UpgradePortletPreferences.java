@@ -336,6 +336,10 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			Element assetTypeElementUuid = rootElement.element(
 				"asset-entry-uuid");
 
+			if (assetTypeElementUuid == null) {
+				continue;
+			}
+
 			String journalArticleResourceUuid = getJournalArticleResourceUuid(
 				assetTypeElementUuid.getStringValue());
 

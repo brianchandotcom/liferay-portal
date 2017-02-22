@@ -68,14 +68,19 @@ import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.Upload;
+import org.gradle.util.CollectionUtils;
 import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class LiferayRelengPlugin implements Plugin<Project> {
+
+	public static final String CLEAN_ARTIFACTS_PUBLISH_COMMANDS_TASK_NAME =
+		"cleanArtifactsPublishCommands";
 
 	public static final Plugin<Project> INSTANCE = new LiferayRelengPlugin();
 
@@ -123,7 +128,12 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		final WritePropertiesTask recordArtifactTask = _addTaskRecordArtifact(
 			project, relengDir);
 
-		_addTaskWriteArtifactPublishCommands(project, recordArtifactTask);
+		Delete cleanArtifactsPublishCommandsTask =
+			_addRootTaskCleanArtifactsPublishCommands(project.getRootProject());
+
+		_addTaskWriteArtifactPublishCommands(
+			project, recordArtifactTask, cleanArtifactsPublishCommandsTask);
+
 		_addTaskPrintStaleArtifact(project, recordArtifactTask);
 
 		_addTaskPrintDependentArtifact(project);
@@ -144,6 +154,31 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	}
 
 	private LiferayRelengPlugin() {
+	}
+
+	private Delete _addRootTaskCleanArtifactsPublishCommands(
+		Project rootProject) {
+
+		TaskContainer taskContainer = rootProject.getTasks();
+
+		Delete delete = (Delete)taskContainer.findByName(
+			CLEAN_ARTIFACTS_PUBLISH_COMMANDS_TASK_NAME);
+
+		if (delete != null) {
+			return delete;
+		}
+
+		delete = GradleUtil.addTask(
+			rootProject, CLEAN_ARTIFACTS_PUBLISH_COMMANDS_TASK_NAME,
+			Delete.class);
+
+		delete.delete(
+			new File(rootProject.getBuildDir(), "artifacts-publish-commands"));
+		delete.setDescription(
+			"Deletes the temporary directory that contains the artifacts " +
+				"publish commands.");
+
+		return delete;
 	}
 
 	private Task _addTaskPrintDependentArtifact(Project project) {
@@ -298,12 +333,16 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 	private WriteArtifactPublishCommandsTask
 		_addTaskWriteArtifactPublishCommands(
-			Project project, final WritePropertiesTask recordArtifactTask) {
+			Project project, final WritePropertiesTask recordArtifactTask,
+			Delete cleanArtifactsPublishCommandsTask) {
 
 		final WriteArtifactPublishCommandsTask
 			writeArtifactPublishCommandsTask = GradleUtil.addTask(
 				project, WRITE_ARTIFACT_PUBLISH_COMMANDS,
 				WriteArtifactPublishCommandsTask.class);
+
+		writeArtifactPublishCommandsTask.dependsOn(
+			cleanArtifactsPublishCommandsTask);
 
 		writeArtifactPublishCommandsTask.doFirst(
 			new Action<Task>() {
@@ -338,10 +377,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			"Prints the artifact publish commands if this project has been " +
 				"changed since the last publish.");
 
-		Project rootProject = project.getRootProject();
-
 		writeArtifactPublishCommandsTask.setOutputDir(
-			rootProject.getBuildDir());
+			CollectionUtils.first(
+				cleanArtifactsPublishCommandsTask.getDelete()));
 
 		_configureTaskEnabledIfStale(
 			writeArtifactPublishCommandsTask, recordArtifactTask);

@@ -24,13 +24,13 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.MissingReference;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.exportimport.lar.ExportImportHelperImpl;
+import com.liferay.exportimport.util.test.ExportImportTestUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
@@ -138,26 +137,11 @@ public class ExportImportHelperUtilTest {
 		_fileEntry = thumbnailCapability.setLargeImageId(
 			_fileEntry, _fileEntry.getFileEntryId());
 
-		TestReaderWriter testReaderWriter = new TestReaderWriter();
-
 		_portletDataContextExport =
-			PortletDataContextFactoryUtil.createExportPortletDataContext(
+			ExportImportTestUtil.getExportPortletDataContext(
 				_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
 				new HashMap<String, String[]>(),
-				new Date(System.currentTimeMillis() - Time.HOUR), new Date(),
-				testReaderWriter);
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element manifestRootElement = document.addElement("root");
-
-		manifestRootElement.addElement("header");
-
-		testReaderWriter.addEntry("/manifest.xml", document.asXML());
-
-		Element rootElement = SAXReaderUtil.createElement("root");
-
-		_portletDataContextExport.setExportDataRootElement(rootElement);
+				new Date(System.currentTimeMillis() - Time.HOUR), new Date());
 
 		_stagingPrivateLayout = LayoutTestUtil.addLayout(_stagingGroup, true);
 		_stagingPublicLayout = LayoutTestUtil.addLayout(_stagingGroup, false);
@@ -165,24 +149,18 @@ public class ExportImportHelperUtilTest {
 		_portletDataContextExport.setPlid(_stagingPublicLayout.getPlid());
 
 		_portletDataContextImport =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
+			ExportImportTestUtil.getImportPortletDataContext(
 				_liveGroup.getCompanyId(), _liveGroup.getGroupId(),
-				new HashMap<String, String[]>(), new TestUserIdStrategy(),
-				testReaderWriter);
-
-		_portletDataContextImport.setImportDataRootElement(rootElement);
-
-		Element missingReferencesElement = rootElement.addElement(
-			"missing-references");
-
-		_portletDataContextImport.setMissingReferencesElement(
-			missingReferencesElement);
+				new HashMap<String, String[]>());
 
 		_livePublicLayout = LayoutTestUtil.addLayout(_liveGroup, false);
 
 		_portletDataContextImport.setPlid(_livePublicLayout.getPlid());
 
 		_portletDataContextImport.setSourceGroupId(_stagingGroup.getGroupId());
+
+		Element rootElement =
+			_portletDataContextImport.getImportDataRootElement();
 
 		rootElement.addElement("entry");
 
@@ -437,11 +415,10 @@ public class ExportImportHelperUtilTest {
 		Layout publicLayout = LayoutTestUtil.addLayout(group, false);
 
 		PortletDataContext portletDataContextExport =
-			PortletDataContextFactoryUtil.createExportPortletDataContext(
+			ExportImportTestUtil.getExportPortletDataContext(
 				group.getCompanyId(), group.getGroupId(),
 				new HashMap<String, String[]>(),
-				new Date(System.currentTimeMillis() - Time.HOUR), new Date(),
-				new TestReaderWriter());
+				new Date(System.currentTimeMillis() - Time.HOUR), new Date());
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			group.getGroupId(), RandomTestUtil.randomString(),

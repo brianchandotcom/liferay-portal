@@ -141,7 +141,7 @@ if (vocabulary != null) {
 				<c:if test="<%= !exist %>">
 					<div class="has-warning">
 						<div class="help-block">
-							<liferay-ui:message key="the-asset-subtype-no-longer-exist" />
+							<liferay-ui:message key="the-asset-subtype-no-longer-exists" />
 						</div>
 					</div>
 				</c:if>

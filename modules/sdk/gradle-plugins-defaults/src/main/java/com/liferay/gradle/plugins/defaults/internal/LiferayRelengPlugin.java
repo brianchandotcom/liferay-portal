@@ -43,7 +43,9 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
+import org.gradle.StartParameter;
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -57,6 +59,7 @@ import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.MavenDeployer;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaBasePlugin;
@@ -301,6 +304,25 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			writeArtifactPublishCommandsTask = GradleUtil.addTask(
 				project, WRITE_ARTIFACT_PUBLISH_COMMANDS,
 				WriteArtifactPublishCommandsTask.class);
+
+		writeArtifactPublishCommandsTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					Gradle gradle = project.getGradle();
+
+					StartParameter startParameter = gradle.getStartParameter();
+
+					if (startParameter.isParallelProjectExecutionEnabled()) {
+						throw new GradleException(
+							"Unable to run " + task + " in parallel");
+					}
+				}
+
+			});
 
 		writeArtifactPublishCommandsTask.setArtifactPropertiesFile(
 			new Callable<File>() {

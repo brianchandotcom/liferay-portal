@@ -281,6 +281,13 @@ public class AssetTagLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.asset.kernel.model.AssetTag> searchTags(
+		long[] groupIds, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().searchTags(groupIds, name, start, end, sort);
+	}
+
 	public static int getAssetEntryAssetTagsCount(long entryId) {
 		return getService().getAssetEntryAssetTagsCount(entryId);
 	}

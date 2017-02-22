@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -106,10 +110,6 @@ public class AssetTagsDisplayContext {
 
 		_keywords = ParamUtil.getString(_request, "keywords", null);
 
-		if (Validator.isNotNull(_keywords)) {
-			_keywords = StringUtil.quote(_keywords, StringPool.PERCENT);
-		}
-
 		return _keywords;
 	}
 
@@ -186,7 +186,7 @@ public class AssetTagsDisplayContext {
 		return _tagId;
 	}
 
-	public SearchContainer getTagsSearchContainer() {
+	public SearchContainer getTagsSearchContainer() throws PortalException {
 		if (_tagsSearchContainer != null) {
 			return _tagsSearchContainer;
 		}
@@ -210,50 +210,79 @@ public class AssetTagsDisplayContext {
 			tagsSearchContainer.setSearch(true);
 		}
 
-		String orderByCol = getOrderByCol();
-
-		tagsSearchContainer.setOrderByCol(orderByCol);
-
-		OrderByComparator<AssetTag> orderByComparator = null;
-
-		boolean orderByAsc = false;
-
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		if (orderByCol.equals("name")) {
-			orderByComparator = new AssetTagNameComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("usages")) {
-			orderByComparator = new AssetTagAssetCountComparator(orderByAsc);
-		}
-
-		tagsSearchContainer.setOrderByComparator(orderByComparator);
-
-		tagsSearchContainer.setOrderByType(orderByType);
-
 		tagsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long scopeGroupId = themeDisplay.getScopeGroupId();
+		if (Validator.isNotNull(keywords)) {
+			Sort sort = null;
 
-		int tagsCount = AssetTagServiceUtil.getTagsCount(
-			scopeGroupId, keywords);
+			String orderByCol = getOrderByCol();
 
-		tagsSearchContainer.setTotal(tagsCount);
+			if (orderByCol.equals("name")) {
+				sort = SortFactoryUtil.getSort(
+					AssetTag.class, Sort.STRING_TYPE, Field.NAME,
+					getOrderByType());
+			}
+			else if (orderByCol.equals("usages")) {
+				sort = SortFactoryUtil.getSort(
+					AssetTag.class, Sort.INT_TYPE, "assetCount_Number",
+					getOrderByType());
+			}
 
-		List<AssetTag> tags = AssetTagServiceUtil.getTags(
-			scopeGroupId, keywords, tagsSearchContainer.getStart(),
-			tagsSearchContainer.getEnd(),
-			tagsSearchContainer.getOrderByComparator());
+			BaseModelSearchResult<AssetTag> baseModelSearchResult =
+				AssetTagLocalServiceUtil.searchTags(
+					new long[] {themeDisplay.getScopeGroupId()}, keywords,
+					tagsSearchContainer.getStart(),
+					tagsSearchContainer.getEnd(), sort);
 
-		tagsSearchContainer.setResults(tags);
+			tagsSearchContainer.setTotal(baseModelSearchResult.getLength());
+			tagsSearchContainer.setResults(
+				baseModelSearchResult.getBaseModels());
+		}
+		else {
+			String orderByCol = getOrderByCol();
+
+			tagsSearchContainer.setOrderByCol(orderByCol);
+
+			OrderByComparator<AssetTag> orderByComparator = null;
+
+			boolean orderByAsc = false;
+
+			String orderByType = getOrderByType();
+
+			if (orderByType.equals("asc")) {
+				orderByAsc = true;
+			}
+
+			if (orderByCol.equals("name")) {
+				orderByComparator = new AssetTagNameComparator(orderByAsc);
+			}
+			else if (orderByCol.equals("usages")) {
+				orderByComparator = new AssetTagAssetCountComparator(
+					orderByAsc);
+			}
+
+			tagsSearchContainer.setOrderByComparator(orderByComparator);
+
+			tagsSearchContainer.setOrderByType(orderByType);
+
+			long scopeGroupId = themeDisplay.getScopeGroupId();
+
+			int tagsCount = AssetTagServiceUtil.getTagsCount(
+				scopeGroupId, keywords);
+
+			tagsSearchContainer.setTotal(tagsCount);
+
+			List<AssetTag> tags = AssetTagServiceUtil.getTags(
+				scopeGroupId, StringPool.BLANK, tagsSearchContainer.getStart(),
+				tagsSearchContainer.getEnd(),
+				tagsSearchContainer.getOrderByComparator());
+
+			tagsSearchContainer.setResults(tags);
+		}
 
 		_tagsSearchContainer = tagsSearchContainer;
 

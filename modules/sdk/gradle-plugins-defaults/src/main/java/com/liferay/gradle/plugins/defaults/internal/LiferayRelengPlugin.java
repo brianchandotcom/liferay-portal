@@ -133,7 +133,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			project, relengDir);
 
 		Delete cleanArtifactsPublishCommandsTask =
-			_addRootTaskCleanArtifactsPublishCommands(project.getRootProject());
+			_addRootTaskCleanArtifactsPublishCommands(project.getGradle());
 
 		MergeFilesTask mergeArtifactsPublishCommandsTask =
 			_addRootTaskMergeArtifactsPublishCommands(
@@ -169,10 +169,13 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	private LiferayRelengPlugin() {
 	}
 
-	private Delete _addRootTaskCleanArtifactsPublishCommands(
-		Project rootProject) {
+	private Delete _addRootTaskCleanArtifactsPublishCommands(Gradle gradle) {
+		StartParameter startParameter = gradle.getStartParameter();
 
-		TaskContainer taskContainer = rootProject.getTasks();
+		Project project = GradleUtil.getProject(
+			gradle.getRootProject(), startParameter.getCurrentDir());
+
+		TaskContainer taskContainer = project.getTasks();
 
 		Delete delete = (Delete)taskContainer.findByName(
 			CLEAN_ARTIFACTS_PUBLISH_COMMANDS_TASK_NAME);
@@ -182,11 +185,10 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		}
 
 		delete = GradleUtil.addTask(
-			rootProject, CLEAN_ARTIFACTS_PUBLISH_COMMANDS_TASK_NAME,
-			Delete.class);
+			project, CLEAN_ARTIFACTS_PUBLISH_COMMANDS_TASK_NAME, Delete.class);
 
 		delete.delete(
-			new File(rootProject.getBuildDir(), "artifacts-publish-commands"));
+			new File(project.getBuildDir(), "artifacts-publish-commands"));
 		delete.setDescription(
 			"Deletes the temporary directory that contains the artifacts " +
 				"publish commands.");

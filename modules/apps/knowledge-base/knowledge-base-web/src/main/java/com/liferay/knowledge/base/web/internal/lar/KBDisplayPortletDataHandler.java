@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class KBDisplayPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String SCHEMA_VERSION = "1.0.0";
+	public static final String SCHEMA_VERSION = "2.0.0";
 
 	@Override
 	public String getSchemaVersion() {

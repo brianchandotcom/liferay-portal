@@ -61,6 +61,8 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "knowledge_base";
 
+	public static final String SCHEMA_VERSION = "2.0.0";
+
 	public AdminPortletDataHandler() {
 		setDataLevel(DataLevel.SITE);
 		setDeletionSystemEventStagedModelTypes(
@@ -81,6 +83,11 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		XStreamAliasRegistryUtil.register(KBArticleImpl.class, "KBArticle");
 		XStreamAliasRegistryUtil.register(KBCommentImpl.class, "KBComment");
 		XStreamAliasRegistryUtil.register(KBTemplateImpl.class, "KBTemplate");
+	}
+
+	@Override
+	public String getSchemaVersion() {
+		return SCHEMA_VERSION;
 	}
 
 	@Override

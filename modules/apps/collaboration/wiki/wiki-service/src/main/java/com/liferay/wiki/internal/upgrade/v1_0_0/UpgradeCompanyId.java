@@ -25,7 +25,7 @@ public class UpgradeCompanyId extends BaseUpgradeCompanyId {
 	protected void doUpgrade() throws Exception {
 		super.doUpgrade();
 
-		runIndexSQL(
+		runSQL(
 			"create index IX_13319367 on WikiPageResource " +
 				"(uuid_[$COLUMN_LENGTH:75$], companyId)");
 	}

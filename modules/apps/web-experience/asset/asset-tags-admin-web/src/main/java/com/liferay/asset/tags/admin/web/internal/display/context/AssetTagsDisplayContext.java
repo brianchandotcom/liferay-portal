@@ -186,7 +186,7 @@ public class AssetTagsDisplayContext {
 		return _tagId;
 	}
 
-	public SearchContainer getTagsSearchContainer() {
+	public SearchContainer getTagsSearchContainer() throws PortalException {
 		if (_tagsSearchContainer != null) {
 			return _tagsSearchContainer;
 		}
@@ -228,13 +228,13 @@ public class AssetTagsDisplayContext {
 			}
 			else if (orderByCol.equals("usages")) {
 				sort = SortFactoryUtil.getSort(
-					AssetTag.class, Sort.INT_TYPE, "assetCount",
+					AssetTag.class, Sort.INT_TYPE, "assetCount_Number",
 					getOrderByType());
 			}
 
 			BaseModelSearchResult<AssetTag> baseModelSearchResult =
 				AssetTagLocalServiceUtil.searchTags(
-					themeDisplay.getScopeGroupId(), keywords,
+					new long[] {themeDisplay.getScopeGroupId()}, keywords,
 					tagsSearchContainer.getStart(),
 					tagsSearchContainer.getEnd(), sort);
 

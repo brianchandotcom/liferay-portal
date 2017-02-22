@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PredicateFilter;
@@ -1174,6 +1175,12 @@ public class BaseTextExportImportContentProcessor
 
 			String url = content.substring(beginPos + offset, endPos);
 
+			endPos = url.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
+
+			if (endPos != -1) {
+				url = url.substring(0, endPos);
+			}
+
 			StringBundler urlSB = new StringBundler(1);
 
 			url = replaceExportHostname(groupId, url, urlSB);
@@ -1275,25 +1282,25 @@ public class BaseTextExportImportContentProcessor
 			while (true) {
 				pos = url.indexOf(StringPool.SLASH, 1);
 
-				Group urlGroup = null;
-
 				if (pos == -1) {
 					break;
 				}
-				else {
-					String groupName = url.substring(1, pos);
 
-					groupFriendlyURL = StringPool.SLASH + groupName;
+				String groupName = url.substring(1, pos);
 
-					urlGroup = GroupLocalServiceUtil.fetchFriendlyURLGroup(
-						group.getCompanyId(), groupFriendlyURL);
-				}
+				groupFriendlyURL = StringPool.SLASH + groupName;
+
+				Group urlGroup = GroupLocalServiceUtil.fetchFriendlyURLGroup(
+					group.getCompanyId(), groupFriendlyURL);
 
 				if (urlGroup != null) {
 					group = urlGroup;
 					groupId = urlGroup.getGroupId();
 
 					url = url.substring(groupFriendlyURL.length());
+				}
+				else {
+					throw new NoSuchLayoutException();
 				}
 			}
 

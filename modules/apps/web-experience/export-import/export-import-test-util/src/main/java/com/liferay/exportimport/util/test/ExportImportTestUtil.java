@@ -16,21 +16,13 @@ package com.liferay.exportimport.util.test;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
-import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipWriter;
 
-import java.io.File;
-import java.io.InputStream;
-
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,6 +39,31 @@ public class ExportImportTestUtil {
 	public static PortletDataContext getExportPortletDataContext(long groupId)
 		throws Exception {
 
+		return getExportPortletDataContext(
+			TestPropsValues.getCompanyId(), groupId);
+	}
+
+	public static PortletDataContext getExportPortletDataContext(
+			long companyId, long groupId)
+		throws Exception {
+
+		return getExportPortletDataContext(
+			companyId, groupId, new HashMap<String, String[]>());
+	}
+
+	public static PortletDataContext getExportPortletDataContext(
+			long companyId, long groupId, Map<String, String[]> parameterMap)
+		throws Exception {
+
+		return getExportPortletDataContext(
+			companyId, groupId, parameterMap, null, null);
+	}
+
+	public static PortletDataContext getExportPortletDataContext(
+			long companyId, long groupId, Map<String, String[]> parameterMap,
+			Date startDate, Date endDate)
+		throws Exception {
+
 		TestReaderWriter testReaderWriter = new TestReaderWriter();
 
 		Document document = SAXReaderUtil.createDocument();
@@ -59,8 +76,8 @@ public class ExportImportTestUtil {
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
-				TestPropsValues.getCompanyId(), groupId,
-				new HashMap<String, String[]>(), null, null, testReaderWriter);
+				companyId, groupId, parameterMap, startDate, endDate,
+				testReaderWriter);
 
 		Element rootElement = SAXReaderUtil.createElement("root");
 
@@ -84,6 +101,14 @@ public class ExportImportTestUtil {
 	public static PortletDataContext getImportPortletDataContext(long groupId)
 		throws Exception {
 
+		return getImportPortletPreferences(
+			TestPropsValues.getCompanyId(), groupId);
+	}
+
+	public static PortletDataContext getImportPortletDataContext(
+			long companyId, long groupId, Map<String, String[]> parameterMap)
+		throws Exception {
+
 		TestReaderWriter testReaderWriter = new TestReaderWriter();
 
 		Document document = SAXReaderUtil.createDocument();
@@ -96,8 +121,7 @@ public class ExportImportTestUtil {
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				TestPropsValues.getCompanyId(), groupId,
-				new HashMap<String, String[]>(), new TestUserIdStrategy(),
+				companyId, groupId, parameterMap, new TestUserIdStrategy(),
 				testReaderWriter);
 
 		Element rootElement = SAXReaderUtil.createElement("root");
@@ -113,100 +137,12 @@ public class ExportImportTestUtil {
 		return portletDataContext;
 	}
 
-	private static class TestReaderWriter implements ZipReader, ZipWriter {
+	public static PortletDataContext getImportPortletPreferences(
+			long companyId, long groupId)
+		throws Exception {
 
-		@Override
-		public void addEntry(String name, byte[] bytes) {
-			_binaryEntries.add(name);
-		}
-
-		@Override
-		public void addEntry(String name, InputStream inputStream) {
-			_binaryEntries.add(name);
-		}
-
-		@Override
-		public void addEntry(String name, String s) {
-			_entries.put(name, s);
-		}
-
-		@Override
-		public void addEntry(String name, StringBuilder sb) {
-			_entries.put(name, sb.toString());
-		}
-
-		@Override
-		public void close() {
-		}
-
-		@Override
-		public byte[] finish() {
-			return new byte[0];
-		}
-
-		public List<String> getBinaryEntries() {
-			return _binaryEntries;
-		}
-
-		@Override
-		public List<String> getEntries() {
-			return new ArrayList<>(_entries.keySet());
-		}
-
-		@Override
-		public byte[] getEntryAsByteArray(String name) {
-			return null;
-		}
-
-		@Override
-		public InputStream getEntryAsInputStream(String name) {
-			return new InputStream() {
-
-				@Override
-				public int read() {
-					return -1;
-				}
-
-			};
-		}
-
-		@Override
-		public String getEntryAsString(String name) {
-			return _entries.get(name);
-		}
-
-		@Override
-		public File getFile() {
-			return null;
-		}
-
-		@Override
-		public List<String> getFolderEntries(String path) {
-			return null;
-		}
-
-		@Override
-		public String getPath() {
-			return StringPool.BLANK;
-		}
-
-		private final List<String> _binaryEntries = new ArrayList<>();
-		private final Map<String, String> _entries = new HashMap<>();
-
-	}
-
-	private static class TestUserIdStrategy implements UserIdStrategy {
-
-		@Override
-		public long getUserId(String userUuid) {
-			try {
-				return TestPropsValues.getUserId();
-			}
-			catch (Exception e) {
-				return 0;
-			}
-		}
-
+		return getImportPortletDataContext(
+			companyId, groupId, new HashMap<String, String[]>());
 	}
 
 }

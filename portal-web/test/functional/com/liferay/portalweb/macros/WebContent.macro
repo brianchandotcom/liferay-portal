@@ -2025,7 +2025,17 @@
 			<then>
 				<var name="key_localizedLanguage" value="${webContentTranslationLanguage}" />
 
-				<execute function="Click" locator1="Translation#AVAILABLE_TRANSLATION" />
+				<toggle name="LPS-67821">
+					<on>
+						<execute function="Click" locator1="NavTab#TAB_LINK">
+							<var name="key_tab" value="${webContentTranslationLanguage}" />
+						</execute>
+					</on>
+
+					<off>
+						<execute function="Click" locator1="Translation#AVAILABLE_TRANSLATION" />
+					</off>
+				</toggle>
 
 				<if>
 					<isset var="localizedTitle" />

@@ -225,10 +225,21 @@
 			<var name="portletOption" value="Editar contenido web" />
 		</execute>
 
-		<execute macro="WebContent#viewTranslationPGViaWCD">
-			<var name="localizedTitle" value="WC Titulo" />
-			<var name="webContentTranslationLanguage" value="español (España)" />
-		</execute>
+		<toggle name="LPS-67821">
+			<on>
+				<execute macro="WebContent#viewTranslationPGViaWCD">
+					<var name="localizedTitle" value="WC Titulo" />
+					<var name="webContentTranslationLanguage" value="es-ES" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="WebContent#viewTranslationPGViaWCD">
+					<var name="localizedTitle" value="WC Titulo" />
+					<var name="webContentTranslationLanguage" value="español (España)" />
+				</execute>
+			</off>
+		</toggle>
 	</command>
 
 	<command name="MoveCurrentLanguagesToAvailable" priority="4">

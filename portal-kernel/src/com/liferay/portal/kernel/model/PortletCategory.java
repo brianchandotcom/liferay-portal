@@ -82,10 +82,6 @@ public class PortletCategory implements Serializable {
 		return _portletCategories.get(name);
 	}
 
-	public Set<String> getFirstChildPortletIds() {
-		return _getFirstChildPortletIds(this);
-	}
-
 	public String getName() {
 		return _name;
 	}
@@ -181,28 +177,6 @@ public class PortletCategory implements Serializable {
 
 	protected void setPath(String path) {
 		_path = path;
-	}
-
-	private Set<String> _getFirstChildPortletIds(
-		PortletCategory parentCategory) {
-
-		Set<String> portletIds = parentCategory.getPortletIds();
-
-		if (!portletIds.isEmpty()) {
-			return portletIds;
-		}
-
-		for (PortletCategory portletCategory : parentCategory.getCategories()) {
-			portletIds = parentCategory.getPortletIds();
-
-			if (!portletIds.isEmpty()) {
-				return portletIds;
-			}
-
-			_getFirstChildPortletIds(portletCategory);
-		}
-
-		return Collections.emptySet();
 	}
 
 	private static final String _DELIMITER = StringPool.DOUBLE_SLASH;

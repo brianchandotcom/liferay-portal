@@ -460,13 +460,13 @@ public interface PortletDataContext extends Serializable {
 		StagedModel parentStagedModel, Class<?> clazz);
 
 	/**
-	 * Returns all the registered primary keys for a given model class name. The
-	 * entites are being registered for the export process. See {@link
-	 * #registerExportingClassedModel(ClassedModel)}
+	 * Returns the registered primary keys for the model class name. The
+	 * model class name's entities are registered for the export process in {@link
+	 * #registerExportingClassedModel(ClassedModel)}.
 	 *
-	 * @param  modelClassName the model class name of the entities we want to
-	 *         get the primary keys for
-	 * @return a set of primary keys for the given model class name
+	 * @param  modelClassName the model class name of the entities for which to get
+	 *         the primary keys
+	 * @return the primary keys for the model class name
 	 */
 	public Set<Serializable> getRegisteredExportingClassedModelPrimaryKeys(
 		String modelClassName);
@@ -635,10 +635,10 @@ public interface PortletDataContext extends Serializable {
 	public void putNotUniquePerLayout(String dataKey);
 
 	/**
-	 * Registers a certain entity to be exported or published during the
+	 * Registers the entity to be exported or published during the
 	 * process. This method is useful when using single asset publication.
 	 *
-	 * @param classedModel the entity classedModel to be registered for the
+	 * @param classedModel the classed model entity to register for the
 	 *        export process
 	 */
 	public void registerExportingClassedModel(ClassedModel classedModel);

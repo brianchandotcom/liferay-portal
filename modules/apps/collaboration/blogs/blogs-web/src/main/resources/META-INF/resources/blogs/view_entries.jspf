@@ -79,6 +79,10 @@ contextObjects.put("blogsPortletInstanceConfiguration", blogsPortletInstanceConf
 contextObjects.put("blogsPortletInstanceSettingsHelper", blogsPortletInstanceSettingsHelper);
 %>
 
+<c:if test="<%= results.isEmpty()%>">
+	<liferay-ui:empty-result-message  search="<%= false %>" message="no-entries-were-found"/>
+</c:if>
+
 <liferay-ddm:template-renderer className="<%= BlogsEntry.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= blogsPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= blogsPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= _convertToBlogEntries(results) %>">
 
 	<%

@@ -39,7 +39,6 @@ AUI.add(
 						var instance = this;
 
 						return {
-							action: 'jump-to-page',
 							source: instance._sourceField.getValue(),
 							target: instance._targetField.getValue()
 						};
@@ -95,6 +94,7 @@ AUI.add(
 
 						instance._sourceField = new Liferay.DDM.Field.Select(
 							{
+								bubbleTargets: [instance],
 								fieldName: instance.get('index') + '-action',
 								label: Liferay.Language.get('the'),
 								options: instance.get('options'),
@@ -129,6 +129,7 @@ AUI.add(
 
 						instance._targetField = new Liferay.DDM.Field.Select(
 							{
+								bubbleTargets: [instance],
 								fieldName: instance.get('index') + '-action',
 								label: Liferay.Language.get('the'),
 								options: instance.get('options'),

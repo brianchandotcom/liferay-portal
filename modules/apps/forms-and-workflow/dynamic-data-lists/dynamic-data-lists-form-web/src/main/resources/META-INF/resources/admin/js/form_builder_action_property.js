@@ -41,10 +41,7 @@ AUI.add(
 					getValue: function() {
 						var instance = this;
 
-						var type = instance.get('type');
-
 						return {
-							action: type,
 							target: instance._field.getValue()
 						};
 					},
@@ -72,6 +69,7 @@ AUI.add(
 
 						instance._field = new Liferay.DDM.Field.Select(
 							{
+								bubbleTargets: [instance],
 								fieldName: instance.get('index') + '-action',
 								label: Liferay.Language.get('the'),
 								options: instance.get('options'),

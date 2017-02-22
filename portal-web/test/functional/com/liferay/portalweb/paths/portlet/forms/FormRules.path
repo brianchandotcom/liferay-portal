@@ -125,6 +125,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RULE_BUILDER_SAVE_BUTTON_DISABLED</td>
+	<td>//button[@disabled='' and contains(@class,'form-builder-rule-settings-save')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

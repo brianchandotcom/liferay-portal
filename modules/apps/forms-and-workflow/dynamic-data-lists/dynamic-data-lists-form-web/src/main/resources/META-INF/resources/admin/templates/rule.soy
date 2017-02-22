@@ -9,6 +9,7 @@
  * @param logicalOperator
  * @param plusIcon
  * @param strings
+ * @param invalid
  */
 {template .settings autoescape="deprecated-contextual"}
 	<h2 class="form-builder-section-title text-default">{$strings.title}</h2>
@@ -69,7 +70,7 @@
 		{/call}
 
 		<div class="liferay-ddl-form-rule-builder-footer">
-			<button class="btn btn-default btn-lg btn-primary ddl-button form-builder-rule-settings-save" type="button">
+			<button class="btn btn-default btn-lg btn-primary ddl-button form-builder-rule-settings-save"  {if $invalid}disabled{/if} type="button">
 				<span class="form-builder-rule-settings-save-label">{$strings.save}</span>
 			</button>
 			<button class="btn btn-cancel btn-default btn-lg btn-link form-builder-rule-settings-cancel" type="button">

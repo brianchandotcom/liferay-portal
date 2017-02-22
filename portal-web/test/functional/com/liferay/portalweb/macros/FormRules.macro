@@ -10,6 +10,8 @@
 
 	<command name="addRule">
 		<execute function="Click" locator1="FormRules#RULE_BUILDER_ADD_RULE_BUTTON" />
+
+		<execute macro="FormRules#viewInactiveSaveButton" />
 	</command>
 
 	<command name="configureActionOptions">
@@ -96,6 +98,8 @@
 	<command name="selectActionTarget">
 		<var name="key_actionRowNumber" value="${actionRowNumber}" />
 		<var name="key_actionTarget" value="${actionTarget}" />
+
+		<execute macro="FormRules#viewInactiveSaveButton" />
 
 		<execute function="Click" locator1="FormRules#RULE_BUILDER_ACTION_TARGET_FIELD" />
 
@@ -226,6 +230,10 @@
 		<var name="key_ruleNumber" value="${ruleNumber}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="FormRules#RULE_BUILDER_SUMMARY_CONDITION_OPERATOR" value1="${conditionOperator}" />
+	</command>
+
+	<command name="viewInactiveSaveButton">
+		<execute function="AssertElementPresent" locator1="FormRules#RULE_BUILDER_SAVE_BUTTON_DISABLED" />
 	</command>
 
 	<command name="viewSummary">

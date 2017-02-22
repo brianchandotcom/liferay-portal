@@ -259,18 +259,20 @@ AUI.add(
 
 				var fieldName = field.get('fieldName');
 
-				var index = fieldName.split('-')[0];
+				if (fieldName && fieldName.match('-condition')) {
+					var index = fieldName.split('-')[0];
 
-				if (fieldName.match('-condition-first-operand')) {
-					instance._updateOperatorList(field.get('dataType'), index);
-					instance._updateSecondOperandFieldVisibility(index);
-				}
-				else if (fieldName.match('-condition-operator')) {
-					instance._updateTypeFieldVisibility(index);
-					instance._updateSecondOperandFieldVisibility(index);
-				}
-				else if (fieldName.match('-condition-second-operand-type')) {
-					instance._updateSecondOperandFieldVisibility(index);
+					if (fieldName.match('-first-operand')) {
+						instance._updateOperatorList(field.get('dataType'), index);
+						instance._updateSecondOperandFieldVisibility(index);
+					}
+					else if (fieldName.match('-operator')) {
+						instance._updateTypeFieldVisibility(index);
+						instance._updateSecondOperandFieldVisibility(index);
+					}
+					else if (fieldName.match('-second-operand-type')) {
+						instance._updateSecondOperandFieldVisibility(index);
+					}
 				}
 			},
 

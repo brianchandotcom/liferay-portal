@@ -69,6 +69,7 @@ import java.util.Map;
 
 import javax.el.ELException;
 import javax.el.ELContext;
+import javax.el.ELResolver;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -77,7 +78,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.JspApplicationContext;
 import javax.servlet.jsp.JspContext;
+import javax.servlet.jsp.JspFactory;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
@@ -320,13 +323,12 @@ public class JspContextWrapper extends PageContext {
 
     public ELContext getELContext() {
         if (elContext == null) {
-            PageContext pc = invokingJspCtxt;
-            while (pc instanceof JspContextWrapper) {
-                pc = ((JspContextWrapper)pc).invokingJspCtxt;
-            }
-            PageContextImpl pci = (PageContextImpl) pc;
-            elContext = pci.getJspApplicationContext().createELContext(
-                              invokingJspCtxt.getELContext().getELResolver());
+            JspFactory jspFactory = JspFactory.getDefaultFactory();
+            JspApplicationContext jspApplicationContext =
+                jspFactory.getJspApplicationContext(
+                    invokingJspCtxt.getServletContext());
+			ELResolver resolver = invokingJspCtxt.getELContext().getELResolver();
+            elContext = new ELContextImpl(resolver);
             elContext.putContext(javax.servlet.jsp.JspContext.class, this);
             ((ELContextImpl)elContext).setVariableMapper(
                 new VariableMapperImpl());
@@ -506,4 +508,5 @@ public class JspContextWrapper extends PageContext {
 	return alias;
     }
 }
+/* @generated */
 

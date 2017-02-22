@@ -46,7 +46,6 @@
 /lib/development/annotations.jar
 /lib/development/ant-apache-bsf.jar
 /lib/development/appium.jar
-/lib/development/bsh.jar
 /lib/development/catalina.jar
 /lib/development/cobertura.jar
 /lib/development/db2jcc.jar

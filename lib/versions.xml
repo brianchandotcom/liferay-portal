@@ -30,6 +30,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/bsh.jar</file-name>
+				<version>2.0 B4</version>
+				<project-name>BeanShell</project-name>
+				<project-url>http://www.beanshell.org</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/xmltask.jar</file-name>
 				<version>1.16</version>
 				<project-name>XMLTask</project-name>

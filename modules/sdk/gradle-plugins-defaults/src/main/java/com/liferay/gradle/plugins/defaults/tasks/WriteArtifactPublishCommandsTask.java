@@ -21,7 +21,14 @@ import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,11 +55,11 @@ import org.gradle.util.VersionNumber;
 /**
  * @author Andrea Di Giorgi
  */
-public class PrintArtifactPublishCommandsTask extends DefaultTask {
+public class WriteArtifactPublishCommandsTask extends DefaultTask {
 
 	public static final String IGNORED_MESSAGE_PATTERN = "artifact:ignore";
 
-	public PrintArtifactPublishCommandsTask() {
+	public WriteArtifactPublishCommandsTask() {
 		String firstOnlyString = GradleUtil.getTaskPrefixedProperty(
 			this, "first");
 
@@ -97,6 +104,11 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 	}
 
 	@Input
+	public File getOutputDir() {
+		return GradleUtil.toFile(getProject(), _outputDir);
+	}
+
+	@Input
 	public Map<String, FileCollection> getPrepNextCommitFiles() {
 		Project project = getProject();
 
@@ -134,7 +146,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		return _gradleDaemon;
 	}
 
-	public PrintArtifactPublishCommandsTask prepNextCommitFile(
+	public WriteArtifactPublishCommandsTask prepNextCommitFile(
 		String message, File file) {
 
 		Set<Object> files = _prepNextCommitFiles.get(message);
@@ -150,7 +162,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		return this;
 	}
 
-	public PrintArtifactPublishCommandsTask prepNextFiles(
+	public WriteArtifactPublishCommandsTask prepNextFiles(
 		Iterable<?> prepNextFiles) {
 
 		GUtil.addToCollection(_prepNextFiles, prepNextFiles);
@@ -158,74 +170,10 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		return this;
 	}
 
-	public PrintArtifactPublishCommandsTask prepNextFiles(
+	public WriteArtifactPublishCommandsTask prepNextFiles(
 		Object... prepNextFiles) {
 
 		return prepNextFiles(Arrays.asList(prepNextFiles));
-	}
-
-	@TaskAction
-	public void printArtifactPublishCommands() {
-		List<String> commands = new ArrayList<>();
-
-		Project project = getProject();
-
-		// Move to the root directory
-
-		commands.add("cd " + FileUtil.getAbsolutePath(project.getRootDir()));
-
-		// Publish if the artifact has never been published
-
-		if (!_isPublished()) {
-			_addPublishCommands(commands, true);
-		}
-
-		// Change log
-
-		BuildChangeLogTask buildChangeLogTask = (BuildChangeLogTask)_getTask(
-			ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
-
-		if (buildChangeLogTask != null) {
-			commands.add(_getGradleCommand(buildChangeLogTask));
-
-			commands.add(
-				"git add " +
-					_getRelativePath(buildChangeLogTask.getChangeLogFile()));
-
-			commands.add(_getGitCommitCommand("change log", false, true, true));
-		}
-
-		// Baseline
-
-		Task baselineTask = _getTask(BaselinePlugin.BASELINE_TASK_NAME);
-
-		if (baselineTask != null) {
-			commands.add(_getGradleCommand(baselineTask));
-
-			commands.add(
-				"git add --all " + _getRelativePath(project.getProjectDir()));
-
-			commands.add(
-				_getGitCommitCommand("packageinfo", false, false, true));
-		}
-
-		// Publish the artifact since there will either be change log or
-		// baseline changes
-
-		if ((baselineTask != null) || (buildChangeLogTask != null)) {
-			_addPublishCommands(commands, false);
-		}
-
-		System.out.println();
-
-		for (String command : commands) {
-			System.out.print(" && ");
-			System.out.print(command);
-		}
-
-		if (isFirstOnly()) {
-			throw new GradleException();
-		}
 	}
 
 	public void setArtifactPropertiesFile(Object artifactPropertiesFile) {
@@ -258,6 +206,10 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		_lowestPublishedVersion = lowestPublishedVersion;
 	}
 
+	public void setOutputDir(Object outputDir) {
+		_outputDir = outputDir;
+	}
+
 	public void setPrepNextFiles(Iterable<?> prepNextFiles) {
 		_prepNextFiles.clear();
 
@@ -266,6 +218,17 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 
 	public void setPrepNextFiles(Object... prepNextFiles) {
 		setPrepNextFiles(Arrays.asList(prepNextFiles));
+	}
+
+	@TaskAction
+	public void writeArtifactPublishCommands() throws IOException {
+		_writeArtifactPublishCommandsStep1();
+		_writeArtifactPublishCommandsStep2();
+		_writeArtifactPublishCommandsStep3();
+
+		if (isFirstOnly()) {
+			throw new GradleException();
+		}
 	}
 
 	private void _addPrepNextCommitCommands(
@@ -430,6 +393,21 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		return _getRelativePath(_getGradleFile());
 	}
 
+	private BufferedWriter _getOutputBufferedWriter(int step)
+		throws IOException {
+
+		File dir = getOutputDir();
+
+		Path dirPath = dir.toPath();
+
+		Files.createDirectories(dirPath);
+
+		return Files.newBufferedWriter(
+			dirPath.resolve(getName() + "-step" + step + ".sh"),
+			StandardCharsets.UTF_8, StandardOpenOption.APPEND,
+			StandardOpenOption.CREATE);
+	}
+
 	private String _getRelativePath(Object object) {
 		Project project = getProject();
 
@@ -469,6 +447,140 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		return false;
 	}
 
+	private void _writeArtifactPublishCommandsStep1() throws IOException {
+		Task baselineTask = _getTask(BaselinePlugin.BASELINE_TASK_NAME);
+
+		if (baselineTask == null) {
+			return;
+		}
+
+		Project project = baselineTask.getProject();
+
+		try (BufferedWriter bufferedWriter = _getOutputBufferedWriter(1)) {
+
+			// Move to the root directory
+
+			bufferedWriter.write("cd ");
+			bufferedWriter.write(
+				FileUtil.getAbsolutePath(project.getRootDir()));
+
+			// Baseline
+
+			bufferedWriter.write(" && ");
+			bufferedWriter.write(_getGradleCommand(baselineTask));
+
+			bufferedWriter.write(System.lineSeparator());
+		}
+	}
+
+	private void _writeArtifactPublishCommandsStep2() throws IOException {
+		Task baselineTask = _getTask(BaselinePlugin.BASELINE_TASK_NAME);
+
+		if (baselineTask == null) {
+			return;
+		}
+
+		Project project = getProject();
+
+		try (BufferedWriter bufferedWriter = _getOutputBufferedWriter(2)) {
+
+			// Comment
+
+			bufferedWriter.write("# ");
+
+			// Move to the root directory
+
+			bufferedWriter.write("cd ");
+			bufferedWriter.write(
+				FileUtil.getAbsolutePath(project.getRootDir()));
+
+			// Baseline
+
+			bufferedWriter.write(" && ");
+
+			bufferedWriter.write(
+				_getGradleCommand(
+					baselineTask,
+					"-D" + baselineTask.getName() + ".ignoreFailures=true"));
+
+			bufferedWriter.write(" && ");
+
+			bufferedWriter.write(
+				"git add --all " + _getRelativePath(project.getProjectDir()));
+
+			bufferedWriter.write(" && ");
+
+			bufferedWriter.write(
+				_getGitCommitCommand("packageinfo", false, false, true));
+
+			bufferedWriter.write(System.lineSeparator());
+		}
+	}
+
+	private void _writeArtifactPublishCommandsStep3() throws IOException {
+		List<String> commands = new ArrayList<>();
+
+		Project project = getProject();
+
+		// Move to the root directory
+
+		commands.add("cd " + FileUtil.getAbsolutePath(project.getRootDir()));
+
+		// Publish if the artifact has never been published
+
+		if (!_isPublished()) {
+			_addPublishCommands(commands, true);
+		}
+
+		// Change log
+
+		BuildChangeLogTask buildChangeLogTask = (BuildChangeLogTask)_getTask(
+			ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
+
+		if (buildChangeLogTask != null) {
+			commands.add(_getGradleCommand(buildChangeLogTask));
+
+			commands.add(
+				"git add " +
+					_getRelativePath(buildChangeLogTask.getChangeLogFile()));
+
+			commands.add(_getGitCommitCommand("change log", false, true, true));
+		}
+
+		// Baseline
+
+		Task baselineTask = _getTask(BaselinePlugin.BASELINE_TASK_NAME);
+
+		if (baselineTask != null) {
+			commands.add(_getGradleCommand(baselineTask));
+
+			commands.add(
+				"git add --all " + _getRelativePath(project.getProjectDir()));
+
+			commands.add(
+				_getGitCommitCommand("packageinfo", false, false, true));
+		}
+
+		// Publish the artifact since there will either be change log or
+		// baseline changes
+
+		if ((baselineTask != null) || (buildChangeLogTask != null)) {
+			_addPublishCommands(commands, false);
+		}
+
+		try (BufferedWriter bufferedWriter = _getOutputBufferedWriter(3)) {
+			for (int i = 0; i < commands.size(); i++) {
+				if (i > 0) {
+					bufferedWriter.write(" && ");
+				}
+
+				bufferedWriter.write(commands.get(i));
+			}
+
+			bufferedWriter.write(System.lineSeparator());
+		}
+	}
+
 	private Object _artifactPropertiesFile;
 	private boolean _firstOnly;
 	private Object _firstPublishExcludedTaskName;
@@ -476,6 +588,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 	private boolean _gradleDaemon;
 	private Object _gradleDir;
 	private Object _lowestPublishedVersion = "1.0.0";
+	private Object _outputDir;
 	private final Map<String, Set<Object>> _prepNextCommitFiles =
 		new LinkedHashMap<>();
 	private final Set<Object> _prepNextFiles = new LinkedHashSet<>();

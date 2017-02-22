@@ -34,8 +34,8 @@ import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure;
 import com.liferay.gradle.plugins.defaults.internal.util.copy.RenameDependencyAction;
 import com.liferay.gradle.plugins.defaults.tasks.InstallCacheTask;
-import com.liferay.gradle.plugins.defaults.tasks.PrintArtifactPublishCommandsTask;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
+import com.liferay.gradle.plugins.defaults.tasks.WriteArtifactPublishCommandsTask;
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.dependency.checker.DependencyCheckerExtension;
 import com.liferay.gradle.plugins.dependency.checker.DependencyCheckerPlugin;
@@ -3468,7 +3468,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			}
 
 			if (!line.contains(
-					PrintArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
+					WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
 
 				return true;
 			}

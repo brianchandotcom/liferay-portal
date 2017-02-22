@@ -54,6 +54,16 @@
 	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Expire')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COMPARE_VERSIONS</td>
+	<td>//*[@data-qa-id='row']//a[contains(@class,'selector-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_COMPARE_VERSIONS_CONTENT</td>
+	<td>//div[contains(@id,'diffContainerHtmlResults')]//p</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

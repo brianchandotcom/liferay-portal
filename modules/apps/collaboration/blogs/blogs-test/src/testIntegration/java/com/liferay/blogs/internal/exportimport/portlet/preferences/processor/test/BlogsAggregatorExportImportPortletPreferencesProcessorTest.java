@@ -17,9 +17,9 @@ package com.liferay.blogs.internal.exportimport.portlet.preferences.processor.te
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.exportimport.util.test.ExportImportTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
@@ -35,9 +35,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -122,44 +119,16 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 
 		_organization = OrganizationTestUtil.addOrganization();
 
-		TestReaderWriter testReaderWriter = new TestReaderWriter();
-
 		_portletDataContextExport =
-			PortletDataContextFactoryUtil.createExportPortletDataContext(
-				TestPropsValues.getCompanyId(), _group.getGroupId(),
-				new HashMap<String, String[]>(), null, null, testReaderWriter);
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element manifestRootElement = document.addElement("root");
-
-		manifestRootElement.addElement("header");
-
-		testReaderWriter.addEntry("/manifest.xml", document.asXML());
-
-		Element rootElement = SAXReaderUtil.createElement("root");
-
-		_portletDataContextExport.setExportDataRootElement(rootElement);
-
-		Element missingReferencesElement = rootElement.addElement(
-			"missing-references");
-
-		_portletDataContextExport.setMissingReferencesElement(
-			missingReferencesElement);
+			ExportImportTestUtil.getExportPortletDataContext(
+				_group.getGroupId());
 
 		_portletDataContextExport.setPortletId(
 			BlogsPortletKeys.BLOGS_AGGREGATOR);
 
 		_portletDataContextImport =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				TestPropsValues.getCompanyId(), _group.getGroupId(),
-				new HashMap<String, String[]>(), new DummyUserIdStrategy(),
-				testReaderWriter);
-
-		_portletDataContextImport.setImportDataRootElement(rootElement);
-
-		_portletDataContextImport.setMissingReferencesElement(
-			missingReferencesElement);
+			ExportImportTestUtil.getImportPortletDataContext(
+				_group.getGroupId());
 
 		_portletDataContextImport.setPortletId(
 			BlogsPortletKeys.BLOGS_AGGREGATOR);

@@ -69,18 +69,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/antlr2.jar</file-name>
-				<version>2.7.7</version>
-				<project-name>ANTLR</project-name>
-				<project-url>http://www.antlr.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/axis.jar</file-name>
 				<version>1.4</version>
 				<project-name>Axis</project-name>
@@ -94,42 +82,6 @@
 				<comments>
 					See modules/third-party/org-apache-axis/patches.
 				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/axis-ant.jar</file-name>
-				<version>1.4</version>
-				<project-name>Axis</project-name>
-				<project-url>http://ws.apache.org/axis</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/bcmail.jar</file-name>
-				<version>1.45</version>
-				<project-name>Bouncy Castle</project-name>
-				<project-url>http://www.bouncycastle.org</project-url>
-				<licenses>
-					<license>
-						<license-name>MIT License</license-name>
-						<license-url>http://opensource.org/licenses/MIT</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/bcprov.jar</file-name>
-				<version>1.45</version>
-				<project-name>Bouncy Castle</project-name>
-				<project-url>http://www.bouncycastle.org</project-url>
-				<licenses>
-					<license>
-						<license-name>MIT License</license-name>
-						<license-url>http://opensource.org/licenses/MIT</license-url>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/bnd.jar</file-name>
@@ -157,19 +109,6 @@
 				<comments>
 					Removed org.cyberneko.* because it conflicts with nekohtml.jar.
 				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/bsf.jar</file-name>
-				<version>2.4.0</version>
-				<project-name>Bean Scripting Framework</project-name>
-				<project-url>http://jakarta.apache.org/bsf</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2002-2006 The Apache Software Foundation.</copyright-notice>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/ccpp-ri.jar</file-name>
@@ -227,18 +166,6 @@
 				<comments>
 					Removed META-INF/beans.xml to prevent CDI autowiring.
 				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/commons-beanutils.jar</file-name>
-				<version>1.9.2</version>
-				<project-name>Commons Beanutils</project-name>
-				<project-url>http://commons.apache.org/beanutils</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/concurrent.jar</file-name>
@@ -391,19 +318,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/im4java.jar</file-name>
-				<version>1.2.0</version>
-				<project-name>im4java</project-name>
-				<project-url>http://im4java.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-						<copyright-notice>Copyright (c) Bernhard Bablok 2008-2010</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jabsorb.jar</file-name>
 				<version>1.3.1</version>
 				<project-name>jabsorb</project-name>
@@ -515,20 +429,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jcl-over-slf4j.jar</file-name>
-				<version>1.7.2</version>
-				<project-name>SLF4J</project-name>
-				<project-url>http://www.slf4j.org</project-url>
-				<project-description>SLF4J</project-description>
-				<licenses>
-					<license>
-						<license-name>MIT License</license-name>
-						<license-url>http://opensource.org/licenses/MIT</license-url>
-						<copyright-notice>Copyright (c) 2004-2007 QOS.ch</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jdom.jar</file-name>
 				<version>1.1.1</version>
 				<project-name>JDOM</project-name>
@@ -559,18 +459,6 @@
 				<version>3.1</version>
 				<project-name>Jericho HTML Parser</project-name>
 				<project-url>http://jerichohtml.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jfreechart.jar</file-name>
-				<version>1.0.13</version>
-				<project-name>JFreeChart</project-name>
-				<project-url>http://www.jfree.org/jfreechart</project-url>
 				<licenses>
 					<license>
 						<license-name>LGPL 2.1</license-name>
@@ -677,43 +565,7 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/jstl-api.jar</file-name>
-				<version>1.2</version>
-				<project-name>JSTL</project-name>
-				<project-url>https://jstl.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.1</license-name>
-						<license-url>http://web.archive.org/web/20090305064954/http://www.sun.com/cddl/cddl.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jstl-impl.jar</file-name>
-				<version>1.2</version>
-				<project-name>JSTL</project-name>
-				<project-url>https://jstl.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.1</license-name>
-						<license-url>http://web.archive.org/web/20090305064954/http://www.sun.com/cddl/cddl.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/juh.jar</file-name>
-				<version>2.3.0</version>
-				<project-name>OpenOffice.org Java Uno</project-name>
-				<project-url>http://udk.openoffice.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jurt.jar</file-name>
 				<version>2.3.0</version>
 				<project-name>OpenOffice.org Java Uno</project-name>
 				<project-url>http://udk.openoffice.org</project-url>
@@ -772,18 +624,6 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/log4j.jar</file-name>
-				<version>1.2.17</version>
-				<project-name>Log4j</project-name>
-				<project-url>http://logging.apache.org/log4j</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/monte-cc.jar</file-name>
 				<version>0.7.7</version>
 				<project-name>Monte Media Library</project-name>
@@ -792,30 +632,6 @@
 					<license>
 						<license-name>LGPL 3.0</license-name>
 						<license-url>https://www.gnu.org/licenses/lgpl-3.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/nekohtml.jar</file-name>
-				<version>1.9.14</version>
-				<project-name>CyberNeko HTML Parser</project-name>
-				<project-url>http://sourceforge.net/projects/nekohtml</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/odmg.jar</file-name>
-				<version>3.0</version>
-				<project-name>ODMG - Object Data Management Group Java Bindings</project-name>
-				<project-url>http://www.odbms.org/odmg</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<copyright-notice>Authored by David Jordan (as Java Editor of the Object Data Management Group)</copyright-notice>
 					</license>
 				</licenses>
 			</library>
@@ -913,19 +729,6 @@
 				<comments>
 					This includes modifications for compatibility with JDK 5.
 				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/slf4j-api.jar</file-name>
-				<version>1.7.2</version>
-				<project-name>SLF4J</project-name>
-				<project-url>http://www.slf4j.org</project-url>
-				<licenses>
-					<license>
-						<license-name>MIT License</license-name>
-						<license-url>http://opensource.org/licenses/MIT</license-url>
-						<copyright-notice>Copyright (c) 2004-2007 QOS.ch</copyright-notice>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/spring-aop.jar</file-name>
@@ -1189,18 +992,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/wstx.jar</file-name>
-				<version>3.2.4</version>
-				<project-name>Woodstox</project-name>
-				<project-url>http://woodstox.codehaus.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/xbean.jar</file-name>
 				<version>2.5.0</version>
 				<project-name>XMLBeans</project-name>
@@ -1228,18 +1019,6 @@
 						<license-name>Indiana University Extreme! Lab Software License 1.1.1</license-name>
 						<license-url>http://www.extreme.indiana.edu/xgws/xsoap/PullParser/LICENSE.txt</license-url>
 						<copyright-notice>Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved.</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/xuggle-xuggler-noarch.jar</file-name>
-				<version>5.4</version>
-				<project-name>Xuggler</project-name>
-				<project-url>http://www.xuggle.com</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 3.0</license-name>
-						<license-url>https://www.gnu.org/licenses/lgpl-3.0</license-url>
 					</license>
 				</licenses>
 			</library>

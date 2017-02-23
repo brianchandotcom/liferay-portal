@@ -1106,7 +1106,13 @@ with the following commands for all publishable subprojects:
 - [LPS-63943]: Rename `printArtifactPublishCommands` task to
 `writeArtifactPublishCommands`.
 
-## 3.0.1 - 2017-02-24
+## 3.1.0 - 2017-02-23
+
+### Added
+- [LPS-70819]: Set the `jsp.precompile.from.source` project property to `false`
+to make the `compileJSP` task download the archive listed in the
+`artifact.jspc.url` artifact property instead of compiling the JSP pages of the
+OSGi project.
 
 ### Changed
 - [LPS-70870]: Update the [Liferay Gradle Plugins] dependency to version 3.2.8.

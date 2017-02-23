@@ -151,7 +151,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static Process executeBashCommands(
-			boolean exitOnFirstFail, String... commands)
+			boolean exitOnFirstFail, File basedir, String... commands)
 		throws InterruptedException, IOException {
 
 		System.out.print("Executing commands: ");
@@ -159,8 +159,6 @@ public class JenkinsResultsParserUtil {
 		for (String command : commands) {
 			System.out.println(command);
 		}
-
-		Runtime runtime = Runtime.getRuntime();
 
 		String[] bashCommands = new String[3];
 
@@ -185,7 +183,11 @@ public class JenkinsResultsParserUtil {
 
 		bashCommands[2] = sb.toString();
 
-		Process process = runtime.exec(bashCommands);
+		ProcessBuilder processBuilder = new ProcessBuilder(bashCommands);
+
+		processBuilder.directory(basedir.getAbsoluteFile());
+
+		Process process = processBuilder.start();
 
 		if (debug) {
 			System.out.println(
@@ -202,10 +204,17 @@ public class JenkinsResultsParserUtil {
 		return process;
 	}
 
+	public static Process executeBashCommands(
+			boolean exitOnFirstFail, String... commands)
+		throws InterruptedException, IOException {
+
+		return executeBashCommands(exitOnFirstFail, new File("."), commands);
+	}
+
 	public static Process executeBashCommands(String... commands)
 		throws InterruptedException, IOException {
 
-		return executeBashCommands(true, commands);
+		return executeBashCommands(true, new File("."), commands);
 	}
 
 	public static String expandSlaveRange(String value) {

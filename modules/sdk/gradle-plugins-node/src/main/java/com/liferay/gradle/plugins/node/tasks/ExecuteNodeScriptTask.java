@@ -32,9 +32,16 @@ public class ExecuteNodeScriptTask extends ExecuteNodeTask {
 
 	@Override
 	public void executeNode() throws Exception {
-		setArgs(getCompleteArgs());
+		List<Object> args = getArgs();
 
-		super.executeNode();
+		try {
+			setArgs(getCompleteArgs());
+
+			super.executeNode();
+		}
+		finally {
+			setArgs(args);
+		}
 	}
 
 	@Input

@@ -192,7 +192,9 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	private void _setTaskExecuteNodeArgDefault(
 		ExecuteNodeTask executeNodeTask, String key, String value) {
 
-		for (String arg : executeNodeTask.getArgs()) {
+		for (Object object : executeNodeTask.getArgs()) {
+			String arg = GradleUtil.toString(object);
+
 			if (arg.startsWith(key)) {
 				return;
 			}

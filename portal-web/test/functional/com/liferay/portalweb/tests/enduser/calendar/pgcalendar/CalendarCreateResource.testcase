@@ -1,0 +1,87 @@
+<definition component-name="portal-calendar">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="custom.properties" value="default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles" />
+	<property name="testray.main.component.name" value="Calendar" />
+
+	<var name="pageName" value="Calendar Page" />
+	<var name="portletName" value="Calendar" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Calendar Page" />
+			<var name="portletName" value="Calendar" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Navigator#gotoPage">
+					<var name="pageName" value="Calendar Page" />
+				</execute>
+
+				<if>
+					<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
+					<then>
+						<execute macro="CalendarEvent#tearDown" />
+					</then>
+				</if>
+
+				<execute macro="Calendar#tearDown" />
+
+				<execute macro="CalendarConfiguration#tearDown" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="AddAndViewOtherCalendars" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="CalendarResource#add">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#add">
+			<var name="calendarName" value="Calendar Resource Name" />
+			<var name="calendarType" value="Other Calendars" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarResource#view">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#view">
+			<var name="calendarName" value="Calendar Resource Name" />
+			<var name="calendarType" value="Other Calendars" />
+		</execute>
+	</command>
+</definition>

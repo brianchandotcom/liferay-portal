@@ -757,6 +757,33 @@
 		</execute>
 	</command>
 
+	<command name="ViewCalendarsAfterCancellingEdit" priority="2">
+		<description message="This is a use case for LPS-69884." />
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="CalendarResource#add">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoResourceCalendars">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoEditResourceCalendar">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+
+		<execute macro="Button#clickCancel" />
+
+		<execute macro="CalendarResource#viewResourceCalendars">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+	</command>
+
 	<command name="ViewSiteNameUpdate" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />

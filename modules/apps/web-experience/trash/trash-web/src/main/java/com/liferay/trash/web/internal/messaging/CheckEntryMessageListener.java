@@ -14,14 +14,16 @@
 
 package com.liferay.trash.web.internal.messaging;
 
-import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.kernel.service.TrashEntryLocalService;
 
@@ -40,18 +42,23 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = CheckEntryMessageListener.class)
-public class CheckEntryMessageListener
-	extends BaseSchedulerEntryMessageListener {
+public class CheckEntryMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate() {
-		schedulerEntryImpl.setTrigger(
-			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(),
-				PropsValues.TRASH_ENTRY_CHECK_INTERVAL, TimeUnit.MINUTE));
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
+			PropsValues.TRASH_ENTRY_CHECK_INTERVAL, TimeUnit.MINUTE);
+
+		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+			className, trigger);
 
 		_schedulerEngineHelper.register(
-			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate
@@ -89,5 +96,8 @@ public class CheckEntryMessageListener
 
 	private SchedulerEngineHelper _schedulerEngineHelper;
 	private TrashEntryLocalService _trashEntryLocalService;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

@@ -17,14 +17,16 @@ package com.liferay.message.boards.web.internal.messaging;
 import com.liferay.message.boards.configuration.MBConfiguration;
 import com.liferay.message.boards.kernel.service.MBBanLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 
 import java.util.Map;
 
@@ -42,8 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.message.boards.configuration.MBConfiguration",
 	immediate = true, service = ExpireBanMessageListener.class
 )
-public class ExpireBanMessageListener
-	extends BaseSchedulerEntryMessageListener {
+public class ExpireBanMessageListener extends BaseMessageListener {
 
 	@Activate
 	@Modified
@@ -51,13 +52,19 @@ public class ExpireBanMessageListener
 		_mbConfiguration = ConfigurableUtil.createConfigurable(
 			MBConfiguration.class, properties);
 
-		schedulerEntryImpl.setTrigger(
-			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(),
-				_mbConfiguration.expireBanJobInterval(), TimeUnit.MINUTE));
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
+			_mbConfiguration.expireBanJobInterval(), TimeUnit.MINUTE);
+
+		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+			className, trigger);
 
 		_schedulerEngineHelper.register(
-			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate
@@ -94,5 +101,8 @@ public class ExpireBanMessageListener
 	private MBBanLocalService _mbBanLocalService;
 	private volatile MBConfiguration _mbConfiguration;
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

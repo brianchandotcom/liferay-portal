@@ -17,14 +17,16 @@ package com.liferay.blogs.web.internal.messaging;
 import com.liferay.blogs.configuration.BlogsConfiguration;
 import com.liferay.blogs.linkback.LinkbackConsumer;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.linkback.LinkbackProducerUtil;
 
 import java.util.Map;
@@ -43,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.blogs.configuration.BlogsConfiguration",
 	immediate = true, service = LinkbackMessageListener.class
 )
-public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
+public class LinkbackMessageListener extends BaseMessageListener {
 
 	@Activate
 	@Modified
@@ -51,13 +53,19 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 		_blogsConfiguration = ConfigurableUtil.createConfigurable(
 			BlogsConfiguration.class, properties);
 
-		schedulerEntryImpl.setTrigger(
-			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(),
-				_blogsConfiguration.linkbackJobInterval(), TimeUnit.MINUTE));
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
+			_blogsConfiguration.linkbackJobInterval(), TimeUnit.MINUTE);
+
+		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+			className, trigger);
 
 		_schedulerEngineHelper.register(
-			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate
@@ -94,5 +102,8 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 	private LinkbackConsumer _linkbackConsumer;
 
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

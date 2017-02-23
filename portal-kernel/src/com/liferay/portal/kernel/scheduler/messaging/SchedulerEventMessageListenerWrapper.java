@@ -169,6 +169,6 @@ public class SchedulerEventMessageListenerWrapper
 	private String _jobName;
 
 	private MessageListener _messageListener;
-	private SchedulerEntry _schedulerEntry;
+	private volatile SchedulerEntry _schedulerEntry;
 
 }

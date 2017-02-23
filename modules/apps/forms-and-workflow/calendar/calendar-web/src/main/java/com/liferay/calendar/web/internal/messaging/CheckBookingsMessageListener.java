@@ -16,14 +16,16 @@ package com.liferay.calendar.web.internal.messaging;
 
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
-import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -35,20 +37,25 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Lundgren
  */
 @Component(immediate = true, service = CheckBookingsMessageListener.class)
-public class CheckBookingsMessageListener
-	extends BaseSchedulerEntryMessageListener {
+public class CheckBookingsMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate() {
-		schedulerEntryImpl.setTrigger(
-			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(),
-				CalendarServiceConfigurationValues.
-					CALENDAR_NOTIFICATION_CHECK_INTERVAL,
-				TimeUnit.MINUTE));
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
+			CalendarServiceConfigurationValues.
+				CALENDAR_NOTIFICATION_CHECK_INTERVAL,
+			TimeUnit.MINUTE);
+
+		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+			className, trigger);
 
 		_schedulerEngineHelper.register(
-			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate
@@ -86,5 +93,8 @@ public class CheckBookingsMessageListener
 
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

@@ -18,15 +18,17 @@ import com.liferay.mail.kernel.model.Account;
 import com.liferay.petra.mail.MailEngine;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.pop.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -60,20 +62,24 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = POPNotificationsMessageListener.class)
-public class POPNotificationsMessageListener
-	extends BaseSchedulerEntryMessageListener {
+public class POPNotificationsMessageListener extends BaseMessageListener {
 
 	@Activate
 	@Modified
 	protected void activate() {
 		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
-			schedulerEntryImpl.setTrigger(
-				TriggerFactoryUtil.createTrigger(
-					getEventListenerClass(), getEventListenerClass(), 1,
-					TimeUnit.MINUTE));
+			Class<?> clazz = getClass();
+
+			String className = clazz.getName();
+
+			Trigger trigger = _triggerFactory.createTrigger(
+				className, className, null, null, 1, TimeUnit.MINUTE);
+
+			SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+				className, trigger);
 
 			_schedulerEngineHelper.register(
-				this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+				this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 		}
 	}
 
@@ -261,5 +267,8 @@ public class POPNotificationsMessageListener
 	private final Map<MessageListener, MessageListenerWrapper>
 		_messageListenerWrappers = new ConcurrentHashMap<>();
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

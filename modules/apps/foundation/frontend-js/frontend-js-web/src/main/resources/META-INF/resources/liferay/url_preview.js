@@ -89,6 +89,8 @@ AUI.add(
 							}
 						);
 
+						dialog.get('contentBox').addClass('container');
+
 						dialog.get('maskNode').setStyle('opacity', 1);
 
 						return dialog;

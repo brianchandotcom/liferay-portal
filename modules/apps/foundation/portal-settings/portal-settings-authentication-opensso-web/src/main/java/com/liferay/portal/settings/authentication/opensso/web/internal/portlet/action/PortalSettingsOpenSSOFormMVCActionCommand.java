@@ -46,7 +46,7 @@ public class PortalSettingsOpenSSOFormMVCActionCommand
 
 	@Override
 	protected String getParameterNamespace() {
-		return PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE;
+		return PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE;
 	}
 
 	@Override

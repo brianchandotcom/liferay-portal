@@ -90,7 +90,7 @@ public class PortalSettingsCASFormMVCActionCommand
 
 	@Override
 	protected String getParameterNamespace() {
-		return PortalSettingsCASConstants.PARAMETER_NAMESPACE;
+		return PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE;
 	}
 
 	@Override

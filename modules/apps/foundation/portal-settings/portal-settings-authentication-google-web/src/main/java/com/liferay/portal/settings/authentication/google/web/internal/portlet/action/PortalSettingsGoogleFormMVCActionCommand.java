@@ -65,7 +65,7 @@ public class PortalSettingsGoogleFormMVCActionCommand
 
 	@Override
 	protected String getParameterNamespace() {
-		return PortalSettingsGoogleConstants.PARAMETER_NAMESPACE;
+		return PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE;
 	}
 
 	@Override

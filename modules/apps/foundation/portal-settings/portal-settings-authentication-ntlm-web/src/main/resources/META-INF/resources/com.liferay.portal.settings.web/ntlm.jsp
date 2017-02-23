@@ -17,7 +17,7 @@
 <%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
 
 <%
-NtlmConfiguration ntlmConfiguration = ConfigurationProviderUtil.getConfiguration(NtlmConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), PortalSettingsNtlmConstants.PARAMETER_NAMESPACE, new CompanyServiceSettingsLocator(company.getCompanyId(), NtlmConstants.SERVICE_NAME)));
+NtlmConfiguration ntlmConfiguration = ConfigurationProviderUtil.getConfiguration(NtlmConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE, new CompanyServiceSettingsLocator(company.getCompanyId(), NtlmConstants.SERVICE_NAME)));
 
 boolean enabled = ntlmConfiguration.enabled();
 String domainController = ntlmConfiguration.domainController();
@@ -35,15 +35,15 @@ if (Validator.isNotNull(servicePassword)) {
 <aui:fieldset>
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/ntlm" />
 
-	<aui:input label="enabled" name='<%= PortalSettingsNtlmConstants.PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />
+	<aui:input label="enabled" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="domain-controller" name='<%= PortalSettingsNtlmConstants.PARAMETER_NAMESPACE + "domainController" %>' type="text" value="<%= domainController %>" />
+	<aui:input cssClass="lfr-input-text-container" label="domain-controller" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "domainController" %>' type="text" value="<%= domainController %>" />
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="domain-controller-name-help" label="domain-controller-name" name='<%= PortalSettingsNtlmConstants.PARAMETER_NAMESPACE + "domainControllerName" %>' type="text" value="<%= domainControllerName %>" />
+	<aui:input cssClass="lfr-input-text-container" helpMessage="domain-controller-name-help" label="domain-controller-name" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "domainControllerName" %>' type="text" value="<%= domainControllerName %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="domain" name='<%= PortalSettingsNtlmConstants.PARAMETER_NAMESPACE + "domain" %>' type="text" value="<%= domain %>" />
+	<aui:input cssClass="lfr-input-text-container" label="domain" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "domain" %>' type="text" value="<%= domain %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="service-account" name='<%= PortalSettingsNtlmConstants.PARAMETER_NAMESPACE + "serviceAccount" %>' type="text" value="<%= serviceAccount %>" />
+	<aui:input cssClass="lfr-input-text-container" label="service-account" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "serviceAccount" %>' type="text" value="<%= serviceAccount %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="service-password" name='<%= PortalSettingsNtlmConstants.PARAMETER_NAMESPACE + "servicePassword" %>' type="password" value="<%= servicePassword %>" />
+	<aui:input cssClass="lfr-input-text-container" label="service-password" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "servicePassword" %>' type="password" value="<%= servicePassword %>" />
 </aui:fieldset>

@@ -89,7 +89,7 @@ public class PortalSettingsFacebookConnectFormMVCActionCommand
 
 	@Override
 	protected String getParameterNamespace() {
-		return PortalSettingsFacebookConnectConstants.PARAMETER_NAMESPACE;
+		return PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE;
 	}
 
 	@Override

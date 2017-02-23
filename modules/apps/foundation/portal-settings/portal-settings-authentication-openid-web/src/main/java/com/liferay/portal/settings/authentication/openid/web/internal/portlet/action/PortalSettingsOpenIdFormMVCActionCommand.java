@@ -46,7 +46,7 @@ public class PortalSettingsOpenIdFormMVCActionCommand
 
 	@Override
 	protected String getParameterNamespace() {
-		return PortalSettingsOpenIdConstants.PARAMETER_NAMESPACE;
+		return PortalSettingsOpenIdConstants.FORM_PARAMETER_NAMESPACE;
 	}
 
 	@Override

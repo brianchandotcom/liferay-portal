@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
-import com.liferay.portal.settings.authentication.cas.web.internal.portlet.constants.PortalSettingsCASConstants;
+import com.liferay.portal.settings.authentication.cas.web.internal.constants.PortalSettingsCASConstants;
 import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 

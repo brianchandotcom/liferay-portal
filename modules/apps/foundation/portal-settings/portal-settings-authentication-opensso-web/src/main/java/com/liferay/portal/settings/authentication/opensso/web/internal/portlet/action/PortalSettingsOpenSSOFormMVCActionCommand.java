@@ -16,7 +16,7 @@ package com.liferay.portal.settings.authentication.opensso.web.internal.portlet.
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
-import com.liferay.portal.settings.authentication.opensso.web.internal.portlet.constants.PortalSettingsOpenSSOConstants;
+import com.liferay.portal.settings.authentication.opensso.web.internal.constants.PortalSettingsOpenSSOConstants;
 import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 

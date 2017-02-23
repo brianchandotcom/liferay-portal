@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.openid.web.internal.portlet.constants;
+package com.liferay.portal.settings.authentication.openid.web.internal.constants;
 
 /**
  * @author Jose A. Jimenez

@@ -32,7 +32,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.security.sso.OpenSSOUtil" %><%@
 page import="com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration" %><%@
 page import="com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants" %><%@
-page import="com.liferay.portal.settings.authentication.opensso.web.internal.portlet.constants.PortalSettingsOpenSSOConstants" %>
+page import="com.liferay.portal.settings.authentication.opensso.web.internal.constants.PortalSettingsOpenSSOConstants" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %>

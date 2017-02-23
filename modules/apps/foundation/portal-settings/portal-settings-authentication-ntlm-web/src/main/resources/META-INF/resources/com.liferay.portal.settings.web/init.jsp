@@ -24,7 +24,7 @@ page import="com.liferay.portal.kernel.util.Portal" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration" %><%@
 page import="com.liferay.portal.security.sso.ntlm.constants.NtlmConstants" %><%@
-page import="com.liferay.portal.settings.authentication.ntlm.web.internal.portlet.constants.PortalSettingsNtlmConstants" %>
+page import="com.liferay.portal.settings.authentication.ntlm.web.internal.constants.PortalSettingsNtlmConstants" %>
 
 <%@ page import="javax.portlet.ActionRequest" %>
 

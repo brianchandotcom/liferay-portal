@@ -16,7 +16,7 @@ package com.liferay.portal.settings.authentication.ntlm.web.internal.portlet.act
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
-import com.liferay.portal.settings.authentication.ntlm.web.internal.portlet.constants.PortalSettingsNtlmConstants;
+import com.liferay.portal.settings.authentication.ntlm.web.internal.constants.PortalSettingsNtlmConstants;
 import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 

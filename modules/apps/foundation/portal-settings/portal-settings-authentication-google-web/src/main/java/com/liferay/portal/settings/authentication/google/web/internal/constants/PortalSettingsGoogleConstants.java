@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.opensso.web.internal.portlet.constants;
+package com.liferay.portal.settings.authentication.google.web.internal.constants;
 
 /**
  * @author Jose A. Jimenez
  */
-public class PortalSettingsOpenSSOConstants {
+public class PortalSettingsGoogleConstants {
 
-	public static final String FORM_PARAMETER_NAMESPACE = "opensso_";
+	public static final String PARAMETER_NAMESPACE = "google_";
 
 }

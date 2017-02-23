@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.cas.web.internal.portlet.constants;
+package com.liferay.portal.settings.authentication.opensso.web.internal.constants;
 
 /**
  * @author Jose A. Jimenez
  */
-public class PortalSettingsCASConstants {
+public class PortalSettingsOpenSSOConstants {
 
-	public static final String FORM_PARAMETER_NAMESPACE = "cas_";
+	public static final String FORM_PARAMETER_NAMESPACE = "opensso_";
 
 }

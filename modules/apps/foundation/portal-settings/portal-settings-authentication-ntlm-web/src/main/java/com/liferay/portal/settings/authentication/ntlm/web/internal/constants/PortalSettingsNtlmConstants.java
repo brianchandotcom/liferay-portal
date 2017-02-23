@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.google.web.internal.portlet.constants;
+package com.liferay.portal.settings.authentication.ntlm.web.internal.constants;
 
 /**
  * @author Jose A. Jimenez
  */
-public class PortalSettingsGoogleConstants {
+public class PortalSettingsNtlmConstants {
 
-	public static final String PARAMETER_NAMESPACE = "google_";
+	public static final String PARAMETER_NAMESPACE = "ntlm_";
 
 }

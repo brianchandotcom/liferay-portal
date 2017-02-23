@@ -5792,7 +5792,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setPassword(PasswordEncryptorUtil.encrypt(user.getPassword()));
 			user.setPasswordEncrypted(true);
 
-			userPersistence.update(user);
+			user = userPersistence.update(user);
 		}
 
 		// Authenticate against the User_ table
@@ -5838,11 +5838,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		if (resultsMap != null) {
-			resultsMap.put("user", user);
-			resultsMap.put("userId", user.getUserId());
-		}
-
 		if (authResult == Authenticator.SUCCESS) {
 
 			// Update digest
@@ -5851,13 +5846,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				!PropsValues.AUTH_PIPELINE_ENABLE_LIFERAY_CHECK ||
 				Validator.isNull(user.getDigest())) {
 
-				user = userPersistence.fetchByPrimaryKey(user.getUserId());
-
 				String digest = user.getDigest(password);
 
 				user.setDigest(digest);
 
-				userPersistence.update(user);
+				user = userPersistence.update(user);
 			}
 		}
 
@@ -5866,9 +5859,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (authResult == Authenticator.FAILURE) {
 			authResult = handleAuthenticationFailure(
 				login, authType, user, headerMap, parameterMap);
+
+			user = userPersistence.fetchByPrimaryKey(user.getUserId());
 		}
 		else {
-			resetFailedLoginAttempts(user);
+			user = resetFailedLoginAttempts(user);
+		}
+
+		if (resultsMap != null) {
+			resultsMap.put("user", user);
+			resultsMap.put("userId", user.getUserId());
 		}
 
 		return authResult;
@@ -5928,11 +5928,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return searchContext;
 	}
 
-	protected void doCheckLockout(User user, PasswordPolicy passwordPolicy)
+	protected User doCheckLockout(User user, PasswordPolicy passwordPolicy)
 		throws PortalException {
 
 		if (!passwordPolicy.isLockout()) {
-			return;
+			return user;
 		}
 
 		// Reset failure count
@@ -5953,7 +5953,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 				user.setFailedLoginAttempts(0);
 
-				userPersistence.update(user);
+				user = userPersistence.update(user);
 			}
 		}
 
@@ -5973,7 +5973,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user.setLockout(false);
 				user.setLockoutDate(null);
 
-				userPersistence.update(user);
+				user = userPersistence.update(user);
 			}
 		}
 
@@ -5981,9 +5981,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			throw new UserLockoutException.PasswordPolicyLockout(
 				user, passwordPolicy);
 		}
+
+		return user;
 	}
 
-	protected void doCheckPasswordExpired(
+	protected User doCheckPasswordExpired(
 			User user, PasswordPolicy passwordPolicy)
 		throws PortalException {
 
@@ -5995,7 +5997,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (graceLoginCount < passwordPolicy.getGraceLimit()) {
 				user.setGraceLoginCount(++graceLoginCount);
 
-				userPersistence.update(user);
+				user = userPersistence.update(user);
 			}
 			else {
 				user.setDigest(StringPool.BLANK);
@@ -6014,9 +6016,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (user.getLastLoginDate() == null) {
 				user.setPasswordReset(true);
 
-				userPersistence.update(user);
+				user = userPersistence.update(user);
 			}
 		}
+
+		return user;
 	}
 
 	protected Date getBirthday(
@@ -6315,16 +6319,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		indexer.reindex(user);
 	}
 
-	protected void resetFailedLoginAttempts(User user) {
-		resetFailedLoginAttempts(user, false);
+	protected User resetFailedLoginAttempts(User user) {
+		return resetFailedLoginAttempts(user, false);
 	}
 
-	protected void resetFailedLoginAttempts(User user, boolean forceUpdate) {
+	protected User resetFailedLoginAttempts(User user, boolean forceUpdate) {
 		if (forceUpdate || (user.getFailedLoginAttempts() > 0)) {
 			user.setFailedLoginAttempts(0);
 
-			userPersistence.update(user);
+			user = userPersistence.update(user);
 		}
+
+		return user;
 	}
 
 	protected BaseModelSearchResult<User> searchUsers(
@@ -6974,9 +6980,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (!LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
 			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
-			doCheckLockout(user, passwordPolicy);
+			user = doCheckLockout(user, passwordPolicy);
 
-			doCheckPasswordExpired(user, passwordPolicy);
+			user = doCheckPasswordExpired(user, passwordPolicy);
 		}
 
 		return user;

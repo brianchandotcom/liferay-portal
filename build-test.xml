@@ -7841,6 +7841,8 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 	</target>
 
 	<target name="prepare-test-bundle">
+		<setup-libs />
+
 		<if>
 			<not>
 				<isset property="app.server.name" />

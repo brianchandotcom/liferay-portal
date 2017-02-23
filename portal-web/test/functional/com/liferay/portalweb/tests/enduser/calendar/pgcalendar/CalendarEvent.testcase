@@ -2239,99 +2239,6 @@
 		</execute>
 	</command>
 
-	<command name="ViewCorrectCalendarOnEventSwitch" priority="3">
-		<description message="This is a use case for LPS-51222." />
-
-		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Site Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="CalendarEvent#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Personal Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="Test Test" />
-		</execute>
-
-		<execute macro="CalendarEvent#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="${siteName}" />
-			<var name="eventTitle" value="Site Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetailsResources">
-			<var name="calendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="Test Test" />
-			<var name="eventTitle" value="Personal Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetailsResources">
-			<var name="calendarName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="${siteName}" />
-			<var name="eventTitle" value="Site Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetailsResources">
-			<var name="calendarName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="Test Test" />
-			<var name="eventTitle" value="Personal Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewDetailsResources">
-			<var name="calendarName" value="Test Test" />
-		</execute>
-	</command>
-
 	<command name="ViewCalendarChange" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -2457,6 +2364,99 @@
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="ViewCorrectCalendarOnEventSwitch" priority="3">
+		<description message="This is a use case for LPS-51222." />
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Site Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#selectCalendar">
+			<var name="calendarName" value="${siteName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Personal Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#selectCalendar">
+			<var name="calendarName" value="Test Test" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewDetails">
+			<var name="calendarName" value="${siteName}" />
+			<var name="eventTitle" value="Site Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewDetailsResources">
+			<var name="calendarName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewDetails">
+			<var name="calendarName" value="Test Test" />
+			<var name="eventTitle" value="Personal Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewDetailsResources">
+			<var name="calendarName" value="Test Test" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewDetails">
+			<var name="calendarName" value="${siteName}" />
+			<var name="eventTitle" value="Site Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewDetailsResources">
+			<var name="calendarName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewDetails">
+			<var name="calendarName" value="Test Test" />
+			<var name="eventTitle" value="Personal Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewDetailsResources">
+			<var name="calendarName" value="Test Test" />
 		</execute>
 	</command>
 </definition>

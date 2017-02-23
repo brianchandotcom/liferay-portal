@@ -185,6 +185,67 @@
 		</execute>
 	</command>
 
+	<command name="ViewCalendarsAfterCancellingEdit" priority="2">
+		<description message="This is a use case for LPS-69884." />
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarResource#add">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoResourceCalendars">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoEditResourceCalendar">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+
+		<execute macro="Button#clickCancel" />
+
+		<execute macro="CalendarResource#viewResourceCalendars">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+	</command>
+
+	<command name="ViewEventDateAndTimeInResourcesAvailability" priority="4">
+		<description message="This is a use case for LPS-62410." />
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#gotoConfigureInvitations" />
+
+		<execute macro="CalendarEvent#viewResourcesAvailability" />
+
+		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
+
+		<execute macro="CalendarEvent#selectTimes" >
+			<var name="endDateTime" value="11:00 AM" />
+			<var name="startDateTime" value="08:00 AM" />
+		</execute>
+
+		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
+
+		<execute macro="CalendarEvent#setEndDateTomorrow" />
+
+		<execute macro="CalendarEvent#selectTimes" >
+			<var name="endDateTime" value="07:00 AM" />
+			<var name="startDateTime" value="08:00 AM" />
+		</execute>
+
+		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
+
+		<execute macro="CalendarEvent#publish" />
+	</command>
+
 	<command name="ViewInactive" priority="2">
 		<description message="This is a use case for LPS-55171." />
 
@@ -350,66 +411,5 @@
 			<var name="eventNumber" value="2" />
 			<var name="eventTitle" value="Calendar Event All Day Title" />
 		</execute>
-	</command>
-
-	<command name="ViewCalendarsAfterCancellingEdit" priority="2">
-		<description message="This is a use case for LPS-69884." />
-
-		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoResourceCalendars">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoEditResourceCalendar">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-
-		<execute macro="Button#clickCancel" />
-
-		<execute macro="CalendarResource#viewResourceCalendars">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-	</command>
-
-	<command name="ViewEventDateAndTimeInResourcesAvailability" priority="4">
-		<description message="This is a use case for LPS-62410." />
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#gotoConfigureInvitations" />
-
-		<execute macro="CalendarEvent#viewResourcesAvailability" />
-
-		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
-
-		<execute macro="CalendarEvent#selectTimes" >
-			<var name="endDateTime" value="11:00 AM" />
-			<var name="startDateTime" value="08:00 AM" />
-		</execute>
-
-		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
-
-		<execute macro="CalendarEvent#setEndDateTomorrow" />
-
-		<execute macro="CalendarEvent#selectTimes" >
-			<var name="endDateTime" value="07:00 AM" />
-			<var name="startDateTime" value="08:00 AM" />
-		</execute>
-
-		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
-
-		<execute macro="CalendarEvent#publish" />
 	</command>
 </definition>

@@ -86,26 +86,6 @@
 		</execute>
 	</command>
 
-	<command name="ImportMicrosoftOutlookCalendarICS" priority="4">
-		<description message="This is a use case for LPS-53072." />
-
-		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoCurrentSiteCalendarsManage" />
-
-		<execute macro="Calendar#importCalendarFile">
-			<var name="calendarFile" value="calendar_microsoft_outlook_calendar.ics" />
-			<var name="calendarName" value="${siteName}" />
-		</execute>
-	</command>
-
 	<command name="ImportCalendarAndViewEventComment" priority="5">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
@@ -193,6 +173,26 @@
 			<var name="eventTitle" value="Calendar Event Regular Title" />
 			<var name="eventType" value="Regular" />
 			<var name="user" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="ImportMicrosoftOutlookCalendarICS" priority="4">
+		<description message="This is a use case for LPS-53072." />
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoCurrentSiteCalendarsManage" />
+
+		<execute macro="Calendar#importCalendarFile">
+			<var name="calendarFile" value="calendar_microsoft_outlook_calendar.ics" />
+			<var name="calendarName" value="${siteName}" />
 		</execute>
 	</command>
 </definition>

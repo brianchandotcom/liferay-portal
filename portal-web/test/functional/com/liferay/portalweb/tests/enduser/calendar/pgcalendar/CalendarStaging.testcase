@@ -182,7 +182,7 @@
 		</execute>
 	</command>
 
-	<command name="SchedulePublishToLiveWithEventAndResource" priority="4"> 
+	<command name="SchedulePublishToLiveWithEventAndResource" priority="4">
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>

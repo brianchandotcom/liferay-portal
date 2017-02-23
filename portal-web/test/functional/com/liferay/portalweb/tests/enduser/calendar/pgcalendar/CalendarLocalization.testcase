@@ -55,6 +55,48 @@
 		</if>
 	</tear-down>
 
+	<command name="EditLanguageSelectorAndViewEvent" priority="3">
+		<description message="This is a use case for LPS-58649." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Calendar Page" />
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Spanish (Spain)" />
+		</execute>
+
+		<execute macro="CalendarScheduler#addLocalizedEvent">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="saveButton" value="Guardar" />
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="CalendarScheduler#viewLocalizedEvent">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="viewTypeLocalized" value="Semana" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="English (United States)" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewDay">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+	</command>
+
 	<command name="ViewShowMoreLocalization" priority="3">
 		<description message="This is a use case for LPS-54786." />
 
@@ -100,48 +142,6 @@
 			<var name="languageName" value="English (United States)" />
 			<var name="portlet" value="Mi cuenta" />
 			<var name="saveButton" value="Guardar" />
-		</execute>
-	</command>
-
-	<command name="EditLanguageSelectorAndViewEvent" priority="3">
-		<description message="This is a use case for LPS-58649." />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Calendar Page" />
-			<var name="portletName" value="Language" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="Spanish (Spain)" />
-		</execute>
-
-		<execute macro="CalendarScheduler#addLocalizedEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="saveButton" value="Guardar" />
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute macro="CalendarScheduler#viewLocalizedEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="viewTypeLocalized" value="Semana" />
-		</execute>
-
-		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="English (United States)" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewDay">
-			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
 	</command>
 </definition>

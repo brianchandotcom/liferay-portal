@@ -79,6 +79,67 @@
 		</execute>
 	</command>
 
+	<command name="ViewCreatedEventVisibleOnScheduler" priority="2">
+		<description message="This is a use case for LPS-67400." />
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<var locator="CalendarEditEvent#END_DATE_TIME" name="endDateTime" />
+		<var locator="CalendarEditEvent#START_DATE_TIME" name="startDateTime" />
+
+		<execute macro="CalendarEvent#viewTimes">
+			<var name="endDateTime" value="${endDateTime}" />
+			<var name="startDateTime" value="${startDateTime}" />
+		</execute>
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="IFrame#closeFrame" />
+
+		<execute macro="CalendarScheduler#selectSpecificEvent">
+			<var name="eventTitle" value="Calendar Event" />
+		</execute>
+	</command>
+
+	<command name="ViewDefaultDurationsViaScheduler" priority="3">
+		<for list="15,30,60,120" param="minutes">
+			<execute macro="Navigator#gotoPage">
+				<var name="pageName" value="Calendar Page" />
+			</execute>
+
+			<execute macro="CalendarNavigator#gotoConfiguration" />
+
+			<execute macro="CalendarConfiguration#selectDefaultDuration">
+				<var name="defaultDuration" value="${minutes} Minutes" />
+			</execute>
+
+			<execute macro="CalendarConfiguration#save" />
+
+			<execute macro="Navigator#gotoPage">
+				<var name="pageName" value="Calendar Page" />
+			</execute>
+
+			<execute macro="CalendarNavigator#gotoView">
+				<var name="viewType" value="Day" />
+			</execute>
+
+			<execute macro="CalendarEvent#addViaDayView">
+				<var name="eventTitle" value="Calendar Event ${minutes} Minutes Title" />
+			</execute>
+
+			<execute macro="CalendarScheduler#viewEventDuration">
+				<var name="eventTitle" value="Calendar Event ${minutes} Minutes Title" />
+				<var name="minutes" value="${minutes}" />
+			</execute>
+
+			<execute macro="CalendarEvent#tearDown" />
+		</for>
+	</command>
+
 	<command name="ViewDisplayedSiteCalendarEventsAsGuest" priority="3">
 		<description message="This is a use case for LPS-59251." />
 
@@ -185,66 +246,5 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="startDateTime" value="03:00 AM" />
 		</execute>
-	</command>
-
-	<command name="ViewCreatedEventVisibleOnScheduler" priority="2">
-		<description message="This is a use case for LPS-67400." />
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<var locator="CalendarEditEvent#END_DATE_TIME" name="endDateTime" />
-		<var locator="CalendarEditEvent#START_DATE_TIME" name="startDateTime" />
-
-		<execute macro="CalendarEvent#viewTimes">
-			<var name="endDateTime" value="${endDateTime}" />
-			<var name="startDateTime" value="${startDateTime}" />
-		</execute>
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Calendar Event" />
-		</execute>
-
-		<execute macro="CalendarEvent#publish" />
-
-		<execute macro="IFrame#closeFrame" />
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
-			<var name="eventTitle" value="Calendar Event" />
-		</execute>
-	</command>
-
-	<command name="ViewDefaultDurationsViaScheduler" priority="3">
-		<for list="15,30,60,120" param="minutes">
-			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="Calendar Page" />
-			</execute>
-
-			<execute macro="CalendarNavigator#gotoConfiguration" />
-
-			<execute macro="CalendarConfiguration#selectDefaultDuration">
-				<var name="defaultDuration" value="${minutes} Minutes" />
-			</execute>
-
-			<execute macro="CalendarConfiguration#save" />
-
-			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="Calendar Page" />
-			</execute>
-
-			<execute macro="CalendarNavigator#gotoView">
-				<var name="viewType" value="Day" />
-			</execute>
-
-			<execute macro="CalendarEvent#addViaDayView">
-				<var name="eventTitle" value="Calendar Event ${minutes} Minutes Title" />
-			</execute>
-
-			<execute macro="CalendarScheduler#viewEventDuration">
-				<var name="eventTitle" value="Calendar Event ${minutes} Minutes Title" />
-				<var name="minutes" value="${minutes}" />
-			</execute>
-
-			<execute macro="CalendarEvent#tearDown" />
-		</for>
 	</command>
 </definition>

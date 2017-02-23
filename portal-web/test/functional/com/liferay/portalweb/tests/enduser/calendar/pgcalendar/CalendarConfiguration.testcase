@@ -55,104 +55,6 @@
 		</if>
 	</tear-down>
 
-	<command name="ViewWeekStartMonday" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<description message="This is a use case for 51127." />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoConfiguration" />
-
-		<execute macro="CalendarConfiguration#selectWeekStartsOn">
-			<var name="weekStartDay" value="Monday" />
-		</execute>
-
-		<execute macro="CalendarConfiguration#save" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewWeekStartDayViaWeekView">
-			<var name="weekStartDay" value="Mon" />
-		</execute>
-
-		<execute macro="Calendar#viewWeekStartDayViaMonthView">
-			<var name="weekStartDay" value="Mon" />
-		</execute>
-
-		<execute macro="Calendar#viewWeekStartDayViaSmallCalendar">
-			<var name="weekStartDay" value="Mo" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="Calendar#viewWeekStartDayViaAddEventMiniCalendar">
-			<var name="weekStartDay" value="Mo" />
-		</execute>
-
-		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
-
-		<execute macro="CalendarEvent#selectRepeatFrequency">
-			<var name="frequency" value="Weekly" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewRepeatWeekStartDay">
-			<var name="weekStartDay" value="MO" />
-		</execute>
-	</command>
-
-	<command name="ViewWeekStartSaturday" priority="3">
-		<description message="This is a use case for 51127." />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoConfiguration" />
-
-		<execute macro="CalendarConfiguration#selectWeekStartsOn">
-			<var name="weekStartDay" value="Saturday" />
-		</execute>
-
-		<execute macro="CalendarConfiguration#save" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewWeekStartDayViaWeekView">
-			<var name="weekStartDay" value="Sat" />
-		</execute>
-
-		<execute macro="Calendar#viewWeekStartDayViaMonthView">
-			<var name="weekStartDay" value="Sat" />
-		</execute>
-
-		<execute macro="Calendar#viewWeekStartDayViaSmallCalendar">
-			<var name="weekStartDay" value="Sa" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="Calendar#viewWeekStartDayViaAddEventMiniCalendar">
-			<var name="weekStartDay" value="Sa" />
-		</execute>
-
-		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
-
-		<execute macro="CalendarEvent#selectRepeatFrequency">
-			<var name="frequency" value="Weekly" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewRepeatWeekStartDay">
-			<var name="weekStartDay" value="SA" />
-		</execute>
-	</command>
-
 	<command name="ConfigureDefaultView" priority="3">
 		<for list="Day,Week,Month" param="defaultView">
 			<execute macro="Navigator#gotoPage">
@@ -268,6 +170,66 @@
 		<execute macro="CalendarEvent#viewTimesViaDetails">
 			<var name="endDateTime" value="AM" />
 			<var name="startDateTime" value="AM" />
+		</execute>
+	</command>
+
+	<command name="ConfigureEventsDisplaySettingsAndViewEvents" priority="4">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<for list="1,2,3,4,5,6" param="eventNumber">
+			<execute macro="CalendarNavigator#gotoAddEvent" />
+
+			<execute macro="CalendarEvent#add">
+				<var name="eventTitle" value="Calendar Event ${eventNumber}" />
+				<var name="eventType" value="All Day" />
+				<var name="pageName" value="Calendar Page" />
+			</execute>
+		</for>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Agenda" />
+		</execute>
+
+		<for list="1,2,3,4,5,6" param="eventNumber">
+			<execute macro="CalendarEvent#viewViaAgendaView">
+				<var name="eventNumber" value="${eventNumber}" />
+			</execute>
+		</for>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoConfiguration" />
+
+		<execute macro="CalendarConfiguration#editNumberOfEventsDisplayed">
+			<var name="maxNumberOfEvents" value="5" />
+		</execute>
+
+		<execute macro="CalendarConfiguration#save" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Agenda" />
+		</execute>
+
+		<for list="1,2,3,4,5" param="eventNumber">
+			<execute macro="CalendarEvent#viewViaAgendaView">
+				<var name="eventNumber" value="${eventNumber}" />
+			</execute>
+		</for>
+
+		<execute macro="CalendarEvent#viewNotPresentViaAgendaView">
+			<var name="eventNumber" value="6" />
 		</execute>
 	</command>
 
@@ -488,34 +450,10 @@
 		</execute>
 	</command>
 
-	<command name="ConfigureEventsDisplaySettingsAndViewEvents" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+	<command name="ViewWeekStartMonday" priority="5">
+		<property name="portal.acceptance" value="true" />
 
-		<for list="1,2,3,4,5,6" param="eventNumber">
-			<execute macro="CalendarNavigator#gotoAddEvent" />
-
-			<execute macro="CalendarEvent#add">
-				<var name="eventTitle" value="Calendar Event ${eventNumber}" />
-				<var name="eventType" value="All Day" />
-				<var name="pageName" value="Calendar Page" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Agenda" />
-		</execute>
-
-		<for list="1,2,3,4,5,6" param="eventNumber">
-			<execute macro="CalendarEvent#viewViaAgendaView">
-				<var name="eventNumber" value="${eventNumber}" />
-			</execute>
-		</for>
+		<description message="This is a use case for 51127." />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar Page" />
@@ -523,8 +461,8 @@
 
 		<execute macro="CalendarNavigator#gotoConfiguration" />
 
-		<execute macro="CalendarConfiguration#editNumberOfEventsDisplayed">
-			<var name="maxNumberOfEvents" value="5" />
+		<execute macro="CalendarConfiguration#selectWeekStartsOn">
+			<var name="weekStartDay" value="Monday" />
 		</execute>
 
 		<execute macro="CalendarConfiguration#save" />
@@ -533,18 +471,80 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Agenda" />
+		<execute macro="CalendarScheduler#viewWeekStartDayViaWeekView">
+			<var name="weekStartDay" value="Mon" />
 		</execute>
 
-		<for list="1,2,3,4,5" param="eventNumber">
-			<execute macro="CalendarEvent#viewViaAgendaView">
-				<var name="eventNumber" value="${eventNumber}" />
-			</execute>
-		</for>
+		<execute macro="Calendar#viewWeekStartDayViaMonthView">
+			<var name="weekStartDay" value="Mon" />
+		</execute>
 
-		<execute macro="CalendarEvent#viewNotPresentViaAgendaView">
-			<var name="eventNumber" value="6" />
+		<execute macro="Calendar#viewWeekStartDayViaSmallCalendar">
+			<var name="weekStartDay" value="Mo" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="Calendar#viewWeekStartDayViaAddEventMiniCalendar">
+			<var name="weekStartDay" value="Mo" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
+
+		<execute macro="CalendarEvent#selectRepeatFrequency">
+			<var name="frequency" value="Weekly" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewRepeatWeekStartDay">
+			<var name="weekStartDay" value="MO" />
+		</execute>
+	</command>
+
+	<command name="ViewWeekStartSaturday" priority="3">
+		<description message="This is a use case for 51127." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoConfiguration" />
+
+		<execute macro="CalendarConfiguration#selectWeekStartsOn">
+			<var name="weekStartDay" value="Saturday" />
+		</execute>
+
+		<execute macro="CalendarConfiguration#save" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewWeekStartDayViaWeekView">
+			<var name="weekStartDay" value="Sat" />
+		</execute>
+
+		<execute macro="Calendar#viewWeekStartDayViaMonthView">
+			<var name="weekStartDay" value="Sat" />
+		</execute>
+
+		<execute macro="Calendar#viewWeekStartDayViaSmallCalendar">
+			<var name="weekStartDay" value="Sa" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="Calendar#viewWeekStartDayViaAddEventMiniCalendar">
+			<var name="weekStartDay" value="Sa" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
+
+		<execute macro="CalendarEvent#selectRepeatFrequency">
+			<var name="frequency" value="Weekly" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewRepeatWeekStartDay">
+			<var name="weekStartDay" value="SA" />
 		</execute>
 	</command>
 </definition>

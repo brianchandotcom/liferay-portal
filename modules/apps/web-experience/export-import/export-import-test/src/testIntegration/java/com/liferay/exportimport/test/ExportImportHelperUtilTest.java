@@ -31,6 +31,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.exportimport.lar.ExportImportHelperImpl;
+import com.liferay.exportimport.util.test.ExportImportTestUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -141,23 +142,10 @@ public class ExportImportHelperUtilTest {
 		TestReaderWriter testReaderWriter = new TestReaderWriter();
 
 		_portletDataContextExport =
-			PortletDataContextFactoryUtil.createExportPortletDataContext(
+			ExportImportTestUtil.getExportPortletDataContext(
 				_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
 				new HashMap<String, String[]>(),
-				new Date(System.currentTimeMillis() - Time.HOUR), new Date(),
-				testReaderWriter);
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element manifestRootElement = document.addElement("root");
-
-		manifestRootElement.addElement("header");
-
-		testReaderWriter.addEntry("/manifest.xml", document.asXML());
-
-		Element rootElement = SAXReaderUtil.createElement("root");
-
-		_portletDataContextExport.setExportDataRootElement(rootElement);
+				new Date(System.currentTimeMillis() - Time.HOUR), new Date());
 
 		_stagingPrivateLayout = LayoutTestUtil.addLayout(_stagingGroup, true);
 		_stagingPublicLayout = LayoutTestUtil.addLayout(_stagingGroup, false);
@@ -165,24 +153,18 @@ public class ExportImportHelperUtilTest {
 		_portletDataContextExport.setPlid(_stagingPublicLayout.getPlid());
 
 		_portletDataContextImport =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
+			ExportImportTestUtil.getImportPortletDataContext(
 				_liveGroup.getCompanyId(), _liveGroup.getGroupId(),
-				new HashMap<String, String[]>(), new TestUserIdStrategy(),
-				testReaderWriter);
-
-		_portletDataContextImport.setImportDataRootElement(rootElement);
-
-		Element missingReferencesElement = rootElement.addElement(
-			"missing-references");
-
-		_portletDataContextImport.setMissingReferencesElement(
-			missingReferencesElement);
+				new HashMap<String, String[]>());
 
 		_livePublicLayout = LayoutTestUtil.addLayout(_liveGroup, false);
 
 		_portletDataContextImport.setPlid(_livePublicLayout.getPlid());
 
 		_portletDataContextImport.setSourceGroupId(_stagingGroup.getGroupId());
+
+		Element rootElement =
+			_portletDataContextImport.getImportDataRootElement();
 
 		rootElement.addElement("entry");
 

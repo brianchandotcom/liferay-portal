@@ -21,3 +21,9 @@
 		color: #869CAD;
 	}
 }
+
+.has-error .alloy-editor-container .alloy-editor.alloy-editor-placeholder {
+	&.ae-placeholder:not(:focus) {
+		border-left-color: #CC6677;
+	}
+}

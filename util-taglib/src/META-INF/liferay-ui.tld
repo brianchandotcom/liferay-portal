@@ -1920,6 +1920,13 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether the field for the input editor is required. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description>Whether to enable editing the HTML source code of the content. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showSource</name>
 			<required>false</required>

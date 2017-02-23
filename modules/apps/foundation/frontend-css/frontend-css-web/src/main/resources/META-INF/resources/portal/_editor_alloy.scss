@@ -24,6 +24,10 @@
 				border-left: 2px solid;
 				padding-left: 10px;
 			}
+
+			&.ae-placeholder[data-required="true"]:not(:focus):before {
+				content: attr(data-placeholder) ' *';
+			}
 		}
 
 		a {
@@ -71,4 +75,11 @@
 			}
 		}
 	}
+}
+
+.has-error .alloy-editor-container .help-block {
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 1.4em;
+	text-align: left;
 }

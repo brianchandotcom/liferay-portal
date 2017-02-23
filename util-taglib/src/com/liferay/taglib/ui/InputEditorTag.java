@@ -39,7 +39,6 @@ import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.taglib.aui.AUIUtil;
-import com.liferay.taglib.util.IncludeTag;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.io.IOException;
@@ -62,7 +61,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Brian Wing Shun Chan
  */
-public class InputEditorTag extends IncludeTag {
+public class InputEditorTag extends com.liferay.taglib.BaseValidatorTagSupport {
 
 	public static Editor getEditor(
 		HttpServletRequest request, String editorName) {
@@ -80,6 +79,11 @@ public class InputEditorTag extends IncludeTag {
 		}
 
 		return _serviceTrackerMap.getService(editorName);
+	}
+
+	@Override
+	public String getInputName() {
+		return getConfigKey();
 	}
 
 	public void setAllowBrowseDocuments(boolean allowBrowseDocuments) {
@@ -174,6 +178,10 @@ public class InputEditorTag extends IncludeTag {
 		_placeholder = placeholder;
 	}
 
+	public void setRequired(boolean required) {
+		_required = required;
+	}
+
 	public void setResizable(boolean resizable) {
 		_resizable = resizable;
 	}
@@ -217,6 +225,7 @@ public class InputEditorTag extends IncludeTag {
 		_onInitMethod = null;
 		_placeholder = null;
 		_resizable = true;
+		_required = false;
 		_showSource = true;
 		_skipEditorLoading = false;
 		_toolbarSet = _TOOLBAR_SET_DEFAULT;
@@ -411,6 +420,8 @@ public class InputEditorTag extends IncludeTag {
 			"liferay-ui:input-editor:placeholder", _placeholder);
 
 		request.setAttribute(
+			"liferay-ui:input-editor:required", String.valueOf(_required));
+		request.setAttribute(
 			"liferay-ui:input-editor:resizable", String.valueOf(_resizable));
 		request.setAttribute(
 			"liferay-ui:input-editor:showSource", String.valueOf(_showSource));
@@ -476,6 +487,7 @@ public class InputEditorTag extends IncludeTag {
 	private String _onFocusMethod;
 	private String _onInitMethod;
 	private String _placeholder;
+	private boolean _required;
 	private boolean _resizable = true;
 	private boolean _showSource = true;
 	private boolean _skipEditorLoading;

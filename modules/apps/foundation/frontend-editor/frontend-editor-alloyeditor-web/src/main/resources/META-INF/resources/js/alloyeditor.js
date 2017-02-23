@@ -91,7 +91,8 @@ AUI.add(
 						var instance = this;
 
 						instance._eventHandles = [
-							Do.after('_afterGet', instance._srcNode, 'get', instance)
+							Do.after('_afterGet', instance._srcNode, 'get', instance),
+							Do.after('_afterVal', instance._srcNode, 'val', instance)
 						];
 
 						var nativeEditor = instance.getNativeEditor();
@@ -223,6 +224,27 @@ AUI.add(
 								parentForm
 							);
 						}
+						else if (attrName === 'name') {
+							return new Do.AlterReturn(
+								'Return editor namespace',
+								instance.get('namespace')
+							);
+						}
+						else if (attrName === 'type') {
+							return new Do.AlterReturn(
+								'Return editor node name',
+								instance._srcNode.get('nodeName')
+							);
+						}
+					},
+
+					_afterVal: function() {
+						var instance = this;
+
+						return new Do.AlterReturn(
+							'Return editor content',
+							instance.getHTML()
+						);
 					},
 
 					_getEditorMethod: function(method) {

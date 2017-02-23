@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.upgrade.v_1_0_1;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
@@ -41,13 +42,9 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		StringBundler portletPreferences, String name, String value) {
 
 		portletPreferences.append("<preference><name>");
-
 		portletPreferences.append(name);
-
 		portletPreferences.append("</name><value>");
-
 		portletPreferences.append(value);
-
 		portletPreferences.append("</value></preference>");
 	}
 
@@ -58,14 +55,15 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		String portletId =
 			"com_liferay_journal_content_web_portlet_JournalContentPortlet";
 
-		String portletPreferencesId =
-			portletId + "_INSTANCE_" + PortletConstants.generateInstanceId();
-
 		Portlet webContentPortlet = PortletLocalServiceUtil.getPortletById(
 			portletId);
 
 		String defaultPreferences = getDefaultPortletPreferences(
 			groupId, articleId);
+
+		String portletPreferencesId =
+			portletId + LayoutTemplateConstants.INSTANCE_SEPARATOR +
+				PortletConstants.generateInstanceId();
 
 		PortletPreferencesLocalServiceUtil.addPortletPreferences(
 			companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid,
@@ -126,14 +124,16 @@ public class UpgradeLayoutType extends UpgradeProcess {
 
 		long resourcePrimKey = 0;
 
-		PreparedStatement ps = connection.prepareStatement(
-			"select resourcePrimKey from JournalArticle where articleId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select resourcePrimKey from JournalArticle where articleId " +
+					"= ?")) {
 
-		ps.setString(1, articleId);
+			ps.setString(1, articleId);
 
-		try (ResultSet rs = ps.executeQuery()) {
-			while (rs.next()) {
-				resourcePrimKey = rs.getLong("resourcePrimKey");
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					resourcePrimKey = rs.getLong("resourcePrimKey");
+				}
 			}
 		}
 

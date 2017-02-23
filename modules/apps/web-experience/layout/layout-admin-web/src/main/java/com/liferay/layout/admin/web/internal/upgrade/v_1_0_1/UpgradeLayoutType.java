@@ -142,7 +142,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		}
 
 		long assetEntryId = getAssetEntryIdForResource(resourcePrimKey);
-		StringBundler portletPreferences = new StringBundler(37);
+		StringBundler portletPreferences = new StringBundler(17);
 
 		portletPreferences.append("<portlet-preferences>");
 
@@ -150,13 +150,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		addPortletPreference(
 			portletPreferences, "assetEntryId", Long.toString(assetEntryId));
 		addPortletPreference(
-			portletPreferences, "contentMetadataAssetAddonEntryKeys", "");
-		addPortletPreference(
-			portletPreferences, "enableViewCountIncrement", "true");
-		addPortletPreference(
 			portletPreferences, "groupId", Long.toString(groupId));
-		addPortletPreference(
-			portletPreferences, "userToolAssetAddonEntryKeys", "");
 
 		portletPreferences.append("</portlet-preferences>");
 

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,8 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<aui:input cssClass="lfr-input-text-container" label="first-name-attribute" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "firstNameAttr" %>' type="text" value="<%= firstNameAttr %>" />
+package com.liferay.portal.settings.authentication.opensso.web.internal.portlet.constants;
 
-<aui:input cssClass="lfr-input-text-container" label="last-name-attribute" name='<%= PortalSettingsOpenSSOConstants.PARAMETER_NAMESPACE + "lastNameAttr" %>' type="text" value="<%= lastNameAttr %>" />
+/**
+ * @author Jose A. Jimenez
+ */
+public class PortalSettingsOpenSSOConstants {
+
+	public static final String PARAMETER_NAMESPACE = "opensso_";
+
+}

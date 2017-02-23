@@ -16,6 +16,7 @@ package com.liferay.portal.settings.authentication.openid.web.internal.portlet.a
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
+import com.liferay.portal.settings.authentication.openid.web.internal.portlet.constants.PortalSettingsOpenIdConstants;
 import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 
@@ -45,7 +46,7 @@ public class PortalSettingsOpenIdFormMVCActionCommand
 
 	@Override
 	protected String getParameterNamespace() {
-		return "openid--";
+		return PortalSettingsOpenIdConstants.PARAMETER_NAMESPACE;
 	}
 
 	@Override

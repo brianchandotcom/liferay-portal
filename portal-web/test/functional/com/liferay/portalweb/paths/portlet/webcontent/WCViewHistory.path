@@ -55,11 +55,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COMPARE_VERSIONS</td>
-	<td>//*[@data-qa-id='row']//a[contains(@class,'selector-button')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>VIEW_COMPARE_VERSIONS_CONTENT</td>
 	<td>//div[contains(@id,'diffContainerHtmlResults')]//p</td>
 	<td></td>

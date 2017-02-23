@@ -1746,7 +1746,7 @@ app.server.type=@{app.server.type}]]></echo>
 	<target name="gradle-plugins-test-jdk8">
 		<run-batch-test>
 			<test-action>
-				<for param="gradle.plugin.dir">
+				<for keepgoing="true" param="gradle.plugin.dir">
 					<path>
 						<dirset
 							dir="modules/sdk"

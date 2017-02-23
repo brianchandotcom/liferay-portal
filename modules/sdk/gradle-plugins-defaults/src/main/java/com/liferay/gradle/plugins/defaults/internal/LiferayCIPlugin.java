@@ -88,7 +88,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	private void _configureTaskExecuteNodeArgs(
 		ExecuteNodeTask executeNodeTask, Map<String, String> newArgs) {
 
-		List<String> args = executeNodeTask.getArgs();
+		List<Object> args = executeNodeTask.getArgs();
 
 		for (Map.Entry<String, String> entry : newArgs.entrySet()) {
 			String key = entry.getKey();
@@ -97,7 +97,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 			boolean changed = false;
 
 			for (int i = 0; i < args.size(); i++) {
-				String arg = args.get(i);
+				String arg = GradleUtil.toString(args.get(i));
 
 				if (arg.startsWith(key)) {
 					changed = true;

@@ -29,10 +29,6 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="portletName" value="Calendar" />
@@ -66,11 +62,6 @@
 
 	<command name="AddEvent" priority="3">
 		<description message="This is a use case for LPS-52083." />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="page" value="Staging Test Page" />
-			<var name="site" value="Site Name" />
-		</execute>
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 

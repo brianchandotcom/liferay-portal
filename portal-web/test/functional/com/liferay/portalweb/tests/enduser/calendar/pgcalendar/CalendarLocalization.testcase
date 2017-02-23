@@ -16,10 +16,6 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="Calendar Page" />
 			<var name="portletName" value="Calendar" />
@@ -58,10 +54,6 @@
 	<command name="EditLanguageSelectorAndViewEvent" priority="3">
 		<description message="This is a use case for LPS-58649." />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="Calendar Page" />
 			<var name="portletName" value="Language" />
@@ -99,10 +91,6 @@
 
 	<command name="ViewShowMoreLocalization" priority="3">
 		<description message="This is a use case for LPS-54786." />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
 
 		<for list="1,2,3,4,5,6" param="eventNumber">
 			<execute macro="CalendarNavigator#gotoAddEvent" />

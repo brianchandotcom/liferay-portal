@@ -16,10 +16,6 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="Calendar Page" />
 			<var name="portletName" value="Calendar" />
@@ -57,10 +53,6 @@
 
 	<command name="ViewCorrectNumberOfWeeksMonthView" priority="3">
 		<description message="This is a use case for LPS-52517." />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
 
 		<execute macro="Calendar#viewMonth">
 			<var name="dateMonth" value="April 2016" />
@@ -146,10 +138,6 @@
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />

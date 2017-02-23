@@ -16,10 +16,6 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="Calendar Page" />
 			<var name="portletName" value="Calendar" />
@@ -80,10 +76,6 @@
 	</command>
 
 	<command name="ConfigureDisplayTimeZone" priority="5">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="CalendarNavigator#gotoConfiguration" />
 
 		<execute macro="CalendarConfiguration#editTimeZoneUTC" />
@@ -174,10 +166,6 @@
 	</command>
 
 	<command name="ConfigureEventsDisplaySettingsAndViewEvents" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<for list="1,2,3,4,5,6" param="eventNumber">
 			<execute macro="CalendarNavigator#gotoAddEvent" />
 
@@ -234,10 +222,6 @@
 	</command>
 
 	<command name="View24hourTimeFormat" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="CalendarScheduler#viewFirstHour">
 			<var name="firstHour" value="12am" />
 		</execute>
@@ -455,10 +439,6 @@
 
 		<description message="This is a use case for 51127." />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="CalendarNavigator#gotoConfiguration" />
 
 		<execute macro="CalendarConfiguration#selectWeekStartsOn">
@@ -502,10 +482,6 @@
 
 	<command name="ViewWeekStartSaturday" priority="3">
 		<description message="This is a use case for 51127." />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
 
 		<execute macro="CalendarNavigator#gotoConfiguration" />
 

@@ -13,15 +13,9 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Calendar" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Workflow Configuration" />

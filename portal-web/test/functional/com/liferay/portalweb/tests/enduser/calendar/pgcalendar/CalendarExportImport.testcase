@@ -16,10 +16,6 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="Calendar Page" />
 			<var name="portletName" value="Calendar" />
@@ -90,10 +86,6 @@
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
 		</execute>
 
 		<execute macro="Calendar#enableComments">
@@ -182,10 +174,6 @@
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoCurrentSiteCalendarsManage" />

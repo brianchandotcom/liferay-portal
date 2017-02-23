@@ -16,10 +16,6 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="Calendar Page" />
 			<var name="portletName" value="Calendar" />
@@ -56,10 +52,6 @@
 	</tear-down>
 
 	<command name="EditInviteForCalendarResourceCalendar" priority="3">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="CalendarResource#add">
 			<var name="calendarResourceName" value="Calendar Resource Name" />
 		</execute>
@@ -136,10 +128,6 @@
 	</command>
 
 	<command name="EditInviteForMyCalendarsCalendar" priority="3">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="Calendar#add">
 			<var name="calendarName" value="My Calendar Name" />
 			<var name="calendarType" value="My Calendars" />
@@ -214,10 +202,6 @@
 	</command>
 
 	<command name="EditReminderForCalendarResourceCalendar" priority="3">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="CalendarResource#add">
 			<var name="calendarResourceName" value="Calendar Resource Name" />
 		</execute>
@@ -294,10 +278,6 @@
 	</command>
 
 	<command name="EditReminderForMyCalendarsCalendar" priority="3">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="Calendar#add">
 			<var name="calendarName" value="My Calendar Name" />
 			<var name="calendarType" value="My Calendars" />

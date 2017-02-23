@@ -20,29 +20,23 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.ModifiedFacet;
-import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
-import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.search.facet.ModifiedFacetFactory;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
-import com.liferay.portal.search.test.util.AssertUtils;
+import com.liferay.portal.search.test.util.SearchMapUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,44 +56,45 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		_modifiedFacetFactory = registry.getService(ModifiedFacetFactory.class);
+	}
+
 	@Test
 	public void testRanges() throws Exception {
 		Group group = userSearchFixture.addGroup();
 
-		final String keyword = RandomTestUtil.randomString();
+		String keyword = RandomTestUtil.randomString();
 
 		userSearchFixture.addUser(group, keyword);
 
-		final String configRange1 = "[11110101010101 TO 19990101010101]";
-		final String configRange2 = "[19990202020202 TO 22220202020202]";
-		final String customRange = "[11110101010101 TO 22220202020202]";
-
-		final HashMap<String, Integer> frequencies =
-			new HashMap<String, Integer>() {
-				{
-					put(configRange1, 0);
-					put(configRange2, 1);
-					put(customRange, 1);
-				}
-			};
-
 		SearchContext searchContext = getSearchContext(keyword);
 
-		ModifiedFacet modifiedFacet = new ModifiedFacet(searchContext);
+		Facet facet = _modifiedFacetFactory.newInstance(searchContext);
 
-		setConfigurationRanges(modifiedFacet, configRange1, configRange2);
+		String configRange1 = "[11110101010101 TO 19990101010101]";
+		String configRange2 = "[19990202020202 TO 22220202020202]";
+		String customRange = "[11110101010101 TO 22220202020202]";
 
-		setCustomRange(modifiedFacet, searchContext, customRange);
+		setConfigurationRanges(facet, configRange1, configRange2);
 
-		searchContext.addFacet(modifiedFacet);
+		setCustomRange(facet, searchContext, customRange);
 
-		assertRanges(frequencies, modifiedFacet, searchContext);
-	}
+		searchContext.addFacet(facet);
 
-	protected static void assertEquals(
-		Collection<String> expected, Collection<String> actual) {
+		search(searchContext);
 
-		Assert.assertEquals(sort(expected), sort(actual));
+		Map<String, Integer> frequencies = SearchMapUtil.join(
+			toMap(configRange1, 0), toMap(configRange2, 1),
+			toMap(customRange, 1));
+
+		assertFrequencies(facet.getFieldName(), searchContext, frequencies);
 	}
 
 	protected static JSONObject createDataJSONObject(String... ranges)
@@ -132,61 +127,24 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		return searchContext;
 	}
 
-	protected static void setConfigurationRanges(
-			ModifiedFacet modifiedFacet, String... ranges)
+	protected static void setConfigurationRanges(Facet facet, String... ranges)
 		throws Exception {
 
-		FacetConfiguration facetConfiguration =
-			modifiedFacet.getFacetConfiguration();
+		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
 		facetConfiguration.setDataJSONObject(createDataJSONObject(ranges));
 	}
 
 	protected static void setCustomRange(
-		ModifiedFacet modifiedFacet, SearchContext searchContext,
-		String customRange) {
+		Facet facet, SearchContext searchContext, String customRange) {
 
-		searchContext.setAttribute(modifiedFacet.getFieldId(), customRange);
+		searchContext.setAttribute(facet.getFieldId(), customRange);
 	}
 
-	protected static String sort(Collection<String> collection) {
-		List<String> list = new ArrayList<>(collection);
-
-		Collections.sort(list);
-
-		return list.toString();
+	protected static Map<String, Integer> toMap(String key, Integer value) {
+		return Collections.singletonMap(key, value);
 	}
 
-	protected static Map<String, Integer> toMap(
-		List<TermCollector> termCollectors) {
-
-		Map<String, Integer> map = new HashMap<>(termCollectors.size());
-
-		for (TermCollector termCollector : termCollectors) {
-			map.put(termCollector.getTerm(), termCollector.getFrequency());
-		}
-
-		return map;
-	}
-
-	protected void assertRanges(
-			Map<String, Integer> expected, ModifiedFacet modifiedFacet,
-			SearchContext searchContext)
-		throws SearchException {
-
-		FacetedSearcher facetedSearcher = createFacetedSearcher();
-
-		facetedSearcher.search(searchContext);
-
-		Map<String, Facet> facets = searchContext.getFacets();
-
-		Facet facet = facets.get(modifiedFacet.getFieldName());
-
-		FacetCollector facetCollector = facet.getFacetCollector();
-
-		AssertUtils.assertEquals(
-			searchContext.getKeywords(), expected,
-			toMap(facetCollector.getTermCollectors()));
-	}
+	private ModifiedFacetFactory _modifiedFacetFactory;
 
 }

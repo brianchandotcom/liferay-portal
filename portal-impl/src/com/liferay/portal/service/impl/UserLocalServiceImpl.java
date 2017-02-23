@@ -2944,17 +2944,20 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
 		if ((passwordPolicy != null) && passwordPolicy.getExpireable()) {
-			Date now = new Date();
+			long currentTime = System.currentTimeMillis();
 
-			if (user.getPasswordModifiedDate() == null) {
-				user.setPasswordModifiedDate(now);
+			long passwordModifiedTime = 0;
 
-				userLocalService.updateUser(user);
+			Date passwordModifiedDate = user.getPasswordModifiedDate();
+
+			if (passwordModifiedDate == null) {
+				passwordModifiedTime = currentTime;
+			}
+			else {
+				passwordModifiedTime = passwordModifiedDate.getTime();
 			}
 
-			long passwordStartTime = user.getPasswordModifiedDate().getTime();
-
-			long elapsedTime = now.getTime() - passwordStartTime;
+			long elapsedTime = currentTime - passwordModifiedTime;
 
 			if (elapsedTime > (passwordPolicy.getMaxAge() * 1000)) {
 				return true;

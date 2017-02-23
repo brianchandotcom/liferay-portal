@@ -1,0 +1,373 @@
+<definition component-name="portal-calendar">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="custom.properties" value="default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles" />
+	<property name="testray.main.component.name" value="Calendar" />
+
+	<var name="pageName" value="Calendar Page" />
+	<var name="portletName" value="Calendar" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Calendar Page" />
+			<var name="portletName" value="Calendar" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Navigator#gotoPage">
+					<var name="pageName" value="Calendar Page" />
+				</execute>
+
+				<if>
+					<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
+					<then>
+						<execute macro="CalendarEvent#tearDown" />
+					</then>
+				</if>
+
+				<execute macro="Calendar#tearDown" />
+
+				<execute macro="CalendarConfiguration#tearDown" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="EditInviteForCalendarResourceCalendar" priority="3">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarResource#add">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#add">
+			<var name="calendarName" value="Calendar Resource Name" />
+			<var name="calendarType" value="Other Calendars" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#editEmailTemplate">
+			<var name="calendarName" value="Calendar Resource Name" />
+			<var name="calendarType" value="Other Calendars" />
+			<var name="fromAddressEdit" value="testedit@liferay.com" />
+			<var name="fromNameEdit" value="Calendar Resource Name Edit" />
+			<var name="inviteEmail" value="true" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#view">
+			<var name="calendarName" value="Calendar Resource Name" />
+			<var name="calendarType" value="Other Calendars" />
+		</execute>
+	</command>
+
+	<command name="EditInviteForCurrentSiteCalendarsCalendar" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#add">
+			<var name="calendarName" value="Site Calendar Name" />
+			<var name="calendarType" value="Current Site Calendars" />
+			<var name="site" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#editEmailTemplate">
+			<var name="calendarName" value="Site Calendar Name" />
+			<var name="calendarType" value="Current Site Calendars" />
+			<var name="fromAddressEdit" value="testedit@liferay.com" />
+			<var name="fromNameEdit" value="Site Calendar Name Edit" />
+			<var name="inviteEmail" value="true" />
+			<var name="site" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#view">
+			<var name="calendarName" value="Site Calendar Name" />
+			<var name="calendarType" value="Current Site Calendars" />
+			<var name="site" value="${siteName}" />
+		</execute>
+	</command>
+
+	<command name="EditInviteForMyCalendarsCalendar" priority="3">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#add">
+			<var name="calendarName" value="My Calendar Name" />
+			<var name="calendarType" value="My Calendars" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#editEmailTemplate">
+			<var name="calendarName" value="My Calendar Name" />
+			<var name="calendarType" value="My Calendars" />
+			<var name="fromAddressEdit" value="testedit@liferay.com" />
+			<var name="fromNameEdit" value="My Calendar Name Edit" />
+			<var name="inviteEmail" value="true" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#view">
+			<var name="calendarName" value="My Calendar Name" />
+			<var name="calendarType" value="My Calendars" />
+			<var name="user" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="EditInviteForUserCalendar" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#add">
+			<var name="calendarName" value="userfn userln" />
+			<var name="calendarType" value="Other Calendars" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#editEmailTemplate">
+			<var name="calendarName" value="userfn userln" />
+			<var name="calendarType" value="Other Calendars" />
+			<var name="fromAddressEdit" value="testedit@liferay.com" />
+			<var name="fromNameEdit" value="Calendar Resource Name Edit" />
+			<var name="inviteEmail" value="true" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#view">
+			<var name="calendarName" value="userfn userln" />
+			<var name="calendarType" value="Other Calendars" />
+		</execute>
+	</command>
+
+	<command name="EditReminderForCalendarResourceCalendar" priority="3">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarResource#add">
+			<var name="calendarResourceName" value="Calendar Resource Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#add">
+			<var name="calendarName" value="Calendar Resource Name" />
+			<var name="calendarType" value="Other Calendars" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#editEmailTemplate">
+			<var name="calendarName" value="Calendar Resource Name" />
+			<var name="calendarType" value="Other Calendars" />
+			<var name="fromAddressEdit" value="testedit@liferay.com" />
+			<var name="fromNameEdit" value="Calendar Resource Name Edit" />
+			<var name="reminderEmail" value="true" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#view">
+			<var name="calendarName" value="Calendar Resource Name" />
+			<var name="calendarType" value="Other Calendars" />
+		</execute>
+	</command>
+
+	<command name="EditReminderForCurrentSiteCalendarsCalendar" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#add">
+			<var name="calendarName" value="Site Calendar Name" />
+			<var name="calendarType" value="Current Site Calendars" />
+			<var name="site" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#editEmailTemplate">
+			<var name="calendarName" value="Site Calendar Name" />
+			<var name="calendarType" value="Current Site Calendars" />
+			<var name="fromAddressEdit" value="testedit@liferay.com" />
+			<var name="fromNameEdit" value="Site Calendar Name Edit" />
+			<var name="reminderEmail" value="true" />
+			<var name="site" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#view">
+			<var name="calendarName" value="Site Calendar Name" />
+			<var name="calendarType" value="Current Site Calendars" />
+			<var name="site" value="${siteName}" />
+		</execute>
+	</command>
+
+	<command name="EditReminderForMyCalendarsCalendar" priority="3">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#add">
+			<var name="calendarName" value="My Calendar Name" />
+			<var name="calendarType" value="My Calendars" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#editEmailTemplate">
+			<var name="calendarName" value="My Calendar Name" />
+			<var name="calendarType" value="My Calendars" />
+			<var name="fromAddressEdit" value="testedit@liferay.com" />
+			<var name="fromNameEdit" value="My Calendar Name Edit" />
+			<var name="reminderEmail" value="true" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#view">
+			<var name="calendarName" value="My Calendar Name" />
+			<var name="calendarType" value="My Calendars" />
+			<var name="user" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="EditReminderForUserCalendar" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#add">
+			<var name="calendarName" value="userfn userln" />
+			<var name="calendarType" value="Other Calendars" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#editEmailTemplate">
+			<var name="calendarName" value="userfn userln" />
+			<var name="calendarType" value="Other Calendars" />
+			<var name="fromAddressEdit" value="testedit@liferay.com" />
+			<var name="fromNameEdit" value="Calendar Resource Name Edit" />
+			<var name="reminderEmail" value="true" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#view">
+			<var name="calendarName" value="userfn userln" />
+			<var name="calendarType" value="Other Calendars" />
+		</execute>
+	</command>
+</definition>

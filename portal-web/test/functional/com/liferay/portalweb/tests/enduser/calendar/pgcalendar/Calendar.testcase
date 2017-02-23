@@ -69,31 +69,6 @@
 		</if>
 	</tear-down>
 
-	<command name="AddCalendarResource" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#view">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-	</command>
-
 	<command name="AddCalendarToCurrentSiteCalendars" priority="4">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
@@ -1237,37 +1212,6 @@
 		</execute>
 	</command>
 
-	<command name="AddResourceCalendarToOtherCalendars" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-			<var name="calendarType" value="Other Calendars" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#add">
-			<var name="calendarName" value="Calendar Resource Name" />
-			<var name="calendarType" value="Other Calendars" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#view">
-			<var name="calendarName" value="Calendar Resource Name" />
-			<var name="calendarType" value="Other Calendars" />
-		</execute>
-	</command>
-
 	<command name="AddUserCalendarToOtherCalendars" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -1833,34 +1777,6 @@
 		</execute>
 
 		<execute macro="Calendar#viewDefault" />
-	</command>
-
-	<command name="DeleteCalendarResource" priority="4">
-		<var name="calendarResourceName" value="Calendar Resource Name" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="${calendarResourceName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#delete">
-			<var name="calendarResourceName" value="${calendarResourceName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#viewDefault">
-			<var name="calendarResourceName" value="${calendarResourceName}" />
-		</execute>
 	</command>
 
 	<command name="DeleteEventAndViewRSSFeed" priority="3">
@@ -3604,58 +3520,6 @@
 		</execute>
 	</command>
 
-	<command name="SearchCalendarResource" priority="3">
-		<description message="This is a use case for LPS-59743." />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="Room 1" />
-		</execute>
-
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="Car1" />
-		</execute>
-
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="Truck" />
-		</execute>
-
-		<execute macro="CalendarResource#search">
-			<var name="calendarResourceName" value="Room Car " />
-		</execute>
-
-		<execute macro="CalendarResource#viewResourceName">
-			<var name="calendarResourceName" value="Room 1" />
-		</execute>
-
-		<execute macro="CalendarResource#viewResourceName">
-			<var name="calendarResourceName" value="Car1" />
-		</execute>
-
-		<execute macro="CalendarResource#viewResourceNameNotPresent">
-			<var name="calendarResourceName" value="Truck" />
-		</execute>
-
-		<execute macro="CalendarResource#search">
-			<var name="calendarResourceName" value="Room" />
-		</execute>
-
-		<execute macro="CalendarResource#viewResourceName">
-			<var name="calendarResourceName" value="Room 1" />
-		</execute>
-
-		<execute macro="CalendarResource#viewResourceNameNotPresent">
-			<var name="calendarResourceName" value="Car1" />
-		</execute>
-
-		<execute macro="CalendarResource#viewResourceNameNotPresent">
-			<var name="calendarResourceName" value="Truck" />
-		</execute>
-	</command>
-
 	<command name="SearchEventInSearchPortletWithTag" priority="4">
 		<description message="This is a use case for LPS-54548." />
 
@@ -4597,36 +4461,6 @@
 		</execute>
 	</command>
 
-	<command name="ViewEventDateAndTimeInResourcesAvailability" priority="4">
-		<description message="This is a use case for LPS-62410." />
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#gotoConfigureInvitations" />
-
-		<execute macro="CalendarEvent#viewResourcesAvailability" />
-
-		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
-
-		<execute macro="CalendarEvent#selectTimes" >
-			<var name="endDateTime" value="11:00 AM" />
-			<var name="startDateTime" value="08:00 AM" />
-		</execute>
-
-		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
-
-		<execute macro="CalendarEvent#setEndDateTomorrow" />
-
-		<execute macro="CalendarEvent#selectTimes" >
-			<var name="endDateTime" value="07:00 AM" />
-			<var name="startDateTime" value="08:00 AM" />
-		</execute>
-
-		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
-
-		<execute macro="CalendarEvent#publish" />
-	</command>
-
 	<command name="ViewEventDetailsAllDayWithModifiedUserTimeZone" priority="4">
 		<description message="This is a use case for LPS-51783." />
 
@@ -4667,204 +4501,6 @@
 		<execute macro="CalendarEvent#viewTimesViaDetails">
 			<var name="endDateTime" value="11:59 PM" />
 			<var name="startDateTime" value="12:00 AM" />
-		</execute>
-	</command>
-
-	<command name="ViewInactiveResourceNotPresent" priority="2">
-		<description message="This is a use case for LPS-55171." />
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="pageName" value="Calendar Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Calendar Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Calendar" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Calendar Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddResource" />
-
-		<execute macro="CalendarResource#editResourceName">
-			<var name="calendarResourceName" value="Calendar Resource" />
-		</execute>
-
-		<execute macro="CalendarResource#deactivate" />
-
-		<execute macro="CalendarResource#save" />
-
-		<execute macro="CalendarResource#viewDefault" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Calendar Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Calendar#searchOtherCalendars">
-			<var name="searchValue" value="resource" />
-		</execute>
-
-		<execute macro="Calendar#viewOtherCalendarsSearchResultNotPresent">
-			<var name="calendarName" value="Calendar Resource" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#viewInvitationResourceNotPresent">
-			<var name="resourceNameList" value="Calendar Resource" />
-		</execute>
-	</command>
-
-	<command name="ViewInvitedResourceAvailability" priority="3">
-		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesMembers">
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#add">
-			<var name="calendarName" value="userfn userln" />
-			<var name="calendarType" value="Other Calendars" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#view">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="Calendar#add">
-			<var name="calendarName" value="Calendar Resource Name" />
-			<var name="calendarType" value="Other Calendars" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="calendarName" value="userfn userln" />
-			<var name="eventTitle" value="Calendar Event All Day Title" />
-			<var name="eventType" value="Regular" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="inviteResource" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="resourcesAvailability" value="true" />
-			<var name="specificOptionSetValue" value="Test Test,Calendar Resource Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventNumber" value="2" />
-			<var name="eventTitle" value="Calendar Event All Day Title" />
-		</execute>
-	</command>
-
-	<command name="ViewResourceCalendarPageAfterCancellingEdit" priority="2">
-		<description message="This is a use case for LPS-69884." />
-
-		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarResource#add">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoResourceCalendars">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoEditResourceCalendar">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
-		</execute>
-
-		<execute macro="Button#clickCancel" />
-
-		<execute macro="CalendarResource#viewResourceCalendars">
-			<var name="calendarResourceName" value="Calendar Resource Name" />
 		</execute>
 	</command>
 

@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,12 +36,6 @@ import java.sql.ResultSet;
  * @author Alec Shay
  */
 public class UpgradeLayoutType extends UpgradeProcess {
-
-	protected void addPortletPreference(
-		StringBundler portletPreferences, String name, long value) {
-
-		addPortletPreference(portletPreferences, name, "" + value);
-	}
 
 	protected void addPortletPreference(
 		StringBundler portletPreferences, String name, String value) {
@@ -56,7 +52,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 	}
 
 	protected String createPortletPreferences(
-			long companyId, long groupId, long plid, long articleId)
+			long companyId, long groupId, long plid, String articleId)
 		throws Exception {
 
 		String portletId =
@@ -83,7 +79,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		updateLayouts();
 	}
 
-	protected long getArticleIdFromTypeSettings(String typeSettings)
+	protected String getArticleIdFromTypeSettings(String typeSettings)
 		throws Exception {
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
@@ -93,10 +89,10 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		String articleId = typeSettingsProperties.getProperty("article-id");
 
 		if (articleId == null) {
-			return 0;
+			return StringPool.BLANK;
 		}
 
-		return Long.parseLong(articleId);
+		return articleId;
 	}
 
 	protected long getAssetEntryIdForResource(long resourcePrimKey)
@@ -120,10 +116,11 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		return assetEntry.getEntryId();
 	}
 
-	protected String getDefaultPortletPreferences(long groupId, long articleId)
+	protected String getDefaultPortletPreferences(
+			long groupId, String articleId)
 		throws Exception {
 
-		if (articleId == 0) {
+		if (Validator.isNull(articleId)) {
 			return null;
 		}
 
@@ -132,7 +129,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		PreparedStatement ps = connection.prepareStatement(
 			"select resourcePrimKey from JournalArticle where articleId = ?");
 
-		ps.setString(1, "" + articleId);
+		ps.setString(1, articleId);
 
 		try (ResultSet rs = ps.executeQuery()) {
 			while (rs.next()) {
@@ -150,12 +147,14 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		portletPreferences.append("<portlet-preferences>");
 
 		addPortletPreference(portletPreferences, "articleId", articleId);
-		addPortletPreference(portletPreferences, "assetEntryId", assetEntryId);
+		addPortletPreference(
+			portletPreferences, "assetEntryId", Long.toString(assetEntryId));
 		addPortletPreference(
 			portletPreferences, "contentMetadataAssetAddonEntryKeys", "");
 		addPortletPreference(
 			portletPreferences, "enableViewCountIncrement", "true");
-		addPortletPreference(portletPreferences, "groupId", groupId);
+		addPortletPreference(
+			portletPreferences, "groupId", Long.toString(groupId));
 		addPortletPreference(
 			portletPreferences, "userToolAssetAddonEntryKeys", "");
 
@@ -178,7 +177,8 @@ public class UpgradeLayoutType extends UpgradeProcess {
 					long plid = rs.getLong("plid");
 					String typeSettings = rs.getString("typeSettings");
 
-					long articleId = getArticleIdFromTypeSettings(typeSettings);
+					String articleId = getArticleIdFromTypeSettings(
+						typeSettings);
 
 					String portletId = createPortletPreferences(
 						companyId, groupId, plid, articleId);

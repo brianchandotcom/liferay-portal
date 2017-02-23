@@ -62,8 +62,8 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 		return sb.toString();
 	}
 
-	private String _description = StringPool.BLANK;
-	private String _eventListenerClass = StringPool.BLANK;
-	private Trigger _trigger;
+	private volatile String _description = StringPool.BLANK;
+	private volatile String _eventListenerClass = StringPool.BLANK;
+	private volatile Trigger _trigger;
 
 }

@@ -859,8 +859,7 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		return toString(
-			url, checkCache, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
-			timeout);
+			url, checkCache, maxRetries, null, retryPeriod, timeout);
 	}
 
 	public static String toString(

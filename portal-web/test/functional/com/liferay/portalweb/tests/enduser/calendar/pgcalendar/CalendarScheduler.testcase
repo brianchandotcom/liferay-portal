@@ -1,0 +1,250 @@
+<definition component-name="portal-calendar">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="custom.properties" value="default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles" />
+	<property name="testray.main.component.name" value="Calendar" />
+
+	<var name="pageName" value="Calendar Page" />
+	<var name="portletName" value="Calendar" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Calendar Page" />
+			<var name="portletName" value="Calendar" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Navigator#gotoPage">
+					<var name="pageName" value="Calendar Page" />
+				</execute>
+
+				<if>
+					<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
+					<then>
+						<execute macro="CalendarEvent#tearDown" />
+					</then>
+				</if>
+
+				<execute macro="Calendar#tearDown" />
+
+				<execute macro="CalendarConfiguration#tearDown" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="ViewCorrectNumberOfWeeksMonthView" priority="3">
+		<description message="This is a use case for LPS-52517." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#viewMonth">
+			<var name="dateMonth" value="April 2016" />
+		</execute>
+
+		<execute macro="Calendar#viewWeekCountViaMonthView">
+			<var name="weekNumber" value="5" />
+		</execute>
+
+		<execute macro="Calendar#viewMonth">
+			<var name="dateMonth" value="July 2016" />
+		</execute>
+
+		<execute macro="Calendar#viewWeekCountViaMonthView">
+			<var name="weekNumber" value="6" />
+		</execute>
+	</command>
+
+	<command name="ViewDisplayedSiteCalendarEventsAsGuest" priority="3">
+		<description message="This is a use case for LPS-59251." />
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Liferay Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#setTimes">
+			<var name="endDateTime" value="04:00 AM" />
+			<var name="startDateTime" value="03:00 AM" />
+		</execute>
+
+		<execute macro="CalendarEvent#selectCalendar">
+			<var name="calendarName" value="${siteName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Test Test Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#setTimes">
+			<var name="endDateTime" value="09:00 PM" />
+			<var name="startDateTime" value="08:00 PM" />
+		</execute>
+
+		<execute macro="CalendarEvent#selectCalendar">
+			<var name="calendarName" value="Test Test" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewWeek">
+			<var name="eventTitle" value="Liferay Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewWeek">
+			<var name="eventTitle" value="Test Test Calendar Event Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPersonalSite" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Calendar" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewSiteCalendarEventWithDefaultPermissions">
+			<var name="calendarName" value="${siteName}" />
+			<var name="endDateTime" value="04:00 AM" />
+			<var name="eventTitle" value="Liferay Calendar Event Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="startDateTime" value="03:00 AM" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewSiteCalendarEventNotPresent">
+			<var name="endDateTime" value="09:00 PM" />
+			<var name="siteName" value="Test Test" />
+			<var name="startDateTime" value="08:00 PM" />
+		</execute>
+
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Welcome" />
+			<var name="url" value="localhost:8080/web/test" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewSiteCalendarEventWithDefaultPermissions">
+			<var name="calendarName" value="Test Test" />
+			<var name="endDateTime" value="09:00 PM" />
+			<var name="eventTitle" value="Test Test Calendar Event Title" />
+			<var name="siteName" value="Test Test" />
+			<var name="startDateTime" value="08:00 PM" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewSiteCalendarEventNotPresent">
+			<var name="endDateTime" value="04:00 AM" />
+			<var name="siteName" value="${siteName}" />
+			<var name="startDateTime" value="03:00 AM" />
+		</execute>
+	</command>
+
+	<command name="ViewCreatedEventVisibleOnScheduler" priority="2">
+		<description message="This is a use case for LPS-67400." />
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<var locator="CalendarEditEvent#END_DATE_TIME" name="endDateTime" />
+		<var locator="CalendarEditEvent#START_DATE_TIME" name="startDateTime" />
+
+		<execute macro="CalendarEvent#viewTimes">
+			<var name="endDateTime" value="${endDateTime}" />
+			<var name="startDateTime" value="${startDateTime}" />
+		</execute>
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="IFrame#closeFrame" />
+
+		<execute macro="CalendarScheduler#selectSpecificEvent">
+			<var name="eventTitle" value="Calendar Event" />
+		</execute>
+	</command>
+
+	<command name="ViewDefaultDurationsViaScheduler" priority="3">
+		<for list="15,30,60,120" param="minutes">
+			<execute macro="Navigator#gotoPage">
+				<var name="pageName" value="Calendar Page" />
+			</execute>
+
+			<execute macro="CalendarNavigator#gotoConfiguration" />
+
+			<execute macro="CalendarConfiguration#selectDefaultDuration">
+				<var name="defaultDuration" value="${minutes} Minutes" />
+			</execute>
+
+			<execute macro="CalendarConfiguration#save" />
+
+			<execute macro="Navigator#gotoPage">
+				<var name="pageName" value="Calendar Page" />
+			</execute>
+
+			<execute macro="CalendarNavigator#gotoView">
+				<var name="viewType" value="Day" />
+			</execute>
+
+			<execute macro="CalendarEvent#addViaDayView">
+				<var name="eventTitle" value="Calendar Event ${minutes} Minutes Title" />
+			</execute>
+
+			<execute macro="CalendarScheduler#viewEventDuration">
+				<var name="eventTitle" value="Calendar Event ${minutes} Minutes Title" />
+				<var name="minutes" value="${minutes}" />
+			</execute>
+
+			<execute macro="CalendarEvent#tearDown" />
+		</for>
+	</command>
+</definition>

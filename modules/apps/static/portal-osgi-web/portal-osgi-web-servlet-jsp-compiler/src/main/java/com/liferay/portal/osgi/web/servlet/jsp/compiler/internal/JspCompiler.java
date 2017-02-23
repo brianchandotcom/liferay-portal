@@ -184,44 +184,50 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		_classLoader = bundleWiring.getClassLoader();
 
-		for (BundleWire bundleWire : bundleWiring.getRequiredWires(null)) {
-			BundleWiring providedBundleWiring = bundleWire.getProviderWiring();
+		for (Bundle participatingBundle : _allParticipatingBundles) {
+			bundleWiring = participatingBundle.adapt(BundleWiring.class);
 
-			_bundleWiringPackageNames.put(
-				providedBundleWiring,
-				_collectPackageNames(providedBundleWiring));
-		}
+			for (BundleWire bundleWire : bundleWiring.getRequiredWires(null)) {
+				BundleWiring providedBundleWiring =
+					bundleWire.getProviderWiring();
 
-		if (_log.isInfoEnabled()) {
-			StringBundler sb = new StringBundler(
-				_bundleWiringPackageNames.size() * 4 + 6);
-
-			sb.append("JSP compiler for bundle ");
-			sb.append(bundle.getSymbolicName());
-			sb.append(StringPool.DASH);
-			sb.append(bundle.getVersion());
-			sb.append(" has dependent bundle wirings: ");
-
-			for (BundleWiring curBundleWiring :
-					_bundleWiringPackageNames.keySet()) {
-
-				Bundle currentBundle = curBundleWiring.getBundle();
-
-				sb.append(currentBundle.getSymbolicName());
-
-				sb.append(StringPool.DASH);
-				sb.append(currentBundle.getVersion());
-				sb.append(StringPool.COMMA_AND_SPACE);
+				_bundleWiringPackageNames.put(
+					providedBundleWiring,
+					_collectPackageNames(providedBundleWiring));
 			}
 
-			sb.setIndex(sb.index() - 1);
+			if (_log.isInfoEnabled()) {
+				StringBundler sb = new StringBundler(
+					_bundleWiringPackageNames.size() * 4 + 6);
 
-			_log.info(sb.toString());
+				sb.append("JSP compiler for bundle ");
+				sb.append(bundle.getSymbolicName());
+				sb.append(StringPool.DASH);
+				sb.append(bundle.getVersion());
+				sb.append(" has dependent bundle wirings: ");
+
+				for (BundleWiring curBundleWiring :
+						_bundleWiringPackageNames.keySet()) {
+
+					Bundle currentBundle = curBundleWiring.getBundle();
+
+					sb.append(currentBundle.getSymbolicName());
+
+					sb.append(StringPool.DASH);
+					sb.append(currentBundle.getVersion());
+					sb.append(StringPool.COMMA_AND_SPACE);
+
+					sb.setIndex(sb.index() - 1);
+
+					_log.info(sb.toString());
+				}
+			}
+
+			_javaFileObjectResolvers.add(
+				new JspJavaFileObjectResolver(
+					bundleWiring, _jspBundleWiring, _bundleWiringPackageNames,
+					_serviceTracker));
 		}
-
-		_javaFileObjectResolver = new JspJavaFileObjectResolver(
-			bundleWiring, _jspBundleWiring, _bundleWiringPackageNames,
-			_serviceTracker);
 
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
 
@@ -336,7 +342,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			}
 
 			javaFileManager = new BundleJavaFileManager(
-				_classLoader, standardJavaFileManager, _javaFileObjectResolver);
+				_classLoader, standardJavaFileManager,
+				_javaFileObjectResolvers);
 		}
 
 		return super.getJavaFileManager(javaFileManager);
@@ -475,6 +482,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		new HashMap<>(_jspBundleWiringPackageNames);
 	private ClassLoader _classLoader;
 	private final List<File> _classPath = new ArrayList<>();
-	private JavaFileObjectResolver _javaFileObjectResolver;
+	private final List<JavaFileObjectResolver> _javaFileObjectResolvers =
+		new ArrayList<>();
 
 }

@@ -31,6 +31,7 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.tools.ForwardingJavaFileManager;
@@ -51,12 +52,12 @@ public class BundleJavaFileManager
 
 	public BundleJavaFileManager(
 		ClassLoader classLoader, JavaFileManager javaFileManager,
-		JavaFileObjectResolver javaFileObjectResolver) {
+		List<JavaFileObjectResolver> javaFileObjectResolvers) {
 
 		super(javaFileManager);
 
 		_classLoader = classLoader;
-		_javaFileObjectResolver = javaFileObjectResolver;
+		_javaFileObjectResolvers = javaFileObjectResolvers;
 	}
 
 	@Override
@@ -131,11 +132,15 @@ public class BundleJavaFileManager
 		if (!packageName.startsWith("java.") &&
 			(location == StandardLocation.CLASS_PATH)) {
 
-			Collection<JavaFileObject> javaFileObjects =
-				_javaFileObjectResolver.resolveClasses(recurse, packagePath);
+			for (JavaFileObjectResolver javaFileObjectResolver :
+					_javaFileObjectResolvers) {
 
-			if (!javaFileObjects.isEmpty()) {
-				return javaFileObjects;
+				Collection<JavaFileObject> javaFileObjects =
+					javaFileObjectResolver.resolveClasses(recurse, packagePath);
+
+				if (!javaFileObjects.isEmpty()) {
+					return javaFileObjects;
+				}
 			}
 		}
 
@@ -205,6 +210,6 @@ public class BundleJavaFileManager
 	}
 
 	private final ClassLoader _classLoader;
-	private final JavaFileObjectResolver _javaFileObjectResolver;
+	private final List<JavaFileObjectResolver> _javaFileObjectResolvers;
 
 }

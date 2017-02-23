@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.ReaderInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.IOException;
@@ -378,7 +379,7 @@ public class ConfigurationPersistenceManager
 
 			storeInDatabase(pid, dictionary);
 
-			_dictionaries.put(pid, dictionary);
+			_dictionaries.put(pid, _copyDictionary(dictionary));
 		}
 		finally {
 			lock.unlock();
@@ -594,6 +595,21 @@ public class ConfigurationPersistenceManager
 			new StringReader(dictionaryString));
 
 		return ConfigurationHandler.read(inputStream);
+	}
+
+	@SuppressWarnings("rawtypes")
+	private Dictionary<?, ?> _copyDictionary(Dictionary<?, ?> dictionary) {
+		Dictionary newDictionary = new HashMapDictionary();
+
+		Enumeration<?> keys = dictionary.keys();
+
+		while (keys.hasMoreElements()) {
+			Object key = keys.nextElement();
+
+			newDictionary.put(key, dictionary.get(key));
+		}
+
+		return newDictionary;
 	}
 
 	private static final Dictionary<?, ?> _emptyDictionary = new Hashtable<>();

@@ -77,6 +77,12 @@ and the `npm-shrinkwrap.json` file from the project, if present.
 - [LPS-69920]: Remove up-to-date check from all tasks that extend
 `NpmInstallTask`.
 
+## 2.0.0 - 2017-02-23
+
+### Fixed
+- [LPS-69920]: Fix duplicated NPM arguments while retrying `npm install` in case
+of failure.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573

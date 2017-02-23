@@ -1,0 +1,198 @@
+<definition component-name="portal-calendar">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="custom.properties" value="default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles" />
+	<property name="testray.main.component.name" value="Calendar" />
+
+	<var name="pageName" value="Calendar Page" />
+	<var name="portletName" value="Calendar" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Calendar Page" />
+			<var name="portletName" value="Calendar" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Navigator#gotoPage">
+					<var name="pageName" value="Calendar Page" />
+				</execute>
+
+				<if>
+					<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
+					<then>
+						<execute macro="CalendarEvent#tearDown" />
+					</then>
+				</if>
+
+				<execute macro="Calendar#tearDown" />
+
+				<execute macro="CalendarConfiguration#tearDown" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="ExportUserCalendarAsICS" priority="4">
+		<description message="This is a use case for LPS-57992." />
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#add">
+			<var name="calendarName" value="Test Test" />
+			<var name="eventTitle" value="Event For Export" />
+			<var name="eventType" value="Regular" />
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoMyCalendarsManage" />
+
+		<execute macro="Calendar#exportCalendarFile">
+			<var name="calendarName" value="Test Test" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#view">
+			<var name="eventTitle" value="Event For Export" />
+		</execute>
+	</command>
+
+	<command name="ImportMicrosoftOutlookCalendarICS" priority="4">
+		<description message="This is a use case for LPS-53072." />
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoCurrentSiteCalendarsManage" />
+
+		<execute macro="Calendar#importCalendarFile">
+			<var name="calendarFile" value="calendar_microsoft_outlook_calendar.ics" />
+			<var name="calendarName" value="${siteName}" />
+		</execute>
+	</command>
+
+	<command name="ImportCalendarAndViewEventComment" priority="5">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#enableComments">
+			<var name="calendarName" value="${siteName}" />
+			<var name="calendarType" value="Current Site Calendars" />
+			<var name="site" value="${siteName}" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#add">
+			<var name="calendarName" value="${siteName}" />
+			<var name="eventComment" value="Calendar Event Regular Comment" />
+			<var name="eventCommentEnabled" value="true" />
+			<var name="eventTitle" value="Calendar Event Regular Title" />
+			<var name="eventType" value="Regular" />
+			<var name="pageName" value="Calendar Page" />
+			<var name="site" value="${siteName}" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewComment">
+			<var name="calendarName" value="${siteName}" />
+			<var name="eventComment" value="Calendar Event Regular Comment" />
+			<var name="eventTitle" value="Calendar Event Regular Title" />
+			<var name="eventType" value="Regular" />
+			<var name="site" value="${siteName}" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="LAR#exportPortlet">
+			<var name="larFileName" value="calendar_calendar_with_comments.portlet.lar" />
+			<var name="portletName" value="Calendar" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#tearDown" />
+
+		<execute macro="Calendar#tearDown" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="calendar_calendar_with_comments.portlet.lar" />
+			<var name="portletName" value="Calendar" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#view">
+			<var name="eventTitle" value="Calendar Event Regular Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewComment">
+			<var name="calendarName" value="${siteName}" />
+			<var name="eventComment" value="Calendar Event Regular Comment" />
+			<var name="eventTitle" value="Calendar Event Regular Title" />
+			<var name="eventType" value="Regular" />
+			<var name="user" value="Test Test" />
+		</execute>
+	</command>
+</definition>

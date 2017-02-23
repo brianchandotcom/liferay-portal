@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Petra Salesforce Client
+Bundle-SymbolicName: com.liferay.petra.salesforce.client
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.petra.salesforce.client,\
+	com.liferay.petra.salesforce.client.bulk,\
+	com.liferay.petra.salesforce.client.partner,\
+	com.liferay.petra.salesforce.client.streaming

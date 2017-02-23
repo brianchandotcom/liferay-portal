@@ -1572,7 +1572,9 @@
 	<command name="viewCompareVersions">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="WCViewHistory#COMPARE_VERSIONS" value1="${version}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${version}" />
+		</execute>
 
 		<execute function="SelectFrameTop" />
 

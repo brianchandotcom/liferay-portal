@@ -1,0 +1,27 @@
+dependencies {
+	compileInclude group: "com.force.api", name: "force-apex-api", version: "39.0.0"
+	compileInclude group: "com.force.api", name: "force-metadata-api", version: "39.0.0"
+	compileInclude group: "com.force.api", name: "force-partner-api", version: "39.0.0"
+	compileInclude group: "com.force.api", name: "force-wsc", version: "39.0.0"
+	compileInclude group: "org.cometd.java", name: "bayeux-api", version: "2.3.1"
+	compileInclude group: "org.cometd.java", name: "cometd-java-client", version: "2.3.1"
+	compileInclude group: "org.cometd.java", name: "cometd-java-common", version: "2.3.1"
+	compileInclude group: "org.eclipse.jetty", name: "jetty-client", version: "7.4.4.v20110707"
+	compileInclude group: "org.eclipse.jetty", name: "jetty-http", version: "7.4.4.v20110707"
+	compileInclude group: "org.eclipse.jetty", name: "jetty-io", version: "7.4.4.v20110707"
+	compileInclude group: "org.eclipse.jetty", name: "jetty-util", version: "7.4.4.v20110707"
+	compileInclude group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
+
+	provided group: "antlr", name: "antlr", version: "2.7.7"
+	provided group: "commons-beanutils", name: "commons-beanutils", version: "1.7.0"
+	provided group: "commons-logging", name: "commons-logging", version: "1.0.3"
+	provided group: "org.antlr", name: "ST4", version: "4.0.7"
+	provided group: "org.antlr", name: "antlr-runtime", version: "3.5"
+	provided group: "org.antlr", name: "stringtemplate", version: "3.2.1"
+	provided group: "org.codehaus.jackson", name: "jackson-core-asl", version: "1.9.13"
+	provided group: "org.codehaus.jackson", name: "jackson-mapper-asl", version: "1.9.13"
+}
+
+liferayOSGi {
+	expandCompileInclude = true
+}

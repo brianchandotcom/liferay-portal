@@ -318,26 +318,6 @@
 					<arg value="-Dbuild.profile=${build.profile}" />
 					<env key="WAS_HOME" value="${app.server.websphere.dir}" />
 				</gradle-execute>
-
-				<if>
-					<equals arg1="${jsp.precompile}" arg2="on" />
-					<then>
-						<if>
-							<equals arg1="${jsp.precompile.parallel}" arg2="on" />
-							<then>
-								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-									<arg value="--parallel" />
-									<arg value="-Dbuild.profile=${build.profile}" />
-								</gradle-execute>
-							</then>
-							<else>
-								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-									<arg value="-Dbuild.profile=${build.profile}" />
-								</gradle-execute>
-							</else>
-						</if>
-					</then>
-				</if>
 			</then>
 			<else>
 				<gradle-execute dir="${project.dir}/modules/core" task="deploy">
@@ -367,27 +347,27 @@
 						</gradle-execute>
 					</else>
 				</if>
-
-				<if>
-					<equals arg1="${jsp.precompile}" arg2="on" />
-					<then>
-						<if>
-							<equals arg1="${jsp.precompile.parallel}" arg2="on" />
-							<then>
-								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-									<arg value="--parallel" />
-									<arg value="-Dbuild.profile=${build.profile}" />
-								</gradle-execute>
-							</then>
-							<else>
-								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-									<arg value="-Dbuild.profile=${build.profile}" />
-								</gradle-execute>
-							</else>
-						</if>
-					</then>
-				</if>
 			</else>
+		</if>
+
+		<if>
+			<equals arg1="${jsp.precompile}" arg2="on" />
+			<then>
+				<if>
+					<equals arg1="${jsp.precompile.parallel}" arg2="on" />
+					<then>
+						<gradle-execute dir="${project.dir}/modules" task="compileJSP">
+							<arg value="--parallel" />
+							<arg value="-Dbuild.profile=${build.profile}" />
+						</gradle-execute>
+					</then>
+					<else>
+						<gradle-execute dir="${project.dir}/modules" task="compileJSP">
+							<arg value="-Dbuild.profile=${build.profile}" />
+						</gradle-execute>
+					</else>
+				</if>
+			</then>
 		</if>
 
 		<if>

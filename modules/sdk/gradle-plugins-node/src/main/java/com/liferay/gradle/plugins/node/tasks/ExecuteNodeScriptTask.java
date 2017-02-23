@@ -50,15 +50,17 @@ public class ExecuteNodeScriptTask extends ExecuteNodeTask {
 	protected List<String> getCompleteArgs() {
 		File scriptFile = getScriptFile();
 
+		List<String> args = GradleUtil.toStringList(getArgs());
+
 		if (scriptFile == null) {
-			return getArgs();
+			return args;
 		}
 
 		List<String> completeArgs = new ArrayList<>();
 
 		completeArgs.add(FileUtil.getAbsolutePath(scriptFile));
 
-		completeArgs.addAll(getArgs());
+		completeArgs.addAll(args);
 
 		return completeArgs;
 	}

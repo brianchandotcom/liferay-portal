@@ -16,6 +16,7 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -77,6 +78,24 @@ public class LayoutServiceTest {
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(), friendlyURLMap, layout.getIconImage(), null,
 			serviceContext);
+	}
+
+	@Test
+	public void testUpdateLayoutLookAndFeel() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		long userId = layout.getUserId();
+
+		layout = LayoutLocalServiceUtil.updateLookAndFeel(
+			_group.getGroupId(), false, layout.getLayoutId(),
+			"test_WAR_testtheme", "01", StringPool.BLANK);
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		layoutTypePortlet.setLayoutTemplateId(userId, "1_column", false);
+
+		layout = LayoutLocalServiceUtil.updateLayout(layout);
 	}
 
 	@DeleteAfterTestRun

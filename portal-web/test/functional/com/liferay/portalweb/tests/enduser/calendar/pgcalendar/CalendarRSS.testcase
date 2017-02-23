@@ -1,0 +1,235 @@
+<definition component-name="portal-calendar">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="custom.properties" value="default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles" />
+	<property name="testray.main.component.name" value="Calendar" />
+
+	<var name="pageName" value="Calendar Page" />
+	<var name="portletName" value="Calendar" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Calendar Page" />
+			<var name="portletName" value="Calendar" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Current Day Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#setTimes">
+			<var name="endDateTime" value="11:59 PM" />
+			<var name="startDateTime" value="11:58 PM" />
+		</execute>
+
+		<execute macro="CalendarEvent#setDatesToday" />
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Navigator#gotoPage">
+					<var name="pageName" value="Calendar Page" />
+				</execute>
+
+				<if>
+					<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
+					<then>
+						<execute macro="CalendarEvent#tearDown" />
+					</then>
+				</if>
+
+				<execute macro="Calendar#tearDown" />
+
+				<execute macro="CalendarConfiguration#tearDown" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="DeleteEventAndViewFeed" priority="3">
+		<description message="This is a use case for LPS-67928." />
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
+			<var name="menuListOption" value="RSS" />
+			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Calendar#viewRSSFeedEventPresent">
+			<var name="calendarName" value="${siteName}" />
+			<var name="eventTitle" value="Current Day Event" />
+			<var name="pageName" value="Calendar Page" />
+			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#closeWindow" />
+
+		<execute macro="CalendarEvent#tearDown" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
+			<var name="menuListOption" value="RSS" />
+			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Calendar#viewRSSFeedEventNotPresent">
+			<var name="calendarName" value="${siteName}" />
+			<var name="eventTitle" value="Current Day Event" />
+			<var name="pageName" value="Calendar Page" />
+			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#closeWindow" />
+	</command>
+
+	<command name="DisableFeedForSiteCalendar" priority="3">
+		<description message="This is a use case for LPS-67928." />
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
+			<var name="menuListOption" value="RSS" />
+			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Calendar#viewRSSFeedEventPresent">
+			<var name="calendarName" value="${siteName}" />
+			<var name="eventTitle" value="Current Day Event" />
+			<var name="pageName" value="Calendar Page" />
+			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<var method="selenium#getLocation()" name="rssURL" />
+
+		<execute macro="Navigator#closeWindow" />
+
+		<execute macro="CalendarNavigator#gotoConfiguration" />
+
+		<execute macro="CalendarConfiguration#enableRSS" />
+
+		<execute macro="CalendarConfiguration#viewRSSOptionsDisabled" />
+
+		<execute macro="CalendarConfiguration#save" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#viewSiteCalendarNoMenulistOption">
+			<var name="menuListOption" value="RSS" />
+			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Calendar#viewNoRSS">
+			<var name="rssURL" value="${rssURL}" />
+		</execute>
+	</command>
+
+	<command name="ViewSiteCalendarFeed" priority="5">
+		<description message="This is a use case for LPS-67928." />
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoPreviousDay" />
+
+		<execute macro="CalendarEvent#addViaDayView">
+			<var name="eventTitle" value="Previous Day Event" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoNextDay" />
+
+		<execute macro="CalendarNavigator#gotoNextDay" />
+
+		<execute macro="CalendarEvent#addViaDayView">
+			<var name="eventTitle" value="Future Day Event" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
+			<var name="menuListOption" value="RSS" />
+			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Calendar#viewRSSFeedEventNotPresent">
+			<var name="calendarName" value="${siteName}" />
+			<var name="eventTitle" value="Past Day Event" />
+			<var name="pageName" value="Calendar Page" />
+			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Calendar#viewRSSFeedEventPresent">
+			<var name="calendarName" value="${siteName}" />
+			<var name="eventTitle" value="Current Day Event" />
+			<var name="pageName" value="Calendar Page" />
+			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Calendar#viewRSSFeedEventPresent">
+			<var name="calendarName" value="${siteName}" />
+			<var name="eventTitle" value="Future Day Event" />
+			<var name="pageName" value="Calendar Page" />
+			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#closeWindow" />
+	</command>
+</definition>

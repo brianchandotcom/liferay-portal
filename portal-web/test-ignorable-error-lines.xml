@@ -189,7 +189,7 @@
 			<matches>.*ServerAdminPortlet\_tabs1\=resources generates exception.*NullPointerException.*</matches>
 		</ignore-error>
 		<ignore-error description="LPS-70839">
-			<contains>[com.liferay.saml.opensaml.integration.internal.bootstrap.OpenSamlBootstrap([0-9]+)]</contains>
+			<contains>[com.liferay.saml.opensaml.integration.internal.bootstrap.OpenSamlBootstrap\([0-9]+\)]</contains>
 			<matches>.*The activate method has thrown an exception.*</matches>
 		</ignore-error>
 		<ignore-error description="LRQA-14442, temporary workaround until Kiyoshi Lee fixes it">

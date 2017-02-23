@@ -1393,6 +1393,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return 0;
 		}
 
+		user = _checkPasswordPolicy(user);
+
 		if (!PropsValues.BASIC_AUTH_PASSWORD_REQUIRED) {
 			return user.getUserId();
 		}
@@ -1466,6 +1468,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (!isUserAllowedToAuthenticate(user)) {
 			return 0;
 		}
+
+		user = _checkPasswordPolicy(user);
 
 		// Verify digest
 
@@ -5782,6 +5786,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return Authenticator.FAILURE;
 		}
 
+		user = _checkPasswordPolicy(user);
+
 		if (!user.isPasswordEncrypted()) {
 			user.setPassword(PasswordEncryptorUtil.encrypt(user.getPassword()));
 			user.setPasswordEncrypted(true);
@@ -6179,17 +6185,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 
 			return false;
-		}
-
-		// Check password policy to see if the is account locked out or if the
-		// password is expired
-
-		if (!LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
-			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
-
-			doCheckLockout(user, passwordPolicy);
-
-			doCheckPasswordExpired(user, passwordPolicy);
 		}
 
 		return true;
@@ -6970,6 +6965,22 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	@BeanReference(type = MailService.class)
 	protected MailService mailService;
+
+	private User _checkPasswordPolicy(User user) throws PortalException {
+
+		// Check password policy to see if the is account locked out or if the
+		// password is expired
+
+		if (!LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
+			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+			doCheckLockout(user, passwordPolicy);
+
+			doCheckPasswordExpired(user, passwordPolicy);
+		}
+
+		return user;
+	}
 
 	private void _sendNotificationEmail(
 			String fromAddress, String fromName, String toAddress, User toUser,

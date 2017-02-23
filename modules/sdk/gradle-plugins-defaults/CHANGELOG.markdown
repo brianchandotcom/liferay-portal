@@ -1091,7 +1091,7 @@ project with the `install` and `uploadArchives` tasks.
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 3.2.7.
 
-## 3.0.0 - 2017-02-22
+## 3.0.0 - 2017-02-23
 
 ### Changed
 - [LPS-63943]: Refactor and rename `PrintArtifactPublishCommandsTask` class to

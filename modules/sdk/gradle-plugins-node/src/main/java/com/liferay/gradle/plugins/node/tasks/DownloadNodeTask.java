@@ -63,7 +63,7 @@ public class DownloadNodeTask extends DefaultTask {
 		final File nodeDir = getNodeDir();
 		final Project project = getProject();
 
-		final File nodeFile = FileUtil.get(project, getNodeUrl());
+		final File nodeFile = _download(getNodeUrl(), null);
 
 		project.delete(nodeDir);
 
@@ -83,7 +83,7 @@ public class DownloadNodeTask extends DefaultTask {
 		if (OSDetector.isWindows()) {
 			File nodeBinDir = new File(getNodeDir(), "bin");
 
-			FileUtil.get(project, getNodeExeUrl(), nodeBinDir);
+			_download(getNodeExeUrl(), nodeBinDir);
 		}
 	}
 
@@ -112,6 +112,12 @@ public class DownloadNodeTask extends DefaultTask {
 
 	public void setNodeUrl(Object nodeUrl) {
 		_nodeUrl = nodeUrl;
+	}
+
+	private File _download(String url, File destinationFile)
+		throws IOException {
+
+		return FileUtil.get(getProject(), url, destinationFile);
 	}
 
 	private final NodeExecutor _nodeExecutor;

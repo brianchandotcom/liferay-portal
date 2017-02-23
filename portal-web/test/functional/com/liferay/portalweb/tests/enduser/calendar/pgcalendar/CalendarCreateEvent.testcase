@@ -20,8 +20,6 @@
 			<var name="pageName" value="Calendar Page" />
 			<var name="portletName" value="Calendar" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
 	</set-up>
 
 	<tear-down>

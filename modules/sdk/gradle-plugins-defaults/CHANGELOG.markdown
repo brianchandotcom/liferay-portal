@@ -1100,8 +1100,8 @@ it to `WriteArtifactPublishCommandsTask`. Executing
 `build/artifacts-publish-commands/artifacts-publish-commands.sh` with the
 following commands for all publishable subprojects:
 	- `gradlew baseline` (failing when semantic versioning errors are detected).
-	- `gradlew baseline` (ignoring semantic versioning errors) and Git commands to
-	commit the files modified by the `baseline` task.
+	- `gradlew baseline` (ignoring semantic versioning errors) and Git commands
+	to commit the files modified by the `baseline` task.
 	- the publish commands returned by the previous version of the plugin.
 - [LPS-63943]: Rename the `printArtifactPublishCommands` task to
 `writeArtifactPublishCommands`.

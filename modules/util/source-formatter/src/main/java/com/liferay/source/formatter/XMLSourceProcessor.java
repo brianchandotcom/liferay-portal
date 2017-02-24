@@ -480,7 +480,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				 (!portalSource && !subrepository &&
 				  fileName.endsWith("/web.xml"))) {
 
-			newContent = newContent = formatWebXML(fileName, newContent);
+			newContent = formatWebXML(fileName, newContent);
 		}
 
 		newContent = sortAttributes(fileName, newContent);

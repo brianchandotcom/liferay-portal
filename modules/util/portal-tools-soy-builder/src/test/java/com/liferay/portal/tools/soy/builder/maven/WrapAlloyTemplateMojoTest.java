@@ -45,7 +45,7 @@ public class WrapAlloyTemplateMojoTest extends WrapAlloyTemplateCommandTest {
 		_preparePomXml(projectDir, dir, moduleName, namespace);
 
 		MavenExecutor.Result result = mavenExecutor.execute(
-			projectDir, "liferay-soy:wrap-alloy-template");
+			projectDir, "soy-builder:wrap-alloy-template");
 
 		Assert.assertEquals(result.output, 0, result.exitCode);
 	}

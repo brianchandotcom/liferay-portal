@@ -85,7 +85,7 @@ public class ExecuteNodeTask extends DefaultTask {
 		}
 	}
 
-	public List<String> getArgs() {
+	public List<Object> getArgs() {
 		return _nodeExecutor.getArgs();
 	}
 

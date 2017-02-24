@@ -8,5 +8,4 @@ Export-Package:\
 	com.liferay.message.boards.web.trash
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Message Boards
-Require-Capability: osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /message-boards-web

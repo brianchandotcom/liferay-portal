@@ -26,7 +26,7 @@ import org.apache.maven.plugin.MojoExecutionException;
  * Builds the WSDD files.
  *
  * @author Andrea Di Giorgi
- * @goal build-wsdd
+ * @goal build
  */
 public class BuildWSDDMojo extends AbstractMojo {
 

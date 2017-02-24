@@ -28,7 +28,7 @@ import org.apache.maven.plugin.MojoExecutionException;
  * Formats Liferay sources.
  *
  * @author Raymond Augé
- * @goal format-source
+ * @goal format
  */
 public class FormatSourceMojo extends AbstractMojo {
 

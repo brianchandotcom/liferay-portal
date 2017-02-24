@@ -7,13 +7,13 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.source.formatter</artifactId>
-	<version>1.0.358</version>
-	<goalPrefix>liferay</goalPrefix>
+	<version>1.0.359</version>
+	<goalPrefix>source-formatter</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>
 	<mojos>
 		<mojo>
-			<goal>format-source</goal>
+			<goal>format</goal>
 			<description>Formats Liferay sources.</description>
 			<requiresDirectInvocation>false</requiresDirectInvocation>
 			<requiresProject>true</requiresProject>

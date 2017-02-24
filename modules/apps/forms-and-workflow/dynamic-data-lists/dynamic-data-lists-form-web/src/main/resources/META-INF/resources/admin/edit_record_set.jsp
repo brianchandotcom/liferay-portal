@@ -61,6 +61,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		<aui:input name="serializedSettingsDDMFormValues" type="hidden" value="" />
 
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
+
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.MustNotDuplicateFieldName.class %>">
 
 			<%

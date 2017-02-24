@@ -22,6 +22,7 @@
 
 <aui:form action="<%= openIdConnectURL %>" method="post" name="fm">
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
+
 	<aui:select label="openid-connect-provider-name" name="<%= OpenIdConnectWebKeys.OPEN_ID_CONNECT_PROVIDER_NAME %>">
 
 		<%

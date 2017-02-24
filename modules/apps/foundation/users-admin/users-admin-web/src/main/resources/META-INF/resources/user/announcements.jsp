@@ -55,14 +55,17 @@ else {
 			name="type"
 			value="<%= LanguageUtil.get(request, delivery.getType()) %>"
 		/>
+
 		<liferay-ui:search-container-column-jsp
 			name="email"
 			path="/user/announcements_checkbox.jsp"
 		/>
+
 		<liferay-ui:search-container-column-jsp
 			name="sms"
 			path="/user/announcements_checkbox.jsp"
 		/>
+
 		<liferay-ui:search-container-column-jsp
 			name="website"
 			path="/user/announcements_checkbox.jsp"

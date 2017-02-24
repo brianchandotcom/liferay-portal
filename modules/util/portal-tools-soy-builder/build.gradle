@@ -8,7 +8,7 @@ buildPluginDescriptor {
 	finalizedBy formatSource
 	finalizedBy formatXML
 
-	goalPrefix = "liferay-soy"
+	goalPrefix = "soy-builder"
 }
 
 configurations {

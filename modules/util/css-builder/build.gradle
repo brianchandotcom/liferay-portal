@@ -15,7 +15,7 @@ buildPluginDescriptor {
 	finalizedBy formatSource
 	finalizedBy formatXML
 
-	goalPrefix = "liferay-css"
+	goalPrefix = "css-builder"
 }
 
 copyPortalCommonCSSJar {

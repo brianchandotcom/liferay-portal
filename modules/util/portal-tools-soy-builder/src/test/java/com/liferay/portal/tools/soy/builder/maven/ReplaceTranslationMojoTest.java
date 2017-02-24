@@ -46,7 +46,7 @@ public class ReplaceTranslationMojoTest extends ReplaceTranslationCommandTest {
 		_preparePomXml(projectDir, dir);
 
 		MavenExecutor.Result result = mavenExecutor.execute(
-			projectDir, "liferay-soy:replace-translation");
+			projectDir, "soy-builder:replace-translation");
 
 		Assert.assertEquals(result.output, 0, result.exitCode);
 	}

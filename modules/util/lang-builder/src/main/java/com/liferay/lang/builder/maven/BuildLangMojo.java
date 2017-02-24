@@ -26,7 +26,7 @@ import org.apache.maven.plugin.MojoExecutionException;
  * Builds language property files.
  *
  * @author Andrea Di Giorgi
- * @goal build-lang
+ * @goal build
  */
 public class BuildLangMojo extends AbstractMojo {
 

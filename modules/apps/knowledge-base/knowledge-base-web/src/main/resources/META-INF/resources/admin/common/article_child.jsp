@@ -50,7 +50,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 						<%
 						PortletURL viewKBArticleURL = null;
 
-						if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
+						if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) || rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION) || rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SEARCH)) {
 							viewKBArticleURL = kbArticleURLHelper.createViewWithRedirectURL(childrenKBArticle, currentURL);
 						}
 						else {

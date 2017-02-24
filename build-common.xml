@@ -671,6 +671,7 @@ Error-Prone was automatically installed. Please rerun your task.
 		<attribute default="${basedir}" name="dir" />
 		<attribute default="true" name="failonerror" />
 		<attribute default="true" name="forcedcacheenabled" />
+		<attribute default="" name="outputproperty" />
 		<attribute name="task" />
 		<element implicit="true" name="args" optional="true" />
 
@@ -697,6 +698,7 @@ Error-Prone was automatically installed. Please rerun your task.
 				<arg value="-Dliferay.home=${liferay.home}" />
 				<arg value="@{task}" />
 				<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
+				<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
 			</exec>
 		</sequential>
 	</macrodef>

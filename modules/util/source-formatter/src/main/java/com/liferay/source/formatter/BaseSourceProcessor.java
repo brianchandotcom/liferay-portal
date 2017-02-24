@@ -971,6 +971,30 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 		}
 
+		matcher = _missingEmptyLineBetweenTagsPattern1.matcher(content);
+
+		while (matcher.find()) {
+			String tabs1 = matcher.group(1);
+			String tabs2 = matcher.group(2);
+
+			if (tabs1.equals(tabs2)) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.end(1));
+			}
+		}
+
+		matcher = _missingEmptyLineBetweenTagsPattern2.matcher(content);
+
+		while (matcher.find()) {
+			String tabs1 = matcher.group(1);
+			String tabs2 = matcher.group(2);
+
+			if (tabs1.equals(tabs2)) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.end(1));
+			}
+		}
+
 		return content;
 	}
 
@@ -3246,6 +3270,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private SourceMismatchException _firstSourceMismatchException;
 	private Set<String> _immutableFieldTypes;
 	private ComparableVersion _mainReleaseComparableVersion;
+	private final Pattern _missingEmptyLineBetweenTagsPattern1 =
+		Pattern.compile("\n(\t*)/>\n(\t*)<[-\\w:]+[> \n]");
+	private final Pattern _missingEmptyLineBetweenTagsPattern2 =
+		Pattern.compile(
+			"\n(\t*)<.* />\n(\t*)<([-\\w:]+|\\w((?!</| />).)*[^/]>)\n");
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private final Map<String, Properties> _moduleLangLanguageProperties =

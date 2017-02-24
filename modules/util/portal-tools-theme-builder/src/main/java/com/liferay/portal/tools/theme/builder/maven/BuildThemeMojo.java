@@ -42,7 +42,7 @@ import org.eclipse.aether.resolution.ArtifactResult;
  * Build a theme.
  *
  * @author Andrea Di Giorgi
- * @goal build-theme
+ * @goal build
  */
 public class BuildThemeMojo extends AbstractMojo {
 

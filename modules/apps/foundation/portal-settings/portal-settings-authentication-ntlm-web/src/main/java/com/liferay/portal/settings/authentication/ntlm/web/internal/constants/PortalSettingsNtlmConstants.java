@@ -19,6 +19,6 @@ package com.liferay.portal.settings.authentication.ntlm.web.internal.constants;
  */
 public class PortalSettingsNtlmConstants {
 
-	public static final String PARAMETER_NAMESPACE = "ntlm_";
+	public static final String FORM_PARAMETER_NAMESPACE = "ntlm_";
 
 }

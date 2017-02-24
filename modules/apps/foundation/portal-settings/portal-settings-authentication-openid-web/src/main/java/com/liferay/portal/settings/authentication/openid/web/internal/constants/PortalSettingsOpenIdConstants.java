@@ -19,6 +19,6 @@ package com.liferay.portal.settings.authentication.openid.web.internal.constants
  */
 public class PortalSettingsOpenIdConstants {
 
-	public static final String PARAMETER_NAMESPACE = "openid_";
+	public static final String FORM_PARAMETER_NAMESPACE = "openid_";
 
 }

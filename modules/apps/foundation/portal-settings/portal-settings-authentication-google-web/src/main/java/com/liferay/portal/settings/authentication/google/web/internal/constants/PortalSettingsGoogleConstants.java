@@ -19,6 +19,6 @@ package com.liferay.portal.settings.authentication.google.web.internal.constants
  */
 public class PortalSettingsGoogleConstants {
 
-	public static final String PARAMETER_NAMESPACE = "google_";
+	public static final String FORM_PARAMETER_NAMESPACE = "google_";
 
 }

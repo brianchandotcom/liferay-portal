@@ -30,7 +30,7 @@ import org.apache.maven.settings.Proxy;
  * @author David Truong
  * @author Andrea Di Giorgi
  */
-@Mojo(inheritByDefault = false, name = "init-bundle")
+@Mojo(inheritByDefault = false, name = "init")
 public class InitBundleMojo extends AbstractBundleMojo {
 
 	@Override

@@ -34,7 +34,7 @@ import org.apache.maven.project.MavenProject;
 /**
  * @author David Truong
  */
-@Mojo(name = "dist-bundle")
+@Mojo(name = "dist")
 public class DistBundleMojo extends AbstractBundleMojo {
 
 	@Override

@@ -24,7 +24,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 
 /**
  * @author Andrea Di Giorgi
- * @goal build-deployment-helper
+ * @goal build
  */
 public class BuildDeploymentHelperMojo extends AbstractMojo {
 

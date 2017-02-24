@@ -9,7 +9,7 @@ buildPluginDescriptor {
 	finalizedBy formatXML
 
 	forcedExclusions "com.ibm.icu:icu4j:2.6.1"
-	goalPrefix = "liferay"
+	goalPrefix = "service-builder"
 }
 
 dependencies {

@@ -30,7 +30,7 @@ import org.apache.maven.plugin.MojoExecutionException;
  * Builds Liferay Service Builder services.
  *
  * @author Raymond Augé
- * @goal build-service
+ * @goal build
  */
 public class BuildServiceMojo extends AbstractMojo {
 

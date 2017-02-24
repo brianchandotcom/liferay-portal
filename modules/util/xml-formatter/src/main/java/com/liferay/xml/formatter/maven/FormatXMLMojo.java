@@ -26,7 +26,7 @@ import org.apache.maven.plugin.MojoExecutionException;
  * Invoke Liferay XML Formatter to format files.
  *
  * @author Andrea Di Giorgi
- * @goal format-xml
+ * @goal format
  */
 public class FormatXMLMojo extends AbstractMojo {
 

@@ -30,7 +30,7 @@ import org.apache.maven.plugin.MojoExecutionException;
  * Invoke Liferay TLD Formatter to format files.
  *
  * @author Andrea Di Giorgi
- * @goal format-tld
+ * @goal format
  */
 public class FormatTLDMojo extends AbstractMojo {
 

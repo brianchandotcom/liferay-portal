@@ -475,6 +475,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				 fileName.endsWith("/tiles-defs.xml")) {
 			formatTilesDefsXML(fileName, newContent);
 		}
+		else if (fileName.endsWith(".toggle")) {
+			newContent = formatToggleXML(fileName, newContent);
+		}
 		else if (((portalSource || subrepository) &&
 				  fileName.endsWith("portal-web/docroot/WEB-INF/web.xml")) ||
 				 (!portalSource && !subrepository &&
@@ -1179,6 +1182,18 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return fixEmptyLinesBetweenTags(content, true);
 	}
 
+	protected String formatToggleXML(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		checkOrder(
+			fileName, document.getRootElement(), "toggle", null,
+			new ElementComparator());
+
+		return fixEmptyLinesBetweenTags(content, false);
+	}
+
 	protected String formatWebXML(String fileName, String content)
 		throws Exception {
 
@@ -1622,7 +1637,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {
 		"**/*.action", "**/*.function", "**/*.jrxml", "**/*.macro",
-		"**/*.testcase", "**/*.xml"
+		"**/*.testcase", "**/*.toggle", "**/*.xml"
 	};
 
 	private static final String _NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES =

@@ -38,9 +38,9 @@ String onChangeMethod = (String)request.getAttribute("liferay-ui:input-editor:on
 String onFocusMethod = (String)request.getAttribute("liferay-ui:input-editor:onFocusMethod");
 String onInitMethod = (String)request.getAttribute("liferay-ui:input-editor:onInitMethod");
 String placeholder = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:placeholder"));
+String required = (String)request.getAttribute("liferay-ui:input-editor:required");
 boolean showSource = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:showSource"));
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
-String required = (String)request.getAttribute("liferay-ui:input-editor:required");
 
 JSONObject editorConfigJSONObject = null;
 

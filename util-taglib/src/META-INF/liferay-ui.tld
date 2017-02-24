@@ -1913,15 +1913,15 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the field for the input editor is resizable. The default value is <![CDATA[<code>true</code>]]>.</description>
-			<name>resizable</name>
+			<description>Whether the field for the input editor is required. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>required</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether the field for the input editor is required. The default value is <![CDATA[<code>false</code>]]>.</description>
-			<name>required</name>
+			<description>Whether the field for the input editor is resizable. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<name>resizable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>

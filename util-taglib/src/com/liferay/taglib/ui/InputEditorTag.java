@@ -38,6 +38,7 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.taglib.BaseValidatorTagSupport;
 import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
@@ -61,7 +62,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Brian Wing Shun Chan
  */
-public class InputEditorTag extends com.liferay.taglib.BaseValidatorTagSupport {
+public class InputEditorTag extends BaseValidatorTagSupport {
 
 	public static Editor getEditor(
 		HttpServletRequest request, String editorName) {

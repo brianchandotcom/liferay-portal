@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
+import com.liferay.portal.kernel.search.facet.MultiValueFacetFactory;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
 import com.liferay.portal.search.web.facet.SearchFacet;
@@ -115,5 +117,13 @@ public class UserSearchFacet extends BaseJSPSearchFacet {
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Override
+	protected FacetFactory getFacetFactory() {
+		return multiValueFacetFactory;
+	}
+
+	@Reference
+	protected MultiValueFacetFactory multiValueFacetFactory;
 
 }

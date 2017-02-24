@@ -13,6 +13,7 @@ buildscript {
 task buildFixPackChangeLog(type: BuildChangeLogTask)
 task cleanReleng
 task cleanVersionOverride
+task printDependencyPath
 task setUpLibs
 task setUpPortalTools
 task wrapper(type: Wrapper)
@@ -81,6 +82,20 @@ cleanVersionOverride {
 		delete bndBndFileTree.collect {
 			new File(gitRepoDir.parentFile, ".version-override-${it.parentFile.name}.properties")
 		}
+	}
+}
+
+printDependencyPath {
+	doLast {
+		assert project.properties["dependencyNotation"] : "Please provide a value for the '-PdependencyNotation' property"
+
+		Dependency dependency = dependencies.create dependencyNotation
+
+		Configuration configuration = configurations.detachedConfiguration dependency
+
+		configuration.transitive = false
+
+		println configuration.singleFile
 	}
 }
 

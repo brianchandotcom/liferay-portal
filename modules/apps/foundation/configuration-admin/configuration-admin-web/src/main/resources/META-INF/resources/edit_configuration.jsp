@@ -53,8 +53,6 @@ renderResponse.setTitle(configurationModelName);
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="factoryPid" type="hidden" value="<%= configurationModel.getFactoryPid() %>" />
 		<aui:input name="pid" type="hidden" value="<%= configurationModel.getID() %>" />
-		<aui:input name="availableLanguageIds" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
-		<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
 
 		<div class="lfr-ddm-container" id="lfr-ddm-container">
 			<aui:fieldset-group>

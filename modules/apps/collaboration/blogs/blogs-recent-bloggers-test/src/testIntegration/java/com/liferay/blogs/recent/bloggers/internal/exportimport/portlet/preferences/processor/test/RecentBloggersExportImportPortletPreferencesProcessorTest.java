@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.blogs.internal.exportimport.portlet.preferences.processor.test;
+package com.liferay.blogs.recent.bloggers.internal.exportimport.portlet.preferences.processor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.util.test.ExportImportTestUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -34,9 +33,6 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -45,15 +41,7 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -71,7 +59,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
+public class RecentBloggersExportImportPortletPreferencesProcessorTest {
 
 	@ClassRule
 	@Rule
@@ -89,7 +77,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 		sb.append("(&(objectClass=");
 		sb.append(ExportImportPortletPreferencesProcessor.class.getName());
 		sb.append(")(javax.portlet.name=");
-		sb.append(BlogsPortletKeys.BLOGS_AGGREGATOR);
+		sb.append(RecentBloggersPortletKeys.RECENT_BLOGGERS);
 		sb.append("))");
 
 		Filter filter = registry.getFilter(sb.toString());
@@ -114,7 +102,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 
 		LayoutTestUtil.addPortletToLayout(
 			TestPropsValues.getUserId(), _layout,
-			BlogsPortletKeys.BLOGS_AGGREGATOR, "column-1",
+			RecentBloggersPortletKeys.RECENT_BLOGGERS, "column-1",
 			new HashMap<String, String[]>());
 
 		_organization = OrganizationTestUtil.addOrganization();
@@ -124,21 +112,21 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 				_group.getGroupId());
 
 		_portletDataContextExport.setPortletId(
-			BlogsPortletKeys.BLOGS_AGGREGATOR);
+			RecentBloggersPortletKeys.RECENT_BLOGGERS);
 
 		_portletDataContextImport =
 			ExportImportTestUtil.getImportPortletDataContext(
 				_group.getGroupId());
 
 		_portletDataContextImport.setPortletId(
-			BlogsPortletKeys.BLOGS_AGGREGATOR);
+			RecentBloggersPortletKeys.RECENT_BLOGGERS);
 	}
 
 	@Test
 	public void testProcessOrganizationId() throws Exception {
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				_layout, BlogsPortletKeys.BLOGS_AGGREGATOR);
+				_layout, RecentBloggersPortletKeys.RECENT_BLOGGERS);
 
 		long organizationId = _organization.getOrganizationId();
 
@@ -161,8 +149,8 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 
 		Assert.assertEquals(_organization.getUuid(), exportedOrganizationId);
 
-		// Update organization to have a different primary key. We will swap
-		// to the new one and verify it.
+		// Update organization to have a different primary key - we will swap
+		// to the new one and we'll  verify it
 
 		OrganizationLocalServiceUtil.deleteOrganization(
 			_organization.getOrganizationId());
@@ -173,7 +161,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 
 		OrganizationLocalServiceUtil.updateOrganization(_organization);
 
-		// Test the import
+		// Test the import part
 
 		PortletPreferences importedPortletPreferences =
 			blogsAggregatorPortletPreferencesProcessor.
@@ -202,88 +190,5 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;
-
-	private class DummyUserIdStrategy implements UserIdStrategy {
-
-		@Override
-		public long getUserId(String s) {
-			try {
-				return TestPropsValues.getUserId();
-			}
-			catch (Exception e) {
-				return 0;
-			}
-		}
-
-	}
-
-	private class TestReaderWriter implements ZipReader, ZipWriter {
-
-		@Override
-		public void addEntry(String name, byte[] bytes) throws IOException {
-		}
-
-		@Override
-		public void addEntry(String name, InputStream inputStream)
-			throws IOException {
-		}
-
-		@Override
-		public void addEntry(String name, String s) throws IOException {
-			_entries.put(name, s);
-		}
-
-		@Override
-		public void addEntry(String name, StringBuilder sb) throws IOException {
-			_entries.put(name, sb.toString());
-		}
-
-		@Override
-		public void close() {
-		}
-
-		@Override
-		public byte[] finish() throws IOException {
-			return new byte[0];
-		}
-
-		@Override
-		public List<String> getEntries() {
-			return new ArrayList<>(_entries.keySet());
-		}
-
-		@Override
-		public byte[] getEntryAsByteArray(String name) {
-			return new byte[0];
-		}
-
-		@Override
-		public InputStream getEntryAsInputStream(String name) {
-			return null;
-		}
-
-		@Override
-		public String getEntryAsString(String name) {
-			return _entries.get(name);
-		}
-
-		@Override
-		public File getFile() {
-			return null;
-		}
-
-		@Override
-		public List<String> getFolderEntries(String name) {
-			return Collections.emptyList();
-		}
-
-		@Override
-		public String getPath() {
-			return StringPool.BLANK;
-		}
-
-		private final Map<String, String> _entries = new HashMap<>();
-
-	}
 
 }

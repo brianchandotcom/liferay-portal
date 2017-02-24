@@ -48,7 +48,7 @@ public class BuildThemeMojoTest extends ThemeBuilderTest {
 			templateExtension, unstyledDir);
 
 		MavenExecutor.Result result = mavenExecutor.execute(
-			projectDir, "liferay-theme:build-theme");
+			projectDir, "theme-builder:build");
 
 		Assert.assertEquals(result.output, 0, result.exitCode);
 	}

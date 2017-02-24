@@ -232,6 +232,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String DEPLOY_TOOL_TASK_NAME = "deployTool";
 
+	public static final String DOWNLOAD_COMPILED_JSP_TASK_NAME =
+		"downloadCompiledJSP";
+
 	public static final String INSTALL_CACHE_TASK_NAME = "installCache";
 
 	public static final String JAR_JAVADOC_TASK_NAME = "jarJavadoc";
@@ -853,6 +856,43 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		return copy;
+	}
+
+	private Copy _addTaskDownloadCompiledJSP(
+		JavaCompile compileJSPTask, Properties artifactProperties) {
+
+		final String artifactJspcURL = artifactProperties.getProperty(
+			"artifact.jspc.url");
+
+		if (Validator.isNull(artifactJspcURL)) {
+			return null;
+		}
+
+		final Project project = compileJSPTask.getProject();
+
+		Copy copy = GradleUtil.addTask(
+			project, DOWNLOAD_COMPILED_JSP_TASK_NAME, Copy.class);
+
+		copy.exclude("META-INF/MANIFEST.MF");
+
+		copy.from(
+			new Callable<FileTree>() {
+
+				@Override
+				public FileTree call() throws Exception {
+					File file = FileUtil.get(project, artifactJspcURL);
+
+					return project.zipTree(file);
+				}
+
+			});
+
+		copy.setDescription(
+			"Downloads the latest compiled JSP classes for this project.");
+		copy.setDestinationDir(compileJSPTask.getDestinationDir());
+		copy.setIncludeEmptyDirs(false);
 
 		return copy;
 	}
@@ -2450,6 +2490,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
 			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
 
+		Properties artifactProperties = null;
 		String dirName = null;
 
 		TaskContainer taskContainer = project.getTasks();
@@ -2464,10 +2505,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			File artifactPropertiesFile = recordArtifactTask.getOutputFile();
 
 			if (artifactPropertiesFile.exists()) {
-				Properties properties = GUtil.loadProperties(
+				artifactProperties = GUtil.loadProperties(
 					artifactPropertiesFile);
 
-				artifactURL = properties.getProperty("artifact.url");
+				artifactURL = artifactProperties.getProperty("artifact.url");
 			}
 
 			if (Validator.isNotNull(artifactURL)) {
@@ -2488,6 +2529,19 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			liferayExtension.getLiferayHome(), "work/" + dirName);
 
 		javaCompile.setDestinationDir(dir);
+
+		boolean jspPrecompileFromSource = GradleUtil.getProperty(
+			project, "jsp.precompile.from.source", true);
+
+		if (!jspPrecompileFromSource && (artifactProperties != null)) {
+			Copy copy = _addTaskDownloadCompiledJSP(
+				javaCompile, artifactProperties);
+
+			if (copy != null) {
+				javaCompile.deleteAllActions();
+				javaCompile.setDependsOn(Collections.singleton(copy));
+			}
+		}
 	}
 
 	private void _configureTaskDeploy(

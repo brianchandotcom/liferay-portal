@@ -89,8 +89,8 @@ the `liferay.workspace.modules.jsp.precompile.enabled` property in
 - [LPS-70677]: Update the [Liferay Gradle Plugins] dependency to version 3.2.5.
 
 ### Fixed
-- [LPS-67573]: Move all the properties available in the
-`gradle.liferayWorkspace` extension object into public API.
+- [LPS-67573]: Move all properties available in the `gradle.liferayWorkspace`
+extension object into the public API.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

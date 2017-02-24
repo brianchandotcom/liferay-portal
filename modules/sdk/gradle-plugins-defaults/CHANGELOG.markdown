@@ -1094,16 +1094,16 @@ project with the `install` and `uploadArchives` tasks.
 ## 3.0.0 - 2017-02-23
 
 ### Changed
-- [LPS-63943]: Refactor and rename `PrintArtifactPublishCommandsTask` class to
-`WriteArtifactPublishCommandsTask`. Executing
-`gradlew writeArtifactPublishCommands` in a parent directory causes the file
-`build/artifacts-publish-commands/artifacts-publish-commands.sh` to be generated
-with the following commands for all publishable subprojects:
-	- `gradlew baseline`
-	- `gradlew baseline` and Git commands to commit the files modified by the
-	`baseline` task
-	- the publish commands returned by the previous version of the plugin
-- [LPS-63943]: Rename `printArtifactPublishCommands` task to
+- [LPS-63943]: Refactor the `PrintArtifactPublishCommandsTask` class and rename
+it to `WriteArtifactPublishCommandsTask`. Executing
+`gradlew writeArtifactPublishCommands` in a parent directory generates the file
+`build/artifacts-publish-commands/artifacts-publish-commands.sh` with the
+following commands for all publishable subprojects:
+	- `gradlew baseline` (failing when semantic versioning errors are detected).
+	- `gradlew baseline` (ignoring semantic versioning errors) and Git commands to
+	commit the files modified by the `baseline` task.
+	- the publish commands returned by the previous version of the plugin.
+- [LPS-63943]: Rename the `printArtifactPublishCommands` task to
 `writeArtifactPublishCommands`.
 
 ## 3.0.1 - 2017-02-24

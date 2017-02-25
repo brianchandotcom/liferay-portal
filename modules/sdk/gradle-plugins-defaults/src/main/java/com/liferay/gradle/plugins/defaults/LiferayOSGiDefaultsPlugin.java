@@ -1737,6 +1737,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		final Logger logger = project.getLogger();
 
+		GradleInternal gradleInternal = (GradleInternal)project.getGradle();
+
+		ServiceRegistry serviceRegistry = gradleInternal.getServices();
+
+		final ProjectConfigurer projectConfigurer = serviceRegistry.get(
+			ProjectConfigurer.class);
+
 		final Configuration configuration = GradleUtil.getConfiguration(
 			project, JspCPlugin.CONFIGURATION_NAME);
 
@@ -1769,6 +1776,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 									project, taglibProject, group, name,
 									externalModuleDependency.getVersion());
 							}
+
+							projectConfigurer.configure(
+								(ProjectInternal)taglibProject);
 
 							GradleUtil.substituteModuleDependencyWithProject(
 								configuration, externalModuleDependency,

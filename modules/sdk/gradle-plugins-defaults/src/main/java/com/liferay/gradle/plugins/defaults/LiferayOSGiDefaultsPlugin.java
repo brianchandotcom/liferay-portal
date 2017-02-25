@@ -119,14 +119,13 @@ import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.DependencySubstitutions;
 import org.gradle.api.artifacts.DependencySubstitutions.Substitution;
+import org.gradle.api.artifacts.ExcludeRule;
 import org.gradle.api.artifacts.ExternalDependency;
 import org.gradle.api.artifacts.ExternalModuleDependency;
 import org.gradle.api.artifacts.ModuleDependency;
-import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.ResolvableDependencies;
@@ -1751,53 +1750,46 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				public void execute(
 					ExternalModuleDependency externalModuleDependency) {
 
-					if (_isTaglibDependency(externalModuleDependency)) {
+					String group = externalModuleDependency.getGroup();
+					String name = externalModuleDependency.getName();
+
+					if (_isTaglibDependency(group, name)) {
+						String projectName = name.substring(12);
+
+						projectName = projectName.replace('.', '-');
+
+						Project taglibProject = GradleUtil.getProject(
+							project.getRootProject(), projectName);
+
+						if (taglibProject != null) {
+							if (logger.isLifecycleEnabled()) {
+								logger.lifecycle(
+									"Compiling JSP files of {} with {} as " +
+										"dependency in place of '{}:{}:{}'",
+									project, taglibProject, group, name,
+									externalModuleDependency.getVersion());
+							}
+
+							GradleUtil.substituteModuleDependencyWithProject(
+								configuration, externalModuleDependency,
+								taglibProject);
+						}
+						else {
+							Map<String, String> args = new HashMap<>();
+
+							args.put("group", group);
+							args.put("module", name);
+
+							configuration.exclude(args);
+						}
+					}
+					else if (_isUtilTaglibDependency(group, name)) {
 						Map<String, String> args = new HashMap<>();
 
-						args.put("group", externalModuleDependency.getGroup());
-						args.put("module", externalModuleDependency.getName());
+						args.put("group", group);
+						args.put("module", name);
 
 						configuration.exclude(args);
-					}
-				}
-
-			});
-
-		ResolutionStrategy resolutionStrategy =
-			configuration.getResolutionStrategy();
-
-		resolutionStrategy.eachDependency(
-			new Action<DependencyResolveDetails>() {
-
-				@Override
-				public void execute(
-					DependencyResolveDetails dependencyResolveDetails) {
-
-					ModuleVersionSelector moduleVersionSelector =
-						dependencyResolveDetails.getRequested();
-
-					String group = moduleVersionSelector.getGroup();
-					String name = moduleVersionSelector.getName();
-
-					if (group.equals("com.liferay.portal") &&
-						name.equals("com.liferay.util.taglib")) {
-
-						String version = liferayExtension.getDefaultVersion(
-							moduleVersionSelector);
-
-						dependencyResolveDetails.useVersion(version);
-
-						if (logger.isLifecycleEnabled()) {
-							File file = GradleUtil.getMavenLocalFile(
-								project, group, name,
-								moduleVersionSelector.getVersion());
-
-							logger.lifecycle(
-								"Compiling JSP files of {} with {} as " +
-									"dependency in place of '{}:{}:{}'",
-								project, file.getAbsolutePath(), group, name,
-								moduleVersionSelector.getVersion());
-						}
 					}
 				}
 
@@ -1813,45 +1805,51 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				public void execute(
 					ResolvableDependencies resolvableDependencies) {
 
-					DependencySet dependencySet =
-						resolvableDependencies.getDependencies();
+					for (ExcludeRule excludeRule :
+							configuration.getExcludeRules()) {
 
-					for (ExternalModuleDependency externalModuleDependency :
-							dependencySet.withType(
-								ExternalModuleDependency.class)) {
-
-						if (!_isTaglibDependency(externalModuleDependency)) {
-							continue;
-						}
+						String group = excludeRule.getGroup();
+						String name = excludeRule.getModule();
 
 						File file;
 
-						File osgiDir = new File(
-							liferayExtension.getLiferayHome(), "osgi");
-						String fileName =
-							externalModuleDependency.getName() + ".jar";
+						if (_isTaglibDependency(group, name)) {
+							File dir = new File(
+								liferayExtension.getLiferayHome(), "osgi");
+							String fileName = name + ".jar";
 
-						try {
-							file = FileUtil.findFile(osgiDir, fileName);
-						}
-						catch (IOException ioe) {
-							throw new UncheckedIOException(ioe);
-						}
+							try {
+								file = FileUtil.findFile(dir, fileName);
+							}
+							catch (IOException ioe) {
+								throw new UncheckedIOException(ioe);
+							}
 
-						if (file == null) {
-							throw new GradleException(
-								"Unable to find " + fileName + " in " +
-									osgiDir);
+							if (file == null) {
+								throw new GradleException(
+									"Unable to find " + fileName + " in " +
+										dir);
+							}
+						}
+						else if (_isUtilTaglibDependency(group, name)) {
+							file = new File(
+								liferayExtension.getAppServerPortalDir(),
+								"WEB-INF/lib/util-taglib.jar");
+
+							if (!file.exists()) {
+								throw new GradleException(
+									"Unable to find " + file);
+							}
+						}
+						else {
+							return;
 						}
 
 						if (logger.isLifecycleEnabled()) {
 							logger.lifecycle(
 								"Compiling JSP files of {} with {} as " +
-									"dependency in place of '{}:{}:{}'",
-								project, file.getAbsolutePath(),
-								externalModuleDependency.getGroup(),
-								externalModuleDependency.getName(),
-								externalModuleDependency.getVersion());
+									"dependency in place of '{}:{}'",
+								project, file.getAbsolutePath(), group, name);
 						}
 
 						GradleUtil.addDependency(
@@ -3531,14 +3529,19 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return false;
 	}
 
-	private boolean _isTaglibDependency(
-		ExternalModuleDependency externalModuleDependency) {
-
-		String group = externalModuleDependency.getGroup();
-		String name = externalModuleDependency.getName();
-
+	private boolean _isTaglibDependency(String group, String name) {
 		if (group.equals("com.liferay") && name.startsWith("com.liferay.") &&
 			name.contains(".taglib")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isUtilTaglibDependency(String group, String name) {
+		if (group.equals("com.liferay.portal") &&
+			name.equals("com.liferay.util.taglib")) {
 
 			return true;
 		}

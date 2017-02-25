@@ -35,6 +35,12 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.ArtifactRepositoryContainer;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySubstitutions;
+import org.gradle.api.artifacts.DependencySubstitutions.Substitution;
+import org.gradle.api.artifacts.ModuleVersionSelector;
+import org.gradle.api.artifacts.ResolutionStrategy;
+import org.gradle.api.artifacts.component.ComponentSelector;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
@@ -294,12 +300,49 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		}
 	}
 
+	public static void substituteModuleDependencyWithProject(
+		Configuration configuration,
+		ModuleVersionSelector moduleVersionSelector, Project project) {
+
+		ResolutionStrategy resolutionStrategy =
+			configuration.getResolutionStrategy();
+
+		DependencySubstitutions dependencySubstitutions =
+			resolutionStrategy.getDependencySubstitution();
+
+		ComponentSelector moduleComponentSelector =
+			dependencySubstitutions.module(
+				_getDependencyNotation(moduleVersionSelector));
+
+		Substitution substitution = dependencySubstitutions.substitute(
+			moduleComponentSelector);
+
+		ComponentSelector projectComponentSelector =
+			dependencySubstitutions.project(project.getPath());
+
+		substitution.with(projectComponentSelector);
+	}
+
 	public static <P extends Plugin<? extends Project>> void withPlugin(
 		Project project, Class<P> pluginClass, Action<P> action) {
 
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withType(pluginClass, action);
+	}
+
+	private static String _getDependencyNotation(
+		ModuleVersionSelector moduleVersionSelector) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(moduleVersionSelector.getGroup());
+		sb.append(':');
+		sb.append(moduleVersionSelector.getName());
+		sb.append(':');
+		sb.append(moduleVersionSelector.getVersion());
+
+		return sb.toString();
 	}
 
 	private static File _getMavenLocalDir(Project project) {

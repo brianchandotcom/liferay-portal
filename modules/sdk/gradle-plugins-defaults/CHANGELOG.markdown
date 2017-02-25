@@ -1117,6 +1117,15 @@ OSGi project.
 ### Changed
 - [LPS-70870]: Update the [Liferay Gradle Plugins] dependency to version 3.2.8.
 
+## 3.1.1 - 2017-02-24
+
+### Changed
+- [LPS-70170]: Change dependency replacements in the `jspC` configuration:
+	- always use the deployed `util-taglib.jar` file; fail if not found.
+	- substitute module taglib dependencies with project dependencies if found,
+	falling back to the deployed JAR file; fail if neither the project or the
+	deployed JAR file are found.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

@@ -1025,6 +1025,8 @@ public interface PropsKeys {
 
 	public static final String JSONWS_WEB_SERVICE_STRICT_HTTP_METHOD = "jsonws.web.service.strict.http.method";
 
+	public static final String JSP_PAGECONTEXT_FORCE_GET_ATTRIBUTE = "jsp.pagecontext.force.get.attribute";
+
 	public static final String JSP_WRITER_BUFFER_SIZE = "jsp.writer.buffer.size";
 
 	public static final String LAYOUT_AJAX_RENDER_ENABLE = "layout.ajax.render.enable";

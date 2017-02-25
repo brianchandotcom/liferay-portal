@@ -15,6 +15,9 @@
 package com.liferay.taglib.servlet;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.taglib.BodyContentWrapper;
 
 import java.io.IOException;
@@ -48,6 +51,10 @@ public class PageContextWrapper extends PageContext {
 
 	@Override
 	public Object findAttribute(String name) {
+		if (_JSP_PAGECONTEXT_FORCE_GET_ATTRIBUTE) {
+			return _pageContext.getAttribute(name);
+		}
+
 		return _pageContext.findAttribute(name);
 	}
 
@@ -234,6 +241,10 @@ public class PageContextWrapper extends PageContext {
 	public void setAttribute(String name, Object value, int scope) {
 		_pageContext.setAttribute(name, value, scope);
 	}
+
+	private static final boolean _JSP_PAGECONTEXT_FORCE_GET_ATTRIBUTE =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.JSP_PAGECONTEXT_FORCE_GET_ATTRIBUTE));
 
 	private final PageContext _pageContext;
 

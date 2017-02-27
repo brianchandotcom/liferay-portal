@@ -53,6 +53,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -72,8 +73,9 @@ import org.apache.commons.lang.time.StopWatch;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.encryption.StandardDecryptionMaterial;
+import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 
 /**
  * @author Alexander Chow
@@ -645,26 +647,21 @@ public class PDFProcessorImpl
 	private void _generateImagesPB(FileVersion fileVersion, File file)
 		throws Exception {
 
-		int previewFilesCount = 0;
-
 		String tempFileId = DLUtil.getTempFileId(
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
 		File decryptedFile = getDecryptedTempFile(tempFileId);
 		File thumbnailFile = getThumbnailTempFile(tempFileId);
 
-		try (PDDocument pdDocument = PDDocument.load(file)) {
-			if (!_isDocumentDecrypted(pdDocument)) {
-				_log.error(
-					"Unable to decrypt PDF document for file version " +
-						fileVersion.getFileVersionId());
+		int previewFilesCount = _getDecryptedNumberOfPagesCount(
+			file, decryptedFile);
 
-				return;
-			}
+		if (previewFilesCount == 0) {
+			_log.error(
+				"Unable to decrypt PDF document for file version " +
+					fileVersion.getFileVersionId());
 
-			pdDocument.save(decryptedFile);
-
-			previewFilesCount = pdDocument.getNumberOfPages();
+			return;
 		}
 
 		File[] previewFiles = new File[previewFilesCount];
@@ -856,22 +853,46 @@ public class PDFProcessorImpl
 		}
 	}
 
+	private int _getDecryptedNumberOfPagesCount(
+		File encryptedFile, File decryptedFile) {
+
+		String[] decryptPasswords = ArrayUtil.append(
+			PropsValues.
+				DL_FILE_ENTRY_PREVIEW_GENERATION_DECRYPT_PASSWORDS_PDFBOX,
+			StringPool.BLANK);
+
+		for (String decryptPassword : decryptPasswords) {
+			try (PDDocument pdDocument =
+					PDDocument.load(encryptedFile, decryptPassword)) {
+
+				pdDocument.setAllSecurityToBeRemoved(true);
+
+				pdDocument.save(decryptedFile);
+
+				return pdDocument.getNumberOfPages();
+			}
+			catch (IOException ioe) {
+				if (!(ioe instanceof InvalidPasswordException)) {
+					_log.error(ioe, ioe);
+				}
+			}
+		}
+
+		return 0;
+	}
+
 	private Map<String, Integer> _getScaledDimensions(File file)
 		throws Exception {
 
-		PDDocument pdDocument = null;
-
-		try {
+		try (PDDocument pdDocument = PDDocument.load(file)) {
 			Map<String, Integer> scaledDimensions = new HashMap<>();
-
-			pdDocument = PDDocument.load(file);
 
 			PDDocumentCatalog pdDocumentCatalog =
 				pdDocument.getDocumentCatalog();
 
-			List<PDPage> pdPages = pdDocumentCatalog.getAllPages();
+			PDPageTree pages = pdDocumentCatalog.getPages();
 
-			PDPage pdPage = pdPages.get(0);
+			PDPage pdPage = pages.get(0);
 
 			PDRectangle pdRectangle = pdPage.getMediaBox();
 
@@ -897,11 +918,6 @@ public class PDFProcessorImpl
 
 			return scaledDimensions;
 		}
-		finally {
-			if (pdDocument != null) {
-				pdDocument.close();
-			}
-		}
 	}
 
 	private boolean _hasImages(FileVersion fileVersion) throws Exception {
@@ -912,35 +928,6 @@ public class PDFProcessorImpl
 		}
 
 		return hasThumbnails(fileVersion);
-	}
-
-	private boolean _isDocumentDecrypted(PDDocument pdDocument) {
-		if (!pdDocument.isEncrypted()) {
-			return true;
-		}
-
-		String[] decryptPasswords = ArrayUtil.append(
-			PropsValues.
-				DL_FILE_ENTRY_PREVIEW_GENERATION_DECRYPT_PASSWORDS_PDFBOX,
-			StringPool.BLANK);
-
-		for (String decryptPassword : decryptPasswords) {
-			StandardDecryptionMaterial standardDecryptionMaterial =
-				new StandardDecryptionMaterial(decryptPassword);
-
-			try {
-				pdDocument.openProtection(standardDecryptionMaterial);
-
-				pdDocument.setAllSecurityToBeRemoved(true);
-
-				return true;
-			}
-			catch (Exception e) {
-				continue;
-			}
-		}
-
-		return false;
 	}
 
 	private boolean _isGeneratePreview(FileVersion fileVersion)

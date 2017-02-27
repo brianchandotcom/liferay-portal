@@ -359,6 +359,7 @@
 				<classpath mode="compile">lib/portal/commons-digester.jar</classpath>
 				<classpath mode="compile">lib/portal/commons-discovery.jar</classpath>
 				<classpath mode="compile">lib/portal/commons-email.jar</classpath>
+				<classpath mode="compile">lib/portal/commons-exec.jar</classpath>
 				<classpath mode="compile">lib/portal/commons-fileupload.jar</classpath>
 				<classpath mode="compile">lib/portal/commons-httpclient.jar</classpath>
 				<classpath mode="compile">lib/portal/commons-io.jar</classpath>
@@ -450,6 +451,7 @@
 				<classpath mode="compile">lib/portal/rdffilter.jar</classpath>
 				<classpath mode="compile">lib/portal/ridl.jar</classpath>
 				<classpath mode="compile">lib/portal/rome.jar</classpath>
+				<classpath mode="compile">lib/portal/rometools.jar</classpath>
 				<classpath mode="compile">lib/portal/saaj-api.jar</classpath>
 				<classpath mode="compile">lib/portal/saaj-impl.jar</classpath>
 				<classpath mode="compile">lib/portal/scribe.jar</classpath>

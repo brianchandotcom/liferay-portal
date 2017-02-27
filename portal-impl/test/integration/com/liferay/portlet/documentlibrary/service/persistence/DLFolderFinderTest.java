@@ -113,8 +113,8 @@ public class DLFolderFinderTest {
 			serviceContext);
 
 		addFileEntry(
-			_group.getGroupId(), _folder.getFolderId(), "FE2.pdf",
-			ContentTypes.APPLICATION_PDF);
+			_group.getGroupId(), _folder.getFolderId(), "FE2.html",
+			ContentTypes.TEXT_HTML);
 
 		fileEntry = addFileEntry(
 			_group.getGroupId(), _folder.getFolderId(), "FE3.txt",
@@ -162,8 +162,7 @@ public class DLFolderFinderTest {
 			2,
 			DLFolderFinderUtil.filterCountF_FE_FS_ByG_F_M_M(
 				_group.getGroupId(), _folder.getFolderId(),
-				new String[] {ContentTypes.APPLICATION_PDF}, false,
-				queryDefinition));
+				new String[] {ContentTypes.TEXT_HTML}, false, queryDefinition));
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
@@ -275,7 +274,7 @@ public class DLFolderFinderTest {
 			1,
 			DLFolderFinderUtil.filterCountFE_FS_ByG_F_M(
 				_group.getGroupId(), _folder.getFolderId(),
-				new String[] {ContentTypes.APPLICATION_PDF}, queryDefinition));
+				new String[] {ContentTypes.TEXT_HTML}, queryDefinition));
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 

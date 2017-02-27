@@ -65,7 +65,6 @@ import java.util.concurrent.Future;
 import org.apache.commons.compress.archivers.zip.UnsupportedZipFeatureException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.pdfbox.exceptions.CryptographyException;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.tika.Tika;
 import org.apache.tika.config.TikaConfig;
@@ -423,8 +422,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		catch (Throwable t) {
 			Throwable throwable = ExceptionUtils.getRootCause(t);
 
-			if (throwable instanceof CryptographyException ||
-				throwable instanceof EncryptedDocumentException ||
+			if (throwable instanceof EncryptedDocumentException ||
 				throwable instanceof UnsupportedZipFeatureException) {
 
 				if (_log.isWarnEnabled()) {

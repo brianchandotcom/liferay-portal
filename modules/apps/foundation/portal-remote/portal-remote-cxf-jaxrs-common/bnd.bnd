@@ -1,12 +1,6 @@
 Bundle-Name: Liferay Portal Remote CXF JAX-RS Common
 Bundle-SymbolicName: com.liferay.portal.remote.cxf.jaxrs.common
 Bundle-Version: 3.0.2
-Export-Package:\
-	javax.json.*,\
-	\
-	javax.ws.rs.*,\
-	\
-	org.apache.cxf.jaxrs.*
 Fragment-Host: com.liferay.portal.remote.cxf.common
 Import-Package:\
 	!com.sun.*,\
@@ -46,3 +40,9 @@ Provide-Capability:\
 		osgi.contract=JavaJSONP;\
 		uses:="javax.json,javax.json.spi,javax.json.stream";\
 		version:Version=1
+-exportcontents:\
+	javax.json.*,\
+	\
+	javax.ws.rs.*,\
+	\
+	org.apache.cxf.jaxrs.*

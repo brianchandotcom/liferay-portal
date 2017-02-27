@@ -47,7 +47,7 @@ public final class PropertiesFileNamedConfigurationContent
 
 		if (!name.endsWith(".properties")) {
 			throw new IllegalArgumentException(
-				"File name does not end in .properties");
+				"File name does not end with .properties");
 		}
 
 		_name = name.substring(0, name.length() - 11);

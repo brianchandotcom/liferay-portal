@@ -150,6 +150,7 @@ import org.gradle.api.internal.GradleInternal;
 import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
 import org.gradle.api.internal.project.ProjectInternal;
 import org.gradle.api.invocation.Gradle;
+import org.gradle.api.logging.LogLevel;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ApplicationPlugin;
 import org.gradle.api.plugins.BasePlugin;
@@ -1736,6 +1737,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		final Project project, final LiferayExtension liferayExtension) {
 
 		final Logger logger = project.getLogger();
+		final boolean compilingJSP = GradleUtil.hasStartParameterTask(
+			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
 
 		GradleInternal gradleInternal = (GradleInternal)project.getGradle();
 
@@ -1769,13 +1772,18 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							project.getRootProject(), projectName);
 
 						if (taglibProject != null) {
-							if (logger.isLifecycleEnabled()) {
-								logger.lifecycle(
-									"Compiling JSP files of {} with {} as " +
-										"dependency in place of '{}:{}:{}'",
-									project, taglibProject, group, name,
-									externalModuleDependency.getVersion());
+							LogLevel logLevel = LogLevel.INFO;
+
+							if (compilingJSP) {
+								logLevel = LogLevel.LIFECYCLE;
 							}
+
+							logger.log(
+								logLevel,
+								"Compiling JSP files of {} with {} as " +
+									"dependency in place of '{}:{}:{}'",
+								project, taglibProject, group, name,
+								externalModuleDependency.getVersion());
 
 							projectConfigurer.configure(
 								(ProjectInternal)taglibProject);

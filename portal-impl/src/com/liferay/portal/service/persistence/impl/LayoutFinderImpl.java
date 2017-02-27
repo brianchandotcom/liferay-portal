@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutReference;
 import com.liferay.portal.kernel.model.LayoutSoap;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -115,6 +116,10 @@ public class LayoutFinderImpl
 
 			sql = StringUtil.replace(
 				sql, "AND (Layout.privateLayout = ?)", StringPool.BLANK);
+
+			sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql, Layout.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -217,5 +222,8 @@ public class LayoutFinderImpl
 			closeSession(session);
 		}
 	}
+
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
+		"Layout.plid";
 
 }

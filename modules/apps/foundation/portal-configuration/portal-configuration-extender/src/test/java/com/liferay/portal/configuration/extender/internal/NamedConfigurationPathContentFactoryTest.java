@@ -53,7 +53,7 @@ public class NamedConfigurationPathContentFactoryTest {
 		_headers.put(
 			"Bundle-SymbolicName",
 			"com.liferay.portal.configuration.extender.test");
-		_headers.put("ConfigurationPath", "/configs");
+		_headers.put("Liferay-Configuration-Path", "/configs");
 
 		temporaryFolder.create();
 

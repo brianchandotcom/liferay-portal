@@ -15,7 +15,6 @@
 package com.liferay.asset.publisher.web.display.context;
 
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
@@ -50,16 +49,10 @@ public class ParentSitesItemSelectorViewDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long groupId = getGroupId();
-
-		if (groupId == 0) {
-			groupId = themeDisplay.getSiteGroupId();
-		}
-
 		GroupSearch groupSearch = new GroupSearch(
 			getPortletRequest(), getPortletURL());
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = themeDisplay.getSiteGroup();
 
 		List<Group> groups = group.getAncestors();
 

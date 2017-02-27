@@ -90,11 +90,11 @@ public class ParentSitesItemSelectorView
 			return false;
 		}
 
-		if (!siteGroup.isRoot()) {
-			return true;
+		if (siteGroup.isRoot()) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override

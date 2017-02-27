@@ -78,7 +78,7 @@ default repository for module and WAR projects.
 ### Changed
 - [LPS-70515]: Update the [Liferay Gradle Plugins] dependency to version 3.1.8.
 
-## 1.3.0 - *(Unreleased)*
+## 1.3.0 - 2017-02-27
 
 ### Added
 - [LPS-70677]: Add the ability to precompile the JSP files of OSGi modules via
@@ -86,7 +86,7 @@ the `liferay.workspace.modules.jsp.precompile.enabled` property in
 `gradle.properties`.
 
 ### Changed
-- [LPS-70677]: Update the [Liferay Gradle Plugins] dependency to version 3.2.5.
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 3.2.9.
 
 ### Fixed
 - [LPS-67573]: Move all properties available in the `gradle.liferayWorkspace`
@@ -94,6 +94,7 @@ extension object into the public API.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
+[LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67352]: https://issues.liferay.com/browse/LPS-67352
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573

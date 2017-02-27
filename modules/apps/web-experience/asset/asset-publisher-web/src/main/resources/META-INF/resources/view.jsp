@@ -121,7 +121,7 @@ request.setAttribute("view.jsp-viewInContext", assetPublisherDisplayContext.isAs
 
 	var queryParamObj = new A.QueryString.parse(queryString);
 
-	var assetEntryId = queryParamObj['<portlet:namespace />assetEntry'];
+	var assetEntryId = queryParamObj['<portlet:namespace />assetEntryId'];
 
 	if (assetEntryId) {
 		window.location.hash = assetEntryId;

@@ -45,7 +45,7 @@ if (Validator.isNull(redirect)) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
 	portletURL.setParameter("mvcPath", "/view.jsp");
-	portletURL.setParameter("assetEntry", assetEntryId);
+	portletURL.setParameter("assetEntryId", assetEntryId);
 
 	redirect = portletURL.toString();
 }

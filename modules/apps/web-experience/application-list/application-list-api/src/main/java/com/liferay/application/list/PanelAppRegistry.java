@@ -24,10 +24,19 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortletCategoryKeys;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -178,6 +187,12 @@ public class PanelAppRegistry {
 	protected GroupProvider groupProvider;
 	protected PortletLocalService portletLocalService;
 
+	@Reference
+	protected ResourcePermissionLocalService resourcePermissionLocalService;
+
+	@Reference
+	protected RoleLocalService roleLocalService;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PanelAppRegistry.class);
 
@@ -249,6 +264,13 @@ public class PanelAppRegistry {
 			if (portlet != null) {
 				portlet.setControlPanelEntryCategory(panelCategoryKey);
 
+				try {
+					initPersonalControlPanelPortletPermission(portlet);
+				}
+				catch (PortalException pe) {
+					_log.error(pe, pe);
+				}
+
 				panelApp.setPortlet(portlet);
 			}
 			else if (_log.isDebugEnabled()) {
@@ -261,6 +283,40 @@ public class PanelAppRegistry {
 			ServiceTrackerMap<String, List<PanelApp>> serviceTrackerMap,
 			String panelCategoryKey, PanelApp panelApp,
 			List<PanelApp> panelApps) {
+		}
+
+		protected void initPersonalControlPanelPortletPermission(
+				Portlet portlet)
+			throws PortalException {
+
+			String category = portlet.getControlPanelEntryCategory();
+
+			if ((category == null) ||
+				!category.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
+
+				return;
+			}
+
+			Role userRole = roleLocalService.getRole(
+				portlet.getCompanyId(), RoleConstants.USER);
+
+			List<String> actionIds =
+				ResourceActionsUtil.getPortletResourceActions(
+					portlet.getRootPortletId());
+
+			String actionId = ActionKeys.ACCESS_IN_CONTROL_PANEL;
+
+			if (actionIds.contains(actionId)) {
+				resourcePermissionLocalService.addResourcePermission(
+					portlet.getCompanyId(), portlet.getRootPortletId(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(portlet.getCompanyId()),
+					userRole.getRoleId(), actionId);
+			}
+
+			portletLocalService.updatePortlet(
+				portlet.getCompanyId(), portlet.getPortletId(),
+				StringPool.BLANK, portlet.isActive());
 		}
 
 	}

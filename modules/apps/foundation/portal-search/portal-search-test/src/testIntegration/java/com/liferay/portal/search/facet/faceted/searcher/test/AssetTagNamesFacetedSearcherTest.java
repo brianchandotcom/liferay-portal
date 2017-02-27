@@ -45,7 +45,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class AssetTagNamesFacetTest extends BaseFacetedSearcherTestCase {
+public class AssetTagNamesFacetedSearcherTest
+	extends BaseFacetedSearcherTestCase {
 
 	@ClassRule
 	@Rule

@@ -201,17 +201,24 @@ public class LDAPUserExporterImpl implements UserExporter {
 		Binding binding = _portalLDAP.getGroup(
 			ldapServerId, companyId, userGroup.getName());
 
-		try {
-			if (binding == null) {
-				if (userOperation == UserOperation.ADD) {
-					addGroup(
-						ldapServerId, ldapContext, userGroup, user,
-						groupMappings, userMappings);
+		if (binding == null) {
+			if (userOperation == UserOperation.ADD) {
+				addGroup(
+					ldapServerId, ldapContext, userGroup, user, groupMappings,
+					userMappings);
+			}
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Cannot find or create LDAP bindings for group: " +
+							userGroup.getName());
 				}
-
-				return;
 			}
 
+			return;
+		}
+
+		try {
 			Name name = new CompositeName();
 
 			name.add(
@@ -228,11 +235,12 @@ public class LDAPUserExporterImpl implements UserExporter {
 			ldapContext.modifyAttributes(name, modificationItems);
 		}
 		catch (SchemaViolationException sve) {
-			if (binding == null) {
-				throw sve;
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Cannot modify LDAP bindings for group: " +
+						userGroup.getName(),
+					sve);
 			}
-
-			_log.error(sve, sve);
 
 			String fullGroupDN = _portalLDAP.getNameInNamespace(
 				ldapServerId, companyId, binding);

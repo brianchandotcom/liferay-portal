@@ -726,7 +726,7 @@
 			<var name="assetTitle" value="WC WebContent5 Title" />
 		</execute>
 
-		<execute macro="Category#viewRemoveFilterViaCategoriesNavigationPG">
+		<execute macro="Category#viewRemoveFilterViaAP">
 			<var name="categoryName" value="Vocabulary1 Category" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>

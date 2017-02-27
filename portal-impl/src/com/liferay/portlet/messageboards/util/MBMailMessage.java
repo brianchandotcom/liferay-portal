@@ -15,6 +15,8 @@
 package com.liferay.portlet.messageboards.util;
 
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -22,9 +24,12 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.mail.internet.MimeUtility;
 
 /**
  * @author Jorge Ferrer
@@ -32,6 +37,15 @@ import java.util.List;
 public class MBMailMessage {
 
 	public void addBytes(String fileName, byte[] bytes) {
+		try {
+			fileName = MimeUtility.decodeText(fileName);
+		}
+		catch (UnsupportedEncodingException uee) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Error decoding filename: " + fileName, uee);
+			}
+		}
+
 		_bytesOVPs.add(new ObjectValuePair<String, byte[]>(fileName, bytes));
 	}
 
@@ -102,6 +116,8 @@ public class MBMailMessage {
 	private final List<ObjectValuePair<String, byte[]>> _bytesOVPs =
 		new ArrayList<>();
 	private String _htmlBody;
+	private final Log _log = LogFactoryUtil.getLog(
+		MBMailMessage.class.getName());
 	private String _plainBody;
 
 }

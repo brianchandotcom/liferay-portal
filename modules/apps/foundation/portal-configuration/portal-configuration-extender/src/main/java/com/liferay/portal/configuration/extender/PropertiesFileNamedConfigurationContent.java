@@ -45,7 +45,12 @@ public final class PropertiesFileNamedConfigurationContent
 			name = name.substring(lastIndexOfSlash + 1);
 		}
 
-		_name = name;
+		if (!name.endsWith(".properties")) {
+			throw new IllegalArgumentException(
+				"File name does not end in .properties");
+		}
+
+		_name = name.substring(0, name.length() - 11);
 
 		try {
 			_inputStream = url.openStream();

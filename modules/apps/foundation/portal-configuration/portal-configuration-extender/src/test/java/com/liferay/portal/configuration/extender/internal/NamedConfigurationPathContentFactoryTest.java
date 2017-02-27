@@ -60,7 +60,7 @@ public class NamedConfigurationPathContentFactoryTest {
 		temporaryFolder.newFolder("configs");
 
 		_file = temporaryFolder.newFile(
-			"/configs/com.liferay.test.aConfigFile");
+			"/configs/com.liferay.test.aConfigFile.properties");
 
 		write(_file, "key=value\nanotherKey=anotherValue");
 	}
@@ -103,7 +103,7 @@ public class NamedConfigurationPathContentFactoryTest {
 		URI uri1 = _file.toURI();
 
 		File file = temporaryFolder.newFile(
-			"/configs/com.liferay.test.anotherConfigFile");
+			"/configs/com.liferay.test.anotherConfigFile.properties");
 
 		write(file, "key2=value2\nanotherKey2=anotherValue2");
 
@@ -150,7 +150,7 @@ public class NamedConfigurationPathContentFactoryTest {
 		temporaryFolder.newFolder("configs", "nested");
 
 		File file = temporaryFolder.newFile(
-			"/configs/nested/com.liferay.test.anotherConfigFile");
+			"/configs/nested/com.liferay.test.anotherConfigFile.properties");
 
 		write(file, "key2=value2\nanotherKey2=anotherValue2");
 

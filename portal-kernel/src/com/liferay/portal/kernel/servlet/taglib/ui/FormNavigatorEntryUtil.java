@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -31,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Sergio González
@@ -41,10 +44,9 @@ public class FormNavigatorEntryUtil {
 		String formNavigatorId, String categoryKey, User user,
 		T formModelBean) {
 
-		@SuppressWarnings("rawtypes")
 		List<FormNavigatorEntry<T>> formNavigatorEntries =
-			(List)_instance._formNavigatorEntries.getService(
-				_getKey(formNavigatorId, categoryKey));
+			_getFormNavigatorEntries(
+				formNavigatorId, categoryKey, formModelBean);
 
 		return filterVisibleFormNavigatorEntries(
 			formNavigatorEntries, user, formModelBean);
@@ -59,11 +61,9 @@ public class FormNavigatorEntryUtil {
 			formNavigatorId);
 
 		for (String categoryKey : categoryKeys) {
-
-			@SuppressWarnings("rawtypes")
 			List<FormNavigatorEntry<T>> curFormNavigatorEntries =
-				(List)_instance._formNavigatorEntries.getService(
-					_getKey(formNavigatorId, categoryKey));
+				_getFormNavigatorEntries(
+					formNavigatorId, categoryKey, formModelBean);
 
 			if (curFormNavigatorEntries != null) {
 				formNavigatorEntries.addAll(curFormNavigatorEntries);
@@ -121,20 +121,43 @@ public class FormNavigatorEntryUtil {
 			List<FormNavigatorEntry<T>> formNavigatorEntries, User user,
 			T formModelBean) {
 
-		List<FormNavigatorEntry<T>> filterFormNavigatorEntries =
-			new ArrayList<>();
+		return ListUtil.fromCollection(formNavigatorEntries).stream().filter(
+			formNavigatorEntry -> formNavigatorEntry.isVisible(
+				user, formModelBean)).collect(Collectors.toList());
+	}
 
-		if (ListUtil.isEmpty(formNavigatorEntries)) {
-			return filterFormNavigatorEntries;
+	private static <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
+		String formNavigatorId, String categoryKey, T formModelBean) {
+
+		Optional<List<FormNavigatorEntry<T>>> formNavigationEntriesOptional =
+			_getFormNavigatorEntriesFromConfiguration(
+				formNavigatorId, categoryKey, formModelBean);
+
+		if (formNavigationEntriesOptional.isPresent()) {
+			List<FormNavigatorEntry<T>> formNavigatorEntries =
+				formNavigationEntriesOptional.get();
+
+			return ListUtil.fromCollection(formNavigatorEntries);
 		}
-
-		for (FormNavigatorEntry<T> formNavigatorEntry : formNavigatorEntries) {
-			if (formNavigatorEntry.isVisible(user, formModelBean)) {
-				filterFormNavigatorEntries.add(formNavigatorEntry);
-			}
+		else {
+			return (List)_instance._formNavigatorEntries.getService(
+				_getKey(formNavigatorId, categoryKey));
 		}
+	}
 
-		return filterFormNavigatorEntries;
+	private static <T> Optional<List<FormNavigatorEntry<T>>>
+		_getFormNavigatorEntriesFromConfiguration(
+			String formNavigatorId, String categoryKey, T formModelBean) {
+
+		Optional<FormNavigatorEntryConfigurationHelper>
+			formNavigatorEntryConfigurationHelperOptional = Optional.ofNullable(
+				_instance._serviceTracker.getService());
+
+		return formNavigatorEntryConfigurationHelperOptional.map(
+			formNavigatorEntryConfigurationHelper ->
+				formNavigatorEntryConfigurationHelper.getFormNavigatorEntries(
+					formNavigatorId, categoryKey, formModelBean)).orElse(
+				Optional.empty());
 	}
 
 	private static String _getKey(String formNavigatorId, String categoryKey) {
@@ -143,6 +166,8 @@ public class FormNavigatorEntryUtil {
 
 	@SuppressWarnings("rawtypes")
 	private FormNavigatorEntryUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
 		_formNavigatorEntries = ServiceTrackerCollections.openMultiValueMap(
 			FormNavigatorEntry.class, null,
 			new ServiceReferenceMapper<String, FormNavigatorEntry>() {
@@ -151,8 +176,6 @@ public class FormNavigatorEntryUtil {
 				public void map(
 					ServiceReference<FormNavigatorEntry> serviceReference,
 					Emitter<String> emitter) {
-
-					Registry registry = RegistryUtil.getRegistry();
 
 					FormNavigatorEntry<?> formNavigatorEntry =
 						registry.getService(serviceReference);
@@ -168,6 +191,11 @@ public class FormNavigatorEntryUtil {
 			},
 			new PropertyServiceReferenceComparator<FormNavigatorEntry>(
 				"form.navigator.entry.order"));
+
+		_serviceTracker = registry.trackServices(
+			FormNavigatorEntryConfigurationHelper.class);
+
+		_serviceTracker.open();
 	}
 
 	private static final FormNavigatorEntryUtil _instance =
@@ -176,6 +204,10 @@ public class FormNavigatorEntryUtil {
 	@SuppressWarnings("rawtypes")
 	private final ServiceTrackerMap<String, List<FormNavigatorEntry>>
 		_formNavigatorEntries;
+
+	private final ServiceTracker
+		<FormNavigatorEntryConfigurationHelper,
+			FormNavigatorEntryConfigurationHelper> _serviceTracker;
 
 	/**
 	 * @see com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator

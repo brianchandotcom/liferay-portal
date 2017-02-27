@@ -1,4 +1,4 @@
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
-ConfigurationPath: /configuration
+Liferay-Configuration-Path: /configuration

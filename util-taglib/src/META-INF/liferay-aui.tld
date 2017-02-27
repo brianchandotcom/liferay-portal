@@ -807,7 +807,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A name for the component. If the name contains -- the generated name will be an string from the first ocurrence of -- to the end of the name less 2 characters, assuming prefix--customName-- as a pattern for customName. The name will be used to create a normalized <code>id</code> if the <code>id</code> is not provided and the <code>type</code> is provided.]]></description>
+			<description><![CDATA[A name for the component.]]></description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

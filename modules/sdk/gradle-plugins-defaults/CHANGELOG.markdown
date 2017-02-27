@@ -1131,6 +1131,12 @@ OSGi project.
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 3.2.9.
 
+## 3.1.3 - 2017-02-27
+
+### Changed
+- [LPS-70170]: Lower log level of `jspC` configuration dependency replacement
+messages if the `compileJSP` is not explicitly invoked.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

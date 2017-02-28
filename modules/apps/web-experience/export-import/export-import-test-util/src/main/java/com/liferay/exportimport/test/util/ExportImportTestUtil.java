@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.util.test;
+package com.liferay.exportimport.test.util;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;

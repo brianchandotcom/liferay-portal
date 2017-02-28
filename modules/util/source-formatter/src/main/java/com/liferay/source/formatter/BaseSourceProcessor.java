@@ -97,7 +97,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public final void format() throws Exception {
-		System.setProperty("java.awt.headless", "false");
+		if (sourceFormatterArgs.isShowDocumentation()) {
+			System.setProperty("java.awt.headless", "false");
+		}
 
 		List<String> fileNames = getFileNames();
 
@@ -2820,7 +2822,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					_sourceFormatterHelper.printError(
 						fileName, sourceFormatterMessage.toString());
 
-					if (_browserStarted) {
+					if (_browserStarted ||
+						!sourceFormatterArgs.isShowDocumentation()) {
+
 						continue;
 					}
 

@@ -117,6 +117,10 @@ public class FormatSourceTask extends JavaExec {
 		return _sourceFormatterArgs.isPrintErrors();
 	}
 
+	public boolean isShowDocumentation() {
+		return _sourceFormatterArgs.isShowDocumentation();
+	}
+
 	public boolean isThrowException() {
 		return _sourceFormatterArgs.isThrowException();
 	}
@@ -178,6 +182,10 @@ public class FormatSourceTask extends JavaExec {
 		_sourceFormatterArgs.setProcessorThreadCount(processorThreadCount);
 	}
 
+	public void setShowDocumentation(boolean showDocumentation) {
+		_sourceFormatterArgs.setShowDocumentation(showDocumentation);
+	}
+
 	public void setThrowException(boolean throwException) {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}
@@ -196,6 +204,7 @@ public class FormatSourceTask extends JavaExec {
 		args.add("include.subrepositories=" + isIncludeSubrepositories());
 		args.add("max.line.length=" + getMaxLineLength());
 		args.add("processor.thread.count=" + getProcessorThreadCount());
+		args.add("show.documentation=" + isShowDocumentation());
 		args.add("source.auto.fix=" + isAutoFix());
 		args.add(
 			"source.copyright.file=" +

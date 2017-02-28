@@ -159,6 +159,12 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setProcessorThreadCount(processorThreadCount);
 
+			boolean showDocumentation = ArgumentsUtil.getBoolean(
+				arguments, "show.documentation",
+				SourceFormatterArgs.SHOW_DOCUMENTATION);
+
+			sourceFormatterArgs.setShowDocumentation(showDocumentation);
+
 			boolean throwException = ArgumentsUtil.getBoolean(
 				arguments, "source.throw.exception",
 				SourceFormatterArgs.THROW_EXCEPTION);

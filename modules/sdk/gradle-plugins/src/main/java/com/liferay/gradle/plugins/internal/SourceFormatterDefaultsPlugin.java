@@ -90,6 +90,15 @@ public class SourceFormatterDefaultsPlugin
 			formatSourceTask.setMaxLineLength(Integer.parseInt(maxLineLength));
 		}
 
+		String showDocumentation = GradleUtil.getProperty(
+			formatSourceTask.getProject(),
+			"source.formatter.show.documentation", (String)null);
+
+		if (Validator.isNotNull(showDocumentation)) {
+			formatSourceTask.setShowDocumentation(
+				Boolean.parseBoolean(showDocumentation));
+		}
+
 		String processorThreadCount = GradleUtil.getProperty(
 			formatSourceTask.getProject(),
 			"source.formatter.processor.thread.count", (String)null);

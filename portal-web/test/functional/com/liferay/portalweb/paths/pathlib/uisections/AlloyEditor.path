@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>CONTENT_FIELD</td>
-	<td>//div[contains(@class,'alloy-editor-container')]//div[(contains(@data-placeholder,'Write your content here...') or contains(@data-placeholder,'reply') or contains(@data-placeholder,'Content')) and contains(@title,'Rich Text Editor')]</td>
+	<td>//div[(contains(@id,'body') or contains(@id,'content')) and contains(@class,'alloy-editor-container')]//div[contains(@class,'alloy-editor-placeholder')]</td>
 	<td></td>
 </tr>
 <tr>

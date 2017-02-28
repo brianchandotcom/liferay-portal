@@ -491,19 +491,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		PortletResourceActionsBag portletResourceActionsBag =
 			getPortletResourceActionsBag(name);
 
-		Set<String> actions =
-			portletResourceActionsBag.getResourceGuestUnsupportedActions();
-
-		if (actions.contains(ActionKeys.CONFIGURATION) &&
-			actions.contains(ActionKeys.PERMISSIONS)) {
-
-			return new ArrayList<>(actions);
-		}
-
-		actions.add(ActionKeys.CONFIGURATION);
-		actions.add(ActionKeys.PERMISSIONS);
-
-		return new ArrayList<>(actions);
+		return new ArrayList<>(
+			portletResourceActionsBag.getResourceGuestUnsupportedActions());
 	}
 
 	@Override
@@ -513,23 +502,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		PortletResourceActionsBag portletResourceActionsBag =
 			getPortletResourceActionsBag(name);
 
-		Set<String> actions =
-			portletResourceActionsBag.getResourceLayoutManagerActions();
-
-		// This check can never return an empty list. If the list is empty, it
-		// means that the portlet does not have an explicit resource-actions
-		// configuration file and should therefore be handled as if it has
-		// defaults of CONFIGURATION, PREFERENCES, and VIEW.
-
-		if (actions.isEmpty()) {
-			actions = new LinkedHashSet<>();
-
-			actions.add(ActionKeys.CONFIGURATION);
-			actions.add(ActionKeys.PREFERENCES);
-			actions.add(ActionKeys.VIEW);
-		}
-
-		return new ArrayList<>(actions);
+		return new ArrayList<>(
+			portletResourceActionsBag.getResourceLayoutManagerActions());
 	}
 
 	@Override
@@ -1338,12 +1312,19 @@ public class ResourceActionsImpl implements ResourceActions {
 		Set<String> portletResourceGuestUnsupportedActions =
 			portletResourceActionsBag.getResourceGuestUnsupportedActions();
 
+		portletResourceGuestUnsupportedActions.add(ActionKeys.CONFIGURATION);
+		portletResourceGuestUnsupportedActions.add(ActionKeys.PERMISSIONS);
+
 		readGuestUnsupportedActions(
 			portletResourceElement, portletResourceGuestUnsupportedActions,
 			portletResourceGuestDefaultActions);
 
 		Set<String> portletResourceLayoutManagerActions =
 			portletResourceActionsBag.getResourceLayoutManagerActions();
+
+		portletResourceLayoutManagerActions.add(ActionKeys.CONFIGURATION);
+		portletResourceLayoutManagerActions.add(ActionKeys.PREFERENCES);
+		portletResourceLayoutManagerActions.add(ActionKeys.VIEW);
 
 		readLayoutManagerActions(
 			portletResourceElement, portletResourceLayoutManagerActions,

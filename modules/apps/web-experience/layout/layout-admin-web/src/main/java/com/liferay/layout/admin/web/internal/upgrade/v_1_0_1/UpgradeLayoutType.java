@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -69,17 +68,11 @@ public class UpgradeLayoutType extends UpgradeProcess {
 	}
 
 	protected String getArticleId(String typeSettings) throws Exception {
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
 
 		typeSettingsProperties.fastLoad(typeSettings);
 
-		String articleId = typeSettingsProperties.getProperty("article-id");
-
-		if (articleId == null) {
-			return StringPool.BLANK;
-		}
-
-		return articleId;
+		return typeSettingsProperties.getProperty("article-id");
 	}
 
 	protected long getAssetEntryId(long resourcePrimKey) throws Exception {
@@ -140,7 +133,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 	}
 
 	protected String getTypeSettings(String portletId) {
-		UnicodeProperties newTypeSettings = new UnicodeProperties();
+		UnicodeProperties newTypeSettings = new UnicodeProperties(true);
 
 		newTypeSettings.put("column-1", portletId);
 
@@ -154,8 +147,8 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"update Layout set typeSettings = ?, type_ = ? where plid = ?"))
-		{
+				"update Layout set typeSettings = ?, type_ = ? where plid = " +
+					"?")) {
 
 			ps.setString(1, typeSettings);
 			ps.setString(2, "portlet");

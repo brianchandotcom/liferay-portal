@@ -759,25 +759,34 @@
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
-		<execute macro="WebContent#addTranslation">
-			<var name="localizedContent" value="WC Contenido" />
-			<var name="localizedLanguage" value="Spanish (Spain)" />
-			<var name="localizedTitle" value="WC Titulo" />
-			<var name="webContentTitle" value="WC Title" />
+		<execute macro="WebContent#addLocale">
+			<var name="language" value="Spanish (Spain)" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
-		<execute macro="WebContent#addTranslation">
-			<var name="localizedContent" value="WC Inhalt" />
-			<var name="localizedLanguage" value="German (Germany)" />
-			<var name="localizedTitle" value="WC Titel" />
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC Contenido" />
 			<var name="webContentTitle" value="WC Titulo" />
 		</execute>
 
-		<execute macro="WebContent#addTranslation">
-			<var name="localizedContent" value="WC Pitoisuus" />
-			<var name="localizedLanguage" value="Finnish (Finland)" />
-			<var name="localizedTitle" value="WC Otsikko" />
+		<execute macro="WebContent#addLocale">
+			<var name="language" value="German (Germany)" />
+			<var name="locale" value="de-DE" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC Inhalt" />
 			<var name="webContentTitle" value="WC Titel" />
+		</execute>
+
+		<execute macro="WebContent#addLocale">
+			<var name="language" value="Finnish (Finland)" />
+			<var name="locale" value="fi-FI" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC Pitoisuus" />
+			<var name="webContentTitle" value="WC Otsikko" />
 		</execute>
 	</command>
 

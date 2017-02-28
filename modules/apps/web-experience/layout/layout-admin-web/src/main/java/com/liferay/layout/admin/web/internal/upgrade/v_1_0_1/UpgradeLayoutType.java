@@ -43,17 +43,15 @@ public class UpgradeLayoutType extends UpgradeProcess {
 			long companyId, long groupId, long plid, String articleId)
 		throws Exception {
 
-		String portletId =
-			"com_liferay_journal_content_web_portlet_JournalContentPortlet";
-
 		Portlet webContentPortlet = PortletLocalServiceUtil.getPortletById(
-			portletId);
+			_PORTLET_ID_JOURNAL_CONTENT);
 
 		String portletPreferences = getPortletPreferences(groupId, articleId);
 
 		String portletPreferencesId =
-			portletId + LayoutTemplateConstants.INSTANCE_SEPARATOR +
-				PortletConstants.generateInstanceId();
+			_PORTLET_ID_JOURNAL_CONTENT +
+				LayoutTemplateConstants.INSTANCE_SEPARATOR +
+					PortletConstants.generateInstanceId();
 
 		PortletPreferencesLocalServiceUtil.addPortletPreferences(
 			companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid,
@@ -77,7 +75,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 
 	protected long getAssetEntryId(long resourcePrimKey) throws Exception {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			"com.liferay.journal.model.JournalArticle", resourcePrimKey);
+			_CLASS_NAME, resourcePrimKey);
 
 		if (assetEntry == null) {
 			throw new UpgradeException(
@@ -178,5 +176,11 @@ public class UpgradeLayoutType extends UpgradeProcess {
 			}
 		}
 	}
+
+	private static final String _CLASS_NAME =
+		"com.liferay.journal.model.JournalArticle";
+
+	private static final String _PORTLET_ID_JOURNAL_CONTENT =
+		"com_liferay_journal_content_web_portlet_JournalContentPortlet";
 
 }

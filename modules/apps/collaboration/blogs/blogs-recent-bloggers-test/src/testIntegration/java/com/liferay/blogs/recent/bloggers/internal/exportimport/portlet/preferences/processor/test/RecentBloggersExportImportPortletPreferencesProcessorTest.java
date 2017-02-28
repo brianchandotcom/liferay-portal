@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.blogs.internal.exportimport.portlet.preferences.processor.test;
+package com.liferay.blogs.recent.bloggers.internal.exportimport.portlet.preferences.processor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
@@ -59,7 +59,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
+public class RecentBloggersExportImportPortletPreferencesProcessorTest {
 
 	@ClassRule
 	@Rule
@@ -77,7 +77,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 		sb.append("(&(objectClass=");
 		sb.append(ExportImportPortletPreferencesProcessor.class.getName());
 		sb.append(")(javax.portlet.name=");
-		sb.append(BlogsPortletKeys.BLOGS_AGGREGATOR);
+		sb.append(RecentBloggersPortletKeys.RECENT_BLOGGERS);
 		sb.append("))");
 
 		Filter filter = registry.getFilter(sb.toString());
@@ -102,7 +102,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 
 		LayoutTestUtil.addPortletToLayout(
 			TestPropsValues.getUserId(), _layout,
-			BlogsPortletKeys.BLOGS_AGGREGATOR, "column-1",
+			RecentBloggersPortletKeys.RECENT_BLOGGERS, "column-1",
 			new HashMap<String, String[]>());
 
 		_organization = OrganizationTestUtil.addOrganization();
@@ -112,21 +112,21 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 				_group.getGroupId());
 
 		_portletDataContextExport.setPortletId(
-			BlogsPortletKeys.BLOGS_AGGREGATOR);
+			RecentBloggersPortletKeys.RECENT_BLOGGERS);
 
 		_portletDataContextImport =
 			ExportImportTestUtil.getImportPortletDataContext(
 				_group.getGroupId());
 
 		_portletDataContextImport.setPortletId(
-			BlogsPortletKeys.BLOGS_AGGREGATOR);
+			RecentBloggersPortletKeys.RECENT_BLOGGERS);
 	}
 
 	@Test
 	public void testProcessOrganizationId() throws Exception {
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				_layout, BlogsPortletKeys.BLOGS_AGGREGATOR);
+				_layout, RecentBloggersPortletKeys.RECENT_BLOGGERS);
 
 		long organizationId = _organization.getOrganizationId();
 
@@ -149,8 +149,8 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 
 		Assert.assertEquals(_organization.getUuid(), exportedOrganizationId);
 
-		// Update organization to have a different primary key. We will swap
-		// to the new one and verify it.
+		// Update organization to have a different primary key - we will swap
+		// to the new one and we'll  verify it
 
 		OrganizationLocalServiceUtil.deleteOrganization(
 			_organization.getOrganizationId());
@@ -161,7 +161,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 
 		OrganizationLocalServiceUtil.updateOrganization(_organization);
 
-		// Test the import
+		// Test the import part
 
 		PortletPreferences importedPortletPreferences =
 			blogsAggregatorPortletPreferencesProcessor.

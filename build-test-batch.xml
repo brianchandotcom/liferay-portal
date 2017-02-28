@@ -727,38 +727,22 @@ app.server.type=@{app.server.type}]]></echo>
 								<available file="liferay-portal-source.zip" />
 							</and>
 							<then>
-								<execute>
-									<![CDATA[
-										unzip -oq liferay-portal-source.zip
-
-										unzip -oq liferay-portal-bundle-@{app.server.type}.zip
-
-										chmod -R a+x bundles
-									]]>
-								</execute>
+								<prepare-test-environment app.server.type="${app.server.type}" />
 							</then>
 						</elseif>
 						<else>
+							<antcall target="compile" />
+
 							<if>
-								<isset property="env.DIST_PATH" />
+								<or>
+									<equals arg1="${app.server.type}" arg2="weblogic" />
+									<equals arg1="${app.server.type}" arg2="websphere" />
+								</or>
 								<then>
-									<prepare-test-environment app.server.type="${app.server.type}" />
+									<prepare-test-build-custom />
 								</then>
 								<else>
-									<antcall target="compile" />
-
-									<if>
-										<or>
-											<equals arg1="${app.server.type}" arg2="weblogic" />
-											<equals arg1="${app.server.type}" arg2="websphere" />
-										</or>
-										<then>
-											<prepare-test-build-custom />
-										</then>
-										<else>
-											<ant antfile="build-dist.xml" target="build-dist-${app.server.type}" />
-										</else>
-									</if>
+									<ant antfile="build-dist.xml" target="build-dist-${app.server.type}" />
 								</else>
 							</if>
 

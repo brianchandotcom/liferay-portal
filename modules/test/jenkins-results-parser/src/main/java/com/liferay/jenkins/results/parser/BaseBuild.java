@@ -169,6 +169,12 @@ public abstract class BaseBuild implements Build {
 
 			TopLevelBuild topLevelBuild = getTopLevelBuild();
 
+			repositoryName = topLevelBuild.getParameterValue("REPOSITORY_NAME");
+
+			if ((repositoryName != null) && !repositoryName.isEmpty()) {
+				return repositoryName;
+			}
+
 			repositoryName = buildProperties.getProperty(
 				JenkinsResultsParserUtil.combine(
 					"repository[", topLevelBuild.getJobName(), "]"));

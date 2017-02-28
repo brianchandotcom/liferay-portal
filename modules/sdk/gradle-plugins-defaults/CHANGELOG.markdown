@@ -1137,11 +1137,12 @@ OSGi project.
 - [LPS-70170]: Lower log level of `jspC` configuration dependency replacement
 messages if the `compileJSP` is not explicitly invoked.
 
-## 3.1.4 - 2017-02-27
+## 3.1.4 - 2017-02-28
 
 ### Changed
 - [LPS-70929]: Disable `-check: exports` if the `bnd.bnd` file contains the
 `-exportcontents` instruction.
+- [LPS-70941]: Update the [Liferay Gradle Plugins] dependency to version 3.2.10.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1253,6 +1254,7 @@ messages if the `compileJSP` is not explicitly invoked.
 [LPS-70819]: https://issues.liferay.com/browse/LPS-70819
 [LPS-70870]: https://issues.liferay.com/browse/LPS-70870
 [LPS-70929]: https://issues.liferay.com/browse/LPS-70929
+[LPS-70941]: https://issues.liferay.com/browse/LPS-70941
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

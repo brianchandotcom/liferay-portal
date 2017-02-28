@@ -89,20 +89,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 			return null;
 		}
 
-		long resourcePrimKey = 0;
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select resourcePrimKey from JournalArticle where articleId " +
-					"= ?")) {
-
-			ps.setString(1, articleId);
-
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					resourcePrimKey = rs.getLong("resourcePrimKey");
-				}
-			}
-		}
+		long resourcePrimKey = getResourcePrimKey(groupId, articleId);
 
 		if (resourcePrimKey == 0) {
 			throw new UpgradeException("Missing article with ID: " + articleId);
@@ -118,6 +105,26 @@ public class UpgradeLayoutType extends UpgradeProcess {
 			"assetEntryId", String.valueOf(assetEntryId));
 
 		return portletPreferences.toString();
+	}
+
+	protected long getResourcePrimKey(long groupId, String articleId)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select resourcePrimKey from JournalArticleResource where " +
+					"articleId = ? and groupId = ?")) {
+
+			ps.setString(1, articleId);
+			ps.setLong(2, groupId);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					return rs.getLong("resourcePrimKey");
+				}
+			}
+		}
+
+		return 0;
 	}
 
 	protected String getTypeSettings(String portletId) {

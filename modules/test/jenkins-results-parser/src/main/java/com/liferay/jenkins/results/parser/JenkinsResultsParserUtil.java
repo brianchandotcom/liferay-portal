@@ -16,6 +16,9 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -86,6 +89,48 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	public static void copy(File source, File target) throws IOException {
+		try {
+			if (!source.exists()) {
+				throw new FileNotFoundException(
+					source.getPath() + " doesn't exist");
+			}
+
+			if (target.exists()) {
+				delete(target);
+			}
+
+			if (source.isDirectory()) {
+				target.mkdir();
+
+				for (File file : source.listFiles()) {
+					copy(file, new File(target, file.getName()));
+				}
+
+				return;
+			}
+
+			try (FileInputStream fileInputStream =
+					new FileInputStream(source)) {
+
+				try (FileOutputStream fileOutputStream =
+						new FileOutputStream(target)) {
+
+					Files.copy(Paths.get(source.toURI()), fileOutputStream);
+
+					fileOutputStream.flush();
+				}
+			}
+		}
+		catch (IOException ioe) {
+			if (target.exists()) {
+				delete(target);
+			}
+
+			throw ioe;
+		}
+	}
+
 	public static JSONObject createJSONObject(String jsonString)
 		throws IOException {
 
@@ -128,6 +173,24 @@ public class JenkinsResultsParserUtil {
 		throws UnsupportedEncodingException {
 
 		return URLDecoder.decode(url, "UTF-8");
+	}
+
+	public static void delete(File file) throws IOException {
+		if (!file.exists()) {
+			System.out.println(
+				"Unable to delete because file does not exist " +
+					file.getPath());
+
+			return;
+		}
+
+		if (file.isDirectory()) {
+			for (File subfile : file.listFiles()) {
+				delete(subfile);
+			}
+		}
+
+		file.delete();
 	}
 
 	public static String encode(String url)
@@ -750,6 +813,8 @@ public class JenkinsResultsParserUtil {
 
 		duration = _appendDurationStringForUnit(
 			duration, _MILLIS_IN_SECOND, sb, "second", "seconds");
+
+		duration = _appendDurationStringForUnit(duration, 1, sb, "ms", "ms");
 
 		String durationString = sb.toString();
 

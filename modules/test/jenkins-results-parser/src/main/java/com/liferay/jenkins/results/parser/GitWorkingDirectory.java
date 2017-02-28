@@ -54,20 +54,6 @@ public class GitWorkingDirectory {
 		_repository = fileRepositoryBuilder.build();
 
 		_git = new Git(_repository);
-
-		JschConfigSessionFactory jschConfigSessionFactory =
-			new JschConfigSessionFactory() {
-
-				@Override
-				protected void configure(
-					OpenSshConfig.Host host, Session session) {
-
-					session.setConfig("StrictHostKeyChecking", "no");
-				}
-
-			};
-
-		SshSessionFactory.setInstance(jschConfigSessionFactory);
 	}
 
 	public void checkoutBranch(String branchName)
@@ -232,6 +218,22 @@ public class GitWorkingDirectory {
 				file.delete();
 			}
 		}
+	}
+
+	static {
+		JschConfigSessionFactory jschConfigSessionFactory =
+			new JschConfigSessionFactory() {
+
+				@Override
+				protected void configure(
+					OpenSshConfig.Host host, Session session) {
+
+					session.setConfig("StrictHostKeyChecking", "no");
+				}
+
+			};
+
+		SshSessionFactory.setInstance(jschConfigSessionFactory);
 	}
 
 	private final Git _git;

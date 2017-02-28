@@ -2,6 +2,10 @@ Bundle-Name: Liferay Calendar API
 Bundle-SymbolicName: com.liferay.calendar.api
 Bundle-Version: 2.1.0
 Export-Package:\
+	com.google.ical.iter,\
+	com.google.ical.util,\
+	com.google.ical.values,\
+	\
 	com.liferay.calendar.constants,\
 	com.liferay.calendar.exception,\
 	com.liferay.calendar.exporter,\
@@ -16,7 +20,3 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Calendar
--exportcontents:\
-	com.google.ical.iter,\
-	com.google.ical.util,\
-	com.google.ical.values

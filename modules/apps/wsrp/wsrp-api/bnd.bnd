@@ -7,10 +7,8 @@ Export-Package:\
 	com.liferay.wsrp.exception,\
 	com.liferay.wsrp.model,\
 	com.liferay.wsrp.service,\
-	com.liferay.wsrp.service.persistence
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
--exportcontents:\
+	com.liferay.wsrp.service.persistence,\
+	\
 	oasis.names.tc.wsrp.v1.bind,\
 	oasis.names.tc.wsrp.v1.intf,\
 	oasis.names.tc.wsrp.v1.types,\
@@ -19,3 +17,5 @@ Liferay-Releng-Module-Group-Title:
 	oasis.names.tc.wsrp.v2.intf,\
 	oasis.names.tc.wsrp.v2.types,\
 	oasis.names.tc.wsrp.v2.wsdl
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

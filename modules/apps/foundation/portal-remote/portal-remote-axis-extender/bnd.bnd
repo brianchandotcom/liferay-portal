@@ -2,6 +2,7 @@ Bundle-Name: Liferay Portal Remote Axis Extender
 Bundle-SymbolicName: com.liferay.portal.remote.axis.extender
 Bundle-Version: 1.0.7
 DynamicImport-Package: com.liferay.*
+Export-Package: org.apache.axis.*;version="1.4"
 Import-Package:\
 	!com.ibm.*,\
 	\
@@ -22,6 +23,5 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
--exportcontents: org.apache.axis.*;version="1.4"
 -fixupmessages: "Version for package org.apache.axis...";is:=ignore
 -includeresource: @com.liferay.util.java-[0-9]*.jar!/com/liferay/util/axis/*.class

@@ -807,7 +807,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A name for the component.]]></description>
+			<description><![CDATA[A name for the component. If the name contains <code>--</code>, the generated name will be the substring following the <code>--</code>, excluding the last two characters and any prefixes. For example, the pattern <code>prefix--customName--</code> would result in the name <code>customName</code>. If the <code>id</code> is not provided and the <code>type</code> is given, the name is used as the <code>id</code>.]]></description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.jcraft.jsch.Session;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,6 +29,9 @@ import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.transport.JschConfigSessionFactory;
+import org.eclipse.jgit.transport.OpenSshConfig;
+import org.eclipse.jgit.transport.SshSessionFactory;
 
 /**
  * @author Michael Hashimoto
@@ -213,6 +218,22 @@ public class GitWorkingDirectory {
 				file.delete();
 			}
 		}
+	}
+
+	static {
+		JschConfigSessionFactory jschConfigSessionFactory =
+			new JschConfigSessionFactory() {
+
+				@Override
+				protected void configure(
+					OpenSshConfig.Host host, Session session) {
+
+					session.setConfig("StrictHostKeyChecking", "no");
+				}
+
+			};
+
+		SshSessionFactory.setInstance(jschConfigSessionFactory);
 	}
 
 	private final Git _git;

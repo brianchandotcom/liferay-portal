@@ -1605,7 +1605,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Map<String, Object> bundleDefaultInstructions = new HashMap<>();
 
-		bundleDefaultInstructions.put("-check", "exports");
 		bundleDefaultInstructions.put(Constants.BUNDLE_VENDOR, "Liferay, Inc.");
 		bundleDefaultInstructions.put(
 			Constants.DONOTCOPY,
@@ -1646,26 +1645,29 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private void _configureBundleInstructions(
 		Project project, GitRepo gitRepo) {
 
-		String projectPath = project.getPath();
-
-		if (!projectPath.startsWith(":apps:") &&
-			!projectPath.startsWith(":private:") && (gitRepo == null)) {
-
-			return;
-		}
-
 		Map<String, String> bundleInstructions = _getBundleInstructions(
 			project);
 
-		String exportPackage = bundleInstructions.get(Constants.EXPORT_PACKAGE);
+		String projectPath = project.getPath();
 
-		if (Validator.isNull(exportPackage)) {
-			return;
+		if (projectPath.startsWith(":apps:") ||
+			projectPath.startsWith(":private:") || (gitRepo != null)) {
+
+			String exportPackage = bundleInstructions.get(
+				Constants.EXPORT_PACKAGE);
+
+			if (Validator.isNotNull(exportPackage)) {
+				exportPackage = "!com.liferay.*.kernel.*," + exportPackage;
+
+				bundleInstructions.put(Constants.EXPORT_PACKAGE, exportPackage);
+			}
 		}
 
-		exportPackage = "!com.liferay.*.kernel.*," + exportPackage;
+		if (!bundleInstructions.containsKey(Constants.EXPORT_CONTENTS) &&
+			!bundleInstructions.containsKey("-check")) {
 
-		bundleInstructions.put(Constants.EXPORT_PACKAGE, exportPackage);
+			bundleInstructions.put("-check", "exports");
+		}
 	}
 
 	private void _configureConfiguration(Configuration configuration) {

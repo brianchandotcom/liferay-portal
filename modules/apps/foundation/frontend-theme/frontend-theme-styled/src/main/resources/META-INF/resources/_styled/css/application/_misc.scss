@@ -26,6 +26,13 @@
 	vertical-align: middle;
 }
 
+.lfr-asset-anchor:before {
+	content: "";
+	display: block;
+	height: 64px;
+	margin: -64px 0 0;
+}
+
 .lfr-url-error {
 	display: inline-block;
 	white-space: normal;

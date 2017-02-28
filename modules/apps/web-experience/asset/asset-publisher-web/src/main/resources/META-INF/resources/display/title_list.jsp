@@ -35,6 +35,7 @@ request.setAttribute("view.jsp-showIconLabel", false);
 
 boolean viewInContext = ((Boolean)request.getAttribute("view.jsp-viewInContext")).booleanValue();
 
+String assetEntryId = String.valueOf(assetEntry.getEntryId());
 String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetEntry, viewInContext);
 %>
 
@@ -43,6 +44,8 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 </c:if>
 
 <li class="h3 <%= assetRendererFactory.getType() %>">
+	<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntryId %>"></span>
+
 	<aui:a href="<%= viewURL %>">
 		<%= HtmlUtil.escape(title) %>
 	</aui:a>

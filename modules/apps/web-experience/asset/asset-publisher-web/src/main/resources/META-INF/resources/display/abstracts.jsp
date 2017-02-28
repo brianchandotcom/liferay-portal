@@ -31,11 +31,14 @@ if (Validator.isNull(title)) {
 
 boolean viewInContext = ((Boolean)request.getAttribute("view.jsp-viewInContext")).booleanValue();
 
+String assetEntryId = String.valueOf(assetEntry.getEntryId());
 String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetEntry, viewInContext);
 %>
 
 <div class="asset-abstract <%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %>">
 	<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
+
+	<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntryId %>"></span>
 
 	<h4 class="asset-title">
 		<c:if test="<%= Validator.isNotNull(viewURL) %>">

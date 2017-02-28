@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.util.test;
+package com.liferay.exportimport.test.util;
 
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.test.util.TestPropsValues;

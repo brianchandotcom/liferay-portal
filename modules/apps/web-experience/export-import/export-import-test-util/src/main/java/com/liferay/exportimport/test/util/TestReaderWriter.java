@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.util.test;
+package com.liferay.exportimport.test.util;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.zip.ZipReader;

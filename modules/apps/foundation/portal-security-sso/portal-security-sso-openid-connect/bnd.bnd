@@ -4,8 +4,25 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.security.sso.openid.connect,\
 	com.liferay.portal.security.sso.openid.connect.configuration,\
-	com.liferay.portal.security.sso.openid.connect.constants,\
+	com.liferay.portal.security.sso.openid.connect.constants
+Import-Package:\
+	!org.apache.avalon.*,\
+	!org.apache.html.dom.*,\
+	!org.apache.log.*,\
 	\
+	!org.bouncycastle.*,\
+	\
+	!org.cryptomator.siv.*,\
+	\
+	!org.joda.time.*,\
+	\
+	!org.opensaml.*,\
+	\
+	!sun.security.util.*,\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Security Frameworks
+-exportcontents:\
 	com.nimbusds.jose.util,\
 	com.nimbusds.jwt,\
 	com.nimbusds.langtag,\
@@ -26,20 +43,3 @@ Export-Package:\
 	\
 	net.minidev.json,\
 	net.minidev.json.parser
-Import-Package:\
-	!org.apache.avalon.*,\
-	!org.apache.html.dom.*,\
-	!org.apache.log.*,\
-	\
-	!org.bouncycastle.*,\
-	\
-	!org.cryptomator.siv.*,\
-	\
-	!org.joda.time.*,\
-	\
-	!org.opensaml.*,\
-	\
-	!sun.security.util.*,\
-	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Security Frameworks

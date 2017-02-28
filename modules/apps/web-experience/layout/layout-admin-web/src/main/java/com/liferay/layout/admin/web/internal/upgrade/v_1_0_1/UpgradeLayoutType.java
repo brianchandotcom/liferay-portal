@@ -67,8 +67,8 @@ public class UpgradeLayoutType extends UpgradeProcess {
 
 		if (assetEntry == null) {
 			throw new UpgradeException(
-				"No asset entry for a journal article with classPK: " +
-					resourcePrimKey);
+				"Unable to find asset entry for a journal article with " +
+					"classPK " + resourcePrimKey);
 		}
 
 		return assetEntry.getEntryId();
@@ -92,7 +92,8 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		long resourcePrimKey = getResourcePrimKey(groupId, articleId);
 
 		if (resourcePrimKey == 0) {
-			throw new UpgradeException("Missing article with ID: " + articleId);
+			throw new UpgradeException(
+				"Unable to find article with ID " + articleId);
 		}
 
 		long assetEntryId = getAssetEntryId(resourcePrimKey);

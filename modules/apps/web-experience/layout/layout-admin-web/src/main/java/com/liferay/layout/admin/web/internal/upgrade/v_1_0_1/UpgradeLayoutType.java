@@ -25,28 +25,20 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.PortletPreferencesImpl;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Alec Shay
  */
 public class UpgradeLayoutType extends UpgradeProcess {
-
-	protected void addPortletPreference(
-		StringBundler portletPreferences, String name, String value) {
-
-		portletPreferences.append("<preference><name>");
-		portletPreferences.append(name);
-		portletPreferences.append("</name><value>");
-		portletPreferences.append(value);
-		portletPreferences.append("</value></preference>");
-	}
 
 	protected String createPortletPreferences(
 			long companyId, long groupId, long plid, String articleId)
@@ -142,17 +134,13 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		}
 
 		long assetEntryId = getAssetEntryIdForResource(resourcePrimKey);
-		StringBundler portletPreferences = new StringBundler(17);
 
-		portletPreferences.append("<portlet-preferences>");
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
-		addPortletPreference(portletPreferences, "articleId", articleId);
-		addPortletPreference(
-			portletPreferences, "assetEntryId", Long.toString(assetEntryId));
-		addPortletPreference(
-			portletPreferences, "groupId", Long.toString(groupId));
-
-		portletPreferences.append("</portlet-preferences>");
+		portletPreferences.setValue("groupId", String.valueOf(groupId));
+		portletPreferences.setValue("articleId", articleId);
+		portletPreferences.setValue(
+			"assetEntryId", String.valueOf(assetEntryId));
 
 		return portletPreferences.toString();
 	}

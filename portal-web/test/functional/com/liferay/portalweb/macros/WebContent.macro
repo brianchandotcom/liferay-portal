@@ -1947,28 +1947,28 @@
 	</command>
 
 	<command name="viewUnlocalizableTextBox">
-		<var name="key_fieldName" value="Text" />
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 
-		<var name="key_fieldName" value="TextBox" />
+		<execute macro="FormFields#viewTextMultilineValue">
+			<var name="fieldName" value="TextBox" />
+			<var name="fieldValue" value="${webContentTextBox}" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="DDMField#TEXT_BOX" value1="${webContentTextBox}" />
-
-		<var name="key_localizedLanguage" value="Spanish (Spain)" />
-
-		<execute function="Click" locator1="Translation#AVAILABLE_TRANSLATION" />
+		<execute macro="WebContent#selectLocale">
+			<var name="locale" value="es-ES" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${localizedTitle}" />
 
-		<var name="key_fieldName" value="Text" />
+		<execute macro="FormFields#viewTextValue">
+			<var name="fieldName" value="Text" />
+			<var name="fieldValue" value="${localizedText}" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="DDMField#TEXT" value1="${localizedText}" />
-
-		<var name="key_fieldName" value="TextBox" />
-
-		<execute function="AssertTextEquals" locator1="DDMField#TEXT_BOX" value1="${localizedTextBox}" />
+		<execute macro="FormFields#viewTextMultilineValue">
+			<var name="fieldName" value="TextBox" />
+			<var name="fieldValue" value="${localizedTextBox}" />
+		</execute>
 	</command>
 
 	<command name="viewUserEditCP">

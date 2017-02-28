@@ -34,12 +34,16 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.source.formatter.util.FileUtil;
 
+import java.awt.Desktop;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.Field;
+
+import java.net.URI;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.CharsetDecoder;
@@ -93,6 +97,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public final void format() throws Exception {
+		System.setProperty("java.awt.headless", "false");
+
 		List<String> fileNames = getFileNames();
 
 		if (fileNames.isEmpty()) {
@@ -185,6 +191,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public void processMessage(String fileName, String message, int lineCount) {
+		processMessage(fileName, message, null, lineCount);
+	}
+
+	@Override
+	public void processMessage(
+		String fileName, String message, String markdownFileName) {
+
+		processMessage(fileName, message, markdownFileName, -1);
+	}
+
+	@Override
+	public void processMessage(
+		String fileName, String message, String markdownFileName,
+		int lineCount) {
+
 		Set<SourceFormatterMessage> sourceFormatterMessages =
 			_sourceFormatterMessagesMap.get(fileName);
 
@@ -193,7 +214,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		sourceFormatterMessages.add(
-			new SourceFormatterMessage(fileName, message, lineCount));
+			new SourceFormatterMessage(
+				fileName, message, markdownFileName, lineCount));
 
 		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}
@@ -2771,7 +2793,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected void processFormattedFile(
 			File file, String fileName, String content, String newContent)
-		throws IOException {
+		throws Exception {
 
 		if (!content.equals(newContent)) {
 			if (sourceFormatterArgs.isPrintErrors()) {
@@ -2797,6 +2819,22 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 					_sourceFormatterHelper.printError(
 						fileName, sourceFormatterMessage.toString());
+
+					if (_browserStarted) {
+						continue;
+					}
+
+					String markdownFileName =
+						sourceFormatterMessage.getMarkdownFileName();
+
+					if (Validator.isNotNull(markdownFileName)) {
+						Desktop desktop = Desktop.getDesktop();
+
+						desktop.browse(
+							new URI(_DOCUMENTATION_URL + markdownFileName));
+
+						_browserStarted = true;
+					}
 				}
 			}
 		}
@@ -3252,9 +3290,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return pattern;
 	}
 
+	private static final String _DOCUMENTATION_URL =
+		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
+			"/source-formatter/documentation/";
+
 	private Set<String> _annotationsExclusions;
 	private Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
+	private boolean _browserStarted;
 	private Map<String, String> _compatClassNamesMap;
 	private String _copyright;
 	private final Pattern _definitionPattern = Pattern.compile(

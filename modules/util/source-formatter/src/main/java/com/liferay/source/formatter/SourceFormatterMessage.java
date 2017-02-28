@@ -30,8 +30,16 @@ public class SourceFormatterMessage
 	public SourceFormatterMessage(
 		String fileName, String message, int lineCount) {
 
+		this(fileName, message, null, lineCount);
+	}
+
+	public SourceFormatterMessage(
+		String fileName, String message, String markdownFileName,
+		int lineCount) {
+
 		_fileName = fileName;
 		_message = message;
+		_markdownFileName = markdownFileName;
 		_lineCount = lineCount;
 	}
 
@@ -58,6 +66,10 @@ public class SourceFormatterMessage
 		return _lineCount;
 	}
 
+	public String getMarkdownFileName() {
+		return _markdownFileName;
+	}
+
 	public String getMessage() {
 		return _message;
 	}
@@ -80,6 +92,7 @@ public class SourceFormatterMessage
 
 	private final String _fileName;
 	private final int _lineCount;
+	private final String _markdownFileName;
 	private final String _message;
 
 }

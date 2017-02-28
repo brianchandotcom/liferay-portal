@@ -1137,7 +1137,7 @@ OSGi project.
 - [LPS-70170]: Lower log level of `jspC` configuration dependency replacement
 messages if the `compileJSP` is not explicitly invoked.
 
-## 3.1.4 - 2017-02-27
+## 3.1.4 - 2017-02-28
 
 ### Changed
 - [LPS-70929]: Disable `-check: exports` if the `bnd.bnd` file contains the

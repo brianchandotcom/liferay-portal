@@ -16,11 +16,8 @@ package com.liferay.layout.admin.web.internal.upgrade.v_1_0_1;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -39,25 +36,16 @@ import javax.portlet.PortletPreferences;
  */
 public class UpgradeLayoutType extends UpgradeProcess {
 
-	protected String addPortletPreferences(
-			long companyId, long groupId, long plid, String articleId)
+	protected void addPortletPreferences(
+			long companyId, long groupId, long plid, String articleId,
+			String portletId)
 		throws Exception {
-
-		Portlet webContentPortlet = PortletLocalServiceUtil.getPortletById(
-			_PORTLET_ID_JOURNAL_CONTENT);
 
 		String portletPreferences = getPortletPreferences(groupId, articleId);
 
-		String portletPreferencesId =
-			_PORTLET_ID_JOURNAL_CONTENT +
-				LayoutTemplateConstants.INSTANCE_SEPARATOR +
-					PortletConstants.generateInstanceId();
-
 		PortletPreferencesLocalServiceUtil.addPortletPreferences(
-			companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid,
-			portletPreferencesId, webContentPortlet, portletPreferences);
-
-		return portletPreferencesId;
+			companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
+			null, portletPreferences);
 	}
 
 	@Override
@@ -84,6 +72,14 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		}
 
 		return assetEntry.getEntryId();
+	}
+
+	protected String getPortletId() {
+		String instanceId = PortletConstants.getInstanceId(
+			_PORTLET_ID_JOURNAL_CONTENT);
+
+		return PortletConstants.assemblePortletId(
+			_PORTLET_ID_JOURNAL_CONTENT, instanceId);
 	}
 
 	protected String getPortletPreferences(long groupId, String articleId)
@@ -135,14 +131,12 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		return newTypeSettings.toString();
 	}
 
-	protected void updateLayout(long plid, String typeSettings)
-		throws Exception {
-
+	protected void updateLayout(long plid, String portletId) throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
 				"update Layout set typeSettings = ?, type_ = ? where plid = " +
 					"?")) {
 
-			ps.setString(1, typeSettings);
+			ps.setString(1, getTypeSettings(portletId));
 			ps.setString(2, "portlet");
 			ps.setLong(3, plid);
 
@@ -166,12 +160,12 @@ public class UpgradeLayoutType extends UpgradeProcess {
 
 					String articleId = getArticleId(typeSettings);
 
-					String portletId = addPortletPreferences(
-						companyId, groupId, plid, articleId);
+					String portletId = getPortletId();
 
-					String curTypeSettings = getTypeSettings(portletId);
+					addPortletPreferences(
+						companyId, groupId, plid, articleId, portletId);
 
-					updateLayout(plid, curTypeSettings);
+					updateLayout(plid, portletId);
 				}
 			}
 		}

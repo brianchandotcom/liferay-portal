@@ -256,7 +256,7 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
-	public static List<File> findFiles(File basedir, String targetFileName) {
+	public static List<File> findFiles(File basedir, String fileNameRegex) {
 		List<File> foundFiles = new ArrayList<>();
 
 		File[] files = basedir.listFiles();
@@ -265,9 +265,9 @@ public class JenkinsResultsParserUtil {
 			String fileName = file.getName();
 
 			if (file.isDirectory()) {
-				foundFiles.addAll(findFiles(file, targetFileName));
+				foundFiles.addAll(findFiles(file, fileNameRegex));
 			}
-			else if (fileName.equals(targetFileName)) {
+			else if (fileName.matches(fileNameRegex)) {
 				foundFiles.add(file);
 			}
 		}

@@ -77,13 +77,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 
 	protected long getAssetEntryId(long resourcePrimKey) throws Exception {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			"com.liferay.portlet.journal.model.JournalArticle",
-			resourcePrimKey);
-
-		if (assetEntry == null) {
-			assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-				"com.liferay.journal.model.JournalArticle", resourcePrimKey);
-		}
+			"com.liferay.journal.model.JournalArticle", resourcePrimKey);
 
 		if (assetEntry == null) {
 			throw new UpgradeException(

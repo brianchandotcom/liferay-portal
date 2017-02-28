@@ -1187,6 +1187,9 @@ task.
 ### Added
 - [LPS-63943]: Print out artifacts publish commands file path.
 
+### Changed
+- [LPS-68405]: Update the [Liferay Gradle Plugins] dependency to version 3.2.16.
+
 ### Fixed
 - [LPS-63943]: Avoid executing `writeArtifactPublishCommands` tasks if not
 explicitly invoked.
@@ -1233,6 +1236,7 @@ explicitly invoked.
 [LPS-68306]: https://issues.liferay.com/browse/LPS-68306
 [LPS-68334]: https://issues.liferay.com/browse/LPS-68334
 [LPS-68402]: https://issues.liferay.com/browse/LPS-68402
+[LPS-68405]: https://issues.liferay.com/browse/LPS-68405
 [LPS-68415]: https://issues.liferay.com/browse/LPS-68415
 [LPS-68448]: https://issues.liferay.com/browse/LPS-68448
 [LPS-68485]: https://issues.liferay.com/browse/LPS-68485

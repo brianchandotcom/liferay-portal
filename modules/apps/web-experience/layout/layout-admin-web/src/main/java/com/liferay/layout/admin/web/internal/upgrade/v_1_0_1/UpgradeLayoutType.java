@@ -40,7 +40,7 @@ import javax.portlet.PortletPreferences;
  */
 public class UpgradeLayoutType extends UpgradeProcess {
 
-	protected String createPortletPreferences(
+	protected String addPortletPreferences(
 			long companyId, long groupId, long plid, String articleId)
 		throws Exception {
 
@@ -50,8 +50,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		Portlet webContentPortlet = PortletLocalServiceUtil.getPortletById(
 			portletId);
 
-		String defaultPreferences = getDefaultPortletPreferences(
-			groupId, articleId);
+		String portletPreferences = getPortletPreferences(groupId, articleId);
 
 		String portletPreferencesId =
 			portletId + LayoutTemplateConstants.INSTANCE_SEPARATOR +
@@ -59,7 +58,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 
 		PortletPreferencesLocalServiceUtil.addPortletPreferences(
 			companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid,
-			portletPreferencesId, webContentPortlet, defaultPreferences);
+			portletPreferencesId, webContentPortlet, portletPreferences);
 
 		return portletPreferencesId;
 	}
@@ -69,9 +68,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		updateLayouts();
 	}
 
-	protected String getArticleIdFromTypeSettings(String typeSettings)
-		throws Exception {
-
+	protected String getArticleId(String typeSettings) throws Exception {
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
 		typeSettingsProperties.fastLoad(typeSettings);
@@ -85,9 +82,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		return articleId;
 	}
 
-	protected long getAssetEntryIdForResource(long resourcePrimKey)
-		throws Exception {
-
+	protected long getAssetEntryId(long resourcePrimKey) throws Exception {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			"com.liferay.portlet.journal.model.JournalArticle",
 			resourcePrimKey);
@@ -106,8 +101,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 		return assetEntry.getEntryId();
 	}
 
-	protected String getDefaultPortletPreferences(
-			long groupId, String articleId)
+	protected String getPortletPreferences(long groupId, String articleId)
 		throws Exception {
 
 		if (Validator.isNull(articleId)) {
@@ -133,7 +127,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 			throw new UpgradeException("Missing article with ID: " + articleId);
 		}
 
-		long assetEntryId = getAssetEntryIdForResource(resourcePrimKey);
+		long assetEntryId = getAssetEntryId(resourcePrimKey);
 
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
@@ -143,6 +137,32 @@ public class UpgradeLayoutType extends UpgradeProcess {
 			"assetEntryId", String.valueOf(assetEntryId));
 
 		return portletPreferences.toString();
+	}
+
+	protected String getTypeSettings(String portletId) {
+		UnicodeProperties newTypeSettings = new UnicodeProperties();
+
+		newTypeSettings.put("column-1", portletId);
+
+		newTypeSettings.put(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column");
+
+		return newTypeSettings.toString();
+	}
+
+	protected void updateLayout(long plid, String typeSettings)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update Layout set typeSettings = ?, type_ = ? where plid = ?"))
+		{
+
+			ps.setString(1, typeSettings);
+			ps.setString(2, "portlet");
+			ps.setLong(3, plid);
+
+			ps.executeUpdate();
+		}
 	}
 
 	protected void updateLayouts() throws Exception {
@@ -159,44 +179,17 @@ public class UpgradeLayoutType extends UpgradeProcess {
 					long plid = rs.getLong("plid");
 					String typeSettings = rs.getString("typeSettings");
 
-					String articleId = getArticleIdFromTypeSettings(
-						typeSettings);
+					String articleId = getArticleId(typeSettings);
 
-					String portletId = createPortletPreferences(
+					String portletId = addPortletPreferences(
 						companyId, groupId, plid, articleId);
 
-					String updatedTypeSettings = updateTypeSettings(portletId);
+					String curTypeSettings = getTypeSettings(portletId);
 
-					updateTypeForLayout(plid, updatedTypeSettings);
+					updateLayout(plid, curTypeSettings);
 				}
 			}
 		}
-	}
-
-	protected void updateTypeForLayout(long plid, String typeSettings)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update Layout set typeSettings = ?, type_ = ? where plid = ?"))
-		{
-
-			ps.setString(1, typeSettings);
-			ps.setString(2, "portlet");
-			ps.setLong(3, plid);
-
-			ps.executeUpdate();
-		}
-	}
-
-	protected String updateTypeSettings(String portletId) {
-		UnicodeProperties newTypeSettings = new UnicodeProperties();
-
-		newTypeSettings.put("column-1", portletId);
-
-		newTypeSettings.put(
-			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column");
-
-		return newTypeSettings.toString();
 	}
 
 }

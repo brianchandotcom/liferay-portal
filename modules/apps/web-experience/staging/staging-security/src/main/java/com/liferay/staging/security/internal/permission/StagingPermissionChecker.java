@@ -135,14 +135,17 @@ public class StagingPermissionChecker implements PermissionChecker {
 
 		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
 
-		if (liveGroupId != groupId) {
+		if ((liveGroupId != groupId) &&
+			!ResourceBlockLocalServiceUtil.isSupported(name)) {
 			if (primKey.equals(String.valueOf(groupId))) {
 				primKey = String.valueOf(liveGroupId);
 			}
+
+			groupId = liveGroupId;
 		}
 
 		return _permissionChecker.hasPermission(
-			liveGroupId, name, primKey, actionId);
+			groupId, name, primKey, actionId);
 	}
 
 	@Override

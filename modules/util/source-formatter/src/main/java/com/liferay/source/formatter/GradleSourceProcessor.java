@@ -95,6 +95,13 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
+		if (dependencies.contains(StringPool.APOSTROPHE)) {
+			String newDependencies = StringUtil.replace(
+				dependencies, StringPool.APOSTROPHE, StringPool.QUOTE);
+
+			return StringUtil.replace(content, dependencies, newDependencies);
+		}
+
 		Set<String> uniqueDependencies = new TreeSet<>();
 
 		for (String dependency : StringUtil.splitLines(dependencies)) {

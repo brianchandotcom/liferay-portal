@@ -185,8 +185,8 @@
 			<var name="key_menuItem" value="${language}" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="${locale}" />
+		<execute macro="WebContent#selectLocale">
+			<var name="locale" value="${locale}" />
 		</execute>
 	</command>
 
@@ -1394,6 +1394,12 @@
 				</execute>
 			</else>
 		</if>
+	</command>
+
+	<command name="selectLocale">
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="${locale}" />
+		</execute>
 	</command>
 
 	<command name="selectTemplateCP">

@@ -3300,6 +3300,10 @@ plugins.includes=</echo>
 		<delete failonerror="false" file="dist/liferay-portal-dependencies-${lp.version}.zip" />
 
 		<zip destfile="dist/liferay-portal-dependencies-${lp.version}.zip">
+			<mappedresources>
+				<fileset dir="tools/sdk/dist" includes="com.liferay.registry.api-*.jar" />
+				<globmapper from="*" to="liferay-portal-dependencies-${lp.version}/com.liferay.registry.api.jar" />
+			</mappedresources>
 			<zipfileset
 				dir="lib/development"
 				includes="hsql.jar"
@@ -3313,11 +3317,6 @@ plugins.includes=</echo>
 			<zipfileset
 				dir="portal-kernel"
 				includes="portal-kernel.jar"
-				prefix="liferay-portal-dependencies-${lp.version}"
-			/>
-			<zipfileset
-				dir="tools/sdk/dist"
-				includes="com.liferay.registry.api*.jar"
 				prefix="liferay-portal-dependencies-${lp.version}"
 			/>
 		</zip>

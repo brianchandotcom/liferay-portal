@@ -34,6 +34,6 @@ public class JSModuleConfigGeneratorExtension {
 		_version = version;
 	}
 
-	private Object _version = "1.1.10";
+	private Object _version = "1.2.1";
 
 }

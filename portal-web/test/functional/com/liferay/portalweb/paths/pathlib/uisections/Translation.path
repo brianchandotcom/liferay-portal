@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADD</td>
-	<td>//div[contains(@class,'translation-manager')]//a[contains(@class,'dropdown-toggle')] | //div[contains(@class,'translationmanager')]//div[contains(@class,'dropdown')]</td>
+	<td>//div[contains(@class,'translationmanager')]//div[contains(@class,'dropdown')]</td>
 	<td></td>
 </tr>
 <tr>

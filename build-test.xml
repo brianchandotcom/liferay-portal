@@ -5015,7 +5015,16 @@ go]]></replacevalue>
 									<else>
 										<echo>Deploying all relevant modules that make up ${Liferay-Releng-App-Title}.lpkg.</echo>
 
-										<gradle-execute dir="@{app.dir}" task="deploy" />
+										<gradle-execute dir="@{app.dir}" task="deploy">
+											<arg value="clean" />
+										</gradle-execute>
+
+										<ant antfile="build.xml" dir="modules" target="build-app-lpkg">
+											<property name="app.name" value="${osgi.app.name}" />
+											<property name="osgi.dir" value="${liferay.home}/osgi" />
+										</ant>
+
+										<gradle-execute dir="@{app.dir}" task="clean" />
 									</else>
 								</if>
 							</sequential>

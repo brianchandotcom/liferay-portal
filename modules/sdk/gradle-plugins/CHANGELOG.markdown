@@ -1149,6 +1149,19 @@ to version 1.0.91.
 - [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
 1.0.358.
 
+## 3.2.10 - 2017-02-28
+
+### Added
+- [LPS-70941]: Add the ability to configure the `showDocumentation` argument in
+all the `FormatSourceTask` instances by setting the project property
+`source.formatter.show.documentation`.
+
+### Changed
+- [LPS-70941]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.92.
+- [LPS-70941]: Update the [Liferay Source Formatter] dependency to version
+1.0.359.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1256,4 +1269,5 @@ to version 1.0.91.
 [LPS-70677]: https://issues.liferay.com/browse/LPS-70677
 [LPS-70707]: https://issues.liferay.com/browse/LPS-70707
 [LPS-70870]: https://issues.liferay.com/browse/LPS-70870
+[LPS-70941]: https://issues.liferay.com/browse/LPS-70941
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

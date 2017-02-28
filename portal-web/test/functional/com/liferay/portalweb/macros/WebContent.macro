@@ -178,6 +178,18 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="addLocale">
+		<execute function="Click" locator1="Translation#ADD" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${language}">
+			<var name="key_menuItem" value="${language}" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="${locale}" />
+		</execute>
+	</command>
+
 	<command name="addLocalizedPGViaWCD">
 		<execute macro="WebContentNavigator#gotoAddPGViaWCD">
 			<var name="structureName" value="${localizedBasicWebContent}" />

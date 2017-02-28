@@ -110,38 +110,42 @@ public class StagingPermissionChecker implements PermissionChecker {
 	public boolean hasPermission(
 		long groupId, String name, long primKey, String actionId) {
 
+		if (ResourceBlockLocalServiceUtil.isSupported(name)) {
+			return _permissionChecker.hasPermission(
+				groupId, name, primKey, actionId);
+		}
+
 		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
 
-		if ((liveGroupId != groupId) &&
-			!ResourceBlockLocalServiceUtil.isSupported(name)) {
+		if (liveGroupId != groupId) {
 			if (primKey == groupId) {
 				primKey = liveGroupId;
 			}
-
-			groupId = liveGroupId;
 		}
 
 		return _permissionChecker.hasPermission(
-			groupId, name, primKey, actionId);
+			liveGroupId, name, primKey, actionId);
 	}
 
 	@Override
 	public boolean hasPermission(
 		long groupId, String name, String primKey, String actionId) {
 
+		if (ResourceBlockLocalServiceUtil.isSupported(name)) {
+			return _permissionChecker.hasPermission(
+				groupId, name, primKey, actionId);
+		}
+
 		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
 
-		if ((liveGroupId != groupId) &&
-			!ResourceBlockLocalServiceUtil.isSupported(name)) {
+		if (liveGroupId != groupId) {
 			if (primKey.equals(String.valueOf(groupId))) {
 				primKey = String.valueOf(liveGroupId);
 			}
-
-			groupId = liveGroupId;
 		}
 
 		return _permissionChecker.hasPermission(
-			groupId, name, primKey, actionId);
+			liveGroupId, name, primKey, actionId);
 	}
 
 	@Override

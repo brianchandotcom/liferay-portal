@@ -48,10 +48,8 @@ public class StagingPermissionChecker implements PermissionChecker {
 	public List<Long> getOwnerResourceBlockIds(
 		long companyId, long groupId, String name, String actionId) {
 
-		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
-
 		return _permissionChecker.getOwnerResourceBlockIds(
-			companyId, liveGroupId, name, actionId);
+			companyId, groupId, name, actionId);
 	}
 
 	@Override
@@ -64,10 +62,8 @@ public class StagingPermissionChecker implements PermissionChecker {
 		long companyId, long groupId, long userId, String name,
 		String actionId) {
 
-		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
-
 		return _permissionChecker.getResourceBlockIds(
-			companyId, liveGroupId, userId, name, actionId);
+			companyId, groupId, userId, name, actionId);
 	}
 
 	@Override

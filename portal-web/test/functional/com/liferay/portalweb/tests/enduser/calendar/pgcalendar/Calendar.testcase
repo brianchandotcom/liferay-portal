@@ -537,9 +537,7 @@
 		</execute>
 	</command>
 
-	<!-- LPS-68313 -->
-
-	<!-- <command name="AddEventRegularAndResourceWithStagingAndSchedulePublishToLive" priority="4">
+	<command name="AddEventRegularAndResourceWithStagingAndSchedulePublishToLive" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -681,7 +679,7 @@
 			<var name="calendarName" value="Calendar Resource Name" />
 			<var name="calendarType" value="Other Calendars" />
 		</execute>
-	</command> -->
+	</command>
 
 	<command name="AddEventRegularCommentToCurrentSiteCalendars" priority="4">
 		<execute macro="TestCase#getSiteName">

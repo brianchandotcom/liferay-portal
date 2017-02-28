@@ -1,6 +1,11 @@
 Bundle-Name: Liferay Portal Remote CXF Common
 Bundle-SymbolicName: com.liferay.portal.remote.cxf.common
 Bundle-Version: 3.0.1
+Export-Package:\
+	javax.wsdl.*;version="1.2",\
+	\
+	org.apache.cxf.*;version="3.1.9",\
+	org.apache.ws.commons.schema.*;version="2.1.0"
 Import-Package:\
 	!com.sun.*,\
 	\
@@ -32,8 +37,3 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
--exportcontents:\
-	javax.wsdl.*;version="1.2",\
-	\
-	org.apache.cxf.*;version="3.1.9",\
-	org.apache.ws.commons.schema.*;version="2.1.0"

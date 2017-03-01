@@ -729,6 +729,11 @@ public class DLFileEntryTypeLocalServiceImpl
 		return staleDDMStructureLinkStructureIds;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #_updateDDMStructure(long,
+	 *             String, long, long, Map, Map, long[], ServiceContext)}
+	 */
+	@Deprecated
 	protected long updateDDMStructure(
 			long userId, String fileEntryTypeUuid, long fileEntryTypeId,
 			long groupId, Map<Locale, String> nameMap,

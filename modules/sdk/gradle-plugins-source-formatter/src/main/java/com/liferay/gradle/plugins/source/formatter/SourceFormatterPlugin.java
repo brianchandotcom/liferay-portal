@@ -100,6 +100,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 		formatSourceTask.setDescription(
 			"Runs Liferay Source Formatter to format the project files.");
+		formatSourceTask.setGroup("formatting");
 
 		return formatSourceTask;
 	}

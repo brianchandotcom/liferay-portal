@@ -95,6 +95,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 
 		formatJavadocTask.setDescription(
 			"Runs Liferay Javadoc Formatter to format files.");
+		formatJavadocTask.setGroup("formatting");
 
 		return formatJavadocTask;
 	}

@@ -78,6 +78,7 @@ public class TLDFormatterPlugin implements Plugin<Project> {
 
 		formatTLDTask.setDescription(
 			"Runs Liferay TLD Formatter to format files.");
+		formatTLDTask.setGroup("formatting");
 
 		return formatTLDTask;
 	}

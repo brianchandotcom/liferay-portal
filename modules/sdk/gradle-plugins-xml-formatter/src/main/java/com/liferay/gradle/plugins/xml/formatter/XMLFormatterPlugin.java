@@ -87,6 +87,7 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 
 		formatXMLTask.setDescription(
 			"Runs Liferay XML Formatter to format the project files.");
+		formatXMLTask.setGroup("formatting");
 
 		PluginContainer pluginContainer = project.getPlugins();
 

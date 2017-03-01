@@ -196,6 +196,12 @@ public class TopLevelBuild extends BaseBuild {
 			String repositoryTypes = buildProperties.getProperty(
 				"repository.types");
 
+			if (jobName.startsWith(
+					"test-subrepository-acceptance-pullrequest")) {
+
+				repositoryTypes += "," + getBaseRepositoryName();
+			}
+
 			for (String repositoryType : repositoryTypes.split(",")) {
 				try {
 					JSONObject gitRepositoryDetailsJSONObject =

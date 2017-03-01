@@ -3,7 +3,12 @@ Bundle-SymbolicName: com.liferay.frontend.editor.simple.web
 Bundle-Version: 1.0.6
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rich Text Editors
-Provide-Capability: liferay.resource.bundle;resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.frontend.editor.lang)";resource.bundle.base.name="content.Language"
-Require-Capability: liferay.resource.bundle;filter:="(bundle.symbolic.name=com.liferay.frontend.editor.lang)
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.frontend.editor.lang)";\
+		resource.bundle.base.name="content.Language"
+Require-Capability:\
+	liferay.resource.bundle;\
+		filter:="(bundle.symbolic.name=com.liferay.frontend.editor.lang)
 Web-ContextPath: /frontend-editor-simple-web
 -donotcopy: (\.touch|.*_diffs.*|.*.properties)"

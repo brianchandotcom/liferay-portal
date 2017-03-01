@@ -4,5 +4,9 @@ Bundle-Version: 1.0.0
 Export-Package: com.liferay.site.taglib.servlet.taglib
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
-Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/site";version:Version="${Bundle-Version}"
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/site";\
+		version:Version="${Bundle-Version}"
 Web-ContextPath: /site-taglib

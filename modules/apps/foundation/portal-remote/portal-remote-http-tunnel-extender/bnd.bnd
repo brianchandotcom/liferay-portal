@@ -3,4 +3,7 @@ Bundle-SymbolicName: com.liferay.portal.remote.http.tunnel.extender
 Bundle-Version: 2.0.4
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
-Provide-Capability: liferay.extender;liferay.extender="http.tunnel.extender";version:Version="${Bundle-Version}"
+Provide-Capability:\
+	liferay.extender;\
+		liferay.extender="http.tunnel.extender";\
+		version:Version="${Bundle-Version}"

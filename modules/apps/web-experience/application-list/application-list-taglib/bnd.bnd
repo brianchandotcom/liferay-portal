@@ -6,5 +6,9 @@ Export-Package:\
 	com.liferay.application.list.taglib.servlet.taglib
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Product Navigation
-Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/application-list";version:Version="${Bundle-Version}"
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/application-list";\
+		version:Version="${Bundle-Version}"
 Web-ContextPath: /application-list-taglib

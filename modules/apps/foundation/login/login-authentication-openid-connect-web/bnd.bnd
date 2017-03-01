@@ -4,6 +4,14 @@ Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Login
 Provide-Capability:\
-	liferay.resource.bundle;resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.login.authentication.openid.connect.web),(&(bundle.symbolic.name=com.liferay.login.web)(!(aggregate=true)))";bundle.symbolic.name=com.liferay.login.web;resource.bundle.base.name="content.Language";service.ranking="1";aggregate=true;servlet.context.name=login-web,\
-	liferay.resource.bundle;resource.bundle.base.name:String="content.Language";bundle.symbolic.name=com.liferay.login.authentication.openid.connect.web
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.login.authentication.openid.connect.web),(&(bundle.symbolic.name=com.liferay.login.web)(!(aggregate=true)))";\
+		bundle.symbolic.name=com.liferay.login.web;\
+		resource.bundle.base.name="content.Language";\
+		service.ranking="1";\
+		aggregate=true;\
+		servlet.context.name=login-web,\
+	liferay.resource.bundle;\
+		resource.bundle.base.name:String="content.Language";\
+		bundle.symbolic.name=com.liferay.login.authentication.openid.connect.web
 Web-ContextPath: /login-authentication-openid-connect-web

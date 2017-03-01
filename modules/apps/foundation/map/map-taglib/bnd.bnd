@@ -2,5 +2,9 @@ Bundle-Name: Liferay Map Taglib
 Bundle-SymbolicName: com.liferay.map.taglib
 Bundle-Version: 1.1.1
 Export-Package: com.liferay.map.taglib.servlet.taglib
-Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/map";version:Version="${Bundle-Version}"
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/map";\
+		version:Version="${Bundle-Version}"
 Web-ContextPath: /map-taglib

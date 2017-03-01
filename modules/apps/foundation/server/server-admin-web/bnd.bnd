@@ -4,4 +4,8 @@ Bundle-Version: 1.0.15
 DynamicImport-Package: *
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
-Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://struts.apache.org/tags-html";version:Version="${Bundle-Version}"
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://struts.apache.org/tags-html";\
+		version:Version="${Bundle-Version}"

@@ -1,5 +1,10 @@
 Bundle-Name: Liferay Frontend Image Editor Capability Effects
 Bundle-SymbolicName: com.liferay.frontend.image.editor.capability.effects
 Bundle-Version: 1.0.8
-Provide-Capability: soy;type="image-editor-capability";version:Version="1.0.0"
-Require-Capability: soy;filter:="(type=metal)"
+Provide-Capability:\
+	soy;\
+		type="image-editor-capability";\
+		version:Version="1.0.0"
+Require-Capability:\
+	soy;\
+		filter:="(type=metal)"

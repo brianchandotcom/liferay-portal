@@ -4,5 +4,9 @@ Bundle-Version: 2.0.5
 Export-Package:\
 	com.liferay.trash.taglib.servlet,\
 	com.liferay.trash.taglib.servlet.taglib
-Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/trash";version:Version="${Bundle-Version}"
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/trash";\
+		version:Version="${Bundle-Version}"
 Web-ContextPath: /trash-taglib

@@ -4,5 +4,9 @@ Bundle-Version: 2.1.2
 Export-Package: com.liferay.site.navigation.taglib.servlet.taglib
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
-Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/site-navigation";version:Version="${Bundle-Version}"
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/site-navigation";\
+		version:Version="${Bundle-Version}"
 Web-ContextPath: /site-navigation-taglib

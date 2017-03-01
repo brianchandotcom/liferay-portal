@@ -4,4 +4,7 @@ Bundle-Version: 1.0.23
 Liferay-Export-JS-Submodules: senna
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend SPA Infrastructure
-Provide-Capability: osgi.extender;osgi.extender="liferay.spa";version:Version="${Bundle-Version}"
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="liferay.spa";\
+		version:Version="${Bundle-Version}"

@@ -221,6 +221,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				cleanArtifactsPublishCommandsTask.getDelete()));
 
 		mergeFilesTask.setDescription("Merges the artifacts publish commands");
+		mergeFilesTask.setHeader(
+			"#!/bin/bash" + System.lineSeparator() + System.lineSeparator() +
+				"set -e" + System.lineSeparator());
 
 		mergeFilesTask.setInputFiles(
 			new File(dir, WRITE_ARTIFACT_PUBLISH_COMMANDS + "-step1.sh"),

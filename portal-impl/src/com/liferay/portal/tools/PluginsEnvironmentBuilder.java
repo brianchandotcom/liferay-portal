@@ -791,9 +791,9 @@ public class PluginsEnvironmentBuilder {
 					gitIgnores.add("/classes");
 					gitIgnores.add("/ext-impl.jar");
 				}
-				else if (sourceDirName.endsWith("ext-service/src")) {
+				else if (sourceDirName.endsWith("ext-kernel/src")) {
 					gitIgnores.add("/classes");
-					gitIgnores.add("/ext-service.jar");
+					gitIgnores.add("/ext-kernel.jar");
 				}
 				else if (sourceDirName.endsWith("ext-util-bridges/src")) {
 					gitIgnores.add("/classes");
@@ -878,7 +878,7 @@ public class PluginsEnvironmentBuilder {
 	private static final String _BRANCH = "master";
 
 	private static final String[] _SOURCE_DIR_NAMES = new String[] {
-		"docroot/WEB-INF/ext-impl/src", "docroot/WEB-INF/ext-service/src",
+		"docroot/WEB-INF/ext-impl/src", "docroot/WEB-INF/ext-kernel/src",
 		"docroot/WEB-INF/ext-util-bridges/src",
 		"docroot/WEB-INF/ext-util-java/src",
 		"docroot/WEB-INF/ext-util-taglib/src", "docroot/WEB-INF/service",

@@ -42,14 +42,14 @@ public class GitWorkingDirectory {
 	public GitWorkingDirectory(String workingDirectory)
 		throws GitAPIException, InterruptedException, IOException {
 
-		this(workingDirectory, "master");
+		this("master", workingDirectory);
 	}
 
 	public GitWorkingDirectory(
-			String workingDirectory, String repositoryBranchName)
+			String upstreamBranchName, String workingDirectory)
 		throws GitAPIException, InterruptedException, IOException {
 
-		_repositoryBranchName = repositoryBranchName;
+		_upstreamBranchName = upstreamBranchName;
 
 		_setWorkingDirectory(workingDirectory);
 
@@ -65,8 +65,7 @@ public class GitWorkingDirectory {
 
 		_git = new Git(_repository);
 
-		_repositoryName = _getRepositoryName(
-			_repositoryBranchName, _repository);
+		_repositoryName = _getRepositoryName(_upstreamBranchName, _repository);
 		_repositoryUsername = _getRepositoryUsername(_repository);
 	}
 
@@ -158,16 +157,16 @@ public class GitWorkingDirectory {
 		return _repository.getBranch();
 	}
 
-	public String getRepositoryBranchName() {
-		return _repositoryBranchName;
-	}
-
 	public String getRepositoryName() {
 		return _repositoryName;
 	}
 
 	public String getRepositoryUsername() {
 		return _repositoryUsername;
+	}
+
+	public String getUpstreamBranchName() {
+		return _upstreamBranchName;
 	}
 
 	public File getWorkingDirectory() {
@@ -298,9 +297,9 @@ public class GitWorkingDirectory {
 	private final Git _git;
 	private File _gitDirectory;
 	private final Repository _repository;
-	private final String _repositoryBranchName;
 	private final String _repositoryName;
 	private final String _repositoryUsername;
+	private final String _upstreamBranchName;
 	private File _workingDirectory;
 
 }

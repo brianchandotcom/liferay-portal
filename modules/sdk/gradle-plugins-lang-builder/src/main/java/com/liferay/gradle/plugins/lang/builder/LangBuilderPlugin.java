@@ -28,6 +28,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
@@ -86,6 +87,7 @@ public class LangBuilderPlugin implements Plugin<Project> {
 
 		buildLangTask.setDescription(
 			"Runs Liferay Lang Builder to translate language property files.");
+		buildLangTask.setGroup(BasePlugin.BUILD_GROUP);
 
 		PluginContainer pluginContainer = project.getPlugins();
 

@@ -107,6 +107,7 @@ public class DBSupportPlugin implements Plugin<Project> {
 		cleanServiceBuilderTask.setDescription(
 			"Cleans the Liferay database from the Service Builder tables and " +
 				"rows of a module.");
+		cleanServiceBuilderTask.setGroup(BasePlugin.BUILD_GROUP);
 
 		cleanServiceBuilderTask.setServletContextName(
 			new Callable<String>() {

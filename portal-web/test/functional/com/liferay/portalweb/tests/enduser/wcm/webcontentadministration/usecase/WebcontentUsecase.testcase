@@ -2375,15 +2375,15 @@
 			<var name="portletOption" value="Modifier le contenu de Web" />
 		</execute>
 
-		<execute macro="WebContent#viewTranslationPGViaWCD">
-			<var name="fieldName" value="Text" />
-			<var name="localizedText" value="WC contenu WebContent" />
-			<var name="localizedTitle" value="WC WebContent Titre" />
-			<var name="lowercaseLanguageCode" value="fr" />
-			<var name="panelHeading" value="Structure et gabarit" />
-			<var name="structureLocalizationName" value="nom de la structure de wc" />
-			<var name="templateLocalizationName" value="nom de la template de wc" />
-			<var name="webContentTranslationLanguage" value="français (France)" />
+		<execute macro="IFrame#selectEditAssetFrame" />
+
+		<execute macro="WebContent#selectLocale">
+			<var name="locale" value="fr-FR" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentText" value="WC contenu WebContent" />
+			<var name="webContentTitle" value="WC WebContent Titre" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

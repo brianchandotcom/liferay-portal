@@ -1564,11 +1564,13 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#viewTranslation">
-			<var name="localizedContent" value="WC Contenido de la web Contenido" />
-			<var name="localizedLanguage" value="Spanish (Spain)" />
-			<var name="localizedTitle" value="WC Contenido de la web Titulo" />
-			<var name="webContentTitle" value="WC WebContent Title" />
+		<execute macro="WebContent#selectLocale">
+			<var name="locale" value="es-ES" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent" value="WC Contenido de la web Contenido" />
+			<var name="webContentTitle" value="WC Contenido de la web Titulo" />
 		</execute>
 	</command>
 

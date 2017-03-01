@@ -228,7 +228,15 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		content = StringUtil.replace(content, " \\\n", "\\\n");
 
-		Matcher matcher = _incorrectTabPattern.matcher(content);
+		Matcher matcher = _trailingSemiColonPattern.matcher(content);
+
+		if (matcher.find()) {
+			content = StringUtil.replaceFirst(
+				content, StringPool.SEMICOLON, StringPool.BLANK,
+				matcher.start());
+		}
+
+		matcher = _incorrectTabPattern.matcher(content);
 
 		if (matcher.find()) {
 			content = StringUtil.replaceFirst(
@@ -617,6 +625,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
 	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
 		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
+	private final Pattern _trailingSemiColonPattern = Pattern.compile(
+		";(\n|\\Z)");
 	private final Pattern _webContextPathNamePattern = Pattern.compile(
 		"^Web-ContextPath: (.*)\n", Pattern.MULTILINE);
 	private final Pattern _wilcardImportPattern = Pattern.compile(

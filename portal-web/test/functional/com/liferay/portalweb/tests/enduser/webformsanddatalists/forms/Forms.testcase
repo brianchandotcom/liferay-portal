@@ -2025,7 +2025,8 @@
 
 	<command name="SubmitFormContainingCaptchaAndViewTextFieldValue" priority="5">
 		<description message="This is a use case for LPS-60818." />
-		<property name="custom.properties" value="captcha.max.challenges=0" />
+		<property name="osgi.module.configuration.file.names" value="com.liferay.captcha.configuration.CaptchaConfiguration" />
+		<property name="osgi.module.configurations" value="maxChallenges=&quot;0&quot;" />
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#openURL" />

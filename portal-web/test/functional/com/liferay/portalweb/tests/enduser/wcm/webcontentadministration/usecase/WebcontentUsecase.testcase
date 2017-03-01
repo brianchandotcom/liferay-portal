@@ -2393,6 +2393,12 @@
 			<var name="webContentTitle" value="WC WebContent Titre" />
 		</execute>
 
+		<execute macro="WebContent#viewStructureAndTemplateLocalization">
+			<var name="panelHeading" value="Structure et gabarit" />
+			<var name="structureLocalizationName" value="nom de la structure de wc" />
+			<var name="templateLocalizationName" value="nom de la template de wc" />
+		</execute>
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -2410,7 +2416,9 @@
 			<var name="portletOption" value="编辑网页内容" />
 		</execute>
 
-		<execute macro="WebContent#viewTranslationPGViaWCD">
+		<execute macro="IFrame#selectEditAssetFrame" />
+
+		<execute macro="WebContent#viewStructureAndTemplateLocalization">
 			<var name="panelHeading" value="结构和模板" />
 			<var name="structureLocalizationName" value="wc 结构名称" />
 			<var name="templateLocalizationName" value="wc 模板名称" />

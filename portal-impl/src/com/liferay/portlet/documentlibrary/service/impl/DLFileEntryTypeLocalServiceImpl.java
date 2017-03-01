@@ -57,6 +57,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -111,13 +112,9 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		long fileEntryTypeId = counterLocalService.increment();
 
-		long ddmStructureId = updateDDMStructure(
+		ddmStructureIds = _updateDDMStructure(
 			userId, fileEntryTypeUuid, fileEntryTypeId, groupId, nameMap,
-			descriptionMap, serviceContext);
-
-		if (ddmStructureId > 0) {
-			ddmStructureIds = ArrayUtil.append(ddmStructureIds, ddmStructureId);
-		}
+			descriptionMap, ddmStructureIds, serviceContext);
 
 		validate(fileEntryTypeId, groupId, fileEntryTypeKey, ddmStructureIds);
 
@@ -475,14 +472,10 @@ public class DLFileEntryTypeLocalServiceImpl
 		DLFileEntryType dlFileEntryType =
 			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
 
-		long ddmStructureId = updateDDMStructure(
+		ddmStructureIds = _updateDDMStructure(
 			userId, dlFileEntryType.getUuid(), fileEntryTypeId,
 			dlFileEntryType.getGroupId(), nameMap, descriptionMap,
-			serviceContext);
-
-		if (ddmStructureId > 0) {
-			ddmStructureIds = ArrayUtil.append(ddmStructureIds, ddmStructureId);
-		}
+			ddmStructureIds, serviceContext);
 
 		validate(
 			fileEntryTypeId, dlFileEntryType.getGroupId(),
@@ -824,6 +817,115 @@ public class DLFileEntryTypeLocalServiceImpl
 				throw new NoSuchMetadataSetException(
 					"{ddmStructureId=" + ddmStructureId);
 			}
+		}
+	}
+
+	private void _deleteDDMStructure(long fileEntryTypeId, long structureId)
+		throws PortalException {
+
+		deleteDDMStructureLinks(
+			fileEntryTypeId, Collections.singleton(structureId));
+
+		DDMStructureManagerUtil.deleteStructure(structureId);
+	}
+
+	private DDMForm _getDDMForm(
+		DDMStructure ddmStructure, ServiceContext serviceContext) {
+
+		DDMForm ddmForm = (DDMForm)serviceContext.getAttribute("ddmForm");
+
+		if (ddmForm != null) {
+			return ddmForm;
+		}
+
+		if (ddmStructure != null) {
+			return ddmStructure.getDDMForm();
+		}
+
+		return null;
+	}
+
+	private boolean _isEmptyDDMForm(DDMForm ddmForm) {
+		if (ddmForm == null) {
+			return true;
+		}
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		if (ddmFormFields.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private long[] _updateDDMStructure(
+			long userId, String fileEntryTypeUuid, long fileEntryTypeId,
+			long groupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, long[] structureIds,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructure ddmStructure = null;
+
+		try {
+			fixDDMStructureKey(fileEntryTypeUuid, fileEntryTypeId, groupId);
+
+			String ddmStructureKey = DLUtil.getDDMStructureKey(
+				fileEntryTypeUuid);
+
+			ddmStructure = DDMStructureManagerUtil.fetchStructure(
+				groupId,
+				classNameLocalService.getClassNameId(DLFileEntryMetadata.class),
+				ddmStructureKey);
+
+			DDMForm ddmForm = _getDDMForm(ddmStructure, serviceContext);
+
+			if (_isEmptyDDMForm(ddmForm)) {
+				if (ddmStructure != null) {
+					_deleteDDMStructure(
+						fileEntryTypeId, ddmStructure.getStructureId());
+
+					return ArrayUtil.remove(
+						structureIds, ddmStructure.getStructureId());
+				}
+
+				return structureIds;
+			}
+
+			if (ddmStructure == null) {
+				ddmStructure = DDMStructureManagerUtil.addStructure(
+					userId, groupId, null,
+					classNameLocalService.getClassNameId(
+						DLFileEntryMetadata.class),
+					ddmStructureKey, nameMap, descriptionMap, ddmForm,
+					StorageEngineManager.STORAGE_TYPE_DEFAULT,
+					DDMStructureManager.STRUCTURE_TYPE_AUTO, serviceContext);
+			}
+			else {
+				ddmStructure = DDMStructureManagerUtil.updateStructure(
+					userId, ddmStructure.getStructureId(),
+					ddmStructure.getParentStructureId(), nameMap,
+					descriptionMap, ddmForm, serviceContext);
+			}
+
+			return ArrayUtil.append(
+				structureIds, ddmStructure.getStructureId());
+		}
+		catch (StructureDefinitionException sde) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(sde, sde);
+			}
+
+			if (ddmStructure != null) {
+				long structureId = ddmStructure.getStructureId();
+
+				_deleteDDMStructure(fileEntryTypeId, structureId);
+
+				return ArrayUtil.remove(structureIds, structureId);
+			}
+
+			return structureIds;
 		}
 	}
 

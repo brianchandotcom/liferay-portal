@@ -118,8 +118,7 @@ public class LayoutFinderImpl
 				sql, "AND (Layout.privateLayout = ?)", StringPool.BLANK);
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
-				sql, Layout.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+				sql, Layout.class.getName(), "Layout.plid", groupId);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -222,8 +221,5 @@ public class LayoutFinderImpl
 			closeSession(session);
 		}
 	}
-
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"Layout.plid";
 
 }

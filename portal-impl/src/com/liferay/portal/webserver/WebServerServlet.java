@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.service.ImageServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -494,9 +493,10 @@ public class WebServerServlet extends HttpServlet {
 					PermissionChecker permissionChecker =
 						PermissionCheckerFactoryUtil.create(user);
 
-					if (!GroupPermissionUtil.contains(
-							permissionChecker, layoutSet.getGroupId(),
-							ActionKeys.VIEW)) {
+					Group group = layoutSet.getGroup();
+
+					if (!group.isShowSite(
+							permissionChecker, layoutSet.isPrivateLayout())) {
 
 						throw new PrincipalException.MustHavePermission(
 							permissionChecker, LayoutSet.class.getName(),

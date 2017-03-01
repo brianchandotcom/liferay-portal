@@ -67,17 +67,17 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		try (InputStream is = (new URL(_RANDOM_USER_API)).openStream()) {
 			String json = StringUtil.read(is);
 
-			JSONObject rootJsonObject = JSONFactoryUtil.createJSONObject(json);
+			JSONObject rootJSONObject = JSONFactoryUtil.createJSONObject(json);
 
-			JSONObject userJsonObject = rootJsonObject.getJSONArray(
+			JSONObject userJSONObject = rootJSONObject.getJSONArray(
 				"results").getJSONObject(0);
 
-			emailAddress = _getEmailAddress(emailAddress, userJsonObject);
+			emailAddress = _getEmailAddress(emailAddress, userJSONObject);
 			male = StringUtil.equalsIgnoreCase(
-				userJsonObject.getString("gender"), "male");
-			birthDate = _getBirthDate(birthDate, userJsonObject);
+				userJSONObject.getString("gender"), "male");
+			birthDate = _getBirthDate(birthDate, userJSONObject);
 
-			JSONObject pictureJSONObject = userJsonObject.getJSONObject(
+			JSONObject pictureJSONObject = userJSONObject.getJSONObject(
 				"picture");
 
 			String portraitURL = pictureJSONObject.getString("large");
@@ -208,8 +208,8 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 			new ServiceContext());
 	}
 
-	private Date _getBirthDate(Date birthDate, JSONObject userJsonObject) {
-		String dob = userJsonObject.getString("dob");
+	private Date _getBirthDate(Date birthDate, JSONObject userJSONObject) {
+		String dob = userJSONObject.getString("dob");
 
 		try {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
@@ -233,10 +233,10 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 	}
 
 	private String _getEmailAddress(
-		String emailAddress, JSONObject userJsonObject) {
+		String emailAddress, JSONObject userJSONObject) {
 
 		if (Validator.isNull(emailAddress)) {
-			emailAddress = userJsonObject.getString("email");
+			emailAddress = userJSONObject.getString("email");
 		}
 
 		if (!Validator.isEmailAddress(emailAddress)) {

@@ -349,13 +349,13 @@ public class LiferayActivityService implements ActivityService {
 		List<MediaItem> mediaItems = new ArrayList<>();
 
 		for (int i = 0; i < mediaItemsJSONArray.length(); i++) {
-			JSONObject mediaItemsJsonObject = mediaItemsJSONArray.getJSONObject(
+			JSONObject mediaItemsJSONObject = mediaItemsJSONArray.getJSONObject(
 				i);
 
 			MediaItem mediaItem = new MediaItemImpl(
-				mediaItemsJsonObject.getString("mimeType"),
-				Type.valueOf(mediaItemsJsonObject.getString("type")),
-				mediaItemsJsonObject.getString("url"));
+				mediaItemsJSONObject.getString("mimeType"),
+				Type.valueOf(mediaItemsJSONObject.getString("type")),
+				mediaItemsJSONObject.getString("url"));
 
 			mediaItems.add(mediaItem);
 		}
@@ -371,15 +371,15 @@ public class LiferayActivityService implements ActivityService {
 		JSONArray mediaItemsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (MediaItem mediaItem : mediaItems) {
-			JSONObject mediaItemsJsonObject =
+			JSONObject mediaItemsJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
-			mediaItemsJsonObject.put("mimeType", mediaItem.getMimeType());
-			mediaItemsJsonObject.put(
+			mediaItemsJSONObject.put("mimeType", mediaItem.getMimeType());
+			mediaItemsJSONObject.put(
 				"type", String.valueOf(mediaItem.getType()));
-			mediaItemsJsonObject.put("url", mediaItem.getUrl());
+			mediaItemsJSONObject.put("url", mediaItem.getUrl());
 
-			mediaItemsJSONArray.put(mediaItemsJsonObject);
+			mediaItemsJSONArray.put(mediaItemsJSONObject);
 		}
 
 		return mediaItemsJSONArray;

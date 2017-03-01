@@ -114,14 +114,14 @@ public class NpmShrinkwrapTask extends ExecuteNpmTask {
 
 		_removeExcludedDependencies(shrinkwrap, excludedDependencies);
 
-		String shrinkwrapJson = JsonOutput.prettyPrint(
+		String shrinkwrapJSON = JsonOutput.prettyPrint(
 			JsonOutput.toJson(shrinkwrap));
 
-		shrinkwrapJson = shrinkwrapJson.replace(_FOUR_SPACES, "\t");
+		shrinkwrapJSON = shrinkwrapJSON.replace(_FOUR_SPACES, "\t");
 
 		Files.write(
 			shrinkwrapJsonFile.toPath(),
-			shrinkwrapJson.getBytes(StandardCharsets.UTF_8));
+			shrinkwrapJSON.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private void _removeExcludedDependencies(

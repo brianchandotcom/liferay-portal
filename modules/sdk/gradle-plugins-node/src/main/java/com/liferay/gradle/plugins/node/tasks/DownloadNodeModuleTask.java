@@ -40,19 +40,19 @@ public class DownloadNodeModuleTask extends ExecuteNpmTask {
 				@Override
 				public boolean isSatisfiedBy(Task task) {
 					try {
-						File packageJsonFile = new File(
+						File packageJSONFile = new File(
 							getModuleDir(), "package.json");
 
-						if (!packageJsonFile.exists()) {
+						if (!packageJSONFile.exists()) {
 							return true;
 						}
 
-						String packageJson = new String(
-							Files.readAllBytes(packageJsonFile.toPath()));
+						String packageJSON = new String(
+							Files.readAllBytes(packageJSONFile.toPath()));
 
 						String version = getModuleVersion();
 
-						if (packageJson.contains(
+						if (packageJSON.contains(
 								"\"version\": \"" + version + "\"")) {
 
 							return false;

@@ -114,10 +114,10 @@ public class ThemeContributorExtender extends AbstractExtender {
 
 					JSONTokener jsonTokener = new JSONTokener(reader);
 
-					JSONObject packageJsonObject = new JSONObject(jsonTokener);
+					JSONObject packageJSONObject = new JSONObject(jsonTokener);
 
 					JSONObject liferayThemeJSONObject =
-						packageJsonObject.optJSONObject("liferayTheme");
+						packageJSONObject.optJSONObject("liferayTheme");
 
 					if (liferayThemeJSONObject != null) {
 						type = liferayThemeJSONObject.getString(jsonName);

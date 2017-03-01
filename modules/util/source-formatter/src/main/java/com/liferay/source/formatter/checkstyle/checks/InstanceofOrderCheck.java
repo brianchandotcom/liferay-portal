@@ -15,10 +15,10 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
+import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 /**
@@ -61,8 +61,8 @@ public class InstanceofOrderCheck extends AbstractCheck {
 		NaturalOrderStringComparator comparator =
 			new NaturalOrderStringComparator();
 
-		String typeName1 = _getTypeName(detailAST);
-		String typeName2 = _getTypeName(nextConditionAST);
+		String typeName1 = DetailASTUtil.getTypeName(detailAST);
+		String typeName2 = DetailASTUtil.getTypeName(nextConditionAST);
 
 		if (comparator.compare(typeName1, typeName2) > 0) {
 			log(
@@ -81,15 +81,6 @@ public class InstanceofOrderCheck extends AbstractCheck {
 		DetailAST parentAST = detailAST.getParent();
 
 		return parentAST.getNextSibling();
-	}
-
-	private String _getTypeName(DetailAST literalInstanceOfAST) {
-		DetailAST typeAST = literalInstanceOfAST.findFirstToken(
-			TokenTypes.TYPE);
-
-		FullIdent typeIdent = FullIdent.createFullIdentBelow(typeAST);
-
-		return typeIdent.getText();
 	}
 
 	private String _getVariableName(DetailAST literalInstanceOfAST) {

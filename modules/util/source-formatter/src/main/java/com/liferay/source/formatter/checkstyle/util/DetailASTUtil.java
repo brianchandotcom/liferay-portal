@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checkstyle.util;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
@@ -192,6 +193,14 @@ public class DetailASTUtil {
 		}
 
 		return startLine;
+	}
+
+	public static String getTypeName(DetailAST detailAST) {
+		DetailAST typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
+
+		FullIdent typeIdent = FullIdent.createFullIdentBelow(typeAST);
+
+		return typeIdent.getText();
 	}
 
 	public static boolean hasParentWithTokenType(

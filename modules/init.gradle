@@ -4,7 +4,7 @@ import org.gradle.internal.hash.HashUtil
 import org.gradle.internal.hash.HashValue
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
-	println "Using proxy ${System.properties['http.proxyHost']}:${System.properties['http.proxyPort']}."
+	logger.lifecycle "Using proxy {}:{}.", System.properties["http.proxyHost"], System.properties["http.proxyPort"]
 
 	System.setProperty "repository.url", "http://repository.liferay.com/nexus/content/groups/public"
 }
@@ -13,7 +13,7 @@ gradle.buildFinished {
 	if (System.getenv("JENKINS_HOME")) {
 		Date now = new Date()
 
-		println "Gradle build finished at " + now.format("yyyy-MM-dd HH:mm:ss.SSS", TimeZone.getTimeZone("UTC"))
+		logger.quiet "Gradle build finished at {}", now.format("yyyy-MM-dd HH:mm:ss.SSS", TimeZone.getTimeZone("UTC"))
 	}
 
 	ByteArrayOutputStream errorByteArrayOutputStream = new ByteArrayOutputStream()

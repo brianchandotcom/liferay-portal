@@ -61,7 +61,7 @@ cleanReleng {
 			if (!moduleDir.exists()) {
 				delete relengDir
 
-				println "Removed " + relativePath(relengDir)
+				logger.lifecycle "Removed {}", relativePath(relengDir)
 			}
 		}
 	}
@@ -95,7 +95,7 @@ printDependencyPath {
 
 		configuration.transitive = false
 
-		println configuration.singleFile
+		logger.quiet configuration.singleFile.absolutePath
 	}
 }
 

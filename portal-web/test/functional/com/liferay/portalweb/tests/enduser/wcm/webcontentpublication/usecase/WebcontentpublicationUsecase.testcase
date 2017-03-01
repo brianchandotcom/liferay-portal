@@ -835,11 +835,17 @@
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
-		<execute macro="WebContent#addTranslation">
-			<var name="localizedInteger" value="3" />
-			<var name="localizedLanguage" value="German (Germany)" />
-			<var name="localizedTitle" value="Netz Inhalt1 Titel" />
-			<var name="webContentTitle" value="Web Content1 Title" />
+		<execute macro="WebContent#addLocale">
+			<var name="language" value="German (Germany)" />
+			<var name="locale" value="de-DE" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="Netz Inhalt1 Titel" />
+		</execute>
+
+		<execute function="Type" locator1="DDMField#INTEGER" value1="3">
+			<var name="key_fieldName" value="Integer" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
@@ -878,11 +884,17 @@
 			<var name="webContentTitle" value="Web Content2 Title" />
 		</execute>
 
-		<execute macro="WebContent#addTranslation">
-			<var name="localizedInteger" value="8" />
-			<var name="localizedLanguage" value="German (Germany)" />
-			<var name="localizedTitle" value="Netz Inhalt2 Titel" />
-			<var name="webContentTitle" value="Web Content2 Title" />
+		<execute macro="WebContent#addLocale">
+			<var name="language" value="German (Germany)" />
+			<var name="locale" value="de-DE" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="Netz Inhalt2 Titel" />
+		</execute>
+
+		<execute function="Type" locator1="DDMField#INTEGER" value1="8">
+			<var name="key_fieldName" value="Integer" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
@@ -921,11 +933,17 @@
 			<var name="webContentTitle" value="Web Content3 Title" />
 		</execute>
 
-		<execute macro="WebContent#addTranslation">
-			<var name="localizedInteger" value="5" />
-			<var name="localizedLanguage" value="German (Germany)" />
-			<var name="localizedTitle" value="Netz Inhalt3 Titel" />
-			<var name="webContentTitle" value="Web Content3 Title" />
+		<execute macro="WebContent#addLocale">
+			<var name="language" value="German (Germany)" />
+			<var name="locale" value="de-DE" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="Netz Inhalt3 Titel" />
+		</execute>
+
+		<execute function="Type" locator1="DDMField#INTEGER" value1="5">
+			<var name="key_fieldName" value="Integer" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

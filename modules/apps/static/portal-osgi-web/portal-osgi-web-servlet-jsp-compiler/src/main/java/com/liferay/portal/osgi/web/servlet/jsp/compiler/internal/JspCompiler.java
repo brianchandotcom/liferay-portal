@@ -196,37 +196,37 @@ public class JspCompiler extends Jsr199JavaCompiler {
 					_collectPackageNames(providedBundleWiring));
 			}
 
-			if (_log.isInfoEnabled()) {
-				StringBundler sb = new StringBundler(
-					_bundleWiringPackageNames.size() * 4 + 6);
-
-				sb.append("JSP compiler for bundle ");
-				sb.append(bundle.getSymbolicName());
-				sb.append(StringPool.DASH);
-				sb.append(bundle.getVersion());
-				sb.append(" has dependent bundle wirings: ");
-
-				for (BundleWiring curBundleWiring :
-						_bundleWiringPackageNames.keySet()) {
-
-					Bundle currentBundle = curBundleWiring.getBundle();
-
-					sb.append(currentBundle.getSymbolicName());
-
-					sb.append(StringPool.DASH);
-					sb.append(currentBundle.getVersion());
-					sb.append(StringPool.COMMA_AND_SPACE);
-
-					sb.setIndex(sb.index() - 1);
-
-					_log.info(sb.toString());
-				}
-			}
-
 			_javaFileObjectResolvers.add(
 				new JspJavaFileObjectResolver(
 					bundleWiring, _jspBundleWiring, _bundleWiringPackageNames,
 					_serviceTracker));
+		}
+
+		if (_log.isInfoEnabled()) {
+			StringBundler sb = new StringBundler(
+				_bundleWiringPackageNames.size() * 4 + 6);
+
+			sb.append("JSP compiler for bundle ");
+			sb.append(bundle.getSymbolicName());
+			sb.append(StringPool.DASH);
+			sb.append(bundle.getVersion());
+			sb.append(" has dependent bundle wirings: ");
+
+			for (BundleWiring curBundleWiring :
+					_bundleWiringPackageNames.keySet()) {
+
+				Bundle currentBundle = curBundleWiring.getBundle();
+
+				sb.append(currentBundle.getSymbolicName());
+
+				sb.append(StringPool.DASH);
+				sb.append(currentBundle.getVersion());
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			_log.info(sb.toString());
 		}
 
 		jspCompilationContext.setClassLoader(jspBundleClassloader);

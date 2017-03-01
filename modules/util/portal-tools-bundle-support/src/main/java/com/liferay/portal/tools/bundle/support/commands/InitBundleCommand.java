@@ -24,10 +24,12 @@ import java.io.File;
 import java.io.IOException;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author David Truong
@@ -49,8 +51,17 @@ public class InitBundleCommand extends BaseCommand implements StreamLogger {
 			cacheDirPath = _cacheDir.toPath();
 		}
 
-		Path path = FileUtil.downloadFile(
-			_url.toURI(), _userName, _password, cacheDirPath, this);
+		Path path;
+
+		URI uri = _url.toURI();
+
+		if ("file".equals(uri.getScheme())) {
+			path = Paths.get(uri);
+		}
+		else {
+			path = FileUtil.downloadFile(
+				uri, _userName, _password, cacheDirPath, this);
+		}
 
 		FileUtil.unpack(path, getLiferayHomePath(), _stripComponents);
 

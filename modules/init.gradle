@@ -13,7 +13,7 @@ gradle.buildFinished {
 	if (System.getenv("JENKINS_HOME")) {
 		Date now = new Date()
 
-		logger.quiet "Gradle build finished at {}", now.format("yyyy-MM-dd HH:mm:ss.SSS", TimeZone.getTimeZone("UTC"))
+		logger.quiet "Gradle build finished at {}.", now.format("yyyy-MM-dd HH:mm:ss.SSS", TimeZone.getTimeZone("UTC"))
 	}
 
 	ByteArrayOutputStream errorByteArrayOutputStream = new ByteArrayOutputStream()

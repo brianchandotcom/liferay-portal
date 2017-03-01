@@ -220,6 +220,28 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			CollectionUtils.first(
 				cleanArtifactsPublishCommandsTask.getDelete()));
 
+		mergeFilesTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					MergeFilesTask mergeFilesTask = (MergeFilesTask)task;
+
+					File file = mergeFilesTask.getOutputFile();
+
+					boolean success = file.setExecutable(true);
+
+					if (!success) {
+						Logger logger = mergeFilesTask.getLogger();
+
+						logger.error(
+							"Unable to set the owner's execute permission " +
+								"for " + file);
+					}
+				}
+
+			});
+
 		mergeFilesTask.setDescription("Merges the artifacts publish commands");
 		mergeFilesTask.setHeader(
 			"#!/bin/bash" + System.lineSeparator() + System.lineSeparator() +

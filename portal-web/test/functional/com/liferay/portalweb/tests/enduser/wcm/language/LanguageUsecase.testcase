@@ -301,7 +301,7 @@
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#viewDefaultLanguage">
-			<var name="localizedLanguage" value="Spanish (Spain)" />
+			<var name="locale" value="es-ES" />
 		</execute>
 	</command>
 

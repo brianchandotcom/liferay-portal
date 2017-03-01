@@ -96,36 +96,76 @@
 			<var name="fieldValue" value="English (United States) Image Description" />
 		</execute>
 
-		<for list="Spanish (Spain),Portuguese (Brazil)" param="language">
-			<execute macro="DDLRecord#addTranslation">
-				<var name="localizedLanguage" value="${language}" />
-			</execute>
+		<execute macro="WebContent#addLocale">
+			<var name="language" value="Spanish (Spain)" />
+			<var name="locale" value="es-ES" />
+		</execute>
 
-			<execute macro="FormFields#editText">
-				<var name="fieldName" value="title" />
-				<var name="fieldValue" value="${language} Title" />
-			</execute>
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="title" />
+			<var name="fieldValue" value="Spanish (Spain) Title" />
+		</execute>
 
-			<execute macro="FormFields#editTextAlt">
-				<var name="fieldName" value="image" />
-				<var name="fieldValue" value="${language} Image Description" />
-			</execute>
-		</for>
+		<execute macro="FormFields#editTextAlt">
+			<var name="fieldName" value="image" />
+			<var name="fieldValue" value="Spanish (Spain) Image Description" />
+		</execute>
 
-		<for list="English (United States),Spanish (Spain),Portuguese (Brazil)" param="language">
-			<execute macro="DDLRecord#selectTranslation">
-				<var name="localizedLanguage" value="${language}" />
-			</execute>
+		<execute macro="WebContent#addLocale">
+			<var name="language" value="Portuguese (Brazil)" />
+			<var name="locale" value="pt-BR" />
+		</execute>
 
-			<execute macro="FormFields#viewTextValue">
-				<var name="fieldName" value="title" />
-				<var name="fieldValue" value="${language} Title" />
-			</execute>
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="title" />
+			<var name="fieldValue" value="Portuguese (Brazil) Title" />
+		</execute>
 
-			<execute macro="FormFields#viewTextValueAlt">
-				<var name="fieldName" value="image" />
-				<var name="fieldValue" value="${language} Image Description" />
-			</execute>
-		</for>
+		<execute macro="FormFields#editTextAlt">
+			<var name="fieldName" value="image" />
+			<var name="fieldValue" value="Portuguese (Brazil) Image Description" />
+		</execute>
+
+		<execute macro="WebContent#selectLocale">
+			<var name="locale" value="en-US" />
+		</execute>
+
+		<execute macro="FormFields#viewTextValue">
+			<var name="fieldName" value="title" />
+			<var name="fieldValue" value="English (United States) Title" />
+		</execute>
+
+		<execute macro="FormFields#viewTextValueAlt">
+			<var name="fieldName" value="image" />
+			<var name="fieldValue" value="English (United States) Image Description" />
+		</execute>
+
+		<execute macro="WebContent#selectLocale">
+			<var name="locale" value="es-ES" />
+		</execute>
+
+		<execute macro="FormFields#viewTextValue">
+			<var name="fieldName" value="title" />
+			<var name="fieldValue" value="Spanish (Spain) Title" />
+		</execute>
+
+		<execute macro="FormFields#viewTextValueAlt">
+			<var name="fieldName" value="image" />
+			<var name="fieldValue" value="Spanish (Spain) Image Description" />
+		</execute>
+
+		<execute macro="WebContent#selectLocale">
+			<var name="locale" value="pt-BR" />
+		</execute>
+
+		<execute macro="FormFields#viewTextValue">
+			<var name="fieldName" value="title" />
+			<var name="fieldValue" value="Portuguese (Brazil) Title" />
+		</execute>
+
+		<execute macro="FormFields#viewTextValueAlt">
+			<var name="fieldName" value="image" />
+			<var name="fieldValue" value="Portuguese (Brazil) Image Description" />
+		</execute>
 	</command>
 </definition>

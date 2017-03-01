@@ -1681,7 +1681,13 @@
 	</command>
 
 	<command name="viewDefaultLanguage">
-		<execute function="AssertTextEquals" locator1="WCEditWebContent#DEFAULT_LANGUAGE" value1="${localizedLanguage}" />
+		<execute function="AssertTextEquals" locator1="NavTab#TAB_LINK" value1="${locale}">
+			<var name="key_tab" value="${locale}" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="NavTab#TAB_LINK">
+			<var name="key_tab" value="en-US" />
+		</execute>
 	</command>
 
 	<command name="viewDefaultPGViaWCD">

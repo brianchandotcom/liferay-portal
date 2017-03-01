@@ -1135,6 +1135,10 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected String getBaseRepositoryType() {
+		if (jobName.startsWith("test-subrepository-acceptance-pullrequest")) {
+			return getBaseRepositoryName();
+		}
+
 		if (jobName.contains("portal")) {
 			return "portal";
 		}

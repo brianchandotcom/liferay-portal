@@ -1452,10 +1452,10 @@ public class CalendarPortlet extends MVCPortlet {
 			themeDisplay.getCompanyId(), null, new long[] {calendarResourceId},
 			null, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		JSONArray jsonObject = CalendarUtil.toCalendarsJSONArray(
+		JSONArray jsonArray = CalendarUtil.toCalendarsJSONArray(
 			themeDisplay, calendars);
 
-		writeJSON(resourceRequest, resourceResponse, jsonObject);
+		writeJSON(resourceRequest, resourceResponse, jsonArray);
 	}
 
 	protected void serveUnknownResource(

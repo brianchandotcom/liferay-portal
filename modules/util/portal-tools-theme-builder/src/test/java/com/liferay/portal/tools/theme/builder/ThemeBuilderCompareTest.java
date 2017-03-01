@@ -257,20 +257,21 @@ public class ThemeBuilderCompareTest {
 
 		File diffsDir = new File(dir, "src");
 
-		JSONObject packageJSON;
+		JSONObject packageJSONObject;
 
 		try (FileReader fileReader = new FileReader(
 				new File(dir, "package.json"))) {
 
-			packageJSON = (JSONObject)JSONValue.parseWithException(fileReader);
+			packageJSONObject = (JSONObject)JSONValue.parseWithException(
+				fileReader);
 		}
 
-		String name = (String)packageJSON.get("name");
+		String name = (String)packageJSONObject.get("name");
 
-		JSONObject liferayThemeJSON = (JSONObject)packageJSON.get(
+		JSONObject liferayThemeJSONObject = (JSONObject)packageJSONObject.get(
 			"liferayTheme");
 
-		String parentName = (String)liferayThemeJSON.get("baseTheme");
+		String parentName = (String)liferayThemeJSONObject.get("baseTheme");
 
 		if (parentName.equals("styled")) {
 			parentName = ThemeBuilder.STYLED;

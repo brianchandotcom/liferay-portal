@@ -73,11 +73,11 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 					JsonSlurper jsonSlurper = new JsonSlurper();
 
-					Map<String, Object> packageJson =
+					Map<String, Object> packageJsonMap =
 						(Map<String, Object>)jsonSlurper.parse(packageJsonFile);
 
-					if (packageJson.containsKey("dependencies") ||
-						packageJson.containsKey("devDependencies")) {
+					if (packageJsonMap.containsKey("dependencies") ||
+						packageJsonMap.containsKey("devDependencies")) {
 
 						return true;
 					}

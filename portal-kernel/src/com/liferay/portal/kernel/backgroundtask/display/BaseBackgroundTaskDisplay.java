@@ -181,24 +181,27 @@ public abstract class BaseBackgroundTaskDisplay
 	}
 
 	protected JSONArray translateJSON(JSONArray jsonArray, Locale locale) {
-		JSONArray translatedJSON = JSONFactoryUtil.createJSONArray();
+		JSONArray translatedJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (Object object : jsonArray) {
 			if (object instanceof JSONObject) {
-				translatedJSON.put(translateJSON((JSONObject)object, locale));
+				translatedJSONArray.put(
+					translateJSON((JSONObject)object, locale));
 			}
 			else if (object instanceof JSONArray) {
-				translatedJSON.put(translateJSON((JSONArray)object, locale));
+				translatedJSONArray.put(
+					translateJSON((JSONArray)object, locale));
 			}
 			else if (object instanceof String) {
-				translatedJSON.put(LanguageUtil.get(locale, (String)object));
+				translatedJSONArray.put(
+					LanguageUtil.get(locale, (String)object));
 			}
 			else {
-				translatedJSON.put(object);
+				translatedJSONArray.put(object);
 			}
 		}
 
-		return translatedJSON;
+		return translatedJSONArray;
 	}
 
 	protected JSONObject translateJSON(JSONObject jsonObject, Locale locale) {
@@ -206,7 +209,7 @@ public abstract class BaseBackgroundTaskDisplay
 			return jsonObject;
 		}
 
-		JSONObject translatedJSON = JSONFactoryUtil.createJSONObject();
+		JSONObject translatedJSONObject = JSONFactoryUtil.createJSONObject();
 
 		Iterator<String> iterator = jsonObject.keys();
 
@@ -216,23 +219,23 @@ public abstract class BaseBackgroundTaskDisplay
 			Object object = jsonObject.get(key);
 
 			if (object instanceof JSONObject) {
-				translatedJSON.put(
+				translatedJSONObject.put(
 					key, translateJSON((JSONObject)object, locale));
 			}
 			else if (object instanceof JSONArray) {
-				translatedJSON.put(
+				translatedJSONObject.put(
 					key, translateJSON((JSONArray)object, locale));
 			}
 			else if (object instanceof String) {
-				translatedJSON.put(
+				translatedJSONObject.put(
 					key, LanguageUtil.get(locale, (String)object));
 			}
 			else {
-				translatedJSON.put(key, object);
+				translatedJSONObject.put(key, object);
 			}
 		}
 
-		return translatedJSON;
+		return translatedJSONObject;
 	}
 
 	protected static final int PERCENTAGE_MAX = 100;

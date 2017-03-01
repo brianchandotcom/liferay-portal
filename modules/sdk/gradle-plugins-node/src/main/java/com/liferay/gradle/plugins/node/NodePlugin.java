@@ -267,23 +267,24 @@ public class NodePlugin implements Plugin<Project> {
 
 					JsonSlurper jsonSlurper = new JsonSlurper();
 
-					Map<String, Object> packageJson =
+					Map<String, Object> packageJsonMap =
 						(Map<String, Object>)jsonSlurper.parse(packageJsonFile);
 
-					Map<String, Object> dependenciesJson =
-						(Map<String, Object>)packageJson.get("dependencies");
+					Map<String, Object> dependenciesJsonMap =
+						(Map<String, Object>)packageJsonMap.get("dependencies");
 
-					if ((dependenciesJson != null) &&
-						dependenciesJson.containsKey(moduleName)) {
+					if ((dependenciesJsonMap != null) &&
+						dependenciesJsonMap.containsKey(moduleName)) {
 
 						return false;
 					}
 
-					dependenciesJson = (Map<String, Object>)packageJson.get(
-						"devDependencies");
+					dependenciesJsonMap =
+						(Map<String, Object>)packageJsonMap.get(
+							"devDependencies");
 
-					if ((dependenciesJson != null) &&
-						dependenciesJson.containsKey(moduleName)) {
+					if ((dependenciesJsonMap != null) &&
+						dependenciesJsonMap.containsKey(moduleName)) {
 
 						return false;
 					}

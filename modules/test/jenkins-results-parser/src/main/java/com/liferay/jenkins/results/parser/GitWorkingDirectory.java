@@ -65,8 +65,8 @@ public class GitWorkingDirectory {
 
 		_git = new Git(_repository);
 
-		_repositoryName = _getRepositoryName(_upstreamBranchName, _repository);
-		_repositoryUsername = _getRepositoryUsername(_repository);
+		_repositoryName = _getRepositoryName();
+		_repositoryUsername = _getRepositoryUsername();
 	}
 
 	public void checkoutBranch(String branchName)
@@ -209,10 +209,8 @@ public class GitWorkingDirectory {
 		addCommand.call();
 	}
 
-	private String _getRepositoryName(
-		String repositoryBranchName, Repository repository) {
-
-		StoredConfig storedConfig = repository.getConfig();
+	private String _getRepositoryName() {
+		StoredConfig storedConfig = _repository.getConfig();
 
 		String remote = storedConfig.getString("remote", "upstream", "url");
 
@@ -221,8 +219,8 @@ public class GitWorkingDirectory {
 
 		String repositoryName = remote.substring(x, y);
 
-		if (!repositoryBranchName.contains("ee-") &&
-			!repositoryBranchName.contains("-private")) {
+		if (!_upstreamBranchName.contains("ee-") &&
+			!_upstreamBranchName.contains("-private")) {
 
 			repositoryName = repositoryName.replace("-ee", "");
 			repositoryName = repositoryName.replace("-private", "");
@@ -231,8 +229,8 @@ public class GitWorkingDirectory {
 		return repositoryName;
 	}
 
-	private String _getRepositoryUsername(Repository repository) {
-		StoredConfig storedConfig = repository.getConfig();
+	private String _getRepositoryUsername() {
+		StoredConfig storedConfig = _repository.getConfig();
 
 		String remote = storedConfig.getString("remote", "upstream", "url");
 

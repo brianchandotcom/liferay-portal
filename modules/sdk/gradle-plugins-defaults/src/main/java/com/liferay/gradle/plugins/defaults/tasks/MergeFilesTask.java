@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.defaults.tasks;
 
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -32,6 +33,7 @@ import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
@@ -41,6 +43,18 @@ import org.gradle.util.GUtil;
  * @author Andrea Di Giorgi
  */
 public class MergeFilesTask extends DefaultTask {
+
+	@Input
+	@Optional
+	public String getFooter() {
+		return GradleUtil.toString(_footer);
+	}
+
+	@Input
+	@Optional
+	public String getHeader() {
+		return GradleUtil.toString(_header);
+	}
 
 	@InputFiles
 	@SkipWhenEmpty
@@ -78,14 +92,14 @@ public class MergeFilesTask extends DefaultTask {
 		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
 				outputFile.toPath(), StandardCharsets.UTF_8)) {
 
-			boolean first = true;
+			String header = getHeader();
+
+			if (Validator.isNotNull(header)) {
+				bufferedWriter.write(header);
+			}
 
 			for (File inputFile : getInputFiles()) {
-				if (!first) {
-					bufferedWriter.write(separator);
-				}
-
-				first = false;
+				bufferedWriter.write(separator);
 
 				String content = new String(
 					Files.readAllBytes(inputFile.toPath()),
@@ -93,7 +107,22 @@ public class MergeFilesTask extends DefaultTask {
 
 				bufferedWriter.write(content);
 			}
+
+			String footer = getFooter();
+
+			if (Validator.isNotNull(footer)) {
+				bufferedWriter.write(separator);
+				bufferedWriter.write(footer);
+			}
 		}
+	}
+
+	public void setFooter(Object footer) {
+		_footer = footer;
+	}
+
+	public void setHeader(Object header) {
+		_header = header;
 	}
 
 	public void setInputFiles(Iterable<?> inputFiles) {
@@ -114,6 +143,8 @@ public class MergeFilesTask extends DefaultTask {
 		_separator = separator;
 	}
 
+	private Object _footer;
+	private Object _header;
 	private final Set<Object> _inputFiles = new LinkedHashSet<>();
 	private Object _outputFile;
 	private Object _separator = System.lineSeparator();

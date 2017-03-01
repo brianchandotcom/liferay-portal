@@ -2410,6 +2410,7 @@ information. Make sure to commit in all build services results.
 				</if>
 
 				<ant dir="portal-impl" target="format-source">
+					<property name="show.documentation" value="false" />
 					<property name="source.auto.fix" value="false" />
 					<property name="source.fail.on.error" value="true" />
 					<property name="source.formatter.excludes" value="${source.formatter.excludes}" />

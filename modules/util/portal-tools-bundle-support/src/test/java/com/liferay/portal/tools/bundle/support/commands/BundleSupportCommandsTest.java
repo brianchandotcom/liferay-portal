@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import java.net.InetSocketAddress;
+import java.net.URI;
 import java.net.URL;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -69,6 +70,11 @@ public class BundleSupportCommandsTest {
 		_authenticatedHttpProxyServer = _startHttpProxyServer(
 			_AUTHENTICATED_HTTP_PROXY_SERVER_PORT, true,
 			_authenticatedHttpProxyHit);
+
+		URL url = BundleSupportCommandsTest.class.getResource(
+			"dependencies" + _CONTEXT_PATH_ZIP);
+
+		_bundleZipFile = new File(url.toURI());
 
 		_httpProxyServer = _startHttpProxyServer(
 			_HTTP_PROXY_SERVER_PORT, false, _httpProxyHit);
@@ -195,14 +201,19 @@ public class BundleSupportCommandsTest {
 
 	@Test
 	public void testInitBundleZip() throws Exception {
-		_testInitBundleZip(_HTTP_SERVER_PASSWORD, _HTTP_SERVER_USER_NAME);
+		_testInitBundleZip(null, _HTTP_SERVER_PASSWORD, _HTTP_SERVER_USER_NAME);
+	}
+
+	@Test
+	public void testInitBundleZipFile() throws Exception {
+		_testInitBundleZip(_bundleZipFile, null, null);
 	}
 
 	@Test
 	public void testInitBundleZipUnauthorized() throws Exception {
 		expectedException.expectMessage("Unauthorized");
 
-		_testInitBundleZip(null, null);
+		_testInitBundleZip(null, null, null);
 	}
 
 	@Rule
@@ -431,6 +442,19 @@ public class BundleSupportCommandsTest {
 	}
 
 	private void _initBundle(
+			File configsDir, File file, File liferayHomeDir, String password,
+			String userName)
+		throws Exception {
+
+		File cacheDir = temporaryFolder.newFolder();
+		URI uri = file.toURI();
+
+		initBundle(
+			cacheDir, configsDir, liferayHomeDir, password, uri.toURL(),
+			userName);
+	}
+
+	private void _initBundle(
 			File configsDir, String contextPath, File liferayHomeDir,
 			String password, String userName)
 		throws Exception {
@@ -503,7 +527,7 @@ public class BundleSupportCommandsTest {
 		}
 	}
 
-	private void _testInitBundleZip(String password, String userName)
+	private void _testInitBundleZip(File file, String password, String userName)
 		throws Exception {
 
 		File liferayHomeDir = temporaryFolder.newFolder("bundles");
@@ -520,8 +544,14 @@ public class BundleSupportCommandsTest {
 		File prodPropertiesFile = _createFile(
 			configsProdDir, "portal-prod.properties");
 
-		_initBundle(
-			configsDir, _CONTEXT_PATH_ZIP, liferayHomeDir, password, userName);
+		if (file != null) {
+			_initBundle(configsDir, file, liferayHomeDir, password, userName);
+		}
+		else {
+			_initBundle(
+				configsDir, _CONTEXT_PATH_ZIP, liferayHomeDir, password,
+				userName);
+		}
 
 		_assertExists(liferayHomeDir, "README.markdown");
 		_assertExists(liferayHomeDir, localPropertiesFile.getName());
@@ -553,6 +583,7 @@ public class BundleSupportCommandsTest {
 	private static final AtomicBoolean _authenticatedHttpProxyHit =
 		new AtomicBoolean();
 	private static HttpProxyServer _authenticatedHttpProxyServer;
+	private static File _bundleZipFile;
 	private static final AtomicBoolean _httpProxyHit = new AtomicBoolean();
 	private static HttpProxyServer _httpProxyServer;
 	private static HttpServer _httpServer;

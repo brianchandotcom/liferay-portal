@@ -1,0 +1,8 @@
+oasis.names.tc.wsrp.v1.bind
+oasis.names.tc.wsrp.v1.intf
+oasis.names.tc.wsrp.v1.types
+oasis.names.tc.wsrp.v1.wsdl
+oasis.names.tc.wsrp.v2.bind
+oasis.names.tc.wsrp.v2.intf
+oasis.names.tc.wsrp.v2.types
+oasis.names.tc.wsrp.v2.wsdl

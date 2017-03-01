@@ -158,10 +158,6 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 		<%
 		for (String type : types) {
-			if (type.equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
-				continue;
-			}
-
 			LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
 
 			if (!layoutTypeController.isInstanceable()) {

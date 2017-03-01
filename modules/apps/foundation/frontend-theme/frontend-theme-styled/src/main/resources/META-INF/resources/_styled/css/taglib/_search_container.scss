@@ -34,6 +34,13 @@
 	}
 }
 
+.lfr-role-column {
+	max-width: 375px;
+	min-width: 375px;
+	word-break: break-all \9;
+	word-wrap: break-word;
+}
+
 .user-info .user-details {
 	.date-info {
 		color: #8C8C8C;

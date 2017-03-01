@@ -1538,6 +1538,7 @@
 			<else>
 				<execute macro="User#loginPG">
 					<var name="localization" value="${localization}" />
+					<var name="samlEnabled" value="${samlEnabled}" />
 					<var name="setupWizardEnabled" value="${setupWizardEnabled}" />
 					<var name="specificURL" value="${virtualHostsURL}" />
 					<var name="userEmailAddress" value="${userEmailAddress}" />

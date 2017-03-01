@@ -150,6 +150,7 @@
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
+			<var name="samlEnabled" value="true" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
 		</execute>

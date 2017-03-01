@@ -2823,7 +2823,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						fileName, sourceFormatterMessage.toString());
 
 					if (_browserStarted ||
-						!sourceFormatterArgs.isShowDocumentation()) {
+						!sourceFormatterArgs.isShowDocumentation() ||
+						!Desktop.isDesktopSupported()) {
 
 						continue;
 					}

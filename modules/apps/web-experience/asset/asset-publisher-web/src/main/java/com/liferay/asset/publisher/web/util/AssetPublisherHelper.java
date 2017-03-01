@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -56,6 +57,21 @@ public class AssetPublisherHelper {
 		viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
 		viewFullContentURL.setParameter(
 			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
+
+		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+
+		int cur = ParamUtil.getInteger(liferayPortletRequest, "cur");
+		int delta = ParamUtil.getInteger(liferayPortletRequest, "delta");
+		boolean resetCur = ParamUtil.getBoolean(
+			liferayPortletRequest, "resetCur");
+
+		redirectURL.setParameter(
+			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
+		redirectURL.setParameter("cur", String.valueOf(cur));
+		redirectURL.setParameter("delta", String.valueOf(delta));
+		redirectURL.setParameter("resetCur", String.valueOf(resetCur));
+
+		viewFullContentURL.setParameter("redirect", redirectURL.toString());
 
 		AssetRendererFactory<?> assetRendererFactory =
 			assetEntry.getAssetRendererFactory();

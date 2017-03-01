@@ -116,6 +116,18 @@ request.setAttribute("view.jsp-viewInContext", assetPublisherDisplayContext.isAs
 	<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="<%= assetPublisherDisplayContext.getPaginationType() %>" />
 </c:if>
 
+<aui:script use="querystring-parse">
+	var queryString = window.location.search.substring(1);
+
+	var queryParamObj = new A.QueryString.parse(queryString);
+
+	var assetEntryId = queryParamObj['<portlet:namespace />assetEntryId'];
+
+	if (assetEntryId) {
+		window.location.hash = assetEntryId;
+	}
+</aui:script>
+
 <%!
 private static Log _log = LogFactoryUtil.getLog("com_liferay_asset_publisher_web.view_jsp");
 %>

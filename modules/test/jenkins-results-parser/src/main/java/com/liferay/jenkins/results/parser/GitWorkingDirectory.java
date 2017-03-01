@@ -34,6 +34,8 @@ import org.eclipse.jgit.transport.JschConfigSessionFactory;
 import org.eclipse.jgit.transport.OpenSshConfig;
 import org.eclipse.jgit.transport.SshSessionFactory;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -138,6 +140,34 @@ public class GitWorkingDirectory {
 		createBranchCommand.setName(branchName);
 
 		createBranchCommand.call();
+	}
+
+	public void createPullRequest(
+			String title, String body, String receiverUserName,
+			String pullRequestBranchName)
+		throws IOException {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("https://api.github.com/repos/");
+		sb.append(receiverUserName);
+		sb.append("/");
+		sb.append(_repositoryName);
+		sb.append("/pulls");
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("base", _upstreamBranchName);
+		requestJSONObject.put("body", body);
+		requestJSONObject.put(
+			"head", receiverUserName + ":" + pullRequestBranchName);
+		requestJSONObject.put("title", title);
+
+		JSONObject responseJSONObject = JenkinsResultsParserUtil.toJSONObject(
+			sb.toString(), requestJSONObject.toString());
+
+		System.out.println(
+			"Created a pull request at " + responseJSONObject.getString("url"));
 	}
 
 	public void deleteBranch(String branchName) throws GitAPIException {

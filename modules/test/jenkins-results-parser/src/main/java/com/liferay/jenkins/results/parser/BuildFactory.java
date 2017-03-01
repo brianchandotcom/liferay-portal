@@ -31,7 +31,7 @@ public class BuildFactory {
 			return new AxisBuild(url, (BatchBuild)parentBuild);
 		}
 
-		if (url.contains("-source")) {
+		if (url.contains("-source") || url.contains("-validation")) {
 			return new SourceBuild(url, parentBuild);
 		}
 

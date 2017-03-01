@@ -542,16 +542,17 @@ AUI.add(
 				ATTRS: {
 					navigationDateFormatter: {
 						value: function(date) {
-							var options = { 
-									weekday: 'long',
-									year: 'numeric',
-									month: 'long',
-									day: 'numeric' 
-							};
+							var instance = this;
 
-							var language = A.config.lang;
+							var scheduler = instance.get('scheduler');
 
-							return date.toLocaleString(language, options);
+							return A.DataType.Date.format(
+								date,
+								{
+									format: Liferay.Language.get('a-b-d-y'),
+									locale: scheduler.get('locale')
+								}
+							);
 						},
 						validator: isFunction
 					}

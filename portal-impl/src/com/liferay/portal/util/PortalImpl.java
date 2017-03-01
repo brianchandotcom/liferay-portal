@@ -1409,7 +1409,8 @@ public class PortalImpl implements Portal {
 		}
 
 		groupFriendlyURL = getGroupFriendlyURL(
-			layout.getLayoutSet(), themeDisplay, true);
+			layout.getLayoutSet(), themeDisplay, true,
+			layout.isTypeControlPanel());
 
 		return groupFriendlyURL.concat(canonicalLayoutFriendlyURL).concat(
 			parametersURL);
@@ -2390,7 +2391,7 @@ public class PortalImpl implements Portal {
 			LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return getGroupFriendlyURL(layoutSet, themeDisplay, false);
+		return getGroupFriendlyURL(layoutSet, themeDisplay, false, false);
 	}
 
 	@Override
@@ -2767,7 +2768,8 @@ public class PortalImpl implements Portal {
 		}
 
 		String groupFriendlyURL = getGroupFriendlyURL(
-			layout.getLayoutSet(), themeDisplay, false);
+			layout.getLayoutSet(), themeDisplay, false,
+			layout.isTypeControlPanel());
 
 		return groupFriendlyURL.concat(
 			layout.getFriendlyURL(themeDisplay.getLocale()));
@@ -7716,6 +7718,15 @@ public class PortalImpl implements Portal {
 			boolean canonicalURL)
 		throws PortalException {
 
+		return getGroupFriendlyURL(
+			layoutSet, themeDisplay, canonicalURL, false);
+	}
+
+	protected String getGroupFriendlyURL(
+			LayoutSet layoutSet, ThemeDisplay themeDisplay,
+			boolean canonicalURL, boolean controlPanel)
+		throws PortalException {
+
 		Group group = layoutSet.getGroup();
 
 		boolean privateLayoutSet = layoutSet.getPrivateLayout();
@@ -7761,7 +7772,10 @@ public class PortalImpl implements Portal {
 					canonicalDomain, themeDisplay.getServerPort(),
 					themeDisplay.isSecure());
 
-				if (canonicalURL || canonicalDomain.startsWith(portalDomain)) {
+				if ((canonicalURL ||
+					 canonicalDomain.startsWith(portalDomain)) &&
+					!controlPanel) {
+
 					String path = StringPool.BLANK;
 
 					if (themeDisplay.isWidget()) {

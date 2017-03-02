@@ -28,6 +28,17 @@ AUI.add(
 				NAME: 'liferay-ddl-form-builder-action-jump-to-page',
 
 				prototype: {
+					conditionChange: function(pages) {
+						var instance = this;
+
+						var startIndex = pages[pages.length - 1] + 1;
+
+						var options = instance.get('options').slice(startIndex);
+
+						instance._setSourcePage(String(Math.max(pages)));
+						instance._setTargetOptions(options);
+					},
+
 					getValue: function() {
 						var instance = this;
 
@@ -46,17 +57,6 @@ AUI.add(
 
 						instance._createSourceField().render(fieldsListContainer);
 						instance._createTargetField().render(fieldsListContainer);
-					},
-
-					conditionChange: function(pages) {
-						var instance = this;
-
-						var startIndex = pages[pages.length - 1] + 1;
-
-						var options = instance.get('options').slice(startIndex);
-
-						instance._setSourcePage(String(Math.max(pages)));
-						instance._setTargetOptions(options);
 					},
 
 					_createSourceField: function() {

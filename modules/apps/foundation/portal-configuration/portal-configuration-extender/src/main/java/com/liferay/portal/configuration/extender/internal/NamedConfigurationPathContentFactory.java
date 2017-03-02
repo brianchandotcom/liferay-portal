@@ -41,7 +41,11 @@ public class NamedConfigurationPathContentFactory
 	public List<NamedConfigurationContent> create(BundleStorage bundleStorage) {
 		Dictionary<String, String> headers = bundleStorage.getHeaders();
 
-		String configurationPath = headers.get("Liferay-Configuration-Path");
+		String configurationPath = headers.get("ConfigurationPath");
+
+		if (configurationPath == null) {
+			configurationPath = headers.get("Liferay-Configuration-Path");
+		}
 
 		if (configurationPath == null) {
 			return null;

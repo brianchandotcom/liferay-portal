@@ -133,6 +133,22 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a menu item in the UI for an Export/Publish Entity Screen.</description>
+		<name>export-import-entity-management-bar-button</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ExportImportEntityManagementBarButtonTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>cmd</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>searchContainerMappingId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders a menu item in the UI for an Import Entity Screen.</description>
 		<name>import-entity</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ImportEntityTag</tag-class>

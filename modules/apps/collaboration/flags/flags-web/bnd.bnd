@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.flags.web
 Bundle-Version: 2.0.6
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
-Web-ContextPath: /page-flags-web
+Web-ContextPath: /flags-web

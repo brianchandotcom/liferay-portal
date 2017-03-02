@@ -4,4 +4,4 @@ Bundle-Version: 1.1.2
 Export-Package: com.liferay.blogs.recent.bloggers.web.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
-Web-ContextPath: /recent-bloggers-web
+Web-ContextPath: /blogs-recent-bloggers-web

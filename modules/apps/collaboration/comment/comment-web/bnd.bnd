@@ -4,4 +4,4 @@ Bundle-Version: 1.1.4
 Export-Package: com.liferay.comment.web.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Comments
-Web-ContextPath: /comments-web
+Web-ContextPath: /comment-web

@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.mobile.device.rules.web
 Bundle-Version: 1.0.13
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Mobile Device Rules
-Web-ContextPath: /mdr-web
+Web-ContextPath: /mobile-device-rules-web

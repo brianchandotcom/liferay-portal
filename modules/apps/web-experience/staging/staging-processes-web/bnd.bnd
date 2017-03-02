@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.staging.processes.web
 Bundle-Version: 1.0.13
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
-Web-ContextPath: /staging-processes
+Web-ContextPath: /staging-processes-web

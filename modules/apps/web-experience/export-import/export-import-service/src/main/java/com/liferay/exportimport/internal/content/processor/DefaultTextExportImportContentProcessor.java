@@ -214,20 +214,7 @@ public class DefaultTextExportImportContentProcessor
 				imageIds = map.get("i_id");
 			}
 
-			imageIds = ArrayUtil.filter(
-				imageIds,
-				new PredicateFilter<String>() {
-
-					@Override
-					public boolean filter(String imageId) {
-						if (Validator.isNotNull(imageId)) {
-							return true;
-						}
-
-						return false;
-					}
-
-				});
+			imageIds = ArrayUtil.filter(imageIds, Validator::isNotNull);
 
 			if (ArrayUtil.isNotEmpty(imageIds)) {
 				map.put("image_id", imageIds);
@@ -841,7 +828,7 @@ public class DefaultTextExportImportContentProcessor
 				stagedModel, DLFileEntry.class);
 
 		for (Element referenceElement : referenceElements) {
-			long classPK = GetterUtil.getLong(
+			Long classPK = GetterUtil.getLong(
 				referenceElement.attributeValue("class-pk"));
 
 			Element referenceDataElement =

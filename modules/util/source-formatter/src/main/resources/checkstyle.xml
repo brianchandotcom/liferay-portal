@@ -185,6 +185,10 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.TernaryOperator">
 			<message key="ternary.operator.avoid" value="Use if-else-statement instead of ternary conditional operator for better readability" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.TestClass">
+			<message key="test.case.class.incorrect.abstract" value="Class ending in *TestCase should be abstract. Either make the class abstract or rename to ''{0}'' if the class contains actual tests" />
+			<message key="test.class.incorrect.abstract" value="Test class ''{0}'' should not be abstract" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.TransactionalTestRule">
 			<message key="import.invalid" value="Avoid using import TransactionalTestRule in *StagedModelDataHandlerTest, see LPS-68908" />
 		</module>

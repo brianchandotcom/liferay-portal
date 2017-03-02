@@ -21,6 +21,8 @@
 		<liferay-util:dynamic-include key="com.liferay.login.web#/navigation.jsp#pre" />
 
 		<%
+		NavigationPageIncludeUtil.includePre(pageContext);
+
 		for (String section : PropsValues.LOGIN_FORM_NAVIGATION_PRE) {
 		%>
 
@@ -28,6 +30,8 @@
 
 		<%
 		}
+
+		NavigationPageIncludeUtil.includePost(pageContext);
 
 		for (String section : PropsValues.LOGIN_FORM_NAVIGATION_POST) {
 		%>

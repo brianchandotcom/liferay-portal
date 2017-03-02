@@ -14,6 +14,8 @@
 
 package com.liferay.taglib;
 
+import static javax.servlet.jsp.tagext.Tag.SKIP_BODY;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
@@ -25,7 +27,7 @@ import javax.servlet.jsp.tagext.Tag;
  *
  * @author Shuyang Zhou
  */
-public class TagSupport implements Tag {
+public class TagSupport implements DirectTag, Tag {
 
 	public static Tag findAncestorWithClass(Tag fromTag, Class<?> clazz) {
 		if ((fromTag == null) || (clazz == null) ||

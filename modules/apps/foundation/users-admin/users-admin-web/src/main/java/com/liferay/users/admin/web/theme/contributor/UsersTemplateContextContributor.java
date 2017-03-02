@@ -56,21 +56,20 @@ public class UsersTemplateContextContributor
 
 		contextObjects.put("is_default_user", user.isDefaultUser());
 
-		Contact contact = user.fetchContact();
+		try {
+			Contact contact = user.getContact();
 
-		if (contact != null) {
 			contextObjects.put("is_female", !contact.isMale());
 			contextObjects.put("is_male", contact.isMale());
+			contextObjects.put("user_birthday", contact.getBirthday());
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
 		}
 
 		contextObjects.put("is_setup_complete", user.isSetupComplete());
 		contextObjects.put("language", themeDisplay.getLanguageId());
 		contextObjects.put("language_id", user.getLanguageId());
-
-		if (contact != null) {
-			contextObjects.put("user_birthday", contact.getBirthday());
-		}
-
 		contextObjects.put("user_comments", user.getComments());
 		contextObjects.put("user_email_address", user.getEmailAddress());
 		contextObjects.put("user_first_name", user.getFirstName());
@@ -99,6 +98,8 @@ public class UsersTemplateContextContributor
 		contextObjects.put(
 			"w3c_language_id",
 			LocaleUtil.toW3cLanguageId(themeDisplay.getLanguageId()));
+
+		contextObjects.put("user_initialized", true);
 	}
 
 	@Reference(unbind = "-")

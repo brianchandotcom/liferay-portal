@@ -1162,6 +1162,22 @@ to version 1.0.92.
 - [LPS-70941]: Update the [Liferay Source Formatter] dependency to version
 1.0.359.
 
+## 3.2.11 - 2017-03-01
+
+### Changed
+- [LPS-70890]: Update the [Liferay CSS Builder] dependency to version 1.0.24.
+- [LPS-70890]: Update the [Liferay Javadoc Formatter] dependency to version
+1.0.19.
+- [LPS-70890]: Update the [Liferay Lang Builder] dependency to version 1.0.11.
+- [LPS-70890]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.145.
+- [LPS-70890]: Update the [Liferay Portal Tools Upgrade Table Builder]
+dependency to version 1.0.6.
+- [LPS-70890]: Update the [Liferay Portal Tools WSDD Builder] dependency to
+version 1.0.7.
+- [LPS-70890]: Update the [Liferay TLD Formatter] dependency to version 1.0.2.
+- [LPS-70890]: Update the [Liferay XML Formatter] dependency to version 1.0.2.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1269,5 +1285,6 @@ to version 1.0.92.
 [LPS-70677]: https://issues.liferay.com/browse/LPS-70677
 [LPS-70707]: https://issues.liferay.com/browse/LPS-70707
 [LPS-70870]: https://issues.liferay.com/browse/LPS-70870
+[LPS-70890]: https://issues.liferay.com/browse/LPS-70890
 [LPS-70941]: https://issues.liferay.com/browse/LPS-70941
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

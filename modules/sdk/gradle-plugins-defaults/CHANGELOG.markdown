@@ -1157,6 +1157,11 @@ task executable.
 ### Changed
 - [LPS-70890]: Update the [Liferay Gradle Plugins] dependency to version 3.2.11.
 
+## 3.2.1 - 2017-03-01
+
+### Changed
+- [LPS-62970]: Update the [Liferay Gradle Plugins] dependency to version 3.2.12.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -1168,6 +1173,7 @@ task executable.
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
 [LPS-61987]: https://issues.liferay.com/browse/LPS-61987
+[LPS-62970]: https://issues.liferay.com/browse/LPS-62970
 [LPS-63943]: https://issues.liferay.com/browse/LPS-63943
 [LPS-65179]: https://issues.liferay.com/browse/LPS-65179
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396

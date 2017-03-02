@@ -18,7 +18,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.upgrade.table.builder", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.wsdd.builder", version: "1.0.9"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.wsdl.builder", version: "2.0.0"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xml.formatter", version: "1.0.6"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xml.formatter", version: "1.0.7"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xsd.builder", version: "1.0.5"
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.26"
 	compile group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.9.0"

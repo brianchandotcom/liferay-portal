@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SCHEDULER_VIEW_DAY</td>
-	<td>//div[@class='yui3-widget component scheduler-view scheduler-view-day']</td>
+	<td>//div[contains(@class,'scheduler-view-day') and contains(@class, 'scheduler-day-view')]</td>
 	<td></td>
 </tr>
 </tbody>

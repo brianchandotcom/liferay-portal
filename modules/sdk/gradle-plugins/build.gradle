@@ -2,7 +2,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.33"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "1.0.3"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "2.0.0"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.db.support", version: "1.0.0"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.db.support", version: "1.0.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "2.0.10"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.javadoc.formatter", version: "1.0.13"

@@ -24,6 +24,8 @@ AUI.add(
 				NAME: 'liferay-ddl-form-builder-action',
 
 				prototype: {
+					conditionChange: function() {},
+
 					getFieldsByType: function(type) {
 						var instance = this;
 

@@ -103,6 +103,30 @@ AUI.add(
 						instance.after('*:valueChange', A.bind(instance._afterValueChange, instance));
 
 						instance.on('*:valueChange', A.bind(instance._handleActionChange, instance));
+
+						instance.on('*:valueChange', A.bind(instance._handleActionUpdates, instance));
+					},
+
+					_handleActionUpdates: function(event) {
+						var instance = this;
+
+						var field = event.target;
+
+						var fieldName = field.get('fieldName');
+
+						var index = fieldName.split('-')[0];
+
+						if (field.getValue() &&
+							(fieldName.match('-condition-first-operand') ||
+							fieldName.match('-condition-second-operand-select'))) {
+							for (var key in instance._actions) {
+								var action = instance._actions[key];
+
+								if (key.match('-action') && action.get('type') === 'jump-to-page') {
+									action.conditionChange(instance._getConditionSelectedFieldsPage());
+								}
+							}
+						}
 					},
 
 					render: function(rule) {
@@ -208,11 +232,13 @@ AUI.add(
 
 						var target = instance._actionFactory.createAction(type, index, action, container);
 
+						target.render(container);
+
+						target.conditionChange(instance._getConditionSelectedFieldsPage());
+
 						if (action && action.target) {
 							target.set('value', action.target);
 						}
-
-						target.render(container);
 
 						instance._actions[index + '-action'] = target;
 					},

@@ -14,10 +14,17 @@
 
 package com.liferay.taglib.aui;
 
+import static javax.servlet.jsp.tagext.Tag.EVAL_PAGE;
+
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseFieldWrapperTag;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Julio Camarero
@@ -27,8 +34,71 @@ import javax.servlet.http.HttpServletRequest;
 public class FieldWrapperTag extends BaseFieldWrapperTag {
 
 	@Override
+	protected String getEndPage() {
+		if ("right".equals(getInlineLabel())) {
+			return super.getEndPage();
+		}
+
+		return null;
+	}
+
+	@Override
+	protected String getStartPage() {
+		if (Validator.isNotNull(getLabel()) &&
+			!"right".equals(getInlineLabel())) {
+
+			return super.getStartPage();
+		}
+
+		return null;
+	}
+
+	@Override
 	protected boolean isCleanUpSetAttributes() {
 		return _CLEAN_UP_SET_ATTRIBUTES;
+	}
+
+	@Override
+	protected int processEndTag() throws Exception {
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("</div>");
+
+		return EVAL_PAGE;
+	}
+
+	@Override
+	protected int processStartTag() throws Exception {
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("<div class=\"");
+
+		String controlGroupCss = "lfr-ddm-field-group";
+
+		if (getInlineField()) {
+			controlGroupCss = controlGroupCss.concat(
+				" lfr-ddm-field-group-inline");
+		}
+
+		if (Validator.isNotNull(getInlineLabel())) {
+			controlGroupCss = controlGroupCss.concat(" form-inline");
+		}
+
+		jspWriter.write(controlGroupCss);
+
+		jspWriter.write(StringPool.SPACE);
+
+		jspWriter.write(
+			AUIUtil.buildCss(
+				"field-wrapper", false, getFirst(), getLast(), getCssClass()));
+
+		jspWriter.write("\" ");
+
+		jspWriter.write(AUIUtil.buildData((Map<String, Object>)getData()));
+
+		jspWriter.write(">");
+
+		return EVAL_BODY_INCLUDE;
 	}
 
 	@Override

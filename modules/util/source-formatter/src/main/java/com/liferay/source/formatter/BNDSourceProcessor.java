@@ -19,8 +19,10 @@ import aQute.bnd.osgi.Constants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportPackage;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
@@ -123,6 +125,51 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 			processMessage(
 				fileName, "Incorrect Web-ContextPath '" + webContextPath + "'");
+		}
+	}
+
+	protected void checkExports(String fileName, String content) {
+		String bundleSymbolicName = getDefinitionValue(
+			content, "Bundle-SymbolicName");
+
+		if (bundleSymbolicName == null) {
+			return;
+		}
+
+		Matcher matcher = _apiOrServiceBundleSymbolicNamePattern.matcher(
+			bundleSymbolicName);
+
+		bundleSymbolicName = matcher.replaceAll(StringPool.BLANK);
+
+		matcher = _exportsPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		String[] lines = StringUtil.splitLines(matcher.group(2));
+
+		for (int i = 0; i < lines.length; i++) {
+			String line = StringUtil.removeChar(
+				StringUtil.trim(lines[i]), CharPool.BACK_SLASH);
+
+			if (Validator.isNull(line) || !line.startsWith("com.liferay.") ||
+				line.startsWith(bundleSymbolicName)) {
+
+				continue;
+			}
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Export-Package '");
+			sb.append(line);
+			sb.append("' should match Bundle-SymbolicName '");
+			sb.append(bundleSymbolicName);
+			sb.append("'");
+
+			processMessage(
+				fileName, sb.toString(),
+				getLineCount(content, matcher.start(2)) + i);
 		}
 	}
 
@@ -252,6 +299,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			!absolutePath.contains("/third-party/")) {
 
 			checkDirectoryAndBundleName(fileName, absolutePath, content);
+			checkExports(fileName, content);
 		}
 
 		content = formatBundleClassPath(content);
@@ -661,6 +709,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};
 
+	private final Pattern _apiOrServiceBundleSymbolicNamePattern =
+		Pattern.compile("\\.(api|service)$");
 	private final Pattern _bundleClassPathPattern = Pattern.compile(
 		"^Bundle-ClassPath:[\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
 	private final Pattern _capabilityLineBreakPattern1 = Pattern.compile(

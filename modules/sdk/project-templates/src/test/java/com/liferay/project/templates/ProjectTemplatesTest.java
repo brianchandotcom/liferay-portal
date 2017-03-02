@@ -633,7 +633,7 @@ public class ProjectTemplatesTest {
 			gradleProjectDir,
 			"src/main/resources/configuration" +
 				"/com.liferay.portal.remote.cxf.common.configuration." +
-					"CXFEndpointPublisherConfiguration-cxf",
+					"CXFEndpointPublisherConfiguration-cxf.properties",
 			"contextPath=/my-rest");
 		_testContains(
 			gradleProjectDir,
@@ -654,7 +654,7 @@ public class ProjectTemplatesTest {
 			mavenProjectDir,
 			"src/main/resources/configuration" +
 				"/com.liferay.portal.remote.cxf.common.configuration." +
-					"CXFEndpointPublisherConfiguration-cxf",
+					"CXFEndpointPublisherConfiguration-cxf.properties",
 			"contextPath=/my-rest");
 
 		_buildProjects(

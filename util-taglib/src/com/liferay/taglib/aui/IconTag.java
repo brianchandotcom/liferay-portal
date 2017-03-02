@@ -15,16 +15,30 @@
 package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.aui.base.BaseIconTag;
 import com.liferay.taglib.servlet.PipingServletResponse;
+import com.liferay.taglib.ui.MessageTag;
+import com.liferay.taglib.util.InlineUtil;
+import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.io.IOException;
+
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eduardo Lundgren
@@ -65,6 +79,40 @@ public class IconTag extends BaseIconTag {
 	}
 
 	@Override
+	protected int processEndTag() throws Exception {
+		JspWriter jspWriter = pageContext.getOut();
+
+		String url = getUrl();
+
+		if (url == null) {
+			jspWriter.write("<span class=\"");
+			jspWriter.write(GetterUtil.getString(getCssClass()));
+			jspWriter.write("\" ");
+			jspWriter.write(AUIUtil.buildData(getData()));
+			jspWriter.write(" id=\"");
+			jspWriter.write(GetterUtil.getString(getId()));
+			jspWriter.write("\">");
+
+			_processIconContent(pageContext);
+
+			jspWriter.write("</span>");
+		}
+		else {
+			ATag aTag = new ATag();
+
+			aTag.setCssClass(getCssClass());
+			aTag.setData(getData());
+			aTag.setHref(getUrl());
+			aTag.setId(getId());
+			aTag.setTarget(getTarget());
+
+			aTag.doBodyTag(pageContext, this::_processIconContent);
+		}
+
+		return EVAL_PAGE;
+	}
+
+	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		if (getSrc() == null) {
 			String src = (String)request.getAttribute("aui:icon:src:ext");
@@ -77,6 +125,78 @@ public class IconTag extends BaseIconTag {
 		}
 
 		super.setAttributes(request);
+	}
+
+	private void _processIconContent(PageContext pageContext) {
+		JspWriter jspWriter = pageContext.getOut();
+
+		try {
+			if ("lexicon".equals(getMarkupView())) {
+				jspWriter.write("<svg class=\"lexicon-icon lexicon-icon-");
+				jspWriter.write(GetterUtil.getString(getImage()));
+				jspWriter.write("\" role=\"img\" title=\"");
+
+				HttpServletRequest httpServletRequest =
+					(HttpServletRequest)pageContext.getRequest();
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				String label = getLabel();
+
+				if (label != null) {
+					ResourceBundle resourceBundle =
+						TagResourceBundleUtil.getResourceBundle(
+							request, themeDisplay.getLocale());
+
+					jspWriter.write(
+						HtmlUtil.escapeAttribute(
+							LanguageUtil.get(resourceBundle, label)));
+				}
+
+				jspWriter.write("\" ");
+				jspWriter.write(
+					InlineUtil.buildDynamicAttributes(getDynamicAttributes()));
+				jspWriter.write(StringPool.GREATER_THAN);
+				jspWriter.write("<use xlink:href=\"");
+
+				String src = getSrc();
+
+				if (src == null) {
+					src =
+						themeDisplay.getPathThemeImages() +
+							"/lexicon/icons.svg";
+				}
+
+				jspWriter.write(src);
+				jspWriter.write(StringPool.POUND);
+				jspWriter.write(GetterUtil.getString(getImage()));
+				jspWriter.write("\" /></svg>");
+			}
+			else {
+				jspWriter.write("<i class=\"icon-");
+				jspWriter.write(GetterUtil.getString(getImage()));
+				jspWriter.write("\"></i>");
+			}
+
+			String label = getLabel();
+
+			if (label != null) {
+				jspWriter.write("<span class=\"taglib-icon-label\">");
+
+				MessageTag messageTag = new MessageTag();
+
+				messageTag.setKey(label);
+
+				messageTag.doTag(pageContext);
+
+				jspWriter.write("</span>");
+			}
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
 	}
 
 	private static final String _PAGE = "/html/taglib/aui/icon/page.jsp";

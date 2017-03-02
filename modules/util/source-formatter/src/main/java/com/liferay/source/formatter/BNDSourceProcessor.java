@@ -42,14 +42,6 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	protected void checkDirectoryAndBundleName(
 		String fileName, String absolutePath, String content) {
 
-		if ((!portalSource && !subrepository) || !isModulesFile(absolutePath) ||
-			!fileName.endsWith("/bnd.bnd") ||
-			absolutePath.contains("/testIntegration/") ||
-			absolutePath.contains("/third-party/")) {
-
-			return;
-		}
-
 		int x = absolutePath.lastIndexOf(StringPool.SLASH);
 
 		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
@@ -254,7 +246,13 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		content = importsFormatter.format(content, _exportsPattern);
 		content = importsFormatter.format(content, _importsPattern);
 
-		checkDirectoryAndBundleName(fileName, absolutePath, content);
+		if ((portalSource || subrepository) && isModulesFile(absolutePath) &&
+			fileName.endsWith("/bnd.bnd") &&
+			!absolutePath.contains("/testIntegration/") &&
+			!absolutePath.contains("/third-party/")) {
+
+			checkDirectoryAndBundleName(fileName, absolutePath, content);
+		}
 
 		content = formatBundleClassPath(content);
 

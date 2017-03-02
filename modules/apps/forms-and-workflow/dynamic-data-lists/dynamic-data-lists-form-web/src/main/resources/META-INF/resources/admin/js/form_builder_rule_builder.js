@@ -7,7 +7,7 @@ AUI.add(
 			'auto-fill': 'auto-fill',
 			calculate: 'calculate-field',
 			enable: 'enable-field',
-			'jump-to-page': 'jump-from-page-to-page',
+			'jump-to-page': 'jump-to-page',
 			require: 'require-field',
 			show: 'show-field'
 		};
@@ -50,7 +50,7 @@ AUI.add(
 							'enable-field': Liferay.Language.get('enable-x'),
 							'equals-to': Liferay.Language.get('is-equal-to'),
 							'is-empty': Liferay.Language.get('is-empty'),
-							'jump-from-page-to-page': Liferay.Language.get('jump-from-x-to-x'),
+							'jump-to-page': Liferay.Language.get('jump-to-page-x'),
 							'not-contains': Liferay.Language.get('does-not-contain'),
 							'not-equals-to': Liferay.Language.get('is-not-equal-to'),
 							'not-is-empty': Liferay.Language.get('is-not-empty'),
@@ -277,11 +277,6 @@ AUI.add(
 
 							if (type === 'jump-to-page') {
 								data = [
-									badgeTemplate(
-										{
-											content: pages[action.source].label
-										}
-									),
 									badgeTemplate(
 										{
 											content: pages[action.target].label

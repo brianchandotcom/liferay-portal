@@ -22,8 +22,16 @@ import java.util.Set;
  */
 public interface PortletResourceActionsBag extends ResourceActionsBag {
 
+	public String getPortletRootModelResource();
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public Map<String, String> getPortletRootModelResources();
 
 	public Set<String> getResourceLayoutManagerActions();
+
+	public void setPortletRootModelResource(String portletRootModelResource);
 
 }

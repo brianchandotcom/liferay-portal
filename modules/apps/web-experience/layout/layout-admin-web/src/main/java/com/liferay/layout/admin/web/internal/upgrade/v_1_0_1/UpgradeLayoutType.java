@@ -16,6 +16,8 @@ package com.liferay.layout.admin.web.internal.upgrade.v_1_0_1;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
@@ -35,6 +37,13 @@ import javax.portlet.PortletPreferences;
  * @author Alec Shay
  */
 public class UpgradeLayoutType extends UpgradeProcess {
+
+	public UpgradeLayoutType(
+		JournalArticleResourceLocalService journalArticleResourceLocalService) {
+
+		_journalArticleResourceLocalService =
+			journalArticleResourceLocalService;
+	}
 
 	protected void addPortletPreferences(
 			long companyId, long groupId, long plid, String portletId,
@@ -91,10 +100,6 @@ public class UpgradeLayoutType extends UpgradeProcess {
 
 		long resourcePrimKey = getResourcePrimKey(groupId, articleId);
 
-		if (resourcePrimKey == 0) {
-			throw new UpgradeException("Unable to get article " + articleId);
-		}
-
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
 		portletPreferences.setValue("articleId", articleId);
@@ -112,21 +117,15 @@ public class UpgradeLayoutType extends UpgradeProcess {
 	protected long getResourcePrimKey(long groupId, String articleId)
 		throws Exception {
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select resourcePrimKey from JournalArticleResource where " +
-					"(groupId = ?) and (articleId = ?)")) {
+		JournalArticleResource journalArticleResource =
+			_journalArticleResourceLocalService.fetchArticleResource(
+				groupId, articleId);
 
-			ps.setLong(1, groupId);
-			ps.setString(2, articleId);
-
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					return rs.getLong("resourcePrimKey");
-				}
-			}
+		if (journalArticleResource == null) {
+			throw new UpgradeException("Unable to get article " + articleId);
 		}
 
-		return 0;
+		return journalArticleResource.getResourcePrimKey();
 	}
 
 	protected String getTypeSettings(String portletId) {
@@ -183,5 +182,8 @@ public class UpgradeLayoutType extends UpgradeProcess {
 
 	private static final String _PORTLET_ID_JOURNAL_CONTENT =
 		"com_liferay_journal_content_web_portlet_JournalContentPortlet";
+
+	private final JournalArticleResourceLocalService
+		_journalArticleResourceLocalService;
 
 }

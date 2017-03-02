@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.upgrade;
 
+import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.layout.admin.web.internal.upgrade.v_1_0_0.UpgradeLayout;
 import com.liferay.layout.admin.web.internal.upgrade.v_1_0_1.UpgradeLayoutType;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -22,6 +23,7 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import java.rmi.registry.Registry;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -41,7 +43,18 @@ public class LayoutAdminWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.layout.admin.web", "1.0.0", "1.0.1",
-			new UpgradeLayoutType());
+			new UpgradeLayoutType(_journalArticleResourceLocalService));
 	}
+
+	@Reference(unbind = "-")
+	protected void setJournalArticleResourceLocalService(
+		JournalArticleResourceLocalService journalArticleResourceLocalService) {
+
+		_journalArticleResourceLocalService =
+			journalArticleResourceLocalService;
+	}
+
+	private JournalArticleResourceLocalService
+		_journalArticleResourceLocalService;
 
 }

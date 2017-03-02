@@ -22,6 +22,5 @@ import org.junit.runner.RunWith;
  * @author Matthew Tambara
  */
 @RunWith(Arquillian.class)
-public class LPKGOverrideVerifyCleanStartupTest
-	extends LPKGOverrideVerifyTestCase {
+public class LPKGOverrideVerifyCleanStartupTest extends LPKGOverrideVerifyTest {
 }

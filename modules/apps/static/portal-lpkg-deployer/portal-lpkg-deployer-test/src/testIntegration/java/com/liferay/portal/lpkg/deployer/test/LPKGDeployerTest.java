@@ -53,11 +53,11 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Matthew Tambara
  */
-public class LPKGDeployerTestCase {
+public class LPKGDeployerTest {
 
 	@Test
 	public void testDeployedLPKGs() throws Exception {
-		Bundle testBundle = FrameworkUtil.getBundle(LPKGDeployerTestCase.class);
+		Bundle testBundle = FrameworkUtil.getBundle(LPKGDeployerTest.class);
 
 		BundleContext bundleContext = testBundle.getBundleContext();
 

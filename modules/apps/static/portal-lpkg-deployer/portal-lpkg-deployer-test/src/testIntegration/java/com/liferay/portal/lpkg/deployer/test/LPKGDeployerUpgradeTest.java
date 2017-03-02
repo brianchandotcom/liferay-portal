@@ -22,5 +22,5 @@ import org.junit.runner.RunWith;
  * @author Matthew Tambara
  */
 @RunWith(Arquillian.class)
-public class LPKGDeployerUpgradeTest extends LPKGDeployerTestCase {
+public class LPKGDeployerUpgradeTest extends LPKGDeployerTest {
 }

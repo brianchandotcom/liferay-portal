@@ -23,5 +23,5 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class LPKGOverrideVerifySecondStartupTest
-	extends LPKGOverrideVerifyTestCase {
+	extends LPKGOverrideVerifyTest {
 }

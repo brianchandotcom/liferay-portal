@@ -41,12 +41,12 @@ import org.osgi.framework.Version;
 /**
  * @author Matthew Tambara
  */
-public class LPKGOverrideVerifyTestCase {
+public class LPKGOverrideVerifyTest {
 
 	@Test
 	public void testOverriddenLPKGs() throws Exception {
 		Bundle testBundle = FrameworkUtil.getBundle(
-			LPKGOverrideVerifyTestCase.class);
+			LPKGOverrideVerifyTest.class);
 
 		BundleContext bundleContext = testBundle.getBundleContext();
 

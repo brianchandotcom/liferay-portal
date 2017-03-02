@@ -84,8 +84,7 @@ public class UpgradeLayoutType extends UpgradeProcess {
 	}
 
 	protected String getPortletId() {
-		String instanceId = PortletConstants.getInstanceId(
-			_PORTLET_ID_JOURNAL_CONTENT);
+		String instanceId = PortletConstants.generateInstanceId();
 
 		return PortletConstants.assemblePortletId(
 			_PORTLET_ID_JOURNAL_CONTENT, instanceId);

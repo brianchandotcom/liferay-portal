@@ -21,26 +21,27 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the FriendlyURL service. Represents a row in the &quot;FriendlyURL&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the FriendlyURLEntry service. Represents a row in the &quot;FriendlyURLEntry&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
- * @see FriendlyURLModel
- * @see com.liferay.friendly.url.model.impl.FriendlyURLImpl
- * @see com.liferay.friendly.url.model.impl.FriendlyURLModelImpl
+ * @see FriendlyURLEntryModel
+ * @see com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl
+ * @see com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl
  * @generated
  */
-@ImplementationClassName("com.liferay.friendly.url.model.impl.FriendlyURLImpl")
+@ImplementationClassName("com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl")
 @ProviderType
-public interface FriendlyURL extends FriendlyURLModel, PersistedModel {
+public interface FriendlyURLEntry extends FriendlyURLEntryModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.friendly.url.model.impl.FriendlyURLImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<FriendlyURL, Long> FRIENDLY_URL_ID_ACCESSOR = new Accessor<FriendlyURL, Long>() {
+	public static final Accessor<FriendlyURLEntry, Long> FRIENDLY_URL_ENTRY_ID_ACCESSOR =
+		new Accessor<FriendlyURLEntry, Long>() {
 			@Override
-			public Long get(FriendlyURL friendlyURL) {
-				return friendlyURL.getFriendlyURLId();
+			public Long get(FriendlyURLEntry friendlyURLEntry) {
+				return friendlyURLEntry.getFriendlyURLEntryId();
 			}
 
 			@Override
@@ -49,8 +50,8 @@ public interface FriendlyURL extends FriendlyURLModel, PersistedModel {
 			}
 
 			@Override
-			public Class<FriendlyURL> getTypeClass() {
-				return FriendlyURL.class;
+			public Class<FriendlyURLEntry> getTypeClass() {
+				return FriendlyURLEntry.class;
 			}
 		};
 }

@@ -41,7 +41,7 @@ import org.junit.BeforeClass;
 /**
  * @author Hugo Huijser
  */
-public class BaseSourceProcessorTestCase {
+public abstract class BaseSourceProcessorTestCase {
 
 	@BeforeClass
 	public static void setUpClass() {

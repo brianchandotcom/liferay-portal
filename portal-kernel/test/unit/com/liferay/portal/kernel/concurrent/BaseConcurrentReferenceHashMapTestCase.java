@@ -33,7 +33,7 @@ import org.junit.Assert;
 /**
  * @author Shuyang Zhou
  */
-public class BaseConcurrentReferenceHashMapTestCase {
+public abstract class BaseConcurrentReferenceHashMapTestCase {
 
 	protected Map<String, Object> createDataMap() {
 		Map<String, Object> map = new HashMap<>();

@@ -38,7 +38,7 @@ import org.osgi.framework.Version;
 /**
  * @author Matthew Tambara
  */
-public class LPKGVersionChangeTestCase {
+public abstract class LPKGVersionChangeTestCase {
 
 	protected void testVersionChange(
 			int majorDelta, int minorDelta, int microDelta)

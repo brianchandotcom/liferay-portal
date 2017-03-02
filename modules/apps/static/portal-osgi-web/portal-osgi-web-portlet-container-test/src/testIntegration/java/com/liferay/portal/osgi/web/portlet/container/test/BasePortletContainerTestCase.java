@@ -43,7 +43,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Raymond Augé
  */
-public class BasePortletContainerTestCase {
+public abstract class BasePortletContainerTestCase {
 
 	@Before
 	public void setUp() throws Exception {

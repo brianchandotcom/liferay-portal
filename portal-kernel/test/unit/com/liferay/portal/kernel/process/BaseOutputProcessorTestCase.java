@@ -25,7 +25,7 @@ import org.junit.Assert;
 /**
  * @author Shuyang Zhou
  */
-public class BaseOutputProcessorTestCase {
+public abstract class BaseOutputProcessorTestCase {
 
 	public void testFailToRead(OutputProcessor<?, ?> outputProcessor) {
 		final IOException ioException = new IOException("Unable to read");

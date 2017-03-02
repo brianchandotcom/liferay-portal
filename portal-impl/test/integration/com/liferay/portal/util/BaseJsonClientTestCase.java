@@ -54,7 +54,7 @@ import org.apache.http.util.EntityUtils;
 /**
  * @author Alexander Chow
  */
-public class BaseJsonClientTestCase {
+public abstract class BaseJsonClientTestCase {
 
 	public static final String URL_JSONWS = "/api/jsonws";
 

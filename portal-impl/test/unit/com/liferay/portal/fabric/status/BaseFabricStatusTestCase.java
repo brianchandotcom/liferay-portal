@@ -31,7 +31,7 @@ import org.junit.Assert;
 /**
  * @author Shuyang Zhou
  */
-public class BaseFabricStatusTestCase {
+public abstract class BaseFabricStatusTestCase {
 
 	protected void assertEquals(
 		List<? extends PlatformManagedObject> platformManagedObjects1,

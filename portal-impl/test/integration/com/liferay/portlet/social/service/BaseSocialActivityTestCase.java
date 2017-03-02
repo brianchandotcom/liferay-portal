@@ -33,7 +33,7 @@ import org.junit.BeforeClass;
 /**
  * @author Zsolt Berentey
  */
-public class BaseSocialActivityTestCase {
+public abstract class BaseSocialActivityTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

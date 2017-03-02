@@ -56,7 +56,7 @@ import org.junit.Before;
 /**
  * @author Eduardo Garcia
  */
-public class BaseExportImportTestCase {
+public abstract class BaseExportImportTestCase {
 
 	public void importLayouts(Map<String, String[]> parameterMap)
 		throws Exception {

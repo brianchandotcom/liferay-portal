@@ -33,7 +33,7 @@ import org.junit.Before;
 /**
  * @author André de Oliveira
  */
-public class BaseFacetedSearcherTestCase {
+public abstract class BaseFacetedSearcherTestCase {
 
 	@Before
 	public void setUp() throws Exception {

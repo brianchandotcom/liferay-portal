@@ -92,6 +92,8 @@ public interface LiferaySelenium {
 
 	public void assertPartialConfirmation(String pattern) throws Exception;
 
+	public void assertPartialLocation(String pattern) throws Exception;
+
 	public void assertPartialText(String locator, String pattern)
 		throws Exception;
 

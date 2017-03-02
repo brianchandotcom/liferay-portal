@@ -448,6 +448,16 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void assertPartialLocation(String pattern) throws Exception {
+		String location = getLocation();
+
+		if (!location.contains(pattern)) {
+			throw new Exception(
+				"\"" + location + "\" does not contain \"" + pattern + "\"");
+		}
+	}
+
+	@Override
 	public void assertPartialText(String locator, String pattern)
 		throws Exception {
 

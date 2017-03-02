@@ -279,8 +279,6 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	public String getTestRayLogsURL() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
 		Properties buildProperties = null;
 
 		try {
@@ -304,10 +302,11 @@ public class AxisBuild extends BaseBuild {
 			getStartPropertiesTempMap();
 
 		return JenkinsResultsParserUtil.combine(
-			logBaseURL, "/", topLevelBuild.getMaster(), "/",
+			logBaseURL, "/",
+			startPropertiesTempMap.get("TOP_LEVEL_MASTER_HOSTNAME"), "/",
 			startPropertiesTempMap.get("TOP_LEVEL_START_TIME"), "/",
-			topLevelBuild.getJobName(), "/",
-			Integer.toString(topLevelBuild.getBuildNumber()), "/",
+			startPropertiesTempMap.get("TOP_LEVEL_JOB_NAME"), "/",
+			startPropertiesTempMap.get("TOP_LEVEL_BUILD_NUMBER"), "/",
 			getParameterValue("JOB_VARIANT"), "/", getAxisNumber());
 	}
 

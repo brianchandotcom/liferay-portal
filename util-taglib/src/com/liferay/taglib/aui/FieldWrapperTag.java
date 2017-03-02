@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseFieldWrapperTag;
 
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
@@ -35,7 +36,7 @@ public class FieldWrapperTag extends BaseFieldWrapperTag {
 
 	@Override
 	protected String getEndPage() {
-		if (Validator.equals(getInlineLabel(), "right")) {
+		if (Objects.equals(getInlineLabel(), "right")) {
 			return super.getEndPage();
 		}
 
@@ -45,7 +46,7 @@ public class FieldWrapperTag extends BaseFieldWrapperTag {
 	@Override
 	protected String getStartPage() {
 		if (Validator.isNotNull(getLabel()) &&
-			!Validator.equals(getInlineLabel(), "right")) {
+			!Objects.equals(getInlineLabel(), "right")) {
 
 			return super.getStartPage();
 		}

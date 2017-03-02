@@ -659,9 +659,9 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _bundleClassPathPattern = Pattern.compile(
 		"^Bundle-ClassPath:[\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
 	private final Pattern _bundleNamePattern = Pattern.compile(
-		"^Bundle-Name: (.*)\n", Pattern.MULTILINE);
+		"^Bundle-Name: (.*)(\n|\\Z)", Pattern.MULTILINE);
 	private final Pattern _bundleSymbolicNamePattern = Pattern.compile(
-		"^Bundle-SymbolicName: (.*)\n", Pattern.MULTILINE);
+		"^Bundle-SymbolicName: (.*)(\n|\\Z)", Pattern.MULTILINE);
 	private final Pattern _capabilityLineBreakPattern1 = Pattern.compile(
 		",[^\\\\]");
 	private final Pattern _capabilityLineBreakPattern2 = Pattern.compile(
@@ -686,7 +686,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _trailingSemiColonPattern = Pattern.compile(
 		";(\n|\\Z)");
 	private final Pattern _webContextPathNamePattern = Pattern.compile(
-		"^Web-ContextPath: (.*)\n", Pattern.MULTILINE);
+		"^Web-ContextPath: (.*)(\n|\\Z)", Pattern.MULTILINE);
 	private final Pattern _wilcardImportPattern = Pattern.compile(
 		"(\\S+\\*)(,\\\\\n|\n|\\Z)");
 

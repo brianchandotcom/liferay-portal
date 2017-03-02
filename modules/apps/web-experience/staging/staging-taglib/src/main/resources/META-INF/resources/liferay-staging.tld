@@ -133,6 +133,12 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a menu item in the UI for an Import Entity Screen.</description>
+		<name>import-entity</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ImportEntityTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<description>Renders a <![CDATA[<code>Navbar</code>]]> containing a staging menu with page versioning information, if available.</description>
 		<name>menu</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.MenuTag</tag-class>

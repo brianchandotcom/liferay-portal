@@ -33,7 +33,7 @@ public class JSONNamingCheck extends AbstractCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.VARIABLE_DEF};
+		return new int[] {TokenTypes.PARAMETER_DEF, TokenTypes.VARIABLE_DEF};
 	}
 
 	@Override

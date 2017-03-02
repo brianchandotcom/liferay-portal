@@ -48,10 +48,15 @@ AUI.add(
 						instance._createTargetField().render(fieldsListContainer);
 					},
 
-					updateSource: function(pages) {
+					conditionChange: function(pages) {
 						var instance = this;
 
-						instance._setSourceField(String(Math.max(pages)));
+						var startIndex = pages[pages.length - 1] + 1;
+
+						var options = instance.get('options').slice(startIndex);
+
+						instance._setSourcePage(String(Math.max(pages)));
+						instance._setTargetOptions(options);
 					},
 
 					_createSourceField: function() {
@@ -124,10 +129,16 @@ AUI.add(
 						return instance._targetField;
 					},
 
-					_setSourceField: function(pageIndex) {
+					_setSourcePage: function(pageIndex) {
 						var instance = this;
 
 						instance._sourceField.setValue(String(pageIndex));
+					},
+
+					_setTargetOptions: function(pages) {
+						var instance = this;
+
+						instance._targetField.set('options', pages);
 					}
 				}
 			}

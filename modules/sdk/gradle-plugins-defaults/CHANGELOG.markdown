@@ -1121,10 +1121,10 @@ OSGi project.
 
 ### Changed
 - [LPS-70170]: Change dependency replacements in the `jspC` configuration:
-	- always use the deployed `util-taglib.jar` file; fail if not found.
-	- substitute module taglib dependencies with project dependencies if found,
-	falling back to the deployed JAR file; fail if neither the project or the
-	deployed JAR file are found.
+	- always use the deployed `util-taglib.jar` file; fail if it's not found.
+	- substitute module taglib dependencies with project dependencies if they're
+	found, falling back to the deployed JAR file; fail if neither the project nor
+	the deployed JAR file are found.
 
 ## 3.1.2 - 2017-02-25
 
@@ -1134,8 +1134,8 @@ OSGi project.
 ## 3.1.3 - 2017-02-27
 
 ### Changed
-- [LPS-70170]: Lower log level of `jspC` configuration dependency replacement
-messages if the `compileJSP` is not explicitly invoked.
+- [LPS-70170]: Lower the log level of `jspC` configuration dependency
+replacement messages if the `compileJSP` task is not explicitly invoked.
 
 ## 3.1.4 - 2017-02-28
 

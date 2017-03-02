@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,24 +11,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.taglib.include;
 
-<%
-String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 
-boolean showCreateAccountIcon = false;
+/**
+ * @author Shuyang Zhou
+ */
+public interface PageInclude {
 
-if (!mvcRenderCommandName.equals("/login/create_account") && company.isStrangers() && !portletName.equals(PortletKeys.FAST_LOGIN)) {
-	showCreateAccountIcon = true;
+	public void include(PageContext pageContext) throws JspException;
+
 }
-%>
-
-<c:if test="<%= showCreateAccountIcon %>">
-	<liferay-ui:icon
-		iconCssClass="icon-plus"
-		message="create-account"
-		url="<%= PortalUtil.getCreateAccountURL(request, themeDisplay) %>"
-	/>
-</c:if>

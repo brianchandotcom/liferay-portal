@@ -2,7 +2,7 @@ Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
 Bundle-Version: 2.7.0
 Export-Package:\
-	com.liferay.alloy.taglib.*;version="2.0.0",\
+	com.liferay.alloy.taglib.*;version="2.1.0",\
 	com.liferay.taglib.*
 Import-Package:\
 	!com.liferay.portal.freemarker,\

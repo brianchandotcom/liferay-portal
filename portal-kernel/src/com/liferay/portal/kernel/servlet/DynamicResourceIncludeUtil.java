@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.net.MalformedURLException;
@@ -30,7 +31,8 @@ public class DynamicResourceIncludeUtil {
 
 	public static ServletContext getPathServletContext(String path) {
 		for (ServletContext servletContext : _servletContexts) {
-			if (path.startsWith(servletContext.getContextPath())) {
+			if (Validator.isNotNull(servletContext.getContextPath()) &&
+				path.startsWith(servletContext.getContextPath())) {
 				return servletContext;
 			}
 		}

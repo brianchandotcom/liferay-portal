@@ -79,11 +79,9 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 					"'");
 		}
 
-		Matcher matcher = _bundleNamePattern.matcher(content);
+		String bundleName = getDefinitionValue(content, "Bundle-Name");
 
-		if (matcher.find()) {
-			String bundleName = matcher.group(1);
-
+		if (bundleName != null) {
 			String strippedBundleName = StringUtil.removeChars(
 				bundleName, CharPool.DASH, CharPool.SPACE);
 
@@ -109,11 +107,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
-		matcher = _bundleSymbolicNamePattern.matcher(content);
+		String bundleSymbolicName = getDefinitionValue(
+			content, "Bundle-SymbolicName");
 
-		if (matcher.find()) {
-			String bundleSymbolicName = matcher.group(1);
-
+		if (bundleSymbolicName != null) {
 			String expectedBundleSymbolicName =
 				"com.liferay." +
 					StringUtil.replace(
@@ -127,16 +124,13 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		matcher = _webContextPathNamePattern.matcher(content);
+		String webContextPath = getDefinitionValue(content, "Web-ContextPath");
 
-		if (matcher.find()) {
-			String webContextPath = matcher.group(1);
+		if ((webContextPath != null) &&
+			!webContextPath.equals("/" + moduleName)) {
 
-			if (!webContextPath.equals("/" + moduleName)) {
-				processMessage(
-					fileName,
-					"Incorrect Web-ContextPath '" + webContextPath + "'");
-			}
+			processMessage(
+				fileName, "Incorrect Web-ContextPath '" + webContextPath + "'");
 		}
 	}
 
@@ -548,6 +542,19 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		return _definitionKeysMap;
 	}
 
+	protected String getDefinitionValue(String content, String key) {
+		Pattern pattern = Pattern.compile(
+			"^" + key + ": (.*)(\n|\\Z)", Pattern.MULTILINE);
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		return null;
+	}
+
 	protected Map<String, Map<String, String>>
 		getFileSpecificDefinitionKeysMap() {
 
@@ -658,10 +665,6 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	private final Pattern _bundleClassPathPattern = Pattern.compile(
 		"^Bundle-ClassPath:[\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
-	private final Pattern _bundleNamePattern = Pattern.compile(
-		"^Bundle-Name: (.*)(\n|\\Z)", Pattern.MULTILINE);
-	private final Pattern _bundleSymbolicNamePattern = Pattern.compile(
-		"^Bundle-SymbolicName: (.*)(\n|\\Z)", Pattern.MULTILINE);
 	private final Pattern _capabilityLineBreakPattern1 = Pattern.compile(
 		",[^\\\\]");
 	private final Pattern _capabilityLineBreakPattern2 = Pattern.compile(
@@ -685,8 +688,6 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
 	private final Pattern _trailingSemiColonPattern = Pattern.compile(
 		";(\n|\\Z)");
-	private final Pattern _webContextPathNamePattern = Pattern.compile(
-		"^Web-ContextPath: (.*)(\n|\\Z)", Pattern.MULTILINE);
 	private final Pattern _wilcardImportPattern = Pattern.compile(
 		"(\\S+\\*)(,\\\\\n|\n|\\Z)");
 

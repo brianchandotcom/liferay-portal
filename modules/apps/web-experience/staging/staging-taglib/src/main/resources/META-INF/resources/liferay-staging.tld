@@ -107,6 +107,32 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a menu item in the UI for an Export Entity Screen.</description>
+		<name>export-entity</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ExportEntityTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>The className of the entity that will be exported. Either className or classNameId should be passed.</description>
+			<name>className</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The classNameId of the entity that will be exported. Either className or classNameId should be passed.</description>
+			<name>classNameId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+		<attribute>
+			<description>The classPK of the entity that will be exported.</description>
+			<name>classPK</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders a <![CDATA[<code>Navbar</code>]]> containing a staging menu with page versioning information, if available.</description>
 		<name>menu</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.MenuTag</tag-class>

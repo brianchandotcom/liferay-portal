@@ -27,27 +27,27 @@ public class LiferayJSONSerializer extends JSONSerializer {
 	@Override
 	public ObjectMatch tryUnmarshall(
 			SerializerState serializerState,
-			@SuppressWarnings("rawtypes") Class clazz, Object json)
+			@SuppressWarnings("rawtypes") Class clazz, Object jsonObj)
 		throws UnmarshallException {
 
 		if (!(serializerState instanceof LiferaySerializerState)) {
 			serializerState = new LiferaySerializerState();
 		}
 
-		return super.tryUnmarshall(serializerState, clazz, json);
+		return super.tryUnmarshall(serializerState, clazz, jsonObj);
 	}
 
 	@Override
 	public Object unmarshall(
 			SerializerState serializerState,
-			@SuppressWarnings("rawtypes") Class clazz, Object json)
+			@SuppressWarnings("rawtypes") Class clazz, Object jsonObj)
 		throws UnmarshallException {
 
 		if (!(serializerState instanceof LiferaySerializerState)) {
 			serializerState = new LiferaySerializerState();
 		}
 
-		return super.unmarshall(serializerState, clazz, json);
+		return super.unmarshall(serializerState, clazz, jsonObj);
 	}
 
 }

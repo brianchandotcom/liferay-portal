@@ -402,20 +402,22 @@ public class PortletAction extends Action {
 
 	protected void writeJSON(
 			PortletRequest portletRequest, ActionResponse actionResponse,
-			Object json)
+			Object jsonObj)
 		throws IOException {
 
-		JSONPortletResponseUtil.writeJSON(portletRequest, actionResponse, json);
+		JSONPortletResponseUtil.writeJSON(
+			portletRequest, actionResponse, jsonObj);
 
 		setForward(portletRequest, ActionConstants.COMMON_NULL);
 	}
 
 	protected void writeJSON(
 			PortletRequest portletRequest, MimeResponse mimeResponse,
-			Object json)
+			Object jsonObj)
 		throws IOException {
 
-		JSONPortletResponseUtil.writeJSON(portletRequest, mimeResponse, json);
+		JSONPortletResponseUtil.writeJSON(
+			portletRequest, mimeResponse, jsonObj);
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = true;

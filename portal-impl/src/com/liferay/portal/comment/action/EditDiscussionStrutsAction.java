@@ -254,12 +254,12 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 
 	protected void writeJSON(
 			HttpServletRequest request, HttpServletResponse response,
-			Object json)
+			Object jsonObj)
 		throws IOException {
 
 		response.setContentType(ContentTypes.APPLICATION_JSON);
 
-		ServletResponseUtil.write(response, json.toString());
+		ServletResponseUtil.write(response, jsonObj.toString());
 
 		response.flushBuffer();
 	}

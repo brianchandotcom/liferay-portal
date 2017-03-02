@@ -507,12 +507,12 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 	@Override
 	protected void writeJSON(
 			PortletRequest portletRequest, MimeResponse mimeResponse,
-			Object json)
+			Object jsonObj)
 		throws IOException {
 
 		mimeResponse.setContentType(ContentTypes.TEXT_HTML);
 
-		PortletResponseUtil.write(mimeResponse, json.toString());
+		PortletResponseUtil.write(mimeResponse, jsonObj.toString());
 
 		mimeResponse.flushBuffer();
 	}

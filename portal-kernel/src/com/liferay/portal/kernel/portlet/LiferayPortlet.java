@@ -639,7 +639,7 @@ public class LiferayPortlet extends GenericPortlet {
 
 	protected void writeJSON(
 			PortletRequest portletRequest, ActionResponse actionResponse,
-			Object json)
+			Object jsonObj)
 		throws IOException {
 
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
@@ -647,19 +647,19 @@ public class LiferayPortlet extends GenericPortlet {
 
 		response.setContentType(getJSONContentType(portletRequest));
 
-		ServletResponseUtil.write(response, json.toString());
+		ServletResponseUtil.write(response, jsonObj.toString());
 
 		response.flushBuffer();
 	}
 
 	protected void writeJSON(
 			PortletRequest portletRequest, MimeResponse mimeResponse,
-			Object json)
+			Object jsonObj)
 		throws IOException {
 
 		mimeResponse.setContentType(getJSONContentType(portletRequest));
 
-		PortletResponseUtil.write(mimeResponse, json.toString());
+		PortletResponseUtil.write(mimeResponse, jsonObj.toString());
 
 		mimeResponse.flushBuffer();
 	}

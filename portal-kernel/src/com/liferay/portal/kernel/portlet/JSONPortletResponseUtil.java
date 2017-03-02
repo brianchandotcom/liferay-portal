@@ -35,19 +35,19 @@ public class JSONPortletResponseUtil {
 
 	public static void writeJSON(
 			PortletRequest portletRequest, MimeResponse mimeResponse,
-			Object json)
+			Object jsonObj)
 		throws IOException {
 
 		mimeResponse.setContentType(_getContentType(portletRequest));
 
-		PortletResponseUtil.write(mimeResponse, json.toString());
+		PortletResponseUtil.write(mimeResponse, jsonObj.toString());
 
 		mimeResponse.flushBuffer();
 	}
 
 	public static void writeJSON(
 			PortletRequest portletRequest, PortletResponse portletResponse,
-			Object json)
+			Object jsonObj)
 		throws IOException {
 
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
@@ -55,7 +55,7 @@ public class JSONPortletResponseUtil {
 
 		response.setContentType(_getContentType(portletRequest));
 
-		ServletResponseUtil.write(response, json.toString());
+		ServletResponseUtil.write(response, jsonObj.toString());
 
 		response.flushBuffer();
 	}

@@ -15,19 +15,16 @@
 package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.aui.base.BaseIconTag;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Eduardo Lundgren
@@ -42,28 +39,21 @@ public class IconTag extends BaseIconTag {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		ServletContext servletContext = (ServletContext)request.getAttribute(
-			WebKeys.CTX);
+		IconTag iconTag = new IconTag();
 
-		RequestDispatcher requestDispatcher =
-			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-				servletContext, _getPage(markupView));
+		iconTag.setCssClass(cssClass);
+		iconTag.setImage(image);
+		iconTag.setMarkupView(markupView);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		request.setAttribute("aui:icon:cssClass", cssClass);
-		request.setAttribute("aui:icon:image", image);
-		request.setAttribute("aui:icon:markupView", markupView);
-
 		try {
-			requestDispatcher.include(
+			iconTag.doTag(
 				request,
 				new PipingServletResponse(response, unsyncStringWriter));
 		}
-		finally {
-			request.removeAttribute("aui:icon:cssClass");
-			request.removeAttribute("aui:icon:image");
-			request.removeAttribute("aui:icon:markupView");
+		catch (JspException je) {
+			throw new ServletException(je);
 		}
 
 		return unsyncStringWriter.toString();

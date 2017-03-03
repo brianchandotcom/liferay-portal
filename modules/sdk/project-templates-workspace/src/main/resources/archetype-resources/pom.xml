@@ -31,9 +31,9 @@
 
 					<!--
 					<execution>
-						<id>default-init-bundle</id>
+						<id>default-init</id>
 						<goals>
-							<goal>init-bundle</goal>
+							<goal>init</goal>
 						</goals>
 						<phase>initialize</phase>
 					</execution>
@@ -46,13 +46,16 @@
 						</goals>
 						<phase>pre-integration-test</phase>
 					</execution>
+
+					<!--
 					<execution>
-						<id>default-dist-bundle</id>
+						<id>default-dist</id>
 						<goals>
-							<goal>dist-bundle</goal>
+							<goal>dist</goal>
 						</goals>
 						<phase>post-integration-test</phase>
 					</execution>
+					-->
 				</executions>
 			</plugin>
 		</plugins>

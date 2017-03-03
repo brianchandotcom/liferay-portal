@@ -106,10 +106,10 @@
 				<version>@com.liferay.css.builder.version@</version>
 				<executions>
 					<execution>
-						<id>default-build-css</id>
+						<id>default-build</id>
 						<phase>generate-sources</phase>
 						<goals>
-							<goal>build-css</goal>
+							<goal>build</goal>
 						</goals>
 					</execution>
 				</executions>

@@ -177,8 +177,10 @@ public class LanguageResources {
 			Locale priorityLocale = LanguageUtil.getLocale(
 				locale.getLanguage());
 
+			variant = priorityLocale.getVariant();
+
 			if ((priorityLocale != null) && !locale.equals(priorityLocale) &&
-				(priorityLocale.getVariant().length() <= 0)) {
+				(variant.length() <= 0)) {
 
 				return new Locale(
 					priorityLocale.getLanguage(), priorityLocale.getCountry());

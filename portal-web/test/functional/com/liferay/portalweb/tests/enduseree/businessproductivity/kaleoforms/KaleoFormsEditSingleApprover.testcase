@@ -359,7 +359,7 @@
 
 		<execute macro="MockMock#viewMail">
 			<var name="asset" value="Review Notification Description" />
-			<var name="content" value="userfn Creator sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="content" value="userfn Creator sent you a Process for review in the workflow." />
 			<var name="recipient" value="userfn Reviewer" />
 			<var name="sender" value="Liferay Portal Workflow Notifications" />
 			<var name="subject" value="Review Notification Description" />
@@ -433,7 +433,7 @@
 
 		<execute macro="MockMock#viewMail">
 			<var name="asset" value="Review Notification Description" />
-			<var name="content" value="userfn Updater sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="content" value="userfn Updater sent you a Process for review in the workflow." />
 			<var name="recipient" value="userfn Reviewer" />
 			<var name="sender" value="Liferay Portal Workflow Notifications" />
 			<var name="subject" value="Review Notification Description" />

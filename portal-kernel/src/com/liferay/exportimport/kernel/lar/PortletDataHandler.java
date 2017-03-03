@@ -235,6 +235,8 @@ public interface PortletDataHandler {
 
 	public boolean isSupportsDataStrategyCopyAsNew();
 
+	public boolean isSupportsDataStrategyMirrorWithOverwriting();
+
 	public void prepareManifestSummary(PortletDataContext portletDataContext)
 		throws PortletDataException;
 

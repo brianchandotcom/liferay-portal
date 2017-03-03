@@ -1167,6 +1167,7 @@ task executable.
 ### Added
 - [LPS-67039]: Add the ability to invoke PMD from a sub-repository, by using
 `gradle.gradleUserHomeDir` as root for the `standard-rules.xml` file path.
+- [LPS-71005]: Update the [Liferay Gradle Plugins] dependency to version 3.2.13.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1282,6 +1283,7 @@ task executable.
 [LPS-70890]: https://issues.liferay.com/browse/LPS-70890
 [LPS-70929]: https://issues.liferay.com/browse/LPS-70929
 [LPS-70941]: https://issues.liferay.com/browse/LPS-70941
+[LPS-71005]: https://issues.liferay.com/browse/LPS-71005
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

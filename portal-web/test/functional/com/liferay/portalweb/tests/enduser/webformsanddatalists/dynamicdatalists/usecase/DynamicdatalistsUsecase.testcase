@@ -942,6 +942,8 @@
 	<command name="AddSelectFieldWithTranslationAndViewInSpreadsheetView" priority="4">
 		<description message="This is a use case for LPS-68216." />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1059,7 +1061,7 @@
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:8080/ja/" />
+			<var name="url" value="${portalURL}/ja/" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

@@ -396,6 +396,8 @@
 	</command>
 
 	<command name="EditSiteFriendlyURL" priority="4">
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -437,7 +439,7 @@
 		<execute macro="Site#viewSiteFriendlyURLPG">
 			<var name="pageName" value="Public Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageURL" value="http://localhost:8080/web/alpha" />
+			<var name="sitePageURL" value="${portalURL}/web/alpha" />
 		</execute>
 
 		<execute macro="Navigator#openPrivateSiteURL">
@@ -447,7 +449,7 @@
 		<execute macro="Site#viewSiteFriendlyURLPG">
 			<var name="pageName" value="Private Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageURL" value="http://localhost:8080/group/alpha" />
+			<var name="sitePageURL" value="${portalURL}/group/alpha" />
 		</execute>
 	</command>
 

@@ -1362,6 +1362,8 @@
 	</command>
 
 	<command name="ViewBlogsEntryFriendlyURLViaBlogsPortletAndRecentBloggers" priority="3">
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<var name="entryAuthor" value="Test Test" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -1374,7 +1376,7 @@
 
 		<var method="StringUtil#lowerCase('${pageNameURL}')" name="pageNameURL" />
 
-		<var name="friendlyURL" value="http://localhost:8080/web/guest/${pageNameURL}/-/blogs/${entryTitleURL}" />
+		<var name="friendlyURL" value="${portalURL}/web/guest/${pageNameURL}/-/blogs/${entryTitleURL}" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />

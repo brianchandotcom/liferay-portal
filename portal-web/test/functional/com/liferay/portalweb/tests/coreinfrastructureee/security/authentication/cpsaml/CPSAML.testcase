@@ -22,10 +22,12 @@
 	<command name="ViewIdPInitiatedSSO" priority="4">
 		<description message="Sign into portal by executing a IdP initiated SSO login. After a successful login, the IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions." />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<!-- Verify SP is logged in -->
 
 		<execute macro="SAML#executeIdPInitiatedSSO">
-			<var name="idpInitiatedSSOURL" value="http://localhost:8080/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
+			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="false" />
 			<var name="samlEnabled" value="true" />
@@ -65,10 +67,12 @@
 	<command name="ViewIdPInitiatedSSOWithRememberMeChecked" priority="4">
 		<description message="LPS-50220 - IdP initiated SSO login should work regardless if 'Remember Me' is checked or not." />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<!-- Verify SP is logged in -->
 
 		<execute macro="SAML#executeIdPInitiatedSSO">
-			<var name="idpInitiatedSSOURL" value="http://localhost:8080/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
+			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="true" />
 			<var name="samlEnabled" value="true" />
@@ -108,6 +112,8 @@
 	<command name="ViewSingleLogoutHTTPPostBindingInConsole" priority="4">
 		<description message="LPS-49666 - SAML Single Logout should support HTTP-POST binding." />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
@@ -125,7 +131,7 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="SAML#executeIdPInitiatedSSO">
-			<var name="idpInitiatedSSOURL" value="http://localhost:8080/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
+			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="true" />
 			<var name="samlEnabled" value="true" />

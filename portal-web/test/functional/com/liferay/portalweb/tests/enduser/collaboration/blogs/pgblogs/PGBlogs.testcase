@@ -486,6 +486,8 @@
 	<command name="AddCustomURL" priority="4">
 		<description message="This is usecase 3 for LPS-69240" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entrySubtitle" value="Blogs Entry Subtitle" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -513,7 +515,7 @@
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:8080/web/guest/blogs-page/-/blogs/custom-url-here" />
+			<var name="url" value="${portalURL}/web/guest/blogs-page/-/blogs/custom-url-here" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntry">

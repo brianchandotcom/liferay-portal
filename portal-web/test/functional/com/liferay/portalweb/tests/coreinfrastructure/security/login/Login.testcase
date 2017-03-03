@@ -6,6 +6,8 @@
 	<command name="CASSmoke" priority="4">
 		<property name="web.plugins.includes" value="cas-web" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -42,10 +44,10 @@
 		</execute>
 
 		<execute macro="PortalSettings#editConfigurationAuthenticationCAS">
-			<var name="casLoginURL" value="http://localhost:8080/cas-web/login" />
-			<var name="casLogoutURL" value="http://localhost:8080/cas-web/logout" />
-			<var name="casServerURL" value="http://localhost:8080/cas-web" />
-			<var name="casServiceURL" value="http://localhost:8080/c/portal/login" />
+			<var name="casLoginURL" value="${portalURL}/cas-web/login" />
+			<var name="casLogoutURL" value="${portalURL}/cas-web/logout" />
+			<var name="casServerURL" value="${portalURL}/cas-web" />
+			<var name="casServiceURL" value="${portalURL}/c/portal/login" />
 		</execute>
 
 		<execute macro="User#logoutPG" />

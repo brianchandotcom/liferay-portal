@@ -776,6 +776,8 @@
 	<command name="SiteFriendlyURLLayoutImporter" priority="3">
 		<property name="testray.component.names" value="Site Administration" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="User Groups" />
 		</execute>
@@ -830,7 +832,7 @@
 
 		<execute macro="UserBar#gotoDashboard" />
 
-		<execute function="AssertLocation" value1="http://localhost:8080/user/usersn" />
+		<execute function="AssertLocation" value1="${portalURL}/user/usersn" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -851,9 +853,9 @@
 			<var name="siteFriendlyURLEdit" value="/liferay" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080/web/liferay/site-page-name" />
+		<execute function="Open" locator1="${portalURL}/web/liferay/site-page-name" />
 
-		<execute function="AssertLocation" value1="http://localhost:8080/web/liferay/site-page-name" />
+		<execute function="AssertLocation" value1="${portalURL}/web/liferay/site-page-name" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1004,6 +1006,8 @@
 	<command name="SitesDemoSiteManagement" priority="4">
 		<property name="testray.component.names" value="Site Administration,Site Pages Administration" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -1067,7 +1071,7 @@
 			<var name="pageName" value="Arenas" />
 		</execute>
 
-		<execute function="Open#openNoError" locator1="http://localhost:8080/web/russia2018" />
+		<execute function="Open#openNoError" locator1="${portalURL}/web/russia2018" />
 
 		<execute macro="Page#viewCustomLogoPG" />
 
@@ -1080,7 +1084,7 @@
 			</execute>
 		</for>
 
-		<execute function="Open#openNoError" locator1="http://localhost:8080/web/russia2018" />
+		<execute function="Open#openNoError" locator1="${portalURL}/web/russia2018" />
 
 		<execute macro="ProductMenu#gotoPublicPages" />
 
@@ -1141,7 +1145,7 @@
 			<var name="pageNameList" value="Accomodations,Maps" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080/web/russia2018" />
+		<execute function="Open" locator1="${portalURL}/web/russia2018" />
 
 		<execute macro="ProductMenu#gotoSitesPublishing">
 			<var name="portlet" value="Export" />

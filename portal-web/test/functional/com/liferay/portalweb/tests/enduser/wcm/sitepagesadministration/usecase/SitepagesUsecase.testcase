@@ -238,6 +238,8 @@
 	<command name="SitesPanelLayout" priority="3">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -282,7 +284,7 @@
 			<var name="pageName" value="Page Name" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=com_liferay_portal_settings_web_portlet_PortalSettingsPortlet&amp;p_p_state=maximized" />
+		<execute function="Open" locator1="${portalURL}/web/usersn/page-name?p_p_id=com_liferay_portal_settings_web_portlet_PortalSettingsPortlet&amp;p_p_state=maximized" />
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the roles required to access this portlet." />
 
@@ -1206,6 +1208,8 @@
 	<command name="WebContentAdministrationSitesPageTypes" priority="3">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -1287,7 +1291,7 @@
 			<var name="siteName" value="Page Type Test Site Name" />
 		</execute>
 
-		<execute function="AssertLocation" value1="http://localhost:8080/web/page-type-test-site-name/embedded-page" />
+		<execute function="AssertLocation" value1="${portalURL}/web/page-type-test-site-name/embedded-page" />
 
 		<execute function="SelectFrame" locator1="IFrame#EMBEDDED_IFRAME" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Embedded#EMBEDDED_TEXT_YES" value1="Yes" />

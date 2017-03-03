@@ -379,6 +379,8 @@
 	</command>
 
 	<command name="AddOrganizationSitePrivatePage" priority="3">
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -410,7 +412,7 @@
 
 		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Private Page" />
-			<var name="url" value="http://localhost:8080/group/organization-name/private-page" />
+			<var name="url" value="${portalURL}/group/organization-name/private-page" />
 		</execute>
 
 		<execute macro="Page#view">
@@ -419,6 +421,8 @@
 	</command>
 
 	<command name="AddOrganizationSitePublicPage" priority="3">
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -449,7 +453,7 @@
 
 		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Public Page" />
-			<var name="url" value="http://localhost:8080/web/organization-name/public-page" />
+			<var name="url" value="${portalURL}/web/organization-name/public-page" />
 		</execute>
 
 		<execute macro="Page#view">
@@ -1163,6 +1167,8 @@
 	</command>
 
 	<command name="DeactivateUserDeactivateButton" priority="4">
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -1194,7 +1200,7 @@
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:8080/c/portal/logout" />
+			<var name="url" value="${portalURL}/c/portal/logout" />
 		</execute>
 
 		<execute macro="User#loginUserInvalidPG">

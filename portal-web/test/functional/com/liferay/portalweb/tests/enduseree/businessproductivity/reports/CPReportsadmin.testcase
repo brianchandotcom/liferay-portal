@@ -219,6 +219,8 @@
 		<property name="test.assert.javascript.errors" value="false" />
 		<property name="test.smtp.server.enabled" value="true" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
@@ -266,7 +268,7 @@
 			<var name="subject" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="${portalURL}" />
 	</command>
 
 	<command name="DownloadReportCSV" priority="4">
@@ -581,6 +583,8 @@
 	<command name="ViewEmailNotificationDelivery" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -657,10 +661,12 @@
 			<var name="gmailMessageTitleList" value="New Report: Custom Report Name.pdf,Your New Account,Your New Password" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="${portalURL}" />
 	</command>
 
 	<command ignore="true" name="ViewEmailRecipientDelivery" priority="4">
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -722,7 +728,7 @@
 			<var name="gmailMessageTitleList" value="New Report: reports_admin_template_source_sample_class_name.pdf,Your New Account,Your New Password" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="${portalURL}" />
 	</command>
 
 	<command name="ViewReportDefinitionParametersFields" priority="3">

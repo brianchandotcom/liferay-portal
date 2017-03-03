@@ -161,12 +161,16 @@
 	<command name="ViewJSONWSNoXSS" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute function="Open" locator1="http://localhost:8080/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E" />
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute function="Open" locator1="${portalURL}/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E" />
 		<execute function="AssertAlertNotPresent" />
 	</command>
 
 	<command name="ViewLiferayPortletListNoXSS" priority="5">
 		<property name="portal.acceptance" value="true" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Asset Publisher Page" />
@@ -180,7 +184,7 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080/web/guest/home?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&amp;p_p_state=pop_up&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_7awylRgVDERT;alert(1)//%22;alert(2)//%22;alert(3)//%E2%80%93%3E%3C/script%3E%22%3E%27%3E%3Cscript%3Ealert(4)%3C/script%3E&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_resourcePrimKey=asdfxxx" />
+		<execute function="Open" locator1="${portalURL}/web/guest/home?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&amp;p_p_state=pop_up&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_7awylRgVDERT;alert(1)//%22;alert(2)//%22;alert(3)//%E2%80%93%3E%3C/script%3E%22%3E%27%3E%3Cscript%3Ealert(4)%3C/script%3E&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_resourcePrimKey=asdfxxx" />
 
 		<execute function="AssertAlertNotPresent" />
 

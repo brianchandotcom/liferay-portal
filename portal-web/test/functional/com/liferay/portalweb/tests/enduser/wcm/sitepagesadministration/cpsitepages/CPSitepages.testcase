@@ -136,6 +136,8 @@
 	<command name="AddSitePrivateChildPage" priority="4">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -167,7 +169,7 @@
 
 		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Site Page" />
-			<var name="url" value="http://localhost:8080/group/site-name/site-child-page" />
+			<var name="url" value="${portalURL}/group/site-name/site-child-page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPrivatePages" />
@@ -180,6 +182,8 @@
 	<command name="AddSitePrivatePage" priority="4">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -200,7 +204,7 @@
 
 		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Site Page" />
-			<var name="url" value="http://localhost:8080/group/site-name/site-page" />
+			<var name="url" value="${portalURL}/group/site-name/site-page" />
 		</execute>
 
 		<execute macro="Page#view">
@@ -211,6 +215,8 @@
 	<command name="AddSitePrivatePagePortlet" priority="4">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -231,7 +237,7 @@
 
 		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Blogs Page" />
-			<var name="url" value="http://localhost:8080/group/site-name" />
+			<var name="url" value="${portalURL}/group/site-name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -497,6 +503,8 @@
 	<command name="SaveEmbeddedPageType" priority="4">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -530,7 +538,7 @@
 
 		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Site Page" />
-			<var name="url" value="http://localhost:8080/web/site-name" />
+			<var name="url" value="${portalURL}/web/site-name" />
 		</execute>
 
 		<execute macro="Page#viewEmbeddedPagePG" />

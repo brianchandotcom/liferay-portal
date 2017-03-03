@@ -26,8 +26,10 @@
 	</tear-down>
 
 	<command name="ViewNoDisplayPortletConfigurationPermission" priority="4">
-		<var name="url1" value="http://localhost:8080/testxxx/?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_users_admin_web_portlet_UsersAdminPortlet" />
-		<var name="url2" value="http://localhost:8080/testxxx/?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet&amp;p_p_state=maximized" />
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<var name="url1" value="${portalURL}/testxxx/?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_users_admin_web_portlet_UsersAdminPortlet" />
+		<var name="url2" value="${portalURL}/testxxx/?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet&amp;p_p_state=maximized" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="testxxx" />

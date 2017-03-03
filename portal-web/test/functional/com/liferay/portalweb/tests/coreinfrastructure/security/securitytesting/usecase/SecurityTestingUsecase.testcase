@@ -27,7 +27,9 @@
 
 	<command name="NoGuestRoleFromWCDArticleHistoryURL" priority="5">
 		<property name="portal.acceptance" value="true" />
-		<var name="url" value="http://localhost:8080/web/guest/home?&amp;p_p_id=com_liferay_journal_web_portlet_JournalPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_mode=view&amp;_com_liferay_journal_web_portlet_JournalPortlet_struts_action=%2Fjournal%2Fview_article_history&amp;_com_liferay_journal_web_portlet_JournalPortlet_groupId=10180&amp;_com_liferay_journal_web_portlet_JournalPortlet_articleId=" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var name="url" value="${portalURL}/web/guest/home?&amp;p_p_id=com_liferay_journal_web_portlet_JournalPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_mode=view&amp;_com_liferay_journal_web_portlet_JournalPortlet_struts_action=%2Fjournal%2Fview_article_history&amp;_com_liferay_journal_web_portlet_JournalPortlet_groupId=10180&amp;_com_liferay_journal_web_portlet_JournalPortlet_articleId=" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
@@ -64,7 +66,9 @@
 
 	<command name="ValidateBeanIdentifierUserPermissions" priority="5">
 		<property name="portal.acceptance" value="true" />
-		<var name="url" value="http://localhost:8080/c/portal/json_service?serviceClassName=com.liferay.portal.service.AccountServiceUtil&amp;serviceMethodName=getBeanIdentifier&amp;p_auth=" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var name="url" value="${portalURL}/c/portal/json_service?serviceClassName=com.liferay.portal.service.AccountServiceUtil&amp;serviceMethodName=getBeanIdentifier&amp;p_auth=" />
 
 		<execute macro="Api#gotoPAuthURL" />
 
@@ -99,7 +103,7 @@
 		</execute>
 
 		<execute macro="Api#gotoPAuthURL">
-			<var name="url" value="http://localhost:8080/api/jsonws/user/update-status/user-id/20250/status/6?p_auth=" />
+			<var name="url" value="${portalURL}/api/jsonws/user/update-status/user-id/20250/status/6?p_auth=" />
 		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="JSONWS#SECURITY_TEST_PAGE_BODY" value1="must have DELETE permission for com.liferay.portal.kernel.model.User" />
@@ -113,7 +117,9 @@
 		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}" />
 		<property name="portal.acceptance" value="true" />
 
-		<execute function="Open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute function="Open" locator1="${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
 		<execute function="Pause" locator1="3000" />
 
 		<var name="key_pageName" value="Welcome" />
@@ -127,7 +133,7 @@
 			<var name="pageName" value="Test" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://localhost:8080/web/guest/test" />
+		<execute function="Open" locator1="${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=${portalURL}/web/guest/test" />
 
 		<var name="key_pageName" value="Test" />
 

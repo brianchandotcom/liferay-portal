@@ -44,6 +44,8 @@
 	<command name="AddPageAndChildPageTranslations" priority="3">
 		<property name="testray.component.names" value="Localization,Site Administration,Site Localization,Site Pages Administration" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -74,7 +76,7 @@
 			<var name="pageLocalizationMessage" value="This page is displayed in Spanish (Spain). Display the page in English (United States). Set Spanish (Spain) as your preferred language." />
 			<var name="pageLocalizationPreferredLanguage" value="Set Spanish (Spain) as your preferred language." />
 			<var name="pageName" value="Casa" />
-			<var name="sitePageURL" value="http://localhost:8080/es/web/site-name/home" />
+			<var name="sitePageURL" value="${portalURL}/es/web/site-name/home" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -111,7 +113,7 @@
 			<var name="childPageName" value="Blog Página" />
 			<var name="pageLocalizationMessage" value="This page is displayed in Spanish (Spain). Display the page in English (United States). Set Spanish (Spain) as your preferred language." />
 			<var name="pageLocalizationPreferredLanguage" value="Set Spanish (Spain) as your preferred language." />
-			<var name="sitePageURL" value="http://localhost:8080/es/web/site-name/blog-page" />
+			<var name="sitePageURL" value="${portalURL}/es/web/site-name/blog-page" />
 		</execute>
 	</command>
 

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.dependencies;
 
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.concurrent.Callable;
 
@@ -35,5 +36,15 @@ public class MissingEmptyLines {
 	public String method2() {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 		themeDisplay.setSignedIn(true);
+	}
+
+	public void method3() {
+		String s1 = "Hello World";
+		String s2 = "World Hello";
+
+		if ((StringUtil.toLowerCase(s1) == null) ||
+			(StringUtil.toLowerCase(s2) == null)) {
+			return;
+		}
 	}
 }

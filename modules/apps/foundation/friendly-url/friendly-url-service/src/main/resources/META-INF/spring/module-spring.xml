@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean class="com.liferay.friendly.url.service.impl.FriendlyURLLocalServiceImpl" id="com.liferay.friendly.url.service.FriendlyURLLocalService" />
-	<bean class="com.liferay.friendly.url.service.persistence.impl.FriendlyURLPersistenceImpl" id="com.liferay.friendly.url.service.persistence.FriendlyURLPersistence" parent="basePersistence" />
+	<bean class="com.liferay.friendly.url.service.impl.FriendlyURLEntryLocalServiceImpl" id="com.liferay.friendly.url.service.FriendlyURLEntryLocalService" />
+	<bean class="com.liferay.friendly.url.service.persistence.impl.FriendlyURLEntryPersistenceImpl" id="com.liferay.friendly.url.service.persistence.FriendlyURLEntryPersistence" parent="basePersistence" />
 </beans>

@@ -3,11 +3,11 @@
 
 <service-builder auto-namespace-tables="false" package-path="com.liferay.friendly.url">
 	<namespace>FU</namespace>
-	<entity local-service="true" name="FriendlyURL" remote-service="false" uuid="true">
+	<entity local-service="true" name="FriendlyURLEntry" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="friendlyURLId" primary="true" type="long" />
+		<column name="friendlyURLEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -38,20 +38,20 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="G_C_C_U" return-type="FriendlyURL">
+		<finder name="G_C_C_U" return-type="FriendlyURLEntry">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="urlTitle" />
 		</finder>
-		<finder name="G_C_C_C_U" return-type="FriendlyURL">
+		<finder name="G_C_C_C_U" return-type="FriendlyURLEntry">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="urlTitle" />
 		</finder>
-		<finder name="G_C_C_C_M" return-type="FriendlyURL">
+		<finder name="G_C_C_C_M" return-type="FriendlyURLEntry">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
@@ -60,7 +60,7 @@
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>DuplicateFriendlyURL</exception>
+		<exception>DuplicateFriendlyURLEntry</exception>
 		<exception>FriendlyURLLength</exception>
 	</exceptions>
 </service-builder>

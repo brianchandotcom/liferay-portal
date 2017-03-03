@@ -15,7 +15,7 @@
 package com.liferay.blogs.internal.upgrade.v1_1_0;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.friendly.url.service.FriendlyURLLocalService;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
@@ -26,8 +26,10 @@ import java.sql.ResultSet;
  */
 public class UpgradeFriendlyURL extends UpgradeProcess {
 
-	public UpgradeFriendlyURL(FriendlyURLLocalService friendlyURLLocalService) {
-		_friendlyURLLocalService = friendlyURLLocalService;
+	public UpgradeFriendlyURL(
+		FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
+
+		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
 	}
 
 	@Override
@@ -44,12 +46,12 @@ public class UpgradeFriendlyURL extends UpgradeProcess {
 				long classPK = rs.getLong(3);
 				String urlTitle = rs.getString(4);
 
-				_friendlyURLLocalService.addFriendlyURL(
+				_friendlyURLEntryLocalService.addFriendlyURLEntry(
 					groupId, companyId, BlogsEntry.class, classPK, urlTitle);
 			}
 		}
 	}
 
-	private final FriendlyURLLocalService _friendlyURLLocalService;
+	private final FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 }

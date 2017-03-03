@@ -27,8 +27,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.friendly.url.model.FriendlyURL;
-import com.liferay.friendly.url.service.FriendlyURLLocalService;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -181,7 +181,7 @@ public class BlogsEntryStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_WEAK);
 		}
 
-		_exportFriendlyURLs(portletDataContext, entry);
+		_exportFriendlyURLEntries(portletDataContext, entry);
 
 		String content =
 			_blogsEntryExportImportContentProcessor.
@@ -368,7 +368,7 @@ public class BlogsEntryStagedModelDataHandler
 
 		newPrimaryKeysMap.put(entry.getEntryId(), importedEntry.getEntryId());
 
-		_importFriendlyURLs(portletDataContext, entry);
+		_importFriendlyURLEntries(portletDataContext, entry);
 
 		portletDataContext.importClassedModel(entry, importedEntry);
 	}
@@ -458,7 +458,7 @@ public class BlogsEntryStagedModelDataHandler
 		for (Element referenceElement : referenceElements) {
 			String className = referenceElement.attributeValue("class-name");
 
-			if (className.equals(FriendlyURL.class.getName()) ||
+			if (className.equals(FriendlyURLEntry.class.getName()) ||
 				className.equals(AssetCategory.class.getName()) ||
 				className.equals(RatingsEntry.class.getName()) ||
 				className.equals(stagedModelClassName)) {
@@ -491,10 +491,10 @@ public class BlogsEntryStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	protected void setFriendlyURLLocalService(
-		FriendlyURLLocalService friendlyURLLocalService) {
+	protected void setFriendlyURLEntryLocalService(
+		FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
 
-		_friendlyURLLocalService = friendlyURLLocalService;
+		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -502,20 +502,20 @@ public class BlogsEntryStagedModelDataHandler
 		_imageLocalService = imageLocalService;
 	}
 
-	private void _exportFriendlyURLs(
+	private void _exportFriendlyURLEntries(
 			PortletDataContext portletDataContext, BlogsEntry blogsEntry)
 		throws PortletDataException {
 
 		long classNameId = _portal.getClassNameId(BlogsEntry.class);
 
-		List<FriendlyURL> friendlyURLs =
-			_friendlyURLLocalService.getFriendlyURLs(
+		List<FriendlyURLEntry> friendlyURLEntries =
+			_friendlyURLEntryLocalService.getFriendlyURLEntries(
 				blogsEntry.getGroupId(), blogsEntry.getCompanyId(), classNameId,
 				blogsEntry.getEntryId());
 
-		for (FriendlyURL friendlyURL : friendlyURLs) {
+		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, blogsEntry, friendlyURL,
+				portletDataContext, blogsEntry, friendlyURLEntry,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 	}
@@ -583,22 +583,22 @@ public class BlogsEntryStagedModelDataHandler
 		return null;
 	}
 
-	private void _importFriendlyURLs(
+	private void _importFriendlyURLEntries(
 			PortletDataContext portletDataContext, BlogsEntry blogsEntry)
 		throws PortletDataException {
 
-		List<Element> friendlyURLElements =
+		List<Element> friendlyURLEntryElements =
 			portletDataContext.getReferenceDataElements(
-				blogsEntry, FriendlyURL.class);
+				blogsEntry, FriendlyURLEntry.class);
 
-		for (Element friendlyURLElement : friendlyURLElements) {
-			String path = friendlyURLElement.attributeValue("path");
+		for (Element friendlyURLEntryElement : friendlyURLEntryElements) {
+			String path = friendlyURLEntryElement.attributeValue("path");
 
-			FriendlyURL friendlyURL =
-				(FriendlyURL)portletDataContext.getZipEntryAsObject(path);
+			FriendlyURLEntry friendlyURLEntry =
+				(FriendlyURLEntry)portletDataContext.getZipEntryAsObject(path);
 
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, friendlyURL);
+				portletDataContext, friendlyURLEntry);
 		}
 	}
 
@@ -608,7 +608,7 @@ public class BlogsEntryStagedModelDataHandler
 	private BlogsEntryExportImportContentProcessor
 		_blogsEntryExportImportContentProcessor;
 	private BlogsEntryLocalService _blogsEntryLocalService;
-	private FriendlyURLLocalService _friendlyURLLocalService;
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 	private ImageLocalService _imageLocalService;
 
 	@Reference

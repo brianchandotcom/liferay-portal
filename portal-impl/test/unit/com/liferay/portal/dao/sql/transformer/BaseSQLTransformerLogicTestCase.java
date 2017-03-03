@@ -177,6 +177,10 @@ public abstract class BaseSQLTransformerLogicTestCase {
 		return getReplaceOriginalSQL();
 	}
 
+	protected SQLTransformerLogic getSQLTransformerLogic(DB db) {
+		return new HypersonicSQLTransformerLogic(db);
+	}
+
 	protected String getSubstOriginalSQL() {
 		return "select foo from Foo";
 	}
@@ -195,7 +199,7 @@ public abstract class BaseSQLTransformerLogicTestCase {
 		);
 
 		_sqlTransformer = SQLTransformerFactory.getSQLTransformer(
-			new HypersonicSQLTransformerLogic(db));
+			getSQLTransformerLogic(db));
 	}
 
 	private SQLTransformer _sqlTransformer;

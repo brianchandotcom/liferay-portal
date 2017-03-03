@@ -45,8 +45,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Layout;
@@ -78,7 +76,6 @@ import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 
 import com.liferay.ratings.kernel.service.persistence.RatingsStatsFinder;
 import com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence;
@@ -86,7 +83,6 @@ import com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -338,16 +334,6 @@ public abstract class LayoutLocalServiceBaseImpl extends BaseLocalServiceImpl
 		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Set<Serializable> primaryKeys = portletDataContext.getRegisteredExportingClassedModelPrimaryKeys(
-							"Layout");
-
-					if (SetUtil.isNotEmpty(primaryKeys)) {
-						Property primaryKeyProperty = PropertyFactoryUtil.forName(
-								"plid");
-
-						dynamicQuery.add(primaryKeyProperty.in(primaryKeys));
-					}
-
 					portletDataContext.addDateRangeCriteria(dynamicQuery,
 						"modifiedDate");
 				}

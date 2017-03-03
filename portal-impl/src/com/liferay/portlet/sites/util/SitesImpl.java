@@ -1570,18 +1570,14 @@ public class SitesImpl implements Sites {
 				permissionChecker, layout.getName(), layout.getLayoutId(),
 				ActionKeys.UPDATE);
 		}
-		else if (!group.isUser() &&
-				 !GroupPermissionUtil.contains(
-					 permissionChecker, group, ActionKeys.UPDATE)) {
+		else if (!GroupPermissionUtil.contains(
+					permissionChecker, group, ActionKeys.UPDATE) &&
+				 (!group.isUser() ||
+				  (permissionChecker.getUserId() != group.getClassPK()))) {
 
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, group.getName(), group.getGroupId(),
 				ActionKeys.UPDATE);
-		}
-		else if (group.isUser() &&
-				 (permissionChecker.getUserId() != group.getClassPK())) {
-
-			throw new PrincipalException();
 		}
 	}
 

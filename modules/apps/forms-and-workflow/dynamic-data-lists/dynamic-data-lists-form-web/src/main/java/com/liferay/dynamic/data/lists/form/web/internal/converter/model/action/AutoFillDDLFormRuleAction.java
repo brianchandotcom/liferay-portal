@@ -61,6 +61,7 @@ public class AutoFillDDLFormRuleAction implements DDLFormRuleAction {
 				_inputMapper, autoFillDDLFormRuleAction._inputMapper) &&
 			Objects.equals(
 				_outputMapper, autoFillDDLFormRuleAction._outputMapper)) {
+
 			return true;
 		}
 

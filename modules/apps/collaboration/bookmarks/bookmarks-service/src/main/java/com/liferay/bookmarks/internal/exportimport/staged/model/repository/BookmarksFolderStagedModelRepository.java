@@ -143,6 +143,7 @@ public class BookmarksFolderStagedModelRepository
 		if ((existingFolder == null) ||
 			!_stagedModelRepositoryHelper.isStagedModelInTrash(
 				existingFolder)) {
+
 			return;
 		}
 

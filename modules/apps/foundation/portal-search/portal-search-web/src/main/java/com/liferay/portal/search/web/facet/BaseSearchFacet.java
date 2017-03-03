@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.search.facet.util.FacetFactoryUtil;
+import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -84,22 +84,33 @@ public abstract class BaseSearchFacet implements SearchFacet {
 			SearchContext searchContext)
 		throws Exception {
 
-		_facetConfiguration = _getFacetConfiguration(searchConfiguration);
+		FacetConfiguration facetConfiguration = _getFacetConfiguration(
+			searchConfiguration);
 
-		if (_facetConfiguration == null) {
-			_facetConfiguration = getDefaultConfiguration(companyId);
+		if (facetConfiguration == null) {
+			facetConfiguration = getDefaultConfiguration(companyId);
 		}
+
+		Facet facet = null;
 
 		if (searchContext != null) {
-			_facet = FacetFactoryUtil.create(
-				searchContext, _facetConfiguration);
+			FacetFactory facetFactory = getFacetFactory();
+
+			facet = facetFactory.newInstance(searchContext);
+
+			facet.setFacetConfiguration(facetConfiguration);
 		}
+
+		_facet = facet;
+		_facetConfiguration = facetConfiguration;
 	}
 
 	@Override
 	public boolean isStatic() {
 		return _facetConfiguration.isStatic();
 	}
+
+	protected abstract FacetFactory getFacetFactory();
 
 	private FacetConfiguration _getFacetConfiguration(String configuration)
 		throws JSONException {

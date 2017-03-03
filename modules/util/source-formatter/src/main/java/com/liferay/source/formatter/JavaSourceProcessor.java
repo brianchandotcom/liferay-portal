@@ -1760,7 +1760,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		while (matcher.find()) {
 			if (getLevel(matcher.group()) == 0) {
-				content = StringUtil.replaceFirst(
+				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start());
 			}
 		}
@@ -1784,7 +1784,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				matcher.end());
 
 			if ((x != -1) && (x != y)) {
-				content = StringUtil.replaceFirst(content, "\n", "\n\n", x + 1);
+				return StringUtil.replaceFirst(content, "\n", "\n\n", x + 1);
+			}
+		}
+
+		matcher = _missingEmptyLinePattern3.matcher(content);
+
+		while (matcher.find()) {
+			if ((getLevel(matcher.group()) != 0) &&
+				(content.charAt(matcher.end()) != CharPool.NEW_LINE)) {
+
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.end() - 1);
 			}
 		}
 
@@ -4768,6 +4779,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"(\t| = |return )new .*\\(.*\\) \\{\n\t+[^{\t]");
 	private final Pattern _missingEmptyLinePattern2 = Pattern.compile(
 		"(\n\t*)(public|private|protected) [^;]+? \\{");
+	private final Pattern _missingEmptyLinePattern3 = Pattern.compile(
+		"\n.*\\) \\{\n");
 	private final Map<String, String> _moduleFileContentsMap =
 		new ConcurrentHashMap<>();
 	private Map<String, String> _moduleFileNamesMap;

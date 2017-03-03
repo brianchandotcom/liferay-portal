@@ -336,6 +336,7 @@
 		my_places_text = my_sites_text
 	/>
 </#if>
+
 <#-- ---------- Includes ---------- -->
 
 <#assign dir_include = "/html" />

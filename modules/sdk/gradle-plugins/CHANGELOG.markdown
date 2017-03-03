@@ -1212,6 +1212,10 @@ to version 1.0.95.
 - [LPS-71048]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to
 version 2.0.1.
 
+### Fixed
+- [LPS-70282]: Add the dependencies in the `compileInclude` configuration to the
+classpath of the `run` task, if the `application` plugin is applied.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

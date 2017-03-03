@@ -390,7 +390,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureLocalPortalTool(
 			project, portalRootDir, SourceFormatterPlugin.CONFIGURATION_NAME,
 			_SOURCE_FORMATTER_PORTAL_TOOL_NAME);
-		_configurePmd(project, portalRootDir);
+		_configurePmd(project);
 		_configureProject(project);
 		configureRepositories(project);
 		_configureSourceSetMain(project);
@@ -2156,16 +2156,18 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		mappings.remove(configuration);
 	}
 
-	private void _configurePmd(Project project, File portalRootDir) {
+	private void _configurePmd(Project project) {
 		PmdExtension pmdExtension = GradleUtil.getExtension(
 			project, PmdExtension.class);
 
-		if (portalRootDir != null) {
-			File ruleSetFile = new File(
-				portalRootDir,
-				"tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java" +
-					"/standard-rules.xml");
+		Gradle gradle = project.getGradle();
 
+		File ruleSetFile = new File(
+			gradle.getGradleUserHomeDir(),
+			"../tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java" +
+				"/standard-rules.xml");
+
+		if (ruleSetFile.exists()) {
 			pmdExtension.setRuleSetFiles(project.files(ruleSetFile));
 		}
 

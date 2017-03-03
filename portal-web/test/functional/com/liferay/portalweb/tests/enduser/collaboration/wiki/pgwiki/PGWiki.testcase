@@ -213,7 +213,7 @@
 	</command>
 
 	<command name="AddWikiFrontPageChildPageFormatHTML" priority="4">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<var name="welcomeToLiferay">
 			<![CDATA[

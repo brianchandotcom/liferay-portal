@@ -164,7 +164,7 @@
 			<flattenmapper />
 
 			<path>
-				<fileset dir="${dist.dir}" includes="*.jar" />
+				<fileset dir="${dist.dir}" includes="*.jar,*.war" />
 			</path>
 		</pathconvert>
 

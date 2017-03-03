@@ -33,6 +33,8 @@ import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuE
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuWebKeys;
+import com.liferay.taglib.portletext.RuntimeTag;
+import com.liferay.taglib.util.BodyBottomTag;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -48,6 +50,9 @@ import javax.portlet.WindowStateException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,6 +79,26 @@ public class ProductMenuProductNavigationControlMenuEntry
 	@Override
 	public String getIconJspPath() {
 		return null;
+	}
+
+	@Override
+	public boolean includeBody(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		BodyBottomTag bodyBottomTag = new BodyBottomTag();
+
+		bodyBottomTag.setOutputKey("productMenu");
+
+		try {
+			bodyBottomTag.doBodyTag(
+				request, response, this::_processBodyBottomContent);
+		}
+		catch (JspException je) {
+			throw new IOException(je);
+		}
+
+		return true;
 	}
 
 	@Override
@@ -160,6 +185,52 @@ public class ProductMenuProductNavigationControlMenuEntry
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	private void _processBodyBottomContent(PageContext pageContext) {
+		try {
+			JspWriter jspWriter = pageContext.getOut();
+
+			jspWriter.write("<div class=\"");
+
+			HttpServletRequest request =
+				(HttpServletRequest)pageContext.getRequest();
+
+			String productMenuState = SessionClicks.get(
+				request,
+				ProductNavigationProductMenuWebKeys.
+					PRODUCT_NAVIGATION_PRODUCT_MENU_STATE,
+				"closed");
+
+			jspWriter.write(productMenuState);
+
+			jspWriter.write(
+				" hidden-print lfr-product-menu-panel sidenav-fixed " +
+					"sidenav-menu-slider\" id=\"");
+
+			String portletNamespace = PortalUtil.getPortletNamespace(
+				ProductNavigationProductMenuPortletKeys.
+					PRODUCT_NAVIGATION_PRODUCT_MENU);
+
+			jspWriter.write(portletNamespace);
+
+			jspWriter.write("sidenavSliderId\">");
+			jspWriter.write(
+				"<div class=\"product-menu sidebar sidenav-menu\">");
+
+			RuntimeTag runtimeTag = new RuntimeTag();
+
+			runtimeTag.setPortletName(
+				ProductNavigationProductMenuPortletKeys.
+					PRODUCT_NAVIGATION_PRODUCT_MENU);
+
+			runtimeTag.doTag(pageContext);
+
+			jspWriter.write("</div></div>");
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
 	}
 
 	private static final String _TMPL_CONTENT = StringUtil.read(

@@ -638,7 +638,8 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/resources/configuration/com.liferay.portal.remote.rest." +
-				"extender.configuration.RestExtenderConfiguration-rest",
+				"extender.configuration.RestExtenderConfiguration-rest." +
+					"properties",
 			"contextPaths=/my-rest",
 			"jaxRsServiceFilterStrings=(component.name=" +
 				"my.rest.application.MyRestApplication)");

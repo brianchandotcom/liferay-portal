@@ -345,7 +345,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="assignedTo" />
+			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="Test Test" />
 		</execute>
 
@@ -471,7 +471,7 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Assigned To" />
+			<var name="fieldLabel" value="Text" />
 			<var name="fieldValue" value="Test Test" />
 		</execute>
 	</command>

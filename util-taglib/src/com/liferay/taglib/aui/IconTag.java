@@ -177,7 +177,7 @@ public class IconTag extends BaseIconTag {
 			else {
 				jspWriter.write("<i class=\"icon-");
 				jspWriter.write(GetterUtil.getString(getImage()));
-				jspWriter.write("\"></i>");
+				jspWriter.write("\" />");
 			}
 
 			String label = getLabel();

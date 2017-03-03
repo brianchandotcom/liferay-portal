@@ -121,6 +121,7 @@ manually adding a dependency to the `jspCTool` configuration:
 dependencies {
 	jspCTool(group: "com.liferay", name: "com.liferay.jasper.jspc", version: "1.0.9") {
 		exclude group: "com.liferay.portal"
+		exclude group: "javax.servlet"
 	}
 
 	jspCTool group: "org.apache.ant", name: "ant", version: "1.9.4"

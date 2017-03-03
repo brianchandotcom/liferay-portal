@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -438,8 +439,19 @@ public class CalEventImporter {
 			return null;
 		}
 
-		TZSRecurrence tzsRecurrence = (TZSRecurrence)_jsonSerializer.fromJSON(
-			originalRecurrence);
+		TZSRecurrence tzsRecurrence;
+
+		try {
+			tzsRecurrence = (TZSRecurrence)JSONFactoryUtil.deserialize(
+				originalRecurrence);
+		}
+		catch (IllegalStateException ise) {
+
+			// LPS-65972
+
+			tzsRecurrence = (TZSRecurrence)_jsonSerializer.fromJSON(
+				originalRecurrence);
+		}
 
 		if (tzsRecurrence == null) {
 			return null;

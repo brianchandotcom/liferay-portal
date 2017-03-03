@@ -58,6 +58,7 @@
 					<hbmFileName>src/main/resources/META-INF/module-hbm.xml</hbmFileName>
 					<implDirName>src/main/java</implDirName>
 					<modelHintsFileName>src/main/resources/META-INF/portlet-model-hints.xml</modelHintsFileName>
+					<mergeModelHintsConfigs>src/main/resources/META-INF/portlet-model-hints.xml</mergeModelHintsConfigs>
 					<osgiModule>true</osgiModule>
 					<propsUtil>${package}.service.util.ServiceProps</propsUtil>
 					<resourcesDirName>src/main/resources</resourcesDirName>

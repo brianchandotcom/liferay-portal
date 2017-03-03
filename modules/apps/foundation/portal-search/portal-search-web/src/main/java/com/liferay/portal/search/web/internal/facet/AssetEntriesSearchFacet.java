@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
+import com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -171,5 +173,13 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
 		return ArrayUtil.toStringArray(assetTypes);
 	}
+
+	@Override
+	protected FacetFactory getFacetFactory() {
+		return assetEntriesFacetFactory;
+	}
+
+	@Reference
+	protected AssetEntriesFacetFactory assetEntriesFacetFactory;
 
 }

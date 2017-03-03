@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.ModifiedFacet;
+import com.liferay.portal.kernel.search.facet.ModifiedFacetFactory;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
@@ -143,6 +145,14 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Override
+	protected FacetFactory getFacetFactory() {
+		return modifiedFacetFactory;
+	}
+
+	@Reference
+	protected ModifiedFacetFactory modifiedFacetFactory;
 
 	private static final String[] _LABELS = new String[] {
 		"past-hour", "past-24-hours", "past-week", "past-month", "past-year"

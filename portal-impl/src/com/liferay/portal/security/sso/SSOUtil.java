@@ -78,7 +78,7 @@ public class SSOUtil {
 		boolean sessionRedirectOnExpire =
 			PropsValues.SESSION_TIMEOUT_REDIRECT_ON_EXPIRE;
 
-		if (_instance._ssoMap.isEmpty()) {
+		if (_instance._ssoMap.isEmpty() || sessionRedirectOnExpire) {
 			return sessionRedirectOnExpire;
 		}
 

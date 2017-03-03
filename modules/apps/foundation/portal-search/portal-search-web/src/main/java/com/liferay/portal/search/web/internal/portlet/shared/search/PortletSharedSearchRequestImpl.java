@@ -32,9 +32,9 @@ import com.liferay.portal.search.web.internal.portlet.shared.task.PortletSharedR
 import com.liferay.portal.search.web.internal.search.request.SearchContainerBuilder;
 import com.liferay.portal.search.web.internal.search.request.SearchContextBuilder;
 import com.liferay.portal.search.web.internal.search.request.SearchRequestImpl;
+import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
-import com.liferay.portal.search.web.portlet.shared.search.SearchAwarePortlet;
 import com.liferay.portal.search.web.portlet.shared.task.PortletSharedTaskExecutor;
 import com.liferay.portal.search.web.search.request.SearchRequest;
 import com.liferay.portal.search.web.search.request.SearchResponse;
@@ -80,16 +80,17 @@ public class PortletSharedSearchRequestImpl
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeSearchAwarePortlet"
+		unbind = "removePortletSharedSearchContributor"
 	)
-	protected void addSearchAwarePortlet(
-		SearchAwarePortlet searchAwarePortlet) {
+	protected void addPortletSharedSearchContributor(
+		PortletSharedSearchContributor portletSharedSearchContributor) {
 
-		Class<?> clazz = searchAwarePortlet.getClass();
+		Class<?> clazz = portletSharedSearchContributor.getClass();
 
-		String portletClassName = clazz.getName();
+		String className = clazz.getName();
 
-		_searchAwareFacetPortlets.put(portletClassName, searchAwarePortlet);
+		_portletSharedSearchContributors.put(
+			className, portletSharedSearchContributor);
 	}
 
 	protected SearchContainer<Document> buildSearchContainer(
@@ -214,37 +215,39 @@ public class PortletSharedSearchRequestImpl
 		return Optional.ofNullable(portletPreferences);
 	}
 
-	protected Optional<SearchAwarePortlet> getSearchAwarePortlet(
-		String portletClassName) {
+	protected Optional<PortletSharedSearchContributor>
+		getPortletSharedSearchContributor(String className) {
 
 		return Optional.ofNullable(
-			_searchAwareFacetPortlets.get(portletClassName));
+			_portletSharedSearchContributors.get(className));
 	}
 
 	protected Optional<SearchSettingsContributor> getSearchSettingsContributor(
 		Portlet portlet, ThemeDisplay themeDisplay,
 		RenderRequest renderRequest) {
 
-		Optional<SearchAwarePortlet> searchAwarePortletOptional =
-			getSearchAwarePortlet(portlet.getPortletClass());
+		Optional<PortletSharedSearchContributor>
+			portletSharedSearchContributorOptional =
+				getPortletSharedSearchContributor(portlet.getPortletClass());
 
 		Optional<SearchSettingsContributor> searchSettingsContributorOptional =
-			searchAwarePortletOptional.map(
-				searchAwarePortlet -> getSearchSettingsContributor(
-					searchAwarePortlet, portlet.getPortletId(), themeDisplay,
-					renderRequest));
+			portletSharedSearchContributorOptional.map(
+				portletSharedSearchContributor -> getSearchSettingsContributor(
+					portletSharedSearchContributor, portlet.getPortletId(),
+					themeDisplay, renderRequest));
 
 		return searchSettingsContributorOptional;
 	}
 
 	protected SearchSettingsContributor getSearchSettingsContributor(
-		SearchAwarePortlet searchAwarePortlet, String portletId,
-		ThemeDisplay themeDisplay, RenderRequest renderRequest) {
+		PortletSharedSearchContributor portletSharedSearchContributor,
+		String portletId, ThemeDisplay themeDisplay,
+		RenderRequest renderRequest) {
 
 		Optional<PortletPreferences> portletPreferencesOptional =
 			getPortletPreferences(themeDisplay, portletId);
 
-		return searchSettings -> searchAwarePortlet.contribute(
+		return searchSettings -> portletSharedSearchContributor.contribute(
 			new PortletSharedSearchSettingsImpl(
 				searchSettings, portletPreferencesOptional,
 				portletSharedRequestHelper, renderRequest));
@@ -257,14 +260,14 @@ public class PortletSharedSearchRequestImpl
 		return themeDisplaySupplier.getThemeDisplay();
 	}
 
-	protected void removeSearchAwarePortlet(
-		SearchAwarePortlet searchAwarePortlet) {
+	protected void removePortletSharedSearchContributor(
+		PortletSharedSearchContributor portletSharedSearchContributor) {
 
-		Class<?> clazz = searchAwarePortlet.getClass();
+		Class<?> clazz = portletSharedSearchContributor.getClass();
 
-		String portletClassName = clazz.getName();
+		String className = clazz.getName();
 
-		_searchAwareFacetPortlets.remove(portletClassName);
+		_portletSharedSearchContributors.remove(className);
 	}
 
 	@Reference
@@ -279,7 +282,7 @@ public class PortletSharedSearchRequestImpl
 	@Reference
 	protected PortletSharedTaskExecutor portletSharedTaskExecutor;
 
-	private final Map<String, SearchAwarePortlet> _searchAwareFacetPortlets =
-		new HashMap<>();
+	private final Map<String, PortletSharedSearchContributor>
+		_portletSharedSearchContributors = new HashMap<>();
 
 }

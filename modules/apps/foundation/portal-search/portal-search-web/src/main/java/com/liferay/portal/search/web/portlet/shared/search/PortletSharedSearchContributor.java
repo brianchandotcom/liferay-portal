@@ -17,7 +17,7 @@ package com.liferay.portal.search.web.portlet.shared.search;
 /**
  * @author Rodrigo Paulino
  */
-public interface SearchAwarePortlet {
+public interface PortletSharedSearchContributor {
 
 	public void contribute(
 		PortletSharedSearchSettings portletSharedSearchSettings);

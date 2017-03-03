@@ -459,6 +459,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
+	public boolean isSupportsDataStrategyMirrorWithOverwriting() {
+		return _supportsDataStrategyMirrorWithOverwriting;
+	}
+
+	@Override
 	public void prepareManifestSummary(PortletDataContext portletDataContext)
 		throws PortletDataException {
 
@@ -838,6 +843,13 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		_supportsDataStrategyCopyAsNew = supportsDataStrategyCopyAsNew;
 	}
 
+	protected void setSupportsDataStrategyMirrorWithOverwriting(
+		boolean supportsDataStrategyMirrorWithOverwriting) {
+
+		_supportsDataStrategyMirrorWithOverwriting =
+			supportsDataStrategyMirrorWithOverwriting;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePortletDataHandler.class);
 
@@ -859,5 +871,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	private boolean _publishToLiveByDefault;
 	private int _rank = 100;
 	private boolean _supportsDataStrategyCopyAsNew = true;
+	private boolean _supportsDataStrategyMirrorWithOverwriting = true;
 
 }

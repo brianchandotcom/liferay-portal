@@ -1182,7 +1182,7 @@ version 1.0.7.
 - [LPS-70890]: Update the [Liferay TLD Formatter] dependency to version 1.0.2.
 - [LPS-70890]: Update the [Liferay XML Formatter] dependency to version 1.0.2.
 
-## 3.2.12 - 2017-03-01
+## 3.2.12 - 2017-03-02
 
 ### Changed
 - [LPS-62970]: Update the [Liferay Gradle Plugins DB Support] dependency to

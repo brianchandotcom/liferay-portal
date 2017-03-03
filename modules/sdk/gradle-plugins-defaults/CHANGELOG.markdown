@@ -1157,7 +1157,7 @@ task executable.
 ### Changed
 - [LPS-70890]: Update the [Liferay Gradle Plugins] dependency to version 3.2.11.
 
-## 3.2.1 - 2017-03-01
+## 3.2.1 - 2017-03-02
 
 ### Changed
 - [LPS-62970]: Update the [Liferay Gradle Plugins] dependency to version 3.2.12.

@@ -141,6 +141,8 @@ public class JspCPlugin implements Plugin<Project> {
 
 		moduleDependency.exclude(
 			Collections.singletonMap("group", "com.liferay.portal"));
+		moduleDependency.exclude(
+			Collections.singletonMap("group", "javax.servlet"));
 	}
 
 	private JavaCompile _addTaskCompileJSP(

@@ -101,6 +101,7 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
+import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
@@ -177,6 +178,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				@Override
 				public void execute(ApplicationPlugin applicationPlugin) {
 					_configureApplication(project);
+					_configureTaskRun(project, compileIncludeConfiguration);
 				}
 
 			});
@@ -977,6 +979,15 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		String title = String.format("%s %s API", bundleName, bundleVersion);
 
 		javadoc.setTitle(title);
+	}
+
+	private void _configureTaskRun(
+		Project project, Configuration compileIncludeConfiguration) {
+
+		JavaExec javaExec = (JavaExec)GradleUtil.getTask(
+			project, ApplicationPlugin.TASK_RUN_NAME);
+
+		javaExec.classpath(compileIncludeConfiguration);
 	}
 
 	private void _configureTasksJavaCompileFork(

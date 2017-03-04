@@ -1206,6 +1206,12 @@ to version 1.0.95.
 - [LPS-71005]: Update the [Liferay Source Formatter] dependency to version
 1.0.362.
 
+## 3.2.14 - 2017-03-03
+
+### Fixed
+- [LPS-70282]: Add the dependencies in the `compileInclude` configuration to the
+classpath of the `run` task, if the `application` plugin is applied.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

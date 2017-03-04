@@ -1169,6 +1169,11 @@ task executable.
 `gradle.gradleUserHomeDir` as the root for the `standard-rules.xml` file path.
 - [LPS-71005]: Update the [Liferay Gradle Plugins] dependency to version 3.2.13.
 
+## 3.2.3 - 2017-03-03
+
+### Changed
+- [LPS-70282]: Update the [Liferay Gradle Plugins] dependency to version 3.2.14.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

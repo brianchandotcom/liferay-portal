@@ -36,11 +36,16 @@ public class SSOUtil {
 	public static String getSessionExpirationRedirectURL(
 		long companyId, String sessionExpirationRedirectURL) {
 
-		if (_instance._ssoMap.isEmpty()) {
+		String ssoSessionExpirationRedirectURL =
+			_instance._getSessionExpirationRedirectUrl(companyId);
+
+		if (_instance._ssoMap.isEmpty() ||
+			(ssoSessionExpirationRedirectURL == null)) {
+
 			return sessionExpirationRedirectURL;
 		}
 
-		return _instance._getSessionExpirationRedirectUrl(companyId);
+		return ssoSessionExpirationRedirectURL;
 	}
 
 	public static String getSignInURL(long companyId, String signInURL) {

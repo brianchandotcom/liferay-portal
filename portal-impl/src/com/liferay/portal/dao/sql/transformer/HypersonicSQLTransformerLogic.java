@@ -27,15 +27,17 @@ public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 	public HypersonicSQLTransformerLogic(DB db) {
 		super(db);
-	}
 
-	@Override
-	public Function<String, String>[] getFunctions() {
-		return new Function[] {
+		_functions = new Function[] {
 			getBooleanFunction(), getCastClobTextFunction(),
 			getCastLongFunction(), getCastTextFunction(),
 			getIntegerDivisionFunction(), getNullDateFunction()
 		};
+	}
+
+	@Override
+	public Function<String, String>[] getFunctions() {
+		return _functions;
 	}
 
 	@Override
@@ -47,5 +49,7 @@ public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
 	}
+
+	private final Function<String, String>[] _functions;
 
 }

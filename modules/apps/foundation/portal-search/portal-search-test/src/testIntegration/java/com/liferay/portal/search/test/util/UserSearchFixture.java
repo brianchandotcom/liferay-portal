@@ -18,6 +18,8 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -26,9 +28,14 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author André de Oliveira
@@ -98,6 +105,37 @@ public class UserSearchFixture {
 		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 
 		PrincipalThreadLocal.setName(_principal);
+	}
+
+	public Map<String, String> toMap(List<Document> list) {
+		Map<String, String> map = new HashMap<>(list.size());
+
+		for (Document document : list) {
+			String[] values = document.getValues(Field.ASSET_TAG_NAMES);
+
+			Arrays.sort(values);
+
+			map.put(document.get("screenName"), StringUtil.merge(values));
+		}
+
+		return map;
+	}
+
+	public Map<String, String> toMap(User user, String... tags) {
+		return Collections.singletonMap(
+			user.getScreenName(), toStringTags(tags));
+	}
+
+	public String toStringTags(String[] tags) {
+		List<String> list = new ArrayList<>(tags.length);
+
+		for (String tag : tags) {
+			list.add(StringUtil.toLowerCase(tag));
+		}
+
+		Collections.sort(list);
+
+		return StringUtil.merge(list);
 	}
 
 	protected static ServiceContext getServiceContext(Group group)

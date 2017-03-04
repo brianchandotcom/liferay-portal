@@ -17,24 +17,18 @@ package com.liferay.portal.search.facet.faceted.searcher.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.test.util.AssertUtils;
+import com.liferay.portal.search.test.util.SearchMapUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.ClassRule;
@@ -73,24 +67,18 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		String prefix = RandomTestUtil.randomString();
 
-		final String tag1 = prefix + " " + RandomTestUtil.randomString();
+		String tag1 = prefix + " " + RandomTestUtil.randomString();
 
-		final User user1 = userSearchFixture.addUser(group1, tag1);
+		User user1 = userSearchFixture.addUser(group1, tag1);
 
 		Group group2 = userSearchFixture.addGroup();
 
-		final String tag2 = prefix + " " + RandomTestUtil.randomString();
+		String tag2 = prefix + " " + RandomTestUtil.randomString();
 
-		final User user2 = userSearchFixture.addUser(group2, tag2);
+		User user2 = userSearchFixture.addUser(group2, tag2);
 
 		assertSearch(
-			prefix,
-			new HashMap<String, String>() {
-				{
-					putAll(toMap(user1, tag1));
-					putAll(toMap(user2, tag2));
-				}
-			});
+			prefix, SearchMapUtil.join(toMap(user1, tag1), toMap(user2, tag2)));
 
 		deactivate(group1);
 
@@ -101,31 +89,14 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		assertSearch(prefix, Collections.<String, String>emptyMap());
 	}
 
-	protected static Map<String, String> toMap(List<Document> list) {
-		Map<String, String> map = new HashMap<>(list.size());
-
-		for (Document document : list) {
-			map.put(
-				document.get("screenName"),
-				document.get(Field.ASSET_TAG_NAMES));
-		}
-
-		return map;
-	}
-
-	protected static Map<String, String> toMap(User user, String tag) {
-		return Collections.singletonMap(
-			user.getScreenName(), StringUtil.toLowerCase(tag));
-	}
-
-	protected void assertSearch(String tag, Map<String, String> expected)
+	protected void assertSearch(String keywords, Map<String, String> expected)
 		throws Exception {
 
-		FacetedSearcher facetedSearcher = createFacetedSearcher();
+		SearchContext searchContext = getSearchContext(keywords);
 
-		Hits hits = facetedSearcher.search(getSearchContext(tag));
+		Hits hits = search(searchContext);
 
-		AssertUtils.assertEquals(tag, expected, toMap(hits.toList()));
+		assertTags(keywords, hits, expected);
 	}
 
 	protected void deactivate(Group group) {

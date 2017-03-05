@@ -22,6 +22,7 @@ import java.util.Map;
 <#if entity.hasRemoteService()>
  * @see ${packagePath}.service.http.${entity.name}ServiceSoap
 </#if>
+
 <#if classDeprecated>
  * @deprecated ${classDeprecatedComment}
 </#if>

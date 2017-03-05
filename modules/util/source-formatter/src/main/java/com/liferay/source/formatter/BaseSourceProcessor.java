@@ -1022,6 +1022,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
+	protected String fixEmptyLinesInMultiLineTags(String content) {
+		Matcher matcher = _emtpyLineInMultiLineTagsPattern.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replaceFirst(
+				content, "\n\n", "\n", matcher.start());
+		}
+
+		return content;
+	}
+
 	protected String fixEmptyLinesInNestedTags(String content) {
 		content = fixEmptyLinesInNestedTags(
 			content, _emptyLineInNestedTagsPattern1, true);
@@ -3308,7 +3319,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private final Pattern _definitionPattern = Pattern.compile(
 		"^([A-Za-z-]+?)[:=](\n|[\\s\\S]*?([^\\\\]\n|\\Z))", Pattern.MULTILINE);
 	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
-		"\n(\t*)</([-\\w:]+)>(\n*)(\t*)<([-\\w:]+)[> \n]");
+		"\n(\t*)</([-\\w:#]+)>(\n*)(\t*)<([-\\w:#]+)[> \n]");
+	private final Pattern _emtpyLineInMultiLineTagsPattern = Pattern.compile(
+		"\n\t*<[-\\w:#]+\n\n\t*\\w");
 	private final Pattern _emptyLineInNestedTagsPattern1 = Pattern.compile(
 		"\n(\t*)(?:<\\w.*[^/])?>\n\n(\t*)(<.*)\n");
 	private final Pattern _emptyLineInNestedTagsPattern2 = Pattern.compile(
@@ -3319,10 +3332,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Set<String> _immutableFieldTypes;
 	private ComparableVersion _mainReleaseComparableVersion;
 	private final Pattern _missingEmptyLineBetweenTagsPattern1 =
-		Pattern.compile("\n(\t*)/>\n(\t*)<[-\\w:]+[> \n]");
+		Pattern.compile("\n(\t*)/>\n(\t*)<[-\\w:#]+[> \n]");
 	private final Pattern _missingEmptyLineBetweenTagsPattern2 =
 		Pattern.compile(
-			"\n(\t*)<.* />\n(\t*)<([-\\w:]+|\\w((?!</| />).)*[^/]>)\n");
+			"\n(\t*)<.* />\n(\t*)<([-\\w:#]+|\\w((?!</| />).)*[^/]>)\n");
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private final Map<String, Properties> _moduleLangLanguageProperties =

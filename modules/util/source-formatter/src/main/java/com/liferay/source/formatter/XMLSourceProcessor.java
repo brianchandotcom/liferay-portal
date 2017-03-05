@@ -488,6 +488,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		newContent = sortAttributes(fileName, newContent);
 
+		newContent = fixEmptyLinesInMultiLineTags(newContent);
+
 		newContent = fixEmptyLinesInNestedTags(newContent);
 
 		return formatXML(newContent);

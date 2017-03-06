@@ -41,6 +41,8 @@ public class ComboServletStaticURLGenerator {
 
 		long timestamp = _timestamp;
 
+		portlets = ListUtil.copy(portlets);
+
 		portlets = ListUtil.sort(portlets, _portletNameComparator);
 
 		for (Portlet portlet : portlets) {

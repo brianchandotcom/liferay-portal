@@ -14,16 +14,36 @@
 
 package com.liferay.layout.admin.web.internal.control.menu;
 
+import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+import com.liferay.taglib.aui.IconTag;
+import com.liferay.taglib.servlet.PageContextFactoryUtil;
+import com.liferay.taglib.ui.SuccessTag;
+import com.liferay.taglib.util.TagResourceBundleUtil;
+
+import java.io.IOException;
+import java.io.Writer;
+
+import java.util.ResourceBundle;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,6 +66,88 @@ public class ManageLayoutProductNavigationControlMenuEntry
 	@Override
 	public String getIconJspPath() {
 		return "/control/menu/edit_layout_control_menu_entry_icon.jsp";
+	}
+
+	@Override
+	public boolean includeIcon(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		Writer writer = response.getWriter();
+
+		writer.write("<li class=\"control-menu-nav-item\">");
+		writer.write(
+			"<a class=\"control-menu-icon lfr-portal-tooltip\" data-qa-id=" +
+				"\"editLayout\" data-title=\"");
+
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			request, _portal.getLocale(request));
+
+		writer.write(
+			_html.escape(_language.get(resourceBundle, "configure-page")));
+
+		writer.write("\" href=\"");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String portletId = LayoutAdminPortletKeys.GROUP_PAGES;
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.isLayoutPrototype()) {
+			portletId = LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE;
+		}
+
+		PortletURL editPageURL = _portal.getControlPanelPortletURL(
+			request, portletId, PortletRequest.RENDER_PHASE);
+
+		Layout layout = themeDisplay.getLayout();
+
+		editPageURL.setParameter("backURL", _portal.getCurrentURL(request));
+		editPageURL.setParameter(
+			"groupId", String.valueOf(layout.getGroupId()));
+		editPageURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
+		editPageURL.setParameter(
+			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+
+		editPageURL.write(writer);
+
+		writer.write("\">");
+
+		IconTag iconTag = new IconTag();
+
+		iconTag.setCssClass("icon-monospaced");
+		iconTag.setImage("cog");
+		iconTag.setMarkupView("lexicon");
+
+		PageContext pageContext = PageContextFactoryUtil.create(
+			request, response);
+
+		try {
+			iconTag.doTag(pageContext);
+		}
+		catch (JspException je) {
+			throw new IOException(je);
+		}
+
+		writer.write("</a></li>");
+
+		SuccessTag successTag = new SuccessTag();
+
+		successTag.setKey("layoutUpdated");
+		successTag.setMessage(
+			_language.get(resourceBundle, "the-page-was-updated-succesfully"));
+		successTag.setTargetNode("#controlMenuAlertsContainer");
+
+		try {
+			successTag.doTag(pageContext);
+		}
+		catch (JspException je) {
+			throw new IOException(je);
+		}
+
+		return true;
 	}
 
 	@Override
@@ -76,5 +178,14 @@ public class ManageLayoutProductNavigationControlMenuEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private Html _html;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

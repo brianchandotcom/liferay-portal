@@ -29,7 +29,7 @@
 				border="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.border()) %>" 
 				bordercolor="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.bordercolor()) %>" 
 				frameborder="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.frameborder()) %>" 
-				height="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getHeight()) %>" 
+				height="<%= iFramePortletInstanceConfiguration.resizeAutomatically() ? "" : HtmlUtil.escapeAttribute(iFrameDisplayContext.getHeight()) %>" 
 				hspace="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.hspace()) %>" 
 				id="<portlet:namespace />iframe" 
 				longdesc="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.longdesc()) %>" 

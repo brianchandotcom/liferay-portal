@@ -2017,9 +2017,7 @@ ${output.content}</echo>
 
 		<run-batch-test>
 			<test-action>
-				<exec dir="${test.base.dir.name}" executable="npm" failonerror="true">
-					<arg value="test" />
-				</exec>
+				<gradle-execute dir="${test.base.dir.name}" task="testJS" />
 			</test-action>
 
 			<test-set-up>
@@ -2034,11 +2032,6 @@ ${output.content}</echo>
 				/>
 
 				<generate-gulp-user-config-json portlet.name="${portlet.name}" />
-
-				<exec dir="${test.base.dir.name}" executable="npm" failonerror="true">
-					<arg value="install" />
-					<arg value="--proxy http://squid.lax.liferay.com:3128" />
-				</exec>
 			</test-set-up>
 		</run-batch-test>
 	</target>

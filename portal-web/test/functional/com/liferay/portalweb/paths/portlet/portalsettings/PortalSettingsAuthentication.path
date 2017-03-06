@@ -62,12 +62,12 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX</td>
-	<td>//input[contains(@name,'cas--importFromLDAP')]</td>
+	<td>//input[contains(@name,'cas_importFromLDAP')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_LOGIN_URL_FIELD</td>
-	<td>//input[contains(@name,'cas--loginURL')]</td>
+	<td>//input[contains(@name,'cas_loginURL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_LOGOUT_URL_FIELD</td>
-	<td>//input[contains(@name,'cas--logoutURL')]</td>
+	<td>//input[contains(@name,'cas_logoutURL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_FIELD</td>
-	<td>//input[contains(@name,'cas--noSuchUserRedirectURL')]</td>
+	<td>//input[contains(@name,'cas_noSuchUserRedirectURL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVER_NAME_FIELD</td>
-	<td>//input[contains(@name,'cas--serverName')]</td>
+	<td>//input[contains(@name,'cas_serverName')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,22 +107,22 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVER_URL_FIELD</td>
-	<td>//input[contains(@name,'cas--serverURL')]</td>
+	<td>//input[contains(@name,'cas_serverURL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVER_URL_HEADER</td>
-	<td>//label[following-sibling::input[contains(@name,'cas--serverURL')]]</td>
+	<td>//label[following-sibling::input[contains(@name,'cas_serverURL')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVICE_URL_FIELD</td>
-	<td>//input[contains(@name,'cas--serviceURL')]</td>
+	<td>//input[contains(@name,'cas_serviceURL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVICE_URL_HEADER</td>
-	<td>//label[following-sibling::input[contains(@name,'cas--serviceURL')]]</td>
+	<td>//label[following-sibling::input[contains(@name,'cas_serviceURL')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -138,17 +138,17 @@
 <!--AUTHENTICATION_GOOGLE-->
 <tr>
 	<td>AUTHENTICATION_GOOGLE_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@name,'google--enabled')]</td>
+	<td>//input[contains(@name,'google_enabled')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_GOOGLE_CLIENT_ID</td>
-	<td>//input[contains(@name,'google--clientId')]</td>
+	<td>//input[contains(@name,'google_clientId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_GOOGLE_CLIENT_SECRET</td>
-	<td>//input[contains(@name,'google--clientSecret')]</td>
+	<td>//input[contains(@name,'google_clientSecret')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -159,37 +159,37 @@
 <!--AUTHENTICATION_FACEBOOK-->
 <tr>
 	<td>AUTHENTICATION_FACEBOOK_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@name,'facebook--enabled')]</td>
+	<td>//input[contains(@name,'facebook_enabled')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_FACEBOOK_APPLICATION_ID</td>
-	<td>//input[contains(@name,'facebook--appId')]</td>
+	<td>//input[contains(@name,'facebook_appId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_FACEBOOK_APPLICATION_SECRET</td>
-	<td>//input[contains(@name,'facebook--appSecret')]</td>
+	<td>//input[contains(@name,'facebook_appSecret')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_FACEBOOK_GRAPH_URL</td>
-	<td>//input[contains(@name,'facebook--graphURL')]</td>
+	<td>//input[contains(@name,'facebook_graphURL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_FACEBOOK_OAUTH_AUTHENTICATION_URL</td>
-	<td>//input[contains(@name,'facebook--oauthAuthURL')]</td>
+	<td>//input[contains(@name,'facebook_oauthAuthURL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_FACEBOOK_OAUTH_TOKEN_URL</td>
-	<td>//input[contains(@name,'facebook--oauthTokenURL')]</td>
+	<td>//input[contains(@name,'facebook_oauthTokenURL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_FACEBOOK_REDIRECT_URL</td>
-	<td>//input[contains(@name,'facebook--oauthRedirectURL')]</td>
+	<td>//input[contains(@name,'facebook_oauthRedirectURL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -276,11 +276,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LDAP_SERVER_RESET_VALUES_BUTTON</td>
-	<td>//button[contains(.,'Reset Values')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_HEADER</td>
 	<td>//label[contains(@for,'baseProviderURL')]</td>
 	<td></td>
@@ -343,57 +338,57 @@
 <!--AUTHENTICATION_NTLM-->
 <tr>
 	<td>AUTHENTICATION_NTLM_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@name,'ntlm--enabled')]</td>
+	<td>//input[contains(@name,'ntlm_enabled')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_HEADER</td>
-	<td>//label[contains(@for,'PortalSettingsPortlet_domainControll')]</td>
+	<td>//label[contains(@for,'ntlm_domainController')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_FIELD</td>
-	<td>//input[contains(@name,'ntlm--domainController')]</td>
+	<td>//input[contains(@name,'ntlm_domainController')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_HEADER</td>
-	<td>//label[contains(@for,'PortalSettingsPortlet_domainControllerNa')]</td>
+	<td>//label[contains(@for,'ntlm_domainControllerName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_FIELD</td>
-	<td>//input[contains(@name,'ntlm--domainControllerName')]</td>
+	<td>//input[contains(@name,'ntlm_domainControllerName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_HEADER</td>
-	<td>//label[contains(@for,'PortalSettingsPortlet_doma') and .=' Domain ']</td>
+	<td>//label[contains(@for,'ntlm_domain') and .=' Domain ']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_FIELD</td>
-	<td>xpath=(//input[contains(@name,'ntlm--domain')])[3]</td>
+	<td>xpath=(//input[contains(@name,'ntlm_domain')])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_SERVICE_ACCOUNT_HEADER</td>
-	<td>//label[contains(@for,'PortalSettingsPortlet_serviceAccou')]</td>
+	<td>//label[contains(@for,'ntlm_serviceAccount')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_SERVICE_ACCOUNT_FIELD</td>
-	<td>//input[contains(@name,'ntlm--serviceAccount')]</td>
+	<td>//input[contains(@name,'ntlm_serviceAccount')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_SERVICE_PASSWORD_HEADER</td>
-	<td>//label[contains(@for,'PortalSettingsPortlet_servicePasswo')]</td>
+	<td>//label[contains(@for,'ntlm_servicePassword')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_SERVICE_PASSWORD_FIELD</td>
-	<td>//input[contains(@name,'ntlm--servicePassword')]</td>
+	<td>//input[contains(@name,'ntlm_servicePassword')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -404,7 +399,7 @@
 <!--AUTHENTICATION_OPEN_ID-->
 <tr>
 	<td>AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@name,'openid--enabled')]</td>
+	<td>//input[contains(@name,'openid_enabled')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -415,12 +410,12 @@
 <!--AUTHENTICATION_OPEN_SSO-->
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@name,'opensso--enabled')]</td>
+	<td>//input[contains(@name,'opensso_enabled')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX</td>
-	<td>//input[contains(@name,'opensso--importFromLDAP')]</td>
+	<td>//input[contains(@name,'opensso_importFromLDAP')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -430,7 +425,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LOGIN_URL_FIELD</td>
-	<td>//input[contains(@name,'opensso--loginURL')]</td>
+	<td>//input[contains(@name,'opensso_loginURL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -440,7 +435,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LOGOUT_URL_FIELD</td>
-	<td>//input[contains(@name,'opensso--logoutURL')]</td>
+	<td>//input[contains(@name,'opensso_logoutURL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -450,7 +445,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_SERVICE_URL_FIELD</td>
-	<td>//input[contains(@name,'opensso--serviceURL')]</td>
+	<td>//input[contains(@name,'opensso_serviceURL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -460,7 +455,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_FIELD</td>
-	<td>//input[contains(@name,'opensso--screenNameAttr')]</td>
+	<td>//input[contains(@name,'opensso_screenNameAttr')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -470,7 +465,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_FIELD</td>
-	<td>//input[contains(@name,'opensso--emailAddressAttr')]</td>
+	<td>//input[contains(@name,'opensso_emailAddressAttr')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -480,7 +475,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_FIELD</td>
-	<td>//input[contains(@name,'opensso--firstNameAttr')]</td>
+	<td>//input[contains(@name,'opensso_firstNameAttr')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -490,38 +485,12 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_FIELD</td>
-	<td>//input[contains(@name,'opensso--lastNameAttr')]</td>
+	<td>//input[contains(@name,'opensso_lastNameAttr')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON</td>
 	<td>//button[contains(.,'Test OpenSSO Configuration')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--AUTHENTICATION_SITE_MINDER-->
-<tr>
-	<td>AUTHENTICATION_SITE_MINDER_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'siteminder-auth-enabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_SITE_MINDER_IMPORT_FROM_LDAP_CHECKBOX</td>
-	<td>//input[contains(@id,'siteminder-import-from-ldap')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_SITE_MINDER_USER_HEADER_HEADER</td>
-	<td>//label[contains(@for,'siteminder-user-header')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_SITE_MINDER_USER_HEADER_FIELD</td>
-	<td>//input[contains(@id,'siteminder-user-header')]</td>
 	<td></td>
 </tr>
 </tbody>

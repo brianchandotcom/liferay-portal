@@ -1643,7 +1643,7 @@ public class ProjectTemplatesTest {
 	};
 
 	private static final String _MAVEN_GOAL_BUILD_SERVICE =
-		"service-builder:build";
+		"liferay:build-service";
 
 	private static final String _MAVEN_GOAL_PACKAGE = "package";
 

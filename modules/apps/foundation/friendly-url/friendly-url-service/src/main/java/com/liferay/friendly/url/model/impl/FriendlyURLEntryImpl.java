@@ -16,6 +16,12 @@ package com.liferay.friendly.url.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalizationLocalServiceUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.util.Locale;
+
 /**
  * @author Pavel Savinov
  */
@@ -23,6 +29,34 @@ import aQute.bnd.annotation.ProviderType;
 public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 
 	public FriendlyURLEntryImpl() {
+	}
+
+	@Override
+	public String getUrlTitle(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			FriendlyURLEntryLocalizationLocalServiceUtil.
+				fetchFriendlyURLEntryLocalization(this, languageId);
+
+		if (friendlyURLEntryLocalization != null) {
+			return friendlyURLEntryLocalization.getUrlTitle();
+		}
+
+		return null;
+	}
+
+	@Override
+	public boolean isLocalized() {
+		int localizationCount =
+			FriendlyURLEntryLocalizationLocalServiceUtil.
+				getFriendlyURLEntryLocalizationCount(this);
+
+		if (localizationCount > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

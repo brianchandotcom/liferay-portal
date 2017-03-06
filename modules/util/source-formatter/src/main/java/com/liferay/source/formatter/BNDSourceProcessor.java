@@ -132,7 +132,9 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		String bundleSymbolicName = getDefinitionValue(
 			content, "Bundle-SymbolicName");
 
-		if (bundleSymbolicName == null) {
+		if ((bundleSymbolicName == null) ||
+			bundleSymbolicName.endsWith(".compat")) {
+
 			return;
 		}
 

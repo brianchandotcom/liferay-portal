@@ -74,14 +74,6 @@
 	</tear-down>
 
 	<command name="EditSingleApproverDefinitionDeleteTaskNode" priority="5">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
-		</execute>
-
-		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
-			<var name="workflowDefinitionTitle" value="Single Approver" />
-		</execute>
-
 		<execute macro="KaleoDesigner#editWorkflowDefinitionTitleViaWorkflowCP">
 			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
 		</execute>
@@ -118,14 +110,6 @@
 	<command name="ViewInvalidSourceXMLRemainsAfterTabSwitch" priority="4">
 		<description message="This is a use case for LPS-48590." />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
-		</execute>
-
-		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
-			<var name="workflowDefinitionTitle" value="Single Approver" />
-		</execute>
-
 		<execute macro="KaleoDesigner#editSourceXML">
 			<var name="kdSourceXML" value="INVALID" />
 			<var name="line" value="6" />
@@ -142,14 +126,6 @@
 
 	<command name="ViewNodeNotificationRecipientPersistsAfterSwitchingTabs" priority="4">
 		<description message="This is a use case for LPS-46657." />
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
-		</execute>
-
-		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
-			<var name="workflowDefinitionTitle" value="Single Approver" />
-		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
 			<var name="nodeNodeLabel" value="review" />
@@ -180,14 +156,6 @@
 
 	<command name="ViewSingleApproverUserNotificationOption" priority="3">
 		<description message="This is a use case for LPS-46605." />
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
-		</execute>
-
-		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
-			<var name="workflowDefinitionTitle" value="Single Approver" />
-		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
 			<var name="nodeNodeLabel" value="review" />

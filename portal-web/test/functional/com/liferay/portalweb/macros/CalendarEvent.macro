@@ -991,6 +991,19 @@
 			</else>
 		</if>
 
+		<var method="selenium#getCurrentDayName()" name="currentDay" />
+		<var method="selenium#getCurrentHour()" name="currentHour" />
+
+		<if>
+			<and>
+				<equals arg1="${currentDay}" arg2="Saturday" />
+				<equals arg1="${currentHour}" arg2="22" />
+			</and>
+			<then>
+				<execute function="Refresh" />
+			</then>
+		</if>
+
 		<execute macro="CalendarScheduler#viewSpecificEventNotPresent">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>

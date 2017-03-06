@@ -167,6 +167,11 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 		return _friendlyURLEntry.isEscapedModel();
 	}
 
+	@Override
+	public boolean isLocalized() {
+		return _friendlyURLEntry.isLocalized();
+	}
+
 	/**
 	* Returns <code>true</code> if this friendly url entry is main.
 	*
@@ -230,6 +235,11 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	@Override
 	public java.lang.String getUrlTitle() {
 		return _friendlyURLEntry.getUrlTitle();
+	}
+
+	@Override
+	public java.lang.String getUrlTitle(java.util.Locale locale) {
+		return _friendlyURLEntry.getUrlTitle(locale);
 	}
 
 	/**

@@ -136,6 +136,38 @@ if (portletTitleBasedNavigation) {
 
 	renderResponse.setTitle(headerTitle);
 }
+
+String defaultLanguageId = themeDisplay.getLanguageId();
+
+Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
+
+
+if (fileEntryTypeId > 0) {
+	try {
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
+
+			try {
+				DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+
+				ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+
+				if (ddmFormValues != null) {
+					Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();
+
+					availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+	}
+	catch (Exception e) {
+		_log.error(e, e);
+	}
+}
 %>
 
 <c:if test="<%= portletTitleBasedNavigation && (fileVersion != null) %>">
@@ -255,6 +287,12 @@ if (portletTitleBasedNavigation) {
 			<liferay-ui:asset-categories-error />
 
 			<liferay-ui:asset-tags-error />
+
+			<aui:translation-manager
+				availableLocales="<%= availableLocales %>"
+				defaultLanguageId="<%= defaultLanguageId %>"
+				id="translationManager"
+			/>
 
 			<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
@@ -378,7 +416,7 @@ if (portletTitleBasedNavigation) {
 								</c:otherwise>
 							</c:choose>
 
-							<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
+							<aui:input name="defaultLanguageId" type="hidden" value="<%= defaultLanguageId %>" />
 
 							<%
 							if (fileEntryTypeId > 0) {

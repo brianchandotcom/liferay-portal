@@ -35,7 +35,7 @@ public class MergeCentralSubrepositoryUtil {
 
 		GitWorkingDirectory centralGitWorkingDirectory =
 			new GitWorkingDirectory(
-				centralWorkingDirectory, centralUpstreamBranchName);
+				centralUpstreamBranchName, centralWorkingDirectory);
 
 		File modulesDir = new File(
 			centralGitWorkingDirectory.getWorkingDirectory(), "modules");

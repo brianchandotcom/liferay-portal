@@ -33,7 +33,7 @@ import org.junit.Before;
  * @author Vilmos Papp
  * @author Akos Thurzo
  */
-public abstract class PortalImplBaseURLTestCase {
+public abstract class BasePortalImplURLTestCase {
 
 	@Before
 	public void setUp() throws Exception {

@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PortalImplBaseURLTestCase;
+import com.liferay.portal.util.BasePortalImplURLTestCase;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -38,7 +38,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Stian Sigvartsen
  */
-public class LayoutTypeURLTest extends PortalImplBaseURLTestCase {
+public class LayoutTypeURLTest extends BasePortalImplURLTestCase {
 
 	@ClassRule
 	@Rule

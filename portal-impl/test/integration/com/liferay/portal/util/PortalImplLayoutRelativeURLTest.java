@@ -34,7 +34,7 @@ import org.junit.Test;
  * @author Akos Thurzo
  * @author Manuel de la Peña
  */
-public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
+public class PortalImplLayoutRelativeURLTest extends BasePortalImplURLTestCase {
 
 	@ClassRule
 	@Rule

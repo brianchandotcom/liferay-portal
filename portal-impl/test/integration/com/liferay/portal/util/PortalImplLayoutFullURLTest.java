@@ -30,7 +30,7 @@ import org.junit.Test;
 /**
  * @author Akos Thurzo
  */
-public class PortalImplLayoutFullURLTest extends PortalImplBaseURLTestCase {
+public class PortalImplLayoutFullURLTest extends BasePortalImplURLTestCase {
 
 	@ClassRule
 	@Rule

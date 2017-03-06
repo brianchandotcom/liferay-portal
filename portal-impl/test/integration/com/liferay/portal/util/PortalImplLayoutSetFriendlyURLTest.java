@@ -40,7 +40,7 @@ import org.junit.Test;
  * @author Akos Thurzo
  */
 public class PortalImplLayoutSetFriendlyURLTest
-	extends PortalImplBaseURLTestCase {
+	extends BasePortalImplURLTestCase {
 
 	@ClassRule
 	@Rule

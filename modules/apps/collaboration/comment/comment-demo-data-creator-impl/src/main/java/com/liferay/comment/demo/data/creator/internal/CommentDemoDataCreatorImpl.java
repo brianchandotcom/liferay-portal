@@ -17,7 +17,6 @@ package com.liferay.comment.demo.data.creator.internal;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.comment.demo.data.creator.CommentDemoDataCreator;
-import com.liferay.comment.demo.data.creator.MultipleCommentDemoDataCreator;
 import com.liferay.message.boards.kernel.exception.NoSuchMessageException;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;

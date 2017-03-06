@@ -4,7 +4,7 @@
 		"metal-events": "^2.6.0"
 	},
 	"devDependencies": {
-		"liferay-module-config-generator": "^1.1.10",
+		"liferay-module-config-generator": "^1.2.1",
 		"metal-cli": "^2.1.2"
 	},
 	"name": "message-boards-web",

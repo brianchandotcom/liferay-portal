@@ -146,6 +146,8 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 		content = importsFormatter.format(content, null, null);
 
+		content = fixEmptyLinesInMultiLineTags(content);
+
 		content = fixEmptyLinesInNestedTags(content);
 
 		content = fixEmptyLinesBetweenTags(content);

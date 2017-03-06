@@ -27,10 +27,10 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class TestClassCheck extends AbstractCheck {
 
-	public static final String MSG_INVALID_ABSTRACT_TEST_CASE_CLASS =
+	public static final String MSG_INCORRECT_ABSTRACT_TEST_CASE_CLASS =
 		"test.case.class.incorrect.abstract";
 
-	public static final String MSG_INVALID_ABSTRACT_TEST_CLASS =
+	public static final String MSG_INCORRECT_ABSTRACT_TEST_CLASS =
 		"test.class.incorrect.abstract";
 
 	@Override
@@ -70,12 +70,13 @@ public class TestClassCheck extends AbstractCheck {
 		if (name.endsWith("TestCase")) {
 			if (!modifiersAST.branchContains(TokenTypes.ABSTRACT)) {
 				log(
-					detailAST.getLineNo(), MSG_INVALID_ABSTRACT_TEST_CASE_CLASS,
+					detailAST.getLineNo(),
+					MSG_INCORRECT_ABSTRACT_TEST_CASE_CLASS,
 					name.substring(0, name.length() - 4));
 			}
 		}
 		else if (modifiersAST.branchContains(TokenTypes.ABSTRACT)) {
-			log(detailAST.getLineNo(), MSG_INVALID_ABSTRACT_TEST_CLASS, name);
+			log(detailAST.getLineNo(), MSG_INCORRECT_ABSTRACT_TEST_CLASS, name);
 		}
 	}
 

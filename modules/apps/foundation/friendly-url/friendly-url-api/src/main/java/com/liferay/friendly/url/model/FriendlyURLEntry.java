@@ -54,4 +54,8 @@ public interface FriendlyURLEntry extends FriendlyURLEntryModel, PersistedModel 
 				return FriendlyURLEntry.class;
 			}
 		};
+
+	public java.lang.String getUrlTitle(java.util.Locale locale);
+
+	public boolean isLocalized();
 }

@@ -92,7 +92,7 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 		TABLE_COLUMNS_MAP.put("main", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FriendlyURLEntry (uuid_ VARCHAR(75) null,friendlyURLEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,urlTitle VARCHAR(75) null,main BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table FriendlyURLEntry (uuid_ VARCHAR(75) null,friendlyURLEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,urlTitle VARCHAR(255) null,main BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table FriendlyURLEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY friendlyURLEntry.friendlyURLEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FriendlyURLEntry.friendlyURLEntryId ASC";

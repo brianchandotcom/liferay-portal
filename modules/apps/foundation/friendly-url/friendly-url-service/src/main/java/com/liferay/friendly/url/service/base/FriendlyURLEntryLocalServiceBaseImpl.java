@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -503,6 +504,44 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the friendly url entry localization local service.
+	 *
+	 * @return the friendly url entry localization local service
+	 */
+	public com.liferay.friendly.url.service.FriendlyURLEntryLocalizationLocalService getFriendlyURLEntryLocalizationLocalService() {
+		return friendlyURLEntryLocalizationLocalService;
+	}
+
+	/**
+	 * Sets the friendly url entry localization local service.
+	 *
+	 * @param friendlyURLEntryLocalizationLocalService the friendly url entry localization local service
+	 */
+	public void setFriendlyURLEntryLocalizationLocalService(
+		com.liferay.friendly.url.service.FriendlyURLEntryLocalizationLocalService friendlyURLEntryLocalizationLocalService) {
+		this.friendlyURLEntryLocalizationLocalService = friendlyURLEntryLocalizationLocalService;
+	}
+
+	/**
+	 * Returns the friendly url entry localization persistence.
+	 *
+	 * @return the friendly url entry localization persistence
+	 */
+	public FriendlyURLEntryLocalizationPersistence getFriendlyURLEntryLocalizationPersistence() {
+		return friendlyURLEntryLocalizationPersistence;
+	}
+
+	/**
+	 * Sets the friendly url entry localization persistence.
+	 *
+	 * @param friendlyURLEntryLocalizationPersistence the friendly url entry localization persistence
+	 */
+	public void setFriendlyURLEntryLocalizationPersistence(
+		FriendlyURLEntryLocalizationPersistence friendlyURLEntryLocalizationPersistence) {
+		this.friendlyURLEntryLocalizationPersistence = friendlyURLEntryLocalizationPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -671,6 +710,10 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 	protected FriendlyURLEntryLocalService friendlyURLEntryLocalService;
 	@BeanReference(type = FriendlyURLEntryPersistence.class)
 	protected FriendlyURLEntryPersistence friendlyURLEntryPersistence;
+	@BeanReference(type = com.liferay.friendly.url.service.FriendlyURLEntryLocalizationLocalService.class)
+	protected com.liferay.friendly.url.service.FriendlyURLEntryLocalizationLocalService friendlyURLEntryLocalizationLocalService;
+	@BeanReference(type = FriendlyURLEntryLocalizationPersistence.class)
+	protected FriendlyURLEntryLocalizationPersistence friendlyURLEntryLocalizationPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

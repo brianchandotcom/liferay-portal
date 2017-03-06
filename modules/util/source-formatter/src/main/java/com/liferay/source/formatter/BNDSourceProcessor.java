@@ -208,6 +208,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		String fileName, String absolutePath, String content, Pattern pattern) {
 
 		if (absolutePath.contains("/portal-kernel/") ||
+			absolutePath.contains("/third-party/") ||
 			absolutePath.contains("/util-bridges/") ||
 			absolutePath.contains("/util-java/") ||
 			absolutePath.contains("/util-taglib/") ||

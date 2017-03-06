@@ -430,7 +430,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (correctKey.equals(definitionKey)) {
-			return content;
+			return StringUtil.replace(
+				content, definitionKey + "=", definitionKey + ":");
 		}
 
 		if (content.startsWith(definitionKey)) {

@@ -604,6 +604,8 @@
 	</command>
 
 	<command name="filterCompletedProcesses">
+		<execute function="Pause" locator1="5000" />
+
 		<execute function="Click" locator1="Dropdown#FILTER" />
 
 		<var name="key_filterValue" value="Completed" />

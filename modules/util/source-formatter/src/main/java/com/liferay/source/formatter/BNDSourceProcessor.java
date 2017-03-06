@@ -222,7 +222,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
-		String imports = matcher.group(2);
+		String imports = matcher.group(3);
 
 		matcher = _wilcardImportPattern.matcher(imports);
 
@@ -720,11 +720,11 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		";[^\\\\]");
 	private Map<String, String> _definitionKeysMap;
 	private final Pattern _exportsPattern = Pattern.compile(
-		"\nExport-Package:(\\\\\n| )(.*?\n|\\Z)[^\t]",
+		"\nExport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
 	private Map<String, Map<String, String>> _fileSpecificDefinitionKeysMap;
 	private final Pattern _importsPattern = Pattern.compile(
-		"\nImport-Package:(\\\\\n| )(.*?\n|\\Z)[^\t]",
+		"\nImport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
 	private final Pattern _includeResourceJarPattern = Pattern.compile(
 		"-[0-9\\.]+\\.jar");

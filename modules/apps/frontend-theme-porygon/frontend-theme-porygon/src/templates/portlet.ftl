@@ -65,6 +65,10 @@
 			<h2 class="portlet-title-text">${portlet_title}</h2>
 		</#if>
 
+		<#if stringUtil.equals(portlet_decorator_name, "barebone")>
+			<h2 class="portlet-title-text hide">${portlet_title}</h2>
+		</#if>
+
 		${portlet_display.writeContent(writer)}
 	</div>
 </section>

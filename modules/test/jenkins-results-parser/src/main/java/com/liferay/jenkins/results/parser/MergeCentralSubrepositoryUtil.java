@@ -131,20 +131,13 @@ public class MergeCentralSubrepositoryUtil {
 
 		String title = subrepositoryName + " - Central Merge Pull Request";
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Merging the following commit: [");
-		sb.append(subrepositoryUpstreamCommit);
-		sb.append("](https://github.com/");
-		sb.append(receiverUserName);
-		sb.append("/");
-		sb.append(subrepositoryName);
-		sb.append("/commit/");
-		sb.append(subrepositoryUpstreamCommit);
-		sb.append(")");
+		String body = JenkinsResultsParserUtil.combine(
+			"Merging the following commit: [", subrepositoryUpstreamCommit,
+			"](https://github.com/", receiverUserName, "/", subrepositoryName,
+			"/commit/", subrepositoryUpstreamCommit, ")");
 
 		centralGitWorkingDirectory.createPullRequest(
-			title, sb.toString(), receiverUserName, mergeBranchName);
+			title, body, receiverUserName, mergeBranchName);
 	}
 
 	private static String _getCiMergeFilePath(
@@ -165,14 +158,8 @@ public class MergeCentralSubrepositoryUtil {
 	private static String _getMergeBranchName(
 		String subrepositoryName, String subrepositoryUpstreamCommit) {
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("ci-merge-");
-		sb.append(subrepositoryName);
-		sb.append("-");
-		sb.append(subrepositoryUpstreamCommit);
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			"ci-merge-", subrepositoryName, "-", subrepositoryUpstreamCommit);
 	}
 
 	private static void _pushMergeBranchToOriging(
@@ -189,16 +176,11 @@ public class MergeCentralSubrepositoryUtil {
 		String mergeBranchName = _getMergeBranchName(
 			subrepositoryName, subrepositoryUpstreamCommit);
 
-		StringBuilder sb = new StringBuilder();
+		String origin = JenkinsResultsParserUtil.combine(
+			"git@github.com:", receiverUserName, "/", centralRepositoryName,
+			".git");
 
-		sb.append("git@github.com:");
-		sb.append(receiverUserName);
-		sb.append("/");
-		sb.append(centralRepositoryName);
-		sb.append(".git");
-
-		centralGitWorkingDirectory.pushBranchToOrigin(
-			mergeBranchName, sb.toString());
+		centralGitWorkingDirectory.pushBranchToOrigin(mergeBranchName, origin);
 	}
 
 }

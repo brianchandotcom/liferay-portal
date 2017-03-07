@@ -72,18 +72,13 @@ public class CentralSubrepository {
 	private String _getMergePullRequestURL() throws IOException {
 		String subrepositoryUpstreamCommit = getSubrepositoryUpstreamCommit();
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("https://api.github.com/repos/");
-		sb.append(_subrepositoryUsername);
-		sb.append("/");
-		sb.append(_subrepositoryName);
-		sb.append("/commits/");
-		sb.append(subrepositoryUpstreamCommit);
-		sb.append("/statuses");
+		String url = JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", _subrepositoryUsername, "/",
+			_subrepositoryName, "/commits/", subrepositoryUpstreamCommit,
+			"/statuses");
 
 		JSONArray statusesJSONArray = new JSONArray(
-			JenkinsResultsParserUtil.toString(sb.toString(), true));
+			JenkinsResultsParserUtil.toString(url, true));
 
 		if (statusesJSONArray != null) {
 			for (int i = 0; i < statusesJSONArray.length(); i++) {
@@ -131,17 +126,13 @@ public class CentralSubrepository {
 	}
 
 	private String _getSubrepositoryUpstreamCommit() throws IOException {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("https://api.github.com/repos/");
-		sb.append(_subrepositoryUsername);
-		sb.append("/");
-		sb.append(_subrepositoryName);
-		sb.append("/git/refs/heads/");
-		sb.append(_subrepositoryUpstreamBranchName);
+		String url = JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", _subrepositoryUsername, "/",
+			_subrepositoryName, "/git/refs/heads/",
+			_subrepositoryUpstreamBranchName);
 
 		JSONObject branchJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			sb.toString(), false);
+			url, false);
 
 		JSONObject objectJSONObject = branchJSONObject.getJSONObject("object");
 
@@ -180,18 +171,12 @@ public class CentralSubrepository {
 		String subrepositoryUpstreamCommit = getSubrepositoryUpstreamCommit();
 
 		if (subrepositoryMergedCommit.equals(subrepositoryUpstreamCommit)) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("SKIPPED: ");
-			sb.append(_subrepositoryName);
-			sb.append(" already has merged commit https://github.com/");
-			sb.append(_subrepositoryUsername);
-			sb.append("/");
-			sb.append(_subrepositoryName);
-			sb.append("/commit/");
-			sb.append(subrepositoryUpstreamCommit);
-
-			System.out.println(sb.toString());
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"SKIPPED: ", _subrepositoryName,
+					" contains merged commit https://github.com/",
+					_subrepositoryUsername, "/", _subrepositoryName, "/commit/",
+					subrepositoryUpstreamCommit));
 
 			return false;
 		}
@@ -199,14 +184,11 @@ public class CentralSubrepository {
 		String mergePullRequestURL = _getMergePullRequestURL();
 
 		if (mergePullRequestURL != null) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("SKIPPED: ");
-			sb.append(_subrepositoryName);
-			sb.append(" already has open merge pull request ");
-			sb.append(mergePullRequestURL);
-
-			System.out.println(sb.toString());
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"SKIPPED: ", _subrepositoryName,
+					" contains an open merge pull request ",
+					mergePullRequestURL));
 
 			return false;
 		}

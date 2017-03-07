@@ -147,14 +147,6 @@ public class GitWorkingDirectory {
 			String pullRequestBranchName)
 		throws IOException {
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("https://api.github.com/repos/");
-		sb.append(receiverUserName);
-		sb.append("/");
-		sb.append(_repositoryName);
-		sb.append("/pulls");
-
 		JSONObject requestJSONObject = new JSONObject();
 
 		requestJSONObject.put("base", _upstreamBranchName);
@@ -163,8 +155,12 @@ public class GitWorkingDirectory {
 			"head", receiverUserName + ":" + pullRequestBranchName);
 		requestJSONObject.put("title", title);
 
+		String url = JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", receiverUserName, "/",
+			_repositoryName, "/pulls");
+
 		JSONObject responseJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			sb.toString(), requestJSONObject.toString());
+			url, requestJSONObject.toString());
 
 		String pullRequestURL = responseJSONObject.getString("url");
 

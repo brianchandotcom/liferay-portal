@@ -6,6 +6,8 @@ import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 
+import ${package}.constants.${className}PortletKeys;
+
 /**
  * @author ${author}
  */
@@ -17,6 +19,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=${artifactId} Portlet",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + ${className}PortletKeys.${className},
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

@@ -1,7 +1,7 @@
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
-Bundle-Version: ${version}#if (${buildType} != "gradle")
-Export-Package: ${package}.constants
+Bundle-Version: ${version}
+Export-Package: ${package}.constants}#if (${buildType} != "gradle")
 
 -jsp: *.jsp,*.jspf
 -plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin

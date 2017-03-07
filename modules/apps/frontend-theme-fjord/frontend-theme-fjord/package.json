@@ -18,7 +18,7 @@
 		"version": "7.0"
 	},
 	"main": "package.json",
-	"name": "fjord-theme",
+	"name": "liferay-fjord-theme",
 	"repository": "liferay/liferay-portal",
 	"version": "1.0.16"
 }

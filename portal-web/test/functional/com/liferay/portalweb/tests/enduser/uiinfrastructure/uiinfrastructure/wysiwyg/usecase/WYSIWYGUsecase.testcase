@@ -134,6 +134,8 @@
 	</command>
 
 	<command name="ViewWikiFrontPageRightToLeft" priority="4">
+		<property name="test.name.skip.portal.instance" value="WYSIWIGUsecase#ViewWikiFrontPageRightToLeft" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>

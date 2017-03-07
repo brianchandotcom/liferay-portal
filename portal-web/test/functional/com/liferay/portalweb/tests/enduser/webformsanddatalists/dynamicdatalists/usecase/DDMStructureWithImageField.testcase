@@ -76,6 +76,8 @@
 	<command name="ViewFieldTranslations" priority="4">
 		<description message="This is a use case for LPS-69593." />
 
+		<property name="test.name.skip.portal.instance" value="DDMStructureWithImageField#ViewFieldTranslations" />
+
 		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>

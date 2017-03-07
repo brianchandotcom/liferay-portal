@@ -1374,6 +1374,8 @@
 	<command name="EditFormWithUpdatedSiteAndUserLocale" priority="2">
 		<description message="This is a use case for LPS-69100 and LPS-69334." />
 
+		<property name="test.name.skip.portal.instance" value="Forms#EditFormWithUpdatedSiteAndUserLocale" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

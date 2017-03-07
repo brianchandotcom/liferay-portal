@@ -337,6 +337,8 @@
 	</command>
 
 	<command name="AssetPublisherCategoriesLocalization" priority="3">
+		<property name="test.name.skip.portal.instance" value="WebcontentpublicationUsecase#AssetPublisherCategoriesLocalization" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

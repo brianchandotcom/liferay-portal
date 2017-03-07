@@ -263,6 +263,8 @@
 	</command>
 
 	<command name="Localization" priority="4">
+		<property name="test.name.skip.portal.instance" value="SocialactivityUsecase#Localization" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>

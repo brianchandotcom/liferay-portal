@@ -54,6 +54,8 @@
 	<command name="EditLanguageSelectorAndViewEvent" priority="3">
 		<description message="This is a use case for LPS-58649." />
 
+		<property name="test.name.skip.portal.instance" value="CalendarLocalization#EditLanguageSelectorAndViewEvent" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar Page" />
 		</execute>

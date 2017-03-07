@@ -142,7 +142,7 @@ public class GitWorkingDirectory {
 		createBranchCommand.call();
 	}
 
-	public void createPullRequest(
+	public String createPullRequest(
 			String title, String body, String receiverUserName,
 			String pullRequestBranchName)
 		throws IOException {
@@ -166,8 +166,11 @@ public class GitWorkingDirectory {
 		JSONObject responseJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			sb.toString(), requestJSONObject.toString());
 
-		System.out.println(
-			"Created a pull request at " + responseJSONObject.getString("url"));
+		String pullRequestURL = responseJSONObject.getString("url");
+
+		System.out.println("Created a pull request at " + pullRequestURL);
+
+		return pullRequestURL;
 	}
 
 	public void deleteBranch(String branchName) throws GitAPIException {

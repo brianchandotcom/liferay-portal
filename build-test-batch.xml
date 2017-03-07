@@ -350,6 +350,8 @@ echo "Sent notification."]]>
 		<sequential>
 			<antcall target="merge-test-results" />
 
+			<local name="testsuite.element" />
+
 			<property name="testsuite.element"><![CDATA[<testsuite errors="0" failures="0" hostname="localhost" name="com.liferay.jenkins.JenkinsLogAsserterTest" skipped="0" tests="1" time="0.0">
 <properties />
 <testcase classname="com.liferay.jenkins.JenkinsLogAsserterTest" name="testScanJenkinsLog" time="0.0" />

@@ -3,6 +3,10 @@
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Security" />
 
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+	</set-up>
+
 	<command name="CASSmoke" priority="4">
 		<property name="test.name.skip.portal.instance" value="Login#CASSmoke" />
 		<property name="web.plugins.includes" value="cas-web" />

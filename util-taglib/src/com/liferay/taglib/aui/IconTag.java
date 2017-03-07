@@ -48,6 +48,11 @@ import javax.servlet.jsp.PageContext;
  */
 public class IconTag extends BaseIconTag {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link DirectTag#doTagAsString(
+	 *			   HttpServletRequest, HttpServletResponse)}
+	 */
+	@Deprecated
 	public static String doTag(
 			String cssClass, String image, String markupView,
 			HttpServletRequest request, HttpServletResponse response)

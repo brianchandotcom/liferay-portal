@@ -18,7 +18,7 @@
 		"version": "7.0"
 	},
 	"main": "package.json",
-	"name": "classic-theme",
+	"name": "liferay-classic-theme",
 	"repository": "liferay/liferay-portal",
 	"version": "1.0.27"
 }

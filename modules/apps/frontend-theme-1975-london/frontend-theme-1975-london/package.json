@@ -25,7 +25,7 @@
 		"version": "7.0"
 	},
 	"main": "package.json",
-	"name": "1975-london-theme",
+	"name": "liferay-1975-london-theme",
 	"repository": "liferay/liferay-portal",
 	"version": "1.0.11"
 }

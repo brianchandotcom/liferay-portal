@@ -18,7 +18,7 @@
 		"version": "7.0"
 	},
 	"main": "package.json",
-	"name": "westeros-bank-theme",
+	"name": "liferay-westeros-bank-theme",
 	"repository": "liferay/liferay-portal",
 	"version": "1.0.28"
 }

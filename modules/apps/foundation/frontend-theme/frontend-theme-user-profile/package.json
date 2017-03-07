@@ -18,7 +18,7 @@
 		"version": "7.0"
 	},
 	"main": "package.json",
-	"name": "user-profile-theme",
+	"name": "liferay-user-profile-theme",
 	"repository": "liferay/liferay-portal",
 	"version": "1.0.25"
 }

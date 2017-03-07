@@ -16,7 +16,6 @@ package com.liferay.layout.set.prototype.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
-import com.liferay.layout.set.prototype.exportimport.data.handler.LayoutSetPrototypeStagedModelDataHandler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -279,14 +278,9 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 	protected Layout importLayoutFromLAR(StagedModel stagedModel)
 		throws DocumentException, IOException {
 
-		LayoutSetPrototypeStagedModelDataHandler
-			layoutSetPrototypeStagedModelDataHandler =
-				new LayoutSetPrototypeStagedModelDataHandler();
+		LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)stagedModel;
 
-		String fileName =
-			layoutSetPrototypeStagedModelDataHandler.
-				getLayoutSetPrototypeLARFileName(
-					(LayoutSetPrototype)stagedModel);
+		String fileName = layoutSetPrototype.getLayoutSetPrototypeId() + ".lar";
 
 		String modelPath = ExportImportPathUtil.getModelPath(
 			stagedModel, fileName);

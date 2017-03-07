@@ -35,6 +35,7 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
@@ -237,6 +238,59 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 		WriteMavenSettingsTask writeMavenSettingsTask = GradleUtil.addTask(
 			project, WRITE_MAVEN_SETTINGS_TASK, WriteMavenSettingsTask.class);
+
+		writeMavenSettingsTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					WriteMavenSettingsTask writeMavenSettingsTask =
+						(WriteMavenSettingsTask)task;
+
+					Logger logger = writeMavenSettingsTask.getLogger();
+
+					if (!logger.isLifecycleEnabled()) {
+						return;
+					}
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("Using ");
+
+					String repositoryUrl =
+						writeMavenSettingsTask.getRepositoryUrl();
+
+					if (Validator.isNotNull(repositoryUrl)) {
+						sb.append(repositoryUrl);
+						sb.append(" as");
+					}
+					else {
+						sb.append("no");
+					}
+
+					sb.append(" custom repository and ");
+
+					String proxyHost = writeMavenSettingsTask.getProxyHost();
+					Integer proxyPort = writeMavenSettingsTask.getProxyPort();
+
+					if (Validator.isNotNull(proxyHost) && (proxyPort != null)) {
+						sb.append(proxyHost);
+						sb.append(':');
+						sb.append(proxyPort);
+						sb.append(" as");
+					}
+					else {
+						sb.append("no");
+					}
+
+					sb.append(" proxy for Maven invocations in ");
+					sb.append(writeMavenSettingsTask.getProject());
+					sb.append('.');
+
+					logger.lifecycle(sb.toString());
+				}
+
+			});
 
 		writeMavenSettingsTask.setDescription(
 			"Writes a temporary Maven settings file to be used during " +

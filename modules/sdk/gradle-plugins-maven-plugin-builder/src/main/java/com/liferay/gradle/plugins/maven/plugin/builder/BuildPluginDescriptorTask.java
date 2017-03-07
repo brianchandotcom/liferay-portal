@@ -61,7 +61,9 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.JavaExecSpec;
@@ -176,6 +178,12 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return GradleUtil.toString(_mavenPluginPluginVersion);
 	}
 
+	@InputFile
+	@Optional
+	public File getMavenSettingsFile() {
+		return GradleUtil.toFile(getProject(), _mavenSettingsFile);
+	}
+
 	@OutputDirectory
 	public File getOutputDir() {
 		return GradleUtil.toFile(getProject(), _outputDir);
@@ -257,6 +265,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public void setMavenPluginPluginVersion(Object mavenPluginPluginVersion) {
 		_mavenPluginPluginVersion = mavenPluginPluginVersion;
+	}
+
+	public void setMavenSettingsFile(Object mavenSettingsFile) {
+		_mavenSettingsFile = mavenSettingsFile;
 	}
 
 	public void setOutputDir(Object outputDir) {
@@ -423,6 +435,14 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 					javaExecSpec.args("--file");
 					javaExecSpec.args(project.relativePath(pomFile));
+
+					File mavenSettingsFile = getMavenSettingsFile();
+
+					if (mavenSettingsFile != null) {
+						javaExecSpec.args("--settings");
+						javaExecSpec.args(
+							project.relativePath(mavenSettingsFile));
+					}
 
 					javaExecSpec.args("-Dencoding=UTF-8");
 
@@ -738,6 +758,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	private Object _mavenEmbedderMainClassName =
 		"org.apache.maven.cli.MavenCli";
 	private Object _mavenPluginPluginVersion = "3.4";
+	private Object _mavenSettingsFile;
 	private Object _outputDir;
 	private Object _pomArtifactId;
 	private Object _pomGroupId;

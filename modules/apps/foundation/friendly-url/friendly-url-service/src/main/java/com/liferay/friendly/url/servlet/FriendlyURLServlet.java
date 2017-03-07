@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PortalMessages;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.CharPool;
@@ -52,11 +53,14 @@ import com.liferay.portal.util.PortalInstances;
 
 import java.io.IOException;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -65,6 +69,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
@@ -214,11 +221,19 @@ public class FriendlyURLServlet extends HttpServlet {
 						layoutFriendlyURLCompositeFriendlyURL,
 						layout.getFriendlyURL(locale))) {
 
-					Locale originalLocale = setAlternativeLayoutFriendlyURL(
-						request, layout, layoutFriendlyURLCompositeFriendlyURL);
+					String redirect = null;
 
-					String redirect = PortalUtil.getLocalizedFriendlyURL(
-						request, layout, locale, originalLocale);
+					try {
+						Locale originalLocale = setAlternativeLayoutFriendlyURL(
+							request, layout,
+							layoutFriendlyURLCompositeFriendlyURL);
+
+						redirect = PortalUtil.getLocalizedFriendlyURL(
+							request, layout, locale, originalLocale);
+					}
+					catch (Exception e) {
+						throw new PortalException(e);
+					}
 
 					Boolean forcePermanentRedirect = Boolean.TRUE;
 
@@ -260,11 +275,12 @@ public class FriendlyURLServlet extends HttpServlet {
 		super.init(servletConfig);
 
 		_private = GetterUtil.getBoolean(
-			servletConfig.getInitParameter("private"));
+			servletConfig.getInitParameter("servlet.init.private"));
 
 		String proxyPath = PortalUtil.getPathProxy();
 
-		_user = GetterUtil.getBoolean(servletConfig.getInitParameter("user"));
+		_user = GetterUtil.getBoolean(
+			servletConfig.getInitParameter("servlet.init.user"));
 
 		if (_private) {
 			if (_user) {
@@ -431,6 +447,51 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	}
 
+	@Activate
+	@Modified
+	protected void activate(final Map<String, Object> properties) {
+		ServletConfig servletConfig = new ServletConfig() {
+
+			@Override
+			public String getInitParameter(String name) {
+				String value = GetterUtil.getString(properties.get(name), null);
+
+				return value;
+			}
+
+			@Override
+			public Enumeration<String> getInitParameterNames() {
+				Set<String> keys = properties.keySet();
+
+				Vector<String> keyNames = new Vector<>(keys);
+
+				return keyNames.elements();
+			}
+
+			@Override
+			public ServletContext getServletContext() {
+				return ServletContextPool.get(
+					PortalUtil.getServletContextName());
+			}
+
+			@Override
+			public String getServletName() {
+				String servletName = GetterUtil.getString(
+					properties.get("osgi.http.whiteboard.servlet.name"));
+
+				return servletName;
+			}
+
+		};
+
+		try {
+			init(servletConfig);
+		}
+		catch (ServletException se) {
+			_log.error("Unable to initialize friendly URL servlet", se);
+		}
+	}
+
 	/**
 	 * @deprecated As of 1.0.0, with no direct replacement
 	 */
@@ -487,7 +548,8 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	protected Locale setAlternativeLayoutFriendlyURL(
-		HttpServletRequest request, Layout layout, String friendlyURL) {
+			HttpServletRequest request, Layout layout, String friendlyURL)
+		throws Exception {
 
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(

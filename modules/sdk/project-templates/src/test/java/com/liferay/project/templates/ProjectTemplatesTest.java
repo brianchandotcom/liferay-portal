@@ -353,19 +353,24 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateMVCPortlet() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle("mvc-portlet", "foo");
 
-		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
 			gradleProjectDir, "src/main/resources/META-INF/resources/init.jsp");
 		_testExists(
 			gradleProjectDir, "src/main/resources/META-INF/resources/view.jsp");
-
+		
+		_testContains(gradleProjectDir, "bnd.bnd",
+				"Export-Package: foo.constants");
 		_testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
+			gradleProjectDir, "src/main/java/foo/constants/FooPortletKeys.java",
+			"public class FooPortletKeys");
+		_testContains(
 			gradleProjectDir, "src/main/java/foo/portlet/FooPortlet.java",
+			"javax.portlet.name=\" + FooPortletKeys.Foo",
 			"public class FooPortlet extends MVCPortlet {");
-
+		
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"mvc-portlet", "foo", "-DclassName=Foo", "-Dpackage=foo");
 
@@ -474,14 +479,25 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"panel-app", "gradle.test", "--class-name", "Foo");
 
-		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(gradleProjectDir, "build.gradle");
-
+		
+		_testContains(
+				gradleProjectDir, "bnd.bnd",
+				"Export-Package: gradle.test.constants");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/gradle/test/application/list/FooPanelApp.java",
 			"public class FooPanelApp extends BasePanelApp");
-
+		_testContains(
+				gradleProjectDir,
+				"src/main/java/gradle/test/constants/FooPortletKeys.java",
+				"public class FooPortletKeys");
+		_testContains(
+				gradleProjectDir,
+				"src/main/java/gradle/test/portlet/FooPortlet.java",
+				"javax.portlet.name=\" + FooPortletKeys.Foo",
+				"public class FooPortlet extends MVCPortlet");
+				
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"panel-app", "gradle.test", "-DclassName=Foo",
 			"-Dpackage=gradle.test");
@@ -496,14 +512,18 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet", "foo.test", "--class-name", "Foo");
 
-		_testExists(gradleProjectDir, "bnd.bnd");
-
+		_testContains(gradleProjectDir, "bnd.bnd",
+				"Export-Package: foo.test.constants");
 		_testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
+			gradleProjectDir, "src/main/java/foo/test/constants/FooPortletKeys.java",
+			"public class FooPortletKeys");
+		_testContains(
 			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
 			"package foo.test.portlet;", "javax.portlet.display-name=foo.test",
+			"javax.portlet.name=\" + FooPortletKeys.Foo",
 			"public class FooPortlet extends GenericPortlet {",
 			"printWriter.print(\"foo.test Portlet");
 

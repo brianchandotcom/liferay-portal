@@ -16,6 +16,7 @@ package com.liferay.portal.security.sso;
 
 import com.liferay.portal.kernel.security.sso.SSO;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
@@ -40,7 +41,7 @@ public class SSOUtil {
 			_instance._getSessionExpirationRedirectUrl(companyId);
 
 		if (_instance._ssoMap.isEmpty() ||
-			(ssoSessionExpirationRedirectURL == null)) {
+			Validator.isNull(ssoSessionExpirationRedirectURL)) {
 
 			return sessionExpirationRedirectURL;
 		}

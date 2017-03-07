@@ -1,4 +1,4 @@
 Bundle-Name: Liferay FreeMarker OSGi Bridge
 Bundle-SymbolicName: com.liferay.freemarker.osgi.bridge
 Bundle-Version: 1.0.1
-Export-Package: com.liferay.freemarker.osgi.servlet
+Export-Package: com.liferay.freemarker.osgi.bridge

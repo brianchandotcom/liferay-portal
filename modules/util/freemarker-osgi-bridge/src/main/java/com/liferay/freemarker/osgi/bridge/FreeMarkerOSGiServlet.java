@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.freemarker.osgi.servlet;
+package com.liferay.freemarker.osgi.bridge;
 
 import com.liferay.freemarker.osgi.internal.BundleTemplateLoader;
 

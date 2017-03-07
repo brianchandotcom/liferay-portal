@@ -161,7 +161,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.icon=/icons/calendar.png",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
-		"com.liferay.portlet.preferences-unique-per-layout=true",
 		"javax.portlet.display-name=Calendar",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",

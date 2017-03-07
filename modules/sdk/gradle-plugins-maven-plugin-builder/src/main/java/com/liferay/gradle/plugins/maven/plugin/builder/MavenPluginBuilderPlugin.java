@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.maven.plugin.builder;
 
+import com.liferay.gradle.plugins.maven.plugin.builder.tasks.BuildPluginDescriptorTask;
 import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;

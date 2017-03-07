@@ -15,7 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.List;
@@ -30,8 +29,7 @@ public class MergeCentralSubrepositoryUtil {
 	public static void createSubrepositoryMergePullRequests(
 			String centralWorkingDirectory, String centralUpstreamBranchName,
 			String receiverUserName, String topLevelBranchName)
-		throws FileNotFoundException, GitAPIException, InterruptedException,
-			IOException {
+		throws GitAPIException, InterruptedException, IOException {
 
 		GitWorkingDirectory centralGitWorkingDirectory =
 			new GitWorkingDirectory(
@@ -120,7 +118,7 @@ public class MergeCentralSubrepositoryUtil {
 	private static void _createMergePullRequest(
 			GitWorkingDirectory centralGitWorkingDirectory,
 			CentralSubrepository centralSubrepository, String receiverUserName)
-		throws FileNotFoundException, IOException {
+		throws IOException {
 
 		String subrepositoryName = centralSubrepository.getSubrepositoryName();
 		String subrepositoryUpstreamCommit =

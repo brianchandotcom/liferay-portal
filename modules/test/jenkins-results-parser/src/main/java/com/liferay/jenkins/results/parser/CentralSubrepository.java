@@ -16,7 +16,6 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.Properties;
@@ -31,7 +30,7 @@ public class CentralSubrepository {
 
 	public CentralSubrepository(
 			File gitrepoFile, String centralUpstreamBranchName)
-		throws FileNotFoundException, IOException {
+		throws IOException {
 
 		_centralUpstreamBranchName = centralUpstreamBranchName;
 
@@ -49,9 +48,7 @@ public class CentralSubrepository {
 		return _subrepositoryName;
 	}
 
-	public String getSubrepositoryUpstreamCommit()
-		throws FileNotFoundException, IOException {
-
+	public String getSubrepositoryUpstreamCommit() throws IOException {
 		if (_subrepositoryUpstreamCommit == null) {
 			_subrepositoryUpstreamCommit = _getSubrepositoryUpstreamCommit();
 		}
@@ -59,9 +56,7 @@ public class CentralSubrepository {
 		return _subrepositoryUpstreamCommit;
 	}
 
-	public Boolean isCentralPullRequestCandidate()
-		throws FileNotFoundException, IOException {
-
+	public Boolean isCentralPullRequestCandidate() throws IOException {
 		if (_centralPullRequestCandidate == null) {
 			_centralPullRequestCandidate = _isCentralPullRequestCandidate();
 		}
@@ -96,9 +91,7 @@ public class CentralSubrepository {
 		return null;
 	}
 
-	private String _getSubrepositoryName()
-		throws FileNotFoundException, IOException {
-
+	private String _getSubrepositoryName() {
 		String remote = _gitrepoProperties.getProperty("remote");
 
 		int x = remote.indexOf("/") + 1;
@@ -107,9 +100,7 @@ public class CentralSubrepository {
 		return remote.substring(x, y);
 	}
 
-	private String _getSubrepositoryUpstreamBranchName()
-		throws FileNotFoundException, IOException {
-
+	private String _getSubrepositoryUpstreamBranchName() {
 		String remote = _gitrepoProperties.getProperty("remote");
 
 		String subrepositoryUpstreamBranchName = _centralUpstreamBranchName;
@@ -139,9 +130,7 @@ public class CentralSubrepository {
 		return objectJSONObject.getString("sha");
 	}
 
-	private String _getSubrepositoryUsername()
-		throws FileNotFoundException, IOException {
-
+	private String _getSubrepositoryUsername() {
 		String remote = _gitrepoProperties.getProperty("remote");
 
 		int x = remote.indexOf(":") + 1;
@@ -150,9 +139,7 @@ public class CentralSubrepository {
 		return remote.substring(x, y);
 	}
 
-	private Boolean _isCentralPullRequestCandidate()
-		throws FileNotFoundException, IOException {
-
+	private Boolean _isCentralPullRequestCandidate() throws IOException {
 		String mode = _gitrepoProperties.getProperty("mode", "push");
 
 		if (!mode.equals("pull")) {

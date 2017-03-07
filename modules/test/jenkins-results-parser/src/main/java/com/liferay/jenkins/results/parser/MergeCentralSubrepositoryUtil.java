@@ -56,7 +56,7 @@ public class MergeCentralSubrepositoryUtil {
 						centralGitWorkingDirectory, centralSubrepository,
 						gitrepoFile);
 
-					_pushMergeBranchToOriging(
+					_pushMergeBranchToOrigin(
 						centralGitWorkingDirectory, centralSubrepository,
 						receiverUserName);
 
@@ -160,7 +160,7 @@ public class MergeCentralSubrepositoryUtil {
 			"ci-merge-", subrepositoryName, "-", subrepositoryUpstreamCommit);
 	}
 
-	private static void _pushMergeBranchToOriging(
+	private static void _pushMergeBranchToOrigin(
 			GitWorkingDirectory centralGitWorkingDirectory,
 			CentralSubrepository centralSubrepository, String receiverUserName)
 		throws GitAPIException, IOException {

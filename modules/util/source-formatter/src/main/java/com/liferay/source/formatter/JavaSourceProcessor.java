@@ -1035,6 +1035,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"com.liferay.portal.kernel.util.UnmodifiableList");
 		}
 
+		// LPS-70963
+
+		if (newContent.contains("java.util.WeakHashMap")) {
+			processMessage(
+				fileName,
+				"Do not use java.util.WeakHashMap because it is not " +
+					"thread-safe");
+		}
+
 		// LPS-28266
 
 		for (int pos1 = -1;;) {

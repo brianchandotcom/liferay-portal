@@ -7,5 +7,4 @@ liferayThemeTasks.registerTasks(
 	{
 		distName: require('./package.json').name.replace(/^liferay-/, ''),
 		gulp: gulp
-	}
-);
+	});

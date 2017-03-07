@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.set.prototype.exportimport.data.handler;
+package com.liferay.layout.set.prototype.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;

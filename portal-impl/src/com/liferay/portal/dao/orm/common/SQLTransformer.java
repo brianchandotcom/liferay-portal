@@ -14,11 +14,18 @@
 
 package com.liferay.portal.dao.orm.common;
 
+import com.liferay.portal.dao.sql.transformer.DB2SQLTransformerLogic;
+import com.liferay.portal.dao.sql.transformer.DefaultSQLTransformer;
+import com.liferay.portal.dao.sql.transformer.HypersonicSQLTransformerLogic;
+import com.liferay.portal.dao.sql.transformer.MySQLSQLTransformerLogic;
+import com.liferay.portal.dao.sql.transformer.OracleSQLTransformerLogic;
+import com.liferay.portal.dao.sql.transformer.PostgreSQLTransformerLogic;
+import com.liferay.portal.dao.sql.transformer.SQLServerSQLTransformerLogic;
+import com.liferay.portal.dao.sql.transformer.SQLTransformerLogic;
+import com.liferay.portal.dao.sql.transformer.SybaseSQLTransformerLogic;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -40,7 +47,10 @@ public class SQLTransformer {
 	}
 
 	public static String transform(String sql) {
-		return _instance._transform(sql);
+		com.liferay.portal.dao.sql.transformer.SQLTransformer transformer =
+			_instance._getTransformer();
+
+		return transformer.transform(sql);
 	}
 
 	public static String transformFromHqlToJpql(String sql) {
@@ -55,6 +65,12 @@ public class SQLTransformer {
 		_reloadSQLTransformer();
 	}
 
+	private com.liferay.portal.dao.sql.transformer.SQLTransformer
+		_getTransformer() {
+
+		return _transformer;
+	}
+
 	private void _reloadSQLTransformer() {
 		if (_transformedSqls == null) {
 			_transformedSqls = new ConcurrentHashMap<>();
@@ -63,288 +79,36 @@ public class SQLTransformer {
 			_transformedSqls.clear();
 		}
 
-		_vendorDB2 = false;
-		_vendorHypersonic = false;
-		_vendorMySQL = false;
-		_vendorOracle = false;
-		_vendorPostgreSQL = false;
-		_vendorSQLServer = false;
-		_vendorSybase = false;
-
 		DB db = DBManagerUtil.getDB();
 
 		DBType dbType = db.getDBType();
 
-		_db = db;
+		SQLTransformerLogic sqlTransformerLogic = null;
 
 		if (dbType == DBType.DB2) {
-			_vendorDB2 = true;
+			sqlTransformerLogic = new DB2SQLTransformerLogic(db);
 		}
 		else if (dbType == DBType.HYPERSONIC) {
-			_vendorHypersonic = true;
+			sqlTransformerLogic = new HypersonicSQLTransformerLogic(db);
 		}
 		else if (dbType == DBType.MYSQL) {
-			_vendorMySQL = true;
+			sqlTransformerLogic = new MySQLSQLTransformerLogic(db);
 		}
 		else if (dbType == DBType.ORACLE) {
-			_vendorOracle = true;
+			sqlTransformerLogic = new OracleSQLTransformerLogic(db);
 		}
 		else if (dbType == DBType.POSTGRESQL) {
-			_vendorPostgreSQL = true;
+			sqlTransformerLogic = new PostgreSQLTransformerLogic(db);
 		}
 		else if (dbType == DBType.SQLSERVER) {
-			_vendorSQLServer = true;
+			sqlTransformerLogic = new SQLServerSQLTransformerLogic(db);
 		}
 		else if (dbType == DBType.SYBASE) {
-			_vendorSybase = true;
-		}
-	}
-
-	private String _removeLower(String sql) {
-		int x = sql.indexOf(_LOWER_OPEN);
-
-		if (x == -1) {
-			return sql;
+			sqlTransformerLogic = new SybaseSQLTransformerLogic(db);
 		}
 
-		StringBuilder sb = new StringBuilder(sql.length());
-
-		int y = 0;
-
-		while (true) {
-			sb.append(sql.substring(y, x));
-
-			y = sql.indexOf(_LOWER_CLOSE, x);
-
-			if (y == -1) {
-				sb.append(sql.substring(x));
-
-				break;
-			}
-
-			sb.append(sql.substring(x + _LOWER_OPEN.length(), y));
-
-			y++;
-
-			x = sql.indexOf(_LOWER_OPEN, y);
-
-			if (x == -1) {
-				sb.append(sql.substring(y));
-
-				break;
-			}
-		}
-
-		sql = sb.toString();
-
-		return sql;
-	}
-
-	private String _replaceBitwiseCheck(String sql) {
-		Matcher matcher = _bitwiseCheckPattern.matcher(sql);
-
-		if (_vendorMySQL || _vendorPostgreSQL || _vendorSQLServer ||
-			_vendorSybase) {
-
-			return matcher.replaceAll("($1 & $2)");
-		}
-		else {
-			return sql;
-		}
-	}
-
-	private String _replaceBoolean(String newSQL) {
-		return StringUtil.replace(
-			newSQL, new String[] {"[$FALSE$]", "[$TRUE$]"},
-			new String[] {_db.getTemplateFalse(), _db.getTemplateTrue()});
-	}
-
-	private String _replaceCastClobText(String sql) {
-		Matcher matcher = _castClobTextPattern.matcher(sql);
-
-		if (_vendorOracle) {
-			return matcher.replaceAll("DBMS_LOB.SUBSTR($1, 4000, 1)");
-		}
-
-		return _replaceCastText(matcher);
-	}
-
-	private String _replaceCastLong(String sql) {
-		Matcher matcher = _castLongPattern.matcher(sql);
-
-		if (_vendorHypersonic) {
-			return matcher.replaceAll("CONVERT($1, SQL_BIGINT)");
-		}
-		else if (_vendorSybase) {
-			return matcher.replaceAll("CONVERT(BIGINT, $1)");
-		}
-		else {
-			return matcher.replaceAll("$1");
-		}
-	}
-
-	private String _replaceCastText(Matcher matcher) {
-		if (_vendorDB2) {
-			return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
-		}
-		else if (_vendorHypersonic) {
-			return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
-		}
-		else if (_vendorOracle) {
-			return matcher.replaceAll("CAST($1 AS VARCHAR(4000))");
-		}
-		else if (_vendorPostgreSQL) {
-			return matcher.replaceAll("CAST($1 AS TEXT)");
-		}
-		else if (_vendorSQLServer) {
-			return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
-		}
-		else if (_vendorSybase) {
-			return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
-		}
-		else {
-			return matcher.replaceAll("$1");
-		}
-	}
-
-	private String _replaceCastText(String sql) {
-		return _replaceCastText(_castTextPattern.matcher(sql));
-	}
-
-	private String _replaceCrossJoin(String sql) {
-		if (_vendorSybase) {
-			return StringUtil.replace(sql, "CROSS JOIN", StringPool.COMMA);
-		}
-
-		return sql;
-	}
-
-	private String _replaceEscape(String sql) {
-		return StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
-	}
-
-	private String _replaceInstr(String sql) {
-		Matcher matcher = _instrPattern.matcher(sql);
-
-		if (_vendorPostgreSQL) {
-			return matcher.replaceAll("POSITION($2 in $1)");
-		}
-		else if (_vendorSybase || _vendorSQLServer) {
-			return matcher.replaceAll("CHARINDEX($2, $1)");
-		}
-
-		return sql;
-	}
-
-	private String _replaceIntegerDivision(String sql) {
-		Matcher matcher = _integerDivisionPattern.matcher(sql);
-
-		if (_vendorMySQL) {
-			return matcher.replaceAll("$1 DIV $2");
-		}
-		else if (_vendorOracle) {
-			return matcher.replaceAll("TRUNC($1 / $2)");
-		}
-		else {
-			return matcher.replaceAll("$1 / $2");
-		}
-	}
-
-	private String _replaceLike(String sql) {
-		Matcher matcher = _likePattern.matcher(sql);
-
-		return matcher.replaceAll(
-			"LIKE COALESCE(CAST(? AS VARCHAR(32672)),'')");
-	}
-
-	private String _replaceMod(String sql) {
-		Matcher matcher = _modPattern.matcher(sql);
-
-		return matcher.replaceAll("$1 % $2");
-	}
-
-	private String _replaceNegativeComparison(String sql) {
-		Matcher matcher = _negativeComparisonPattern.matcher(sql);
-
-		return matcher.replaceAll("$1 ($2)");
-	}
-
-	private String _replaceNotEqualsBlankStringComparison(String sql) {
-		return StringUtil.replace(sql, " != ''", " IS NOT NULL");
-	}
-
-	private String _replaceNullDate(String newSQL) {
-		if (_vendorPostgreSQL) {
-			return StringUtil.replace(
-				newSQL, "[$NULL_DATE$]", "CAST(NULL AS TIMESTAMP)");
-		}
-
-		return StringUtil.replace(newSQL, "[$NULL_DATE$]", "NULL");
-	}
-
-	private String _replaceReplace(String newSQL) {
-		return newSQL.replaceAll("(?i)replace\\(", "str_replace(");
-	}
-
-	private String _replaceSubstr(String sql) {
-		Matcher matcher = _substrPattern.matcher(sql);
-
-		if (_vendorSybase || _vendorSQLServer) {
-			return matcher.replaceAll("SUBSTRING($1, $2, $3)");
-		}
-
-		return sql;
-	}
-
-	private String _transform(String sql) {
-		if (sql == null) {
-			return sql;
-		}
-
-		String newSQL = sql;
-
-		newSQL = _replaceBitwiseCheck(newSQL);
-		newSQL = _replaceBoolean(newSQL);
-		newSQL = _replaceCastClobText(newSQL);
-		newSQL = _replaceCastLong(newSQL);
-		newSQL = _replaceCastText(newSQL);
-		newSQL = _replaceCrossJoin(newSQL);
-		newSQL = _replaceInstr(newSQL);
-		newSQL = _replaceIntegerDivision(newSQL);
-		newSQL = _replaceNullDate(newSQL);
-		newSQL = _replaceSubstr(newSQL);
-
-		if (_vendorDB2) {
-			newSQL = _replaceLike(newSQL);
-		}
-		else if (_vendorMySQL) {
-			DB db = DBManagerUtil.getDB();
-
-			if (!db.isSupportsStringCaseSensitiveQuery()) {
-				newSQL = _removeLower(newSQL);
-			}
-		}
-		else if (_vendorOracle) {
-			newSQL = _replaceEscape(newSQL);
-			newSQL = _replaceNotEqualsBlankStringComparison(newSQL);
-		}
-		else if (_vendorPostgreSQL) {
-			newSQL = _replaceNegativeComparison(newSQL);
-		}
-		else if (_vendorSQLServer) {
-			newSQL = _replaceMod(newSQL);
-		}
-		else if (_vendorSybase) {
-			newSQL = _replaceMod(newSQL);
-			newSQL = _replaceReplace(newSQL);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Original SQL " + sql);
-			_log.debug("Modified SQL " + newSQL);
-		}
-
-		return newSQL;
+		_transformer = new DefaultSQLTransformer(
+			sqlTransformerLogic.getFunctions());
 	}
 
 	private String _transformFromHqlToJpql(String sql) {
@@ -354,7 +118,7 @@ public class SQLTransformer {
 			return newSQL;
 		}
 
-		newSQL = _transform(sql);
+		newSQL = _transformer.transform(sql);
 
 		newSQL = _transformPositionalParams(newSQL);
 
@@ -374,7 +138,7 @@ public class SQLTransformer {
 			return newSQL;
 		}
 
-		newSQL = _transform(sql);
+		newSQL = _transformer.transform(sql);
 
 		Matcher matcher = _jpqlCountPattern.matcher(newSQL);
 
@@ -426,45 +190,12 @@ public class SQLTransformer {
 
 	private static final String _JPQL_NOT_EQUALS = "<>";
 
-	private static final String _LOWER_CLOSE = StringPool.CLOSE_PARENTHESIS;
-
-	private static final String _LOWER_OPEN = "lower(";
-
-	private static final Log _log = LogFactoryUtil.getLog(SQLTransformer.class);
-
 	private static final SQLTransformer _instance = new SQLTransformer();
 
-	private static final Pattern _bitwiseCheckPattern = Pattern.compile(
-		"BITAND\\((.+?),(.+?)\\)");
-	private static final Pattern _castClobTextPattern = Pattern.compile(
-		"CAST_CLOB_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _castLongPattern = Pattern.compile(
-		"CAST_LONG\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _castTextPattern = Pattern.compile(
-		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _instrPattern = Pattern.compile(
-		"INSTR\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _integerDivisionPattern = Pattern.compile(
-		"INTEGER_DIV\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _jpqlCountPattern = Pattern.compile(
 		"SELECT COUNT\\((\\S+)\\) FROM (\\S+) (\\S+)");
-	private static final Pattern _likePattern = Pattern.compile(
-		"LIKE \\?", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _modPattern = Pattern.compile(
-		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _negativeComparisonPattern = Pattern.compile(
-		"(!?=)( -([0-9]+)?)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _substrPattern = Pattern.compile(
-		"SUBSTR\\((.+?),(.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 
-	private DB _db;
 	private Map<String, String> _transformedSqls;
-	private boolean _vendorDB2;
-	private boolean _vendorHypersonic;
-	private boolean _vendorMySQL;
-	private boolean _vendorOracle;
-	private boolean _vendorPostgreSQL;
-	private boolean _vendorSQLServer;
-	private boolean _vendorSybase;
+	private com.liferay.portal.dao.sql.transformer.SQLTransformer _transformer;
 
 }

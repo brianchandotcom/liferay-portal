@@ -159,6 +159,11 @@ public class SubscriptionLocalServiceImpl
 		return subscription;
 	}
 
+	@Override
+	public void deleteGroupSubscriptions(long groupId) {
+		subscriptionPersistence.removeByGroupId(groupId);
+	}
+
 	/**
 	 * Deletes the subscription with the primary key. A social activity with the
 	 * unsubscribe action is created.

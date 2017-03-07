@@ -26,13 +26,13 @@
 
 		data.put("rowPK", resultRow.getPrimaryKey());
 
-		Object object = resultRow.getObject();
+		ClassedModel classedModel = (ClassedModel)resultRow.getObject();
 
-		data.put("className", ExportImportClassedModelUtil.getClassName((ClassedModel)object));
-		data.put("classPK", ExportImportClassedModelUtil.getClassPK((ClassedModel)object));
+		data.put("className", ExportImportClassedModelUtil.getClassName(classedModel));
+		data.put("classPK", ExportImportClassedModelUtil.getClassPK(classedModel));
 	%>
 
-		<%@ include file="/export_import_entity_search_container_mapping/row_data.jspf" %>
+		<div <%= HtmlUtil.buildData(data) %>></div>
 
 	<%
 	}

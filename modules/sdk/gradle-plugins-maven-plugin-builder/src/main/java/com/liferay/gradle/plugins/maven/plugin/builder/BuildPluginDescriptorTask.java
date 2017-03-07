@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.maven.plugin.builder;
 
-import com.liferay.gradle.plugins.maven.plugin.builder.util.XMLUtil;
+import com.liferay.gradle.plugins.maven.plugin.builder.internal.util.XMLUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 

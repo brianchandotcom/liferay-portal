@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory;
@@ -44,13 +44,13 @@ import java.io.Writer;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -74,8 +74,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ProductNavigationControlMenuEntry.class
 )
 public class SimulationProductNavigationControlMenuEntry
-	extends BaseJSPProductNavigationControlMenuEntry
-	implements ProductNavigationControlMenuEntry {
+	extends BaseProductNavigationControlMenuEntry {
 
 	@Activate
 	public void activate() {
@@ -85,12 +84,12 @@ public class SimulationProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public String getBodyJspPath() {
-		return "/portlet/control_menu/simulation_control_menu_body.jsp";
+	public String getLabel(Locale locale) {
+		return null;
 	}
 
 	@Override
-	public String getIconJspPath() {
+	public String getURL(HttpServletRequest request) {
 		return null;
 	}
 
@@ -178,15 +177,6 @@ public class SimulationProductNavigationControlMenuEntry
 		}
 
 		return super.isShow(request);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.product.navigation.simulation.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	@Reference(unbind = "-")

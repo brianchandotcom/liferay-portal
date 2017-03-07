@@ -16,6 +16,10 @@ package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.function.Function;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,6 +37,14 @@ public abstract class BaseSQLTransformerLogicTestCase {
 		Assert.assertEquals(
 			getBitwiseCheckTransformedSQL(),
 			sqlTransformer.transform(getBitwiseCheckOriginalSQL()));
+	}
+
+	@Test
+	public void testReplaceBitwiseCheckWithWhitespacesSurroundingCommas() {
+		Assert.assertEquals(
+			getBitwiseCheckTransformedSQL(),
+			sqlTransformer.transform(
+				addWhitespacesFunction.apply(getBitwiseCheckOriginalSQL())));
 	}
 
 	@Test
@@ -64,6 +76,14 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	@Test
+	public void testReplaceInstrWithWhitespacesSurroundingCommas() {
+		Assert.assertEquals(
+			getInstrTransformedSQL(),
+			sqlTransformer.transform(
+				addWhitespacesFunction.apply(getInstrOriginalSQL())));
+	}
+
+	@Test
 	public void testReplaceIntegerDivision() {
 		Assert.assertEquals(
 			getIntegerDivisionTransformedSQL(),
@@ -71,10 +91,26 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	@Test
+	public void testReplaceIntegerDivisionWithWhitespacesSurroundingCommas() {
+		Assert.assertEquals(
+			getIntegerDivisionTransformedSQL(),
+			sqlTransformer.transform(
+				addWhitespacesFunction.apply(getIntegerDivisionOriginalSQL())));
+	}
+
+	@Test
 	public void testReplaceMod() {
 		Assert.assertEquals(
 			getModTransformedSQL(),
 			sqlTransformer.transform(getModOriginalSQL()));
+	}
+
+	@Test
+	public void testReplaceModWithWhitespacesSurroundingCommas() {
+		Assert.assertEquals(
+			getModTransformedSQL(),
+			sqlTransformer.transform(
+				addWhitespacesFunction.apply(getModOriginalSQL())));
 	}
 
 	@Test
@@ -96,6 +132,14 @@ public abstract class BaseSQLTransformerLogicTestCase {
 		Assert.assertEquals(
 			getSubstTransformedSQL(),
 			sqlTransformer.transform(getSubstOriginalSQL()));
+	}
+
+	@Test
+	public void testReplaceSubstWithWhitespacesSurroundingCommas() {
+		Assert.assertEquals(
+			getSubstTransformedSQL(),
+			sqlTransformer.transform(
+				addWhitespacesFunction.apply(getSubstOriginalSQL())));
 	}
 
 	@Test
@@ -202,6 +246,8 @@ public abstract class BaseSQLTransformerLogicTestCase {
 			getSQLTransformerLogic(db));
 	}
 
+	protected final Function<String, String> addWhitespacesFunction =
+		(String sql) -> StringUtil.replace(sql, CharPool.COMMA, "   ,   ");
 	protected SQLTransformer sqlTransformer;
 
 }

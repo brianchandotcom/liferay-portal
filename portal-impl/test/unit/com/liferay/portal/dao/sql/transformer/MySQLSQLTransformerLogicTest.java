@@ -44,6 +44,14 @@ public class MySQLSQLTransformerLogicTest
 		setDB(_db);
 	}
 
+	@Override
+	@Test
+	public void testReplaceModWithWhitespacesSurroundingCommas() {
+		Assert.assertEquals(
+			getModTransformedSQL(),
+			sqlTransformer.transform(getModOriginalSQL()));
+	}
+
 	@Test
 	public void testTransformLower() {
 		String sql = "select lower(foo) from Foo";

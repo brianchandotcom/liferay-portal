@@ -17,7 +17,9 @@ package com.liferay.portal.dao.sql.transformer;
 import com.liferay.portal.dao.db.HypersonicDB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -35,6 +37,22 @@ public class HypersonicSQLTransformerLogicTest
 	@Before
 	public void setUp() {
 		setDB(new HypersonicDB(1, 0));
+	}
+
+	@Override
+	@Test
+	public void testReplaceBitwiseCheckWithWhitespacesSurroundingCommas() {
+		Assert.assertEquals(
+			getBitwiseCheckTransformedSQL(),
+			sqlTransformer.transform(getBitwiseCheckOriginalSQL()));
+	}
+
+	@Override
+	@Test
+	public void testReplaceModWithWhitespacesSurroundingCommas() {
+		Assert.assertEquals(
+			getModTransformedSQL(),
+			sqlTransformer.transform(getModOriginalSQL()));
 	}
 
 	@Override

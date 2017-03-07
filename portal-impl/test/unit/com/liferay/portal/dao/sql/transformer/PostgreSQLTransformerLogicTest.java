@@ -39,6 +39,14 @@ public class PostgreSQLTransformerLogicTest
 		setDB(new PostgreSQLDB(1, 0));
 	}
 
+	@Override
+	@Test
+	public void testReplaceModWithWhitespacesSurroundingCommas() {
+		Assert.assertEquals(
+			getModTransformedSQL(),
+			sqlTransformer.transform(getModOriginalSQL()));
+	}
+
 	@Test
 	public void testTransformReplaceNegativeComparison() {
 		String sql = "select * from Foo where foo != -1";

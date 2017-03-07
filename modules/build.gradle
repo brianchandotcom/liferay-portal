@@ -1,3 +1,4 @@
+import com.liferay.gradle.plugins.maven.plugin.builder.BuildPluginDescriptorTask
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.GradleUtil
 
@@ -171,6 +172,12 @@ gradle.beforeProject {
 				startTestableTomcat {
 					deleteLiferayHome = false
 				}
+			}
+		}
+
+		if (System.getenv("JENKINS_HOME")) {
+			tasks.withType(BuildPluginDescriptorTask) {
+				enabled = false
 			}
 		}
 	}

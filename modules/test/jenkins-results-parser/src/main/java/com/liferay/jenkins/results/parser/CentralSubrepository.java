@@ -141,7 +141,7 @@ public class CentralSubrepository {
 		sb.append(_subrepositoryUpstreamBranchName);
 
 		JSONObject branchJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			sb.toString());
+			sb.toString(), false);
 
 		JSONObject objectJSONObject = branchJSONObject.getJSONObject("object");
 

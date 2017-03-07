@@ -1216,6 +1216,20 @@ version 2.0.1.
 - [LPS-70282]: Add the dependencies in the `compileInclude` configuration to the
 classpath of the `run` task, if the `application` plugin is applied.
 
+## 3.2.15 - 2017-03-06
+
+### Changed
+- [LPS-71005]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.96.
+- [LPS-71005]: Update the [Liferay Source Formatter] dependency to version
+1.0.363.
+
+## 3.2.16 - 2017-03-07
+
+### Changed
+- [LPS-68405]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.9.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1271,6 +1285,7 @@ classpath of the `run` task, if the `application` plugin is applied.
 [LPS-68297]: https://issues.liferay.com/browse/LPS-68297
 [LPS-68298]: https://issues.liferay.com/browse/LPS-68298
 [LPS-68334]: https://issues.liferay.com/browse/LPS-68334
+[LPS-68405]: https://issues.liferay.com/browse/LPS-68405
 [LPS-68415]: https://issues.liferay.com/browse/LPS-68415
 [LPS-68485]: https://issues.liferay.com/browse/LPS-68485
 [LPS-68504]: https://issues.liferay.com/browse/LPS-68504

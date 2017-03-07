@@ -25,8 +25,6 @@ import java.io.File;
 
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
@@ -109,23 +107,6 @@ public class ConfigJSModulesTask
 
 				@Override
 				public void execute(CopySpec copySpec) {
-					String customDefine = getCustomDefine();
-
-					if (Validator.isNotNull(customDefine)) {
-						final String replacement = Matcher.quoteReplacement(
-							customDefine + "(");
-
-						copySpec.filter(
-							new Closure<String>(getProject()) {
-
-								@SuppressWarnings("unused")
-								public String doCall(String line) {
-									return _replaceDefines(line, replacement);
-								}
-
-							});
-					}
-
 					copySpec.from(outputDir);
 					copySpec.into(getSourceDir());
 				}
@@ -347,6 +328,13 @@ public class ConfigJSModulesTask
 		completeArgs.add("--moduleConfig");
 		completeArgs.add(FileUtil.getAbsolutePath(getModuleConfigFile()));
 
+		String customDefine = getCustomDefine();
+
+		if (Validator.isNotNull(customDefine)) {
+			completeArgs.add("--namespace");
+			completeArgs.add(customDefine);
+		}
+
 		completeArgs.add("--output");
 		completeArgs.add(FileUtil.getAbsolutePath(getOutputFile()));
 
@@ -360,21 +348,8 @@ public class ConfigJSModulesTask
 		return completeArgs;
 	}
 
-	private static String _replaceDefines(String line, String replacement) {
-		if (Validator.isNull(line)) {
-			return line;
-		}
-
-		Matcher matcher = _definePattern.matcher(line);
-
-		return matcher.replaceAll(replacement);
-	}
-
-	private static final Pattern _definePattern = Pattern.compile(
-		"(?:^|\\s)define\\(");
-
 	private Object _configVariable;
-	private Object _customDefine = "Liferay.Loader.define";
+	private Object _customDefine = "Liferay.Loader";
 	private boolean _ignorePath;
 	private boolean _keepFileExtension;
 	private boolean _lowerCase;

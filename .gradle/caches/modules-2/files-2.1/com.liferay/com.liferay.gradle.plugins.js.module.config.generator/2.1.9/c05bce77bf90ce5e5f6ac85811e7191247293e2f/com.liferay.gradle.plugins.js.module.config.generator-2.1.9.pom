@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.gradle.plugins.js.module.config.generator</artifactId>
-  <version>2.1.8</version>
+  <version>2.1.9</version>
   <description>Liferay Gradle Plugins JS Module Config Generator</description>
   <licenses>
     <license>

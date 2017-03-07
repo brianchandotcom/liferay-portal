@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.memory.FinalizeManager;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.osgi.framework.BundleContext;
 
@@ -31,13 +30,15 @@ import org.osgi.framework.BundleContext;
 public class CustomSQLPool {
 
 	public CustomSQLPool() {
-		_maps = new WeakHashMap<>();
+		_maps = new ConcurrentReferenceKeyHashMap<>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	}
 
 	public void clear() {
 		_maps = null;
 
-		_maps = new WeakHashMap<>();
+		_maps = new ConcurrentReferenceKeyHashMap<>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	}
 
 	public String get(BundleContext bundleContext, String id) {

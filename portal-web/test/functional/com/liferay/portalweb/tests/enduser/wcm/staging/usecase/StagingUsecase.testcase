@@ -418,6 +418,60 @@
 		</execute>
 	</command>
 
+	<command name="SearchPublishTemplate" priority="4">
+		<execute macro="SitePageNavigator#gotoPages">
+			<var name="page" value="Public Pages" />
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#addPublishTemplate">
+			<var name="publishTemplateDescription" value="Publish Template Description" />
+			<var name="publishTemplateName" value="First Template" />
+		</execute>
+
+		<execute macro="Staging#savePublishTemplate">
+			<var name="publishTemplateDescription" value="Publish Template Description" />
+			<var name="publishTemplateName" value="First Template" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#addPublishTemplate">
+			<var name="publishTemplateDescription" value="Publish Template Description 2" />
+			<var name="publishTemplateName" value="Second Template" />
+		</execute>
+
+		<execute macro="Staging#savePublishTemplate">
+			<var name="publishTemplateDescription" value="Publish Template Description 2" />
+			<var name="publishTemplateName" value="Second Template" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#searchPublishTemplate">
+			<var name="searchTerm" value="Second" />
+		</execute>
+	</command>
+
 	<command name="StagingLocalLiveLock" priority="4">
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />

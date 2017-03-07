@@ -842,6 +842,22 @@
 		<execute function="Pause" locator1="5000" />
 	</command>
 
+	<command name="searchPublishTemplate">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#PUBLISH_TEPMLATES" value1="Publish Templates" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
+
+		<var name="key_publishTemplateName" value="${searchTerm}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_NAME" value1="${searchTerm}" />
+	</command>
+
 	<command name="setContentDateRange">
 		<if>
 			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />

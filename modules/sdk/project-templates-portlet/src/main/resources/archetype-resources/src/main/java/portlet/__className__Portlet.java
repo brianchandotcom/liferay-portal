@@ -1,5 +1,7 @@
 package ${package}.portlet;
 
+import ${package}.constants.${className}PortletKeys;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -10,8 +12,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-
-import ${package}.constants.${className}PortletKeys;
 
 /**
  * @author ${author}

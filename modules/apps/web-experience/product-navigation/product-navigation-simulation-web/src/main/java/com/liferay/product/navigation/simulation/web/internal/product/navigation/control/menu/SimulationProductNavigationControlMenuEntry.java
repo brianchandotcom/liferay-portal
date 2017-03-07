@@ -42,6 +42,7 @@ import com.liferay.taglib.util.BodyBottomTag;
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -51,11 +52,9 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Activate;
@@ -133,17 +132,17 @@ public class SimulationProductNavigationControlMenuEntry
 
 		Map<String, String> values = new HashMap<>();
 
+		IconTag iconTag = new IconTag();
+
+		iconTag.setCssClass("icon-monospaced");
+		iconTag.setImage("simulation-menu-closed");
+		iconTag.setMarkupView("lexicon");
+
 		try {
-			String iconTag = IconTag.doTag(
-				"icon-monospaced", "simulation-menu-closed", "lexicon", request,
-				response);
-
-			values.put("iconTag", iconTag);
+			values.put("iconTag", iconTag.doTagAsString(request, response));
 		}
-		catch (ServletException se) {
-			_log.error(se, se);
-
-			return false;
+		catch (JspException je) {
+			ReflectionUtil.throwException(je);
 		}
 
 		values.put("portletNamespace", _portletNamespace);
@@ -152,7 +151,7 @@ public class SimulationProductNavigationControlMenuEntry
 
 		Writer writer = response.getWriter();
 
-		writer.write(StringUtil.replace(_TMPL_CONTENT, "${", "}", values));
+		writer.write(StringUtil.replace(_ICON_TMPL_CONTENT, "${", "}", values));
 
 		return true;
 	}
@@ -190,26 +189,16 @@ public class SimulationProductNavigationControlMenuEntry
 	}
 
 	private void _processBodyBottomTagBody(PageContext pageContext) {
-		JspWriter jspWriter = pageContext.getOut();
-
 		try {
-			jspWriter.write(
-				"<div class=\"closed lfr-admin-panel lfr-product-menu-panel " +
-					"lfr-simulation-panel sidenav-fixed sidenav-menu-slider " +
-						"sidenav-right\" id=\"");
-			jspWriter.write(_portletNamespace);
-			jspWriter.write(
-				"simulationPanelId\"><div class=\"product-menu sidebar " +
-					"sidebar-inverse sidenav-menu\"><div class=\"" +
-						"sidebar-header\"><span>");
+			Map<String, String> values = new HashMap<>();
+
+			values.put("portletNamespace", _portletNamespace);
 
 			MessageTag messageTag = new MessageTag();
 
 			messageTag.setKey("simulation");
 
-			messageTag.doTag(pageContext);
-
-			jspWriter.write("</span>");
+			values.put("sidebarMessage", messageTag.doTagAsString(pageContext));
 
 			IconTag iconTag = new IconTag();
 
@@ -218,10 +207,12 @@ public class SimulationProductNavigationControlMenuEntry
 			iconTag.setMarkupView("lexicon");
 			iconTag.setUrl("javascript:;");
 
-			iconTag.doTag(pageContext);
+			values.put("sidebarIcon", iconTag.doTagAsString(pageContext));
 
-			jspWriter.write(
-				"</div><div class=\"sidebar-body\"></div></div></div>");
+			Writer writer = pageContext.getOut();
+
+			writer.write(
+				StringUtil.replace(_BODY_TMPL_CONTENT, "${", "}", values));
 
 			ScriptTag scriptTag = new ScriptTag();
 
@@ -235,33 +226,27 @@ public class SimulationProductNavigationControlMenuEntry
 	}
 
 	private void _processScriptTagBody(PageContext pageContext) {
-		JspWriter jspWriter = pageContext.getOut();
+		Writer writer = pageContext.getOut();
 
 		try {
-			jspWriter.write("var simulationToggle = $('#");
-			jspWriter.write(_portletNamespace);
-			jspWriter.write(
-				"simulationToggleId');simulationToggle.sideNavigation();var " +
-					"simulationPanel = $('#");
-			jspWriter.write(_portletNamespace);
-			jspWriter.write(
-				"simulationPanelId');simulationPanel.on(" +
-					"'open.lexicon.sidenav',function(event) {Liferay.fire(" +
-						"'SimulationMenu:openSimulationPanel');});");
-			jspWriter.write(
-				"simulationPanel.on('closed.lexicon.sidenav',function(event) " +
-					"{Liferay.fire('SimulationMenu:closeSimulationPanel');});");
-			jspWriter.write(
-				"Liferay.once('screenLoad',function() {var sideNavigation = " +
-					"simulationToggle.data('lexicon.sidenav');if (" +
-						"sideNavigation) {sideNavigation.destroy();}});");
+			writer.write(
+				StringUtil.replace(
+					_BODY_SCRIPT_TMPL_CONTENT, "${", "}",
+					Collections.singletonMap(
+						"portletNamespace", _portletNamespace)));
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+		catch (IOException ioe) {
+			ReflectionUtil.throwException(ioe);
 		}
 	}
 
-	private static final String _TMPL_CONTENT = StringUtil.read(
+	private static final String _BODY_SCRIPT_TMPL_CONTENT = StringUtil.read(
+		SimulationProductNavigationControlMenuEntry.class, "body_script.tmpl");
+
+	private static final String _BODY_TMPL_CONTENT = StringUtil.read(
+		SimulationProductNavigationControlMenuEntry.class, "body.tmpl");
+
+	private static final String _ICON_TMPL_CONTENT = StringUtil.read(
 		SimulationProductNavigationControlMenuEntry.class, "icon.tmpl");
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -16,7 +16,9 @@ package com.liferay.taglib;
 
 import static javax.servlet.jsp.tagext.Tag.SKIP_BODY;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
+import com.liferay.taglib.servlet.PipingPageContext;
 
 import java.util.function.Consumer;
 
@@ -85,6 +87,27 @@ public interface DirectTag extends Tag {
 		doEndTag();
 	}
 
+	public default String doBodyTagAsString(
+			HttpServletRequest request, HttpServletResponse response,
+			Consumer<PageContext> consumer)
+		throws JspException {
+
+		return doBodyTagAsString(
+			PageContextFactoryUtil.create(request, response), consumer);
+	}
+
+	public default String doBodyTagAsString(
+			PageContext pageContext, Consumer<PageContext> consumer)
+		throws JspException {
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		doBodyTag(
+			new PipingPageContext(pageContext, unsyncStringWriter), consumer);
+
+		return unsyncStringWriter.toString();
+	}
+
 	public default void doTag(
 			HttpServletRequest request, HttpServletResponse response)
 		throws JspException {
@@ -97,6 +120,23 @@ public interface DirectTag extends Tag {
 
 		doStartTag();
 		doEndTag();
+	}
+
+	public default String doTagAsString(
+			HttpServletRequest request, HttpServletResponse response)
+		throws JspException {
+
+		return doTagAsString(PageContextFactoryUtil.create(request, response));
+	}
+
+	public default String doTagAsString(PageContext pageContext)
+		throws JspException {
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		doTag(new PipingPageContext(pageContext, unsyncStringWriter));
+
+		return unsyncStringWriter.toString();
 	}
 
 }

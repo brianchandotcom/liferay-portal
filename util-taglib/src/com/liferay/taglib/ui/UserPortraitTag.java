@@ -52,14 +52,15 @@ public class UserPortraitTag extends IncludeTag {
 
 		jspWriter.write("<div class=\"");
 
-		boolean showInititals =
-			_userFileUploadsSettings.isImageDefaultUseInitials();
+		long userPortraitId = 0;
 
-		if ((user != null) && (user.getPortraitId() > 0)) {
-			showInititals = false;
+		if (user != null) {
+			userPortraitId = user.getPortraitId();
 		}
 
-		if (showInititals) {
+		if (_userFileUploadsSettings.isImageDefaultUseInitials() &&
+			(userPortraitId == 0)) {
+
 			jspWriter.write(LexiconUtil.getUserColorCssClass(user));
 			jspWriter.write(" ");
 			jspWriter.write(_cssClass);

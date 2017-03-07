@@ -419,11 +419,11 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 				@Override
 				public void execute(JavaExecSpec javaExecSpec) {
-					javaExecSpec.args("-B");
+					javaExecSpec.args("--batch-mode");
 
-					javaExecSpec.args("-e");
+					javaExecSpec.args("--errors");
 
-					javaExecSpec.args("-f");
+					javaExecSpec.args("--file");
 					javaExecSpec.args(project.relativePath(pomFile));
 
 					javaExecSpec.args("-Dencoding=UTF-8");

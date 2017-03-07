@@ -471,6 +471,7 @@ public class DLFileEntryTypeServiceTest {
 
 		for (com.liferay.dynamic.data.mapping.kernel.DDMStructure structure :
 				ddmStructures) {
+
 			structureIds[i] = structure.getStructureId();
 
 			i++;

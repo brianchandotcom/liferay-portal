@@ -4,7 +4,8 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.gradle.plugins.maven.plugin.builder</artifactId>
-  <version>1.0.12</version>
+  <version>1.1.0</version>
+  <description>Liferay Gradle Plugins Maven Plugin Builder</description>
   <licenses>
     <license>
       <name>LGPL 2.1</name>

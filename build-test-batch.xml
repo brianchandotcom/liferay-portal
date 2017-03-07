@@ -2268,13 +2268,6 @@ ${output.content}</echo>
 				<prepare-test-build />
 
 				<if>
-					<available file="${env.TOP_LEVEL_SHARED_DIR}/modules.base.dir.names.properties" />
-					<then>
-						<property file="${env.TOP_LEVEL_SHARED_DIR}/modules.base.dir.names.properties" />
-					</then>
-				</if>
-
-				<if>
 					<isset property="modules.base.dir.names.with.changes" />
 					<then>
 						<for list="${modules.base.dir.names.with.changes}" param="module.base.dir.name">

@@ -40,7 +40,7 @@ public class SSOUtil {
 			_instance._getSessionExpirationRedirectUrl(companyId);
 
 		if (_instance._ssoMap.isEmpty() ||
-			(ssoSessionExpirationRedirectURL == null)) {
+			Validator.isNull(ssoSessionExpirationRedirectURL)) {
 
 			return sessionExpirationRedirectURL;
 		}

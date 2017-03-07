@@ -431,6 +431,10 @@ public class SubscriptionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void deleteGroupSubscriptions(long groupId) {
+		getService().deleteGroupSubscriptions(groupId);
+	}
+
 	/**
 	* Deletes the user's subscription to the entity. A social activity with the
 	* unsubscribe action is created.

@@ -112,6 +112,163 @@ public class SubscriptionUtil {
 	}
 
 	/**
+	* Returns all the subscriptions where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the matching subscriptions
+	*/
+	public static List<Subscription> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	* Returns a range of all the subscriptions where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SubscriptionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of subscriptions
+	* @param end the upper bound of the range of subscriptions (not inclusive)
+	* @return the range of matching subscriptions
+	*/
+	public static List<Subscription> findByGroupId(long groupId, int start,
+		int end) {
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the subscriptions where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SubscriptionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of subscriptions
+	* @param end the upper bound of the range of subscriptions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching subscriptions
+	*/
+	public static List<Subscription> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<Subscription> orderByComparator) {
+		return getPersistence()
+				   .findByGroupId(groupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the subscriptions where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SubscriptionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of subscriptions
+	* @param end the upper bound of the range of subscriptions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching subscriptions
+	*/
+	public static List<Subscription> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<Subscription> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByGroupId(groupId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first subscription in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subscription
+	* @throws NoSuchSubscriptionException if a matching subscription could not be found
+	*/
+	public static Subscription findByGroupId_First(long groupId,
+		OrderByComparator<Subscription> orderByComparator)
+		throws com.liferay.subscription.exception.NoSuchSubscriptionException {
+		return getPersistence().findByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the first subscription in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subscription, or <code>null</code> if a matching subscription could not be found
+	*/
+	public static Subscription fetchByGroupId_First(long groupId,
+		OrderByComparator<Subscription> orderByComparator) {
+		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last subscription in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subscription
+	* @throws NoSuchSubscriptionException if a matching subscription could not be found
+	*/
+	public static Subscription findByGroupId_Last(long groupId,
+		OrderByComparator<Subscription> orderByComparator)
+		throws com.liferay.subscription.exception.NoSuchSubscriptionException {
+		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last subscription in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
+	*/
+	public static Subscription fetchByGroupId_Last(long groupId,
+		OrderByComparator<Subscription> orderByComparator) {
+		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the subscriptions before and after the current subscription in the ordered set where groupId = &#63;.
+	*
+	* @param subscriptionId the primary key of the current subscription
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next subscription
+	* @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
+	*/
+	public static Subscription[] findByGroupId_PrevAndNext(
+		long subscriptionId, long groupId,
+		OrderByComparator<Subscription> orderByComparator)
+		throws com.liferay.subscription.exception.NoSuchSubscriptionException {
+		return getPersistence()
+				   .findByGroupId_PrevAndNext(subscriptionId, groupId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the subscriptions where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	*/
+	public static void removeByGroupId(long groupId) {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of subscriptions where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching subscriptions
+	*/
+	public static int countByGroupId(long groupId) {
+		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
 	* Returns all the subscriptions where userId = &#63;.
 	*
 	* @param userId the user ID

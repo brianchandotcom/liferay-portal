@@ -346,6 +346,91 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 	}
 
+	public static class Redirect {
+
+		public Redirect() {
+			this(Portal.PATH_MAIN);
+		}
+
+		public Redirect(String path) {
+			this(path, false, false);
+		}
+
+		public Redirect(String path, boolean force, boolean permanent) {
+			_path = path;
+			_force = force;
+			_permanent = permanent;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+
+			if (!(obj instanceof Redirect)) {
+				return false;
+			}
+
+			Redirect redirect = (Redirect)obj;
+
+			if (Objects.equals(getPath(), redirect.getPath()) &&
+				(isForce() == redirect.isForce()) &&
+				(isPermanent() == redirect.isPermanent())) {
+
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		public String getPath() {
+			if (Validator.isNull(_path)) {
+				return Portal.PATH_MAIN;
+			}
+
+			return _path;
+		}
+
+		@Override
+		public int hashCode() {
+			int hash = HashUtil.hash(0, _path);
+
+			hash = HashUtil.hash(hash, _force);
+			hash = HashUtil.hash(hash, _permanent);
+
+			return hash;
+		}
+
+		public boolean isForce() {
+			return _force;
+		}
+
+		public boolean isPermanent() {
+			return _permanent;
+		}
+
+		public boolean isValidForward() {
+			String path = getPath();
+
+			if (path.charAt(0) != CharPool.SLASH) {
+				return false;
+			}
+
+			if (isForce()) {
+				return false;
+			}
+
+			return true;
+		}
+
+		private final boolean _force;
+		private final String _path;
+		private final boolean _permanent;
+
+	}
+
 	/**
 	 * @deprecated As of 1.0.0, with no direct replacement
 	 */
@@ -429,91 +514,6 @@ public class FriendlyURLServlet extends HttpServlet {
 			"/html/common/themes/layout_friendly_url_redirect.jsp");
 
 		return locale;
-	}
-
-	protected static class Redirect {
-
-		public Redirect() {
-			this(Portal.PATH_MAIN);
-		}
-
-		public Redirect(String path) {
-			this(path, false, false);
-		}
-
-		public Redirect(String path, boolean force, boolean permanent) {
-			_path = path;
-			_force = force;
-			_permanent = permanent;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
-			}
-
-			if (!(obj instanceof Redirect)) {
-				return false;
-			}
-
-			Redirect redirect = (Redirect)obj;
-
-			if (Objects.equals(getPath(), redirect.getPath()) &&
-				(isForce() == redirect.isForce()) &&
-				(isPermanent() == redirect.isPermanent())) {
-
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-
-		public String getPath() {
-			if (Validator.isNull(_path)) {
-				return Portal.PATH_MAIN;
-			}
-
-			return _path;
-		}
-
-		@Override
-		public int hashCode() {
-			int hash = HashUtil.hash(0, _path);
-
-			hash = HashUtil.hash(hash, _force);
-			hash = HashUtil.hash(hash, _permanent);
-
-			return hash;
-		}
-
-		public boolean isForce() {
-			return _force;
-		}
-
-		public boolean isPermanent() {
-			return _permanent;
-		}
-
-		public boolean isValidForward() {
-			String path = getPath();
-
-			if (path.charAt(0) != CharPool.SLASH) {
-				return false;
-			}
-
-			if (isForce()) {
-				return false;
-			}
-
-			return true;
-		}
-
-		private final boolean _force;
-		private final String _path;
-		private final boolean _permanent;
-
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -17,92 +17,97 @@
 <%@ include file="/init.jsp" %>
 
 <%
+PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
 PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
+List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory, themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup());
 %>
 
-<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showBody="<%= false %>">
+<c:if test="<%= !panelApps.isEmpty() %>">
+	<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showBody="<%= false %>">
 
-	<%
-	Group curSite = themeDisplay.getSiteGroup();
+		<%
+		Group curSite = themeDisplay.getSiteGroup();
 
-	List<Layout> scopeLayouts = LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId());
-	%>
+		List<Layout> scopeLayouts = LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId());
+		%>
 
-	<c:choose>
-		<c:when test="<%= scopeLayouts.isEmpty() %>">
-			<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
-		</c:when>
-		<c:otherwise>
-			<ul class="nav nav-equal-height nav-nested">
-				<li>
-					<div class="scope-selector">
+		<c:choose>
+			<c:when test="<%= scopeLayouts.isEmpty() %>">
+				<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+			</c:when>
+			<c:otherwise>
+				<ul class="nav nav-equal-height nav-nested">
+					<li>
+						<div class="scope-selector">
 
-						<%
-						Group curScopeGroup = themeDisplay.getScopeGroup();
-						%>
+							<%
+							Group curScopeGroup = themeDisplay.getScopeGroup();
+							%>
 
-						<span class="scope-name">
-							<c:choose>
-								<c:when test="<%= curScopeGroup.isLayout() %>">
-									<%= curScopeGroup.getDescriptiveName(locale) %> (<liferay-ui:message key="scope" />)
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="default-scope" />
-								</c:otherwise>
-							</c:choose>
-						</span>
-						<span class="nav-equal-height-heading-field">
-							<liferay-ui:icon-menu direction="left" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
+							<span class="scope-name">
+								<c:choose>
+									<c:when test="<%= curScopeGroup.isLayout() %>">
+										<%= curScopeGroup.getDescriptiveName(locale) %> (<liferay-ui:message key="scope" />)
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message key="default-scope" />
+									</c:otherwise>
+								</c:choose>
+							</span>
+							<span class="nav-equal-height-heading-field">
+								<liferay-ui:icon-menu direction="left" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
 
-								<%
-								Map<String, Object> data = new HashMap<String, Object>();
+									<%
+									Map<String, Object> data = new HashMap<String, Object>();
 
-								String portletId = themeDisplay.getPpid();
+									String portletId = themeDisplay.getPpid();
 
-								if (Validator.isNull(portletId) || !panelCategoryHelper.containsPortlet(portletId, PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, curSite)) {
-									portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, curSite);
-								}
-
-								PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, curSite, portletId, 0, 0, PortletRequest.RENDER_PHASE);
-								%>
-
-								<liferay-ui:icon
-									cssClass='<%= (curScopeGroup.getGroupId() == curSite.getGroupId()) ? "active" : StringPool.BLANK %>'
-									data="<%= data %>"
-									message="default-scope"
-									url="<%= portletURL.toString() %>"
-								/>
-
-								<%
-								for (Layout curScopeLayout : scopeLayouts) {
-									Group scopeGroup = curScopeLayout.getScopeGroup();
-
-									if (Validator.isNull(portletId) || !panelCategoryHelper.containsPortlet(portletId, PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, scopeGroup)) {
-										portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, scopeGroup);
+									if (Validator.isNull(portletId) || !panelCategoryHelper.containsPortlet(portletId, PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, curSite)) {
+										portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, curSite);
 									}
 
-									portletURL = PortalUtil.getControlPanelPortletURL(request, scopeGroup, portletId, 0, 0, PortletRequest.RENDER_PHASE);
-								%>
+									PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, curSite, portletId, 0, 0, PortletRequest.RENDER_PHASE);
+									%>
 
 									<liferay-ui:icon
-										cssClass='<%= (curScopeGroup.getGroupId() == scopeGroup.getGroupId()) ? "active" : StringPool.BLANK %>'
+										cssClass='<%= (curScopeGroup.getGroupId() == curSite.getGroupId()) ? "active" : StringPool.BLANK %>'
 										data="<%= data %>"
-										message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
+										message="default-scope"
 										url="<%= portletURL.toString() %>"
 									/>
 
-								<%
-								}
-								%>
+									<%
+									for (Layout curScopeLayout : scopeLayouts) {
+										Group scopeGroup = curScopeLayout.getScopeGroup();
 
-							</liferay-ui:icon-menu>
-						</span>
-					</div>
+										if (Validator.isNull(portletId) || !panelCategoryHelper.containsPortlet(portletId, PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, scopeGroup)) {
+											portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, scopeGroup);
+										}
 
-					<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
-				</li>
-			</ul>
-		</c:otherwise>
-	</c:choose>
-</liferay-application-list:panel-category>
+										portletURL = PortalUtil.getControlPanelPortletURL(request, scopeGroup, portletId, 0, 0, PortletRequest.RENDER_PHASE);
+									%>
+
+										<liferay-ui:icon
+											cssClass='<%= (curScopeGroup.getGroupId() == scopeGroup.getGroupId()) ? "active" : StringPool.BLANK %>'
+											data="<%= data %>"
+											message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
+											url="<%= portletURL.toString() %>"
+										/>
+
+									<%
+									}
+									%>
+
+								</liferay-ui:icon-menu>
+							</span>
+						</div>
+
+						<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+					</li>
+				</ul>
+			</c:otherwise>
+		</c:choose>
+	</liferay-application-list:panel-category>
+</c:if>

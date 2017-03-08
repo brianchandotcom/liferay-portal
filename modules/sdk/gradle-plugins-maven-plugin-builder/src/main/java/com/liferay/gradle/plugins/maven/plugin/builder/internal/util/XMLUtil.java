@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.maven.plugin.builder.util;
+package com.liferay.gradle.plugins.maven.plugin.builder.internal.util;
 
 import com.liferay.gradle.util.Validator;
 

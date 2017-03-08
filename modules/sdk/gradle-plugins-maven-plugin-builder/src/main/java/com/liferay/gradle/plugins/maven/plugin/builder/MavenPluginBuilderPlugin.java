@@ -14,7 +14,10 @@
 
 package com.liferay.gradle.plugins.maven.plugin.builder;
 
+import com.liferay.gradle.plugins.maven.plugin.builder.tasks.BuildPluginDescriptorTask;
+import com.liferay.gradle.plugins.maven.plugin.builder.tasks.WriteMavenSettingsTask;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
@@ -32,6 +35,7 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
@@ -52,26 +56,32 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 	public static final String MAVEN_EMBEDDER_CONFIGURATION_NAME =
 		"mavenEmbedder";
 
+	public static final String WRITE_MAVEN_SETTINGS_TASK = "writeMavenSettings";
+
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
 		Configuration mavenEmbedderConfiguration =
-			addConfigurationMavenEmbedder(project);
+			_addConfigurationMavenEmbedder(project);
+
+		WriteMavenSettingsTask writeMavenSettingsTask =
+			_addTaskWriteMavenSettings(project);
 
 		BuildPluginDescriptorTask buildPluginDescriptorTask =
-			addTaskBuildPluginDescriptor(project, mavenEmbedderConfiguration);
+			_addTaskBuildPluginDescriptor(
+				writeMavenSettingsTask, mavenEmbedderConfiguration);
 
 		JavaVersion javaVersion = JavaVersion.current();
 
 		if (javaVersion.isJava8Compatible()) {
-			configureTasksJavadocDisableDoclint(project);
+			_configureTasksJavadocDisableDoclint(project);
 		}
 
-		configureTasksUpload(project, buildPluginDescriptorTask);
+		_configureTasksUpload(project, buildPluginDescriptorTask);
 	}
 
-	protected Configuration addConfigurationMavenEmbedder(
+	private Configuration _addConfigurationMavenEmbedder(
 		final Project project) {
 
 		Configuration configuration = GradleUtil.addConfiguration(
@@ -82,7 +92,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					addDependenciesMavenEmbedder(project);
+					_addDependenciesMavenEmbedder(project);
 				}
 
 			});
@@ -94,7 +104,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected void addDependenciesMavenEmbedder(Project project) {
+	private void _addDependenciesMavenEmbedder(Project project) {
 		GradleUtil.addDependency(
 			project, MAVEN_EMBEDDER_CONFIGURATION_NAME, "org.apache.maven",
 			"maven-embedder", "3.3.9");
@@ -112,15 +122,19 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 			"slf4j-simple", "1.7.5");
 	}
 
-	protected BuildPluginDescriptorTask addTaskBuildPluginDescriptor(
-		final Project project, FileCollection mavenEmbedderClasspath) {
+	private BuildPluginDescriptorTask _addTaskBuildPluginDescriptor(
+		final WriteMavenSettingsTask writeMavenSettingsTask,
+		FileCollection mavenEmbedderClasspath) {
+
+		final Project project = writeMavenSettingsTask.getProject();
 
 		BuildPluginDescriptorTask buildPluginDescriptorTask =
 			GradleUtil.addTask(
 				project, BUILD_PLUGIN_DESCRIPTOR_TASK_NAME,
 				BuildPluginDescriptorTask.class);
 
-		buildPluginDescriptorTask.dependsOn(JavaPlugin.COMPILE_JAVA_TASK_NAME);
+		buildPluginDescriptorTask.dependsOn(
+			JavaPlugin.COMPILE_JAVA_TASK_NAME, writeMavenSettingsTask);
 
 		final SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
@@ -143,12 +157,22 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		buildPluginDescriptorTask.setMavenEmbedderClasspath(
 			mavenEmbedderClasspath);
 
+		buildPluginDescriptorTask.setMavenSettingsFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return writeMavenSettingsTask.getOutputFile();
+				}
+
+			});
+
 		buildPluginDescriptorTask.setOutputDir(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					File resourcesDir = getSrcDir(sourceSet.getResources());
+					File resourcesDir = _getSrcDir(sourceSet.getResources());
 
 					return new File(resourcesDir, "META-INF/maven");
 				}
@@ -196,7 +220,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return getSrcDir(sourceSet.getJava());
+					return _getSrcDir(sourceSet.getJava());
 				}
 
 			});
@@ -209,14 +233,102 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		return buildPluginDescriptorTask;
 	}
 
-	protected void configureTaskJavadocDisableDoclint(Javadoc javadoc) {
+	private WriteMavenSettingsTask _addTaskWriteMavenSettings(
+		final Project project) {
+
+		WriteMavenSettingsTask writeMavenSettingsTask = GradleUtil.addTask(
+			project, WRITE_MAVEN_SETTINGS_TASK, WriteMavenSettingsTask.class);
+
+		writeMavenSettingsTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					WriteMavenSettingsTask writeMavenSettingsTask =
+						(WriteMavenSettingsTask)task;
+
+					Logger logger = writeMavenSettingsTask.getLogger();
+
+					if (!logger.isLifecycleEnabled()) {
+						return;
+					}
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("Using ");
+
+					String repositoryUrl =
+						writeMavenSettingsTask.getRepositoryUrl();
+
+					if (Validator.isNotNull(repositoryUrl)) {
+						sb.append(repositoryUrl);
+						sb.append(" as");
+					}
+					else {
+						sb.append("no");
+					}
+
+					sb.append(" custom repository and ");
+
+					String proxyHost = writeMavenSettingsTask.getProxyHost();
+					Integer proxyPort = writeMavenSettingsTask.getProxyPort();
+
+					if (Validator.isNotNull(proxyHost) && (proxyPort != null)) {
+						sb.append(proxyHost);
+						sb.append(':');
+						sb.append(proxyPort);
+						sb.append(" as");
+					}
+					else {
+						sb.append("no");
+					}
+
+					sb.append(" proxy for Maven invocations in ");
+					sb.append(writeMavenSettingsTask.getProject());
+					sb.append('.');
+
+					logger.lifecycle(sb.toString());
+				}
+
+			});
+
+		writeMavenSettingsTask.setDescription(
+			"Writes a temporary Maven settings file to be used during " +
+				"subsequent Maven invocations.");
+		writeMavenSettingsTask.setNonProxyHosts(
+			System.getProperty("http.nonProxyHosts"));
+		writeMavenSettingsTask.setProxyHost(
+			new ProxyPropertyCallable("proxyHost", writeMavenSettingsTask));
+		writeMavenSettingsTask.setProxyPassword(
+			new ProxyPropertyCallable("proxyPassword", writeMavenSettingsTask));
+		writeMavenSettingsTask.setProxyPort(
+			new ProxyPropertyCallable("proxyPort", writeMavenSettingsTask));
+		writeMavenSettingsTask.setProxyUser(
+			new ProxyPropertyCallable("proxyUser", writeMavenSettingsTask));
+		writeMavenSettingsTask.setRepositoryUrl(
+			System.getProperty("repository.url"));
+
+		writeMavenSettingsTask.setOutputFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(project.getBuildDir(), "settings.xml");
+				}
+
+			});
+
+		return writeMavenSettingsTask;
+	}
+
+	private void _configureTaskJavadocDisableDoclint(Javadoc javadoc) {
 		CoreJavadocOptions coreJavadocOptions =
 			(CoreJavadocOptions)javadoc.getOptions();
 
 		coreJavadocOptions.addStringOption("Xdoclint:none", "-quiet");
 	}
 
-	protected void configureTasksJavadocDisableDoclint(Project project) {
+	private void _configureTasksJavadocDisableDoclint(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -225,13 +337,13 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Javadoc javadoc) {
-					configureTaskJavadocDisableDoclint(javadoc);
+					_configureTaskJavadocDisableDoclint(javadoc);
 				}
 
 			});
 	}
 
-	protected void configureTasksUpload(
+	private void _configureTasksUpload(
 		Project project,
 		final BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
@@ -243,19 +355,19 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Upload upload) {
-					configureTaskUpload(upload, buildPluginDescriptorTask);
+					_configureTaskUpload(upload, buildPluginDescriptorTask);
 				}
 
 			});
 	}
 
-	protected void configureTaskUpload(
+	private void _configureTaskUpload(
 		Upload upload, BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
 		upload.dependsOn(buildPluginDescriptorTask);
 	}
 
-	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
+	private File _getSrcDir(SourceDirectorySet sourceDirectorySet) {
 		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
 
 		Iterator<File> iterator = srcDirs.iterator();
@@ -264,5 +376,33 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 	}
 
 	private static final OsgiHelper _osgiHelper = new OsgiHelper();
+
+	private static class ProxyPropertyCallable implements Callable<String> {
+
+		public ProxyPropertyCallable(
+			String key, WriteMavenSettingsTask writeMavenSettingsTask) {
+
+			_key = key;
+			_writeMavenSettingsTask = writeMavenSettingsTask;
+		}
+
+		@Override
+		public String call() throws Exception {
+			String protocol = "https";
+
+			String repositoryUrl = _writeMavenSettingsTask.getRepositoryUrl();
+
+			if (Validator.isNotNull(repositoryUrl)) {
+				protocol = repositoryUrl.substring(
+					0, repositoryUrl.indexOf(':'));
+			}
+
+			return System.getProperty(protocol + "." + _key);
+		}
+
+		private final String _key;
+		private final WriteMavenSettingsTask _writeMavenSettingsTask;
+
+	}
 
 }

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.maven.plugin.builder;
+package com.liferay.gradle.plugins.maven.plugin.builder.tasks;
 
-import com.liferay.gradle.plugins.maven.plugin.builder.util.XMLUtil;
+import com.liferay.gradle.plugins.maven.plugin.builder.internal.util.XMLUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -61,7 +61,9 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.JavaExecSpec;
@@ -100,14 +102,14 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 				preparedSourceDir = new File(
 					getTemporaryDir(), "prepared-source");
 
-				prepareSources(preparedSourceDir);
+				_prepareSources(preparedSourceDir);
 			}
 
-			buildPomFile(pomFile, preparedSourceDir);
+			_buildPomFile(pomFile, preparedSourceDir);
 
-			buildPluginDescriptor(pomFile);
+			_buildPluginDescriptor(pomFile);
 
-			readdForcedExclusions();
+			_readdForcedExclusions();
 		}
 		catch (Exception e) {
 			throw new GradleException(e.getMessage(), e);
@@ -174,6 +176,12 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	@Input
 	public String getMavenPluginPluginVersion() {
 		return GradleUtil.toString(_mavenPluginPluginVersion);
+	}
+
+	@InputFile
+	@Optional
+	public File getMavenSettingsFile() {
+		return GradleUtil.toFile(getProject(), _mavenSettingsFile);
 	}
 
 	@OutputDirectory
@@ -259,6 +267,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		_mavenPluginPluginVersion = mavenPluginPluginVersion;
 	}
 
+	public void setMavenSettingsFile(Object mavenSettingsFile) {
+		_mavenSettingsFile = mavenSettingsFile;
+	}
+
 	public void setOutputDir(Object outputDir) {
 		_outputDir = outputDir;
 	}
@@ -289,7 +301,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		_useSetterComments = useSetterComments;
 	}
 
-	protected void appendDependencyElements(
+	private void _appendDependencyElements(
 		Document document, Element dependenciesElement,
 		String configurationName, String scope) {
 
@@ -367,27 +379,27 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 				dependencyElement.appendChild(exclusionsElement);
 
 				for (String dependencyNotation : forcedExclusions) {
-					appendDependencyExclusionElement(
+					_appendDependencyExclusionElement(
 						document, exclusionsElement, dependencyNotation);
 				}
 			}
 		}
 	}
 
-	protected void appendDependencyExclusionElement(
+	private void _appendDependencyExclusionElement(
 		Document document, Element exclusionsElement,
 		String dependencyNotation) {
 
-		String[] tokens = parseDependencyNotation(dependencyNotation);
+		String[] tokens = _parseDependencyNotation(dependencyNotation);
 
 		String groupId = tokens[0];
 		String artifactId = tokens[1];
 
-		appendDependencyExclusionElement(
+		_appendDependencyExclusionElement(
 			document, exclusionsElement, groupId, artifactId);
 	}
 
-	protected void appendDependencyExclusionElement(
+	private void _appendDependencyExclusionElement(
 		Document document, Element exclusionsElement, String groupId,
 		String artifactId) {
 
@@ -400,7 +412,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		XMLUtil.appendElement(document, exclusionElement, "groupId", groupId);
 	}
 
-	protected void appendRepositoryElement(
+	private void _appendRepositoryElement(
 		Document document, Element repositoriesElement, String id, String url) {
 
 		Element repositoryElement = document.createElement("repository");
@@ -411,7 +423,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		XMLUtil.appendElement(document, repositoryElement, "url", url);
 	}
 
-	protected void buildPluginDescriptor(final File pomFile) throws Exception {
+	private void _buildPluginDescriptor(final File pomFile) throws Exception {
 		final Project project = getProject();
 
 		project.javaexec(
@@ -419,12 +431,18 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 				@Override
 				public void execute(JavaExecSpec javaExecSpec) {
-					javaExecSpec.args("-B");
+					javaExecSpec.args("--batch-mode", "--errors");
 
-					javaExecSpec.args("-e");
-
-					javaExecSpec.args("-f");
+					javaExecSpec.args("--file");
 					javaExecSpec.args(project.relativePath(pomFile));
+
+					File mavenSettingsFile = getMavenSettingsFile();
+
+					if (mavenSettingsFile != null) {
+						javaExecSpec.args("--settings");
+						javaExecSpec.args(
+							project.relativePath(mavenSettingsFile));
+					}
 
 					javaExecSpec.args("-Dencoding=UTF-8");
 
@@ -448,7 +466,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		Files.move(dir.toPath(), outputDir.toPath());
 	}
 
-	protected void buildPomFile(File pomFile, File sourceDir) throws Exception {
+	private void _buildPomFile(File pomFile, File sourceDir) throws Exception {
 		Project project = getProject();
 
 		if (sourceDir == null) {
@@ -528,7 +546,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			String configurationName = entry.getKey();
 			String scope = entry.getValue();
 
-			appendDependencyElements(
+			_appendDependencyElements(
 				document, dependenciesElement, configurationName, scope);
 		}
 
@@ -546,14 +564,15 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 				String id = entry.getKey();
 				String url = GradleUtil.toString(entry.getValue());
 
-				appendRepositoryElement(document, repositoriesElement, id, url);
+				_appendRepositoryElement(
+					document, repositoriesElement, id, url);
 			}
 		}
 
 		XMLUtil.write(document, pomFile);
 	}
 
-	protected String getComments(JavaMethod javaMethod) {
+	private String _getComments(JavaMethod javaMethod) {
 		String code = javaMethod.getCodeBlock();
 
 		int start = code.indexOf("/**");
@@ -571,7 +590,19 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return code.substring(start, end + 2);
 	}
 
-	protected String[] parseDependencyNotation(String dependencyNotation) {
+	private String _getTypeName(Type type) {
+		String name = type.getFullyQualifiedName();
+
+		int pos = name.lastIndexOf('.');
+
+		if (pos != -1) {
+			name = name.substring(pos + 1);
+		}
+
+		return name;
+	}
+
+	private String[] _parseDependencyNotation(String dependencyNotation) {
 		String[] tokens = dependencyNotation.split(":");
 
 		if (tokens.length != 3) {
@@ -582,7 +613,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return tokens;
 	}
 
-	protected void prepareSource(JavaClass javaClass) throws Exception {
+	private void _prepareSource(JavaClass javaClass) throws Exception {
 		StringBuilder sb = new StringBuilder();
 
 		for (BeanProperty beanProperty : javaClass.getBeanProperties()) {
@@ -594,7 +625,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 				continue;
 			}
 
-			sb.append(getComments(javaMethod));
+			sb.append(_getComments(javaMethod));
 			sb.append('\n');
 			sb.append("private ");
 
@@ -628,7 +659,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		Files.write(path, code.getBytes(StandardCharsets.UTF_8));
 	}
 
-	protected void prepareSources(final File preparedSourceDir)
+	private void _prepareSources(final File preparedSourceDir)
 		throws Exception {
 
 		Project project = getProject();
@@ -650,11 +681,11 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		javaDocBuilder.addSourceTree(preparedSourceDir);
 
 		for (JavaClass javaClass : javaDocBuilder.getClasses()) {
-			prepareSource(javaClass);
+			_prepareSource(javaClass);
 		}
 	}
 
-	protected void readdForcedExclusions() throws Exception {
+	private void _readdForcedExclusions() throws Exception {
 		Set<String> forcedExclusions = getForcedExclusions();
 
 		if (forcedExclusions.isEmpty()) {
@@ -683,7 +714,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		sb.append(content, 0, pos - 1);
 
 		for (String dependencyNotation : forcedExclusions) {
-			String[] tokens = parseDependencyNotation(dependencyNotation);
+			String[] tokens = _parseDependencyNotation(dependencyNotation);
 
 			String groupId = tokens[0];
 			String artifactId = tokens[1];
@@ -715,18 +746,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
 	}
 
-	private String _getTypeName(Type type) {
-		String name = type.getFullyQualifiedName();
-
-		int pos = name.lastIndexOf('.');
-
-		if (pos != -1) {
-			name = name.substring(pos + 1);
-		}
-
-		return name;
-	}
-
 	private static final Logger _logger = Logging.getLogger(
 		BuildPluginDescriptorTask.class);
 
@@ -739,6 +758,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	private Object _mavenEmbedderMainClassName =
 		"org.apache.maven.cli.MavenCli";
 	private Object _mavenPluginPluginVersion = "3.4";
+	private Object _mavenSettingsFile;
 	private Object _outputDir;
 	private Object _pomArtifactId;
 	private Object _pomGroupId;

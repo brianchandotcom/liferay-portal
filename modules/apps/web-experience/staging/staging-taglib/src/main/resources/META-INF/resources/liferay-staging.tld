@@ -107,6 +107,65 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a menu item in the UI for an Export Entity Screen.</description>
+		<name>export-entity</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ExportEntityTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>The className of the entity that will be exported. Either className or classNameId should be passed.</description>
+			<name>className</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The classNameId of the entity that will be exported. Either className or classNameId should be passed.</description>
+			<name>classNameId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+		<attribute>
+			<description>The classPK of the entity that will be exported.</description>
+			<name>classPK</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Renders a menu item in the UI for an Export/Publish Entity Screen.</description>
+		<name>export-import-entity-management-bar-button</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ExportImportEntityManagementBarButtonTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>cmd</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>searchContainerMappingId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Adds a Seach Container Mapping to the DOM required by the Export Import Entity Management Bar Button tag library.</description>
+		<name>export-import-entity-search-container-mapping</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ExportImportEntitySearchContainerMappingTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>searchContainerMappingId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Renders a menu item in the UI for an Import Entity Screen.</description>
+		<name>import-entity</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ImportEntityTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<description>Renders a <![CDATA[<code>Navbar</code>]]> containing a staging menu with page versioning information, if available.</description>
 		<name>menu</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.MenuTag</tag-class>

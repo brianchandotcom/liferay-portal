@@ -14,18 +14,9 @@
 
 package com.liferay.portal.dao.orm.common;
 
-import com.liferay.portal.dao.sql.transformer.DB2SQLTransformerLogic;
-import com.liferay.portal.dao.sql.transformer.DefaultSQLTransformer;
-import com.liferay.portal.dao.sql.transformer.HypersonicSQLTransformerLogic;
-import com.liferay.portal.dao.sql.transformer.MySQLSQLTransformerLogic;
-import com.liferay.portal.dao.sql.transformer.OracleSQLTransformerLogic;
-import com.liferay.portal.dao.sql.transformer.PostgreSQLTransformerLogic;
-import com.liferay.portal.dao.sql.transformer.SQLServerSQLTransformerLogic;
-import com.liferay.portal.dao.sql.transformer.SQLTransformerLogic;
-import com.liferay.portal.dao.sql.transformer.SybaseSQLTransformerLogic;
+import com.liferay.portal.dao.sql.transformer.SQLTransformerFactory;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -81,34 +72,7 @@ public class SQLTransformer {
 
 		DB db = DBManagerUtil.getDB();
 
-		DBType dbType = db.getDBType();
-
-		SQLTransformerLogic sqlTransformerLogic = null;
-
-		if (dbType == DBType.DB2) {
-			sqlTransformerLogic = new DB2SQLTransformerLogic(db);
-		}
-		else if (dbType == DBType.HYPERSONIC) {
-			sqlTransformerLogic = new HypersonicSQLTransformerLogic(db);
-		}
-		else if (dbType == DBType.MYSQL) {
-			sqlTransformerLogic = new MySQLSQLTransformerLogic(db);
-		}
-		else if (dbType == DBType.ORACLE) {
-			sqlTransformerLogic = new OracleSQLTransformerLogic(db);
-		}
-		else if (dbType == DBType.POSTGRESQL) {
-			sqlTransformerLogic = new PostgreSQLTransformerLogic(db);
-		}
-		else if (dbType == DBType.SQLSERVER) {
-			sqlTransformerLogic = new SQLServerSQLTransformerLogic(db);
-		}
-		else if (dbType == DBType.SYBASE) {
-			sqlTransformerLogic = new SybaseSQLTransformerLogic(db);
-		}
-
-		_transformer = new DefaultSQLTransformer(
-			sqlTransformerLogic.getFunctions());
+		_transformer = SQLTransformerFactory.getSQLTransformer(db);
 	}
 
 	private String _transformFromHqlToJpql(String sql) {

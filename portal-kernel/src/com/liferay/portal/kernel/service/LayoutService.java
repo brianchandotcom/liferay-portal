@@ -507,6 +507,9 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutsCount(long groupId, boolean privateLayout);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(long groupId, boolean privateLayout,
 		long parentLayoutId);
 

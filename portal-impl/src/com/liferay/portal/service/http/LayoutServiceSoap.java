@@ -491,6 +491,21 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	public static int getLayoutsCount(long groupId, boolean privateLayout)
+		throws RemoteException {
+		try {
+			int returnValue = LayoutServiceUtil.getLayoutsCount(groupId,
+					privateLayout);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getLayoutsCount(long groupId, boolean privateLayout,
 		long parentLayoutId) throws RemoteException {
 		try {

@@ -36,6 +36,7 @@ import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -46,10 +47,12 @@ import javax.servlet.ServletContext;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
+import javax.tools.ForwardingJavaFileManager;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
+import javax.tools.JavaFileObject.Kind;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
@@ -346,7 +349,30 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				_javaFileObjectResolvers);
 		}
 
-		return super.getJavaFileManager(javaFileManager);
+		return new ForwardingJavaFileManager<JavaFileManager>(
+			super.getJavaFileManager(javaFileManager)) {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public Iterable<JavaFileObject> list(
+					Location location, String packageName, Set<Kind> kinds,
+					boolean recurse)
+				throws IOException {
+
+				Iterable<JavaFileObject> iterable = super.list(
+					location, packageName, kinds, recurse);
+
+				if ((location == StandardLocation.CLASS_PATH) &&
+					packageName.startsWith(Constants.JSP_PACKAGE_NAME)) {
+
+					iterable = new ArrayList<>(
+						(Collection<JavaFileObject>)iterable);
+				}
+
+				return iterable;
+			}
+
+		};
 	}
 
 	protected void initClassPath(ServletContext servletContext) {

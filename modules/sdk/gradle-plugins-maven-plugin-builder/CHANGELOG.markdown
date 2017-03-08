@@ -7,7 +7,7 @@
 descriptors are now delimited by dots instead of dollar signs (e.g.,
 `java.io.File` instead of `java$io$File`).
 
-## 1.1.0 - 2017-03-07
+## 1.1.0 - 2017-03-08
 
 ### Added
 - [LPS-71087]: Add task `writeMavenSettings` to configure the Maven invocations

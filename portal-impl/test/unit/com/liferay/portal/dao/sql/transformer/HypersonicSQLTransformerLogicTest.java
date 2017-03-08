@@ -15,28 +15,19 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.dao.db.HypersonicDB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Manuel de la Peña
  * @author Brian Wing Shun Chan
  */
-@PrepareForTest(DBManagerUtil.class)
-@RunWith(PowerMockRunner.class)
 public class HypersonicSQLTransformerLogicTest
 	extends BaseSQLTransformerLogicTestCase {
 
-	@Before
-	public void setUp() {
-		setDB(new HypersonicDB(1, 0));
+	public HypersonicSQLTransformerLogicTest() {
+		super(new HypersonicDB(1, 0));
 	}
 
 	@Override

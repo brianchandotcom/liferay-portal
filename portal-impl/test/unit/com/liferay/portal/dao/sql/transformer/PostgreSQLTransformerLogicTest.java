@@ -15,28 +15,18 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.dao.db.PostgreSQLDB;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Manuel de la Peña
  */
-@PrepareForTest(DBManagerUtil.class)
-@RunWith(PowerMockRunner.class)
 public class PostgreSQLTransformerLogicTest
 	extends BaseSQLTransformerLogicTestCase {
 
-	@Before
-	public void setUp() {
-		setDB(new PostgreSQLDB(1, 0));
+	public PostgreSQLTransformerLogicTest() {
+		super(new PostgreSQLDB(1, 0));
 	}
 
 	@Override
@@ -85,11 +75,6 @@ public class PostgreSQLTransformerLogicTest
 	@Override
 	protected String getNullDateTransformedSQL() {
 		return "select CAST(NULL AS TIMESTAMP) from Foo";
-	}
-
-	@Override
-	protected SQLTransformerLogic getSQLTransformerLogic(DB db) {
-		return new PostgreSQLTransformerLogic(db);
 	}
 
 }

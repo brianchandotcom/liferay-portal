@@ -15,33 +15,18 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.dao.db.MySQLDB;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Manuel de la Peña
  */
-@PrepareForTest({DB.class, DBManagerUtil.class})
-@RunWith(PowerMockRunner.class)
 public class MySQLSQLTransformerLogicTest
 	extends BaseSQLTransformerLogicTestCase {
 
-	@Before
-	public void setUp() {
-		_db = _mockDB(false);
-
-		setDB(_db);
+	public MySQLSQLTransformerLogicTest() {
+		super(new MySQLDB(5, 7));
 	}
 
 	@Override
@@ -90,11 +75,14 @@ public class MySQLSQLTransformerLogicTest
 
 	@Test
 	public void testTransformSupportsStringCaseSensitiveQuery() {
-		_db = _mockDB(true);
-
-		setDB(_db);
-
 		String sql = "select * from foo";
+
+		MySQLDB mySQLDB = new MySQLDB(5, 7);
+
+		mySQLDB.setSupportsStringCaseSensitiveQuery(true);
+
+		SQLTransformer sqlTransformer = SQLTransformerFactory.getSQLTransformer(
+			mySQLDB);
 
 		String transformedSql = sqlTransformer.transform(sql);
 
@@ -136,24 +124,5 @@ public class MySQLSQLTransformerLogicTest
 	protected String getNullDateTransformedSQL() {
 		return "select NULL from Foo";
 	}
-
-	@Override
-	protected SQLTransformerLogic getSQLTransformerLogic(DB db) {
-		return new MySQLSQLTransformerLogic(db);
-	}
-
-	private DB _mockDB(boolean supportsStringCaseSensitiveQuery) {
-		DB spy = Mockito.spy(new MySQLDB(5, 7));
-
-		PowerMockito.when(
-			spy.isSupportsStringCaseSensitiveQuery()
-		).thenReturn(
-			supportsStringCaseSensitiveQuery
-		);
-
-		return spy;
-	}
-
-	private DB _db;
 
 }

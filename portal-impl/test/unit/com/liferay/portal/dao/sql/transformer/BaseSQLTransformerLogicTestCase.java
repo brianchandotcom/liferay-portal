@@ -15,7 +15,6 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -24,13 +23,15 @@ import java.util.function.Function;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Manuel de la Peña
  * @author Brian Wing Shun Chan
  */
 public abstract class BaseSQLTransformerLogicTestCase {
+
+	public BaseSQLTransformerLogicTestCase(DB db) {
+		sqlTransformer = SQLTransformerFactory.getSQLTransformer(db);
+	}
 
 	@Test
 	public void testReplaceBitwiseCheck() {
@@ -221,29 +222,12 @@ public abstract class BaseSQLTransformerLogicTestCase {
 		return getReplaceOriginalSQL();
 	}
 
-	protected SQLTransformerLogic getSQLTransformerLogic(DB db) {
-		return new HypersonicSQLTransformerLogic(db);
-	}
-
 	protected String getSubstOriginalSQL() {
 		return "select foo from Foo";
 	}
 
 	protected String getSubstTransformedSQL() {
 		return getSubstOriginalSQL();
-	}
-
-	protected void setDB(DB db) {
-		PowerMockito.mockStatic(DBManagerUtil.class);
-
-		PowerMockito.when(
-			DBManagerUtil.getDB()
-		).thenReturn(
-			db
-		);
-
-		sqlTransformer = SQLTransformerFactory.getSQLTransformer(
-			getSQLTransformerLogic(db));
 	}
 
 	protected final Function<String, String> addWhitespacesFunction =

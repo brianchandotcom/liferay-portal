@@ -20,6 +20,7 @@
 	"license": "LGPL",
 	"liferayTheme": {
 		"baseTheme": "styled",
+		"distName": "porygon-theme",
 		"hookModules": ["liferay-theme-es2015-hook"],
 		"rubySass": false,
 		"version": "7.0"

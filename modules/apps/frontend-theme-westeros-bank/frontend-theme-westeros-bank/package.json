@@ -14,6 +14,7 @@
 	"license": "LGPL",
 	"liferayTheme": {
 		"baseTheme": "styled",
+		"distName": "westeros-bank-theme",
 		"rubySass": false,
 		"version": "7.0"
 	},

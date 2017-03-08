@@ -1317,23 +1317,24 @@ AUI.add(
 
 						var curPorlet = instance._curPortlet;
 
+						var cruft = EMPTY;
+
 						var portletTitle = curPorlet.one('.portlet-title, .portlet-title-text');
 
 						if (portletTitle) {
-							var cruft = portletTitle.html().match(/<\/?[^>]+>|\n|\r|\t/gim);
+							cruft = portletTitle.html().match(/<\/?[^>]+>|\n|\r|\t/gim);
 
 							if (cruft) {
 								cruft = cruft.join(EMPTY);
 							}
-							else {
-								cruft = EMPTY;
-							}
+						}
 
-							var value = event.currentTarget.val();
+						var value = event.currentTarget.val();
 
-							var portletLanguage = instance._portletLanguage.val();
+						var portletLanguage = instance._portletLanguage.val();
 
-							if (portletLanguage == instance._currentLanguage) {
+						if (portletLanguage == instance._currentLanguage) {
+							if (portletTitle) {
 								portletTitle.html(cruft);
 
 								var portletNameText = portletTitle.one('.portlet-name-text');
@@ -1341,18 +1342,18 @@ AUI.add(
 								if (portletNameText) {
 									portletNameText.text(value);
 								}
-
-								var portletTitleText = curPorlet.one('.portlet-title-text');
-
-								if (portletTitleText) {
-									portletTitleText.text(value);
-								}
 							}
 
-							portletData.title = value;
+							var portletTitleText = curPorlet.one('.portlet-title-text');
 
-							instance._portletTitles(portletLanguage, value);
+							if (portletTitleText) {
+								portletTitleText.text(value);
+							}
 						}
+
+						portletData.title = value;
+
+						instance._portletTitles(portletLanguage, value);
 					}
 				);
 

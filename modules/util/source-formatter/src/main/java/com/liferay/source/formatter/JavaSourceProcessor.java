@@ -2791,7 +2791,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							 line.contains(" index IX_")) {
 					}
 					else if (lineLength > _maxLineLength) {
-						if (!isExcludedPath(
+						if (!line.matches(
+								"\t*(extends|implements) [\\w.]+ \\{") &&
+							!line.matches(
+								"\t*(private|protected|public) void \\w+" +
+									"\\(\\)( \\{)?") &&
+							!isExcludedPath(
 								_LINE_LENGTH_EXCLUDES, absolutePath,
 								lineCount) &&
 							!isAnnotationParameter(content, trimmedLine)) {

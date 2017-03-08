@@ -72,11 +72,11 @@ public class MySQLSQLTransformerLogicTest
 
 	@Test
 	public void testTransformLowerRecursive() {
-		String sql = "select lower( lower(foo)) from Foo";
+		String sql = "select lower(lower(foo)) from Foo";
 
 		String transformedSql = sqlTransformer.transform(sql);
 
-		Assert.assertEquals("select  lower(foo) from Foo", transformedSql);
+		Assert.assertEquals("select lower(foo) from Foo", transformedSql);
 	}
 
 	@Test

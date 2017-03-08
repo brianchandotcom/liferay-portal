@@ -1196,8 +1196,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			stopWatch.start();
 
-			while (!group.isRoot()) {
-				Group parentGroup = group.getParentGroup();
+			Group currentGroup = group;
+
+			while (!currentGroup.isRoot()) {
+				Group parentGroup = currentGroup.getParentGroup();
 
 				long[] roleIds = getRoleIds(
 					getUserId(), parentGroup.getGroupId());
@@ -1211,7 +1213,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					return true;
 				}
 
-				group = parentGroup;
+				currentGroup = parentGroup;
 			}
 		}
 

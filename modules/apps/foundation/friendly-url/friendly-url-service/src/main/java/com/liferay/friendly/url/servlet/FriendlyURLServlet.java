@@ -73,139 +73,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class FriendlyURLServlet extends HttpServlet {
 
-	@Override
-	public void init(ServletConfig servletConfig) throws ServletException {
-		super.init(servletConfig);
-
-		_private = GetterUtil.getBoolean(
-			servletConfig.getInitParameter("private"));
-
-		String proxyPath = PortalUtil.getPathProxy();
-
-		_user = GetterUtil.getBoolean(servletConfig.getInitParameter("user"));
-
-		if (_private) {
-			if (_user) {
-				_friendlyURLPathPrefix =
-					PortalUtil.getPathFriendlyURLPrivateUser();
-			}
-			else {
-				_friendlyURLPathPrefix =
-					PortalUtil.getPathFriendlyURLPrivateGroup();
-			}
-		}
-		else {
-			_friendlyURLPathPrefix = PortalUtil.getPathFriendlyURLPublic();
-		}
-
-		_pathInfoOffset = _friendlyURLPathPrefix.length() - proxyPath.length();
-	}
-
-	@Override
-	public void service(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {
-
-		// Do not set the entire full main path. See LEP-456.
-
-		String pathInfo = getPathInfo(request);
-
-		Redirect redirect = null;
-
-		try {
-			redirect = getRedirect(request, pathInfo);
-
-			if (request.getAttribute(WebKeys.LAST_PATH) == null) {
-				request.setAttribute(
-					WebKeys.LAST_PATH, getLastPath(request, pathInfo));
-			}
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(pe);
-			}
-
-			if (pe instanceof NoSuchGroupException ||
-				pe instanceof NoSuchLayoutException) {
-
-				PortalUtil.sendError(
-					HttpServletResponse.SC_NOT_FOUND, pe, request, response);
-
-				return;
-			}
-		}
-
-		if (redirect == null) {
-			redirect = new Redirect();
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Redirect " + redirect.getPath());
-		}
-
-		if (redirect.isValidForward()) {
-			ServletContext servletContext = getServletContext();
-
-			RequestDispatcher requestDispatcher =
-				servletContext.getRequestDispatcher(redirect.getPath());
-
-			if (requestDispatcher != null) {
-				requestDispatcher.forward(request, response);
-			}
-		}
-		else {
-			if (redirect.isPermanent()) {
-				response.setHeader("Location", redirect.getPath());
-				response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-			}
-			else {
-				response.sendRedirect(redirect.getPath());
-			}
-		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected String getFriendlyURL(String pathInfo) {
-		String friendlyURL = _friendlyURLPathPrefix;
-
-		if (Validator.isNotNull(pathInfo)) {
-			friendlyURL = friendlyURL.concat(pathInfo);
-		}
-
-		return friendlyURL;
-	}
-
-	protected LastPath getLastPath(
-		HttpServletRequest request, String pathInfo) {
-
-		String lifecycle = ParamUtil.getString(request, "p_p_lifecycle");
-
-		if (lifecycle.equals("1")) {
-			return new LastPath(_friendlyURLPathPrefix, pathInfo);
-		}
-		else {
-			return new LastPath(
-				_friendlyURLPathPrefix, pathInfo,
-				HttpUtil.parameterMapToString(request.getParameterMap()));
-		}
-	}
-
-	protected String getPathInfo(HttpServletRequest request) {
-		String requestURI = request.getRequestURI();
-
-		int pos = requestURI.indexOf(Portal.JSESSIONID);
-
-		if (pos == -1) {
-			return requestURI.substring(_pathInfoOffset);
-		}
-
-		return requestURI.substring(_pathInfoOffset, pos);
-	}
-
-	protected Redirect getRedirect(HttpServletRequest request, String path)
+	public Redirect getRedirect(HttpServletRequest request, String path)
 		throws PortalException {
 
 		if (path.length() <= 1) {
@@ -387,8 +255,140 @@ public class FriendlyURLServlet extends HttpServlet {
 		return new Redirect(actualURL);
 	}
 
+	@Override
+	public void init(ServletConfig servletConfig) throws ServletException {
+		super.init(servletConfig);
+
+		_private = GetterUtil.getBoolean(
+			servletConfig.getInitParameter("private"));
+
+		String proxyPath = PortalUtil.getPathProxy();
+
+		_user = GetterUtil.getBoolean(servletConfig.getInitParameter("user"));
+
+		if (_private) {
+			if (_user) {
+				_friendlyURLPathPrefix =
+					PortalUtil.getPathFriendlyURLPrivateUser();
+			}
+			else {
+				_friendlyURLPathPrefix =
+					PortalUtil.getPathFriendlyURLPrivateGroup();
+			}
+		}
+		else {
+			_friendlyURLPathPrefix = PortalUtil.getPathFriendlyURLPublic();
+		}
+
+		_pathInfoOffset = _friendlyURLPathPrefix.length() - proxyPath.length();
+	}
+
+	@Override
+	public void service(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		// Do not set the entire full main path. See LEP-456.
+
+		String pathInfo = getPathInfo(request);
+
+		Redirect redirect = null;
+
+		try {
+			redirect = getRedirect(request, pathInfo);
+
+			if (request.getAttribute(WebKeys.LAST_PATH) == null) {
+				request.setAttribute(
+					WebKeys.LAST_PATH, getLastPath(request, pathInfo));
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe);
+			}
+
+			if (pe instanceof NoSuchGroupException ||
+				pe instanceof NoSuchLayoutException) {
+
+				PortalUtil.sendError(
+					HttpServletResponse.SC_NOT_FOUND, pe, request, response);
+
+				return;
+			}
+		}
+
+		if (redirect == null) {
+			redirect = new Redirect();
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Redirect " + redirect.getPath());
+		}
+
+		if (redirect.isValidForward()) {
+			ServletContext servletContext = getServletContext();
+
+			RequestDispatcher requestDispatcher =
+				servletContext.getRequestDispatcher(redirect.getPath());
+
+			if (requestDispatcher != null) {
+				requestDispatcher.forward(request, response);
+			}
+		}
+		else {
+			if (redirect.isPermanent()) {
+				response.setHeader("Location", redirect.getPath());
+				response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+			}
+			else {
+				response.sendRedirect(redirect.getPath());
+			}
+		}
+	}
+
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
+	protected String getFriendlyURL(String pathInfo) {
+		String friendlyURL = _friendlyURLPathPrefix;
+
+		if (Validator.isNotNull(pathInfo)) {
+			friendlyURL = friendlyURL.concat(pathInfo);
+		}
+
+		return friendlyURL;
+	}
+
+	protected LastPath getLastPath(
+		HttpServletRequest request, String pathInfo) {
+
+		String lifecycle = ParamUtil.getString(request, "p_p_lifecycle");
+
+		if (lifecycle.equals("1")) {
+			return new LastPath(_friendlyURLPathPrefix, pathInfo);
+		}
+		else {
+			return new LastPath(
+				_friendlyURLPathPrefix, pathInfo,
+				HttpUtil.parameterMapToString(request.getParameterMap()));
+		}
+	}
+
+	protected String getPathInfo(HttpServletRequest request) {
+		String requestURI = request.getRequestURI();
+
+		int pos = requestURI.indexOf(Portal.JSESSIONID);
+
+		if (pos == -1) {
+			return requestURI.substring(_pathInfoOffset);
+		}
+
+		return requestURI.substring(_pathInfoOffset, pos);
+	}
+
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
 	 */
 	@Deprecated
 	protected Object[] getRedirect(

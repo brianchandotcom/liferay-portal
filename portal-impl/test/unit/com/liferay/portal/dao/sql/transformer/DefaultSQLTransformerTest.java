@@ -14,6 +14,8 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.util.function.Function;
 
 import org.junit.Assert;
@@ -30,6 +32,16 @@ public class DefaultSQLTransformerTest {
 			new Function[] {_noTransformationFunction});
 
 		Assert.assertNull(sqlTransformer.transform(null));
+	}
+
+	@Test
+	public void testTransformWithMultipleFunctions() {
+		SQLTransformer sqlTransformer = new DefaultSQLTransformer(
+			new Function[] {_toUpperCase, _trim});
+
+		String sql = sqlTransformer.transform(" select * from Table ");
+
+		Assert.assertEquals("SELECT * FROM TABLE", sql);
 	}
 
 	@Test
@@ -53,5 +65,8 @@ public class DefaultSQLTransformerTest {
 
 	private final Function<String, String> _noTransformationFunction =
 		(String sql) -> sql;
+	private final Function<String, String> _toUpperCase =
+		(String sql) -> StringUtil.toUpperCase(sql);
+	private final Function<String, String> _trim = (String sql) -> sql.trim();
 
 }

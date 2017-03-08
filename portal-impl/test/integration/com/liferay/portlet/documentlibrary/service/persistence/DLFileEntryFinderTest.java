@@ -1202,7 +1202,8 @@ public class DLFileEntryFinderTest {
 			List<DLFileEntry> dlFileEntries =
 				DLFileEntryLocalServiceUtil.getMisversionedFileEntries();
 
-			Assert.assertEquals(dlFileEntries.toString(), 1, dlFileEntries.size());
+			Assert.assertEquals(
+				dlFileEntries.toString(), 1, dlFileEntries.size());
 
 			DLFileEntry dlFileEntry = dlFileEntries.get(0);
 

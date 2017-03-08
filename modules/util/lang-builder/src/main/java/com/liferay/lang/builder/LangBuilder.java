@@ -578,7 +578,8 @@ public class LangBuilder {
 			if (value.contains(".") || value.contains("?") ||
 				value.contains(":") ||
 				key.equals(
-					"the-url-of-the-page-comparing-this-page-content-with-the-previous-version")) {
+					"the-url-of-the-page-comparing-this-page-content-with-" +
+						"the-previous-version")) {
 			}
 			else {
 				value = StringUtil.replace(value, " this ", " This ");

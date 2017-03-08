@@ -205,12 +205,12 @@ public class VirtualLayout extends LayoutWrapper {
 		}
 	}
 
-	private static final String _LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING =
-		PropsUtil.get(
+	private static final String
+		_LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING = PropsUtil.get(
 			PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING);
 
-	private static final String _LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING =
-		PropsUtil.get(
+	private static final String
+		_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING = PropsUtil.get(
 			PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
 
 	private static final Log _log = LogFactoryUtil.getLog(VirtualLayout.class);

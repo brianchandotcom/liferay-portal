@@ -1177,9 +1177,9 @@ task executable.
 ## 3.2.4 - 2017-03-06
 
 ### Changed
-- [LPS-70604]: Check whether `:util:` or `:private:util:` projects have all
-their dependencies already published before enabling the
-`printArtifactPublishCommands` task.
+- [LPS-70604]: Check whether the `:util:` or `:private:util:` projects have
+their dependencies published before enabling the `printArtifactPublishCommands`
+task.
 - [LPS-71005]: Update the [Liferay Gradle Plugins] dependency to version 3.2.15.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

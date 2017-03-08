@@ -1213,8 +1213,8 @@ to version 1.0.95.
 version 2.0.1.
 
 ### Fixed
-- [LPS-70282]: Add the dependencies in the `compileInclude` configuration to the
-classpath of the `run` task, if the `application` plugin is applied.
+- [LPS-70282]: Add the `compileInclude` configuration's dependencies to the
+classpath of the `run` task if the `application` plugin is applied.
 
 ## 3.2.15 - 2017-03-06
 

@@ -913,6 +913,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	@Override
+	public int getLayoutsCount(long groupId, boolean privateLayout) {
+		return layoutPersistence.filterCountByG_P(groupId, privateLayout);
+	}
+
+	@Override
 	public int getLayoutsCount(
 		long groupId, boolean privateLayout, long parentLayoutId) {
 

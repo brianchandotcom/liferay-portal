@@ -131,6 +131,24 @@
 		</execute>
 	</command>
 
+	<command name="ModifyInitalPageVariationSetup" priority="3">
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#modifyVariation">
+			<var name="enableOnPublicPages" value="true" />
+		</execute>
+	</command>
+
 	<command name="PublishRenamedTags" priority="4">
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Staging Test Page" />

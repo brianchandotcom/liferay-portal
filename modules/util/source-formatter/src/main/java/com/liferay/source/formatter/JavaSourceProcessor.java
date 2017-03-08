@@ -1291,6 +1291,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixMultiLineComment(newContent);
 
+		newContent = getCombinedLinesContent(newContent);
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);
 		newContent = getCombinedLinesContent(
@@ -3102,6 +3103,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			content, "import java.util.Objects;\n", pos + 1);
 	}
 
+	protected String getCombinedLinesContent(String content) {
+		Matcher matcher = _combinedLinesPattern3.matcher(content);
+
+		content = matcher.replaceAll("$1 $3");
+
+		matcher = _combinedLinesPattern4.matcher(content);
+
+		return matcher.replaceAll("$1 $3");
+	}
+
 	protected String getCombinedLinesContent(String content, Pattern pattern) {
 		Matcher matcher = pattern.matcher(content);
 
@@ -4727,6 +4738,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*).+(=|\\]) (\\{)\n");
 	private final Pattern _combinedLinesPattern2 = Pattern.compile(
 		"\n(\t*)@.+(\\()\n");
+	private final Pattern _combinedLinesPattern3 = Pattern.compile(
+		"(\n\t*(private|protected|public) void)\n\t+(\\w+\\(\\)( \\{)?\n)");
+	private final Pattern _combinedLinesPattern4 = Pattern.compile(
+		"(\n\t*(extends|implements))\n\t+([\\w.]+ \\{\n)");
 	private final Pattern _componentAnnotationPattern = Pattern.compile(
 		"@Component(\n|\\([\\s\\S]*?\\)\n)");
 	private final Pattern _customSQLFilePattern = Pattern.compile(

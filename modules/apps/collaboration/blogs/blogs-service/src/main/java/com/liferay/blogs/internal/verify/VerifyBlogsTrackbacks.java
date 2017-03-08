@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.verify;
+package com.liferay.blogs.internal.verify;
 
 import com.liferay.blogs.linkback.LinkbackConsumer;
 import com.liferay.blogs.model.BlogsEntry;
@@ -32,6 +32,7 @@ import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -42,10 +43,12 @@ import org.osgi.service.component.annotations.Reference;
  * </p>
  *
  * @author Alexander Chow
- * @deprecated As of 1.1.0, replaced by {@link
- *             com.liferay.blogs.internal.verify.VerifyBlogsTrackbacks}
  */
-@Deprecated
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.blogs.trackbacks"},
+	service = VerifyProcess.class
+)
 public class VerifyBlogsTrackbacks extends VerifyProcess {
 
 	@Override

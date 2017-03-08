@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.verify;
+package com.liferay.wiki.internal.verify;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -34,15 +34,18 @@ import com.liferay.wiki.util.comparator.PageVersionComparator;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Iván Zaera
- * @deprecated As of 1.4.0, replaced by {@link
- *             com.liferay.wiki.internal.verify.WikiServiceVerifyProcess}
  */
-@Deprecated
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.wiki.service"},
+	service = VerifyProcess.class
+)
 public class WikiServiceVerifyProcess extends VerifyProcess {
 
 	@Override

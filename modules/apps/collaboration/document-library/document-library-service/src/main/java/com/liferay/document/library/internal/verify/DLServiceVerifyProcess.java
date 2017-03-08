@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.verify;
+package com.liferay.document.library.internal.verify;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
@@ -68,6 +68,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import org.springframework.context.ApplicationContext;
@@ -76,10 +77,12 @@ import org.springframework.context.ApplicationContext;
  * @author Raymond Augé
  * @author Douglas Wong
  * @author Alexander Chow
- * @deprecated As of 1.1.0, replaced by {@link
- *             com.liferay.document.library.internal.verify.DLServiceVerifyProcess}
  */
-@Deprecated
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.document.library.service"},
+	service = VerifyProcess.class
+)
 public class DLServiceVerifyProcess extends VerifyProcess {
 
 	protected void addDLFileVersion(DLFileEntry dlFileEntry) {
@@ -520,7 +523,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		updateClassNameId();
 		updateFileEntryAssets();
 		updateFolderAssets();
-		verifyTree();
 	}
 
 	protected String getMimeType(InputStream inputStream, String title) {
@@ -745,17 +747,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Assets verified for folders");
-			}
-		}
-	}
-
-	protected void verifyTree() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long[] companyIds =
-				_portalInstancesLocalService.getCompanyIdsBySQL();
-
-			for (long companyId : companyIds) {
-				_dlFolderLocalService.rebuildTree(companyId);
 			}
 		}
 	}

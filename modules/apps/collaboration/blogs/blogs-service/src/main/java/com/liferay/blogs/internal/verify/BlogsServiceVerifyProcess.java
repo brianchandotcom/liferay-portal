@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.verify;
+package com.liferay.blogs.internal.verify;
 
 import com.liferay.blogs.internal.verify.model.BlogsEntryVerifiableModel;
 import com.liferay.blogs.model.BlogsEntry;
@@ -26,14 +26,17 @@ import com.liferay.portal.verify.VerifyResourcePermissions;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
- * @deprecated As of 1.1.0, replaced by {@link
- *             com.liferay.blogs.internal.verify.BlogsServiceVerifyProcess}
  */
-@Deprecated
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.blogs.service"},
+	service = VerifyProcess.class
+)
 public class BlogsServiceVerifyProcess extends VerifyProcess {
 
 	@Override

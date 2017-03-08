@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryTypeException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException;
 import com.liferay.document.library.kernel.exception.NoSuchMetadataSetException;
+import com.liferay.document.library.kernel.exception.RequiredFileEntryTypeException;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
@@ -124,6 +125,12 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 			   StructureDuplicateElementException | StructureNameException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
+		}
+		catch (RequiredFileEntryTypeException rfete) {
+			SessionErrors.add(actionRequest, rfete.getClass());
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/document_library/view_file_entry_types.jsp");
 		}
 		catch (NoSuchFileEntryTypeException | NoSuchStructureException |
 			   PrincipalException e) {

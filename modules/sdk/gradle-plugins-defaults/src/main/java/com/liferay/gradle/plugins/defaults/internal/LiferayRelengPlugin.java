@@ -144,7 +144,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				project, recordArtifactTask, cleanArtifactsPublishCommandsTask,
 				mergeArtifactsPublishCommandsTask);
 
-		mergeArtifactsPublishCommandsTask.dependsOn(
+		mergeArtifactsPublishCommandsTask.mustRunAfter(
 			writeArtifactPublishCommandsTask);
 
 		_addTaskPrintStaleArtifact(project, recordArtifactTask);

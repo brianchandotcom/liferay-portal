@@ -227,17 +227,22 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				public void execute(Task task) {
 					MergeFilesTask mergeFilesTask = (MergeFilesTask)task;
 
+					Logger logger = mergeFilesTask.getLogger();
+
 					File file = mergeFilesTask.getOutputFile();
 
 					boolean success = file.setExecutable(true);
 
 					if (!success) {
-						Logger logger = mergeFilesTask.getLogger();
-
 						logger.error(
 							"Unable to set the owner's execute permission " +
 								"for {}",
 							file);
+					}
+
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle(
+							"Artifacts publish commands written in {}.", file);
 					}
 				}
 

@@ -171,18 +171,19 @@ public class FlagsTag extends TemplateRendererTag {
 
 		String namespace = PortalUtil.getPortletNamespace(PortletKeys.FLAGS);
 
-		JSONObject dataJSON = JSONFactoryUtil.createJSONObject();
+		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		dataJSON.put(namespace + "className", className);
-		dataJSON.put(namespace + "classPK", classPK);
-		dataJSON.put(namespace + "contentTitle", context.get("contentTitle"));
-		dataJSON.put(
+		dataJSONObject.put(namespace + "className", className);
+		dataJSONObject.put(namespace + "classPK", classPK);
+		dataJSONObject.put(
+			namespace + "contentTitle", context.get("contentTitle"));
+		dataJSONObject.put(
 			namespace + "contentURL",
 			PortalUtil.getPortalURL(request) + _getCurrentURL());
-		dataJSON.put(
+		dataJSONObject.put(
 			namespace + "reportedUserId", context.get("reportedUserId"));
 
-		return dataJSON;
+		return dataJSONObject;
 	}
 
 	private String _getUri() throws WindowStateException {

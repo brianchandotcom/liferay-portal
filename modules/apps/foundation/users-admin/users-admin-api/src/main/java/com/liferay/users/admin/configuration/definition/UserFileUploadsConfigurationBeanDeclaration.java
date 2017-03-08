@@ -17,9 +17,12 @@ package com.liferay.users.admin.configuration.definition;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Drew Brokke
  */
+@Component
 public class UserFileUploadsConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

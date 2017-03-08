@@ -3,6 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.friendly.url.model.FriendlyURLEntry" />
+	<import class="com.liferay.friendly.url.model.FriendlyURLEntryLocalization" />
 	<class name="com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl" table="FriendlyURLEntry">
 		<id name="friendlyURLEntryId" type="long">
 			<generator class="assigned" />
@@ -16,5 +17,15 @@
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="urlTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="main" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationImpl" table="FriendlyURLEntryLocalization">
+		<id name="friendlyURLEntryLocalizationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="friendlyURLEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="urlTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

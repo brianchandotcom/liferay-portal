@@ -236,7 +236,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 						logger.error(
 							"Unable to set the owner's execute permission " +
-								"for " + file);
+								"for {}",
+							file);
 					}
 				}
 

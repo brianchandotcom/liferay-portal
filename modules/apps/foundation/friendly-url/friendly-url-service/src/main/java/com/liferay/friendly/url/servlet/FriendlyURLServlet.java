@@ -221,19 +221,11 @@ public class FriendlyURLServlet extends HttpServlet {
 						layoutFriendlyURLCompositeFriendlyURL,
 						layout.getFriendlyURL(locale))) {
 
-					String redirect = null;
+					Locale originalLocale = setAlternativeLayoutFriendlyURL(
+						request, layout, layoutFriendlyURLCompositeFriendlyURL);
 
-					try {
-						Locale originalLocale = setAlternativeLayoutFriendlyURL(
-							request, layout,
-							layoutFriendlyURLCompositeFriendlyURL);
-
-						redirect = PortalUtil.getLocalizedFriendlyURL(
-							request, layout, locale, originalLocale);
-					}
-					catch (Exception e) {
-						throw new PortalException(e);
-					}
+					String redirect = PortalUtil.getLocalizedFriendlyURL(
+						request, layout, locale, originalLocale);
 
 					Boolean forcePermanentRedirect = Boolean.TRUE;
 
@@ -548,8 +540,7 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	protected Locale setAlternativeLayoutFriendlyURL(
-			HttpServletRequest request, Layout layout, String friendlyURL)
-		throws Exception {
+		HttpServletRequest request, Layout layout, String friendlyURL) {
 
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(

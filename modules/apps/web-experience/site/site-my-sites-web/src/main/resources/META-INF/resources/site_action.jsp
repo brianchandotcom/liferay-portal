@@ -27,7 +27,7 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:choose>
 		<c:when test='<%= tabs1.equals("my-sites") %>'>
-			<c:if test="<%= mySitesDisplayContext.isDefaultLayoutVisible(group, false) %>">
+			<c:if test="<%= LayoutServiceUtil.getLayoutsCount(group.getGroupId(), false) > 0 %>">
 				<liferay-ui:icon
 					message="go-to-public-pages"
 					target="_blank"
@@ -35,7 +35,7 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 				/>
 			</c:if>
 
-			<c:if test="<%= mySitesDisplayContext.isDefaultLayoutVisible(group, true) %>">
+			<c:if test="<%= LayoutServiceUtil.getLayoutsCount(group.getGroupId(), true) > 0 %>">
 				<liferay-ui:icon
 					message="go-to-private-pages"
 					target="_blank"

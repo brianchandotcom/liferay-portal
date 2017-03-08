@@ -34,6 +34,7 @@ page import="com.liferay.portal.kernel.model.MembershipRequestConstants" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.LayoutServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.MembershipRequestLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -46,8 +47,7 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.liveusers.LiveUsers" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %><%@
-page import="com.liferay.site.my.sites.web.internal.display.context.MySitesDisplayContext" %>
+page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.LinkedHashMap" %><%@
@@ -64,7 +64,3 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%@ include file="/init-ext.jsp" %>
-
-<%
-MySitesDisplayContext mySitesDisplayContext = new MySitesDisplayContext(request);
-%>

@@ -36,9 +36,7 @@ request.setAttribute("view.jsp-portletURLString", portletURLString);
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 
-	<c:if test="<%= !portletName.equals(PortletKeys.FRIENDS_DIRECTORY) %>">
-		<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>" />
-	</c:if>
+	<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>" />
 
 	<c:choose>
 		<c:when test='<%= tabs1.equals("users") %>'>

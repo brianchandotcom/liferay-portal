@@ -242,7 +242,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 			});
 
-		mergeFilesTask.setDescription("Merges the artifacts publish commands");
+		mergeFilesTask.setDescription("Merges the artifacts publish commands.");
 		mergeFilesTask.setHeader(
 			"#!/bin/bash" + System.lineSeparator() + System.lineSeparator() +
 				"set -e" + System.lineSeparator());

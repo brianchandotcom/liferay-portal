@@ -46,7 +46,8 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.liveusers.LiveUsers" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
+page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %><%@
+page import="com.liferay.site.my.sites.web.internal.display.context.MySitesDisplayContext" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.LinkedHashMap" %><%@
@@ -63,3 +64,7 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%@ include file="/init-ext.jsp" %>
+
+<%
+MySitesDisplayContext mySitesDisplayContext = new MySitesDisplayContext(request);
+%>

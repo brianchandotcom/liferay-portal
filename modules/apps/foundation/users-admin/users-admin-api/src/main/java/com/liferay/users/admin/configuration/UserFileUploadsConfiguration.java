@@ -53,4 +53,11 @@ public interface UserFileUploadsConfiguration {
 	)
 	public boolean imageCheckToken();
 
+	@Meta.AD(
+		deflt = "true",
+		description = "use-initials-for-default-user-portrait-help",
+		name = "use-initials-for-default-user-portrait", required = false
+	)
+	public boolean imageDefaultUseInitials();
+
 }

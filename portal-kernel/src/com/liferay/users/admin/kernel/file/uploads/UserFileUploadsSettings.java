@@ -30,4 +30,6 @@ public interface UserFileUploadsSettings {
 
 	public boolean isImageCheckToken();
 
+	public boolean isImageDefaultUseInitials();
+
 }

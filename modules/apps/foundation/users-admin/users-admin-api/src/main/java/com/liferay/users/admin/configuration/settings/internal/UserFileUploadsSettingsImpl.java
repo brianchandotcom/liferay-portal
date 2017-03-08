@@ -53,6 +53,11 @@ public class UserFileUploadsSettingsImpl implements UserFileUploadsSettings {
 		return _userFileUploadsConfiguration.imageCheckToken();
 	}
 
+	@Override
+	public boolean isImageDefaultUseInitials() {
+		return _userFileUploadsConfiguration.imageDefaultUseInitials();
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {

@@ -620,6 +620,10 @@ public class LayoutServiceUtil {
 			inputStream, mimeType);
 	}
 
+	public static int getLayoutsCount(long groupId, boolean privateLayout) {
+		return getService().getLayoutsCount(groupId, privateLayout);
+	}
+
 	public static int getLayoutsCount(long groupId, boolean privateLayout,
 		long parentLayoutId) {
 		return getService()

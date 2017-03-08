@@ -617,6 +617,11 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	@Override
+	public int getLayoutsCount(long groupId, boolean privateLayout) {
+		return _layoutService.getLayoutsCount(groupId, privateLayout);
+	}
+
+	@Override
 	public int getLayoutsCount(long groupId, boolean privateLayout,
 		long parentLayoutId) {
 		return _layoutService.getLayoutsCount(groupId, privateLayout,

@@ -58,9 +58,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 	}
 
 	@Test
-	public void
-		testGetValuesByConfigurationAndNegativeCardinalityWithTextField() {
-
+	public void testGetValuesByConfigurationAndNegativeCardinalityWithTextField() {
 		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
 			ExtendedObjectClassDefinition.class);
 
@@ -106,9 +104,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 	}
 
 	@Test
-	public void
-		testGetValuesByConfigurationAndPositiveCardinalityWithTextField() {
-
+	public void testGetValuesByConfigurationAndPositiveCardinalityWithTextField() {
 		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
 			ExtendedObjectClassDefinition.class);
 

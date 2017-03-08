@@ -190,9 +190,7 @@ public class PortletInstanceTest {
 	}
 
 	@Test
-	public void
-		testFromPortletNameAndUserIdAndInstanceIdWithOnlyInstanceId() {
-
+	public void testFromPortletNameAndUserIdAndInstanceIdWithOnlyInstanceId() {
 		PortletInstance portletInstance =
 			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
 				PortletKeys.TEST, "xyz");

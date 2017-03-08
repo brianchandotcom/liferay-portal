@@ -70,8 +70,7 @@ public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 	}
 
 	@Test
-	public void
-			testUpdateContentWithEmptyBlogsEntryAttachmentFileEntryReferences()
+	public void testUpdateContentWithEmptyBlogsEntryAttachmentFileEntryReferences()
 		throws Exception {
 
 		String content = BlogsEntryAttachmentFileEntryUtil.updateContent(

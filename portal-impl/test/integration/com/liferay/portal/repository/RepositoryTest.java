@@ -218,8 +218,7 @@ public class RepositoryTest {
 	}
 
 	@Test
-	public void
-			testRepositoryFileEntriesAreDeletedWhenDeletingLiferayRepository()
+	public void testRepositoryFileEntriesAreDeletedWhenDeletingLiferayRepository()
 		throws Exception {
 
 		long[] fileEntryIds = new long[4];

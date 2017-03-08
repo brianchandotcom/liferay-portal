@@ -43,8 +43,7 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class EditUserMVCActionCommand
-	extends
-		com.liferay.users.admin.web.portlet.action.EditUserMVCActionCommand {
+	extends com.liferay.users.admin.web.portlet.action.EditUserMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

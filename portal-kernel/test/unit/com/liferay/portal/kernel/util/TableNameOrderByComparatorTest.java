@@ -43,9 +43,7 @@ public class TableNameOrderByComparatorTest {
 	}
 
 	@Test
-	public void
-		testGetOrderByWithMultipleColumnNamesReturnsDecoratedTableName() {
-
+	public void testGetOrderByWithMultipleColumnNamesReturnsDecoratedTableName() {
 		TableNameOrderByComparator<?> tableNameOrderByComparator =
 			new TableNameOrderByComparator<>(
 				new TestGetOrderByComparator("column1, column2"), "table");

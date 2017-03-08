@@ -429,8 +429,7 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void
-			testPortletNameAndEditorNameOverridesEditorConfigKeyEditorConfig()
+	public void testPortletNameAndEditorNameOverridesEditorConfigKeyEditorConfig()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();

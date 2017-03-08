@@ -66,9 +66,7 @@ public class ItemSelectorCriterionSerializerTest {
 	}
 
 	@Test
-	public void
-		testSerializationAndDeserializationWithProvidedSupportedReturnTypes() {
-
+	public void testSerializationAndDeserializationWithProvidedSupportedReturnTypes() {
 		TestItemSelectorView testItemSelectorView = new TestItemSelectorView();
 
 		ServiceRegistration<ItemSelectorView>

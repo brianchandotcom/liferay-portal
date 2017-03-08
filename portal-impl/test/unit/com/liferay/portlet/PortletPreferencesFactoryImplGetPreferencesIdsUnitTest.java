@@ -109,8 +109,7 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsUnitTest {
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void
-			testPreferencesWithModeEditGuestInPublicLayoutWithoutPermission()
+	public void testPreferencesWithModeEditGuestInPublicLayoutWithoutPermission()
 		throws Exception {
 
 		_layout.setPrivateLayout(false);

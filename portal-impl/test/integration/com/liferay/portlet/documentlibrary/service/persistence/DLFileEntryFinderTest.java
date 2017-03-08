@@ -478,8 +478,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void
-			testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_BothRepositories()
+	public void testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_BothRepositories()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();
@@ -494,8 +493,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void
-			testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_DefaultRepository()
+	public void testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_DefaultRepository()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();
@@ -510,8 +508,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void
-			testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_EmptyRepositories()
+	public void testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_EmptyRepositories()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();
@@ -526,8 +523,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void
-			testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_NewRepository()
+	public void testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_NewRepository()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();
@@ -646,8 +642,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void
-			testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_BothRepositories()
+	public void testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_BothRepositories()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();
@@ -662,8 +657,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void
-			testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_DefaultRepository()
+	public void testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_DefaultRepository()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();
@@ -678,8 +672,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void
-			testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_EmptyRepositories()
+	public void testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_EmptyRepositories()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();
@@ -694,8 +687,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void
-			testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_NewRepository()
+	public void testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_NewRepository()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();
@@ -870,8 +862,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void
-			testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_BothRepositories()
+	public void testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_BothRepositories()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();
@@ -886,8 +877,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void
-			testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_DefaultRepository()
+	public void testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_DefaultRepository()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();
@@ -902,8 +892,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void
-			testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_EmptyRepositories()
+	public void testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_EmptyRepositories()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();
@@ -918,8 +907,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void
-			testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_NewRepository()
+	public void testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_NewRepository()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();

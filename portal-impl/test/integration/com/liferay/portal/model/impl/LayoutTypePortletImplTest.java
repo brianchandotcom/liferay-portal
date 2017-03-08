@@ -150,8 +150,7 @@ public class LayoutTypePortletImplTest {
 		}
 
 		@Test
-		public void
-				shouldReturnFalseIfANonlayoutCacheableRootPortletIsInstalled()
+		public void shouldReturnFalseIfANonlayoutCacheableRootPortletIsInstalled()
 			throws Exception {
 
 			Portlet noncacheablePortlet =

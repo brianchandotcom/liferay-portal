@@ -1069,8 +1069,7 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void
-			testUpdateAllFollowingFromSingleInstancePreservesDayTimeAcrossDays()
+	public void testUpdateAllFollowingFromSingleInstancePreservesDayTimeAcrossDays()
 		throws Exception {
 
 		ServiceContext serviceContext = createServiceContext();

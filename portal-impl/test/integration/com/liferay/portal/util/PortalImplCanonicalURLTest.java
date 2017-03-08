@@ -214,8 +214,7 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
-	public void
-			testDomainCustomPortalLocaleCanonicalURLFirstLayoutFromLocalhost()
+	public void testDomainCustomPortalLocaleCanonicalURLFirstLayoutFromLocalhost()
 		throws Exception {
 
 		testCanonicalURL(
@@ -241,8 +240,7 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
-	public void
-			testLocalizedSiteCustomSiteLocaleCanonicalURLForceLayoutFriendlyURL()
+	public void testLocalizedSiteCustomSiteLocaleCanonicalURLForceLayoutFriendlyURL()
 		throws Exception {
 
 		testCanonicalURL(
@@ -272,8 +270,7 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
-	public void
-			testLocalizedSiteDefaultSiteLocaleCanonicalURLForceLayoutFriendlyURL()
+	public void testLocalizedSiteDefaultSiteLocaleCanonicalURLForceLayoutFriendlyURL()
 		throws Exception {
 
 		testCanonicalURL(

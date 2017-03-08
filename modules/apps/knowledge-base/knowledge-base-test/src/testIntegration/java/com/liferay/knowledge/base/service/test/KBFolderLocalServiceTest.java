@@ -160,8 +160,7 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test
-	public void
-			testGetKBFoldersAndKBArticlesCountWithMultipleKBArticleVersions()
+	public void testGetKBFoldersAndKBArticlesCountWithMultipleKBArticleVersions()
 		throws Exception {
 
 		KBArticle kbArticle = addKBArticle(

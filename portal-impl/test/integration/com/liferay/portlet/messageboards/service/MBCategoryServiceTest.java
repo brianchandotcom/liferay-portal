@@ -96,8 +96,7 @@ public class MBCategoryServiceTest {
 	}
 
 	@Test
-	public void
-			testGetCategoriesAndThreadsCountInRootCategoryWithOnlyCategories()
+	public void testGetCategoriesAndThreadsCountInRootCategoryWithOnlyCategories()
 		throws Exception {
 
 		MBCategory category1 = addCategory();

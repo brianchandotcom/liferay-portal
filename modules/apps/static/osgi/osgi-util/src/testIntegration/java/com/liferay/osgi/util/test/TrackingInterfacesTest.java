@@ -99,9 +99,7 @@ public class TrackingInterfacesTest {
 	}
 
 	@Test
-	public void
-		testInjectNextServiceWithHighestRankingWhenUnregisteringServices() {
-
+	public void testInjectNextServiceWithHighestRankingWhenUnregisteringServices() {
 		TestInterface testInterface = new TestInterface();
 
 		try (ReflectionServiceTracker reflectionServiceTracker =

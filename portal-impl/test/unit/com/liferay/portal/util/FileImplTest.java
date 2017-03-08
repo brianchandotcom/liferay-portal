@@ -58,9 +58,7 @@ public class FileImplTest {
 	}
 
 	@Test
-	public void
-		testAppendParentheticalSuffixWithMultipleStringWithSpaceValue() {
-
+	public void testAppendParentheticalSuffixWithMultipleStringWithSpaceValue() {
 		String fileName = _fileImpl.appendParentheticalSuffix(
 			"test.jsp", "A B");
 

@@ -321,8 +321,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithBlogsMapping1()
+	public void testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithBlogsMapping1()
 		throws Exception {
 
 		testWronglyLocalizedSiteLayoutFriendlyURL(
@@ -330,8 +329,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithBlogsMapping2()
+	public void testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithBlogsMapping2()
 		throws Exception {
 
 		testWronglyLocalizedSiteLayoutFriendlyURL(
@@ -355,8 +353,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithTagsMapping1()
+	public void testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithTagsMapping1()
 		throws Exception {
 
 		testWronglyLocalizedSiteLayoutFriendlyURL(
@@ -364,8 +361,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithTagsMapping2()
+	public void testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithTagsMapping2()
 		throws Exception {
 
 		testWronglyLocalizedSiteLayoutFriendlyURL(
@@ -389,8 +385,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedSiteLayoutPublicFriendlyURLWithBlogsMapping1()
+	public void testWronglyLocalizedSiteLayoutPublicFriendlyURLWithBlogsMapping1()
 		throws Exception {
 
 		testWronglyLocalizedSiteLayoutFriendlyURL(
@@ -398,8 +393,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedSiteLayoutPublicFriendlyURLWithBlogsMapping2()
+	public void testWronglyLocalizedSiteLayoutPublicFriendlyURLWithBlogsMapping2()
 		throws Exception {
 
 		testWronglyLocalizedSiteLayoutFriendlyURL(
@@ -423,8 +417,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedSiteLayoutPublicFriendlyURLWithTagsMapping1()
+	public void testWronglyLocalizedSiteLayoutPublicFriendlyURLWithTagsMapping1()
 		throws Exception {
 
 		testWronglyLocalizedSiteLayoutFriendlyURL(
@@ -432,8 +425,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedSiteLayoutPublicFriendlyURLWithTagsMapping2()
+	public void testWronglyLocalizedSiteLayoutPublicFriendlyURLWithTagsMapping2()
 		throws Exception {
 
 		testWronglyLocalizedSiteLayoutFriendlyURL(
@@ -457,8 +449,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithBlogsMapping1()
+	public void testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithBlogsMapping1()
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
@@ -466,8 +457,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithBlogsMapping2()
+	public void testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithBlogsMapping2()
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
@@ -475,8 +465,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithParams1()
+	public void testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithParams1()
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
@@ -484,8 +473,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithParams2()
+	public void testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithParams2()
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
@@ -493,8 +481,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithTagsMapping1()
+	public void testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithTagsMapping1()
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
@@ -502,8 +489,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithTagsMapping2()
+	public void testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithTagsMapping2()
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
@@ -527,8 +513,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithBlogsMapping1()
+	public void testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithBlogsMapping1()
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
@@ -536,8 +521,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithBlogsMapping2()
+	public void testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithBlogsMapping2()
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
@@ -561,8 +545,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithTagsMapping1()
+	public void testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithTagsMapping1()
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
@@ -570,8 +553,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
-	public void
-			testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithTagsMapping2()
+	public void testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithTagsMapping2()
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(

@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,10 +44,10 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class FormNavigatorEntryConfigurationParser {
 
-	public Optional<SortedSet<String>> getFormNavigatorEntryKeys(
+	public Optional<List<String>> getFormNavigatorEntryKeys(
 		String categoryKey, String context) {
 
-		SortedSet<String> formNavigatorEntryKeys = null;
+		List<String> formNavigatorEntryKeys = null;
 
 		if (Validator.isNotNull(context)) {
 			formNavigatorEntryKeys = _formNavigatorEntryKeysMap.get(
@@ -87,20 +89,20 @@ public class FormNavigatorEntryConfigurationParser {
 		}
 	}
 
-	private SortedSet<String> _splitKeys(String formNavigatorEntryKeys) {
-		SortedSet<String> keys = new TreeSet<>();
+	private List<String> _splitKeys(String formNavigatorEntryKeys) {
+		Set<String> keys = new LinkedHashSet<>();
 
 		for (String key : StringUtil.split(formNavigatorEntryKeys)) {
 			keys.add(key.trim());
 		}
 
-		return keys;
+		return new ArrayList<>(keys);
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
 		"^(?<key>.*)=(?<value>.*)$", Pattern.MULTILINE);
 
 	private FormNavigatorConfiguration _formNavigatorConfiguration;
-	private Map<String, SortedSet<String>> _formNavigatorEntryKeysMap;
+	private Map<String, List<String>> _formNavigatorEntryKeysMap;
 
 }

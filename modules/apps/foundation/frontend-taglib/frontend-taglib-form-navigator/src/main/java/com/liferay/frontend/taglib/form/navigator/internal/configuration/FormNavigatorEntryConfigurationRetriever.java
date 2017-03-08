@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.SortedSet;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -33,21 +32,21 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(service = FormNavigatorEntryConfigurationRetriever.class)
 public class FormNavigatorEntryConfigurationRetriever {
 
-	public Optional<SortedSet<String>> getFormNavigatorEntryKeys(
+	public Optional<List<String>> getFormNavigatorEntryKeys(
 		String formNavigatorId, String categoryKey, String context) {
 
 		List<FormNavigatorEntryConfigurationParser>
 			formNavigatorEntryConfigurationParsers = ListUtil.fromCollection(
 				_serviceTrackerMap.getService(formNavigatorId));
 
-		Optional<SortedSet<String>> formNavigatorEntryKeysOptional =
+		Optional<List<String>> formNavigatorEntryKeysOptional =
 			Optional.empty();
 
 		for (FormNavigatorEntryConfigurationParser
 				formNavigatorEntryConfigurationParser :
 					formNavigatorEntryConfigurationParsers) {
 
-			Optional<SortedSet<String>> currentFormNavigatorEntryKeysOptional =
+			Optional<List<String>> currentFormNavigatorEntryKeysOptional =
 				formNavigatorEntryConfigurationParser.getFormNavigatorEntryKeys(
 					categoryKey, context);
 

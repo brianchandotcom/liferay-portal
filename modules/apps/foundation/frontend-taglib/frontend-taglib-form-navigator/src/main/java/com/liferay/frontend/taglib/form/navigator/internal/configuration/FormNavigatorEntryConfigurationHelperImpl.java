@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.SortedSet;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -48,7 +47,7 @@ public class FormNavigatorEntryConfigurationHelperImpl
 
 		String context = _getContext(formNavigatorId, formModelBean);
 
-		Optional<SortedSet<String>> optionalFormNavigatorEntryKeys =
+		Optional<List<String>> optionalFormNavigatorEntryKeys =
 			_formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
 				formNavigatorId, categoryKey, context);
 
@@ -101,7 +100,7 @@ public class FormNavigatorEntryConfigurationHelperImpl
 	}
 
 	private <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
-		String formNavigatorId, SortedSet<String> formNavigatorEntryKeys) {
+		String formNavigatorId, List<String> formNavigatorEntryKeys) {
 
 		List<FormNavigatorEntry<T>> formNavigatorEntries = new ArrayList<>();
 

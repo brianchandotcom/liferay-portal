@@ -23,6 +23,8 @@ AUI.add(
 
 				AUGMENTS: [],
 
+				EXTENDS: Liferay.DDL.FormBuilderAction,
+
 				NAME: 'liferay-ddl-form-builder-action-property',
 
 				prototype: {

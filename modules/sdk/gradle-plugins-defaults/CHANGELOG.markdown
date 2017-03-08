@@ -1182,6 +1182,15 @@ their dependencies published before enabling the `printArtifactPublishCommands`
 task.
 - [LPS-71005]: Update the [Liferay Gradle Plugins] dependency to version 3.2.15.
 
+## 3.2.5 - 2017-03-08
+
+### Added
+- [LPS-63943]: Print out artifacts publish commands file path.
+
+### Fixed
+- [LPS-63943]: Avoid executing `writeArtifactPublishCommands` tasks if not
+explicitly invoked.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

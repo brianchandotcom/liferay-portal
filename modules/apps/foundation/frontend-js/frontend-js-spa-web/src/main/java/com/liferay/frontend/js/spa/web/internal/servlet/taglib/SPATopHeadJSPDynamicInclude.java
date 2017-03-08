@@ -71,6 +71,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			"clearScreensCache",
 			String.valueOf(
 				_spaUtil.isClearScreensCache(request, request.getSession())));
+		values.put("debugEnabled", String.valueOf(_spaUtil.isDebugEnabled()));
 		values.put("excludedPaths", _spaUtil.getExcludedPaths());
 		values.put(
 			"loginRedirect",

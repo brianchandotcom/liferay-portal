@@ -19,6 +19,8 @@ import com.liferay.frontend.js.spa.web.configuration.SPAConfigurationUtil;
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
@@ -165,6 +167,10 @@ public class SPAUtil {
 		return false;
 	}
 
+	public boolean isDebugEnabled() {
+		return _log.isDebugEnabled();
+	}
+
 	@Activate
 	protected void activate(
 			BundleContext bundleContext, SPAConfiguration spaConfiguration)
@@ -233,6 +239,8 @@ public class SPAUtil {
 		"javascript.single.page.application.navigation.exception.selector";
 
 	private static final String _VALID_STATUS_CODES;
+
+	private static final Log _log = LogFactoryUtil.getLog(SPAUtil.class);
 
 	private static final List<String> _navigationExceptionSelectors =
 		new CopyOnWriteArrayList<>();

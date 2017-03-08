@@ -685,11 +685,49 @@ public class BaseTextExportImportContentProcessor
 					url = url.substring(groupFriendlyURL.length());
 				}
 
+				long groupId = group.getGroupId();
+
+				while (true) {
+					pos = url.indexOf(StringPool.SLASH, 1);
+
+					if (pos == -1) {
+						break;
+					}
+
+					String groupName = url.substring(1, pos);
+
+					groupFriendlyURL = StringPool.SLASH + groupName;
+
+					Group urlGroup =
+						GroupLocalServiceUtil.fetchFriendlyURLGroup(
+							group.getCompanyId(), groupFriendlyURL);
+
+					if (urlGroup != null) {
+						group = urlGroup;
+						groupId = urlGroup.getGroupId();
+
+						if (!DATA_HANDLER_GROUP_FRIENDLY_URL.equals(
+								urlSB.stringAt(urlSB.index() - 1))) {
+
+							urlSB.append(DATA_HANDLER_GROUP_FRIENDLY_URL);
+						}
+
+						url = url.substring(groupFriendlyURL.length());
+					}
+					else {
+						throw new NoSuchLayoutException();
+					}
+				}
+
+				if (Validator.isNull(url)) {
+					continue;
+				}
+
 				Element entityElement = portletDataContext.getExportDataElement(
 					stagedModel);
 
 				Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-					group.getGroupId(), privateLayout, url);
+					groupId, privateLayout, url);
 
 				portletDataContext.addReferenceElement(
 					stagedModel, entityElement, layout,
@@ -1023,8 +1061,16 @@ public class BaseTextExportImportContentProcessor
 				newGroupId = layout.getGroupId();
 				newLayoutId = layout.getLayoutId();
 			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get layout with plid " + oldPlid);
+			else if (_log.isDebugEnabled()) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Unable to get layout with plid ");
+				sb.append(oldPlid);
+				sb.append(", using layout id  ");
+				sb.append(newLayoutId);
+				sb.append(" instead");
+
+				_log.debug(sb.toString());
 			}
 
 			String oldLinkToLayout = matcher.group(0);

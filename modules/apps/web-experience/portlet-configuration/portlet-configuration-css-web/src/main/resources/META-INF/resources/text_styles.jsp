@@ -24,7 +24,7 @@ decimalFormatSymbols.setDecimalSeparator('.');
 
 <aui:row>
 	<aui:col width="<%= 33 %>">
-		<aui:select label="font" name="lfr-font-family" showEmptyOption="<%= true %>">
+		<aui:select label="font" name="fontFamily" showEmptyOption="<%= true %>">
 			<aui:option label="Arial" />
 			<aui:option label="Georgia" />
 			<aui:option label="Times New Roman" />
@@ -33,11 +33,11 @@ decimalFormatSymbols.setDecimalSeparator('.');
 			<aui:option label="Verdana" />
 		</aui:select>
 
-		<aui:input label="bold" name="lfr-font-bold" type="toggle-switch" />
+		<aui:input label="bold" name="fontBold" type="toggle-switch" />
 
-		<aui:input label="italic" name="lfr-font-italic" type="toggle-switch" />
+		<aui:input label="italic" name="fontItalic" type="toggle-switch" />
 
-		<aui:select label="size" name="lfr-font-size" showEmptyOption="<%= true %>">
+		<aui:select label="size" name="fontSize" showEmptyOption="<%= true %>">
 
 			<%
 			DecimalFormat decimalFormat = new DecimalFormat("#.##em", decimalFormatSymbols);
@@ -54,16 +54,16 @@ decimalFormatSymbols.setDecimalSeparator('.');
 
 		</aui:select>
 
-		<aui:input label="color" name="lfr-font-color" />
+		<aui:input label="color" name="fontColor" />
 
-		<aui:select label="alignment" name="lfr-font-align" showEmptyOption="<%= true %>">
+		<aui:select label="alignment" name="textAlign" showEmptyOption="<%= true %>">
 			<aui:option label="justify" />
 			<aui:option label="left" />
 			<aui:option label="right" />
 			<aui:option label="center" />
 		</aui:select>
 
-		<aui:select label="text-decoration" name="lfr-font-decoration" showEmptyOption="<%= true %>">
+		<aui:select label="text-decoration" name="textDecoration" showEmptyOption="<%= true %>">
 			<aui:option label="none" />
 			<aui:option label="underline" />
 			<aui:option label="overline" />
@@ -72,7 +72,7 @@ decimalFormatSymbols.setDecimalSeparator('.');
 	</aui:col>
 
 	<aui:col last="<%= true %>" width="<%= 60 %>">
-		<aui:select label="word-spacing" name="lfr-font-space" showEmptyOption="<%= true %>">
+		<aui:select label="word-spacing" name="wordSpacing" showEmptyOption="<%= true %>">
 
 			<%
 			DecimalFormat decimalFormat = new DecimalFormat("#.##em", decimalFormatSymbols);
@@ -93,7 +93,7 @@ decimalFormatSymbols.setDecimalSeparator('.');
 
 		</aui:select>
 
-		<aui:select label="line-height" name="lfr-font-leading" showEmptyOption="<%= true %>">
+		<aui:select label="line-height" name="lineHeight" showEmptyOption="<%= true %>">
 
 			<%
 			DecimalFormat decimalFormat = new DecimalFormat("#.##em", decimalFormatSymbols);
@@ -110,7 +110,7 @@ decimalFormatSymbols.setDecimalSeparator('.');
 
 		</aui:select>
 
-		<aui:select label="letter-spacing" name="lfr-font-tracking" showEmptyOption="<%= true %>">
+		<aui:select label="letter-spacing" name="letterSpacing" showEmptyOption="<%= true %>">
 
 			<%
 			for (int i = -10; i <= 50; i++) {

@@ -19,39 +19,39 @@
 <aui:row>
 	<aui:col cssClass="lfr-padding use-for-all-column" width="<%= 50 %>">
 		<aui:fieldset label="padding">
-			<aui:input checked="checked" cssClass="lfr-use-for-all" label="same-for-all" name="lfr-use-for-all-padding" type="toggle-switch" />
+			<aui:input checked="checked" cssClass="lfr-use-for-all" label="same-for-all" name="useForAllPadding" type="toggle-switch" />
 
 			<span class="field-row">
-				<aui:input inlineField="<%= true %>" label="top" name="lfr-padding-top" />
+				<aui:input inlineField="<%= true %>" label="top" name="paddingTop" />
 
-				<aui:select inlineField="<%= true %>" label="" name="lfr-padding-top-unit" title="top-padding-unit">
+				<aui:select inlineField="<%= true %>" label="" name="paddingTopUnit" title="top-padding-unit">
 					<aui:option label="%" />
 					<aui:option label="px" />
 					<aui:option label="em" />
 				</aui:select>
 			</span>
 			<span class="field-row">
-				<aui:input inlineField="<%= true %>" label="right" name="lfr-padding-right" />
+				<aui:input inlineField="<%= true %>" label="right" name="paddingRight" />
 
-				<aui:select inlineField="<%= true %>" label="" name="lfr-padding-right-unit" title="right-padding-unit">
+				<aui:select inlineField="<%= true %>" label="" name="paddingRightUnit" title="right-padding-unit">
 					<aui:option label="%" />
 					<aui:option label="px" />
 					<aui:option label="em" />
 				</aui:select>
 			</span>
 			<span class="field-row">
-				<aui:input inlineField="<%= true %>" label="bottom" name="lfr-padding-bottom" />
+				<aui:input inlineField="<%= true %>" label="bottom" name="paddingBottom" />
 
-				<aui:select inlineField="<%= true %>" label="" name="lfr-padding-bottom-unit" title="bottom-padding-unit">
+				<aui:select inlineField="<%= true %>" label="" name="paddingBottomUnit" title="bottom-padding-unit">
 					<aui:option label="%" />
 					<aui:option label="px" />
 					<aui:option label="em" />
 				</aui:select>
 			</span>
 			<span class="field-row">
-				<aui:input inlineField="<%= true %>" label="left" name="lfr-padding-left" />
+				<aui:input inlineField="<%= true %>" label="left" name="paddingLeft" />
 
-				<aui:select inlineField="<%= true %>" label="" name="lfr-padding-left-unit" title="left-padding-unit">
+				<aui:select inlineField="<%= true %>" label="" name="paddingLeftUnit" title="left-padding-unit">
 					<aui:option label="%" />
 					<aui:option label="px" />
 					<aui:option label="em" />
@@ -62,39 +62,39 @@
 
 	<aui:col cssClass="lfr-margin use-for-all-column" last="<%= true %>" width="<%= 50 %>">
 		<aui:fieldset label="margin">
-			<aui:input checked="checked" cssClass="lfr-use-for-all" label="same-for-all" name="lfr-use-for-all-margin" type="toggle-switch" />
+			<aui:input checked="checked" cssClass="lfr-use-for-all" label="same-for-all" name="useForAllMargin" type="toggle-switch" />
 
 			<span class="field-row">
-				<aui:input inlineField="<%= true %>" label="top" name="lfr-margin-top" />
+				<aui:input inlineField="<%= true %>" label="top" name="marginTop" />
 
-				<aui:select inlineField="<%= true %>" label="" name="lfr-margin-top-unit" title="top-margin-unit">
+				<aui:select inlineField="<%= true %>" label="" name="marginTopUnit" title="top-margin-unit">
 					<aui:option label="%" />
 					<aui:option label="px" />
 					<aui:option label="em" />
 				</aui:select>
 			</span>
 			<span class="field-row">
-				<aui:input inlineField="<%= true %>" label="right" name="lfr-margin-right" />
+				<aui:input inlineField="<%= true %>" label="right" name="marginRight" />
 
-				<aui:select inlineField="<%= true %>" label="" name="lfr-margin-right-unit" title="top-margin-unit">
+				<aui:select inlineField="<%= true %>" label="" name="marginRightUnit" title="top-margin-unit">
 					<aui:option label="%" />
 					<aui:option label="px" />
 					<aui:option label="em" />
 				</aui:select>
 			</span>
 			<span class="field-row">
-				<aui:input inlineField="<%= true %>" label="bottom" name="lfr-margin-bottom" />
+				<aui:input inlineField="<%= true %>" label="bottom" name="marginBottom" />
 
-				<aui:select inlineField="<%= true %>" label="" name="lfr-margin-bottom-unit" title="top-margin-unit">
+				<aui:select inlineField="<%= true %>" label="" name="marginBottomUnit" title="top-margin-unit">
 					<aui:option label="%" />
 					<aui:option label="px" />
 					<aui:option label="em" />
 				</aui:select>
 			</span>
 			<span class="field-row">
-				<aui:input inlineField="<%= true %>" label="left" name="lfr-margin-left" />
+				<aui:input inlineField="<%= true %>" label="left" name="marginLeft" />
 
-				<aui:select inlineField="<%= true %>" label="" name="lfr-margin-left-unit" title="top-margin-unit">
+				<aui:select inlineField="<%= true %>" label="" name="marginLeftUnit" title="top-margin-unit">
 					<aui:option label="%" />
 					<aui:option label="px" />
 					<aui:option label="em" />

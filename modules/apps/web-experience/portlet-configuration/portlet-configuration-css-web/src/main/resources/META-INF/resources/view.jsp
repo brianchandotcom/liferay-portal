@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String portletResource = ParamUtil.getString(request, "portletResource");
-%>
-
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(portletResource) && PortletPermissionUtil.contains(permissionChecker, themeDisplay.getLayout(), portletResource, ActionKeys.CONFIGURATION) %>">
 		<aui:form action="" cssClass="container-fluid-1280" method="post" name="fm">

@@ -41,17 +41,14 @@ public class JavaEmptyLinesCheck extends BaseFileCheck {
 
 		content = _fixRedundantEmptyLines(content);
 
-		content = _fixIncorrectEmptyLineBeforeCloseCurlyBrace(
-			content, fileName);
+		content = _fixIncorrectEmptyLineBeforeCloseCurlyBrace(content);
 
 		content = _fixMissingEmptyLineAfterSettingVariable(content);
 
 		return new Tuple(content, Collections.emptySet());
 	}
 
-	private String _fixIncorrectEmptyLineBeforeCloseCurlyBrace(
-		String content, String fileName) {
-
+	private String _fixIncorrectEmptyLineBeforeCloseCurlyBrace(String content) {
 		Matcher matcher1 = _incorrectCloseCurlyBracePattern1.matcher(content);
 
 		while (matcher1.find()) {

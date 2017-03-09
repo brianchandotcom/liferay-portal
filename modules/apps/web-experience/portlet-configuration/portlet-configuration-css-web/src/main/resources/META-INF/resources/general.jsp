@@ -16,10 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:input name="use-custom-title" type="toggle-switch" />
+<aui:input name="useCustomTitle" type="toggle-switch" />
 
 <span class="field-row">
-	<aui:input inlineField="<%= true %>" label="" name="custom-title" />
+	<aui:input inlineField="<%= true %>" label="" name="customTitle" />
 
 	<aui:select inlineField="<%= true %>" label="" name="lfr-portlet-language" title="language">
 
@@ -36,7 +36,7 @@
 	</aui:select>
 </span>
 
-<aui:select label="link-portlet-urls-to-page" name="lfr-point-links">
+<aui:select label="link-portlet-urls-to-page" name="linkToLayoutUuid">
 	<aui:option label="current-page" value="" />
 
 	<%
@@ -61,7 +61,7 @@
 
 </aui:select>
 
-<aui:select label="portlet-decorators" name="portlet-decorator">
+<aui:select label="portlet-decorators" name="portletDecoratorId">
 
 	<%
 	List<PortletDecorator> portletDecorators = theme.getPortletDecorators();

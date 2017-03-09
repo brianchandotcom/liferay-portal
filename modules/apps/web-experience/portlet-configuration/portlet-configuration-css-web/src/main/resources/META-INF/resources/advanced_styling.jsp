@@ -16,6 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:input label="enter-your-custom-css-class-names" name="lfr-custom-css-class-name" type="text" />
+<aui:input label="enter-your-custom-css-class-names" name="customCSSClassName" type="text" />
 
-<aui:input cssClass="lfr-textarea-container" label="enter-your-custom-css" name="lfr-custom-css" type="textarea" />
+<aui:input label="enter-your-custom-css" name="customCSS" type="textarea" />

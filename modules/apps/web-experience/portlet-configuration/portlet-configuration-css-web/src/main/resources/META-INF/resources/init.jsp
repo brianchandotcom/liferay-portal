@@ -62,6 +62,8 @@ page import="java.util.Objects" %>
 <portlet:defineObjects />
 
 <%
+String currentURL = PortalUtil.getCurrentURL(request);
+
 String portletResource = ParamUtil.getString(renderRequest, "portletResource");
 
 PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletResource);

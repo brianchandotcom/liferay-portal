@@ -18,23 +18,9 @@
 
 <aui:input name="useCustomTitle" type="toggle-switch" />
 
-<span class="field-row">
-	<aui:input inlineField="<%= true %>" label="" name="customTitle" />
-
-	<aui:select inlineField="<%= true %>" label="" name="lfr-portlet-language" title="language">
-
-		<%
-		for (Locale curLocale : LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId())) {
-		%>
-
-			<aui:option label="<%= curLocale.getDisplayName(locale) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
-</span>
+<aui:field-wrapper cssClass="lfr-input-text-container">
+	<liferay-ui:input-localized defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="customTitle" xml="" />
+</aui:field-wrapper>
 
 <aui:select label="link-portlet-urls-to-page" name="linkToLayoutUuid">
 	<aui:option label="current-page" value="" />

@@ -18,9 +18,12 @@
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(portletResource) && PortletPermissionUtil.contains(permissionChecker, themeDisplay.getLayout(), portletResource, ActionKeys.CONFIGURATION) %>">
-		<aui:form action="" cssClass="container-fluid-1280" method="post" name="fm">
-			<input id="portlet-area" name="portlet-area" type="hidden" />
-			<input id="portlet-boundary-id" name="portlet-boundary-id" type="hidden" />
+		<portlet:actionURL name="updateLookAndFeel" var="updateLookAndFeelURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:actionURL>
+
+		<aui:form action="<%= updateLookAndFeelURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+			<aui:input name="portletId" type="hidden" value="<%= portletResource %>" />
 
 			<div class="portlet-configuration-body-content">
 				<div class="container-fluid-1280">

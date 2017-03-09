@@ -42,11 +42,16 @@ import org.junit.rules.ExternalResource;
 public class MavenExecutor extends ExternalResource {
 
 	public Result execute(File projectDir, String... args) throws Exception {
+		boolean mavenDebug = isMavenDebug();
 		Path mavenHomeDirPath = _checkMavenHomeDirPath();
 
 		List<String> commands = new ArrayList<>();
 
 		String mavenExecutableFileName = "mvn";
+
+		if (mavenDebug) {
+			mavenExecutableFileName = "mvnDebug";
+		}
 
 		if (_isWindows()) {
 			mavenExecutableFileName += ".cmd";
@@ -66,6 +71,10 @@ public class MavenExecutor extends ExternalResource {
 		ProcessBuilder processBuilder = new ProcessBuilder(commands);
 
 		processBuilder.directory(projectDir);
+
+		if (mavenDebug) {
+			processBuilder.inheritIO();
+		}
 
 		Map<String, String> environment = processBuilder.environment();
 
@@ -162,6 +171,10 @@ public class MavenExecutor extends ExternalResource {
 
 	protected String getMavenOpts() {
 		return "-Dfile.encoding=UTF-8";
+	}
+
+	protected boolean isMavenDebug() {
+		return Boolean.getBoolean("maven.debug");
 	}
 
 	protected void writeSettingsXmlFile() throws IOException {

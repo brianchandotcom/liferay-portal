@@ -22,11 +22,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -35,14 +38,21 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortletCategoryKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
+import javax.portlet.ValidatorException;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -196,6 +206,12 @@ public class PanelAppRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PanelAppRegistry.class);
 
+	@Reference
+	private PortletPreferencesFactory _portletPreferencesFactory;
+
+	@Reference
+	private PrefsProps _prefsProps;
+
 	private ServiceTrackerMap<String, List<PanelApp>> _serviceTrackerMap;
 
 	private class PanelAppOrderComparator
@@ -267,8 +283,8 @@ public class PanelAppRegistry {
 				try {
 					initPersonalControlPanelPortletPermission(portlet);
 				}
-				catch (PortalException pe) {
-					_log.error(pe, pe);
+				catch (Exception e) {
+					_log.error(e, e);
 				}
 
 				panelApp.setPortlet(portlet);
@@ -287,7 +303,8 @@ public class PanelAppRegistry {
 
 		protected void initPersonalControlPanelPortletPermission(
 				Portlet portlet)
-			throws PortalException {
+			throws IOException, PortalException, ReadOnlyException,
+				ValidatorException {
 
 			String category = portlet.getControlPanelEntryCategory();
 
@@ -297,8 +314,24 @@ public class PanelAppRegistry {
 				return;
 			}
 
+			long companyId = portlet.getCompanyId();
+			String portletId = portlet.getPortletId();
+
+			PortletPreferences portletPreferences =
+				_portletPreferencesFactory.getLayoutPortletSetup(
+					companyId, companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+					LayoutConstants.DEFAULT_PLID, portletId,
+					PortletConstants.DEFAULT_PREFERENCES);
+
+			if (_prefsProps.getBoolean(
+					portletPreferences,
+					"myAccountAccessInControlPanelPermissionsInitialized")) {
+
+				return;
+			}
+
 			Role userRole = roleLocalService.getRole(
-				portlet.getCompanyId(), RoleConstants.USER);
+				companyId, RoleConstants.USER);
 
 			List<String> actionIds =
 				ResourceActionsUtil.getPortletResourceActions(
@@ -308,15 +341,20 @@ public class PanelAppRegistry {
 
 			if (actionIds.contains(actionId)) {
 				resourcePermissionLocalService.addResourcePermission(
-					portlet.getCompanyId(), portlet.getRootPortletId(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(portlet.getCompanyId()),
+					companyId, portlet.getRootPortletId(),
+					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
 					userRole.getRoleId(), actionId);
 			}
 
 			portletLocalService.updatePortlet(
 				portlet.getCompanyId(), portlet.getPortletId(),
 				StringPool.BLANK, portlet.isActive());
+
+			portletPreferences.setValue(
+				"myAccountAccessInControlPanelPermissionsInitialized",
+				StringPool.TRUE);
+
+			portletPreferences.store();
 		}
 
 	}

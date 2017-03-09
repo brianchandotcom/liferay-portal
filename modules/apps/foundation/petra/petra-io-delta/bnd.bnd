@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Petra IO Delta
 Bundle-SymbolicName: com.liferay.petra.io.delta
-Bundle-Version: 1.0.5
+Bundle-Version: 1.1.0
 Export-Package: com.liferay.petra.io.delta

@@ -18,6 +18,7 @@ import java.io.IOException;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.SeekableByteChannel;
 
 /**
  * @author Connor McKay
@@ -74,9 +75,30 @@ public class ByteChannelReader {
 		return _byteBuffer.hasRemaining();
 	}
 
+	public boolean isSeekable() {
+		if (_readableByteChannel instanceof SeekableByteChannel) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public void maybeRead(int length) throws IOException {
 		if (!_eof && (_byteBuffer.remaining() < length)) {
 			read(length);
+		}
+	}
+
+	public void position(int position) throws IOException {
+		if (isSeekable()) {
+			((SeekableByteChannel)_readableByteChannel).position(position);
+
+			_byteBuffer.clear();
+			_byteBuffer.flip();
+		}
+		else {
+			throw new IOException("ByteChannel is not seekable");
 		}
 	}
 

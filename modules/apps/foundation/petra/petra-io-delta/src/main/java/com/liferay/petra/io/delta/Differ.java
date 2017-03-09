@@ -14,15 +14,15 @@
 
 package com.liferay.petra.io.delta;
 
+import gnu.trove.map.hash.TIntIntHashMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
+
 import java.io.IOException;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
 
 import java.security.MessageDigest;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Connor McKay
@@ -67,25 +67,47 @@ public class Differ {
 	}
 
 	protected void readChecksums() throws IOException {
-		_blockDatas = new HashMap<>(_blocksCount);
+		if (_checksumsByteChannelReader.isSeekable()) {
+			_weakChecksums = new TIntIntHashMap(_blocksCount, 0.5f, -1, -1);
+		}
+		else {
+			_blockDatas = new TIntObjectHashMap<>(_blocksCount);
+		}
 
 		for (int blockNumber = 0; blockNumber < _blocksCount; blockNumber++) {
 			_checksumsByteChannelReader.ensureData(20);
 
 			int weakChecksum = _checksumsByteBuffer.getInt();
 
-			byte[] strongChecksum = new byte[16];
+			if (_checksumsByteChannelReader.isSeekable()) {
 
-			_checksumsByteBuffer.get(strongChecksum);
+				// If checksumsByteChannelReader is an instance of
+				// SeekableByteChannel, we can significantly reduce heap memory
+				// usage and maintain performance by reading the strong
+				// checksums as needed.
 
-			// It is possible that there are two or more blocks with the same
-			// weak checksum, in which case the map will only contain the strong
-			// checksum of the last one. In some cases, this may cause a data
-			// block to be sent when a reference block could have been sent, but
-			// it doesn't really matter.
+				_checksumsByteChannelReader.skip(16);
 
-			_blockDatas.put(
-				weakChecksum, new BlockData(blockNumber, strongChecksum));
+				_weakChecksums.put(weakChecksum, blockNumber);
+			}
+			else {
+				byte[] strongChecksum = new byte[16];
+
+				_checksumsByteBuffer.get(strongChecksum);
+
+				// It is possible that there are two or more blocks with the
+				// same weak checksum, in which case the map will only contain
+				// the strong checksum of the last one. In some cases, this may
+				// cause a data block to be sent when a reference block could
+				// have been sent, but it doesn't really matter.
+
+				ByteBuffer byteBuffer = ByteBuffer.allocate(20);
+
+				byteBuffer.put(strongChecksum);
+				byteBuffer.putInt(blockNumber);
+
+				_blockDatas.put(weakChecksum, byteBuffer.array());
+			}
 		}
 	}
 
@@ -125,15 +147,43 @@ public class Differ {
 		_lastBlockNumber = -1;
 
 		while (_rollingChecksum.hasNext()) {
-			BlockData blockData = _blockDatas.get(
-				_rollingChecksum.weakChecksum());
+			int blockNumber = 0;
+			byte[] strongChecksum = null;
 
-			if ((blockData != null) &&
+			if (_checksumsByteChannelReader.isSeekable()) {
+				blockNumber = _weakChecksums.get(
+					_rollingChecksum.weakChecksum());
+
+				if (blockNumber != -1) {
+					int position = 13 + (blockNumber * 20);
+
+					_checksumsByteChannelReader.position(position);
+
+					_checksumsByteChannelReader.ensureData(16);
+
+					strongChecksum = new byte[16];
+
+					_checksumsByteBuffer.get(strongChecksum);
+				}
+			}
+			else {
+				byte[] blockDataBytes = _blockDatas.get(
+					_rollingChecksum.weakChecksum());
+
+				if (blockDataBytes != null) {
+					ByteBuffer byteBuffer = ByteBuffer.wrap(blockDataBytes);
+
+					strongChecksum = new byte[16];
+
+					byteBuffer.get(strongChecksum, 0, 16);
+
+					blockNumber = byteBuffer.getInt();
+				}
+			}
+
+			if ((strongChecksum != null) &&
 				MessageDigest.isEqual(
-					blockData.getStrongChecksum(),
-					_rollingChecksum.strongChecksum())) {
-
-				int blockNumber = blockData.getBlockNumber();
+					strongChecksum, _rollingChecksum.strongChecksum())) {
 
 				if (_firstBlockNumber == -1) {
 					writeDataBlock();
@@ -210,7 +260,7 @@ public class Differ {
 		_lastBlockNumber = -1;
 	}
 
-	private Map<Integer, BlockData> _blockDatas;
+	private TIntObjectHashMap<byte[]> _blockDatas;
 	private int _blockLength;
 	private int _blocksCount;
 	private ByteBuffer _checksumsByteBuffer;
@@ -222,25 +272,6 @@ public class Differ {
 	private int _lastBlockNumber;
 	private ReadableByteChannel _modifiedReadableByteChannel;
 	private RollingChecksum _rollingChecksum;
-
-	private static class BlockData {
-
-		public BlockData(int blockNumber, byte[] strongChecksum) {
-			_blockNumber = blockNumber;
-			_strongChecksum = strongChecksum;
-		}
-
-		public int getBlockNumber() {
-			return _blockNumber;
-		}
-
-		public byte[] getStrongChecksum() {
-			return _strongChecksum;
-		}
-
-		private final int _blockNumber;
-		private final byte[] _strongChecksum;
-
-	}
+	private TIntIntHashMap _weakChecksums;
 
 }

@@ -98,20 +98,17 @@ public class CustomizationSettingsProductNavigationControlMenuEntry
 
 	@Override
 	public boolean isShow(HttpServletRequest request) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Boolean show = (Boolean)request.getAttribute(_SHOW);
 
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.isTypeControlPanel()) {
-			return false;
+		if (show != null) {
+			return show;
 		}
 
-		if (!isCustomizableLayout(themeDisplay)) {
-			return false;
-		}
+		show = _isShow(request);
 
-		return super.isShow(request);
+		request.setAttribute(_SHOW, show);
+
+		return show;
 	}
 
 	@Override
@@ -162,6 +159,27 @@ public class CustomizationSettingsProductNavigationControlMenuEntry
 
 		return true;
 	}
+
+	private boolean _isShow(HttpServletRequest request) throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		if (!isCustomizableLayout(themeDisplay)) {
+			return false;
+		}
+
+		return super.isShow(request);
+	}
+
+	private static final String _SHOW =
+		CustomizationSettingsProductNavigationControlMenuEntry.class +
+			"._IS_SHOW";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CustomizationSettingsProductNavigationControlMenuEntry.class);

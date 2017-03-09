@@ -53,6 +53,29 @@ public class StagingProductNavigationControlMenuEntry
 
 	@Override
 	public boolean isShow(HttpServletRequest request) throws PortalException {
+		Boolean show = (Boolean)request.getAttribute(_SHOW);
+
+		if (show != null) {
+			return show;
+		}
+
+		show = _isShow(request);
+
+		request.setAttribute(_SHOW, show);
+
+		return show;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.staging.bar.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	private boolean _isShow(HttpServletRequest request) throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -69,13 +92,7 @@ public class StagingProductNavigationControlMenuEntry
 		return true;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.staging.bar.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
+	private static final String _SHOW =
+		StagingProductNavigationControlMenuEntry.class + "._SHOW";
 
 }

@@ -14,16 +14,28 @@
 
 package com.liferay.portal.kernel.cal;
 
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.util.CalendarFactoryImpl;
+import com.liferay.portal.util.FastDateFormatFactoryImpl;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Steven Smith
  */
 public class RecurrenceSerializerTest extends RecurrenceSerializer {
+
+	@Before
+	public void setUp() {
+		setUpCalendarFactoryUtil();
+		setUpFastDateFormatFactoryUtil();
+	}
 
 	@Test
 	public void testDailyRecurrence() throws Exception {
@@ -44,11 +56,11 @@ public class RecurrenceSerializerTest extends RecurrenceSerializer {
 
 		recurrence.setByDay(_firstMondayDayAndPositions);
 
-		Assert.assertEquals("0 4 3 ? * 2 *", toCronText(recurrence));
+		Assert.assertEquals("0 4 3 ? * MON *", toCronText(recurrence));
 
 		recurrence.setByDay(_firstMondayDayAndFirstFridayAndPositions);
 
-		Assert.assertEquals("0 4 3 ? * 2,6 *", toCronText(recurrence));
+		Assert.assertEquals("0 4 3 ? * MON,FRI *", toCronText(recurrence));
 	}
 
 	@Test
@@ -70,11 +82,11 @@ public class RecurrenceSerializerTest extends RecurrenceSerializer {
 
 		recurrence.setByDay(_firstMondayDayAndPositions);
 
-		Assert.assertEquals("0 4 3 ? 1/1 2#0 *", toCronText(recurrence));
+		Assert.assertEquals("0 4 3 ? 1/1 MON#0 *", toCronText(recurrence));
 
 		recurrence.setInterval(3);
 
-		Assert.assertEquals("0 4 3 ? 1/3 2#0 *", toCronText(recurrence));
+		Assert.assertEquals("0 4 3 ? 1/3 MON#0 *", toCronText(recurrence));
 	}
 
 	@Test
@@ -84,11 +96,11 @@ public class RecurrenceSerializerTest extends RecurrenceSerializer {
 
 		recurrence.setByDay(_lastMondayDayAndPositions);
 
-		Assert.assertEquals("0 4 3 ? 1/1 2L *", toCronText(recurrence));
+		Assert.assertEquals("0 4 3 ? 1/1 MONL *", toCronText(recurrence));
 
 		recurrence.setInterval(3);
 
-		Assert.assertEquals("0 4 3 ? 1/3 2L *", toCronText(recurrence));
+		Assert.assertEquals("0 4 3 ? 1/3 MONL *", toCronText(recurrence));
 	}
 
 	@Test
@@ -136,15 +148,15 @@ public class RecurrenceSerializerTest extends RecurrenceSerializer {
 
 		recurrence.setByDay(_firstMondayDayAndPositions);
 
-		Assert.assertEquals("0 4 3 ? * 2/1 *", toCronText(recurrence));
+		Assert.assertEquals("0 4 3 ? * MON/1 *", toCronText(recurrence));
 
 		recurrence.setByDay(_firstMondayDayAndFirstFridayAndPositions);
 
-		Assert.assertEquals("0 4 3 ? * 2,6/1 *", toCronText(recurrence));
+		Assert.assertEquals("0 4 3 ? * MON,FRI/1 *", toCronText(recurrence));
 
 		recurrence.setInterval(3);
 
-		Assert.assertEquals("0 4 3 ? * 2,6/3 *", toCronText(recurrence));
+		Assert.assertEquals("0 4 3 ? * MON,FRI/3 *", toCronText(recurrence));
 	}
 
 	@Test
@@ -167,11 +179,11 @@ public class RecurrenceSerializerTest extends RecurrenceSerializer {
 		recurrence.setByMonth(new int[] {0});
 		recurrence.setByDay(_firstMondayDayAndPositions);
 
-		Assert.assertEquals("0 4 3 ? 1 2#0 2010/1", toCronText(recurrence));
+		Assert.assertEquals("0 4 3 ? 1 MON#0 2010/1", toCronText(recurrence));
 
 		recurrence.setInterval(3);
 
-		Assert.assertEquals("0 4 3 ? 1 2#0 2010/3", toCronText(recurrence));
+		Assert.assertEquals("0 4 3 ? 1 MON#0 2010/3", toCronText(recurrence));
 	}
 
 	@Test
@@ -182,11 +194,11 @@ public class RecurrenceSerializerTest extends RecurrenceSerializer {
 		recurrence.setByMonth(new int[] {0});
 		recurrence.setByDay(_lastMondayDayAndPositions);
 
-		Assert.assertEquals("0 4 3 ? 1 2L 2010/1", toCronText(recurrence));
+		Assert.assertEquals("0 4 3 ? 1 MONL 2010/1", toCronText(recurrence));
 
 		recurrence.setInterval(3);
 
-		Assert.assertEquals("0 4 3 ? 1 2L 2010/3", toCronText(recurrence));
+		Assert.assertEquals("0 4 3 ? 1 MONL 2010/3", toCronText(recurrence));
 	}
 
 	@Test
@@ -207,6 +219,20 @@ public class RecurrenceSerializerTest extends RecurrenceSerializer {
 	protected Recurrence getRecurrence(Calendar calendar, int recurrenceType) {
 		return new Recurrence(
 			calendar, new Duration(1, 0, 0, 0), recurrenceType);
+	}
+
+	protected void setUpCalendarFactoryUtil() {
+		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
+
+		calendarFactoryUtil.setCalendarFactory(new CalendarFactoryImpl());
+	}
+
+	protected void setUpFastDateFormatFactoryUtil() {
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
 	}
 
 	private static final DayAndPosition[]

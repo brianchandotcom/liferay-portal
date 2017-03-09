@@ -16,4 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:input label="background-color" name="lfr-bg-color" />
+<aui:input name="backgroundColor" />

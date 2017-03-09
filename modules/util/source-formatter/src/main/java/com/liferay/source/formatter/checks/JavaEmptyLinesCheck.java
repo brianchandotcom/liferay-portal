@@ -37,14 +37,14 @@ public class JavaEmptyLinesCheck extends BaseFileCheck {
 			return new Tuple(content, Collections.emptySet());
 		}
 
+		content = _fixMissingEmptyLines(content);
+
+		content = _fixRedundantEmptyLines(content);
+
 		content = _fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			content, fileName);
 
-		content = _fixMissingEmptyLines(content);
-
 		content = _fixMissingEmptyLineAfterSettingVariable(content);
-
-		content = _fixRedundantEmptyLines(content);
 
 		return new Tuple(content, Collections.emptySet());
 	}

@@ -2489,6 +2489,11 @@
 	<command name="WebContentAdministrationPaginatingRelatedAssets" priority="3">
 		<property name="testray.component.names" value="Related Assets,Web Content Administration" />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -2607,7 +2612,7 @@
 		<execute macro="WebContent#addExistingRelatedAssetCP">
 			<var name="assetTitle" value="WC WebContent 5 Title" />
 			<var name="assetType" value="Basic Web Content" />
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#add">

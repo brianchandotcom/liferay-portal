@@ -463,6 +463,11 @@
 	</command>
 
 	<command name="ViewSiteManagePagesRegRole" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
 			<var name="portletName" value="Sites" />
 			<var name="roleTitle" value="Regrole Name" />
@@ -529,13 +534,13 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<var name="key_site" value="Liferay" />
+		<var name="key_site" value="${siteName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" value1="Liferay" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" value1="${siteName}" />
 
-		<var name="key_siteName" value="Liferay" />
+		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertElementPresent" locator1="SitePages#SITE_NAME" value1="Liferay" />
+		<execute function="AssertElementPresent" locator1="SitePages#SITE_NAME" value1="${siteName}" />
 
 		<execute macro="Navigator#openURL" />
 

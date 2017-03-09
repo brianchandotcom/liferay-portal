@@ -1,0 +1,9 @@
+/.digest
+/.lfrbuild-*
+/build
+/build.gradle
+/build_gradle
+/dist
+/liferay-theme.json
+/npm-shrinkwrap.json
+/resources-importer

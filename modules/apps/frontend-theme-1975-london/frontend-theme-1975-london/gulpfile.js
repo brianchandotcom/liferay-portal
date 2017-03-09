@@ -6,5 +6,4 @@ var liferayThemeTasks = require('liferay-theme-tasks');
 liferayThemeTasks.registerTasks(
 	{
 		gulp: gulp
-	}
-);
+	});

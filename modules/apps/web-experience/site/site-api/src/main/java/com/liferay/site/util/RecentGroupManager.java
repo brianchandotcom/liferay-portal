@@ -47,6 +47,12 @@ public class RecentGroupManager {
 			return;
 		}
 
+		Group liveGroup = _groupLocalService.fetchGroup(liveGroupId);
+
+		if (liveGroup.isLayoutPrototype() || liveGroup.isLayoutSetPrototype()) {
+			return;
+		}
+
 		String value = _getRecentGroupsValue(request);
 
 		List<Long> groupIds = ListUtil.fromArray(

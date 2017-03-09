@@ -49,16 +49,27 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 
 	@Override
 	public void executeNode() throws Exception {
+		File packageJsonFile = _getPackageJsonFile();
+
+		boolean packageJsonExists = packageJsonFile.exists();
+
 		try {
 			_createNpmrcFile();
-			_createPackageJsonFile();
+
+			if (!packageJsonExists) {
+				_createPackageJsonFile();
+			}
 
 			super.executeNode();
 		}
 		finally {
 			Project project = getProject();
 
-			project.delete(_getNpmrcFile(), _getPackageJsonFile());
+			project.delete(_getNpmrcFile());
+
+			if (!packageJsonExists) {
+				project.delete(packageJsonFile);
+			}
 		}
 	}
 

@@ -586,6 +586,12 @@ public class ModulesStructureTest {
 			String gitAttributesTemplate, String settingsGradleTemplate)
 		throws IOException {
 
+		for (String fileName : _GRADLE_WRAPPER_FILE_NAMES) {
+			Path path = dirPath.resolve(fileName);
+
+			Assert.assertFalse("Forbidden " + path, Files.exists(path));
+		}
+
 		Path buildGradlePath = dirPath.resolve("build.gradle");
 		Path gradlePropertiesPath = dirPath.resolve("gradle.properties");
 		Path settingsGradlePath = dirPath.resolve("settings.gradle");
@@ -776,6 +782,10 @@ public class ModulesStructureTest {
 
 	private static final String _GIT_REPO_GRADLE_PROJECT_PATH_PREFIX_KEY =
 		"project.path.prefix";
+
+	private static final String[] _GRADLE_WRAPPER_FILE_NAMES = {
+		"gradle", "gradlew", "gradlew.bat"
+	};
 
 	private static final String _SOURCE_FORMATTER_IGNORE_FILE_NAME =
 		"source_formatter.ignore";

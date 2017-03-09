@@ -61,14 +61,6 @@ public class LoginPostAction extends Action {
 
 			session.removeAttribute(Globals.LOCALE_KEY);
 
-			// Password Expiring Check
-
-			if (UserLocalServiceUtil.isPasswordExpiringSoon(
-					PortalUtil.getUser(request))) {
-
-				SessionMessages.add(request, "passwordExpiringSoon");
-			}
-
 			// Live users
 
 			if (PropsValues.LIVE_USERS_ENABLED) {
@@ -110,6 +102,14 @@ public class LoginPostAction extends Action {
 				UserLocalServiceUtil.addDefaultGroups(userId);
 				UserLocalServiceUtil.addDefaultRoles(userId);
 				UserLocalServiceUtil.addDefaultUserGroups(userId);
+			}
+
+			// Password Expiration
+
+			if (UserLocalServiceUtil.isPasswordExpiringSoon(
+				PortalUtil.getUser(request))) {
+
+				SessionMessages.add(request, "passwordExpiringSoon");
 			}
 		}
 		catch (Exception e) {

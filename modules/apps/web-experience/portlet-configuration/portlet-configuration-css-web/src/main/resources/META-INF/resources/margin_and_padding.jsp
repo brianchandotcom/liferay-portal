@@ -148,3 +148,18 @@ JSONObject paddingJSONObject = spacingDataJSONObject.getJSONObject("padding");
 		</aui:fieldset>
 	</aui:col>
 </aui:row>
+
+<aui:script>
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllPadding', '<portlet:namespace />paddingBottom', <%= paddingJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllPadding', '<portlet:namespace />paddingBottomUnit', <%= paddingJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllPadding', '<portlet:namespace />paddingLeft', <%= paddingJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllPadding', '<portlet:namespace />paddingLeftUnit', <%= paddingJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllPadding', '<portlet:namespace />paddingRight', <%= paddingJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllPadding', '<portlet:namespace />paddingRightUnit', <%= paddingJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllMargin', '<portlet:namespace />marginBottom', <%= marginSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllMargin', '<portlet:namespace />marginBottomUnit', <%= marginSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllMargin', '<portlet:namespace />marginLeft', <%= marginSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllMargin', '<portlet:namespace />marginLeftUnit', <%= marginSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllMargin', '<portlet:namespace />marginRight', <%= marginSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllMargin', '<portlet:namespace />marginRightUnit', <%= marginSONObject.getBoolean("sameForAll") %>);
+</aui:script>

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
@@ -31,7 +32,6 @@ import com.liferay.product.navigation.control.menu.constants.ProductNavigationCo
 import com.liferay.taglib.aui.IconTag;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 import com.liferay.taglib.ui.SuccessTag;
-import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -83,15 +83,15 @@ public class ManageLayoutProductNavigationControlMenuEntry
 
 		Map<String, String> values = new HashMap<>();
 
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			request, _portal.getLocale(request));
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", themeDisplay.getLocale(), getClass());
 
 		values.put(
 			"configurePage",
 			_html.escape(_language.get(resourceBundle, "configure-page")));
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		String portletId = LayoutAdminPortletKeys.GROUP_PAGES;
 

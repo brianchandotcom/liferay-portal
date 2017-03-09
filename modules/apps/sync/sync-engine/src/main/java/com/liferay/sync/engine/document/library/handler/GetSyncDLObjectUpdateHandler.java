@@ -124,6 +124,20 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				}
 			}
 
+			protected void doCancel() {
+				if (_firedProcessingState) {
+					SyncEngineUtil.fireSyncEngineStateChanged(
+						getSyncAccountId(),
+						SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSED);
+
+					_firedProcessingState = false;
+				}
+
+				event.cancel();
+
+				_scheduledFuture.cancel(true);
+			}
+
 			@Override
 			protected void doRun() {
 				SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
@@ -143,20 +157,6 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				}
 
 				super.doRun();
-			}
-
-			protected void doCancel() {
-				if (_firedProcessingState) {
-					SyncEngineUtil.fireSyncEngineStateChanged(
-						getSyncAccountId(),
-						SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSED);
-
-					_firedProcessingState = false;
-				}
-
-				event.cancel();
-
-				_scheduledFuture.cancel(true);
 			}
 
 			private boolean _firedProcessingState;

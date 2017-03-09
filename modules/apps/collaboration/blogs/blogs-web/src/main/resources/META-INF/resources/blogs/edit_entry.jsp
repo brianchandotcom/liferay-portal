@@ -171,8 +171,10 @@ if (portletTitleBasedNavigation) {
 					</div>
 
 					<div class="col-md-8 col-md-offset-2">
-						<div class="entry-title">
-							<h1><liferay-ui:input-editor contents="<%= HtmlUtil.escape(title) %>" editorName="alloyeditor" name="titleEditor" onChangeMethod="OnChangeTitle" placeholder="title" showSource="<%= false %>" /></h1>
+						<div class="entry-title form-group">
+							<h1>
+								<liferay-ui:input-editor contents="<%= HtmlUtil.escape(title) %>" editorName="alloyeditor" name="titleEditor" onChangeMethod="OnChangeTitle" placeholder="title" showSource="<%= false %>" />
+							</h1>
 						</div>
 
 						<aui:input name="title" type="hidden" />
@@ -183,8 +185,10 @@ if (portletTitleBasedNavigation) {
 
 						<aui:input name="subtitle" type="hidden" />
 
-						<div class="entry-content">
-							<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp") %>' name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
+						<div class="entry-content form-group">
+							<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp") %>' name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" required="<%= true %>">
+								<aui:validator name="required" />
+							</liferay-ui:input-editor>
 						</div>
 
 						<aui:input name="content" type="hidden" />
@@ -257,6 +261,12 @@ if (portletTitleBasedNavigation) {
 							<aui:input checked="<%= customAbstract %>" label="custom-abstract" name="customAbstract" type="radio" value="<%= true %>" />
 						</div>
 
+						<div class="entry-description form-group">
+							<aui:input disabled="<%= !customAbstract %>" label="description" name="description" type="text" value="<%= description %>">
+								<aui:validator name="required" />
+							</aui:input>
+						</div>
+
 						<portlet:actionURL name="/blogs/upload_small_image" var="uploadSmallImageURL" />
 
 						<div class="lfr-blogs-small-image-selector">
@@ -267,12 +277,6 @@ if (portletTitleBasedNavigation) {
 
 							<liferay-item-selector:image-selector fileEntryId="<%= smallImageFileEntryId %>" itemSelectorEventName="<%= smallImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, smallImageSelectedItemEventName) %>" maxFileSize="<%= PropsValues.BLOGS_IMAGE_MAX_SIZE %>" paramName="smallImageFileEntry" uploadURL="<%= uploadSmallImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 						</div>
-
-						<div class="entry-description">
-							<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorName="alloyeditor" name="descriptionEditor" onInitMethod="OnDescriptionEditorInit" placeholder="description" showSource="<%= false %>" />
-						</div>
-
-						<aui:input name="description" type="hidden" />
 					</div>
 
 					<aui:input label="display-date" name="displayDate" />
@@ -410,12 +414,6 @@ if (portletTitleBasedNavigation) {
 		}
 	}
 
-	function <portlet:namespace />OnDescriptionEditorInit() {
-		<c:if test="<%= !customAbstract %>">
-			document.getElementById('<portlet:namespace />descriptionEditor').setAttribute('contenteditable', false);
-		</c:if>
-	}
-
 	<c:if test="<%= (entry != null) && blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>">
 		Liferay.Util.toggleBoxes('<portlet:namespace />sendEmailEntryUpdated', '<portlet:namespace />emailEntryUpdatedCommentWrapper');
 	</c:if>
@@ -456,25 +454,6 @@ if (portletTitleBasedNavigation) {
 			}
 		)
 	);
-
-	var createAbstractEditor = function() {
-		var descriptionEditor = window['<portlet:namespace />descriptionEditor'];
-
-		if (!descriptionEditor.instanceReady) {
-			descriptionEditor.create();
-
-			blogs.setDescription(window['<portlet:namespace />contentEditor'].getText());
-		}
-	};
-
-	var configurationContentHeader = AUI.$('#<portlet:namespace />configurationContent');
-
-	if (configurationContentHeader.hasClass('in')) {
-		createAbstractEditor();
-	}
-	else {
-		configurationContentHeader.on('show.bs.collapse', createAbstractEditor);
-	}
 
 	var clearSaveDraftHandle = function(event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {

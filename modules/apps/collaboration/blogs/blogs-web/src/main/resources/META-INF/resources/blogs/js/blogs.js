@@ -48,7 +48,8 @@ AUI.add(
 							savedAtMessage: Liferay.Language.get('entry-saved-at-x'),
 							savedDraftAtMessage: Liferay.Language.get('draft-saved-at-x'),
 							saveDraftError: Liferay.Language.get('could-not-save-draft-to-the-server'),
-							saveDraftMessage: Liferay.Language.get('saving-draft')
+							saveDraftMessage: Liferay.Language.get('saving-draft'),
+							titleRequiredAtPublish: Liferay.Language.get('this-field-is-required-to-publish-the-entry')
 						}
 					}
 				},
@@ -106,9 +107,20 @@ AUI.add(
 							description = instance._shorten(text);
 						}
 
-						window[instance.ns('descriptionEditor')].setHTML(description);
+						var descriptionNode = instance.one('#description');
 
-						instance._syncDescriptionEditorUI();
+						descriptionNode.val(description);
+
+						descriptionNode.attr('disabled', instance._shortenDescription);
+
+						var form = Liferay.Form.get(instance.ns('fm'));
+
+						if (!instance._shortenDescription) {
+							form.addRule(instance.ns('description'), 'required');
+						}
+						else {
+							form.removeRule(instance.ns('description'), 'required');
+						}
 					},
 
 					updateFriendlyURL: function(title) {
@@ -131,6 +143,28 @@ AUI.add(
 						instance._calculateReadingTimeFn(content);
 					},
 
+					_automaticURL: function() {
+						return this.one('#urlOptions').one('input:checked').val() === 'true';
+					},
+
+					_beforePublishBtnClick: function(event) {
+						var instance = this;
+
+						var form = Liferay.Form.get(instance.ns('fm'));
+
+						var strings = instance.get('strings');
+
+						form.addRule(instance.ns('titleEditor'), 'required', strings.titleRequiredAtPublish);
+					},
+
+					_beforeSaveBtnClick: function() {
+						var instance = this;
+
+						var form = Liferay.Form.get(instance.ns('fm'));
+
+						form.removeRule(instance.ns('titleEditor'), 'required');
+					},
+
 					_bindUI: function() {
 						var instance = this;
 
@@ -145,6 +179,7 @@ AUI.add(
 
 						if (publishButton) {
 							eventHandles.push(
+								publishButton.before(STR_CLICK, A.bind('_beforePublishBtnClick', instance)),
 								publishButton.on(STR_CLICK, A.bind('_checkImagesBeforeSave', instance, false, false))
 							);
 						}
@@ -153,6 +188,7 @@ AUI.add(
 
 						if (saveButton) {
 							eventHandles.push(
+								saveButton.before(STR_CLICK, A.bind('_beforeSaveBtnClick', instance)),
 								saveButton.on(STR_CLICK, A.bind('_checkImagesBeforeSave', instance, true, false))
 							);
 						}
@@ -247,12 +283,10 @@ AUI.add(
 						instance._shortenDescription = target.val() === 'false';
 
 						if (instance._shortenDescription) {
-							instance._customDescription = window[instance.ns('descriptionEditor')].getHTML();
+							instance._customDescription = instance.one('#description').val();
 
 							description = window[instance.ns('contentEditor')].getText();
 						}
-
-						instance._setDescriptionReadOnly(instance._shortenDescription);
 
 						instance.setDescription(description);
 					},
@@ -337,7 +371,6 @@ AUI.add(
 
 						var content = window[instance.ns('contentEditor')].getHTML();
 						var coverImageCaption = window[instance.ns('coverImageCaptionEditor')].getHTML();
-						var description = window[instance.ns('descriptionEditor')].getHTML();
 						var subtitle = window[instance.ns('subtitleEditor')].getHTML();
 						var title = window[instance.ns('titleEditor')].getText();
 						var urlTitle = instance.one('#urlTitle').val();
@@ -345,7 +378,7 @@ AUI.add(
 						var form = instance._getPrincipalForm();
 
 						if (draft && ajax) {
-							var hasData = content !== STR_BLANK && (draft || (title !== STR_BLANK));
+							var hasData = content !== STR_BLANK && (draft || title !== STR_BLANK);
 
 							var hasChanged = instance._oldContent !== content || instance._oldSubtitle !== subtitle || instance._oldTitle !== title;
 
@@ -458,22 +491,12 @@ AUI.add(
 
 							instance.one('#content').val(content);
 							instance.one('#coverImageCaption').val(coverImageCaption);
-							instance.one('#description').val(description);
 							instance.one('#subtitle').val(subtitle);
 							instance.one('#title').val(title);
 							instance.one('#workflowAction').val(draft ? constants.ACTION_SAVE_DRAFT : constants.ACTION_PUBLISH);
 
 							submitForm(form);
 						}
-					},
-
-					_setDescriptionReadOnly: function(readOnly) {
-						var instance = this;
-
-						var descriptionEditorNode = instance.one('#descriptionEditor');
-
-						descriptionEditorNode.attr('contenteditable', !readOnly);
-						descriptionEditorNode.toggleClass('readonly', readOnly);
 					},
 
 					_shorten: function(text) {
@@ -494,10 +517,6 @@ AUI.add(
 						return text;
 					},
 
-					_automaticURL: function() {
-						return this.one('#urlOptions').one("input:checked").val() === 'true';
-					},
-
 					_showCaption: function() {
 						var instance = this;
 
@@ -505,24 +524,6 @@ AUI.add(
 
 						if (captionNode) {
 							captionNode.removeClass(CSS_INVISIBLE);
-						}
-					},
-
-					_syncDescriptionEditorUI: function() {
-						var instance = this;
-
-						var liferayDescriptionEditor = window[instance.ns('descriptionEditor')];
-
-						if (liferayDescriptionEditor.instanceReady) {
-							var nativeDescriptionEditor = liferayDescriptionEditor.getNativeEditor().get('nativeEditor');
-
-							if (nativeDescriptionEditor && nativeDescriptionEditor.plugins && nativeDescriptionEditor.plugins.ae_placeholder) {
-								var editorEvent = {
-									editor: nativeDescriptionEditor
-								};
-
-								nativeDescriptionEditor.plugins.ae_placeholder._checkEmptyData(editorEvent);
-							}
 						}
 					},
 
@@ -559,6 +560,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-io-request', 'liferay-portlet-base']
+		requires: ['aui-base', 'aui-io-request', 'liferay-form', 'liferay-portlet-base']
 	}
 );

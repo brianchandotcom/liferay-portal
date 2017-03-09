@@ -705,6 +705,31 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
+	@Override
+	public synchronized void removePortletResource(String portletName) {
+		PortletResourceActionsBag portletResourceActionsBag =
+			_portletResourceActionsBags.remove(portletName);
+
+		if (portletResourceActionsBag != null) {
+			Set<String> modelResources =
+				portletResourceActionsBag.getModelResources();
+
+			for (String modelResource : modelResources) {
+				ModelResourceActionsBag modelResourceActionsBag =
+					_modelResourceActionsBags.get(modelResource);
+
+				Set<String> portletResources =
+					modelResourceActionsBag.getPortletResources();
+
+				portletResources.remove(portletName);
+
+				if (portletResources.isEmpty()) {
+					_modelResourceActionsBags.remove(modelResource);
+				}
+			}
+		}
+	}
+
 	@BeanReference(type = PortletLocalService.class)
 	protected PortletLocalService portletLocalService;
 

@@ -29,9 +29,11 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
+import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.awt.Desktop;
@@ -208,18 +210,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String fileName, String message, String markdownFileName,
 		int lineCount) {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages =
-			_sourceFormatterMessagesMap.get(fileName);
-
-		if (sourceFormatterMessages == null) {
-			sourceFormatterMessages = new TreeSet<>();
-		}
-
-		sourceFormatterMessages.add(
+		processMessage(
+			fileName,
 			new SourceFormatterMessage(
 				fileName, message, markdownFileName, lineCount));
-
-		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}
 
 	@Override
@@ -1250,6 +1244,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String newContent = doFormat(file, fileName, absolutePath, content);
 
+		newContent = processFileChecks(fileName, absolutePath, newContent);
+
 		newContent = StringUtil.replace(
 			newContent, StringPool.RETURN, StringPool.BLANK);
 
@@ -1975,6 +1971,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected File getFile(String fileName, int level) {
 		return _sourceFormatterHelper.getFile(
 			sourceFormatterArgs.getBaseDirName(), fileName, level);
+	}
+
+	protected List<FileCheck> getFileChecks() {
+		return null;
 	}
 
 	protected List<String> getFileNames(
@@ -2804,6 +2804,34 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	protected String processFileChecks(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		List<FileCheck> fileChecks = getFileChecks();
+
+		if (fileChecks == null) {
+			return content;
+		}
+
+		for (FileCheck fileCheck : fileChecks) {
+			Tuple tuple = fileCheck.process(fileName, absolutePath, content);
+
+			content = (String)tuple.getObject(0);
+
+			Set<SourceFormatterMessage> sourceFormatterMessages =
+				(Set<SourceFormatterMessage>)tuple.getObject(1);
+
+			for (SourceFormatterMessage sourceFormatterMessage :
+					sourceFormatterMessages) {
+
+				processMessage(fileName, sourceFormatterMessage);
+			}
+		}
+
+		return content;
+	}
+
 	protected void processFormattedFile(
 			File file, String fileName, String content, String newContent)
 		throws Exception {
@@ -2856,6 +2884,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		_modifiedFileNames.add(file.getAbsolutePath());
+	}
+
+	protected void processMessage(
+		String fileName, SourceFormatterMessage sourceFormatterMessage) {
+
+		Set<SourceFormatterMessage> sourceFormatterMessages =
+			_sourceFormatterMessagesMap.get(fileName);
+
+		if (sourceFormatterMessages == null) {
+			sourceFormatterMessages = new TreeSet<>();
+		}
+
+		sourceFormatterMessages.add(sourceFormatterMessage);
+
+		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}
 
 	protected void putBNDSettings(BNDSettings bndSettings) {

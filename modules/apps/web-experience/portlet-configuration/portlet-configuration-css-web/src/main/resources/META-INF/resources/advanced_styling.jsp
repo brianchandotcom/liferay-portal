@@ -20,6 +20,20 @@
 JSONObject advancedDataJSONObject = portletSetupJSONObject.getJSONObject("advancedData");
 %>
 
+<div class="alert alert-info">
+	<p>
+		<liferay-ui:message key="your-current-portlet-information-is-as-follows" />
+	</p>
+
+	<p>
+		<liferay-ui:message key="portlet-id" />: <strong>#portlet_<%= portletResource %></strong>
+	</p>
+
+	<p>
+		<liferay-ui:message key="portlet-classes" />: <strong># + portletClasses + </strong>
+	</p>
+</div>
+
 <aui:input label="enter-your-custom-css-class-names" name="customCSSClassName" type="text" value='<%= advancedDataJSONObject.getString("customCSSClassName") %>' />
 
 <aui:input label="enter-your-custom-css" name="customCSS" type="textarea" value='<%= advancedDataJSONObject.getString("customCSS") %>' />

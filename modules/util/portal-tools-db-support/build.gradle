@@ -1,5 +1,7 @@
 apply plugin: "com.liferay.maven.plugin.builder"
 
+String h2Version = "1.4.193"
+
 buildPluginDescriptor {
 	ext {
 		autoClean = false
@@ -11,15 +13,22 @@ buildPluginDescriptor {
 	goalPrefix = "db-support"
 }
 
+configurations {
+	mavenDistribution
+}
+
 dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.58"
+
+	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
 	provided group: "com.liferay", name: "com.liferay.portal.tools.service.builder", transitive: false, version: "1.0.135"
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 
-	testCompile group: "com.h2database", name: "h2", version: "1.4.193"
+	testCompile group: "com.h2database", name: "h2", version: h2Version
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
+	testCompile project(":test:maven-executor")
 }
 
 formatSource {
@@ -28,6 +37,18 @@ formatSource {
 
 liferayOSGi {
 	expandCompileInclude = true
+}
+
+test {
+	dependsOn install
+
+	doFirst {
+		systemProperty "maven.debug", System.getProperty("maven.debug")
+		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
+	}
+
+	systemProperty "db.support.version", jar.version
+	systemProperty "h2.version", h2Version
 }
 
 updateFileVersions {

@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Portlet Configuration CSS Web
 Bundle-SymbolicName: com.liferay.portlet.configuration.css.web
 Bundle-Version: 2.0.9
+Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
 Web-ContextPath: /portlet-configuration-css-web

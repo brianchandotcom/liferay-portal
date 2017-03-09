@@ -195,11 +195,19 @@ public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 	public void setWorkflowTaskAssignees(
 		Collection<WorkflowTaskAssignee> workflowTaskAssignees) {
 
-		if (_workflowTaskAssignees == null) {
-			_workflowTaskAssignees = new ArrayList<>();
+		if (_workflowTaskAssignees != null) {
+			_workflowTaskAssignees.addAll(workflowTaskAssignees);
+
+			return;
 		}
 
-		_workflowTaskAssignees.addAll(workflowTaskAssignees);
+		if (workflowTaskAssignees instanceof List) {
+			_workflowTaskAssignees =
+				(List<WorkflowTaskAssignee>)workflowTaskAssignees;
+		}
+		else {
+			_workflowTaskAssignees = new ArrayList<>(workflowTaskAssignees);
+		}
 	}
 
 	public void setWorkflowTaskId(long workflowTaskId) {

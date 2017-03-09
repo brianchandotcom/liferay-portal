@@ -72,7 +72,7 @@
 - [LPS-70870]: Update the [Liferay Gradle Plugins Node] dependency to version
 2.0.0.
 
-## 2.0.11 - 2017-03-08
+## 2.0.11 - 2017-03-09
 
 ### Changed
 - [LPS-70634]: Update the [Liferay Gradle Plugins Node] dependency to version

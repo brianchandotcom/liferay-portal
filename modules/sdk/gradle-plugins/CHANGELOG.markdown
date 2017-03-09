@@ -1230,7 +1230,7 @@ to version 1.0.96.
 - [LPS-68405]: Update the [Liferay Gradle Plugins JS Module Config Generator]
 dependency to version 2.1.9.
 
-## 3.2.17 - 2017-03-08
+## 3.2.17 - 2017-03-09
 
 ### Added
 - [LPS-70634]: Use the `liferayTheme.distName` property in the `package.json`

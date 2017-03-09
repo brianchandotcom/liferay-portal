@@ -84,7 +84,7 @@ and the `npm-shrinkwrap.json` file from the project, if present.
 of failure.
 - [LPS-70870]: Fix Node.js download with authenticated proxies.
 
-## 2.0.1 - 2017-03-08
+## 2.0.1 - 2017-03-09
 
 ### Changed
 - [LPS-70634]: Reuse the `package.json` file of a project, if it exists, while

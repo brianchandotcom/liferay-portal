@@ -101,7 +101,7 @@ with if preceded by spaces or tabs.
 - [LPS-68405]: Update the default version of `liferay-module-config-generator`
 to `1.2.1`.
 
-## 2.1.10 - 2017-03-08
+## 2.1.10 - 2017-03-09
 
 ### Changed
 - [LPS-70634]: Update the [Liferay Gradle Plugins Node] dependency to version

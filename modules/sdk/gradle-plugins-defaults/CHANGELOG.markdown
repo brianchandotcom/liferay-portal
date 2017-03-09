@@ -1194,7 +1194,7 @@ task.
 - [LPS-63943]: Avoid executing `writeArtifactPublishCommands` tasks if not
 explicitly invoked.
 
-## 3.3.0 - 2017-03-08
+## 3.3.0 - 2017-03-09
 
 ### Added
 - [LPS-70634]: Automatically publish public themes to the NPM registry while

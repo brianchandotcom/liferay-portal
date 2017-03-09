@@ -71,7 +71,10 @@ import java.util.regex.Pattern;
 
 /**
  * @author Gergely Mathe
+ *
+ * @deprecated As of 4.0.0
  */
+@Deprecated
 public class BaseTextExportImportContentProcessor
 	implements ExportImportContentProcessor<String> {
 

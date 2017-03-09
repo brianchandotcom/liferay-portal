@@ -155,3 +155,18 @@ JSONObject borderWidthJSONObject = borderDataJSONObject.getJSONObject("borderWid
 		</aui:fieldset>
 	</aui:col>
 </aui:row>
+
+<aui:script>
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllWidth', '<portlet:namespace />borderWidthRight', <%= borderWidthJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllWidth', '<portlet:namespace />borderWidthRightUnit', <%= borderWidthJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllWidth', '<portlet:namespace />borderWidthBottom', <%= borderWidthJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllWidth', '<portlet:namespace />borderWidthBottomUnit', <%= borderWidthJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllWidth', '<portlet:namespace />borderWidthLeft', <%= borderWidthJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllWidth', '<portlet:namespace />borderWidthLeftUnit', <%= borderWidthJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllStyle', '<portlet:namespace />borderStyleRight', <%= borderStyleJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllStyle', '<portlet:namespace />borderStyleBottom', <%= borderStyleJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllStyle', '<portlet:namespace />borderStyleLeft', <%= borderStyleJSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllColor', '<portlet:namespace />borderColorRight', <%= borderColorSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllColor', '<portlet:namespace />borderColorBottom', <%= borderColorSONObject.getBoolean("sameForAll") %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllColor', '<portlet:namespace />borderColorLeft', <%= borderColorSONObject.getBoolean("sameForAll") %>);
+</aui:script>

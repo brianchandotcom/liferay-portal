@@ -92,3 +92,7 @@ String portletDecoratorId = portletSetup.getValue("portletSetupPortletDecoratorI
 <span class="alert alert-info form-hint hide" id="border-note">
 	<liferay-ui:message key="this-change-will-only-be-shown-after-you-refresh-the-page" />
 </span>
+
+<aui:script>
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useCustomTitle', '<portlet:namespace />customTitle', <%= !useCustomTitle %>);
+</aui:script>

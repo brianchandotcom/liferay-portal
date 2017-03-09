@@ -264,26 +264,14 @@ AUI.add(
 						for (var i = indexes.length - 1; i >= 0; i--) {
 							var currentIndex = indexes[i];
 
-							var action = {
-								action: instance._actions[currentIndex + '-target'].getValue()
-							};
-
-							var target;
-
-							var targetField = instance._actions[currentIndex + '-action'];
-
-							if (action.get('type') === 'jump-to-page') {
-								action.updateSource(instance._getConditionSelectedFieldsPage());
-							}
-
-							if (targetField) {
-								target = targetField.getValue();
-							}
+							var targetAction = instance._actions[currentIndex + '-action'];
 
 							actions.push(
 								A.merge(
-									target,
-									action
+									{
+										action: instance._actions[currentIndex + '-target'].getValue()
+									},
+									targetAction ? targetAction.getValue() : undefined
 								)
 							);
 						}
@@ -385,7 +373,7 @@ AUI.add(
 
 						var fieldName = field.get('fieldName');
 
-						if (field.getValue() &&
+						if (field.getValue() && fieldName &&
 							(fieldName.match('-condition-first-operand') ||
 							fieldName.match('-condition-second-operand-select'))) {
 							for (var key in instance._actions) {

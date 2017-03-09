@@ -208,18 +208,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String fileName, String message, String markdownFileName,
 		int lineCount) {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages =
-			_sourceFormatterMessagesMap.get(fileName);
-
-		if (sourceFormatterMessages == null) {
-			sourceFormatterMessages = new TreeSet<>();
-		}
-
-		sourceFormatterMessages.add(
+		processMessage(
+			fileName,
 			new SourceFormatterMessage(
 				fileName, message, markdownFileName, lineCount));
-
-		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}
 
 	@Override
@@ -2856,6 +2848,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		_modifiedFileNames.add(file.getAbsolutePath());
+	}
+
+	protected void processMessage(
+		String fileName, SourceFormatterMessage sourceFormatterMessage) {
+
+		Set<SourceFormatterMessage> sourceFormatterMessages =
+			_sourceFormatterMessagesMap.get(fileName);
+
+		if (sourceFormatterMessages == null) {
+			sourceFormatterMessages = new TreeSet<>();
+		}
+
+		sourceFormatterMessages.add(sourceFormatterMessage);
+
+		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}
 
 	protected void putBNDSettings(BNDSettings bndSettings) {

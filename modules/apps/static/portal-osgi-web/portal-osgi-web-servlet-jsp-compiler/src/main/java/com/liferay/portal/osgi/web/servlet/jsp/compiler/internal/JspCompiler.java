@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathU
 import java.io.File;
 import java.io.IOException;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.security.AccessController;
@@ -36,23 +38,21 @@ import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
-import javax.tools.ForwardingJavaFileManager;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
-import javax.tools.JavaFileObject.Kind;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
@@ -349,30 +349,32 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				_javaFileObjectResolvers);
 		}
 
-		return new ForwardingJavaFileManager<JavaFileManager>(
-			super.getJavaFileManager(javaFileManager)) {
+		return super.getJavaFileManager(javaFileManager);
+	}
 
-			@Override
-			@SuppressWarnings("unchecked")
-			public Iterable<JavaFileObject> list(
-					Location location, String packageName, Set<Kind> kinds,
-					boolean recurse)
-				throws IOException {
+	@Override
+	protected JavaFileObject getOutputFile(String className, URI uri) {
+		Map<String, Map<String, JavaFileObject>> packageMap =
+			rtctxt.getPackageMap();
 
-				Iterable<JavaFileObject> iterable = super.list(
-					location, packageName, kinds, recurse);
+		String packageName = className.substring(
+			0, className.lastIndexOf(CharPool.PERIOD));
 
-				if ((location == StandardLocation.CLASS_PATH) &&
-					packageName.startsWith(Constants.JSP_PACKAGE_NAME)) {
+		// The super impl's packageJavaFileObjects is plain HashMap which is not
+		// threadsafe, copy-swap it to be ConcurrentHashMap
 
-					iterable = new ArrayList<>(
-						(Collection<JavaFileObject>)iterable);
-				}
+		Map<String, JavaFileObject> packageJavaFileObjects = packageMap.get(
+			packageName);
 
-				return iterable;
-			}
+		JavaFileObject javaFileObject = super.getOutputFile(className, uri);
 
-		};
+		if (packageJavaFileObjects == null) {
+			packageMap.put(
+				packageName,
+				new ConcurrentHashMap<>(packageMap.get(packageName)));
+		}
+
+		return javaFileObject;
 	}
 
 	protected void initClassPath(ServletContext servletContext) {

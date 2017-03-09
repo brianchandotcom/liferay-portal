@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+JSONObject textDataJSONObject = portletSetupJSONObject.getJSONObject("textData");
+
 DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
 
 decimalFormatSymbols.setDecimalSeparator('.');
@@ -25,17 +27,17 @@ decimalFormatSymbols.setDecimalSeparator('.');
 <aui:row>
 	<aui:col width="<%= 33 %>">
 		<aui:select label="font" name="fontFamily" showEmptyOption="<%= true %>">
-			<aui:option label="Arial" />
-			<aui:option label="Georgia" />
-			<aui:option label="Times New Roman" />
-			<aui:option label="Tahoma" />
-			<aui:option label="Trebuchet MS" />
-			<aui:option label="Verdana" />
+			<aui:option label="Arial" selected='<%= Objects.equals(textDataJSONObject.get("fontFamily"), "Arial") %>' />
+			<aui:option label="Georgia" selected='<%= Objects.equals(textDataJSONObject.get("fontFamily"), "Georgia") %>' />
+			<aui:option label="Times New Roman" selected='<%= Objects.equals(textDataJSONObject.get("fontFamily"), "Times New Roman") %>' />
+			<aui:option label="Tahoma" selected='<%= Objects.equals(textDataJSONObject.get("fontFamily"), "Tahoma") %>' />
+			<aui:option label="Trebuchet MS" selected='<%= Objects.equals(textDataJSONObject.get("fontFamily"), "Trebuchet MS") %>' />
+			<aui:option label="Verdana" selected='<%= Objects.equals(textDataJSONObject.get("fontFamily"), "Verdana") %>' />
 		</aui:select>
 
-		<aui:input label="bold" name="fontBold" type="toggle-switch" />
+		<aui:input label="bold" name="fontBold" type="toggle-switch" value='<%= Objects.equals(textDataJSONObject.get("fontWeight"), "bold") %>' />
 
-		<aui:input label="italic" name="fontItalic" type="toggle-switch" />
+		<aui:input label="italic" name="fontItalic" type="toggle-switch" value='<%= Objects.equals(textDataJSONObject.get("fontStyle"), "italic") %>' />
 
 		<aui:select label="size" name="fontSize" showEmptyOption="<%= true %>">
 
@@ -46,7 +48,7 @@ decimalFormatSymbols.setDecimalSeparator('.');
 				String value = decimalFormat.format(i);
 			%>
 
-				<aui:option label="<%= value %>" />
+				<aui:option label="<%= value %>" selected='<%= Objects.equals(textDataJSONObject.get("fontSize"), value) %>' />
 
 			<%
 			}
@@ -54,20 +56,20 @@ decimalFormatSymbols.setDecimalSeparator('.');
 
 		</aui:select>
 
-		<aui:input label="color" name="fontColor" />
+		<aui:input label="color" name="fontColor" value='<%= textDataJSONObject.get("color") %>' />
 
 		<aui:select label="alignment" name="textAlign" showEmptyOption="<%= true %>">
-			<aui:option label="justify" />
-			<aui:option label="left" />
-			<aui:option label="right" />
-			<aui:option label="center" />
+			<aui:option label="justify" selected='<%= Objects.equals(textDataJSONObject.get("textAlign"), "justify") %>' />
+			<aui:option label="left" selected='<%= Objects.equals(textDataJSONObject.get("textAlign"), "left") %>' />
+			<aui:option label="right" selected='<%= Objects.equals(textDataJSONObject.get("textAlign"), "right") %>' />
+			<aui:option label="center" selected='<%= Objects.equals(textDataJSONObject.get("textAlign"), "center") %>' />
 		</aui:select>
 
 		<aui:select label="text-decoration" name="textDecoration" showEmptyOption="<%= true %>">
-			<aui:option label="none" />
-			<aui:option label="underline" />
-			<aui:option label="overline" />
-			<aui:option label="strikethrough" value="line-through" />
+			<aui:option label="none" selected='<%= Objects.equals(textDataJSONObject.get("textDecoration"), "none") %>' />
+			<aui:option label="underline" selected='<%= Objects.equals(textDataJSONObject.get("textDecoration"), "underline") %>' />
+			<aui:option label="overline" selected='<%= Objects.equals(textDataJSONObject.get("textDecoration"), "overline") %>' />
+			<aui:option label="strikethrough" selected='<%= Objects.equals(textDataJSONObject.get("textDecoration"), "line-through") %>' value="line-through" />
 		</aui:select>
 	</aui:col>
 
@@ -85,7 +87,7 @@ decimalFormatSymbols.setDecimalSeparator('.');
 				}
 			%>
 
-				<aui:option label="<%= value %>" />
+				<aui:option label="<%= value %>" selected='<%= Objects.equals(textDataJSONObject.get("wordSpacing"), value) %>' />
 
 			<%
 			}
@@ -102,7 +104,7 @@ decimalFormatSymbols.setDecimalSeparator('.');
 				String value = decimalFormat.format(i);
 			%>
 
-				<aui:option label="<%= value %>" />
+				<aui:option label="<%= value %>" selected='<%= Objects.equals(textDataJSONObject.get("lineHeight"), value) %>' />
 
 			<%
 			}
@@ -121,7 +123,7 @@ decimalFormatSymbols.setDecimalSeparator('.');
 				}
 			%>
 
-				<aui:option label="<%= value %>" />
+				<aui:option label="<%= value %>" selected='<%= Objects.equals(textDataJSONObject.get("letterSpacing"), value) %>' />
 
 			<%
 			}

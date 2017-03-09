@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:input label="enter-your-custom-css-class-names" name="customCSSClassName" type="text" />
+<%
+JSONObject advancedDataJSONObject = portletSetupJSONObject.getJSONObject("advancedData");
+%>
 
-<aui:input label="enter-your-custom-css" name="customCSS" type="textarea" />
+<aui:input label="enter-your-custom-css-class-names" name="customCSSClassName" type="text" value='<%= advancedDataJSONObject.getString("customCSSClassName") %>' />
+
+<aui:input label="enter-your-custom-css" name="customCSS" type="textarea" value='<%= advancedDataJSONObject.getString("customCSS") %>' />

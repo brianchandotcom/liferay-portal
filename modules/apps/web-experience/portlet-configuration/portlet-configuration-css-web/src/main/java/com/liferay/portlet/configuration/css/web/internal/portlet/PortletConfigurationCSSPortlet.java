@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.portlet.PortletSetupUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -36,8 +35,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSPortletKeys;
 
-import java.io.IOException;
-
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
@@ -45,10 +42,7 @@ import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,78 +70,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class PortletConfigurationCSSPortlet extends MVCPortlet {
-
-	public void getLookAndFeel(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortletException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			Layout layout = themeDisplay.getLayout();
-
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
-
-			String portletId = ParamUtil.getString(
-				resourceRequest, "portletId");
-
-			if (!PortletPermissionUtil.contains(
-					permissionChecker, layout, portletId,
-					ActionKeys.CONFIGURATION)) {
-
-				return;
-			}
-
-			PortletPreferences portletSetup =
-				themeDisplay.getStrictLayoutPortletSetup(layout, portletId);
-
-			JSONObject portletSetupJSONObject =
-				PortletSetupUtil.cssToJSONObject(portletSetup);
-
-			JSONObject defaultPortletTitlesJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			for (Locale locale : LanguageUtil.getAvailableLocales(
-					themeDisplay.getSiteGroupId())) {
-
-				String rootPortletId = PortletConstants.getRootPortletId(
-					portletId);
-				String languageId = LocaleUtil.toLanguageId(locale);
-
-				defaultPortletTitlesJSONObject.put(
-					languageId,
-					_portal.getPortletTitle(rootPortletId, languageId));
-			}
-
-			portletSetupJSONObject.put(
-				"defaultPortletTitles", defaultPortletTitlesJSONObject);
-
-			writeJSON(
-				resourceRequest, resourceResponse,
-				portletSetupJSONObject.toString());
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
-	}
-
-	@Override
-	public void serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws IOException, PortletException {
-
-		String resourceID = GetterUtil.getString(
-			resourceRequest.getResourceID());
-
-		if (resourceID.equals("getLookAndFeel")) {
-			getLookAndFeel(resourceRequest, resourceResponse);
-		}
-		else {
-			super.serveResource(resourceRequest, resourceResponse);
-		}
-	}
 
 	public void updateLookAndFeel(
 			ActionRequest actionRequest, ActionResponse actionResponse)

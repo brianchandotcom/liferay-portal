@@ -133,23 +133,12 @@ public class PanelCategoryHelper {
 		String panelCategoryKey, PermissionChecker permissionChecker,
 		Group group, User user) {
 
-		int count = 0;
+		int count =
+			_panelCategoryRegistry.countChildPanelCategoriesNotifications(
+				this, panelCategoryKey, permissionChecker, group, user);
 
-		List<PanelCategory> panelCategories =
-			_panelCategoryRegistry.getChildPanelCategories(
-				panelCategoryKey, permissionChecker, group);
-
-		for (PanelCategory panelCategory : panelCategories) {
-			count += panelCategory.getNotificationsCount(
-				this, permissionChecker, group, user);
-		}
-
-		Iterable<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
-			panelCategoryKey, permissionChecker, group);
-
-		for (PanelApp panelApp : panelApps) {
-			count += panelApp.getNotificationsCount(user);
-		}
+		count += _panelAppRegistry.countPanelAppsNotifications(
+			panelCategoryKey, permissionChecker, group, user);
 
 		return count;
 	}

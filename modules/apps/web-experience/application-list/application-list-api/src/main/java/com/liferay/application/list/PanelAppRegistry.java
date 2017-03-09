@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -51,6 +52,28 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = PanelAppRegistry.class)
 public class PanelAppRegistry {
+
+	public int countPanelAppsNotifications(
+		String parentPanelCategoryKey, PermissionChecker permissionChecker,
+		Group group, User user) {
+
+		int totalCount = 0;
+
+		for (PanelApp panelApp : getPanelApps(parentPanelCategoryKey)) {
+			int count = panelApp.getNotificationsCount(user);
+
+			try {
+				if ((count > 0) && panelApp.isShow(permissionChecker, group)) {
+					totalCount += count;
+				}
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
+			}
+		}
+
+		return totalCount;
+	}
 
 	public PanelApp getFirstPanelApp(
 		String parentPanelCategoryKey, PermissionChecker permissionChecker,

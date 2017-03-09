@@ -14,6 +14,7 @@
 
 package com.liferay.application.list;
 
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.util.PanelCategoryServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
@@ -46,6 +48,33 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 @Component(immediate = true, service = PanelCategoryRegistry.class)
 public class PanelCategoryRegistry {
+
+	public int countChildPanelCategoriesNotifications(
+		PanelCategoryHelper panelCategoryHelper, String panelCategoryKey,
+		PermissionChecker permissionChecker, Group group, User user) {
+
+		int totalCount = 0;
+
+		for (PanelCategory panelCategory :
+				getChildPanelCategories(panelCategoryKey)) {
+
+			int count = panelCategory.getNotificationsCount(
+				panelCategoryHelper, permissionChecker, group, user);
+
+			try {
+				if ((count > 0) &&
+					panelCategory.isShow(permissionChecker, group)) {
+
+					totalCount += count;
+				}
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
+			}
+		}
+
+		return totalCount;
+	}
 
 	public List<PanelCategory> getChildPanelCategories(
 		PanelCategory panelCategory) {

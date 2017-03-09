@@ -149,7 +149,18 @@ public class LiferayThemePlugin implements Plugin<Project> {
 	private void _configureArchivesBaseName(
 		Project project, Map<String, Object> packageJsonMap) {
 
-		String name = (String)packageJsonMap.get("name");
+		String name = null;
+
+		Map<String, Object> liferayThemeMap =
+			(Map<String, Object>)packageJsonMap.get("liferayTheme");
+
+		if (liferayThemeMap != null) {
+			name = (String)liferayThemeMap.get("distName");
+		}
+
+		if (Validator.isNull(name)) {
+			name = (String)packageJsonMap.get("name");
+		}
 
 		if (Validator.isNull(name)) {
 			return;

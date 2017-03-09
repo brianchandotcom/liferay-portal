@@ -197,6 +197,20 @@
 		<loadfile property="artifact.name" srcfile="package.json">
 			<filterchain>
 				<linecontains>
+					<contains value="&quot;distName&quot;:" />
+				</linecontains>
+
+				<tokenfilter>
+					<replaceregex pattern="\s.*&quot;distName&quot;: &quot;([0-9a-z-]+)&quot;," replace="\1" />
+				</tokenfilter>
+
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+
+		<loadfile property="artifact.name" srcfile="package.json">
+			<filterchain>
+				<linecontains>
 					<contains value="&quot;name&quot;:" />
 				</linecontains>
 

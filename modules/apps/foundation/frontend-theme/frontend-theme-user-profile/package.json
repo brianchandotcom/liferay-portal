@@ -3,10 +3,10 @@
 	"bugs": {
 		"url": "https://issues.liferay.com/"
 	},
-	"dependencies": {
+	"devDependencies": {
 		"gulp": "^3.8.10",
-		"liferay-theme-deps-7.0": "*",
-		"liferay-theme-tasks": "*"
+		"liferay-theme-deps-7.0": "~1.0.0",
+		"liferay-theme-tasks": "^1.3.11"
 	},
 	"keywords": [
 		"liferay-theme"
@@ -14,11 +14,12 @@
 	"license": "LGPL",
 	"liferayTheme": {
 		"baseTheme": "styled",
+		"distName": "user-profile-theme",
 		"rubySass": false,
 		"version": "7.0"
 	},
 	"main": "package.json",
-	"name": "user-profile-theme",
+	"name": "liferay-user-profile-theme",
 	"repository": "liferay/liferay-portal",
 	"version": "1.0.25"
 }

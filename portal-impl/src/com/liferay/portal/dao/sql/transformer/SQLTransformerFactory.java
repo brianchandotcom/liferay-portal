@@ -15,7 +15,6 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 
 /**
@@ -24,27 +23,37 @@ import com.liferay.portal.kernel.dao.db.DBType;
  */
 public class SQLTransformerFactory {
 
-	public static SQLTransformer getSQLTransformer() {
-		if (_sqlTransformer != null) {
-			return _sqlTransformer;
+	public static SQLTransformer getSQLTransformer(DB db) {
+		DBType dbType = db.getDBType();
+
+		SQLTransformerLogic sqlTransformerLogic = null;
+
+		if (dbType == DBType.DB2) {
+			sqlTransformerLogic = new DB2SQLTransformerLogic(db);
 		}
-
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.HYPERSONIC) {
-			_sqlTransformer = getSQLTransformer(
-				new HypersonicSQLTransformerLogic(db));
+		else if (dbType == DBType.HYPERSONIC) {
+			sqlTransformerLogic = new HypersonicSQLTransformerLogic(db);
 		}
-
-		return _sqlTransformer;
-	}
-
-	public static SQLTransformer getSQLTransformer(
-		SQLTransformerLogic sqlTransformerLogic) {
+		else if (dbType == DBType.MYSQL) {
+			sqlTransformerLogic = new MySQLSQLTransformerLogic(db);
+		}
+		else if (dbType == DBType.ORACLE) {
+			sqlTransformerLogic = new OracleSQLTransformerLogic(db);
+		}
+		else if (dbType == DBType.POSTGRESQL) {
+			sqlTransformerLogic = new PostgreSQLTransformerLogic(db);
+		}
+		else if (dbType == DBType.SQLSERVER) {
+			sqlTransformerLogic = new SQLServerSQLTransformerLogic(db);
+		}
+		else if (dbType == DBType.SYBASE) {
+			sqlTransformerLogic = new SybaseSQLTransformerLogic(db);
+		}
+		else {
+			return sql -> sql;
+		}
 
 		return new DefaultSQLTransformer(sqlTransformerLogic.getFunctions());
 	}
-
-	private static SQLTransformer _sqlTransformer;
 
 }

@@ -38,7 +38,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected Pattern getBitwiseCheckPattern() {
-		return Pattern.compile("BITAND\\((.+?),(.+?)\\)");
+		return Pattern.compile("BITAND\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)");
 	}
 
 	protected Function<String, String> getBooleanFunction() {
@@ -83,7 +83,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
 	protected Pattern getInstrPattern() {
 		return Pattern.compile(
-			"INSTR\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+			"INSTR\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)", Pattern.CASE_INSENSITIVE);
 	}
 
 	protected Function<String, String> getIntegerDivisionFunction() {
@@ -94,12 +94,13 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
 	protected Pattern getIntegerDivisionPattern() {
 		return Pattern.compile(
-			"INTEGER_DIV\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+			"INTEGER_DIV\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)",
+			Pattern.CASE_INSENSITIVE);
 	}
 
 	protected Pattern getModPattern() {
 		return Pattern.compile(
-			"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+			"MOD\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)", Pattern.CASE_INSENSITIVE);
 	}
 
 	protected Function<String, String> getNullDateFunction() {
@@ -108,7 +109,8 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
 	protected Pattern getSubstrPattern() {
 		return Pattern.compile(
-			"SUBSTR\\((.+?),(.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+			"SUBSTR\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)",
+			Pattern.CASE_INSENSITIVE);
 	}
 
 	protected String replaceBitwiseCheck(Matcher matcher) {

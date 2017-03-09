@@ -18,20 +18,21 @@ import com.liferay.portal.kernel.dao.db.DB;
 
 import java.util.function.Function;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Manuel de la Peña
- * @author Brian Wing Shun Chan
  */
-public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
+public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 
-	public HypersonicSQLTransformerLogic(DB db) {
+	public DB2SQLTransformerLogic(DB db) {
 		super(db);
 
 		_functions = new Function[] {
 			getBooleanFunction(), getCastClobTextFunction(),
 			getCastLongFunction(), getCastTextFunction(),
-			getIntegerDivisionFunction(), getNullDateFunction()
+			getIntegerDivisionFunction(), getNullDateFunction(),
+			_getLikeFunction()
 		};
 	}
 
@@ -41,14 +42,21 @@ public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	@Override
-	protected String replaceCastLong(Matcher matcher) {
-		return matcher.replaceAll("CONVERT($1, SQL_BIGINT)");
+	protected String replaceCastText(Matcher matcher) {
+		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
 	}
 
-	@Override
-	protected String replaceCastText(Matcher matcher) {
-		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
+	private Function<String, String> _getLikeFunction() {
+		return (String sql) -> {
+			Matcher matcher = _likePattern.matcher(sql);
+
+			return matcher.replaceAll(
+				"LIKE COALESCE(CAST(? AS VARCHAR(32672)),'')");
+		};
 	}
+
+	private static final Pattern _likePattern = Pattern.compile(
+		"LIKE \\?", Pattern.CASE_INSENSITIVE);
 
 	private final Function<String, String>[] _functions;
 

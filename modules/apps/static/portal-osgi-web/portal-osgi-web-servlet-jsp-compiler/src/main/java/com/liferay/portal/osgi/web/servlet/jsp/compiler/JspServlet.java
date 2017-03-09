@@ -820,7 +820,7 @@ public class JspServlet extends HttpServlet {
 					}
 				}
 
-				return _jspBundle.getEntry(path);
+				return _jspBundle.getResource(path);
 			}
 			catch (MalformedURLException murle) {
 			}

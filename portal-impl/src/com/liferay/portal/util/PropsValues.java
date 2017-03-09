@@ -967,6 +967,8 @@ public class PropsValues {
 
 	public static final String MODULE_FRAMEWORK_STATE_DIR = PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_STATE_DIR);
 
+	public static final String[] MODULE_FRAMEWORK_STATIC_JARS = PropsUtil.getArray(PropsKeys.MODULE_FRAMEWORK_STATIC_JARS);
+
 	public static final long MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT = GetterUtil.getLong(PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT));
 
 	public static final String[] MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA = PropsUtil.getArray(PropsKeys.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA);

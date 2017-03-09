@@ -1,0 +1,22 @@
+task deployAppServerPortalFile(type: Copy)
+
+clean {
+	delete new File(liferay.appServerPortalDir, "WEB-INF/tagPlugins.xml")
+}
+
+dependencies {
+	provided group: "com.liferay", name: "javax.servlet.jsp", version: "2.3.3-b02.LIFERAY-PATCHED-6"
+}
+
+deploy {
+	finalizedBy deployAppServerPortalFile
+}
+
+deployAppServerPortalFile {
+	ext {
+		autoClean = false
+	}
+
+	from "src/main/resources/WEB-INF/tagPlugins.xml"
+	into new File(liferay.appServerPortalDir, "WEB-INF")
+}

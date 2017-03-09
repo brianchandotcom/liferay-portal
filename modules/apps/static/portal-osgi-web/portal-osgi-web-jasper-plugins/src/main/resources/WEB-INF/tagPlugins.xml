@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<tag-plugins>
+	<tag-plugin>
+		<tag-class>com.liferay.taglib.core.ChooseTag</tag-class>
+		<plugin-class>com.liferay.portal.osgi.web.jasper.plugins.ChooseTagPlugin</plugin-class>
+	</tag-plugin>
+	<tag-plugin>
+		<tag-class>com.liferay.taglib.core.IfTag</tag-class>
+		<plugin-class>com.liferay.portal.osgi.web.jasper.plugins.IfTagPlugin</plugin-class>
+	</tag-plugin>
+	<tag-plugin>
+		<tag-class>com.liferay.taglib.core.OtherwiseTag</tag-class>
+		<plugin-class>com.liferay.portal.osgi.web.jasper.plugins.OtherwiseTagPlugin</plugin-class>
+	</tag-plugin>
+	<tag-plugin>
+		<tag-class>com.liferay.taglib.core.WhenTag</tag-class>
+		<plugin-class>com.liferay.portal.osgi.web.jasper.plugins.WhenTagPlugin</plugin-class>
+	</tag-plugin>
+</tag-plugins>

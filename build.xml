@@ -336,6 +336,7 @@
 							<arg value="--parallel" />
 							<arg value="-Dbuild.profile=${build.profile}" />
 							<arg value="deployAppServerLib" />
+							<arg value="deployAppServerPortalFile" />
 							<arg value="deployConfigs" />
 						</gradle-execute>
 					</then>
@@ -343,6 +344,7 @@
 						<gradle-execute dir="${project.dir}/modules" task="deployTool">
 							<arg value="--parallel" />
 							<arg value="-Dbuild.profile=${build.profile}" />
+							<arg value="deployAppServerPortalFile" />
 							<arg value="deployConfigs" />
 						</gradle-execute>
 					</else>

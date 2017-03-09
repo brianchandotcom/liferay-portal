@@ -383,6 +383,8 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
+	public void deleteGroupSubscriptions(long groupId);
+
 	/**
 	* Deletes the user's subscription to the entity. A social activity with the
 	* unsubscribe action is created.

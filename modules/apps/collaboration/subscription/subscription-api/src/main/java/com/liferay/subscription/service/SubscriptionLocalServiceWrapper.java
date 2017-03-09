@@ -457,6 +457,11 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 			projection);
 	}
 
+	@Override
+	public void deleteGroupSubscriptions(long groupId) {
+		_subscriptionLocalService.deleteGroupSubscriptions(groupId);
+	}
+
 	/**
 	* Deletes the user's subscription to the entity. A social activity with the
 	* unsubscribe action is created.

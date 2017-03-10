@@ -350,6 +350,35 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateLayoutTemplate() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"layout-template", "foo");
+
+		_testExists(gradleProjectDir, "src/main/webapp/foo.png");
+
+		_testContains(
+			gradleProjectDir, "src/main/webapp/foo.tpl", "class=\"foo\"");
+		_testContains(
+			gradleProjectDir,
+			"src/main/webapp/WEB-INF/liferay-layout-templates.xml",
+			"<layout-template id=\"foo\" name=\"foo\">",
+			"<template-path>/foo.tpl</template-path>",
+			"<thumbnail-path>/foo.png</thumbnail-path>");
+		_testContains(
+			gradleProjectDir,
+			"src/main/webapp/WEB-INF/liferay-plugin-package.properties",
+			"name=foo");
+		_testEquals(gradleProjectDir, "build.gradle", "apply plugin: \"war\"");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"layout-template", "foo");
+
+		_buildProjects(
+			gradleProjectDir, mavenProjectDir, "build/libs/foo.war",
+			"target/foo-1.0.0.war");
+	}
+
+	@Test
 	public void testBuildTemplateMVCPortlet() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle("mvc-portlet", "foo");
 
@@ -1053,9 +1082,7 @@ public class ProjectTemplatesTest {
 				FileTestUtil.getProjectTemplatesDirectoryStream()) {
 
 			for (Path path : directoryStream) {
-				Path fileNamePath = path.getFileName();
-
-				String fileName = fileNamePath.toString();
+				String fileName = String.valueOf(path.getFileName());
 
 				String template = fileName.substring(
 					FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX.length());
@@ -1401,6 +1428,19 @@ public class ProjectTemplatesTest {
 			Assert.assertTrue(
 				"Not found in " + fileName + ": " + s, content.contains(s));
 		}
+
+		return file;
+	}
+
+	private static File _testEquals(
+			File dir, String fileName, String expectedContent)
+		throws IOException {
+
+		File file = _testExists(dir, fileName);
+
+		Assert.assertEquals(
+			"Incorrect " + fileName, expectedContent,
+			FileUtil.read(file.toPath()));
 
 		return file;
 	}

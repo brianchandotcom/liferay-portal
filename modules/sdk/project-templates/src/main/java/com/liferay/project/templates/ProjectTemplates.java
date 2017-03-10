@@ -65,10 +65,8 @@ public class ProjectTemplates {
 				while (iterator.hasNext()) {
 					Path templateBundleFile = iterator.next();
 
-					Path templateBundleFileNamePath =
-						templateBundleFile.getFileName();
-
-					String template = templateBundleFileNamePath.toString();
+					String template = String.valueOf(
+						templateBundleFile.getFileName());
 
 					template = template.substring(
 						TEMPLATE_BUNDLE_PREFIX.length(),

@@ -16,17 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-JSONObject advancedDataJSONObject = portletSetupJSONObject.getJSONObject("advancedData");
-%>
-
 <div class="alert alert-info">
 	<p>
 		<liferay-ui:message key="your-current-portlet-information-is-as-follows" />
 	</p>
 
 	<p>
-		<liferay-ui:message key="portlet-id" />: <strong>#portlet_<%= portletResource %></strong>
+		<liferay-ui:message key="portlet-id" />: <strong>#portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %></strong>
 	</p>
 
 	<p>
@@ -34,9 +30,9 @@ JSONObject advancedDataJSONObject = portletSetupJSONObject.getJSONObject("advanc
 	</p>
 </div>
 
-<aui:input label="enter-your-custom-css-class-names" name="customCSSClassName" type="text" value='<%= advancedDataJSONObject.getString("customCSSClassName") %>' />
+<aui:input label="enter-your-custom-css-class-names" name="customCSSClassName" type="text" value="<%= portletConfigurationCSSPortletDisplayContext.getCustomCSSClassName() %>" />
 
-<aui:input label="enter-your-custom-css" name="customCSS" type="textarea" value='<%= advancedDataJSONObject.getString("customCSS") %>' />
+<aui:input label="enter-your-custom-css" name="customCSS" type="textarea" value="<%= portletConfigurationCSSPortletDisplayContext.getCustomCSS() %>" />
 
 <div id="lfr-add-rule-container">
 	<aui:button cssClass="btn btn-link" id="addId" value="add-a-css-rule-for-this-portlet" />
@@ -48,7 +44,7 @@ JSONObject advancedDataJSONObject = portletSetupJSONObject.getJSONObject("advanc
 	A.one('#<portlet:namespace />addId').on(
 		'click',
 		function() {
-			<portlet:namespace />insertCustomCSSValue('#portlet_<%= portletResource %>');
+			<portlet:namespace />insertCustomCSSValue('#portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>');
 		}
 	);
 
@@ -77,7 +73,7 @@ JSONObject advancedDataJSONObject = portletSetupJSONObject.getJSONObject("advanc
 
 	var opener = Liferay.Util.getOpener();
 
-	var portlet = A.one(opener['portlet_<%= portletResource %>']);
+	var portlet = A.one(opener['portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>']);
 	var portletContent = portlet.one('.portlet-content');
 
 	var portletClasses;

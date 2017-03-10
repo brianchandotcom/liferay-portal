@@ -1,4 +1,4 @@
-#if (${projectType} != "workspace")buildscript {
+#if (${projectType} != "workspace")
 apply plugin: "war"
 
 #end

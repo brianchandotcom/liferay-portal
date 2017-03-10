@@ -56,9 +56,14 @@ AUI.add(
 					_createColorPickerPopover: function(trigger) {
 						var instance = this;
 
+						var color = trigger.val();
+
+						instance._setColor(color, trigger);
+
 						return new A.ColorPickerPopover(
 							{
 								constrain: true,
+								color: color,
 								trigger: trigger,
 								zIndex: Liferay.zIndex.POPOVER
 							}

@@ -46,6 +46,11 @@ public abstract class BaseCommand implements Command {
 
 			throw e;
 		}
+		finally {
+			if (connection != null) {
+				connection.close();
+			}
+		}
 	}
 
 	protected abstract void execute(Connection connection) throws Exception;

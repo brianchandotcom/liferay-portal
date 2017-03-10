@@ -223,7 +223,7 @@ public class SQLTransformer {
 		return StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
 	}
 
-	private String _replaceInStr(String sql) {
+	private String _replaceInstr(String sql) {
 		Matcher matcher = _instrPattern.matcher(sql);
 
 		if (_vendorPostgreSQL) {
@@ -309,7 +309,7 @@ public class SQLTransformer {
 		newSQL = _replaceCastLong(newSQL);
 		newSQL = _replaceCastText(newSQL);
 		newSQL = _replaceCrossJoin(newSQL);
-		newSQL = _replaceInStr(newSQL);
+		newSQL = _replaceInstr(newSQL);
 		newSQL = _replaceIntegerDivision(newSQL);
 		newSQL = _replaceNullDate(newSQL);
 		newSQL = _replaceSubstr(newSQL);

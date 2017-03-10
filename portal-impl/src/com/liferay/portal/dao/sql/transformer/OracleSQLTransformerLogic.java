@@ -15,32 +15,49 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.function.Function;
 import java.util.regex.Matcher;
 
 /**
  * @author Manuel de la Peña
- * @author Brian Wing Shun Chan
  */
-public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
+public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 
-	public HypersonicSQLTransformerLogic(DB db) {
+	public OracleSQLTransformerLogic(DB db) {
 		super(db);
 
 		setFunctions(
 			getBooleanFunction(), getCastClobTextFunction(),
 			getCastLongFunction(), getCastTextFunction(),
-			getIntegerDivisionFunction(), getNullDateFunction());
+			getIntegerDivisionFunction(), getNullDateFunction(),
+			_getEscapeFunction(), _getNotEqualsBlankStringFunction());
 	}
 
 	@Override
-	protected String replaceCastLong(Matcher matcher) {
-		return matcher.replaceAll("CONVERT($1, SQL_BIGINT)");
+	protected String replaceCastClobText(Matcher matcher) {
+		return matcher.replaceAll("DBMS_LOB.SUBSTR($1, 4000, 1)");
 	}
 
 	@Override
 	protected String replaceCastText(Matcher matcher) {
-		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
+		return matcher.replaceAll("CAST($1 AS VARCHAR(4000))");
+	}
+
+	@Override
+	protected String replaceIntegerDivision(Matcher matcher) {
+		return matcher.replaceAll("TRUNC($1 / $2)");
+	}
+
+	private Function<String, String> _getEscapeFunction() {
+		return (String sql) -> StringUtil.replace(
+			sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
+	}
+
+	private Function<String, String> _getNotEqualsBlankStringFunction() {
+		return (String sql) -> StringUtil.replace(
+			sql, " != ''", " IS NOT NULL");
 	}
 
 }

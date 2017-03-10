@@ -20,27 +20,23 @@ import java.util.regex.Matcher;
 
 /**
  * @author Manuel de la Peña
- * @author Brian Wing Shun Chan
  */
-public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
+public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 
-	public HypersonicSQLTransformerLogic(DB db) {
+	public SQLServerSQLTransformerLogic(DB db) {
 		super(db);
 
 		setFunctions(
-			getBooleanFunction(), getCastClobTextFunction(),
-			getCastLongFunction(), getCastTextFunction(),
-			getIntegerDivisionFunction(), getNullDateFunction());
-	}
-
-	@Override
-	protected String replaceCastLong(Matcher matcher) {
-		return matcher.replaceAll("CONVERT($1, SQL_BIGINT)");
+			getBitwiseCheckFunction(), getBooleanFunction(),
+			getCastClobTextFunction(), getCastLongFunction(),
+			getCastTextFunction(), getInstrFunction(),
+			getIntegerDivisionFunction(), getModFunction(),
+			getNullDateFunction(), getSubstrFunction());
 	}
 
 	@Override
 	protected String replaceCastText(Matcher matcher) {
-		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
+		return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
 	}
 
 }

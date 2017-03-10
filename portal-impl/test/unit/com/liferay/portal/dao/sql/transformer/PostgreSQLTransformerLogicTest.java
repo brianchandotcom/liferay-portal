@@ -14,28 +14,19 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
-import com.liferay.portal.dao.db.HypersonicDB;
+import com.liferay.portal.dao.db.PostgreSQLDB;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
- * @author Brian Wing Shun Chan
  */
-public class HypersonicSQLTransformerLogicTest
+public class PostgreSQLTransformerLogicTest
 	extends BaseSQLTransformerLogicTestCase {
 
-	public HypersonicSQLTransformerLogicTest() {
-		super(new HypersonicDB(1, 0));
-	}
-
-	@Override
-	@Test
-	public void testReplaceBitwiseCheckWithExtraWhitespace() {
-		Assert.assertEquals(
-			getBitwiseCheckTransformedSQL(),
-			sqlTransformer.transform(getBitwiseCheckOriginalSQL()));
+	public PostgreSQLTransformerLogicTest() {
+		super(new PostgreSQLDB(1, 0));
 	}
 
 	@Override
@@ -46,14 +37,31 @@ public class HypersonicSQLTransformerLogicTest
 			sqlTransformer.transform(getModOriginalSQL()));
 	}
 
+	@Test
+	public void testReplaceNegativeComparison() {
+		Assert.assertEquals(
+			"select * from Foo where foo != ( -1)",
+			sqlTransformer.transform("select * from Foo where foo != -1"));
+	}
+
+	@Override
+	protected String getBitwiseCheckTransformedSQL() {
+		return "select (foo & bar) from Foo";
+	}
+
 	@Override
 	protected String getCastClobTextTransformedSQL() {
-		return "select CONVERT(foo, SQL_VARCHAR) from Foo";
+		return "select CAST(foo AS TEXT) from Foo";
+	}
+
+	@Override
+	protected String getCastLongOriginalSQL() {
+		return "select CAST_LONG(foo) from Foo";
 	}
 
 	@Override
 	protected String getCastLongTransformedSQL() {
-		return "select CONVERT(foo, SQL_BIGINT) from Foo";
+		return "select foo from Foo";
 	}
 
 	@Override
@@ -63,7 +71,7 @@ public class HypersonicSQLTransformerLogicTest
 
 	@Override
 	protected String getNullDateTransformedSQL() {
-		return "select NULL from Foo";
+		return "select CAST(NULL AS TIMESTAMP) from Foo";
 	}
 
 }

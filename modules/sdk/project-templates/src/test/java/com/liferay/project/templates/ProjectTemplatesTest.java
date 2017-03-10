@@ -1082,9 +1082,7 @@ public class ProjectTemplatesTest {
 				FileTestUtil.getProjectTemplatesDirectoryStream()) {
 
 			for (Path path : directoryStream) {
-				Path fileNamePath = path.getFileName();
-
-				String fileName = fileNamePath.toString();
+				String fileName = String.valueOf(path.getFileName());
 
 				String template = fileName.substring(
 					FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX.length());

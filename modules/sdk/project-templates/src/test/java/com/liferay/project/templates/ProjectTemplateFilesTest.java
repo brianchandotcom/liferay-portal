@@ -139,9 +139,8 @@ public class ProjectTemplateFilesTest {
 		Assert.assertTrue(
 			"Missing " + gitIgnorePath, Files.exists(gitIgnorePath));
 
-		Path projectTemplateDirNamePath = projectTemplateDirPath.getFileName();
-
-		String projectTemplateDirName = projectTemplateDirNamePath.toString();
+		String projectTemplateDirName = String.valueOf(
+			projectTemplateDirPath.getFileName());
 
 		if (!projectTemplateDirName.equals(
 				FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX +
@@ -194,9 +193,7 @@ public class ProjectTemplateFilesTest {
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					Path fileNamePath = path.getFileName();
-
-					String fileName = fileNamePath.toString();
+					String fileName = String.valueOf(path.getFileName());
 
 					String extension = FileTestUtil.getExtension(fileName);
 

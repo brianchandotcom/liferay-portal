@@ -18,12 +18,6 @@
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "forms");
-
-String displayStyle = ddlFormAdminDisplayContext.getDisplayStyle();
-
-PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
-
-portletURL.setParameter("displayStyle", displayStyle);
 %>
 
 <liferay-util:include page="/admin/search_bar.jsp" servletContext="<%= application %>" />
@@ -34,7 +28,7 @@ portletURL.setParameter("displayStyle", displayStyle);
 	<c:when test='<%= tabs1.equals("forms") %>'>
 		<liferay-util:include page="/admin/view_forms.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:when test='<%= tabs1.equals("field_library") %>'>
+	<c:when test='<%= tabs1.equals("field-library") %>'>
 		<liferay-util:include page="/admin/view_field_library.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>

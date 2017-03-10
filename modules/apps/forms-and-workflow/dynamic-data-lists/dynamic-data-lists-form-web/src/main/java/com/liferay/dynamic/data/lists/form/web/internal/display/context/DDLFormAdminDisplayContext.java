@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormR
 import com.liferay.dynamic.data.lists.form.web.internal.display.context.util.DDLFormAdminRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.internal.display.context.util.DDMExpressionFunctionMetadataHelper;
 import com.liferay.dynamic.data.lists.form.web.internal.display.context.util.DDMExpressionFunctionMetadataHelper.DDMExpressionFunctionMetadata;
+import com.liferay.dynamic.data.lists.form.web.internal.search.FieldLibrarySearch;
 import com.liferay.dynamic.data.lists.form.web.internal.search.RecordSetSearch;
 import com.liferay.dynamic.data.lists.model.DDLFormRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
@@ -142,6 +143,13 @@ public class DDLFormAdminDisplayContext {
 
 		_ddlFormAdminRequestHelper = new DDLFormAdminRequestHelper(
 			renderRequest);
+
+		_ddlFormAdminFieldLibraryDisplayContext =
+			new DDLFormAdminFieldLibraryDisplayContext(
+				renderRequest, renderResponse, _ddlFormAdminRequestHelper,
+				ddmStructureService, getDisplayStyle(), getOrderByCol(),
+				getOrderByType(), getKeywords());
+
 		_ddmExpressionFunctionMetadataHelper =
 			new DDMExpressionFunctionMetadataHelper(getResourceBundle());
 	}
@@ -153,8 +161,7 @@ public class DDLFormAdminDisplayContext {
 	public DDLFormAdminFieldLibraryDisplayContext
 		getDDLFormAdminFieldLibraryDisplayContext() {
 
-		return new DDLFormAdminFieldLibraryDisplayContext(
-			_renderRequest, _renderResponse, _ddmStructureService);
+		return _ddlFormAdminFieldLibraryDisplayContext;
 	}
 
 	public DDLFormViewRecordDisplayContext
@@ -256,6 +263,14 @@ public class DDLFormAdminDisplayContext {
 		return _DISPLAY_VIEWS;
 	}
 
+	public PortletURL getFieldLibraryPortletURL() {
+		return _ddlFormAdminFieldLibraryDisplayContext.getPortletURL();
+	}
+
+	public FieldLibrarySearch getFieldLibrarySearch() throws PortalException {
+		return _ddlFormAdminFieldLibraryDisplayContext.getFieldLibrarySearch();
+	}
+
 	public String getFormURL() throws PortalException {
 		DDLRecordSet recordSet = getRecordSet();
 
@@ -282,12 +297,17 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
+		if (!isFormsTab()) {
+			return _ddlFormAdminFieldLibraryDisplayContext.getPortletURL();
+		}
+
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/admin/view.jsp");
 		portletURL.setParameter(
 			"groupId",
 			String.valueOf(_ddlFormAdminRequestHelper.getScopeGroupId()));
+		portletURL.setParameter("tabs1", "forms");
 
 		return portletURL;
 	}
@@ -536,6 +556,10 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public boolean isShowSearch() throws PortalException {
+		if (!isFormsTab()) {
+			return _ddlFormAdminFieldLibraryDisplayContext.isShowSearch();
+		}
+
 		if (hasResults()) {
 			return true;
 		}
@@ -551,6 +575,10 @@ public class DDLFormAdminDisplayContext {
 		return DDLRecordSetPermission.contains(
 			_ddlFormAdminRequestHelper.getPermissionChecker(), recordSet,
 			ActionKeys.VIEW);
+	}
+
+	protected String getCurrentTab() {
+		return ParamUtil.getString(_renderRequest, "tabs1", "forms");
 	}
 
 	protected OrderByComparator<DDLRecordSet> getDDLRecordSetOrderByComparator(
@@ -713,6 +741,12 @@ public class DDLFormAdminDisplayContext {
 		return false;
 	}
 
+	protected boolean isFormsTab() {
+		String currentTab = getCurrentTab();
+
+		return currentTab.equals("forms");
+	}
+
 	protected boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -771,6 +805,8 @@ public class DDLFormAdminDisplayContext {
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
+	private final DDLFormAdminFieldLibraryDisplayContext
+		_ddlFormAdminFieldLibraryDisplayContext;
 	private final DDLFormAdminRequestHelper _ddlFormAdminRequestHelper;
 	private final DDLFormWebConfiguration _ddlFormWebConfiguration;
 	private final DDLRecordLocalService _ddlRecordLocalService;

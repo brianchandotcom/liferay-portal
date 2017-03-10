@@ -108,12 +108,35 @@ public class ProjectTemplateFilesTest {
 			Path projectTemplateDirPath, String gitIgnoreTemplate)
 		throws IOException {
 
+		String projectTemplateDirName = String.valueOf(
+			projectTemplateDirPath.getFileName());
+
 		Path archetypeMetadataXmlPath = projectTemplateDirPath.resolve(
 			"src/main/resources/META-INF/maven/archetype-metadata.xml");
 
 		Assert.assertTrue(
 			"Missing " + archetypeMetadataXmlPath,
 			Files.exists(archetypeMetadataXmlPath));
+
+		String archetypeDescriptorName = projectTemplateDirName.substring(
+			FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX.length());
+
+		if (archetypeDescriptorName.equals(WorkspaceUtil.WORKSPACE)) {
+			archetypeDescriptorName = "liferay-" + archetypeDescriptorName;
+		}
+		else {
+			archetypeDescriptorName =
+				"liferay-module-" + archetypeDescriptorName;
+		}
+
+		String archetypeMetadataXml = FileUtil.read(archetypeMetadataXmlPath);
+
+		Assert.assertTrue(
+			"Incorrect archetype descriptor name in " +
+				archetypeMetadataXmlPath,
+			archetypeMetadataXml.startsWith(
+				"<?xml version=\"1.0\"?>\n\n<archetype-descriptor name=\"" +
+					archetypeDescriptorName + "\">"));
 
 		Path archetypeResourcesDirPath = projectTemplateDirPath.resolve(
 			"src/main/resources/archetype-resources");
@@ -138,9 +161,6 @@ public class ProjectTemplateFilesTest {
 
 		Assert.assertTrue(
 			"Missing " + gitIgnorePath, Files.exists(gitIgnorePath));
-
-		String projectTemplateDirName = String.valueOf(
-			projectTemplateDirPath.getFileName());
 
 		if (!projectTemplateDirName.equals(
 				FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX +

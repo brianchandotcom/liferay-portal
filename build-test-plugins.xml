@@ -255,6 +255,8 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 							</then>
 						</if>
 
+						<get-testcase-property property.name="direct.deploy.enabled" />
+
 						<if>
 							<isset property="plugin.war" />
 							<then>
@@ -274,6 +276,12 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 								<contains string="${plugin.path}" substring="${project.dir}/modules/" />
 								<then>
 									<gradle-execute dir="${plugin.path}" task="deploy" />
+								</then>
+							</elseif>
+							<elseif>
+								<isset property="direct.deploy.enabled" />
+								<then>
+									<ant dir="${plugin.path}" inheritAll="false" target="direct-deploy" />
 								</then>
 							</elseif>
 							<else>

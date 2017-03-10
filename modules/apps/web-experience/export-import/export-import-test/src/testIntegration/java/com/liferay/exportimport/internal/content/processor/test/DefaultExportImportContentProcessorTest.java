@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.exportimport.content.processor.test;
+package com.liferay.exportimport.internal.content.processor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
-import com.liferay.exportimport.content.processor.base.BaseTextExportImportContentProcessor;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -95,7 +95,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class BaseExportImportContentProcessorTest {
+public class DefaultExportImportContentProcessorTest {
 
 	@ClassRule
 	@Rule
@@ -191,10 +191,9 @@ public class BaseExportImportContentProcessorTest {
 			_stagingGroup.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
 
-		_exportImportContentProcessor = (BaseExportImportContentProcessor)
+		_exportImportContentProcessor =
 			ExportImportContentProcessorRegistryUtil.
-				getExportImportContentProcessor(
-					DummyStagedModel.class.getName());
+				getExportImportContentProcessor(String.class.getName());
 	}
 
 	@Test
@@ -311,8 +310,8 @@ public class BaseExportImportContentProcessorTest {
 			"/en");
 
 		setFinalStaticField(
-			BaseTextExportImportContentProcessor.class.getDeclaredField(
-				"PRIVATE_USER_SERVLET_MAPPING"),
+			_exportImportContentProcessor.getClass().getDeclaredField(
+				"_PRIVATE_USER_SERVLET_MAPPING"),
 			"/en/");
 
 		String content = replaceParameters(
@@ -341,8 +340,8 @@ public class BaseExportImportContentProcessorTest {
 			_oldLayoutFriendlyURLPrivateUserServletMapping);
 
 		setFinalStaticField(
-			BaseTextExportImportContentProcessor.class.getDeclaredField(
-				"PRIVATE_USER_SERVLET_MAPPING"),
+			_exportImportContentProcessor.getClass().getDeclaredField(
+				"_PRIVATE_USER_SERVLET_MAPPING"),
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING +
 				StringPool.SLASH);
 
@@ -360,8 +359,8 @@ public class BaseExportImportContentProcessorTest {
 			"/en");
 
 		setFinalStaticField(
-			BaseTextExportImportContentProcessor.class.getDeclaredField(
-				"PRIVATE_USER_SERVLET_MAPPING"),
+			_exportImportContentProcessor.getClass().getDeclaredField(
+				"_PRIVATE_USER_SERVLET_MAPPING"),
 			"/en/");
 
 		String content = replaceParameters(
@@ -389,8 +388,8 @@ public class BaseExportImportContentProcessorTest {
 			_oldLayoutFriendlyURLPrivateUserServletMapping);
 
 		setFinalStaticField(
-			BaseTextExportImportContentProcessor.class.getDeclaredField(
-				"PRIVATE_USER_SERVLET_MAPPING"),
+			_exportImportContentProcessor.getClass().getDeclaredField(
+				"_PRIVATE_USER_SERVLET_MAPPING"),
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING +
 				StringPool.SLASH);
 	}
@@ -778,7 +777,7 @@ public class BaseExportImportContentProcessorTest {
 
 	private static String _oldLayoutFriendlyURLPrivateUserServletMapping;
 
-	private BaseExportImportContentProcessor _exportImportContentProcessor;
+	private ExportImportContentProcessor<String> _exportImportContentProcessor;
 	private FileEntry _fileEntry;
 
 	@DeleteAfterTestRun

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.exportimport.content.processor.base;
+package com.liferay.exportimport.internal.content.processor;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -35,10 +35,10 @@ import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -69,13 +68,17 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * @author Gergely Mathe
- *
- * @deprecated As of 4.0.0
+ * @author Daniel Kocsis
  */
-@Deprecated
-public class BaseTextExportImportContentProcessor
+@Component(
+	immediate = true, property = {"model.class.name=java.lang.String"},
+	service = ExportImportContentProcessor.class
+)
+public class DefaultTextExportImportContentProcessor
 	implements ExportImportContentProcessor<String> {
 
 	@Override
@@ -136,7 +139,7 @@ public class BaseTextExportImportContentProcessor
 		}
 
 		int endPos = StringUtil.indexOfAny(
-			sb.toString(), DL_REFERENCE_LEGACY_STOP_CHARS, beginPos + 2);
+			sb.toString(), _DL_REFERENCE_LEGACY_STOP_CHARS, beginPos + 2);
 
 		if (endPos == -1) {
 			return;
@@ -153,11 +156,11 @@ public class BaseTextExportImportContentProcessor
 		long groupId, String content, int beginPos, int endPos) {
 
 		boolean legacyURL = true;
-		char[] stopChars = DL_REFERENCE_LEGACY_STOP_CHARS;
+		char[] stopChars = _DL_REFERENCE_LEGACY_STOP_CHARS;
 
 		if (content.startsWith("/documents/", beginPos)) {
 			legacyURL = false;
-			stopChars = DL_REFERENCE_STOP_CHARS;
+			stopChars = _DL_REFERENCE_STOP_CHARS;
 		}
 
 		endPos = StringUtil.indexOfAny(content, stopChars, beginPos, endPos);
@@ -211,20 +214,7 @@ public class BaseTextExportImportContentProcessor
 				imageIds = map.get("i_id");
 			}
 
-			imageIds = ArrayUtil.filter(
-				imageIds,
-				new PredicateFilter<String>() {
-
-					@Override
-					public boolean filter(String imageId) {
-						if (Validator.isNotNull(imageId)) {
-							return true;
-						}
-
-						return false;
-					}
-
-				});
+			imageIds = ArrayUtil.filter(imageIds, Validator::isNotNull);
 
 			if (ArrayUtil.isNotEmpty(imageIds)) {
 				map.put("image_id", imageIds);
@@ -256,7 +246,7 @@ public class BaseTextExportImportContentProcessor
 			long groupId = MapUtil.getLong(map, "groupId");
 
 			if (Validator.isNotNull(uuid)) {
-				fileEntry = DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+				fileEntry = _dlAppLocalService.getFileEntryByUuidAndGroupId(
 					uuid, groupId);
 			}
 			else {
@@ -266,27 +256,27 @@ public class BaseTextExportImportContentProcessor
 					String title = MapUtil.getString(map, "title");
 
 					if (Validator.isNotNull(title)) {
-						fileEntry = DLAppLocalServiceUtil.getFileEntry(
+						fileEntry = _dlAppLocalService.getFileEntry(
 							groupId, folderId, title);
 					}
 					else {
 						DLFileEntry dlFileEntry =
-							DLFileEntryLocalServiceUtil.fetchFileEntryByName(
+							_dlFileEntryLocalService.fetchFileEntryByName(
 								groupId, folderId, name);
 
 						if (dlFileEntry != null) {
-							fileEntry = DLAppLocalServiceUtil.getFileEntry(
+							fileEntry = _dlAppLocalService.getFileEntry(
 								dlFileEntry.getFileEntryId());
 						}
 					}
 				}
 				else if (map.containsKey("image_id")) {
 					DLFileEntry dlFileEntry =
-						DLFileEntryLocalServiceUtil.fetchFileEntryByAnyImageId(
+						_dlFileEntryLocalService.fetchFileEntryByAnyImageId(
 							MapUtil.getLong(map, "image_id"));
 
 					if (dlFileEntry != null) {
-						fileEntry = DLAppLocalServiceUtil.getFileEntry(
+						fileEntry = _dlAppLocalService.getFileEntry(
 							dlFileEntry.getFileEntryId());
 					}
 				}
@@ -309,7 +299,7 @@ public class BaseTextExportImportContentProcessor
 			String content, boolean exportReferencedContent)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			portletDataContext.getGroupId());
 
 		if (group.isStagingGroup()) {
@@ -418,7 +408,7 @@ public class BaseTextExportImportContentProcessor
 			return url;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
 
@@ -433,10 +423,10 @@ public class BaseTextExportImportContentProcessor
 
 			if (url.startsWith(portalUrl)) {
 				if (secure) {
-					urlSB.append(DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL);
+					urlSB.append(_DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL);
 				}
 				else {
-					urlSB.append(DATA_HANDLER_PUBLIC_LAYOUT_SET_URL);
+					urlSB.append(_DATA_HANDLER_PUBLIC_LAYOUT_SET_URL);
 				}
 
 				return url.substring(portalUrl.length());
@@ -454,18 +444,17 @@ public class BaseTextExportImportContentProcessor
 
 			if (url.startsWith(portalUrl)) {
 				if (secure) {
-					urlSB.append(DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL);
+					urlSB.append(_DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL);
 				}
 				else {
-					urlSB.append(DATA_HANDLER_PRIVATE_LAYOUT_SET_URL);
+					urlSB.append(_DATA_HANDLER_PRIVATE_LAYOUT_SET_URL);
 				}
 
 				return url.substring(portalUrl.length());
 			}
 		}
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			group.getCompanyId());
+		Company company = _companyLocalService.getCompany(group.getCompanyId());
 
 		String companyVirtualHostname = company.getVirtualHostname();
 
@@ -475,10 +464,10 @@ public class BaseTextExportImportContentProcessor
 
 			if (url.startsWith(portalUrl)) {
 				if (secure) {
-					urlSB.append(DATA_HANDLER_COMPANY_SECURE_URL);
+					urlSB.append(_DATA_HANDLER_COMPANY_SECURE_URL);
 				}
 				else {
-					urlSB.append(DATA_HANDLER_COMPANY_URL);
+					urlSB.append(_DATA_HANDLER_COMPANY_URL);
 				}
 
 				return url.substring(portalUrl.length());
@@ -499,7 +488,7 @@ public class BaseTextExportImportContentProcessor
 			String content)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			portletDataContext.getScopeGroupId());
 
 		StringBuilder sb = new StringBuilder(content);
@@ -535,7 +524,7 @@ public class BaseTextExportImportContentProcessor
 			}
 
 			endPos = StringUtil.indexOfAny(
-				content, LAYOUT_REFERENCE_STOP_CHARS, beginPos + offset,
+				content, _LAYOUT_REFERENCE_STOP_CHARS, beginPos + offset,
 				endPos);
 
 			if (endPos == -1) {
@@ -561,7 +550,7 @@ public class BaseTextExportImportContentProcessor
 						continue;
 					}
 
-					urlSB.append(DATA_HANDLER_PATH_CONTEXT);
+					urlSB.append(_DATA_HANDLER_PATH_CONTEXT);
 
 					url = url.substring(pathContext.length());
 				}
@@ -588,11 +577,11 @@ public class BaseTextExportImportContentProcessor
 						localePath.length());
 
 					if (urlWithoutLocale.startsWith(
-							PRIVATE_GROUP_SERVLET_MAPPING) ||
+							_PRIVATE_GROUP_SERVLET_MAPPING) ||
 						urlWithoutLocale.startsWith(
-							PRIVATE_USER_SERVLET_MAPPING) ||
+							_PRIVATE_USER_SERVLET_MAPPING) ||
 						urlWithoutLocale.startsWith(
-							PUBLIC_GROUP_SERVLET_MAPPING)) {
+							_PUBLIC_GROUP_SERVLET_MAPPING)) {
 
 						urlSB.append(localePath);
 
@@ -602,27 +591,27 @@ public class BaseTextExportImportContentProcessor
 
 				boolean privateLayout = false;
 
-				if (url.startsWith(PRIVATE_GROUP_SERVLET_MAPPING)) {
-					urlSB.append(DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING);
+				if (url.startsWith(_PRIVATE_GROUP_SERVLET_MAPPING)) {
+					urlSB.append(_DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING);
 
 					url = url.substring(
-						PRIVATE_GROUP_SERVLET_MAPPING.length() - 1);
+						_PRIVATE_GROUP_SERVLET_MAPPING.length() - 1);
 
 					privateLayout = true;
 				}
-				else if (url.startsWith(PRIVATE_USER_SERVLET_MAPPING)) {
-					urlSB.append(DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING);
+				else if (url.startsWith(_PRIVATE_USER_SERVLET_MAPPING)) {
+					urlSB.append(_DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING);
 
 					url = url.substring(
-						PRIVATE_USER_SERVLET_MAPPING.length() - 1);
+						_PRIVATE_USER_SERVLET_MAPPING.length() - 1);
 
 					privateLayout = true;
 				}
-				else if (url.startsWith(PUBLIC_GROUP_SERVLET_MAPPING)) {
-					urlSB.append(DATA_HANDLER_PUBLIC_SERVLET_MAPPING);
+				else if (url.startsWith(_PUBLIC_GROUP_SERVLET_MAPPING)) {
+					urlSB.append(_DATA_HANDLER_PUBLIC_SERVLET_MAPPING);
 
 					url = url.substring(
-						PUBLIC_GROUP_SERVLET_MAPPING.length() - 1);
+						_PUBLIC_GROUP_SERVLET_MAPPING.length() - 1);
 				}
 				else {
 					String urlSBString = urlSB.toString();
@@ -630,16 +619,16 @@ public class BaseTextExportImportContentProcessor
 					LayoutSet layoutSet = null;
 
 					if (urlSBString.contains(
-							DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL) ||
+							_DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL) ||
 						urlSBString.contains(
-							DATA_HANDLER_PUBLIC_LAYOUT_SET_URL)) {
+							_DATA_HANDLER_PUBLIC_LAYOUT_SET_URL)) {
 
 						layoutSet = group.getPublicLayoutSet();
 					}
 					else if (urlSBString.contains(
-								DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL) ||
+								_DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL) ||
 							 urlSBString.contains(
-								 DATA_HANDLER_PRIVATE_LAYOUT_SET_URL)) {
+								 _DATA_HANDLER_PRIVATE_LAYOUT_SET_URL)) {
 
 						layoutSet = group.getPrivateLayoutSet();
 					}
@@ -651,7 +640,7 @@ public class BaseTextExportImportContentProcessor
 					privateLayout = layoutSet.isPrivateLayout();
 
 					LayoutFriendlyURL layoutFriendlyUrl =
-						LayoutFriendlyURLLocalServiceUtil.
+						_layoutFriendlyURLLocalService.
 							fetchFirstLayoutFriendlyURL(
 								group.getGroupId(), privateLayout, url);
 
@@ -662,18 +651,18 @@ public class BaseTextExportImportContentProcessor
 					if (privateLayout) {
 						if (group.isUser()) {
 							urlSB.append(
-								DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING);
+								_DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING);
 						}
 						else {
 							urlSB.append(
-								DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING);
+								_DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING);
 						}
 					}
 					else {
-						urlSB.append(DATA_HANDLER_PUBLIC_SERVLET_MAPPING);
+						urlSB.append(_DATA_HANDLER_PUBLIC_SERVLET_MAPPING);
 					}
 
-					urlSB.append(DATA_HANDLER_GROUP_FRIENDLY_URL);
+					urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
 
 					continue;
 				}
@@ -683,12 +672,10 @@ public class BaseTextExportImportContentProcessor
 				if (url.equals(groupFriendlyURL) ||
 					url.startsWith(groupFriendlyURL + StringPool.SLASH)) {
 
-					urlSB.append(DATA_HANDLER_GROUP_FRIENDLY_URL);
+					urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
 
 					url = url.substring(groupFriendlyURL.length());
 				}
-
-				long groupId = group.getGroupId();
 
 				while (true) {
 					pos = url.indexOf(StringPool.SLASH, 1);
@@ -701,18 +688,16 @@ public class BaseTextExportImportContentProcessor
 
 					groupFriendlyURL = StringPool.SLASH + groupName;
 
-					Group urlGroup =
-						GroupLocalServiceUtil.fetchFriendlyURLGroup(
-							group.getCompanyId(), groupFriendlyURL);
+					Group urlGroup = _groupLocalService.fetchFriendlyURLGroup(
+						group.getCompanyId(), groupFriendlyURL);
 
 					if (urlGroup != null) {
 						group = urlGroup;
-						groupId = urlGroup.getGroupId();
 
-						if (!DATA_HANDLER_GROUP_FRIENDLY_URL.equals(
+						if (!_DATA_HANDLER_GROUP_FRIENDLY_URL.equals(
 								urlSB.stringAt(urlSB.index() - 1))) {
 
-							urlSB.append(DATA_HANDLER_GROUP_FRIENDLY_URL);
+							urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
 						}
 
 						url = url.substring(groupFriendlyURL.length());
@@ -729,8 +714,8 @@ public class BaseTextExportImportContentProcessor
 				Element entityElement = portletDataContext.getExportDataElement(
 					stagedModel);
 
-				Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-					groupId, privateLayout, url);
+				Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+					group.getGroupId(), privateLayout, url);
 
 				portletDataContext.addReferenceElement(
 					stagedModel, entityElement, layout,
@@ -775,7 +760,7 @@ public class BaseTextExportImportContentProcessor
 		List<String> oldLinksToLayout = new ArrayList<>();
 		List<String> newLinksToLayout = new ArrayList<>();
 
-		Matcher matcher = exportLinksToLayoutPattern.matcher(content);
+		Matcher matcher = _exportLinksToLayoutPattern.matcher(content);
 
 		while (matcher.find()) {
 			long layoutId = GetterUtil.getLong(matcher.group(1));
@@ -785,7 +770,7 @@ public class BaseTextExportImportContentProcessor
 			boolean privateLayout = type.startsWith("private");
 
 			try {
-				Layout layout = LayoutLocalServiceUtil.getLayout(
+				Layout layout = _layoutLocalService.getLayout(
 					portletDataContext.getScopeGroupId(), privateLayout,
 					layoutId);
 
@@ -843,7 +828,7 @@ public class BaseTextExportImportContentProcessor
 				stagedModel, DLFileEntry.class);
 
 		for (Element referenceElement : referenceElements) {
-			long classPK = GetterUtil.getLong(
+			Long classPK = GetterUtil.getLong(
 				referenceElement.attributeValue("class-pk"));
 
 			Element referenceDataElement =
@@ -904,7 +889,7 @@ public class BaseTextExportImportContentProcessor
 			FileEntry importedFileEntry = null;
 
 			try {
-				importedFileEntry = DLAppLocalServiceUtil.getFileEntry(
+				importedFileEntry = _dlAppLocalService.getFileEntry(
 					fileEntryId);
 			}
 			catch (PortalException pe) {
@@ -941,11 +926,10 @@ public class BaseTextExportImportContentProcessor
 		String privateLayoutSetPortalURL = StringPool.BLANK;
 		String publicLayoutSetPortalURL = StringPool.BLANK;
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			portletDataContext.getScopeGroupId());
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			group.getCompanyId());
+		Company company = _companyLocalService.getCompany(group.getCompanyId());
 
 		LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
 		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
@@ -995,33 +979,33 @@ public class BaseTextExportImportContentProcessor
 		}
 
 		content = StringUtil.replace(
-			content, DATA_HANDLER_COMPANY_SECURE_URL, companySecurePortalURL);
+			content, _DATA_HANDLER_COMPANY_SECURE_URL, companySecurePortalURL);
 		content = StringUtil.replace(
-			content, DATA_HANDLER_COMPANY_URL, companyPortalURL);
+			content, _DATA_HANDLER_COMPANY_URL, companyPortalURL);
 		content = StringUtil.replace(
-			content, DATA_HANDLER_GROUP_FRIENDLY_URL, group.getFriendlyURL());
+			content, _DATA_HANDLER_GROUP_FRIENDLY_URL, group.getFriendlyURL());
 		content = StringUtil.replace(
-			content, DATA_HANDLER_PATH_CONTEXT, PortalUtil.getPathContext());
+			content, _DATA_HANDLER_PATH_CONTEXT, PortalUtil.getPathContext());
 		content = StringUtil.replace(
-			content, DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING,
+			content, _DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING,
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING);
 		content = StringUtil.replace(
-			content, DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL,
+			content, _DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL,
 			privateLayoutSetSecurePortalURL);
 		content = StringUtil.replace(
-			content, DATA_HANDLER_PRIVATE_LAYOUT_SET_URL,
+			content, _DATA_HANDLER_PRIVATE_LAYOUT_SET_URL,
 			privateLayoutSetPortalURL);
 		content = StringUtil.replace(
-			content, DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING,
+			content, _DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING,
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
 		content = StringUtil.replace(
-			content, DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL,
+			content, _DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL,
 			publicLayoutSetSecurePortalURL);
 		content = StringUtil.replace(
-			content, DATA_HANDLER_PUBLIC_LAYOUT_SET_URL,
+			content, _DATA_HANDLER_PUBLIC_LAYOUT_SET_URL,
 			publicLayoutSetPortalURL);
 		content = StringUtil.replace(
-			content, DATA_HANDLER_PUBLIC_SERVLET_MAPPING,
+			content, _DATA_HANDLER_PUBLIC_SERVLET_MAPPING,
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING);
 
 		return content;
@@ -1034,7 +1018,7 @@ public class BaseTextExportImportContentProcessor
 		List<String> oldLinksToLayout = new ArrayList<>();
 		List<String> newLinksToLayout = new ArrayList<>();
 
-		Matcher matcher = importLinksToLayoutPattern.matcher(content);
+		Matcher matcher = _importLinksToLayoutPattern.matcher(content);
 
 		Map<Long, Long> layoutPlids =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -1058,22 +1042,14 @@ public class BaseTextExportImportContentProcessor
 
 			long newLayoutId = oldLayoutId;
 
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(newPlid);
+			Layout layout = _layoutLocalService.fetchLayout(newPlid);
 
 			if (layout != null) {
 				newGroupId = layout.getGroupId();
 				newLayoutId = layout.getLayoutId();
 			}
-			else if (_log.isDebugEnabled()) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append("Unable to get layout with plid ");
-				sb.append(oldPlid);
-				sb.append(", using layout ID  ");
-				sb.append(newLayoutId);
-				sb.append(" instead");
-
-				_log.debug(sb.toString());
+			else if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get layout with plid " + oldPlid);
 			}
 
 			String oldLinkToLayout = matcher.group(0);
@@ -1143,7 +1119,7 @@ public class BaseTextExportImportContentProcessor
 		int i = 0;
 
 		for (long companyId : companyIds) {
-			Company company = CompanyLocalServiceUtil.getCompany(companyId);
+			Company company = _companyLocalService.getCompany(companyId);
 
 			String webId = company.getWebId();
 
@@ -1182,7 +1158,7 @@ public class BaseTextExportImportContentProcessor
 	protected void validateLayoutReferences(long groupId, String content)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		String[] patterns = {"href=", "[["};
 
@@ -1215,7 +1191,7 @@ public class BaseTextExportImportContentProcessor
 			}
 
 			endPos = StringUtil.indexOfAny(
-				content, LAYOUT_REFERENCE_STOP_CHARS, beginPos + offset,
+				content, _LAYOUT_REFERENCE_STOP_CHARS, beginPos + offset,
 				endPos);
 
 			if (endPos == -1) {
@@ -1269,9 +1245,11 @@ public class BaseTextExportImportContentProcessor
 				String urlWithoutLocale = url.substring(localePath.length());
 
 				if (urlWithoutLocale.startsWith(
-						PRIVATE_GROUP_SERVLET_MAPPING) ||
-					urlWithoutLocale.startsWith(PRIVATE_USER_SERVLET_MAPPING) ||
-					urlWithoutLocale.startsWith(PUBLIC_GROUP_SERVLET_MAPPING)) {
+						_PRIVATE_GROUP_SERVLET_MAPPING) ||
+					urlWithoutLocale.startsWith(
+						_PRIVATE_USER_SERVLET_MAPPING) ||
+					urlWithoutLocale.startsWith(
+						_PUBLIC_GROUP_SERVLET_MAPPING)) {
 
 					url = urlWithoutLocale;
 				}
@@ -1279,18 +1257,19 @@ public class BaseTextExportImportContentProcessor
 
 			boolean privateLayout = false;
 
-			if (url.startsWith(PRIVATE_GROUP_SERVLET_MAPPING)) {
-				url = url.substring(PRIVATE_GROUP_SERVLET_MAPPING.length() - 1);
+			if (url.startsWith(_PRIVATE_GROUP_SERVLET_MAPPING)) {
+				url = url.substring(
+					_PRIVATE_GROUP_SERVLET_MAPPING.length() - 1);
 
 				privateLayout = true;
 			}
-			else if (url.startsWith(PRIVATE_USER_SERVLET_MAPPING)) {
-				url = url.substring(PRIVATE_USER_SERVLET_MAPPING.length() - 1);
+			else if (url.startsWith(_PRIVATE_USER_SERVLET_MAPPING)) {
+				url = url.substring(_PRIVATE_USER_SERVLET_MAPPING.length() - 1);
 
 				privateLayout = true;
 			}
-			else if (url.startsWith(PUBLIC_GROUP_SERVLET_MAPPING)) {
-				url = url.substring(PUBLIC_GROUP_SERVLET_MAPPING.length() - 1);
+			else if (url.startsWith(_PUBLIC_GROUP_SERVLET_MAPPING)) {
+				url = url.substring(_PUBLIC_GROUP_SERVLET_MAPPING.length() - 1);
 			}
 			else {
 				String urlSBString = urlSB.toString();
@@ -1298,15 +1277,15 @@ public class BaseTextExportImportContentProcessor
 				LayoutSet layoutSet = null;
 
 				if (urlSBString.contains(
-						DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL) ||
-					urlSBString.contains(DATA_HANDLER_PUBLIC_LAYOUT_SET_URL)) {
+						_DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL) ||
+					urlSBString.contains(_DATA_HANDLER_PUBLIC_LAYOUT_SET_URL)) {
 
 					layoutSet = group.getPublicLayoutSet();
 				}
 				else if (urlSBString.contains(
-							DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL) ||
+							_DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL) ||
 						 urlSBString.contains(
-							 DATA_HANDLER_PRIVATE_LAYOUT_SET_URL)) {
+							 _DATA_HANDLER_PRIVATE_LAYOUT_SET_URL)) {
 
 					layoutSet = group.getPrivateLayoutSet();
 				}
@@ -1339,7 +1318,7 @@ public class BaseTextExportImportContentProcessor
 
 				groupFriendlyURL = StringPool.SLASH + groupName;
 
-				Group urlGroup = GroupLocalServiceUtil.fetchFriendlyURLGroup(
+				Group urlGroup = _groupLocalService.fetchFriendlyURLGroup(
 					group.getCompanyId(), groupFriendlyURL);
 
 				if (urlGroup != null) {
@@ -1357,11 +1336,11 @@ public class BaseTextExportImportContentProcessor
 				continue;
 			}
 
-			Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 				groupId, privateLayout, url);
 
 			if (layout == null) {
-				group = GroupLocalServiceUtil.fetchFriendlyURLGroup(
+				group = _groupLocalService.fetchFriendlyURLGroup(
 					group.getCompanyId(), url);
 
 				if (group == null) {
@@ -1374,7 +1353,7 @@ public class BaseTextExportImportContentProcessor
 	protected void validateLinksToLayoutsReferences(String content)
 		throws PortalException {
 
-		Matcher matcher = exportLinksToLayoutPattern.matcher(content);
+		Matcher matcher = _exportLinksToLayoutPattern.matcher(content);
 
 		while (matcher.find()) {
 			long groupId = GetterUtil.getLong(matcher.group(5));
@@ -1385,7 +1364,7 @@ public class BaseTextExportImportContentProcessor
 
 			long layoutId = GetterUtil.getLong(matcher.group(1));
 
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			Layout layout = _layoutLocalService.fetchLayout(
 				groupId, privateLayout, layoutId);
 
 			if (layout == null) {
@@ -1394,78 +1373,96 @@ public class BaseTextExportImportContentProcessor
 		}
 	}
 
-	protected static final String DATA_HANDLER_COMPANY_SECURE_URL =
+	private static final String _DATA_HANDLER_COMPANY_SECURE_URL =
 		"@data_handler_company_secure_url@";
 
-	protected static final String DATA_HANDLER_COMPANY_URL =
+	private static final String _DATA_HANDLER_COMPANY_URL =
 		"@data_handler_company_url@";
 
-	protected static final String DATA_HANDLER_GROUP_FRIENDLY_URL =
+	private static final String _DATA_HANDLER_GROUP_FRIENDLY_URL =
 		"@data_handler_group_friendly_url@";
 
-	protected static final String DATA_HANDLER_PATH_CONTEXT =
+	private static final String _DATA_HANDLER_PATH_CONTEXT =
 		"@data_handler_path_context@";
 
-	protected static final String DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING =
+	private static final String _DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING =
 		"@data_handler_private_group_servlet_mapping@";
 
-	protected static final String DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL =
+	private static final String _DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL =
 		"@data_handler_private_layout_set_secure_url@";
 
-	protected static final String DATA_HANDLER_PRIVATE_LAYOUT_SET_URL =
+	private static final String _DATA_HANDLER_PRIVATE_LAYOUT_SET_URL =
 		"@data_handler_private_layout_set_url@";
 
-	protected static final String DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING =
+	private static final String _DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING =
 		"@data_handler_private_user_servlet_mapping@";
 
-	protected static final String DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL =
+	private static final String _DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL =
 		"@data_handler_public_layout_set_secure_url@";
 
-	protected static final String DATA_HANDLER_PUBLIC_LAYOUT_SET_URL =
+	private static final String _DATA_HANDLER_PUBLIC_LAYOUT_SET_URL =
 		"@data_handler_public_layout_set_url@";
 
-	protected static final String DATA_HANDLER_PUBLIC_SERVLET_MAPPING =
+	private static final String _DATA_HANDLER_PUBLIC_SERVLET_MAPPING =
 		"@data_handler_public_servlet_mapping@";
 
-	protected static final char[] DL_REFERENCE_LEGACY_STOP_CHARS = {
+	private static final char[] _DL_REFERENCE_LEGACY_STOP_CHARS = {
 		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
 		CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN, CharPool.LESS_THAN,
 		CharPool.PIPE, CharPool.QUOTE, CharPool.SPACE
 	};
 
-	protected static final char[] DL_REFERENCE_STOP_CHARS = {
+	private static final char[] _DL_REFERENCE_STOP_CHARS = {
 		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
 		CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN, CharPool.LESS_THAN,
 		CharPool.PIPE, CharPool.QUESTION, CharPool.QUOTE, CharPool.SPACE
 	};
 
-	protected static final char[] LAYOUT_REFERENCE_STOP_CHARS = {
+	private static final char[] _LAYOUT_REFERENCE_STOP_CHARS = {
 		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
 		CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN, CharPool.LESS_THAN,
 		CharPool.PIPE, CharPool.QUESTION, CharPool.QUOTE, CharPool.SPACE
 	};
 
-	protected static final String PRIVATE_GROUP_SERVLET_MAPPING =
+	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =
 		PropsUtil.get(
 			PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING) +
 				StringPool.SLASH;
 
-	protected static final String PRIVATE_USER_SERVLET_MAPPING =
+	private static final String _PRIVATE_USER_SERVLET_MAPPING =
 		PropsUtil.get(
 			PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING) +
 				StringPool.SLASH;
 
-	protected static final String PUBLIC_GROUP_SERVLET_MAPPING =
+	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
 		PropsUtil.get(
 			PropsKeys.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING) +
 				StringPool.SLASH;
 
-	protected static final Pattern exportLinksToLayoutPattern = Pattern.compile(
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultTextExportImportContentProcessor.class);
+
+	private static final Pattern _exportLinksToLayoutPattern = Pattern.compile(
 		"\\[([\\d]+)@(private(-group|-user)?|public)(@([\\d]+))?\\]");
-	protected static final Pattern importLinksToLayoutPattern = Pattern.compile(
+	private static final Pattern _importLinksToLayoutPattern = Pattern.compile(
 		"\\[([\\d]+)@(private(-group|-user)?|public)@([\\d]+)(@([\\d]+))?\\]");
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		BaseTextExportImportContentProcessor.class);
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }

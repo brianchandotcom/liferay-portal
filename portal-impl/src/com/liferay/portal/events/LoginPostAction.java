@@ -107,7 +107,7 @@ public class LoginPostAction extends Action {
 			// Password Expiration
 
 			if (UserLocalServiceUtil.isPasswordExpiringSoon(
-				PortalUtil.getUser(request))) {
+					PortalUtil.getUser(request))) {
 
 				SessionMessages.add(request, "passwordExpiringSoon");
 			}

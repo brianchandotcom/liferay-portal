@@ -533,6 +533,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher1 = _registryRegisterPattern.matcher(content);
 
 		while (matcher1.find()) {
+			if (ToolsUtil.isInsideQuotes(content, matcher1.start())) {
+				continue;
+			}
+
 			List<String> parametersList = getParameterList(
 				content.substring(matcher1.start()));
 
@@ -1232,6 +1236,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			Matcher matcher = pattern.matcher(content);
 
 			while (matcher.find()) {
+				if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
+					continue;
+				}
+
 				String match = matcher.group();
 
 				List<String> parametersList = getParameterList(match);

@@ -358,6 +358,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Matcher matcher = getterUtilGetPattern.matcher(content);
 
 		while (matcher.find()) {
+			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
+				continue;
+			}
+
 			List<String> parametersList = getParameterList(matcher.group());
 
 			if (parametersList.size() != 2) {
@@ -753,6 +757,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Matcher matcher = stringUtilReplacePattern.matcher(content);
 
 		while (matcher.find()) {
+			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
+				continue;
+			}
+
 			List<String> parametersList = getParameterList(matcher.group());
 
 			if (parametersList.size() != 3) {

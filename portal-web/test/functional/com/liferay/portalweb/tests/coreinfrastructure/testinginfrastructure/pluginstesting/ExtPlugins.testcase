@@ -1,0 +1,75 @@
+<definition component-name="portal-test-plugins">
+	<property name="custom.properties" value="web.server.display.node=true" />
+	<property name="ext.plugins.includes" value="sample-ext" />
+	<property name="testray.main.component.name" value="Test Plugins" />
+
+	<set-up>
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="MessageboardsThread#tearDownCP" />
+
+				<execute macro="DMDocument#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="ViewSampleExtPluginValidationViaDeploy" priority="5">
+		<execute function="AssertConsoleTextPresent" value1="EXT_ATOM_SERVLET_INSTALLED" />
+
+		<execute function="AssertConsoleTextPresent" value1="EXT_WEB_SERVLET_INSTALLED" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="ext_portal_impl_installed_" />
+
+		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
+
+		<execute function="AssertElementNotPresent" locator1="UserBar#USER_SIGN_IN" />
+
+		<execute function="Pause" locator1="120000" />
+
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerWarning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+		<execute function="Refresh" />
+
+		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+	</command>
+
+	<command name="ViewSampleExtPluginValidationViaDirectDeploy" priority="5">
+		<property name="direct.deploy.enabled" value="true" />
+
+		<execute function="AssertConsoleTextPresent" value1="EXT_ATOM_SERVLET_INSTALLED" />
+
+		<execute function="AssertConsoleTextPresent" value1="EXT_WEB_SERVLET_INSTALLED" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="ext_portal_impl_installed_" />
+
+		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
+
+		<execute function="AssertElementNotPresent" locator1="UserBar#USER_SIGN_IN" />
+
+		<execute function="Pause" locator1="120000" />
+
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerWarning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+		<execute function="Refresh" />
+
+		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+	</command>
+</definition>

@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <c:choose>
-	<c:when test="<%= Validator.isNotNull(portletResource) && PortletPermissionUtil.contains(permissionChecker, themeDisplay.getLayout(), portletResource, ActionKeys.CONFIGURATION) %>">
+	<c:when test="<%= portletConfigurationCSSPortletDisplayContext.hasAccess() %>">
 		<portlet:actionURL name="updateLookAndFeel" var="updateLookAndFeelURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:actionURL>
 
 		<aui:form action="<%= updateLookAndFeelURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-			<aui:input name="portletId" type="hidden" value="<%= portletResource %>" />
+			<aui:input name="portletId" type="hidden" value="<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>" />
 
 			<div class="portlet-configuration-body-content">
 				<div class="container-fluid-1280">

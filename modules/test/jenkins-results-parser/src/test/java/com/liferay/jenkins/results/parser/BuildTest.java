@@ -47,8 +47,8 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 			"test-portal-acceptance-pullrequest(ee-6.2.x)_passed", "337",
 			"test-portal-acceptance-pullrequest(ee-6.2.x)", "test-1-17");
 		downloadSample(
-			"test-portal-acceptance-pullrequest(ee-7.0.x)_sf-failure", "191",
-			"test-portal-acceptance-pullrequest(ee-7.0.x)", "test-1-6");
+			"test-portal-acceptance-pullrequest(ee-7.0.x)_sf-failure", "262",
+			"test-portal-acceptance-pullrequest(ee-7.0.x)", "test-1-11");
 		downloadSample(
 			"test-portal-acceptance-pullrequest(master)_generic-failure",
 			"1375", "test-portal-acceptance-pullrequest(master)", "test-1-1");

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterMessage;
 
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -51,6 +53,9 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 			return;
 		}
 
+		_checkMissingParentheses(
+			sourceFormatterMessages, ifClause, fileName, lineCount);
+
 		if (_hasRedundantParentheses(ifClause, "||", "&&") ||
 			_hasRedundantParentheses(ifClause, "&&", "||")) {
 
@@ -59,6 +64,84 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 				"Redundant parentheses in if-statement", lineCount);
 
 			return;
+		}
+
+		int x = ifClause.indexOf(StringPool.OPEN_PARENTHESIS);
+
+		while (true) {
+			x = ifClause.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			char previousChar = ifClause.charAt(x - 1);
+
+			if ((previousChar != CharPool.OPEN_PARENTHESIS) &&
+				(previousChar != CharPool.SPACE)) {
+
+				continue;
+			}
+
+			int y = x;
+
+			while (true) {
+				y = ifClause.indexOf(StringPool.CLOSE_PARENTHESIS, y + 1);
+
+				String s = ifClause.substring(x + 1, y);
+
+				if (getLevel(s) == 0) {
+					char nextChar = ifClause.charAt(y + 1);
+
+					if (((previousChar == CharPool.OPEN_PARENTHESIS) &&
+						 (nextChar == CharPool.CLOSE_PARENTHESIS)) ||
+						(((nextChar == CharPool.CLOSE_PARENTHESIS) ||
+						  (nextChar == CharPool.SPACE)) &&
+						 _hasRedundantParentheses(s))) {
+
+						addMessage(
+							sourceFormatterMessages, fileName,
+							"Redundant parentheses in if-statement", lineCount);
+
+						return;
+					}
+
+					break;
+				}
+			}
+		}
+	}
+
+	private void _checkMissingParentheses(
+		Set<SourceFormatterMessage> sourceFormatterMessages, String ifClause,
+		String fileName, int lineCount) {
+
+		outerLoop:
+		while (true) {
+			Matcher matcher = _methodCallPattern.matcher(ifClause);
+
+			if (!matcher.find()) {
+				break;
+			}
+
+			int x = matcher.start() + 1;
+
+			while (true) {
+				x = ifClause.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
+
+				if (x == -1) {
+					break outerLoop;
+				}
+
+				String s = ifClause.substring(matcher.start() + 1, x + 1);
+
+				if (getLevel(s) == 0) {
+					ifClause = StringUtil.replaceFirst(
+						ifClause, s, StringPool.BLANK, matcher.start());
+
+					break;
+				}
+			}
 		}
 
 		int previousParenthesisPos = -1;
@@ -84,52 +167,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 				}
 			}
 
-			if (previousParenthesisPos == -1) {
-				previousParenthesisPos = i;
-
-				continue;
-			}
-
 			previousParenthesisPos = i;
-
-			if (c != CharPool.OPEN_PARENTHESIS) {
-				continue;
-			}
-
-			char previousChar = ifClause.charAt(i - 1);
-
-			if ((previousChar != CharPool.OPEN_PARENTHESIS) &&
-				(previousChar != CharPool.SPACE)) {
-
-				continue;
-			}
-
-			int j = i;
-
-			while (true) {
-				j = ifClause.indexOf(StringPool.CLOSE_PARENTHESIS, j + 1);
-
-				String s = ifClause.substring(i + 1, j);
-
-				if (getLevel(s) == 0) {
-					char nextChar = ifClause.charAt(j + 1);
-
-					if (((previousChar == CharPool.OPEN_PARENTHESIS) &&
-						 (nextChar == CharPool.CLOSE_PARENTHESIS)) ||
-						(((nextChar == CharPool.CLOSE_PARENTHESIS) ||
-						  (nextChar == CharPool.SPACE)) &&
-						 _hasRedundantParentheses(s))) {
-
-						addMessage(
-							sourceFormatterMessages, fileName,
-							"Redundant parentheses in if-statement", lineCount);
-
-						return;
-					}
-
-					break;
-				}
-			}
 		}
 	}
 
@@ -241,5 +279,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 
 		return false;
 	}
+
+	private final Pattern _methodCallPattern = Pattern.compile("\\w\\(");
 
 }

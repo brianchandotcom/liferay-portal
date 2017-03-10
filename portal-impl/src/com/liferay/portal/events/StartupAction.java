@@ -172,7 +172,7 @@ public class StartupAction extends SimpleAction {
 		DB db = DBManagerUtil.getDB();
 
 		if ((db.getDBType() == DBType.MYSQL) &&
-			GetterUtil.getFloat(db.getVersionString()) < 5.6F) {
+			(GetterUtil.getFloat(db.getVersionString()) < 5.6F)) {
 
 			_log.error(
 				"Please upgrade to at least MySQL 5.6.4. The portal no " +

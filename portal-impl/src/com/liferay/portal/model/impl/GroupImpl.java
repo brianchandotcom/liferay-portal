@@ -295,8 +295,8 @@ public class GroupImpl extends GroupBaseImpl {
 
 			if ((layoutSet.getPageCount() > 0) ||
 				(isUser() &&
-				 LayoutLocalServiceUtil.getLayoutsCount(this, privateLayout) >
-					 0)) {
+				 (LayoutLocalServiceUtil.getLayoutsCount(this, privateLayout) >
+					 0))) {
 
 				String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
 					layoutSet, themeDisplay);

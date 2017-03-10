@@ -28,6 +28,7 @@ import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JavaEmptyLinesCheck;
+import com.liferay.source.formatter.checks.JavaIfStatementCheck;
 import com.liferay.source.formatter.checks.JavaLineBreakCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -1183,49 +1184,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String fixIfClause(String ifClause, String line, int delta) {
-		if (StringUtil.count(ifClause, line) > 1) {
-			return ifClause;
-		}
-
-		String newLine = line;
-
-		String whitespace = StringPool.BLANK;
-		int whitespaceLength = Math.abs(delta);
-
-		while (whitespaceLength > 0) {
-			if (whitespaceLength >= 4) {
-				whitespace += StringPool.TAB;
-
-				whitespaceLength -= 4;
-			}
-			else {
-				whitespace += StringPool.SPACE;
-
-				whitespaceLength -= 1;
-			}
-		}
-
-		if (delta > 0) {
-			if (!line.contains(StringPool.TAB + whitespace)) {
-				newLine = StringUtil.replaceLast(
-					newLine, StringPool.TAB, StringPool.FOUR_SPACES);
-			}
-
-			newLine = StringUtil.replaceLast(
-				newLine, StringPool.TAB + whitespace, StringPool.TAB);
-		}
-		else {
-			newLine = StringUtil.replaceLast(
-				newLine, StringPool.TAB, StringPool.TAB + whitespace);
-		}
-
-		newLine = StringUtil.replaceLast(
-			newLine, StringPool.FOUR_SPACES, StringPool.TAB);
-
-		return StringUtil.replace(ifClause, line, newLine);
-	}
-
 	protected String fixIncorrectBooleanUse(
 		String content, String... methodNames) {
 
@@ -1721,199 +1679,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatIfClause(String ifClause) throws IOException {
-		String strippedQuotesIfClause = stripQuotes(ifClause);
-
-		if (strippedQuotesIfClause.contains("!(") ||
-			strippedQuotesIfClause.contains("//")) {
-
-			return ifClause;
-		}
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(ifClause));
-
-		String line = null;
-
-		String previousLine = null;
-		int previousLineLength = 0;
-
-		int previousLineLeadingWhitespace = 0;
-		int previousLineLevel = 0;
-		boolean previousLineIsStartCriteria = true;
-
-		int baseLeadingWhitespace = 0;
-		int insideMethodCallExpectedWhitespace = 0;
-		int level = -1;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			String originalLine = line;
-
-			String trimmedLine = StringUtil.trimLeading(line);
-
-			int x = getIncorrectLineBreakPos(line, previousLine);
-
-			if (x != -1) {
-				String leadingWhitespace = line.substring(
-					0, line.indexOf(trimmedLine));
-
-				return StringUtil.replace(
-					ifClause, line,
-					line.substring(0, x) + "\n" + leadingWhitespace +
-						line.substring(x + 1));
-			}
-
-			if ((previousLineLength > 0) && previousLineIsStartCriteria &&
-				(previousLineLevel >= 0) && previousLine.matches(".*[|&^]")) {
-
-				Matcher matcher = _ifStatementCriteriaPattern.matcher(
-					trimmedLine);
-
-				while (matcher.find()) {
-					if (ToolsUtil.isInsideQuotes(trimmedLine, matcher.end())) {
-						continue;
-					}
-
-					String linePart = trimmedLine.substring(0, matcher.end());
-
-					int linePartLevel = getLevel(linePart);
-
-					if ((linePartLevel <= 0) &&
-						((previousLineLength + linePart.length()) <
-							_maxLineLength)) {
-
-						if (linePart.equals(trimmedLine)) {
-							return StringUtil.replace(
-								ifClause, previousLine + "\n" + originalLine,
-								previousLine + StringPool.SPACE + trimmedLine);
-						}
-						else {
-							String newPreviousLine =
-								previousLine + StringPool.SPACE + linePart;
-							String newLine = StringUtil.replaceFirst(
-								originalLine, linePart, StringPool.BLANK);
-
-							return StringUtil.replace(
-								ifClause, previousLine + "\n" + originalLine,
-								newPreviousLine + "\n" + newLine);
-						}
-					}
-				}
-			}
-
-			line = StringUtil.replace(
-				line, StringPool.TAB, StringPool.FOUR_SPACES);
-
-			int leadingWhitespace = line.length() - trimmedLine.length();
-
-			if (Validator.isNull(previousLine)) {
-				baseLeadingWhitespace =
-					line.indexOf(CharPool.OPEN_PARENTHESIS) + 1;
-			}
-			else if (previousLine.endsWith("|") || previousLine.endsWith("&") ||
-					 previousLine.endsWith("^")) {
-
-				int expectedLeadingWhitespace = baseLeadingWhitespace + level;
-
-				if (leadingWhitespace != expectedLeadingWhitespace) {
-					return fixIfClause(
-						ifClause, originalLine,
-						leadingWhitespace - expectedLeadingWhitespace);
-				}
-			}
-			else {
-				int expectedLeadingWhitespace = 0;
-
-				if (previousLine.contains(StringPool.TAB + "else if (")) {
-					expectedLeadingWhitespace = baseLeadingWhitespace + 3;
-				}
-				else if (previousLine.contains(StringPool.TAB + "if (")) {
-					expectedLeadingWhitespace = baseLeadingWhitespace + 4;
-				}
-				else if (previousLine.contains(StringPool.TAB + "while (")) {
-					expectedLeadingWhitespace = baseLeadingWhitespace + 5;
-				}
-
-				if (previousLine.endsWith(StringPool.COMMA) &&
-					(insideMethodCallExpectedWhitespace > 0)) {
-
-					if (previousLineLevel < 0) {
-						insideMethodCallExpectedWhitespace -= 4;
-					}
-
-					expectedLeadingWhitespace =
-						insideMethodCallExpectedWhitespace;
-				}
-				else {
-					if (expectedLeadingWhitespace == 0) {
-						expectedLeadingWhitespace =
-							previousLineLeadingWhitespace + 4;
-					}
-
-					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
-						insideMethodCallExpectedWhitespace =
-							expectedLeadingWhitespace;
-					}
-				}
-
-				if (leadingWhitespace != expectedLeadingWhitespace) {
-					return fixIfClause(
-						ifClause, originalLine,
-						leadingWhitespace - expectedLeadingWhitespace);
-				}
-			}
-
-			if (line.endsWith(") {")) {
-				return ifClause;
-			}
-
-			int lineLevel = getLevel(trimmedLine);
-
-			level += lineLevel;
-
-			if (Validator.isNotNull(previousLine)) {
-				if (!previousLine.endsWith("|") &&
-					!previousLine.endsWith("&") &&
-					!previousLine.endsWith("^")) {
-
-					previousLineIsStartCriteria = false;
-				}
-				else {
-					previousLineIsStartCriteria = true;
-				}
-			}
-
-			previousLine = originalLine;
-			previousLineLength = line.length();
-
-			previousLineLevel = lineLevel;
-			previousLineLeadingWhitespace = leadingWhitespace;
-		}
-
-		return ifClause;
-	}
-
-	protected String formatIfClause(
-			String ifClause, String fileName, int lineCount)
-		throws IOException {
-
-		String ifClauseSingleLine = StringUtil.replace(
-			ifClause,
-			new String[] {
-				StringPool.TAB + StringPool.SPACE, StringPool.TAB,
-				StringPool.OPEN_PARENTHESIS + StringPool.NEW_LINE,
-				StringPool.NEW_LINE
-			},
-			new String[] {
-				StringPool.TAB, StringPool.BLANK, StringPool.OPEN_PARENTHESIS,
-				StringPool.SPACE
-			});
-
-		checkIfClauseParentheses(ifClauseSingleLine, fileName, lineCount);
-
-		return formatIfClause(ifClause);
-	}
-
 	protected String formatJava(
 			String fileName, String absolutePath, String content)
 		throws Exception {
@@ -1928,7 +1693,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			int lineCount = 0;
 
-			String ifClause = StringPool.BLANK;
 			String packageName = StringPool.BLANK;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
@@ -2076,8 +1840,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 
-					if (Validator.isNull(ifClause) &&
-						!previousLine.contains("\tthrows ") &&
+					if (!previousLine.contains("\tthrows ") &&
 						!previousLine.contains(" throws ") &&
 						(previousLineLeadingTabCount ==
 							(lineLeadingTabCount - 1))) {
@@ -2143,42 +1906,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				if (line.contains("  {") && !line.matches("\\s*\\*.*")) {
 					processMessage(fileName, "{", lineCount);
-				}
-
-				if (trimmedLine.startsWith("catch (") ||
-					trimmedLine.startsWith("if (") ||
-					trimmedLine.startsWith("else if (") ||
-					trimmedLine.startsWith("while (") ||
-					Validator.isNotNull(ifClause)) {
-
-					ifClause = ifClause + line + StringPool.NEW_LINE;
-
-					String trimmedIfClause = StringUtil.trim(ifClause);
-
-					if (line.endsWith(") {") ||
-						(line.endsWith(StringPool.SEMICOLON) &&
-						 trimmedIfClause.startsWith("while "))) {
-
-						String newIfClause = formatIfClause(
-							ifClause, fileName, lineCount);
-
-						if (!ifClause.equals(newIfClause) &&
-							content.contains(ifClause)) {
-
-							return StringUtil.replace(
-								content, ifClause, newIfClause);
-						}
-
-						ifClause = StringPool.BLANK;
-					}
-					else if (line.endsWith(StringPool.SEMICOLON)) {
-						if (!trimmedIfClause.contains("{\t")) {
-							processMessage(
-								fileName, "Incorrect if statement", lineCount);
-						}
-
-						ifClause = StringPool.BLANK;
-					}
 				}
 
 				int lineLength = getLineLength(line);
@@ -3196,6 +2923,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return Arrays.asList(
 			new FileCheck[] {
 				new JavaEmptyLinesCheck(),
+				new JavaIfStatementCheck(sourceFormatterArgs),
 				new JavaLineBreakCheck(sourceFormatterArgs)
 			});
 	}
@@ -3388,38 +3116,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return -1;
-	}
-
-	protected int getIncorrectLineBreakPos(String line, String previousLine) {
-		for (int x = line.length();;) {
-			int y = line.lastIndexOf(" || ", x - 1);
-			int z = line.lastIndexOf(" && ", x - 1);
-
-			x = Math.max(y, z);
-
-			if (x == -1) {
-				return x;
-			}
-
-			if (ToolsUtil.isInsideQuotes(line, x)) {
-				continue;
-			}
-
-			if (Validator.isNotNull(previousLine) &&
-				(previousLine.endsWith(StringPool.PERIOD) ||
-				 (getLevel(line.substring(0, x)) < 0))) {
-
-				return x + 3;
-			}
-
-			if (!line.endsWith(" ||") && !line.endsWith(" &&")) {
-				continue;
-			}
-
-			if (getLevel(line.substring(x)) > 0) {
-				return x + 3;
-			}
-		}
 	}
 
 	protected String getModuleClassContent(String fullClassName)
@@ -4172,8 +3868,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Pattern.DOTALL);
 	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
-	private final Pattern _ifStatementCriteriaPattern = Pattern.compile(
-		".*?( [|&^]+( |\\Z)|\\) \\{\\Z)");
 	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
 		"([\n\t])(synchronized) (private|public|protected)");
 	private final Pattern _internalImportPattern = Pattern.compile(

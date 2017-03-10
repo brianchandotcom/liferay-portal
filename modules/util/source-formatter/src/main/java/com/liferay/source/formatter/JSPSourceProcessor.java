@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
+import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.JSPIfStatementCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 
@@ -40,6 +42,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -238,31 +241,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				fileName,
 				"Use '" + tag + ":defineObjects' or rename var, see LPS-62493",
 				getLineCount(content, x));
-		}
-	}
-
-	protected void checkIfClauseParentheses(
-		String trimmedLine, String fileName, int lineCount,
-		boolean javaSource) {
-
-		if (javaSource) {
-			if ((trimmedLine.startsWith("if (") ||
-				 trimmedLine.startsWith("else if (") ||
-				 trimmedLine.startsWith("while (")) &&
-				trimmedLine.endsWith(") {")) {
-
-				checkIfClauseParentheses(trimmedLine, fileName, lineCount);
-			}
-
-			return;
-		}
-
-		Matcher matcher = _testTagPattern.matcher(trimmedLine);
-
-		if (matcher.find()) {
-			String ifClause = "if (" + matcher.group(2) + ") {";
-
-			checkIfClauseParentheses(ifClause, fileName, lineCount);
 		}
 	}
 
@@ -845,9 +823,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						lineCount);
 				}
 
-				checkIfClauseParentheses(
-					trimmedLine, fileName, lineCount, javaSource);
-
 				Matcher matcher = _jspTaglibPattern.matcher(line);
 
 				while (matcher.find()) {
@@ -1300,6 +1275,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
+	}
+
+	@Override
+	protected List<FileCheck> getFileChecks() {
+		return Arrays.asList(new FileCheck[] {new JSPIfStatementCheck()});
 	}
 
 	protected List<String> getJSPDuplicateImports(
@@ -2195,8 +2175,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"<%@\\s+taglib uri=.* prefix=\"(.*?)\" %>");
 	private final Pattern _taglibVariablePattern = Pattern.compile(
 		"(\n\t*String (taglib\\w+) = (.*);)\n\\s*%>\\s+(<[\\S\\s]*?>)\n");
-	private final Pattern _testTagPattern = Pattern.compile(
-		"^<c:(if|when) test=['\"]<%= (.+) %>['\"]>$");
 	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
 		"(<.*page import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(

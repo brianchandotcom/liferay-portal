@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.FTLIfStatementCheck;
+import com.liferay.source.formatter.checks.FileCheck;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,23 +37,6 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class FTLSourceProcessor extends BaseSourceProcessor {
-
-	protected void checkIfStatement(
-		String line, String fileName, int lineCount) {
-
-		if ((!line.startsWith("<#elseif ") && !line.startsWith("<#if ")) ||
-			!line.endsWith(">") || line.contains("?")) {
-
-			return;
-		}
-
-		int pos = line.indexOf(StringPool.SPACE);
-
-		String ifClause =
-			"if (" + line.substring(pos + 1, line.length() - 1) + ") {";
-
-		checkIfClauseParentheses(ifClause, fileName, lineCount);
-	}
 
 	@Override
 	protected String doFormat(
@@ -240,13 +226,9 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-			int lineCount = 0;
-
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
-
 				line = trimLine(line, false);
 
 				String trimmedLine = StringUtil.trimLeading(line);
@@ -257,8 +239,6 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 					line = formatIncorrectSyntax(line, "=[", "= [", false);
 					line = formatIncorrectSyntax(line, "+[", "+ [", false);
 				}
-
-				checkIfStatement(trimmedLine, fileName, lineCount);
 
 				sb.append(line);
 				sb.append("\n");
@@ -324,6 +304,11 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 		return StringUtil.replaceFirst(
 			content, match, replacement, matcher.start());
+	}
+
+	@Override
+	protected List<FileCheck> getFileChecks() {
+		return Arrays.asList(new FileCheck[] {new FTLIfStatementCheck()});
 	}
 
 	protected String sortLiferayVariables(String content) {

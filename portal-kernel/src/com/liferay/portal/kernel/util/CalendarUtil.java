@@ -91,8 +91,8 @@ public class CalendarUtil {
 		if (today.get(Calendar.MONTH) < birthday.get(Calendar.MONTH)) {
 			yearDiff--;
 		}
-		else if (today.get(Calendar.MONTH) == birthday.get(Calendar.MONTH) &&
-				 today.get(Calendar.DATE) < birthday.get(Calendar.DATE)) {
+		else if ((today.get(Calendar.MONTH) == birthday.get(Calendar.MONTH)) &&
+				 (today.get(Calendar.DATE) < birthday.get(Calendar.DATE))) {
 
 			yearDiff--;
 		}

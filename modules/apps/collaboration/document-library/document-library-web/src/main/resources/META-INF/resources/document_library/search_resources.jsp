@@ -208,7 +208,7 @@ SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, p
 								latestFileVersion = fileEntry.getLatestFileVersion();
 							}
 
-							if ((dlSearchContainer.getRowChecker() == null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+							if ((dlSearchContainer.getRowChecker() == null) && (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE))) {
 								dlSearchContainer.setRowChecker(entriesChecker);
 							}
 
@@ -253,7 +253,7 @@ SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, p
 						<c:when test="<%= (curFolder != null) && DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.VIEW) %>">
 
 							<%
-							if ((dlSearchContainer.getRowChecker() == null) && DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE)) {
+							if ((dlSearchContainer.getRowChecker() == null) && (DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE))) {
 								dlSearchContainer.setRowChecker(entriesChecker);
 							}
 

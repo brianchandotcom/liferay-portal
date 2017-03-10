@@ -194,7 +194,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 		if (!friendlyURL.equals(StringPool.SLASH) && !_contextPath.isEmpty() &&
 			(friendlyURL.length() > _contextPath.length()) &&
 			friendlyURL.startsWith(_contextPath) &&
-			friendlyURL.charAt(_contextPath.length()) == CharPool.SLASH) {
+			(friendlyURL.charAt(_contextPath.length()) == CharPool.SLASH)) {
 
 			friendlyURL = friendlyURL.substring(_contextPath.length());
 		}

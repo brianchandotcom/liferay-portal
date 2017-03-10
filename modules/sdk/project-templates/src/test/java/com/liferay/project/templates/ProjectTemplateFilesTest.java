@@ -223,7 +223,7 @@ public class ProjectTemplateFilesTest {
 
 		boolean trailingEmptyLine = false;
 
-		if ((text.length() > 0) && text.charAt(text.length() - 1) == '\n') {
+		if ((text.length() > 0) && (text.charAt(text.length() - 1) == '\n')) {
 			trailingEmptyLine = true;
 		}
 

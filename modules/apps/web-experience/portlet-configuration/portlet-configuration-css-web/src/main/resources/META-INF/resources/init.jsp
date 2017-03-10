@@ -23,39 +23,20 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.kernel.json.JSONObject" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.model.Group" %><%@
-page import="com.liferay.portal.kernel.model.Layout" %><%@
+<%@ page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.PortletDecorator" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletSetupUtil" %><%@
-page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
-page import="com.liferay.portal.kernel.util.LocalizationUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
-page import="com.liferay.portal.util.LayoutListUtil" %><%@
-page import="com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSConstants" %>
+page import="com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSConstants" %><%@
+page import="com.liferay.portlet.configuration.css.web.internal.display.context.PortletConfigurationCSSPortletDisplayContext" %>
 
-<%@ page import="java.text.DecimalFormat" %><%@
-page import="java.text.DecimalFormatSymbols" %>
+<%@ page import="java.text.DecimalFormat" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
-page import="java.util.Locale" %><%@
-page import="java.util.Map" %><%@
-page import="java.util.Objects" %>
-
-<%@ page import="javax.portlet.PortletPreferences" %>
+<%@ page import="java.util.Objects" %>
 
 <liferay-theme:defineObjects />
 
@@ -64,11 +45,7 @@ page import="java.util.Objects" %>
 <%
 String currentURL = PortalUtil.getCurrentURL(request);
 
-String portletResource = ParamUtil.getString(renderRequest, "portletResource");
-
-PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletResource);
-
-JSONObject portletSetupJSONObject = PortletSetupUtil.cssToJSONObject(portletSetup);
+PortletConfigurationCSSPortletDisplayContext portletConfigurationCSSPortletDisplayContext = new PortletConfigurationCSSPortletDisplayContext(renderRequest);
 %>
 
 <%@ include file="/init-ext.jsp" %>

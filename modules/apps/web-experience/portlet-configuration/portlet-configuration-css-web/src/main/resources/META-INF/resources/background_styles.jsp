@@ -16,8 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-JSONObject bgDataJSONObject = portletSetupJSONObject.getJSONObject("bgData");
-%>
-
-<aui:input name="backgroundColor" value='<%= bgDataJSONObject.getString("backgroundColor") %>' />
+<aui:input name="backgroundColor" value="<%= portletConfigurationCSSPortletDisplayContext.getBackgroundColor() %>" />

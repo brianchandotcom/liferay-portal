@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
@@ -1389,6 +1390,38 @@ public class ProjectTemplatesTest {
 			"", output);
 	}
 
+	private static void _testChangePortletModelHintsXml(
+			File projectDir, String serviceProjectName,
+			Callable<Void> buildServiceCallable)
+		throws Exception {
+
+		buildServiceCallable.call();
+
+		File file = _testExists(
+			projectDir,
+			serviceProjectName +
+				"/src/main/resources/META-INF/portlet-model-hints.xml");
+
+		Path path = file.toPath();
+
+		String content = FileUtil.read(path);
+
+		String newContent = content.replace(
+			"<field name=\"field5\" type=\"String\" />",
+			"<field name=\"field5\" type=\"String\">\n\t\t\t<hint-collection " +
+				"name=\"CLOB\" />\n\t\t</field>");
+
+		Assert.assertNotEquals("Unexpected " + file, content, newContent);
+
+		Files.write(path, newContent.getBytes(StandardCharsets.UTF_8));
+
+		buildServiceCallable.call();
+
+		Assert.assertEquals(
+			"Changes in " + file + " incorrectly overridden", newContent,
+			FileUtil.read(path));
+	}
+
 	private static File _testContains(
 			File dir, String fileName, String... strings)
 		throws IOException {
@@ -1564,12 +1597,12 @@ public class ProjectTemplatesTest {
 	}
 
 	private void _testBuildTemplateServiceBuilder(
-			File gradleProjectDir, File rootProject, String name,
-			String packageName, String projectPath)
+			File gradleProjectDir, final File rootProject, String name,
+			String packageName, final String projectPath)
 		throws Exception {
 
 		String apiProjectName = name + "-api";
-		String serviceProjectName = name + "-service";
+		final String serviceProjectName = name + "-service";
 
 		boolean workspace = WorkspaceUtil.isWorkspace(gradleProjectDir);
 
@@ -1595,10 +1628,21 @@ public class ProjectTemplatesTest {
 				"compileOnly project(\":" + apiProjectName + "\")");
 		}
 
-		_executeGradle(
-			rootProject,
-			projectPath + ":" + serviceProjectName +
-				_GRADLE_TASK_PATH_BUILD_SERVICE);
+		_testChangePortletModelHintsXml(
+			gradleProjectDir, serviceProjectName,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					_executeGradle(
+						rootProject,
+						projectPath + ":" + serviceProjectName +
+							_GRADLE_TASK_PATH_BUILD_SERVICE);
+
+					return null;
+				}
+
+			});
 
 		_executeGradle(
 			rootProject,
@@ -1613,12 +1657,23 @@ public class ProjectTemplatesTest {
 			serviceProjectName + "/build/libs/" + packageName +
 				".service-1.0.0.jar");
 
-		File mavenProjectDir = _buildTemplateWithMaven(
+		final File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "-Dpackage=" + packageName);
 
-		_executeMaven(
-			new File(mavenProjectDir, serviceProjectName),
-			_MAVEN_GOAL_BUILD_SERVICE);
+		_testChangePortletModelHintsXml(
+			mavenProjectDir, serviceProjectName,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					_executeMaven(
+						new File(mavenProjectDir, serviceProjectName),
+						_MAVEN_GOAL_BUILD_SERVICE);
+
+					return null;
+				}
+
+			});
 
 		File gradleServicePropertiesFile = new File(
 			gradleProjectDir,

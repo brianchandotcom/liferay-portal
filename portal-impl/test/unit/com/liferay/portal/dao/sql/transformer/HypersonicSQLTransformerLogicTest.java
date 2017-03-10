@@ -15,35 +15,26 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.dao.db.HypersonicDB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Manuel de la Peña
  * @author Brian Wing Shun Chan
  */
+@PrepareForTest(DBManagerUtil.class)
+@RunWith(PowerMockRunner.class)
 public class HypersonicSQLTransformerLogicTest
 	extends BaseSQLTransformerLogicTestCase {
 
-	public HypersonicSQLTransformerLogicTest() {
-		super(new HypersonicDB(1, 0));
-	}
-
-	@Override
-	@Test
-	public void testReplaceBitwiseCheckWithExtraWhitespace() {
-		Assert.assertEquals(
-			getBitwiseCheckTransformedSQL(),
-			sqlTransformer.transform(getBitwiseCheckOriginalSQL()));
-	}
-
-	@Override
-	@Test
-	public void testReplaceModWithExtraWhitespace() {
-		Assert.assertEquals(
-			getModTransformedSQL(),
-			sqlTransformer.transform(getModOriginalSQL()));
+	@Before
+	public void setUp() {
+		setDB(new HypersonicDB(1, 0));
 	}
 
 	@Override
@@ -58,7 +49,7 @@ public class HypersonicSQLTransformerLogicTest
 
 	@Override
 	protected String getIntegerDivisionTransformedSQL() {
-		return "select foo / bar from Foo";
+		return "select foo /  bar from Foo";
 	}
 
 	@Override

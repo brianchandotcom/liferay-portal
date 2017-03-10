@@ -31,7 +31,7 @@ public class DefaultSQLTransformer implements SQLTransformer {
 
 	@Override
 	public String transform(String sql) {
-		if ((_functions == null) || (sql == null)) {
+		if (sql == null) {
 			return sql;
 		}
 

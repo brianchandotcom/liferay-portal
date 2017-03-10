@@ -46,18 +46,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		/>
 	</aui:nav>
 
-	<c:if test='<%= tabs1.equals("forms") %>'>
-		<c:if test="<%= ddlFormAdminDisplayContext.isShowSearch() %>">
-
-			<%
-			PortletURL formsPortletURL = ddlFormAdminDisplayContext.getPortletURL();
-			%>
-
-			<aui:nav-bar-search>
-				<aui:form action="<%= formsPortletURL.toString() %>" method="post" name="fm1">
-					<liferay-ui:input-search markupView="lexicon" />
-				</aui:form>
-			</aui:nav-bar-search>
-		</c:if>
+	<c:if test="<%= ddlFormAdminDisplayContext.isShowSearch() %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= ddlFormAdminDisplayContext.getPortletURL() %>" method="post" name="fm1">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
 	</c:if>
 </aui:nav-bar>

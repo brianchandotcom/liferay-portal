@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<archetype-descriptor name="liferay-module-layouttpl">
+<archetype-descriptor name="liferay-module-layout-template">
 	<fileSets>
 		<fileSet filtered="true">
 			<directory>src/main/webapp</directory>

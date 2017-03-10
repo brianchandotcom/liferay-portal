@@ -1237,6 +1237,10 @@ dependency to version 2.1.9.
 file as value of the `archivesBaseName` property of theme projects, if present.
 
 ### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.97.
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.364.
 - [LPS-70634]: Update the [Liferay Gradle Plugins Gulp] dependency to version
 2.0.11.
 - [LPS-70634]: Update the [Liferay Gradle Plugins JS Module Config Generator]
@@ -1247,6 +1251,10 @@ version 2.3.8.
 ## 3.2.18 - 2017-03-09
 
 ### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.98.
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.365.
 - [LPS-67688]: Update the [Liferay Gradle Plugins DB Support] dependency to
 version 1.0.2.
 

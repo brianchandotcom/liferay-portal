@@ -90,6 +90,11 @@ public class MySQLSQLTransformerLogicTest
 	}
 
 	@Override
+	protected String getBooleanTransformedSQL() {
+		return "select * from Foo where foo = 0 and bar = 1";
+	}
+
+	@Override
 	protected String getCastClobTextTransformedSQL() {
 		return "select foo from Foo";
 	}

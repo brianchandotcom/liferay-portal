@@ -50,6 +50,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
@@ -114,7 +115,8 @@ public class DDLFormAdminDisplayContext {
 		DDMFormValuesFactory ddmFormValuesFactory,
 		DDMFormValuesMerger ddmFormValuesMerger,
 		DDMStructureLocalService ddmStructureLocalService,
-		JSONFactory jsonFactory, StorageEngine storageEngine,
+		DDMStructureService ddmStructureService, JSONFactory jsonFactory,
+		StorageEngine storageEngine,
 		WorkflowEngineManager workflowEngineManager) {
 
 		_renderRequest = renderRequest;
@@ -133,6 +135,7 @@ public class DDLFormAdminDisplayContext {
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_ddmStructureLocalService = ddmStructureLocalService;
+		_ddmStructureService = ddmStructureService;
 		_jsonFactory = jsonFactory;
 		_storageEngine = storageEngine;
 		_workflowEngineManager = workflowEngineManager;
@@ -145,6 +148,13 @@ public class DDLFormAdminDisplayContext {
 
 	public int getAutosaveInterval() {
 		return _ddlFormWebConfiguration.autosaveInterval();
+	}
+
+	public DDLFormAdminFieldLibraryDisplayContext
+		getDDLFormAdminFieldLibraryDisplayContext() {
+
+		return new DDLFormAdminFieldLibraryDisplayContext(
+			_renderRequest, _renderResponse, _ddmStructureService);
 	}
 
 	public DDLFormViewRecordDisplayContext
@@ -780,6 +790,7 @@ public class DDLFormAdminDisplayContext {
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;
 	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final DDMStructureService _ddmStructureService;
 	private DDMStructure _ddmStucture;
 	private String _displayStyle;
 	private final JSONFactory _jsonFactory;

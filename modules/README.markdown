@@ -9,7 +9,7 @@ best practices.
 
 The default value for source/target compatibility is still Java 7. This is to
 limit the use of new features only when necessary. In order to use Java 8
-features, add these lines in your `build.gradle`:
+features, add these lines in your `build.gradle` file:
 
 ```gradle
 sourceCompatibility = "1.8"
@@ -92,7 +92,7 @@ File Name | Description
 
 ## Source Formatting
 
-### Gradle files
+### Gradle Files
 
 The following source formatting rules should be followed for Gradle files.
 
@@ -116,7 +116,7 @@ closure arguments.
 	for default tasks. Don't declare the task dependencies here.
 	5. Variables used globally by the whole script, like a URL or a relative
 	path.
-	6. Blocks `{ ... }` to configure tasks, extension objects, etc. These are
+	6. Blocks `{ ... }` to configure tasks, extension objects, etc. These must be
 	sorted alphabetically.
 * Inside a block `{ ... }`:
 	* If variables are needed, declare them inside the block at the beginning.

@@ -14,10 +14,15 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.converter;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -27,6 +32,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -36,18 +42,28 @@ import java.util.regex.Pattern;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.Mock;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Marcellus Tavares
  */
+@PrepareForTest(ServiceContextThreadLocal.class)
+@RunWith(PowerMockRunner.class)
 public class DDLFormRuleToDDMFormRuleConverterTest
 	extends BaseDDLDDMConverterTest {
 
 	@Before
 	public void setUp() throws Exception {
 		setUpDDLFormRuleDeserializer();
+		setUpServiceContextThreadLocal();
 
 		_ddlFormRulesToDDMFormRulesConverter =
 			new DDLFormRuleToDDMFormRuleConverter();
@@ -147,6 +163,31 @@ public class DDLFormRuleToDDMFormRuleConverterTest
 		assertConversion(
 			"ddl-form-rules-boolean-actions.json",
 			"ddm-form-rules-boolean-actions.json");
+	}
+
+	@Test
+	public void testCalculateAction() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormField ddmFormField0 = new DDMFormField(
+			"field0", FieldConstants.INTEGER);
+		DDMFormField ddmFormField1 = new DDMFormField(
+			"field1", FieldConstants.INTEGER);
+		DDMFormField ddmFormField2 = new DDMFormField(
+			"field2", FieldConstants.INTEGER);
+
+		ddmForm.setDDMFormFields(
+			Arrays.asList(ddmFormField0, ddmFormField1, ddmFormField2));
+
+		PowerMockito.when(
+			_serviceContext.getAttribute("form")
+		).thenReturn(
+			ddmForm
+		);
+
+		assertConversion(
+			"ddl-form-rules-calculate-action.json",
+			"ddm-form-rules-calculate-action.json");
 	}
 
 	@Test
@@ -256,6 +297,16 @@ public class DDLFormRuleToDDMFormRuleConverterTest
 		field.set(_ddlFormRulesDeserializer, new JSONFactoryImpl());
 	}
 
+	protected void setUpServiceContextThreadLocal() {
+		PowerMockito.mockStatic(ServiceContextThreadLocal.class);
+
+		PowerMockito.when(
+			ServiceContextThreadLocal.getServiceContext()
+		).thenReturn(
+			_serviceContext
+		);
+	}
+
 	private final Pattern _callFunctionPattern = Pattern.compile(
 		"call\\(\\s*\'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-" +
 			"[0-9a-f]{12})\'\\s*,\\s*\'(.*)\'\\s*,\\s*\'(.*)\'\\s*\\)");
@@ -263,5 +314,8 @@ public class DDLFormRuleToDDMFormRuleConverterTest
 		new DDLFormRuleDeserializer();
 	private DDLFormRuleToDDMFormRuleConverter
 		_ddlFormRulesToDDMFormRulesConverter;
+
+	@Mock
+	private ServiceContext _serviceContext;
 
 }

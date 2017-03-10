@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.form.web.internal.converter;
 
 import com.liferay.dynamic.data.lists.form.web.internal.converter.DDMFormRuleToDDLFormRuleConverter.ActionExpressionVisitor;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleAction;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.model.action.CalculateDDLFormRuleAction;
 import com.liferay.dynamic.data.mapping.expression.model.Expression;
 
 import java.util.List;
@@ -23,27 +24,22 @@ import java.util.List;
 /**
  * @author Leonardo Barros
  */
-public class DDLFormRuleActionFactory {
+public class CalculateDDLFormRuleActionFactory {
 
 	public static DDLFormRuleAction create(
-		String action, List<Expression> expressions,
-		ActionExpressionVisitor visitor) {
+		List<Expression> expressions,
+		ActionExpressionVisitor actionExpressionVisitor) {
 
-		if (action.equals("auto-fill")) {
-			return AutoFillDDLFormRuleActionFactory.create(
-				expressions, visitor);
-		}
-		else if (action.equals("calculate")) {
-			return CalculateDDLFormRuleActionFactory.create(
-				expressions, visitor);
-		}
-		else if (action.equals("jump-to-page")) {
-			return JumpToPageDDLFormRuleActionFactory.create(
-				expressions, visitor);
-		}
+		String target = actionExpressionVisitor.doVisit(expressions.get(0));
 
-		return DefaultDDLFormRuleActionFactory.create(
-			action, expressions, visitor);
+		Expression expression = expressions.get(1);
+
+		String expressionStr = expression.toString();
+
+		expressionStr = expressionStr.replaceAll(
+			"(getValue\\(\\'([^\\(]+)\\'\\))", "$2");
+
+		return new CalculateDDLFormRuleAction(target, expressionStr);
 	}
 
 }

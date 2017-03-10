@@ -40,6 +40,7 @@ AUI.add(
 						value: {
 							and: Liferay.Language.get('and'),
 							autofill: Liferay.Language.get('autofill'),
+							calculate: Liferay.Language.get('calculate'),
 							cancel: Liferay.Language.get('cancel'),
 							description: Liferay.Language.get('define-condition-and-action-to-change-fields-and-elements-on-the-form'),
 							enable: Liferay.Language.get('enable'),
@@ -225,6 +226,10 @@ AUI.add(
 							{
 								label: strings.autofill,
 								value: 'auto-fill'
+							},
+							{
+								label: strings.calculate,
+								value: 'calculate'
 							},
 							{
 								label: strings.show,

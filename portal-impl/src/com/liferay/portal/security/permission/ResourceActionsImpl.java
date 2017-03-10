@@ -112,6 +112,45 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public void check(String portletName) {
+		PortletResourceActionsBag portletResourceActionsBag =
+			_portletResourceActionsBags.get(portletName);
+
+		if (portletResourceActionsBag == null) {
+			portletResourceActionsBag = new PortletResourceActionsBagImpl();
+
+			Set<String> resoureceActions =
+				portletResourceActionsBag.getResourceActions();
+
+			resoureceActions.addAll(getPortletMimeTypeActions(portletName));
+
+			if (!portletName.equals(PortletKeys.PORTAL)) {
+				checkPortletActions(portletName, resoureceActions);
+			}
+
+			Set<String> groupDefaultActions =
+				portletResourceActionsBag.getResourceGroupDefaultActions();
+
+			checkPortletGroupDefaultActions(groupDefaultActions);
+
+			Set<String> guestDefaultActions =
+				portletResourceActionsBag.getResourceGuestDefaultActions();
+
+			checkPortletGuestDefaultActions(guestDefaultActions);
+
+			Set<String> guestUnsupportedActions =
+				portletResourceActionsBag.getResourceGuestUnsupportedActions();
+
+			checkPortletGuestUnsupportedActions(guestUnsupportedActions);
+
+			Set<String> layoutManagerActions =
+				portletResourceActionsBag.getResourceLayoutManagerActions();
+
+			checkPortletLayoutManagerActions(layoutManagerActions);
+
+			_portletResourceActionsBags.put(
+				portletName, portletResourceActionsBag);
+		}
+
 		ResourceActionLocalServiceUtil.checkResourceActions(
 			portletName, getPortletResourceActions(portletName));
 

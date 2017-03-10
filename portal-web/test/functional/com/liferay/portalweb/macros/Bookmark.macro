@@ -8,15 +8,20 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SELECT" value1="Select" />
+		<if>
+			<isset var="bookmarkFolderName" />
+			<then>
+				<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SELECT" value1="Select" />
 
-		<execute function="SelectFrameTop" />
+				<execute function="SelectFrameTop" />
 
-		<execute function="SelectFrame" locator1="IFrame#SELECT_FOLDER" />
+				<execute function="SelectFrame" locator1="IFrame#SELECT_FOLDER" />
 
-		<var name="key_folderName" value="${bookmarkFolderName}" />
+				<var name="key_folderName" value="${bookmarkFolderName}" />
 
-		<execute function="AssertClick" locator1="Bookmarks#FOLDER_TABLE_CHOOSE" value1="Choose" />
+				<execute function="AssertClick" locator1="Bookmarks#FOLDER_TABLE_CHOOSE" value1="Choose" />
+			</then>
+		</if>
 
 		<execute function="SelectFrameTop" />
 

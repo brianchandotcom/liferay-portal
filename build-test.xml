@@ -5122,6 +5122,18 @@ go]]></replacevalue>
 		Deploy plugin files to the deploy directory.
 		-->
 
+		<get-testcase-property property.name="ext.plugins.includes" />
+
+		<if>
+			<isset property="ext.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+					<property name="plugin.types" value="ext" />
+					<property name="plugins.includes" value="${ext.plugins.includes}" />
+				</ant>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="hook.plugins.includes" />
 
 		<if>

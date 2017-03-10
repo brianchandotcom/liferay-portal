@@ -92,3 +92,38 @@ File Name | Description
 File Name | Description
 --------- | -----------
 `.lfrbuild-missing-resources-importer` | Added only on the `master `branch, prevents the theme from theme from being published in case it doesn't contain the *Resources Importer* files.
+
+## Source Formatting
+
+### Gradle files
+
+* Always use double quotes, unless necessary.
+* Don't use `def`, explicitly define the types, even for closure arguments.
+* Dependencies:
+	* There is usually no need to declare `transitive: false` for
+	`compileInclude` or `provided` dependencies, this is the default behavior.
+	* If a module only includes unit tests, add all dependencies to the
+	`testCompile` configuration. If a module only includes integration tests,
+	add all dependencies to the `testIntegrationCompile` configuration.
+	* Always sort dependencies alphabetically.
+	* Separate dependencies of different configurations with an empty line.
+* Ordering inside Gradle files:
+	1. Classes imports, sorted and separated in groups (same logic we use in
+	Java)
+	2. `apply plugin`, sorted alphabetically
+	3. `ext { ... }` block
+	4. Task creation: `task taskName(type: TaskType)` or simply `task taskName`
+	for default tasks. Don't declare the task dependencies here.
+	5. Variables used globally by the whole script, like a URL or a relative
+	path
+	6. Blocks `{ ... }` to configure tasks, extension objects, etc., sorted
+	alphabetically
+* Inside a block `{ ... }`:
+	* If variables are needed, declare them inside the block, at the beginning.
+	* If setting a property, use the `=` assignment even if Gradle doesn't
+	complain when not used.
+	* If multiple assignments are necessary (for example, multiple `dependsOn`
+	or multiple `excludes`), write them on separate lines.
+	* Order assignments alphabetically, leaving an empty line after multiple
+	calls to the same method (like after multiple `dependsOn`) or if the
+	assignment has a closure.

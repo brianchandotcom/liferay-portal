@@ -454,6 +454,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>KNOWLEDGE_BASE_ARTICLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Knowledge Base Article')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMPERSONATE_USER</td>
 	<td>//a[@role='menuitem' and contains(.,'Impersonate User')]</td>
 	<td></td>

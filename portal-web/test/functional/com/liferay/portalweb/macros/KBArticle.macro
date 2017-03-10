@@ -316,6 +316,21 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_ENTER_A_VALID_TITLE" value1="Please enter a valid title." />
 	</command>
 
+	<command name="addPGViaAP">
+		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
+
+		<execute function="AssertClick" locator1="MenuItem#KNOWLEDGE_BASE_ARTICLE" value1="Knowledge Base Article" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${kbArticleContent}" />
+			<var name="title" value="${kbArticleTitle}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+	</command>
+
 	<command name="addSections">
 		<var name="sectionCount" value="0" />
 
@@ -1668,6 +1683,14 @@
 				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#CUSTOM_FIELD_VALUE" value1="${customFieldValue}" />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewPGViaAP">
+		<var name="key_assetContent" value="${kbArticleContent}" />
+		<var name="key_assetTitle" value="${kbArticleTitle}" />
+
+		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${kbArticleContent}" />
 	</command>
 
 	<command name="viewSearchResultsPG">

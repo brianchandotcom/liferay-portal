@@ -252,7 +252,10 @@ public class ProjectTemplateFilesTest {
 				"#if (" + condition.trim() + ")", matcher.group());
 		}
 
-		if (extension.equals("xml") && Validator.isNotNull(text)) {
+		if (extension.equals("xml") &&
+			!fileName.equals("liferay-layout-templates.xml") &&
+			Validator.isNotNull(text)) {
+
 			String xmlDeclaration = _XML_DECLARATION;
 
 			if (fileName.equals("service.xml")) {

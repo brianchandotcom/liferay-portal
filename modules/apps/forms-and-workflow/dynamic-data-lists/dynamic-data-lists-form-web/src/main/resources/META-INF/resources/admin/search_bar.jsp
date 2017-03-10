@@ -17,19 +17,47 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
+String tabs1 = ParamUtil.getString(request, "tabs1", "forms");
+
+PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="forms" selected="<%= true %>" />
+
+		<%
+		portletURL.setParameter("tabs1", "forms");
+		%>
+
+		<aui:nav-item
+			href="<%= portletURL.toString() %>"
+			label="forms"
+			selected='<%= tabs1.equals("forms") %>'
+		/>
+
+		<%
+		portletURL.setParameter("tabs1", "field-library");
+		%>
+
+		<aui:nav-item
+			href="<%= portletURL.toString() %>"
+			label="field-library"
+			selected='<%= tabs1.equals("field-library") %>'
+		/>
 	</aui:nav>
 
-	<c:if test="<%= ddlFormAdminDisplayContext.isShowSearch() %>">
-		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
+	<c:if test='<%= tabs1.equals("forms") %>'>
+		<c:if test="<%= ddlFormAdminDisplayContext.isShowSearch() %>">
+
+			<%
+			PortletURL formsPortletURL = ddlFormAdminDisplayContext.getPortletURL();
+			%>
+
+			<aui:nav-bar-search>
+				<aui:form action="<%= formsPortletURL.toString() %>" method="post" name="fm1">
+					<liferay-ui:input-search markupView="lexicon" />
+				</aui:form>
+			</aui:nav-bar-search>
+		</c:if>
 	</c:if>
 </aui:nav-bar>

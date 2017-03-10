@@ -17,38 +17,32 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JSONObject textDataJSONObject = portletSetupJSONObject.getJSONObject("textData");
-
-DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
-
-decimalFormatSymbols.setDecimalSeparator('.');
+DecimalFormat decimalFormat = portletConfigurationCSSPortletDisplayContext.getDecimalFormat();
 %>
 
 <aui:row>
 	<aui:col width="<%= 33 %>">
 		<aui:select label="font" name="fontFamily" showEmptyOption="<%= true %>">
-			<aui:option label="Arial" selected='<%= Objects.equals(textDataJSONObject.get("fontFamily"), "Arial") %>' />
-			<aui:option label="Georgia" selected='<%= Objects.equals(textDataJSONObject.get("fontFamily"), "Georgia") %>' />
-			<aui:option label="Times New Roman" selected='<%= Objects.equals(textDataJSONObject.get("fontFamily"), "Times New Roman") %>' />
-			<aui:option label="Tahoma" selected='<%= Objects.equals(textDataJSONObject.get("fontFamily"), "Tahoma") %>' />
-			<aui:option label="Trebuchet MS" selected='<%= Objects.equals(textDataJSONObject.get("fontFamily"), "Trebuchet MS") %>' />
-			<aui:option label="Verdana" selected='<%= Objects.equals(textDataJSONObject.get("fontFamily"), "Verdana") %>' />
+			<aui:option label="Arial" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontFamily"), "Arial") %>' />
+			<aui:option label="Georgia" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontFamily"), "Georgia") %>' />
+			<aui:option label="Times New Roman" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontFamily"), "Times New Roman") %>' />
+			<aui:option label="Tahoma" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontFamily"), "Tahoma") %>' />
+			<aui:option label="Trebuchet MS" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontFamily"), "Trebuchet MS") %>' />
+			<aui:option label="Verdana" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontFamily"), "Verdana") %>' />
 		</aui:select>
 
-		<aui:input label="bold" name="fontBold" type="toggle-switch" value='<%= Objects.equals(textDataJSONObject.get("fontWeight"), "bold") %>' />
+		<aui:input label="bold" name="fontBold" type="toggle-switch" value='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontWeight"), "bold") %>' />
 
-		<aui:input label="italic" name="fontItalic" type="toggle-switch" value='<%= Objects.equals(textDataJSONObject.get("fontStyle"), "italic") %>' />
+		<aui:input label="italic" name="fontItalic" type="toggle-switch" value='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontStyle"), "italic") %>' />
 
 		<aui:select label="size" name="fontSize" showEmptyOption="<%= true %>">
 
 			<%
-			DecimalFormat decimalFormat = new DecimalFormat("#.##em", decimalFormatSymbols);
-
 			for (double i = 0.1; i <= 12; i += 0.1) {
 				String value = decimalFormat.format(i);
 			%>
 
-				<aui:option label="<%= value %>" selected='<%= Objects.equals(textDataJSONObject.get("fontSize"), value) %>' />
+				<aui:option label="<%= value %>" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontSize"), value) %>' />
 
 			<%
 			}
@@ -56,20 +50,20 @@ decimalFormatSymbols.setDecimalSeparator('.');
 
 		</aui:select>
 
-		<aui:input label="color" name="fontColor" value='<%= textDataJSONObject.get("color") %>' />
+		<aui:input label="color" name="fontColor" value='<%= portletConfigurationCSSPortletDisplayContext.getTextDataProperty("color") %>' />
 
 		<aui:select label="alignment" name="textAlign" showEmptyOption="<%= true %>">
-			<aui:option label="justify" selected='<%= Objects.equals(textDataJSONObject.get("textAlign"), "justify") %>' />
-			<aui:option label="left" selected='<%= Objects.equals(textDataJSONObject.get("textAlign"), "left") %>' />
-			<aui:option label="right" selected='<%= Objects.equals(textDataJSONObject.get("textAlign"), "right") %>' />
-			<aui:option label="center" selected='<%= Objects.equals(textDataJSONObject.get("textAlign"), "center") %>' />
+			<aui:option label="justify" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textAlign"), "justify") %>' />
+			<aui:option label="left" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textAlign"), "left") %>' />
+			<aui:option label="right" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textAlign"), "right") %>' />
+			<aui:option label="center" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textAlign"), "center") %>' />
 		</aui:select>
 
 		<aui:select label="text-decoration" name="textDecoration" showEmptyOption="<%= true %>">
-			<aui:option label="none" selected='<%= Objects.equals(textDataJSONObject.get("textDecoration"), "none") %>' />
-			<aui:option label="underline" selected='<%= Objects.equals(textDataJSONObject.get("textDecoration"), "underline") %>' />
-			<aui:option label="overline" selected='<%= Objects.equals(textDataJSONObject.get("textDecoration"), "overline") %>' />
-			<aui:option label="strikethrough" selected='<%= Objects.equals(textDataJSONObject.get("textDecoration"), "line-through") %>' value="line-through" />
+			<aui:option label="none" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textDecoration"), "none") %>' />
+			<aui:option label="underline" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textDecoration"), "underline") %>' />
+			<aui:option label="overline" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textDecoration"), "overline") %>' />
+			<aui:option label="strikethrough" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textDecoration"), "line-through") %>' value="line-through" />
 		</aui:select>
 	</aui:col>
 
@@ -77,8 +71,6 @@ decimalFormatSymbols.setDecimalSeparator('.');
 		<aui:select label="word-spacing" name="wordSpacing" showEmptyOption="<%= true %>">
 
 			<%
-			DecimalFormat decimalFormat = new DecimalFormat("#.##em", decimalFormatSymbols);
-
 			for (double i = -1; i <= 1; i += 0.05) {
 				String value = decimalFormat.format(i);
 
@@ -87,7 +79,7 @@ decimalFormatSymbols.setDecimalSeparator('.');
 				}
 			%>
 
-				<aui:option label="<%= value %>" selected='<%= Objects.equals(textDataJSONObject.get("wordSpacing"), value) %>' />
+				<aui:option label="<%= value %>" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("wordSpacing"), value) %>' />
 
 			<%
 			}
@@ -98,13 +90,11 @@ decimalFormatSymbols.setDecimalSeparator('.');
 		<aui:select label="line-height" name="lineHeight" showEmptyOption="<%= true %>">
 
 			<%
-			DecimalFormat decimalFormat = new DecimalFormat("#.##em", decimalFormatSymbols);
-
 			for (double i = 0.1; i <= 12; i += 0.1) {
 				String value = decimalFormat.format(i);
 			%>
 
-				<aui:option label="<%= value %>" selected='<%= Objects.equals(textDataJSONObject.get("lineHeight"), value) %>' />
+				<aui:option label="<%= value %>" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("lineHeight"), value) %>' />
 
 			<%
 			}
@@ -123,7 +113,7 @@ decimalFormatSymbols.setDecimalSeparator('.');
 				}
 			%>
 
-				<aui:option label="<%= value %>" selected='<%= Objects.equals(textDataJSONObject.get("letterSpacing"), value) %>' />
+				<aui:option label="<%= value %>" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("letterSpacing"), value) %>' />
 
 			<%
 			}

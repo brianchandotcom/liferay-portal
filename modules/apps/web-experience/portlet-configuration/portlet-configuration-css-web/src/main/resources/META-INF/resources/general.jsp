@@ -16,64 +16,27 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-boolean useCustomTitle = GetterUtil.getBoolean(portletSetup.getValue("portletSetupUseCustomTitle", StringPool.BLANK));
-%>
-
-<aui:input name="useCustomTitle" type="toggle-switch" value="<%= useCustomTitle %>" />
-
-<%
-Portlet portlet = PortletLocalServiceUtil.getPortletById(portletResource);
-
-Map<Locale, String> customTitleMap = new HashMap<>();
-
-for (Locale curLocale : LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId())) {
-	String languageId = LocaleUtil.toLanguageId(curLocale);
-
-	String portletTitle = PortalUtil.getPortletTitle(portlet, application, curLocale);
-
-	String portletSetupTitle = portletSetup.getValue("portletSetupTitle_" + languageId, portletTitle);
-
-	customTitleMap.put(curLocale, portletSetupTitle);
-}
-
-String customTitleXml = LocalizationUtil.updateLocalization(customTitleMap, StringPool.BLANK, "customTitle", LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
-%>
+<aui:input name="useCustomTitle" type="toggle-switch" value="<%= portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>" />
 
 <aui:field-wrapper cssClass="lfr-input-text-container">
-	<liferay-ui:input-localized defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="customTitle" xml="<%= customTitleXml %>" />
+	<liferay-ui:input-localized defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="customTitle" xml="<%= portletConfigurationCSSPortletDisplayContext.getCustomTitleXML() %>" />
 </aui:field-wrapper>
 
-<%
-String linkToLayoutUuid = portletSetup.getValue("portletSetupLinkToLayoutUuid", StringPool.BLANK);
-%>
-
 <aui:select label="link-portlet-urls-to-page" name="linkToLayoutUuid">
-	<aui:option label="current-page" selected="<%= Objects.equals(StringPool.BLANK, linkToLayoutUuid) %>" value="" />
+	<aui:option label="current-page" selected="<%= Objects.equals(StringPool.BLANK, portletConfigurationCSSPortletDisplayContext.getLinkToLayoutUuid()) %>" value="" />
 
 	<%
-	Group group = layout.getGroup();
-
-	List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(group.getGroupId(), layout.isPrivateLayout(), group.getGroupKey(), locale);
-
-	for (LayoutDescription layoutDescription : layoutDescriptions) {
+	for (LayoutDescription layoutDescription : portletConfigurationCSSPortletDisplayContext.getLayoutDescriptions()) {
 		Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
-
-		if (layoutDescriptionLayout != null) {
 	%>
 
-			<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Objects.equals(layoutDescriptionLayout.getUuid(), linkToLayoutUuid) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
+		<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Objects.equals(layoutDescriptionLayout.getUuid(), portletConfigurationCSSPortletDisplayContext.getLinkToLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
 
 	<%
-		}
 	}
 	%>
 
 </aui:select>
-
-<%
-String portletDecoratorId = portletSetup.getValue("portletSetupPortletDecoratorId", StringPool.BLANK);
-%>
 
 <aui:select label="portlet-decorators" name="portletDecoratorId">
 
@@ -81,7 +44,7 @@ String portletDecoratorId = portletSetup.getValue("portletSetupPortletDecoratorI
 	for (PortletDecorator portletDecorator : theme.getPortletDecorators()) {
 	%>
 
-		<aui:option label="<%= portletDecorator.getName() %>" selected="<%= Objects.equals(portletDecorator.getPortletDecoratorId(), portletDecoratorId) %>" value="<%= portletDecorator.getPortletDecoratorId() %>" />
+		<aui:option label="<%= portletDecorator.getName() %>" selected="<%= Objects.equals(portletDecorator.getPortletDecoratorId(), portletConfigurationCSSPortletDisplayContext.getPortletDecoratorId()) %>" value="<%= portletDecorator.getPortletDecoratorId() %>" />
 
 	<%
 	}
@@ -94,5 +57,5 @@ String portletDecoratorId = portletSetup.getValue("portletSetupPortletDecoratorI
 </span>
 
 <aui:script>
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useCustomTitle', '<portlet:namespace />customTitle', <%= !useCustomTitle %>);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />useCustomTitle', '<portlet:namespace />customTitle', <%= !portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>);
 </aui:script>

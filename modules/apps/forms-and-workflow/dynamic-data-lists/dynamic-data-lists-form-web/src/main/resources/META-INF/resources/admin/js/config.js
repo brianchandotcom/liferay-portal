@@ -44,9 +44,18 @@
 								'liferay-ddl-form-builder-data-provider-parameter-template'
 							]
 						},
+						'liferay-ddl-form-builder-action-calculate': {
+							path: 'form_builder_action_calculate.js',
+							requires: ['liferay-ddl-form-builder-action']
+						},
 						'liferay-ddl-form-builder-action-factory': {
 							path: 'form_builder_action_factory.js',
-							requires: ['liferay-ddl-form-builder-action-autofill', 'liferay-ddl-form-builder-action-jump-to-page', 'liferay-ddl-form-builder-action-property']
+							requires: [
+								'liferay-ddl-form-builder-action-autofill',
+								'liferay-ddl-form-builder-action-jump-to-page',
+								'liferay-ddl-form-builder-action-property',
+								'liferay-ddl-form-builder-action-calculate'
+							]
 						},
 						'liferay-ddl-form-builder-action-jump-to-page': {
 							path: 'form_builder_action_jump_to_page.js',

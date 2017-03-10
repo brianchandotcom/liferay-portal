@@ -76,6 +76,17 @@ AUI.add(
 								}
 							);
 						}
+						else if (type === 'calculate') {
+							action = new Liferay.DDL.FormBuilderActionCalculate(
+								{
+									action: act,
+									boundingBox: container,
+									index: index,
+									options: instance.get('fields'),
+									portletNamespace: instance.get('portletNamespace')
+								}
+							);
+						}
 
 						return action;
 					},

@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.apache.commons.lang.math.NumberUtils;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -105,7 +107,13 @@ public class DDLFormRuleToDDMFormRuleConverter {
 				StringUtil.quote(operand.getValue()));
 		}
 
-		return StringUtil.quote(operand.getValue());
+		String value = operand.getValue();
+
+		if (NumberUtils.isNumber(value)) {
+			return value;
+		}
+
+		return StringUtil.quote(value);
 	}
 
 	protected String convertOperands(

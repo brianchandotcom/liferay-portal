@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormR
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleAction;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleCondition;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.action.AutoFillDDLFormRuleAction;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.model.action.CalculateDDLFormRuleAction;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.action.DefaultDDLFormRuleAction;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.action.JumpToPageDDLFormRuleAction;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -125,6 +126,9 @@ public class DDLFormRuleDeserializer {
 
 		if (action.equals("auto-fill")) {
 			return AutoFillDDLFormRuleAction.class;
+		}
+		else if (action.equals("calculate")) {
+			return CalculateDDLFormRuleAction.class;
 		}
 		else if (action.equals("jump-to-page")) {
 			return JumpToPageDDLFormRuleAction.class;

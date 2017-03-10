@@ -70,6 +70,13 @@ public class DDMFormRuleToDDLFormRuleConverterTest
 	}
 
 	@Test
+	public void testCalculateAction() throws Exception {
+		assertConversion(
+			"ddm-form-rules-calculate-action.json",
+			"ddl-form-rules-calculate-action.json");
+	}
+
+	@Test
 	public void testComparisonOperatorsCondition() throws Exception {
 		assertConversion(
 			"ddm-form-rules-comparison-operators-condition.json",

@@ -11,6 +11,7 @@
 	<version>1.0.0</version>
 	<packaging>war</packaging>
 	<properties>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 </project>

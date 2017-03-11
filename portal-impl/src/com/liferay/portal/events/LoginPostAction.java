@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -101,6 +102,14 @@ public class LoginPostAction extends Action {
 				UserLocalServiceUtil.addDefaultGroups(userId);
 				UserLocalServiceUtil.addDefaultRoles(userId);
 				UserLocalServiceUtil.addDefaultUserGroups(userId);
+			}
+
+			// Password Expiration
+
+			if (UserLocalServiceUtil.isPasswordExpiringSoon(
+					PortalUtil.getUser(request))) {
+
+				SessionMessages.add(request, "passwordExpiringSoon");
 			}
 		}
 		catch (Exception e) {

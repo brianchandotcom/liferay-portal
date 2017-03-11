@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import java.util.List;
 
+import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
 /**
@@ -29,7 +30,7 @@ public class MergeCentralSubrepositoryUtil {
 	public static void createSubrepositoryMergePullRequests(
 			String centralWorkingDirectory, String centralUpstreamBranchName,
 			String receiverUserName, String topLevelBranchName)
-		throws GitAPIException, InterruptedException, IOException {
+		throws GitAPIException, IOException {
 
 		GitWorkingDirectory centralGitWorkingDirectory =
 			new GitWorkingDirectory(
@@ -56,7 +57,7 @@ public class MergeCentralSubrepositoryUtil {
 						centralGitWorkingDirectory, centralSubrepository,
 						gitrepoFile);
 
-					_pushMergeBranchToOrigin(
+					_pushMergeBranchToRemote(
 						centralGitWorkingDirectory, centralSubrepository,
 						receiverUserName);
 
@@ -95,7 +96,7 @@ public class MergeCentralSubrepositoryUtil {
 			GitWorkingDirectory centralGitWorkingDirectory,
 			CentralSubrepository centralSubrepository,
 			String topLevelBranchName)
-		throws GitAPIException, InterruptedException, IOException {
+		throws GitAPIException, IOException {
 
 		String subrepositoryName = centralSubrepository.getSubrepositoryName();
 		String subrepositoryUpstreamCommit =
@@ -104,7 +105,7 @@ public class MergeCentralSubrepositoryUtil {
 		String mergeBranchName = _getMergeBranchName(
 			subrepositoryName, subrepositoryUpstreamCommit);
 
-		centralGitWorkingDirectory.resetHardToHEAD();
+		centralGitWorkingDirectory.reset("head", ResetType.HARD);
 
 		centralGitWorkingDirectory.checkoutBranch(topLevelBranchName);
 
@@ -160,7 +161,7 @@ public class MergeCentralSubrepositoryUtil {
 			"ci-merge-", subrepositoryName, "-", subrepositoryUpstreamCommit);
 	}
 
-	private static void _pushMergeBranchToOrigin(
+	private static void _pushMergeBranchToRemote(
 			GitWorkingDirectory centralGitWorkingDirectory,
 			CentralSubrepository centralSubrepository, String receiverUserName)
 		throws GitAPIException, IOException {
@@ -174,11 +175,12 @@ public class MergeCentralSubrepositoryUtil {
 		String mergeBranchName = _getMergeBranchName(
 			subrepositoryName, subrepositoryUpstreamCommit);
 
-		String origin = JenkinsResultsParserUtil.combine(
+		String originRemoteURL = JenkinsResultsParserUtil.combine(
 			"git@github.com:", receiverUserName, "/", centralRepositoryName,
 			".git");
 
-		centralGitWorkingDirectory.pushBranchToOrigin(mergeBranchName, origin);
+		centralGitWorkingDirectory.pushToRemote(
+			mergeBranchName, originRemoteURL);
 	}
 
 }

@@ -373,6 +373,9 @@ public class ProjectTemplatesTest {
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"layout-template", "foo");
 
+		_createNewFiles(
+			"src/main/resources/.gitkeep", gradleProjectDir, mavenProjectDir);
+
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/foo.war",
 			"target/foo-1.0.0.war");
@@ -1306,6 +1309,22 @@ public class ProjectTemplatesTest {
 		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");
 
 		return projectDir;
+	}
+
+	private static void _createNewFiles(String fileName, File... dirs)
+		throws IOException {
+
+		for (File dir : dirs) {
+			File file = new File(dir, fileName);
+
+			File parentDir = file.getParentFile();
+
+			if (!parentDir.isDirectory()) {
+				Assert.assertTrue(parentDir.mkdirs());
+			}
+
+			Assert.assertTrue(file.createNewFile());
+		}
 	}
 
 	private static void _executeGradle(File projectDir, String... taskPaths)

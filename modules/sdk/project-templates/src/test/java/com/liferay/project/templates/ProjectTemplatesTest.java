@@ -1028,9 +1028,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateWorkspaceExistingFile() throws Exception {
 		File destinationDir = temporaryFolder.newFolder("existing-file");
 
-		File file = new File(destinationDir, "foo");
-
-		Assert.assertTrue(file.createNewFile());
+		_createNewFiles("foo", destinationDir);
 
 		_buildTemplateWithGradle(
 			destinationDir, WorkspaceUtil.WORKSPACE, "foo");
@@ -1040,9 +1038,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateWorkspaceForce() throws Exception {
 		File destinationDir = temporaryFolder.newFolder("existing-file");
 
-		File file = new File(destinationDir, "foo");
-
-		Assert.assertTrue(file.createNewFile());
+		_createNewFiles("foo", destinationDir);
 
 		_buildTemplateWithGradle(
 			destinationDir, WorkspaceUtil.WORKSPACE, "forced", "--force");

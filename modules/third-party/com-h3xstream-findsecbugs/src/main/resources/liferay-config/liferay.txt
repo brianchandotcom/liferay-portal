@@ -105,6 +105,13 @@ com/liferay/portal/kernel/portlet/PortletURLFactoryUtil.create(Ljavax/portlet/Po
 Ljavax/portlet/PortletURL;:SAFE
 Lcom/liferay/portal/kernel/portlet/LiferayPortletURL;:SAFE
 
+- Our implementation is safe, taint state is not modified
+javax/portlet/BaseURL.setParameter(Ljava/lang/String;Ljava/lang/String;)V:2#2
+javax/portlet/BaseURL.setParameter(Ljava/lang/String;[Ljava/lang/String;)V:2#2
+javax/portlet/BaseURL.setParameters(Ljava/util/Map;)V:1#1
+javax/portlet/BaseURL.addProperty(Ljava/lang/String;Ljava/lang/String;)V:2#2
+javax/portlet/BaseURL.setProperty(Ljava/lang/String;Ljava/lang/String;)V:2#2
+
 - For Meaning of :0,1#2 syntax please see https://github.com/find-sec-bugs/find-sec-bugs/issues/103
 - In general:
 -   number is a parameter index, "n" means object itself
@@ -161,6 +168,11 @@ com/liferay/portal/kernel/util/StringUtil.merge([S)Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/util/StringUtil.merge([SLjava/lang/String;)Ljava/lang/String;:0
 com/liferay/portal/kernel/util/StringUtil.merge([Ljava/lang/Object;)Ljava/lang/String;:0
 com/liferay/portal/kernel/util/StringUtil.merge([Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/String;:0,1
+
+com/liferay/portal/kernel/util/StringUtil.replaceFirst(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1,2
+com/liferay/portal/kernel/util/StringUtil.replace(Ljava/lang/String;CC)Ljava/lang/String;:0,1,2
+com/liferay/portal/kernel/util/StringUtil.replace(Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;)Ljava/lang/String;:0,1,2
+com/liferay/portal/kernel/util/StringUtil.replace(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1,2
 
 com/liferay/portal/kernel/util/StringUtil.shorten(Ljava/lang/String;)Ljava/lang/String;:0
 com/liferay/portal/kernel/util/StringUtil.shorten(Ljava/lang/String;I)Ljava/lang/String;:1
@@ -341,3 +353,33 @@ com/liferay/portal/kernel/util/LocaleUtil.toW3cLanguageId(Ljava/util/Locale;)Lja
 com/liferay/portal/kernel/util/LocaleUtil.toW3cLanguageId(Ljava/lang/String;)Ljava/lang/String;:0
 com/liferay/portal/kernel/util/LocaleUtil.toW3cLanguageIds([Ljava/util/Locale;)[Ljava/lang/String;:0
 com/liferay/portal/kernel/util/LocaleUtil.toW3cLanguageIds([Ljava/lang/String;)[Ljava/lang/String;:0
+
+- Let's trust OrderByComparator. In portal all implementations use constants
+com/liferay/portal/kernel/util/OrderByComparator.getOrderByConditionFields()[Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/OrderByComparator.getOrderByFields()[Ljava/lang/String;:SAFE
+
+com/liferay/util/dao/orm/CustomSQLUtil.appendCriteria(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/util/dao/orm/CustomSQLUtil.get(Ljava/lang/Class;Ljava/lang/String;Lcom/liferay/portal/kernel/dao/orm/QueryDefinition;)Ljava/lang/String;:SAFE
+com/liferay/util/dao/orm/CustomSQLUtil.get(Ljava/lang/Class;Ljava/lang/String;Lcom/liferay/portal/kernel/dao/orm/QueryDefinition;Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/util/dao/orm/CustomSQLUtil.get(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/util/dao/orm/CustomSQLUtil.keywords([Ljava/lang/String;)[Ljava/lang/String;:0
+com/liferay/util/dao/orm/CustomSQLUtil.keywords(Ljava/lang/String;)[Ljava/lang/String;:0
+com/liferay/util/dao/orm/CustomSQLUtil.keywords([Ljava/lang/String;Z)[Ljava/lang/String;:1
+com/liferay/util/dao/orm/CustomSQLUtil.keywords(Ljava/lang/String;Z)[Ljava/lang/String;:1
+com/liferay/util/dao/orm/CustomSQLUtil.replaceAndOperator(Ljava/lang/String;Z)Ljava/lang/String;:1
+com/liferay/util/dao/orm/CustomSQLUtil.replaceKeywords(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z[Ljava/lang/String;)Ljava/lang/String;:2,3,4
+com/liferay/util/dao/orm/CustomSQLUtil.replaceOrderBy(Ljava/lang/String;Lcom/liferay/portal/kernel/util/OrderByComparator;)Ljava/lang/String;:1
+
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.appendCriteria(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.get(Ljava/lang/Class;Ljava/lang/String;Lcom/liferay/portal/kernel/dao/orm/QueryDefinition;)Ljava/lang/String;:SAFE
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.get(Ljava/lang/Class;Ljava/lang/String;Lcom/liferay/portal/kernel/dao/orm/QueryDefinition;Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.get(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.keywords([Ljava/lang/String;)[Ljava/lang/String;:0
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.keywords(Ljava/lang/String;)[Ljava/lang/String;:0
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.keywords([Ljava/lang/String;Z)[Ljava/lang/String;:1
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.keywords(Ljava/lang/String;Z)[Ljava/lang/String;:1
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.replaceAndOperator(Ljava/lang/String;Z)Ljava/lang/String;:1
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.replaceKeywords(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z[Ljava/lang/String;)Ljava/lang/String;:2,3,4
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.replaceOrderBy(Ljava/lang/String;Lcom/liferay/portal/kernel/util/OrderByComparator;)Ljava/lang/String;:1
+
+

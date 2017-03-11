@@ -118,11 +118,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Missing parentheses in if-statement",
 				"Missing parentheses in if-statement",
 				"Missing parentheses in if-statement",
+				"Missing parentheses in if-statement",
+				"Unnecessary parentheses around expression.",
 				"Redundant parentheses in if-statement",
-				"Redundant parentheses in if-statement",
-				"Redundant parentheses in if-statement"
+				"Unnecessary parentheses around expression."
 			},
-			new Integer[] {25, 29, 33, 39, 43, 47, 51});
+			new Integer[] {25, 29, 33, 39, 43, 43, 47, 51});
 	}
 
 	@Test
@@ -162,10 +163,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"IncorrectLineBreaks1.testjava",
 			new String[] {
-				"Line should not start with '='",
+				"'=' should be on the previous line.",
 				"There should be a line break after '||'",
 				"There should be a line break after '\"Hello World\", " +
 					"\"Hello\", \"World\"),'",
+				"Add the string 'Hello World Hello World ' to the previous " +
+					"literal string",
 				"There should be a line break after '\"Hello World Hello " +
 					"World Hello World\",'",
 				"There should be a line break after " +
@@ -184,13 +187,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"Comparator<String>() {'",
 				"There should be a line break after '},'",
 				"Line starts with '2' tabs, but '3' tabs are expected",
+				"Line starts with '2' tabs, but '3' tabs are expected",
 				"There should be a line break before 'throws'",
+				"Line starts with '2' tabs, but '3' tabs are expected",
 				"There should be a line break before 'throws'",
 				"'new String[] {' should be added to previous line"
 			},
 			new Integer[] {
-				31, 35, 43, 47, 52, 55, 58, 61, 65, 68, 73, 77, 82, 86, 93, 104,
-				117, 121, 122, 128, 138
+				31, 35, 43, 47, 47, 52, 55, 58, 61, 65, 68, 73, 77, 82, 86, 93,
+				104, 117, 121, 122, 122, 128, 128, 138
 			});
 		test("IncorrectLineBreaks2.testjava");
 	}

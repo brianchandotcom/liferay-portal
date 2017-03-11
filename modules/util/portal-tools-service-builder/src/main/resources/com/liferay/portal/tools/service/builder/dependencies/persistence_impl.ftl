@@ -932,14 +932,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 			query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE_PKS_IN);
 
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				<#if stringUtil.equals(entity.PKClassName, "String")>
-					query.append(StringPool.APOSTROPHE);
-					query.append((String)primaryKey);
-					query.append(StringPool.APOSTROPHE);
-				<#else>
-					query.append(String.valueOf(primaryKey));
-				</#if>
+			for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+				query.append(StringPool.QUESTION);
 
 				query.append(StringPool.COMMA);
 			}
@@ -956,6 +950,16 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				session = openSession();
 
 				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				for (Serializable primaryKey : uncachedPrimaryKeys) {
+					<#if stringUtil.equals(entity.PKClassName, "String")>
+						qPos.add((String)primaryKey);
+					<#else>
+						qPos.add(String.valueOf(primaryKey));
+					</#if>
+				}
 
 				for (${entity.name} ${entity.varName} : (List<${entity.name}>)q.list()) {
 					map.put(${entity.varName}.getPrimaryKeyObj(), ${entity.varName});

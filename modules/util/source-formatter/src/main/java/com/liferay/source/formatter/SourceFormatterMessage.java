@@ -49,9 +49,7 @@ public class SourceFormatterMessage
 			return _fileName.compareTo(sourceFormatterMessage.getFileName());
 		}
 
-		if ((_lineCount != -1) ||
-			(sourceFormatterMessage.getLineCount() != -1)) {
-
+		if (_lineCount != sourceFormatterMessage.getLineCount()) {
 			return _lineCount - sourceFormatterMessage.getLineCount();
 		}
 

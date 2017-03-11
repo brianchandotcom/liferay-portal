@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.form.web.internal.display.context.util.DDL
 import com.liferay.dynamic.data.lists.form.web.internal.search.FieldLibrarySearch;
 import com.liferay.dynamic.data.lists.form.web.internal.search.FieldLibrarySearchTerms;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
@@ -26,7 +27,10 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureCreateDateCompa
 import com.liferay.dynamic.data.mapping.util.comparator.StructureModifiedDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -56,6 +60,27 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 		_orderByCol = orderByCol;
 		_orderByType = orderByType;
 		_keywords = keywords;
+	}
+
+	public DDMStructure getDDMStructure() {
+		if (_ddmStructure != null) {
+			return _ddmStructure;
+		}
+
+		long structureId = ParamUtil.getLong(_renderRequest, "structureId");
+
+		if (structureId > 0) {
+			try {
+				_ddmStructure = _ddmStructureService.getStructure(structureId);
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe);
+				}
+			}
+		}
+
+		return _ddmStructure;
 	}
 
 	public String getDisplayStyle() {
@@ -102,6 +127,12 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 		portletURL.setParameter("tabs1", "field-library");
 
 		return portletURL;
+	}
+
+	public boolean isShowAddButton() {
+		return DDLPermission.contains(
+			_ddlFormAdminRequestHelper.getPermissionChecker(),
+			_ddlFormAdminRequestHelper.getScopeGroupId(), "ADD_STRUCTURE");
 	}
 
 	public boolean isShowSearch() throws PortalException {
@@ -234,7 +265,11 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 		fieldLibrarySearch.setTotal(total);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDLFormAdminFieldLibraryDisplayContext.class);
+
 	private final DDLFormAdminRequestHelper _ddlFormAdminRequestHelper;
+	private DDMStructure _ddmStructure;
 	private final DDMStructureService _ddmStructureService;
 	private final String _displayStyle;
 	private final String _keywords;

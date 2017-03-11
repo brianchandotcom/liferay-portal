@@ -94,3 +94,17 @@ portletURL.setParameter("displayStyle", displayStyle);
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
+
+<c:if test="<%= ddlFormAdminFieldLibraryDisplayContext.isShowAddButton() %>">
+	<portlet:renderURL var="addFieldSetURL">
+		<portlet:param name="mvcPath" value="/admin/edit_field_set.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "new-field-set") %>' url="<%= addFieldSetURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
+
+<aui:script use="liferay-ddl-portlet"></aui:script>

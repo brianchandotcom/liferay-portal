@@ -93,11 +93,9 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 				if (getLevel(s) == 0) {
 					char nextChar = ifClause.charAt(y + 1);
 
-					if (((previousChar == CharPool.OPEN_PARENTHESIS) &&
-						 (nextChar == CharPool.CLOSE_PARENTHESIS)) ||
-						(((nextChar == CharPool.CLOSE_PARENTHESIS) ||
-						  (nextChar == CharPool.SPACE)) &&
-						 _hasRedundantParentheses(s))) {
+					if (((nextChar == CharPool.CLOSE_PARENTHESIS) ||
+						 (nextChar == CharPool.SPACE)) &&
+						_hasRedundantParentheses(s)) {
 
 						addMessage(
 							sourceFormatterMessages, fileName,

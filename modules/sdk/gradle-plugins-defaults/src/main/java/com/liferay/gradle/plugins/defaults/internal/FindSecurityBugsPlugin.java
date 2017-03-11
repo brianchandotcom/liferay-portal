@@ -177,6 +177,18 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 			});
 
+
+		ReportingExtension reportingExtension =
+			GradleUtil.getExtension(
+				javaExec.getProject(), ReportingExtension.class);
+
+		File outputDir = new File(
+			reportingExtension.getBaseDir(), javaExec.getName());
+
+		outputDir.mkdirs();
+
+		final File outputFile = new File(outputDir, "reports.html");
+
 		javaExec.doFirst(
 			new Action<Task>() {
 
@@ -184,23 +196,24 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 				public void execute(Task task) {
 					JavaExec javaExec = (JavaExec)task;
 
-					ReportingExtension reportingExtension =
-						GradleUtil.getExtension(
-							javaExec.getProject(), ReportingExtension.class);
-
-					File outputDir = new File(
-						reportingExtension.getBaseDir(), javaExec.getName());
-
-					outputDir.mkdirs();
-
-					File outputFile = new File(outputDir, "reports.html");
-
 					javaExec.args(
 						"-outputFile", FileUtil.getAbsolutePath(outputFile));
 
 					javaExec.args("-pluginList", pluginClasspath.getAsPath());
+
+					System.out.println("Using version: " + _VERSION);
 				}
 
+			});
+
+		javaExec.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					System.out.println(
+						"Report saved to " + outputFile.getAbsolutePath());
+				}
 			});
 
 		javaExec.dependsOn(writeFindBugsProjectTask);
@@ -316,6 +329,6 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 	 */
 	private static final String _UNZIP_JAR_TASK_NAME = "unzipJar";
 
-	private static final String _VERSION = "1.5.0.LIFERAY-PATCHED-1";
+	private static final String _VERSION = "1.5.0.LIFERAY-PATCHED-2";
 
 }

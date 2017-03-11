@@ -455,18 +455,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jericho-html.jar</file-name>
-				<version>3.1</version>
-				<project-name>Jericho HTML Parser</project-name>
-				<project-url>http://jerichohtml.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jhlabs-filters.jar</file-name>
 				<version></version>
 				<project-name>JH Labs Java Image Filters</project-name>
@@ -565,18 +553,6 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/juh.jar</file-name>
-				<version>2.3.0</version>
-				<project-name>OpenOffice.org Java Uno</project-name>
-				<project-url>http://udk.openoffice.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/kxml2.jar</file-name>
 				<version>2.3.0</version>
 				<project-name>kXML 2</project-name>
@@ -657,18 +633,6 @@
 					<license>
 						<license-name>Public Domain</license-name>
 						<license-url>http://en.wikipedia.org/wiki/Public_domain</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/ridl.jar</file-name>
-				<version>2.3.0</version>
-				<project-name>OpenOffice.org Java Uno</project-name>
-				<project-url>http://udk.openoffice.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -954,18 +918,6 @@
 				<comments>
 					This does not include missing OSGi headers. See LPS-49575.
 				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/stringtemplate.jar</file-name>
-				<version>3.0</version>
-				<project-name>StringTemplate</project-name>
-				<project-url>http://www.stringtemplate.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/truezip.jar</file-name>

@@ -1208,6 +1208,12 @@ executing the `uploadArchives` task.
 ### Changed
 - [LPS-67688]: Update the [Liferay Gradle Plugins] dependency to version 3.2.18.
 
+## 3.4.0 - 2017-03-10
+
+### Added
+- [LPS-71201]: Fail release tasks if the project is being published from the
+master branch, but it was previously already published from a release branch.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -1328,6 +1334,7 @@ executing the `uploadArchives` task.
 [LPS-70941]: https://issues.liferay.com/browse/LPS-70941
 [LPS-71005]: https://issues.liferay.com/browse/LPS-71005
 [LPS-71048]: https://issues.liferay.com/browse/LPS-71048
+[LPS-71201]: https://issues.liferay.com/browse/LPS-71201
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

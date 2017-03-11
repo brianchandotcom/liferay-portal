@@ -247,6 +247,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String PORTAL_TEST_CONFIGURATION_NAME = "portalTest";
 
+	public static final String RELEASE_PORTAL_ROOT_DIR_PROPERTY_NAME =
+		"release.versions.test.other.dir";
+
 	public static final String SNAPSHOT_IF_STALE_PROPERTY_NAME =
 		"snapshotIfStale";
 
@@ -3652,12 +3655,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		File releasePortalRootDir = GradleUtil.getProperty(
-			project, _RELEASE_PORTAL_ROOT_DIR_PROPERTY_NAME, (File)null);
+			project, RELEASE_PORTAL_ROOT_DIR_PROPERTY_NAME, (File)null);
 
 		if (releasePortalRootDir == null) {
 			throw new GradleException(
 				"Please set the property \"" +
-					_RELEASE_PORTAL_ROOT_DIR_PROPERTY_NAME + "\".");
+					RELEASE_PORTAL_ROOT_DIR_PROPERTY_NAME + "\".");
 		}
 
 		Logger logger = project.getLogger();
@@ -3755,9 +3758,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final Duration _PORTAL_TOOL_MAX_AGE = TimeCategory.getDays(
 		30);
-
-	private static final String _RELEASE_PORTAL_ROOT_DIR_PROPERTY_NAME =
-		"release.versions.test.other.dir";
 
 	private static final String _REPOSITORY_PRIVATE_PASSWORD =
 		System.getProperty("repository.private.password");

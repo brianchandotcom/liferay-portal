@@ -68,12 +68,6 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 						"Line should not start with ';'", lineCount);
 				}
 
-				if (trimmedLine.startsWith(StringPool.EQUAL)) {
-					addMessage(
-						sourceFormatterMessages, fileName,
-						"Line should not start with '='", lineCount);
-				}
-
 				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
 					!trimmedLine.startsWith(StringPool.STAR)) {
 

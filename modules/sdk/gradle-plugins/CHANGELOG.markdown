@@ -1258,6 +1258,14 @@ to version 1.0.98.
 - [LPS-67688]: Update the [Liferay Gradle Plugins DB Support] dependency to
 version 1.0.2.
 
+## 3.2.19 - 2017-03-11
+
+### Changed
+- [LPS-71164]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.99.
+- [LPS-71164]: Update the [Liferay Source Formatter] dependency to version
+1.0.366.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1375,4 +1383,5 @@ version 1.0.2.
 [LPS-70941]: https://issues.liferay.com/browse/LPS-70941
 [LPS-71005]: https://issues.liferay.com/browse/LPS-71005
 [LPS-71048]: https://issues.liferay.com/browse/LPS-71048
+[LPS-71164]: https://issues.liferay.com/browse/LPS-71164
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

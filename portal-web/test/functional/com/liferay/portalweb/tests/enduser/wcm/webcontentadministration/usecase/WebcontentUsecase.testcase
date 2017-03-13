@@ -617,7 +617,7 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="WebContent#editDisplayPageCP">
+		<execute macro="WebContent#editDisplayPage">
 			<var name="pageName" value="Site Page Name" />
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>

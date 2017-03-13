@@ -21,6 +21,7 @@
 		</execute>
 
 		<execute macro="FormRules#selectActionTarget">
+			<var name="action" value="${action}" />
 			<var name="actionRowNumber" value="${actionRowNumber}" />
 			<var name="actionTarget" value="${actionTarget}" />
 		</execute>
@@ -100,7 +101,15 @@
 
 		<execute macro="FormRules#viewInactiveSaveButton" />
 
-		<execute function="Click" locator1="FormRules#RULE_BUILDER_ACTION_TARGET_FIELD" />
+		<if>
+			<equals arg1="${action}" arg2="Jump to Page" />
+			<then>
+				<execute function="Click" locator1="FormRules#RULE_BUILDER_JUMP_TO_PAGE_ACTION_TARGET" />
+			</then>
+			<else>
+				<execute function="Click" locator1="FormRules#RULE_BUILDER_ACTION_TARGET_FIELD" />
+			</else>
+		</if>
 
 		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_SELECT_ACTION_TARGET" value1="${actionTarget}" />
 	</command>

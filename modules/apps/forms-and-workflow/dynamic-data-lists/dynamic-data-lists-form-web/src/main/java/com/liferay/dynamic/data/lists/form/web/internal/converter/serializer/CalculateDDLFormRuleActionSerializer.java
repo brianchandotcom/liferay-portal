@@ -81,7 +81,7 @@ public class CalculateDDLFormRuleActionSerializer
 					start = i;
 				}
 
-				if (i == expression.length() - 1) {
+				if (i == (expression.length() - 1)) {
 					end = expression.length();
 				}
 			}

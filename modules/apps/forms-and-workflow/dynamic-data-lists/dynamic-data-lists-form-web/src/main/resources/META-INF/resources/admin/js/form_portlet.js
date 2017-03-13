@@ -757,7 +757,9 @@ AUI.add(
 
 						var saveAndPublish = instance.one('input[name*="saveAndPublish"]');
 
-						saveAndPublish.set('value', 'false');
+						if (saveAndPublish) {
+							saveAndPublish.set('value', 'false');
+						}
 
 						instance.submitForm();
 					},

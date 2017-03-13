@@ -221,11 +221,9 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 				new long[] {_ddlFormAdminRequestHelper.getScopeGroupId()},
 				PortalUtil.getClassNameId(DDLRecordSet.class),
 				fieldLibrarySearchTerms.getKeywords(),
-				fieldLibrarySearchTerms.getKeywords(),
-				StorageType.JSON.toString(),
 				DDMStructureConstants.TYPE_FRAGMENT,
-				WorkflowConstants.STATUS_ANY, false,
-				fieldLibrarySearch.getStart(), fieldLibrarySearch.getEnd(),
+				WorkflowConstants.STATUS_ANY, fieldLibrarySearch.getStart(),
+				fieldLibrarySearch.getEnd(),
 				fieldLibrarySearch.getOrderByComparator());
 		}
 
@@ -247,7 +245,8 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 				PortalUtil.getClassNameId(DDLRecordSet.class),
 				fieldLibrarySearchTerms.getName(),
 				fieldLibrarySearchTerms.getDescription(),
-				StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT,
+				StorageType.JSON.toString(),
+				DDMStructureConstants.TYPE_FRAGMENT,
 				WorkflowConstants.STATUS_ANY,
 				fieldLibrarySearchTerms.isAndOperator());
 		}
@@ -257,9 +256,8 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 				new long[] {_ddlFormAdminRequestHelper.getScopeGroupId()},
 				PortalUtil.getClassNameId(DDLRecordSet.class),
 				fieldLibrarySearchTerms.getKeywords(),
-				fieldLibrarySearchTerms.getKeywords(),
-				StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT,
-				WorkflowConstants.STATUS_ANY, false);
+				DDMStructureConstants.TYPE_FRAGMENT,
+				WorkflowConstants.STATUS_ANY);
 		}
 
 		fieldLibrarySearch.setTotal(total);

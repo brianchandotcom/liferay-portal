@@ -44,7 +44,7 @@ public class LayoutSetPrototypePermissionImpl
 		String actionId) {
 
 		if (permissionChecker.hasPermission(
-				0, LayoutSetPrototype.class.getName(), layoutSetPrototypeId,
+				null, LayoutSetPrototype.class.getName(), layoutSetPrototypeId,
 				actionId)) {
 
 			return true;

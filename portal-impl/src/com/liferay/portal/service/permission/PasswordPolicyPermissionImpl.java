@@ -43,7 +43,7 @@ public class PasswordPolicyPermissionImpl implements PasswordPolicyPermission {
 		String actionId) {
 
 		return permissionChecker.hasPermission(
-			0, PasswordPolicy.class.getName(), passwordPolicyId, actionId);
+			null, PasswordPolicy.class.getName(), passwordPolicyId, actionId);
 	}
 
 }

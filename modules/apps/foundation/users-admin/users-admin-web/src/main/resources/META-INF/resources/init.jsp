@@ -216,7 +216,7 @@ boolean filterManageableGroups = true;
 
 boolean filterManageableOrganizations = true;
 
-if (permissionChecker.hasPermission(0, Organization.class.getName(), Organization.class.getName(), ActionKeys.VIEW)) {
+if (permissionChecker.hasPermission(null, Organization.class.getName(), Organization.class.getName(), ActionKeys.VIEW)) {
 	filterManageableOrganizations = false;
 }
 

@@ -37,7 +37,8 @@ public class PushNotificationsPermission {
 	public static boolean contains(
 		PermissionChecker permissionChecker, String actionId) {
 
-		return permissionChecker.hasPermission(0, RESOURCE_NAME, 0, actionId);
+		return permissionChecker.hasPermission(
+			null, RESOURCE_NAME, 0, actionId);
 	}
 
 }

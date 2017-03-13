@@ -96,6 +96,8 @@ public class GroupPermissionImpl
 			return false;
 		}
 
+		Group originalGroup = group;
+
 		long groupId = group.getGroupId();
 
 		if (group.isStagingGroup()) {
@@ -122,7 +124,7 @@ public class GroupPermissionImpl
 
 		if (actionId.equals(ActionKeys.ADD_COMMUNITY) &&
 			(permissionChecker.hasPermission(
-				groupId, Group.class.getName(), groupId,
+				originalGroup, Group.class.getName(), groupId,
 				ActionKeys.MANAGE_SUBGROUPS) ||
 			 PortalPermissionUtil.contains(
 				 permissionChecker, ActionKeys.ADD_COMMUNITY))) {
@@ -131,7 +133,7 @@ public class GroupPermissionImpl
 		}
 		else if (actionId.equals(ActionKeys.ADD_LAYOUT) &&
 				 permissionChecker.hasPermission(
-					 groupId, Group.class.getName(), groupId,
+					 originalGroup, Group.class.getName(), groupId,
 					 ActionKeys.MANAGE_LAYOUTS)) {
 
 			return true;
@@ -140,33 +142,33 @@ public class GroupPermissionImpl
 				  actionId.equals(ActionKeys.EXPORT_IMPORT_PORTLET_INFO) ||
 				  actionId.equals(ActionKeys.PUBLISH_PORTLET_INFO)) &&
 				 permissionChecker.hasPermission(
-					 groupId, Group.class.getName(), groupId,
+					 originalGroup, Group.class.getName(), groupId,
 					 ActionKeys.PUBLISH_STAGING)) {
 
 			return true;
 		}
 		else if (actionId.equals(ActionKeys.VIEW) &&
 				 (permissionChecker.hasPermission(
-					 groupId, Group.class.getName(), groupId,
+					 originalGroup, Group.class.getName(), groupId,
 					 ActionKeys.ASSIGN_USER_ROLES) ||
 				  permissionChecker.hasPermission(
-					 groupId, Group.class.getName(), groupId,
+					 originalGroup, Group.class.getName(), groupId,
 					 ActionKeys.MANAGE_LAYOUTS))) {
 
 			return true;
 		}
 		else if (actionId.equals(ActionKeys.VIEW_STAGING) &&
 				 (permissionChecker.hasPermission(
-					 groupId, Group.class.getName(), groupId,
+					 originalGroup, Group.class.getName(), groupId,
 					 ActionKeys.MANAGE_LAYOUTS) ||
 				  permissionChecker.hasPermission(
-					 groupId, Group.class.getName(), groupId,
+					 originalGroup, Group.class.getName(), groupId,
 					 ActionKeys.MANAGE_STAGING) ||
 				  permissionChecker.hasPermission(
-					 groupId, Group.class.getName(), groupId,
+					 originalGroup, Group.class.getName(), groupId,
 					 ActionKeys.PUBLISH_STAGING) ||
 				  permissionChecker.hasPermission(
-					 groupId, Group.class.getName(), groupId,
+					 originalGroup, Group.class.getName(), groupId,
 					 ActionKeys.UPDATE))) {
 
 			return true;
@@ -175,7 +177,7 @@ public class GroupPermissionImpl
 		// Group id must be set so that users can modify their personal pages
 
 		if (permissionChecker.hasPermission(
-				groupId, Group.class.getName(), groupId, actionId)) {
+				originalGroup, Group.class.getName(), groupId, actionId)) {
 
 			return true;
 		}
@@ -214,7 +216,7 @@ public class GroupPermissionImpl
 		PermissionChecker permissionChecker, String actionId) {
 
 		return permissionChecker.hasPermission(
-			0, Group.class.getName(), Group.class.getName(), actionId);
+			null, Group.class.getName(), Group.class.getName(), actionId);
 	}
 
 }

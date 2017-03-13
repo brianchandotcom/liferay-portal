@@ -43,7 +43,7 @@ public class UserGroupPermissionImpl implements UserGroupPermission {
 		String actionId) {
 
 		return permissionChecker.hasPermission(
-			0, UserGroup.class.getName(), userGroupId, actionId);
+			null, UserGroup.class.getName(), userGroupId, actionId);
 	}
 
 }

@@ -56,11 +56,8 @@ public class AccountPermissionImpl implements AccountPermission {
 	public boolean contains(
 		PermissionChecker permissionChecker, Account account, String actionId) {
 
-		//long groupId = account.getGroupId();
-		long groupId = 0;
-
 		return permissionChecker.hasPermission(
-			groupId, Account.class.getName(), account.getAccountId(), actionId);
+			null, Account.class.getName(), account.getAccountId(), actionId);
 	}
 
 	@Override

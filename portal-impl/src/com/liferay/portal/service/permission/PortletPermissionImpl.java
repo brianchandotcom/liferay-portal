@@ -342,7 +342,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 
 		return permissionChecker.hasPermission(
-			groupId, rootPortletId, resourcePermissionPrimKey, actionId);
+			group, rootPortletId, resourcePermissionPrimKey, actionId);
 	}
 
 	@Override

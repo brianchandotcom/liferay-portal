@@ -342,8 +342,7 @@ public class LayoutPermissionImpl
 		}
 
 		return permissionChecker.hasPermission(
-			layout.getGroupId(), Layout.class.getName(), layout.getPlid(),
-			actionId);
+			group, Layout.class.getName(), layout.getPlid(), actionId);
 	}
 
 	@Override

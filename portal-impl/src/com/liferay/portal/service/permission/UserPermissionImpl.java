@@ -119,14 +119,14 @@ public class UserPermissionImpl
 				}
 
 				if (permissionChecker.hasPermission(
-						0, User.class.getName(), userId, actionId)) {
+						null, User.class.getName(), userId, actionId)) {
 
 					return true;
 				}
 			}
 			else {
 				if (permissionChecker.hasPermission(
-						0, User.class.getName(), User.class.getName(),
+						null, User.class.getName(), User.class.getName(),
 						actionId)) {
 
 					return true;

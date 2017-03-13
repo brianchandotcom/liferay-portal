@@ -72,7 +72,7 @@ public class SAPEntryPermission implements BaseModelPermissionChecker {
 		String actionId) {
 
 		return permissionChecker.hasPermission(
-			0, SAPEntry.class.getName(), sapEntry.getSapEntryId(), actionId);
+			null, SAPEntry.class.getName(), sapEntry.getSapEntryId(), actionId);
 	}
 
 	@Override

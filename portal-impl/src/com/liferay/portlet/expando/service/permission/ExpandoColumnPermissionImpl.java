@@ -70,7 +70,8 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 		String actionId) {
 
 		return permissionChecker.hasPermission(
-			0, ExpandoColumn.class.getName(), column.getColumnId(), actionId);
+			null, ExpandoColumn.class.getName(), column.getColumnId(),
+			actionId);
 	}
 
 	@Override

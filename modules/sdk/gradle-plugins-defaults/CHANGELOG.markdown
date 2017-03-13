@@ -1217,6 +1217,11 @@ master branch, but it was previously already published from a release branch.
 ### Changed
 - [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.2.19.
 
+## 3.4.1 - 2017-03-13
+
+### Changed
+- [LPS-71222]: Update the [Liferay Gradle Plugins] dependency to version 3.2.20.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -1339,6 +1344,7 @@ master branch, but it was previously already published from a release branch.
 [LPS-71048]: https://issues.liferay.com/browse/LPS-71048
 [LPS-71164]: https://issues.liferay.com/browse/LPS-71164
 [LPS-71201]: https://issues.liferay.com/browse/LPS-71201
+[LPS-71222]: https://issues.liferay.com/browse/LPS-71222
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

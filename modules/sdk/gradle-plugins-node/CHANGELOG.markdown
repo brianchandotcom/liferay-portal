@@ -90,6 +90,11 @@ of failure.
 - [LPS-70634]: Reuse the `package.json` file of a project, if it exists, while
 executing a task of type `PublishNodeModuleTask`.
 
+## 2.0.2 - 2017-03-13
+
+### Changed
+- [LPS-71222]: Always sort the generated `npm-shrinkwrap.json` files.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -101,3 +106,4 @@ executing a task of type `PublishNodeModuleTask`.
 [LPS-69920]: https://issues.liferay.com/browse/LPS-69920
 [LPS-70634]: https://issues.liferay.com/browse/LPS-70634
 [LPS-70870]: https://issues.liferay.com/browse/LPS-70870
+[LPS-71222]: https://issues.liferay.com/browse/LPS-71222

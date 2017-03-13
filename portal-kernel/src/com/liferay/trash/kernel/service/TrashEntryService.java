@@ -126,6 +126,24 @@ public interface TrashEntryService extends BaseService {
 		OrderByComparator<TrashEntry> obc) throws PrincipalException;
 
 	/**
+	* Returns a range of all the trash entries matching the group ID.
+	*
+	* @param groupId the primary key of the group
+	* @param className the class name of the entity
+	* @param start the lower bound of the range of trash entries to return
+	* @param end the upper bound of the range of trash entries to return (not
+	inclusive)
+	* @param obc the comparator to order the trash entries (optionally
+	<code>null</code>)
+	* @return the range of matching trash entries ordered by comparator
+	<code>obc</code>
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TrashEntryList getEntries(long groupId, java.lang.String className,
+		int start, int end, OrderByComparator<TrashEntry> obc)
+		throws PrincipalException;
+
+	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier

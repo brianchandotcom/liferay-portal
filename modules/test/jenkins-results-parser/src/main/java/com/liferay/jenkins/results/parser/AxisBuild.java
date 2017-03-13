@@ -93,6 +93,48 @@ public class AxisBuild extends BaseBuild {
 		return parentBuild.getBrowser();
 	}
 
+	public String getBuildDescriptionTestRayReports() {
+		Element unorderedListElement = Dom4JUtil.getNewElement("ul");
+
+		for (TestResult testResult : getTestResults(null)) {
+			String displayName = testResult.getDisplayName();
+
+			if (!displayName.contains("JenkinsLogAsserterTest")) {
+				Element listItemElement = Dom4JUtil.getNewElement(
+					"li", unorderedListElement);
+
+				Dom4JUtil.getNewElement("strong", listItemElement, displayName);
+
+				Element reportLinksUnorderedListElement =
+					Dom4JUtil.getNewElement("ul", listItemElement);
+
+				Element poshiReportListItemElement = Dom4JUtil.getNewElement(
+					"li", reportLinksUnorderedListElement);
+
+				Dom4JUtil.getNewAnchorElement(
+					testResult.getPoshiReportURL(), poshiReportListItemElement,
+					"Poshi Report");
+
+				Element poshiSummaryListItemElement = Dom4JUtil.getNewElement(
+					"li", reportLinksUnorderedListElement);
+
+				Dom4JUtil.getNewAnchorElement(
+					testResult.getPoshiSummaryURL(),
+					poshiSummaryListItemElement, "Poshi Summary");
+			}
+		}
+
+		Dom4JUtil.addToElement(
+			unorderedListElement, Dom4JUtil.getNewElement("br"));
+
+		try {
+			return Dom4JUtil.format(unorderedListElement, false);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to generate html", ioe);
+		}
+	}
+
 	@Override
 	public String getBuildURL() {
 		String jobURL = getJobURL();
@@ -279,8 +321,6 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	public String getTestRayLogsURL() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
 		Properties buildProperties = null;
 
 		try {
@@ -304,10 +344,11 @@ public class AxisBuild extends BaseBuild {
 			getStartPropertiesTempMap();
 
 		return JenkinsResultsParserUtil.combine(
-			logBaseURL, "/", topLevelBuild.getMaster(), "/",
+			logBaseURL, "/",
+			startPropertiesTempMap.get("TOP_LEVEL_MASTER_HOSTNAME"), "/",
 			startPropertiesTempMap.get("TOP_LEVEL_START_TIME"), "/",
-			topLevelBuild.getJobName(), "/",
-			Integer.toString(topLevelBuild.getBuildNumber()), "/",
+			startPropertiesTempMap.get("TOP_LEVEL_JOB_NAME"), "/",
+			startPropertiesTempMap.get("TOP_LEVEL_BUILD_NUMBER"), "/",
 			getParameterValue("JOB_VARIANT"), "/", getAxisNumber());
 	}
 

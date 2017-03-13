@@ -30,10 +30,82 @@ JSONObject advancedDataJSONObject = portletSetupJSONObject.getJSONObject("advanc
 	</p>
 
 	<p>
-		<liferay-ui:message key="portlet-classes" />: <strong># + portletClasses + </strong>
+		<liferay-ui:message key="portlet-classes" />: <strong><span id="<portlet:namespace />portletClasses"></span></strong>
 	</p>
 </div>
 
 <aui:input label="enter-your-custom-css-class-names" name="customCSSClassName" type="text" value='<%= advancedDataJSONObject.getString("customCSSClassName") %>' />
 
 <aui:input label="enter-your-custom-css" name="customCSS" type="textarea" value='<%= advancedDataJSONObject.getString("customCSS") %>' />
+
+<div id="lfr-add-rule-container">
+	<aui:button cssClass="btn btn-link" id="addId" value="add-a-css-rule-for-this-portlet" />
+
+	<aui:button cssClass="btn btn-link" id="addClass" value="add-a-css-rule-for-all-portlets-like-this-one" />
+</div>
+
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />addId').on(
+		'click',
+		function() {
+			<portlet:namespace />insertCustomCSSValue('#portlet_<%= portletResource %>');
+		}
+	);
+
+	A.one('#<portlet:namespace />addClass').on(
+		'click',
+		function() {
+			<portlet:namespace />insertCustomCSSValue(portletClasses);
+		}
+	);
+
+	function <portlet:namespace />insertCustomCSSValue(value) {
+		var textarea = A.one('#<portlet:namespace />customCSS');
+
+		var currentVal = textarea.val().trim();
+
+		if (currentVal.length) {
+			currentVal += '\n\n';
+		}
+
+		var newVal = currentVal + value + ' {\n\t\n}\n';
+
+		textarea.val(newVal);
+
+		Liferay.Util.setCursorPosition(textarea, newVal.length - 3);
+	}
+
+	var opener = Liferay.Util.getOpener();
+
+	var portlet = A.one(opener['portlet_<%= portletResource %>']);
+	var portletContent = portlet.one('.portlet-content');
+
+	var portletClasses;
+
+	if (portlet && portlet != portletContent) {
+		portletClasses = portlet.attr('class').replace(/(?:^|\s)portlet(?=\s|$)/g, '');
+
+		portletClasses = portletClasses.replace(/\s+/g, '.').trim();
+
+		if (portletClasses) {
+			portletClasses = ' .' + portletClasses;
+		}
+	}
+
+	var boundaryClasses = [];
+
+	portletContent.attr('class').replace(
+		/(?:([\w\d-]+)-)?portlet(?:-?([\w\d-]+-?))?/g,
+		function(match, subMatch1, subMatch2) {
+			var regexIgnoredClasses = /boundary|draggable/;
+
+			if (!regexIgnoredClasses.test(subMatch2)) {
+				boundaryClasses.push(match);
+			}
+		}
+	);
+
+	portletClasses = '.' + boundaryClasses.join('.') + portletClasses;
+
+	A.one('#<portlet:namespace />portletClasses').html(portletClasses);
+</aui:script>

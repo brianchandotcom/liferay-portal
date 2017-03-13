@@ -1,6 +1,7 @@
 <definition component-name="portal-test-plugins">
 	<property name="custom.properties" value="web.server.display.node=true" />
 	<property name="ext.plugins.includes" value="sample-ext" />
+	<property name="portal.release.environment" value="true" />
 	<property name="testray.main.component.name" value="Test Plugins" />
 
 	<set-up>

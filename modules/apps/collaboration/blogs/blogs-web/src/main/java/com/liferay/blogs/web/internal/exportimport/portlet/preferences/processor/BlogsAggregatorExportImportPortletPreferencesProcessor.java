@@ -19,7 +19,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
-import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
+import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorHelper;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -31,12 +31,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateImportCapability;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import javax.portlet.PortletPreferences;
 
@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ExportImportPortletPreferencesProcessor.class
 )
 public class BlogsAggregatorExportImportPortletPreferencesProcessor
-	extends BaseExportImportPortletPreferencesProcessor {
+	implements ExportImportPortletPreferencesProcessor {
 
 	@Override
 	public List<Capability> getExportCapabilities() {
@@ -95,61 +95,6 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 		catch (Exception e) {
 			return portletPreferences;
 		}
-	}
-
-	@Override
-	protected String getExportPortletPreferencesValue(
-			PortletDataContext portletDataContext, Portlet portlet,
-			String className, long primaryKeyLong)
-		throws Exception {
-
-		String uuid = null;
-
-		Element rootElement = portletDataContext.getExportDataRootElement();
-
-		if (className.equals(Organization.class.getName())) {
-			Organization organization =
-				_organizationLocalService.fetchOrganization(primaryKeyLong);
-
-			if (organization != null) {
-				uuid = organization.getUuid();
-
-				portletDataContext.addReferenceElement(
-					portlet, rootElement, organization,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-			}
-		}
-
-		return uuid;
-	}
-
-	@Override
-	protected Long getImportPortletPreferencesNewValue(
-			PortletDataContext portletDataContext, Class<?> clazz,
-			long companyGroupId, Map<Long, Long> primaryKeys,
-			String portletPreferencesOldValue)
-		throws Exception {
-
-		if (Validator.isNumber(portletPreferencesOldValue)) {
-			long oldPrimaryKey = GetterUtil.getLong(portletPreferencesOldValue);
-
-			return MapUtil.getLong(primaryKeys, oldPrimaryKey, oldPrimaryKey);
-		}
-
-		String className = clazz.getName();
-
-		if (className.equals(Organization.class.getName())) {
-			Organization organization =
-				_organizationLocalService.fetchOrganizationByUuidAndCompanyId(
-					portletPreferencesOldValue,
-					portletDataContext.getCompanyId());
-
-			if (organization != null) {
-				return organization.getOrganizationId();
-			}
-		}
-
-		return null;
 	}
 
 	@Reference(unbind = "-")
@@ -203,9 +148,35 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
-			updateExportPortletPreferencesClassPKs(
-				portletDataContext, portlet, portletPreferences,
-				"organizationId", Organization.class.getName());
+			Function<String, String> exportPortletPreferencesNewValueFunction =
+				(primaryKey) -> {
+
+					long primaryKeyLong = GetterUtil.getLong(primaryKey);
+
+					Organization organization =
+						_organizationLocalService.fetchOrganization(
+							primaryKeyLong);
+
+					if (organization != null) {
+						String uuid = organization.getUuid();
+
+						portletDataContext.addReferenceElement(
+							portlet,
+							portletDataContext.getExportDataRootElement(),
+							organization,
+							PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+
+						return uuid;
+					}
+
+					return null;
+				};
+
+			_exportImportPortletPreferencesProcessorHelper.
+				updateExportPortletPreferencesClassPKs(
+					portletDataContext, portlet, portletPreferences,
+					"organizationId", Organization.class.getName(),
+					exportPortletPreferencesNewValueFunction);
 		}
 
 		return portletPreferences;
@@ -221,14 +192,49 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 
 		Group companyGroup = company.getGroup();
 
-		updateImportPortletPreferencesClassPKs(
-			portletDataContext, portletPreferences, "organizationId",
-			Organization.class, companyGroup.getGroupId());
+		Map<Long, Long> primaryKeys =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Organization.class);
+
+		Function<String, Long> importPortletPreferencesNewValueFunction =
+			(portletPreferencesOldValue) -> {
+
+				if (Validator.isNumber(portletPreferencesOldValue)) {
+					long oldPrimaryKey = GetterUtil.getLong(
+						portletPreferencesOldValue);
+
+					return MapUtil.getLong(
+						primaryKeys, oldPrimaryKey, oldPrimaryKey);
+				}
+
+				Organization organization =
+					_organizationLocalService.
+						fetchOrganizationByUuidAndCompanyId(
+							portletPreferencesOldValue,
+							portletDataContext.getCompanyId());
+
+				if (organization != null) {
+					return organization.getOrganizationId();
+				}
+
+				return null;
+			};
+
+		_exportImportPortletPreferencesProcessorHelper.
+			updateImportPortletPreferencesClassPKs(
+				portletDataContext, portletPreferences, "organizationId",
+				companyGroup.getGroupId(),
+				importPortletPreferencesNewValueFunction);
 
 		return portletPreferences;
 	}
 
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ExportImportPortletPreferencesProcessorHelper
+		_exportImportPortletPreferencesProcessorHelper;
+
 	private OrganizationLocalService _organizationLocalService;
 	private PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;

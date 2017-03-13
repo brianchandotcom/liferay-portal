@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.application.list.api", version: "2.0.0"
@@ -5,7 +8,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.document.library.api", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.expando.taglib", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.exportimport.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.exportimport.service", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.flags.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.0.0"
@@ -29,6 +31,7 @@ dependencies {
 	provided project(":apps:foundation:friendly-url:friendly-url-api")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
 	provided project(":apps:web-experience:asset:asset-taglib")
+	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:portlet-display-template:portlet-display-template")
 	provided project(":core:portal-compat:blogs:portal-impl-blogs-compat")
 	provided project(":core:portal-compat:blogs:portal-kernel-blogs-compat")

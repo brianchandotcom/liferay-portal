@@ -851,29 +851,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Display Page" />
+		<execute macro="WebContent#editDisplayPage">
+			<var name="pageName" value="${displayPageName}" />
 		</execute>
-
-		<var name="key_displayPageName" value="${displayPageName}" />
-
-		<execute function="Click" locator1="Button#CHOOSE" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="SelectFrame" locator1="WCSelectDisplayPage#DISPLAY_PAGE_CONFIGURATION_IFRAME" />
-
-		<execute function="AssertClick" locator1="WCSelectDisplayPage#PUBLIC_DISPLAY_PAGE_SELECTION" value1="${displayPageName}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute macro="Button#clickDone" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
-
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute function="Pause" locator1="3000" />
 

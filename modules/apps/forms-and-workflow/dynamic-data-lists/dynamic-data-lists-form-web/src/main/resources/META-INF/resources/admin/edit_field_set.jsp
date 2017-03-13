@@ -146,11 +146,10 @@ renderResponse.setTitle((ddmStructure == null) ? LanguageUtil.get(request, "new-
 
 		<div class="container-fluid-1280">
 			<aui:button-row cssClass="ddl-form-builder-buttons">
-				<aui:button cssClass="btn-lg ddl-button" id="save" value="save" />
+				<aui:button cssClass="btn-lg" id="save" type="submit" value="save" />
+				<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>
 		</div>
-
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="saveFieldSet" var="saveFieldSetURL" />
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getDataProviderInstances" var="getDataProviderInstancesURL" />
 
@@ -192,8 +191,6 @@ renderResponse.setTitle((ddmStructure == null) ? LanguageUtil.get(request, "new-
 									new Liferay.DDL.Portlet(
 										{
 											availableLanguageIds: definition.availableLanguageIds,
-											autosaveInterval: '<%= ddlFormAdminDisplayContext.getAutosaveInterval() %>',
-											autosaveURL: '<%= saveFieldSetURL.toString() %>',
 											defaultLanguageId: definition.defaultLanguageId,
 											definition: definition,
 											description: '<%= HtmlUtil.escapeJS(description) %>',

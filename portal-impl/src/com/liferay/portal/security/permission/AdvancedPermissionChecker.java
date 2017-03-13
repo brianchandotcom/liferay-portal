@@ -364,17 +364,16 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 	@Override
 	public boolean hasPermission(
-		long groupId, String name, String primKey, String actionId) {
+		Group group, String name, String primKey, String actionId) {
 
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
 
-		Group group = null;
+		long groupId = 0;
 
 		try {
-			if (groupId > 0) {
-				group = GroupLocalServiceUtil.getGroup(groupId);
+			if (group != null) {
 
 				// If the group is a scope group for a layout, check the
 				// original group.
@@ -385,9 +384,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					Layout layout = LayoutLocalServiceUtil.getLayout(
 						group.getClassPK());
 
-					groupId = layout.getGroupId();
-
-					group = GroupLocalServiceUtil.getGroup(groupId);
+					group = layout.getGroup();
 				}
 				else if (group.isUserPersonalSite()) {
 					return false;
@@ -399,9 +396,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				if (group.isUser() && (group.getClassPK() == getUserId())) {
 					group = GroupLocalServiceUtil.getGroup(
 						getCompanyId(), GroupConstants.USER_PERSONAL_SITE);
-
-					groupId = group.getGroupId();
 				}
+
+				groupId = group.getGroupId();
 			}
 		}
 		catch (Exception e) {

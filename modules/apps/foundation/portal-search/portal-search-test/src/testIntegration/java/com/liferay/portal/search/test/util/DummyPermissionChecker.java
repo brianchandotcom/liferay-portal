@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.test.util;
 
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
@@ -87,6 +88,20 @@ public class DummyPermissionChecker implements PermissionChecker {
 	public boolean hasOwnerPermission(
 		long companyId, String name, String primKey, long ownerId,
 		String actionId) {
+
+		return false;
+	}
+
+	@Override
+	public boolean hasPermission(
+		Group group, String name, long primKey, String actionId) {
+
+		return false;
+	}
+
+	@Override
+	public boolean hasPermission(
+		Group group, String name, String primKey, String actionId) {
 
 		return false;
 	}

@@ -16,10 +16,12 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
@@ -87,9 +89,26 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 
 	@Override
 	public boolean hasPermission(
+		Group group, String name, long primKey, String actionId) {
+
+		return hasPermission(group, name, String.valueOf(primKey), actionId);
+	}
+
+	@Override
+	public boolean hasPermission(
 		long groupId, String name, long primKey, String actionId) {
 
-		return hasPermission(groupId, name, String.valueOf(primKey), actionId);
+		return hasPermission(
+			GroupLocalServiceUtil.fetchGroup(groupId), name,
+			String.valueOf(primKey), actionId);
+	}
+
+	@Override
+	public boolean hasPermission(
+		long groupId, String name, String primKey, String actionId) {
+
+		return hasPermission(
+			GroupLocalServiceUtil.fetchGroup(groupId), name, primKey, actionId);
 	}
 
 	@Override

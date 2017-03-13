@@ -215,11 +215,18 @@
 			getPortalURL: function() {
 				return '<%= themeDisplay.getPortalURL() %>';
 			},
+
+			<%
+			Group scopeGroup = themeDisplay.getScopeGroup();
+
+			Group liveGroup = StagingUtil.getLiveGroup(scopeGroup);
+			%>
+
 			getScopeGroupId: function() {
-				return '<%= themeDisplay.getScopeGroupId() %>';
+				return '<%= scopeGroup.getGroupId() %>';
 			},
 			getScopeGroupIdOrLiveGroupId: function() {
-				return '<%= themeDisplay.getSiteGroupIdOrLiveGroupId() %>';
+				return '<%= liveGroup.getGroupId() %>';
 			},
 			getSessionId: function() {
 				return '<%= PropsValues.SESSION_ENABLE_URL_WITH_SESSION_ID ? session.getId() : StringPool.BLANK %>';

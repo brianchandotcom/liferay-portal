@@ -1874,6 +1874,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
+	protected List<String> getExcludes(String property) {
+		List<String> excludes = _exclusionPropertiesMap.get(property);
+
+		if (excludes != null) {
+			return excludes;
+		}
+
+		excludes = getPropertyList(property);
+
+		_exclusionPropertiesMap.put(property, excludes);
+
+		return excludes;
+	}
+
 	protected File getFile(String fileName, int level) {
 		return _sourceFormatterHelper.getFile(
 			sourceFormatterArgs.getBaseDirName(), fileName, level);

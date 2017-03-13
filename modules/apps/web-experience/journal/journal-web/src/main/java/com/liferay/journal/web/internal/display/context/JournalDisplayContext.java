@@ -1297,7 +1297,7 @@ public class JournalDisplayContext {
 			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
 			jsonObject.put("value", getLayoutBreadcrumb(layout));
 
-			if (layout.getUuid().equals(selectedLayoutUuid)) {
+			if (Objects.equals(layout.getUuid(), selectedLayoutUuid)) {
 				jsonObject.put("expanded", true);
 				jsonObject.put("selected", true);
 			}

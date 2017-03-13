@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -241,6 +243,15 @@ public class SaveRecordSetMVCCommandHelper {
 			ddmFormValuesJSONDeserializer.deserialize(
 				ddmForm, serializedSettingsDDMFormValues);
 
+		if (!validateRedirectURL(settingsDDMFormValues)) {
+			SessionMessages.add(
+				portletRequest,
+				_portal.getPortletId(portletRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+
+			SessionErrors.add(portletRequest, "invalidRedirectUrl");
+		}
+
 		return settingsDDMFormValues;
 	}
 
@@ -371,6 +382,36 @@ public class SaveRecordSetMVCCommandHelper {
 			themeDisplay.getUserId(), themeDisplay.getCompanyId(), groupId,
 			DDLRecordSet.class.getName(), recordSet.getRecordSetId(), 0,
 			workflowDefinition);
+	}
+
+	protected boolean validateRedirectURL(DDMFormValues settingsDDMFormValues) {
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			settingsDDMFormValues.getDDMFormFieldValuesMap();
+
+		if (!ddmFormFieldValuesMap.containsKey("redirectURL")) {
+			return true;
+		}
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			"redirectURL");
+
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		Value value = ddmFormFieldValue.getValue();
+
+		for (Locale availableLocale : value.getAvailableLocales()) {
+			String valueString = value.getString(availableLocale);
+
+			if (Validator.isNotNull(valueString)) {
+				String escapedRedirect = _portal.escapeRedirect(valueString);
+
+				if (Validator.isNull(escapedRedirect)) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	@Reference

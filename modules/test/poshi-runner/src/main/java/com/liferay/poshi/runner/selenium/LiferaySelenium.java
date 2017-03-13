@@ -100,6 +100,8 @@ public interface LiferaySelenium {
 	public void assertPartialTextAceEditor(String locator, String pattern)
 		throws Exception;
 
+	public void assertPrompt(String pattern, String value) throws Exception;
+
 	public void assertSelectedLabel(String selectLocator, String pattern)
 		throws Exception;
 

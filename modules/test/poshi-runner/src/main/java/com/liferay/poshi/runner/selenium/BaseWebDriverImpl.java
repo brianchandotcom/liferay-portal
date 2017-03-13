@@ -488,6 +488,17 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void assertPrompt(String pattern, String value) throws Exception {
+		String confirmation = getConfirmation(value);
+
+		if (!pattern.equals(confirmation)) {
+			throw new Exception(
+				"Expected text \"" + pattern +
+					"\" does not match actual text \"" + confirmation + "\"");
+		}
+	}
+
+	@Override
 	public void assertSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
 

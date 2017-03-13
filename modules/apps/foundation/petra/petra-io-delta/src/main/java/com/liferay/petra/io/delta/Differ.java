@@ -68,7 +68,7 @@ public class Differ {
 
 	protected void readChecksums() throws IOException {
 		if (_checksumsByteChannelReader.isSeekable()) {
-			_weakChecksums = new TIntIntHashMap(_blocksCount, 0.5f, -1, -1);
+			_weakChecksums = new TIntIntHashMap(_blocksCount, 0.5F, -1, -1);
 		}
 		else {
 			_blockBytesMap = new TIntObjectHashMap<>(_blocksCount);

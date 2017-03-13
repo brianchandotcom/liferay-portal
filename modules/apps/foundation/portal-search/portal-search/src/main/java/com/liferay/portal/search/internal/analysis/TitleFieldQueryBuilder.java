@@ -57,6 +57,6 @@ public class TitleFieldQueryBuilder implements FieldQueryBuilder {
 	@Reference
 	protected KeywordTokenizer keywordTokenizer;
 
-	private volatile float _exactMatchBoost = 2.0f;
+	private volatile float _exactMatchBoost = 2.0F;
 
 }

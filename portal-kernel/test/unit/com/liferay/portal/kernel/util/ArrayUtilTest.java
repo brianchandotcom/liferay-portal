@@ -60,13 +60,13 @@ public class ArrayUtilTest {
 				new double[] {1.0, 2.0, 3.0}, new double[] {4.0, 5.0, 6.0}),
 			0.0001);
 		Assert.assertArrayEquals(
-			new float[] {1.0f, 2.0f, 3.0f, 4.0f},
-			ArrayUtil.append(new float[] {1.0f, 2.0f, 3.0f}, 4.0f), 0.0001f);
+			new float[] {1.0F, 2.0F, 3.0F, 4.0F},
+			ArrayUtil.append(new float[] {1.0F, 2.0F, 3.0F}, 4.0F), 0.0001F);
 		Assert.assertArrayEquals(
-			new float[] {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f},
+			new float[] {1.0F, 2.0F, 3.0F, 4.0F, 5.0F, 6.0F},
 			ArrayUtil.append(
-				new float[] {1.0f, 2.0f, 3.0f}, new float[] {4.0f, 5.0f, 6.0f}),
-			0.0001f);
+				new float[] {1.0F, 2.0F, 3.0F}, new float[] {4.0F, 5.0F, 6.0F}),
+			0.0001F);
 		Assert.assertArrayEquals(
 			new int[] {1, 2, 3, 4}, ArrayUtil.append(new int[] {1, 2, 3}, 4));
 		Assert.assertArrayEquals(
@@ -145,8 +145,8 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testContainsAllFloatArray() throws Exception {
-		float[] array1 = {1.5f, 2.5f};
-		float[] array2 = {1.5f, 2.5f, 3.5f};
+		float[] array1 = {1.5F, 2.5F};
+		float[] array2 = {1.5F, 2.5F, 3.5F};
 
 		Assert.assertFalse(ArrayUtil.containsAll(array1, array2));
 		Assert.assertTrue(ArrayUtil.containsAll(array2, array1));
@@ -226,10 +226,10 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testContainsFloatArray() throws Exception {
-		float[] array = {2.5f, 3.5f};
+		float[] array = {2.5F, 3.5F};
 
-		Assert.assertFalse(ArrayUtil.contains(array, 1.5f));
-		Assert.assertTrue(ArrayUtil.contains(array, 2.5f));
+		Assert.assertFalse(ArrayUtil.contains(array, 1.5F));
+		Assert.assertTrue(ArrayUtil.contains(array, 2.5F));
 	}
 
 	@Test
@@ -663,18 +663,18 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testRemoveFromFloatArray() {
-		float[] array = {1.5f, 2.5f, 3.5f};
+		float[] array = {1.5F, 2.5F, 3.5F};
 
-		array = ArrayUtil.remove(array, 3.5f);
+		array = ArrayUtil.remove(array, 3.5F);
 
-		Assert.assertArrayEquals(new float[] {1.5f, 2.5f}, array, 0);
+		Assert.assertArrayEquals(new float[] {1.5F, 2.5F}, array, 0);
 	}
 
 	@Test
 	public void testRemoveFromFloatEmptyArray() {
 		float[] array = {};
 
-		array = ArrayUtil.remove(array, 3.5f);
+		array = ArrayUtil.remove(array, 3.5F);
 
 		Assert.assertTrue(ArrayUtil.isEmpty(array));
 	}
@@ -683,7 +683,7 @@ public class ArrayUtilTest {
 	public void testRemoveFromFloatNullArray() {
 		float[] array = null;
 
-		array = ArrayUtil.remove(array, 3.5f);
+		array = ArrayUtil.remove(array, 3.5F);
 
 		Assert.assertNull(array);
 	}
@@ -876,9 +876,9 @@ public class ArrayUtilTest {
 			new double[] {1.0, 2.0, 3.0},
 			ArrayUtil.subset(new double[] {1.0, 2.0, 3.0, 4.0}, 0, 3), 0.0001);
 		Assert.assertArrayEquals(
-			new float[] {1.0f, 2.0f, 3.0f},
-			ArrayUtil.subset(new float[] {1.0f, 2.0f, 3.0f, 4.0f}, 0, 3),
-			0.0001f);
+			new float[] {1.0F, 2.0F, 3.0F},
+			ArrayUtil.subset(new float[] {1.0F, 2.0F, 3.0F, 4.0F}, 0, 3),
+			0.0001F);
 		Assert.assertArrayEquals(
 			new int[] {1, 2, 3},
 			ArrayUtil.subset(new int[] {1, 2, 3, 4}, 0, 3));
@@ -974,9 +974,9 @@ public class ArrayUtilTest {
 			ArrayUtil.unique(new double[] {1.0, 2.0, 3.0, 1.0, 2.0, 3.0}),
 			0.0001);
 		Assert.assertArrayEquals(
-			new float[] {1.0f, 2.0f, 3.0f},
-			ArrayUtil.unique(new float[] {1.0f, 2.0f, 3.0f, 3.0f, 2.0f}),
-			0.0001f);
+			new float[] {1.0F, 2.0F, 3.0F},
+			ArrayUtil.unique(new float[] {1.0F, 2.0F, 3.0F, 3.0F, 2.0F}),
+			0.0001F);
 		Assert.assertArrayEquals(
 			new int[] {1, 2, 3}, ArrayUtil.unique(new int[] {1, 2, 3, 3, 2}));
 		Assert.assertArrayEquals(

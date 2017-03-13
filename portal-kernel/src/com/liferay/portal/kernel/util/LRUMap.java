@@ -23,7 +23,7 @@ import java.util.Map;
 public class LRUMap<K, V> extends LinkedHashMap<K, V> {
 
 	public LRUMap(int capacity) {
-		super(capacity * 3 / 2, 0.75f, true);
+		super(capacity * 3 / 2, 0.75F, true);
 
 		_capacity = capacity;
 	}

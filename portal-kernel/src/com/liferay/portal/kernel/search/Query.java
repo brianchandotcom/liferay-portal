@@ -25,7 +25,7 @@ import java.io.Serializable;
  */
 public interface Query extends Serializable {
 
-	public static final float BOOST_DEFAULT = 1.0f;
+	public static final float BOOST_DEFAULT = 1.0F;
 
 	public <T> T accept(QueryVisitor<T> queryVisitor);
 

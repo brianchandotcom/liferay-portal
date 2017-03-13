@@ -785,7 +785,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			document.addNumber(Field.RATINGS, ratingsStats.getAverageScore());
 		}
 		else {
-			document.addNumber(Field.RATINGS, 0.0f);
+			document.addNumber(Field.RATINGS, 0.0F);
 		}
 
 		document.addNumber(Field.VIEW_COUNT, assetEntry.getViewCount());

@@ -20,7 +20,6 @@ import groovy.json.JsonOutput;
 import groovy.json.JsonSlurper;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -57,7 +56,28 @@ public class NpmShrinkwrapTask extends ExecuteNpmTask {
 	public void executeNode() throws Exception {
 		super.executeNode();
 
-		_removeExcludedDependencies();
+		File shrinkwrapJsonFile = new File(
+			getWorkingDir(), "npm-shrinkwrap.json");
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		Map<String, Object> shrinkwrap = (Map<String, Object>)jsonSlurper.parse(
+			shrinkwrapJsonFile);
+
+		List<String> excludedDependencies = getExcludedDependencies();
+
+		if (!excludedDependencies.isEmpty()) {
+			_removeExcludedDependencies(shrinkwrap, getExcludedDependencies());
+		}
+
+		String shrinkwrapJSON = JsonOutput.prettyPrint(
+			JsonOutput.toJson(shrinkwrap));
+
+		shrinkwrapJSON = shrinkwrapJSON.replace(_FOUR_SPACES, "\t");
+
+		Files.write(
+			shrinkwrapJsonFile.toPath(),
+			shrinkwrapJSON.getBytes(StandardCharsets.UTF_8));
 	}
 
 	@Input
@@ -95,33 +115,6 @@ public class NpmShrinkwrapTask extends ExecuteNpmTask {
 		}
 
 		return completeArgs;
-	}
-
-	private void _removeExcludedDependencies() throws IOException {
-		List<String> excludedDependencies = getExcludedDependencies();
-
-		if (excludedDependencies.isEmpty()) {
-			return;
-		}
-
-		File shrinkwrapJsonFile = new File(
-			getWorkingDir(), "npm-shrinkwrap.json");
-
-		JsonSlurper jsonSlurper = new JsonSlurper();
-
-		Map<String, Object> shrinkwrap = (Map<String, Object>)jsonSlurper.parse(
-			shrinkwrapJsonFile);
-
-		_removeExcludedDependencies(shrinkwrap, excludedDependencies);
-
-		String shrinkwrapJSON = JsonOutput.prettyPrint(
-			JsonOutput.toJson(shrinkwrap));
-
-		shrinkwrapJSON = shrinkwrapJSON.replace(_FOUR_SPACES, "\t");
-
-		Files.write(
-			shrinkwrapJsonFile.toPath(),
-			shrinkwrapJSON.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private void _removeExcludedDependencies(

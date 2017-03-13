@@ -299,12 +299,6 @@ if (comment) {
 
 			var inputValue = '<%= ((microblogsEntry != null) && (edit)) ? StringUtil.replace(HtmlUtil.escapeJS(microblogsEntry.getContent()), "\'", "\\'") : StringPool.BLANK %>';
 
-			if ((autocomplete.height() < 45) || (highlighterContent.height() < 45)) {
-				autocomplete.height(45);
-
-				highlighterContent.height(45);
-			}
-
 			var textarea = new A.Textarea(
 				{
 					autoSize: true,
@@ -421,12 +415,6 @@ if (comment) {
 			var highlighterContent = A.one('#<portlet:namespace />highlighterContent<%= formId %>');
 
 			var contentInputHeight = contentInput.height();
-
-			if (contentInputHeight > 45) {
-				autocomplete.height(contentInputHeight);
-
-				highlighterContent.height(contentInputHeight);
-			}
 		};
 
 		var updateContentTextbox = function(event) {

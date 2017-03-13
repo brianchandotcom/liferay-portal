@@ -70,7 +70,6 @@
 			<message key="name.invalidPattern" value="Class, interface, enum or annotation ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="UnnecessaryParentheses" />
-		<module name="UpperEll" />
 		<module name="WhitespaceAfter">
 			<property name="tokens" value="COMMA, SEMI" />
 		</module>

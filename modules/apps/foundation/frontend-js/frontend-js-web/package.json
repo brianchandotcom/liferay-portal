@@ -10,7 +10,7 @@
 		"gulp-metal": "^1.9.8",
 		"karma": "^1.3.0",
 		"karma-html2js-preprocessor": "^1.1.0",
-		"liferay-amd-loader": "1.5.8",
+		"liferay-amd-loader": "1.5.9",
 		"liferay-karma-config": "0.0.4",
 		"liferay-module-config-generator": "^1.2.1",
 		"metal-cli": "^2.1.2",

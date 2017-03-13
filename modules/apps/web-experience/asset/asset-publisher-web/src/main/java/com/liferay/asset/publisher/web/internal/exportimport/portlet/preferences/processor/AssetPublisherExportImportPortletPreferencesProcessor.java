@@ -418,7 +418,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 					Group.class);
 
 			groupId = MapUtil.getLong(
-				groupIds, GetterUtil.getLong(oldValues[1]));
+				groupIds, GetterUtil.getLong(oldValues[1]), groupId);
 		}
 
 		if (className.equals(AssetCategory.class.getName())) {

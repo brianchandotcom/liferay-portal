@@ -426,7 +426,7 @@
 			<var name="nodeNotificationsDescription" value="Update Notification Description" />
 			<var name="nodeNotificationsName" value="Update Notification" />
 			<var name="nodeNotificationsRecipientType" value="Role Type" />
-			<var name="roleTitle" value="Administrator" />
+			<var name="roleName" value="Administrator" />
 			<var name="roleType" value="Regular" />
 		</execute>
 
@@ -437,7 +437,7 @@
 		<execute macro="KaleoDesigner#viewNodeNotifications">
 			<var name="nodeNotificationsName" value="Update Notification" />
 			<var name="nodeNotificationsRecipientType" value="Role Type" />
-			<var name="roleTitle" value="Administrator" />
+			<var name="roleName" value="Administrator" />
 			<var name="roleType" value="Regular" />
 		</execute>
 
@@ -1520,7 +1520,7 @@
 			<var name="nodeNotificationsDescription" value="Review Notification Description" />
 			<var name="nodeNotificationsName" value="Review Notification" />
 			<var name="nodeNotificationsRecipientType" value="Role Type" />
-			<var name="roleTitle" value="Administrator" />
+			<var name="roleName" value="Administrator" />
 			<var name="roleType" value="Regular" />
 		</execute>
 
@@ -1534,7 +1534,7 @@
 		<execute macro="KaleoDesigner#viewNodeNotifications">
 			<var name="nodeNotificationsName" value="Review Notification" />
 			<var name="nodeNotificationsRecipientType" value="Role Type" />
-			<var name="roleTitle" value="Administrator" />
+			<var name="roleName" value="Administrator" />
 			<var name="roleType" value="Regular" />
 		</execute>
 	</command>

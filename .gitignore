@@ -171,12 +171,14 @@
 /lib/portal/jaxws-rt.jar
 /lib/portal/jcl-over-slf4j.jar
 /lib/portal/jempbox.jar
+/lib/portal/jericho-html.jar
 /lib/portal/jfreechart.jar
 /lib/portal/jhighlight.jar
 /lib/portal/jna.jar
 /lib/portal/jsr107cache.jar
 /lib/portal/jstl-api.jar
 /lib/portal/jstl-impl.jar
+/lib/portal/juh.jar
 /lib/portal/juniversalchardet.jar
 /lib/portal/jurt.jar
 /lib/portal/log4j.jar
@@ -189,6 +191,7 @@
 /lib/portal/nekohtml.jar
 /lib/portal/netcdf.jar
 /lib/portal/netty-all.jar
+/lib/portal/ridl.jar
 /lib/portal/odmg.jar
 /lib/portal/oro.jar
 /lib/portal/pdfbox.jar
@@ -204,6 +207,7 @@
 /lib/portal/stax-ex.jar
 /lib/portal/stax.jar
 /lib/portal/streambuffer.jar
+/lib/portal/stringtemplate.jar
 /lib/portal/struts-core.jar
 /lib/portal/struts-el.jar
 /lib/portal/struts-extras.jar

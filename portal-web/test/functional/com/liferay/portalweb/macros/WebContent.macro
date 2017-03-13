@@ -830,9 +830,16 @@
 
 		<execute function="SelectFrame" value1="relative=top" />
 
+		<if>
+			<condition function="IsElementPresent" locator1="IFrame#EDIT_ASSET" />
+			<then>
+				<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+			</then>
+		</if>
+
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#DISPLAY_PAGE_SELECTION" value1="Public Pages > ${pageName}" />
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="Button#clickPublish" />
 	</command>
 
 	<command name="editDisplayPagePGViaAP">

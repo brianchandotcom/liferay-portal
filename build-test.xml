@@ -5107,6 +5107,15 @@ go]]></replacevalue>
 
 						<dirname file="${osgi.module.build.file}" property="osgi.module.dir" />
 
+						<if>
+							<equals arg1="@{osgi.module}" arg2="documentum-hook" />
+							<then>
+								<propertyfile file="${osgi.module.dir}/docroot/WEB-INF/src/dfc.properties">
+									<entry key="dfc.docbroker.host[0]" value="${cmis.repository.vm.host.name}" />
+								</propertyfile>
+							</then>
+						</if>
+
 						<gradle-execute dir="${osgi.module.dir}" task="deploy">
 							<arg value="clean" />
 						</gradle-execute>

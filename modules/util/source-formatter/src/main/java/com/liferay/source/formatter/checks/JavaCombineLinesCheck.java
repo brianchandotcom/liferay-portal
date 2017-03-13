@@ -629,8 +629,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		}
 
 		if ((getLevel(trimmedLine) < 0) &&
-			(line.matches(".*[|&^]") ||
-			 line.endsWith(StringPool.COMMA) ||
+			(line.matches(".*[|&^]") || line.endsWith(StringPool.COMMA) ||
 			 (trimmedPreviousLine.startsWith("new ") &&
 			  line.endsWith(") {")))) {
 

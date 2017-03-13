@@ -132,6 +132,26 @@ public class TrashEntryServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the trash entries matching the group ID.
+	*
+	* @param groupId the primary key of the group
+	* @param className the class name of the entity
+	* @param start the lower bound of the range of trash entries to return
+	* @param end the upper bound of the range of trash entries to return (not
+	inclusive)
+	* @param obc the comparator to order the trash entries (optionally
+	<code>null</code>)
+	* @return the range of matching trash entries ordered by comparator
+	<code>obc</code>
+	*/
+	public static com.liferay.trash.kernel.model.TrashEntryList getEntries(
+		long groupId, java.lang.String className, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.trash.kernel.model.TrashEntry> obc)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+		return getService().getEntries(groupId, className, start, end, obc);
+	}
+
+	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier

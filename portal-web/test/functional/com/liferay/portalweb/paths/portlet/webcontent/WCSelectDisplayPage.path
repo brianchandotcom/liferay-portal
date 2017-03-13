@@ -41,12 +41,7 @@
 <!--PUBLIC_PAGES-->
 <tr>
 	<td>PUBLIC_PAGES_SELECTION</td>
-	<td>//ul[contains(@class,'tree-container')]/li[contains(.,'${key_pageName}')]/div//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLIC_DISPLAY_PAGE_SELECTION</td>
-	<td>//li[contains(@id,'treeContainer')]/div/span/a[contains(.,'${key_displayPageName}')]</td>
+	<td>//li[contains(@class,'treeview-node')]//div/span[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>

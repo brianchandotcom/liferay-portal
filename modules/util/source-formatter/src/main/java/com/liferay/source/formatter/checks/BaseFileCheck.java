@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
 
@@ -188,6 +189,63 @@ public abstract class BaseFileCheck implements FileCheck {
 		else {
 			return false;
 		}
+	}
+
+	protected boolean isExcludedPath(
+		List<String> excludes, String path, int lineCount) {
+
+		return isExcludedPath(excludes, path, lineCount, null);
+	}
+
+	protected boolean isExcludedPath(
+		List<String> excludes, String path, int lineCount, String parameter) {
+
+		if (ListUtil.isEmpty(excludes)) {
+			return false;
+		}
+
+		String pathWithParameter = null;
+
+		if (Validator.isNotNull(parameter)) {
+			pathWithParameter = path + StringPool.AT + parameter;
+		}
+
+		String pathWithLineCount = null;
+
+		if (lineCount > 0) {
+			pathWithLineCount = path + StringPool.AT + lineCount;
+		}
+
+		for (String exclude : excludes) {
+			if (Validator.isNull(exclude)) {
+				continue;
+			}
+
+			if (exclude.startsWith("**")) {
+				exclude = exclude.substring(2);
+			}
+
+			if (exclude.endsWith("**")) {
+				exclude = exclude.substring(0, exclude.length() - 2);
+
+				if (path.contains(exclude)) {
+					return true;
+				}
+
+				continue;
+			}
+
+			if (path.endsWith(exclude) ||
+				((pathWithParameter != null) &&
+				 pathWithParameter.endsWith(exclude)) ||
+				((pathWithLineCount != null) &&
+				 pathWithLineCount.endsWith(exclude))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected String stripQuotes(String s) {

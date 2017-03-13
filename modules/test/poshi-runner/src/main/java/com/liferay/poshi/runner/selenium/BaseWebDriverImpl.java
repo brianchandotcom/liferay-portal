@@ -856,7 +856,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public String getConfirmation() {
-		return WebDriverHelper.getConfirmation(this);
+		return getConfirmation(null);
+	}
+
+	@Override
+	public String getConfirmation(String value) {
+		return WebDriverHelper.getConfirmation(this, value);
 	}
 
 	@Override

@@ -156,6 +156,8 @@ public interface LiferaySelenium {
 
 	public String getConfirmation();
 
+	public String getConfirmation(String value);
+
 	public String getCurrentDay();
 
 	public String getCurrentDayName();

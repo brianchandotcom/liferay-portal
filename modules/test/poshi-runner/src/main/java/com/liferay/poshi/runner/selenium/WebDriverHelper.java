@@ -271,6 +271,10 @@ public class WebDriverHelper {
 	}
 
 	public static String getConfirmation(WebDriver webDriver) {
+		return getConfirmation(webDriver, null);
+	}
+
+	public static String getConfirmation(WebDriver webDriver, String value) {
 		webDriver.switchTo();
 
 		WebDriverWait webDriverWait = new WebDriverWait(webDriver, 1);
@@ -280,6 +284,10 @@ public class WebDriverHelper {
 				ExpectedConditions.alertIsPresent());
 
 			String confirmation = alert.getText();
+
+			if (Validator.isNotNull(value)) {
+				alert.sendKeys(value);
+			}
 
 			alert.accept();
 

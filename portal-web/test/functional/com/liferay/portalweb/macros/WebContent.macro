@@ -816,11 +816,13 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var name="key_pageName" value="${pageName}" />
+		<execute function="SelectFrameTop" />
 
 		<execute function="SelectFrame" locator1="WCSelectDisplayPage#DISPLAY_PAGE_CONFIGURATION_IFRAME" />
 
-		<execute function="AssertClick" locator1="WCSelectDisplayPage#PUBLIC_PAGES_SELECTION" value1="${pageName}" />
+		<execute function="Click#mouseOverClick" locator1="WCSelectDisplayPage#PUBLIC_PAGES_SELECTION">
+			<var name="key_pageName" value="${pageName}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 

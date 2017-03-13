@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.checks.util;
 
-
 /**
  * @author Hugo Huijser
  */

@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.defaults.internal;
 
+import com.liferay.gradle.plugins.LiferayAntPlugin;
+import com.liferay.gradle.plugins.LiferayThemePlugin;
 import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.WriteDigestTask;
@@ -67,6 +69,7 @@ import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
+import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
@@ -386,6 +389,26 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 						@Override
 						public String call() throws Exception {
 							String key = publishArtifact.getClassifier();
+
+							if (Validator.isNull(key)) {
+								key = publishArtifact.getType();
+
+								Project project =
+									writePropertiesTask.getProject();
+
+								if ((JavaPlugin.JAR_TASK_NAME.equals(key) &&
+										GradleUtil.hasPlugin(
+											project, JavaPlugin.class)) ||
+									(WarPlugin.WAR_TASK_NAME.equals(key) &&
+										(GradleUtil.hasPlugin(
+											project, LiferayAntPlugin.class) ||
+										GradleUtil.hasPlugin(
+											project,
+											LiferayThemePlugin.class)))) {
+
+									key = null;
+								}
+							}
 
 							if (Validator.isNull(key)) {
 								key = "artifact.url";

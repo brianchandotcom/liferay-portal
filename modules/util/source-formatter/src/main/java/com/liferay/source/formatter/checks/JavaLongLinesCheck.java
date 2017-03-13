@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -242,7 +243,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 				}
 
 				if (!ToolsUtil.isInsideQuotes(line, x) &&
-					_isValidJavaParameter(line.substring(0, x))) {
+					JavaSourceUtil.isValidJavaParameter(line.substring(0, x))) {
 
 					String firstLine = line.substring(0, x + 1);
 					String secondLine = indent + line.substring(x + 2);
@@ -399,23 +400,6 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 			if (annotationParameters.contains(line)) {
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	private boolean _isValidJavaParameter(String javaParameter) {
-		if (javaParameter.contains(" implements ") ||
-			javaParameter.contains(" throws ")) {
-
-			return false;
-		}
-
-		if ((getLevel(javaParameter, "(", ")") == 0) &&
-			(getLevel(javaParameter, "<", ">") == 0) &&
-			(getLevel(javaParameter, "{", "}") == 0)) {
-
-			return true;
 		}
 
 		return false;

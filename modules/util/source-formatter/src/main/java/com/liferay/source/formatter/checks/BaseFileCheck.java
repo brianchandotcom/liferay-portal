@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.List;
 import java.util.Set;
@@ -39,35 +39,6 @@ public abstract class BaseFileCheck implements FileCheck {
 			new SourceFormatterMessage(fileName, message, null, lineCount));
 	}
 
-	protected int adjustLevel(int level, String text, String s, int diff) {
-		String[] lines = StringUtil.splitLines(text);
-
-		forLoop:
-		for (String line : lines) {
-			line = StringUtil.trim(line);
-
-			if (line.startsWith("//")) {
-				continue;
-			}
-
-			int x = -1;
-
-			while (true) {
-				x = line.indexOf(s, x + 1);
-
-				if (x == -1) {
-					continue forLoop;
-				}
-
-				if (!ToolsUtil.isInsideQuotes(line, x)) {
-					level += diff;
-				}
-			}
-		}
-
-		return level;
-	}
-
 	protected int getLeadingTabCount(String line) {
 		int leadingTabCount = 0;
 
@@ -81,41 +52,29 @@ public abstract class BaseFileCheck implements FileCheck {
 	}
 
 	protected int getLevel(String s) {
-		return getLevel(
-			s, new String[] {StringPool.OPEN_PARENTHESIS},
-			new String[] {StringPool.CLOSE_PARENTHESIS}, 0);
+		return SourceUtil.getLevel(s);
 	}
 
 	protected int getLevel(
 		String s, String increaseLevelString, String decreaseLevelString) {
 
-		return getLevel(
-			s, new String[] {increaseLevelString},
-			new String[] {decreaseLevelString}, 0);
+		return SourceUtil.getLevel(s, increaseLevelString, decreaseLevelString);
 	}
 
 	protected int getLevel(
 		String s, String[] increaseLevelStrings,
 		String[] decreaseLevelStrings) {
 
-		return getLevel(s, increaseLevelStrings, decreaseLevelStrings, 0);
+		return SourceUtil.getLevel(
+			s, increaseLevelStrings, decreaseLevelStrings);
 	}
 
 	protected int getLevel(
 		String s, String[] increaseLevelStrings, String[] decreaseLevelStrings,
 		int startLevel) {
 
-		int level = startLevel;
-
-		for (String increaseLevelString : increaseLevelStrings) {
-			level = adjustLevel(level, s, increaseLevelString, 1);
-		}
-
-		for (String decreaseLevelString : decreaseLevelStrings) {
-			level = adjustLevel(level, s, decreaseLevelString, -1);
-		}
-
-		return level;
+		return SourceUtil.getLevel(
+			s, increaseLevelStrings, decreaseLevelStrings, startLevel);
 	}
 
 	protected String getLine(String content, int lineCount) {

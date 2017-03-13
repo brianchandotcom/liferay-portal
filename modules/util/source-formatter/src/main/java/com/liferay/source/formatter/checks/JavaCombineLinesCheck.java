@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -483,7 +484,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 						String linePart = trimmedLine.substring(0, x + 1);
 
 						if (!ToolsUtil.isInsideQuotes(trimmedLine, x) &&
-							_isValidJavaParameter(linePart)) {
+							JavaSourceUtil.isValidJavaParameter(linePart)) {
 
 							if (trimmedLine.equals(linePart)) {
 								return _getCombinedLinesContent(
@@ -801,23 +802,6 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		return StringUtil.replaceFirst(
 			content, previousLine + "\n" + line, firstLine + "\n" + secondLine,
 			previousLineStartPos);
-	}
-
-	private boolean _isValidJavaParameter(String javaParameter) {
-		if (javaParameter.contains(" implements ") ||
-			javaParameter.contains(" throws ")) {
-
-			return false;
-		}
-
-		if ((getLevel(javaParameter, "(", ")") == 0) &&
-			(getLevel(javaParameter, "<", ">") == 0) &&
-			(getLevel(javaParameter, "{", "}") == 0)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private final Pattern _combinedLinesPattern1 = Pattern.compile(

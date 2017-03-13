@@ -31,7 +31,7 @@ public class RatingsTestUtil {
 	public static RatingsEntry addEntry(String className, long classPK)
 		throws Exception {
 
-		return addEntry(className, classPK, 1.0d, TestPropsValues.getUserId());
+		return addEntry(className, classPK, 1.0D, TestPropsValues.getUserId());
 	}
 
 	public static RatingsEntry addEntry(

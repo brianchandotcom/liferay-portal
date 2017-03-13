@@ -60,7 +60,7 @@ public class DescriptionFieldQueryBuilder implements FieldQueryBuilder {
 	@Reference
 	protected KeywordTokenizer keywordTokenizer;
 
-	private volatile float _exactMatchBoost = 2.0f;
+	private volatile float _exactMatchBoost = 2.0F;
 	private volatile int _proximitySlop = 50;
 
 }

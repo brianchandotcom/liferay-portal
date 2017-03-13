@@ -542,8 +542,8 @@ public class StringUtilTest {
 			new double[] {1.0, 2.0, 3.0}, StringUtil.split("1.0,2.0,3.0", 1.0),
 			0.0001);
 		Assert.assertArrayEquals(
-			new float[] {1.0f, 2.0f, 3.0f},
-			StringUtil.split("1.0,2.0,3.0", 1.0f), .0001f);
+			new float[] {1.0F, 2.0F, 3.0F},
+			StringUtil.split("1.0,2.0,3.0", 1.0F), .0001F);
 		Assert.assertArrayEquals(
 			new int[] {1, 2, 3}, StringUtil.split("1,2,3", 1));
 		Assert.assertArrayEquals(

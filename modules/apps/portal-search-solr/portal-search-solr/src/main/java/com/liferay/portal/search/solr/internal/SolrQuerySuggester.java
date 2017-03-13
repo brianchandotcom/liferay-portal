@@ -151,7 +151,7 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_distanceThreshold = MapUtil.getDouble(
-			properties, "distance.threshold", 0.6d);
+			properties, "distance.threshold", 0.6D);
 	}
 
 	protected String[] getFilterQueries(
@@ -366,7 +366,7 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 
 	private static final long _GLOBAL_GROUP_ID = 0;
 
-	private static final float _INFINITE_WEIGHT = 100f;
+	private static final float _INFINITE_WEIGHT = 100F;
 
 	private static final int _MAX_QUERY_RESULTS = 500;
 

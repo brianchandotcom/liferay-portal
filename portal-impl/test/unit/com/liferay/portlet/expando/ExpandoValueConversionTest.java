@@ -384,7 +384,7 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testFloat1() {
-		Float negativeFloat = -456.23f;
+		Float negativeFloat = -456.23F;
 
 		Float convertedFloat = _converter.convertType(
 			ExpandoColumnConstants.FLOAT, negativeFloat.toString());
@@ -394,7 +394,7 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testFloat2() {
-		Float positiveFloat = 345.4f;
+		Float positiveFloat = 345.4F;
 
 		Float convertedFloat = _converter.convertType(
 			ExpandoColumnConstants.FLOAT, positiveFloat.toString());
@@ -409,7 +409,7 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testFloatArray1() {
-		Float floatValue = 13.4f;
+		Float floatValue = 13.4F;
 
 		float[] convertedFloats = _converter.convertType(
 			ExpandoColumnConstants.FLOAT_ARRAY, floatValue.toString());
@@ -421,7 +421,7 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testFloatArray2() {
-		float float1 = 345.67f;
+		float float1 = 345.67F;
 		int float2 = 56;
 
 		float[] convertedFloats = _converter.convertType(
@@ -441,8 +441,8 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testFloatArray4() {
-		float float1 = 56.6567f;
-		float float2 = 0.0000345f;
+		float float1 = 56.6567F;
+		float float2 = 0.0000345F;
 
 		float[] convertedFloats = _converter.convertType(
 			ExpandoColumnConstants.FLOAT_ARRAY,

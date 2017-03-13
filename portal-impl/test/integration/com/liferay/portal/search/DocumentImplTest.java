@@ -418,50 +418,50 @@ public class DocumentImplTest {
 
 	protected void populateNumbers() {
 		populateNumbers(
-			"firstuser", 1e-11, 8e-5f, Integer.MAX_VALUE, Long.MIN_VALUE);
+			"firstuser", 1e-11, 8e-5F, Integer.MAX_VALUE, Long.MIN_VALUE);
 		populateNumberArrays(
 			"firstuser", new Double[] {1e-11, 2e-11, 3e-11},
-			new Float[] {8e-5f, 8e-5f, 8e-5f}, new Integer[] {1, 2, 3},
+			new Float[] {8e-5F, 8e-5F, 8e-5F}, new Integer[] {1, 2, 3},
 			new Long[] {-3L, -2L, -1L});
 
 		populateNumbers(
-			"seconduser", 3e-11, 7e-5f, Integer.MAX_VALUE - 1,
+			"seconduser", 3e-11, 7e-5F, Integer.MAX_VALUE - 1,
 			Long.MIN_VALUE + 1L);
 		populateNumberArrays(
 			"seconduser", new Double[] {1e-11, 2e-11, 5e-11},
-			new Float[] {9e-5f, 8e-5f, 7e-5f}, new Integer[] {1, 3, 4},
+			new Float[] {9e-5F, 8e-5F, 7e-5F}, new Integer[] {1, 3, 4},
 			new Long[] {-3L, -2L, -2L});
 
 		populateNumbers(
-			"thirduser", 5e-11, 6e-5f, Integer.MAX_VALUE - 2,
+			"thirduser", 5e-11, 6e-5F, Integer.MAX_VALUE - 2,
 			Long.MIN_VALUE + 2L);
 		populateNumberArrays(
 			"thirduser", new Double[] {1e-11, 3e-11, 2e-11},
-			new Float[] {9e-5f, 8e-5f, 9e-5f}, new Integer[] {2, 1, 1},
+			new Float[] {9e-5F, 8e-5F, 9e-5F}, new Integer[] {2, 1, 1},
 			new Long[] {-3L, -3L, -1L});
 
 		populateNumbers(
-			"fourthuser", 2e-11, 5e-5f, Integer.MAX_VALUE - 3,
+			"fourthuser", 2e-11, 5e-5F, Integer.MAX_VALUE - 3,
 			Long.MIN_VALUE + 3L);
 		populateNumberArrays(
 			"fourthuser", new Double[] {1e-11, 2e-11, 4e-11},
-			new Float[] {9e-5f, 9e-5f, 7e-5f}, new Integer[] {1, 2, 4},
+			new Float[] {9e-5F, 9e-5F, 7e-5F}, new Integer[] {1, 2, 4},
 			new Long[] {-3L, -3L, -2L});
 
 		populateNumbers(
-			"fifthuser", 4e-11, 4e-5f, Integer.MAX_VALUE - 4,
+			"fifthuser", 4e-11, 4e-5F, Integer.MAX_VALUE - 4,
 			Long.MIN_VALUE + 4L);
 		populateNumberArrays(
 			"fifthuser", new Double[] {1e-11, 3e-11, 1e-11},
-			new Float[] {9e-5f, 9e-5f, 8e-5f}, new Integer[] {1, 4, 4},
+			new Float[] {9e-5F, 9e-5F, 8e-5F}, new Integer[] {1, 4, 4},
 			new Long[] {-4L, -2L, -1L});
 
 		populateNumbers(
-			"sixthuser", 6e-11, 3e-5f, Integer.MAX_VALUE - 5,
+			"sixthuser", 6e-11, 3e-5F, Integer.MAX_VALUE - 5,
 			Long.MIN_VALUE + 5L);
 		populateNumberArrays(
 			"sixthuser", new Double[] {2e-11, 1e-11, 1e-11},
-			new Float[] {9e-5f, 9e-5f, 9e-5f}, new Integer[] {2, 1, 2},
+			new Float[] {9e-5F, 9e-5F, 9e-5F}, new Integer[] {2, 1, 2},
 			new Long[] {-4L, -2L, -2L});
 	}
 

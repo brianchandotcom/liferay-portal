@@ -1786,11 +1786,11 @@ public class CMISRepository extends BaseCmisRepository {
 					scores.add(Float.valueOf(scoreObj.toString()));
 				}
 				else {
-					scores.add(1.0f);
+					scores.add(1.0F);
 				}
 			}
 			else {
-				scores.add(1.0f);
+				scores.add(1.0F);
 			}
 
 			snippets.add(StringPool.BLANK);

@@ -70,7 +70,7 @@ public abstract class BaseDataPartitioningExporterTestCase {
 			int expectedInteger, Timestamp expectedTimestamp)
 		throws Exception {
 
-		float expectedFloat = 99.99f;
+		float expectedFloat = 99.99F;
 		String expectedString = "expectedString";
 
 		return new Object[] {

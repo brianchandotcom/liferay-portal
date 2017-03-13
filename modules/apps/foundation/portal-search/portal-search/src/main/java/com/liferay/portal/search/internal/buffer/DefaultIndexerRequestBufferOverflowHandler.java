@@ -114,7 +114,7 @@ public class DefaultIndexerRequestBufferOverflowHandler
 		indexerRequestBufferExecutorWatcher;
 
 	private static final float _DEFAULT_MINIMUM_BUFFER_AVAILABILITY_PERCENTAGE =
-		0.90f;
+		0.90F;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultIndexerRequestBufferOverflowHandler.class);

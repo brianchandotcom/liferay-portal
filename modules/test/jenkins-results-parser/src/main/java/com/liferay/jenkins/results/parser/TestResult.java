@@ -61,7 +61,7 @@ public class TestResult {
 
 		className = caseJSONObject.getString("className");
 
-		duration = (long)(caseJSONObject.getDouble("duration") * 1000d);
+		duration = (long)(caseJSONObject.getDouble("duration") * 1000D);
 
 		int x = className.lastIndexOf(".");
 

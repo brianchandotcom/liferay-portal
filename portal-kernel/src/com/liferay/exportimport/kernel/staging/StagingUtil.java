@@ -257,6 +257,10 @@ public class StagingUtil {
 		return _staging.getExceptionMessagesJSONObject(locale, e, contextMap);
 	}
 
+	public static Group getLiveGroup(Group group) {
+		return _staging.getLiveGroup(group);
+	}
+
 	public static Group getLiveGroup(long groupId) {
 		return _staging.getLiveGroup(groupId);
 	}

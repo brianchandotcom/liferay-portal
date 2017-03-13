@@ -944,6 +944,19 @@ public class StagingImpl implements Staging {
 	}
 
 	@Override
+	public Group getLiveGroup(Group group) {
+		if (group == null) {
+			return null;
+		}
+
+		if (group.isStagingGroup() && !group.isStagedRemotely()) {
+			return group.getLiveGroup();
+		}
+
+		return group;
+	}
+
+	@Override
 	public Group getLiveGroup(long groupId) {
 		if (groupId <= 0) {
 			return null;

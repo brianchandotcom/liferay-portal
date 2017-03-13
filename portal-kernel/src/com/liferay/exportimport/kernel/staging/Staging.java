@@ -175,6 +175,8 @@ public interface Staging {
 	public JSONObject getExceptionMessagesJSONObject(
 		Locale locale, Exception e, Map<String, Serializable> contextMap);
 
+	public Group getLiveGroup(Group group);
+
 	public Group getLiveGroup(long groupId);
 
 	public long getLiveGroupId(long groupId);

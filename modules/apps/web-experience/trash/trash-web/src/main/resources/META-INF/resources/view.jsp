@@ -19,7 +19,7 @@
 <%
 String keywords = ParamUtil.getString(request, "keywords");
 
-PortletURL portletURL = renderResponse.createRenderURL();
+PortletURL portletURL = trashDisplayContext.getPortletURL();
 
 boolean approximate = false;
 
@@ -39,7 +39,14 @@ if (Validator.isNotNull(searchTerms.getKeywords())) {
 	trashEntries = baseModelSearchResult.getBaseModels();
 }
 else {
-	TrashEntryList trashEntryList = TrashEntryServiceUtil.getEntries(themeDisplay.getScopeGroupId(), entrySearch.getStart(), entrySearch.getEnd(), entrySearch.getOrderByComparator());
+	TrashEntryList trashEntryList = null;
+
+	if (Objects.equals(trashDisplayContext.getNavigation(), "all")) {
+		trashEntryList = TrashEntryServiceUtil.getEntries(themeDisplay.getScopeGroupId(), entrySearch.getStart(), entrySearch.getEnd(), entrySearch.getOrderByComparator());
+	}
+	else {
+		trashEntryList = TrashEntryServiceUtil.getEntries(themeDisplay.getScopeGroupId(), trashDisplayContext.getNavigation(), entrySearch.getStart(), entrySearch.getEnd(), entrySearch.getOrderByComparator());
+	}
 
 	entrySearch.setTotal(trashEntryList.getCount());
 

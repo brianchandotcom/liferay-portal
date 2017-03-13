@@ -158,15 +158,13 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 							primaryKeyLong);
 
 					if (organization != null) {
-						String uuid = organization.getUuid();
-
 						portletDataContext.addReferenceElement(
 							portlet,
 							portletDataContext.getExportDataRootElement(),
 							organization,
 							PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
-						return uuid;
+						return organization.getUuid();
 					}
 
 					return null;

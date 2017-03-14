@@ -27,6 +27,7 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSe
 import com.liferay.exportimport.kernel.exception.LARFileException;
 import com.liferay.exportimport.kernel.exception.LARFileSizeException;
 import com.liferay.exportimport.kernel.exception.LARTypeException;
+import com.liferay.exportimport.kernel.exception.LayoutImportException;
 import com.liferay.exportimport.kernel.exception.MissingReferenceException;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
@@ -96,6 +97,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.RecentLayoutBranchLocalService;
 import com.liferay.portal.kernel.service.RecentLayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.RecentLayoutSetBranchLocalService;
@@ -114,6 +116,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -144,6 +147,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
@@ -654,6 +658,9 @@ public class StagingImpl implements Staging {
 		int errorType = 0;
 		JSONArray warningMessagesJSONArray = null;
 
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
 		if (e instanceof DuplicateFileEntryException) {
 			errorMessage = LanguageUtil.get(
 				locale, "please-enter-a-unique-document-name");
@@ -718,15 +725,94 @@ public class StagingImpl implements Staging {
 		else if (e instanceof LARTypeException) {
 			LARTypeException lte = (LARTypeException)e;
 
-			errorMessage = LanguageUtil.format(
-				locale, "please-import-a-lar-file-of-the-correct-type-x",
-				lte.getMessage());
+			if (lte.getType() == LARTypeException.COMPANY_GROUP) {
+				errorMessage = LanguageUtil.format(
+					resourceBundle, "a-x-can-only-be-imported-to-a-x",
+					"global-site");
+			}
+			else if (lte.getType() == LARTypeException.LAYOUT_PROTOTYPE) {
+				errorMessage = LanguageUtil.format(
+					resourceBundle, "a-x-can-only-be-imported-to-a-x",
+					LanguageUtil.get(locale, "page-template"));
+			}
+			else if (lte.getType() == LARTypeException.LAYOUT_SET) {
+				errorMessage = LanguageUtil.format(
+					resourceBundle, "a-x-can-only-be-imported-to-a-x", "site");
+			}
+			else if (lte.getType() == LARTypeException.LAYOUT_SET_PROTOTYPE) {
+				errorMessage = LanguageUtil.format(
+					resourceBundle, "a-x-can-only-be-imported-to-a-x",
+					LanguageUtil.get(locale, "site-template"));
+			}
+			else {
+				errorMessage = LanguageUtil.format(
+					resourceBundle, "uploaded-lar-file-type-x-does-not-match-x",
+					new Object[] {
+						lte.getActualLARType(),
+						StringUtil.merge(
+							lte.getExpectedLARTypes(),
+							StringPool.COMMA_AND_SPACE)
+					});
+			}
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (e instanceof LARFileException) {
-			errorMessage = LanguageUtil.get(
-				locale, "please-specify-a-lar-file-to-import");
+			LARFileException lfe = (LARFileException)e;
+
+			if (lfe.getType() == LARFileException.MISSING_MANIFEST) {
+				errorMessage = LanguageUtil.get(
+					resourceBundle, "missing-manifest.xml");
+			}
+			else if (lfe.getType() == LARFileException.INVALID_MANIFEST) {
+				errorMessage = LanguageUtil.format(
+					resourceBundle, "invalid-manifest.xml-x", lfe.getMessage());
+			}
+			else {
+				errorMessage = LanguageUtil.get(
+					locale, "please-specify-a-lar-file-to-import");
+			}
+
+			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+		}
+		else if (e instanceof LayoutImportException) {
+			LayoutImportException lie = (LayoutImportException)e;
+
+			if (lie.getType() == LayoutImportException.WRONG_BUILD_NUMBER) {
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"lar-build-number-x-does-not-match-portal-build-number-x",
+					lie.getArguments());
+			}
+			else if (lie.getType() ==
+						LayoutImportException.WRONG_LAR_SCHEMA_VERSION) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"lar-schema-version-x-does-not-match-deployed-export-" +
+						"import-schema-version-x",
+					lie.getArguments());
+			}
+			else if (lie.getType() ==
+						LayoutImportException.WRONG_PORTLET_SCHEMA_VERSION) {
+
+				Object[] arguments = lie.getArguments();
+
+				Portlet portlet = _portletLocalService.getPortletById(
+					(String)arguments[1]);
+
+				arguments[1] = portlet.getDisplayName();
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"portlet's-schema-version-x-in-the-lar-is-not-valid-for-" +
+						"the-deployed-portlet-x-with-schema-version-x",
+					lie.getArguments());
+			}
+			else {
+				errorMessage = e.getLocalizedMessage();
+			}
+
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (e instanceof LayoutPrototypeException) {
@@ -739,7 +825,7 @@ public class StagingImpl implements Staging {
 			sb.append("not-be-found.-please-import-the-following-templates-");
 			sb.append("manually");
 
-			errorMessage = LanguageUtil.get(locale, sb.toString());
+			errorMessage = LanguageUtil.get(resourceBundle, sb.toString());
 
 			errorMessagesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -900,8 +986,15 @@ public class StagingImpl implements Staging {
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (e instanceof PortletIdException) {
-			errorMessage = LanguageUtil.get(
-				locale, "please-import-a-lar-file-for-the-current-portlet");
+			PortletIdException pie = (PortletIdException)e;
+
+			Portlet portlet = _portletLocalService.getPortletById(
+				pie.getMessage());
+
+			errorMessage = LanguageUtil.format(
+				resourceBundle, "a-x-can-only-be-imported-to-a-x",
+				portlet.getDisplayName() + " Portlet");
+
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else {

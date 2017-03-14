@@ -17,16 +17,18 @@ package com.liferay.document.library.pdf.processor.pdfbox1.internal;
 import com.liferay.portal.image.ImageToolImpl;
 import com.liferay.portal.kernel.image.ImageTool;
 
+import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 
 import java.io.File;
 
+import java.util.List;
+
 import javax.imageio.ImageIO;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPageTree;
-import org.apache.pdfbox.rendering.ImageType;
-import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
+import org.apache.pdfbox.pdmodel.PDPage;
 
 /**
  * @author Preston Crary
@@ -40,17 +42,18 @@ public class LiferayPDFBoxConverterUtil {
 		throws Exception {
 
 		try (PDDocument pdDocument = PDDocument.load(inputFile)) {
-			PDFRenderer pdfRenderer = new PDFRenderer(pdDocument);
+			PDDocumentCatalog pdDocumentCatalog =
+				pdDocument.getDocumentCatalog();
 
-			PDPageTree pdPageTree = pdDocument.getPages();
+			List<PDPage> pdPages = pdDocumentCatalog.getAllPages();
 
-			int count = pdPageTree.getCount();
+			for (int i = 0; i < pdPages.size(); i++) {
+				PDPage pdPage = pdPages.get(i);
 
-			for (int i = 0; i < count; i++) {
 				if (generateThumbnail && (i == 0)) {
 					_generateImagesPB(
-						pdfRenderer, i, thumbnailFile, thumbnailExtension, dpi,
-						height, width);
+						pdPage, thumbnailFile, thumbnailExtension, dpi, height,
+						width);
 				}
 
 				if (!generatePreview) {
@@ -58,19 +61,18 @@ public class LiferayPDFBoxConverterUtil {
 				}
 
 				_generateImagesPB(
-					pdfRenderer, i, previewFiles[i], extension, dpi, height,
-					width);
+					pdPage, previewFiles[i], extension, dpi, height, width);
 			}
 		}
 	}
 
 	private static void _generateImagesPB(
-			PDFRenderer pdfRenderer, int pageIndex, File outputFile,
-			String extension, int dpi, int height, int width)
+			PDPage pdPage, File outputFile, String extension, int dpi,
+			int height, int width)
 		throws Exception {
 
-		RenderedImage renderedImage = pdfRenderer.renderImageWithDPI(
-			pageIndex, dpi, ImageType.RGB);
+		RenderedImage renderedImage = pdPage.convertToImage(
+			BufferedImage.TYPE_INT_RGB, dpi);
 
 		ImageTool imageTool = ImageToolImpl.getInstance();
 

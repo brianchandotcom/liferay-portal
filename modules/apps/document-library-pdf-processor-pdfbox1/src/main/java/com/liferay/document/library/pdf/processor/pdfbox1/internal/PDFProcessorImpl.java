@@ -55,7 +55,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -76,10 +75,8 @@ import org.apache.commons.lang.time.StopWatch;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
-import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.pdmodel.encryption.StandardDecryptionMaterial;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -111,7 +108,7 @@ public class PDFProcessorImpl
 				Collections.singletonList("-Djava.awt.headless=true"));
 
 			String classpath = ClassPathUtil.buildClassPath(
-				ImageType.class, Log4JUtil.class, PDFProcessorImpl.class);
+				PDDocument.class, Log4JUtil.class, PDFProcessorImpl.class);
 
 			String portalClassPath = ClassPathUtil.getPortalClassPath();
 
@@ -686,13 +683,27 @@ public class PDFProcessorImpl
 	private void _generateImagesPB(FileVersion fileVersion, File file)
 		throws Exception {
 
+		int previewFilesCount = 0;
+
 		String tempFileId = DLUtil.getTempFileId(
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
 		File decryptedFile = getDecryptedTempFile(tempFileId);
 		File thumbnailFile = getThumbnailTempFile(tempFileId);
 
-		int previewFilesCount = _getPreviewFilesCount(file, decryptedFile);
+		try (PDDocument pdDocument = PDDocument.load(file)) {
+			if (!_isDocumentDecrypted(pdDocument)) {
+				_log.error(
+					"Unable to decrypt PDF document for file version " +
+						fileVersion.getFileVersionId());
+
+				return;
+			}
+
+			pdDocument.save(decryptedFile);
+
+			previewFilesCount = pdDocument.getNumberOfPages();
+		}
 
 		if (previewFilesCount == 0) {
 			_log.error(
@@ -888,44 +899,22 @@ public class PDFProcessorImpl
 		}
 	}
 
-	private int _getPreviewFilesCount(File encryptedFile, File decryptedFile) {
-		String[] decryptPasswords = ArrayUtil.append(
-			PropsValues.
-				DL_FILE_ENTRY_PREVIEW_GENERATION_DECRYPT_PASSWORDS_PDFBOX,
-			StringPool.BLANK);
-
-		for (String decryptPassword : decryptPasswords) {
-			try (PDDocument pdDocument =
-					PDDocument.load(encryptedFile, decryptPassword)) {
-
-				pdDocument.setAllSecurityToBeRemoved(true);
-
-				pdDocument.save(decryptedFile);
-
-				return pdDocument.getNumberOfPages();
-			}
-			catch (IOException ioe) {
-				if (!(ioe instanceof InvalidPasswordException)) {
-					_log.error(ioe, ioe);
-				}
-			}
-		}
-
-		return 0;
-	}
-
 	private Map<String, Integer> _getScaledDimensions(File file)
 		throws Exception {
 
-		try (PDDocument pdDocument = PDDocument.load(file)) {
+		PDDocument pdDocument = null;
+
+		try {
 			Map<String, Integer> scaledDimensions = new HashMap<>();
+
+			pdDocument = PDDocument.load(file);
 
 			PDDocumentCatalog pdDocumentCatalog =
 				pdDocument.getDocumentCatalog();
 
-			PDPageTree pages = pdDocumentCatalog.getPages();
+			List<PDPage> pdPages = pdDocumentCatalog.getAllPages();
 
-			PDPage pdPage = pages.get(0);
+			PDPage pdPage = pdPages.get(0);
 
 			PDRectangle pdRectangle = pdPage.getMediaBox();
 
@@ -951,6 +940,11 @@ public class PDFProcessorImpl
 
 			return scaledDimensions;
 		}
+		finally {
+			if (pdDocument != null) {
+				pdDocument.close();
+			}
+		}
 	}
 
 	private boolean _hasImages(FileVersion fileVersion) throws Exception {
@@ -961,6 +955,35 @@ public class PDFProcessorImpl
 		}
 
 		return hasThumbnails(fileVersion);
+	}
+
+	private boolean _isDocumentDecrypted(PDDocument pdDocument) {
+		if (!pdDocument.isEncrypted()) {
+			return true;
+		}
+
+		String[] decryptPasswords = ArrayUtil.append(
+			PropsValues.
+				DL_FILE_ENTRY_PREVIEW_GENERATION_DECRYPT_PASSWORDS_PDFBOX,
+			StringPool.BLANK);
+
+		for (String decryptPassword : decryptPasswords) {
+			StandardDecryptionMaterial standardDecryptionMaterial =
+				new StandardDecryptionMaterial(decryptPassword);
+
+			try {
+				pdDocument.openProtection(standardDecryptionMaterial);
+
+				pdDocument.setAllSecurityToBeRemoved(true);
+
+				return true;
+			}
+			catch (Exception e) {
+				continue;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isGeneratePreview(FileVersion fileVersion)

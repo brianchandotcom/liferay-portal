@@ -150,6 +150,10 @@ public abstract class BaseFileCheck implements FileCheck {
 		}
 	}
 
+	protected boolean isExcludedPath(List<String> excludes, String path) {
+		return isExcludedPath(excludes, path, -1);
+	}
+
 	protected boolean isExcludedPath(
 		List<String> excludes, String path, int lineCount) {
 

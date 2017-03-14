@@ -1,23 +1,35 @@
 AUI.add(
 	'liferay-ddl-form-builder-pages-manager',
 	function(A) {
-		var Renderer = Liferay.DDM.Renderer;
-
 		var CSS_FORM_BUILDER_CONTROLS_TRIGGER = A.getClassName('form', 'builder', 'controls', 'trigger');
 
 		var CSS_FORM_BUILDER_PAGE_MANAGER_ADD_PAGE_LAST_POSITION = A.getClassName('form', 'builder', 'page', 'manager', 'add', 'last', 'position');
 
 		var CSS_FORM_BUILDER_PAGE_MANAGER_DELETE_PAGE = A.getClassName('form', 'builder', 'page', 'manager', 'delete', 'page');
 
+		var CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE = A.getClassName('form', 'builder', 'page', 'manager', 'add', 'success', 'page');
+
+		var CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE = A.getClassName('form', 'builder', 'page', 'manager', 'remove', 'success', 'page');
+
 		var CSS_FORM_BUILDER_PAGE_MANAGER_SWITCH_MODE = A.getClassName('form', 'builder', 'page', 'manager', 'switch', 'mode');
+
+		var CSS_FORM_BUILDER_PAGE_POPOVER_CONTENT = A.getClassName('form', 'builder', 'pages', 'popover', 'content');
 
 		var CSS_FORM_BUILDER_PAGES_CONTENT = A.getClassName('form', 'builder', 'page', 'manager', 'content');
 
 		var CSS_FORM_BUILDER_PAGINATION = A.getClassName('form', 'builder', 'pagination');
 
+		var CSS_FORM_BUILDER_SUCCESS_PAGE = A.getClassName('form', 'builder', 'success', 'page');
+
+		var CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE = A.getClassName('form', 'builder', 'success', 'page', 'title');
+
+		var CSS_FORM_BUILDER_SUCCESS_PAGE_DESCRIPTION = A.getClassName('form', 'builder', 'success', 'page', 'description');
+
 		var CSS_FORM_BUILDER_TABVIEW = A.getClassName('form', 'builder', 'tabview');
 
 		var CSS_PAGE_HEADER = A.getClassName('form', 'builder', 'page', 'header');
+
+		var CSS_LAYOUT = A.getClassName('form', 'builder', 'layout');
 
 		var CSS_PAGE_HEADER_DESCRIPTION = A.getClassName('form', 'builder', 'page', 'header', 'description');
 
@@ -41,10 +53,14 @@ AUI.add(
 					strings: {
 						value: {
 							addPageLastPosition: Liferay.Language.get('add-new-page'),
+							addSuccessPage: Liferay.Language.get('add-success-page'),
 							aditionalInfo: Liferay.Language.get('add-a-short-description-for-this-page'),
 							deleteCurrentPage: Liferay.Language.get('delete-current-page'),
+							description: Liferay.Language.get('description'),
+							removeSuccessPage: Liferay.Language.get('remove-success-page'),
 							resetPage: Liferay.Language.get('reset-page'),
 							switchMode: Liferay.Language.get('switch-pagination-mode'),
+							title: Liferay.Language.get('title'),
 							untitledPage: Liferay.Language.get('untitled-page-x-of-x')
 						},
 						writeOnce: true
@@ -74,6 +90,19 @@ AUI.add(
 						CSS_PAGE_HEADER_DESCRIPTION_HIDE_BORDER + ' form-control"></textarea>' +
 					'</div>',
 
+					TPL_POPOVER_CONTENT: '<ul class="' + CSS_FORM_BUILDER_PAGE_POPOVER_CONTENT + '">' +
+					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_PAGE_LAST_POSITION + '">{addPageLastPosition}</li>' +
+					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_DELETE_PAGE + '">{deleteCurrentPage}</li>' +
+					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE + '">{addSuccessPage}</li>' +
+					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE + '">{removeSuccessPage}</li>' +
+					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_SWITCH_MODE + '">{switchMode}</li>' +
+					'</ul>',
+
+					TPL_SUCCESS_PAGE: '<div class="' + CSS_FORM_BUILDER_SUCCESS_PAGE + '">' +
+					'<label class="control-label">{title}</label><input class="' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE + ' form-control" type="text"><br>' +
+					'<label class="control-label">{description}</label><input class="' + CSS_FORM_BUILDER_SUCCESS_PAGE_DESCRIPTION + ' form-control" type="text">' +
+					'</div>',
+
 					initializer: function() {
 						var instance = this;
 
@@ -81,6 +110,26 @@ AUI.add(
 							A.on('windowresize', A.bind('_syncPageInformationHeight', instance)),
 							instance.after('titlesChange', A.bind('_afterTitlesChange', instance))
 						];
+
+						var boundingBox = instance.get('builder').get('boundingBox');
+
+						var content = boundingBox.one('.form-builder-content');
+
+						var strings = instance.get('strings');
+
+						var successPage = A.Node.create(
+							A.Lang.sub(
+								instance.TPL_SUCCESS_PAGE,
+								{
+									description: strings.description,
+									title: strings.title
+								}
+							)
+						);
+
+						successPage.hide();
+
+						content.append(successPage);
 					},
 
 					destructor: function() {
@@ -103,6 +152,46 @@ AUI.add(
 						FormBuilderPagesManager.superclass.enablePaginations.apply(instance, arguments);
 
 						instance._toggleWizardDisabled(false);
+					},
+
+					getSuccessPageDefinition: function() {
+						var instance = this;
+
+						var builder = instance.get('builder');
+
+						var boundingBox = builder.get('boundingBox');
+
+						var successPage = boundingBox.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE);
+
+						var wizard = instance._getWizard();
+
+						var successPageDefinition = {
+							body: successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_DESCRIPTION).val(),
+							enabled: wizard.get('successPage'),
+							title: successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE).val()
+						};
+
+						return successPageDefinition;
+					},
+
+					setSuccessPage: function(successPageDefinition) {
+						var instance = this;
+
+						var builder = instance.get('builder');
+
+						var boundingBox = builder.get('boundingBox');
+
+						var successPage = boundingBox.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE);
+
+						var wizard = instance._getWizard();
+
+						if (successPageDefinition) {
+							wizard.set('successPage', successPageDefinition.enabled);
+
+							successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_DESCRIPTION).val(successPageDefinition.body);
+
+							successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE).val(successPageDefinition.title);
+						}
 					},
 
 					toggleControlsTriggerDisabled: function(disabled) {
@@ -168,9 +257,17 @@ AUI.add(
 					_afterWizardSelectionChange: function() {
 						var instance = this;
 
-						var selectedWizard = instance._getWizard().get('selected');
+						var wizard = instance._getWizard();
 
-						if (selectedWizard > -1) {
+						var selectedWizard = wizard.get('selected');
+
+						var pagesQuantity = wizard.get('items').length;
+
+						if (wizard.get('successPage') && selectedWizard === pagesQuantity) {
+							instance._showSuccessPage();
+						} 
+						else if (selectedWizard > -1) {
+							instance._showLayout();
 							var pagination = instance._getPagination();
 
 							pagination.set('page', selectedWizard + 1);
@@ -190,8 +287,10 @@ AUI.add(
 									instance.TPL_POPOVER_CONTENT,
 									{
 										addPageLastPosition: strings.addPageLastPosition,
+										addSuccessPage: strings.addSuccessPage,
 										addPageNextPosition: strings.addPageNextPosition,
 										deleteCurrentPage: this._getDeleteButtonString(),
+										removeSuccessPage: strings.removeSuccessPage,
 										switchMode: strings.switchMode
 									}
 								),
@@ -206,6 +305,8 @@ AUI.add(
 
 						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_PAGE_LAST_POSITION).on('click', A.bind('_onAddLastPageClick', instance));
 						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_DELETE_PAGE).on('click', A.bind('_onRemovePageClick', instance));
+						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE).on('click', A.bind('_onAddSuccessClick', instance));
+						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE).on('click', A.bind('_onRemoveSuccessClick', instance));
 
 						var switchModeNode = popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_SWITCH_MODE);
 
@@ -295,11 +396,22 @@ AUI.add(
 						instance._getPopover().hide();
 					},
 
-					_onAddPageClick: function() {
+					_onAddSuccessClick: function() {
 						var instance = this;
 
-						instance._addPage();
-						instance._addWizardPage();
+						var activePageNumber = instance.get('activePageNumber');
+
+						var wizard = instance._getWizard();
+
+						wizard.set('successPage', true);
+
+						instance._uiSetMode(instance.get('mode'));
+
+						instance._showSuccessPage();
+
+						instance._syncControlTriggersUI();
+
+						instance._getPopover().hide();
 					},
 
 					_onPageControlOptionClick: function(event) {
@@ -359,6 +471,18 @@ AUI.add(
 
 							instance._getWizard().activate(0);
 						}
+					},
+
+					_onRemoveSuccessClick: function() {
+						var instance = this;
+
+						var wizard = instance._getWizard();
+
+						wizard.set('successPage', false);
+
+						instance._uiSetMode(instance.get('mode'));
+
+						instance._showLayout();
 					},
 
 					_onSwitchViewClick: function() {
@@ -496,6 +620,28 @@ AUI.add(
 						}
 					},
 
+					_showLayout: function() {
+						var instance = this;
+
+						var boundingBox = instance.get('builder').get('boundingBox');
+
+						boundingBox.one('.' + CSS_LAYOUT).show();
+						boundingBox.one('.' + CSS_PAGE_HEADER).show();
+
+						boundingBox.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE).hide();
+					},
+
+					_showSuccessPage: function() {
+						var instance = this;
+
+						var boundingBox = instance.get('builder').get('boundingBox');
+
+						boundingBox.one('.' + CSS_LAYOUT).hide();
+						boundingBox.one('.' + CSS_PAGE_HEADER).hide();
+
+						boundingBox.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE).show();
+					},
+
 					_syncControlTriggersUI: function() {
 						var instance = this;
 
@@ -505,8 +651,10 @@ AUI.add(
 
 						var boundingBox = builder.get('boundingBox');
 
-						boundingBox.all('.' + CSS_FORM_BUILDER_CONTROLS_TRIGGER).toggle(pagesQuantity > 1);
-						pageHeader.one('.' + CSS_FORM_BUILDER_CONTROLS_TRIGGER).toggle(pagesQuantity <= 1);
+						var wizard = instance._getWizard();
+
+						boundingBox.all('.' + CSS_FORM_BUILDER_CONTROLS_TRIGGER).toggle(pagesQuantity > 1 || wizard.get('successPage'));
+						pageHeader.one('.' + CSS_FORM_BUILDER_CONTROLS_TRIGGER).toggle(pagesQuantity <= 1 && !wizard.get('successPage'));
 					},
 
 					_syncPageInformationHeight: function() {
@@ -562,7 +710,7 @@ AUI.add(
 						var paginationBoundingBox = pagination.get('boundingBox').get('parentNode');
 						var wizardBoundingBox = wizard.get('boundingBox');
 
-						if (instance.get('pagesQuantity') > 1) {
+						if (instance.get('pagesQuantity') > 1 || wizard.get('successPage')) {
 							if (type === 'wizard') {
 								paginationBoundingBox.hide();
 								wizardBoundingBox.show();
@@ -593,6 +741,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-autosize-deprecated', 'aui-char-counter', 'aui-form-builder-page-manager', 'liferay-ddm-form-renderer-wizard']
+		requires: ['aui-autosize-deprecated', 'aui-char-counter', 'aui-form-builder-page-manager', 'liferay-ddl-form-builder-wizard']
 	}
 );

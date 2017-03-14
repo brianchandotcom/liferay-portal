@@ -85,7 +85,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			UnicodeProperties typeSettingsProperties)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUserById(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		TrashEntry trashEntry = trashEntryPersistence.fetchByC_C(
@@ -155,7 +155,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 					Date createDate = trashEntry.getCreateDate();
 
-					Group group = groupPersistence.fetchByPrimaryKey(
+					Group group = groupLocalService.fetchGroup(
 						trashEntry.getGroupId());
 
 					if (group == null) {

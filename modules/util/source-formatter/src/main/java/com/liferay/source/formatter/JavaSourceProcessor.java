@@ -32,6 +32,7 @@ import com.liferay.source.formatter.checks.JavaDiamondOperatorCheck;
 import com.liferay.source.formatter.checks.JavaEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JavaIfStatementCheck;
 import com.liferay.source.formatter.checks.JavaLineBreakCheck;
+import com.liferay.source.formatter.checks.JavaLogLevelCheck;
 import com.liferay.source.formatter.checks.JavaLongLinesCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -284,47 +285,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					fileName,
 					"Do not import internal class from another module",
 					getLineCount(content, matcher.start(1)));
-			}
-		}
-	}
-
-	protected void checkLogLevel(String content, String fileName) {
-		if (fileName.contains("Log")) {
-			return;
-		}
-
-		Matcher matcher = _logLevelPattern.matcher(content);
-
-		while (matcher.find()) {
-			int pos = matcher.start();
-
-			while (true) {
-				pos = content.lastIndexOf(
-					StringPool.NEW_LINE + StringPool.TAB, pos - 1);
-
-				char c = content.charAt(pos + 2);
-
-				if (c != CharPool.TAB) {
-					break;
-				}
-			}
-
-			String codeBlock = content.substring(pos, matcher.start());
-			String s =
-				"_log.is" + StringUtil.upperCaseFirstLetter(matcher.group(2)) +
-					"Enabled()";
-
-			if (codeBlock.contains(s) ^ !s.equals("_log.isErrorEnabled()")) {
-				int lineCount = getLineCount(content, matcher.start(1));
-
-				if (codeBlock.contains(s)) {
-					processMessage(
-						fileName, "Do not use _log.isErrorEnabled()",
-						lineCount);
-				}
-				else {
-					processMessage(fileName, "Use " + s, lineCount);
-				}
 			}
 		}
 	}
@@ -853,10 +813,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
 					"SecureRandom instead of java.security.SecureRandom");
 		}
-
-		// LPS-41315
-
-		checkLogLevel(newContent, fileName);
 
 		// LPS-46632
 
@@ -2151,6 +2107,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				new JavaEmptyLinesCheck(),
 				new JavaIfStatementCheck(sourceFormatterArgs),
 				new JavaLineBreakCheck(sourceFormatterArgs),
+				new JavaLogLevelCheck(),
 				new JavaLongLinesCheck(_lineLengthExcludes, sourceFormatterArgs)
 			});
 	}
@@ -2801,8 +2758,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				".*(extends [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL)
 	};
 	private List<String> _lineLengthExcludes;
-	private final Pattern _logLevelPattern = Pattern.compile(
-		"\n(\t+)_log.(debug|error|info|trace|warn)\\(");
 	private final Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");

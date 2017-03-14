@@ -12,19 +12,22 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.exportimport.staged.model.repository;
+package com.liferay.dynamic.data.lists.internal.exportimport.staged.model.repository;
 
+import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.api.DDLRecordSetStagedModelRepository;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepository;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -38,14 +41,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * @author Tamas Molnar
- *
- * @deprecated As of 1.2.0
+ * @author Mate Thurzo
  */
-@Deprecated
-public class DDLRecordSetStagedModelRepository
-	extends BaseStagedModelRepository<DDLRecordSet> {
+@Component(
+	immediate = true,
+	property = {
+		"model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet"
+	},
+	service = {
+		DDLRecordSetStagedModelRepository.class, StagedModelRepository.class
+	}
+)
+public class DDLRecordSetStagedModelRepositoryImpl
+	implements DDLRecordSetStagedModelRepository {
 
 	@Override
 	public DDLRecordSet addStagedModel(
@@ -64,7 +76,7 @@ public class DDLRecordSetStagedModelRepository
 			ddlRecordSet.setRecordSetKey(null);
 		}
 
-		return DDLRecordSetLocalServiceUtil.addRecordSet(
+		return _ddlRecordSetLocalService.addRecordSet(
 			userId, ddlRecordSet.getGroupId(), ddlRecordSet.getDDMStructureId(),
 			ddlRecordSet.getRecordSetKey(), ddlRecordSet.getNameMap(),
 			ddlRecordSet.getDescriptionMap(), ddlRecordSet.getMinDisplayRows(),
@@ -75,7 +87,7 @@ public class DDLRecordSetStagedModelRepository
 	public void deleteStagedModel(DDLRecordSet ddlRecordSet)
 		throws PortalException {
 
-		DDLRecordSetLocalServiceUtil.deleteRecordSet(ddlRecordSet);
+		_ddlRecordSetLocalService.deleteRecordSet(ddlRecordSet);
 	}
 
 	@Override
@@ -99,13 +111,14 @@ public class DDLRecordSetStagedModelRepository
 			portletDataContext, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
 	}
 
+	@Override
 	public void deleteStagedModels(
 			PortletDataContext portletDataContext, int scope)
 		throws PortalException {
 
 		Set<Long> recordSetDDMStructureIds = new HashSet<>();
 
-		List<DDLRecordSet> recordSets = DDLRecordSetLocalServiceUtil.search(
+		List<DDLRecordSet> recordSets = _ddlRecordSetLocalService.search(
 			portletDataContext.getCompanyId(),
 			portletDataContext.getScopeGroupId(), null, scope,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -114,17 +127,23 @@ public class DDLRecordSetStagedModelRepository
 		for (DDLRecordSet recordSet : recordSets) {
 			recordSetDDMStructureIds.add(recordSet.getDDMStructureId());
 
-			DDLRecordSetLocalServiceUtil.deleteRecordSet(recordSet);
+			_ddlRecordSetLocalService.deleteRecordSet(recordSet);
 		}
 
-		deleteDDMStructures(recordSetDDMStructureIds);
+		_deleteDDMStructures(recordSetDDMStructureIds);
+	}
+
+	@Override
+	public DDLRecordSet fetchMissingReference(String uuid, long groupId) {
+		return (DDLRecordSet)_stagedModelRepositoryHelper.fetchMissingReference(
+			uuid, groupId, this);
 	}
 
 	@Override
 	public DDLRecordSet fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return DDLRecordSetLocalServiceUtil.fetchDDLRecordSetByUuidAndGroupId(
+		return _ddlRecordSetLocalService.fetchDDLRecordSetByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -132,24 +151,25 @@ public class DDLRecordSetStagedModelRepository
 	public List<DDLRecordSet> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return DDLRecordSetLocalServiceUtil.getDDLRecordSetsByUuidAndCompanyId(
+		return _ddlRecordSetLocalService.getDDLRecordSetsByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<DDLRecordSet>());
 	}
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) {
+		PortletDataContext portletDataContext) {
 
 		return getExportActionableDynamicQuery(
 			portletDataContext, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
 	}
 
+	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext, final int scope) {
+		PortletDataContext portletDataContext, int scope) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			DDLRecordSetLocalServiceUtil.getExportActionableDynamicQuery(
+			_ddlRecordSetLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
@@ -203,10 +223,16 @@ public class DDLRecordSetStagedModelRepository
 	}
 
 	@Override
+	public void restoreStagedModel(
+			PortletDataContext portletDataContext, DDLRecordSet ddlRecordSet)
+		throws PortletDataException {
+	}
+
+	@Override
 	public DDLRecordSet saveStagedModel(DDLRecordSet ddlRecordSet)
 		throws PortalException {
 
-		return DDLRecordSetLocalServiceUtil.updateDDLRecordSet(ddlRecordSet);
+		return _ddlRecordSetLocalService.updateDDLRecordSet(ddlRecordSet);
 	}
 
 	@Override
@@ -217,18 +243,27 @@ public class DDLRecordSetStagedModelRepository
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			ddlRecordSet);
 
-		return DDLRecordSetLocalServiceUtil.updateRecordSet(
+		return _ddlRecordSetLocalService.updateRecordSet(
 			ddlRecordSet.getRecordSetId(), ddlRecordSet.getDDMStructureId(),
 			ddlRecordSet.getNameMap(), ddlRecordSet.getDescriptionMap(),
 			ddlRecordSet.getMinDisplayRows(), serviceContext);
 	}
 
-	protected void deleteDDMStructures(Set<Long> ddmStructureIds)
+	private void _deleteDDMStructures(Set<Long> ddmStructureIds)
 		throws PortalException {
 
 		for (Long ddmStructureId : ddmStructureIds) {
-			DDMStructureLocalServiceUtil.deleteStructure(ddmStructureId);
+			_ddmStructureLocalService.deleteStructure(ddmStructureId);
 		}
 	}
+
+	@Reference
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.trash.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -66,11 +67,13 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Sampsa Sohlman
  * @author Shuyang Zhou
  */
+@RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
 public class TrashEntryLocalServiceCheckEntriesTest {
 

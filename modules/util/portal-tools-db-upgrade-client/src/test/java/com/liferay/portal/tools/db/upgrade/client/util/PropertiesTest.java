@@ -46,8 +46,6 @@ public class PropertiesTest {
 	public void testEscapedProperties() throws Exception {
 		Properties properties = new Properties();
 
-		properties.load(_propertiesFile);
-
 		properties.setProperty(
 			"upgrade.processes.master",
 			"com.liferay.portal.upgrade.UpgradeProcess_6_1_1\\," +

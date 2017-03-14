@@ -216,7 +216,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 					javaExec.args("-pluginList", pluginClasspath.getAsPath());
 
 					if (logger.isLifecycleEnabled()) {
-						logger.lifecycle("Using version: " + _VERSION);
+						logger.lifecycle(
+							"Using Find Security Bugs version " + _VERSION);
 					}
 				}
 
@@ -233,7 +234,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 					if (logger.isLifecycleEnabled()) {
 						logger.lifecycle(
-							"Report saved to {}", outputFile.getAbsolutePath());
+							"Find Security Bugs report saved to {}.",
+							outputFile.getAbsolutePath());
 					}
 				}
 

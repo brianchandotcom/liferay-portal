@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Document Library PDF Processor
-Bundle-SymbolicName: com.liferay.document.library.pdf.processor
+Bundle-Name: Liferay Document Library PDF Processor PDFBox 2
+Bundle-SymbolicName: com.liferay.document.library.pdf.processor.pdfbox2
 Bundle-Version: 1.0.0
 Import-Package:\
 	org.bouncycastle.asn1;resolution:=optional,\

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.pdf.processor.internal;
+package com.liferay.document.library.pdf.processor.pdfbox2.internal;
 
 import com.liferay.portal.image.ImageToolImpl;
 import com.liferay.portal.kernel.image.ImageTool;

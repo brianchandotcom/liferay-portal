@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.pdf.processor.internal;
+package com.liferay.document.library.pdf.processor.pdfbox2.internal;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
@@ -91,7 +91,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  * @author Ivica Cardic
  */
-@Component(immediate = true, service = {DLProcessor.class, PDFProcessor.class})
+@Component(
+	immediate = true, property = {"service.ranking:Integer=100"},
+	service = {DLProcessor.class, PDFProcessor.class}
+)
 public class PDFProcessorImpl
 	extends DLPreviewableProcessor implements PDFProcessor {
 

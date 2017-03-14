@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.pdf.processor.internal;
+package com.liferay.document.library.pdf.processor.pdfbox1.internal;
 
 import com.liferay.document.library.kernel.util.PDFBoxConverter;
 

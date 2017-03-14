@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.dynamic.data.lists.constants,\
 	com.liferay.dynamic.data.lists.exception,\
 	com.liferay.dynamic.data.lists.exporter,\
+	com.liferay.dynamic.data.lists.exportimport.staged.model.repository.api,\
 	com.liferay.dynamic.data.lists.model,\
 	com.liferay.dynamic.data.lists.service,\
 	com.liferay.dynamic.data.lists.service.persistence,\

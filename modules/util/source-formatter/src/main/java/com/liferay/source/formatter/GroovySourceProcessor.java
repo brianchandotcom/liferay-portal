@@ -31,10 +31,6 @@ public class GroovySourceProcessor extends JavaSourceProcessor {
 	}
 
 	@Override
-	protected void checkPackagePath(String fileName, String packagePath) {
-	}
-
-	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		if (!portalSource && !subrepository) {
 			return new ArrayList<>();

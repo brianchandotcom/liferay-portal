@@ -34,6 +34,7 @@ import com.liferay.source.formatter.checks.JavaIfStatementCheck;
 import com.liferay.source.formatter.checks.JavaLineBreakCheck;
 import com.liferay.source.formatter.checks.JavaLogLevelCheck;
 import com.liferay.source.formatter.checks.JavaLongLinesCheck;
+import com.liferay.source.formatter.checks.JavaPackagePathCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -286,34 +287,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"Do not import internal class from another module",
 					getLineCount(content, matcher.start(1)));
 			}
-		}
-	}
-
-	protected void checkPackagePath(String fileName, String packagePath) {
-		if (Validator.isNull(packagePath)) {
-			processMessage(fileName, "Missing package");
-
-			return;
-		}
-
-		int pos = fileName.lastIndexOf(CharPool.SLASH);
-
-		String filePath = StringUtil.replace(
-			fileName.substring(0, pos), CharPool.SLASH, CharPool.PERIOD);
-
-		if (!filePath.endsWith(packagePath)) {
-			processMessage(
-				fileName,
-				"The declared package '" + packagePath +
-					"' does not match the expected package",
-				"package.markdown");
-
-			return;
-		}
-
-		if (packagePath.matches(".*\\.internal\\.([\\w.]+\\.)?impl")) {
-			processMessage(
-				fileName, "Do not use 'impl' inside 'internal', see LPS-70113");
 		}
 	}
 
@@ -600,8 +573,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (matcher.find()) {
 			packagePath = matcher.group(2);
 		}
-
-		checkPackagePath(fileName, packagePath);
 
 		if (packagePath.endsWith(".model")) {
 			if (content.contains("extends " + className + "Model")) {
@@ -2108,7 +2079,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				new JavaIfStatementCheck(sourceFormatterArgs),
 				new JavaLineBreakCheck(sourceFormatterArgs),
 				new JavaLogLevelCheck(),
-				new JavaLongLinesCheck(_lineLengthExcludes, sourceFormatterArgs)
+				new JavaLongLinesCheck(
+					_lineLengthExcludes, sourceFormatterArgs),
+				new JavaPackagePathCheck()
 			});
 	}
 

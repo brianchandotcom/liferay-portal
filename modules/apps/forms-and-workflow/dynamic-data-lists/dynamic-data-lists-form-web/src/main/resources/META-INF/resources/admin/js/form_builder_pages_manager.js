@@ -5,9 +5,9 @@ AUI.add(
 
 		var CSS_FORM_BUILDER_PAGE_MANAGER_ADD_PAGE_LAST_POSITION = A.getClassName('form', 'builder', 'page', 'manager', 'add', 'last', 'position');
 
-		var CSS_FORM_BUILDER_PAGE_MANAGER_DELETE_PAGE = A.getClassName('form', 'builder', 'page', 'manager', 'delete', 'page');
-
 		var CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE = A.getClassName('form', 'builder', 'page', 'manager', 'add', 'success', 'page');
+
+		var CSS_FORM_BUILDER_PAGE_MANAGER_DELETE_PAGE = A.getClassName('form', 'builder', 'page', 'manager', 'delete', 'page');
 
 		var CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE = A.getClassName('form', 'builder', 'page', 'manager', 'remove', 'success', 'page');
 
@@ -21,15 +21,15 @@ AUI.add(
 
 		var CSS_FORM_BUILDER_SUCCESS_PAGE = A.getClassName('form', 'builder', 'success', 'page');
 
-		var CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE = A.getClassName('form', 'builder', 'success', 'page', 'title');
-
 		var CSS_FORM_BUILDER_SUCCESS_PAGE_DESCRIPTION = A.getClassName('form', 'builder', 'success', 'page', 'description');
+
+		var CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE = A.getClassName('form', 'builder', 'success', 'page', 'title');
 
 		var CSS_FORM_BUILDER_TABVIEW = A.getClassName('form', 'builder', 'tabview');
 
-		var CSS_PAGE_HEADER = A.getClassName('form', 'builder', 'page', 'header');
-
 		var CSS_LAYOUT = A.getClassName('form', 'builder', 'layout');
+
+		var CSS_PAGE_HEADER = A.getClassName('form', 'builder', 'page', 'header');
 
 		var CSS_PAGE_HEADER_DESCRIPTION = A.getClassName('form', 'builder', 'page', 'header', 'description');
 
@@ -265,7 +265,7 @@ AUI.add(
 
 						if (wizard.get('successPage') && selectedWizard === pagesQuantity) {
 							instance._showSuccessPage();
-						} 
+						}
 						else if (selectedWizard > -1) {
 							instance._showLayout();
 							var pagination = instance._getPagination();
@@ -287,8 +287,8 @@ AUI.add(
 									instance.TPL_POPOVER_CONTENT,
 									{
 										addPageLastPosition: strings.addPageLastPosition,
-										addSuccessPage: strings.addSuccessPage,
 										addPageNextPosition: strings.addPageNextPosition,
+										addSuccessPage: strings.addSuccessPage,
 										deleteCurrentPage: this._getDeleteButtonString(),
 										removeSuccessPage: strings.removeSuccessPage,
 										switchMode: strings.switchMode
@@ -398,8 +398,6 @@ AUI.add(
 
 					_onAddSuccessClick: function() {
 						var instance = this;
-
-						var activePageNumber = instance.get('activePageNumber');
 
 						var wizard = instance._getWizard();
 

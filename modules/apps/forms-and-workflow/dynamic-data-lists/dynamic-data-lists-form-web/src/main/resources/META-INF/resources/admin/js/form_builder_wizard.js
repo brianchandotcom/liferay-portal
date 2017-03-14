@@ -37,25 +37,6 @@ AUI.add(
 						contentBox.append(instance._getItemsNodeList(instance.get('items')));
 					},
 
-					_setState: function(index, state) {
-						var instance = this;
-
-						var items = instance.get('items');
-
-						if (items[index]) {
-							items[index].state = state;
-
-							instance._activeSuccessPage = false;
-
-							instance.set('items', items);
-						}
-						else {
-							instance._activeSuccessPage = true;
-
-							instance.set('items', items);
-						}
-					},
-
 					_getItemsNodeList: function(items) {
 						var instance = this;
 
@@ -76,6 +57,25 @@ AUI.add(
 						}
 
 						return itemsNodeList;
+					},
+
+					_setState: function(index, state) {
+						var instance = this;
+
+						var items = instance.get('items');
+
+						if (items[index]) {
+							items[index].state = state;
+
+							instance._activeSuccessPage = false;
+
+							instance.set('items', items);
+						}
+						else {
+							instance._activeSuccessPage = true;
+
+							instance.set('items', items);
+						}
 					}
 				}
 			}

@@ -4905,7 +4905,12 @@ go]]></replacevalue>
 						/>
 
 						<if>
-							<available file="${project.dir}/plugins/marketplace/${app.file.name}" />
+							<and>
+								<available file="${project.dir}/plugins/marketplace/${app.file.name}" />
+								<not>
+									<contains string="${test.latest.marketplace.apps.exclude}" substring="${app.file.name}" />
+								</not>
+							</and>
 							<then>
 								<echo>Copying ${project.dir}/plugins/marketplace/${app.file.name} to ${liferay.home}/osgi/marketplace/${app.file.name}</echo>
 

@@ -7944,8 +7944,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 				<delete dir="dist" />
 
-				<ant antfile="build.xml" inheritAll="false" target="deploy-additional-jars" />
-
 				<ant antfile="build.xml" inheritAll="false" target="update-app-server-scripts" />
 
 				<mirrors-get

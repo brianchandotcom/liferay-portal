@@ -177,10 +177,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 			});
 
-
-		ReportingExtension reportingExtension =
-			GradleUtil.getExtension(
-				javaExec.getProject(), ReportingExtension.class);
+		ReportingExtension reportingExtension = GradleUtil.getExtension(
+			javaExec.getProject(), ReportingExtension.class);
 
 		File outputDir = new File(
 			reportingExtension.getBaseDir(), javaExec.getName());
@@ -214,6 +212,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 					System.out.println(
 						"Report saved to " + outputFile.getAbsolutePath());
 				}
+
 			});
 
 		javaExec.dependsOn(writeFindBugsProjectTask);

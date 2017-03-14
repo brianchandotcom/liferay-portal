@@ -19,22 +19,17 @@ import com.liferay.portal.tools.db.upgrade.client.util.StringUtil;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 
 import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import jline.console.ConsoleReader;
 
@@ -400,8 +395,8 @@ public class UpgradeClient {
 		Properties properties = new Properties();
 
 		if (file.exists()) {
-			try (InputStream inputStream = new FileInputStream(file)) {
-				properties.load(inputStream);
+			try {
+				properties.load(file);
 			}
 			catch (IOException ioe) {
 				System.err.println("Unable to load " + file);
@@ -412,27 +407,10 @@ public class UpgradeClient {
 	}
 
 	private void _saveProperties() throws IOException {
-		_store(_appServerProperties, _appServerPropertiesFile);
-		_store(
-			_portalUpgradeDatabaseProperties,
+		_appServerProperties.store(_appServerPropertiesFile);
+		_portalUpgradeDatabaseProperties.store(
 			_portalUpgradeDatabasePropertiesFile);
-		_store(_portalUpgradeExtProperties, _portalUpgradeExtPropertiesFile);
-	}
-
-	private void _store(Properties properties, File file) throws IOException {
-		try (PrintWriter printWriter = new PrintWriter(file)) {
-			Enumeration<?> enumeration = properties.propertyNames();
-
-			while (enumeration.hasMoreElements()) {
-				String key = (String)enumeration.nextElement();
-
-				String value = properties.getProperty(key);
-
-				value = value.replace('\\', '/');
-
-				printWriter.println(key + "=" + value);
-			}
-		}
+		_portalUpgradeExtProperties.store(_portalUpgradeExtPropertiesFile);
 	}
 
 	private void _verifyAppServerProperties() throws IOException {

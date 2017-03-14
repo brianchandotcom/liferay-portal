@@ -34,7 +34,6 @@ AUI.add(
 						else {
 							return true;
 						}
-
 					},
 
 					_isValidActions: function(actions) {

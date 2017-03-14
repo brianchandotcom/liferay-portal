@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -61,10 +62,12 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -283,6 +286,26 @@ public class LayoutExportController implements ExportController {
 		rootElement.addElement("site-services");
 
 		// Export the group
+
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			portletDataContext.getGroupId(),
+			portletDataContext.isPrivateLayout());
+
+		String layoutSetPrototypeUuid = layoutSet.getLayoutSetPrototypeUuid();
+
+		if (!group.isStaged() && Validator.isNotNull(layoutSetPrototypeUuid)) {
+			LayoutSetPrototype layoutSetPrototype =
+				_layoutSetPrototypeLocalService.
+					getLayoutSetPrototypeByUuidAndCompanyId(
+						layoutSetPrototypeUuid, companyId);
+
+			headerElement.addAttribute(
+				"layout-set-prototype-uuid", layoutSetPrototypeUuid);
+
+			headerElement.addAttribute(
+				"layout-set-prototype-name",
+				layoutSetPrototype.getName(LocaleUtil.getDefault()));
+		}
 
 		StagedGroup stagedGroup = ModelAdapterUtil.adapt(
 			group, Group.class, StagedGroup.class);

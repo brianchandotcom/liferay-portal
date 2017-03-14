@@ -32,11 +32,32 @@ import java.util.Set;
 public abstract class BaseFileCheck implements FileCheck {
 
 	protected void addMessage(
+		Set<SourceFormatterMessage> messages, String fileName, String message) {
+
+		addMessage(messages, fileName, message, -1);
+	}
+
+	protected void addMessage(
 		Set<SourceFormatterMessage> messages, String fileName, String message,
 		int lineCount) {
 
+		addMessage(messages, fileName, message, null, lineCount);
+	}
+
+	protected void addMessage(
+		Set<SourceFormatterMessage> messages, String fileName, String message,
+		String markdownFileName) {
+
+		addMessage(messages, fileName, message, markdownFileName, -1);
+	}
+
+	protected void addMessage(
+		Set<SourceFormatterMessage> messages, String fileName, String message,
+		String markdownFileName, int lineCount) {
+
 		messages.add(
-			new SourceFormatterMessage(fileName, message, null, lineCount));
+			new SourceFormatterMessage(
+				fileName, message, markdownFileName, lineCount));
 	}
 
 	protected int getLeadingTabCount(String line) {

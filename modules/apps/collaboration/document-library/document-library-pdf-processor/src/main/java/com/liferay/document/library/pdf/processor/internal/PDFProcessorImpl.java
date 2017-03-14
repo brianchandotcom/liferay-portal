@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
+import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -58,6 +60,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +79,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
+import org.apache.pdfbox.rendering.ImageType;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -96,6 +100,30 @@ public class PDFProcessorImpl
 		FileUtil.mkdirs(DECRYPT_TMP_PATH);
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
+
+		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
+			ProcessConfig.Builder builder = new ProcessConfig.Builder();
+
+			builder.setArguments(
+				Collections.singletonList("-Djava.awt.headless=true"));
+
+			String classpath = ClassPathUtil.buildClassPath(
+				ImageType.class, Log4JUtil.class, PDFProcessorImpl.class);
+
+			String portalClassPath = ClassPathUtil.getPortalClassPath();
+
+			classpath = classpath.concat(File.pathSeparator).concat(
+				portalClassPath);
+
+			builder.setBootstrapClassPath(classpath);
+
+			builder.setReactClassLoader(
+				ClassLoaderUtil.getContextClassLoader());
+
+			builder.setRuntimeClassPath(classpath);
+
+			_processConfig = builder.build();
+		}
 	}
 
 	@Override
@@ -698,7 +726,7 @@ public class PDFProcessorImpl
 					generatePreview, generateThumbnail);
 
 			ProcessChannel<String> processChannel = ProcessExecutorUtil.execute(
-				ClassPathUtil.getPortalProcessConfig(), processCallable);
+				_processConfig, processCallable);
 
 			Future<String> future = processChannel.getProcessNoticeableFuture();
 
@@ -1001,6 +1029,7 @@ public class PDFProcessorImpl
 
 	private final List<Long> _fileVersionIds = new Vector<>();
 	private boolean _ghostscriptInitialized;
+	private ProcessConfig _processConfig;
 
 	private static class LiferayPDFBoxProcessCallable
 		implements ProcessCallable<String> {

@@ -39,9 +39,33 @@
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= trashDisplayContext.getPortletURL() %>"
-		/>
+			label='<%= Objects.equals(trashDisplayContext.getNavigation(), "all") ? "all" : ResourceActionsUtil.getModelResource(locale, trashDisplayContext.getNavigation()) %>'
+		>
+
+			<%
+			PortletURL allURL = trashDisplayContext.getPortletURL();
+
+			allURL.setParameter("navigation", "all");
+			%>
+
+			<liferay-frontend:management-bar-filter-item active='<%= Objects.equals(trashDisplayContext.getNavigation(), "all") %>' label="all" url="<%= allURL.toString() %>" />
+
+			<%
+			List<TrashHandler> trashHandlers = TrashHandlerRegistryUtil.getTrashHandlers();
+
+			for (TrashHandler trashHandler : trashHandlers) {
+				PortletURL trashHandlerURL = trashDisplayContext.getPortletURL();
+
+				trashHandlerURL.setParameter("navigation", trashHandler.getClassName());
+			%>
+
+				<liferay-frontend:management-bar-filter-item active="<%= Objects.equals(trashDisplayContext.getNavigation(), trashHandler.getClassName()) %>" label="<%= ResourceActionsUtil.getModelResource(locale, trashHandler.getClassName()) %>" url="<%= trashHandlerURL.toString() %>" />
+
+			<%
+			}
+			%>
+
+		</liferay-frontend:management-bar-navigation>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= trashDisplayContext.getOrderByCol() %>"

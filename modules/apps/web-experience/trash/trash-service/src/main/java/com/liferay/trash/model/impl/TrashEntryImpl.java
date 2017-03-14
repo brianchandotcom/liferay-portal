@@ -16,22 +16,95 @@ package com.liferay.trash.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.trash.model.TrashEntry;
+
 /**
- * The extended model implementation for the TrashEntry service. Represents a row in the &quot;TrashEntry&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.trash.model.TrashEntry} interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Zsolt Berentey
  */
 @ProviderType
 public class TrashEntryImpl extends TrashEntryBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a trash entry model instance should use the {@link com.liferay.trash.model.TrashEntry} interface instead.
-	 */
-	public TrashEntryImpl() {
+
+	@Override
+	public TrashEntry getRootEntry() {
+		return _rootEntry;
 	}
+
+	@Override
+	public String getTypeSettings() {
+		if (_typeSettingsProperties == null) {
+			return super.getTypeSettings();
+		}
+		else {
+			return _typeSettingsProperties.toString();
+		}
+	}
+
+	@Override
+	public UnicodeProperties getTypeSettingsProperties() {
+		if (_typeSettingsProperties == null) {
+			_typeSettingsProperties = new UnicodeProperties(true);
+
+			_typeSettingsProperties.fastLoad(super.getTypeSettings());
+		}
+
+		return _typeSettingsProperties;
+	}
+
+	@Override
+	public String getTypeSettingsProperty(String key) {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		return typeSettingsProperties.getProperty(key);
+	}
+
+	@Override
+	public String getTypeSettingsProperty(String key, String defaultValue) {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		return typeSettingsProperties.getProperty(key, defaultValue);
+	}
+
+	@Override
+	public boolean isTrashEntry(Class<?> clazz, long classPK) {
+		if (clazz == null) {
+			return false;
+		}
+
+		return isTrashEntry(clazz.getName(), classPK);
+	}
+
+	@Override
+	public boolean isTrashEntry(String className, long classPK) {
+		if (className.equals(getClassName()) && (classPK == getClassPK())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public void setRootEntry(TrashEntry rootEntry) {
+		_rootEntry = rootEntry;
+	}
+
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		_typeSettingsProperties = null;
+
+		super.setTypeSettings(typeSettings);
+	}
+
+	@Override
+	public void setTypeSettingsProperties(
+		UnicodeProperties typeSettingsProperties) {
+
+		_typeSettingsProperties = typeSettingsProperties;
+
+		super.setTypeSettings(_typeSettingsProperties.toString());
+	}
+
+	private TrashEntry _rootEntry;
+	private UnicodeProperties _typeSettingsProperties;
+
 }

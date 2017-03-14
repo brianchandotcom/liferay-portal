@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
-import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -35,13 +35,9 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tamas Molnar
@@ -74,14 +70,14 @@ public class DDLRecordStagedModelRepository
 			serviceContext.setUuid(ddlRecord.getUuid());
 		}
 
-		return _ddlRecordLocalService.addRecord(
+		return DDLRecordLocalServiceUtil.addRecord(
 			userId, ddlRecord.getGroupId(), ddlRecord.getRecordSetId(),
 			ddlRecord.getDisplayIndex(), ddmFormValues, serviceContext);
 	}
 
 	@Override
 	public void deleteStagedModel(DDLRecord ddlRecord) throws PortalException {
-		_ddlRecordLocalService.deleteRecord(ddlRecord);
+		DDLRecordLocalServiceUtil.deleteRecord(ddlRecord);
 	}
 
 	@Override
@@ -105,7 +101,7 @@ public class DDLRecordStagedModelRepository
 	public DDLRecord fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return _ddlRecordLocalService.fetchDDLRecordByUuidAndGroupId(
+		return DDLRecordLocalServiceUtil.fetchDDLRecordByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -113,7 +109,7 @@ public class DDLRecordStagedModelRepository
 	public List<DDLRecord> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return _ddlRecordLocalService.getDDLRecordsByUuidAndCompanyId(
+		return DDLRecordLocalServiceUtil.getDDLRecordsByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<DDLRecord>());
 	}
@@ -130,7 +126,7 @@ public class DDLRecordStagedModelRepository
 		PortletDataContext portletDataContext, final int scope) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			_ddlRecordLocalService.getExportActionableDynamicQuery(
+			DDLRecordLocalServiceUtil.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
@@ -171,7 +167,7 @@ public class DDLRecordStagedModelRepository
 	public DDLRecord saveStagedModel(DDLRecord ddlRecord)
 		throws PortalException {
 
-		return _ddlRecordLocalService.updateDDLRecord(ddlRecord);
+		return DDLRecordLocalServiceUtil.updateDDLRecord(ddlRecord);
 	}
 
 	@Override
@@ -192,7 +188,7 @@ public class DDLRecordStagedModelRepository
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			ddlRecord);
 
-		return _ddlRecordLocalService.updateRecord(
+		return DDLRecordLocalServiceUtil.updateRecord(
 			userId, ddlRecord.getRecordId(), false, ddlRecord.getDisplayIndex(),
 			ddmFormValues, serviceContext);
 	}
@@ -250,11 +246,5 @@ public class DDLRecordStagedModelRepository
 
 		return recordVersionDynamicQuery;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDLRecordStagedModelRepository.class);
-
-	@Reference
-	private DDLRecordLocalService _ddlRecordLocalService;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash.service;
+package com.liferay.trash.service.test;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;

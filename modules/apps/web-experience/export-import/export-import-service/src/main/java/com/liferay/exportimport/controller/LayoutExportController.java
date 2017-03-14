@@ -406,25 +406,6 @@ public class LayoutExportController implements ExportController {
 			portletDataContext, layout);
 	}
 
-	@Reference(unbind = "-")
-	protected void setBackgroundTaskLocalService(
-		BackgroundTaskLocalService backgroundTaskLocalService) {
-
-		_backgroundTaskLocalService = backgroundTaskLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExportImportLifecycleManager(
-		ExportImportLifecycleManager exportImportLifecycleManager) {
-
-		_exportImportLifecycleManager = exportImportLifecycleManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	/**
 	 * @deprecated As of 4.0.0
 	 */
@@ -438,13 +419,6 @@ public class LayoutExportController implements ExportController {
 	@Deprecated
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutPrototypeLocalService(
-		LayoutPrototypeLocalService layoutPrototypeLocalService) {
-
-		_layoutPrototypeLocalService = layoutPrototypeLocalService;
 	}
 
 	/**
@@ -471,38 +445,37 @@ public class LayoutExportController implements ExportController {
 		LayoutSetLocalService layoutSetLocalService) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setLayoutSetPrototypeLocalService(
-		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
-
-		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletExportController(
-		PortletExportController portletExportController) {
-
-		_portletExportController = portletExportController;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutExportController.class);
 
+	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
+
 	private final DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();
+
+	@Reference
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
 	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
+
+	@Reference
 	private PortletExportController _portletExportController;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

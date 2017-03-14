@@ -2718,58 +2718,6 @@ public class StagingImpl implements Staging {
 		return 0;
 	}
 
-	@Reference(unbind = "-")
-	protected void setExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService) {
-
-		_exportImportConfigurationLocalService =
-			exportImportConfigurationLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutBranchLocalService(
-		LayoutBranchLocalService layoutBranchLocalService) {
-
-		_layoutBranchLocalService = layoutBranchLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutRevisionLocalService(
-		LayoutRevisionLocalService layoutRevisionLocalService) {
-
-		_layoutRevisionLocalService = layoutRevisionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutService(LayoutService layoutService) {
-		_layoutService = layoutService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetBranchLocalService(
-		LayoutSetBranchLocalService layoutSetBranchLocalService) {
-
-		_layoutSetBranchLocalService = layoutSetBranchLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLockManager(LockManager lockManager) {
-		_lockManager = lockManager;
-	}
-
 	protected void setRecentLayoutBranchId(
 			long userId, long layoutSetBranchId, long plid, long layoutBranchId)
 		throws PortalException {
@@ -2805,13 +2753,6 @@ public class StagingImpl implements Staging {
 		}
 
 		ProxiedLayoutsThreadLocal.clearProxiedLayouts();
-	}
-
-	@Reference(unbind = "-")
-	protected void setRecentLayoutBranchLocalService(
-		RecentLayoutBranchLocalService recentLayoutBranchLocalService) {
-
-		_recentLayoutBranchLocalService = recentLayoutBranchLocalService;
 	}
 
 	protected void setRecentLayoutRevisionId(
@@ -2867,13 +2808,6 @@ public class StagingImpl implements Staging {
 			userId, layoutSetBranchId, plid, layoutBranchId);
 	}
 
-	@Reference (unbind = "-")
-	protected void setRecentLayoutRevisionLocalService(
-		RecentLayoutRevisionLocalService recentLayoutRevisionLocalService) {
-
-		_recentLayoutRevisionLocalService = recentLayoutRevisionLocalService;
-	}
-
 	protected void setRecentLayoutSetBranchId(
 			long userId, long layoutSetId, long layoutSetBranchId)
 		throws PortalException {
@@ -2910,32 +2844,6 @@ public class StagingImpl implements Staging {
 		}
 
 		ProxiedLayoutsThreadLocal.clearProxiedLayouts();
-	}
-
-	@Reference(unbind = "-")
-	protected void setRecentLayoutSetBranchLocalService(
-		RecentLayoutSetBranchLocalService recentLayoutSetBranchLocalService) {
-
-		_recentLayoutSetBranchLocalService = recentLayoutSetBranchLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStagingLocalService(
-		StagingLocalService stagingLocalService) {
-
-		_stagingLocalService = stagingLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWorkflowInstanceLinkLocalService(
-		WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
-
-		_workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
 	}
 
 	protected void validateRemoteGroup(
@@ -3073,25 +2981,54 @@ public class StagingImpl implements Staging {
 
 	private static final Log _log = LogFactoryUtil.getLog(StagingImpl.class);
 
+	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private LayoutBranchLocalService _layoutBranchLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private LayoutRevisionLocalService _layoutRevisionLocalService;
+
+	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+
+	@Reference
 	private LockManager _lockManager;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
+	private PortletLocalService _portletLocalService;
+
+	@Reference
 	private RecentLayoutBranchLocalService _recentLayoutBranchLocalService;
+
+	@Reference
 	private RecentLayoutRevisionLocalService _recentLayoutRevisionLocalService;
+
+	@Reference
 	private RecentLayoutSetBranchLocalService
 		_recentLayoutSetBranchLocalService;
+
+	@Reference
 	private StagingLocalService _stagingLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 	private class ScheduleInformation {

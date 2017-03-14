@@ -28,6 +28,7 @@ import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JavaCombineLinesCheck;
+import com.liferay.source.formatter.checks.JavaDiamondOperatorCheck;
 import com.liferay.source.formatter.checks.JavaEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JavaIfStatementCheck;
 import com.liferay.source.formatter.checks.JavaLineBreakCheck;
@@ -57,40 +58,6 @@ import org.apache.maven.artifact.versioning.ComparableVersion;
  * @author Hugo Huijser
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
-
-	protected String applyDiamondOperator(String content) {
-		Matcher matcher = _diamondOperatorPattern.matcher(content);
-
-		while (matcher.find()) {
-			String match = matcher.group();
-
-			if (match.contains("{\n")) {
-				continue;
-			}
-
-			String className = matcher.group(3);
-			String parameterType = matcher.group(5);
-
-			// LPS-70579
-
-			if ((className.equals("AutoResetThreadLocal") ||
-				 className.equals("InitialThreadLocal")) &&
-				(parameterType.startsWith("Map<") ||
-				 parameterType.startsWith("Set<"))) {
-
-				continue;
-			}
-
-			String whitespace = matcher.group(4);
-
-			String replacement = StringUtil.replaceFirst(
-				match, whitespace + "<" + parameterType + ">", "<>");
-
-			content = StringUtil.replace(content, match, replacement);
-		}
-
-		return content;
-	}
 
 	protected String checkAnnotationLineBreaks(
 		String content, String annotation) {
@@ -926,12 +893,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName,
 				"Never import javax.servlet.jsp.* from portal-kernel, see " +
 					"LPS-47682");
-		}
-
-		// LPS-48153
-
-		if (!isExcludedPath(_DIAMOND_OPERATOR_EXCLUDES, absolutePath)) {
-			newContent = applyDiamondOperator(newContent);
 		}
 
 		// LPS-49552
@@ -2186,6 +2147,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			new FileCheck[] {
 				new JavaCombineLinesCheck(
 					_fitOnSingleLineExcludes, sourceFormatterArgs),
+				new JavaDiamondOperatorCheck(_diamondOperatorExcludes),
 				new JavaEmptyLinesCheck(),
 				new JavaIfStatementCheck(sourceFormatterArgs),
 				new JavaLineBreakCheck(sourceFormatterArgs),
@@ -2665,6 +2627,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
 			getProperty("allow.use.service.util.in.service.impl"));
 
+		_diamondOperatorExcludes = getExcludes(_DIAMOND_OPERATOR_EXCLUDES);
 		_fitOnSingleLineExcludes = getExcludes(_FIT_ON_SINGLE_LINE_EXCLUDES);
 		_lineLengthExcludes = getExcludes(_LINE_LENGTH_EXCLUDES);
 	}
@@ -2821,10 +2784,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _deprecatedPattern = Pattern.compile(
 		"(\n\\s*\\* @deprecated)( As of ([0-9\\.]+)(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
-	private final Pattern _diamondOperatorPattern = Pattern.compile(
-		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<([^>][^;]*?)>" +
-			"\\(\n*\t*.*?\\);\n",
-		Pattern.DOTALL);
+	private List<String> _diamondOperatorExcludes;
 	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
 	private List<String> _fitOnSingleLineExcludes;

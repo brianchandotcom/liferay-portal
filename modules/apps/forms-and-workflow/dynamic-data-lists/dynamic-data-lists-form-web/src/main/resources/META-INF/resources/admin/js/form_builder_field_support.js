@@ -116,6 +116,7 @@ AUI.add(
 					}
 				);
 
+				settings.dataType = instance.get('dataType');
 				settings.readOnly = true;
 				settings.type = instance.get('type');
 				settings.value = '';

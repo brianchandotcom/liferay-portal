@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Trash Service
 Bundle-SymbolicName: com.liferay.trash.service
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.trash.model.impl
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Recycle Bin
 Liferay-Require-SchemaVersion: 1.0.0

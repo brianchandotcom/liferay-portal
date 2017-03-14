@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.internal.exportimport.data.handler;
 
+import com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -43,6 +44,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -76,7 +79,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -190,6 +196,18 @@ public class FileEntryStagedModelDataHandler
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, DLPluggableContentDataHandler.class,
+			"(model.class.name=" + FileEntry.class.getName() + ")");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
+	}
+
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, FileEntry fileEntry)
@@ -276,6 +294,13 @@ public class FileEntryStagedModelDataHandler
 
 			DLProcessorRegistryUtil.exportGeneratedFiles(
 				portletDataContext, fileEntry, fileEntryElement);
+		}
+
+		for (DLPluggableContentDataHandler dlPluggableContentDataHandler :
+				_serviceTrackerList) {
+
+			dlPluggableContentDataHandler.exportContent(
+				portletDataContext, fileEntryElement, fileEntry);
 		}
 
 		exportMetaData(portletDataContext, fileEntryElement, fileEntry);
@@ -567,6 +592,14 @@ public class FileEntryStagedModelDataHandler
 				DLProcessorRegistryUtil.importGeneratedFiles(
 					portletDataContext, fileEntry, importedFileEntry,
 					fileEntryElement);
+			}
+
+			for (DLPluggableContentDataHandler dlPluggableContentDataHandler :
+					_serviceTrackerList) {
+
+				dlPluggableContentDataHandler.importContent(
+					portletDataContext, fileEntryElement, fileEntry,
+					importedFileEntry);
 			}
 
 			portletDataContext.importClassedModel(
@@ -920,6 +953,9 @@ public class FileEntryStagedModelDataHandler
 	private Portal _portal;
 
 	private RepositoryLocalService _repositoryLocalService;
+	private ServiceTrackerList
+		<DLPluggableContentDataHandler, DLPluggableContentDataHandler>
+			_serviceTrackerList;
 	private StorageEngine _storageEngine;
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.source.formatter.checks.FileCheck;
+
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -56,6 +58,11 @@ public class GroovySourceProcessor extends JavaSourceProcessor {
 		}
 
 		return content;
+	}
+
+	@Override
+	protected List<FileCheck> getFileChecks() {
+		return null;
 	}
 
 	@Override

@@ -76,7 +76,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
@@ -99,6 +98,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -733,7 +733,7 @@ public class LayoutImportController implements ImportController {
 		String xml = zipReader.getEntryAsString("/manifest.xml");
 
 		if (xml == null) {
-			throw new LARFileException("manifest.xml not found in the LAR");
+			throw new LARFileException(LARFileException.MISSING_MANIFEST);
 		}
 
 		Element rootElement = null;
@@ -744,7 +744,7 @@ public class LayoutImportController implements ImportController {
 			rootElement = document.getRootElement();
 		}
 		catch (Exception e) {
-			throw new LARFileException(e);
+			throw new LARFileException(LARFileException.INVALID_MANIFEST, e);
 		}
 
 		// Bundle compatibility
@@ -758,14 +758,9 @@ public class LayoutImportController implements ImportController {
 			int buildNumber = ReleaseInfo.getBuildNumber();
 
 			if (buildNumber != importBuildNumber) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append("LAR build number ");
-				sb.append(importBuildNumber);
-				sb.append(" does not match portal build number ");
-				sb.append(buildNumber);
-
-				throw new LayoutImportException(sb.toString());
+				throw new LayoutImportException(
+					LayoutImportException.WRONG_BUILD_NUMBER,
+					new Object[] {importBuildNumber, buildNumber});
 			}
 		}
 		else {
@@ -808,15 +803,12 @@ public class LayoutImportController implements ImportController {
 						ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION),
 					Version.getInstance(importSchemaVersion))) {
 
-				StringBundler sb = new StringBundler(4);
-
-				sb.append("LAR schema version ");
-				sb.append(importSchemaVersion);
-				sb.append(
-					" does not match deployed export/import schema version ");
-				sb.append(ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION);
-
-				throw new LayoutImportException(sb.toString());
+				throw new LayoutImportException(
+					LayoutImportException.WRONG_LAR_SCHEMA_VERSION,
+					new Object[] {
+						importSchemaVersion,
+						ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION
+					});
 			}
 		}
 
@@ -824,11 +816,12 @@ public class LayoutImportController implements ImportController {
 
 		String larType = headerElement.attributeValue("type");
 
-		if (!larType.equals("layout-prototype") &&
-			!larType.equals("layout-set") &&
-			!larType.equals("layout-set-prototype")) {
+		String[] expectedLARTypes = new String[] {
+			"layout-prototype", "layout-set", "layout-set-prototype"
+		};
 
-			throw new LARTypeException(larType);
+		if (Stream.of(expectedLARTypes).noneMatch(lt -> lt.equals(larType))) {
+			throw new LARTypeException(larType, expectedLARTypes);
 		}
 
 		Group group = _groupLocalService.fetchGroup(groupId);
@@ -841,14 +834,12 @@ public class LayoutImportController implements ImportController {
 				PortletDataHandlerKeys.
 					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
-			throw new LARTypeException(
-				"A page template can only be imported to a page template");
+			throw new LARTypeException(LARTypeException.LAYOUT_PROTOTYPE);
 		}
 
 		if (larType.equals("layout-set")) {
 			if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
-				throw new LARTypeException(
-					"A site can only be imported to a site");
+				throw new LARTypeException(LARTypeException.LAYOUT_SET);
 			}
 
 			long sourceCompanyGroupId = GetterUtil.getLong(
@@ -872,8 +863,7 @@ public class LayoutImportController implements ImportController {
 			}
 
 			if (group.isCompany() ^ companySourceGroup) {
-				throw new LARTypeException(
-					"A company site can only be imported to a company site");
+				throw new LARTypeException(LARTypeException.COMPANY_GROUP);
 			}
 		}
 
@@ -883,8 +873,7 @@ public class LayoutImportController implements ImportController {
 				PortletDataHandlerKeys.
 					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
-			throw new LARTypeException(
-				"A site template can only be imported to a site template");
+			throw new LARTypeException(LARTypeException.LAYOUT_SET_PROTOTYPE);
 		}
 
 		// Portlets compatibility
@@ -910,16 +899,12 @@ public class LayoutImportController implements ImportController {
 			}
 
 			if (!portletDataHandler.validateSchemaVersion(schemaVersion)) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append("Portlet's schema version ");
-				sb.append(schemaVersion);
-				sb.append(" in the LAR is not valid for the deployed portlet ");
-				sb.append(portletId);
-				sb.append(" with schema version ");
-				sb.append(portletDataHandler.getSchemaVersion());
-
-				throw new LayoutImportException(sb.toString());
+				throw new LayoutImportException(
+					LayoutImportException.WRONG_PORTLET_SCHEMA_VERSION,
+					new Object[] {
+						schemaVersion, portletId,
+						portletDataHandler.getSchemaVersion()
+					});
 			}
 		}
 

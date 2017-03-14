@@ -2553,8 +2553,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 		query.append(_SQL_SELECT_MDRACTION_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2571,6 +2571,12 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (MDRAction mdrAction : (List<MDRAction>)q.list()) {
 				map.put(mdrAction.getPrimaryKeyObj(), mdrAction);

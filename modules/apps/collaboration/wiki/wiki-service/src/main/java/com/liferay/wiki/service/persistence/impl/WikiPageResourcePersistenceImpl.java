@@ -2292,8 +2292,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 		query.append(_SQL_SELECT_WIKIPAGERESOURCE_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2310,6 +2310,12 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (WikiPageResource wikiPageResource : (List<WikiPageResource>)q.list()) {
 				map.put(wikiPageResource.getPrimaryKeyObj(), wikiPageResource);

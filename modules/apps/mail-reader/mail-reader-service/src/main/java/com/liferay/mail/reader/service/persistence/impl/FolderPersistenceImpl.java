@@ -1345,8 +1345,8 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 
 		query.append(_SQL_SELECT_FOLDER_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -1363,6 +1363,12 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (Folder folder : (List<Folder>)q.list()) {
 				map.put(folder.getPrimaryKeyObj(), folder);

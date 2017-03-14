@@ -2868,8 +2868,8 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 		query.append(_SQL_SELECT_SYSTEMEVENT_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2886,6 +2886,12 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (SystemEvent systemEvent : (List<SystemEvent>)q.list()) {
 				map.put(systemEvent.getPrimaryKeyObj(), systemEvent);

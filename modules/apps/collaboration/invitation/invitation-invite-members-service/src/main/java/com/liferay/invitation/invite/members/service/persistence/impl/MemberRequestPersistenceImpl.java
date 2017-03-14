@@ -2225,8 +2225,8 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 
 		query.append(_SQL_SELECT_MEMBERREQUEST_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2243,6 +2243,12 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (MemberRequest memberRequest : (List<MemberRequest>)q.list()) {
 				map.put(memberRequest.getPrimaryKeyObj(), memberRequest);

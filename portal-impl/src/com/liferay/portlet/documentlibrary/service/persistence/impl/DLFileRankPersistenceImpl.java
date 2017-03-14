@@ -3045,8 +3045,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 
 		query.append(_SQL_SELECT_DLFILERANK_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -3063,6 +3063,12 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (DLFileRank dlFileRank : (List<DLFileRank>)q.list()) {
 				map.put(dlFileRank.getPrimaryKeyObj(), dlFileRank);

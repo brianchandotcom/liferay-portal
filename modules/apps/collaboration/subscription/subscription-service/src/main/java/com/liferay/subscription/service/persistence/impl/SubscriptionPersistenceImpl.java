@@ -3528,8 +3528,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 		query.append(_SQL_SELECT_SUBSCRIPTION_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -3546,6 +3546,12 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (Subscription subscription : (List<Subscription>)q.list()) {
 				map.put(subscription.getPrimaryKeyObj(), subscription);

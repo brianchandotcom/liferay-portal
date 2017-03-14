@@ -23339,8 +23339,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		query.append(_SQL_SELECT_WIKIPAGE_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -23357,6 +23357,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (WikiPage wikiPage : (List<WikiPage>)q.list()) {
 				map.put(wikiPage.getPrimaryKeyObj(), wikiPage);

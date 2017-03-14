@@ -2412,8 +2412,8 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 
 		query.append(_SQL_SELECT_RECENTLAYOUTBRANCH_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2430,6 +2430,12 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (RecentLayoutBranch recentLayoutBranch : (List<RecentLayoutBranch>)q.list()) {
 				map.put(recentLayoutBranch.getPrimaryKeyObj(),

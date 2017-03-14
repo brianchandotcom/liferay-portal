@@ -21,7 +21,6 @@ import com.liferay.portlet.asset.util.AssetEntryIndexer;
 import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.documentlibrary.util.DLFolderIndexer;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
-import com.liferay.portlet.trash.util.TrashIndexer;
 import com.liferay.portlet.usersadmin.util.ContactIndexer;
 import com.liferay.portlet.usersadmin.util.OrganizationIndexer;
 
@@ -41,7 +40,6 @@ public class PortalRegisterTestUtil {
 		IndexerRegistryUtil.register(new DLFolderIndexer());
 		IndexerRegistryUtil.register(new MBMessageIndexer());
 		IndexerRegistryUtil.register(new OrganizationIndexer());
-		IndexerRegistryUtil.register(new TrashIndexer());
 
 		_indexersRegistered = true;
 	}

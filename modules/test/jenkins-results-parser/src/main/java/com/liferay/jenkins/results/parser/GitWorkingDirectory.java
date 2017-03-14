@@ -162,7 +162,7 @@ public class GitWorkingDirectory {
 		JSONObject responseJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			url, requestJSONObject.toString());
 
-		String pullRequestURL = responseJSONObject.getString("url");
+		String pullRequestURL = responseJSONObject.getString("html_url");
 
 		System.out.println("Created a pull request at " + pullRequestURL);
 

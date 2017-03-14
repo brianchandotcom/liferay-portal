@@ -24,7 +24,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -42,21 +41,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tamas Molnar
+ *
+ * @deprecated As of 1.2.0
  */
-@Component(
-	immediate = true,
-	property = {
-		"model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord"
-	},
-	service = {
-		DDLRecordStagedModelRepository.class, StagedModelRepository.class
-	}
-)
+@Deprecated
 public class DDLRecordStagedModelRepository
 	extends BaseStagedModelRepository<DDLRecord> {
 

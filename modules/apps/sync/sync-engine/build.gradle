@@ -32,3 +32,7 @@ dependencies {
 	compileInclude group: "org.bouncycastle", name: "bcprov-jdk15on", version: "1.54"
 	compileInclude group: "org.slf4j", name: "slf4j-api", version: "1.7.21"
 }
+
+liferayOSGi {
+	expandCompileInclude = true
+}

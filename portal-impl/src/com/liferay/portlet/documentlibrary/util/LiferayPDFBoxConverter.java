@@ -14,23 +14,16 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.image.ImageToolImpl;
-import com.liferay.portal.kernel.image.ImageTool;
-
-import java.awt.image.RenderedImage;
+import com.liferay.document.library.kernel.util.PDFBoxConverter;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.File;
 
-import javax.imageio.ImageIO;
-
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPageTree;
-import org.apache.pdfbox.rendering.ImageType;
-import org.apache.pdfbox.rendering.PDFRenderer;
-
 /**
  * @author Juan Gonzalez
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class LiferayPDFBoxConverter {
 
 	public LiferayPDFBoxConverter(
@@ -51,49 +44,17 @@ public class LiferayPDFBoxConverter {
 	}
 
 	public void generateImagesPB() throws Exception {
-		try (PDDocument pdDocument = PDDocument.load(_inputFile)) {
-			PDFRenderer pdfRenderer = new PDFRenderer(pdDocument);
-
-			PDPageTree pdPageTree = pdDocument.getPages();
-
-			int count = pdPageTree.getCount();
-
-			for (int i = 0; i < count; i++) {
-				if (_generateThumbnail && (i == 0)) {
-					_generateImagesPB(
-						pdfRenderer, i, _thumbnailFile, _thumbnailExtension);
-				}
-
-				if (!_generatePreview) {
-					break;
-				}
-
-				_generateImagesPB(pdfRenderer, i, _previewFiles[i], _extension);
-			}
-		}
+		_pdfBoxConverter.generateImagesPB(
+			_inputFile, _thumbnailFile, _previewFiles, _extension,
+			_thumbnailExtension, _dpi, _height, _width, _generatePreview,
+			_generateThumbnail);
 	}
 
-	private void _generateImagesPB(
-			PDFRenderer pdfRenderer, int pageIndex, File outputFile,
-			String extension)
-		throws Exception {
-
-		RenderedImage renderedImage = pdfRenderer.renderImageWithDPI(
-			pageIndex, _dpi, ImageType.RGB);
-
-		ImageTool imageTool = ImageToolImpl.getInstance();
-
-		if (_height != 0) {
-			renderedImage = imageTool.scale(renderedImage, _height, _width);
-		}
-		else {
-			renderedImage = imageTool.scale(renderedImage, _width);
-		}
-
-		outputFile.createNewFile();
-
-		ImageIO.write(renderedImage, extension, outputFile);
-	}
+	@SuppressWarnings("deprecation")
+	private static volatile PDFBoxConverter _pdfBoxConverter =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			PDFBoxConverter.class, LiferayPDFBoxConverter.class,
+			"_pdfBoxConverter", true);
 
 	private final int _dpi;
 	private final String _extension;

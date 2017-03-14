@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Document Library PDF Processor
+Bundle-SymbolicName: com.liferay.document.library.pdf.processor
+Bundle-Version: 1.0.0
+Import-Package:\
+	org.bouncycastle.asn1;resolution:=optional,\
+	org.bouncycastle.asn1.cms;resolution:=optional,\
+	org.bouncycastle.asn1.pkcs;resolution:=optional,\
+	org.bouncycastle.asn1.x500;resolution:=optional,\
+	org.bouncycastle.asn1.x509;resolution:=optional,\
+	org.bouncycastle.cert;resolution:=optional,\
+	org.bouncycastle.cms;resolution:=optional,\
+	org.bouncycastle.cms.jcajce;resolution:=optional,\
+	org.bouncycastle.jce.provider;resolution:=optional,\
+	*

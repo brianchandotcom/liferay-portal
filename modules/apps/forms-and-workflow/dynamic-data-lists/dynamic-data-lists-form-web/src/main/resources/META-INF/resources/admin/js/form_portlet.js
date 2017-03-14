@@ -250,6 +250,8 @@ AUI.add(
 
 						instance.definitionSerializer.set('pages', pages);
 
+						instance.definitionSerializer.set('successPage', formBuilder.getSuccessPageDefinition());
+
 						var definition = JSON.parse(instance.definitionSerializer.serialize());
 
 						var rules = JSON.stringify(ruleBuilder.get('rules'));

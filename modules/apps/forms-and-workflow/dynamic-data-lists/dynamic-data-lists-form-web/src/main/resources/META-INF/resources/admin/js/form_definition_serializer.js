@@ -27,9 +27,8 @@ AUI.add(
 						value: {}
 					},
 
-					rules: {
-						validator: Array.isArray,
-						value: []
+					successPage: {
+						value: {}
 					}
 				},
 
@@ -48,7 +47,7 @@ AUI.add(
 								availableLanguageIds: instance.get('availableLanguageIds'),
 								defaultLanguageId: instance.get('defaultLanguageId'),
 								fields: instance.get('fields'),
-								rules: instance.get('rules')
+								successPage: instance.get('successPage')
 							}
 						);
 

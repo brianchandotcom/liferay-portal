@@ -270,7 +270,7 @@ AUI.add(
 
 							var wizardNode = builder.get('boundingBox').one('.' + CSS_FORM_BUILDER_TABVIEW);
 
-							instance.wizard = new Renderer.Wizard(
+							instance.wizard = new Liferay.DDL.FormBuilderWizard(
 								{
 									after: {
 										selectedChange: A.bind(instance._afterWizardSelectionChange, instance)

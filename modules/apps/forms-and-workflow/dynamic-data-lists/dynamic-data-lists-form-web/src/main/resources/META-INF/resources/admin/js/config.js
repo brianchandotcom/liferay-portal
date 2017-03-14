@@ -158,11 +158,17 @@
 								'aui-modal'
 							]
 						},
+						'liferay-ddl-form-builder-wizard': {
+							path: 'form_builder_wizard.js',
+							requires: [
+								'liferay-ddm-form-renderer-wizard'
+							]
+						},
 						'liferay-ddl-form-builder-pages-manager': {
 							path: 'form_builder_pages_manager.js',
 							requires: [
 								'aui-form-builder-page-manager',
-								'liferay-ddm-form-renderer-wizard'
+								'liferay-ddl-form-builder-wizard'
 							]
 						},
 						'liferay-ddl-form-builder-render-rule': {

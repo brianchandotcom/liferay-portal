@@ -550,7 +550,6 @@
 		</property>
 	</bean>
 	<bean class="com.liferay.portlet.documentlibrary.util.DLFileVersionPolicyImpl" destroy-method="destroy" id="com.liferay.document.library.kernel.util.DLFileVersionPolicy" />
-	<bean class="com.liferay.portlet.trash.util.TrashIndexer" id="com.liferay.portlet.trash.util.TrashIndexer" />
 	<bean class="com.liferay.portlet.usersadmin.util.ContactIndexer" id="com.liferay.portlet.usersadmin.util.ContactIndexer" />
 	<bean class="com.liferay.portlet.usersadmin.util.OrganizationIndexer" id="com.liferay.portlet.usersadmin.util.OrganizationIndexer" />
 	<bean class="com.liferay.portlet.rolesadmin.util.RolesAdminImpl" id="com.liferay.roles.admin.kernel.util.RolesAdmin" />

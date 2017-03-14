@@ -33,6 +33,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.reporting.ReportingExtension;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.SourceSet;
@@ -201,6 +202,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 				public void execute(Task task) {
 					JavaExec javaExec = (JavaExec)task;
 
+					Logger logger = javaExec.getLogger();
+
 					File outputFile = outputFileGetter.transform(javaExec);
 
 					File outputDir = outputFile.getParentFile();
@@ -212,7 +215,9 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 					javaExec.args("-pluginList", pluginClasspath.getAsPath());
 
-					System.out.println("Using version: " + _VERSION);
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle("Using version: " + _VERSION);
+					}
 				}
 
 			});
@@ -222,10 +227,14 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Task task) {
+					Logger logger = task.getLogger();
+
 					File outputFile = outputFileGetter.transform(task);
 
-					System.out.println(
-						"Report saved to " + outputFile.getAbsolutePath());
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle(
+							"Report saved to {}", outputFile.getAbsolutePath());
+					}
 				}
 
 			});

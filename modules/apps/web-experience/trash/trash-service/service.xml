@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder api-package-path="com.liferay.trash.kernel" package-path="com.liferay.portlet.trash">
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.trash">
 	<namespace>Trash</namespace>
 	<entity local-service="true" name="TrashEntry" remote-service="true">
 
@@ -57,8 +57,11 @@
 
 		<!-- References -->
 
+		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="SystemEvent" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="TrashVersion" package-path="com.liferay.trash" />
 	</entity>
 	<entity local-service="true" name="TrashVersion" remote-service="false">
 
@@ -91,6 +94,10 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="ClassName" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>RestoreEntry</exception>

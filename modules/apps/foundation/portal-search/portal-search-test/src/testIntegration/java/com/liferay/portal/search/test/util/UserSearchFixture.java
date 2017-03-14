@@ -89,6 +89,13 @@ public class UserSearchFixture {
 
 				@Override
 				public boolean hasPermission(
+					Group group, String name, long primKey, String actionId) {
+
+					return true;
+				}
+
+				@Override
+				public boolean hasPermission(
 					long groupId, String name, long primKey, String actionId) {
 
 					return true;

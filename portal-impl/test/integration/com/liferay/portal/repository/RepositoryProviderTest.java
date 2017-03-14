@@ -191,10 +191,7 @@ public class RepositoryProviderTest {
 					}
 
 					@Override
-					public boolean hasPermission(
-						long groupId, String name, String primKey,
-						String actionId) {
-
+					protected boolean hasPermission(String actionId) {
 						return false;
 					}
 

@@ -21,7 +21,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -69,7 +69,7 @@ public class SitesThatIAdministerItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = PortalUtil.getResourceBundle(locale);
+		ResourceBundle resourceBundle = _portal.getResourceBundle(locale);
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, "sites-that-i-administer");
@@ -140,6 +140,9 @@ public class SitesThatIAdministerItemSelectorView
 				new ItemSelectorReturnType[] {
 					new SiteItemSelectorReturnType()
 				}));
+
+	@Reference
+	private Portal _portal;
 
 	private ServletContext _servletContext;
 

@@ -17,7 +17,7 @@ package com.liferay.login.web.internal.servlet.taglib.include;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.include.PageInclude;
@@ -30,6 +30,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -79,8 +80,7 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 		iconTag.setMessage("create-account");
 
 		try {
-			iconTag.setUrl(
-				PortalUtil.getCreateAccountURL(request, themeDisplay));
+			iconTag.setUrl(_portal.getCreateAccountURL(request, themeDisplay));
 		}
 		catch (Exception e) {
 			throw new JspException(e);
@@ -88,5 +88,8 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 
 		iconTag.doTag(pageContext);
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

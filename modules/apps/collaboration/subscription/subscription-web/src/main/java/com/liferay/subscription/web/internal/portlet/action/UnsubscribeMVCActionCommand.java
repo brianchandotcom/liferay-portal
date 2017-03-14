@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.subscription.exception.NoSuchSubscriptionException;
 import com.liferay.subscription.model.Subscription;
@@ -108,7 +108,7 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 	private void _checkUser(long userId, ActionRequest actionRequest)
 		throws PortalException {
 
-		User user = PortalUtil.getUser(actionRequest);
+		User user = _portal.getUser(actionRequest);
 
 		if ((user != null) && (userId != user.getUserId())) {
 			throw new PrincipalException();
@@ -178,6 +178,9 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

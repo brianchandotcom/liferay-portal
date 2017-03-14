@@ -28,6 +28,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.Transformer;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
@@ -177,15 +178,21 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 			});
 
-		ReportingExtension reportingExtension = GradleUtil.getExtension(
-			javaExec.getProject(), ReportingExtension.class);
+		final Transformer<File, Task> outputFileGetter =
+			new Transformer<File, Task>() {
 
-		File outputDir = new File(
-			reportingExtension.getBaseDir(), javaExec.getName());
+				@Override
+				public File transform(Task task) {
+					ReportingExtension reportingExtension =
+						GradleUtil.getExtension(
+							task.getProject(), ReportingExtension.class);
 
-		outputDir.mkdirs();
+					return new File(
+						reportingExtension.getBaseDir(),
+						task.getName() + "/reports.html");
+				}
 
-		final File outputFile = new File(outputDir, "reports.html");
+			};
 
 		javaExec.doFirst(
 			new Action<Task>() {
@@ -193,6 +200,12 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Task task) {
 					JavaExec javaExec = (JavaExec)task;
+
+					File outputFile = outputFileGetter.transform(javaExec);
+
+					File outputDir = outputFile.getParentFile();
+
+					outputDir.mkdirs();
 
 					javaExec.args(
 						"-outputFile", FileUtil.getAbsolutePath(outputFile));
@@ -209,6 +222,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Task task) {
+					File outputFile = outputFileGetter.transform(task);
+
 					System.out.println(
 						"Report saved to " + outputFile.getAbsolutePath());
 				}

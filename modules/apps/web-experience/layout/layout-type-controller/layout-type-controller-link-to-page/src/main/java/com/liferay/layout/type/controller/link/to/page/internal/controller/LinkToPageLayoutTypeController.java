@@ -14,19 +14,17 @@
 
 package com.liferay.layout.type.controller.link.to.page.internal.controller;
 
-import com.liferay.layout.type.controller.full.page.application.internal.constants.FullPageApplicationLayoutTypeControllerConstants;
-import com.liferay.layout.type.controller.full.page.application.internal.constants.FullPageApplicationLayoutTypeControllerWebKeys;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
-import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
-
-import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletResponse;
@@ -37,11 +35,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Juergen Kappler
+ * @author Pavel Savinov
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + FullPageApplicationLayoutTypeControllerConstants.LAYOUT_TYPE_FULL_PAGE_APPLICATION},
+	property = {"layout.type=" + LayoutConstants.TYPE_LINK_TO_LAYOUT},
 	service = LayoutTypeController.class
 )
 public class LinkToPageLayoutTypeController
@@ -49,69 +47,74 @@ public class LinkToPageLayoutTypeController
 
 	@Override
 	public String getType() {
-		return LayoutConstants.TYPE_PORTLET;
+		return LayoutConstants.TYPE_LINK_TO_LAYOUT;
 	}
 
 	@Override
 	public String getURL() {
-		return _URL;
+		Filter filter = new Filter(getType());
+
+		return GetterUtil.getString(
+			PropsUtil.get(PropsKeys.LAYOUT_URL, filter), _URL);
+	}
+
+	@Override
+	public String includeEditContent(
+			HttpServletRequest request, HttpServletResponse response,
+			Layout layout)
+		throws Exception {
+
+		request.setAttribute(WebKeys.SEL_LAYOUT, layout);
+
+		return super.includeEditContent(request, response, layout);
 	}
 
 	@Override
 	public boolean isBrowsable() {
-		return true;
+		Filter filter = new Filter(getType());
+
+		return GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.LAYOUT_BROWSABLE, filter), true);
 	}
 
 	@Override
 	public boolean isFirstPageable() {
-		return true;
+		Filter filter = new Filter(getType());
+
+		return GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.LAYOUT_FIRST_PAGEABLE, filter));
 	}
 
 	@Override
 	public boolean isFullPageDisplayable() {
-		return true;
+		Filter filter = new Filter(getType());
+
+		return GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.FULL_PAGE_DISPLAYABLE, filter));
 	}
 
 	@Override
 	public boolean isParentable() {
-		return true;
+		Filter filter = new Filter(getType());
+
+		return GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.LAYOUT_PARENTABLE, filter));
 	}
 
 	@Override
 	public boolean isSitemapable() {
-		return false;
+		Filter filter = new Filter(getType());
+
+		return GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.LAYOUT_SITEMAPABLE, filter));
 	}
 
 	@Override
 	public boolean isURLFriendliable() {
-		return true;
-	}
+		Filter filter = new Filter(getType());
 
-	@Override
-	protected void addAttributes(HttpServletRequest request) {
-		super.addAttributes(request);
-
-		List<Portlet> portlets = _portletLocalService.getPortlets();
-
-		if (portlets.isEmpty()) {
-			return;
-		}
-
-		portlets = ListUtil.filter(
-			portlets,
-			new PredicateFilter<Portlet>() {
-
-				@Override
-				public boolean filter(Portlet portlet) {
-					return portlet.isFullPageDisplayable();
-				}
-
-			});
-
-		request.setAttribute(
-			FullPageApplicationLayoutTypeControllerWebKeys.
-				FULL_PAGE_APPLICATION_PORTLETS,
-			portlets);
+		return GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.LAYOUT_URL_FRIENDLIABLE, filter), true);
 	}
 
 	@Override
@@ -128,34 +131,25 @@ public class LinkToPageLayoutTypeController
 
 	@Override
 	protected String getViewPage() {
-		return _VIEW_PAGE;
-	}
+		Filter filter = new Filter(getType());
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
+		return GetterUtil.getString(
+			PropsUtil.get(PropsKeys.LAYOUT_VIEW_PAGE, filter));
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.full.page.application)",
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.link.to.page)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
 
-	private static final String _EDIT_PAGE =
-		"/layout/edit/full_page_application.jsp";
+	private static final String _EDIT_PAGE = "/layout/edit/link_to_layout.jsp";
 
 	private static final String _URL =
-		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}" +
-			"&p_v_l_s_g_id=${liferay:pvlsgid}";
-
-	private static final String _VIEW_PAGE =
-		"/layout/view/full_page_application.jsp";
-
-	private PortletLocalService _portletLocalService;
+		"${liferay:mainPath}/portal/layout?p_v_l_s_g_id=${liferay:pvlsgid}&" +
+			"groupId=${liferay:groupId}&privateLayout=${privateLayout}&" +
+				"layoutId=${linkToLayoutId}";
 
 }

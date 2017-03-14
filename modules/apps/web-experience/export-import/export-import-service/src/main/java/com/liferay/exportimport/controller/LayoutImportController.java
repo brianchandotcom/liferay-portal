@@ -706,60 +706,6 @@ public class LayoutImportController implements ImportController {
 			new StagedModelType(Layout.class));
 	}
 
-	@Reference(unbind = "-")
-	protected void setExportImportLifecycleManager(
-		ExportImportLifecycleManager exportImportLifecycleManager) {
-
-		_exportImportLifecycleManager = exportImportLifecycleManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutPrototypeLocalService(
-		LayoutPrototypeLocalService layoutPrototypeLocalService) {
-
-		_layoutPrototypeLocalService = layoutPrototypeLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-
-		_layoutSetLocalService = layoutSetLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetPrototypeLocalService(
-		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
-
-		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletImportController(
-		PortletImportController portletImportController) {
-
-		_portletImportController = portletImportController;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
 	/**
 	 * @deprecated As of 4.0.0
 	 */
@@ -1101,19 +1047,35 @@ public class LayoutImportController implements ImportController {
 
 	private final DeletionSystemEventImporter _deletionSystemEventImporter =
 		DeletionSystemEventImporter.getInstance();
+
+	@Reference
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
 	private final PermissionImporter _permissionImporter =
 		PermissionImporter.getInstance();
 
 	@Reference
 	private PortletDataHandlerProvider _portletDataHandlerProvider;
 
+	@Reference
 	private PortletImportController _portletImportController;
+
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 }

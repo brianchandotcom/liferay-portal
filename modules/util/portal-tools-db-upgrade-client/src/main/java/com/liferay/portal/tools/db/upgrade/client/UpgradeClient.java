@@ -14,7 +14,10 @@
 
 package com.liferay.portal.tools.db.upgrade.client;
 
+import com.liferay.portal.tools.db.upgrade.client.util.GogoTelnetClient;
+import com.liferay.portal.tools.db.upgrade.client.util.Properties;
 import com.liferay.portal.tools.db.upgrade.client.util.StringUtil;
+import com.liferay.portal.tools.db.upgrade.client.util.TeePrintStream;
 
 import java.io.BufferedReader;
 import java.io.Closeable;

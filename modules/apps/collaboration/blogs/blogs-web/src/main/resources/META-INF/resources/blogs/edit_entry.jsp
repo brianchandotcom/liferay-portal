@@ -269,6 +269,10 @@ if (portletTitleBasedNavigation) {
 
 						<portlet:actionURL name="/blogs/upload_small_image" var="uploadSmallImageURL" />
 
+						<div class="clearfix">
+							<label class="control-label"><liferay-ui:message key="small-image" /></label>
+						</div>
+
 						<div class="lfr-blogs-small-image-selector">
 
 							<%

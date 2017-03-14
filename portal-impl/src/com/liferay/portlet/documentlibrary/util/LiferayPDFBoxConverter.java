@@ -84,7 +84,7 @@ public class LiferayPDFBoxConverter {
 		ImageTool imageTool = ImageToolImpl.getInstance();
 
 		if (_height != 0) {
-			renderedImage = imageTool.scale(renderedImage, _width, _height);
+			renderedImage = imageTool.scale(renderedImage, _height, _width);
 		}
 		else {
 			renderedImage = imageTool.scale(renderedImage, _width);

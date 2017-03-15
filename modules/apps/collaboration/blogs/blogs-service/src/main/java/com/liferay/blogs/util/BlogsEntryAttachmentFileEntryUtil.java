@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
 import java.io.InputStream;
@@ -128,36 +126,18 @@ public class BlogsEntryAttachmentFileEntryUtil {
 		return tempBlogsEntryAttachmentFileEntries;
 	}
 
+	/**
+	 * @deprecated As of 1.1.0, replaced by
+	 * {@link BlogsEntryAttachmentContentUpdater#updateContent(String, List)}
+	 */
+	@Deprecated
 	public static String updateContent(
 		String content,
 		List<BlogsEntryAttachmentFileEntryReference>
 			blogsEntryAttachmentFileEntryReferences) {
 
-		for (BlogsEntryAttachmentFileEntryReference
-				blogsEntryAttachmentFileEntryReference :
-					blogsEntryAttachmentFileEntryReferences) {
-
-			StringBundler sb = new StringBundler(8);
-
-			sb.append("<\\s*?img");
-			sb.append(_ATTRIBUTE_LIST_REGEXP);
-			sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-			sb.append("\\s*?=\\s*?\"");
-			sb.append(
-				blogsEntryAttachmentFileEntryReference.
-					getTempBlogsEntryAttachmentFileEntryId());
-			sb.append("\"");
-			sb.append(_ATTRIBUTE_LIST_REGEXP);
-			sb.append("/>");
-
-			content = content.replaceAll(
-				sb.toString(),
-				_getBlogsEntryAttachmentFileEntryImgTag(
-					blogsEntryAttachmentFileEntryReference.
-						getBlogsEntryAttachmentFileEntry()));
-		}
-
-		return content;
+		return _BLOGS_ENTRY_ATTACHMENT_CONTENT_UPDATER.updateContent(
+			content, blogsEntryAttachmentFileEntryReferences);
 	}
 
 	private static FileEntry _fetchPortletFileEntry(
@@ -174,15 +154,6 @@ public class BlogsEntryAttachmentFileEntryUtil {
 
 			return null;
 		}
-	}
-
-	private static String _getBlogsEntryAttachmentFileEntryImgTag(
-		FileEntry blogsEntryAttachmentFileEntry) {
-
-		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
-			null, blogsEntryAttachmentFileEntry, StringPool.BLANK);
-
-		return "<img src=\"" + fileEntryURL + "\" />";
 	}
 
 	private static String _getUniqueFileName(
@@ -218,8 +189,9 @@ public class BlogsEntryAttachmentFileEntryUtil {
 				folderId);
 	}
 
-	private static final String _ATTRIBUTE_LIST_REGEXP =
-		"(\\s*?\\w+\\s*?=\\s*?\"[^\"]*\")*?\\s*?";
+	private static final BlogsEntryAttachmentContentUpdater
+		_BLOGS_ENTRY_ATTACHMENT_CONTENT_UPDATER =
+			new BlogsEntryAttachmentContentUpdater();
 
 	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
 

@@ -43,7 +43,10 @@ import javax.portlet.PortletResponse;
 /**
  * @author Julio Camarero
  * @author Zsolt Berentey
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.trash.internal.search.TrashIndexer}
  */
+@Deprecated
 public class TrashIndexer extends BaseIndexer<TrashEntry> {
 
 	public static final String CLASS_NAME = TrashEntry.class.getName();

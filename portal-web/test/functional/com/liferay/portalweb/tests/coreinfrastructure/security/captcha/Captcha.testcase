@@ -1,4 +1,6 @@
 <definition component-name="portal-security">
+	<property name="osgi.module.configuration.file.names" value="com.liferay.captcha.configuration.CaptchaConfiguration.config" />
+	<property name="osgi.module.configurations" value="maxChallenges=&quot;0&quot;" />
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Security" />
 
@@ -23,9 +25,6 @@
 	</tear-down>
 
 	<command name="ViewCaptchaEnabled" priority="4">
-		<property name="osgi.module.configuration.file.names" value="com.liferay.captcha.configuration.CaptchaConfiguration" />
-		<property name="osgi.module.configurations" value="maxChallenges=&quot;0&quot;" />
-
 		<execute macro="SignInNavigator#gotoCreateAccount" />
 
 		<execute macro="User#viewCaptchaPG">
@@ -36,9 +35,6 @@
 	<command name="ViewRecaptchaEnabled" priority="4">
 		<var name="recaptchaPrivateKey" property-value="recaptcha.private.key" />
 		<var name="recaptchaPublicKey" property-value="recaptcha.public.key" />
-
-		<property name="osgi.module.configuration.file.names" value="com.liferay.captcha.configuration.CaptchaConfiguration" />
-		<property name="osgi.module.configurations" value="maxChallenges=&quot;0&quot;" />
 
 		<execute macro="User#firstLoginPG" />
 

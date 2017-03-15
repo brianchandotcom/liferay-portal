@@ -27,7 +27,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
-import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.DLProcessorThreadLocal;
 import com.liferay.dynamic.data.mapping.exportimport.content.processor.DDMFormValuesExportImportContentProcessor;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
@@ -286,14 +285,6 @@ public class FileEntryStagedModelDataHandler
 					_log.error(ioe, ioe);
 				}
 			}
-		}
-
-		if (portletDataContext.getBooleanParameter(
-				_DL_PORTLET_DATA_HANDLER_NAMESPACE,
-				"previews-and-thumbnails")) {
-
-			DLProcessorRegistryUtil.exportGeneratedFiles(
-				portletDataContext, fileEntry, fileEntryElement);
 		}
 
 		for (DLPluggableContentDataHandler dlPluggableContentDataHandler :
@@ -584,14 +575,6 @@ public class FileEntryStagedModelDataHandler
 					fileEntry.getFileName(), fileEntry.getMimeType(),
 					fileEntryTitle, fileEntry.getDescription(), null, is,
 					fileEntry.getSize(), serviceContext);
-			}
-
-			if (portletDataContext.getBooleanParameter(
-					"document_library", "previews-and-thumbnails")) {
-
-				DLProcessorRegistryUtil.importGeneratedFiles(
-					portletDataContext, fileEntry, importedFileEntry,
-					fileEntryElement);
 			}
 
 			for (DLPluggableContentDataHandler dlPluggableContentDataHandler :
@@ -927,12 +910,6 @@ public class FileEntryStagedModelDataHandler
 			throw pde;
 		}
 	}
-
-	/**
-	 * @see com.liferay.document.library.web.lar.DLPortletDataHandler#NAMESPACE
-	 */
-	private static final String _DL_PORTLET_DATA_HANDLER_NAMESPACE =
-		"document_library";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntryStagedModelDataHandler.class);

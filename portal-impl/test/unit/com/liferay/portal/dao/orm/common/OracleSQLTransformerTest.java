@@ -68,7 +68,7 @@ public class OracleSQLTransformerTest extends BaseSQLTransformerTestCase {
 
 	@Override
 	protected String getIntegerDivisionTransformedSQL() {
-		return "select TRUNC(foo / bar) from Foo";
+		return "select TRUNC(foo /  bar) from Foo";
 	}
 
 	@Override

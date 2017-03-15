@@ -260,12 +260,16 @@ public class CompanyIndexFactory implements IndexFactory {
 	}
 
 	protected void loadTypeMappingsContributors(
+		String indexName,
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
 
 		for (IndexSettingsContributor indexSettingsContributor :
 				_indexSettingsContributors) {
 
 			indexSettingsContributor.contribute(liferayDocumentTypeFactory);
+
+			indexSettingsContributor.contribute(
+				indexName, liferayDocumentTypeFactory);
 		}
 	}
 
@@ -314,7 +318,7 @@ public class CompanyIndexFactory implements IndexFactory {
 
 		loadAdditionalTypeMappings(indexName, liferayDocumentTypeFactory);
 
-		loadTypeMappingsContributors(liferayDocumentTypeFactory);
+		loadTypeMappingsContributors(indexName, liferayDocumentTypeFactory);
 
 		liferayDocumentTypeFactory.createOptionalDefaultTypeMappings(indexName);
 	}

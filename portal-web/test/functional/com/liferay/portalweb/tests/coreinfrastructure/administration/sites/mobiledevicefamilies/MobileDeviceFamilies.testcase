@@ -44,7 +44,7 @@
 		</execute>
 
 		<execute macro="MobileDevice#addCP">
-			<var name="mobileDeviceFamilyName" value="Mobile Device Family Name" />
+			<var name="deviceFamilyName" value="Mobile Device Family Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">

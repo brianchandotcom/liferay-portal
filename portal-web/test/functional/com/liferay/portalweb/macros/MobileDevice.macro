@@ -5,7 +5,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="New Device Family" />
 
 		<execute macro="PortletEntry#inputName">
-			<var name="name" value="Device Family Name" />
+			<var name="name" value="${deviceFamilyName}" />
 		</execute>
 
 		<execute function="Click" locator1="Button#SAVE" />

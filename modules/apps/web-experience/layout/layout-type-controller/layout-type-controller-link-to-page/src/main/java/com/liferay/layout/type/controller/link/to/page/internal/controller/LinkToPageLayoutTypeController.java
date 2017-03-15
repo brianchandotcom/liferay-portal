@@ -14,16 +14,13 @@
 
 package com.liferay.layout.type.controller.link.to.page.internal.controller;
 
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.ServletContext;
@@ -52,10 +49,7 @@ public class LinkToPageLayoutTypeController
 
 	@Override
 	public String getURL() {
-		Filter filter = new Filter(getType());
-
-		return GetterUtil.getString(
-			PropsUtil.get(PropsKeys.LAYOUT_URL, filter), _URL);
+		return _URL;
 	}
 
 	@Override
@@ -70,51 +64,23 @@ public class LinkToPageLayoutTypeController
 	}
 
 	@Override
-	public boolean isBrowsable() {
-		Filter filter = new Filter(getType());
-
-		return GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LAYOUT_BROWSABLE, filter), true);
-	}
-
-	@Override
 	public boolean isFirstPageable() {
-		Filter filter = new Filter(getType());
-
-		return GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LAYOUT_FIRST_PAGEABLE, filter));
-	}
-
-	@Override
-	public boolean isFullPageDisplayable() {
-		Filter filter = new Filter(getType());
-
-		return GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.FULL_PAGE_DISPLAYABLE, filter));
+		return false;
 	}
 
 	@Override
 	public boolean isParentable() {
-		Filter filter = new Filter(getType());
-
-		return GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LAYOUT_PARENTABLE, filter));
+		return true;
 	}
 
 	@Override
 	public boolean isSitemapable() {
-		Filter filter = new Filter(getType());
-
-		return GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LAYOUT_SITEMAPABLE, filter));
+		return false;
 	}
 
 	@Override
 	public boolean isURLFriendliable() {
-		Filter filter = new Filter(getType());
-
-		return GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LAYOUT_URL_FRIENDLIABLE, filter), true);
+		return true;
 	}
 
 	@Override
@@ -131,10 +97,7 @@ public class LinkToPageLayoutTypeController
 
 	@Override
 	protected String getViewPage() {
-		Filter filter = new Filter(getType());
-
-		return GetterUtil.getString(
-			PropsUtil.get(PropsKeys.LAYOUT_VIEW_PAGE, filter));
+		return StringPool.BLANK;
 	}
 
 	@Reference(

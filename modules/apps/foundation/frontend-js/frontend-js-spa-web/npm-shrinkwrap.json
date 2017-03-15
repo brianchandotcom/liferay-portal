@@ -62,8 +62,8 @@
 		},
 		"bluebird": {
 			"from": "bluebird@>=3.0.6 <4.0.0",
-			"resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.4.7.tgz",
-			"version": "3.4.7"
+			"resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.5.0.tgz",
+			"version": "3.5.0"
 		},
 		"bootstrap": {
 			"from": "bootstrap@>=3.3.6 <4.0.0",
@@ -220,8 +220,8 @@
 		},
 		"error-ex": {
 			"from": "error-ex@>=1.2.0 <2.0.0",
-			"resolved": "https://registry.npmjs.org/error-ex/-/error-ex-1.3.0.tgz",
-			"version": "1.3.0"
+			"resolved": "https://registry.npmjs.org/error-ex/-/error-ex-1.3.1.tgz",
+			"version": "1.3.1"
 		},
 		"escape-string-regexp": {
 			"from": "escape-string-regexp@>=1.0.2 <2.0.0",
@@ -456,8 +456,8 @@
 				},
 				"readable-stream": {
 					"from": "readable-stream@>=2.0.5 <3.0.0",
-					"resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.2.3.tgz",
-					"version": "2.2.3"
+					"resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.2.5.tgz",
+					"version": "2.2.5"
 				}
 			},
 			"from": "got@>=5.0.0 <6.0.0",
@@ -541,8 +541,8 @@
 		},
 		"is-buffer": {
 			"from": "is-buffer@>=1.0.2 <2.0.0",
-			"resolved": "https://registry.npmjs.org/is-buffer/-/is-buffer-1.1.4.tgz",
-			"version": "1.1.4"
+			"resolved": "https://registry.npmjs.org/is-buffer/-/is-buffer-1.1.5.tgz",
+			"version": "1.1.5"
 		},
 		"is-dotfile": {
 			"from": "is-dotfile@>=1.0.0 <2.0.0",
@@ -3041,8 +3041,8 @@
 				},
 				"readable-stream": {
 					"from": "readable-stream@>=2.0.0 <3.0.0",
-					"resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.2.3.tgz",
-					"version": "2.2.3"
+					"resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.2.5.tgz",
+					"version": "2.2.5"
 				}
 			},
 			"from": "read-all-stream@>=3.0.0 <4.0.0",
@@ -3139,9 +3139,9 @@
 			"version": "2.1.0"
 		},
 		"senna": {
-			"from": "senna@>=2.1.3 <3.0.0",
-			"resolved": "https://registry.npmjs.org/senna/-/senna-2.1.3.tgz",
-			"version": "2.1.3"
+			"from": "senna@>=2.1.4 <3.0.0",
+			"resolved": "https://registry.npmjs.org/senna/-/senna-2.1.4.tgz",
+			"version": "2.1.4"
 		},
 		"sequencify": {
 			"from": "sequencify@>=0.0.7 <0.1.0",
@@ -3212,8 +3212,8 @@
 				},
 				"readable-stream": {
 					"from": "readable-stream@>=2.1.5 <3.0.0",
-					"resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.2.3.tgz",
-					"version": "2.2.3"
+					"resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.2.5.tgz",
+					"version": "2.2.5"
 				}
 			},
 			"from": "through2@>=2.0.0 <3.0.0",

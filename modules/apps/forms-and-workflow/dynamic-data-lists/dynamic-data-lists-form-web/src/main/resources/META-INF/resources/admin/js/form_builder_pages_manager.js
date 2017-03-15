@@ -480,6 +480,8 @@ AUI.add(
 
 						instance._uiSetMode(instance.get('mode'));
 
+						instance._syncControlTriggersUI();
+
 						instance._showLayout();
 					},
 

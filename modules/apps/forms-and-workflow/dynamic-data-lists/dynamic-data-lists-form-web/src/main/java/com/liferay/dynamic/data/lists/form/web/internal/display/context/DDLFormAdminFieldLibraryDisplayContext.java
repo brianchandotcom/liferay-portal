@@ -87,6 +87,10 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 		return _displayStyle;
 	}
 
+	public String[] getDisplayViews() {
+		return _DISPLAY_VIEWS;
+	}
+
 	public FieldLibrarySearch getFieldLibrarySearch() throws PortalException {
 		PortletURL portletURL = getPortletURL();
 
@@ -115,6 +119,14 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 		setFieldLibrarySearchTotal(fieldLibrarySearch);
 
 		return fieldLibrarySearch;
+	}
+
+	public String getOrderByCol() {
+		return _orderByCol;
+	}
+
+	public String getOrderByType() {
+		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() {
@@ -262,6 +274,8 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 
 		fieldLibrarySearch.setTotal(total);
 	}
+
+	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLFormAdminFieldLibraryDisplayContext.class);

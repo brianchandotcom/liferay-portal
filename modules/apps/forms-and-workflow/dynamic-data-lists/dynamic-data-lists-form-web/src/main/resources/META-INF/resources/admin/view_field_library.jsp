@@ -41,7 +41,7 @@ portletURL.setParameter("displayStyle", displayStyle);
 				modelVar="structure"
 			>
 				<portlet:renderURL var="rowURL">
-					<portlet:param name="mvcPath" value="/admin/edit_custom_field.jsp" />
+					<portlet:param name="mvcPath" value="/admin/edit_field_set.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="structureId" value="<%= String.valueOf(structure.getStructureId()) %>" />
 					<portlet:param name="displayStyle" value="<%= displayStyle %>" />

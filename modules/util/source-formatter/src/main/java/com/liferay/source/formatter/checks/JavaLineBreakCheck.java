@@ -24,7 +24,6 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.SourceFormatterMessage;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -42,10 +41,6 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 	@Override
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
-
-		if (hasGeneratedTag(content)) {
-			return new Tuple(content, Collections.emptySet());
-		}
 
 		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 

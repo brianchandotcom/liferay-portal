@@ -35,7 +35,7 @@ public class JavaLogLevelCheck extends BaseFileCheck {
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (fileName.contains("Log") || hasGeneratedTag(content)) {
+		if (fileName.contains("Log")) {
 			return new Tuple(content, Collections.emptySet());
 		}
 

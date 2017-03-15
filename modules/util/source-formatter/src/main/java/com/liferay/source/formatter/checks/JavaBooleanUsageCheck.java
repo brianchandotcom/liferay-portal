@@ -33,10 +33,6 @@ public class JavaBooleanUsageCheck extends BaseFileCheck {
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (hasGeneratedTag(content)) {
-			return new Tuple(content, Collections.emptySet());
-		}
-
 		content = _fixIncorrectBooleanUse(content, "setAttribute");
 
 		return new Tuple(content, Collections.emptySet());

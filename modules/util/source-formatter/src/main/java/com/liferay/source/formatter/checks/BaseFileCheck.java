@@ -160,17 +160,6 @@ public abstract class BaseFileCheck implements FileCheck {
 		return x + 1;
 	}
 
-	protected boolean hasGeneratedTag(String content) {
-		if ((content.contains("* @generated") || content.contains("$ANTLR")) &&
-			!content.contains("hasGeneratedTag")) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	protected boolean isExcludedPath(List<String> excludes, String path) {
 		return isExcludedPath(excludes, path, -1);
 	}

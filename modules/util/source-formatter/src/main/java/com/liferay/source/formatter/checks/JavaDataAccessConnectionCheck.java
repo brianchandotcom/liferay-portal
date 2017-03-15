@@ -29,10 +29,6 @@ public class JavaDataAccessConnectionCheck extends BaseFileCheck {
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (hasGeneratedTag(content)) {
-			return new Tuple(content, Collections.emptySet());
-		}
-
 		String packagePath = JavaSourceUtil.getPackagePath(content);
 
 		if (packagePath.startsWith("com.liferay.portal.kernel.upgrade") ||

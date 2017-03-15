@@ -36,10 +36,6 @@ public class JavaVerifyUpgradeConnectionCheck extends BaseFileCheck {
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (hasGeneratedTag(content)) {
-			return new Tuple(content, Collections.emptySet());
-		}
-
 		if (isExcludedPath(_excludes, absolutePath) ||
 			fileName.endsWith("Test.java") ||
 			fileName.endsWith("UpgradeTableListener.java") ||

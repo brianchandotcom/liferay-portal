@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,10 +32,6 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 	@Override
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
-
-		if (hasGeneratedTag(content)) {
-			return new Tuple(content, Collections.emptySet());
-		}
 
 		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 

@@ -35,9 +35,7 @@ public class JavaDiamondOperatorCheck extends BaseFileCheck {
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (hasGeneratedTag(content) ||
-			isExcludedPath(_excludes, absolutePath)) {
-
+		if (isExcludedPath(_excludes, absolutePath)) {
 			return new Tuple(content, Collections.emptySet());
 		}
 

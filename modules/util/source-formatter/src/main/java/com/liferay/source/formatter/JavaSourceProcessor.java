@@ -2281,6 +2281,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	@Override
+	protected String processFileChecks(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (hasGeneratedTag(content)) {
+			return content;
+		}
+
+		return super.processFileChecks(fileName, absolutePath, content);
+	}
+
 	protected void setBNDInheritRequiredValue(
 			String fileName, boolean bndInheritRequired)
 		throws Exception {

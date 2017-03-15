@@ -77,6 +77,7 @@ test {
 		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
 	}
 
+	systemProperty "maven.repo.local", System.properties["maven.repo.local"]
 	systemProperty "theme.builder.version", jar.version
 }
 

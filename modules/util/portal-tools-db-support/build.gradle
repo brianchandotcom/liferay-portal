@@ -49,6 +49,7 @@ test {
 
 	systemProperty "db.support.version", jar.version
 	systemProperty "h2.version", h2Version
+	systemProperty "maven.repo.local", System.properties["maven.repo.local"]
 }
 
 updateFileVersions {

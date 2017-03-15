@@ -14,6 +14,7 @@
 
 package com.liferay.exportimport.trash.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
@@ -30,10 +31,12 @@ import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Levente Hudak
  */
+@RunWith(Arquillian.class)
 @Sync
 public class ExportImportConfigurationTrashHandlerTest
 	extends BaseTrashHandlerTestCase {

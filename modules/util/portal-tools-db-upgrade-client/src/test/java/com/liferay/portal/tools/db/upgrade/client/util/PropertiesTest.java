@@ -18,32 +18,21 @@ import java.io.File;
 
 import java.nio.file.Files;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class PropertiesTest {
 
-	@Before
-	public void setUp() throws Exception {
-		_propertiesFile = new File("p.properties");
-
-		_propertiesFile.createNewFile();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		if (_propertiesFile.exists()) {
-			_propertiesFile.delete();
-		}
-	}
-
 	@Test
 	public void testEscapedProperties() throws Exception {
+		File propertiesFile = temporaryFolder.newFile("test.properties");
+
 		Properties properties = new Properties();
 
 		properties.setProperty(
@@ -54,11 +43,11 @@ public class PropertiesTest {
 		String originalValue = properties.getProperty(
 			"upgrade.processes.master");
 
-		properties.store(_propertiesFile);
+		properties.store(propertiesFile);
 
 		properties = new Properties();
 
-		properties.load(_propertiesFile);
+		properties.load(propertiesFile);
 
 		Assert.assertEquals(
 			originalValue, properties.getProperty("upgrade.processes.master"));
@@ -66,6 +55,8 @@ public class PropertiesTest {
 
 	@Test
 	public void testLoadProperties() throws Exception {
+		File propertiesFile = temporaryFolder.newFile("test.properties");
+
 		StringBuilder propertiesSB = new StringBuilder();
 
 		propertiesSB.append("index.on.upgrade=false\n");
@@ -83,11 +74,11 @@ public class PropertiesTest {
 
 		String propertiesString = propertiesSB.toString();
 
-		Files.write(_propertiesFile.toPath(), propertiesString.getBytes());
+		Files.write(propertiesFile.toPath(), propertiesString.getBytes());
 
 		Properties properties = new Properties();
 
-		properties.load(_propertiesFile);
+		properties.load(propertiesFile);
 
 		Assert.assertEquals(
 			"false", properties.getProperty("index.on.upgrade"));
@@ -95,19 +86,19 @@ public class PropertiesTest {
 
 	@Test
 	public void testWindowsPathProperties() throws Exception {
-		Properties properties = new Properties();
+		File propertiesFile = temporaryFolder.newFile("test.properties");
 
-		properties.load(_propertiesFile);
+		Properties properties = new Properties();
 
 		properties.setProperty("liferay.home", "c:\\liferay\\");
 
 		String originalValue = properties.getProperty("liferay.home");
 
-		properties.store(_propertiesFile);
+		properties.store(propertiesFile);
 
 		properties = new Properties();
 
-		properties.load(_propertiesFile);
+		properties.load(propertiesFile);
 
 		String savedValue = properties.getProperty("liferay.home");
 
@@ -116,6 +107,7 @@ public class PropertiesTest {
 		Assert.assertEquals("c:/liferay/", savedValue);
 	}
 
-	private static File _propertiesFile;
+	@Rule
+	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 }

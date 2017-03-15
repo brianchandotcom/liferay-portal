@@ -87,8 +87,6 @@ public class PropertiesTest {
 
 		properties.setProperty("liferay.home", "c:\\liferay\\");
 
-		String expectedValue = properties.getProperty("liferay.home");
-
 		properties.store(propertiesFile);
 
 		properties = new Properties();
@@ -98,7 +96,6 @@ public class PropertiesTest {
 		String actualValue = properties.getProperty("liferay.home");
 
 		Assert.assertEquals("c:/liferay/", actualValue);
-		Assert.assertNotEquals(expectedValue, actualValue);
 	}
 
 	@Rule

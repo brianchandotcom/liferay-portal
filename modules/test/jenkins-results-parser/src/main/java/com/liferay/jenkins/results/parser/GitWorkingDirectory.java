@@ -327,11 +327,11 @@ public class GitWorkingDirectory {
 		commitCommand.call();
 	}
 
-	public void createBranch(String branchName) throws GitAPIException {
-		createBranch(branchName, false, "HEAD");
+	public void createLocalBranch(String branchName) throws GitAPIException {
+		createLocalBranch(branchName, false, "HEAD");
 	}
 
-	public void createBranch(String branchName, boolean force, String sha)
+	public void createLocalBranch(String branchName, boolean force, String sha)
 		throws GitAPIException {
 
 		System.out.println(
@@ -378,12 +378,14 @@ public class GitWorkingDirectory {
 		return pullRequestURL;
 	}
 
-	public void deleteBranch(String branchName) throws GitAPIException {
-		System.out.println("Delete branch " + branchName);
+	public void deleteLocalBranch(String localBranchName)
+		throws GitAPIException {
+
+		System.out.println("Delete local branch " + localBranchName);
 
 		DeleteBranchCommand deleteBranchCommand = _git.branchDelete();
 
-		deleteBranchCommand.setBranchNames(branchName);
+		deleteBranchCommand.setBranchNames(localBranchName);
 		deleteBranchCommand.setForce(true);
 
 		deleteBranchCommand.call();

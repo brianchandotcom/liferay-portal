@@ -1001,9 +1001,8 @@ public class JenkinsResultsParserUtil {
 					throw ioe;
 				}
 
-				if (debug) {
-					System.out.println("Retry in " + retryPeriod + " seconds");
-				}
+				System.out.println(
+					"Retrying " + url + " in " + retryPeriod + " seconds");
 
 				sleep(1000 * retryPeriod);
 			}

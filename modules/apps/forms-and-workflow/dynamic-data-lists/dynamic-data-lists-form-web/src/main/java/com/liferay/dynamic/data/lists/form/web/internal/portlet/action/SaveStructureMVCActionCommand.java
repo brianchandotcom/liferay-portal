@@ -56,11 +56,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
-		"mvc.command.name=saveFieldSet"
+		"mvc.command.name=saveStructure"
 	},
 	service = MVCActionCommand.class
 )
-public class SaveFieldSetMVCActionCommand extends BaseMVCActionCommand {
+public class SaveStructureMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -74,20 +74,34 @@ public class SaveFieldSetMVCActionCommand extends BaseMVCActionCommand {
 			DDMStructure.class.getName(), actionRequest);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long structureId = ParamUtil.getLong(actionRequest, "structureId");
 		String structureKey = ParamUtil.getString(
 			actionRequest, "structureKey");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		DDMForm ddmForm = getDDMForm(actionRequest);
 		DDMFormLayout ddmFormLayout = getDDMFormLayout(actionRequest);
+		DDMStructure ddmStructure = null;
 
-		DDMStructure ddmStructure = _ddmStructureService.addStructure(
-			groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-			_portal.getClassNameId(DDLRecordSet.class), structureKey,
-			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
-			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), description),
-			ddmForm, ddmFormLayout, StorageType.JSON.toString(),
-			DDMStructureConstants.TYPE_FRAGMENT, serviceContext);
+		if (structureId == 0) {
+			ddmStructure = _ddmStructureService.addStructure(
+				groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+				_portal.getClassNameId(DDLRecordSet.class), structureKey,
+				getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
+				getLocalizedMap(
+					themeDisplay.getSiteDefaultLocale(), description),
+				ddmForm, ddmFormLayout, StorageType.JSON.toString(),
+				DDMStructureConstants.TYPE_FRAGMENT, serviceContext);
+		}
+		else {
+			ddmStructure = _ddmStructureService.updateStructure(
+				groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+				_portal.getClassNameId(DDLRecordSet.class), structureKey,
+				getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
+				getLocalizedMap(
+					themeDisplay.getSiteDefaultLocale(), description),
+				ddmForm, ddmFormLayout, serviceContext);
+		}
 
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, themeDisplay.getPpid(), PortletRequest.RENDER_PHASE);

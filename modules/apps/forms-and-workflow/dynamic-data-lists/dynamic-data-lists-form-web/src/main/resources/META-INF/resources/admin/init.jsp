@@ -74,9 +74,21 @@ page import="java.util.Map" %>
 <portlet:defineObjects />
 
 <%
-DDLFormAdminDisplayContext ddlFormAdminDisplayContext = (DDLFormAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+DDLFormAdminDisplayContext ddlFormAdminDisplayContext = null;
+DDLFormAdminFieldLibraryDisplayContext ddlFormAdminFieldLibraryDisplayContext = null;
+PortletURL fieldLibraryPortletURL = null;
 
-DDLFormAdminFieldLibraryDisplayContext ddlFormAdminFieldLibraryDisplayContext = ddlFormAdminDisplayContext.getDDLFormAdminFieldLibraryDisplayContext();
+Object portletDisplayContext = request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+if (portletDisplayContext instanceof DDLFormAdminFieldLibraryDisplayContext) {
+	ddlFormAdminFieldLibraryDisplayContext = (DDLFormAdminFieldLibraryDisplayContext)portletDisplayContext;
+	ddlFormAdminDisplayContext = ddlFormAdminFieldLibraryDisplayContext.getDDLFormAdminDisplayContext();
+
+	fieldLibraryPortletURL = ddlFormAdminFieldLibraryDisplayContext.getPortletURL();
+}
+else {
+	ddlFormAdminDisplayContext = (DDLFormAdminDisplayContext)portletDisplayContext;
+}
 %>
 
 <%@ include file="/admin/init-ext.jsp" %>

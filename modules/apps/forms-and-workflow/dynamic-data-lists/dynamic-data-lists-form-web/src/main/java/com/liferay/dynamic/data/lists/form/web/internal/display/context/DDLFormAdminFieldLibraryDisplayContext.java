@@ -14,11 +14,14 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.display.context;
 
-import com.liferay.dynamic.data.lists.form.web.internal.display.context.util.DDLFormAdminRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.internal.search.FieldLibrarySearch;
 import com.liferay.dynamic.data.lists.form.web.internal.search.FieldLibrarySearchTerms;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
@@ -29,6 +32,7 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -36,6 +40,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -47,19 +52,13 @@ import javax.portlet.RenderResponse;
 public class DDLFormAdminFieldLibraryDisplayContext {
 
 	public DDLFormAdminFieldLibraryDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		DDLFormAdminRequestHelper ddlFormAdminRequestHelper,
-		DDMStructureService ddmStructureService, String displayStyle,
-		String orderByCol, String orderByType, String keywords) {
+		DDLFormAdminDisplayContext ddlFormAdminDisplayContext) {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
-		_ddlFormAdminRequestHelper = ddlFormAdminRequestHelper;
-		_ddmStructureService = ddmStructureService;
-		_displayStyle = displayStyle;
-		_orderByCol = orderByCol;
-		_orderByType = orderByType;
-		_keywords = keywords;
+		_ddlFormAdminDisplayContext = ddlFormAdminDisplayContext;
+	}
+
+	public DDLFormAdminDisplayContext getDDLFormAdminDisplayContext() {
+		return _ddlFormAdminDisplayContext;
 	}
 
 	public DDMStructure getDDMStructure() {
@@ -67,11 +66,14 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 			return _ddmStructure;
 		}
 
-		long structureId = ParamUtil.getLong(_renderRequest, "structureId");
+		long structureId = ParamUtil.getLong(getRenderRequest(), "structureId");
 
 		if (structureId > 0) {
 			try {
-				_ddmStructure = _ddmStructureService.getStructure(structureId);
+				DDMStructureService ddmStructureService =
+					getDDMStructureService();
+
+				_ddmStructure = ddmStructureService.getStructure(structureId);
 			}
 			catch (PortalException pe) {
 				if (_log.isDebugEnabled()) {
@@ -84,27 +86,30 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		return _displayStyle;
+		return _ddlFormAdminDisplayContext.getDisplayStyle();
 	}
 
 	public String[] getDisplayViews() {
-		return _DISPLAY_VIEWS;
+		return _ddlFormAdminDisplayContext.getDisplayViews();
 	}
 
 	public FieldLibrarySearch getFieldLibrarySearch() throws PortalException {
 		PortletURL portletURL = getPortletURL();
 
-		portletURL.setParameter("displayStyle", _displayStyle);
+		portletURL.setParameter("displayStyle", getDisplayStyle());
 
 		FieldLibrarySearch fieldLibrarySearch = new FieldLibrarySearch(
-			_renderRequest, portletURL);
+			getRenderRequest(), portletURL);
+
+		String orderByCol = getOrderByCol();
+		String orderByType = getOrderByType();
 
 		OrderByComparator<DDMStructure> orderByComparator =
-			getDDMStructureOrderByComparator(_orderByCol, _orderByType);
+			getDDMStructureOrderByComparator(orderByCol, orderByType);
 
-		fieldLibrarySearch.setOrderByCol(_orderByCol);
+		fieldLibrarySearch.setOrderByCol(orderByCol);
 		fieldLibrarySearch.setOrderByComparator(orderByComparator);
-		fieldLibrarySearch.setOrderByType(_orderByType);
+		fieldLibrarySearch.setOrderByType(orderByType);
 
 		if (fieldLibrarySearch.isSearch()) {
 			fieldLibrarySearch.setEmptyResultsMessage(
@@ -122,29 +127,74 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		return _orderByCol;
+		return _ddlFormAdminDisplayContext.getOrderByCol();
 	}
 
 	public String getOrderByType() {
-		return _orderByType;
+		return _ddlFormAdminDisplayContext.getOrderByType();
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
+		RenderResponse renderResponse = getRenderResponse();
+
+		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/admin/view.jsp");
-		portletURL.setParameter(
-			"groupId",
-			String.valueOf(_ddlFormAdminRequestHelper.getScopeGroupId()));
-		portletURL.setParameter("tabs1", "field-library");
+		portletURL.setParameter("groupId", String.valueOf(getScopeGroupId()));
+		portletURL.setParameter("currentTab", "field-library");
 
 		return portletURL;
 	}
 
+	public String getSerializedDDMForm() throws PortalException {
+		String definition = ParamUtil.getString(
+			getRenderRequest(), "definition");
+
+		if (Validator.isNotNull(definition)) {
+			return definition;
+		}
+
+		DDMStructure ddmStructure = getDDMStructure();
+
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.addAvailableLocale(getSiteDefaultLocale());
+		ddmForm.setDefaultLocale(getSiteDefaultLocale());
+
+		if (ddmStructure != null) {
+			ddmForm = ddmStructure.getDDMForm();
+		}
+
+		DDMFormJSONSerializer ddmFormJSONSerializer =
+			getDDMFormJSONSerializer();
+
+		return ddmFormJSONSerializer.serialize(ddmForm);
+	}
+
+	public String getSerializedDDMFormLayout() throws PortalException {
+		String layout = ParamUtil.getString(getRenderRequest(), "layout");
+
+		if (Validator.isNotNull(layout)) {
+			return layout;
+		}
+
+		DDMStructure ddmStructure = getDDMStructure();
+
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		if (ddmStructure != null) {
+			ddmFormLayout = ddmStructure.getDDMFormLayout();
+		}
+
+		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer =
+			getDDMFormLayoutJSONSerializer();
+
+		return ddmFormLayoutJSONSerializer.serialize(ddmFormLayout);
+	}
+
 	public boolean isShowAddButton() {
 		return DDLPermission.contains(
-			_ddlFormAdminRequestHelper.getPermissionChecker(),
-			_ddlFormAdminRequestHelper.getScopeGroupId(), "ADD_STRUCTURE");
+			getPermissionChecker(), getScopeGroupId(), "ADD_STRUCTURE");
 	}
 
 	public boolean isShowSearch() throws PortalException {
@@ -157,6 +207,18 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 		}
 
 		return false;
+	}
+
+	protected long getCompanyId() {
+		return _ddlFormAdminDisplayContext.getCompanyId();
+	}
+
+	protected DDMFormJSONSerializer getDDMFormJSONSerializer() {
+		return _ddlFormAdminDisplayContext.getDDMFormJSONSerializer();
+	}
+
+	protected DDMFormLayoutJSONSerializer getDDMFormLayoutJSONSerializer() {
+		return _ddlFormAdminDisplayContext.getDDMFormLayoutJSONSerializer();
 	}
 
 	protected OrderByComparator<DDMStructure> getDDMStructureOrderByComparator(
@@ -183,6 +245,34 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 		return orderByComparator;
 	}
 
+	protected DDMStructureService getDDMStructureService() {
+		return _ddlFormAdminDisplayContext.getDDMStructureService();
+	}
+
+	protected String getKeywords() {
+		return ParamUtil.getString(getRenderRequest(), "keywords");
+	}
+
+	protected PermissionChecker getPermissionChecker() {
+		return _ddlFormAdminDisplayContext.getPermissionChecker();
+	}
+
+	protected RenderRequest getRenderRequest() {
+		return _ddlFormAdminDisplayContext.getRenderRequest();
+	}
+
+	protected RenderResponse getRenderResponse() {
+		return _ddlFormAdminDisplayContext.getRenderResponse();
+	}
+
+	protected long getScopeGroupId() {
+		return _ddlFormAdminDisplayContext.getScopeGroupId();
+	}
+
+	protected Locale getSiteDefaultLocale() {
+		return _ddlFormAdminDisplayContext.getSiteDefaultLocale();
+	}
+
 	protected int getTotal() throws PortalException {
 		FieldLibrarySearch fieldLibrarySearch = getFieldLibrarySearch();
 
@@ -198,7 +288,7 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 	}
 
 	protected boolean isSearch() {
-		if (Validator.isNotNull(_keywords)) {
+		if (Validator.isNotNull(getKeywords())) {
 			return true;
 		}
 
@@ -213,10 +303,11 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 
 		List<DDMStructure> results = null;
 
+		DDMStructureService ddmStructureService = getDDMStructureService();
+
 		if (fieldLibrarySearchTerms.isAdvancedSearch()) {
-			results = _ddmStructureService.search(
-				_ddlFormAdminRequestHelper.getCompanyId(),
-				new long[] {_ddlFormAdminRequestHelper.getScopeGroupId()},
+			results = ddmStructureService.search(
+				getCompanyId(), new long[] {getScopeGroupId()},
 				PortalUtil.getClassNameId(DDLRecordSet.class),
 				fieldLibrarySearchTerms.getName(),
 				fieldLibrarySearchTerms.getDescription(),
@@ -228,9 +319,8 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 				fieldLibrarySearch.getOrderByComparator());
 		}
 		else {
-			results = _ddmStructureService.search(
-				_ddlFormAdminRequestHelper.getCompanyId(),
-				new long[] {_ddlFormAdminRequestHelper.getScopeGroupId()},
+			results = ddmStructureService.search(
+				getCompanyId(), new long[] {getScopeGroupId()},
 				PortalUtil.getClassNameId(DDLRecordSet.class),
 				fieldLibrarySearchTerms.getKeywords(),
 				DDMStructureConstants.TYPE_FRAGMENT,
@@ -248,12 +338,13 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 		FieldLibrarySearchTerms fieldLibrarySearchTerms =
 			(FieldLibrarySearchTerms)fieldLibrarySearch.getSearchTerms();
 
+		DDMStructureService ddmStructureService = getDDMStructureService();
+
 		int total = 0;
 
 		if (fieldLibrarySearchTerms.isAdvancedSearch()) {
-			total = _ddmStructureService.searchCount(
-				_ddlFormAdminRequestHelper.getCompanyId(),
-				new long[] {_ddlFormAdminRequestHelper.getScopeGroupId()},
+			total = ddmStructureService.searchCount(
+				getCompanyId(), new long[] {getScopeGroupId()},
 				PortalUtil.getClassNameId(DDLRecordSet.class),
 				fieldLibrarySearchTerms.getName(),
 				fieldLibrarySearchTerms.getDescription(),
@@ -263,9 +354,8 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 				fieldLibrarySearchTerms.isAndOperator());
 		}
 		else {
-			total = _ddmStructureService.searchCount(
-				_ddlFormAdminRequestHelper.getCompanyId(),
-				new long[] {_ddlFormAdminRequestHelper.getScopeGroupId()},
+			total = ddmStructureService.searchCount(
+				getCompanyId(), new long[] {getScopeGroupId()},
 				PortalUtil.getClassNameId(DDLRecordSet.class),
 				fieldLibrarySearchTerms.getKeywords(),
 				DDMStructureConstants.TYPE_FRAGMENT,
@@ -275,19 +365,10 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 		fieldLibrarySearch.setTotal(total);
 	}
 
-	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLFormAdminFieldLibraryDisplayContext.class);
 
-	private final DDLFormAdminRequestHelper _ddlFormAdminRequestHelper;
+	private final DDLFormAdminDisplayContext _ddlFormAdminDisplayContext;
 	private DDMStructure _ddmStructure;
-	private final DDMStructureService _ddmStructureService;
-	private final String _displayStyle;
-	private final String _keywords;
-	private final String _orderByCol;
-	private final String _orderByType;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
 
 }

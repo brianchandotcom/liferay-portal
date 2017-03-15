@@ -985,7 +985,6 @@
 		<execute function="AssertElementPresent" locator1="Portlet#H2_HEADER" value1="Dynamic Data Lists Display" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel}" />
-
 		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD_1" value1="${ddlRecordFieldData}" />
 
 		<if>

@@ -1233,8 +1233,8 @@ dependency to version 2.1.9.
 ## 3.2.17 - 2017-03-09
 
 ### Added
-- [LPS-70634]: Use the `liferayTheme.distName` property in the `package.json`
-file as value of the `archivesBaseName` property of theme projects, if present.
+- [LPS-70634]: Use the `package.json` file's `liferayTheme.distName` property as
+the `archivesBaseName` property's value for theme projects, if present.
 
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency

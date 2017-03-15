@@ -40,7 +40,7 @@ renderResponse.setTitle((ddmStructure == null) ? LanguageUtil.get(request, "new-
 <div class="loading-animation" id="<portlet:namespace />loader"></div>
 
 <portlet:actionURL name="saveFieldSet" var="saveFieldSetURL">
-	<portlet:param name="mvcPath" value="/admin/edit_field_set.jsp" />
+	<portlet:param name="mvcPath" value="/admin/field-library/edit.jsp" />
 </portlet:actionURL>
 
 <div class="hide portlet-forms" id="<portlet:namespace />formContainer">

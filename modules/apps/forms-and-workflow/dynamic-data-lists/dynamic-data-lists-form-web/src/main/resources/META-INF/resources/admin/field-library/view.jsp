@@ -41,7 +41,7 @@ portletURL.setParameter("displayStyle", displayStyle);
 				modelVar="structure"
 			>
 				<portlet:renderURL var="rowURL">
-					<portlet:param name="mvcPath" value="/admin/edit_field_set.jsp" />
+					<portlet:param name="mvcPath" value="/admin/field-library/edit.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="structureId" value="<%= String.valueOf(structure.getStructureId()) %>" />
 					<portlet:param name="displayStyle" value="<%= displayStyle %>" />
@@ -57,11 +57,11 @@ portletURL.setParameter("displayStyle", displayStyle);
 						<liferay-ui:search-container-column-jsp
 							colspan="<%= 2 %>"
 							href="<%= rowURL %>"
-							path="/admin/view_field_library_descriptive.jsp"
+							path="/admin/field-library/view_descriptive.jsp"
 						/>
 
 						<liferay-ui:search-container-column-jsp
-							path="/admin/field_library_action.jsp"
+							path="/admin/field-library/action.jsp"
 						/>
 					</c:when>
 					<c:otherwise>
@@ -84,7 +84,7 @@ portletURL.setParameter("displayStyle", displayStyle);
 						/>
 
 						<liferay-ui:search-container-column-jsp
-							path="/admin/field_library_action.jsp"
+							path="/admin/field-library/action.jsp"
 						/>
 					</c:otherwise>
 				</c:choose>
@@ -97,7 +97,7 @@ portletURL.setParameter("displayStyle", displayStyle);
 
 <c:if test="<%= ddlFormAdminFieldLibraryDisplayContext.isShowAddButton() %>">
 	<portlet:renderURL var="addFieldSetURL">
-		<portlet:param name="mvcPath" value="/admin/edit_field_set.jsp" />
+		<portlet:param name="mvcPath" value="/admin/field-library/edit.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 	</portlet:renderURL>

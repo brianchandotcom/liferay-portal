@@ -29,8 +29,8 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "forms");
 		<liferay-util:include page="/admin/view_forms.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= tabs1.equals("field-library") %>'>
-		<liferay-util:include page="/admin/field_library_toolbar.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/field-library/toolbar.jsp" servletContext="<%= application %>" />
 
-		<liferay-util:include page="/admin/view_field_library.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/field-library/view.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>

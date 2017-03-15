@@ -27,7 +27,7 @@ if (delta > 0) {
 %>
 
 <liferay-frontend:management-bar-display-buttons
-	displayViews="<%= ddlFormAdminFieldLibrayDisplayContext.getDisplayViews() %>"
+	displayViews="<%= ddlFormAdminFieldLibraryDisplayContext.getDisplayViews() %>"
 	portletURL="<%= displayStyleURL %>"
-	selectedDisplayStyle="<%= ddlFormAdminFieldLibrayDisplayContext.getDisplayStyle() %>"
+	selectedDisplayStyle="<%= ddlFormAdminFieldLibraryDisplayContext.getDisplayStyle() %>"
 />

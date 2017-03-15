@@ -35,6 +35,7 @@ import com.liferay.source.formatter.checks.JavaLineBreakCheck;
 import com.liferay.source.formatter.checks.JavaLogLevelCheck;
 import com.liferay.source.formatter.checks.JavaLongLinesCheck;
 import com.liferay.source.formatter.checks.JavaPackagePathCheck;
+import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -477,41 +478,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkVerifyUpgradeConnection(
-		String fileName, String className, String content) {
-
-		if (fileName.endsWith("Test.java") ||
-			fileName.endsWith("UpgradeTableListener.java") ||
-			(!className.contains("Upgrade") && !className.contains("Verify"))) {
-
-			return;
-		}
-
-		if (isExcludedPath(
-				_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES, fileName) ||
-			content.contains("ThrowableAwareRunnable")) {
-
-			return;
-		}
-
-		int x = -1;
-
-		while (true) {
-			x = content.indexOf(
-				"DataAccess.getUpgradeOptimizedConnection", x + 1);
-
-			if (x == -1) {
-				break;
-			}
-
-			processMessage(
-				fileName,
-				"Use existing connection field instead of " +
-					"DataAccess.getUpgradeOptimizedConnection",
-				getLineCount(content, x));
-		}
-	}
-
 	protected void checkXMLSecurity(
 		String fileName, String content, boolean isRunOutsidePortalExclusion) {
 
@@ -914,12 +880,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		newContent = fixIncorrectBooleanUse(newContent, "setAttribute");
-
-		// LPS-65213
-
-		if (portalSource || subrepository) {
-			checkVerifyUpgradeConnection(fileName, className, newContent);
-		}
 
 		// LPS-69494
 
@@ -2083,6 +2043,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			new JavaLongLinesCheck(_lineLengthExcludes, sourceFormatterArgs));
 		fileChecks.add(new JavaPackagePathCheck());
 
+		if (portalSource || subrepository) {
+			fileChecks.add(
+				new JavaVerifyUpgradeConnectionCheck(
+					_upgradeDataAccessConnectionExcludes));
+		}
+
 		return fileChecks;
 	}
 
@@ -2561,6 +2527,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_diamondOperatorExcludes = getExcludes(_DIAMOND_OPERATOR_EXCLUDES);
 		_fitOnSingleLineExcludes = getExcludes(_FIT_ON_SINGLE_LINE_EXCLUDES);
 		_lineLengthExcludes = getExcludes(_LINE_LENGTH_EXCLUDES);
+		_upgradeDataAccessConnectionExcludes = getExcludes(
+			_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES);
 	}
 
 	protected void processCheckStyle() throws Exception {
@@ -2764,6 +2732,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();
+	private List<String> _upgradeDataAccessConnectionExcludes;
 	private final Pattern _upgradeClassNamePattern = Pattern.compile(
 		"new .*?(\\w+)\\(", Pattern.DOTALL);
 

@@ -103,6 +103,8 @@ AUI.add(
 						instance.after('*:valueChange', A.bind(instance._afterValueChange, instance));
 
 						instance.on('*:valueChange', A.bind(instance._handleActionChange, instance));
+
+						instance.on('*:valueChange', A.bind(instance._handleActionUpdates, instance));
 					},
 
 					render: function(rule) {
@@ -208,11 +210,13 @@ AUI.add(
 
 						var target = instance._actionFactory.createAction(type, index, action, container);
 
+						target.render(container);
+
+						target.conditionChange(instance._getConditionSelectedFieldsPage());
+
 						if (action && action.target) {
 							target.set('value', action.target);
 						}
-
-						target.render(container);
 
 						instance._actions[index + '-action'] = target;
 					},
@@ -260,27 +264,37 @@ AUI.add(
 						for (var i = indexes.length - 1; i >= 0; i--) {
 							var currentIndex = indexes[i];
 
-							var action = {
-								action: instance._actions[currentIndex + '-target'].getValue()
-							};
-
-							var target;
-
-							var targetField = instance._actions[currentIndex + '-action'];
-
-							if (targetField) {
-								target = targetField.getValue();
-							}
+							var targetAction = instance._actions[currentIndex + '-action'];
 
 							actions.push(
 								A.merge(
-									target,
-									action
+									{
+										action: instance._actions[currentIndex + '-target'].getValue()
+									},
+									targetAction ? targetAction.getValue() : undefined
 								)
 							);
 						}
 
 						return actions;
+					},
+
+					_getConditionSelectedFieldsPage: function() {
+						var instance = this;
+
+						var fields = [];
+
+						for (var conditionKey in instance._conditions) {
+							if (!!conditionKey.match('-condition-second-operand-select') || !!conditionKey.match('-condition-first-operand')) {
+								var fieldName = instance._conditions[conditionKey].getValue();
+
+								if (fieldName) {
+									fields.push(instance._getFieldPageIndex(fieldName));
+								}
+							}
+						}
+
+						return fields;
 					},
 
 					_getFieldDataType: function(fieldName) {
@@ -293,6 +307,18 @@ AUI.add(
 						);
 
 						return field.dataType;
+					},
+
+					_getFieldPageIndex: function(fieldName) {
+						var instance = this;
+
+						var field = instance.get('fields').find(
+							function(field) {
+								return field.value === fieldName;
+							}
+						);
+
+						return field.pageIndex;
 					},
 
 					_getOptionsLabel: function(field, optionValue) {
@@ -337,6 +363,26 @@ AUI.add(
 							var index = fieldName.split('-')[0];
 
 							instance._createTargetSelect(index, event.newVal[0]);
+						}
+					},
+
+					_handleActionUpdates: function(event) {
+						var instance = this;
+
+						var field = event.target;
+
+						var fieldName = field.get('fieldName');
+
+						if (field.getValue() && fieldName &&
+							(fieldName.match('-condition-first-operand') ||
+							fieldName.match('-condition-second-operand-select'))) {
+							for (var key in instance._actions) {
+								var action = instance._actions[key];
+
+								if (key.match('-action') && action.get('type') === 'jump-to-page') {
+									action.conditionChange(instance._getConditionSelectedFieldsPage());
+								}
+							}
 						}
 					},
 

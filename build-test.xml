@@ -6037,6 +6037,19 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<start-android-device />
 	</target>
 
+	<target name="prepare-osgi-module-configurations">
+		<get-testcase-property property.name="osgi.module.configurations" />
+
+		<if>
+			<not>
+				<contains string="${osgi.module.configurations}" substring="maxChallenges" />
+			</not>
+			<then>
+				<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">maxChallenges=&quot;-1&quot;</echo>
+			</then>
+		</if>
+	</target>
+
 	<target name="prepare-portal-ext-properties">
 		<delete file="portal-impl/src/portal-ext.properties" />
 
@@ -9012,6 +9025,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<delete failonerror="false" file="${app.server.classes.portal.dir}/system-ext.properties" />
 			</then>
 			<else>
+				<antcall target="prepare-osgi-module-configurations" />
+
 				<antcall target="prepare-portal-properties" />
 
 				<antcall target="prepare-portal-ext-properties" />

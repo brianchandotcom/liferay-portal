@@ -44,7 +44,7 @@ public class SQLServerSQLTransformerTest extends BaseSQLTransformerTestCase {
 
 	@Override
 	protected String getBitwiseCheckTransformedSQL() {
-		return "select (foo &  bar) from Foo";
+		return "select (foo & bar) from Foo";
 	}
 
 	@Override
@@ -59,12 +59,12 @@ public class SQLServerSQLTransformerTest extends BaseSQLTransformerTestCase {
 
 	@Override
 	protected String getIntegerDivisionTransformedSQL() {
-		return "select foo /  bar from Foo";
+		return "select foo / bar from Foo";
 	}
 
 	@Override
 	protected String getModTransformedSQL() {
-		return "select foo %  bar from Foo";
+		return "select foo % bar from Foo";
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class SQLServerSQLTransformerTest extends BaseSQLTransformerTestCase {
 
 	@Override
 	protected String getSubstrTransformedSQL() {
-		return "select SUBSTRING(foo,  1,  1) from Foo";
+		return "select SUBSTRING(foo, 1, 1) from Foo";
 	}
 
 	@Override

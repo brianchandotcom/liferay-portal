@@ -49,7 +49,7 @@ public class MySQLSQLTransformerTest extends BaseSQLTransformerTestCase {
 
 	@Override
 	protected String getBitwiseCheckTransformedSQL() {
-		return "select (foo &  bar) from Foo";
+		return "select (foo & bar) from Foo";
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class MySQLSQLTransformerTest extends BaseSQLTransformerTestCase {
 
 	@Override
 	protected String getIntegerDivisionTransformedSQL() {
-		return "select foo DIV  bar from Foo";
+		return "select foo DIV bar from Foo";
 	}
 
 	@Override

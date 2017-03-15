@@ -1,7 +1,7 @@
 <definition component-name="portal-security">
 	<property name="osgi.module.configuration.file.names" value="com.liferay.captcha.configuration.CaptchaConfiguration.config" />
 	<property name="osgi.module.configurations" value="maxChallenges=&quot;0&quot;" />
-	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Security" />
 
 	<set-up>

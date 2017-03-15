@@ -14,10 +14,19 @@
 
 package com.liferay.source.formatter.checks.util;
 
+import com.liferay.portal.kernel.util.CharPool;
+
 /**
  * @author Hugo Huijser
  */
 public class JavaSourceUtil extends SourceUtil {
+
+	public static String getClassName(String fileName) {
+		int x = fileName.lastIndexOf(CharPool.SLASH);
+		int y = fileName.lastIndexOf(CharPool.PERIOD);
+
+		return fileName.substring(x + 1, y);
+	}
 
 	public static boolean isValidJavaParameter(String javaParameter) {
 		if (javaParameter.contains(" implements ") ||

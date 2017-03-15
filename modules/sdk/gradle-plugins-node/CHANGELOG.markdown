@@ -88,7 +88,7 @@ of failure.
 
 ### Changed
 - [LPS-70634]: Reuse the `package.json` file of a project, if it exists, while
-executing a task of type `PublishNodeModuleTask`.
+executing the `PublishNodeModuleTask`.
 
 ## 2.0.2 - 2017-03-13
 

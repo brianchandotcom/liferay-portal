@@ -109,9 +109,9 @@ public class MergeCentralSubrepositoryUtil {
 
 		centralGitWorkingDirectory.checkoutBranch(topLevelBranchName);
 
-		centralGitWorkingDirectory.deleteBranch(mergeBranchName);
+		centralGitWorkingDirectory.deleteLocalBranch(mergeBranchName);
 
-		centralGitWorkingDirectory.createBranch(mergeBranchName);
+		centralGitWorkingDirectory.createLocalBranch(mergeBranchName);
 
 		centralGitWorkingDirectory.checkoutBranch(mergeBranchName);
 	}

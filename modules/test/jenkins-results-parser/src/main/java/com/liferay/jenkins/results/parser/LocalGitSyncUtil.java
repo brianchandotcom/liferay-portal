@@ -111,7 +111,7 @@ public class LocalGitSyncUtil {
 				gitWorkingDirectory.checkoutBranch(
 					tempUpstreamRemoteConfig.getName() + "/master", "-f");
 
-				gitWorkingDirectory.deleteBranch("master");
+				gitWorkingDirectory.deleteLocalBranch("master");
 
 				gitWorkingDirectory.checkoutBranch("master", "-b");
 
@@ -119,12 +119,12 @@ public class LocalGitSyncUtil {
 
 				// gitWorkingDirectory.copyUpstreamRefsToHeads();
 
-				gitWorkingDirectory.createBranch(cacheBranchName, true, null);
+				gitWorkingDirectory.createLocalBranch(cacheBranchName, true, null);
 
 				gitWorkingDirectory.fetch(
 					cacheBranchName, senderBranchName, senderRemoteConfig);
 
-				gitWorkingDirectory.createBranch(
+				gitWorkingDirectory.createLocalBranch(
 					cacheBranchName, true, senderSHA);
 
 				if (pullRequest) {
@@ -151,7 +151,7 @@ public class LocalGitSyncUtil {
 					gitWorkingDirectory.checkoutBranch("master");
 				}
 
-				gitWorkingDirectory.deleteBranch(cacheBranchName);
+				gitWorkingDirectory.deleteLocalBranch(cacheBranchName);
 			}
 		}
 		finally {
@@ -352,7 +352,7 @@ public class LocalGitSyncUtil {
 			if (localBranchName.matches(_cachedBranchRegex) &&
 				!localBranchName.equals(excludeBranchName)) {
 
-				gitWorkingDirectory.deleteBranch(localBranchName);
+				gitWorkingDirectory.deleteLocalBranch(localBranchName);
 			}
 		}
 	}

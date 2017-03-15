@@ -48,8 +48,13 @@ public class JavaExceptionCheck extends BaseFileCheck {
 		int skipVariableNameCheckEndPos = -1;
 
 		while (matcher.find()) {
-			String exceptionClassName = matcher.group(2);
-			String exceptionVariableName = matcher.group(3);
+			if (Validator.isNotNull(matcher.group(2))) {
+				return StringUtil.replaceFirst(
+					content, "final ", StringPool.BLANK, matcher.start());
+			}
+
+			String exceptionClassName = matcher.group(3);
+			String exceptionVariableName = matcher.group(4);
 			String tabs = matcher.group(1);
 
 			String expectedExceptionVariableName = "e";
@@ -139,7 +144,7 @@ public class JavaExceptionCheck extends BaseFileCheck {
 	}
 
 	private final Pattern _catchExceptionPattern = Pattern.compile(
-		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
+		"\n(\t+)catch \\((final )?(.+Exception) (.+)\\) \\{\n");
 	private final Pattern _lowerCaseNumberOrPeriodPattern = Pattern.compile(
 		"[a-z0-9.]");
 	private final Pattern _throwsExceptionsPattern = Pattern.compile(

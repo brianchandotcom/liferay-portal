@@ -455,44 +455,12 @@ public class GitWorkingDirectory {
 		fetch(remoteConfig, refSpec);
 	}
 
-	public List<Ref> getAllBranchRefs() throws GitAPIException {
+	public List<Ref> getBranchRefs() throws GitAPIException {
 		ListBranchCommand listBranchCommand = _git.branchList();
 
 		listBranchCommand.setListMode(ListMode.ALL);
 
 		return listBranchCommand.call();
-	}
-
-	public List<String> getAllLocalBranchNames() throws GitAPIException {
-		List<Ref> allLocalBranchRefs = new ArrayList<>();
-
-		for (Ref branchRef : getAllBranchRefs()) {
-			String branchName = branchRef.getName();
-
-			if (branchName.startsWith("refs/heads")) {
-				allLocalBranchRefs.add(branchRef);
-			}
-		}
-
-		return toShortNameList(allLocalBranchRefs);
-	}
-
-	public List<String> getAllRemoteRepositoryBranchNames(
-			RemoteConfig remoteConfig)
-		throws GitAPIException {
-
-		LsRemoteCommand lsRemoteCommand = Git.lsRemoteRepository();
-
-		lsRemoteCommand.setHeads(true);
-		lsRemoteCommand.setRemote(getRemoteURL(remoteConfig));
-		lsRemoteCommand.setTags(false);
-
-		List<String> remoteBranchNames = toShortNameList(
-			lsRemoteCommand.call());
-
-		Collections.sort(remoteBranchNames);
-
-		return remoteBranchNames;
 	}
 
 	public String getCurrentBranch() {
@@ -530,6 +498,20 @@ public class GitWorkingDirectory {
 
 	public File getGitDirectory() {
 		return _gitDirectory;
+	}
+
+	public List<String> getLocalBranchNames() throws GitAPIException {
+		List<Ref> allLocalBranchRefs = new ArrayList<>();
+
+		for (Ref branchRef : getBranchRefs()) {
+			String branchName = branchRef.getName();
+
+			if (branchName.startsWith("refs/heads")) {
+				allLocalBranchRefs.add(branchRef);
+			}
+		}
+
+		return toShortNameList(allLocalBranchRefs);
 	}
 
 	public RemoteConfig getRemoteConfig(String remoteName)
@@ -570,6 +552,24 @@ public class GitWorkingDirectory {
 		return remoteNames;
 	}
 
+	public List<String> getRemoteRepositoryBranchNames(
+			RemoteConfig remoteConfig)
+		throws GitAPIException {
+
+		LsRemoteCommand lsRemoteCommand = Git.lsRemoteRepository();
+
+		lsRemoteCommand.setHeads(true);
+		lsRemoteCommand.setRemote(getRemoteURL(remoteConfig));
+		lsRemoteCommand.setTags(false);
+
+		List<String> remoteBranchNames = toShortNameList(
+			lsRemoteCommand.call());
+
+		Collections.sort(remoteBranchNames);
+
+		return remoteBranchNames;
+	}
+
 	public String getRepositoryName() {
 		return _repositoryName;
 	}
@@ -584,6 +584,12 @@ public class GitWorkingDirectory {
 
 	public File getWorkingDirectory() {
 		return _workingDirectory;
+	}
+
+	public boolean localBranchExists(String branchName) throws GitAPIException {
+		List<String> localBranchNames = getLocalBranchNames();
+
+		return localBranchNames.contains(branchName);
 	}
 
 	public boolean pushToRemote(RemoteConfig remoteConfig)

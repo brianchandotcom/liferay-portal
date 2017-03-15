@@ -1185,14 +1185,15 @@ task.
 ## 3.2.5 - 2017-03-08
 
 ### Added
-- [LPS-63943]: Print out artifacts publish commands file path.
+- [LPS-63943]: Print the file path for the `writeArtifactPublishCommands` task's
+resulting `.sh` file.
 
 ### Changed
 - [LPS-68405]: Update the [Liferay Gradle Plugins] dependency to version 3.2.16.
 
 ### Fixed
-- [LPS-63943]: Avoid executing `writeArtifactPublishCommands` tasks if not
-explicitly invoked.
+- [LPS-63943]: Avoid executing `writeArtifactPublishCommands` tasks if they're
+not explicitly invoked.
 
 ## 3.3.0 - 2017-03-09
 

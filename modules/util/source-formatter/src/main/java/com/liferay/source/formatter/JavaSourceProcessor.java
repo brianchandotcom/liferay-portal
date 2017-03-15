@@ -37,6 +37,7 @@ import com.liferay.source.formatter.checks.JavaLongLinesCheck;
 import com.liferay.source.formatter.checks.JavaPackagePathCheck;
 import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
 import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
+import com.liferay.source.formatter.checks.JavaXMLSecurityCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -366,42 +367,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkXMLSecurity(
-		String fileName, String content, boolean isRunOutsidePortalExclusion) {
-
-		String[] xmlVulnerabitilies = new String[] {
-			"DocumentBuilderFactory.newInstance",
-			"new javax.xml.parsers.SAXParser",
-			"new org.apache.xerces.parsers.SAXParser",
-			"new org.dom4j.io.SAXReader", "new SAXParser", "new SAXReader",
-			"SAXParserFactory.newInstance", "saxParserFactory.newInstance",
-			"SAXParserFactory.newSAXParser", "saxParserFactory.newSAXParser",
-			"XMLInputFactory.newFactory", "xmlInputFactory.newFactory",
-			"XMLInputFactory.newInstance", "xmlInputFactory.newInstance"
-		};
-
-		for (String xmlVulnerabitily : xmlVulnerabitilies) {
-			if (!content.contains(xmlVulnerabitily)) {
-				continue;
-			}
-
-			StringBundler sb = new StringBundler(3);
-
-			if (isRunOutsidePortalExclusion) {
-				sb.append("Possible XXE or Quadratic Blowup security ");
-				sb.append("vulnerability using ");
-			}
-			else {
-				sb.append("Use SecureXMLFactoryProviderUtil.");
-				sb.append("newDocumentBuilderFactory instead of ");
-			}
-
-			sb.append(xmlVulnerabitily);
-
-			processMessage(fileName, sb.toString());
-		}
-	}
-
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -678,15 +643,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-49552
 
 		checkFinderCacheInterfaceMethod(fileName, newContent);
-
-		// LPS-50479
-
-		if (!fileName.contains("/test/") &&
-			!fileName.contains("/testIntegration/") &&
-			!isExcludedPath(_SECURE_XML_EXCLUDES, absolutePath)) {
-
-			checkXMLSecurity(fileName, content, isRunOutsidePortalExclusion);
-		}
 
 		// LPS-60358
 
@@ -1935,6 +1891,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					_upgradeDataAccessConnectionExcludes));
 			fileChecks.add(
 				new JavaUpgradeClassCheck(_upgradeServiceUtilExcludes));
+			fileChecks.add(
+				new JavaXMLSecurityCheck(
+					_runOutsidePortalExcludes, _secureXMLExcludes));
 		}
 
 		return fileChecks;
@@ -2415,6 +2374,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_diamondOperatorExcludes = getExcludes(_DIAMOND_OPERATOR_EXCLUDES);
 		_fitOnSingleLineExcludes = getExcludes(_FIT_ON_SINGLE_LINE_EXCLUDES);
 		_lineLengthExcludes = getExcludes(_LINE_LENGTH_EXCLUDES);
+		_runOutsidePortalExcludes = getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES);
+		_secureXMLExcludes = getExcludes(_SECURE_XML_EXCLUDES);
 		_upgradeDataAccessConnectionExcludes = getExcludes(
 			_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES);
 		_upgradeServiceUtilExcludes = getExcludes(
@@ -2609,6 +2570,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");
+	private List<String> _runOutsidePortalExcludes;
+	private List<String> _secureXMLExcludes;
 	private final Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 	private final Pattern _stagedModelTypesPattern = Pattern.compile(

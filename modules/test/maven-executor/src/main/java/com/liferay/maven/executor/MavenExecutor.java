@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
 
@@ -112,6 +113,16 @@ public class MavenExecutor extends ExternalResource {
 		return _checkMavenHomeDirPath();
 	}
 
+	public Path getMavenLocalRepositoryDirPath() {
+		String dirName = System.getProperty("maven.repo.local");
+
+		if (Validator.isNull(dirName)) {
+			return null;
+		}
+
+		return Paths.get(dirName);
+	}
+
 	public String getRepositoryUrl() {
 		return System.getProperty("repository.url");
 	}
@@ -178,8 +189,15 @@ public class MavenExecutor extends ExternalResource {
 	}
 
 	protected void writeSettingsXmlFile() throws IOException {
+		boolean localRepository = false;
 		boolean mirrors = false;
 		boolean proxies = false;
+
+		Path localRepositoryDirPath = getMavenLocalRepositoryDirPath();
+
+		if (localRepositoryDirPath != null) {
+			localRepository = true;
+		}
 
 		String repositoryUrl = getRepositoryUrl();
 
@@ -194,12 +212,22 @@ public class MavenExecutor extends ExternalResource {
 			proxies = true;
 		}
 
-		if (!mirrors && !proxies) {
+		if (!localRepository && !mirrors && !proxies) {
 			return;
 		}
 
 		String mavenSettingsXml = FileUtil.read(
 			MavenExecutor.class, "dependencies/settings_xml.tmpl");
+
+		if (localRepository) {
+			mavenSettingsXml = mavenSettingsXml.replace(
+				"[$LOCAL_REPOSITORY_DIR$]",
+				FileUtil.getAbsolutePath(localRepositoryDirPath));
+		}
+		else {
+			mavenSettingsXml = mavenSettingsXml.replaceFirst(
+				"<localRepository>[\\s\\S]+<\\/localRepository>", "");
+		}
 
 		if (mirrors) {
 			mavenSettingsXml = mavenSettingsXml.replace(

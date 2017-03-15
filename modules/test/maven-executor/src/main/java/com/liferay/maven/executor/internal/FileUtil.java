@@ -15,6 +15,7 @@
 package com.liferay.maven.executor.internal;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -59,6 +60,16 @@ public class FileUtil {
 				}
 
 			});
+	}
+
+	public static String getAbsolutePath(Path path) {
+		String absolutePath = String.valueOf(path.toAbsolutePath());
+
+		if (File.separatorChar != '/') {
+			absolutePath = absolutePath.replace(File.separatorChar, '/');
+		}
+
+		return absolutePath;
 	}
 
 	public static String read(Class<?> clazz, String name) throws IOException {

@@ -19,35 +19,37 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-DDMStructure ddmStructure = ddlFormAdminFieldLibraryDisplayContext.getDDMStructure();
+DDMStructure structure = ddlFormAdminFieldLibraryDisplayContext.getDDMStructure();
 
-long groupId = BeanParamUtil.getLong(ddmStructure, request, "groupId", scopeGroupId);
-long ddmStructureId = 0;
+long groupId = BeanParamUtil.getLong(structure, request, "groupId", scopeGroupId);
+long structureId = ParamUtil.getLong(request, "structureId");
 
-if (ddmStructure != null) {
-	ddmStructureId = ddmStructure.getStructureId();
+if (structure != null) {
+	structureId = structure.getStructureId();
 }
 
-String name = BeanParamUtil.getString(ddmStructure, request, "name");
-String description = BeanParamUtil.getString(ddmStructure, request, "description");
+String name = BeanParamUtil.getString(structure, request, "name");
+String description = BeanParamUtil.getString(structure, request, "description");
+String structureKey = BeanParamUtil.getString(structure, request, "structureKey");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((ddmStructure == null) ? LanguageUtil.get(request, "new-field-set") : LanguageUtil.get(request, "edit-field-set"));
+renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-field-set") : LanguageUtil.get(request, "edit-field-set"));
 %>
 
 <div class="loading-animation" id="<portlet:namespace />loader"></div>
 
-<portlet:actionURL name="saveFieldSet" var="saveFieldSetURL">
+<portlet:actionURL name="saveStructure" var="saveStructureURL">
 	<portlet:param name="mvcPath" value="/admin/field-library/edit.jsp" />
 </portlet:actionURL>
 
 <div class="hide portlet-forms" id="<portlet:namespace />formContainer">
-	<aui:form action="<%= saveFieldSetURL %>" cssClass="ddl-form-builder-form" method="post" name="editForm">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:form action="<%= saveStructureURL %>" cssClass="ddl-form-builder-form" method="post" name="editForm">
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
+		<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
+		<aui:input name="structureKey" type="hidden" value="<%= structureKey %>" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
 
@@ -182,7 +184,7 @@ renderResponse.setTitle((ddmStructure == null) ? LanguageUtil.get(request, "new-
 							window,
 							'<portlet:namespace />init',
 							function() {
-								var definition = <%= ddlFormAdminDisplayContext.getSerializedDDMForm() %>;
+								var definition = <%= ddlFormAdminFieldLibraryDisplayContext.getSerializedDDMForm() %>;
 
 								Liferay.DDM.Renderer.FieldTypes.register(fieldTypes);
 
@@ -204,7 +206,7 @@ renderResponse.setTitle((ddmStructure == null) ? LanguageUtil.get(request, "new-
 											getDataProviderParametersSettingsURL: '<%= getDataProviderParametersSettings.toString() %>',
 											getFieldTypeSettingFormContextURL: '<%= getFieldSettingsDDMFormContext.toString() %>',
 											getRolesURL: '<%= getRoles.toString() %>',
-											layout: <%= ddlFormAdminDisplayContext.getSerializedDDMFormLayout() %>,
+											layout: <%= ddlFormAdminFieldLibraryDisplayContext.getSerializedDDMFormLayout() %>,
 											name: '<%= HtmlUtil.escapeJS(name) %>',
 											namespace: '<portlet:namespace />',
 										}

@@ -34,11 +34,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
-		"mvc.command.name=deleteFieldSet"
+		"mvc.command.name=deleteStructure"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteFieldSetMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteStructureMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

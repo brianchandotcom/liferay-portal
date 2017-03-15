@@ -16,10 +16,6 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<%
-PortletURL portletURL = ddlFormAdminFieldLibraryDisplayContext.getPortletURL();
-%>
-
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
 	searchContainerId="ddmStructure"
@@ -31,14 +27,14 @@ PortletURL portletURL = ddlFormAdminFieldLibraryDisplayContext.getPortletURL();
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= fieldLibraryPortletURL %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= ddlFormAdminFieldLibraryDisplayContext.getOrderByCol() %>"
 			orderByType="<%= ddlFormAdminFieldLibraryDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"create-date", "modified-date", "name"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= fieldLibraryPortletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
@@ -57,7 +53,7 @@ PortletURL portletURL = ddlFormAdminFieldLibraryDisplayContext.getPortletURL();
 			form.attr('method', 'post');
 			form.fm('deleteStructureIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="deleteFieldSet"><portlet:param name="mvcPath" value="/admin/view.jsp" /><portlet:param name="tabs1" value="field-library" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL name="deleteStructure"><portlet:param name="mvcPath" value="/admin/view.jsp" /><portlet:param name="currentTab" value="field-library" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 		}
 	}
 </aui:script>

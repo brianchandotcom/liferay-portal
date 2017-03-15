@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormR
 import com.liferay.dynamic.data.lists.form.web.internal.display.context.util.DDLFormAdminRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.internal.display.context.util.DDMExpressionFunctionMetadataHelper;
 import com.liferay.dynamic.data.lists.form.web.internal.display.context.util.DDMExpressionFunctionMetadataHelper.DDMExpressionFunctionMetadata;
-import com.liferay.dynamic.data.lists.form.web.internal.search.FieldLibrarySearch;
 import com.liferay.dynamic.data.lists.form.web.internal.search.RecordSetSearch;
 import com.liferay.dynamic.data.lists.model.DDLFormRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
@@ -64,6 +63,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -144,12 +144,6 @@ public class DDLFormAdminDisplayContext {
 		_ddlFormAdminRequestHelper = new DDLFormAdminRequestHelper(
 			renderRequest);
 
-		_ddlFormAdminFieldLibraryDisplayContext =
-			new DDLFormAdminFieldLibraryDisplayContext(
-				renderRequest, renderResponse, _ddlFormAdminRequestHelper,
-				ddmStructureService, getDisplayStyle(), getOrderByCol(),
-				getOrderByType(), getKeywords());
-
 		_ddmExpressionFunctionMetadataHelper =
 			new DDMExpressionFunctionMetadataHelper(getResourceBundle());
 	}
@@ -158,10 +152,8 @@ public class DDLFormAdminDisplayContext {
 		return _ddlFormWebConfiguration.autosaveInterval();
 	}
 
-	public DDLFormAdminFieldLibraryDisplayContext
-		getDDLFormAdminFieldLibraryDisplayContext() {
-
-		return _ddlFormAdminFieldLibraryDisplayContext;
+	public long getCompanyId() {
+		return _ddlFormAdminRequestHelper.getCompanyId();
 	}
 
 	public DDLFormViewRecordDisplayContext
@@ -233,6 +225,10 @@ public class DDLFormAdminDisplayContext {
 		return ddlFormViewRecordDisplayContext.getDDMFormHTML(renderRequest);
 	}
 
+	public DDMFormLayoutJSONSerializer getDDMFormLayoutJSONSerializer() {
+		return _ddmFormLayoutJSONSerializer;
+	}
+
 	public DDMStructure getDDMStructure() throws PortalException {
 		if (_ddmStucture != null) {
 			return _ddmStucture;
@@ -250,6 +246,10 @@ public class DDLFormAdminDisplayContext {
 		return _ddmStucture;
 	}
 
+	public DDMStructureService getDDMStructureService() {
+		return _ddmStructureService;
+	}
+
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
 			_displayStyle = getDisplayStyle(
@@ -261,14 +261,6 @@ public class DDLFormAdminDisplayContext {
 
 	public String[] getDisplayViews() {
 		return _DISPLAY_VIEWS;
-	}
-
-	public PortletURL getFieldLibraryPortletURL() {
-		return _ddlFormAdminFieldLibraryDisplayContext.getPortletURL();
-	}
-
-	public FieldLibrarySearch getFieldLibrarySearch() throws PortalException {
-		return _ddlFormAdminFieldLibraryDisplayContext.getFieldLibrarySearch();
 	}
 
 	public String getFormURL() throws PortalException {
@@ -296,18 +288,16 @@ public class DDLFormAdminDisplayContext {
 		return ParamUtil.getString(_renderRequest, "orderByType", "desc");
 	}
 
-	public PortletURL getPortletURL() {
-		if (!isFormsTab()) {
-			return _ddlFormAdminFieldLibraryDisplayContext.getPortletURL();
-		}
+	public PermissionChecker getPermissionChecker() {
+		return _ddlFormAdminRequestHelper.getPermissionChecker();
+	}
 
+	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/admin/view.jsp");
-		portletURL.setParameter(
-			"groupId",
-			String.valueOf(_ddlFormAdminRequestHelper.getScopeGroupId()));
-		portletURL.setParameter("tabs1", "forms");
+		portletURL.setParameter("groupId", String.valueOf(getScopeGroupId()));
+		portletURL.setParameter("currentTab", "forms");
 
 		return portletURL;
 	}
@@ -392,6 +382,14 @@ public class DDLFormAdminDisplayContext {
 		return record.getLatestRecordVersion();
 	}
 
+	public RenderRequest getRenderRequest() {
+		return _renderRequest;
+	}
+
+	public RenderResponse getRenderResponse() {
+		return _renderResponse;
+	}
+
 	public ResourceBundle getResourceBundle() {
 		Locale locale = getSiteDefaultLocale();
 
@@ -412,6 +410,10 @@ public class DDLFormAdminDisplayContext {
 
 	public String getRestrictedFormURL() {
 		return getFormLayoutURL(true);
+	}
+
+	public long getScopeGroupId() {
+		return _ddlFormAdminRequestHelper.getScopeGroupId();
 	}
 
 	public String getSerializedDDMExpressionFunctionsMetadata() {
@@ -556,10 +558,6 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public boolean isShowSearch() throws PortalException {
-		if (!isFormsTab()) {
-			return _ddlFormAdminFieldLibraryDisplayContext.isShowSearch();
-		}
-
 		if (hasResults()) {
 			return true;
 		}
@@ -575,10 +573,6 @@ public class DDLFormAdminDisplayContext {
 		return DDLRecordSetPermission.contains(
 			_ddlFormAdminRequestHelper.getPermissionChecker(), recordSet,
 			ActionKeys.VIEW);
-	}
-
-	protected String getCurrentTab() {
-		return ParamUtil.getString(_renderRequest, "tabs1", "forms");
 	}
 
 	protected OrderByComparator<DDLRecordSet> getDDLRecordSetOrderByComparator(
@@ -638,6 +632,10 @@ public class DDLFormAdminDisplayContext {
 		}
 
 		return jsonArray;
+	}
+
+	protected DDMFormJSONSerializer getDDMFormJSONSerializer() {
+		return _ddmFormJSONSerializer;
 	}
 
 	protected String getDisplayStyle(
@@ -741,12 +739,6 @@ public class DDLFormAdminDisplayContext {
 		return false;
 	}
 
-	protected boolean isFormsTab() {
-		String currentTab = getCurrentTab();
-
-		return currentTab.equals("forms");
-	}
-
 	protected boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -805,8 +797,6 @@ public class DDLFormAdminDisplayContext {
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
-	private final DDLFormAdminFieldLibraryDisplayContext
-		_ddlFormAdminFieldLibraryDisplayContext;
 	private final DDLFormAdminRequestHelper _ddlFormAdminRequestHelper;
 	private final DDLFormWebConfiguration _ddlFormWebConfiguration;
 	private final DDLRecordLocalService _ddlRecordLocalService;

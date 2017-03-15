@@ -17,18 +17,20 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "forms");
+String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 %>
 
-<liferay-util:include page="/admin/search_bar.jsp" servletContext="<%= application %>" />
-
 <c:choose>
-	<c:when test='<%= tabs1.equals("forms") %>'>
+	<c:when test='<%= currentTab.equals("forms") %>'>
+		<liferay-util:include page="/admin/search_bar.jsp" servletContext="<%= application %>" />
+
 		<liferay-util:include page="/admin/toolbar.jsp" servletContext="<%= application %>" />
 
 		<liferay-util:include page="/admin/view_forms.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:when test='<%= tabs1.equals("field-library") %>'>
+	<c:when test='<%= currentTab.equals("field-library") %>'>
+		<liferay-util:include page="/admin/field-library/search_bar.jsp" servletContext="<%= application %>" />
+
 		<liferay-util:include page="/admin/field-library/toolbar.jsp" servletContext="<%= application %>" />
 
 		<liferay-util:include page="/admin/field-library/view.jsp" servletContext="<%= application %>" />

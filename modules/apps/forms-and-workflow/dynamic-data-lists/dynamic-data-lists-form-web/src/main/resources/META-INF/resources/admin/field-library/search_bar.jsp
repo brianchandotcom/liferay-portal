@@ -30,7 +30,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		<aui:nav-item
 			href="<%= portletURL.toString() %>"
 			label="forms"
-			selected="<%= true %>"
+			selected="<%= false %>"
 		/>
 
 		<%
@@ -40,13 +40,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		<aui:nav-item
 			href="<%= portletURL.toString() %>"
 			label="field-library"
-			selected="<%= false %>"
+			selected="<%= true %>"
 		/>
 	</aui:nav>
 
-	<c:if test="<%= ddlFormAdminDisplayContext.isShowSearch() %>">
+	<c:if test="<%= ddlFormAdminFieldLibraryDisplayContext.isShowSearch() %>">
 		<aui:nav-bar-search>
-			<aui:form action="<%= ddlFormAdminDisplayContext.getPortletURL() %>" method="post" name="fm1">
+			<aui:form action="<%= ddlFormAdminFieldLibraryDisplayContext.getPortletURL() %>" method="post" name="fm1">
 				<liferay-ui:input-search markupView="lexicon" />
 			</aui:form>
 		</aui:nav-bar-search>

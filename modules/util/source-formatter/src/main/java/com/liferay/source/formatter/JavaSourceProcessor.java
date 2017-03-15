@@ -27,6 +27,7 @@ import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.JavaBooleanUsageCheck;
 import com.liferay.source.formatter.checks.JavaCombineLinesCheck;
 import com.liferay.source.formatter.checks.JavaDataAccessConnectionCheck;
 import com.liferay.source.formatter.checks.JavaDiamondOperatorCheck;
@@ -723,8 +724,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkGetterUtilGet(fileName, newContent);
 		}
 
-		newContent = fixIncorrectBooleanUse(newContent, "setAttribute");
-
 		// LPS-69494
 
 		if (!fileName.endsWith("AbstractExtender.java") &&
@@ -841,46 +840,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	protected String fixIncorrectBooleanUse(
-		String content, String... methodNames) {
-
-		for (String methodName : methodNames) {
-			Pattern pattern = Pattern.compile(
-				"\\." + methodName + "\\((.*?)\\);\n", Pattern.DOTALL);
-
-			Matcher matcher = pattern.matcher(content);
-
-			while (matcher.find()) {
-				if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
-					continue;
-				}
-
-				String match = matcher.group();
-
-				List<String> parametersList = getParameterList(match);
-
-				if (parametersList.size() != 2) {
-					continue;
-				}
-
-				String secondParameterName = parametersList.get(1);
-
-				if (secondParameterName.equals("false") ||
-					secondParameterName.equals("true")) {
-
-					String replacement = StringUtil.replaceLast(
-						match, secondParameterName,
-						"Boolean." +
-							StringUtil.toUpperCase(secondParameterName));
-
-					return StringUtil.replace(content, match, replacement);
-				}
-			}
-		}
-
-		return content;
 	}
 
 	protected String fixSystemExceptions(String content) {
@@ -1847,6 +1806,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected List<FileCheck> getFileChecks() {
 		List<FileCheck> fileChecks = new ArrayList<>();
 
+		fileChecks.add(new JavaBooleanUsageCheck());
 		fileChecks.add(
 			new JavaCombineLinesCheck(
 				_fitOnSingleLineExcludes, sourceFormatterArgs));

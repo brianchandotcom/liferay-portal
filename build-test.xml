@@ -2681,13 +2681,13 @@ ${tomcat-gc-log}
 
 									<delete dir="${tstamp.value}" />
 								</then>
+								<else>
+									<propertyfile file="${project.dir}/modules/private/apps/documentum/documentum-hook/docroot/WEB-INF/src/dfc.properties">
+										<entry key="dfc.docbroker.host[0]" value="${cmis.repository.vm.host.name}" />
+									</propertyfile>
+								</else>
 							</if>
 						</then>
-						<else>
-							<propertyfile file="${project.dir}/modules/private/apps/documentum/documentum-hook/docroot/WEB-INF/src/dfc.properties">
-								<entry key="dfc.docbroker.host[0]" value="${cmis.repository.vm.host.name}" />
-							</propertyfile>
-						</else>
 					</if>
 				</then>
 			</if>

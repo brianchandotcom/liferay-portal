@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.lists.exception.RecordSetSettingsInvalidRedirectURLException;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRuleDeserializer;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRuleToDDMFormRuleConverter;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRule;
@@ -344,6 +345,8 @@ public class SaveRecordSetMVCCommandHelper {
 			DDMFormValues settingsDDMFormValues)
 		throws PortalException {
 
+		validateRedirectURL(settingsDDMFormValues);
+
 		ddlRecordSetService.updateRecordSet(
 			recordSet.getRecordSetId(), settingsDDMFormValues);
 
@@ -371,6 +374,36 @@ public class SaveRecordSetMVCCommandHelper {
 			themeDisplay.getUserId(), themeDisplay.getCompanyId(), groupId,
 			DDLRecordSet.class.getName(), recordSet.getRecordSetId(), 0,
 			workflowDefinition);
+	}
+
+	protected void validateRedirectURL(DDMFormValues settingsDDMFormValues)
+		throws PortalException {
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			settingsDDMFormValues.getDDMFormFieldValuesMap();
+
+		if (!ddmFormFieldValuesMap.containsKey("redirectURL")) {
+			return;
+		}
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			"redirectURL");
+
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		Value value = ddmFormFieldValue.getValue();
+
+		for (Locale availableLocale : value.getAvailableLocales()) {
+			String valueString = value.getString(availableLocale);
+
+			if (Validator.isNotNull(valueString)) {
+				String escapedRedirect = _portal.escapeRedirect(valueString);
+
+				if (Validator.isNull(escapedRedirect)) {
+					throw new RecordSetSettingsInvalidRedirectURLException();
+				}
+			}
+		}
 	}
 
 	@Reference

@@ -112,6 +112,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= RecordSetNameException.class %>" message="please-enter-a-valid-form-name" />
+		<liferay-ui:error exception="<%= RecordSetSettingsInvalidRedirectURLException.class %>" message="invalid-redirect-url" />
 		<liferay-ui:error exception="<%= StorageException.class %>" message="please-enter-a-valid-form-settings" />
 		<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-form-definition" />
 		<liferay-ui:error exception="<%= StructureLayoutException.class %>" message="please-enter-a-valid-form-layout" />

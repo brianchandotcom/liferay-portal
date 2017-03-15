@@ -18,7 +18,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
@@ -42,11 +41,9 @@ public class Properties {
 	}
 
 	public void load(File file) throws IOException {
-		try (InputStream inputStream = new FileInputStream(file);
-			InputStreamReader inputStreamReader = new InputStreamReader(
-				inputStream, StandardCharsets.UTF_8);
-			BufferedReader bufferedReader = new BufferedReader(
-				inputStreamReader)) {
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(
+					new FileInputStream(file), StandardCharsets.UTF_8))) {
 
 			String name = null;
 			String line = null;

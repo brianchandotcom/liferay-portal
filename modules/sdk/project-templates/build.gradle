@@ -98,9 +98,9 @@ test {
 	jvmArgs "-XX:MaxMetaspaceSize=256m"
 	maxHeapSize = "1024m"
 
-	systemProperty "repository.url", System.properties["repository.url"]
 	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
 	systemProperty "http.proxyPort", System.properties["http.proxyPort"]
+	systemProperty "repository.url", System.properties["repository.url"]
 
 	systemProperties projectTemplateTokens
 }

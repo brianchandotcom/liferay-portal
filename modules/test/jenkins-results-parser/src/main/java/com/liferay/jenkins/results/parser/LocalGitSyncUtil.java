@@ -41,7 +41,7 @@ public class LocalGitSyncUtil {
 			String upstreamUsername, String upstreamSHA)
 		throws GitAPIException, IOException {
 
-		String originalBranch = gitWorkingDirectory.getCurrentBranch();
+		String originalBranchName = gitWorkingDirectory.getCurrentBranch();
 
 		RemoteConfig senderRemoteConfig = null;
 		RemoteConfig tempUpstreamRemoteConfig = null;
@@ -90,7 +90,7 @@ public class LocalGitSyncUtil {
 					0, localGitRemoteConfigs.size() - 1);
 
 				List<String> remoteBranchNames =
-					gitWorkingDirectory.getAllRemoteRepositoryBranchNames(
+					gitWorkingDirectory.getRemoteRepositoryBranchNames(
 						localGitRemoteConfigs.get(randomIndex));
 
 				if (remoteBranchNames.contains(cacheBranchName)) {
@@ -144,7 +144,12 @@ public class LocalGitSyncUtil {
 					gitWorkingDirectory.removeRemotes(localGitRemoteConfigs);
 				}
 
-				gitWorkingDirectory.checkoutBranch(originalBranch);
+				if (gitWorkingDirectory.localBranchExists(originalBranchName)) {
+					gitWorkingDirectory.checkoutBranch(originalBranchName);
+				}
+				else {
+					gitWorkingDirectory.checkoutBranch("master");
+				}
 
 				gitWorkingDirectory.deleteBranch(cacheBranchName);
 			}
@@ -332,7 +337,7 @@ public class LocalGitSyncUtil {
 		throws GitAPIException {
 
 		for (String remoteBranchName :
-				gitWorkingDirectory.getAllRemoteRepositoryBranchNames(
+				gitWorkingDirectory.getRemoteRepositoryBranchNames(
 					remoteConfig)) {
 
 			Matcher matcher = _cachedTimestampBranchPattern.matcher(
@@ -377,7 +382,7 @@ public class LocalGitSyncUtil {
 		throws GitAPIException {
 
 		for (String localBranchName :
-				gitWorkingDirectory.getAllLocalBranchNames()) {
+				gitWorkingDirectory.getLocalBranchNames()) {
 
 			System.out.println("Checking local branch: " + localBranchName);
 

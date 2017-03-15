@@ -413,20 +413,6 @@ public class LocalGitSyncUtil {
 			url = url.replace(
 				"${repository-name}", gitWorkingDirectory.getRepositoryName());
 
-			/*
-			 * try { File file = new File(localGitRemoteURL);
-			 *
-			 * if (file.exists()) { url = localGitRemoteURL; }
-			 *
-			 * String content = JenkinsResultsParserUtil.toString(
-			 * localGitRemoteURL);
-			 *
-			 * if (content != null) { url = localGitRemoteURL; } } catch
-			 * (Exception e) { url = JenkinsResultsParserUtil.combine( "git@",
-			 * localGitRemoteURL, ":", getRepositoryUsername(), "/",
-			 * getRepositoryName(), ".git"); }
-			 */
-
 			String localGitRemoteName =
 				"local-git-remote-" +
 					localGitRemoteURLs.indexOf(localGitRemoteURL);
@@ -485,7 +471,7 @@ public class LocalGitSyncUtil {
 	}
 
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =
-		1000 * 60 * 5; //60 * 24 * 7;
+		1000 * 60 * 60 * 24 * 7;
 
 	private static final String _cachedBranchRegex = ".*cache-.+-.+-.+-.+";
 	private static final Pattern _cachedTimestampBranchPattern =

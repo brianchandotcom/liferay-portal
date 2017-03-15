@@ -40,7 +40,7 @@ public class LocalGitSyncUtil {
 			String senderUsername, String senderSHA, String upstreamBranchName,
 			String upstreamUsername, String upstreamSHA)
 		throws GitAPIException, IOException {
-		
+
 		String originalBranch = gitWorkingDirectory.getCurrentBranch();
 
 		RemoteConfig senderRemoteConfig = null;
@@ -90,13 +90,13 @@ public class LocalGitSyncUtil {
 					0, localGitRemoteConfigs.size() - 1);
 
 				List<String> remoteBranchNames =
-					gitWorkingDirectory.getAllRemoteBranchNames(
+					gitWorkingDirectory.getAllRemoteRepositoryBranchNames(
 						localGitRemoteConfigs.get(randomIndex));
 
 				if (remoteBranchNames.contains(cacheBranchName)) {
 					System.out.println(
 						"cacheBranch " + cacheBranchName + " already exists.");
-					
+
 					return cacheBranchName;
 				}
 
@@ -145,7 +145,7 @@ public class LocalGitSyncUtil {
 				}
 
 				gitWorkingDirectory.checkoutBranch(originalBranch);
-				
+
 				gitWorkingDirectory.deleteBranch(cacheBranchName);
 			}
 		}
@@ -332,7 +332,8 @@ public class LocalGitSyncUtil {
 		throws GitAPIException {
 
 		for (String remoteBranchName :
-				gitWorkingDirectory.getAllRemoteBranchNames(remoteConfig)) {
+				gitWorkingDirectory.getAllRemoteRepositoryBranchNames(
+					remoteConfig)) {
 
 			Matcher matcher = _cachedTimestampBranchPattern.matcher(
 				remoteBranchName);
@@ -377,7 +378,7 @@ public class LocalGitSyncUtil {
 
 		for (String localBranchName :
 				gitWorkingDirectory.getAllLocalBranchNames()) {
-			
+
 			System.out.println("Checking local branch: " + localBranchName);
 
 			if (localBranchName.matches(_cachedBranchRegex) &&
@@ -486,8 +487,7 @@ public class LocalGitSyncUtil {
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =
 		1000 * 60 * 5; //60 * 24 * 7;
 
-	private static final String _cachedBranchRegex =
-		".*cache-.+-.+-.+-.+";
+	private static final String _cachedBranchRegex = ".*cache-.+-.+-.+-.+";
 	private static final Pattern _cachedTimestampBranchPattern =
 		Pattern.compile("(?<name>cache-.*)-(?<timestamp>\\d+)");
 

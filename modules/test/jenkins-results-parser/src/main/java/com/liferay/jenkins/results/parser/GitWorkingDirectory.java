@@ -477,7 +477,8 @@ public class GitWorkingDirectory {
 		return toShortNameList(allLocalBranchRefs);
 	}
 
-	public List<String> getAllRemoteBranchNames(RemoteConfig remoteConfig)
+	public List<String> getAllRemoteRepositoryBranchNames(
+			RemoteConfig remoteConfig)
 		throws GitAPIException {
 
 		LsRemoteCommand lsRemoteCommand = Git.lsRemoteRepository();

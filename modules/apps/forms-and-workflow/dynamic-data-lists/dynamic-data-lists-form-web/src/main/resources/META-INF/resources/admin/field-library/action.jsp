@@ -24,7 +24,7 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcPath" value="/admin/edit_field_set.jsp" />
+		<portlet:param name="mvcPath" value="/admin/field-library/edit.jsp" />
 		<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
 		<portlet:param name="structureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
 	</portlet:renderURL>

@@ -25,7 +25,7 @@ PortletURL portletURL = ddlFormAdminFieldLibraryDisplayContext.getPortletURL();
 	searchContainerId="ddmStructure"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-util:include page="/admin/field_library_display_style_buttons.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/field-library/display_style_buttons.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>

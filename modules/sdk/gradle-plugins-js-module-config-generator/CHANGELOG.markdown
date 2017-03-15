@@ -94,7 +94,7 @@ with if preceded by spaces or tabs.
 ## 2.1.9 - 2017-03-08
 
 ### Changed
-- [LPS-68405]: Change the default value of the `ConfigJSModulesTask`'s 
+- [LPS-68405]: Change the default value of the `ConfigJSModulesTask`'s
 `customDefine` property to `Liferay.Loader`.
 - [LPS-68405]: Leverage the new `--namespace` argument to replace the
 `define(...)` calls.

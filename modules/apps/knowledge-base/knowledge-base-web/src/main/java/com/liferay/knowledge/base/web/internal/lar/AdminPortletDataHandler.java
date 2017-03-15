@@ -33,6 +33,7 @@ import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBCommentLocalService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.service.KBTemplateLocalService;
+import com.liferay.knowledge.base.service.permission.AdminPermission;
 import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -60,6 +61,8 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "knowledge_base";
 
+	public static final String SCHEMA_VERSION = "2.0.0";
+
 	public AdminPortletDataHandler() {
 		setDataLevel(DataLevel.SITE);
 		setDeletionSystemEventStagedModelTypes(
@@ -80,6 +83,11 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		XStreamAliasRegistryUtil.register(KBArticleImpl.class, "KBArticle");
 		XStreamAliasRegistryUtil.register(KBCommentImpl.class, "KBComment");
 		XStreamAliasRegistryUtil.register(KBTemplateImpl.class, "KBTemplate");
+	}
+
+	@Override
+	public String getSchemaVersion() {
+		return SCHEMA_VERSION;
 	}
 
 	@Override
@@ -110,7 +118,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortletPermissions(RESOURCE_NAME);
+		portletDataContext.addPortletPermissions(AdminPermission.RESOURCE_NAME);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -142,7 +150,8 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPortletPermissions(RESOURCE_NAME);
+		portletDataContext.importPortletPermissions(
+			AdminPermission.RESOURCE_NAME);
 
 		Element kbArticlesElement =
 			portletDataContext.getImportDataGroupElement(KBArticle.class);
@@ -279,9 +288,6 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 	protected void setPortal(Portal portal) {
 		_portal = portal;
 	}
-
-	protected static final String RESOURCE_NAME =
-		"com.liferay.knowledge.base.admin";
 
 	private KBArticleLocalService _kbArticleLocalService;
 	private KBCommentLocalService _kbCommentLocalService;

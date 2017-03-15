@@ -42,7 +42,7 @@ if (kbFolder != null) {
 	showPermissionsURL = KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.PERMISSIONS);
 }
 else {
-	modelResource = "com.liferay.knowledge.base.admin";
+	modelResource = AdminPermission.RESOURCE_NAME;
 	modelResourceDescription = themeDisplay.getScopeGroupName();
 	resourcePrimKey = String.valueOf(scopeGroupId);
 

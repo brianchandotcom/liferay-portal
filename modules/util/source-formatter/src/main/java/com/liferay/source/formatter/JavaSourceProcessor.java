@@ -32,6 +32,7 @@ import com.liferay.source.formatter.checks.JavaCombineLinesCheck;
 import com.liferay.source.formatter.checks.JavaDataAccessConnectionCheck;
 import com.liferay.source.formatter.checks.JavaDiamondOperatorCheck;
 import com.liferay.source.formatter.checks.JavaEmptyLinesCheck;
+import com.liferay.source.formatter.checks.JavaExceptionCheck;
 import com.liferay.source.formatter.checks.JavaIfStatementCheck;
 import com.liferay.source.formatter.checks.JavaLineBreakCheck;
 import com.liferay.source.formatter.checks.JavaLogLevelCheck;
@@ -589,8 +590,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent, StringPool.TAB + "for (;;) {",
 			StringPool.TAB + "while (true) {");
 
-		newContent = formatExceptions(newContent, file, packagePath, fileName);
-
 		// LPS-39508
 
 		if (!isRunOutsidePortalExclusion &&
@@ -750,8 +749,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = formatValidatorEquals(newContent);
 
 		newContent = fixUnparameterizedClassType(newContent);
-
-		newContent = sortExceptions(newContent);
 
 		newContent = formatArray(newContent);
 
@@ -1235,64 +1232,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		setBNDInheritRequiredValue(fileName, bndInheritRequired);
-
-		return content;
-	}
-
-	protected String formatExceptions(
-			String content, File file, String packagePath, String fileName)
-		throws IOException {
-
-		Matcher matcher = _catchExceptionPattern.matcher(content);
-
-		int skipVariableNameCheckEndPos = -1;
-
-		while (matcher.find()) {
-			String exceptionClassName = matcher.group(2);
-			String exceptionVariableName = matcher.group(3);
-			String tabs = matcher.group(1);
-
-			String expectedExceptionVariableName = "e";
-
-			if (!exceptionClassName.contains(" |")) {
-				Matcher lowerCaseNumberOrPeriodMatcher =
-					_lowerCaseNumberOrPeriodPattern.matcher(exceptionClassName);
-
-				expectedExceptionVariableName = StringUtil.toLowerCase(
-					lowerCaseNumberOrPeriodMatcher.replaceAll(
-						StringPool.BLANK));
-			}
-
-			Pattern exceptionVariablePattern = Pattern.compile(
-				"(\\W)" + exceptionVariableName + "(\\W)");
-
-			int pos = content.indexOf(
-				"\n" + tabs + StringPool.CLOSE_CURLY_BRACE, matcher.end() - 1);
-
-			String insideCatchCode = content.substring(matcher.end(), pos + 1);
-
-			if (insideCatchCode.contains("catch (" + exceptionClassName)) {
-				skipVariableNameCheckEndPos = pos;
-			}
-
-			if ((skipVariableNameCheckEndPos < matcher.start()) &&
-				!expectedExceptionVariableName.equals(exceptionVariableName)) {
-
-				String catchExceptionCodeBlock = content.substring(
-					matcher.start(), pos + 1);
-
-				Matcher exceptionVariableMatcher =
-					exceptionVariablePattern.matcher(catchExceptionCodeBlock);
-
-				String catchExceptionReplacement =
-					exceptionVariableMatcher.replaceAll(
-						"$1" + expectedExceptionVariableName + "$2");
-
-				return StringUtil.replaceFirst(
-					content, catchExceptionCodeBlock, catchExceptionReplacement,
-					matcher.start() - 1);
-			}
-		}
 
 		return content;
 	}
@@ -1813,6 +1752,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		fileChecks.add(new JavaDataAccessConnectionCheck());
 		fileChecks.add(new JavaDiamondOperatorCheck(_diamondOperatorExcludes));
 		fileChecks.add(new JavaEmptyLinesCheck());
+		fileChecks.add(new JavaExceptionCheck());
 		fileChecks.add(new JavaIfStatementCheck(sourceFormatterArgs));
 		fileChecks.add(new JavaLineBreakCheck(sourceFormatterArgs));
 		fileChecks.add(new JavaLogLevelCheck());
@@ -2358,47 +2298,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		putBNDSettings(bndSettings);
 	}
 
-	protected String sortExceptions(String content) {
-		Matcher matcher = _throwsExceptionsPattern.matcher(content);
-
-		while (matcher.find()) {
-			String match = matcher.group();
-
-			String exceptions = matcher.group(1);
-
-			exceptions = StringUtil.replace(
-				exceptions, new String[] {StringPool.TAB, StringPool.NEW_LINE},
-				new String[] {StringPool.SPACE, StringPool.SPACE});
-
-			String previousException = StringPool.BLANK;
-
-			for (String exception :
-					StringUtil.split(exceptions, StringPool.COMMA_AND_SPACE)) {
-
-				exception = StringUtil.trim(exception);
-
-				if (Validator.isNotNull(previousException) &&
-					(previousException.compareToIgnoreCase(exception) > 0)) {
-
-					String replacement = match.replaceAll(
-						"(\\W)" + exception + "(\\W)",
-						"$1" + previousException + "$2");
-
-					replacement = replacement.replaceFirst(
-						"(\\W)" + previousException + "(\\W)",
-						"$1" + exception + "$2");
-
-					return sortExceptions(
-						StringUtil.replace(content, match, replacement));
-				}
-
-				previousException = exception;
-			}
-		}
-
-		return content;
-	}
-
 	private static final String _CHECK_JAVA_FIELD_TYPES_EXCLUDES =
 		"check.java.field.types.excludes";
 
@@ -2456,8 +2355,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"(\n\t*.* =) (new \\w*\\[\\] \\{)\n(\t*)(.+)\n\t*(\\};)\n");
 	private final Pattern _assertEqualsPattern = Pattern.compile(
 		"Assert\\.assertEquals\\((.*?)\\);\n", Pattern.DOTALL);
-	private final Pattern _catchExceptionPattern = Pattern.compile(
-		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private boolean _checkRegistryInTestClasses;
 	private final Pattern _classPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
@@ -2487,8 +2384,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
-	private final Pattern _lowerCaseNumberOrPeriodPattern = Pattern.compile(
-		"[a-z0-9.]");
 	private int _maxLineLength;
 	private final Map<String, String> _moduleFileContentsMap =
 		new ConcurrentHashMap<>();
@@ -2511,8 +2406,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 	private final Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
-	private final Pattern _throwsExceptionsPattern = Pattern.compile(
-		"\\sthrows ([\\s\\w,]*)[;{]\n");
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();

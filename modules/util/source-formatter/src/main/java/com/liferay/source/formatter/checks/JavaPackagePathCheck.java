@@ -15,17 +15,15 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -42,22 +40,16 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 
 		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 
-		String packagePath = StringPool.BLANK;
-
-		Matcher matcher = _packagePattern.matcher(content);
-
-		if (matcher.find()) {
-			packagePath = matcher.group(2);
-		}
-
-		_checkPackagePath(sourceFormatterMessages, fileName, packagePath);
+		_checkPackagePath(sourceFormatterMessages, fileName, content);
 
 		return new Tuple(content, sourceFormatterMessages);
 	}
 
 	private void _checkPackagePath(
 		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String packagePath) {
+		String content) {
+
+		String packagePath = JavaSourceUtil.getPackagePath(content);
 
 		if (Validator.isNull(packagePath)) {
 			addMessage(sourceFormatterMessages, fileName, "Missing package");
@@ -86,8 +78,5 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 				"Do not use 'impl' inside 'internal', see LPS-70113");
 		}
 	}
-
-	private final Pattern _packagePattern = Pattern.compile(
-		"(\n|^)\\s*package (.*);\n");
 
 }

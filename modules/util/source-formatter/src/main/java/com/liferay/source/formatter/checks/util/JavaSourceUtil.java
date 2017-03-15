@@ -21,6 +21,8 @@ import com.liferay.portal.tools.ToolsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -32,6 +34,16 @@ public class JavaSourceUtil extends SourceUtil {
 		int y = fileName.lastIndexOf(CharPool.PERIOD);
 
 		return fileName.substring(x + 1, y);
+	}
+
+	public static String getPackagePath(String content) {
+		Matcher matcher = _packagePattern.matcher(content);
+
+		if (matcher.find()) {
+			return matcher.group(2);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public static List<String> getParameterList(String methodCall) {
@@ -106,5 +118,8 @@ public class JavaSourceUtil extends SourceUtil {
 			}
 		}
 	}
+
+	private static final Pattern _packagePattern = Pattern.compile(
+		"(\n|^)\\s*package (.*);\n");
 
 }

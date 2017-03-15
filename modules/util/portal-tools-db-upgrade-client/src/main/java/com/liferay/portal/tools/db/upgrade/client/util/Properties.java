@@ -80,7 +80,9 @@ public class Properties {
 	}
 
 	public void store(File file) throws IOException {
-		try (PrintWriter printWriter = new PrintWriter(file)) {
+		try (PrintWriter printWriter = new PrintWriter(
+				file, StandardCharsets.UTF_8.name())) {
+
 			for (String name : propertyNames()) {
 				String value = getProperty(name);
 

@@ -188,9 +188,20 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		</c:if>
 
 		<c:if test="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>">
+
+			<%
+			PortletURL assetLingsURL = renderResponse.createRenderURL();
+
+			assetLingsURL.setParameter("mvcPath", "/view_content.jsp");
+
+			if (print) {
+				assetLingsURL.setParameter("viewMode", Constants.PRINT);
+			}
+			%>
+
 			<liferay-ui:asset-links
 				assetEntryId="<%= assetEntry.getEntryId() %>"
-				portletURL="<%= viewFullContentURL %>"
+				portletURL="<%= assetLingsURL %>"
 			/>
 		</c:if>
 

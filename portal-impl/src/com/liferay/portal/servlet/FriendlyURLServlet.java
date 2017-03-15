@@ -70,7 +70,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class FriendlyURLServlet extends HttpServlet {
 
 	@Override

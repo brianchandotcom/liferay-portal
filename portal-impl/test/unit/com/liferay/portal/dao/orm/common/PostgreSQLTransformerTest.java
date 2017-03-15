@@ -37,13 +37,13 @@ public class PostgreSQLTransformerTest extends BaseSQLTransformerTestCase {
 	@Test
 	public void testReplaceNegativeComparison() {
 		Assert.assertEquals(
-			"select * from Foo where foo != (-1)",
+			"select * from Foo where foo != ( -1)",
 			SQLTransformer.transform("select * from Foo where foo != -1"));
 	}
 
 	@Override
 	protected String getBitwiseCheckTransformedSQL() {
-		return "select (foo & bar) from Foo";
+		return "select (foo &  bar) from Foo";
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class PostgreSQLTransformerTest extends BaseSQLTransformerTestCase {
 
 	@Override
 	protected String getIntegerDivisionTransformedSQL() {
-		return "select foo / bar from Foo";
+		return "select foo /  bar from Foo";
 	}
 
 	@Override

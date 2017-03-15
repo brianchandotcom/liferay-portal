@@ -104,6 +104,10 @@ AUI.add(
 					},
 
 					sharedFormURL: {
+					},
+
+					showPagination: {
+						value: true
 					}
 				},
 
@@ -807,7 +811,8 @@ AUI.add(
 								getFieldTypeSettingFormContextURL: instance.get('getFieldTypeSettingFormContextURL'),
 								pagesJSON: layout.pages,
 								portletNamespace: instance.get('namespace'),
-								recordSetId: instance.get('recordSetId')
+								recordSetId: instance.get('recordSetId'),
+								showPagination: instance.get('showPagination')
 							}
 						);
 					},

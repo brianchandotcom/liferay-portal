@@ -209,6 +209,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-fie
 											layout: <%= ddlFormAdminFieldLibraryDisplayContext.getSerializedDDMFormLayout() %>,
 											name: '<%= HtmlUtil.escapeJS(name) %>',
 											namespace: '<portlet:namespace />',
+											showPagination: false
 										}
 									)
 								);

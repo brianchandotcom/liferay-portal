@@ -111,6 +111,10 @@ AUI.add(
 							instance.after('titlesChange', A.bind('_afterTitlesChange', instance))
 						];
 
+						if (!instance.get('showPagination')) {
+							instance._hidePagination();
+						}
+
 						var boundingBox = instance.get('builder').get('boundingBox');
 
 						var content = boundingBox.one('.form-builder-content');
@@ -395,6 +399,18 @@ AUI.add(
 						}
 
 						return instance.wizard;
+					},
+
+					_hidePagination: function() {
+						var instance = this;
+
+						var builder = instance.get('builder');
+
+						var boundingBox = builder.get('boundingBox');
+
+						var pageHeader = boundingBox.one('.form-builder-page-header');
+
+						pageHeader.hide();
 					},
 
 					_onAddLastPageClick: function() {

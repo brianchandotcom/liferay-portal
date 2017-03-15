@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.trash.util;
+package com.liferay.trash.internal.search;
 
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
@@ -41,13 +40,13 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Julio Camarero
  * @author Zsolt Berentey
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.portlet.trash.util.TrashIndexer}
  */
-@Component(immediate = true, service = Indexer.class)
+@Deprecated
 public class TrashIndexer extends BaseIndexer<TrashEntry> {
 
 	public static final String CLASS_NAME = TrashEntry.class.getName();

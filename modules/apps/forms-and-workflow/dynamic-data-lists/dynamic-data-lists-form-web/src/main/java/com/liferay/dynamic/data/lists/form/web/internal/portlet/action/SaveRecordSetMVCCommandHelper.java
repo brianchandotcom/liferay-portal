@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.lists.exception.RecordSetSettingsRedirectURLException;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRuleDeserializer;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRuleToDDMFormRuleConverter;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRule;
@@ -44,8 +45,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -243,15 +242,6 @@ public class SaveRecordSetMVCCommandHelper {
 			ddmFormValuesJSONDeserializer.deserialize(
 				ddmForm, serializedSettingsDDMFormValues);
 
-		if (!validateRedirectURL(settingsDDMFormValues)) {
-			SessionMessages.add(
-				portletRequest,
-				_portal.getPortletId(portletRequest) +
-					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
-
-			SessionErrors.add(portletRequest, "invalidRedirectUrl");
-		}
-
 		return settingsDDMFormValues;
 	}
 
@@ -355,6 +345,8 @@ public class SaveRecordSetMVCCommandHelper {
 			DDMFormValues settingsDDMFormValues)
 		throws PortalException {
 
+		validateRedirectURL(settingsDDMFormValues);
+
 		ddlRecordSetService.updateRecordSet(
 			recordSet.getRecordSetId(), settingsDDMFormValues);
 
@@ -384,12 +376,14 @@ public class SaveRecordSetMVCCommandHelper {
 			workflowDefinition);
 	}
 
-	protected boolean validateRedirectURL(DDMFormValues settingsDDMFormValues) {
+	protected void validateRedirectURL(DDMFormValues settingsDDMFormValues)
+		throws PortalException {
+
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			settingsDDMFormValues.getDDMFormFieldValuesMap();
 
 		if (!ddmFormFieldValuesMap.containsKey("redirectURL")) {
-			return true;
+			return;
 		}
 
 		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
@@ -406,12 +400,10 @@ public class SaveRecordSetMVCCommandHelper {
 				String escapedRedirect = _portal.escapeRedirect(valueString);
 
 				if (Validator.isNull(escapedRedirect)) {
-					return false;
+					throw new RecordSetSettingsRedirectURLException();
 				}
 			}
 		}
-
-		return true;
 	}
 
 	@Reference

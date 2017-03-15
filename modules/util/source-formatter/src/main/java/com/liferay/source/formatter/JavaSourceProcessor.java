@@ -28,6 +28,7 @@ import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JavaCombineLinesCheck;
+import com.liferay.source.formatter.checks.JavaDataAccessConnectionCheck;
 import com.liferay.source.formatter.checks.JavaDiamondOperatorCheck;
 import com.liferay.source.formatter.checks.JavaEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JavaIfStatementCheck;
@@ -422,7 +423,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processMessage(fileName, "UTF-8");
 		}
 
-		newContent = fixDataAccessConnection(className, newContent);
 		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
 
 		newContent = StringUtil.replace(
@@ -841,32 +841,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	protected String fixDataAccessConnection(String className, String content) {
-		int x = content.indexOf("package ");
-
-		int y = content.indexOf(CharPool.SEMICOLON, x);
-
-		if ((x == -1) || (y == -1)) {
-			return content;
-		}
-
-		String packageName = content.substring(x + 8, y);
-
-		if (!packageName.startsWith("com.liferay.portal.kernel.upgrade") &&
-			!packageName.startsWith("com.liferay.portal.kernel.verify") &&
-			!packageName.startsWith("com.liferay.portal.upgrade") &&
-			!packageName.startsWith("com.liferay.portal.verify")) {
-
-			return content;
-		}
-
-		content = StringUtil.replace(
-			content, "DataAccess.getConnection",
-			"DataAccess.getUpgradeOptimizedConnection");
-
-		return content;
 	}
 
 	protected String fixIncorrectBooleanUse(
@@ -1876,6 +1850,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		fileChecks.add(
 			new JavaCombineLinesCheck(
 				_fitOnSingleLineExcludes, sourceFormatterArgs));
+		fileChecks.add(new JavaDataAccessConnectionCheck());
 		fileChecks.add(new JavaDiamondOperatorCheck(_diamondOperatorExcludes));
 		fileChecks.add(new JavaEmptyLinesCheck());
 		fileChecks.add(new JavaIfStatementCheck(sourceFormatterArgs));

@@ -94,7 +94,7 @@ AUI.add(
 					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_PAGE_LAST_POSITION + '">{addPageLastPosition}</li>' +
 					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_DELETE_PAGE + '">{deleteCurrentPage}</li>' +
 					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE + '">{addSuccessPage}</li>' +
-					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE + '">{removeSuccessPage}</li>' +
+					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE + '" hidden="hidden">{removeSuccessPage}</li>' +
 					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_SWITCH_MODE + '">{switchMode}</li>' +
 					'</ul>',
 
@@ -409,6 +409,12 @@ AUI.add(
 
 						instance._syncControlTriggersUI();
 
+						var popoverBoundingBox = instance._getPopover().get('boundingBox');
+
+						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE).hide();
+
+						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE).show();
+
 						instance._getPopover().hide();
 					},
 
@@ -481,6 +487,12 @@ AUI.add(
 						instance._uiSetMode(instance.get('mode'));
 
 						instance._syncControlTriggersUI();
+
+						var popoverBoundingBox = instance._getPopover().get('boundingBox');
+
+						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE).show();
+
+						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE).hide();
 
 						instance._showLayout();
 					},

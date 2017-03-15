@@ -56,20 +56,8 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.abego.treelayout</groupId>
-      <artifactId>org.abego.treelayout.core</artifactId>
-      <version>1.0.1</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>antlr4-annotations</artifactId>
-      <version>4.3</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.antlr</groupId>
-      <artifactId>antlr4-runtime</artifactId>
       <version>4.3</version>
       <scope>provided</scope>
     </dependency>

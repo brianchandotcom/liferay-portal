@@ -5212,7 +5212,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		query.append(_SQL_SELECT_WIKINODE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}

@@ -6811,7 +6811,7 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		query.append(_SQL_SELECT_CALENDARBOOKING_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}

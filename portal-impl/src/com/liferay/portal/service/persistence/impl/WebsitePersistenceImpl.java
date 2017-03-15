@@ -4603,7 +4603,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		query.append(_SQL_SELECT_WEBSITE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}

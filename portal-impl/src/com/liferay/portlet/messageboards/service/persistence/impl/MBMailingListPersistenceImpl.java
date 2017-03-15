@@ -2825,7 +2825,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		query.append(_SQL_SELECT_MBMAILINGLIST_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}

@@ -251,43 +251,6 @@ public class LocalGitSyncUtil {
 		}
 	}
 
-	protected static void deleteCachedBranchFromRemote(
-			GitWorkingDirectory gitWorkingDirectory, String remoteBranchName,
-			String remoteTimestampBranchName, RemoteConfig remoteConfig)
-		throws GitAPIException {
-
-		if (gitWorkingDirectory.pushToRemote(
-				"", remoteBranchName, remoteConfig)) {
-
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Deleted ", remoteBranchName, " from ",
-					GitWorkingDirectory.getRemoteURL(remoteConfig)));
-		}
-
-		else {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Unable to delete ", remoteBranchName, " from ",
-					GitWorkingDirectory.getRemoteURL(remoteConfig)));
-		}
-
-		if (gitWorkingDirectory.pushToRemote(
-				"", remoteTimestampBranchName, remoteConfig)) {
-
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Deleted ", remoteTimestampBranchName, " from ",
-					GitWorkingDirectory.getRemoteURL(remoteConfig)));
-		}
-		else {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Unable to delete ", remoteTimestampBranchName, " from ",
-					GitWorkingDirectory.getRemoteURL(remoteConfig)));
-		}
-	}
-
 	protected static void deleteExpiredCacheBranches(
 			final GitWorkingDirectory gitWorkingDirectory,
 			List<RemoteConfig> localGitRemoteConfigs)
@@ -358,7 +321,7 @@ public class LocalGitSyncUtil {
 
 				if (branchAge > _BRANCH_EXPIRE_AGE_MILLIS) {
 					try {
-						deleteCachedBranchFromRemote(
+						deleteRemoteRepositoryCachedBranch(
 							gitWorkingDirectory, matcher.group("name"),
 							remoteBranchName, remoteConfig);
 					}
@@ -391,6 +354,43 @@ public class LocalGitSyncUtil {
 
 				gitWorkingDirectory.deleteBranch(localBranchName);
 			}
+		}
+	}
+
+	protected static void deleteRemoteRepositoryCachedBranch(
+			GitWorkingDirectory gitWorkingDirectory, String remoteBranchName,
+			String remoteTimestampBranchName, RemoteConfig remoteConfig)
+		throws GitAPIException {
+
+		if (gitWorkingDirectory.pushToRemote(
+				"", remoteBranchName, remoteConfig)) {
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Deleted ", remoteBranchName, " from ",
+					GitWorkingDirectory.getRemoteURL(remoteConfig)));
+		}
+
+		else {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Unable to delete ", remoteBranchName, " from ",
+					GitWorkingDirectory.getRemoteURL(remoteConfig)));
+		}
+
+		if (gitWorkingDirectory.pushToRemote(
+				"", remoteTimestampBranchName, remoteConfig)) {
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Deleted ", remoteTimestampBranchName, " from ",
+					GitWorkingDirectory.getRemoteURL(remoteConfig)));
+		}
+		else {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Unable to delete ", remoteTimestampBranchName, " from ",
+					GitWorkingDirectory.getRemoteURL(remoteConfig)));
 		}
 	}
 

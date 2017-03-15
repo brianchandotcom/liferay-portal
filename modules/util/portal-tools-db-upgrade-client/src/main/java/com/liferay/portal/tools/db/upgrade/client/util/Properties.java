@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -42,30 +42,30 @@ public class Properties {
 	}
 
 	public void load(File file) throws IOException {
-		String line;
+		try (InputStream inputStream = new FileInputStream(file);
+			InputStreamReader inputStreamReader = new InputStreamReader(
+				inputStream, StandardCharsets.UTF_8);
+			BufferedReader bufferedReader = new BufferedReader(
+				inputStreamReader)) {
 
-		try (InputStream fis = new FileInputStream(file);
-			InputStreamReader isr = new InputStreamReader(
-				fis, Charset.forName("UTF-8"));
-			BufferedReader br = new BufferedReader(isr)) {
+			String name = null;
+			String line = null;
 
-			String key = "";
-
-			while ((line = br.readLine()) != null) {
+			while ((line = bufferedReader.readLine()) != null) {
 				if (!line.startsWith("#")) {
 					int index = line.indexOf("=");
 
 					String value;
 
 					if (index > 0) {
-						key = line.substring(0, index);
+						name = line.substring(0, index);
 						value = line.substring(index + 1, line.length());
 					}
 					else {
-						value = _properties.get(key) + "\n" + line;
+						value = _properties.get(name) + "\n" + line;
 					}
 
-					_properties.put(key, value);
+					_properties.put(name, value);
 				}
 			}
 		}
@@ -81,18 +81,16 @@ public class Properties {
 
 	public void store(File file) throws IOException {
 		try (PrintWriter printWriter = new PrintWriter(file)) {
-			Set<String> keys = propertyNames();
+			for (String name : propertyNames()) {
+				String value = getProperty(name);
 
-			for (String key : keys) {
-				String value = getProperty(key);
-
-				if (key.endsWith(".dir") || key.endsWith(".dirs") ||
-					key.endsWith("liferay.home")) {
+				if (name.endsWith(".dir") || name.endsWith(".dirs") ||
+					name.endsWith("liferay.home")) {
 
 					value = value.replace('\\', '/');
 				}
 
-				printWriter.println(key + "=" + value);
+				printWriter.println(name + "=" + value);
 			}
 		}
 	}

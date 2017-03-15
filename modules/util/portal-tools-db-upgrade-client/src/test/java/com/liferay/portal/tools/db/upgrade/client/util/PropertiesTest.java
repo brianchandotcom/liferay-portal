@@ -40,7 +40,7 @@ public class PropertiesTest {
 			"com.liferay.portal.upgrade.UpgradeProcess_6_1_1\\," +
 				"com.liferay.portal.upgrade.UpgradeProcess_6_2_0");
 
-		String originalValue = properties.getProperty(
+		String expectedValue = properties.getProperty(
 			"upgrade.processes.master");
 
 		properties.store(propertiesFile);
@@ -50,29 +50,24 @@ public class PropertiesTest {
 		properties.load(propertiesFile);
 
 		Assert.assertEquals(
-			originalValue, properties.getProperty("upgrade.processes.master"));
+			expectedValue, properties.getProperty("upgrade.processes.master"));
 	}
 
 	@Test
 	public void testLoadProperties() throws Exception {
 		File propertiesFile = temporaryFolder.newFile("test.properties");
 
-		StringBuilder propertiesSB = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 
-		propertiesSB.append("index.on.upgrade=false\n");
-		propertiesSB.append("upgrade.processes.master=\\\n");
-		propertiesSB.append(
-			"\t\tcom.liferay.portal.upgrade.UpgradeProcess_6_1_1\\,\\\n");
-		propertiesSB.append(
-			"\t\tcom.liferay.portal.upgrade.UpgradeProcess_6_2_0\\,\\\n");
-		propertiesSB.append(
-			"\t\tcom.liferay.portal.upgrade.UpgradeProcess_7_0_0\\,\\\n");
-		propertiesSB.append(
-			"\t\tcom.liferay.portal.upgrade.UpgradeProcess_7_0_1\\,\\\n");
-		propertiesSB.append(
-			"\t\tcom.liferay.portal.upgrade.UpgradeProcess_7_0_3\n");
+		sb.append("index.on.upgrade=false\n");
+		sb.append("upgrade.processes.master=\\\n");
+		sb.append("\t\tcom.liferay.portal.upgrade.UpgradeProcess_6_1_1\\,\\\n");
+		sb.append("\t\tcom.liferay.portal.upgrade.UpgradeProcess_6_2_0\\,\\\n");
+		sb.append("\t\tcom.liferay.portal.upgrade.UpgradeProcess_7_0_0\\,\\\n");
+		sb.append("\t\tcom.liferay.portal.upgrade.UpgradeProcess_7_0_1\\,\\\n");
+		sb.append("\t\tcom.liferay.portal.upgrade.UpgradeProcess_7_0_3\n");
 
-		String propertiesString = propertiesSB.toString();
+		String propertiesString = sb.toString();
 
 		Files.write(propertiesFile.toPath(), propertiesString.getBytes());
 
@@ -92,7 +87,7 @@ public class PropertiesTest {
 
 		properties.setProperty("liferay.home", "c:\\liferay\\");
 
-		String originalValue = properties.getProperty("liferay.home");
+		String expectedValue = properties.getProperty("liferay.home");
 
 		properties.store(propertiesFile);
 
@@ -100,11 +95,10 @@ public class PropertiesTest {
 
 		properties.load(propertiesFile);
 
-		String savedValue = properties.getProperty("liferay.home");
+		String actualValue = properties.getProperty("liferay.home");
 
-		Assert.assertNotEquals(originalValue, savedValue);
-
-		Assert.assertEquals("c:/liferay/", savedValue);
+		Assert.assertEquals("c:/liferay/", actualValue);
+		Assert.assertNotEquals(expectedValue, actualValue);
 	}
 
 	@Rule

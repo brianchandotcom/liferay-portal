@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.trash.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileRank;
@@ -73,12 +74,14 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Alexander Chow
  * @author Julio Camarero
  * @author Eudaldo Alonso
  */
+@RunWith(Arquillian.class)
 @Sync
 public class DLFileEntryTrashHandlerTest
 	extends BaseTrashHandlerTestCase

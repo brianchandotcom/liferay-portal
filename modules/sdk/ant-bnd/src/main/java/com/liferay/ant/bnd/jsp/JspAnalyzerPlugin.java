@@ -83,6 +83,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		Map<String, Resource> resources = jar.getResources();
 
 		Set<String> keys = new HashSet<String>(resources.keySet());
+		Set<String> taglibURIs = new HashSet<>();
 
 		for (String key : keys) {
 			for (Instruction instruction : instructions.keySet()) {
@@ -97,7 +98,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 						resource.openInputStream(), "UTF-8");
 
 					addApiUses(analyzer, jsp);
-					addTaglibRequirements(analyzer, jsp);
+					addTaglibRequirements(analyzer, jsp, taglibURIs);
 
 					matches = true;
 				}
@@ -289,10 +290,17 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		taglibRequirements.add(parameters.toString());
 	}
 
-	protected void addTaglibRequirements(Analyzer analyzer, String content) {
-		Set<String> taglibRequirements = new TreeSet<String>();
+	protected void addTaglibRequirements(
+		Analyzer analyzer, String content, Set<String> taglibURIs) {
+
+		Set<String> taglibRequirements = new TreeSet<>();
 
 		for (String uri : getTaglibURIs(content)) {
+			if (taglibURIs.contains(uri)) {
+				continue;
+			}
+
+			taglibURIs.add(uri);
 
 			// Check to see if the JAR provides this TLD itself which would
 			// indicate that it already has access to the required classes

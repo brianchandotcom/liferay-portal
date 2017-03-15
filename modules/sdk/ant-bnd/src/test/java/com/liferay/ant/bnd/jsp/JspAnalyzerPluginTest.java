@@ -23,6 +23,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -81,16 +82,18 @@ public class JspAnalyzerPluginTest {
 
 		String content = IO.collect(inputStream);
 
+		Set<String> taglibURIs = new HashSet<>();
+
 		Builder builder = new Builder();
 
 		builder.build();
 
-		jspAnalyzerPlugin.addTaglibRequirements(builder, content);
+		jspAnalyzerPlugin.addTaglibRequirements(builder, content, taglibURIs);
 
 		String requireCapability1 = builder.getProperty(
 			Constants.REQUIRE_CAPABILITY);
 
-		jspAnalyzerPlugin.addTaglibRequirements(builder, content);
+		jspAnalyzerPlugin.addTaglibRequirements(builder, content, taglibURIs);
 
 		String requireCapability2 = builder.getProperty(
 			Constants.REQUIRE_CAPABILITY);

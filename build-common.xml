@@ -710,7 +710,12 @@ Error-Prone was automatically installed. Please rerun your task.
 		<element implicit="true" name="attach-files" optional="true" />
 
 		<sequential>
+			<local name="build.repository.local.actual.dir" />
 			<local name="snapshot.version.suffix" />
+
+			<condition else="${build.repository.local.dir}" property="build.repository.local.actual.dir" value="${user.home}/.m2/repository">
+				<equals arg1="${build.repository.local.dir}" arg2="" />
+			</condition>
 
 			<condition else="" property="snapshot.version.suffix" value="-SNAPSHOT">
 				<istrue value="@{snapshot}" />
@@ -718,10 +723,11 @@ Error-Prone was automatically installed. Please rerun your task.
 
 			<prepare-portal-artifact-pom snapshot.version.suffix="${snapshot.version.suffix}" />
 
-			<delete dir="${user.home}/.m2/repository/com/liferay/portal/com.liferay.${processed.artifact.name}" />
+			<delete dir="${build.repository.local.actual.dir}/com/liferay/portal/com.liferay.${processed.artifact.name}" />
 
 			<artifact:install file="${artifact.name}.@{packaging}">
 				<attach-files />
+				<localRepository path="${build.repository.local.dir}" unless:blank="${build.repository.local.dir}" />
 				<pom file="pom.xml" />
 			</artifact:install>
 

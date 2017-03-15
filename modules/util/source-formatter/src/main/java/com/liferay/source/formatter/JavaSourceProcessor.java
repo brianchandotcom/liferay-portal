@@ -42,7 +42,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -2070,19 +2069,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(
-			new FileCheck[] {
-				new JavaCombineLinesCheck(
-					_fitOnSingleLineExcludes, sourceFormatterArgs),
-				new JavaDiamondOperatorCheck(_diamondOperatorExcludes),
-				new JavaEmptyLinesCheck(),
-				new JavaIfStatementCheck(sourceFormatterArgs),
-				new JavaLineBreakCheck(sourceFormatterArgs),
-				new JavaLogLevelCheck(),
-				new JavaLongLinesCheck(
-					_lineLengthExcludes, sourceFormatterArgs),
-				new JavaPackagePathCheck()
-			});
+		List<FileCheck> fileChecks = new ArrayList<>();
+
+		fileChecks.add(
+			new JavaCombineLinesCheck(
+				_fitOnSingleLineExcludes, sourceFormatterArgs));
+		fileChecks.add(new JavaDiamondOperatorCheck(_diamondOperatorExcludes));
+		fileChecks.add(new JavaEmptyLinesCheck());
+		fileChecks.add(new JavaIfStatementCheck(sourceFormatterArgs));
+		fileChecks.add(new JavaLineBreakCheck(sourceFormatterArgs));
+		fileChecks.add(new JavaLogLevelCheck());
+		fileChecks.add(
+			new JavaLongLinesCheck(_lineLengthExcludes, sourceFormatterArgs));
+		fileChecks.add(new JavaPackagePathCheck());
+
+		return fileChecks;
 	}
 
 	protected String getFormattedClassLine(String indent, String classLine) {

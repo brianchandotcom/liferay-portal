@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.trash;
+package com.liferay.exportimport.trash.test;
 
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;

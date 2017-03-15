@@ -24,6 +24,7 @@
 /.bnd
 /.checkstyle
 /.idea
+/.m2
 /.sonar
 /.xmlcatalog
 /ActiveMQ

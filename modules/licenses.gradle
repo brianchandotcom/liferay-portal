@@ -1,0 +1,241 @@
+import com.github.jk1.license.ConfigurationData
+import com.github.jk1.license.LicenseReportPlugin
+import com.github.jk1.license.ModuleData
+import com.github.jk1.license.ProjectData
+import com.github.jk1.license.reader.ConfigurationReader
+import com.github.jk1.license.render.SingleInfoReportRenderer
+
+import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil
+import com.liferay.gradle.util.StringUtil
+
+import java.util.regex.Matcher
+
+buildscript {
+	apply from: file("build-buildscript.gradle"), to: buildscript
+}
+
+plugins {
+	id "com.github.jk1.dependency-license-report" version "0.3.8"
+}
+
+generateLicenseReport {
+	doFirst {
+		XmlSlurper xmlSlurper = new XmlSlurper()
+
+		FileTree lfrbuildPortalFileTree = fileTree(dir: projectDir, include: "**/.lfrbuild-portal")
+
+		Set<String> configurationNames = []
+
+		lfrbuildPortalFileTree.each {
+			File lfrbuildPortalFile ->
+
+			File moduleDir = lfrbuildPortalFile.parentFile
+
+			String appTitle
+
+			File appDir = GradleUtil.getRootDir(moduleDir, "app.bnd")
+
+			String configurationName = "thirdPartyLibs"
+
+			if (appDir) {
+				Properties appProperties = GUtil.loadProperties(new File(appDir, "app.bnd"))
+
+				appTitle = appProperties["Liferay-Releng-App-Title"]
+
+				appTitle = appTitle.replace('${liferay.releng.app.title.prefix}', "Liferay")
+			}
+			else {
+				appTitle = relativePath(moduleDir)
+
+				appTitle = StringUtil.capitalize(appTitle.substring(0, appTitle.indexOf(File.separator)))
+			}
+
+			Configuration configuration = configurations.maybeCreate("thirdPartyLibs-${appTitle}")
+
+			configuration.transitive = false
+
+			configurationNames << configuration.name
+
+			File buildGradleFile = new File(moduleDir, "build.gradle")
+
+			if (buildGradleFile.exists()) {
+				String buildGradle = buildGradleFile.text
+
+				buildGradle.eachMatch(/compileInclude\s+group:\s*['"](.+)['"],\s*name:\s*['"](.+)['"],\s*version:\s*['"](.+)['"]/) {
+					String dependencyLine, String dependencyGroup, String dependencyName, String dependencyVersion ->
+
+					dependencyVersion = dependencyVersion.replaceAll(/\$\{(.+)\}/) {
+						String all, String variableName ->
+
+						Matcher matcher = buildGradle =~ /${variableName} = "(.+)"/
+
+						if (matcher) {
+							return matcher[0][1]
+						}
+						else {
+							logger.error "Unable to find value of {} in {}", all, buildGradleFile
+
+							return all
+						}
+					}
+
+					Dependency dependency = dependencies.add(configuration.name, "${dependencyGroup}:${dependencyName}:${dependencyVersion}")
+
+					logger.info "Added {} from {} into {}", dependency, buildGradleFile, configuration
+				}
+
+				File bndBndFile = new File(moduleDir, "bnd.bnd")
+
+				if (bndBndFile.exists()) {
+					Properties bndBndProperties = GUtil.loadProperties(bndBndFile)
+
+					Set<String> includedResources = []
+
+					String includeResource = bndBndProperties["-includeresource"]
+
+					if (includeResource) {
+						includedResources.addAll includeResource.tokenize(',')
+					}
+
+					includeResource = bndBndProperties["Include-Resource"]
+
+					if (includeResource) {
+						includedResources.addAll includeResource.tokenize(',')
+					}
+
+					includedResources.each {
+						String includedResource ->
+
+						Matcher matcher = includedResource =~ /[@=]{1,2}(.+)-\[0-9\]\*\.jar/
+
+						if (!matcher) {
+							return
+						}
+
+						String dependencyName = matcher[0][1]
+
+						Matcher dependencyMatcher = buildGradle =~ /provided\s+group:\s*['"](.+)['"],\s*name:\s*['"]${dependencyName}['"],\s*(?:\s*transitive: \w+,\s*)?version:\s*['"](.+)['"]/
+
+						if (!dependencyMatcher) {
+							logger.error "Unable to find dependency '{}' in {}", dependencyName, buildGradleFile
+
+							return
+						}
+
+						String dependencyGroup = dependencyMatcher[0][1]
+						String dependencyVersion = dependencyMatcher[0][2]
+
+						Dependency dependency = dependencies.add(configuration.name, "${dependencyGroup}:${dependencyName}:${dependencyVersion}")
+
+						logger.info "Added {} from {} into {}", dependency, bndBndFile, configuration
+					}
+				}
+			}
+
+			File ivyXmlFile = new File(moduleDir, "ivy.xml")
+
+			if (ivyXmlFile.exists()) {
+				def ivyModuleNode = xmlSlurper.parse(ivyXmlFile)
+
+				def dependencyNodes = ivyModuleNode.dependencies.children()
+
+				dependencyNodes.each {
+					String dependencyConf = it.@conf
+
+					if (dependencyConf) {
+						return
+					}
+
+					String dependencyGroup = it.@org
+					String dependencyName = it.@name
+					String dependencyVersion = it.@rev
+
+					Dependency dependency = dependencies.add(configuration.name, "${dependencyGroup}:${dependencyName}:${dependencyVersion}")
+
+					logger.info "Added {} from {} into {}", dependency, ivyXmlFile, configuration
+				}
+			}
+		}
+
+		licenseReport.configurations = configurationNames
+	}
+
+	doFirst {
+		MetaMethod readMetaMethod = ConfigurationReader.metaClass.getMetaMethod("read", [Project, Configuration] as Class[])
+
+		ConfigurationReader.metaClass.read = {
+			Project project, Configuration configuration ->
+
+			ConfigurationData configurationData = readMetaMethod.invoke(delegate, project, configuration)
+
+			configurationData.name = configuration.name
+
+			return configurationData
+		}
+	}
+}
+
+licenseReport {
+	renderer = new SingleInfoReportRenderer() {
+
+		@Override
+		void render(ProjectData projectData) {
+			LicenseReportPlugin.LicenseReportExtension licenseReportExtension = projectData.project.licenseReport
+
+			File outputFile = new File(licenseReportExtension.outputDir, "licenses.csv")
+
+			outputFile.withWriter {
+				Writer writer ->
+
+				writer.writeLine '"AppName","ArtifactGroup","ArtifactName","ArtifactVersion","ModuleUrl","ModuleLicense","ModuleLicenseUrl"'
+
+				projectData.configurations.each {
+					ConfigurationData configurationData ->
+
+					String appName = configurationData.name.substring(15)
+
+					configurationData.dependencies.each {
+						ModuleData moduleData ->
+
+						def (String moduleUrl, String moduleLicense, String moduleLicenseUrl) = moduleLicenseInfo(licenseReportExtension, moduleData)
+
+						writer.writeLine "${_quote(appName)},${_quote(moduleData.group)},${_quote(moduleData.name)},${_quote(moduleData.version)},${_quote(moduleUrl)},${_quote(moduleLicense)},${_quote(moduleLicenseUrl)}"
+					}
+				}
+			}
+		}
+
+		private String _quote(String content) {
+			if (!content) {
+				return ""
+			}
+
+			content = content.trim()
+			content = content.replace("\"", "\"\"")
+
+			return "\"${content}\""
+		}
+
+	}
+}
+
+repositories {
+	maven {
+		url "http://repository.liferay.com/nexus/content/groups/public"
+	}
+
+	String repositoryPrivatePassword = System.properties["repository.private.password"]
+	String repositoryPrivateUrl = System.properties["repository.private.url"]
+	String repositoryPrivateUsername = System.properties["repository.private.username"]
+
+	if (repositoryPrivatePassword && repositoryPrivateUrl && repositoryPrivateUsername) {
+		maven {
+			credentials {
+				password repositoryPrivatePassword
+				username repositoryPrivateUsername
+			}
+
+			url repositoryPrivateUrl
+		}
+	}
+}

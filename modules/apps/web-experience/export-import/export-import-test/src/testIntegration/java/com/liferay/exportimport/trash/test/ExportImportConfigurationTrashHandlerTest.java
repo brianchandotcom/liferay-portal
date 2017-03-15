@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.layoutsadmin.util.test.ExportImportConfigurationTestUtil;
-import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.trash.test.util.BaseTrashHandlerTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

@@ -185,12 +185,22 @@ AUI.add(
 
 						var wizard = instance._getWizard();
 
-						if (successPageDefinition) {
+						if (successPageDefinition.enabled) {
 							wizard.set('successPage', successPageDefinition.enabled);
 
 							successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_DESCRIPTION).val(successPageDefinition.body);
 
 							successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE).val(successPageDefinition.title);
+							
+							instance._uiSetMode(instance.get('mode'));
+
+							instance._syncControlTriggersUI();
+
+							var popoverBoundingBox = instance._getPopover().get('boundingBox');
+
+							popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE).hide();
+
+							popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE).show();
 						}
 					},
 

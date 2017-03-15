@@ -120,11 +120,11 @@
 							<c:choose>
 								<c:when test="<%= assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId() %>">
 									<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
-										<%= assetRenderer.getTitle(locale) %>
+										<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 									</aui:a>
 								</c:when>
 								<c:otherwise>
-									<%= assetRenderer.getTitle(locale) %>
+									<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 								</c:otherwise>
 							</c:choose>
 						</h5>
@@ -171,11 +171,11 @@
 						<c:choose>
 							<c:when test="<%= assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId() %>">
 								<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
-									<%= assetRenderer.getTitle(locale) %>
+									<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 								</aui:a>
 							</c:when>
 							<c:otherwise>
-								<%= assetRenderer.getTitle(locale) %>
+								<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 							</c:otherwise>
 						</c:choose>
 					</liferay-ui:search-container-column-text>
@@ -183,7 +183,7 @@
 					<liferay-ui:search-container-column-text
 						name="description"
 						truncate="<%= true %>"
-						value="<%= assetRenderer.getSummary(renderRequest, renderResponse) %>"
+						value="<%= HtmlUtil.escape(assetRenderer.getSummary(renderRequest, renderResponse)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

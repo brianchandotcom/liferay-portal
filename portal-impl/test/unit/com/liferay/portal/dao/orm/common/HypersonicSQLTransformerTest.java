@@ -44,7 +44,7 @@ public class HypersonicSQLTransformerTest extends BaseSQLTransformerTestCase {
 
 	@Override
 	protected String getIntegerDivisionTransformedSQL() {
-		return "select foo /  bar from Foo";
+		return "select foo / bar from Foo";
 	}
 
 	@Override

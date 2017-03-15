@@ -15,6 +15,12 @@
 package com.liferay.source.formatter.checks.util;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Hugo Huijser
@@ -26,6 +32,30 @@ public class JavaSourceUtil extends SourceUtil {
 		int y = fileName.lastIndexOf(CharPool.PERIOD);
 
 		return fileName.substring(x + 1, y);
+	}
+
+	public static List<String> getParameterList(String methodCall) {
+		String parameters = null;
+
+		int x = -1;
+
+		while (true) {
+			x = methodCall.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
+
+			parameters = methodCall.substring(0, x + 1);
+
+			if ((getLevel(parameters, "(", ")") == 0) &&
+				(getLevel(parameters, "{", "}") == 0)) {
+
+				break;
+			}
+		}
+
+		x = parameters.indexOf(StringPool.OPEN_PARENTHESIS);
+
+		parameters = parameters.substring(x + 1, parameters.length() - 1);
+
+		return splitParameters(parameters);
 	}
 
 	public static boolean isValidJavaParameter(String javaParameter) {
@@ -43,6 +73,38 @@ public class JavaSourceUtil extends SourceUtil {
 		}
 
 		return false;
+	}
+
+	public static List<String> splitParameters(String parameters) {
+		List<String> parametersList = new ArrayList<>();
+
+		int x = -1;
+
+		while (true) {
+			x = parameters.indexOf(StringPool.COMMA, x + 1);
+
+			if (x == -1) {
+				parametersList.add(StringUtil.trim(parameters));
+
+				return parametersList;
+			}
+
+			if (ToolsUtil.isInsideQuotes(parameters, x)) {
+				continue;
+			}
+
+			String linePart = parameters.substring(0, x);
+
+			if ((getLevel(linePart, "(", ")") == 0) &&
+				(getLevel(linePart, "{", "}") == 0)) {
+
+				parametersList.add(StringUtil.trim(linePart));
+
+				parameters = parameters.substring(x + 1);
+
+				x = -1;
+			}
+		}
 	}
 
 }

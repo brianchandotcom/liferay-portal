@@ -35,6 +35,7 @@ import com.liferay.source.formatter.checks.JavaLineBreakCheck;
 import com.liferay.source.formatter.checks.JavaLogLevelCheck;
 import com.liferay.source.formatter.checks.JavaLongLinesCheck;
 import com.liferay.source.formatter.checks.JavaPackagePathCheck;
+import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
 import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -361,119 +362,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					fileName,
 					"Missing deletion system event '" +
 						localServiceImplFileName + "', see LPS-46632");
-			}
-		}
-	}
-
-	protected void checkUpgradeClass(
-		String fileName, String absolutePath, String className,
-		String content) {
-
-		if (!fileName.contains("/upgrade/")) {
-			return;
-		}
-
-		// LPS-41205
-
-		int pos = content.indexOf("LocaleUtil.getDefault()");
-
-		if (pos != -1) {
-			processMessage(
-				fileName,
-				"Use UpgradeProcessUtil.getDefaultLanguageId(companyId) " +
-					"instead of LocaleUtil.getDefault()",
-				getLineCount(content, pos));
-		}
-
-		pos = content.indexOf("rs.getDate(");
-
-		if (pos != -1) {
-			processMessage(
-				fileName, "Use rs.getTimeStamp instead of rs.getDate",
-				getLineCount(content, pos));
-		}
-
-		// LPS-34911
-
-		if ((portalSource ||subrepository) &&
-			!isExcludedPath(_UPGRADE_SERVICE_UTIL_EXCLUDES, absolutePath) &&
-			fileName.contains("/portal/upgrade/") &&
-			!fileName.contains("/test/") &&
-			!fileName.contains("/testIntegration/")) {
-
-			pos = content.indexOf("ServiceUtil.");
-
-			if (pos != -1) {
-				processMessage(
-					fileName,
-					"Do not use *ServiceUtil classes in upgrade classes, see " +
-						"LPS-34911",
-					getLineCount(content, pos));
-			}
-		}
-
-		if (!fileName.endsWith("Upgrade.java")) {
-			return;
-		}
-
-		// LPS-59828
-
-		if (content.contains("implements UpgradeStepRegistrator")) {
-			Matcher matcher = _componentAnnotationPattern.matcher(content);
-
-			if (matcher.find()) {
-				String componentAnnotation = matcher.group();
-
-				if (!componentAnnotation.contains("service =")) {
-					processMessage(
-						fileName, "@Component requires 'service' parameter");
-				}
-			}
-		}
-
-		// LPS-65685
-
-		Matcher matcher1 = _registryRegisterPattern.matcher(content);
-
-		while (matcher1.find()) {
-			if (ToolsUtil.isInsideQuotes(content, matcher1.start())) {
-				continue;
-			}
-
-			List<String> parametersList = getParameterList(
-				content.substring(matcher1.start()));
-
-			if (parametersList.size() <= 4) {
-				continue;
-			}
-
-			String previousUpgradeClassName = null;
-
-			for (int i = 3; i < parametersList.size(); i++) {
-				String parameter = parametersList.get(i);
-
-				Matcher matcher2 = _upgradeClassNamePattern.matcher(parameter);
-
-				if (!matcher2.find()) {
-					break;
-				}
-
-				String upgradeClassName = matcher2.group(1);
-
-				if ((previousUpgradeClassName != null) &&
-					(previousUpgradeClassName.compareTo(upgradeClassName) >
-						0)) {
-
-					processMessage(
-						fileName,
-						"Break up Upgrade classes with a minor version " +
-							"increment or order alphabetically, see LPS-65685",
-						getLineCount(content, matcher1.start()));
-
-					break;
-				}
-
-				previousUpgradeClassName = upgradeClassName;
 			}
 		}
 	}
@@ -896,8 +784,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			processMessage(fileName, sb.toString());
 		}
-
-		checkUpgradeClass(fileName, absolutePath, className, newContent);
 
 		if (_addMissingDeprecationReleaseVersion) {
 			newContent = formatDeprecatedJavadoc(
@@ -2047,6 +1933,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileChecks.add(
 				new JavaVerifyUpgradeConnectionCheck(
 					_upgradeDataAccessConnectionExcludes));
+			fileChecks.add(
+				new JavaUpgradeClassCheck(_upgradeServiceUtilExcludes));
 		}
 
 		return fileChecks;
@@ -2529,6 +2417,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_lineLengthExcludes = getExcludes(_LINE_LENGTH_EXCLUDES);
 		_upgradeDataAccessConnectionExcludes = getExcludes(
 			_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES);
+		_upgradeServiceUtilExcludes = getExcludes(
+			_UPGRADE_SERVICE_UTIL_EXCLUDES);
 	}
 
 	protected void processCheckStyle() throws Exception {
@@ -2676,8 +2566,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _classPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?) \\{)\n(\\s*)(\\S)");
-	private final Pattern _componentAnnotationPattern = Pattern.compile(
-		"@Component(\n|\\([\\s\\S]*?\\)\n)");
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
 	private final Pattern _deprecatedPattern = Pattern.compile(
@@ -2721,8 +2609,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");
-	private final Pattern _registryRegisterPattern = Pattern.compile(
-		"registry\\.register\\((.*?)\\);\n", Pattern.DOTALL);
 	private final Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 	private final Pattern _stagedModelTypesPattern = Pattern.compile(
@@ -2733,7 +2619,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();
 	private List<String> _upgradeDataAccessConnectionExcludes;
-	private final Pattern _upgradeClassNamePattern = Pattern.compile(
-		"new .*?(\\w+)\\(", Pattern.DOTALL);
+	private List<String> _upgradeServiceUtilExcludes;
 
 }

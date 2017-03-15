@@ -142,7 +142,7 @@
 		<execute macro="FormsAdminNavigator#gotoRules" />
 
 		<execute macro="FormRules#viewSummary">
-			<var name="action" value="Jump to page" />
+			<var name="action" value="Jump to Page" />
 			<var name="actionTarget" value="3 Page 3" />
 			<var name="conditionField" value="Choose Your Destiny" />
 			<var name="conditionFieldConstant" value="Destiny 2" />
@@ -151,7 +151,7 @@
 		</execute>
 
 		<execute macro="FormRules#viewSummary">
-			<var name="action" value="Jump to page" />
+			<var name="action" value="Jump to Page" />
 			<var name="actionTarget" value="4 Page 4" />
 			<var name="conditionField" value="Choose Your Destiny" />
 			<var name="conditionFieldConstant" value="Destiny 3" />

@@ -41,10 +41,7 @@ public class DLProcessorPluggableContentDataHandler
 			FileEntry fileEntry)
 		throws Exception {
 
-		if (portletDataContext.getBooleanParameter(
-				_DL_PORTLET_DATA_HANDLER_NAMESPACE,
-				"previews-and-thumbnails")) {
-
+		if (_isEnabled(portletDataContext)) {
 			DLProcessorRegistryUtil.exportGeneratedFiles(
 				portletDataContext, fileEntry, fileEntryElement);
 		}
@@ -56,13 +53,16 @@ public class DLProcessorPluggableContentDataHandler
 			FileEntry fileEntry, FileEntry importedFileEntry)
 		throws Exception {
 
-		if (portletDataContext.getBooleanParameter(
-				"document_library", "previews-and-thumbnails")) {
-
+		if (_isEnabled(portletDataContext)) {
 			DLProcessorRegistryUtil.importGeneratedFiles(
 				portletDataContext, fileEntry, importedFileEntry,
 				fileEntryElement);
 		}
+	}
+
+	private boolean _isEnabled(PortletDataContext portletDataContext) {
+		return portletDataContext.getBooleanParameter(
+			_DL_PORTLET_DATA_HANDLER_NAMESPACE, "previews-and-thumbnails");
 	}
 
 	/**

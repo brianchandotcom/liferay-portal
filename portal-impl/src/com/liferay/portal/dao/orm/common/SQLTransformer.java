@@ -82,20 +82,15 @@ public class SQLTransformer {
 
 		newSQL = _sqlTransformer.transform(sql);
 
-		Function<String, String> positionalParameterFunction =
-			HqlToJpqlTransformerLogic.getPositionalParameterFunction();
+		Function[] functions = {
+			HqlToJpqlTransformerLogic.getPositionalParameterFunction(),
+			HqlToJpqlTransformerLogic.getNotEqualsFunction(),
+			HqlToJpqlTransformerLogic.getCompositeIdMarkerFunction()
+		};
 
-		newSQL = positionalParameterFunction.apply(newSQL);
-
-		Function<String, String> notEqualsFunction =
-			HqlToJpqlTransformerLogic.getNotEqualsFunction();
-
-		newSQL = notEqualsFunction.apply(newSQL);
-
-		Function<String, String> compositeIdMarkerFunction =
-			HqlToJpqlTransformerLogic.getCompositeIdMarkerFunction();
-
-		newSQL = compositeIdMarkerFunction.apply(newSQL);
+		for (Function<String, String> function : functions) {
+			newSQL = function.apply(newSQL);
+		}
 
 		_transformedSqls.put(sql, newSQL);
 

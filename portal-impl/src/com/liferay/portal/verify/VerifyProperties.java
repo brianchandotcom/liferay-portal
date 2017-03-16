@@ -1731,6 +1731,7 @@ public class VerifyProperties extends VerifyProcess {
 		"dynamic.data.lists.template.language.parser[ftl]",
 		"dynamic.data.lists.template.language.parser[vm]",
 		"dynamic.data.lists.template.language.parser[xsl]",
+		"dynamic.data.mapping.structure.index.with.thread",
 		"dynamic.data.mapping.structure.private.field.names",
 		"dynamic.data.mapping.structure.private.field.datatype[_fieldsDisplay]",
 		"dynamic.data.mapping.structure.private.field.repeatable[" +

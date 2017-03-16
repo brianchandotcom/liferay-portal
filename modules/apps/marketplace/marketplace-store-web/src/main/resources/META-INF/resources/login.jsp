@@ -29,5 +29,11 @@
 		<portlet:param name="callbackURL" value="<%= callbackURL %>" />
 	</liferay-portlet:actionURL>
 
-	<aui:button onClick="<%= authorizeURL %>" value="sign-in" />
+	<%
+	Map<String, Object> data = new HashMap<String, Object>();
+	
+	data.put("senna-off", "true");
+	%>
+
+	<aui:button data="<%= data %>" onClick="<%= authorizeURL %>" value="sign-in" />
 </div>

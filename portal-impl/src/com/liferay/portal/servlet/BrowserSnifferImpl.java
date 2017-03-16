@@ -505,10 +505,15 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	}
 
 	private boolean _isMozilla(String userAgent) {
-		if (userAgent.contains("mozilla") &&
-			!(userAgent.contains("compatible") ||
-			  userAgent.contains("webkit"))) {
+		if (userAgent.contains("compatible")) {
+			return false;
+		}
 
+		if (userAgent.contains("webkit")) {
+			return false;
+		}
+
+		if (userAgent.contains("mozilla")) {
 			return true;
 		}
 

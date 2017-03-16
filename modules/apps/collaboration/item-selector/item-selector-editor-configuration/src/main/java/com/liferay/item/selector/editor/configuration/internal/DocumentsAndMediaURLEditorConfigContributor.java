@@ -15,16 +15,23 @@
 package com.liferay.item.selector.editor.configuration.internal;
 
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -32,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(service = EditorConfigContributor.class)
-public class URLEditorConfigContributor extends BaseEditorConfigContributor {
+public class DocumentsAndMediaURLEditorConfigContributor extends BaseEditorConfigContributor {
 
 	@Override
 	public void populateConfigJSONObject(
@@ -40,13 +47,29 @@ public class URLEditorConfigContributor extends BaseEditorConfigContributor {
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		PortletURL itemSelectorURL = getItemSelectorPortletURL(
-			inputEditorTaglibAttributes, requestBackedPortletURLFactory,
-			new URLItemSelectorCriterion());
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
 
-		if (itemSelectorURL != null) {
-			jsonObject.put("filebrowserBrowseUrl", itemSelectorURL.toString());
-		}
+		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
+
+		ItemSelectorCriterion itemSelectorCriterion =
+			new FileItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		String namespace = GetterUtil.getString(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:namespace"));
+
+		String name = GetterUtil.getString(
+			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, namespace + name + "selectItem",
+			itemSelectorCriterion);
+
+		jsonObject.put("filebrowserBrowseUrl", itemSelectorURL.toString());
 	}
 
 	@Reference(unbind = "-")

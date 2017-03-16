@@ -73,6 +73,30 @@
 				);
 
 				editor.addCommand(
+					'linkselector',
+					{
+						canUndo: false,
+						exec: function(editor, callback) {
+							var onSelectedLinkChangeFn = AUI().bind(
+								'_onSelectedLinkChange',
+								instance,
+								editor,
+								callback
+							);
+
+							instance._getItemSelectorDialog(
+								editor,
+								editor.config.filebrowserBrowseUrl,
+								function(itemSelectorDialog) {
+									itemSelectorDialog.once('selectedItemChange', onSelectedLinkChangeFn);
+									itemSelectorDialog.open();
+								}
+							);
+						}
+					}
+				);
+
+				editor.addCommand(
 					'videoselector',
 					{
 						canUndo: false,
@@ -141,6 +165,9 @@
 						}
 						else if (dialogName === 'video') {
 							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'videoselector', 'poster');
+						}
+						else if (dialogName === 'link') {
+							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'linkselector', 'url');
 						}
 					}
 				);
@@ -375,6 +402,27 @@
 
 									editor.focus();
 								}
+							}
+						}
+					);
+				}
+			},
+
+			_onSelectedLinkChange: function(editor, callback, event) {
+				var instance = this;
+
+				var selectedItem = event.newVal;
+
+				if (selectedItem) {
+					var eventName = editor.name + 'selectItem';
+
+					var linkUrl = selectedItem.value;
+
+					Liferay.Util.getWindow(eventName).onceAfter(
+						'destroy',
+						function() {
+							if (callback) {
+								callback(linkUrl);
 							}
 						}
 					);

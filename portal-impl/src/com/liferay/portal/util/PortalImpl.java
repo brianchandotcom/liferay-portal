@@ -4014,10 +4014,13 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getPortalURL(HttpServletRequest request, boolean secure) {
-		String serverName = getForwardedHost(request);
 		int serverPort = getForwardedPort(request);
 
-		return getPortalURL(serverName, serverPort, secure);
+		if (Validator.isNull(PropsValues.WEB_SERVER_HOST)) {
+			return _getPortalURL(getForwardedHost(request), serverPort, secure);
+		}
+
+		return _getPortalURL(PropsValues.WEB_SERVER_HOST, serverPort, secure);
 	}
 
 	@Override
@@ -4072,13 +4075,16 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getPortalURL(PortletRequest portletRequest, boolean secure) {
-		return getPortalURL(
-			portletRequest.getServerName(), portletRequest.getServerPort(),
-			secure);
+		int port = portletRequest.getServerPort();
+
+		if (Validator.isNull(PropsValues.WEB_SERVER_HOST)) {
+			return _getPortalURL(portletRequest.getServerName(), port, secure);
+		}
+
+		return _getPortalURL(PropsValues.WEB_SERVER_HOST, port, secure);
 	}
 
-	@Override
-	public String getPortalURL(
+	private String _getPortalURL(
 		String serverName, int serverPort, boolean secure) {
 
 		StringBundler sb = new StringBundler(4);
@@ -4099,12 +4105,7 @@ public class PortalImpl implements Portal {
 			sb.append(Http.HTTP_WITH_SLASH);
 		}
 
-		if (Validator.isNull(PropsValues.WEB_SERVER_HOST)) {
-			sb.append(serverName);
-		}
-		else {
-			sb.append(PropsValues.WEB_SERVER_HOST);
-		}
+		sb.append(serverName);
 
 		if (!https) {
 			if (PropsValues.WEB_SERVER_HTTP_PORT == -1) {
@@ -4140,6 +4141,17 @@ public class PortalImpl implements Portal {
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	public String getPortalURL(
+		String serverName, int serverPort, boolean secure) {
+
+		if (Validator.isNull(PropsValues.WEB_SERVER_HOST)) {
+			return _getPortalURL(serverName, serverPort, secure);
+		}
+
+		return _getPortalURL(PropsValues.WEB_SERVER_HOST, serverPort, secure);
 	}
 
 	@Override

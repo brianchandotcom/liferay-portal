@@ -1360,6 +1360,7 @@ rerun your task.
 					<propertyref name="source.formatter.max.line.length" />
 					<propertyref name="source.formatter.processor.thread.count" />
 					<propertyref name="timeout.app.server.wait" />
+					<propertyref name="upgrade.table.dir" />
 					<propertyref prefix="ivy.pom." />
 					<propertyref prefix="nodejs.npm." />
 					<propertyref prefix="sonatype." />

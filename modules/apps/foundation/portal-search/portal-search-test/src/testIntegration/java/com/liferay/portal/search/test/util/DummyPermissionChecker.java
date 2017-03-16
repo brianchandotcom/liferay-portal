@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author André de Oliveira
@@ -46,6 +48,11 @@ public class DummyPermissionChecker implements PermissionChecker {
 	@Override
 	public long getOwnerRoleId() {
 		return 0;
+	}
+
+	@Override
+	public Map<Object, Object> getPermissionsCache() {
+		return _permissionsCache;
 	}
 
 	@Override
@@ -178,5 +185,7 @@ public class DummyPermissionChecker implements PermissionChecker {
 	public boolean isSignedIn() {
 		return false;
 	}
+
+	private final Map<Object, Object> _permissionsCache = new HashMap<>();
 
 }

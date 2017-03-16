@@ -27,7 +27,11 @@ import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -84,6 +88,50 @@ public class GroupPermissionImpl
 
 	@Override
 	public boolean contains(
+			PermissionChecker permissionChecker, Group group, String actionId)
+		throws PortalException {
+
+		Map<Object, Object> permissionsCache =
+			permissionChecker.getPermissionsCache();
+
+		CacheKey cacheKey = new CacheKey(
+			group.getGroupId(), group.getMvccVersion(), actionId);
+
+		Boolean contains = (Boolean)permissionsCache.get(cacheKey);
+
+		if (contains == null) {
+			contains = _contains(permissionChecker, group, actionId);
+
+			permissionsCache.put(cacheKey, contains);
+		}
+
+		return contains;
+	}
+
+	@Override
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, String actionId)
+		throws PortalException {
+
+		if (groupId > 0) {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			return contains(permissionChecker, group, actionId);
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean contains(
+		PermissionChecker permissionChecker, String actionId) {
+
+		return permissionChecker.hasPermission(
+			null, Group.class.getName(), Group.class.getName(), actionId);
+	}
+
+	private boolean _contains(
 			PermissionChecker permissionChecker, Group group, String actionId)
 		throws PortalException {
 
@@ -196,27 +244,49 @@ public class GroupPermissionImpl
 		return false;
 	}
 
-	@Override
-	public boolean contains(
-			PermissionChecker permissionChecker, long groupId, String actionId)
-		throws PortalException {
+	private static class CacheKey {
 
-		if (groupId > 0) {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
 
-			return contains(permissionChecker, group, actionId);
-		}
-		else {
+			if (!(obj instanceof CacheKey)) {
+				return false;
+			}
+
+			CacheKey cacheKey = (CacheKey)obj;
+
+			if ((_groupId == cacheKey._groupId) &&
+				(_mvccVersion == cacheKey._mvccVersion) &&
+				Objects.equals(_actionId, cacheKey._actionId)) {
+
+				return true;
+			}
+
 			return false;
 		}
-	}
 
-	@Override
-	public boolean contains(
-		PermissionChecker permissionChecker, String actionId) {
+		@Override
+		public int hashCode() {
+			int hash = HashUtil.hash(0, _groupId);
 
-		return permissionChecker.hasPermission(
-			null, Group.class.getName(), Group.class.getName(), actionId);
+			hash = HashUtil.hash(hash, _mvccVersion);
+
+			return HashUtil.hash(hash, _actionId);
+		}
+
+		private CacheKey(long groupId, long mvccVersion, String actionId) {
+			_groupId = groupId;
+			_mvccVersion = mvccVersion;
+			_actionId = actionId;
+		}
+
+		private final String _actionId;
+		private final long _groupId;
+		private final long _mvccVersion;
+
 	}
 
 }

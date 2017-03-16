@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -48,6 +49,8 @@ public interface PermissionChecker extends Cloneable {
 	 * @return the primary key of the owner role
 	 */
 	public long getOwnerRoleId();
+
+	public Map<Object, Object> getPermissionsCache();
 
 	public List<Long> getResourceBlockIds(
 		long companyId, long groupId, long userId, String name,

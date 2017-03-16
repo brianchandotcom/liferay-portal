@@ -28,7 +28,9 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.admin.util.OmniadminUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -53,6 +55,11 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 	@Override
 	public long getOwnerRoleId() {
 		return ownerRole.getRoleId();
+	}
+
+	@Override
+	public Map<Object, Object> getPermissionsCache() {
+		return _permissionsCache;
 	}
 
 	@Override
@@ -168,5 +175,7 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePermissionChecker.class);
+
+	private final Map<Object, Object> _permissionsCache = new HashMap<>();
 
 }

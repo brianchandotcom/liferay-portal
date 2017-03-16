@@ -15,10 +15,11 @@
 package com.liferay.document.library.web.internal.upload;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -27,39 +28,43 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.upload.BaseUploadHandler;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.upload.UploadFileEntryHandler;
 
 import java.io.InputStream;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
  * @author Sergio González
+ * @author Alejandro Tardín
  */
-public class FileEntryDLUploadHandler extends BaseUploadHandler {
-
-	public FileEntryDLUploadHandler(DLValidator dlValidator) {
-		_dlValidator = dlValidator;
-	}
+@Component(service = DLUploadFileEntryHandler.class)
+public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 	@Override
-	protected FileEntry addFileEntry(
+	public FileEntry addFileEntry(
 			long userId, long groupId, long folderId, String fileName,
 			String contentType, InputStream inputStream, long size,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return DLAppServiceUtil.addFileEntry(
+		return _dlAppService.addFileEntry(
 			groupId, folderId, fileName, contentType, fileName,
 			StringPool.BLANK, StringPool.BLANK, inputStream, size,
 			serviceContext);
 	}
 
 	@Override
-	protected void checkPermission(
+	public void checkPermission(
 			long groupId, long folderId, PermissionChecker permissionChecker)
 		throws PortalException {
 
@@ -68,12 +73,21 @@ public class FileEntryDLUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
-	protected FileEntry fetchFileEntry(
+	public void doHandleUploadException(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			PortalException pe, JSONObject jsonObject)
+		throws PortalException {
+
+		throw pe;
+	}
+
+	@Override
+	public FileEntry fetchFileEntry(
 			long userId, long groupId, long folderId, String fileName)
 		throws PortalException {
 
 		try {
-			return DLAppServiceUtil.getFileEntry(groupId, folderId, fileName);
+			return _dlAppService.getFileEntry(groupId, folderId, fileName);
 		}
 		catch (PortalException pe) {
 
@@ -88,17 +102,17 @@ public class FileEntryDLUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
-	protected long getFolderId(UploadPortletRequest uploadPortletRequest) {
+	public long getFolderId(UploadPortletRequest uploadPortletRequest) {
 		return ParamUtil.getLong(uploadPortletRequest, "folderId");
 	}
 
 	@Override
-	protected String getParameterName() {
+	public String getParameterName() {
 		return "imageSelectorFileName";
 	}
 
 	@Override
-	protected ServiceContext getServiceContext(
+	public ServiceContext getServiceContext(
 			UploadPortletRequest uploadPortletRequest)
 		throws PortalException {
 
@@ -107,7 +121,7 @@ public class FileEntryDLUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
-	protected String getURL(FileEntry fileEntry, ThemeDisplay themeDisplay) {
+	public String getURL(FileEntry fileEntry, ThemeDisplay themeDisplay) {
 		try {
 			return DLUtil.getPreviewURL(
 				fileEntry, fileEntry.getLatestFileVersion(), themeDisplay,
@@ -126,15 +140,19 @@ public class FileEntryDLUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
-	protected void validateFile(String fileName, String contentType, long size)
+	public void validateFile(String fileName, String contentType, long size)
 		throws PortalException {
 
 		_dlValidator.validateFileSize(fileName, size);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FileEntryDLUploadHandler.class);
+		DLUploadFileEntryHandler.class);
 
-	private final DLValidator _dlValidator;
+	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
+	private DLValidator _dlValidator;
 
 }

@@ -14,17 +14,15 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
-import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.document.library.web.internal.upload.FileEntryDLUploadHandler;
+import com.liferay.document.library.web.internal.upload.DLUploadFileEntryHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.upload.UploadHandler;
+import com.liferay.upload.UploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -42,22 +40,19 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
-	@Activate
-	protected void activate() {
-		_uploadHandler = new FileEntryDLUploadHandler(_dlValidator);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_uploadHandler.upload(actionRequest, actionResponse);
+		_uploadHandler.upload(
+			_dlUploadFileEntryHandler, actionRequest, actionResponse);
 	}
 
 	@Reference
-	private DLValidator _dlValidator;
+	private DLUploadFileEntryHandler _dlUploadFileEntryHandler;
 
+	@Reference
 	private UploadHandler _uploadHandler;
 
 }

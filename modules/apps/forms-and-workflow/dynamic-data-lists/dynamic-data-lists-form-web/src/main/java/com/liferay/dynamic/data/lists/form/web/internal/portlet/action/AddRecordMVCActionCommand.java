@@ -88,35 +88,29 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, ddlRecord);
 		}
 
-		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsModel();
+		if (SessionErrors.isEmpty(actionRequest)) {
+			DDLRecordSetSettings recordSetSettings =
+				recordSet.getSettingsModel();
 
-		String redirectURL = recordSetSettings.redirectURL();
+			String redirectURL = recordSetSettings.redirectURL();
 
-		if (SessionErrors.isEmpty(actionRequest) &&
-			Validator.isNotNull(redirectURL)) {
+			if (Validator.isNotNull(redirectURL)) {
+				sendRedirect(actionRequest, actionResponse, redirectURL);
+			}
+			else {
+				DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
+					ddmForm.getDDMFormSuccessPageSettings();
 
-			String portletId = _portal.getPortletId(actionRequest);
+				if (ddmFormSuccessPageSettings.isEnabled()) {
+					String portletId = _portal.getPortletId(actionRequest);
 
-			SessionMessages.add(
-				actionRequest,
-				portletId.concat(
-					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE));
-
-			actionResponse.sendRedirect(redirectURL);
-		}
-
-		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
-			ddmForm.getDDMFormSuccessPageSettings();
-
-		if (SessionErrors.isEmpty(actionRequest) &&
-			ddmFormSuccessPageSettings.isEnabled()) {
-
-			String portletId = _portal.getPortletId(actionRequest);
-
-			SessionMessages.add(
-				actionRequest,
-				portletId.concat(
-					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE));
+					SessionMessages.add(
+						actionRequest,
+						portletId.concat(
+							SessionMessages.
+								KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE));
+				}
+			}
 		}
 	}
 

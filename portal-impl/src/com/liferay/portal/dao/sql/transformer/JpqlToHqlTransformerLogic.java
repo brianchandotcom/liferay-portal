@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,19 +23,21 @@ import java.util.regex.Pattern;
  */
 public class JpqlToHqlTransformerLogic {
 
-	public static final String transformCount(String sql) {
-		Matcher matcher = _jpqlCountPattern.matcher(sql);
+	public static final Function<String, String> getCountFunction() {
+		return (String sql) -> {
+			Matcher matcher = _jpqlCountPattern.matcher(sql);
 
-		if (matcher.find()) {
-			String countExpression = matcher.group(1);
-			String entityAlias = matcher.group(3);
+			if (matcher.find()) {
+				String countExpression = matcher.group(1);
+				String entityAlias = matcher.group(3);
 
-			if (entityAlias.equals(countExpression)) {
-				return matcher.replaceFirst(_HQL_COUNT_SQL);
+				if (entityAlias.equals(countExpression)) {
+					return matcher.replaceFirst(_HQL_COUNT_SQL);
+				}
 			}
-		}
 
-		return sql;
+			return sql;
+		};
 	}
 
 	private static final String _HQL_COUNT_SQL = "SELECT COUNT(*) FROM $2 $3";

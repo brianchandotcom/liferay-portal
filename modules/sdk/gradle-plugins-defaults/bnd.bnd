@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.gradle.plugins.defaults
 Bundle-Version: 3.4.4
 Export-Package:\
 	com.liferay.gradle.plugins.defaults,\
+	com.liferay.gradle.plugins.defaults.extensions,\
 	com.liferay.gradle.plugins.defaults.tasks

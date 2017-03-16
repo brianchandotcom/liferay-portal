@@ -1,10 +1,10 @@
 import com.liferay.gradle.util.StringUtil
 
-task importPackages(type: Copy)
-task transformImportedPackages(type: JavaExec)
+task importFiles(type: Copy)
+task transformImportedFiles(type: JavaExec)
 
 classes {
-	dependsOn transformImportedPackages
+	dependsOn transformImportedFiles
 }
 
 configurations {
@@ -15,17 +15,17 @@ dependencies {
 	bytecodeTransformer group: "com.liferay", name: "com.liferay.portal.tools.portal.compat.bytecode.transformer", version: "1.0.1"
 }
 
-importPackages {
+importFiles {
 	into {
 		compileJava.destinationDir
 	}
 }
 
-transformImportedPackages {
+transformImportedFiles {
 	classpath = configurations.bytecodeTransformer
-	dependsOn importPackages
+	dependsOn importFiles
 	main = "com.liferay.portal.tools.portal.compat.bytecode.transformer.PortalCompactBytecodeTransformer"
-	systemProperty "classes.dir", importPackages.destinationDir
+	systemProperty "classes.dir", importFiles.destinationDir
 }
 
 updateFileVersions {
@@ -51,16 +51,16 @@ updateFileVersions {
 	}]
 }
 
-Properties importedPackagesProperties = new Properties()
+Properties importedFilesProperties = new Properties()
 
-File importedPackagesPropertiesFile = file("imported-packages.properties")
+File importedFilesPropertiesFile = file("imported-files.properties")
 
-importedPackagesPropertiesFile.withInputStream {
-	importedPackagesProperties.load it
+importedFilesPropertiesFile.withInputStream {
+	importedFilesProperties.load it
 }
 
-importedPackagesProperties.each {
-	String dependencyNotation, String packageNames ->
+importedFilesProperties.each {
+	String dependencyNotation, String dependencyIncludes ->
 
 	String dependencySuffix = dependencyNotation.replaceAll(/[\.|:](\w)/) {
 		String s = it[1]
@@ -68,23 +68,17 @@ importedPackagesProperties.each {
 		s.toUpperCase()
 	}
 
-	Configuration dependencyConfiguration = configurations.create("importedPackages" + StringUtil.capitalize(dependencySuffix))
+	Configuration dependencyConfiguration = configurations.create("importedFiles" + StringUtil.capitalize(dependencySuffix))
 
 	dependencyConfiguration.transitive = false
 
 	dependencies.add dependencyConfiguration.name, dependencyNotation
 
-	String[] dependencyIncludes = packageNames.tokenize(",")
-
-	dependencyIncludes = dependencyIncludes.collect {
-		it.replace('.' as char, '/' as char) + "/*"
-	}
-
-	importPackages {
+	importFiles {
 		from {
 			zipTree(dependencyConfiguration.singleFile)
 		} {
-			include dependencyIncludes
+			include dependencyIncludes.tokenize(",")
 		}
 	}
 }

@@ -391,10 +391,25 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 		Matcher matcher = _annotationPattern.matcher(content);
 
 		while (matcher.find()) {
-			String annotationParameters = matcher.group(3);
+			x = matcher.end();
 
-			if (annotationParameters.contains(line)) {
-				return true;
+			while (true) {
+				x = content.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				String annotationParameters = content.substring(
+					matcher.end() - 2, x + 1);
+
+				if (getLevel(annotationParameters) == 0) {
+					if (annotationParameters.contains(line)) {
+						return true;
+					}
+
+					break;
+				}
 			}
 		}
 
@@ -402,7 +417,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 	}
 
 	private final Pattern _annotationPattern = Pattern.compile(
-		"(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
+		"\n\t*@(.+)\\(\n");
 	private final List<String> _excludes;
 	private final SourceFormatterArgs _sourceFormatterArgs;
 

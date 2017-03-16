@@ -1223,7 +1223,7 @@ master branch, but it was previously already published from a release branch.
 ### Changed
 - [LPS-71222]: Update the [Liferay Gradle Plugins] dependency to version 3.2.20.
 
-## 3.4.2 - 2017-03-13
+## 3.4.2 - 2017-03-14
 
 ### Fixed
 - [LPS-71224]: Always point the `artifact.url` property of `artifact.properties`

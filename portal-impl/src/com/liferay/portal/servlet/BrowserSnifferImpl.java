@@ -49,10 +49,12 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 
 	@Override
 	public String getBrowserId(HttpServletRequest request) {
-		if (isIe(request)) {
+		String userAgent = getUserAgent(request);
+
+		if (isIe(userAgent)) {
 			return BROWSER_ID_IE;
 		}
-		else if (isFirefox(request)) {
+		else if (_isFirefox(userAgent)) {
 			return BROWSER_ID_FIREFOX;
 		}
 		else {
@@ -140,19 +142,7 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 
 	@Override
 	public boolean isFirefox(HttpServletRequest request) {
-		if (!isMozilla(request)) {
-			return false;
-		}
-
-		String userAgent = getUserAgent(request);
-
-		for (String firefoxAlias : _FIREFOX_ALIASES) {
-			if (userAgent.contains(firefoxAlias)) {
-				return true;
-			}
-		}
-
-		return false;
+		return _isFirefox(getUserAgent(request));
 	}
 
 	@Override
@@ -499,6 +489,31 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		{"version", "firefox", "minefield", "chrome"};
 	protected static char[] versionSeparators =
 		{CharPool.BACK_SLASH, CharPool.SLASH};
+
+	private boolean _isFirefox(String userAgent) {
+		if (!_isMozilla(userAgent)) {
+			return false;
+		}
+
+		for (String firefoxAlias : _FIREFOX_ALIASES) {
+			if (userAgent.contains(firefoxAlias)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isMozilla(String userAgent) {
+		if (userAgent.contains("mozilla") &&
+			!(userAgent.contains("compatible") ||
+			  userAgent.contains("webkit"))) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	private static final String[] _FIREFOX_ALIASES = {
 		"firefox", "minefield", "granparadiso", "bonecho", "firebird",

@@ -79,7 +79,6 @@ import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersi
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -91,7 +90,6 @@ import com.liferay.trash.kernel.service.persistence.TrashVersionPersistence;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -352,16 +350,6 @@ public abstract class JournalArticleLocalServiceBaseImpl
 		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Set<Serializable> primaryKeys = portletDataContext.getRegisteredExportingClassedModelPrimaryKeys(
-							"JournalArticle");
-
-					if (SetUtil.isNotEmpty(primaryKeys)) {
-						Property primaryKeyProperty = PropertyFactoryUtil.forName(
-								"id");
-
-						dynamicQuery.add(primaryKeyProperty.in(primaryKeys));
-					}
-
 					Criterion modifiedDateCriterion = portletDataContext.getDateRangeCriteria(
 							"modifiedDate");
 

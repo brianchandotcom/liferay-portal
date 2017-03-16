@@ -99,8 +99,6 @@
 		<var name="key_actionRowNumber" value="${actionRowNumber}" />
 		<var name="key_actionTarget" value="${actionTarget}" />
 
-		<execute macro="FormRules#viewInactiveSaveButton" />
-
 		<if>
 			<equals arg1="${action}" arg2="Jump to Page" />
 			<then>

@@ -27,6 +27,7 @@ import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.JavaAnnotationsCheck;
 import com.liferay.source.formatter.checks.JavaBooleanUsageCheck;
 import com.liferay.source.formatter.checks.JavaCombineLinesCheck;
 import com.liferay.source.formatter.checks.JavaDataAccessConnectionCheck;
@@ -45,7 +46,6 @@ import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -65,124 +65,6 @@ import org.apache.maven.artifact.versioning.ComparableVersion;
  * @author Hugo Huijser
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
-
-	protected String checkAnnotationLineBreaks(
-		String content, String annotation) {
-
-		Matcher matcher = _annotationLineBreakPattern1.matcher(annotation);
-
-		if (matcher.find()) {
-			String replacement = StringUtil.replaceFirst(
-				annotation, matcher.group(1), StringPool.BLANK,
-				matcher.start());
-
-			return StringUtil.replace(content, annotation, replacement);
-		}
-
-		matcher = _annotationLineBreakPattern2.matcher(annotation);
-
-		if (matcher.find()) {
-			String replacement = StringUtil.replaceFirst(
-				annotation, matcher.group(1), StringPool.SPACE,
-				matcher.start());
-
-			return StringUtil.replace(content, annotation, replacement);
-		}
-
-		return content;
-	}
-
-	protected String checkAnnotationMetaTypeProperties(
-		String content, String annotation) {
-
-		if (!annotation.contains("@Meta.")) {
-			return content;
-		}
-
-		Matcher matcher = _annotationMetaTypePattern.matcher(annotation);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String newAnnotation = StringUtil.replaceFirst(
-			annotation, StringPool.PERCENT, StringPool.BLANK, matcher.start());
-
-		return StringUtil.replace(content, annotation, newAnnotation);
-	}
-
-	protected String checkAnnotationParameterProperties(
-		String content, String annotation) {
-
-		int x = annotation.indexOf("property = {");
-
-		if (x == -1) {
-			return content;
-		}
-
-		int y = x;
-
-		while (true) {
-			y = annotation.indexOf(CharPool.CLOSE_CURLY_BRACE, y + 1);
-
-			if (!ToolsUtil.isInsideQuotes(annotation, y)) {
-				break;
-			}
-		}
-
-		String parameterProperties = annotation.substring(x + 12, y);
-
-		parameterProperties = StringUtil.replace(
-			parameterProperties, StringPool.NEW_LINE, StringPool.SPACE);
-
-		String[] parameterPropertiesArray = StringUtil.split(
-			parameterProperties, StringPool.COMMA_AND_SPACE);
-
-		String previousPropertyName = null;
-		String previousPropertyNameAndValue = null;
-
-		for (String parameterProperty : parameterPropertiesArray) {
-			x = parameterProperty.indexOf(CharPool.QUOTE);
-			y = parameterProperty.indexOf(CharPool.EQUAL, x);
-
-			int z = x;
-
-			while (true) {
-				z = parameterProperty.indexOf(CharPool.QUOTE, z + 1);
-
-				if ((z == -1) ||
-					!ToolsUtil.isInsideQuotes(parameterProperty, z)) {
-
-					break;
-				}
-			}
-
-			if ((x == -1) || (y == -1) || (z == -1)) {
-				return content;
-			}
-
-			String propertyName = parameterProperty.substring(x + 1, y);
-			String propertyNameAndValue = parameterProperty.substring(x + 1, z);
-
-			if (Validator.isNotNull(previousPropertyName) &&
-				(previousPropertyName.compareToIgnoreCase(propertyName) > 0)) {
-
-				content = StringUtil.replaceFirst(
-					content, previousPropertyNameAndValue,
-					propertyNameAndValue);
-				content = StringUtil.replaceLast(
-					content, propertyNameAndValue,
-					previousPropertyNameAndValue);
-
-				return content;
-			}
-
-			previousPropertyName = propertyName;
-			previousPropertyNameAndValue = propertyNameAndValue;
-		}
-
-		return content;
-	}
 
 	protected void checkBndInheritAnnotationOption() {
 		Map<String, BNDSettings> bndSettingsMap = getBNDSettingsMap();
@@ -454,9 +336,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent,
 			new String[] {";\n/**", "\t/*\n\t *", ";;\n", "\n/**\n *\n *"},
 			new String[] {";\n\n/**", "\t/**\n\t *", ";\n", "\n/**\n *"});
-
-		newContent = formatAnnotations(
-			fileName, StringPool.BLANK, newContent, StringPool.BLANK, true);
 
 		matcher = _logPattern.matcher(newContent);
 
@@ -882,119 +761,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		return fixSystemExceptions(
 			StringUtil.replaceFirst(content, match, replacement));
-	}
-
-	protected String formatAnnotations(
-			String fileName, String javaTermName, String content, String indent,
-			boolean sortAnnotations)
-		throws IOException {
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(content));
-
-		String line = null;
-
-		String annotation = StringPool.BLANK;
-		String previousAnnotation = StringPool.BLANK;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.equals(indent + StringPool.CLOSE_CURLY_BRACE)) {
-				return content;
-			}
-
-			int tabCount = StringUtil.count(line, CharPool.TAB);
-
-			if ((tabCount < indent.length()) && Validator.isNull(annotation)) {
-				continue;
-			}
-
-			if ((tabCount < indent.length()) ||
-				((tabCount == indent.length()) &&
-				 !line.startsWith(indent + StringPool.CLOSE_PARENTHESIS))) {
-
-				if (Validator.isNotNull(annotation) &&
-					annotation.contains(StringPool.OPEN_PARENTHESIS)) {
-
-					Matcher matcher = _annotationPattern.matcher(annotation);
-
-					if (matcher.find()) {
-						String match = matcher.group();
-
-						if ((getLevel(match) == 0) &&
-							!match.endsWith("\n)\n") &&
-							!match.endsWith("\t)\n")) {
-
-							String tabs = matcher.group(1);
-
-							String replacement = StringUtil.replaceLast(
-								match, ")", "\n" + tabs + ")");
-
-							return StringUtil.replace(
-								content, match, replacement);
-						}
-					}
-
-					String newContent = checkAnnotationParameterProperties(
-						content, annotation);
-
-					newContent = checkAnnotationMetaTypeProperties(
-						newContent, annotation);
-
-					newContent = checkAnnotationLineBreaks(
-						newContent, annotation);
-
-					if (!newContent.equals(content)) {
-						return formatAnnotations(
-							fileName, javaTermName, newContent, indent,
-							sortAnnotations);
-					}
-
-					String newAnnotation = formatAnnotations(
-						fileName, javaTermName, annotation, indent + "\t\t",
-						false);
-
-					if (!newAnnotation.equals(annotation)) {
-						return StringUtil.replace(
-							content, annotation, newAnnotation);
-					}
-				}
-
-				if (sortAnnotations &&
-					Validator.isNotNull(previousAnnotation) &&
-					(previousAnnotation.compareToIgnoreCase(annotation) > 0)) {
-
-					content = StringUtil.replaceFirst(
-						content, previousAnnotation, annotation);
-					content = StringUtil.replaceLast(
-						content, annotation, previousAnnotation);
-
-					return formatAnnotations(
-						fileName, javaTermName, content, indent,
-						sortAnnotations);
-				}
-
-				if (line.startsWith(indent + StringPool.AT)) {
-					if (Validator.isNotNull(annotation)) {
-						previousAnnotation = annotation;
-					}
-
-					annotation = line + "\n";
-				}
-				else {
-					annotation = StringPool.BLANK;
-					previousAnnotation = StringPool.BLANK;
-				}
-			}
-			else {
-				if (Validator.isNull(annotation)) {
-					return content;
-				}
-
-				annotation += line + "\n";
-			}
-		}
-
-		return content;
 	}
 
 	protected String formatArray(String content) {
@@ -1745,6 +1511,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected List<FileCheck> getFileChecks() {
 		List<FileCheck> fileChecks = new ArrayList<>();
 
+		fileChecks.add(new JavaAnnotationsCheck());
 		fileChecks.add(new JavaBooleanUsageCheck());
 		fileChecks.add(
 			new JavaCombineLinesCheck(
@@ -2350,17 +2117,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private static final String _UPGRADE_SERVICE_UTIL_EXCLUDES =
 		"upgrade.service.util.excludes";
 
-	private static final Pattern _annotationPattern = Pattern.compile(
-		"(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
-
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
-	private final Pattern _annotationLineBreakPattern1 = Pattern.compile(
-		"[{=]\n.*(\" \\+\n\t*\")");
-	private final Pattern _annotationLineBreakPattern2 = Pattern.compile(
-		"=(\n\t*)\"");
-	private final Pattern _annotationMetaTypePattern = Pattern.compile(
-		"[\\s\\(](name|description) = \"%");
 	private final Pattern _anonymousClassPattern = Pattern.compile(
 		"\n(\t+)(\\S.* )?new (.|\\(\n)*\\) \\{\n\n");
 	private final Pattern _arrayPattern = Pattern.compile(

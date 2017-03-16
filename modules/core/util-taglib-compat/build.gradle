@@ -1,16 +1,16 @@
 import com.liferay.gradle.util.StringUtil
 
-task importClasses(type: Copy)
+task importFiles(type: Copy)
 
 classes {
-	dependsOn importClasses
+	dependsOn importFiles
 }
 
 dependencies {
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 }
 
-importClasses {
+importFiles {
 	into {
 		compileJava.destinationDir
 	}
@@ -20,16 +20,16 @@ liferay {
 	deployDir = "../../../tmp/lib-pre"
 }
 
-Properties importedClassesProperties = new Properties()
+Properties importedFilesProperties = new Properties()
 
-File importedClassesPropertiesFile = file("imported-classes.properties")
+File importedFilesPropertiesFile = file("imported-files.properties")
 
-importedClassesPropertiesFile.withInputStream {
-	importedClassesProperties.load it
+importedFilesPropertiesFile.withInputStream {
+	importedFilesProperties.load it
 }
 
-importedClassesProperties.each {
-	String dependencyNotation, String packageNames ->
+importedFilesProperties.each {
+	String dependencyNotation, String dependencyIncludes ->
 
 	String dependencySuffix = dependencyNotation.replaceAll(/[\.|:](\w)/) {
 		String s = it[1]
@@ -37,23 +37,17 @@ importedClassesProperties.each {
 		s.toUpperCase()
 	}
 
-	Configuration dependencyConfiguration = configurations.create("importedClasses" + StringUtil.capitalize(dependencySuffix))
+	Configuration dependencyConfiguration = configurations.create("importedFiles" + StringUtil.capitalize(dependencySuffix))
 
 	dependencyConfiguration.transitive = false
 
 	dependencies.add dependencyConfiguration.name, dependencyNotation
 
-	String[] dependencyIncludes = packageNames.tokenize(",")
-
-	dependencyIncludes = dependencyIncludes.collect {
-		it.replace('.' as char, '/' as char) + ".class"
-	}
-
-	importClasses {
+	importFiles {
 		from {
 			zipTree(dependencyConfiguration.singleFile)
 		} {
-			include dependencyIncludes
+			include dependencyIncludes.tokenize(",")
 		}
 	}
 }

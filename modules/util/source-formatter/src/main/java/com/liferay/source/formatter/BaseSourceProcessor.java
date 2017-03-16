@@ -1892,9 +1892,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			sourceFormatterArgs.getBaseDirName(), fileName, level);
 	}
 
-	protected List<FileCheck> getFileChecks() {
-		return null;
-	}
+	protected abstract List<FileCheck> getFileChecks();
 
 	protected List<String> getFileNames(
 			String basedir, List<String> recentChangesFileNames,

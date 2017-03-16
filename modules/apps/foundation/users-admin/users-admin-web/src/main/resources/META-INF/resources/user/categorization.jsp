@@ -22,6 +22,8 @@ User selUser = (User)request.getAttribute("user.selUser");
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="categorization" />
+
 <liferay-ui:asset-categories-error />
 
 <liferay-ui:asset-tags-error />

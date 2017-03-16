@@ -18,6 +18,8 @@ import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.announcements.kernel.model.AnnouncementsEntryConstants;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
+import com.liferay.asset.kernel.exception.AssetCategoryException;
+import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.AddressCityException;
@@ -405,6 +407,11 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				mvcPath = "/error.jsp";
+			}
+			else if (e instanceof AssetCategoryException ||
+					 e instanceof AssetTagException) {
+
+				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else if (e instanceof AddressCityException ||
 					 e instanceof AddressStreetException ||

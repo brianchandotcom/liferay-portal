@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JSPIfStatementCheck;
+import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 
@@ -688,12 +689,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineCount++;
 
-				if (!fileName.contains("jsonw") ||
-					!fileName.endsWith("action.jsp")) {
-
-					line = trimLine(line, false);
-				}
-
 				if (line.contains("<aui:button ") &&
 					line.contains("type=\"button\"")) {
 
@@ -1279,7 +1274,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(new FileCheck[] {new JSPIfStatementCheck()});
+		return Arrays.asList(
+			new FileCheck[] {
+				new JSPIfStatementCheck(), new JSPWhitespaceCheck()
+			});
 	}
 
 	protected List<String> getJSPDuplicateImports(

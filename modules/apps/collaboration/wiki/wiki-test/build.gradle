@@ -5,6 +5,7 @@ dependencies {
 	testCompile project(":apps:collaboration:wiki:wiki-api")
 	testCompile project(":apps:collaboration:wiki:wiki-service")
 	testCompile project(":apps:collaboration:wiki:wiki-web")
+	testCompile project(":apps:web-experience:trash:trash-test")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"

@@ -13,6 +13,7 @@
 			<validator name="required" />
 		</field>
 		<field name="emailAddress" type="String">
+			<hint name="max-length">254</hint>
 			<validator name="email" />
 			<validator name="required" />
 		</field>

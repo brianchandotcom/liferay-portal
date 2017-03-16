@@ -58,4 +58,12 @@
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_FIELD_REQUIRED" value1="${validationErrorMessage}" />
 	</command>
+
+	<command name="viewSuccessPage">
+		<var name="key_successPageDescription" value="${successPageDescription}" />
+		<var name="key_successPageTitle" value="${successPageTitle}" />
+
+		<execute function="AssertTextEquals" locator1="FormPortlet#SUCCESS_PAGE_TITLE" value1="${successPageTitle}" />
+		<execute function="AssertTextEquals" locator1="FormPortlet#SUCCESS_PAGE_DESCRIPTION" value1="${successPageDescription}" />
+	</command>
 </definition>

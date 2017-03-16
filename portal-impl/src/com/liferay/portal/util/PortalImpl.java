@@ -5209,7 +5209,16 @@ public class PortalImpl implements Portal {
 		// URI
 
 		sb.append(uri);
-		sb.append(StringPool.QUESTION);
+
+		// Language id
+
+		sb.append("?languageId=");
+		sb.append(themeDisplay.getLanguageId());
+
+		// Build number
+
+		sb.append("&b=");
+		sb.append(ReleaseInfo.getBuildNumber());
 
 		// Browser id
 
@@ -5269,16 +5278,6 @@ public class PortalImpl implements Portal {
 			sb.append(queryString);
 		}
 
-		// Language id
-
-		sb.append("&languageId=");
-		sb.append(themeDisplay.getLanguageId());
-
-		// Build number
-
-		sb.append("&b=");
-		sb.append(ReleaseInfo.getBuildNumber());
-
 		// Timestamp
 
 		if (((parameterMap == null) || !parameterMap.containsKey("t")) &&
@@ -5310,11 +5309,7 @@ public class PortalImpl implements Portal {
 			sb.append(timestamp);
 		}
 
-		String url = sb.toString();
-
-		url = StringUtil.replace(url, "?&", StringPool.QUESTION);
-
-		return url;
+		return sb.toString();
 	}
 
 	@Override

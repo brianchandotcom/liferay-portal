@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.upload;
+package com.liferay.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -20,15 +20,13 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Adolfo Pérez
- *
- * @deprecated As of 7.0.0, replaced by {@link com.liferay.upload.UploadHandler}
+ * @author Alejandro Tardín
  */
-@Deprecated
 public interface UploadHandler {
 
 	public void upload(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			UploadFileEntryHandler handler, PortletRequest portletRequest,
+			PortletResponse portletResponse)
 		throws PortalException;
 
 }

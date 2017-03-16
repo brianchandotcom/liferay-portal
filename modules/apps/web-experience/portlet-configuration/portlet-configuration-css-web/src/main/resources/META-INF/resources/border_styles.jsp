@@ -118,13 +118,69 @@
 		<aui:fieldset label="border-color">
 			<aui:input checked="checked" cssClass="lfr-use-for-all use-for-all-column" label="same-for-all" name="useForAllColor" type="toggle-switch" value='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor") %>' />
 
-			<aui:input label="top" name="borderColorTop" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderProperty("top", "borderColor") %>' wrapperCssClass="field-row" />
+			<%
+			Map<String, Object> contextBorderTop = new HashMap<>();
 
-			<aui:input label="right" name="borderColorRight" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderProperty("right", "borderColor") %>' wrapperCssClass="field-row" />
+			contextBorderTop.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("top", "borderColor"));
+			contextBorderTop.put("id", renderResponse.getNamespace() + "borderColorTop");
+			contextBorderTop.put("label", LanguageUtil.get(request, "top"));
+			contextBorderTop.put("name", renderResponse.getNamespace() + "borderColorTop");
+			contextBorderTop.put("wrapperCssClass", "field-row");
+			%>
 
-			<aui:input label="bottom" name="borderColorBottom" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderProperty("bottom", "borderColor") %>' wrapperCssClass="field-row" />
+			<soy:template-renderer
+				context="<%= contextBorderTop %>"
+				module="portlet-configuration-css-web/js/ColorPickerInput.es"
+				templateNamespace="ColorPickerInput.render"
+			/>
 
-			<aui:input label="left" name="borderColorLeft" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderProperty("left", "borderColor") %>' wrapperCssClass="field-row" />
+			<%
+			Map<String, Object> contextBorderRight = new HashMap<>();
+
+			contextBorderRight.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("right", "borderColor"));
+			contextBorderRight.put("id", renderResponse.getNamespace() + "borderColorRight");
+			contextBorderRight.put("label", LanguageUtil.get(request, "right"));
+			contextBorderRight.put("name", renderResponse.getNamespace() + "borderColorRight");
+			contextBorderRight.put("wrapperCssClass", "field-row");
+			%>
+
+			<soy:template-renderer
+				context="<%= contextBorderRight %>"
+				module="portlet-configuration-css-web/js/ColorPickerInput.es"
+				templateNamespace="ColorPickerInput.render"
+			/>
+
+			<%
+			Map<String, Object> contextBorderBottom = new HashMap<>();
+
+			contextBorderBottom.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("bottom", "borderColor"));
+			contextBorderBottom.put("id", renderResponse.getNamespace() + "borderColorBottom");
+			contextBorderBottom.put("label", LanguageUtil.get(request, "bottom"));
+			contextBorderBottom.put("name", renderResponse.getNamespace() + "borderColorBottom");
+			contextBorderBottom.put("wrapperCssClass", "field-row");
+			%>
+
+			<soy:template-renderer
+				context="<%= contextBorderBottom %>"
+				module="portlet-configuration-css-web/js/ColorPickerInput.es"
+				templateNamespace="ColorPickerInput.render"
+			/>
+
+			<%
+			Map<String, Object> contextBorderLeft = new HashMap<>();
+
+			contextBorderLeft.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("left", "borderColor"));
+			contextBorderLeft.put("id", renderResponse.getNamespace() + "borderColorLeft");
+			contextBorderLeft.put("label", LanguageUtil.get(request, "left"));
+			contextBorderLeft.put("name", renderResponse.getNamespace() + "borderColorLeft");
+			contextBorderLeft.put("wrapperCssClass", "field-row");
+			%>
+
+			<soy:template-renderer
+				context="<%= contextBorderLeft %>"
+				module="portlet-configuration-css-web/js/ColorPickerInput.es"
+				templateNamespace="ColorPickerInput.render"
+			/>
 		</aui:fieldset>
 	</aui:col>
 </aui:row>

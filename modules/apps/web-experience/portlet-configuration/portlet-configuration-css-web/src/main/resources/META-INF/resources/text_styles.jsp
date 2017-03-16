@@ -50,7 +50,20 @@ DecimalFormat decimalFormat = portletConfigurationCSSPortletDisplayContext.getDe
 
 		</aui:select>
 
-		<aui:input label="color" name="fontColor" value='<%= portletConfigurationCSSPortletDisplayContext.getTextDataProperty("color") %>' />
+		<%
+		Map<String, Object> context = new HashMap<>();
+
+		context.put("color", portletConfigurationCSSPortletDisplayContext.getTextDataProperty("color"));
+		context.put("id", renderResponse.getNamespace() + "fontColor");
+		context.put("label", LanguageUtil.get(request, "color"));
+		context.put("name", renderResponse.getNamespace() + "fontColor");
+		%>
+
+		<soy:template-renderer
+			context="<%= context %>"
+			module="portlet-configuration-css-web/js/ColorPickerInput.es"
+			templateNamespace="ColorPickerInput.render"
+		/>
 
 		<aui:select label="alignment" name="textAlign" showEmptyOption="<%= true %>">
 			<aui:option label="justify" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textAlign"), "justify") %>' />

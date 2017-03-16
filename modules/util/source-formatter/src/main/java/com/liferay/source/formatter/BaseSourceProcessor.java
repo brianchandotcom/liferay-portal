@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.nio.charset.CharsetDecoderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -2941,55 +2940,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return sb.toString();
-	}
-
-	protected String trimContent(String content, boolean allowLeadingSpaces)
-		throws IOException {
-
-		StringBundler sb = new StringBundler();
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				sb.append(trimLine(line, allowLeadingSpaces));
-				sb.append("\n");
-			}
-		}
-
-		content = sb.toString();
-
-		if (content.endsWith("\n")) {
-			content = content.substring(0, content.length() - 1);
-		}
-
-		return content;
-	}
-
-	protected String trimLine(String line, boolean allowLeadingSpaces) {
-		if (line.trim().length() == 0) {
-			return StringPool.BLANK;
-		}
-
-		line = StringUtil.trimTrailing(line);
-
-		if (allowLeadingSpaces || line.startsWith(" *")) {
-			return line;
-		}
-
-		while (line.matches("^\t*    .*")) {
-			line = StringUtil.replaceFirst(
-				line, StringPool.FOUR_SPACES, StringPool.TAB);
-		}
-
-		while (line.startsWith(StringPool.SPACE)) {
-			line = StringUtil.replaceFirst(
-				line, StringPool.SPACE, StringPool.BLANK);
-		}
-
-		return line;
 	}
 
 	protected static final String LANGUAGE_KEYS_CHECK_EXCLUDES =

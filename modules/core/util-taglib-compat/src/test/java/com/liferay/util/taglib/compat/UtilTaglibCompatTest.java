@@ -33,7 +33,7 @@ public class UtilTaglibCompatTest {
 	@Test
 	public void testNoConflictingImportedClasses() throws Exception {
 		File importedClassesPropertiesFile = new File(
-			"imported-classes.properties");
+			"imported-files.properties");
 
 		Assert.assertTrue(importedClassesPropertiesFile.exists());
 
@@ -63,8 +63,11 @@ public class UtilTaglibCompatTest {
 						line = line.substring(0, line.length() - 2);
 					}
 
-					File file = new File(
-						srcDir, line.replace('.', '/') + ".java");
+					if (line.endsWith(".class")) {
+						line = line.substring(0, line.length() - 6) + ".java";
+					}
+
+					File file = new File(srcDir, line);
 
 					Assert.assertFalse(
 						file.getPath() + " should not exist", file.exists());

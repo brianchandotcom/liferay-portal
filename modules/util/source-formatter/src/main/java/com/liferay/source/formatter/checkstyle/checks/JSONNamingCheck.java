@@ -33,27 +33,37 @@ public class JSONNamingCheck extends AbstractCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.PARAMETER_DEF, TokenTypes.VARIABLE_DEF};
+		return new int[] {
+			TokenTypes.METHOD_DEF, TokenTypes.PARAMETER_DEF,
+			TokenTypes.VARIABLE_DEF
+		};
 	}
 
 	@Override
 	public void visitToken(DetailAST detailAST) {
-		String name = _getVariableName(detailAST);
 		String typeName = DetailASTUtil.getTypeName(detailAST);
 
-		_checkVariable(
-			name, typeName, "String", "JSON", "Json", detailAST.getLineNo());
-		_checkVariable(
-			name, typeName, "JSONArray", "JSONArray", "JsonArray",
+		if (typeName.equals("boolean") || typeName.equals("void")) {
+			return;
+		}
+
+		String name = _getName(detailAST);
+		String tokenTypeName = _getTokenTypeName(detailAST);
+
+		_checkName(
+			name, typeName, tokenTypeName, "String", "JSON", "Json",
 			detailAST.getLineNo());
-		_checkVariable(
-			name, typeName, "JSONObject", "JSONObject", "JsonObject",
-			detailAST.getLineNo());
+		_checkName(
+			name, typeName, tokenTypeName, "JSONArray", "JSONArray",
+			"JsonArray", detailAST.getLineNo());
+		_checkName(
+			name, typeName, tokenTypeName, "JSONObject", "JSONObject",
+			"JsonObject", detailAST.getLineNo());
 	}
 
-	private void _checkVariable(
-		String name, String typeName, String type, String reservedNameEnding,
-		String incorrectNameEnding, int lineNo) {
+	private void _checkName(
+		String name, String typeName, String tokenTypeName, String type,
+		String reservedNameEnding, String incorrectNameEnding, int lineNo) {
 
 		String lowerCaseName = StringUtil.toLowerCase(name);
 
@@ -68,8 +78,8 @@ public class JSONNamingCheck extends AbstractCheck {
 
 			if (!lowerCaseTypeName.endsWith(StringUtil.toLowerCase(type))) {
 				log(
-					lineNo, MSG_RESERVED_VARIABLE_NAME, reservedNameEnding,
-					type);
+					lineNo, MSG_RESERVED_VARIABLE_NAME, tokenTypeName,
+					reservedNameEnding, type);
 			}
 
 			return;
@@ -77,16 +87,29 @@ public class JSONNamingCheck extends AbstractCheck {
 
 		if (name.endsWith(incorrectNameEnding)) {
 			log(
-				lineNo, MSG_RENAME_VARIABLE, name,
+				lineNo, MSG_RENAME_VARIABLE,
+				StringUtil.toLowerCase(tokenTypeName), name,
 				StringUtil.replaceLast(
 					name, incorrectNameEnding, reservedNameEnding));
 		}
 	}
 
-	private String _getVariableName(DetailAST detailAST) {
+	private String _getName(DetailAST detailAST) {
 		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 		return nameAST.getText();
+	}
+
+	private String _getTokenTypeName(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.METHOD_DEF) {
+			return "Method";
+		}
+
+		if (detailAST.getType() == TokenTypes.PARAMETER_DEF) {
+			return "Parameter";
+		}
+
+		return "Variable";
 	}
 
 }

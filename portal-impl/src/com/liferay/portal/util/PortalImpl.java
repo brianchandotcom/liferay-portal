@@ -5276,7 +5276,7 @@ public class PortalImpl implements Portal {
 		// Query string
 
 		if (Validator.isNotNull(queryString)) {
-			if (!queryString.startsWith(StringPool.AMPERSAND)) {
+			if (queryString.charAt(0) != CharPool.AMPERSAND) {
 				sb.append(StringPool.AMPERSAND);
 			}
 

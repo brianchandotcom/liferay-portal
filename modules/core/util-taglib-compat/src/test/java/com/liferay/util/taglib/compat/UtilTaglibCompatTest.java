@@ -31,11 +31,11 @@ import org.junit.Test;
 public class UtilTaglibCompatTest {
 
 	@Test
-	public void testNoConflictingImportedClasses() throws Exception {
-		File importedClassesPropertiesFile = new File(
+	public void testNoConflictingImportedFiles() throws Exception {
+		File importedFilesPropertiesFile = new File(
 			"imported-files.properties");
 
-		Assert.assertTrue(importedClassesPropertiesFile.exists());
+		Assert.assertTrue(importedFilesPropertiesFile.exists());
 
 		File srcDir = new File("../../../util-taglib/src/");
 
@@ -44,7 +44,7 @@ public class UtilTaglibCompatTest {
 		Assert.assertTrue(srcDir + "is not util-taglib/src", srcDir.exists());
 
 		try (FileReader fileReader = new FileReader(
-				importedClassesPropertiesFile);
+				importedFilesPropertiesFile);
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(fileReader)) {
 

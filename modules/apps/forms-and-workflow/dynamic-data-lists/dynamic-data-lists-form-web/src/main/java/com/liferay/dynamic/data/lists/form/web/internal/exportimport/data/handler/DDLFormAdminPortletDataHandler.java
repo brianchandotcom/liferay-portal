@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.exportimport.data.handler;
 
-import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.DDLRecordSetStagedModelRepository;
-import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.DDLRecordStagedModelRepository;
+import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.api.DDLRecordSetStagedModelRepository;
+import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.api.DDLRecordStagedModelRepository;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -285,24 +285,17 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		DDLRecordSetLocalService ddlRecordSetLocalService) {
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)",
-		unbind = "-"
-	)
+	@Deprecated
 	protected void setDDLRecordSetStagedModelRepository(
-		DDLRecordSetStagedModelRepository ddlRecordSetStagedModelRepository) {
-
-		_ddlRecordSetStagedModelRepository = ddlRecordSetStagedModelRepository;
+		com.liferay.dynamic.data.lists.exportimport.staged.model.repository.
+			DDLRecordSetStagedModelRepository
+				ddlRecordSetStagedModelRepository) {
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)",
-		unbind = "-"
-	)
+	@Deprecated
 	protected void setDDLRecordStagedModelRepository(
-		DDLRecordStagedModelRepository ddlRecordStagedModelRepository) {
-
-		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
+		com.liferay.dynamic.data.lists.exportimport.staged.model.repository.
+			DDLRecordStagedModelRepository ddlRecordStagedModelRepository) {
 	}
 
 	/**
@@ -318,8 +311,12 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	@Reference
+	private DDLRecordStagedModelRepository
+		_ddlRecordStagedModelRepository;
+
+	@Reference
 	private DDLRecordSetStagedModelRepository
 		_ddlRecordSetStagedModelRepository;
-	private DDLRecordStagedModelRepository _ddlRecordStagedModelRepository;
 
 }

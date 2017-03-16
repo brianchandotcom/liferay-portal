@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.lists.internal.exportimport.data.handler;
 
-import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.DDLRecordStagedModelRepository;
+import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.api.DDLRecordStagedModelRepository;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
@@ -250,14 +250,13 @@ public class DDLRecordStagedModelDataHandler
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)",
-		unbind = "-"
-	)
+	/**
+	 * @deprecated As of 1.2.0
+	 */
+	@Deprecated
 	protected void setDDLRecordStagedModelRepository(
-		DDLRecordStagedModelRepository ddlRecordStagedModelRepository) {
-
-		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
+		com.liferay.dynamic.data.lists.exportimport.staged.model.repository.
+			DDLRecordStagedModelRepository ddlRecordStagedModelRepository) {
 	}
 
 	@Reference(unbind = "-")
@@ -315,7 +314,10 @@ public class DDLRecordStagedModelDataHandler
 	}
 
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	@Reference
 	private DDLRecordStagedModelRepository _ddlRecordStagedModelRepository;
+
 	private DDMFormValuesExportImportContentProcessor
 		_ddmFormValuesExportImportContentProcessor;
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;

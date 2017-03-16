@@ -14,16 +14,14 @@
 
 package com.liferay.portal.dao.orm.common;
 
+import com.liferay.portal.dao.sql.transformer.HqlToJpqlTransformerLogic;
 import com.liferay.portal.dao.sql.transformer.SQLTransformerFactory;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,11 +82,20 @@ public class SQLTransformer {
 
 		newSQL = _sqlTransformer.transform(sql);
 
-		newSQL = _transformPositionalParams(newSQL);
+		Function<String, String> positionalParameterFunction =
+			HqlToJpqlTransformerLogic.getPositionalParameterFunction();
 
-		newSQL = StringUtil.replace(newSQL, _HQL_NOT_EQUALS, _JPQL_NOT_EQUALS);
-		newSQL = StringUtil.replace(
-			newSQL, _HQL_COMPOSITE_ID_MARKER, _JPQL_DOT_SEPARTOR);
+		newSQL = positionalParameterFunction.apply(newSQL);
+
+		Function<String, String> notEqualsFunction =
+			HqlToJpqlTransformerLogic.getNotEqualsFunction();
+
+		newSQL = notEqualsFunction.apply(newSQL);
+
+		Function<String, String> compositeIdMarkerFunction =
+			HqlToJpqlTransformerLogic.getCompositeIdMarkerFunction();
+
+		newSQL = compositeIdMarkerFunction.apply(newSQL);
 
 		_transformedSqls.put(sql, newSQL);
 
@@ -120,39 +127,7 @@ public class SQLTransformer {
 		return newSQL;
 	}
 
-	private String _transformPositionalParams(String queryString) {
-		if (queryString.indexOf(CharPool.QUESTION) == -1) {
-			return queryString;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		int i = 1;
-		int from = 0;
-		int to = 0;
-
-		while ((to = queryString.indexOf(CharPool.QUESTION, from)) != -1) {
-			sb.append(queryString.substring(from, to));
-			sb.append(StringPool.QUESTION);
-			sb.append(i++);
-
-			from = to + 1;
-		}
-
-		sb.append(queryString.substring(from));
-
-		return sb.toString();
-	}
-
-	private static final String _HQL_COMPOSITE_ID_MARKER = "\\.id\\.";
-
 	private static final String _HQL_COUNT_SQL = "SELECT COUNT(*) FROM $2 $3";
-
-	private static final String _HQL_NOT_EQUALS = "!=";
-
-	private static final String _JPQL_DOT_SEPARTOR = ".";
-
-	private static final String _JPQL_NOT_EQUALS = "<>";
 
 	private static final SQLTransformer _instance = new SQLTransformer();
 

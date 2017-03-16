@@ -113,10 +113,26 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		return properties.getProperty(key, defaultValue);
 	}
 
+	public static File getMavenLocalDir(Project project) {
+		RepositoryHandler repositoryHandler = project.getRepositories();
+
+		ArtifactRepository artifactRepository = repositoryHandler.findByName(
+			ArtifactRepositoryContainer.DEFAULT_MAVEN_LOCAL_REPO_NAME);
+
+		if (!(artifactRepository instanceof MavenArtifactRepository)) {
+			return null;
+		}
+
+		MavenArtifactRepository mavenArtifactRepository =
+			(MavenArtifactRepository)artifactRepository;
+
+		return new File(mavenArtifactRepository.getUrl());
+	}
+
 	public static File getMavenLocalFile(
 		Project project, String group, String name, String version) {
 
-		File dir = _getMavenLocalDir(project);
+		File dir = getMavenLocalDir(project);
 
 		if (dir == null) {
 			return null;
@@ -247,7 +263,7 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 	}
 
 	public static boolean isFromMavenLocal(Project project, File file) {
-		File mavenLocalDir = _getMavenLocalDir(project);
+		File mavenLocalDir = getMavenLocalDir(project);
 
 		if ((mavenLocalDir != null) && FileUtil.isChild(file, mavenLocalDir)) {
 			return true;
@@ -347,22 +363,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		sb.append(moduleVersionSelector.getVersion());
 
 		return sb.toString();
-	}
-
-	private static File _getMavenLocalDir(Project project) {
-		RepositoryHandler repositoryHandler = project.getRepositories();
-
-		ArtifactRepository artifactRepository = repositoryHandler.findByName(
-			ArtifactRepositoryContainer.DEFAULT_MAVEN_LOCAL_REPO_NAME);
-
-		if (!(artifactRepository instanceof MavenArtifactRepository)) {
-			return null;
-		}
-
-		MavenArtifactRepository mavenArtifactRepository =
-			(MavenArtifactRepository)artifactRepository;
-
-		return new File(mavenArtifactRepository.getUrl());
 	}
 
 }

@@ -1223,11 +1223,24 @@ master branch, but it was previously already published from a release branch.
 ### Changed
 - [LPS-71222]: Update the [Liferay Gradle Plugins] dependency to version 3.2.20.
 
-## 3.4.2 - 2017-03-13
+## 3.4.2 - 2017-03-14
 
 ### Fixed
 - [LPS-71224]: Always point the `artifact.url` property of `artifact.properties`
 to the primary artifact, even when the `application` plugin is applied.
+
+## 3.4.3 - 2017-03-15
+
+### Changed
+- [LPS-71118]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.1.3.
+- [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.2.21.
+
+## 3.4.4 - 2017-03-16
+
+### Fixed
+- [LPS-71264]: Use the actual directory of the Maven local repository as default
+value for the `mavenRootDir` property of `InstallCacheTask`.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1349,10 +1362,12 @@ to the primary artifact, even when the `application` plugin is applied.
 [LPS-70941]: https://issues.liferay.com/browse/LPS-70941
 [LPS-71005]: https://issues.liferay.com/browse/LPS-71005
 [LPS-71048]: https://issues.liferay.com/browse/LPS-71048
+[LPS-71118]: https://issues.liferay.com/browse/LPS-71118
 [LPS-71164]: https://issues.liferay.com/browse/LPS-71164
 [LPS-71201]: https://issues.liferay.com/browse/LPS-71201
 [LPS-71222]: https://issues.liferay.com/browse/LPS-71222
 [LPS-71224]: https://issues.liferay.com/browse/LPS-71224
+[LPS-71264]: https://issues.liferay.com/browse/LPS-71264
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

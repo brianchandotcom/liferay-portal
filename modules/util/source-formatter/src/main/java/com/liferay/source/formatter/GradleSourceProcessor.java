@@ -20,9 +20,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -62,7 +65,7 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 
 		checkDefaultVersion(fileName, content);
 
-		return trimContent(content, false);
+		return content;
 	}
 
 	@Override
@@ -145,6 +148,11 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return StringUtil.replace(content, dependencies, sb.toString());
+	}
+
+	@Override
+	protected List<FileCheck> getFileChecks() {
+		return Arrays.asList(new FileCheck[] {new WhitespaceCheck()});
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/build.gradle"};

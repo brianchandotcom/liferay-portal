@@ -26,9 +26,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportPackage;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -249,8 +252,6 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
-
-		content = trimContent(content, false);
 
 		content = StringUtil.replace(
 			content, new String[] {"/\n", "/,\\\n"},
@@ -613,6 +614,11 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return null;
+	}
+
+	@Override
+	protected List<FileCheck> getFileChecks() {
+		return Arrays.asList(new FileCheck[] {new WhitespaceCheck()});
 	}
 
 	protected Map<String, Map<String, String>>

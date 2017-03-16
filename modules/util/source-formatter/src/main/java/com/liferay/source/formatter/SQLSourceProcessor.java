@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,8 +49,6 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 			String previousLineSqlCommand = StringPool.BLANK;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				line = trimLine(line, false);
-
 				if (Validator.isNotNull(line) &&
 					!line.startsWith(StringPool.TAB)) {
 
@@ -97,6 +98,11 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
+	}
+
+	@Override
+	protected List<FileCheck> getFileChecks() {
+		return Arrays.asList(new FileCheck[] {new WhitespaceCheck()});
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.sql"};

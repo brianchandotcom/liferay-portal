@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -39,10 +42,8 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		String newContent = trimContent(content, false);
-
-		newContent = StringUtil.replace(
-			newContent, StringPool.DOUBLE_SPACE, StringPool.SPACE);
+		String newContent = StringUtil.replace(
+			content, StringPool.DOUBLE_SPACE, StringPool.SPACE);
 
 		newContent = sortProperties(newContent);
 
@@ -147,6 +148,11 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
+	}
+
+	@Override
+	protected List<FileCheck> getFileChecks() {
+		return Arrays.asList(new FileCheck[] {new WhitespaceCheck()});
 	}
 
 	protected String sortProperties(String content) {

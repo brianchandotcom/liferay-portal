@@ -15,10 +15,12 @@
 package com.liferay.source.formatter;
 
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -62,7 +64,7 @@ public class GroovySourceProcessor extends JavaSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return null;
+		return Arrays.asList(new FileCheck[] {new WhitespaceCheck()});
 	}
 
 	@Override

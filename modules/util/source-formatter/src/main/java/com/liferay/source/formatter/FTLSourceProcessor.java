@@ -25,6 +25,7 @@ import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.FTLIfStatementCheck;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
@@ -229,8 +230,6 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				line = trimLine(line, false);
-
 				String trimmedLine = StringUtil.trimLeading(line);
 
 				if (trimmedLine.startsWith("<#assign ")) {
@@ -308,7 +307,8 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(new FileCheck[] {new FTLIfStatementCheck()});
+		return Arrays.asList(
+			new FileCheck[] {new FTLIfStatementCheck(), new WhitespaceCheck()});
 	}
 
 	protected String sortLiferayVariables(String content) {

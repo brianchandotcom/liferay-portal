@@ -42,6 +42,7 @@ import com.liferay.source.formatter.checks.JavaPackagePathCheck;
 import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
 import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
 import com.liferay.source.formatter.checks.JavaXMLSecurityCheck;
+import com.liferay.source.formatter.checks.WhitespaceCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -283,7 +284,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		String newContent = trimContent(content, false);
+		String newContent = content;
 
 		if (newContent.contains("$\n */")) {
 			processMessage(fileName, "*");
@@ -1510,6 +1511,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<FileCheck> getFileChecks() {
 		List<FileCheck> fileChecks = new ArrayList<>();
+
+		fileChecks.add(new WhitespaceCheck());
 
 		fileChecks.add(new JavaAnnotationsCheck());
 		fileChecks.add(new JavaBooleanUsageCheck());

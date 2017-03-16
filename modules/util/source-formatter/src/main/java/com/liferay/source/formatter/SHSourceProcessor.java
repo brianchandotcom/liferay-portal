@@ -14,8 +14,11 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.source.formatter.checks.FileCheck;
+
 import java.io.File;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,6 +42,11 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
+	}
+
+	@Override
+	protected List<FileCheck> getFileChecks() {
+		return Collections.emptyList();
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.sh"};

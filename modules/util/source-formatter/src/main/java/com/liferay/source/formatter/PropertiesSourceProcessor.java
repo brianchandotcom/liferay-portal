@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.WhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
@@ -31,6 +33,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -496,8 +499,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineCount++;
 
-				line = trimLine(line, true);
-
 				checkMaxLineLength(line, fileName, lineCount);
 
 				if (line.startsWith(StringPool.TAB)) {
@@ -618,6 +619,11 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			new String[] {"language.", "Language"},
 			new String[] {"model.resource.", "Model resources"}
 		};
+	}
+
+	@Override
+	protected List<FileCheck> getFileChecks() {
+		return Arrays.asList(new FileCheck[] {new WhitespaceCheck(true)});
 	}
 
 	protected String getPortalPortalProperties() throws Exception {

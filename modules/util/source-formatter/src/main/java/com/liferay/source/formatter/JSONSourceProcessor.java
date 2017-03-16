@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -79,8 +82,6 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineCount++;
-
-				line = trimLine(line, true);
 
 				checkIndentation(line, fileName, expectedTabCount, lineCount);
 
@@ -150,6 +151,11 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
+	}
+
+	@Override
+	protected List<FileCheck> getFileChecks() {
+		return Arrays.asList(new FileCheck[] {new WhitespaceCheck(true)});
 	}
 
 	protected String sort(String content) {

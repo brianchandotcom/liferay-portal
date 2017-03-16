@@ -15,9 +15,12 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,8 +37,6 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
-
-		content = trimContent(content, false);
 
 		Matcher matcher = _typePattern.matcher(content);
 
@@ -83,6 +84,11 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
+	}
+
+	@Override
+	protected List<FileCheck> getFileChecks() {
+		return Arrays.asList(new FileCheck[] {new WhitespaceCheck()});
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.tld"};

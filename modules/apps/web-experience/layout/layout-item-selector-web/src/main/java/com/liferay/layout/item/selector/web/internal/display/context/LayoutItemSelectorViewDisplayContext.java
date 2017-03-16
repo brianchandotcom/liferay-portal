@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -207,13 +208,12 @@ public class LayoutItemSelectorViewDisplayContext {
 		for (Layout layout : layouts) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("icon", "page");
-			jsonObject.put("id", layout.getUuid());
-			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
-			jsonObject.put("value", getLayoutBreadcrumb(layout));
+			JSONArray childrenJSONArray = _getLayoutsJSONArray(
+				groupId, privateLayout, layout.getLayoutId(),
+				selectedLayoutUuid);
 
-			if (layout.getUuid().equals(selectedLayoutUuid)) {
-				jsonObject.put("selected", true);
+			if (childrenJSONArray.length() > 0) {
+				jsonObject.put("children", childrenJSONArray);
 			}
 
 			if (_layoutItemSelectorCriterion.isCheckDisplayPage() &&
@@ -222,13 +222,15 @@ public class LayoutItemSelectorViewDisplayContext {
 				jsonObject.put("disabled", true);
 			}
 
-			JSONArray childrenJSONArray = _getLayoutsJSONArray(
-				groupId, privateLayout, layout.getLayoutId(),
-				selectedLayoutUuid);
+			jsonObject.put("icon", "page");
+			jsonObject.put("id", layout.getUuid());
+			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
 
-			if (childrenJSONArray.length() > 0) {
-				jsonObject.put("children", childrenJSONArray);
+			if (Objects.equals(layout.getUuid(), selectedLayoutUuid)) {
+				jsonObject.put("selected", true);
 			}
+
+			jsonObject.put("value", getLayoutBreadcrumb(layout));
 
 			jsonArray.put(jsonObject);
 		}

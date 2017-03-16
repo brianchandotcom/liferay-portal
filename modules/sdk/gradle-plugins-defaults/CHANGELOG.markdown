@@ -1238,6 +1238,12 @@ version 1.1.3.
 
 ## 3.5.0 - 2017-03-16
 
+### Added
+- [LPS-71303]: Set the `liferayThemeDefaults.useLocalDependencies` property to
+`false` to avoid providing the `--css-common-path`, `--styled-path`, and
+`--unstyled-path` arguments to the Gulp tasks, and use the dependencies declared
+in `package.json` instead.
+
 ### Changed
 - [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.22.
 
@@ -1371,6 +1377,7 @@ value for the `mavenRootDir` property of `InstallCacheTask`.
 [LPS-71222]: https://issues.liferay.com/browse/LPS-71222
 [LPS-71224]: https://issues.liferay.com/browse/LPS-71224
 [LPS-71264]: https://issues.liferay.com/browse/LPS-71264
+[LPS-71303]: https://issues.liferay.com/browse/LPS-71303
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

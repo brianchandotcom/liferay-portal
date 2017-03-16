@@ -44,7 +44,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 		return new Tuple(content, Collections.emptySet());
 	}
 
-	private String _fixAnnotationLineBreaks(String annotation) {
+	private String _fixAnnotationLineBreaks(String annotation, String indent) {
 		Matcher matcher = _annotationLineBreakPattern1.matcher(annotation);
 
 		if (matcher.find()) {
@@ -61,23 +61,8 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 				matcher.start());
 		}
 
-		matcher = _annotationLineBreakPattern3.matcher(annotation);
-
-		if (!matcher.find()) {
-			return annotation;
-		}
-
-		String match = matcher.group();
-
-		if ((getLevel(match) == 0) && !match.endsWith("\n)\n") &&
-			!match.endsWith("\t)\n")) {
-
-			String tabs = matcher.group(1);
-
-			String replacement = StringUtil.replaceLast(
-				match, ")", "\n" + tabs + ")");
-
-			return StringUtil.replace(annotation, match, replacement);
+		if (annotation.matches(".*\\(\n[\\S\\s]*[^\t\n]\\)\n")) {
+			return StringUtil.replaceLast(annotation, ")", "\n" + indent + ")");
 		}
 
 		return annotation;
@@ -126,7 +111,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 			String newAnnotation = annotation;
 
 			if (newAnnotation.contains(StringPool.OPEN_PARENTHESIS)) {
-				newAnnotation = _fixAnnotationLineBreaks(newAnnotation);
+				newAnnotation = _fixAnnotationLineBreaks(newAnnotation, indent);
 				newAnnotation = _fixAnnotationMetaTypeProperties(newAnnotation);
 				newAnnotation = _sortAnnotationParameterProperties(
 					newAnnotation);
@@ -325,8 +310,6 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 		"[{=]\n.*(\" \\+\n\t*\")");
 	private final Pattern _annotationLineBreakPattern2 = Pattern.compile(
 		"=(\n\t*)\"");
-	private final Pattern _annotationLineBreakPattern3 = Pattern.compile(
-		"(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
 	private final Pattern _annotationMetaTypePattern = Pattern.compile(
 		"[\\s\\(](name|description) = \"%");
 	private final Pattern _modifierPattern = Pattern.compile(

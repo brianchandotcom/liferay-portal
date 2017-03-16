@@ -438,7 +438,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		ExecuteGulpTask executeGulpTask,
 		Task zipResourcesImporterArchivesTask) {
 
-		executeGulpTask.args("--skip-update-check");
+		executeGulpTask.args("--skip-update-check=true");
 		executeGulpTask.dependsOn(zipResourcesImporterArchivesTask);
 	}
 

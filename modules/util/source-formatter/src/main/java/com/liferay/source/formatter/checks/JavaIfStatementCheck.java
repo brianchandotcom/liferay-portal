@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.SourceFormatterMessage;
 
 import java.util.HashSet;
@@ -35,8 +34,8 @@ import java.util.regex.Pattern;
  */
 public class JavaIfStatementCheck extends IfStatementCheck {
 
-	public JavaIfStatementCheck(SourceFormatterArgs sourceFormatterArgs) {
-		_sourceFormatterArgs = sourceFormatterArgs;
+	public JavaIfStatementCheck(int maxLineLength) {
+		_maxLineLength = maxLineLength;
 	}
 
 	@Override
@@ -206,7 +205,7 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 
 					if ((linePartLevel <= 0) &&
 						((previousLineLength + linePart.length()) <
-							_sourceFormatterArgs.getMaxLineLength())) {
+							_maxLineLength)) {
 
 						if (linePart.equals(trimmedLine)) {
 							return StringUtil.replace(
@@ -355,6 +354,6 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 		".*?( [|&^]+( |\\Z)|\\) \\{\\Z)");
 	private final Pattern _ifStatementPattern = Pattern.compile(
 		"\t+(catch|(else )?if|while) \\(.*?(\\) \\{|;)\n", Pattern.DOTALL);
-	private final SourceFormatterArgs _sourceFormatterArgs;
+	private final int _maxLineLength;
 
 }

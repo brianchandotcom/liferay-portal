@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
@@ -38,11 +37,9 @@ import java.util.regex.Pattern;
  */
 public class JavaLongLinesCheck extends BaseFileCheck {
 
-	public JavaLongLinesCheck(
-		List<String> excludes, SourceFormatterArgs sourceFormatterArgs) {
-
+	public JavaLongLinesCheck(List<String> excludes, int maxLineLength) {
 		_excludes = excludes;
-		_sourceFormatterArgs = sourceFormatterArgs;
+		_maxLineLength = maxLineLength;
 	}
 
 	@Override
@@ -71,7 +68,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 				int lineLength = getLineLength(line);
 
-				if (lineLength <= _sourceFormatterArgs.getMaxLineLength()) {
+				if (lineLength <= _maxLineLength) {
 					continue;
 				}
 
@@ -105,8 +102,8 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 				}
 
 				addMessage(
-					sourceFormatterMessages, fileName,
-					"> " + _sourceFormatterArgs.getMaxLineLength(), lineCount);
+					sourceFormatterMessages, fileName, "> " + _maxLineLength,
+					lineCount);
 			}
 		}
 
@@ -114,10 +111,8 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 	}
 
 	private int _getIfClauseLineBreakPos(String line) {
-		int x = line.lastIndexOf(
-			" || ", _sourceFormatterArgs.getMaxLineLength() - 3);
-		int y = line.lastIndexOf(
-			" && ", _sourceFormatterArgs.getMaxLineLength() - 3);
+		int x = line.lastIndexOf(" || ", _maxLineLength - 3);
+		int y = line.lastIndexOf(" && ", _maxLineLength - 3);
 
 		int z = Math.max(x, y);
 
@@ -149,7 +144,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 			return x + 1;
 		}
 
-		for (x = _sourceFormatterArgs.getMaxLineLength() + 1;;) {
+		for (x = _maxLineLength + 1;;) {
 			x = line.lastIndexOf(StringPool.COMMA_AND_SPACE, x - 1);
 
 			if (x == -1) {
@@ -327,9 +322,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 					String secondLine =
 						indent + StringPool.TAB + line.substring(x + 1);
 
-					if (getLineLength(secondLine) <=
-							_sourceFormatterArgs.getMaxLineLength()) {
-
+					if (getLineLength(secondLine) <= _maxLineLength) {
 						return StringUtil.replace(
 							content, "\n" + line + "\n",
 							"\n" + firstLine + "\n" + secondLine + "\n");
@@ -419,6 +412,6 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 	private final Pattern _annotationPattern = Pattern.compile(
 		"\n\t*@(.+)\\(\n");
 	private final List<String> _excludes;
-	private final SourceFormatterArgs _sourceFormatterArgs;
+	private final int _maxLineLength;
 
 }

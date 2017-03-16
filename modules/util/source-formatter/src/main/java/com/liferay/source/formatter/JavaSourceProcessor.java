@@ -1518,16 +1518,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		fileChecks.add(new JavaBooleanUsageCheck());
 		fileChecks.add(
 			new JavaCombineLinesCheck(
-				_fitOnSingleLineExcludes, sourceFormatterArgs));
+				_fitOnSingleLineExcludes,
+				sourceFormatterArgs.getMaxLineLength()));
 		fileChecks.add(new JavaDataAccessConnectionCheck());
 		fileChecks.add(new JavaDiamondOperatorCheck(_diamondOperatorExcludes));
 		fileChecks.add(new JavaEmptyLinesCheck());
 		fileChecks.add(new JavaExceptionCheck());
-		fileChecks.add(new JavaIfStatementCheck(sourceFormatterArgs));
-		fileChecks.add(new JavaLineBreakCheck(sourceFormatterArgs));
+		fileChecks.add(
+			new JavaIfStatementCheck(sourceFormatterArgs.getMaxLineLength()));
+		fileChecks.add(
+			new JavaLineBreakCheck(sourceFormatterArgs.getMaxLineLength()));
 		fileChecks.add(new JavaLogLevelCheck());
 		fileChecks.add(
-			new JavaLongLinesCheck(_lineLengthExcludes, sourceFormatterArgs));
+			new JavaLongLinesCheck(
+				_lineLengthExcludes, sourceFormatterArgs.getMaxLineLength()));
 		fileChecks.add(new JavaPackagePathCheck());
 
 		if (portalSource || subrepository) {

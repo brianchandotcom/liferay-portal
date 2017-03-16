@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.SourceFormatterMessage;
 
 import java.util.HashSet;
@@ -34,8 +33,8 @@ import java.util.regex.Pattern;
  */
 public class JavaLineBreakCheck extends BaseFileCheck {
 
-	public JavaLineBreakCheck(SourceFormatterArgs sourceFormatterArgs) {
-		_sourceFormatterArgs = sourceFormatterArgs;
+	public JavaLineBreakCheck(int maxLineLength) {
+		_maxLineLength = maxLineLength;
 	}
 
 	@Override
@@ -86,7 +85,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				if (!line.startsWith("import ") &&
 					!line.startsWith("package ") &&
 					!line.matches("\\s*\\*.*") &&
-					(lineLength <= _sourceFormatterArgs.getMaxLineLength())) {
+					(lineLength <= _maxLineLength)) {
 
 					_checkLineBreaks(
 						sourceFormatterMessages, line, previousLine, fileName,
@@ -143,8 +142,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			int x = trimmedLine.indexOf(CharPool.OPEN_PARENTHESIS);
 
 			if ((x != -1) &&
-				((getLineLength(previousLine) + x) <
-					_sourceFormatterArgs.getMaxLineLength()) &&
+				((getLineLength(previousLine) + x) < _maxLineLength) &&
 				(trimmedLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
 				 (trimmedLine.charAt(x + 1) != CharPool.CLOSE_PARENTHESIS))) {
 
@@ -436,9 +434,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 						StringUtil.trimLeading(matcher.group(2)) +
 							matcher.group(3);
 
-				if (getLineLength(singleLine) <=
-						_sourceFormatterArgs.getMaxLineLength()) {
-
+				if (getLineLength(singleLine) <= _maxLineLength) {
 					content = StringUtil.replace(
 						content, matcher.group(), "\n" + singleLine);
 
@@ -548,7 +544,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		"(\n\t*/\\*)\n\t*(.*?)\n\t*(\\*/\n)", Pattern.DOTALL);
 	private final Pattern _lineStartingWithOpenParenthesisPattern =
 		Pattern.compile("(.)\n+(\t+)\\)[^.].*\n");
+	private final int _maxLineLength;
 	private final Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
-	private final SourceFormatterArgs _sourceFormatterArgs;
 
 }

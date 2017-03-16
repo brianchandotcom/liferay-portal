@@ -1234,6 +1234,7 @@ to the primary artifact, even when the `application` plugin is applied.
 ### Changed
 - [LPS-71118]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.1.3.
+- [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.2.21.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

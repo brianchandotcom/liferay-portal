@@ -19,8 +19,6 @@
 <%
 LayoutItemSelectorViewDisplayContext layoutItemSelectorViewDisplayContext = (LayoutItemSelectorViewDisplayContext)request.getAttribute(BaseLayoutsItemSelectorView.LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
-LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorViewDisplayContext.getLayoutItemSelectorCriterion();
-
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 %>
 
@@ -29,102 +27,41 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 </liferay-util:html-top>
 
 <div class="container-fluid-1280 layouts-selector">
-	<div class="card-horizontal main-content-card">
-		<div class="card-row card-row-padded">
-			<liferay-layout:layouts-tree
-				checkContentDisplayPage="<%= layoutItemSelectorCriterion.isCheckDisplayPage() %>"
-				draggableTree="<%= false %>"
-				expandFirstNode="<%= true %>"
-				groupId="<%= scopeGroupId %>"
-				portletURL="<%= layoutItemSelectorViewDisplayContext.getEditLayoutURL() %>"
-				privateLayout="<%= layoutItemSelectorViewDisplayContext.isPrivateLayout() %>"
-				rootNodeName="<%= layoutItemSelectorViewDisplayContext.getRootNodeName() %>"
-				saveState="<%= false %>"
-				selectedLayoutIds="<%= layoutItemSelectorViewDisplayContext.getSelectedLayoutIds() %>"
-				selPlid="<%= layoutItemSelectorViewDisplayContext.getSelPlid() %>"
-				treeId="treeContainer"
-			/>
-		</div>
-	</div>
-</div>
+	<aui:form cssClass="container-fluid-1280" name="selectDisplayPageFm">
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<div class="portlet-journal-tree" id="<portlet:namespace />displayPageContainer">
+				</div>
+			</aui:fieldset>
+		</aui:fieldset-group>
+	</aui:form>
 
-<aui:script use="aui-base">
-	var LString = A.Lang.String;
+	<aui:script require="journal-web/js/CardsTreeView.es,metal-dom/src/dom">
+		var CardsTreeView = journalWebJsCardsTreeViewEs.default;
+		var dom = metalDomSrcDom.default;
 
-	var getChosenPagePath = function(node) {
-		var buffer = [];
-
-		if (A.instanceOf(node, A.TreeNode)) {
-			var labelText = LString.escapeHTML(node.get('labelEl').text());
-
-			buffer.push(labelText);
-
-			node.eachParent(
-				function(treeNode) {
-					var labelEl = treeNode.get('labelEl');
-
-					if (labelEl) {
-						labelText = LString.escapeHTML(labelEl.text());
-
-						buffer.unshift(labelText);
-					}
-				}
-			);
-		}
-
-		return buffer.join(' > ');
-	};
-
-	var setSelectedPage = function(event) {
-		var disabled = true;
-
-		var messageText = '<%= UnicodeLanguageUtil.get(request, "there-is-no-selected-page") %>';
-
-		var lastSelectedNode = event.newVal;
-
-		var labelEl = lastSelectedNode.get('labelEl');
-
-		var link = labelEl.one('a');
-
-		var url = link.attr('data-url');
-		var uuid = link.attr('data-uuid');
-
-		var data = {};
-
-		if (link && url) {
-			disabled = false;
-
-			data.layoutpath = getChosenPagePath(lastSelectedNode);
-
-			<c:choose>
-				<c:when test="<%= Objects.equals(layoutItemSelectorViewDisplayContext.getItemSelectorReturnTypeName(), URLItemSelectorReturnType.class.getName()) %>">
-					data.value = url;
-				</c:when>
-				<c:when test="<%= Objects.equals(layoutItemSelectorViewDisplayContext.getItemSelectorReturnTypeName(), UUIDItemSelectorReturnType.class.getName()) %>">
-					data.value = uuid;
-				</c:when>
-			</c:choose>
-		}
-
-		<c:if test="<%= Validator.isNotNull(layoutItemSelectorViewDisplayContext.getCkEditorFuncNum()) %>">
-			data.ckeditorfuncnum: <%= layoutItemSelectorViewDisplayContext.getCkEditorFuncNum() %>;
-		</c:if>
-
-		Liferay.Util.getOpener().Liferay.fire(
-			'<%= layoutItemSelectorViewDisplayContext.getItemSelectedEventName() %>',
+		new CardsTreeView(
 			{
-				data: data
-			}
+				events: {
+					selectedNodesChanged: function(event) {
+						var node = event.newVal[0];
+
+						var data = {
+							id: node.id,
+							name: node.value
+						};
+
+						Liferay.Util.getOpener().Liferay.fire(
+							'<%= HtmlUtil.escapeJS(layoutItemSelectorViewDisplayContext.getItemSelectedEventName()) %>',
+							{
+								data: data
+							}
+						);
+					}
+				},
+				nodes: [<%= layoutItemSelectorViewDisplayContext.getLayoutsJSONObject() %>]
+			},
+			'#<portlet:namespace />displayPageContainer'
 		);
-	};
-
-	var container = A.one('#<portlet:namespace />treeContainerOutput');
-
-	if (container) {
-		container.swallowEvent('click', true);
-
-		var tree = container.getData('tree-view');
-
-		tree.after('lastSelectedChange', setSelectedPage);
-	}
-</aui:script>
+	</aui:script>
+</div>

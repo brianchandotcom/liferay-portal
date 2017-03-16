@@ -1236,6 +1236,12 @@ to the primary artifact, even when the `application` plugin is applied.
 version 1.1.3.
 - [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.2.21.
 
+## 3.4.4 - 2017-03-16
+
+### Fixed
+- [LPS-71264]: Use the actual directory of the Maven local repository as default
+value for the `mavenRootDir` property of `InstallCacheTask`.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -1361,6 +1367,7 @@ version 1.1.3.
 [LPS-71201]: https://issues.liferay.com/browse/LPS-71201
 [LPS-71222]: https://issues.liferay.com/browse/LPS-71222
 [LPS-71224]: https://issues.liferay.com/browse/LPS-71224
+[LPS-71264]: https://issues.liferay.com/browse/LPS-71264
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

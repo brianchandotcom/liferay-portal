@@ -80,6 +80,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_CONTROLS_ADD_SUCCESS_PAGE</td>
+	<td>//li[@class='form-builder-page-manager-add-success-page' and contains(text(),'Add Success Page')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

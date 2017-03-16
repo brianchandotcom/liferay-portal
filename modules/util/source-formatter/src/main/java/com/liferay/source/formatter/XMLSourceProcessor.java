@@ -388,10 +388,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (isExcludedPath(_XML_EXCLUDES, absolutePath)) {
-			return content;
-		}
-
 		String newContent = content;
 
 		if (fileName.startsWith(
@@ -1647,8 +1643,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	private static final String _SERVICE_FINDER_COLUMN_SORT_EXCLUDES =
 		"service.finder.column.sort.excludes";
-
-	private static final String _XML_EXCLUDES = "xml.excludes";
 
 	private static final Pattern _commentPattern1 = Pattern.compile(
 		">\n\t+<!--[\n ]");

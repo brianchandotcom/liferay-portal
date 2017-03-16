@@ -168,7 +168,9 @@
 		<field name="couponDiscount" type="double" />
 		<field name="billingFirstName" type="String" />
 		<field name="billingLastName" type="String" />
-		<field name="billingEmailAddress" type="String" />
+		<field name="billingEmailAddress" type="String">
+			<hint name="max-length">254</hint>
+		</field>
 		<field name="billingCompany" type="String" />
 		<field name="billingStreet" type="String" />
 		<field name="billingCity" type="String" />
@@ -179,7 +181,9 @@
 		<field name="shipToBilling" type="boolean" />
 		<field name="shippingFirstName" type="String" />
 		<field name="shippingLastName" type="String" />
-		<field name="shippingEmailAddress" type="String" />
+		<field name="shippingEmailAddress" type="String">
+			<hint name="max-length">254</hint>
+		</field>
 		<field name="shippingCompany" type="String" />
 		<field name="shippingStreet" type="String" />
 		<field name="shippingCity" type="String" />

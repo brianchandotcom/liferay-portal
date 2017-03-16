@@ -59,6 +59,20 @@ public class PortalWebResourcesUtil {
 		return portalWebResources.getContextPath();
 	}
 
+	public static long getPathLastModified(
+		String requestURI, long defaultValue) {
+
+		for (PortalWebResources portalWebResources :
+				_portalWebResourcesMap.values()) {
+
+			if (requestURI.startsWith(portalWebResources.getContextPath())) {
+				return portalWebResources.getLastModified();
+			}
+		}
+
+		return defaultValue;
+	}
+
 	public static String getPathResourceType(String path) {
 		for (PortalWebResources portalWebResources :
 				_portalWebResourcesMap.values()) {

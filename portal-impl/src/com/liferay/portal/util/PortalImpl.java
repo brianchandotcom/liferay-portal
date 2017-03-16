@@ -5314,12 +5314,9 @@ public class PortalImpl implements Portal {
 					timestamp = ServletContextUtil.getLastModified(
 						servletContext, path, true);
 				}
-				else if (PortalWebResourcesUtil.hasContextPath(path)) {
-					timestamp = PortalWebResourcesUtil.getLastModified(
-						PortalWebResourcesUtil.getPathResourceType(path));
-				}
 				else {
-					timestamp = theme.getTimestamp();
+					timestamp = PortalWebResourcesUtil.getPathLastModified(
+						uri, theme.getTimestamp());
 				}
 			}
 

@@ -15,6 +15,7 @@
 package com.liferay.portal.dao.orm.common;
 
 import com.liferay.portal.dao.sql.transformer.HqlToJpqlTransformerLogic;
+import com.liferay.portal.dao.sql.transformer.JpqlToHqlTransformerLogic;
 import com.liferay.portal.dao.sql.transformer.SQLTransformerFactory;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -22,8 +23,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
@@ -106,28 +105,17 @@ public class SQLTransformer {
 
 		newSQL = _sqlTransformer.transform(sql);
 
-		Matcher matcher = _jpqlCountPattern.matcher(newSQL);
+		Function<String, String> countFunction =
+			JpqlToHqlTransformerLogic.getCountFunction();
 
-		if (matcher.find()) {
-			String countExpression = matcher.group(1);
-			String entityAlias = matcher.group(3);
-
-			if (entityAlias.equals(countExpression)) {
-				newSQL = matcher.replaceFirst(_HQL_COUNT_SQL);
-			}
-		}
+		newSQL = countFunction.apply(newSQL);
 
 		_transformedSqls.put(sql, newSQL);
 
 		return newSQL;
 	}
 
-	private static final String _HQL_COUNT_SQL = "SELECT COUNT(*) FROM $2 $3";
-
 	private static final SQLTransformer _instance = new SQLTransformer();
-
-	private static final Pattern _jpqlCountPattern = Pattern.compile(
-		"SELECT COUNT\\((\\S+)\\) FROM (\\S+) (\\S+)");
 
 	private com.liferay.portal.dao.sql.transformer.SQLTransformer
 		_sqlTransformer;

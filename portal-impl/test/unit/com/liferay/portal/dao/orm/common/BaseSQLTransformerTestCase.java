@@ -113,6 +113,24 @@ public abstract class BaseSQLTransformerTestCase {
 	}
 
 	@Test
+	public void testTransformFromHqlToJpqlWithCompositeMarker() {
+		String sql = "select * from Foo where foo\\.id\\.bar = 1";
+
+		Assert.assertEquals(
+			"select * from Foo where foo.bar = 1",
+			SQLTransformer.transformFromHqlToJpql(sql));
+	}
+
+	@Test
+	public void testTransformFromHqlToJpqlWithNotEquals() {
+		String sql = "select * from Foo where foo != 1";
+
+		Assert.assertEquals(
+			"select * from Foo where foo <> 1",
+			SQLTransformer.transformFromHqlToJpql(sql));
+	}
+
+	@Test
 	public void testTransformPositionalParametersWithMultipleQuestions() {
 		String sql = "select * from Foo where";
 

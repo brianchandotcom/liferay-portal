@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
@@ -56,8 +57,14 @@ public class InstallCacheTask extends DefaultTask {
 		_cacheRootDir = new File(
 			gradle.getGradleUserHomeDir(), "caches/modules-2/files-2.1");
 
-		_mavenRootDir = new File(
-			System.getProperty("user.home"), ".m2/repository");
+		_mavenRootDir = new Callable<File>() {
+
+			@Override
+			public File call() throws Exception {
+				return GradleUtil.getMavenLocalDir(getProject());
+			}
+
+		};
 	}
 
 	@Input

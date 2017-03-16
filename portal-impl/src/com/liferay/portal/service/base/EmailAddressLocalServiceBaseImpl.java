@@ -53,12 +53,10 @@ import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -315,16 +313,6 @@ public abstract class EmailAddressLocalServiceBaseImpl
 		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Set<Serializable> primaryKeys = portletDataContext.getRegisteredExportingClassedModelPrimaryKeys(
-							"EmailAddress");
-
-					if (SetUtil.isNotEmpty(primaryKeys)) {
-						Property primaryKeyProperty = PropertyFactoryUtil.forName(
-								"emailAddressId");
-
-						dynamicQuery.add(primaryKeyProperty.in(primaryKeys));
-					}
-
 					portletDataContext.addDateRangeCriteria(dynamicQuery,
 						"modifiedDate");
 

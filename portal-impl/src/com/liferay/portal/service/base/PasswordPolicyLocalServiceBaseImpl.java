@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PasswordPolicy;
@@ -54,12 +52,10 @@ import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -319,16 +315,6 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Set<Serializable> primaryKeys = portletDataContext.getRegisteredExportingClassedModelPrimaryKeys(
-							"PasswordPolicy");
-
-					if (SetUtil.isNotEmpty(primaryKeys)) {
-						Property primaryKeyProperty = PropertyFactoryUtil.forName(
-								"passwordPolicyId");
-
-						dynamicQuery.add(primaryKeyProperty.in(primaryKeys));
-					}
-
 					portletDataContext.addDateRangeCriteria(dynamicQuery,
 						"modifiedDate");
 				}

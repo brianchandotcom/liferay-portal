@@ -191,7 +191,7 @@ AUI.add(
 							successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_DESCRIPTION).val(successPageDefinition.body);
 
 							successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE).val(successPageDefinition.title);
-							
+
 							instance._uiSetMode(instance.get('mode'));
 
 							instance._syncControlTriggersUI();
@@ -419,6 +419,12 @@ AUI.add(
 
 						instance._syncControlTriggersUI();
 
+						var pagesQuantity = instance.get('pagesQuantity');
+
+						wizard.clearAll();
+
+						wizard.activate(pagesQuantity);
+
 						var popoverBoundingBox = instance._getPopover().get('boundingBox');
 
 						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE).hide();
@@ -499,6 +505,8 @@ AUI.add(
 						instance._syncControlTriggersUI();
 
 						var popoverBoundingBox = instance._getPopover().get('boundingBox');
+
+						instance._resetSuccessPage();
 
 						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE).show();
 
@@ -604,6 +612,20 @@ AUI.add(
 						var wizard = instance._getWizard();
 
 						wizard.render();
+					},
+
+					_resetSuccessPage: function() {
+						var instance = this;
+
+						var builder = instance.get('builder');
+
+						var boundingBox = builder.get('boundingBox');
+
+						var successPage = boundingBox.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE);
+
+						successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_DESCRIPTION).val('');
+
+						successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE).val('');
 					},
 
 					_setCharacterLimitToPageDescription: function(maxLength) {

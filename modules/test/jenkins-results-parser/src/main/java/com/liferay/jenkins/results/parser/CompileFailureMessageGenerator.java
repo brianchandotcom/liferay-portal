@@ -38,6 +38,10 @@ public class CompileFailureMessageGenerator
 		int end = consoleOutput.indexOf("Compile failed;");
 
 		if (end == -1) {
+			end = consoleOutput.indexOf("compileJava FAILED");
+		}
+
+		if (end == -1) {
 			return null;
 		}
 

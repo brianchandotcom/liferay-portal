@@ -41,14 +41,6 @@
 				<aui:button cssClass="btn-lg" type="cancel" />
 			</aui:button-row>
 		</aui:form>
-
-		<aui:script use="liferay-portlet-look-and-feel">
-			new Liferay.Portlet.LookAndFeel(
-				{
-					namespace: '<portlet:namespace />'
-				}
-			);
-		</aui:script>
 	</c:when>
 	<c:otherwise>
 		<liferay-util:include page="/html/portal/portlet_access_denied.jsp" />

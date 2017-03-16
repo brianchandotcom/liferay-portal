@@ -126,6 +126,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SUCCESS_PAGE-->
+<tr>
+	<td>SUCCESS_PAGE_TITLE_FIELD</td>
+	<td>//div[@class='form-builder-success-page']//input[contains(@class,'success-page-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_PAGE_DESCRIPTION_FIELD</td>
+	<td>//div[@class='form-builder-success-page']//input[contains(@class,'success-page-description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--PUBLISH-->
 <tr>
 	<td>PUBLISH_FORM_NAME_FIELD</td>

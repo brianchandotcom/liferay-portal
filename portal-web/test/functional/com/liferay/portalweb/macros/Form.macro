@@ -168,6 +168,11 @@
 		<execute function="Type" locator1="Form#PAGE_TITLE_FIELD" value1="${formPageName}" />
 	</command>
 
+	<command name="editSuccessPage">
+		<execute function="Type" locator1="Form#SUCCESS_PAGE_TITLE_FIELD" value1="${successPageTitle}" />
+		<execute function="Type" locator1="Form#SUCCESS_PAGE_DESCRIPTION_FIELD" value1="${successPageDescription}" />
+	</command>
+
 	<command name="getPublishedFormPublicURL" returns="publicURL">
 		<var locator="Form#PUBLISH_FORM_PUBLIC_URL" name="publicURL" />
 

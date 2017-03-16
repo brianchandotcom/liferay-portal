@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportPackage;
+import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.xml.Dom4jUtil;
@@ -392,18 +394,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (!fileName.startsWith(
-				sourceFormatterArgs.getBaseDirName() + "build") &&
-			!fileName.contains("/build")) {
-
-			newContent = trimContent(newContent, false);
-		}
-
 		if (fileName.startsWith(
 				sourceFormatterArgs.getBaseDirName() + "build") ||
 			(fileName.contains("/build") && !fileName.contains("/tools/"))) {
 
-			newContent = formatAntXML(fileName, absolutePath, newContent);
+			formatAntXML(fileName, absolutePath, newContent);
 		}
 		else if (fileName.contains("/custom-sql/")) {
 			newContent = formatCustomSQLXML(fileName, newContent);
@@ -473,6 +468,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 		else if ((portalSource || subrepository) &&
 				 fileName.endsWith("/tiles-defs.xml")) {
+
 			formatTilesDefsXML(fileName, newContent);
 		}
 		else if (fileName.endsWith(".toggle")) {
@@ -689,11 +685,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatAntXML(
+	protected void formatAntXML(
 			String fileName, String absolutePath, String content)
 		throws Exception {
-
-		String newContent = trimContent(content, true);
 
 		Document document = readXML(content);
 
@@ -719,11 +713,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			processMessage(fileName, "Macrodefs go before targets");
 		}
 
-		checkImportFiles(fileName, newContent);
+		checkImportFiles(fileName, content);
 
 		checkTargetNames(fileName, absolutePath, content);
-
-		return newContent;
 	}
 
 	protected String formatCustomSQLXML(String fileName, String content)
@@ -1350,6 +1342,14 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return elements;
+	}
+
+	@Override
+	protected List<FileCheck> getFileChecks() {
+		return Arrays.asList(
+			new FileCheck[] {
+				new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName())
+			});
 	}
 
 	protected String getTablesContent(String fileName, String absolutePath)

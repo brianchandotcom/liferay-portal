@@ -260,6 +260,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	protected void addHighlights(
 		SearchRequestBuilder searchRequestBuilder, QueryConfig queryConfig) {
 
+		if (!queryConfig.isHighlightEnabled()) {
+			return;
+		}
+
 		for (String highlightFieldName : queryConfig.getHighlightFieldNames()) {
 			addHighlightedField(
 				searchRequestBuilder, queryConfig, highlightFieldName);

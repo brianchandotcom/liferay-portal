@@ -905,16 +905,6 @@ public class JavaClass {
 
 			checkTestAnnotations(javaTerm);
 		}
-
-		String javaTermContent = javaTerm.getContent();
-
-		String newJavaTermContent = _javaSourceProcessor.formatAnnotations(
-			_fileName, javaTerm.getName(), javaTermContent, _indent, true);
-
-		if (!javaTermContent.equals(newJavaTermContent)) {
-			_classContent = _classContent.replace(
-				javaTermContent, newJavaTermContent);
-		}
 	}
 
 	protected String getAccessModifier() {

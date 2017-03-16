@@ -112,6 +112,57 @@ public abstract class BaseSQLTransformerTestCase {
 		Assert.assertEquals(sql, SQLTransformer.transform(sql));
 	}
 
+	@Test
+	public void testTransformFromHqlToJpqlWithCompositeMarker() {
+		String sql = "select * from Foo where foo\\.id\\.bar = 1";
+
+		Assert.assertEquals(
+			"select * from Foo where foo.bar = 1",
+			SQLTransformer.transformFromHqlToJpql(sql));
+	}
+
+	@Test
+	public void testTransformFromHqlToJpqlWithNotEquals() {
+		String sql = "select * from Foo where foo != 1";
+
+		Assert.assertEquals(
+			"select * from Foo where foo <> 1",
+			SQLTransformer.transformFromHqlToJpql(sql));
+	}
+
+	@Test
+	public void testTransformPositionalParametersWithMultipleQuestions() {
+		String sql = "select * from Foo where";
+
+		String expectedSql = new String(sql);
+
+		for (int i = 1; i <= 100; i++) {
+			String positionalParameter = " and foo" + i + " = ?";
+
+			sql += positionalParameter;
+			expectedSql += positionalParameter + i;
+		}
+
+		Assert.assertEquals(
+			expectedSql, SQLTransformer.transformFromHqlToJpql(sql));
+	}
+
+	@Test
+	public void testTransformPositionalParametersWithOneQuestion() {
+		String sql = "select * from Foo where foo = ?";
+
+		Assert.assertEquals(
+			"select * from Foo where foo = ?1",
+			SQLTransformer.transformFromHqlToJpql(sql));
+	}
+
+	@Test
+	public void testTransformWithZeroQuestions() {
+		String sql = "select * from Foo";
+
+		Assert.assertEquals(sql, SQLTransformer.transformFromHqlToJpql(sql));
+	}
+
 	protected String getBitwiseCheckOriginalSQL() {
 		return "select BITAND(foo, bar) from Foo";
 	}

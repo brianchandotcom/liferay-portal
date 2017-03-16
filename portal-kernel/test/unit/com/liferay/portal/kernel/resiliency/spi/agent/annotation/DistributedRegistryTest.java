@@ -313,7 +313,8 @@ public class DistributedRegistryTest {
 		public static final String name10 = "nam10";
 
 		@Distributed(
-			direction = Direction.RESPONSE, matchType = MatchType.POSTFIX)
+			direction = Direction.RESPONSE, matchType = MatchType.POSTFIX
+		)
 		public static final String name11 = "name11";
 
 		@Distributed(direction = Direction.DUPLEX, matchType = MatchType.PREFIX)

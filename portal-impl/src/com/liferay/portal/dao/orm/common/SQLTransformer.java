@@ -27,6 +27,7 @@ import java.util.function.Function;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Manuel de la Peña
  */
 public class SQLTransformer {
 

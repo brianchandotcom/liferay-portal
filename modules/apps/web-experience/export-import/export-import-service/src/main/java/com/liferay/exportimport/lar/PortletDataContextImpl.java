@@ -1258,8 +1258,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public Set<Serializable> getRegisteredExportingClassedModelPrimaryKeys(
 		String modelClassName) {
 
-		if (_classedModelPrimaryKeysMap.containsKey(modelClassName)) {
-			return _classedModelPrimaryKeysMap.get(modelClassName);
+		if (_classedModelPrimaryKeyMap.containsKey(modelClassName)) {
+			return _classedModelPrimaryKeyMap.get(modelClassName);
 		}
 
 		return Collections.emptySet();
@@ -1467,16 +1467,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
-		Serializable primaryKey = ExportImportClassedModelUtil.getPrimaryKeyObj(
-			classedModel);
+		Serializable primaryKeyObj =
+			ExportImportClassedModelUtil.getPrimaryKeyObj(classedModel);
 
-		Serializable newPrimaryKey =
+		Serializable newPrimaryKeyObj =
 			ExportImportClassedModelUtil.getPrimaryKeyObj(newClassedModel);
 
 		Map<Serializable, Serializable> newPrimaryKeysMap =
 			(Map<Serializable, Serializable>)getNewPrimaryKeysMap(clazz);
 
-		newPrimaryKeysMap.put(primaryKey, newPrimaryKey);
+		newPrimaryKeysMap.put(primaryKeyObj, newPrimaryKeyObj);
 
 		if (classedModel instanceof StagedGroupedModel &&
 			newClassedModel instanceof StagedGroupedModel) {
@@ -1498,8 +1498,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		importLocks(
-			clazz, String.valueOf(primaryKey), String.valueOf(newPrimaryKey));
-		importPermissions(clazz, primaryKey, newPrimaryKey);
+			clazz, String.valueOf(primaryKeyObj),
+			String.valueOf(newPrimaryKeyObj));
+		importPermissions(clazz, primaryKeyObj, newPrimaryKeyObj);
 	}
 
 	/**
@@ -1854,19 +1855,19 @@ public class PortletDataContextImpl implements PortletDataContext {
 		String modelClassName = ExportImportClassedModelUtil.getClassName(
 			classedModel);
 
-		Set<Serializable> primaryKeys = _classedModelPrimaryKeysMap.get(
+		Set<Serializable> primaryKeyObjs = _classedModelPrimaryKeyMap.get(
 			modelClassName);
 
-		if (primaryKeys == null) {
-			primaryKeys = new HashSet<>();
+		if (primaryKeyObjs == null) {
+			primaryKeyObjs = new HashSet<>();
 		}
 
-		Serializable primaryKey = ExportImportClassedModelUtil.getPrimaryKeyObj(
-			classedModel);
+		Serializable primaryKeyObj =
+			ExportImportClassedModelUtil.getPrimaryKeyObj(classedModel);
 
-		primaryKeys.add(primaryKey);
+		primaryKeyObjs.add(primaryKeyObj);
 
-		_classedModelPrimaryKeysMap.put(modelClassName, primaryKeys);
+		_classedModelPrimaryKeyMap.put(modelClassName, primaryKeyObjs);
 	}
 
 	@Override
@@ -2768,7 +2769,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private final Map<String, long[]> _assetCategoryIdsMap = new HashMap<>();
 	private final Set<Long> _assetLinkIds = new HashSet<>();
 	private final Map<String, String[]> _assetTagNamesMap = new HashMap<>();
-	private final Map<String, Set<Serializable>> _classedModelPrimaryKeysMap =
+	private final Map<String, Set<Serializable>> _classedModelPrimaryKeyMap =
 		new HashMap<>();
 	private long _companyGroupId;
 	private long _companyId;

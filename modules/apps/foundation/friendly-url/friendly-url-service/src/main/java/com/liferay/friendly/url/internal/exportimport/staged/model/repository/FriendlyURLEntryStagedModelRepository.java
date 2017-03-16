@@ -15,8 +15,9 @@
 package com.liferay.friendly.url.internal.exportimport.staged.model.repository;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepository;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -40,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = StagedModelRepository.class
 )
 public class FriendlyURLEntryStagedModelRepository
-	extends BaseStagedModelRepository<FriendlyURLEntry> {
+	implements StagedModelRepository<FriendlyURLEntry> {
 
 	@Override
 	public FriendlyURLEntry addStagedModel(
@@ -92,6 +93,20 @@ public class FriendlyURLEntryStagedModelRepository
 	}
 
 	@Override
+	public FriendlyURLEntry fetchMissingReference(String uuid, long groupId) {
+		return (FriendlyURLEntry)_stagedModelRepositoryHelper.
+			fetchMissingReference(uuid, groupId, this);
+	}
+
+	@Override
+	public FriendlyURLEntry fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return _friendlyURLEntryLocalService.
+			fetchFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
 	public List<FriendlyURLEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -105,6 +120,12 @@ public class FriendlyURLEntryStagedModelRepository
 
 		return _friendlyURLEntryLocalService.getExportActionableDynamicQuery(
 			portletDataContext);
+	}
+
+	@Override
+	public void restoreStagedModel(
+			PortletDataContext portletDataContext, FriendlyURLEntry stagedModel)
+		throws PortletDataException {
 	}
 
 	@Override
@@ -154,5 +175,8 @@ public class FriendlyURLEntryStagedModelRepository
 	}
 
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;
 
 }

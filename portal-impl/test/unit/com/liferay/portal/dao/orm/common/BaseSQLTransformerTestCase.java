@@ -131,6 +131,29 @@ public abstract class BaseSQLTransformerTestCase {
 	}
 
 	@Test
+	public void testTransformFromJpqlToHql() {
+		Assert.assertEquals(
+			"SELECT COUNT(*) FROM Foo foo",
+			SQLTransformer.transformFromJpqlToHql(
+				"SELECT COUNT(foo) FROM Foo foo"));
+	}
+
+	@Test
+	public void testTransformFromJpqlToHqlNotMatching() {
+		String sql = "SELECT * FROM Foo where foo != 1";
+
+		Assert.assertEquals(sql, SQLTransformer.transformFromJpqlToHql(sql));
+	}
+
+	@Test
+	public void testTransformFromJpqlToHqlWithAliasDifferentThanFieldCount() {
+		Assert.assertEquals(
+			"SELECT COUNT(bar) FROM Foo foo",
+			SQLTransformer.transformFromJpqlToHql(
+				"SELECT COUNT(bar) FROM Foo foo"));
+	}
+
+	@Test
 	public void testTransformPositionalParametersWithMultipleQuestions() {
 		String sql = "select * from Foo where";
 

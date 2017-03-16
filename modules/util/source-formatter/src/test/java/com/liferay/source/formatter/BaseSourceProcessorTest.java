@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
@@ -83,6 +84,11 @@ public class BaseSourceProcessorTest {
 
 			@Override
 			protected String[] doGetIncludes() {
+				return null;
+			}
+
+			@Override
+			protected List<FileCheck> getFileChecks() {
 				return null;
 			}
 

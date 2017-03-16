@@ -14,11 +14,11 @@
 
 package com.liferay.portal.dao.orm.common;
 
+import com.liferay.portal.dao.sql.transformer.HqlToJpqlTransformerLogic;
 import com.liferay.portal.dao.sql.transformer.PositionalParametersTransformerLogic;
 import com.liferay.portal.dao.sql.transformer.SQLTransformerFactory;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -89,9 +89,15 @@ public class SQLTransformer {
 
 		newSQL = positionalParameterFunction.apply(newSQL);
 
-		newSQL = StringUtil.replace(newSQL, _HQL_NOT_EQUALS, _JPQL_NOT_EQUALS);
-		newSQL = StringUtil.replace(
-			newSQL, _HQL_COMPOSITE_ID_MARKER, _JPQL_DOT_SEPARTOR);
+		Function<String, String> notEqualsFunction =
+			HqlToJpqlTransformerLogic.getNotEqualsFunction();
+
+		newSQL = notEqualsFunction.apply(newSQL);
+
+		Function<String, String> compositeIdMarkerFunction =
+			HqlToJpqlTransformerLogic.getCompositeIdMarkerFunction();
+
+		newSQL = compositeIdMarkerFunction.apply(newSQL);
 
 		_transformedSqls.put(sql, newSQL);
 
@@ -123,15 +129,7 @@ public class SQLTransformer {
 		return newSQL;
 	}
 
-	private static final String _HQL_COMPOSITE_ID_MARKER = "\\.id\\.";
-
 	private static final String _HQL_COUNT_SQL = "SELECT COUNT(*) FROM $2 $3";
-
-	private static final String _HQL_NOT_EQUALS = "!=";
-
-	private static final String _JPQL_DOT_SEPARTOR = ".";
-
-	private static final String _JPQL_NOT_EQUALS = "<>";
 
 	private static final SQLTransformer _instance = new SQLTransformer();
 

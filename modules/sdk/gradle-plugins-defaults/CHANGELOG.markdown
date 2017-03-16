@@ -1229,6 +1229,12 @@ master branch, but it was previously already published from a release branch.
 - [LPS-71224]: Always point the `artifact.url` property of `artifact.properties`
 to the primary artifact, even when the `application` plugin is applied.
 
+## 3.4.3 - 2017-03-15
+
+### Changed
+- [LPS-71118]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.1.3.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -1349,6 +1355,7 @@ to the primary artifact, even when the `application` plugin is applied.
 [LPS-70941]: https://issues.liferay.com/browse/LPS-70941
 [LPS-71005]: https://issues.liferay.com/browse/LPS-71005
 [LPS-71048]: https://issues.liferay.com/browse/LPS-71048
+[LPS-71118]: https://issues.liferay.com/browse/LPS-71118
 [LPS-71164]: https://issues.liferay.com/browse/LPS-71164
 [LPS-71201]: https://issues.liferay.com/browse/LPS-71201
 [LPS-71222]: https://issues.liferay.com/browse/LPS-71222

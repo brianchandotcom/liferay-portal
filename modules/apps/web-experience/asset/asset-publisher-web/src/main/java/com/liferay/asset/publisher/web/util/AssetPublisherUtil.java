@@ -1740,11 +1740,13 @@ public class AssetPublisherUtil {
 		_portletPreferencesLocalService = portletPreferencesLocalService;
 	}
 
-	@Reference(unbind = "-")
+	/**
+	 * @deprecated As of 2.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
+		com.liferay.portal.kernel.service.SubscriptionLocalService
+			subscriptionLocalService) {
 	}
 
 	@Reference(unbind = "-")
@@ -2071,7 +2073,6 @@ public class AssetPublisherUtil {
 	private static LayoutLocalService _layoutLocalService;
 	private static PortletPreferencesLocalService
 		_portletPreferencesLocalService;
-	private static SubscriptionLocalService _subscriptionLocalService;
 
 	private static final Accessor<AssetEntry, String> _titleAccessor =
 		new Accessor<AssetEntry, String>() {
@@ -2097,5 +2098,8 @@ public class AssetPublisherUtil {
 
 	private final List<AssetEntryQueryProcessor> _assetEntryQueryProcessors =
 		new CopyOnWriteArrayList<>();
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

@@ -7,6 +7,6 @@ create table Contacts_Entry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	fullName VARCHAR(75) null,
-	emailAddress VARCHAR(75) null,
+	emailAddress VARCHAR(254) null,
 	comments STRING null
 );

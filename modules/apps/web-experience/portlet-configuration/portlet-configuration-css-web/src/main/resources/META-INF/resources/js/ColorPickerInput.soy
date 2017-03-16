@@ -1,0 +1,35 @@
+{namespace ColorPickerInput}
+
+/**
+ * Prints the color picker input.
+ *
+ * @param id
+ * @param label
+ * @param? name
+ * @param? color
+ * @param? wrapperCssClass
+ */
+{template .render}
+	<div class="form-group {$wrapperCssClass ? $wrapperCssClass : ''}">
+		<label>
+			{$label}
+		</label>
+
+		{let $inputAttributes kind="attributes"}
+			class="form-control"
+			id="{$id}"
+			type="text"
+
+			{if $name}
+				name="{$name}"
+			{/if}
+
+			{if $color}
+				style="background-color: {$color};"
+				value="{$color}"
+			{/if}
+		{/let}
+
+		<input {$inputAttributes}></input>
+	</div>
+{/template}

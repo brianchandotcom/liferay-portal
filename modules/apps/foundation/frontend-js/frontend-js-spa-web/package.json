@@ -3,7 +3,7 @@
 		"metal": "^2.4.7",
 		"metal-dom": "^2.4.7",
 		"metal-uri": "^2.0.2",
-		"senna": "^2.1.4"
+		"senna": "^2.1.5"
 	},
 	"devDependencies": {
 		"liferay-module-config-generator": "^1.2.1",

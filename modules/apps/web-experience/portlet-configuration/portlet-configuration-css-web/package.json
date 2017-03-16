@@ -1,0 +1,11 @@
+{
+	"dependencies": {
+		"metal-components": "1.0.0-rc.19"
+	},
+	"devDependencies": {
+		"liferay-module-config-generator": "^1.2.1",
+		"metal-cli": "^2.0.0"
+	},
+	"name": "portlet-configuration-css-web",
+	"version": "2.0.8"
+}

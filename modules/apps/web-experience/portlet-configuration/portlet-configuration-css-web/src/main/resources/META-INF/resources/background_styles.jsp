@@ -16,4 +16,17 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:input name="backgroundColor" value="<%= portletConfigurationCSSPortletDisplayContext.getBackgroundColor() %>" />
+<%
+Map<String, Object> context = new HashMap<>();
+
+context.put("color", portletConfigurationCSSPortletDisplayContext.getBackgroundColor());
+context.put("id", renderResponse.getNamespace() + "backgroundColor");
+context.put("label", LanguageUtil.get(request, "background-color"));
+context.put("name", renderResponse.getNamespace() + "backgroundColor");
+%>
+
+<soy:template-renderer
+	context="<%= context %>"
+	module="portlet-configuration-css-web/js/ColorPickerInput.es"
+	templateNamespace="ColorPickerInput.render"
+/>

@@ -26,6 +26,9 @@
 	<suppress checks="Indentation" files="portal-impl/test/integration/com/liferay/portal/xmlrpc/XmlRpcParserTest\.java" />
 	<suppress checks="Indentation" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
 	<suppress checks="Indentation" files="portal-kernel/src/com/liferay/portal/kernel/io/BigEndianCodec\.java" />
+	<suppress checks="JSONNaming" files="portal-impl/src/com/liferay/portal/action/JSONServiceAction\.java" />
+	<suppress checks="JSONNaming" files="portal-kernel/src/com/liferay/portal/kernel/backgroundtask/display/BaseBackgroundTaskDisplay\.java" />
+	<suppress checks="JSONNaming" files="util-java/src/com/liferay/util/Autocomplete\.java" />
 	<suppress checks="MethodName" files="portal-impl/src/com/liferay/portal/events/EventsProcessorUtil\.java" />
 	<suppress checks="MethodName" files="portal-impl/src/com/liferay/portal/template/AbstractTemplate\.java" />
 	<suppress checks="MethodName" files="portal-impl/src/com/liferay/portal/util/HttpImpl\.java" />

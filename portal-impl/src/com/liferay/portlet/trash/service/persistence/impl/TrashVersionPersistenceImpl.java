@@ -1858,7 +1858,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		query.append(_SQL_SELECT_TRASHVERSION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -1875,6 +1875,11 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (TrashVersion trashVersion : (List<TrashVersion>)q.list()) {
 				map.put(trashVersion.getPrimaryKeyObj(), trashVersion);

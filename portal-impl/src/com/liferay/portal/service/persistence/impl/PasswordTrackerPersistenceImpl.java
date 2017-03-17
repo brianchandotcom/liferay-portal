@@ -1022,7 +1022,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		query.append(_SQL_SELECT_PASSWORDTRACKER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -1039,6 +1039,11 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (PasswordTracker passwordTracker : (List<PasswordTracker>)q.list()) {
 				map.put(passwordTracker.getPrimaryKeyObj(), passwordTracker);

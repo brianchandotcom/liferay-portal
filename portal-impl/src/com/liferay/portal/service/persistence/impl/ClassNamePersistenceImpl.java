@@ -746,7 +746,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		query.append(_SQL_SELECT_CLASSNAME_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -763,6 +763,11 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (ClassName className : (List<ClassName>)q.list()) {
 				map.put(className.getPrimaryKeyObj(), className);

@@ -2174,7 +2174,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		query.append(_SQL_SELECT_RESOURCEBLOCK_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2191,6 +2191,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (ResourceBlock resourceBlock : (List<ResourceBlock>)q.list()) {
 				map.put(resourceBlock.getPrimaryKeyObj(), resourceBlock);

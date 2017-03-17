@@ -8326,7 +8326,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		query.append(_SQL_SELECT_USER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -8343,6 +8343,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (User user : (List<User>)q.list()) {
 				map.put(user.getPrimaryKeyObj(), user);

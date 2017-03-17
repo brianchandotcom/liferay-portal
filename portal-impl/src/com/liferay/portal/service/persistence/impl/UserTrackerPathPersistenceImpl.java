@@ -1035,7 +1035,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		query.append(_SQL_SELECT_USERTRACKERPATH_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -1052,6 +1052,11 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (UserTrackerPath userTrackerPath : (List<UserTrackerPath>)q.list()) {
 				map.put(userTrackerPath.getPrimaryKeyObj(), userTrackerPath);

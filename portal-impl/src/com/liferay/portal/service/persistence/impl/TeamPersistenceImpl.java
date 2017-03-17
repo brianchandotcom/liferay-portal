@@ -3158,7 +3158,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		query.append(_SQL_SELECT_TEAM_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -3175,6 +3175,11 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (Team team : (List<Team>)q.list()) {
 				map.put(team.getPrimaryKeyObj(), team);

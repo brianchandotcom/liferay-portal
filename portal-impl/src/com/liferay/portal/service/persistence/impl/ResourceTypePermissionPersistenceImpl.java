@@ -2073,7 +2073,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		query.append(_SQL_SELECT_RESOURCETYPEPERMISSION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2090,6 +2090,11 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (ResourceTypePermission resourceTypePermission : (List<ResourceTypePermission>)q.list()) {
 				map.put(resourceTypePermission.getPrimaryKeyObj(),

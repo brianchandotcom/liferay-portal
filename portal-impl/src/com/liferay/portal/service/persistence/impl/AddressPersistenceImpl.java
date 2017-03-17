@@ -5271,7 +5271,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		query.append(_SQL_SELECT_ADDRESS_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -5288,6 +5288,11 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (Address address : (List<Address>)q.list()) {
 				map.put(address.getPrimaryKeyObj(), address);

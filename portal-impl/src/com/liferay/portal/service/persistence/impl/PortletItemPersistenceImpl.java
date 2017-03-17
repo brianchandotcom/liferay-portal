@@ -2158,7 +2158,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		query.append(_SQL_SELECT_PORTLETITEM_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2175,6 +2175,11 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (PortletItem portletItem : (List<PortletItem>)q.list()) {
 				map.put(portletItem.getPrimaryKeyObj(), portletItem);

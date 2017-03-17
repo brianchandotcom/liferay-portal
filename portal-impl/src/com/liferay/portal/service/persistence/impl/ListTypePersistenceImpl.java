@@ -1384,7 +1384,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		query.append(_SQL_SELECT_LISTTYPE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -1401,6 +1401,11 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (ListType listType : (List<ListType>)q.list()) {
 				map.put(listType.getPrimaryKeyObj(), listType);

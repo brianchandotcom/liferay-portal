@@ -924,21 +924,15 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				return map;
 			}
 
-			<#if stringUtil.equals(entity.PKClassName, "String")>
-				StringBundler query = new StringBundler(uncachedPrimaryKeys.size() * 4 + 1);
-			<#else>
-				StringBundler query = new StringBundler(uncachedPrimaryKeys.size() * 2 + 1);
-			</#if>
+			StringBundler query = new StringBundler(uncachedPrimaryKeys.size() * 2 + 1);
 
 			query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE_PKS_IN);
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				<#if stringUtil.equals(entity.PKClassName, "String")>
-					query.append(StringPool.APOSTROPHE);
-					query.append((String)primaryKey);
-					query.append(StringPool.APOSTROPHE);
+					query.append(StringPool.QUESTION);
 				<#else>
-					query.append(String.valueOf(primaryKey));
+					query.append((${entity.PKClassName})primaryKey);
 				</#if>
 
 				query.append(StringPool.COMMA);
@@ -956,6 +950,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				session = openSession();
 
 				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				for (Serializable primaryKey : uncachedPrimaryKeys) {
+					<#if stringUtil.equals(entity.PKClassName, "String")>
+						qPos.add((String)primaryKey);
+					</#if>
+				}
 
 				for (${entity.name} ${entity.varName} : (List<${entity.name}>)q.list()) {
 					map.put(${entity.varName}.getPrimaryKeyObj(), ${entity.varName});

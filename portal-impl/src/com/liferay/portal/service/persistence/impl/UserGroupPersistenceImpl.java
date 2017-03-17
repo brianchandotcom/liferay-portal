@@ -4676,7 +4676,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		query.append(_SQL_SELECT_USERGROUP_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -4693,6 +4693,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (UserGroup userGroup : (List<UserGroup>)q.list()) {
 				map.put(userGroup.getPrimaryKeyObj(), userGroup);

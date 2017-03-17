@@ -2892,7 +2892,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		query.append(_SQL_SELECT_REPOSITORY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2909,6 +2909,11 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (Repository repository : (List<Repository>)q.list()) {
 				map.put(repository.getPrimaryKeyObj(), repository);

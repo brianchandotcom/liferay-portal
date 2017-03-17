@@ -3693,7 +3693,7 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 		query.append(_SQL_SELECT_GADGET_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -3710,6 +3710,11 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (Gadget gadget : (List<Gadget>)q.list()) {
 				map.put(gadget.getPrimaryKeyObj(), gadget);

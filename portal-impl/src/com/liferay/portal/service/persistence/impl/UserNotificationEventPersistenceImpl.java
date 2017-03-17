@@ -9152,7 +9152,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		query.append(_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -9169,6 +9169,11 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (UserNotificationEvent userNotificationEvent : (List<UserNotificationEvent>)q.list()) {
 				map.put(userNotificationEvent.getPrimaryKeyObj(),

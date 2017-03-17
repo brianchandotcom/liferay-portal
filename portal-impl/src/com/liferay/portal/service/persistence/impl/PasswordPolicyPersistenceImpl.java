@@ -4040,7 +4040,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		query.append(_SQL_SELECT_PASSWORDPOLICY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -4057,6 +4057,11 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (PasswordPolicy passwordPolicy : (List<PasswordPolicy>)q.list()) {
 				map.put(passwordPolicy.getPrimaryKeyObj(), passwordPolicy);

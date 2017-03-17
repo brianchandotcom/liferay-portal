@@ -1332,7 +1332,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		query.append(_SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}
@@ -1349,6 +1349,11 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+			}
 
 			for (AnnouncementsFlag announcementsFlag : (List<AnnouncementsFlag>)q.list()) {
 				map.put(announcementsFlag.getPrimaryKeyObj(), announcementsFlag);

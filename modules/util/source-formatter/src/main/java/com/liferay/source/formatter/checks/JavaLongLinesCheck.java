@@ -61,7 +61,8 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 				if (line.startsWith("import ") || line.startsWith("package ") ||
 					line.matches("\\s*\\*.*") ||
 					(fileName.endsWith("Table.java") &&
-					 line.contains("final String TABLE_"))) {
+					 (line.contains("final String TABLE_") ||
+					  line.contains("\"create index ")))) {
 
 					continue;
 				}

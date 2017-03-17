@@ -153,9 +153,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectDynamicdatalistCP" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="RejectDynamicdatalistCP" priority="4">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />
 		<var name="ddlRecordFieldData" value="Record Text" />

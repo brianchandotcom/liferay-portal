@@ -334,9 +334,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolder" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddFolder" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>

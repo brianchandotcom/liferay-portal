@@ -196,9 +196,7 @@
 		</execute>
 	</command>
 
-	<command description="Ensure that the super admin can add a Blank Site" name="AddSite" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command description="Ensure that the super admin can add a Blank Site" name="AddSite" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

@@ -360,9 +360,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRegular" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddRegular" priority="4">
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#add">

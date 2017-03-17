@@ -27,9 +27,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddDocument" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddDocument" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -52,9 +50,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolder" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddFolder" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

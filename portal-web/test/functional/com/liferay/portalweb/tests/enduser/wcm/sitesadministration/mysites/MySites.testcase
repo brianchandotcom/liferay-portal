@@ -69,9 +69,7 @@
 		</execute>
 	</command>
 
-	<command name="JoinSiteOpen" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="JoinSiteOpen" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

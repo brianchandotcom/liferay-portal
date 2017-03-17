@@ -39,9 +39,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddEntry" priority="4">
 		<execute macro="Microblogs#updateStatus">
 			<var name="entryContent" value="Microblog Entry Content" />
 		</execute>

@@ -93,9 +93,7 @@
 		</for>
 	</command>
 
-	<command name="AddBlogsEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddBlogsEntry" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -116,9 +114,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryComment" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddBlogsEntryComment" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>

@@ -24,9 +24,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddPageTemplate" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddPageTemplate" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Page Templates" />
 		</execute>

@@ -25,9 +25,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddBookmark" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddBookmark" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -102,9 +100,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolder" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddFolder" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

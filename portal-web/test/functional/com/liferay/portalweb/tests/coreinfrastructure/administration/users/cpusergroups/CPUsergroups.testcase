@@ -66,9 +66,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroup" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddUserGroup" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="User Groups" />
 		</execute>

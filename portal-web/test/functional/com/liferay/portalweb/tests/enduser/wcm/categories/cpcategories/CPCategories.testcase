@@ -101,9 +101,7 @@
 		</execute>
 	</command>
 
-	<command description="Ensure that a user can add a category." name="AddCategory" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command description="Ensure that a user can add a category." name="AddCategory" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -392,9 +390,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSubcategory" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddSubcategory" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -473,9 +469,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabulary" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddVocabulary" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

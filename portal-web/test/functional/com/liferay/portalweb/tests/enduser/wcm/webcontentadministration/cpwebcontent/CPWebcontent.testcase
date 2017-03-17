@@ -634,9 +634,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContent" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddWebContent" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

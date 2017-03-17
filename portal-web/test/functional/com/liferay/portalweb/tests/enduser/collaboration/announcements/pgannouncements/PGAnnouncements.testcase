@@ -41,8 +41,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddAnnouncementsEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
+	<command name="AddAnnouncementsEntry" priority="4">
 		<property name="test.name.skip.portal.instance" value="PGAnnouncements#AddAnnouncementsEntry" />
 
 		<execute macro="Navigator#gotoPage">

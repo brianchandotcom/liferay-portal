@@ -150,9 +150,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiNode" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddWikiNode" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

@@ -81,6 +81,8 @@
 				<setup-sdk />
 
 				<gradle-execute dir="${project.dir}/modules" task="clean">
+					<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
+					<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 					<arg value="-Dbuild.profile=${build.profile}" />
 					<arg value="-Dclean.node.modules=${clean.node.modules}" />
 				</gradle-execute>
@@ -315,6 +317,8 @@
 
 				<gradle-execute dir="${project.dir}/modules" task="deploy">
 					<arg value="--parallel" />
+					<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
+					<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 					<arg value="-Dbuild.profile=${build.profile}" />
 					<env key="WAS_HOME" value="${app.server.websphere.dir}" />
 				</gradle-execute>
@@ -322,6 +326,8 @@
 			<else>
 				<gradle-execute dir="${project.dir}/modules/core" task="deploy">
 					<arg value="--parallel" />
+					<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
+					<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 					<arg value="-Dbuild.profile=${build.profile}" />
 				</gradle-execute>
 
@@ -334,6 +340,8 @@
 					<then>
 						<gradle-execute dir="${project.dir}/modules" task="deployTool">
 							<arg value="--parallel" />
+							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
+							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 							<arg value="-Dbuild.profile=${build.profile}" />
 							<arg value="deployAppServerLib" />
 							<arg value="deployAppServerPortalFile" />
@@ -343,6 +351,8 @@
 					<else>
 						<gradle-execute dir="${project.dir}/modules" task="deployTool">
 							<arg value="--parallel" />
+							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
+							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 							<arg value="-Dbuild.profile=${build.profile}" />
 							<arg value="deployAppServerPortalFile" />
 							<arg value="deployConfigs" />
@@ -360,11 +370,15 @@
 					<then>
 						<gradle-execute dir="${project.dir}/modules" task="compileJSP">
 							<arg value="--parallel" />
+							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
+							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 							<arg value="-Dbuild.profile=${build.profile}" />
 						</gradle-execute>
 					</then>
 					<else>
 						<gradle-execute dir="${project.dir}/modules" task="compileJSP">
+							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
+							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 							<arg value="-Dbuild.profile=${build.profile}" />
 						</gradle-execute>
 					</else>

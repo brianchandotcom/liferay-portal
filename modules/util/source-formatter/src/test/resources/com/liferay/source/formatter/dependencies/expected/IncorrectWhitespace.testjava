@@ -63,6 +63,9 @@ public class IncorrectWhitespace {
 	 */
 	public void method2() {
 		String s1 = "test";
+
+		// Comment
+
 		String s2 = "hello ,world";
 		String s3 = "hello\" ,world";
 		String s4 = "hello\\\" ,world";
@@ -118,11 +121,11 @@ public class IncorrectWhitespace {
 			newList.add(s);
 		}
 
+		String test = "Hello World";
+
 		for (String s : list2) {
 			newList.add(s);
 		}
-
-		String test = "Hello World";
 
 		for (String s : StringUtil.split(test, ':')) {
 			newList.add(s);

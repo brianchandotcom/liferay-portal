@@ -49,10 +49,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
 
@@ -313,14 +313,6 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletSession portletSession = renderRequest.getPortletSession();
-
-		String currentTab = ParamUtil.getString(
-			renderRequest, "currentTab",
-			GetterUtil.getString(portletSession.getAttribute("currentTab")));
-
-		portletSession.setAttribute("currentTab", currentTab);
-
 		long recordSetId = ParamUtil.getLong(renderRequest, "recordSetId");
 
 		DDMForm ddmForm = createSettingsDDMForm(recordSetId, themeDisplay);
@@ -355,6 +347,13 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 				_ddmFormValuesMerger, _ddmStructureLocalService,
 				_ddmStructureService, _jsonFactory, _storageEngine,
 				_workflowEngineManager);
+
+		String currentTab = SessionParamUtil.getString(
+			renderRequest, "currentTab");
+
+		PortletSession portletSession = renderRequest.getPortletSession();
+
+		portletSession.setAttribute("currentTab", currentTab);
 
 		if (currentTab.equals("field-library")) {
 			DDLFormAdminFieldLibraryDisplayContext

@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.internal.exportimport.data.handler;
 
+import com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -26,7 +27,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
-import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.DLProcessorThreadLocal;
 import com.liferay.dynamic.data.mapping.exportimport.content.processor.DDMFormValuesExportImportContentProcessor;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
@@ -43,6 +43,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -76,7 +78,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -190,6 +195,18 @@ public class FileEntryStagedModelDataHandler
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, DLPluggableContentDataHandler.class,
+			"(model.class.name=" + FileEntry.class.getName() + ")");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
+	}
+
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, FileEntry fileEntry)
@@ -270,12 +287,11 @@ public class FileEntryStagedModelDataHandler
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(
-				_DL_PORTLET_DATA_HANDLER_NAMESPACE,
-				"previews-and-thumbnails")) {
+		for (DLPluggableContentDataHandler dlPluggableContentDataHandler :
+				_serviceTrackerList) {
 
-			DLProcessorRegistryUtil.exportGeneratedFiles(
-				portletDataContext, fileEntry, fileEntryElement);
+			dlPluggableContentDataHandler.exportContent(
+				portletDataContext, fileEntryElement, fileEntry);
 		}
 
 		exportMetaData(portletDataContext, fileEntryElement, fileEntry);
@@ -561,12 +577,12 @@ public class FileEntryStagedModelDataHandler
 					fileEntry.getSize(), serviceContext);
 			}
 
-			if (portletDataContext.getBooleanParameter(
-					"document_library", "previews-and-thumbnails")) {
+			for (DLPluggableContentDataHandler dlPluggableContentDataHandler :
+					_serviceTrackerList) {
 
-				DLProcessorRegistryUtil.importGeneratedFiles(
-					portletDataContext, fileEntry, importedFileEntry,
-					fileEntryElement);
+				dlPluggableContentDataHandler.importContent(
+					portletDataContext, fileEntryElement, fileEntry,
+					importedFileEntry);
 			}
 
 			portletDataContext.importClassedModel(
@@ -895,12 +911,6 @@ public class FileEntryStagedModelDataHandler
 		}
 	}
 
-	/**
-	 * @see com.liferay.document.library.web.lar.DLPortletDataHandler#NAMESPACE
-	 */
-	private static final String _DL_PORTLET_DATA_HANDLER_NAMESPACE =
-		"document_library";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntryStagedModelDataHandler.class);
 
@@ -920,6 +930,9 @@ public class FileEntryStagedModelDataHandler
 	private Portal _portal;
 
 	private RepositoryLocalService _repositoryLocalService;
+	private ServiceTrackerList
+		<DLPluggableContentDataHandler, DLPluggableContentDataHandler>
+			_serviceTrackerList;
 	private StorageEngine _storageEngine;
 
 }

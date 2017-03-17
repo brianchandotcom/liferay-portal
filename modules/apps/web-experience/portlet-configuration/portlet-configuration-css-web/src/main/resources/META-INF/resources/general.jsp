@@ -16,10 +16,24 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:input name="useCustomTitle" type="toggle-switch" value="<%= portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>" />
+<%
+Map<String, Object> contextUseForAllTitle = new HashMap<>();
+
+contextUseForAllTitle.put("checked", portletConfigurationCSSPortletDisplayContext.isUseCustomTitle());
+contextUseForAllTitle.put("disableOnChecked", false);
+contextUseForAllTitle.put("label", LanguageUtil.get(request, "use-custom-title"));
+contextUseForAllTitle.put("name", renderResponse.getNamespace() + "useCustomTitle");
+contextUseForAllTitle.put("inputSelector", ".custom-title");
+%>
+
+<soy:template-renderer
+	context="<%= contextUseForAllTitle %>"
+	module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
+	templateNamespace="ToggleDisableInputs.render"
+/>
 
 <aui:field-wrapper cssClass="lfr-input-text-container">
-	<liferay-ui:input-localized defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="customTitle" xml="<%= portletConfigurationCSSPortletDisplayContext.getCustomTitleXML() %>" />
+	<liferay-ui:input-localized cssClass="custom-title" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" disabled="<%= !portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>" name="customTitle" xml="<%= portletConfigurationCSSPortletDisplayContext.getCustomTitleXML() %>" />
 </aui:field-wrapper>
 
 <aui:select label="link-portlet-urls-to-page" name="linkToLayoutUuid">
@@ -55,7 +69,3 @@
 <span class="alert alert-info form-hint hide" id="border-note">
 	<liferay-ui:message key="this-change-will-only-be-shown-after-you-refresh-the-page" />
 </span>
-
-<aui:script>
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useCustomTitle', '<portlet:namespace />customTitle', <%= !portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>);
-</aui:script>

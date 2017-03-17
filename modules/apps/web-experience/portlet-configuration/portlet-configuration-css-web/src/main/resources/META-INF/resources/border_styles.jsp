@@ -19,7 +19,20 @@
 <aui:row>
 	<aui:col cssClass="lfr-border-width use-for-all-column" width="<%= 33 %>">
 		<aui:fieldset label="border-width">
-			<aui:input checked="checked" cssClass="lfr-use-for-all" label="same-for-all" name="useForAllWidth" type="toggle-switch" value='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' />
+			<%
+			Map<String, Object> contextUseForAllWidth = new HashMap<>();
+
+			contextUseForAllWidth.put("checked", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth"));
+			contextUseForAllWidth.put("label", LanguageUtil.get(request, "same-for-all"));
+			contextUseForAllWidth.put("name", renderResponse.getNamespace() + "useForAllWidth");
+			contextUseForAllWidth.put("inputSelector", ".same-border-width");
+			%>
+
+			<soy:template-renderer
+				context="<%= contextUseForAllWidth %>"
+				module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
+				templateNamespace="ToggleDisableInputs.render"
+			/>
 
 			<span class="field-row">
 				<aui:input inlineField="<%= true %>" label="top" name="borderWidthTop" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("top", "value") %>' />
@@ -31,27 +44,27 @@
 				</aui:select>
 			</span>
 			<span class="field-row">
-				<aui:input inlineField="<%= true %>" label="right" name="borderWidthRight" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("right", "value") %>' />
+				<aui:input cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="right" name="borderWidthRight" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("right", "value") %>' />
 
-				<aui:select inlineField="<%= true %>" label="" name="borderWidthRightUnit" title="right-border-unit">
+				<aui:select cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="" name="borderWidthRightUnit" title="right-border-unit">
 					<aui:option label="%" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("right", "unit"), "%") %>' />
 					<aui:option label="px" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("right", "unit"), "px") %>' />
 					<aui:option label="em" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("right", "unit"), "em") %>' />
 				</aui:select>
 			</span>
 			<span class="field-row">
-				<aui:input inlineField="<%= true %>" label="bottom" name="borderWidthBottom" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("bottom", "value") %>' />
+				<aui:input cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="bottom" name="borderWidthBottom" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("bottom", "value") %>' />
 
-				<aui:select inlineField="<%= true %>" label="" name="borderWidthBottomUnit" title="bottom-border-unit">
+				<aui:select cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="" name="borderWidthBottomUnit" title="bottom-border-unit">
 					<aui:option label="%" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("bottom", "unit"), "%") %>' />
 					<aui:option label="px" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("bottom", "unit"), "px") %>' />
 					<aui:option label="em" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("bottom", "unit"), "em") %>' />
 				</aui:select>
 			</span>
 			<span class="field-row">
-				<aui:input inlineField="<%= true %>" label="left" name="borderWidthLeft" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("left", "value") %>' />
+				<aui:input cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="left" name="borderWidthLeft" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("left", "value") %>' />
 
-				<aui:select inlineField="<%= true %>" label="" name="borderWidthLeftUnit" title="left-border-unit">
+				<aui:select cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="" name="borderWidthLeftUnit" title="left-border-unit">
 					<aui:option label="%" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("left", "unit"), "%") %>' />
 					<aui:option label="px" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("left", "unit"), "px") %>' />
 					<aui:option label="em" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("left", "unit"), "em") %>' />
@@ -62,7 +75,20 @@
 
 	<aui:col cssClass="lfr-border-style" width="<%= 33 %>">
 		<aui:fieldset label="border-style">
-			<aui:input checked="checked" cssClass="lfr-use-for-all use-for-all-column" label="same-for-all" name="useForAllStyle" type="toggle-switch" value='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderStyle") %>' />
+			<%
+			Map<String, Object> contextUseForAllStyle = new HashMap<>();
+
+			contextUseForAllStyle.put("checked", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderStyle"));
+			contextUseForAllStyle.put("label", LanguageUtil.get(request, "same-for-all"));
+			contextUseForAllStyle.put("name", renderResponse.getNamespace() + "useForAllStyle");
+			contextUseForAllStyle.put("inputSelector", ".same-border-style");
+			%>
+
+			<soy:template-renderer
+				context="<%= contextUseForAllStyle %>"
+				module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
+				templateNamespace="ToggleDisableInputs.render"
+			/>
 
 			<aui:select label="top" name="borderStyleTop" showEmptyOption="<%= true %>" wrapperCssClass="field-row">
 				<aui:option label="dashed" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("top", "borderStyle"), "dashed") %>' />
@@ -76,7 +102,7 @@
 				<aui:option label="solid" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("top", "borderStyle"), "solid") %>' />
 			</aui:select>
 
-			<aui:select label="right" name="borderStyleRight" showEmptyOption="<%= true %>" wrapperCssClass="field-row">
+			<aui:select cssClass="same-border-style" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderStyle") %>' label="right" name="borderStyleRight" showEmptyOption="<%= true %>" wrapperCssClass="field-row">
 				<aui:option label="dashed" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("right", "borderStyle"), "dashed") %>' />
 				<aui:option label="double" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("right", "borderStyle"), "double") %>' />
 				<aui:option label="dotted" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("right", "borderStyle"), "dotted") %>' />
@@ -88,7 +114,7 @@
 				<aui:option label="solid" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("right", "borderStyle"), "solid") %>' />
 			</aui:select>
 
-			<aui:select label="bottom" name="borderStyleBottom" showEmptyOption="<%= true %>" wrapperCssClass="field-row">
+			<aui:select cssClass="same-border-style" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderStyle") %>' label="bottom" name="borderStyleBottom" showEmptyOption="<%= true %>" wrapperCssClass="field-row">
 				<aui:option label="dashed" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("bottom", "borderStyle"), "dashed") %>' />
 				<aui:option label="double" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("bottom", "borderStyle"), "double") %>' />
 				<aui:option label="dotted" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("bottom", "borderStyle"), "dotted") %>' />
@@ -100,7 +126,7 @@
 				<aui:option label="solid" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("bottom", "borderStyle"), "solid") %>' />
 			</aui:select>
 
-			<aui:select label="left" name="borderStyleLeft" showEmptyOption="<%= true %>" wrapperCssClass="field-row">
+			<aui:select cssClass="same-border-style" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderStyle") %>' label="left" name="borderStyleLeft" showEmptyOption="<%= true %>" wrapperCssClass="field-row">
 				<aui:option label="dashed" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("left", "borderStyle"), "dashed") %>' />
 				<aui:option label="double" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("left", "borderStyle"), "double") %>' />
 				<aui:option label="dotted" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("left", "borderStyle"), "dotted") %>' />
@@ -116,7 +142,20 @@
 
 	<aui:col cssClass="lfr-border-color" last="<%= true %>" width="<%= 33 %>">
 		<aui:fieldset label="border-color">
-			<aui:input checked="checked" cssClass="lfr-use-for-all use-for-all-column" label="same-for-all" name="useForAllColor" type="toggle-switch" value='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor") %>' />
+			<%
+			Map<String, Object> contextUseForAllColor = new HashMap<>();
+
+			contextUseForAllColor.put("checked", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
+			contextUseForAllColor.put("label", LanguageUtil.get(request, "same-for-all"));
+			contextUseForAllColor.put("name", renderResponse.getNamespace() + "useForAllColor");
+			contextUseForAllColor.put("inputSelector", ".same-border-color");
+			%>
+
+			<soy:template-renderer
+				context="<%= contextUseForAllColor %>"
+				module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
+				templateNamespace="ToggleDisableInputs.render"
+			/>
 
 			<%
 			Map<String, Object> contextBorderTop = new HashMap<>();
@@ -137,7 +176,9 @@
 			<%
 			Map<String, Object> contextBorderRight = new HashMap<>();
 
+			contextBorderRight.put("cssClass", "same-border-color");
 			contextBorderRight.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("right", "borderColor"));
+			contextBorderRight.put("disabled", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
 			contextBorderRight.put("id", renderResponse.getNamespace() + "borderColorRight");
 			contextBorderRight.put("label", LanguageUtil.get(request, "right"));
 			contextBorderRight.put("name", renderResponse.getNamespace() + "borderColorRight");
@@ -153,7 +194,9 @@
 			<%
 			Map<String, Object> contextBorderBottom = new HashMap<>();
 
+			contextBorderBottom.put("cssClass", "same-border-color");
 			contextBorderBottom.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("bottom", "borderColor"));
+			contextBorderBottom.put("disabled", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
 			contextBorderBottom.put("id", renderResponse.getNamespace() + "borderColorBottom");
 			contextBorderBottom.put("label", LanguageUtil.get(request, "bottom"));
 			contextBorderBottom.put("name", renderResponse.getNamespace() + "borderColorBottom");
@@ -169,7 +212,9 @@
 			<%
 			Map<String, Object> contextBorderLeft = new HashMap<>();
 
+			contextBorderLeft.put("cssClass", "same-border-color");
 			contextBorderLeft.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("left", "borderColor"));
+			contextBorderLeft.put("disabled", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
 			contextBorderLeft.put("id", renderResponse.getNamespace() + "borderColorLeft");
 			contextBorderLeft.put("label", LanguageUtil.get(request, "left"));
 			contextBorderLeft.put("name", renderResponse.getNamespace() + "borderColorLeft");
@@ -184,18 +229,3 @@
 		</aui:fieldset>
 	</aui:col>
 </aui:row>
-
-<aui:script>
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllWidth', '<portlet:namespace />borderWidthRight', <%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>);
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllWidth', '<portlet:namespace />borderWidthRightUnit', <%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>);
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllWidth', '<portlet:namespace />borderWidthBottom', <%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>);
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllWidth', '<portlet:namespace />borderWidthBottomUnit', <%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>);
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllWidth', '<portlet:namespace />borderWidthLeft', <%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>);
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllWidth', '<portlet:namespace />borderWidthLeftUnit', <%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>);
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllStyle', '<portlet:namespace />borderStyleRight', <%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderStyle") %>);
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllStyle', '<portlet:namespace />borderStyleBottom', <%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderStyle") %>);
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllStyle', '<portlet:namespace />borderStyleLeft', <%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderStyle") %>);
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllColor', '<portlet:namespace />borderColorRight', <%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor") %>);
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllColor', '<portlet:namespace />borderColorBottom', <%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor") %>);
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />useForAllColor', '<portlet:namespace />borderColorLeft', <%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor") %>);
-</aui:script>

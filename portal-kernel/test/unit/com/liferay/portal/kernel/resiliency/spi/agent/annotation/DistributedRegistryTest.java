@@ -92,7 +92,6 @@ public class DistributedRegistryTest {
 
 			Assert.fail();
 		}
-
 		catch (RuntimeException re) {
 			Throwable throwable = re.getCause();
 

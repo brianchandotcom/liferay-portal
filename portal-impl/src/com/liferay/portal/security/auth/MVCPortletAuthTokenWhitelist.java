@@ -98,7 +98,6 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 				portletId, _portletInvocationWhitelistAction,
 				mvcActionCommandNames);
 		}
-
 		else if (themeDisplay.isLifecycleRender()) {
 			String namespace = PortalUtil.getPortletNamespace(portletId);
 
@@ -109,7 +108,6 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 				portletId, _portletInvocationWhitelistRender,
 				mvcRenderCommandName);
 		}
-
 		else if (themeDisplay.isLifecycleResource()) {
 			String ppid = request.getParameter("p_p_id");
 
@@ -156,7 +154,6 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 				portletId, _portletInvocationWhitelistAction,
 				mvcActionCommandNames);
 		}
-
 		else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 			String mvcRenderCommandName = liferayPortletURL.getParameter(
 				"mvcRenderCommandName");
@@ -165,7 +162,6 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 				portletId, _portletInvocationWhitelistRender,
 				mvcRenderCommandName);
 		}
-
 		else if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
 			String mvcResourceCommandName = liferayPortletURL.getResourceID();
 

@@ -774,7 +774,6 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			return ListUtil.unique(groups);
 		}
-
 		catch (PortalException pe) {
 			Class<?> clazz = pe.getClass();
 

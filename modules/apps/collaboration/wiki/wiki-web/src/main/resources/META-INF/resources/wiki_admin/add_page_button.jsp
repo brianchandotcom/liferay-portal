@@ -32,7 +32,6 @@ List<Menu> menus = wikiPortletToolbarContributor.getPortletTitleMenus(renderRequ
 
 		for (URLMenuItem urlMenuItem : urlMenuItems) {
 			addMenuItems.add(new AddMenuItem(urlMenuItem.getLabel(), urlMenuItem.getURL()));
-
 		}
 	%>
 

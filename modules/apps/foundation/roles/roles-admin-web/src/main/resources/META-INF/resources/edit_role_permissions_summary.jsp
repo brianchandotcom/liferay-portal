@@ -114,8 +114,11 @@ for (int i = 0; i < results.size(); i++) {
 	PermissionDisplay permissionDisplay = (PermissionDisplay)results.get(i);
 
 	Permission permission = permissionDisplay.getPermission();
+
 	Resource resource = permissionDisplay.getResource();
+
 	String curResource = resource.getName();
+
 	String curPortletName = permissionDisplay.getPortletName();
 	String curPortletLabel = permissionDisplay.getPortletLabel();
 	String curModelLabel = permissionDisplay.getModelLabel();

@@ -79,6 +79,7 @@
 
 				for (int i = 0; i < users.size(); i++) {
 					User curUser = users.get(i);
+
 					String userName = HtmlUtil.escape(curUser.getFullName());
 				%>
 

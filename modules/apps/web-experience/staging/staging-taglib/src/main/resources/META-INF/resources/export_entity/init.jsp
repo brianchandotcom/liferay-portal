@@ -28,6 +28,7 @@ long classPK = GetterUtil.getLong(request.getAttribute("liferay-staging:export-e
 
 if (Validator.isNotNull(classNameId)) {
 	ClassName classNameObject = ClassNameLocalServiceUtil.getClassName(classNameId);
+
 	className = classNameObject.getClassName();
 }
 %>

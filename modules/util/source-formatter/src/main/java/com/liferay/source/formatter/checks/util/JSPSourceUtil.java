@@ -43,7 +43,7 @@ public class JSPSourceUtil {
 	}
 
 	private static final Pattern _javaEndTagPattern = Pattern.compile(
-		"[\n\t]%>\n");
+		"[\n\t]%>(\n|\\Z)");
 	private static final Pattern _javaStartTagPattern = Pattern.compile(
 		"[\n\t]<%\\!?\n");
 

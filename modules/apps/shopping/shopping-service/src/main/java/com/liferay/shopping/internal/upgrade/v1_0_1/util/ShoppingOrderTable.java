@@ -1,0 +1,1 @@
+package com.liferay.shopping.internal.upgrade.v1_0_1.util;

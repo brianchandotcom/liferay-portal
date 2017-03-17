@@ -19,13 +19,14 @@
 <aui:row>
 	<aui:col cssClass="lfr-padding use-for-all-column" width="<%= 50 %>">
 		<aui:fieldset label="padding">
+
 			<%
 			Map<String, Object> contextUseForAllPadding = new HashMap<>();
 
 			contextUseForAllPadding.put("checked", portletConfigurationCSSPortletDisplayContext.isSpacingSameForAll("padding"));
+			contextUseForAllPadding.put("inputSelector", ".same-padding");
 			contextUseForAllPadding.put("label", LanguageUtil.get(request, "same-for-all"));
 			contextUseForAllPadding.put("name", renderResponse.getNamespace() + "useForAllPadding");
-			contextUseForAllPadding.put("inputSelector", ".same-padding");
 			%>
 
 			<soy:template-renderer
@@ -75,13 +76,14 @@
 
 	<aui:col cssClass="lfr-margin use-for-all-column" last="<%= true %>" width="<%= 50 %>">
 		<aui:fieldset label="margin">
+
 			<%
 			Map<String, Object> contextUseForAllMargin = new HashMap<>();
 
 			contextUseForAllMargin.put("checked", portletConfigurationCSSPortletDisplayContext.isSpacingSameForAll("margin"));
+			contextUseForAllMargin.put("inputSelector", ".same-margin");
 			contextUseForAllMargin.put("label", LanguageUtil.get(request, "same-for-all"));
 			contextUseForAllMargin.put("name", renderResponse.getNamespace() + "useForAllMargin");
-			contextUseForAllMargin.put("inputSelector", ".same-margin");
 			%>
 
 			<soy:template-renderer

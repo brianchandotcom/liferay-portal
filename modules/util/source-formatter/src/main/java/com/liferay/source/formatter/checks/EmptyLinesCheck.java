@@ -237,6 +237,32 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				continue outerLoop;
 			}
 
+			matcher = _redundantEmptyLinePattern3.matcher(content);
+
+			while (matcher.find()) {
+				if (!isJavaSource(content, matcher.start())) {
+					continue;
+				}
+
+				content = StringUtil.replaceFirst(
+					content, "\n", StringPool.BLANK, matcher.start() + 1);
+
+				continue outerLoop;
+			}
+
+			matcher = _redundantEmptyLinePattern4.matcher(content);
+
+			while (matcher.find()) {
+				if (!isJavaSource(content, matcher.start())) {
+					continue;
+				}
+
+				content = StringUtil.replaceFirst(
+					content, "\n", StringPool.BLANK, matcher.start());
+
+				continue outerLoop;
+			}
+
 			break;
 		}
 
@@ -261,6 +287,10 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		"\n\npublic ((abstract|static) )*(class|enum|interface) ");
 	private final Pattern _redundantEmptyLinePattern2 = Pattern.compile(
 		" \\* @author .*\n \\*\\/\n\n");
+	private final Pattern _redundantEmptyLinePattern3 = Pattern.compile(
+			"[\n\t](catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
+	private final Pattern _redundantEmptyLinePattern4 = Pattern.compile(
+		"\\{\n\n\t*\\}");
 	private final Pattern _setVariablePattern = Pattern.compile(
 		"\t[A-Z]\\w+ (\\w+) =\\s+((?!\\{\n).)*?;\n", Pattern.DOTALL);
 

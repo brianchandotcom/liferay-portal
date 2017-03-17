@@ -353,27 +353,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		String fileName) {
 
 		while (true) {
-			Matcher matcher = _incorrectLineBreakPattern1.matcher(content);
-
-			if (matcher.find()) {
-				content = StringUtil.replaceFirst(
-					content, StringPool.NEW_LINE, StringPool.BLANK,
-					matcher.start());
-
-				continue;
-			}
-
-			matcher = _incorrectLineBreakPattern2.matcher(content);
-
-			if (matcher.find()) {
-				content = StringUtil.replaceFirst(
-					content, StringPool.NEW_LINE, StringPool.BLANK,
-					matcher.start());
-
-				continue;
-			}
-
-			matcher = _incorrectLineBreakPattern4.matcher(content);
+			Matcher matcher = _incorrectLineBreakPattern4.matcher(content);
 
 			while (matcher.find()) {
 				String matchingLine = matcher.group(2);
@@ -526,10 +506,6 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		return matcher.replaceAll("$1$2$3");
 	}
 
-	private final Pattern _incorrectLineBreakPattern1 = Pattern.compile(
-		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
-	private final Pattern _incorrectLineBreakPattern2 = Pattern.compile(
-		"\\{\n\n\t*\\}");
 	private final Pattern _incorrectLineBreakPattern3 = Pattern.compile(
 		", (new .*\\(.*\\) \\{)\n");
 	private final Pattern _incorrectLineBreakPattern4 = Pattern.compile(

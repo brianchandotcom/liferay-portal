@@ -38,11 +38,13 @@ public class ContactsServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.contacts.service", "1.0.0", "2.0.1",
-			new UpgradeEntry(_userLocalService));
+			new UpgradeEntry(_userLocalService),
+			new com.liferay.contacts.internal.upgrade.v2_0_1.UpgradeEntry());
 
 		registry.register(
 			"com.liferay.contacts.service", "2.0.0", "2.0.1",
-			new DummyUpgradeStep());
+			new DummyUpgradeStep(),
+			new com.liferay.contacts.internal.upgrade.v2_0_1.UpgradeEntry());
 	}
 
 	@Reference

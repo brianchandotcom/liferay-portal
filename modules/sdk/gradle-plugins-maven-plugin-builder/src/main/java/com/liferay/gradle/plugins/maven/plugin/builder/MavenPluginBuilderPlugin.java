@@ -295,6 +295,8 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		writeMavenSettingsTask.setDescription(
 			"Writes a temporary Maven settings file to be used during " +
 				"subsequent Maven invocations.");
+		writeMavenSettingsTask.setLocalRepositoryDir(
+			new SystemPropertyCallable("maven.repo.local"));
 		writeMavenSettingsTask.setNonProxyHosts(
 			System.getProperty("http.nonProxyHosts"));
 		writeMavenSettingsTask.setProxyHost(
@@ -377,17 +379,18 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 	private static final OsgiHelper _osgiHelper = new OsgiHelper();
 
-	private static class ProxyPropertyCallable implements Callable<String> {
+	private static class ProxyPropertyCallable extends SystemPropertyCallable {
 
 		public ProxyPropertyCallable(
 			String key, WriteMavenSettingsTask writeMavenSettingsTask) {
 
-			_key = key;
+			super(key);
+
 			_writeMavenSettingsTask = writeMavenSettingsTask;
 		}
 
 		@Override
-		public String call() throws Exception {
+		protected String getSystemPropertyKey() {
 			String protocol = "https";
 
 			String repositoryUrl = _writeMavenSettingsTask.getRepositoryUrl();
@@ -397,11 +400,29 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 					0, repositoryUrl.indexOf(':'));
 			}
 
-			return System.getProperty(protocol + "." + _key);
+			return protocol + "." + super.getSystemPropertyKey();
+		}
+
+		private final WriteMavenSettingsTask _writeMavenSettingsTask;
+
+	}
+
+	private static class SystemPropertyCallable implements Callable<String> {
+
+		public SystemPropertyCallable(String key) {
+			_key = key;
+		}
+
+		@Override
+		public String call() throws Exception {
+			return System.getProperty(getSystemPropertyKey());
+		}
+
+		protected String getSystemPropertyKey() {
+			return _key;
 		}
 
 		private final String _key;
-		private final WriteMavenSettingsTask _writeMavenSettingsTask;
 
 	}
 

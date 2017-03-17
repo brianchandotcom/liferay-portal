@@ -14,6 +14,8 @@
 
 package com.liferay.layout.type.controller.link.to.page.internal.controller;
 
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.layout.type.controller.link.to.page.internal.constants.LinkToPageLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -58,6 +60,8 @@ public class LinkToPageLayoutTypeController
 			Layout layout)
 		throws Exception {
 
+		request.setAttribute(
+			LinkToPageLayoutTypeControllerWebKeys.ITEM_SELECTOR, _itemSelector);
 		request.setAttribute(WebKeys.SEL_LAYOUT, layout);
 
 		return super.includeEditContent(request, response, layout);
@@ -114,5 +118,8 @@ public class LinkToPageLayoutTypeController
 		"${liferay:mainPath}/portal/layout?p_v_l_s_g_id=${liferay:pvlsgid}&" +
 			"groupId=${liferay:groupId}&privateLayout=${privateLayout}&" +
 				"layoutId=${linkToLayoutId}";
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

@@ -31,7 +31,10 @@ public interface OpenOfficeConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean cacheEnabled();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false", description = "openoffice-server-enabled-help",
+		required = false
+	)
 	public boolean serverEnabled();
 
 	@Meta.AD(deflt = "127.0.0.1", required = false)

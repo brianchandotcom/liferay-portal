@@ -24,11 +24,15 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.PortalOpenSearchImpl;
 import com.liferay.portal.search.web.constants.SearchPortletKeys;
+import com.liferay.portal.search.web.internal.display.context.SearchDisplayContext;
+import com.liferay.portal.search.web.internal.display.context.SearchDisplayContextFactory;
 
 import java.io.IOException;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
@@ -67,6 +71,21 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class SearchPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		SearchDisplayContext searchDisplayContext =
+			searchDisplayContextFactory.create(
+				renderRequest, renderResponse, renderRequest.getPreferences());
+
+		renderRequest.setAttribute(
+			SearchDisplayContext.class.getName(), searchDisplayContext);
+
+		super.render(renderRequest, renderResponse);
+	}
 
 	@Override
 	public void serveResource(
@@ -135,6 +154,9 @@ public class SearchPortlet extends MVCPortlet {
 
 		return xml.getBytes();
 	}
+
+	@Reference
+	protected SearchDisplayContextFactory searchDisplayContextFactory;
 
 	@Reference
 	private Portal _portal;

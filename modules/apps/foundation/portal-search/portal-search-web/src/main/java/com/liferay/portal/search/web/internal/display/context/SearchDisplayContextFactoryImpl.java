@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherMa
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -37,7 +38,7 @@ public class SearchDisplayContextFactoryImpl
 	public SearchDisplayContext create(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			PortletPreferences portletPreferences)
-		throws Exception {
+		throws PortletException {
 
 		return new SearchDisplayContext(
 			renderRequest, portletPreferences, portal, HtmlUtil.getHtml(),

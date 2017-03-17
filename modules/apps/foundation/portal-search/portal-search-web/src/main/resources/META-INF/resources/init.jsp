@@ -109,7 +109,11 @@ page import="javax.portlet.WindowState" %>
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-SearchDisplayContext searchDisplayContext = SearchDisplayContextFactoryUtil.create(renderRequest, renderResponse, portletPreferences);
+SearchDisplayContext searchDisplayContext = (SearchDisplayContext)request.getAttribute(SearchDisplayContext.class.getName());
+
+if (searchDisplayContext == null) {
+	searchDisplayContext = SearchDisplayContextFactoryUtil.create(renderRequest, renderResponse, portletPreferences);
+}
 %>
 
 <%@ include file="/init-ext.jsp" %>

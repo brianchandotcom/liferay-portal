@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.display.context;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -26,6 +27,6 @@ public interface SearchDisplayContextFactory {
 	public SearchDisplayContext create(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			PortletPreferences portletPreferences)
-		throws Exception;
+		throws PortletException;
 
 }

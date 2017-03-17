@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.util.Collections;
 
@@ -36,6 +37,11 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 		content = fixMissingEmptyLineAfterSettingVariable(content);
 
 		return new Tuple(content, Collections.emptySet());
+	}
+
+	@Override
+	protected boolean isJavaSource(String content, int pos) {
+		return JSPSourceUtil.isJavaSource(content, pos);
 	}
 
 }

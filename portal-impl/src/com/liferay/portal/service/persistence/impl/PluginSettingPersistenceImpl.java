@@ -1391,7 +1391,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		query.append(_SQL_SELECT_PLUGINSETTING_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}

@@ -961,7 +961,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		query.append(_SQL_SELECT_IMAGE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}

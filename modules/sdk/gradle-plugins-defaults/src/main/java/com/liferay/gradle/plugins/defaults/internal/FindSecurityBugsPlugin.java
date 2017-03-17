@@ -28,10 +28,12 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.Transformer;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.reporting.ReportingExtension;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.SourceSet;
@@ -177,6 +179,22 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 			});
 
+		final Transformer<File, Task> outputFileGetter =
+			new Transformer<File, Task>() {
+
+				@Override
+				public File transform(Task task) {
+					ReportingExtension reportingExtension =
+						GradleUtil.getExtension(
+							task.getProject(), ReportingExtension.class);
+
+					return new File(
+						reportingExtension.getBaseDir(),
+						task.getName() + "/reports.html");
+				}
+
+			};
+
 		javaExec.doFirst(
 			new Action<Task>() {
 
@@ -184,21 +202,41 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 				public void execute(Task task) {
 					JavaExec javaExec = (JavaExec)task;
 
-					ReportingExtension reportingExtension =
-						GradleUtil.getExtension(
-							javaExec.getProject(), ReportingExtension.class);
+					Logger logger = javaExec.getLogger();
 
-					File outputDir = new File(
-						reportingExtension.getBaseDir(), javaExec.getName());
+					File outputFile = outputFileGetter.transform(javaExec);
+
+					File outputDir = outputFile.getParentFile();
 
 					outputDir.mkdirs();
-
-					File outputFile = new File(outputDir, "reports.html");
 
 					javaExec.args(
 						"-outputFile", FileUtil.getAbsolutePath(outputFile));
 
 					javaExec.args("-pluginList", pluginClasspath.getAsPath());
+
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle(
+							"Using Find Security Bugs version " + _VERSION);
+					}
+				}
+
+			});
+
+		javaExec.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Logger logger = task.getLogger();
+
+					File outputFile = outputFileGetter.transform(task);
+
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle(
+							"Find Security Bugs report saved to {}.",
+							outputFile.getAbsolutePath());
+					}
 				}
 
 			});
@@ -316,6 +354,6 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 	 */
 	private static final String _UNZIP_JAR_TASK_NAME = "unzipJar";
 
-	private static final String _VERSION = "1.5.0.LIFERAY-PATCHED-1";
+	private static final String _VERSION = "1.5.0.LIFERAY-PATCHED-2";
 
 }

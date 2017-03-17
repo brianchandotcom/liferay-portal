@@ -2860,7 +2860,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		query.append(_SQL_SELECT_REPOSITORYENTRY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}

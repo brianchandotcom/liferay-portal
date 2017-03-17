@@ -16,8 +16,6 @@ package com.liferay.portal.tools.db.upgrade.client.util;
 
 import java.io.File;
 
-import java.nio.file.Files;
-
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,28 +53,26 @@ public class PropertiesTest {
 
 	@Test
 	public void testLoadProperties() throws Exception {
-		File propertiesFile = temporaryFolder.newFile("test.properties");
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("index.on.upgrade=false\n");
-		sb.append("upgrade.processes.master=\\\n");
-		sb.append("\t\tcom.liferay.portal.upgrade.UpgradeProcess_6_1_1\\,\\\n");
-		sb.append("\t\tcom.liferay.portal.upgrade.UpgradeProcess_6_2_0\\,\\\n");
-		sb.append("\t\tcom.liferay.portal.upgrade.UpgradeProcess_7_0_0\\,\\\n");
-		sb.append("\t\tcom.liferay.portal.upgrade.UpgradeProcess_7_0_1\\,\\\n");
-		sb.append("\t\tcom.liferay.portal.upgrade.UpgradeProcess_7_0_3\n");
-
-		String propertiesString = sb.toString();
-
-		Files.write(propertiesFile.toPath(), propertiesString.getBytes());
-
 		Properties properties = new Properties();
 
-		properties.load(propertiesFile);
+		properties.load(
+			PropertiesTest.class.getResourceAsStream(
+				"dependencies/test.properties"));
 
 		Assert.assertEquals(
 			"false", properties.getProperty("index.on.upgrade"));
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("\\\n");
+		sb.append("com.liferay.portal.upgrade.UpgradeProcess_6_1_1\\,\\\n");
+		sb.append("com.liferay.portal.upgrade.UpgradeProcess_6_2_0\\,\\\n");
+		sb.append("com.liferay.portal.upgrade.UpgradeProcess_7_0_0\\,\\\n");
+		sb.append("com.liferay.portal.upgrade.UpgradeProcess_7_0_1\\,\\\n");
+		sb.append("com.liferay.portal.upgrade.UpgradeProcess_7_0_3");
+
+		Assert.assertEquals(
+			properties.getProperty("upgrade.processes.master"), sb.toString());
 	}
 
 	@Test

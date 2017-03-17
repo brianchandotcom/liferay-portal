@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
@@ -41,35 +42,7 @@ public class Properties {
 	}
 
 	public void load(File file) throws IOException {
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(
-					new FileInputStream(file), StandardCharsets.UTF_8))) {
-
-			String name = null;
-			String line = null;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				line = line.trim();
-
-				if (line.isEmpty() || (line.charAt(0) == '#')) {
-					continue;
-				}
-
-				int index = line.indexOf("=");
-
-				String value;
-
-				if (index > 0) {
-					name = line.substring(0, index);
-					value = line.substring(index + 1, line.length());
-				}
-				else {
-					value = _properties.get(name) + "\n" + line;
-				}
-
-				_properties.put(name, value);
-			}
-		}
+		load(new FileInputStream(file));
 	}
 
 	public Set<String> propertyNames() {
@@ -94,6 +67,37 @@ public class Properties {
 				}
 
 				printWriter.println(name + "=" + value);
+			}
+		}
+	}
+
+	protected void load(InputStream inputStream) throws IOException {
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+
+			String name = null;
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				line = line.trim();
+
+				if (line.isEmpty() || (line.charAt(0) == '#')) {
+					continue;
+				}
+
+				int index = line.indexOf("=");
+
+				String value;
+
+				if (index > 0) {
+					name = line.substring(0, index);
+					value = line.substring(index + 1, line.length());
+				}
+				else {
+					value = _properties.get(name) + "\n" + line;
+				}
+
+				_properties.put(name, value);
 			}
 		}
 	}

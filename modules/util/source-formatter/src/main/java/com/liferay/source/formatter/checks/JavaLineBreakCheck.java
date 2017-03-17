@@ -353,7 +353,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		String fileName) {
 
 		while (true) {
-			Matcher matcher = _incorrectLineBreakPattern4.matcher(content);
+			Matcher matcher = _incorrectLineBreakPattern1.matcher(content);
 
 			while (matcher.find()) {
 				String matchingLine = matcher.group(2);
@@ -369,7 +369,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				}
 			}
 
-			matcher = _incorrectLineBreakPattern5.matcher(content);
+			matcher = _incorrectLineBreakPattern2.matcher(content);
 
 			while (matcher.find()) {
 				String tabs = matcher.group(2);
@@ -394,7 +394,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				}
 			}
 
-			matcher = _incorrectLineBreakPattern6.matcher(content);
+			matcher = _incorrectLineBreakPattern3.matcher(content);
 
 			if (matcher.find()) {
 				content = StringUtil.replaceFirst(
@@ -402,7 +402,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 					matcher.start());
 			}
 
-			matcher = _incorrectLineBreakPattern7.matcher(content);
+			matcher = _incorrectLineBreakPattern4.matcher(content);
 
 			while (matcher.find()) {
 				if (content.charAt(matcher.end()) != CharPool.NEW_LINE) {
@@ -435,7 +435,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			break;
 		}
 
-		Matcher matcher = _incorrectLineBreakPattern3.matcher(content);
+		Matcher matcher = _incorrectLineBreakPattern5.matcher(content);
 
 		while (matcher.find()) {
 			if (getLevel(matcher.group()) == 0) {
@@ -506,16 +506,16 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		return matcher.replaceAll("$1$2$3");
 	}
 
-	private final Pattern _incorrectLineBreakPattern3 = Pattern.compile(
-		", (new .*\\(.*\\) \\{)\n");
-	private final Pattern _incorrectLineBreakPattern4 = Pattern.compile(
+	private final Pattern _incorrectLineBreakPattern1 = Pattern.compile(
 		"\n(\t*)(.*\\) \\{)([\t ]*\\}\n)");
-	private final Pattern _incorrectLineBreakPattern5 = Pattern.compile(
+	private final Pattern _incorrectLineBreakPattern2 = Pattern.compile(
 		"\n(\t*).*\\}\n(\t*)\\);");
-	private final Pattern _incorrectLineBreakPattern6 = Pattern.compile(
+	private final Pattern _incorrectLineBreakPattern3 = Pattern.compile(
 		"\n(\t*)\\{.+(?<!\\}(,|;)?)\n");
-	private final Pattern _incorrectLineBreakPattern7 = Pattern.compile(
+	private final Pattern _incorrectLineBreakPattern4 = Pattern.compile(
 		"\n(\t+\\{)\n(.*[^;])\n\t+(\\},?)");
+	private final Pattern _incorrectLineBreakPattern5 = Pattern.compile(
+		", (new .*\\(.*\\) \\{)\n");
 	private final Pattern _incorrectMultiLineCommentPattern = Pattern.compile(
 		"(\n\t*/\\*)\n\t*(.*?)\n\t*(\\*/\n)", Pattern.DOTALL);
 	private final Pattern _lineStartingWithOpenParenthesisPattern =

@@ -408,14 +408,11 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 				mvcPath = "/error.jsp";
 			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException) {
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
 			else if (e instanceof AddressCityException ||
 					 e instanceof AddressStreetException ||
 					 e instanceof AddressZipException ||
+					 e instanceof AssetCategoryException ||
+					 e instanceof AssetTagException ||
 					 e instanceof CompanyMaxUsersException ||
 					 e instanceof ContactBirthdayException ||
 					 e instanceof ContactNameException ||

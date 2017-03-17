@@ -336,15 +336,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixUnparameterizedClassType(newContent);
 
-		Matcher matcher = _missingEmptyLinePattern.matcher(newContent);
-
-		if (matcher.find()) {
-			newContent = StringUtil.replaceFirst(
-				newContent, StringPool.NEW_LINE, StringPool.BLANK,
-				matcher.start(1));
-		}
-
-		matcher = _directiveLinePattern.matcher(newContent);
+		Matcher matcher = _directiveLinePattern.matcher(newContent);
 
 		while (matcher.find()) {
 			String directiveLine = matcher.group();
@@ -926,28 +918,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		content = sb.toString();
-
-		while (true) {
-			Matcher matcher = _incorrectEmptyLinePattern1.matcher(content);
-
-			if (matcher.find()) {
-				content = StringUtil.replaceFirst(
-					content, "\n\n", "\n", matcher.start());
-
-				continue;
-			}
-
-			matcher = _incorrectEmptyLinePattern2.matcher(content);
-
-			if (matcher.find()) {
-				content = StringUtil.replaceFirst(
-					content, "\n\n", "\n", matcher.start());
-
-				continue;
-			}
-
-			break;
-		}
 
 		if (content.endsWith("\n")) {
 			content = content.substring(0, content.length() - 1);
@@ -2132,10 +2102,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 	private final Pattern _incorrectClosingTagPattern = Pattern.compile(
 		"\n(\t*)\t((?!<\\w).)* />\n");
-	private final Pattern _incorrectEmptyLinePattern1 = Pattern.compile(
-		"[\n\t]<%\n\n(\t*)[^/\n\t]");
-	private final Pattern _incorrectEmptyLinePattern2 = Pattern.compile(
-		"([\n\t])([^/\n\t])(.*)\n\n\t*%>");
 	private Pattern _javaClassPattern = Pattern.compile(
 		"\n(private|protected|public).* class ([A-Za-z0-9]+) " +
 			"([\\s\\S]*?)\n\\}\n");
@@ -2148,8 +2114,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
-	private final Pattern _missingEmptyLinePattern = Pattern.compile(
-		"[\n\t](catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private final Pattern _multilineTagPattern = Pattern.compile(
 		"(\\s+)<[-\\w]+:[-\\w]+\n.*?(/?>)(\n|$)", Pattern.DOTALL);

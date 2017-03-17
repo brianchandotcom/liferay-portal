@@ -14,10 +14,14 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.util.Collections;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -36,6 +40,8 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 
 		content = fixMissingEmptyLineAfterSettingVariable(content);
 
+		content = _fixRedundantEmptyLines(content);
+
 		return new Tuple(content, Collections.emptySet());
 	}
 
@@ -43,5 +49,36 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 	protected boolean isJavaSource(String content, int pos) {
 		return JSPSourceUtil.isJavaSource(content, pos);
 	}
+
+	private String _fixRedundantEmptyLines(String content) {
+		while (true) {
+			Matcher matcher = _redundantEmptyLinePattern1.matcher(content);
+
+			if (matcher.find()) {
+				content = StringUtil.replaceFirst(
+					content, "\n", StringPool.BLANK, matcher.start() + 1);
+
+				continue;
+			}
+
+			matcher = _redundantEmptyLinePattern2.matcher(content);
+
+			if (matcher.find()) {
+				content = StringUtil.replaceFirst(
+					content, "\n", StringPool.BLANK, matcher.start() + 1);
+
+				continue;
+			}
+
+			break;
+		}
+
+		return content;
+	}
+
+	private final Pattern _redundantEmptyLinePattern1 = Pattern.compile(
+		"[\n\t]<%\n\n(\t*)[^/\n\t]");
+	private final Pattern _redundantEmptyLinePattern2 = Pattern.compile(
+		"[\n\t][^/\n\t].*\n\n\t*%>");
 
 }

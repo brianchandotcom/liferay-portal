@@ -1239,8 +1239,8 @@ version 1.1.3.
 ## 3.4.4 - 2017-03-16
 
 ### Fixed
-- [LPS-71264]: Use the actual directory of the Maven local repository as default
-value for the `mavenRootDir` property of `InstallCacheTask`.
+- [LPS-71264]: Use the actual directory of the Maven local repository as the
+default value for the `mavenRootDir` property of `InstallCacheTask`.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

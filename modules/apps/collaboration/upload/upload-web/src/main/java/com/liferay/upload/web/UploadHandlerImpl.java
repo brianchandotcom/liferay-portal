@@ -17,6 +17,8 @@ package com.liferay.upload.web;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadFileEntryHandler;
+import com.liferay.upload.UploadFileEntryResponseCustomizer;
 import com.liferay.upload.UploadHandler;
 
 import java.io.IOException;
@@ -45,6 +48,8 @@ import java.io.InputStream;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -122,6 +127,29 @@ public class UploadHandlerImpl implements UploadHandler {
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, UploadFileEntryResponseCustomizer.class, "source");
+	}
+
+	private void _customizeFileJSONResponse(
+			PortletRequest portletRequest, FileEntry fileEntry,
+			JSONObject jsonObject)
+		throws IOException {
+
+		String source = ParamUtil.getString(
+			portletRequest, "source", StringPool.BLANK);
+
+		UploadFileEntryResponseCustomizer uploadFileEntryResponseCustomizer =
+			_serviceTrackerMap.getService(source);
+
+		if (uploadFileEntryResponseCustomizer != null) {
+			uploadFileEntryResponseCustomizer.customize(
+				fileEntry, jsonObject, portletRequest);
+		}
+	}
+
 	private JSONObject _getImageJSONObject(
 			UploadFileEntryHandler handler, PortletRequest portletRequest)
 		throws PortalException {
@@ -169,6 +197,9 @@ public class UploadHandlerImpl implements UploadHandler {
 			imageJSONObject.put("type", "document");
 			imageJSONObject.put("url", handler.getURL(fileEntry, themeDisplay));
 			imageJSONObject.put("uuid", fileEntry.getUuid());
+
+			_customizeFileJSONResponse(
+				portletRequest, fileEntry, imageJSONObject);
 
 			return imageJSONObject;
 		}
@@ -274,5 +305,8 @@ public class UploadHandlerImpl implements UploadHandler {
 	}
 
 	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
+
+	private ServiceTrackerMap<String, UploadFileEntryResponseCustomizer>
+		_serviceTrackerMap;
 
 }

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.portal.remote.cxf.jaxrs.common</artifactId>
-  <version>3.0.0</version>
+  <version>3.1.0</version>
   <description>Liferay Portal Remote CXF JAX-RS Common</description>
   <licenses>
     <license>

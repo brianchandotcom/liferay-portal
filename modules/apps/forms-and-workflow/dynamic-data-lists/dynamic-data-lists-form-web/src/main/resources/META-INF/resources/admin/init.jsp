@@ -29,6 +29,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.dynamic.data.lists.exception.RecordSetNameException" %><%@
 page import="com.liferay.dynamic.data.lists.exception.RecordSetSettingsRedirectURLException" %><%@
 page import="com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormAdminDisplayContext" %><%@
+page import="com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormAdminFieldLibraryDisplayContext" %><%@
 page import="com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormViewRecordsDisplayContext" %><%@
 page import="com.liferay.dynamic.data.lists.model.DDLRecord" %><%@
 page import="com.liferay.dynamic.data.lists.model.DDLRecordSet" %><%@
@@ -39,6 +40,7 @@ page import="com.liferay.dynamic.data.mapping.exception.StructureDefinitionExcep
 page import="com.liferay.dynamic.data.mapping.exception.StructureLayoutException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StructureNameException" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMFormField" %><%@
+page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.DDMFormValues" %><%@
 page import="com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException" %><%@
@@ -72,7 +74,21 @@ page import="java.util.Map" %>
 <portlet:defineObjects />
 
 <%
-DDLFormAdminDisplayContext ddlFormAdminDisplayContext = (DDLFormAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+DDLFormAdminDisplayContext ddlFormAdminDisplayContext = null;
+DDLFormAdminFieldLibraryDisplayContext ddlFormAdminFieldLibraryDisplayContext = null;
+PortletURL fieldLibraryPortletURL = null;
+
+Object portletDisplayContext = request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+if (portletDisplayContext instanceof DDLFormAdminFieldLibraryDisplayContext) {
+	ddlFormAdminFieldLibraryDisplayContext = (DDLFormAdminFieldLibraryDisplayContext)portletDisplayContext;
+	ddlFormAdminDisplayContext = ddlFormAdminFieldLibraryDisplayContext.getDDLFormAdminDisplayContext();
+
+	fieldLibraryPortletURL = ddlFormAdminFieldLibraryDisplayContext.getPortletURL();
+}
+else {
+	ddlFormAdminDisplayContext = (DDLFormAdminDisplayContext)portletDisplayContext;
+}
 %>
 
 <%@ include file="/admin/init-ext.jsp" %>

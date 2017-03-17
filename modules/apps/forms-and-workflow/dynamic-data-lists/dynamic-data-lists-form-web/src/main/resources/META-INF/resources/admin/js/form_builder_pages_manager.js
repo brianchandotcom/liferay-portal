@@ -81,6 +81,10 @@ AUI.add(
 							A.on('windowresize', A.bind('_syncPageInformationHeight', instance)),
 							instance.after('titlesChange', A.bind('_afterTitlesChange', instance))
 						];
+
+						if (!instance.get('showPagination')) {
+							instance._hidePagination();
+						}
 					},
 
 					destructor: function() {
@@ -284,6 +288,18 @@ AUI.add(
 						}
 
 						return instance.wizard;
+					},
+
+					_hidePagination: function() {
+						var instance = this;
+
+						var builder = instance.get('builder');
+
+						var boundingBox = builder.get('boundingBox');
+
+						var pageHeader = boundingBox.one('.form-builder-page-header');
+
+						pageHeader.hide();
 					},
 
 					_onAddLastPageClick: function() {

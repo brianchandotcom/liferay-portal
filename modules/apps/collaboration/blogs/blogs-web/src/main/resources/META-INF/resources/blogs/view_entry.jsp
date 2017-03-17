@@ -170,8 +170,13 @@ if (portletTitleBasedNavigation) {
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<c:if test="<%= (discussion != null) && blogsPortletInstanceConfiguration.enableComments() %>">
+
+				<%
+				int commentsCount = CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId());
+				%>
+
 				<h2>
-					<strong><liferay-ui:message arguments="<%= CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId()) %>" key="x-comments" /></strong>
+					<strong><liferay-ui:message arguments="<%= commentsCount %>" key='<%= commentsCount == 1 ? "x-comment" : "x-comments" %>' /></strong>
 				</h2>
 
 				<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() && Validator.isNotNull(entry.getUrlTitle()) %>">

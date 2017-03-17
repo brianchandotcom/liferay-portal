@@ -33,6 +33,11 @@ class ColorPickerInput extends Component {
 }
 
 ColorPickerInput.STATE = {
+	disabled: {
+		validator: core.isBoolean,
+		value: false
+	},
+
 	id: {
 		validator: core.isString
 	},

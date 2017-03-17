@@ -1,0 +1,1 @@
+package com.liferay.contacts.internal.upgrade.v2_0_1.util;

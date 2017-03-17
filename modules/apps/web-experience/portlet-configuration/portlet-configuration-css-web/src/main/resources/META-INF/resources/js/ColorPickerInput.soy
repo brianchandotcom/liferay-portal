@@ -3,6 +3,8 @@
 /**
  * Prints the color picker input.
  *
+ * @param? disabled
+ * @param? cssClass
  * @param id
  * @param label
  * @param? name
@@ -16,13 +18,19 @@
 		</label>
 
 		{let $inputAttributes kind="attributes"}
-			class="form-control"
+			class="form-control {$cssClass ? $cssClass : ''}"
+
+			{if $disabled}
+				disabled="true"
+			{/if}
+
 			id="{$id}"
-			type="text"
 
 			{if $name}
 				name="{$name}"
 			{/if}
+
+			type="text"
 
 			{if $color}
 				style="background-color: {$color};"

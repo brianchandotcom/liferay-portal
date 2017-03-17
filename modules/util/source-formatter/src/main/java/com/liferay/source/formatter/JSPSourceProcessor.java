@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.JSPEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JSPIfStatementCheck;
 import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
@@ -43,7 +44,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -1274,10 +1274,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(
-			new FileCheck[] {
-				new JSPIfStatementCheck(), new JSPWhitespaceCheck()
-			});
+		List<FileCheck> fileChecks = new ArrayList<>();
+
+		fileChecks.add(new JSPWhitespaceCheck());
+
+		fileChecks.add(new JSPEmptyLinesCheck());
+		fileChecks.add(new JSPIfStatementCheck());
+
+		return fileChecks;
 	}
 
 	protected List<String> getJSPDuplicateImports(

@@ -54,6 +54,8 @@ public interface UserBag extends Serializable {
 
 	public Collection<Group> getUserUserGroupGroups() throws PortalException;
 
+	public long[] getUserUserGroupsIds();
+
 	public boolean hasRole(Role role);
 
 	public boolean hasUserGroup(Group group);

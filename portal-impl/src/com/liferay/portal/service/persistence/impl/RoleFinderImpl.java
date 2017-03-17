@@ -88,6 +88,9 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 	public static final String FIND_BY_SYSTEM =
 		RoleFinder.class.getName() + ".findBySystem";
 
+	public static final String FIND_BY_TEAMS_USER =
+		RoleFinder.class.getName() + ".findByTeamsUser";
+
 	public static final String FIND_BY_USER_GROUP_GROUP_ROLE =
 		RoleFinder.class.getName() + ".findByUserGroupGroupRole";
 
@@ -450,6 +453,36 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<Role> findByTeamsUser(long userId, long groupId) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_TEAMS_USER);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("Role_", RoleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(userId);
+			qPos.add(groupId);
+			qPos.add(userId);
 
 			return q.list(true);
 		}

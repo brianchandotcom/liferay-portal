@@ -184,6 +184,11 @@ public class RoleFinderUtil {
 		return getFinder().findBySystem(companyId);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Role> findByTeamsUser(
+		long userId, long groupId) {
+		return getFinder().findByTeamsUser(userId, groupId);
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.Role> findByUserGroupGroupRole(
 		long userId, long groupId) {
 		return getFinder().findByUserGroupGroupRole(userId, groupId);

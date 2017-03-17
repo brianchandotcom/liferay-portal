@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -368,6 +369,58 @@ public class RoleLocalServiceTest {
 			group.getGroupId());
 
 		testGetTeamRoleMap(teamRoleMap, team, true);
+	}
+
+	@Test
+	public void testGetUserTeamRoles() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_user = UserTestUtil.addUser();
+
+		Team team = TeamLocalServiceUtil.addTeam(
+			_user.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new ServiceContext());
+
+		List<Role> roles = RoleLocalServiceUtil.getUserTeamRoles(
+			_user.getUserId(), _group.getGroupId());
+
+		Assert.assertEquals(roles.toString(), 0, roles.size());
+
+		TeamLocalServiceUtil.addUserTeam(_user.getUserId(), team.getTeamId());
+
+		roles = RoleLocalServiceUtil.getUserTeamRoles(
+			_user.getUserId(), _group.getGroupId());
+
+		Role teamRole = team.getRole();
+
+		Assert.assertEquals(roles.toString(), 1, roles.size());
+		Assert.assertEquals(teamRole, roles.get(0));
+
+		TeamLocalServiceUtil.deleteUserTeam(
+			_user.getUserId(), team.getTeamId());
+
+		_userGroup = UserGroupTestUtil.addUserGroup(_group.getGroupId());
+
+		UserLocalServiceUtil.addUserGroupUser(
+			_userGroup.getUserGroupId(), _user.getUserId());
+
+		TeamLocalServiceUtil.addUserGroupTeam(
+			_userGroup.getUserGroupId(), team.getTeamId());
+
+		roles = RoleLocalServiceUtil.getUserTeamRoles(
+			_user.getUserId(), _group.getGroupId());
+
+		Assert.assertEquals(roles.toString(), 1, roles.size());
+		Assert.assertEquals(teamRole, roles.get(0));
+
+		TeamLocalServiceUtil.addUserTeam(_user.getUserId(), team.getTeamId());
+
+		roles = RoleLocalServiceUtil.getUserTeamRoles(
+			_user.getUserId(), _group.getGroupId());
+
+		Assert.assertEquals(roles.toString(), 1, roles.size());
+		Assert.assertEquals(teamRole, roles.get(0));
 	}
 
 	protected Object[] getOrganizationAndTeam() throws Exception {

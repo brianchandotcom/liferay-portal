@@ -1075,6 +1075,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return roleFinder.findByU_G(userId, groupIds);
 	}
 
+	@Override
+	public List<Role> getUserTeamRoles(long userId, long groupId) {
+		return roleFinder.findByTeamsUser(userId, groupId);
+	}
+
 	/**
 	 * Returns <code>true</code> if the user is associated with the named
 	 * regular role.

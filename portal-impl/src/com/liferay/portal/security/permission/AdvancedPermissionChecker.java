@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.permission;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -33,8 +32,8 @@ import com.liferay.portal.kernel.model.ResourceBlockConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -49,7 +48,7 @@ import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPrototypePermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutSetPrototypePermissionUtil;
@@ -65,7 +64,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -557,28 +555,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	protected void addTeamRoles(long userId, Group group, Set<Long> roleIds)
 		throws Exception {
 
-		List<Team> userTeams = TeamLocalServiceUtil.getUserTeams(
+		List<Role> roles = RoleLocalServiceUtil.getUserTeamRoles(
 			userId, group.getGroupId());
 
-		for (Team team : userTeams) {
-			Role role = RoleLocalServiceUtil.getTeamRole(
-				team.getCompanyId(), team.getTeamId());
-
-			roleIds.add(role.getRoleId());
-		}
-
-		LinkedHashMap<String, Object> teamParams = new LinkedHashMap<>();
-
-		teamParams.put("usersUserGroups", userId);
-
-		List<Team> userGroupTeams = TeamLocalServiceUtil.search(
-			group.getGroupId(), null, null, teamParams, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-
-		for (Team team : userGroupTeams) {
-			Role role = RoleLocalServiceUtil.getTeamRole(
-				team.getCompanyId(), team.getTeamId());
-
+		for (Role role : roles) {
 			roleIds.add(role.getRoleId());
 		}
 	}
@@ -676,20 +656,29 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				}
 			}
 
-			List<Role> userGroupGroupRoles =
-				RoleLocalServiceUtil.getUserGroupGroupRoles(userId, groupId);
+			long[] userUserGroupIds = userBag.getUserUserGroupsIds();
 
-			for (Role userGroupGroupRole : userGroupGroupRoles) {
-				roleIdsSet.add(userGroupGroupRole.getRoleId());
-			}
+			if (userUserGroupIds.length > 0) {
+				List<UserGroupGroupRole> userGroupGroupRoles =
+					UserGroupGroupRoleLocalServiceUtil.
+						getUserGroupGroupRolesByUser(userId, groupId);
 
-			if (parentGroupId > 0) {
-				userGroupGroupRoles =
-					RoleLocalServiceUtil.getUserGroupGroupRoles(
-						userId, parentGroupId);
+				for (UserGroupGroupRole userGroupGroupRole :
+						userGroupGroupRoles) {
 
-				for (Role userGroupGroupRole : userGroupGroupRoles) {
 					roleIdsSet.add(userGroupGroupRole.getRoleId());
+				}
+
+				if (parentGroupId > 0) {
+					userGroupGroupRoles =
+						UserGroupGroupRoleLocalServiceUtil.
+							getUserGroupGroupRoles(userId, parentGroupId);
+
+					for (UserGroupGroupRole userGroupGroupRole :
+							userGroupGroupRoles) {
+
+						roleIdsSet.add(userGroupGroupRole.getRoleId());
+					}
 				}
 			}
 

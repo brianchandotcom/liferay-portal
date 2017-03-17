@@ -233,6 +233,10 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<UserGroupGroupRole> getUserGroupGroupRolesByUser(long userId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserGroupGroupRole> getUserGroupGroupRolesByUser(long userId,
+		long groupId);
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

@@ -35,6 +35,11 @@ public class UserGroupGroupRoleFinderUtil {
 		return getFinder().findByUserGroupsUsers(userId);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.UserGroupGroupRole> findByUserGroupsUsers(
+		long userId, long groupId) {
+		return getFinder().findByUserGroupsUsers(userId, groupId);
+	}
+
 	public static UserGroupGroupRoleFinder getFinder() {
 		if (_finder == null) {
 			_finder = (UserGroupGroupRoleFinder)PortalBeanLocatorUtil.locate(UserGroupGroupRoleFinder.class.getName());

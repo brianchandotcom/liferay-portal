@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.service.persistence.UserGroupGroupRoleFinder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.UserGroupGroupRoleImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -78,12 +79,47 @@ public class UserGroupGroupRoleFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_USER_GROUPS_USERS);
 
+			sql = StringUtil.removeSubstring(sql, "[$WHERE$]");
+
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("UserGroupGroupRole", UserGroupGroupRoleImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(userId);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<UserGroupGroupRole> findByUserGroupsUsers(
+		long userId, long groupId) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_USER_GROUPS_USERS);
+
+			sql = StringUtil.replace(
+				sql, "[$WHERE$]", "(UserGroupGroupRole.groupId = ?) AND ");
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("UserGroupGroupRole", UserGroupGroupRoleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
 			qPos.add(userId);
 
 			return q.list(true);

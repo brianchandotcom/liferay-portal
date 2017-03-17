@@ -278,6 +278,13 @@ public class UserGroupGroupRoleLocalServiceWrapper
 		return _userGroupGroupRoleLocalService.getUserGroupGroupRolesByUser(userId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.UserGroupGroupRole> getUserGroupGroupRolesByUser(
+		long userId, long groupId) {
+		return _userGroupGroupRoleLocalService.getUserGroupGroupRolesByUser(userId,
+			groupId);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

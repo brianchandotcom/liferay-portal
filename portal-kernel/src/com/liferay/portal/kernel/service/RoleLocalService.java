@@ -720,6 +720,9 @@ public interface RoleLocalService extends BaseLocalService,
 	public List<Role> getUserRoles(long userId, int start, int end,
 		OrderByComparator<Role> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Role> getUserTeamRoles(long userId, long groupId);
+
 	/**
 	* Returns an ordered range of all the roles that match the keywords and
 	* types.

@@ -831,6 +831,11 @@ public class RoleLocalServiceUtil {
 		return getService().getUserRoles(userId, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Role> getUserTeamRoles(
+		long userId, long groupId) {
+		return getService().getUserTeamRoles(userId, groupId);
+	}
+
 	/**
 	* Returns an ordered range of all the roles that match the keywords and
 	* types.

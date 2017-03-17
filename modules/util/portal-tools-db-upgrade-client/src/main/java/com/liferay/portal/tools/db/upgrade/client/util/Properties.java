@@ -49,21 +49,25 @@ public class Properties {
 			String line = null;
 
 			while ((line = bufferedReader.readLine()) != null) {
-				if (!line.startsWith("#")) {
-					int index = line.indexOf("=");
+				line = line.trim();
 
-					String value;
-
-					if (index > 0) {
-						name = line.substring(0, index);
-						value = line.substring(index + 1, line.length());
-					}
-					else {
-						value = _properties.get(name) + "\n" + line;
-					}
-
-					_properties.put(name, value);
+				if (line.isEmpty() || (line.charAt(0) == '#')) {
+					continue;
 				}
+
+				int index = line.indexOf("=");
+
+				String value;
+
+				if (index > 0) {
+					name = line.substring(0, index);
+					value = line.substring(index + 1, line.length());
+				}
+				else {
+					value = _properties.get(name) + "\n" + line;
+				}
+
+				_properties.put(name, value);
 			}
 		}
 	}

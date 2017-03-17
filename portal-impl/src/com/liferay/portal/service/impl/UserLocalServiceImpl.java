@@ -4683,9 +4683,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setLastLoginDate(lastLoginDate);
 		user.setLastLoginIP(lastLoginIP);
 
-		user = resetFailedLoginAttempts(user, true);
-
-		return user;
+		return resetFailedLoginAttempts(user, true);
 	}
 
 	/**

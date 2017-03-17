@@ -31,7 +31,7 @@ String value = (String)request.getAttribute("liferay-frontend:management-bar-fil
 					<liferay-ui:message key="<%= label %>" />:
 				</c:if>
 
-				<liferay-ui:message key="<%= value %>" />
+				<liferay-ui:message key="<%= HtmlUtil.escape(value) %>" />
 			</span>
 
 			<aui:icon image="caret-double-l" markupView="lexicon" />

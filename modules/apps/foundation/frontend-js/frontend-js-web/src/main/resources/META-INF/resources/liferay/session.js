@@ -327,6 +327,9 @@ AUI.add(
 
 									elapsed = timeOffset;
 								}
+								else {
+									timestamp = 'expired';
+								}
 
 								var extend = instance.get('autoExtend');
 
@@ -339,6 +342,7 @@ AUI.add(
 								if (hasWarned) {
 									if (timestamp == 'expired') {
 										expirationMoment = true;
+										extend = false;
 										hasExpired = true;
 									}
 

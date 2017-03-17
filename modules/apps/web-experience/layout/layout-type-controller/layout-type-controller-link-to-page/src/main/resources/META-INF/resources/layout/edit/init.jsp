@@ -18,4 +18,6 @@
 
 <%
 Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
+
+LinkToPageLayoutTypeControllerDisplayContext linkToPageLayoutTypeControllerDisplayContext = new LinkToPageLayoutTypeControllerDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>

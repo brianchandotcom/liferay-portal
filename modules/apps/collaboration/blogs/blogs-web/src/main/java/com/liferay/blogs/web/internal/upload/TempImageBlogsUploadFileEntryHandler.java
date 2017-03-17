@@ -28,10 +28,11 @@ import java.io.InputStream;
  * @author Adolfo Pérez
  * @author Roberto Díaz
  */
-public class TempImageBlogsUploadHandler extends BaseBlogsUploadHandler {
+public class TempImageBlogsUploadFileEntryHandler
+	extends BaseBlogsUploadFileEntryHandler {
 
 	@Override
-	protected FileEntry addFileEntry(
+	public FileEntry addFileEntry(
 			long userId, long groupId, long folderId, String fileName,
 			String contentType, InputStream inputStream, long size,
 			ServiceContext serviceContext)
@@ -43,7 +44,7 @@ public class TempImageBlogsUploadHandler extends BaseBlogsUploadHandler {
 	}
 
 	@Override
-	protected FileEntry fetchFileEntry(
+	public FileEntry fetchFileEntry(
 		long userId, long groupId, long folderId, String fileName) {
 
 		try {
@@ -60,6 +61,6 @@ public class TempImageBlogsUploadHandler extends BaseBlogsUploadHandler {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TempImageBlogsUploadHandler.class);
+		TempImageBlogsUploadFileEntryHandler.class);
 
 }

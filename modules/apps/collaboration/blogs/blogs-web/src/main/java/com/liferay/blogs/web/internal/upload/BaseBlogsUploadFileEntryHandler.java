@@ -25,13 +25,13 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
-import com.liferay.portal.kernel.upload.BaseUploadHandler;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.upload.UploadFileEntryHandler;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -40,37 +40,11 @@ import javax.portlet.PortletResponse;
  * @author Sergio González
  * @author Adolfo Pérez
  */
-public abstract class BaseBlogsUploadHandler extends BaseUploadHandler {
+public abstract class BaseBlogsUploadFileEntryHandler
+	implements UploadFileEntryHandler {
 
 	@Override
-	public void validateFile(String fileName, String contentType, long size)
-		throws PortalException {
-
-		long maxSize = getMaxFileSize();
-
-		if ((maxSize > 0) && (size > maxSize)) {
-			throw new EntryImageSizeException();
-		}
-
-		String extension = FileUtil.getExtension(fileName);
-
-		String[] imageExtensions = PrefsPropsUtil.getStringArray(
-			PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
-
-		for (String imageExtension : imageExtensions) {
-			if (StringPool.STAR.equals(imageExtension) ||
-				imageExtension.equals(StringPool.PERIOD + extension)) {
-
-				return;
-			}
-		}
-
-		throw new EntryImageNameException(
-			"Invalid image for file name " + fileName);
-	}
-
-	@Override
-	protected void checkPermission(
+	public void checkPermission(
 			long groupId, long folderId, PermissionChecker permissionChecker)
 		throws PortalException {
 
@@ -87,7 +61,7 @@ public abstract class BaseBlogsUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
-	protected void doHandleUploadException(
+	public void doHandleUploadException(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortalException pe, JSONObject jsonObject)
 		throws PortalException {
@@ -123,13 +97,40 @@ public abstract class BaseBlogsUploadHandler extends BaseUploadHandler {
 		}
 	}
 
-	protected long getMaxFileSize() {
-		return PropsValues.BLOGS_IMAGE_MAX_SIZE;
+	@Override
+	public String getParameterName() {
+		return "imageSelectorFileName";
 	}
 
 	@Override
-	protected String getParameterName() {
-		return "imageSelectorFileName";
+	public void validateFile(String fileName, String contentType, long size)
+		throws PortalException {
+
+		long maxSize = getMaxFileSize();
+
+		if ((maxSize > 0) && (size > maxSize)) {
+			throw new EntryImageSizeException();
+		}
+
+		String extension = FileUtil.getExtension(fileName);
+
+		String[] imageExtensions = PrefsPropsUtil.getStringArray(
+			PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
+
+		for (String imageExtension : imageExtensions) {
+			if (StringPool.STAR.equals(imageExtension) ||
+				imageExtension.equals(StringPool.PERIOD + extension)) {
+
+				return;
+			}
+		}
+
+		throw new EntryImageNameException(
+			"Invalid image for file name " + fileName);
+	}
+
+	protected long getMaxFileSize() {
+		return PropsValues.BLOGS_IMAGE_MAX_SIZE;
 	}
 
 }

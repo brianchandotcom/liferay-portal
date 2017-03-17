@@ -15,15 +15,16 @@
 package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.internal.upload.ImageBlogsUploadHandler;
+import com.liferay.blogs.web.internal.upload.ImageBlogsUploadFileEntryHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.upload.UploadHandler;
+import com.liferay.upload.UploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -44,9 +45,15 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_uploadHandler.upload(actionRequest, actionResponse);
+		_uploadHandler.upload(
+			_imageBlogsUploadFileEntryHandler, actionRequest, actionResponse);
 	}
 
-	private final UploadHandler _uploadHandler = new ImageBlogsUploadHandler();
+	private final ImageBlogsUploadFileEntryHandler
+		_imageBlogsUploadFileEntryHandler =
+			new ImageBlogsUploadFileEntryHandler();
+
+	@Reference
+	private UploadHandler _uploadHandler;
 
 }

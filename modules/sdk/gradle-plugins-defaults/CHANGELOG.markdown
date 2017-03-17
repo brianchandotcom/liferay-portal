@@ -1236,7 +1236,10 @@ to the primary artifact, even when the `application` plugin is applied.
 version 1.1.3.
 - [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.2.21.
 
-## 3.4.4 - 2017-03-16
+## 3.5.0 - 2017-03-16
+
+### Changed
+- [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.22.
 
 ### Fixed
 - [LPS-71264]: Use the actual directory of the Maven local repository as default

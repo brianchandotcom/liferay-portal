@@ -905,10 +905,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				if (lineCount > 1) {
 					sb.append(previousLine);
 					sb.append("\n");
-
-					if (addExtraEmptyLine(previousLine, line, javaSource)) {
-						sb.append("\n");
-					}
 				}
 
 				previousLine = line;

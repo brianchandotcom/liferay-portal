@@ -40,6 +40,8 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 
 		content = fixMissingEmptyLineAfterSettingVariable(content);
 
+		content = _fixMissingEmptyLines(content);
+
 		content = _fixRedundantEmptyLines(content);
 
 		return new Tuple(content, Collections.emptySet());
@@ -48,6 +50,50 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 	@Override
 	protected boolean isJavaSource(String content, int pos) {
 		return JSPSourceUtil.isJavaSource(content, pos);
+	}
+
+	private String _fixMissingEmptyLines(String content) {
+		while (true) {
+			Matcher matcher = _missingEmptyLinePattern1.matcher(content);
+
+			if (matcher.find()) {
+				content = StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
+
+				continue;
+			}
+
+			matcher = _missingEmptyLinePattern2.matcher(content);
+
+			if (matcher.find()) {
+				content = StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start());
+
+				continue;
+			}
+
+			matcher = _missingEmptyLinePattern3.matcher(content);
+
+			if (matcher.find()) {
+				content = StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
+
+				continue;
+			}
+
+			matcher = _missingEmptyLinePattern4.matcher(content);
+
+			if (matcher.find()) {
+				content = StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
+
+				continue;
+			}
+
+			break;
+		}
+
+		return content;
 	}
 
 	private String _fixRedundantEmptyLines(String content) {
@@ -76,6 +122,14 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
+	private final Pattern _missingEmptyLinePattern1 = Pattern.compile(
+		"[\t\n](--)?%>\n\t*(?!-->)\\S");
+	private final Pattern _missingEmptyLinePattern2 = Pattern.compile(
+		"\\S(?!<\\!--)\n\t*<%(--)?\n");
+	private final Pattern _missingEmptyLinePattern3 = Pattern.compile(
+		"[\t\n]<%\n\t*//");
+	private final Pattern _missingEmptyLinePattern4 = Pattern.compile(
+		"[\t\n]//.*\n\t*%>\n");
 	private final Pattern _redundantEmptyLinePattern1 = Pattern.compile(
 		"[\n\t]<%\n\n(\t*)[^/\n\t]");
 	private final Pattern _redundantEmptyLinePattern2 = Pattern.compile(

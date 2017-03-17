@@ -202,6 +202,58 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				}
 			}
 
+			matcher = _missingEmptyLinePattern4.matcher(content);
+
+			while (matcher.find()) {
+				if (!isJavaSource(content, matcher.start())) {
+					continue;
+				}
+
+				content = StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
+
+				continue outerLoop;
+			}
+
+			matcher = _missingEmptyLinePattern5.matcher(content);
+
+			while (matcher.find()) {
+				if (!isJavaSource(content, matcher.start())) {
+					continue;
+				}
+
+				content = StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
+
+				continue outerLoop;
+			}
+
+			matcher = _missingEmptyLinePattern6.matcher(content);
+
+			while (matcher.find()) {
+				if (!isJavaSource(content, matcher.start())) {
+					continue;
+				}
+
+				content = StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start());
+
+				continue outerLoop;
+			}
+
+			matcher = _missingEmptyLinePattern7.matcher(content);
+
+			while (matcher.find()) {
+				if (!isJavaSource(content, matcher.start())) {
+					continue;
+				}
+
+				content = StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
+
+				continue outerLoop;
+			}
+
 			break;
 		}
 
@@ -283,12 +335,21 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		"(\n\t*)(public|private|protected) [^;]+? \\{");
 	private final Pattern _missingEmptyLinePattern3 = Pattern.compile(
 		"\n.*\\) \\{\n");
+	private final Pattern _missingEmptyLinePattern4 = Pattern.compile(
+		"\n\t*// .*\n[\t ]*(?!// )\\S");
+	private final Pattern _missingEmptyLinePattern5 = Pattern.compile(
+		"\n[\t ]*(?!// )\\S.*\n\t*// ");
+	private final Pattern _missingEmptyLinePattern6 = Pattern.compile(
+		"[^{:/\n]\n\t*(for|if|try) \\(");
+	private final Pattern _missingEmptyLinePattern7 = Pattern.compile(
+		"[\t\n]\\}\n[\t ]*(?!(/\\*|\\}|\\)|//|catch |else |finally |while ))" +
+			"\\S");
 	private final Pattern _redundantEmptyLinePattern1 = Pattern.compile(
 		"\n\npublic ((abstract|static) )*(class|enum|interface) ");
 	private final Pattern _redundantEmptyLinePattern2 = Pattern.compile(
 		" \\* @author .*\n \\*\\/\n\n");
 	private final Pattern _redundantEmptyLinePattern3 = Pattern.compile(
-			"[\n\t](catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
+		"[\n\t](catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
 	private final Pattern _redundantEmptyLinePattern4 = Pattern.compile(
 		"\\{\n\n\t*\\}");
 	private final Pattern _setVariablePattern = Pattern.compile(

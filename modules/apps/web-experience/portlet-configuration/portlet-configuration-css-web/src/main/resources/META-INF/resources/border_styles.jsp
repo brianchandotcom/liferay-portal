@@ -19,13 +19,14 @@
 <aui:row>
 	<aui:col cssClass="lfr-border-width use-for-all-column" width="<%= 33 %>">
 		<aui:fieldset label="border-width">
+
 			<%
 			Map<String, Object> contextUseForAllWidth = new HashMap<>();
 
 			contextUseForAllWidth.put("checked", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth"));
+			contextUseForAllWidth.put("inputSelector", ".same-border-width");
 			contextUseForAllWidth.put("label", LanguageUtil.get(request, "same-for-all"));
 			contextUseForAllWidth.put("name", renderResponse.getNamespace() + "useForAllWidth");
-			contextUseForAllWidth.put("inputSelector", ".same-border-width");
 			%>
 
 			<soy:template-renderer
@@ -75,13 +76,14 @@
 
 	<aui:col cssClass="lfr-border-style" width="<%= 33 %>">
 		<aui:fieldset label="border-style">
+
 			<%
 			Map<String, Object> contextUseForAllStyle = new HashMap<>();
 
 			contextUseForAllStyle.put("checked", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderStyle"));
+			contextUseForAllStyle.put("inputSelector", ".same-border-style");
 			contextUseForAllStyle.put("label", LanguageUtil.get(request, "same-for-all"));
 			contextUseForAllStyle.put("name", renderResponse.getNamespace() + "useForAllStyle");
-			contextUseForAllStyle.put("inputSelector", ".same-border-style");
 			%>
 
 			<soy:template-renderer
@@ -142,13 +144,14 @@
 
 	<aui:col cssClass="lfr-border-color" last="<%= true %>" width="<%= 33 %>">
 		<aui:fieldset label="border-color">
+
 			<%
 			Map<String, Object> contextUseForAllColor = new HashMap<>();
 
 			contextUseForAllColor.put("checked", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
+			contextUseForAllColor.put("inputSelector", ".same-border-color");
 			contextUseForAllColor.put("label", LanguageUtil.get(request, "same-for-all"));
 			contextUseForAllColor.put("name", renderResponse.getNamespace() + "useForAllColor");
-			contextUseForAllColor.put("inputSelector", ".same-border-color");
 			%>
 
 			<soy:template-renderer
@@ -176,8 +179,8 @@
 			<%
 			Map<String, Object> contextBorderRight = new HashMap<>();
 
-			contextBorderRight.put("cssClass", "same-border-color");
 			contextBorderRight.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("right", "borderColor"));
+			contextBorderRight.put("cssClass", "same-border-color");
 			contextBorderRight.put("disabled", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
 			contextBorderRight.put("id", renderResponse.getNamespace() + "borderColorRight");
 			contextBorderRight.put("label", LanguageUtil.get(request, "right"));
@@ -194,8 +197,8 @@
 			<%
 			Map<String, Object> contextBorderBottom = new HashMap<>();
 
-			contextBorderBottom.put("cssClass", "same-border-color");
 			contextBorderBottom.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("bottom", "borderColor"));
+			contextBorderBottom.put("cssClass", "same-border-color");
 			contextBorderBottom.put("disabled", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
 			contextBorderBottom.put("id", renderResponse.getNamespace() + "borderColorBottom");
 			contextBorderBottom.put("label", LanguageUtil.get(request, "bottom"));
@@ -212,8 +215,8 @@
 			<%
 			Map<String, Object> contextBorderLeft = new HashMap<>();
 
-			contextBorderLeft.put("cssClass", "same-border-color");
 			contextBorderLeft.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("left", "borderColor"));
+			contextBorderLeft.put("cssClass", "same-border-color");
 			contextBorderLeft.put("disabled", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
 			contextBorderLeft.put("id", renderResponse.getNamespace() + "borderColorLeft");
 			contextBorderLeft.put("label", LanguageUtil.get(request, "left"));

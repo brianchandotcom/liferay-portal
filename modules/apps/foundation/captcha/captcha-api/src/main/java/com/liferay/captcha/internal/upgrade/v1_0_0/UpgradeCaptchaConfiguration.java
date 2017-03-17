@@ -43,11 +43,18 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 	}
 
 	protected void doUpgrade() throws Exception {
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			CaptchaConfiguration.class.getName(), StringPool.QUESTION);
+
+		Dictionary properties = configuration.getProperties();
+
+		if (properties == null) {
+			properties = new HashMapDictionary();
+		}
+
 		CaptchaConfiguration defaultConfig =
 			ConfigurableUtil.createConfigurable(
-				CaptchaConfiguration.class, new HashMapDictionary<>());
-
-		Dictionary properties = new HashMapDictionary();
+				CaptchaConfiguration.class, properties);
 
 		properties.put(
 			"captchaEngine",
@@ -158,9 +165,6 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 				LegacyCaptchaPropsKeys.
 					CAPTCHA_ENGINE_SIMPLECAPTCHA_WORD_RENDERERS,
 				StringPool.COMMA, defaultConfig.simpleCaptchaWordRenderers()));
-
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			CaptchaConfiguration.class.getName(), StringPool.QUESTION);
 
 		configuration.update(properties);
 

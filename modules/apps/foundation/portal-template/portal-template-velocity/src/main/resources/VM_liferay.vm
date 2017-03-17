@@ -62,7 +62,7 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 #end
 
 #macro (search $default_preferences)
-	#if ($is_setup_complete)
+	#if ($themeDisplay.isImpersonated() || $is_setup_complete)
 		$theme.runtime("com.liferay.portlet.admin.util.PortalSearchApplicationType$Search", $portletProviderAction.VIEW, "", $!default_preferences)
 	#end
 #end

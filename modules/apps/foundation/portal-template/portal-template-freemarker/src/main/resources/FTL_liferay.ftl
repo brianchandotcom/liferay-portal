@@ -118,7 +118,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 <#macro search
 	default_preferences = ""
 >
-	<#if is_setup_complete>
+	<#if themeDisplay.isImpersonated() || is_setup_complete>
 		<@liferay_portlet["runtime"]
 			defaultPreferences=default_preferences
 			portletProviderAction=portletProviderAction.VIEW

@@ -1,0 +1,37 @@
+{namespace ToggleDisableInputs}
+
+/**
+ * Prints the color picker input.
+ *
+ * @param? checked
+ * @param label
+ * @param? name
+ *
+ */
+{template .render}
+	<div class="form-group">
+	    <label>
+	    	{let $inputAttributes kind="attributes"}
+				class="toggle-switch"
+				data-onchange="toggleSwitch"
+				type="checkbox"
+
+				{if $checked}
+					checked="checked"
+				{/if}
+
+				{if $name}
+					name="{$name}"
+				{/if}
+			{/let}
+
+	        <input {$inputAttributes}></input>
+
+			<span class="toggle-switch-label">{$label}</span>
+
+			<span aria-hidden="true" class="toggle-switch-bar">
+				<span class="toggle-switch-handle" data-label-off="NO" data-label-on="YES"></span>
+			</span>
+		</label>
+	</div>
+{/template}

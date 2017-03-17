@@ -1245,7 +1245,7 @@ version 1.1.3.
 in `package.json` instead.
 
 ### Changed
-- [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.22.
+- [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.2.22.
 
 ### Fixed
 - [LPS-71264]: Use the actual directory of the Maven local repository as the

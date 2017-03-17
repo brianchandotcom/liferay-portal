@@ -113,11 +113,11 @@ public class DDLFormAdminFieldLibraryDisplayContext {
 
 		if (fieldLibrarySearch.isSearch()) {
 			fieldLibrarySearch.setEmptyResultsMessage(
-				"no-custom-fields-were-found");
+				"no-field-sets-were-found");
 		}
 		else {
 			fieldLibrarySearch.setEmptyResultsMessage(
-				"there-are-no-custom-fields");
+				"there-are-no-field-sets");
 		}
 
 		setFieldLibrarySearchResults(fieldLibrarySearch);

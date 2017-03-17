@@ -201,6 +201,17 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
+		String linkToLayoutUuid = ParamUtil.getString(
+			actionRequest, "linkToLayoutUuid");
+
+		if (Validator.isNotNull(linkToLayoutUuid)) {
+			Layout linkToLayout = layoutLocalService.getLayoutByUuidAndGroupId(
+				linkToLayoutUuid, groupId, privateLayout);
+
+			typeSettingsProperties.put(
+				"linkToLayoutId", String.valueOf(linkToLayout.getLayoutId()));
+		}
+
 		if (inheritFromParentLayoutId && (parentLayoutId > 0)) {
 			Layout parentLayout = layoutLocalService.getLayout(
 				groupId, privateLayout, parentLayoutId);
@@ -472,6 +483,17 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		UnicodeProperties formTypeSettingsProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
+
+		String linkToLayoutUuid = ParamUtil.getString(
+			actionRequest, "linkToLayoutUuid");
+
+		if (Validator.isNotNull(linkToLayoutUuid)) {
+			Layout linkToLayout = layoutLocalService.getLayoutByUuidAndGroupId(
+				linkToLayoutUuid, groupId, privateLayout);
+
+			formTypeSettingsProperties.put(
+				"linkToLayoutId", String.valueOf(linkToLayout.getLayoutId()));
+		}
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.layout.type.controller.link.to.page.internal.constants;
 
-<%
-Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
+/**
+ * @author Pavel Savinov
+ */
+public class LinkToPageLayoutTypeControllerWebKeys {
 
-LinkToPageLayoutTypeControllerDisplayContext linkToPageLayoutTypeControllerDisplayContext = new LinkToPageLayoutTypeControllerDisplayContext(liferayPortletRequest, liferayPortletResponse);
-%>
+	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
+
+}

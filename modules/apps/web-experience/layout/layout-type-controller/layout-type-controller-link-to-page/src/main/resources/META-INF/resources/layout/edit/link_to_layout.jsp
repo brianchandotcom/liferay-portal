@@ -19,30 +19,42 @@
 <aui:input name="TypeSettingsProperties--groupId--" type="hidden" value="<%= (selLayout == null) ? StringPool.BLANK : selLayout.getGroupId() %>" />
 <aui:input name="TypeSettingsProperties--privateLayout--" type="hidden" value="<%= (selLayout == null) ? StringPool.BLANK : selLayout.isPrivateLayout() %>" />
 
-<%
-long linkToLayoutId = 0;
+<div class="form-group">
+	<aui:input label="link-to-layout" name="linkToLayoutName" type="resource" value="<%= linkToPageLayoutTypeControllerDisplayContext.getLinkToLayoutName() %>" />
+	<aui:input name="linkToLayoutUuid" type="hidden" value="<%= linkToPageLayoutTypeControllerDisplayContext.getLinkToLayoutUuid() %>" />
 
-if (selLayout != null) {
-	linkToLayoutId = GetterUtil.getLong(selLayout.getTypeSettingsProperty("linkToLayoutId"));
-}
-%>
+	<aui:button name="selectLayoutButton" value="select" />
 
-<aui:select label="link-to-layout" name="TypeSettingsProperties--linkToLayoutId--">
+	<aui:script use="liferay-item-selector-dialog">
+		$('#<portlet:namespace />selectLayoutButton').on(
+			'click',
+			function(event) {
+				event.preventDefault();
 
-	<%
-	List<LayoutDescription> layoutDescriptions = (List<LayoutDescription>)request.getAttribute(WebKeys.LAYOUT_DESCRIPTIONS);
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+					{
+						eventName: '<%= linkToPageLayoutTypeControllerDisplayContext.getEventName() %>',
+						on: {
+							selectedItemChange: function(event) {
+								var selectedItem = event.newVal;
 
-	for (LayoutDescription layoutDescription : layoutDescriptions) {
-		Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
+								var linkToLayoutName = A.one('#<portlet:namespace />linkToLayoutName');
+								var linkToLayoutUuid = A.one('#<portlet:namespace />linkToLayoutUuid');
 
-		if (layoutDescriptionLayout != null) {
-	%>
+								if (selectedItem) {
+									linkToLayoutName.val(selectedItem.name);
+									linkToLayoutUuid.val(selectedItem.id);
+								}
+							}
+						},
+						'strings.add': '<liferay-ui:message key="done" />',
+						title: '<liferay-ui:message key="select-layout" />',
+						url: '<%= linkToPageLayoutTypeControllerDisplayContext.getItemSelectorURL() %>'
+					}
+				);
 
-			<aui:option disabled="<%= (selLayout != null) && (selLayout.getPlid() == layoutDescriptionLayout.getPlid()) %>" label="<%= layoutDescription.getDisplayName() %>" selected="<%= (linkToLayoutId == layoutDescriptionLayout.getLayoutId()) %>" value="<%= layoutDescriptionLayout.getLayoutId() %>" />
-
-	<%
-		}
-	}
-	%>
-
-</aui:select>
+				itemSelectorDialog.open();
+			}
+		);
+	</aui:script>
+</div>

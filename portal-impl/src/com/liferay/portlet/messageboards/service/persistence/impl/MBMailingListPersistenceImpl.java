@@ -2824,8 +2824,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 		query.append(_SQL_SELECT_MBMAILINGLIST_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2842,6 +2842,12 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (MBMailingList mbMailingList : (List<MBMailingList>)q.list()) {
 				map.put(mbMailingList.getPrimaryKeyObj(), mbMailingList);

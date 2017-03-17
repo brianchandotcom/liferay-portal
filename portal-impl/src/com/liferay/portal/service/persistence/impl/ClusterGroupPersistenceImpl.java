@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchClusterGroupException;
@@ -472,8 +473,8 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 
 		query.append(_SQL_SELECT_CLUSTERGROUP_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -490,6 +491,12 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (ClusterGroup clusterGroup : (List<ClusterGroup>)q.list()) {
 				map.put(clusterGroup.getPrimaryKeyObj(), clusterGroup);

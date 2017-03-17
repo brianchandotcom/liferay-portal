@@ -2390,8 +2390,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 		query.append(_SQL_SELECT_REGION_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2408,6 +2408,12 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (Region region : (List<Region>)q.list()) {
 				map.put(region.getPrimaryKeyObj(), region);

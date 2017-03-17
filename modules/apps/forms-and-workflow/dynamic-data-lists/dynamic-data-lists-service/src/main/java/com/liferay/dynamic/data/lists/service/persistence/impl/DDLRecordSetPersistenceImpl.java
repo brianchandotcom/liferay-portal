@@ -3660,8 +3660,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 
 		query.append(_SQL_SELECT_DDLRECORDSET_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -3678,6 +3678,12 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (DDLRecordSet ddlRecordSet : (List<DDLRecordSet>)q.list()) {
 				map.put(ddlRecordSet.getPrimaryKeyObj(), ddlRecordSet);

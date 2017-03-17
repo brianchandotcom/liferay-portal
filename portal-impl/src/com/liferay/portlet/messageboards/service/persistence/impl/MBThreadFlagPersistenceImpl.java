@@ -3325,8 +3325,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 		query.append(_SQL_SELECT_MBTHREADFLAG_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -3343,6 +3343,12 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (MBThreadFlag mbThreadFlag : (List<MBThreadFlag>)q.list()) {
 				map.put(mbThreadFlag.getPrimaryKeyObj(), mbThreadFlag);

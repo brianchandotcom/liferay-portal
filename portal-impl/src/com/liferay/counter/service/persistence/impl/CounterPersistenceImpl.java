@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
@@ -464,10 +465,8 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 
 		query.append(_SQL_SELECT_COUNTER_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(StringPool.APOSTROPHE);
-			query.append((String)primaryKey);
-			query.append(StringPool.APOSTROPHE);
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -484,6 +483,12 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add((String)primaryKey);
+			}
 
 			for (Counter counter : (List<Counter>)q.list()) {
 				map.put(counter.getPrimaryKeyObj(), counter);

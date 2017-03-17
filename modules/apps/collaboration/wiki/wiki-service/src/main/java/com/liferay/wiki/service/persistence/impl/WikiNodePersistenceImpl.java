@@ -5211,8 +5211,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 		query.append(_SQL_SELECT_WIKINODE_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -5229,6 +5229,12 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (WikiNode wikiNode : (List<WikiNode>)q.list()) {
 				map.put(wikiNode.getPrimaryKeyObj(), wikiNode);

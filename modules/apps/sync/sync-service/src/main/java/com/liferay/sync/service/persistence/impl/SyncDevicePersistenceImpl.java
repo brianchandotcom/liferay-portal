@@ -2811,8 +2811,8 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 
 		query.append(_SQL_SELECT_SYNCDEVICE_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2829,6 +2829,12 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (SyncDevice syncDevice : (List<SyncDevice>)q.list()) {
 				map.put(syncDevice.getPrimaryKeyObj(), syncDevice);

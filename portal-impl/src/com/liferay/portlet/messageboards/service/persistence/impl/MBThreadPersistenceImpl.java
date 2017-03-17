@@ -13692,8 +13692,8 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_SQL_SELECT_MBTHREAD_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -13710,6 +13710,12 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (MBThread mbThread : (List<MBThread>)q.list()) {
 				map.put(mbThread.getPrimaryKeyObj(), mbThread);

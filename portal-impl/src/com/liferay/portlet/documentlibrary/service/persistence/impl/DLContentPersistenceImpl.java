@@ -2739,8 +2739,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 		query.append(_SQL_SELECT_DLCONTENT_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2757,6 +2757,12 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (DLContent dlContent : (List<DLContent>)q.list()) {
 				map.put(dlContent.getPrimaryKeyObj(), dlContent);

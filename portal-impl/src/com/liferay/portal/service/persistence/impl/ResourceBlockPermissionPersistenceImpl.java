@@ -1866,8 +1866,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 
 		query.append(_SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -1884,6 +1884,12 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (ResourceBlockPermission resourceBlockPermission : (List<ResourceBlockPermission>)q.list()) {
 				map.put(resourceBlockPermission.getPrimaryKeyObj(),

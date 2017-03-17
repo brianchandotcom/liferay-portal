@@ -3124,8 +3124,8 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 		query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -3142,6 +3142,12 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (SocialActivityCounter socialActivityCounter : (List<SocialActivityCounter>)q.list()) {
 				map.put(socialActivityCounter.getPrimaryKeyObj(),

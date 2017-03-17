@@ -1024,8 +1024,8 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 
 		query.append(_SQL_SELECT_SHOPPINGITEMPRICE_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -1042,6 +1042,12 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (ShoppingItemPrice shoppingItemPrice : (List<ShoppingItemPrice>)q.list()) {
 				map.put(shoppingItemPrice.getPrimaryKeyObj(), shoppingItemPrice);

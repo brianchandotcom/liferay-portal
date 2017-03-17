@@ -2530,8 +2530,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 		query.append(_SQL_SELECT_MDRRULE_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2548,6 +2548,12 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (MDRRule mdrRule : (List<MDRRule>)q.list()) {
 				map.put(mdrRule.getPrimaryKeyObj(), mdrRule);

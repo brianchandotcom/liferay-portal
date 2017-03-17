@@ -2149,8 +2149,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 		query.append(_SQL_SELECT_CONTACT_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2167,6 +2167,12 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (Contact contact : (List<Contact>)q.list()) {
 				map.put(contact.getPrimaryKeyObj(), contact);

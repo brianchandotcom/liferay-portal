@@ -2607,8 +2607,8 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 
 		query.append(_SQL_SELECT_WSRPCONSUMERPORTLET_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2625,6 +2625,12 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (WSRPConsumerPortlet wsrpConsumerPortlet : (List<WSRPConsumerPortlet>)q.list()) {
 				map.put(wsrpConsumerPortlet.getPrimaryKeyObj(),

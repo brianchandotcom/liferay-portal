@@ -3413,8 +3413,8 @@ public class ExportImportConfigurationPersistenceImpl
 
 		query.append(_SQL_SELECT_EXPORTIMPORTCONFIGURATION_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -3431,6 +3431,12 @@ public class ExportImportConfigurationPersistenceImpl
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (ExportImportConfiguration exportImportConfiguration : (List<ExportImportConfiguration>)q.list()) {
 				map.put(exportImportConfiguration.getPrimaryKeyObj(),

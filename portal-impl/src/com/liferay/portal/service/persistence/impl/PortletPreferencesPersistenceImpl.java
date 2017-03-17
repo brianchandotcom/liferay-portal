@@ -5175,8 +5175,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -5193,6 +5193,12 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (PortletPreferences portletPreferences : (List<PortletPreferences>)q.list()) {
 				map.put(portletPreferences.getPrimaryKeyObj(),

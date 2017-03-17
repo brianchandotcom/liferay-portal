@@ -4602,8 +4602,8 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 
 		query.append(_SQL_SELECT_WEBSITE_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -4620,6 +4620,12 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (Website website : (List<Website>)q.list()) {
 				map.put(website.getPrimaryKeyObj(), website);

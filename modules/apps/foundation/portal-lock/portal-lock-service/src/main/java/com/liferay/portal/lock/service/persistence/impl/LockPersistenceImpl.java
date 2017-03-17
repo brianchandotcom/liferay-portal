@@ -2524,8 +2524,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		query.append(_SQL_SELECT_LOCK_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2542,6 +2542,12 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (Lock lock : (List<Lock>)q.list()) {
 				map.put(lock.getPrimaryKeyObj(), lock);

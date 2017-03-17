@@ -8451,8 +8451,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 		query.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -8469,6 +8469,12 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (MicroblogsEntry microblogsEntry : (List<MicroblogsEntry>)q.list()) {
 				map.put(microblogsEntry.getPrimaryKeyObj(), microblogsEntry);

@@ -2836,8 +2836,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 		query.append(_SQL_SELECT_POLLSCHOICE_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2854,6 +2854,12 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (PollsChoice pollsChoice : (List<PollsChoice>)q.list()) {
 				map.put(pollsChoice.getPrimaryKeyObj(), pollsChoice);

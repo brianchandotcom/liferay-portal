@@ -2184,8 +2184,8 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 
 		query.append(_SQL_SELECT_LAYOUTSET_WHERE_PKS_IN);
 
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+		for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+			query.append(StringPool.QUESTION);
 
 			query.append(StringPool.COMMA);
 		}
@@ -2202,6 +2202,12 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 			session = openSession();
 
 			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				qPos.add(String.valueOf(primaryKey));
+			}
 
 			for (LayoutSet layoutSet : (List<LayoutSet>)q.list()) {
 				map.put(layoutSet.getPrimaryKeyObj(), layoutSet);

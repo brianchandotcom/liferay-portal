@@ -4921,6 +4921,21 @@ go]]></replacevalue>
 						</if>
 					</sequential>
 				</for>
+
+				<for list="${test.latest.marketplace.apps.include}" param="app.file.name">
+					<sequential>
+						<if>
+							<available file="${project.dir}/plugins/marketplace/@{app.file.name}" />
+							<then>
+								<echo>Copying ${project.dir}/plugins/marketplace/@{app.file.name} to ${liferay.home}/osgi/marketplace/@{app.file.name}</echo>
+
+								<delete failonerror="false" file="${liferay.home}/osgi/marketplace/@{app.file.name}" />
+
+								<copy file="${project.dir}/plugins/marketplace/@{app.file.name}" tofile="${liferay.home}/osgi/marketplace/@{app.file.name}" />
+							</then>
+						</if>
+					</sequential>
+				</for>
 			</then>
 		</if>
 	</target>

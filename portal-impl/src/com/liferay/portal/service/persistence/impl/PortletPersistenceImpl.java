@@ -1308,7 +1308,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		query.append(_SQL_SELECT_PORTLET_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}

@@ -1245,11 +1245,16 @@ version 1.1.3.
 in `package.json` instead.
 
 ### Changed
-- [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.22.
+- [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.2.22.
 
 ### Fixed
 - [LPS-71264]: Use the actual directory of the Maven local repository as the
 default value for the `mavenRootDir` property of `InstallCacheTask`.
+
+## 3.5.1 - 2017-03-17
+
+### Changed
+- [LPS-71331]: Update the [Liferay Gradle Plugins] dependency to version 3.2.23.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1378,6 +1383,7 @@ default value for the `mavenRootDir` property of `InstallCacheTask`.
 [LPS-71224]: https://issues.liferay.com/browse/LPS-71224
 [LPS-71264]: https://issues.liferay.com/browse/LPS-71264
 [LPS-71303]: https://issues.liferay.com/browse/LPS-71303
+[LPS-71331]: https://issues.liferay.com/browse/LPS-71331
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

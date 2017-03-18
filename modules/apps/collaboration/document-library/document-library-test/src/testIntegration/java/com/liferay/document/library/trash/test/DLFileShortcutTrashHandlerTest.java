@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.trash.test.util.BaseTrashHandlerTestCase;
@@ -52,7 +56,9 @@ import com.liferay.trash.test.util.WhenIsMoveableFromTrashBaseModel;
 import com.liferay.trash.test.util.WhenIsRestorableBaseModel;
 import com.liferay.trash.test.util.WhenIsUpdatableBaseModel;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -120,6 +126,22 @@ public class DLFileShortcutTrashHandlerTest
 	@Override
 	public void moveParentBaseModelToTrash(long primaryKey) throws Exception {
 		DLTrashServiceUtil.moveFolderToTrash(primaryKey);
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		setUpPermissionThreadLocal();
+		setUpPrincipalThreadLocal();
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -244,6 +266,34 @@ public class DLFileShortcutTrashHandlerTest
 		DLTrashServiceUtil.moveFileShortcutToTrash(primaryKey);
 	}
 
+	protected void setUpPermissionThreadLocal() throws Exception {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+
+				{
+					init(TestPropsValues.getUser());
+				}
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+			});
+	}
+
+	protected void setUpPrincipalThreadLocal() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
 	protected void trashFileEntry() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
@@ -288,6 +338,8 @@ public class DLFileShortcutTrashHandlerTest
 			getNotInTrashBaseModelsCount(parentBaseModel));
 	}
 
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 	private final WhenIsAssetable _whenIsAssetable =
 		new DefaultWhenIsAssetable();
 

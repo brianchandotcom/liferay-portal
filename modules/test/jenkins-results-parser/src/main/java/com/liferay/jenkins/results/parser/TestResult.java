@@ -166,7 +166,7 @@ public class TestResult {
 		encodedTestName = encodedTestName.replace("]", "_");
 		encodedTestName = encodedTestName.replace("#", "_");
 
-		if (simpleClassName.equals("junit.framework")) {
+		if (packageName.equals("junit.framework")) {
 			encodedTestName = encodedTestName.replace(".", "_");
 		}
 

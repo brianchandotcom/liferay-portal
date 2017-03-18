@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -147,8 +148,7 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 						if (!trimmedLine.equals("/>") &&
 							!line.endsWith(" />")) {
 
-							line = StringUtil.replaceLast(
-								line, "/>", " />");
+							line = StringUtil.replaceLast(line, "/>", " />");
 						}
 					}
 					else if (line.endsWith(" >")) {
@@ -158,10 +158,10 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 
 				while (trimmedLine.contains(StringPool.TAB)) {
 					line = StringUtil.replaceLast(
-						line, StringPool.TAB, StringPool.SPACE);
+						line, CharPool.TAB, StringPool.SPACE);
 
 					trimmedLine = StringUtil.replaceLast(
-						trimmedLine, StringPool.TAB, StringPool.SPACE);
+						trimmedLine, CharPool.TAB, StringPool.SPACE);
 				}
 
 				while (trimmedLine.contains(StringPool.DOUBLE_SPACE) &&
@@ -173,8 +173,7 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 						line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
 
 					trimmedLine = StringUtil.replaceLast(
-						trimmedLine, StringPool.DOUBLE_SPACE,
-						StringPool.SPACE);
+						trimmedLine, StringPool.DOUBLE_SPACE, StringPool.SPACE);
 				}
 
 				sb.append(line);

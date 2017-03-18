@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -82,7 +83,8 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 				if (!trimmedLine.equals("{") && line.endsWith("{") &&
 					!line.endsWith(" {")) {
 
-					line = StringUtil.replaceLast(line, "{", " {");
+					line = StringUtil.replaceLast(
+						line, CharPool.OPEN_CURLY_BRACE, " {");
 				}
 
 				int lineLeadingTabCount = getLeadingTabCount(line);
@@ -97,7 +99,7 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 					!previousLine.contains("\ttry (")) {
 
 					line = StringUtil.replaceFirst(
-						line, StringPool.TAB, StringPool.BLANK);
+						line, CharPool.TAB, StringPool.BLANK);
 				}
 
 				sb.append(line);

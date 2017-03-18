@@ -242,7 +242,6 @@ public class WhitespaceCheck extends BaseFileCheck {
 			line, StringPool.SPACE + StringPool.TAB, StringPool.TAB, false);
 	}
 
-
 	protected boolean isAllowLeadingSpaces(String fileName) {
 		return _allowLeadingSpaces;
 	}

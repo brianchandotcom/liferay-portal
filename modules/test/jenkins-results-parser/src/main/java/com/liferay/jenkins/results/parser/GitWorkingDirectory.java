@@ -437,6 +437,8 @@ public class GitWorkingDirectory {
 							te.getMessage(), " Retrying fetch."));
 
 					retries++;
+
+					JenkinsResultsParserUtil.sleep(30000);
 				}
 				else {
 					throw te;

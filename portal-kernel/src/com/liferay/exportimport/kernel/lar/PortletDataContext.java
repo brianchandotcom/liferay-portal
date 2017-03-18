@@ -459,18 +459,6 @@ public interface PortletDataContext extends Serializable {
 	public List<Element> getReferenceElements(
 		StagedModel parentStagedModel, Class<?> clazz);
 
-	/**
-	 * Returns the registered primary keys for the model class name. The model
-	 * class name's entities are registered for the export process in {@link
-	 * #registerExportingClassedModel(ClassedModel)}.
-	 *
-	 * @param  modelClassName the model class name of the entities for which to
-	 *         get the primary keys
-	 * @return the primary keys for the model class name
-	 */
-	public Set<Serializable> getRegisteredExportingClassedModelPrimaryKeys(
-		String modelClassName);
-
 	public String getRootPortletId();
 
 	/**
@@ -633,15 +621,6 @@ public interface PortletDataContext extends Serializable {
 	public boolean isWithinDateRange(Date modifiedDate);
 
 	public void putNotUniquePerLayout(String dataKey);
-
-	/**
-	 * Registers the entity to be exported or published during the process. This
-	 * method is useful when using single asset publication.
-	 *
-	 * @param classedModel the classed model entity to register for the export
-	 *        process
-	 */
-	public void registerExportingClassedModel(ClassedModel classedModel);
 
 	public void setClassLoader(ClassLoader classLoader);
 

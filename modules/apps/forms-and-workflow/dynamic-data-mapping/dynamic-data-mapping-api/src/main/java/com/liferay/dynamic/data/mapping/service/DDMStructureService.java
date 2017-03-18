@@ -348,6 +348,7 @@ public interface DDMStructureService extends BaseService {
 	structure is related to
 	* @param keywords the keywords (space separated), which may occur in the
 	structure's name or description (optionally <code>null</code>)
+	* @param status the workflow's status.
 	* @return the number of matching structures
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -431,6 +432,7 @@ public interface DDMStructureService extends BaseService {
 	* @param groupIds the primary keys of the groups
 	* @param classNameId the primary key of the class name of the model the
 	structure is related to
+	* @param status the workflow's status.
 	* @param keywords the keywords (space separated), which may occur in the
 	structure's name or description (optionally <code>null</code>)
 	* @param start the lower bound of the range of structures to return
@@ -504,6 +506,7 @@ public interface DDMStructureService extends BaseService {
 	com.liferay.dynamic.data.mapping.storage.StorageType}.
 	* @param type the structure's type. For more information, see {@link
 	com.liferay.dynamic.data.mapping.model.DDMStructureConstants}.
+	* @param status the workflow's status.
 	* @param andOperator whether every field must match its keywords, or just
 	one field
 	* @param start the lower bound of the range of structures to return

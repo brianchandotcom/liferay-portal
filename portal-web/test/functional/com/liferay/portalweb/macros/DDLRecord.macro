@@ -15,6 +15,23 @@
 		</execute>
 	</command>
 
+	<command name="addPGViaAP">
+		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
+
+		<execute function="AssertClick" locator1="MenuItem#DDL_RECORD_NAME" value1="${ddlListName}" >
+			<var name="key_ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+	</command>
+
 	<command name="addRepeatableField">
 		<var name="key_fieldName" value="${fieldName}" />
 
@@ -891,6 +908,14 @@
 
 	<command name="viewNoRecords">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No ${ddlDataDefinitionName} records were found" />
+	</command>
+
+	<command name="viewPGViaAP">
+		<var name="key_assetContent" value="${ddlRecordFieldData}" />
+		<var name="key_assetTitle" value="${ddlListName}" />
+
+		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${ddlListName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="viewPopulatedField">

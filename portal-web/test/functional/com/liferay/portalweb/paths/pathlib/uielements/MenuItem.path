@@ -309,6 +309,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DDL_RECORD_NAME</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_ddlListName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEACTIVATE</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Deactivate')]</td>
 	<td></td>

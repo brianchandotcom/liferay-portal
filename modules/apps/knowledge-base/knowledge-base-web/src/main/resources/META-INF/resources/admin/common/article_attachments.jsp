@@ -33,6 +33,10 @@ if (kbArticle != null) {
 		<div class="row">
 
 			<%
+			Map<String, Object> data = new HashMap<String, Object>();
+
+			data.put("senna-off", "true");
+
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext = (DLMimeTypeDisplayContext)request.getAttribute(KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT);
 
 			for (FileEntry fileEntry : attachmentsFileEntries) {
@@ -41,6 +45,7 @@ if (kbArticle != null) {
 
 				<div class="col-md-4">
 					<liferay-frontend:horizontal-card
+						data="<%= data %>"
 						text="<%= fileEntry.getTitle() %>"
 						url="<%= rowURL %>"
 					>

@@ -45,7 +45,7 @@
 
 		<div class="card-col-content card-col-gutters">
 			<span class="lfr-card-title-text truncate-text">
-				<aui:a href="<%= url %>" title="<%= HtmlUtil.escapeAttribute(text) %>">
+				<aui:a data="<%= data %>" href="<%= url %>" title="<%= HtmlUtil.escapeAttribute(text) %>">
 					<%= HtmlUtil.escape(text) %>
 				</aui:a>
 			</span>

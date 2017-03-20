@@ -47,7 +47,9 @@ public class CaptchaConfigurationModelListener
 		try {
 			String captchaEngine = (String)properties.get("captchaEngine");
 
-			if (captchaEngine.equals(ReCaptchaImpl.class.getName())) {
+			if (Validator.isNotNull(captchaEngine) &&
+				captchaEngine.equals(ReCaptchaImpl.class.getName())) {
+
 				validateReCaptchaKeys(properties);
 			}
 		}

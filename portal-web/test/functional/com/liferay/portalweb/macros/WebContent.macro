@@ -820,11 +820,20 @@
 
 		<execute function="SelectFrame" locator1="WCSelectDisplayPage#DISPLAY_PAGE_CONFIGURATION_IFRAME" />
 
-		<execute function="Click#mouseOverClick" locator1="WCSelectDisplayPage#PUBLIC_PAGES_SELECTION">
+		<while>
+			<condition function="IsElementPresent" locator1="PagesConfiguration#PAGE_TREE_NODE_COLLAPSED" />
+			<then>
+				<execute function="Click" locator1="PagesConfiguration#PAGE_TREE_NODE_COLLAPSED" />
+			</then>
+		</while>
+
+		<execute function="AssertElementPresent" locator1="PagesConfiguration#PAGE_TREE_NODE_EXPANDED" />
+
+		<execute function="Click#mouseOverClick" locator1="PagesConfiguration#PAGE_TREE_LINK">
 			<var name="key_pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="SelectFrameTop" />
 
 		<execute macro="Button#clickDone" />
 

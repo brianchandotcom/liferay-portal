@@ -5223,12 +5223,16 @@ public class PortalImpl implements Portal {
 		// URI
 
 		sb.append(uri);
-		sb.append(StringPool.QUESTION);
+
+		boolean firstParam = true;
 
 		// Browser id
 
 		if ((parameterMap == null) || !parameterMap.containsKey("browserId")) {
-			sb.append("&browserId=");
+			sb.append("?browserId=");
+
+			firstParam = false;
+
 			sb.append(BrowserSnifferUtil.getBrowserId(request));
 		}
 
@@ -5237,7 +5241,15 @@ public class PortalImpl implements Portal {
 		if ((uri.endsWith(".css") || uri.endsWith(".jsp")) &&
 			((parameterMap == null) || !parameterMap.containsKey("themeId"))) {
 
-			sb.append("&themeId=");
+			if (firstParam) {
+				sb.append("?themeId=");
+
+				firstParam = false;
+			}
+			else {
+				sb.append("&themeId=");
+			}
+
 			sb.append(HttpUtil.encodeURL(theme.getThemeId()));
 		}
 
@@ -5245,7 +5257,15 @@ public class PortalImpl implements Portal {
 			((parameterMap == null) ||
 			 !parameterMap.containsKey("colorSchemeId"))) {
 
-			sb.append("&colorSchemeId=");
+			if (firstParam) {
+				sb.append("?colorSchemeId=");
+
+				firstParam = false;
+			}
+			else {
+				sb.append("&colorSchemeId=");
+			}
+
 			sb.append(HttpUtil.encodeURL(colorScheme.getColorSchemeId()));
 		}
 
@@ -5268,7 +5288,15 @@ public class PortalImpl implements Portal {
 			}
 
 			if (Validator.isNotNull(minifierType)) {
-				sb.append("&minifierType=");
+				if (firstParam) {
+					sb.append("?minifierType=");
+
+					firstParam = false;
+				}
+				else {
+					sb.append("&minifierType=");
+				}
+
 				sb.append(minifierType);
 			}
 		}
@@ -5276,16 +5304,39 @@ public class PortalImpl implements Portal {
 		// Query string
 
 		if (Validator.isNotNull(queryString)) {
-			if (queryString.charAt(0) != CharPool.AMPERSAND) {
+			if (queryString.charAt(0) == CharPool.AMPERSAND) {
+				if (firstParam) {
+					sb.append(StringPool.QUESTION);
+
+					sb.append(queryString.substring(1));
+				}
+				else {
+					sb.append(queryString);
+				}
+			}
+			else if (firstParam) {
+				sb.append(StringPool.QUESTION);
+
+				sb.append(queryString);
+			}
+			else {
 				sb.append(StringPool.AMPERSAND);
+
+				sb.append(queryString);
 			}
 
-			sb.append(queryString);
+			firstParam = false;
 		}
 
 		// Language id
 
-		sb.append("&languageId=");
+		if (firstParam) {
+			sb.append("?languageId=");
+		}
+		else {
+			sb.append("&languageId=");
+		}
+
 		sb.append(themeDisplay.getLanguageId());
 
 		// Build number
@@ -5324,11 +5375,7 @@ public class PortalImpl implements Portal {
 			sb.append(timestamp);
 		}
 
-		String url = sb.toString();
-
-		url = StringUtil.replace(url, "?&", StringPool.QUESTION);
-
-		return url;
+		return sb.toString();
 	}
 
 	@Override

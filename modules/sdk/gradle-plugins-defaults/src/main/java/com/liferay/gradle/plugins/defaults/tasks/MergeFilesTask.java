@@ -31,6 +31,7 @@ import java.util.Set;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
@@ -86,7 +87,26 @@ public class MergeFilesTask extends DefaultTask {
 
 	@TaskAction
 	public void mergeFiles() throws IOException {
+		FileCollection inputFiles = getInputFiles();
+
+		inputFiles = inputFiles.filter(
+			new Spec<File>() {
+
+				@Override
+				public boolean isSatisfiedBy(File file) {
+					return file.exists();
+				}
+
+			});
+
 		File outputFile = getOutputFile();
+
+		if (inputFiles.isEmpty()) {
+			outputFile.delete();
+
+			return;
+		}
+
 		String separator = getSeparator();
 
 		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
@@ -98,7 +118,7 @@ public class MergeFilesTask extends DefaultTask {
 				bufferedWriter.write(header);
 			}
 
-			for (File inputFile : getInputFiles()) {
+			for (File inputFile : inputFiles) {
 				bufferedWriter.write(separator);
 
 				String content = new String(

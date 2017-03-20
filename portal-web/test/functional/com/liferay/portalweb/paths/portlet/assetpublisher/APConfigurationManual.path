@@ -18,11 +18,6 @@
 	<td>//div[@class='panel-body']//p</td>
 	<td></td>
 </tr>
-<tr>
-	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM</td>
-	<td>//li[@class='asset-selector']//span[contains(.,'${key_assetEntryType}')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

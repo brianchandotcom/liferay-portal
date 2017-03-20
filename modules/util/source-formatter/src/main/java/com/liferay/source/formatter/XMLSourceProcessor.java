@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportPackage;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.XMLEmptyLinesCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
@@ -397,7 +398,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			formatAntXML(fileName, absolutePath, newContent);
 		}
 		else if (fileName.contains("/custom-sql/")) {
-			newContent = formatCustomSQLXML(fileName, newContent);
+			formatCustomSQLXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("structures.xml")) {
 			newContent = formatDDLStructuresXML(newContent);
@@ -407,19 +408,19 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				fileName, absolutePath, newContent);
 		}
 		else if (fileName.endsWith("-hbm.xml")) {
-			newContent = formatHBMXML(fileName, newContent);
+			formatHBMXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("-log4j.xml")) {
-			newContent = formatLog4jXML(fileName, newContent);
+			formatLog4jXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("-look-and-feel.xml")) {
-			newContent = formatLookAndFeelXML(fileName, newContent);
+			formatLookAndFeelXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("-model-hints.xml")) {
-			newContent = formatModelHintsXML(fileName, newContent);
+			formatModelHintsXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("portlet-preferences.xml")) {
-			newContent = formatPortletPreferencesXML(fileName, newContent);
+			formatPortletPreferencesXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("/liferay-portlet.xml") ||
 				 ((portalSource || subrepository) &&
@@ -437,30 +438,29 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent = formatPoshiXML(fileName, newContent);
 		}
 		else if (fileName.contains("/resource-actions/")) {
-			newContent = formatResourceActionXML(fileName, newContent, "model");
-			newContent = formatResourceActionXML(
-				fileName, newContent, "portlet");
+			formatResourceActionXML(fileName, newContent, "model");
+			formatResourceActionXML(fileName, newContent, "portlet");
 		}
 		else if (fileName.endsWith("/service.xml")) {
-			newContent = formatServiceXML(fileName, absolutePath, newContent);
+			formatServiceXML(fileName, absolutePath, newContent);
 		}
 		else if (fileName.endsWith("/schema.xml") &&
 				 absolutePath.contains("solr")) {
 
-			newContent = formatSolrSchemaXML(fileName, newContent);
+			formatSolrSchemaXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("-spring.xml")) {
-			newContent = formatSpringXML(fileName, newContent);
+			formatSpringXML(fileName, newContent);
 		}
 		else if ((portalSource || subrepository) &&
 				 fileName.endsWith("/struts-config.xml")) {
 
-			newContent = formatStrutsConfigXML(fileName, newContent);
+			formatStrutsConfigXML(fileName, newContent);
 		}
 		else if ((portalSource || subrepository) &&
 				 fileName.endsWith("/test-ignorable-error-lines.xml")) {
 
-			newContent = formatTestIgnorableErrorLinesXml(fileName, newContent);
+			formatTestIgnorableErrorLinesXml(fileName, newContent);
 		}
 		else if ((portalSource || subrepository) &&
 				 fileName.endsWith("/tiles-defs.xml")) {
@@ -468,7 +468,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			formatTilesDefsXML(fileName, newContent);
 		}
 		else if (fileName.endsWith(".toggle")) {
-			newContent = formatToggleXML(fileName, newContent);
+			formatToggleXML(fileName, newContent);
 		}
 		else if (((portalSource || subrepository) &&
 				  fileName.endsWith("portal-web/docroot/WEB-INF/web.xml")) ||
@@ -479,10 +479,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		newContent = sortAttributes(fileName, newContent);
-
-		newContent = fixEmptyLinesInMultiLineTags(newContent);
-
-		newContent = fixEmptyLinesInNestedTags(newContent);
 
 		return formatXML(newContent);
 	}
@@ -504,23 +500,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	protected String fixEmptyLinesBetweenTags(
-		String content, boolean allowEmptyLinesBetweenTags) {
-
-		if (allowEmptyLinesBetweenTags) {
-			return fixEmptyLinesBetweenTags(content);
-		}
-
-		Matcher matcher = _emptyLineBetweenTagsPattern.matcher(content);
-
-		if (matcher.find()) {
-			return StringUtil.replaceFirst(
-				content, "\n\n", "\n", matcher.end(1));
-		}
-
-		return content;
 	}
 
 	protected String fixPoshiXMLElementWithNoChild(String content) {
@@ -714,7 +693,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkTargetNames(fileName, absolutePath, content);
 	}
 
-	protected String formatCustomSQLXML(String fileName, String content)
+	protected void formatCustomSQLXML(String fileName, String content)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -737,8 +716,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				"Avoid using WHERE ... NOT IN: " + content.substring(y + 1, z) +
 					", see LPS-51315");
 		}
-
-		return fixEmptyLinesBetweenTags(content, false);
 	}
 
 	protected String formatDDLStructuresXML(String content) throws Exception {
@@ -797,7 +774,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		int pos = content.indexOf("<routes>\n");
 
 		if (pos == -1) {
-			return fixEmptyLinesBetweenTags(content, false);
+			return content;
 		}
 
 		StringBundler sb = new StringBundler(9);
@@ -819,10 +796,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		sb.append(".dtd\">\n\n");
 		sb.append(content.substring(pos));
 
-		return fixEmptyLinesBetweenTags(sb.toString(), false);
+		return sb.toString();
 	}
 
-	protected String formatHBMXML(String fileName, String content)
+	protected void formatHBMXML(String fileName, String content)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -830,11 +807,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, document.getRootElement(), "import", null,
 			new ElementComparator("class"));
-
-		return fixEmptyLinesBetweenTags(content, false);
 	}
 
-	protected String formatLog4jXML(String fileName, String content)
+	protected void formatLog4jXML(String fileName, String content)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -842,11 +817,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, document.getRootElement(), "category", null,
 			new ElementComparator(true));
-
-		return fixEmptyLinesBetweenTags(content, true);
 	}
 
-	protected String formatLookAndFeelXML(String fileName, String content)
+	protected void formatLookAndFeelXML(String fileName, String content)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -866,11 +839,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				fileName, settingsElement, "setting", null,
 				new ElementComparator("key"));
 		}
-
-		return fixEmptyLinesBetweenTags(content, false);
 	}
 
-	protected String formatModelHintsXML(String fileName, String content)
+	protected void formatModelHintsXML(String fileName, String content)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -882,12 +853,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			new ElementComparator());
 		checkOrder(
 			fileName, rootElement, "model", null, new ElementComparator());
-
-		return fixEmptyLinesBetweenTags(content, false);
 	}
 
-	protected String formatPortletPreferencesXML(
-			String fileName, String content)
+	protected void formatPortletPreferencesXML(String fileName, String content)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -905,8 +873,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			processMessage(fileName, "Rename file to " + correctFileName);
 		}
-
-		return fixEmptyLinesBetweenTags(content, false);
 	}
 
 	protected String formatPortletXML(
@@ -991,7 +957,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return fixPoshiXMLNumberOfTabs(content);
 	}
 
-	protected String formatResourceActionXML(
+	protected void formatResourceActionXML(
 			String fileName, String content, String type)
 		throws Exception {
 
@@ -1030,11 +996,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, rootElement, type + "-resource", null,
 			new ResourceActionResourceElementComparator(type + "-name"));
-
-		return fixEmptyLinesBetweenTags(content, false);
 	}
 
-	protected String formatServiceXML(
+	protected void formatServiceXML(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
@@ -1086,11 +1050,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, rootElement.element("exceptions"), "exception", null,
 			new ServiceExceptionElementComparator());
-
-		return fixEmptyLinesBetweenTags(content, false);
 	}
 
-	protected String formatSolrSchemaXML(String fileName, String content)
+	protected void formatSolrSchemaXML(String fileName, String content)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -1103,11 +1065,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, rootElement.element("types"), "fieldType", null,
 			new ElementComparator());
-
-		return fixEmptyLinesBetweenTags(content, false);
 	}
 
-	protected String formatSpringXML(String fileName, String content)
+	protected void formatSpringXML(String fileName, String content)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -1115,11 +1075,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, document.getRootElement(), "bean", null,
 			new SpringBeanElementComparator("id"));
-
-		return fixEmptyLinesBetweenTags(content, false);
 	}
 
-	protected String formatStrutsConfigXML(String fileName, String content)
+	protected void formatStrutsConfigXML(String fileName, String content)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -1129,11 +1087,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, rootElement.element("action-mappings"), "action", null,
 			new StrutsActionElementComparator("path"));
-
-		return fixEmptyLinesBetweenTags(content, true);
 	}
 
-	protected String formatTestIgnorableErrorLinesXml(
+	protected void formatTestIgnorableErrorLinesXml(
 			String fileName, String content)
 		throws Exception {
 
@@ -1156,11 +1112,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				fileName, logElement, "ignore-error", null,
 				new ElementComparator("description"));
 		}
-
-		return fixEmptyLinesBetweenTags(content, false);
 	}
 
-	protected String formatTilesDefsXML(String fileName, String content)
+	protected void formatTilesDefsXML(String fileName, String content)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -1168,11 +1122,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, document.getRootElement(), "definition", null,
 			new TilesDefinitionElementComparator());
-
-		return fixEmptyLinesBetweenTags(content, true);
 	}
 
-	protected String formatToggleXML(String fileName, String content)
+	protected void formatToggleXML(String fileName, String content)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -1180,8 +1132,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, document.getRootElement(), "toggle", null,
 			new ElementComparator());
-
-		return fixEmptyLinesBetweenTags(content, false);
 	}
 
 	protected String formatWebXML(String fileName, String content)
@@ -1195,7 +1145,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				processMessage(fileName, StringPool.BLANK);
 			}
 
-			return fixEmptyLinesBetweenTags(content, false);
+			return content;
 		}
 
 		Properties properties = new Properties();
@@ -1273,7 +1223,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent.substring(0, x) + sb.toString() +
 				newContent.substring(y);
 
-		return fixEmptyLinesBetweenTags(newContent, false); 
+		return newContent;
 	}
 
 	protected List<String> getColumnNames(
@@ -1342,10 +1292,15 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(
-			new FileCheck[] {
-				new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName())
-			});
+		List<FileCheck> fileChecks = new ArrayList<>();
+
+		fileChecks.add(
+			new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName()));
+
+		fileChecks.add(
+			new XMLEmptyLinesCheck(sourceFormatterArgs.getBaseDirName()));
+
+		return fileChecks;
 	}
 
 	protected String getTablesContent(String fileName, String absolutePath)
@@ -1649,8 +1604,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static final Pattern _commentPattern2 = Pattern.compile(
 		"[\t ]-->\n[\t<]");
 
-	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
-		"\n(\t*)<[\\w/].*>(\n\n)(\t*)<(\\w)");
 	private final Pattern _importFilePattern = Pattern.compile(
 		"<import file=\"(.*)\"");
 	private final Pattern _incorrectDefaultPreferencesFileName =

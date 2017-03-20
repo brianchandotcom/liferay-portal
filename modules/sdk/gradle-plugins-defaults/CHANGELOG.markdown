@@ -1263,6 +1263,9 @@ default value for the `mavenRootDir` property of `InstallCacheTask`.
 
 ## 3.5.3 - 2017-03-21
 
+### Added
+- [LPS-70146]: Disable `printDependentArtifact` task for `*-test` projects.
+
 ### Changed
 - [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.2.25.
 

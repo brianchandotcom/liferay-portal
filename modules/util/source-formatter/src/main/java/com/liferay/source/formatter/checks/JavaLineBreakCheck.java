@@ -346,6 +346,19 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				sourceFormatterMessages, fileName,
 				"There should be a line break after '}'", lineCount);
 		}
+
+		Matcher matcher = _incorrectLineBreakPattern6.matcher(trimmedLine);
+
+		if (matcher.find() && (getLevel(matcher.group(4)) > 1)) {
+			x = trimmedLine.indexOf("(", matcher.start(4));
+
+			String linePart = trimmedLine.substring(0, x + 1);
+
+			addMessage(
+				sourceFormatterMessages, fileName,
+				"There should be a line break after '" + linePart + "'",
+				lineCount);
+		}
 	}
 
 	private String _fixIncorrectLineBreaks(
@@ -516,6 +529,8 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		"\n(\t+\\{)\n(.*[^;])\n\t+(\\},?)");
 	private final Pattern _incorrectLineBreakPattern5 = Pattern.compile(
 		", (new .*\\(.*\\) \\{)\n");
+	private final Pattern _incorrectLineBreakPattern6 = Pattern.compile(
+		"^(((else )?if|for|try|while) \\()?\\(*(.*\\()$");
 	private final Pattern _incorrectMultiLineCommentPattern = Pattern.compile(
 		"(\n\t*/\\*)\n\t*(.*?)\n\t*(\\*/\n)", Pattern.DOTALL);
 	private final Pattern _lineStartingWithOpenParenthesisPattern =

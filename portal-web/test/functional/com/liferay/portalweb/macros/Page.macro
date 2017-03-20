@@ -472,9 +472,9 @@
 			<var name="page" value="${page}" />
 		</execute>
 
-		<var name="key_pageType" value="${pageType}" />
-
-		<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_LAYOUT" value1="${pageType}" />
+		<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_LAYOUT" value1="${pageType}">
+			<var name="key_pageType" value="${pageType}" />
+		</execute>
 
 		<if>
 			<equals arg1="${pageType}" arg2="Link to a Page of This Site" />

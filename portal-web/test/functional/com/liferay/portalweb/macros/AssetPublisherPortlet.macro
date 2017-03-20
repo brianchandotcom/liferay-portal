@@ -1090,9 +1090,9 @@
 		<execute function="Click" locator1="APConfigurationManual#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT" />
 
 		<for list="${assetEntryTypes}" param="assetEntryType">
-			<var name="key_assetEntryType" value="${assetEntryType}" />
-
-			<execute function="AssertTextEquals#assertPartialText" locator1="APConfigurationManual#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="${assetEntryType}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="MenuItem#ANY_MENU_ITEM" value1="${assetEntryType}">
+				<var name="key_menuItem" value="${assetEntryType}" />
+			</execute>
 		</for>
 
 		<execute macro="IFrame#selectTopFrame" />

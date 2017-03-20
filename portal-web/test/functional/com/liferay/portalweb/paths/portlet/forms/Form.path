@@ -176,12 +176,12 @@
 </tr>
 <tr>
 	<td>SETTINGS_TAB_WORKFLOW_CONFIGURATION_FIELD</td>
-	<td>//div[contains(@data-fieldname,'workflowDefinition')]//a[contains(@id,'workflowDefinition')]</td>
+	<td>//div[contains(@data-fieldname,'workflowDefinition')]//a[contains(@id,'workflowDefinition')] | //div[contains(@data-fieldname,'workflowDefinition')]//div[contains(@id,'workflowDefinition')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_TAB_WORKFLOW_CONFIGURATION</td>
-	<td>//div[contains(@data-fieldname,'workflowDefinition')]//a[contains(@id,'workflowDefinition')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_workflowDefinition}')]</td>
+	<td>//div[contains(@data-fieldname,'workflowDefinition')]//a[contains(@id,'workflowDefinition')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_workflowDefinition}')] | //div[contains(@data-fieldname,'workflowDefinition')]//div[contains(@id,'workflowDefinition')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_workflowDefinition}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -254,12 +254,12 @@
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]//div[contains(@class,'select-field')]//a[contains(@id,'outputParameterType')]</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]//div[contains(@class,'select-field')]//a[contains(@id,'outputParameterType')] | //div[contains(@data-fieldname,'outputParameters')]//div[contains(@class,'select-field')]//div[contains(@id,'outputParameterType')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_2</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div//div[contains(@class,'select-field')]//a[contains(@id,'outputParameterType')]</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div//div[contains(@class,'select-field')]//a[contains(@id,'outputParameterType')] | //div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div//div[contains(@class,'select-field')]//div[contains(@id,'outputParameterType')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -39,12 +39,8 @@ public class LangBuilderArgs {
 		return _portalLanguagePropertiesFileName;
 	}
 
-	public String getTranslateClientId() {
-		return _translateClientId;
-	}
-
-	public String getTranslateClientSecret() {
-		return _translateClientSecret;
+	public String getTranslateSubscriptionKey() {
+		return _translateSubscriptionKey;
 	}
 
 	public boolean isPlugin() {
@@ -77,12 +73,8 @@ public class LangBuilderArgs {
 		_translate = translate;
 	}
 
-	public void setTranslateClientId(String translateClientId) {
-		_translateClientId = translateClientId;
-	}
-
-	public void setTranslateClientSecret(String translateClientSecret) {
-		_translateClientSecret = translateClientSecret;
+	public void setTranslateSubscriptionKey(String translateSubscriptionKey) {
+		_translateSubscriptionKey = translateSubscriptionKey;
 	}
 
 	private String _langDirName = LANG_DIR_NAME;
@@ -90,7 +82,6 @@ public class LangBuilderArgs {
 	private boolean _plugin = PLUGIN;
 	private String _portalLanguagePropertiesFileName;
 	private boolean _translate = TRANSLATE;
-	private String _translateClientId;
-	private String _translateClientSecret;
+	private String _translateSubscriptionKey;
 
 }

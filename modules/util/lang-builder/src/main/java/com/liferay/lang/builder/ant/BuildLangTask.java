@@ -61,12 +61,8 @@ public class BuildLangTask extends Task {
 		_langBuilderArgs.setTranslate(translate);
 	}
 
-	public void setTranslateClientId(String translateClientId) {
-		_langBuilderArgs.setTranslateClientId(translateClientId);
-	}
-
-	public void setTranslateClientSecret(String translateClientSecret) {
-		_langBuilderArgs.setTranslateClientSecret(translateClientSecret);
+	public void setTranslateSubscriptionKey(String translateSubscriptionKey) {
+		_langBuilderArgs.setTranslateSubscriptionKey(translateSubscriptionKey);
 	}
 
 	private final LangBuilderArgs _langBuilderArgs = new LangBuilderArgs();

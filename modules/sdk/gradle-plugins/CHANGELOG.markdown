@@ -1152,7 +1152,7 @@ to version 1.0.91.
 ## 3.2.10 - 2017-02-28
 
 ### Added
-- [LPS-70941]: Add the ability to configure the `showDocumentation` argument in
+- [LPS-70941]: Add the ability to configure the `showDocumentation` property in
 all `FormatSourceTask` instances by setting the project property
 `source.formatter.show.documentation`.
 

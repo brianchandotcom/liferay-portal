@@ -21,13 +21,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.FTLEmptyLinesCheck;
 import com.liferay.source.formatter.checks.FTLIfStatementCheck;
 import com.liferay.source.formatter.checks.FTLWhitespaceCheck;
 import com.liferay.source.formatter.checks.FileCheck;
 
 import java.io.File;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -131,14 +132,6 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 		content = importsFormatter.format(content, null, null);
 
-		content = fixEmptyLinesInMultiLineTags(content);
-
-		content = fixEmptyLinesInNestedTags(content);
-
-		content = fixEmptyLinesBetweenTags(content);
-
-		content = fixMissingEmptyLinesAroundComments(content);
-
 		return StringUtil.replace(content, "\n\n\n", "\n\n");
 	}
 
@@ -155,24 +148,6 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	protected String fixMissingEmptyLinesAroundComments(String content) {
-		Matcher matcher = _missingEmptyLineAfterCommentPattern.matcher(content);
-
-		if (matcher.find()) {
-			return StringUtil.replaceFirst(
-				content, "\n", "\n\n", matcher.start());
-		}
-
-		matcher = _missingEmptyLineBeforeCommentPattern.matcher(content);
-
-		if (matcher.find()) {
-			return StringUtil.replaceFirst(
-				content, "\n", "\n\n", matcher.start());
-		}
-
-		return content;
 	}
 
 	protected String formatAssignTags(String content) {
@@ -269,10 +244,14 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(
-			new FileCheck[] {
-				new FTLIfStatementCheck(), new FTLWhitespaceCheck()
-			});
+		List<FileCheck> fileChecks = new ArrayList<>();
+
+		fileChecks.add(new FTLWhitespaceCheck());
+
+		fileChecks.add(new FTLEmptyLinesCheck());
+		fileChecks.add(new FTLIfStatementCheck());
+
+		return fileChecks;
 	}
 
 	protected String sortLiferayVariables(String content) {
@@ -316,10 +295,6 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		"^\t*<#assign liferay_.*>\n", Pattern.MULTILINE);
 	private final Pattern _liferayVariablesPattern = Pattern.compile(
 		"(^\t*<#assign liferay_.*>\n)+", Pattern.MULTILINE);
-	private final Pattern _missingEmptyLineAfterCommentPattern =
-		Pattern.compile("-->\n[^\n]");
-	private final Pattern _missingEmptyLineBeforeCommentPattern =
-		Pattern.compile("[^\n]\n\t*<#--");
 	private final Pattern _multiParameterTagPattern = Pattern.compile(
 		"\n(\t*)<@.+=.+=.+/>");
 	private final Pattern _singleParameterTagPattern = Pattern.compile(

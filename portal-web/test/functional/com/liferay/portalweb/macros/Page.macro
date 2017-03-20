@@ -479,7 +479,26 @@
 		<if>
 			<equals arg1="${pageType}" arg2="Link to a Page of This Site" />
 			<then>
-				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT" value1="regexp:.*${pageLinkName}.*" />
+				<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+				<while>
+					<condition function="IsElementPresent" locator1="PagesConfiguration#PAGE_TREE_NODE_COLLAPSED" />
+					<then>
+						<execute function="Click" locator1="PagesConfiguration#PAGE_TREE_NODE_COLLAPSED" />
+					</then>
+				</while>
+
+				<execute function="AssertElementPresent" locator1="PagesConfiguration#PAGE_TREE_NODE_EXPANDED" />
+
+				<execute function="Click#mouseOverClick" locator1="PagesConfiguration#PAGE_TREE_LINK">
+					<var name="key_pageName" value="${pageLinkName}" />
+				</execute>
+
+				<execute function="SelectFrameTop" />
+
+				<execute macro="Button#clickDone" />
 			</then>
 			<elseif>
 				<equals arg1="${pageType}" arg2="Embedded" />

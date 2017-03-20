@@ -107,6 +107,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a menu item in the UI for an Export Entity Screen.</description>
 		<name>export-entity</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ExportEntityTag</tag-class>
 		<body-content>JSP</body-content>
@@ -132,6 +133,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a menu item in the UI for an Export/Publish Entity Screen.</description>
 		<name>export-import-entity-management-bar-button</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ExportImportEntityManagementBarButtonTag</tag-class>
 		<body-content>JSP</body-content>
@@ -147,6 +149,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Adds a Seach Container Mapping to the DOM required by the Export Import Entity Management Bar Button tag library.</description>
 		<name>export-import-entity-search-container-mapping</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ExportImportEntitySearchContainerMappingTag</tag-class>
 		<body-content>JSP</body-content>
@@ -157,6 +160,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a menu item in the UI for an Import Entity Screen.</description>
 		<name>import-entity</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ImportEntityTag</tag-class>
 		<body-content>JSP</body-content>

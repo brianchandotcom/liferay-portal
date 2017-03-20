@@ -322,12 +322,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixCompatClassImports(absolutePath, newContent);
 
-		newContent = fixEmptyLinesInMultiLineTags(newContent);
-
-		newContent = fixEmptyLinesInNestedTags(newContent);
-
-		newContent = fixEmptyLinesBetweenTags(newContent);
-
 		newContent = fixIncorrectClosingTag(newContent);
 
 		newContent = fixEmptyJavaSourceTag(newContent);

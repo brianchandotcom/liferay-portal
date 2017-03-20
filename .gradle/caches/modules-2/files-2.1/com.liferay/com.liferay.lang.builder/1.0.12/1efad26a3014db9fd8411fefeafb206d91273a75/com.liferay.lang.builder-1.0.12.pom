@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.lang.builder</artifactId>
-  <version>1.0.11</version>
+  <version>1.0.12</version>
   <description>Liferay Lang Builder</description>
   <licenses>
     <license>
@@ -26,9 +26,9 @@
   </scm>
   <dependencies>
     <dependency>
-      <groupId>com.memetix</groupId>
+      <groupId>io.github.firemaples</groupId>
       <artifactId>microsoft-translator-java-api</artifactId>
-      <version>0.6.2</version>
+      <version>0.8.3</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

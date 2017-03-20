@@ -1297,8 +1297,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		fileChecks.add(
 			new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName()));
 
-		fileChecks.add(
-			new XMLEmptyLinesCheck(sourceFormatterArgs.getBaseDirName()));
+		if (portalSource || subrepository) {
+			fileChecks.add(
+				new XMLEmptyLinesCheck(sourceFormatterArgs.getBaseDirName()));
+		}
 
 		return fileChecks;
 	}

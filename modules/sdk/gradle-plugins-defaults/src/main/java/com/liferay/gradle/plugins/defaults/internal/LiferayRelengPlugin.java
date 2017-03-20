@@ -292,7 +292,11 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					if (_hasProjectDependencies(task.getProject())) {
+					Project project = task.getProject();
+
+					if (!GradleUtil.isTestProject(project) &&
+						_hasProjectDependencies(project)) {
+
 						return true;
 					}
 

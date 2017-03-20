@@ -14,6 +14,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TREE_LINK</td>
+	<td>//li[contains(@class,'treeview-node')]//div/span[contains(.,'${key_pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_NODE_EXPANDED</td>
+	<td>//div[contains(@class,'treeview-node-main') and @aria-expanded='true']/div[contains(@class,'toggler')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_NODE_COLLAPSED</td>
+	<td>//div[contains(@class,'treeview-node-main') and @aria-expanded='false']/div[contains(@class,'toggler')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGES_ALL_PUBLIC_PAGES_CHECKBOX</td>
 	<td>//div[contains(.,'Public Pages')]//span[contains(@class,'icon-check')]</td>
 	<td></td>

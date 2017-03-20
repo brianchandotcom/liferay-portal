@@ -57,7 +57,7 @@
 <!--AUTHENTICATION_CAS-->
 <tr>
 	<td>AUTHENTICATION_CAS_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@name,'cas--enabled')]</td>
+	<td>//input[contains(@name,'cas_enabled')]</td>
 	<td></td>
 </tr>
 <tr>

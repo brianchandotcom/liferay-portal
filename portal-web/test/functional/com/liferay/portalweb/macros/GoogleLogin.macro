@@ -29,7 +29,7 @@
 
 		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 
-		<execute function="Click" locator1="Link#GOOGLE_LOGIN" />
+		<execute function="Click" locator1="Icon#GOOGLE_PLUS" />
 
 		<execute function="SelectWindow" locator1="GoogleLogin#PAGE_TITLE" />
 

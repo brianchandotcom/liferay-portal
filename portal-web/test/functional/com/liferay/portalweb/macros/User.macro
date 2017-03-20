@@ -1785,7 +1785,7 @@
 
 		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 
-		<execute function="AssertClick" locator1="Link#FACEBOOK_LOGIN" value1="Facebook" />
+		<execute function="AssertClick" locator1="Icon#FACEBOOK" value1="Facebook" />
 
 		<execute function="SelectWindow" locator1="title=Log into Facebook | Facebook" />
 

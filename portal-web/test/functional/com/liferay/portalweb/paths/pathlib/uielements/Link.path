@@ -59,16 +59,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FACEBOOK_LOGIN</td>
-	<td>//span[contains(.,'Facebook')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GOOGLE_LOGIN</td>
-	<td>//span[contains(.,'Google')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>GUEST</td>
 	<td>//div[@class='navigation']/ul/li/a/span[contains(.,'Guest')]</td>
 	<td></td>
@@ -105,7 +95,7 @@
 </tr>
 <tr>
 	<td>OPENID</td>
-	<td>//span[contains(.,'OpenID')]</td>
+	<td>//a[contains(.,'OpenID')]</td>
 	<td></td>
 </tr>
 <tr>

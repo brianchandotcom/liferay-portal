@@ -125,7 +125,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			else {
 				String firstLine = matcher.group(2);
 
-				if (firstLine.equals("%>")) {
+				if (firstLine.equals("%>") || firstLine.endsWith("-->")) {
 					continue;
 				}
 

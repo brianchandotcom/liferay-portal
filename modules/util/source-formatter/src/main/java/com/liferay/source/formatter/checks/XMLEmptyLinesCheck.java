@@ -71,6 +71,6 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 
 	private final String _baseDirName;
 	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
-		"\n(\t*)<[\\w/].*>(\n\n)(\t*)<(\\w)");
+		"\n(\t*)<[\\w/].*[^-]>(\n\n)(\t*)<(\\w)");
 
 }

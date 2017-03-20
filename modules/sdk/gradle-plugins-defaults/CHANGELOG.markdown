@@ -1337,6 +1337,11 @@ OSGi project snapshot with the `install` and `uploadArchives` tasks.
 ### Changed
 - [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.2.35.
 
+## 3.5.15 - 2017-04-05
+
+### Changed
+- [LPS-71375]: Update the [Liferay Gradle Plugins] dependency to version 3.2.36.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -1468,6 +1473,7 @@ OSGi project snapshot with the `install` and `uploadArchives` tasks.
 [LPS-71303]: https://issues.liferay.com/browse/LPS-71303
 [LPS-71331]: https://issues.liferay.com/browse/LPS-71331
 [LPS-71354]: https://issues.liferay.com/browse/LPS-71354
+[LPS-71375]: https://issues.liferay.com/browse/LPS-71375
 [LPS-71376]: https://issues.liferay.com/browse/LPS-71376
 [LPS-71535]: https://issues.liferay.com/browse/LPS-71535
 [LPS-71603]: https://issues.liferay.com/browse/LPS-71603

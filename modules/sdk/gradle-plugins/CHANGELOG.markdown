@@ -1406,6 +1406,22 @@ to version 1.0.113.
 - [LPS-71164]: Update the [Liferay Source Formatter] dependency to version
 1.0.380.
 
+## 3.2.36 - 2017-04-05
+
+### Added
+- [LPS-71375]: Add the ability to configure the `translateSubscriptionKey`
+property in all `BuildLangTask` instances by setting the project property
+`microsoft.translator.subscription.key`.
+
+### Changed
+- [LPS-71375]: Update the [Liferay Gradle Plugins Lang Builder] dependency to
+version 2.0.0.
+- [LPS-71375]: Update the [Liferay Lang Builder] dependency to version 1.0.12.
+
+### Removed
+- [LPS-71375]: The project properties `microsoft.translator.client.id` and
+`microsoft.translator.client.secret` are no longer available.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1529,6 +1545,7 @@ to version 1.0.113.
 [LPS-71164]: https://issues.liferay.com/browse/LPS-71164
 [LPS-71222]: https://issues.liferay.com/browse/LPS-71222
 [LPS-71331]: https://issues.liferay.com/browse/LPS-71331
+[LPS-71375]: https://issues.liferay.com/browse/LPS-71375
 [LPS-71558]: https://issues.liferay.com/browse/LPS-71558
 [LPS-71603]: https://issues.liferay.com/browse/LPS-71603
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

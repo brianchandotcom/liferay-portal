@@ -952,9 +952,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				fileName, "Only *.java files are allowed in /src/*/java/");
 		}
 
-		String newContent = doFormat(file, fileName, absolutePath, content);
+		String newContent = processFileChecks(fileName, absolutePath, content);
 
-		newContent = processFileChecks(fileName, absolutePath, newContent);
+		newContent = doFormat(file, fileName, absolutePath, newContent);
 
 		newContent = StringUtil.replace(
 			newContent, StringPool.RETURN, StringPool.BLANK);

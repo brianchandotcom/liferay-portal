@@ -271,7 +271,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, LiferayExtension.class);
 
 		final GitRepo gitRepo = _getGitRepo(project.getProjectDir());
-		boolean testProject = GradleUtil.isTestProject(project);
+		final boolean testProject = GradleUtil.isTestProject(project);
 
 		File versionOverrideFile = _getVersionOverrideFile(project, gitRepo);
 
@@ -470,7 +470,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					// to know if we are publishing a snapshot or not.
 
 					_configureTaskUploadArchives(
-						project, updateFileVersionsTask, updateVersionTask);
+						project, testProject, updateFileVersionsTask,
+						updateVersionTask);
 
 					_configureProjectBndProperties(project, liferayExtension);
 				}
@@ -3090,15 +3091,24 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskUploadArchives(
-		Project project, ReplaceRegexTask updateFileVersionsTask,
+		Project project, boolean testProject,
+		ReplaceRegexTask updateFileVersionsTask,
 		ReplaceRegexTask updateVersionTask) {
+
+		Task uploadArchivesTask = GradleUtil.getTask(
+			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+
+		if (testProject) {
+			uploadArchivesTask.setDependsOn(Collections.emptySet());
+			uploadArchivesTask.setEnabled(false);
+			uploadArchivesTask.setFinalizedBy(Collections.emptySet());
+
+			return;
+		}
 
 		if (GradleUtil.isSnapshot(project)) {
 			return;
 		}
-
-		Task uploadArchivesTask = GradleUtil.getTask(
-			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 
 		TaskContainer taskContainer = project.getTasks();
 

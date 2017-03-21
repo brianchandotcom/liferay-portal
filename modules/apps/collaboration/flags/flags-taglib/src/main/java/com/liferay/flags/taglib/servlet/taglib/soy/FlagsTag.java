@@ -63,7 +63,7 @@ public class FlagsTag extends TemplateRendererTag {
 
 			putValue("cssClass", _getCssClass(randomNamespace, enabled));
 
-			putValue("data", _getDataJSON(context, className, classPK));
+			putValue("data", _getDataJSONObject(context, className, classPK));
 
 			putValue("flagsEnabled", _isFlagsEnabled(themeDisplay));
 
@@ -166,7 +166,7 @@ public class FlagsTag extends TemplateRendererTag {
 		return currentURL;
 	}
 
-	private JSONObject _getDataJSON(
+	private JSONObject _getDataJSONObject(
 		Map<String, Object> context, String className, long classPK) {
 
 		String namespace = PortalUtil.getPortletNamespace(PortletKeys.FLAGS);

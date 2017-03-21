@@ -26,6 +26,7 @@ import com.liferay.project.templates.util.StringTestUtil;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
@@ -1046,6 +1047,41 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateWorkspaceLocalProperties() throws Exception {
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			WorkspaceUtil.WORKSPACE, "foo");
+
+		Properties gradleLocalProperties = new Properties();
+
+		String homeDirName = "foo/bar/baz";
+		String modulesDirName = "qux/quux";
+
+		gradleLocalProperties.put("liferay.workspace.home.dir", homeDirName);
+		gradleLocalProperties.put(
+			"liferay.workspace.modules.dir", modulesDirName);
+
+		File gradleLocalPropertiesFile = new File(
+			workspaceProjectDir, "gradle-local.properties");
+
+		try (FileOutputStream fileOutputStream = new FileOutputStream(
+				gradleLocalPropertiesFile)) {
+
+			gradleLocalProperties.store(fileOutputStream, null);
+		}
+
+		_buildTemplateWithGradle(
+			new File(workspaceProjectDir, modulesDirName), "", "foo-portlet");
+
+		_executeGradle(
+			workspaceProjectDir,
+			":" + modulesDirName.replace('/', ':') + ":foo-portlet" +
+				_GRADLE_TASK_PATH_DEPLOY);
+
+		_testExists(
+			workspaceProjectDir, homeDirName + "/osgi/modules/foo.portlet.jar");
+	}
+
+	@Test
 	public void testBuildTemplateWorkspaceWithPortlet() throws Exception {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "withportlet");
@@ -1767,6 +1803,8 @@ public class ProjectTemplatesTest {
 
 	private static final String _GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING =
 		":checkSourceFormatting";
+
+	private static final String _GRADLE_TASK_PATH_DEPLOY = ":deploy";
 
 	private static final String[] _GRADLE_WRAPPER_FILE_NAMES = {
 		"gradlew", "gradlew.bat", "gradle/wrapper/gradle-wrapper.jar",

@@ -7,20 +7,6 @@
 		<isset property="env.AXIS_VARIABLE" />
 	</condition>
 
-	<macrodef name="check-deprecated-method">
-		<sequential>
-			<if>
-				<and>
-					<available file="javac.output.txt" />
-					<isset property="env.TOP_LEVEL_SHARED_DIR" />
-				</and>
-				<then>
-					<copy file="javac.output.txt" tofile="${env.TOP_LEVEL_SHARED_DIR}/javac.output.txt" />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="check-jenkins-console">
 		<sequential>
 			<if>
@@ -271,61 +257,9 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						<param name="todir" value="${app.server.lib.global.dir}" />
 					</antcall>
 
-					<trycatch property="database.error">
-						<try>
-							<record action="start" name="${project.dir}/database.log" />
-
-							<antcall inheritall="false" target="rebuild-database" >
-								<param name="database.type" value="@{database.type}" />
-							</antcall>
-
-							<record action="stop" name="${project.dir}/database.log" />
-						</try>
-						<catch>
-							<if>
-								<resourcecontains resource="${project.dir}/database.log" substring="ERROR 1010" />
-								<then>
-									<zip destfile="${env.TOP_LEVEL_SHARED_DIR}/database.error.zip">
-										<fileset dir="/var/lib/mysql/${database.mysql.schema}" />
-									</zip>
-
-									<delete includeemptydirs="true">
-										<fileset dir="/var/lib/mysql/${database.mysql.schema}" includes="**/*" />
-									</delete>
-
-									<antcall inheritall="false" target="rebuild-database" >
-										<param name="database.type" value="@{database.type}" />
-									</antcall>
-
-									<echo file="${project.dir}/database_error.sh">
-										<![CDATA[service sendmail stop
-
-if [[ -n `service postfix status | grep 'dead\|stopped'` ]]
-then
-	service postfix restart
-fi
-
-service postfix status
-
-EMAIL_BODY="Invalid files found in MySQL database. Archive can be found in ${TOP_LEVEL_SHARED_DIR}."
-
-echo ${BUILD_URL} > /tmp/database_failure_email_body.txt
-echo -e ${EMAIL_BODY} >> /tmp/database_failure_email_body.txt
-
-mail -s "$(echo -e "${NODE_NAME} failed to delete a MySQL database on $(date).\nFrom: Jenkins Slave Verification <root@${NODE_NAME}.lax.liferay.com>\n")" ${EMAIL_LIST} < /tmp/database_failure_email_body.txt
-
-echo "Sent notification."]]>
-									</echo>
-
-									<chmod file="database_error.sh" perm="a+x" />
-
-									<exec executable="${project.dir}/database_error.sh" />
-
-									<delete file="database_error.sh" />
-								</then>
-							</if>
-						</catch>
-					</trycatch>
+					<antcall inheritall="false" target="rebuild-database" >
+						<param name="database.type" value="@{database.type}" />
+					</antcall>
 
 					<test-action />
 
@@ -589,8 +523,6 @@ app.server.type=@{app.server.type}]]></echo>
 					<property name="job.failure.message" value="" />
 
 					<echo>${job.failure.message}</echo>
-
-					<check-deprecated-method />
 
 					<check-jenkins-console />
 

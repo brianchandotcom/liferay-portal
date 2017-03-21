@@ -30,6 +30,7 @@ import com.liferay.source.formatter.checks.XMLBuildFileCheck;
 import com.liferay.source.formatter.checks.XMLCustomSQLFileCheck;
 import com.liferay.source.formatter.checks.XMLDDLStructuresFileCheck;
 import com.liferay.source.formatter.checks.XMLEmptyLinesCheck;
+import com.liferay.source.formatter.checks.XMLFriendlyURLRoutesFileCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
@@ -48,8 +49,6 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.maven.artifact.versioning.ComparableVersion;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -267,11 +266,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (fileName.endsWith("routes.xml")) {
-			newContent = formatFriendlyURLRoutesXML(
-				fileName, absolutePath, newContent);
-		}
-		else if (fileName.endsWith("-hbm.xml")) {
+		if (fileName.endsWith("-hbm.xml")) {
 			formatHBMXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("-log4j.xml")) {
@@ -522,58 +517,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	protected String formatFriendlyURLRoutesXML(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> routeElements = rootElement.elements("route");
-
-		ElementComparator elementComparator = new ElementComparator();
-
-		for (Element routeElement : routeElements) {
-			checkOrder(
-				fileName, routeElement, "ignored-parameter", null,
-				elementComparator);
-			checkOrder(
-				fileName, routeElement, "implicit-parameter", null,
-				elementComparator);
-			checkOrder(
-				fileName, routeElement, "overridden-parameter", null,
-				elementComparator);
-		}
-
-		int pos = content.indexOf("<routes>\n");
-
-		if (pos == -1) {
-			return content;
-		}
-
-		StringBundler sb = new StringBundler(9);
-
-		ComparableVersion mainReleaseComparableVersion =
-			getMainReleaseComparableVersion(fileName, absolutePath, false);
-
-		String mainReleaseVersion = mainReleaseComparableVersion.toString();
-
-		sb.append("<?xml version=\"1.0\"?>\n");
-		sb.append("<!DOCTYPE routes PUBLIC \"-//Liferay//DTD Friendly URL ");
-		sb.append("Routes ");
-		sb.append(mainReleaseVersion);
-		sb.append("//EN\" \"http://www.liferay.com/dtd/");
-		sb.append("liferay-friendly-url-routes_");
-		sb.append(
-			StringUtil.replace(
-				mainReleaseVersion, StringPool.PERIOD, StringPool.UNDERLINE));
-		sb.append(".dtd\">\n\n");
-		sb.append(content.substring(pos));
-
-		return sb.toString();
 	}
 
 	protected void formatHBMXML(String fileName, String content)
@@ -1053,6 +996,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName()));
 		fileChecks.add(new XMLCustomSQLFileCheck());
 		fileChecks.add(new XMLDDLStructuresFileCheck());
+		fileChecks.add(new XMLFriendlyURLRoutesFileCheck());
 
 		fileChecks.add(
 			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));

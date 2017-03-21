@@ -39,6 +39,7 @@ import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.Type;
+import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
@@ -1923,7 +1924,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					new DefaultDocletTagFactory(),
 					new ThreadSafeClassLibrary());
 
-				javaDocBuilder.addSource(tagJavaFile);
+				try {
+					javaDocBuilder.addSource(tagJavaFile);
+				}
+				catch (ParseException pe) {
+					continue;
+				}
 
 				JavaClass tagJavaClass = javaDocBuilder.getClassByName(
 					tagClassName);

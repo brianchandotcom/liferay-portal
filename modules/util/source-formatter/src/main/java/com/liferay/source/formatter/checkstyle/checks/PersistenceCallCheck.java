@@ -31,9 +31,9 @@ import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.Type;
+import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,7 +77,12 @@ public class PersistenceCallCheck extends AbstractCheck {
 		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(
 			new DefaultDocletTagFactory(), new ThreadSafeClassLibrary());
 
-		javaDocBuilder.addSource(new UnsyncStringReader(content));
+		try {
+			javaDocBuilder.addSource(new UnsyncStringReader(content));
+		}
+		catch (ParseException pe) {
+			return;
+		}
 
 		JavaClass javaClass = _getJavaClass(javaDocBuilder, fileName);
 
@@ -117,7 +122,7 @@ public class PersistenceCallCheck extends AbstractCheck {
 		try {
 			javaDocBuilder.addSource(new File(extendedClassFileName));
 		}
-		catch (IOException ioe) {
+		catch (Exception e) {
 		}
 
 		return javaDocBuilder;

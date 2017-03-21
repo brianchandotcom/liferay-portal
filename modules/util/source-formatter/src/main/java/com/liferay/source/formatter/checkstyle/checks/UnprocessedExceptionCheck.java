@@ -33,6 +33,7 @@ import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaPackage;
 import com.thoughtworks.qdox.model.JavaSource;
+import com.thoughtworks.qdox.parser.ParseException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -222,8 +223,12 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 
 		FileText fileText = fileContents.getText();
 
-		javaDocBuilder.addSource(
-			new UnsyncStringReader((String)fileText.getFullText()));
+		try {
+			javaDocBuilder.addSource(
+				new UnsyncStringReader((String)fileText.getFullText()));
+		}
+		catch (ParseException pe) {
+		}
 
 		return javaDocBuilder;
 	}

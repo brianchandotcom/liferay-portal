@@ -32,6 +32,7 @@ import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
 import com.thoughtworks.qdox.model.JavaMethod;
+import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
 
@@ -333,7 +334,12 @@ public class JavaClass {
 		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(
 			new DefaultDocletTagFactory(), new ThreadSafeClassLibrary());
 
-		javaDocBuilder.addSource(_file);
+		try {
+			javaDocBuilder.addSource(_file);
+		}
+		catch (ParseException pe) {
+			return;
+		}
 
 		com.thoughtworks.qdox.model.JavaClass javaClass =
 			javaDocBuilder.getClassByName(getClassName());

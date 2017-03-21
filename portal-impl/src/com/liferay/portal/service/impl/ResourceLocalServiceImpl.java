@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PermissionedModel;
 import com.liferay.portal.kernel.model.Resource;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -41,6 +42,7 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.ResourceLocalServiceBaseImpl;
 import com.liferay.portal.util.ResourcePermissionsThreadLocal;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -1236,6 +1238,22 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		}
 		else {
 			actions = ResourceActionsUtil.getModelResourceActions(name);
+		}
+
+		if (actions.isEmpty()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No actions found for " + name + ", checking database");
+			}
+
+			List<ResourceAction> resourceActions =
+				resourceActionLocalService.getResourceActions(name);
+
+			actions = new ArrayList(resourceActions.size());
+
+			for (ResourceAction resourceAction : resourceActions) {
+				actions.add(resourceAction.getActionId());
+			}
 		}
 
 		if (actions.isEmpty()) {

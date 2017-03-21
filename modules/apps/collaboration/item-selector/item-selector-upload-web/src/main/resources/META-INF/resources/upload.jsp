@@ -41,6 +41,24 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 </div>
 
 <aui:script use="liferay-item-selector-repository-entry-browser">
+
+	<%
+	ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver =
+		itemSelectorUploadViewDisplayContext.
+			getItemSelectorReturnTypeResolver();
+
+	String returnTypeName =
+		itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass().getName();
+
+	String uploadURL = itemSelectorUploadViewDisplayContext.getURL();
+	String namespace = itemSelectorUploadViewDisplayContext.getNamespace();
+
+	if (Validator.isNotNull(namespace)) {
+		uploadURL += "&" + namespace + "_source=itemselector";
+		uploadURL += "&" + namespace + "_returnType=" + returnTypeName;
+	}
+	%>
+
 	new Liferay.ItemSelectorRepositoryEntryBrowser(
 		{
 			closeCaption: '<%= itemSelectorUploadViewDisplayContext.getTitle(locale) %>',
@@ -51,8 +69,8 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 				}
 			},
 			rootNode: '#itemSelectorUploadContainer',
-			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(FileEntryItemSelectorReturnType.class.getName()) %>',
-			uploadItemURL: '<%= itemSelectorUploadViewDisplayContext.getURL() %>',
+			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(returnTypeName) %>',
+			uploadItemURL: '<%= uploadURL.toString() %>',
 			validExtensions: '<%= ArrayUtil.isEmpty(itemSelectorUploadViewDisplayContext.getExtensions()) ? "*" : StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions()) %>'
 		}
 	);

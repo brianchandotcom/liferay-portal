@@ -14,8 +14,12 @@
 
 package com.liferay.item.selector.upload.web.internal.display.context;
 
+import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.upload.web.internal.ItemSelectorUploadView;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
 
@@ -27,11 +31,15 @@ public class ItemSelectorUploadViewDisplayContext {
 	public ItemSelectorUploadViewDisplayContext(
 		UploadItemSelectorCriterion uploadItemSelectorCriterion,
 		ItemSelectorUploadView itemSelectorUploadView,
-		String itemSelectedEventName) {
+		String itemSelectedEventName,
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler) {
 
 		_uploadItemSelectorCriterion = uploadItemSelectorCriterion;
 		_itemSelectorUploadView = itemSelectorUploadView;
 		_itemSelectedEventName = itemSelectedEventName;
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
 	}
 
 	public String[] getExtensions() {
@@ -42,8 +50,26 @@ public class ItemSelectorUploadViewDisplayContext {
 		return _itemSelectedEventName;
 	}
 
+	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
+		return _itemSelectorReturnTypeResolverHandler.
+			getItemSelectorReturnTypeResolver(
+				_uploadItemSelectorCriterion, _itemSelectorUploadView,
+				FileEntry.class);
+	}
+
 	public long getMaxFileSize() {
 		return _uploadItemSelectorCriterion.getMaxFileSize();
+	}
+
+	public String getNamespace() {
+		String portletId = _uploadItemSelectorCriterion.getPortletId();
+
+		if (portletId != null) {
+			return StringPool.UNDERLINE +
+				_uploadItemSelectorCriterion.getPortletId();
+		}
+
+		return null;
 	}
 
 	public String getRepositoryName() {
@@ -59,6 +85,8 @@ public class ItemSelectorUploadViewDisplayContext {
 	}
 
 	private final String _itemSelectedEventName;
+	private final ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 	private final ItemSelectorUploadView _itemSelectorUploadView;
 	private final UploadItemSelectorCriterion _uploadItemSelectorCriterion;
 

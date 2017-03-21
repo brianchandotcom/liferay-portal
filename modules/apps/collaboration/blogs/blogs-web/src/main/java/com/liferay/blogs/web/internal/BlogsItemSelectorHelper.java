@@ -89,7 +89,7 @@ public class BlogsItemSelectorHelper {
 
 		UploadItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				uploadURL.toString(),
+				BlogsPortletKeys.BLOGS, uploadURL.toString(),
 				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"),
 				PropsValues.BLOGS_IMAGE_MAX_SIZE, extensions);
 

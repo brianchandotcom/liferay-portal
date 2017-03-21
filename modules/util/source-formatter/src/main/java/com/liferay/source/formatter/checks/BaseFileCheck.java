@@ -20,11 +20,17 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.ElementComparator;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.Text;
 
 /**
  * @author Hugo Huijser
@@ -58,6 +64,67 @@ public abstract class BaseFileCheck implements FileCheck {
 		messages.add(
 			new SourceFormatterMessage(
 				fileName, message, markdownFileName, lineCount));
+	}
+
+	protected void checkElementOrder(
+		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
+		Element rootElement, String elementName, String parentElementName,
+		ElementComparator elementComparator) {
+
+		if (rootElement == null) {
+			return;
+		}
+
+		Node previousNode = null;
+
+		Iterator<Node> iterator = rootElement.nodeIterator();
+
+		while (iterator.hasNext()) {
+			Node curNode = (Node)iterator.next();
+
+			if (curNode instanceof Text) {
+				continue;
+			}
+
+			if (previousNode == null) {
+				previousNode = curNode;
+
+				continue;
+			}
+
+			if (curNode instanceof Element && previousNode instanceof Element) {
+				Element curElement = (Element)curNode;
+				Element previousElement = (Element)previousNode;
+
+				String curElementName = curElement.getName();
+				String previousElementName = previousElement.getName();
+
+				if (curElementName.equals(elementName) &&
+					previousElementName.equals(elementName) &&
+					(elementComparator.compare(previousElement, curElement) >
+						0)) {
+
+					StringBundler sb = new StringBundler(7);
+
+					sb.append("Incorrect order '");
+					sb.append(elementName);
+					sb.append("':");
+
+					if (Validator.isNotNull(parentElementName)) {
+						sb.append(StringPool.SPACE);
+						sb.append(parentElementName);
+					}
+
+					sb.append(StringPool.SPACE);
+					sb.append(elementComparator.getElementName(curElement));
+
+					addMessage(
+						sourceFormatterMessages, fileName, sb.toString());
+				}
+			}
+
+			previousNode = curNode;
+		}
 	}
 
 	protected int getLeadingTabCount(String line) {
@@ -219,6 +286,43 @@ public abstract class BaseFileCheck implements FileCheck {
 		}
 
 		return false;
+	}
+
+	protected boolean isExcludedPath(
+		List<String> excludes, String path, String parameter) {
+
+		return isExcludedPath(excludes, path, -1, parameter);
+	}
+
+	protected boolean isModulesFile(
+		String absolutePath, boolean subrepository) {
+
+		return isModulesFile(absolutePath, subrepository, null);
+	}
+
+	protected boolean isModulesFile(
+		String absolutePath, boolean subrepository,
+		List<String> pluginsInsideModulesDirectoryNames) {
+
+		if (subrepository) {
+			return true;
+		}
+
+		if (pluginsInsideModulesDirectoryNames == null) {
+			return absolutePath.contains("/modules/");
+		}
+
+		try {
+			for (String directoryName : pluginsInsideModulesDirectoryNames) {
+				if (absolutePath.contains(directoryName)) {
+					return false;
+				}
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return absolutePath.contains("/modules/");
 	}
 
 	protected String stripQuotes(String s) {

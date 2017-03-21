@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.trash;
+package com.liferay.document.library.trash.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
@@ -42,24 +43,26 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
-import com.liferay.portlet.trash.test.DefaultWhenIsAssetable;
-import com.liferay.portlet.trash.test.WhenHasGrandParent;
-import com.liferay.portlet.trash.test.WhenIsAssetable;
-import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
-import com.liferay.portlet.trash.test.WhenIsMoveableFromTrashBaseModel;
-import com.liferay.portlet.trash.test.WhenIsRestorableBaseModel;
-import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
+import com.liferay.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.trash.test.DefaultWhenIsAssetable;
+import com.liferay.trash.test.WhenHasGrandParent;
+import com.liferay.trash.test.WhenIsAssetable;
+import com.liferay.trash.test.WhenIsAssetableParentModel;
+import com.liferay.trash.test.WhenIsMoveableFromTrashBaseModel;
+import com.liferay.trash.test.WhenIsRestorableBaseModel;
+import com.liferay.trash.test.WhenIsUpdatableBaseModel;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
  * @author Eudaldo Alonso
  */
+@RunWith(Arquillian.class)
 @Sync
 public class DLFileShortcutTrashHandlerTest
 	extends BaseTrashHandlerTestCase

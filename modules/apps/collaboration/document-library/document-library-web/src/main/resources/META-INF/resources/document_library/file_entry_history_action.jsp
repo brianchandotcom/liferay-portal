@@ -36,7 +36,15 @@ FileEntry fileEntry = fileVersion.getFileEntry();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+
+	<%
+	Map<String, Object> data = new HashMap<String, Object>();
+
+	data.put("senna-off", "true");
+	%>
+
 	<liferay-ui:icon
+		data="<%= data %>"
 		message="download"
 		method="get"
 		url="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
@@ -102,7 +110,7 @@ FileEntry fileEntry = fileVersion.getFileEntry();
 			</portlet:renderURL>
 
 			<%
-			Map<String, Object> data = new HashMap<String, Object>();
+			data = new HashMap<String, Object>();
 
 			data.put("uri", selectFileVersionURL);
 			%>

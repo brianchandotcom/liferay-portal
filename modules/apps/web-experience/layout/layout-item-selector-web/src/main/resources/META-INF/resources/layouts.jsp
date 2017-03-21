@@ -52,7 +52,6 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 							layoutId: node.layoutId,
 							name: node.value,
 							privateLayout: node.privateLayout
-
 						};
 
 						Liferay.Util.getOpener().Liferay.fire(

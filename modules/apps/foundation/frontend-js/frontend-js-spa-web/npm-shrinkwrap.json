@@ -3139,9 +3139,9 @@
 			"version": "2.1.0"
 		},
 		"senna": {
-			"from": "senna@>=2.1.4 <3.0.0",
-			"resolved": "https://registry.npmjs.org/senna/-/senna-2.1.4.tgz",
-			"version": "2.1.4"
+			"from": "senna@>=2.1.5 <3.0.0",
+			"resolved": "https://registry.npmjs.org/senna/-/senna-2.1.5.tgz",
+			"version": "2.1.5"
 		},
 		"sequencify": {
 			"from": "sequencify@>=0.0.7 <0.1.0",

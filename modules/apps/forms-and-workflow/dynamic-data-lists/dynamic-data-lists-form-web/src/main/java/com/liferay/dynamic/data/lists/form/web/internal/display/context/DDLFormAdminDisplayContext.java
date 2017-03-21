@@ -50,6 +50,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
@@ -62,6 +63,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -114,7 +116,8 @@ public class DDLFormAdminDisplayContext {
 		DDMFormValuesFactory ddmFormValuesFactory,
 		DDMFormValuesMerger ddmFormValuesMerger,
 		DDMStructureLocalService ddmStructureLocalService,
-		JSONFactory jsonFactory, StorageEngine storageEngine,
+		DDMStructureService ddmStructureService, JSONFactory jsonFactory,
+		StorageEngine storageEngine,
 		WorkflowEngineManager workflowEngineManager) {
 
 		_renderRequest = renderRequest;
@@ -133,18 +136,24 @@ public class DDLFormAdminDisplayContext {
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_ddmStructureLocalService = ddmStructureLocalService;
+		_ddmStructureService = ddmStructureService;
 		_jsonFactory = jsonFactory;
 		_storageEngine = storageEngine;
 		_workflowEngineManager = workflowEngineManager;
 
 		_ddlFormAdminRequestHelper = new DDLFormAdminRequestHelper(
 			renderRequest);
+
 		_ddmExpressionFunctionMetadataHelper =
 			new DDMExpressionFunctionMetadataHelper(getResourceBundle());
 	}
 
 	public int getAutosaveInterval() {
 		return _ddlFormWebConfiguration.autosaveInterval();
+	}
+
+	public long getCompanyId() {
+		return _ddlFormAdminRequestHelper.getCompanyId();
 	}
 
 	public DDLFormViewRecordDisplayContext
@@ -216,6 +225,10 @@ public class DDLFormAdminDisplayContext {
 		return ddlFormViewRecordDisplayContext.getDDMFormHTML(renderRequest);
 	}
 
+	public DDMFormLayoutJSONSerializer getDDMFormLayoutJSONSerializer() {
+		return _ddmFormLayoutJSONSerializer;
+	}
+
 	public DDMStructure getDDMStructure() throws PortalException {
 		if (_ddmStucture != null) {
 			return _ddmStucture;
@@ -231,6 +244,10 @@ public class DDLFormAdminDisplayContext {
 			recordSet.getDDMStructureId());
 
 		return _ddmStucture;
+	}
+
+	public DDMStructureService getDDMStructureService() {
+		return _ddmStructureService;
 	}
 
 	public String getDisplayStyle() {
@@ -271,13 +288,16 @@ public class DDLFormAdminDisplayContext {
 		return ParamUtil.getString(_renderRequest, "orderByType", "desc");
 	}
 
+	public PermissionChecker getPermissionChecker() {
+		return _ddlFormAdminRequestHelper.getPermissionChecker();
+	}
+
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/admin/view.jsp");
-		portletURL.setParameter(
-			"groupId",
-			String.valueOf(_ddlFormAdminRequestHelper.getScopeGroupId()));
+		portletURL.setParameter("groupId", String.valueOf(getScopeGroupId()));
+		portletURL.setParameter("currentTab", "forms");
 
 		return portletURL;
 	}
@@ -362,6 +382,14 @@ public class DDLFormAdminDisplayContext {
 		return record.getLatestRecordVersion();
 	}
 
+	public RenderRequest getRenderRequest() {
+		return _renderRequest;
+	}
+
+	public RenderResponse getRenderResponse() {
+		return _renderResponse;
+	}
+
 	public ResourceBundle getResourceBundle() {
 		Locale locale = getSiteDefaultLocale();
 
@@ -382,6 +410,10 @@ public class DDLFormAdminDisplayContext {
 
 	public String getRestrictedFormURL() {
 		return getFormLayoutURL(true);
+	}
+
+	public long getScopeGroupId() {
+		return _ddlFormAdminRequestHelper.getScopeGroupId();
 	}
 
 	public String getSerializedDDMExpressionFunctionsMetadata() {
@@ -602,6 +634,10 @@ public class DDLFormAdminDisplayContext {
 		return jsonArray;
 	}
 
+	protected DDMFormJSONSerializer getDDMFormJSONSerializer() {
+		return _ddmFormJSONSerializer;
+	}
+
 	protected String getDisplayStyle(
 		PortletRequest portletRequest,
 		DDLFormWebConfiguration ddlFormWebConfiguration,
@@ -780,6 +816,7 @@ public class DDLFormAdminDisplayContext {
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;
 	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final DDMStructureService _ddmStructureService;
 	private DDMStructure _ddmStucture;
 	private String _displayStyle;
 	private final JSONFactory _jsonFactory;

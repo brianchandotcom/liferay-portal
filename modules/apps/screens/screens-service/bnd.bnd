@@ -1,7 +1,10 @@
 Bundle-Name: Liferay Screens Service
 Bundle-SymbolicName: com.liferay.screens.service
 Bundle-Version: 1.0.20
-Import-Package: com.liferay.journal.*;version="[1.0,4.0)",*
+Import-Package:\
+	com.liferay.dynamic.data.lists.util.comparator;version="[1.0,2.0)",\
+	com.liferay.journal.*;version="[1.0,4.0)",\
+	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Liferay-Require-SchemaVersion: 1.0.8

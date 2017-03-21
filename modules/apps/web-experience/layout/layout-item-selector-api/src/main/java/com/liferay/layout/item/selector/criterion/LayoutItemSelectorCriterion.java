@@ -25,10 +25,19 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _checkDisplayPage;
 	}
 
+	public boolean isEnableCurrentPage() {
+		return _enableCurrentPage;
+	}
+
 	public void setCheckDisplayPage(boolean checkDisplayPage) {
 		_checkDisplayPage = checkDisplayPage;
 	}
 
+	public void setEnableCurrentPage(boolean enableCurrentPage) {
+		_enableCurrentPage = enableCurrentPage;
+	}
+
 	private boolean _checkDisplayPage;
+	private boolean _enableCurrentPage;
 
 }

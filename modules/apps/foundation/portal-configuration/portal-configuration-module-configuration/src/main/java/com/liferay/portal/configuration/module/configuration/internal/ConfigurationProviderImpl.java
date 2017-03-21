@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsLocator;
+import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -138,6 +139,16 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 			clazz,
 			new PortletInstanceSettingsLocator(
 				layout, portletId, configurationPid));
+	}
+
+	@Override
+	public <T> T getSystemConfiguration(Class<T> clazz)
+		throws ConfigurationException {
+
+		String configurationPid = _getConfigurationPid(clazz);
+
+		return getConfiguration(
+			clazz, new SystemSettingsLocator(configurationPid));
 	}
 
 	protected <T> Class<?> getOverrideClass(Class<T> clazz) {

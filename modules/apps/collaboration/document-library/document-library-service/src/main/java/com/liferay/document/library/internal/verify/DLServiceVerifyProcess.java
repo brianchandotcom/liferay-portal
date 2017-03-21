@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.internal.verify;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
@@ -37,6 +38,11 @@ import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -50,6 +56,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -683,34 +690,76 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 	protected void updateFileEntryAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<DLFileEntry> dlFileEntries =
-				_dlFileEntryLocalService.getNoAssetFileEntries();
+			ActionableDynamicQuery actionableDynamicQuery =
+				_dlFileEntryLocalService.getActionableDynamicQuery();
+
+			actionableDynamicQuery.setAddCriteriaMethod(
+				new ActionableDynamicQuery.AddCriteriaMethod() {
+
+					@Override
+					public void addCriteria(DynamicQuery dynamicQuery) {
+						Property fileEntryIdProperty =
+							PropertyFactoryUtil.forName("fileEntryId");
+
+						DynamicQuery assetEntryDynamicQuery =
+							DynamicQueryFactoryUtil.forClass(AssetEntry.class);
+
+						Property classNameIdProperty =
+							PropertyFactoryUtil.forName("classNameId");
+
+						long classNameId = PortalUtil.getClassNameId(
+							DLFileEntry.class);
+
+						assetEntryDynamicQuery.add(
+							classNameIdProperty.eq(classNameId));
+
+						Projection projection = ProjectionFactoryUtil.property(
+							"classPK");
+
+						assetEntryDynamicQuery.setProjection(projection);
+
+						dynamicQuery.add(
+							fileEntryIdProperty.notIn(assetEntryDynamicQuery));
+					}
+
+				});
 
 			if (_log.isDebugEnabled()) {
+				long count = actionableDynamicQuery.performCount();
+
 				_log.debug(
-					"Processing " + dlFileEntries.size() +
-						" file entries with no asset");
+					"Processing " + count + " file entries with no asset");
 			}
 
-			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
-				FileVersion fileVersion = new LiferayFileVersion(
-					dlFileEntry.getFileVersion());
+			actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.PerformActionMethod<DLFileEntry>() {
 
-				try {
-					_dlAppHelperLocalService.updateAsset(
-						dlFileEntry.getUserId(), fileEntry, fileVersion, null,
-						null, null);
-				}
-				catch (Exception e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to update asset for file entry " +
-								dlFileEntry.getFileEntryId() + ": " +
-									e.getMessage());
+					@Override
+					public void performAction(DLFileEntry dlFileEntry)
+						throws PortalException {
+
+						FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
+						FileVersion fileVersion = new LiferayFileVersion(
+							dlFileEntry.getFileVersion());
+
+						try {
+							_dlAppHelperLocalService.updateAsset(
+								dlFileEntry.getUserId(), fileEntry, fileVersion,
+								null, null, null);
+						}
+						catch (Exception e) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Unable to update asset for file entry " +
+										dlFileEntry.getFileEntryId() + ": " +
+											e.getMessage());
+							}
+						}
 					}
-				}
-			}
+
+				});
+
+			actionableDynamicQuery.performActions();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Assets verified for file entries");

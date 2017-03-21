@@ -132,6 +132,17 @@ import org.apache.commons.lang.time.StopWatch;
 public class ServicePreAction extends Action {
 
 	public ServicePreAction() {
+		_mainPath = PortalUtil.getPathMain();
+
+		String pathProxy = PortalUtil.getPathProxy();
+
+		if (Validator.isBlank(pathProxy)) {
+			_pathProxy = null;
+		}
+		else {
+			_pathProxy = pathProxy;
+		}
+
 		initImportLARFiles();
 	}
 
@@ -174,7 +185,7 @@ public class ServicePreAction extends Action {
 		String friendlyURLPublicPath = PortalUtil.getPathFriendlyURLPublic();
 		String imagePath = dynamicResourcesCDNHost.concat(
 			PortalUtil.getPathImage());
-		String mainPath = PortalUtil.getPathMain();
+		String mainPath = _mainPath;
 
 		String i18nPath = (String)request.getAttribute(WebKeys.I18N_PATH);
 
@@ -409,6 +420,7 @@ public class ServicePreAction extends Action {
 				!group.isControlPanel() &&
 				GroupPermissionUtil.contains(
 					permissionChecker, group, ActionKeys.VIEW_STAGING);
+			boolean loginRequest = isLoginRequest(request);
 
 			if (viewableStaging) {
 				layouts = LayoutLocalServiceUtil.getLayouts(
@@ -420,7 +432,7 @@ public class ServicePreAction extends Action {
 
 				layout = null;
 			}
-			else if (!isLoginRequest(request) &&
+			else if (!loginRequest &&
 					 (!viewableGroup || !viewableSourceGroup ||
 					  (!redirectToDefaultLayout &&
 					   !hasAccessPermission(
@@ -448,7 +460,7 @@ public class ServicePreAction extends Action {
 
 				throw new NoSuchLayoutException(sb.toString());
 			}
-			else if (isLoginRequest(request) && !viewableGroup) {
+			else if (loginRequest && !viewableGroup) {
 				layout = null;
 			}
 			else if (group.isLayoutPrototype()) {
@@ -1666,26 +1678,25 @@ public class ServicePreAction extends Action {
 	protected boolean isLoginRequest(HttpServletRequest request) {
 		String requestURI = request.getRequestURI();
 
-		String mainPath = PortalUtil.getPathMain();
+		String mainPath = _mainPath;
 
-		String pathProxy = PortalUtil.getPathProxy();
-
-		if (!Validator.isBlank(pathProxy)) {
-			if (!requestURI.startsWith(pathProxy)) {
-				requestURI = pathProxy + requestURI;
+		if (_pathProxy != null) {
+			if (!requestURI.startsWith(_pathProxy)) {
+				requestURI = _pathProxy.concat(requestURI);
 			}
 
-			if (!mainPath.startsWith(pathProxy)) {
-				mainPath = pathProxy + mainPath;
+			if (!mainPath.startsWith(_pathProxy)) {
+				mainPath = _pathProxy.concat(mainPath);
 			}
 		}
 
-		if (requestURI.startsWith(mainPath.concat(_PATH_PORTAL_LOGIN))) {
+		if (requestURI.startsWith(mainPath) &&
+			requestURI.startsWith(_PATH_PORTAL_LOGIN, mainPath.length())) {
+
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected List<Layout> mergeAdditionalLayouts(
@@ -2036,5 +2047,8 @@ public class ServicePreAction extends Action {
 
 	private static final Map<String, String> _portalDomains =
 		new ConcurrentHashMap<>();
+
+	private final String _mainPath;
+	private final String _pathProxy;
 
 }

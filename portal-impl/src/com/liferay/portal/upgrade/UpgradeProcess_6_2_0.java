@@ -19,6 +19,7 @@ import com.liferay.portal.upgrade.v6_2_0.UpgradeAnnouncements;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeAssetPublisher;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeBlogs;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeBlogsAggregator;
+import com.liferay.portal.upgrade.v6_2_0.UpgradeBreadcrumb;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeCalendar;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeCompany;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeCustomizablePortlets;
@@ -62,6 +63,7 @@ public class UpgradeProcess_6_2_0 extends Pre7UpgradeProcess {
 
 		upgrade(UpgradeAnnouncements.class);
 		upgrade(UpgradeAssetPublisher.class);
+		upgrade(UpgradeBreadcrumb.class);
 		upgrade(UpgradeBlogs.class);
 		upgrade(UpgradeBlogsAggregator.class);
 		upgrade(UpgradeCalendar.class);

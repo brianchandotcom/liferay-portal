@@ -88,11 +88,10 @@ public class LinkToPageLayoutTypeControllerDisplayContext {
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
 			getEventName(), layoutItemSelectorCriterion);
 
-		long currentPlid = ParamUtil.getLong(_liferayPortletRequest, "selPlid");
+		long selPlid = ParamUtil.getLong(_liferayPortletRequest, "selPlid");
 
 		itemSelectorURL.setParameter("layoutUuid", getLinkToLayoutUuid());
-		itemSelectorURL.setParameter(
-			"currentPlid", String.valueOf(currentPlid));
+		itemSelectorURL.setParameter("selPlid", String.valueOf(selPlid));
 
 		return itemSelectorURL.toString();
 	}

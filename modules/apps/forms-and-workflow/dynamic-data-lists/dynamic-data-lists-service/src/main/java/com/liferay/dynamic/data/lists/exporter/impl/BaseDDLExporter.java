@@ -191,7 +191,10 @@ public abstract class BaseDDLExporter implements DDLExporter {
 			return getDDMFormFieldRenderedValues(ddmFormValues, ddmFormFields);
 		}
 		else {
-			Fields fields = getDDMFormValuesToFieldsConverter().convert(
+			DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter =
+				getDDMFormValuesToFieldsConverter();
+
+			Fields fields = ddmFormValuesToFieldsConverter.convert(
 				ddmStructure, ddmFormValues);
 
 			return getDDMFormFieldRenderedValues(fields, ddmFormFields);

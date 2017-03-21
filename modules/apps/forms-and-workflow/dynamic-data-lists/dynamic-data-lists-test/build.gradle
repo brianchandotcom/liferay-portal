@@ -4,6 +4,7 @@ dependencies {
 	testCompile group: "com.liferay", name: "com.liferay.exportimport.api", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.exportimport.service", version: "3.0.0"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testCompile group: "org.apache.poi", name: "poi", version: "3.15"
 	testCompile project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-api")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-form-web")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-service")

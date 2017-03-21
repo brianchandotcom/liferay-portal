@@ -59,12 +59,18 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -146,6 +152,112 @@ public class DDLExporterTest {
 		String actualFileContent = FileUtil.read(file);
 
 		Assert.assertEquals(expectedFileContent, actualFileContent);
+	}
+
+	@Test
+	public void testXLSExport() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			_availableLocales, _defaultLocale);
+
+		createDDMFormFields(ddmForm);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm, _availableLocales, _defaultLocale);
+
+		createDDMFormFieldValues(ddmFormValues);
+
+		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
+			_group);
+
+		DDLRecordSet recordSet = recordSetTestHelper.addRecordSet(ddmForm);
+
+		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
+			_group, recordSet);
+
+		recordTestHelper.addRecord(
+			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
+
+		DDLExporter ddlExporter = _ddlExporterFactory.getDDLExporter("xls");
+
+		byte[] bytes = ddlExporter.export(recordSet.getRecordSetId());
+
+		try (ByteArrayInputStream byteArrayInputStream =
+				new ByteArrayInputStream(bytes);
+			HSSFWorkbook workbook = new HSSFWorkbook(byteArrayInputStream)) {
+
+			Sheet sheet = workbook.getSheetAt(0);
+
+			Row row = sheet.getRow(0);
+
+			Cell cell = null;
+
+			for (int i = 0; i < 13; i++) {
+				cell = row.getCell(i);
+
+				Assert.assertEquals("Field" + i, cell.getStringCellValue());
+			}
+
+			row = sheet.getRow(1);
+
+			cell = row.getCell(0);
+
+			Assert.assertEquals("false", cell.getStringCellValue());
+
+			cell = row.getCell(1);
+
+			Assert.assertEquals("1/1/70", cell.getStringCellValue());
+
+			cell = row.getCell(2);
+
+			Assert.assertEquals("1.0", cell.getStringCellValue());
+
+			cell = row.getCell(3);
+
+			Assert.assertEquals("file.txt", cell.getStringCellValue());
+
+			cell = row.getCell(4);
+
+			Assert.assertEquals(
+				"Latitude: -8.035, Longitude: -34.918",
+				cell.getStringCellValue());
+
+			cell = row.getCell(5);
+
+			Assert.assertEquals("2", cell.getStringCellValue());
+
+			cell = row.getCell(6);
+
+			Assert.assertEquals(
+				"Link to Page content", cell.getStringCellValue());
+
+			cell = row.getCell(7);
+
+			Assert.assertEquals("3", cell.getStringCellValue());
+
+			cell = row.getCell(8);
+
+			Assert.assertEquals("Option 1", cell.getStringCellValue());
+
+			cell = row.getCell(9);
+
+			Assert.assertEquals("Option 1", cell.getStringCellValue());
+
+			cell = row.getCell(10);
+
+			Assert.assertEquals("Text content", cell.getStringCellValue());
+
+			cell = row.getCell(11);
+
+			Assert.assertEquals("Text Area content", cell.getStringCellValue());
+
+			cell = row.getCell(12);
+
+			Assert.assertEquals("Text HTML content", cell.getStringCellValue());
+
+			cell = row.getCell(13);
+
+			Assert.assertEquals("Approved", cell.getStringCellValue());
+		}
 	}
 
 	@Test

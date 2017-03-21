@@ -513,10 +513,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "imageMagickEnabled");
 		String imageMagickPath = ParamUtil.getString(
 			actionRequest, "imageMagickPath");
-		boolean openOfficeEnabled = ParamUtil.getBoolean(
-			actionRequest, "openOfficeEnabled");
-		int openOfficePort = ParamUtil.getInteger(
-			actionRequest, "openOfficePort");
 		boolean xugglerEnabled = ParamUtil.getBoolean(
 			actionRequest, "xugglerEnabled");
 
@@ -524,11 +520,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			PropsKeys.IMAGEMAGICK_ENABLED, String.valueOf(imageMagickEnabled));
 		portletPreferences.setValue(
 			PropsKeys.IMAGEMAGICK_GLOBAL_SEARCH_PATH, imageMagickPath);
-		portletPreferences.setValue(
-			PropsKeys.OPENOFFICE_SERVER_ENABLED,
-			String.valueOf(openOfficeEnabled));
-		portletPreferences.setValue(
-			PropsKeys.OPENOFFICE_SERVER_PORT, String.valueOf(openOfficePort));
 		portletPreferences.setValue(
 			PropsKeys.XUGGLER_ENABLED, String.valueOf(xugglerEnabled));
 

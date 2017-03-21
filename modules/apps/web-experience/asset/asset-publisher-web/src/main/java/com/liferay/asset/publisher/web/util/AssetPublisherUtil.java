@@ -504,9 +504,25 @@ public class AssetPublisherUtil {
 
 			String assetEntryUuid = rootElement.elementText("asset-entry-uuid");
 
+			String assetEntryType = rootElement.elementText("asset-entry-type");
+
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(assetEntryType);
+
+			String portletId = assetRendererFactory.getPortletId();
+
 			AssetEntry assetEntry = null;
 
 			for (long groupId : groupIds) {
+				Group group = _groupLocalService.fetchGroup(groupId);
+
+				if (group.isStagingGroup() &&
+					!group.isStagedPortlet(portletId)) {
+
+					groupId = group.getLiveGroupId();
+				}
+
 				assetEntry = _assetEntryLocalService.fetchEntry(
 					groupId, assetEntryUuid);
 
@@ -527,7 +543,7 @@ public class AssetPublisherUtil {
 				continue;
 			}
 
-			AssetRendererFactory<?> assetRendererFactory =
+			assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassName(
 						assetEntry.getClassName());

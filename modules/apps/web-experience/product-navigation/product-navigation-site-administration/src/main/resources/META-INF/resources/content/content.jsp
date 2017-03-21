@@ -19,26 +19,29 @@
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
 PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
-
-PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
-
-List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory, themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup());
 %>
 
-<c:if test="<%= !panelApps.isEmpty() %>">
-	<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showBody="<%= false %>">
+<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showBody="<%= false %>">
 
-		<%
-		Group curSite = themeDisplay.getSiteGroup();
+	<%
+	Group curSite = themeDisplay.getSiteGroup();
 
-		List<Layout> scopeLayouts = LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId());
-		%>
+	List<Layout> scopeLayouts = LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId());
+	%>
 
-		<c:choose>
-			<c:when test="<%= scopeLayouts.isEmpty() %>">
-				<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
-			</c:when>
-			<c:otherwise>
+	<c:choose>
+		<c:when test="<%= scopeLayouts.isEmpty() %>">
+			<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+		</c:when>
+		<c:otherwise>
+
+			<%
+			PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
+
+			List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory, themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup());
+			%>
+
+			<c:if test="<%= !panelApps.isEmpty() %>">
 				<ul class="nav nav-equal-height nav-nested">
 					<li>
 						<div class="scope-selector">
@@ -108,7 +111,7 @@ List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory, themeDis
 						<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
 					</li>
 				</ul>
-			</c:otherwise>
-		</c:choose>
-	</liferay-application-list:panel-category>
-</c:if>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
+</liferay-application-list:panel-category>

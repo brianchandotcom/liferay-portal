@@ -53,10 +53,12 @@ public class LocalGitSyncUtil {
 			String upstreamUsername, String upstreamSHA)
 		throws GitAPIException, IOException {
 
+		long start = System.currentTimeMillis();
+
 		String originalBranchName = gitWorkingDirectory.getCurrentBranch();
 
 		RemoteConfig senderRemoteConfig = null;
-		RemoteConfig tempUpstreamRemoteConfig = null;
+		RemoteConfig upstreamRemoteConfig = null;
 
 		if ((senderBranchName == null) || senderBranchName.isEmpty()) {
 			senderBranchName = upstreamBranchName;
@@ -71,15 +73,12 @@ public class LocalGitSyncUtil {
 		}
 
 		try {
-			tempUpstreamRemoteConfig = gitWorkingDirectory.addRemote(
-				true, "upstream-temp",
-				getGitHubRemoteURL(
-					gitWorkingDirectory.getRepositoryName(), upstreamUsername));
-
 			senderRemoteConfig = gitWorkingDirectory.addRemote(
 				true, "sender-temp",
 				getGitHubRemoteURL(
 					gitWorkingDirectory.getRepositoryName(), senderUsername));
+			upstreamRemoteConfig = gitWorkingDirectory.getRemoteConfig(
+				"upstream");
 
 			boolean pullRequest = !upstreamSHA.equals(senderSHA);
 
@@ -117,10 +116,10 @@ public class LocalGitSyncUtil {
 
 				gitWorkingDirectory.reset("HEAD", ResetType.HARD);
 
-				gitWorkingDirectory.fetch(tempUpstreamRemoteConfig, null);
+				gitWorkingDirectory.fetch(upstreamRemoteConfig, null);
 
 				gitWorkingDirectory.checkoutBranch(
-					tempUpstreamRemoteConfig.getName() + "/master", "-f");
+					upstreamRemoteConfig.getName() + "/master", "-f");
 
 				gitWorkingDirectory.deleteLocalBranch("master");
 
@@ -167,13 +166,14 @@ public class LocalGitSyncUtil {
 			}
 		}
 		finally {
-			if (tempUpstreamRemoteConfig != null) {
-				gitWorkingDirectory.removeRemote(tempUpstreamRemoteConfig);
-			}
-
 			if (senderRemoteConfig != null) {
 				gitWorkingDirectory.removeRemote(senderRemoteConfig);
 			}
+
+			System.out.println(
+				"SynchronizeToLocalGit completed in " +
+					JenkinsResultsParserUtil.toDurationString(
+						System.currentTimeMillis() - start));
 		}
 	}
 
@@ -560,7 +560,7 @@ public class LocalGitSyncUtil {
 	}
 
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =
-		1000 * 60 * 60 * 24 * 7;
+		1000 * 60 * 60 * 24 * 2;
 
 	private static final String _cachedBranchRegex = ".*cache-.+-.+-.+-.+";
 	private static final Pattern _cachedTimestampBranchPattern =

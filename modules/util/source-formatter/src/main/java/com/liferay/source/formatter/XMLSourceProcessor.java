@@ -28,6 +28,7 @@ import com.liferay.portal.tools.ImportPackage;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.XMLBuildFileCheck;
 import com.liferay.source.formatter.checks.XMLCustomSQLFileCheck;
+import com.liferay.source.formatter.checks.XMLDDLStructuresFileCheck;
 import com.liferay.source.formatter.checks.XMLEmptyLinesCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
@@ -266,10 +267,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (fileName.endsWith("structures.xml")) {
-			newContent = formatDDLStructuresXML(newContent);
-		}
-		else if (fileName.endsWith("routes.xml")) {
+		if (fileName.endsWith("routes.xml")) {
 			newContent = formatFriendlyURLRoutesXML(
 				fileName, absolutePath, newContent);
 		}
@@ -524,35 +522,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	protected String formatDDLStructuresXML(String content) throws Exception {
-		Document document = readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		sortElementsByChildElement(rootElement, "structure", "name");
-
-		List<Element> structureElements = rootElement.elements("structure");
-
-		for (Element structureElement : structureElements) {
-			Element structureRootElement = structureElement.element("root");
-
-			sortElementsByAttribute(
-				structureRootElement, "dynamic-element", "name");
-
-			List<Element> dynamicElementElements =
-				structureRootElement.elements("dynamic-element");
-
-			for (Element dynamicElementElement : dynamicElementElements) {
-				Element metaDataElement = dynamicElementElement.element(
-					"meta-data");
-
-				sortElementsByAttribute(metaDataElement, "entry", "name");
-			}
-		}
-
-		return Dom4jUtil.toString(document);
 	}
 
 	protected String formatFriendlyURLRoutesXML(
@@ -1083,6 +1052,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		fileChecks.add(
 			new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName()));
 		fileChecks.add(new XMLCustomSQLFileCheck());
+		fileChecks.add(new XMLDDLStructuresFileCheck());
 
 		fileChecks.add(
 			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));

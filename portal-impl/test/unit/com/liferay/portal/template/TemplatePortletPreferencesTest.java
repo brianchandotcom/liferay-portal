@@ -77,7 +77,7 @@ public class TemplatePortletPreferencesTest {
 	}
 
 	@Test
-	public void testSetValue() throws Exception {
+	public void testGetPreferences() throws Exception {
 		Callable<String> callable = new TemplateCallable();
 
 		List<Future<String>> futures = new ArrayList<>(_THREADS_SIZE);
@@ -121,15 +121,9 @@ public class TemplatePortletPreferencesTest {
 			// ways to prove that the fix indeed eliminates the race condition.
 
 			synchronized (_templatePortletPreferences) {
-				_templatePortletPreferences.setValue(
+				return _templatePortletPreferences.getPreferences(
 					randomString, randomString);
 			}
-
-			String xml = _templatePortletPreferences.toString();
-
-			_templatePortletPreferences.reset();
-
-			return xml;
 		}
 
 	}

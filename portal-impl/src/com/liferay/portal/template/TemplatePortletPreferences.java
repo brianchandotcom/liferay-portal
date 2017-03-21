@@ -16,10 +16,11 @@ package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.PortletConstants;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
-import com.liferay.portlet.PortletPreferencesImpl;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.util.xml.XMLUtil;
+
+import java.util.Collections;
+import java.util.Map;
 
 import javax.portlet.ReadOnlyException;
 
@@ -29,57 +30,75 @@ import javax.portlet.ReadOnlyException;
  */
 public class TemplatePortletPreferences {
 
-	public void reset() {
-		PortletPreferencesImpl portletPreferencesImpl =
-			_portletPreferencesImplThreadLocal.get();
-
-		portletPreferencesImpl.reset();
-	}
-
-	public void setValue(String key, String value) throws ReadOnlyException {
-		PortletPreferencesImpl portletPreferencesImpl =
-			_portletPreferencesImplThreadLocal.get();
-
-		portletPreferencesImpl.setValue(key, value);
-	}
-
-	public void setValues(String key, String[] values)
+	public String getPreferences(Map<String, Object> preferences)
 		throws ReadOnlyException {
 
-		PortletPreferencesImpl portletPreferencesImpl =
-			_portletPreferencesImplThreadLocal.get();
+		StringBundler sb = new StringBundler();
 
-		portletPreferencesImpl.setValues(key, values);
+		sb.append("<portlet-preferences>");
+
+		for (Map.Entry<String, Object> entry : preferences.entrySet()) {
+			sb.append("<preference><name>");
+			sb.append(entry.getKey());
+			sb.append("</name>");
+
+			Object valueObject = entry.getValue();
+
+			if (valueObject instanceof String) {
+				sb.append("<value>");
+				sb.append(XMLUtil.toCompactSafe((String)valueObject));
+				sb.append("</value>");
+			}
+			else if (valueObject instanceof String[]) {
+				for (String value : (String[])valueObject) {
+					sb.append("<value>");
+					sb.append(XMLUtil.toCompactSafe(value));
+					sb.append("</value>");
+				}
+			}
+			else {
+				sb.setIndex(sb.index() - 3);
+
+				continue;
+			}
+
+			sb.append("</preference>");
+		}
+
+		sb.append("</portlet-preferences>");
+
+		return sb.toString();
 	}
 
-	@Override
-	public String toString() {
-		PortletPreferencesImpl portletPreferencesImpl =
-			_portletPreferencesImplThreadLocal.get();
+	public String getPreferences(String key, String value)
+		throws ReadOnlyException {
 
-		try {
-			return PortletPreferencesFactoryUtil.toXML(portletPreferencesImpl);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+		return getPreferences(Collections.singletonMap(key, value));
+	}
 
-			return PortletConstants.DEFAULT_PREFERENCES;
-		}
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	public void reset() {
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	public void setValue(String key, String value) throws ReadOnlyException {
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	public void setValues(String key, String[] values)
+		throws ReadOnlyException {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TemplatePortletPreferences.class);
-
-	private final ThreadLocal<PortletPreferencesImpl>
-		_portletPreferencesImplThreadLocal =
-			new AutoResetThreadLocal<PortletPreferencesImpl>(
-				TemplatePortletPreferences.class.getName()) {
-
-				@Override
-				protected PortletPreferencesImpl initialValue() {
-					return new PortletPreferencesImpl();
-				}
-
-			};
 
 }

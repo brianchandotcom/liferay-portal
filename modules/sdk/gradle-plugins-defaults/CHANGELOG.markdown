@@ -1261,7 +1261,10 @@ default value for the `mavenRootDir` property of `InstallCacheTask`.
 ### Changed
 - [LPS-66891]: Update the [Liferay Gradle Plugins] dependency to version 3.2.24.
 
-## 3.5.3 - 2017-03-20
+## 3.5.3 - 2017-03-21
+
+### Changed
+- [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.2.25.
 
 ### Fixed
 - [LPS-63943]: Avoid failing the build when running

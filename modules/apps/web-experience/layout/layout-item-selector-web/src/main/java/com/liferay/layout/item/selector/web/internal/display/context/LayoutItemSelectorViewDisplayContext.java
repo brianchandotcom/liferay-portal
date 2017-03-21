@@ -148,10 +148,12 @@ public class LayoutItemSelectorViewDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long currentPlid = ParamUtil.getLong(_request, "currentPlid");
 		String layoutUuid = ParamUtil.getString(_request, "layoutUuid");
 
 		JSONArray jsonArray = _getLayoutsJSONArray(
-			themeDisplay.getScopeGroupId(), isPrivateLayout(), 0, layoutUuid);
+			themeDisplay.getScopeGroupId(), isPrivateLayout(), 0, layoutUuid,
+			currentPlid);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -194,7 +196,7 @@ public class LayoutItemSelectorViewDisplayContext {
 
 	private JSONArray _getLayoutsJSONArray(
 			long groupId, boolean privateLayout, long parentLayoutId,
-			String selectedLayoutUuid)
+			String selectedLayoutUuid, long currentPlid)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -210,14 +212,16 @@ public class LayoutItemSelectorViewDisplayContext {
 
 			JSONArray childrenJSONArray = _getLayoutsJSONArray(
 				groupId, privateLayout, layout.getLayoutId(),
-				selectedLayoutUuid);
+				selectedLayoutUuid, currentPlid);
 
 			if (childrenJSONArray.length() > 0) {
 				jsonObject.put("children", childrenJSONArray);
 			}
 
-			if (_layoutItemSelectorCriterion.isCheckDisplayPage() &&
-				!layout.isContentDisplayPage()) {
+			if ((_layoutItemSelectorCriterion.isCheckDisplayPage() &&
+				 !layout.isContentDisplayPage()) ||
+				(!_layoutItemSelectorCriterion.isEnableCurrentPage() &&
+				 (layout.getPlid() == currentPlid))) {
 
 				jsonObject.put("disabled", true);
 			}

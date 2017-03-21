@@ -41,8 +41,8 @@ import com.liferay.source.formatter.checks.JavaLongLinesCheck;
 import com.liferay.source.formatter.checks.JavaPackagePathCheck;
 import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
 import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
+import com.liferay.source.formatter.checks.JavaWhitespaceCheck;
 import com.liferay.source.formatter.checks.JavaXMLSecurityCheck;
-import com.liferay.source.formatter.checks.WhitespaceCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -1040,31 +1040,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
-				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
-					!trimmedLine.startsWith(StringPool.STAR)) {
-
-					if (line.contains(StringPool.TAB + StringPool.SPACE) &&
-						!previousLine.matches(".*[&|^]") &&
-						!previousLine.contains(StringPool.TAB + "((") &&
-						!previousLine.contains(
-							StringPool.TAB + StringPool.LESS_THAN) &&
-						!previousLine.contains(
-							StringPool.TAB + StringPool.SPACE) &&
-						!previousLine.contains(StringPool.TAB + "for (") &&
-						!previousLine.contains(
-							StringPool.TAB + "implements ") &&
-						!previousLine.contains(StringPool.TAB + "throws ")) {
-
-						line = StringUtil.replace(
-							line, StringPool.TAB + StringPool.SPACE,
-							StringPool.TAB);
-					}
-
-					line = formatIncorrectSyntax(line, ",}", "}", false);
-
-					line = formatWhitespace(line, trimmedLine, true);
-				}
-
 				// LPS-42599
 
 				if (!isExcludedPath(
@@ -1124,12 +1099,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					processMessage(
 						fileName, "Rename 'mapping' to 'ActionMapping'",
 						lineCount);
-				}
-
-				if (!trimmedLine.equals("{") && line.endsWith("{") &&
-					!line.endsWith(" {")) {
-
-					line = StringUtil.replaceLast(line, "{", " {");
 				}
 
 				int lineLeadingTabCount = getLeadingTabCount(line);
@@ -1230,18 +1199,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				if (line.contains("  {") && !line.matches("\\s*\\*.*")) {
 					processMessage(fileName, "{", lineCount);
-				}
-
-				if (!trimmedLine.startsWith("//") &&
-					((lineLeadingTabCount - 2) ==
-						previousLineLeadingTabCount) &&
-					(previousLineLeadingTabCount > 0) &&
-					line.endsWith(StringPool.SEMICOLON) &&
-					!previousLine.contains("\tfor (") &&
-					!previousLine.contains("\ttry (")) {
-
-					line = StringUtil.replaceFirst(
-						line, StringPool.TAB, StringPool.BLANK);
 				}
 
 				if (lineCount > 1) {
@@ -1508,7 +1465,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected List<FileCheck> getFileChecks() {
 		List<FileCheck> fileChecks = new ArrayList<>();
 
-		fileChecks.add(new WhitespaceCheck());
+		fileChecks.add(new JavaWhitespaceCheck());
 
 		fileChecks.add(new JavaAnnotationsCheck());
 		fileChecks.add(new JavaBooleanUsageCheck());

@@ -70,10 +70,12 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -988,6 +990,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		user.setTimeZoneId(timeZoneId);
 
 		userPersistence.update(user);
+
+		Locale locale = user.getLocale();
+
+		if (locale.equals(LocaleUtil.getDefault())) {
+			return;
+		}
+
+		verifyGroupsNameMap(user);
 	}
 
 	/**
@@ -1613,6 +1623,80 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				}
 			}
 		}
+	}
+
+	protected void verifyGroupsNameMap(User user) throws PortalException {
+		ActionableDynamicQuery groupActionableDynamicQuery =
+			groupLocalService.getActionableDynamicQuery();
+
+		groupActionableDynamicQuery.setCompanyId(user.getCompanyId());
+
+		groupActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property activeProperty = PropertyFactoryUtil.forName(
+						"active");
+
+					dynamicQuery.add(activeProperty.eq(Boolean.TRUE));
+
+					Property nameProperty = PropertyFactoryUtil.forName("name");
+
+					dynamicQuery.add(nameProperty.isNotNull());
+
+					Property typeProperty = PropertyFactoryUtil.forName("type");
+
+					dynamicQuery.add(
+						typeProperty.ne(GroupConstants.TYPE_SITE_SYSTEM));
+				}
+
+			});
+
+		groupActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Group>() {
+
+				@Override
+				public void performAction(Group group) {
+					Map<Locale, String> nameMap = group.getNameMap();
+
+					if (MapUtil.isEmpty(nameMap)) {
+						return;
+					}
+
+					Locale locale = user.getLocale();
+
+					String groupDefaultName = nameMap.get(locale);
+
+					if (Validator.isNotNull(groupDefaultName)) {
+						return;
+					}
+
+					String oldGroupDefaultName = nameMap.get(
+						LocaleUtil.getDefault());
+
+					if (_log.isWarnEnabled()) {
+						StringBundler sb = new StringBundler(5);
+
+						sb.append("No name was found for locale ");
+						sb.append(locale);
+						sb.append(". Using name ");
+						sb.append(oldGroupDefaultName);
+						sb.append(" instead.");
+
+						_log.warn(sb.toString());
+					}
+
+					nameMap.put(locale, oldGroupDefaultName);
+
+					group.setNameMap(nameMap);
+
+					groupLocalService.updateGroup(group);
+				}
+
+			});
+
+		groupActionableDynamicQuery.performActions();
 	}
 
 	protected class DeleteGroupActionableDynamicQuery {

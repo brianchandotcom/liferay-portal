@@ -36,9 +36,9 @@ import org.eclipse.jgit.transport.RemoteConfig;
 public class LocalGitSyncUtil {
 
 	public static void deleteCachedBranch(
-			GitWorkingDirectory gitWorkingDirectory, String senderBranchName,
-			String senderUsername, String senderSHA, String upstreamBranchName,
-			String upstreamUsername, String upstreamSHA)
+			GitWorkingDirectory gitWorkingDirectory, String receiverUsername,
+			String senderBranchName, String senderUsername, String senderSHA,
+			String upstreamBranchName, String upstreamSHA)
 		throws GitAPIException {
 
 		List<RemoteConfig> localGitRemoteConfigs = null;
@@ -49,7 +49,7 @@ public class LocalGitSyncUtil {
 
 			deleteCachedBranch(
 				getCacheBranchName(
-					senderUsername, senderSHA, upstreamUsername, upstreamSHA),
+					receiverUsername, senderUsername, senderSHA, upstreamSHA),
 				gitWorkingDirectory, localGitRemoteConfigs);
 		}
 		finally {
@@ -59,10 +59,45 @@ public class LocalGitSyncUtil {
 		}
 	}
 
+	public static List<RemoteConfig> getLocalGitRemoteConfigs(
+			GitWorkingDirectory gitWorkingDirectory)
+		throws GitAPIException {
+
+		List<String> localGitRemoteURLs = getLocalGitRemoteURLs(
+			gitWorkingDirectory);
+
+		List<RemoteConfig> localGitRemoteConfigs = new ArrayList<>(
+			localGitRemoteURLs.size());
+
+		for (String localGitRemoteURL : localGitRemoteURLs) {
+			String url = localGitRemoteURL.replace(
+				"${username}", gitWorkingDirectory.getRepositoryUsername());
+
+			url = url.replace(
+				"${repository-name}", gitWorkingDirectory.getRepositoryName());
+
+			String localGitRemoteName =
+				"local-git-remote-" +
+					localGitRemoteURLs.indexOf(localGitRemoteURL);
+
+			RemoteConfig remoteConfig = gitWorkingDirectory.getRemoteConfig(
+				localGitRemoteName);
+
+			if (remoteConfig == null) {
+				remoteConfig = gitWorkingDirectory.addRemote(
+					true, localGitRemoteName, url);
+			}
+
+			localGitRemoteConfigs.add(remoteConfig);
+		}
+
+		return localGitRemoteConfigs;
+	}
+
 	public static String synchronizeToLocalGit(
-			GitWorkingDirectory gitWorkingDirectory, String senderBranchName,
-			String senderUsername, String senderSHA, String upstreamBranchName,
-			String upstreamUsername, String upstreamSHA)
+			GitWorkingDirectory gitWorkingDirectory, String receiverUsername,
+			String senderBranchName, String senderUsername, String senderSHA,
+			String upstreamBranchName, String upstreamSHA)
 		throws GitAPIException, IOException {
 
 		long start = System.currentTimeMillis();
@@ -71,18 +106,6 @@ public class LocalGitSyncUtil {
 
 		RemoteConfig senderRemoteConfig = null;
 		RemoteConfig upstreamRemoteConfig = null;
-
-		if ((senderBranchName == null) || senderBranchName.isEmpty()) {
-			senderBranchName = upstreamBranchName;
-		}
-
-		if ((senderSHA == null) || senderSHA.isEmpty()) {
-			senderSHA = upstreamSHA;
-		}
-
-		if ((senderUsername == null) || senderUsername.isEmpty()) {
-			senderUsername = upstreamUsername;
-		}
 
 		try {
 			senderRemoteConfig = gitWorkingDirectory.addRemote(
@@ -95,7 +118,7 @@ public class LocalGitSyncUtil {
 			boolean pullRequest = !upstreamSHA.equals(senderSHA);
 
 			String cacheBranchName = getCacheBranchName(
-				senderUsername, senderSHA, upstreamUsername, upstreamSHA);
+				receiverUsername, senderUsername, senderSHA, upstreamSHA);
 
 			List<RemoteConfig> localGitRemoteConfigs = null;
 
@@ -158,7 +181,7 @@ public class LocalGitSyncUtil {
 
 				cacheBranches(
 					gitWorkingDirectory, cacheBranchName, localGitRemoteConfigs,
-					upstreamBranchName, upstreamUsername);
+					upstreamBranchName, "liferay");
 
 				return cacheBranchName;
 			}
@@ -482,11 +505,11 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static String getCacheBranchName(
-		String senderUsername, String senderSHA, String upstreamUsername,
+		String receiverUsername, String senderUsername, String senderSHA,
 		String upstreamSHA) {
 
 		return JenkinsResultsParserUtil.combine(
-			"cache-", upstreamUsername, "-", upstreamSHA, "-", senderUsername,
+			"cache-", receiverUsername, "-", upstreamSHA, "-", senderUsername,
 			"-", senderSHA);
 	}
 
@@ -495,41 +518,6 @@ public class LocalGitSyncUtil {
 
 		return JenkinsResultsParserUtil.combine(
 			"git@github.com:", userName, "/", repositoryName, ".git");
-	}
-
-	protected static List<RemoteConfig> getLocalGitRemoteConfigs(
-			GitWorkingDirectory gitWorkingDirectory)
-		throws GitAPIException {
-
-		List<String> localGitRemoteURLs = getLocalGitRemoteURLs(
-			gitWorkingDirectory);
-
-		List<RemoteConfig> localGitRemoteConfigs = new ArrayList<>(
-			localGitRemoteURLs.size());
-
-		for (String localGitRemoteURL : localGitRemoteURLs) {
-			String url = localGitRemoteURL.replace(
-				"${username}", gitWorkingDirectory.getRepositoryUsername());
-
-			url = url.replace(
-				"${repository-name}", gitWorkingDirectory.getRepositoryName());
-
-			String localGitRemoteName =
-				"local-git-remote-" +
-					localGitRemoteURLs.indexOf(localGitRemoteURL);
-
-			RemoteConfig remoteConfig = gitWorkingDirectory.getRemoteConfig(
-				localGitRemoteName);
-
-			if (remoteConfig == null) {
-				remoteConfig = gitWorkingDirectory.addRemote(
-					true, localGitRemoteName, url);
-			}
-
-			localGitRemoteConfigs.add(remoteConfig);
-		}
-
-		return localGitRemoteConfigs;
 	}
 
 	protected static List<String> getLocalGitRemoteURLs(

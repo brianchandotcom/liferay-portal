@@ -14,6 +14,7 @@
 .gradle
 .idea
 /bundles
+/gradle-*.properties
 /plugins-sdk/**/classes
 /plugins-sdk/**/ivy.xml.MD5
 /plugins-sdk/**/liferay-hook.xml.processed

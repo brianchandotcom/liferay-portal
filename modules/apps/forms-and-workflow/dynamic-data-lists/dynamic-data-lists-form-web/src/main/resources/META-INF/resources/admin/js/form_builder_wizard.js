@@ -27,14 +27,22 @@ AUI.add(
 						instance.after('successPageChange', A.bind(instance._afterSuccessPageChange, instance));
 					},
 
-					_afterSuccessPageChange: function() {
+					isSuccessPageSelected: function() {
+						var instance = this;
+
+						return instance._activeSuccessPage;
+					},
+
+					_afterSuccessPageChange: function(event) {
 						var instance = this;
 
 						var contentBox = instance.get('contentBox');
 
 						contentBox.empty();
 
-						contentBox.append(instance._getItemsNodeList(instance.get('items')));
+						var items = instance.get('items');
+
+						contentBox.append(instance._getItemsNodeList(items));
 					},
 
 					_getItemsNodeList: function(items) {

@@ -35,6 +35,18 @@ import org.eclipse.jgit.transport.RemoteConfig;
  */
 public class LocalGitSyncUtil {
 
+	public static void deleteCachedBranch(
+			GitWorkingDirectory gitWorkingDirectory, String senderBranchName,
+			String senderUsername, String senderSHA, String upstreamBranchName,
+			String upstreamUsername, String upstreamSHA)
+		throws GitAPIException {
+
+		deleteCachedBranch(
+			getCacheBranchName(
+				senderUsername, senderSHA, upstreamUsername, upstreamSHA),
+			gitWorkingDirectory, getLocalGitRemoteConfigs(gitWorkingDirectory));
+	}
+
 	public static String synchronizeToLocalGit(
 			GitWorkingDirectory gitWorkingDirectory, String senderBranchName,
 			String senderUsername, String senderSHA, String upstreamBranchName,
@@ -46,34 +58,33 @@ public class LocalGitSyncUtil {
 		RemoteConfig senderRemoteConfig = null;
 		RemoteConfig tempUpstreamRemoteConfig = null;
 
+		if ((senderBranchName == null) || senderBranchName.isEmpty()) {
+			senderBranchName = upstreamBranchName;
+		}
+
+		if ((senderSHA == null) || senderSHA.isEmpty()) {
+			senderSHA = upstreamSHA;
+		}
+
+		if ((senderUsername == null) || senderUsername.isEmpty()) {
+			senderUsername = upstreamUsername;
+		}
+
 		try {
 			tempUpstreamRemoteConfig = gitWorkingDirectory.addRemote(
 				true, "upstream-temp",
 				getGitHubRemoteURL(
 					gitWorkingDirectory.getRepositoryName(), upstreamUsername));
 
-			if (upstreamSHA == null) {
-				upstreamSHA = GitWorkingDirectory.getGitHubBranchCommit(
-					upstreamBranchName, tempUpstreamRemoteConfig,
-					gitWorkingDirectory.getRepositoryName());
-			}
-
 			senderRemoteConfig = gitWorkingDirectory.addRemote(
 				true, "sender-temp",
 				getGitHubRemoteURL(
 					gitWorkingDirectory.getRepositoryName(), senderUsername));
 
-			if (senderSHA == null) {
-				senderSHA = GitWorkingDirectory.getGitHubBranchCommit(
-					senderBranchName, senderRemoteConfig,
-					gitWorkingDirectory.getRepositoryName());
-			}
-
 			boolean pullRequest = !upstreamSHA.equals(senderSHA);
 
-			String cacheBranchName = JenkinsResultsParserUtil.combine(
-				"cache-", upstreamUsername, "-", upstreamSHA, "-",
-				senderUsername, "-", senderSHA);
+			String cacheBranchName = getCacheBranchName(
+				senderUsername, senderSHA, upstreamUsername, upstreamSHA);
 
 			List<RemoteConfig> localGitRemoteConfigs = null;
 
@@ -104,7 +115,7 @@ public class LocalGitSyncUtil {
 
 				gitWorkingDirectory.clean();
 
-				gitWorkingDirectory.reset("head", ResetType.HARD);
+				gitWorkingDirectory.reset("HEAD", ResetType.HARD);
 
 				gitWorkingDirectory.fetch(tempUpstreamRemoteConfig, null);
 
@@ -119,7 +130,8 @@ public class LocalGitSyncUtil {
 
 				// gitWorkingDirectory.copyUpstreamRefsToHeads();
 
-				gitWorkingDirectory.createLocalBranch(cacheBranchName, true, null);
+				gitWorkingDirectory.createLocalBranch(
+					cacheBranchName, true, null);
 
 				gitWorkingDirectory.fetch(
 					cacheBranchName, senderBranchName, senderRemoteConfig);
@@ -251,6 +263,81 @@ public class LocalGitSyncUtil {
 		}
 	}
 
+	protected static void deleteCachedBranch(
+			final String cachedBranchName,
+			final GitWorkingDirectory gitWorkingDirectory,
+			List<RemoteConfig> localGitRemoteConfigs)
+		throws GitAPIException {
+
+		long start = System.currentTimeMillis();
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			localGitRemoteConfigs.size());
+
+		for (final RemoteConfig localGitRemoteConfig : localGitRemoteConfigs) {
+			executorService.execute(
+				new Runnable() {
+
+					@Override
+					public void run() {
+						try {
+							deleteCachedBranch(
+								cachedBranchName, gitWorkingDirectory,
+								localGitRemoteConfig);
+						}
+						catch (GitAPIException gapie) {
+							throw new RuntimeException(gapie);
+						}
+					}
+
+				});
+		}
+
+		executorService.shutdown();
+
+		try {
+			executorService.awaitTermination(15, TimeUnit.MINUTES);
+		}
+		catch (InterruptedException ie) {
+			throw new RuntimeException(ie);
+		}
+
+		long duration = System.currentTimeMillis() - start;
+
+		System.out.println(
+			"Expired cache branches deleted in " +
+				JenkinsResultsParserUtil.toDurationString(duration));
+	}
+
+	protected static void deleteCachedBranch(
+			String cachedBranchName, GitWorkingDirectory gitWorkingDirectory,
+			RemoteConfig remoteConfig)
+		throws GitAPIException {
+
+		for (String remoteBranchName :
+				gitWorkingDirectory.getRemoteRepositoryBranchNames(
+					remoteConfig)) {
+
+			if (!remoteBranchName.startsWith(cachedBranchName)) {
+				continue;
+			}
+
+			try {
+				deleteRemoteRepositoryCachedBranch(
+					gitWorkingDirectory, remoteBranchName, remoteConfig);
+			}
+			catch (GitAPIException gapie) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"WARNING - Unable to delete cached branch ",
+						remoteBranchName, " from ",
+						GitWorkingDirectory.getRemoteURL(remoteConfig)));
+
+				gapie.printStackTrace();
+			}
+		}
+	}
+
 	protected static void deleteExpiredCacheBranches(
 			final GitWorkingDirectory gitWorkingDirectory,
 			List<RemoteConfig> localGitRemoteConfigs)
@@ -323,7 +410,10 @@ public class LocalGitSyncUtil {
 					try {
 						deleteRemoteRepositoryCachedBranch(
 							gitWorkingDirectory, matcher.group("name"),
-							remoteBranchName, remoteConfig);
+							remoteConfig);
+						deleteRemoteRepositoryCachedBranch(
+							gitWorkingDirectory, remoteBranchName,
+							remoteConfig);
 					}
 					catch (GitAPIException gapie) {
 						System.out.println(
@@ -359,7 +449,7 @@ public class LocalGitSyncUtil {
 
 	protected static void deleteRemoteRepositoryCachedBranch(
 			GitWorkingDirectory gitWorkingDirectory, String remoteBranchName,
-			String remoteTimestampBranchName, RemoteConfig remoteConfig)
+			RemoteConfig remoteConfig)
 		throws GitAPIException {
 
 		if (gitWorkingDirectory.pushToRemote(
@@ -377,21 +467,15 @@ public class LocalGitSyncUtil {
 					"Unable to delete ", remoteBranchName, " from ",
 					GitWorkingDirectory.getRemoteURL(remoteConfig)));
 		}
+	}
 
-		if (gitWorkingDirectory.pushToRemote(
-				"", remoteTimestampBranchName, remoteConfig)) {
+	protected static String getCacheBranchName(
+		String senderUsername, String senderSHA, String upstreamUsername,
+		String upstreamSHA) {
 
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Deleted ", remoteTimestampBranchName, " from ",
-					GitWorkingDirectory.getRemoteURL(remoteConfig)));
-		}
-		else {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Unable to delete ", remoteTimestampBranchName, " from ",
-					GitWorkingDirectory.getRemoteURL(remoteConfig)));
-		}
+		return JenkinsResultsParserUtil.combine(
+			"cache-", upstreamUsername, "-", upstreamSHA, "-", senderUsername,
+			"-", senderSHA);
 	}
 
 	protected static String getGitHubRemoteURL(

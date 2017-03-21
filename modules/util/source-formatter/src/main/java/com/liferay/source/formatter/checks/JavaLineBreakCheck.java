@@ -113,8 +113,8 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 		String trimmedLine = StringUtil.trimLeading(line);
 
-		if (previousLine.contains("\t/*") || trimmedLine.startsWith("//") ||
-			trimmedLine.endsWith("*/")) {
+		if (previousLine.contains("\t/*") || trimmedLine.startsWith("//") |
+			trimmedLine.startsWith("/*") || trimmedLine.endsWith("*/")) {
 
 			return;
 		}

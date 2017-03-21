@@ -247,17 +247,17 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						<arg line="${database.service.cmd.start}" />
 					</exec>
 
-					<antcall inheritall="false" target="copy-optional-jars" >
+					<antcall inheritall="false" target="copy-optional-jars">
 						<param name="database.type" value="@{database.type}" />
 						<param name="todir" value="lib/development" />
 					</antcall>
 
-					<antcall inheritall="false" target="copy-optional-jars" >
+					<antcall inheritall="false" target="copy-optional-jars">
 						<param name="database.type" value="@{database.type}" />
 						<param name="todir" value="${app.server.lib.global.dir}" />
 					</antcall>
 
-					<antcall inheritall="false" target="rebuild-database" >
+					<antcall inheritall="false" target="rebuild-database">
 						<param name="database.type" value="@{database.type}" />
 					</antcall>
 

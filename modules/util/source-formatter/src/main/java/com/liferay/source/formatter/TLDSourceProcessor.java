@@ -99,7 +99,7 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 	private static class TagElementComparator extends ElementComparator {
 
 		@Override
-		protected String getElementName(Element element) {
+		public String getElementName(Element element) {
 			Element nameElement = element.element(getNameAttribute());
 
 			return nameElement.getText();

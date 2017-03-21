@@ -55,7 +55,7 @@ public class ElementComparator extends NaturalOrderStringComparator {
 		return super.compare(elementName1, elementName2);
 	}
 
-	protected String getElementName(Element element) {
+	public String getElementName(Element element) {
 		return element.attributeValue(getNameAttribute());
 	}
 

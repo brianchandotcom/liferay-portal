@@ -1736,7 +1736,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private class PortletPreferenceElementComparator extends ElementComparator {
 
 		@Override
-		protected String getElementName(Element preferenceElement) {
+		public String getElementName(Element preferenceElement) {
 			Element nameElement = preferenceElement.element(getNameAttribute());
 
 			return nameElement.getStringValue();
@@ -1748,7 +1748,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		extends ElementComparator {
 
 		@Override
-		protected String getElementName(Element actionKeyElement) {
+		public String getElementName(Element actionKeyElement) {
 			return actionKeyElement.getStringValue();
 		}
 
@@ -1762,7 +1762,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		@Override
-		protected String getElementName(Element portletResourceElement) {
+		public String getElementName(Element portletResourceElement) {
 			Element portletNameElement = portletResourceElement.element(
 				getNameAttribute());
 
@@ -1778,7 +1778,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private class ServiceExceptionElementComparator extends ElementComparator {
 
 		@Override
-		protected String getElementName(Element exceptionElement) {
+		public String getElementName(Element exceptionElement) {
 			return exceptionElement.getStringValue();
 		}
 
@@ -1954,7 +1954,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		@Override
-		protected String getElementName(Element element) {
+		public String getElementName(Element element) {
 			String elementName = super.getElementName(element);
 
 			if ((elementName != null) &&

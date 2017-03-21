@@ -85,6 +85,15 @@ public class ConfigurationProviderUtil {
 			clazz, layout, portletId);
 	}
 
+	public static <T> T getSystemConfiguration(Class<T> clazz)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		return configurationProvider.getSystemConfiguration(clazz);
+	}
+
 	private static final ServiceTrackerList<ConfigurationProvider>
 		_configurationProvider = ServiceTrackerCollections.openList(
 			ConfigurationProvider.class);

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportPackage;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.XMLBuildFileCheck;
+import com.liferay.source.formatter.checks.XMLCustomSQLFileCheck;
 import com.liferay.source.formatter.checks.XMLEmptyLinesCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
@@ -265,10 +266,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (fileName.contains("/custom-sql/")) {
-			formatCustomSQLXML(fileName, newContent);
-		}
-		else if (fileName.endsWith("structures.xml")) {
+		if (fileName.endsWith("structures.xml")) {
 			newContent = formatDDLStructuresXML(newContent);
 		}
 		else if (fileName.endsWith("routes.xml")) {
@@ -526,31 +524,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	protected void formatCustomSQLXML(String fileName, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		checkOrder(
-			fileName, document.getRootElement(), "sql", null,
-			new CustomSQLElementComparator("id"));
-
-		Matcher matcher = _whereNotInSQLPattern.matcher(content);
-
-		if (matcher.find()) {
-			int x = content.lastIndexOf("<sql id=", matcher.start());
-
-			int y = content.indexOf(CharPool.QUOTE, x);
-
-			int z = content.indexOf(CharPool.QUOTE, y + 1);
-
-			processMessage(
-				fileName,
-				"Avoid using WHERE ... NOT IN: " + content.substring(y + 1, z) +
-					", see LPS-51315");
-		}
 	}
 
 	protected String formatDDLStructuresXML(String content) throws Exception {
@@ -1109,6 +1082,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		fileChecks.add(
 			new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName()));
+		fileChecks.add(new XMLCustomSQLFileCheck());
 
 		fileChecks.add(
 			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));
@@ -1408,90 +1382,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private String _tablesContent;
 	private final Map<String, String> _tablesContentMap =
 		new ConcurrentHashMap<>();
-	private final Pattern _whereNotInSQLPattern = Pattern.compile(
-		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
-
-	private class CustomSQLElementComparator extends ElementComparator {
-
-		public CustomSQLElementComparator(String nameAttribute) {
-			super(nameAttribute);
-		}
-
-		@Override
-		public int compare(Element sqlElement1, Element sqlElement2) {
-			String sqlElementName1 = getElementName(sqlElement1);
-			String sqlElementName2 = getElementName(sqlElement2);
-
-			String finderObjectName1 = _getFinderObjectName(sqlElementName1);
-			String finderObjectName2 = _getFinderObjectName(sqlElementName2);
-
-			if ((finderObjectName1 == null) || (finderObjectName2 == null)) {
-				return 0;
-			}
-
-			int value = finderObjectName1.compareToIgnoreCase(
-				finderObjectName2);
-
-			if (value != 0) {
-				return value;
-			}
-
-			String finderKeyName1 = _getFinderKeyName(sqlElementName1);
-			String finderKeyName2 = _getFinderKeyName(sqlElementName2);
-
-			int startsWithWeight = StringUtil.startsWithWeight(
-				finderKeyName1, finderKeyName2);
-
-			if (startsWithWeight == 0) {
-				return finderKeyName1.compareTo(finderKeyName2);
-			}
-
-			String startFinder = finderKeyName1.substring(0, startsWithWeight);
-
-			if (!startFinder.contains("By")) {
-				NaturalOrderStringComparator comparator =
-					new NaturalOrderStringComparator();
-
-				return comparator.compare(finderKeyName1, finderKeyName2);
-			}
-
-			int columnCount1 = StringUtil.count(
-				sqlElementName1, CharPool.UNDERLINE);
-			int columnCount2 = StringUtil.count(
-				sqlElementName2, CharPool.UNDERLINE);
-
-			return columnCount1 - columnCount2;
-		}
-
-		private String _getFinderKeyName(String elementName) {
-			if (Validator.isNull(elementName)) {
-				return null;
-			}
-
-			int pos = elementName.lastIndexOf(StringPool.PERIOD);
-
-			if (pos == -1) {
-				return null;
-			}
-
-			return elementName.substring(pos + 1);
-		}
-
-		private String _getFinderObjectName(String elementName) {
-			if (Validator.isNull(elementName)) {
-				return null;
-			}
-
-			int pos = elementName.lastIndexOf(StringPool.PERIOD);
-
-			if (pos == -1) {
-				return null;
-			}
-
-			return elementName.substring(0, pos);
-		}
-
-	}
 
 	private class PortletPreferenceElementComparator extends ElementComparator {
 

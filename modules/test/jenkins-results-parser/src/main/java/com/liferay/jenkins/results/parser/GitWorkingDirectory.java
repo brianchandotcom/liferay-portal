@@ -33,7 +33,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.jgit.api.AddCommand;
-import org.eclipse.jgit.api.CleanCommand;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.DeleteBranchCommand;
@@ -45,20 +44,14 @@ import org.eclipse.jgit.api.LsRemoteCommand;
 import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.api.RebaseResult;
-import org.eclipse.jgit.api.RemoteAddCommand;
-import org.eclipse.jgit.api.RemoteListCommand;
-import org.eclipse.jgit.api.RemoteRemoveCommand;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.TransportException;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.merge.ResolveMerger;
 import org.eclipse.jgit.merge.ResolveMerger.MergeFailureReason;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.JschConfigSessionFactory;
@@ -177,19 +170,15 @@ public class GitWorkingDirectory {
 			}
 		}
 
-		RemoteAddCommand remoteAddCommand = _git.remoteAdd();
-
-		remoteAddCommand.setName(remoteName);
-
 		try {
-			remoteAddCommand.setUri(new URIish(remoteURL));
+			JenkinsResultsParserUtil.executeBashCommands(
+				true, _workingDirectory,
+				JenkinsResultsParserUtil.combine(
+					"git remote add ", remoteName, " ", remoteURL));
 		}
-		catch (URISyntaxException urise) {
-			throw new RuntimeException(
-				"Invalid remote url " + remoteURL, urise);
+		catch (InterruptedException | IOException e) {
+			throw new RuntimeException("Unable to add remote " + remoteName, e);
 		}
-
-		remoteAddCommand.call();
 
 		_remoteConfigs = null;
 
@@ -222,13 +211,9 @@ public class GitWorkingDirectory {
 			JenkinsResultsParserUtil.executeBashCommands(
 				true, _workingDirectory, sb.toString());
 		}
-		catch (IOException ioe) {
+		catch (InterruptedException | IOException e) {
 			throw new RuntimeException(
-				"Unable to checkout branch " + branchName, ioe);
-		}
-		catch (InterruptedException ie) {
-			throw new RuntimeException(
-				"Unable to checkout branch " + branchName, ie);
+				"Unable to checkout branch " + branchName, e);
 		}
 
 		int timeout = 0;
@@ -294,15 +279,14 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public void clean() throws GitAPIException {
-		CleanCommand cleanCommand = _git.clean();
-
-		cleanCommand.setCleanDirectories(true);
-		cleanCommand.setForce(true);
-
-		System.out.println("clean -dfx");
-
-		cleanCommand.call();
+	public void clean() {
+		try {
+			JenkinsResultsParserUtil.executeBashCommands(
+				true, _workingDirectory, "git clean -dfx");
+		}
+		catch (InterruptedException | IOException e) {
+			throw new RuntimeException("Unable to execute git clean.", e);
+		}
 	}
 
 	public void commitFileToCurrentBranch(String fileName, String message)
@@ -537,9 +521,13 @@ public class GitWorkingDirectory {
 			return _remoteConfigs;
 		}
 
-		RemoteListCommand remoteListCommand = _git.remoteList();
-
-		_remoteConfigs = remoteListCommand.call();
+		try {
+			_remoteConfigs = RemoteConfig.getAllRemoteConfigs(
+				_repository.getConfig());
+		}
+		catch (URISyntaxException urise) {
+			throw new RuntimeException(urise);
+		}
 
 		return _remoteConfigs;
 	}
@@ -683,13 +671,7 @@ public class GitWorkingDirectory {
 
 		rebaseCommand.setOperation(RebaseCommand.Operation.BEGIN);
 
-		RevCommit revCommit = createRevCommit(refSHA);
-
-		if (revCommit == null) {
-			throw new RuntimeException("Commit not found.");
-		}
-
-		rebaseCommand.setUpstream(revCommit);
+		rebaseCommand.setUpstream(refSHA);
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
@@ -756,13 +738,22 @@ public class GitWorkingDirectory {
 
 			System.out.println("remote remove " + remoteConfig.getName());
 
-			RemoteRemoveCommand remoteRemoveCommand = _git.remoteRemove();
+			try {
+				JenkinsResultsParserUtil.executeBashCommands(
+					true, _workingDirectory,
+					"git remote remove " + remoteConfig.getName());
+			}
+			catch (InterruptedException | IOException e) {
+				throw new RuntimeException(
+					"Unable to remove remote " + remoteConfig.getName(), e);
+			}
 
-			remoteRemoveCommand.setName(remoteConfig.getName());
-
-			remoteRemoveCommand.call();
-
-			_remoteConfigs = null;
+			if (_remoteConfigs.contains(remoteConfig)) {
+				_remoteConfigs.remove(remoteConfig);
+			}
+			else {
+				_remoteConfigs = null;
+			}
 		}
 		catch (GitAPIException gapie) {
 			gapie.printStackTrace();
@@ -809,16 +800,6 @@ public class GitWorkingDirectory {
 		URIish uri = uris.get(0);
 
 		return uri.toString();
-	}
-
-	protected RevCommit createRevCommit(String sha)
-		throws GitAPIException, IOException {
-
-		ObjectId objectId = ObjectId.fromString(sha);
-
-		try (RevWalk revWalk = new RevWalk(_repository)) {
-			return revWalk.parseCommit(objectId);
-		}
 	}
 
 	protected String loadRepositoryName() throws GitAPIException {

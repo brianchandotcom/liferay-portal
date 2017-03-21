@@ -1249,16 +1249,17 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			List<ResourceAction> resourceActions =
 				resourceActionLocalService.getResourceActions(name);
 
+			if (resourceActions.isEmpty()) {
+				throw new ResourceActionsException(
+					"There are no actions associated with the resource " +
+						name);
+			}
+
 			actions = new ArrayList(resourceActions.size());
 
 			for (ResourceAction resourceAction : resourceActions) {
 				actions.add(resourceAction.getActionId());
 			}
-		}
-
-		if (actions.isEmpty()) {
-			throw new ResourceActionsException(
-				"There are no actions associated with the resource " + name);
 		}
 	}
 

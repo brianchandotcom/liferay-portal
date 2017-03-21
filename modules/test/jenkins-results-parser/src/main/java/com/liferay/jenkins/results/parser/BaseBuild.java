@@ -720,8 +720,12 @@ public abstract class BaseBuild implements Build {
 
 		String thisBuildURL = getBuildURL();
 
-		if ((thisBuildURL != null) && thisBuildURL.equals(buildURL)) {
-			return true;
+		if (thisBuildURL != null) {
+			thisBuildURL = JenkinsResultsParserUtil.getLocalURL(thisBuildURL);
+
+			if (thisBuildURL.equals(buildURL)) {
+				return true;
+			}
 		}
 
 		for (Build downstreamBuild : downstreamBuilds) {

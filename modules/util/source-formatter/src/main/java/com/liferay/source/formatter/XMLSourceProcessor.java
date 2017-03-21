@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportPackage;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.XMLBuildFileCheck;
 import com.liferay.source.formatter.checks.XMLEmptyLinesCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
@@ -237,51 +238,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkAntXMLProjectName(String fileName, Document document) {
-		Matcher matcher = _projectNamePattern.matcher(fileName);
-
-		if (!matcher.find()) {
-			return;
-		}
-
-		String expectedProjectName = matcher.group(1);
-
-		Element rootElement = document.getRootElement();
-
-		String projectName = rootElement.attributeValue("name");
-
-		if (!projectName.equals(expectedProjectName)) {
-			processMessage(
-				fileName, "Incorrect project name '" + projectName + "'");
-		}
-	}
-
-	protected void checkImportFiles(String fileName, String content) {
-		Matcher matcher = _importFilePattern.matcher(content);
-
-		while (matcher.find()) {
-			String importFileName = fileName;
-
-			int pos = importFileName.lastIndexOf(StringPool.SLASH);
-
-			if (pos == -1) {
-				return;
-			}
-
-			importFileName = importFileName.substring(0, pos + 1);
-
-			importFileName = importFileName + matcher.group(1);
-
-			File file = new File(importFileName);
-
-			if (!file.exists()) {
-				processMessage(
-					fileName,
-					"Incorrect import file '" + matcher.group(1) + "'");
-			}
-		}
-	}
-
 	protected void checkPoshiCharactersAfterDefinition(
 		String fileName, String content) {
 
@@ -302,88 +258,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkTargetName(
-			String targetName, String buildFileName, String fileName)
-		throws Exception {
-
-		List<String> targetNames = getTargetNames(
-			buildFileName, fileName, null, false);
-
-		if ((targetNames == null) || targetNames.contains(targetName)) {
-			return;
-		}
-
-		int x = targetName.lastIndexOf(CharPool.PERIOD);
-
-		if (x != -1) {
-			targetName = targetName.substring(x + 1);
-		}
-
-		if (!targetNames.contains(targetName)) {
-			processMessage(
-				fileName, "Target '" + targetName + "' does not exist");
-		}
-	}
-
-	protected void checkTargetNames(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> antCallElements = getElementsByName(
-			"antcall", rootElement, null);
-
-		for (Element antCallElement : antCallElements) {
-			String targetName = antCallElement.attributeValue("target");
-
-			if ((targetName == null) ||
-				targetName.contains(StringPool.OPEN_CURLY_BRACE)) {
-
-				continue;
-			}
-
-			checkTargetName(targetName, absolutePath, fileName);
-		}
-
-		String fileDirName = fileName.substring(
-			0, fileName.lastIndexOf(CharPool.SLASH) + 1);
-
-		List<Element> antElements = getElementsByName("ant", rootElement, null);
-
-		for (Element antElement : antElements) {
-			String targetName = antElement.attributeValue("target");
-
-			if ((targetName == null) ||
-				targetName.contains(StringPool.OPEN_CURLY_BRACE)) {
-
-				continue;
-			}
-
-			String fullDirName = fileDirName;
-
-			String dirName = antElement.attributeValue("dir");
-
-			if (dirName != null) {
-				if (dirName.contains(StringPool.OPEN_CURLY_BRACE)) {
-					continue;
-				}
-
-				fullDirName = fullDirName + dirName + StringPool.SLASH;
-			}
-
-			String antFileName = antElement.attributeValue("antfile");
-
-			if (antFileName == null) {
-				antFileName = "build.xml";
-			}
-
-			checkTargetName(targetName, fullDirName + antFileName, fileName);
-		}
-	}
-
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -391,13 +265,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (fileName.startsWith(
-				sourceFormatterArgs.getBaseDirName() + "build") ||
-			(fileName.contains("/build") && !fileName.contains("/tools/"))) {
-
-			formatAntXML(fileName, absolutePath, newContent);
-		}
-		else if (fileName.contains("/custom-sql/")) {
+		if (fileName.contains("/custom-sql/")) {
 			formatCustomSQLXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("structures.xml")) {
@@ -658,39 +526,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	protected void formatAntXML(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		checkAntXMLProjectName(fileName, document);
-
-		checkOrder(
-			fileName, document.getRootElement(), "macrodef", null,
-			new ElementComparator());
-		checkOrder(
-			fileName, document.getRootElement(), "target", null,
-			new ElementComparator());
-
-		int x = content.lastIndexOf("\n\t</macrodef>");
-		int y = content.indexOf("\n\t<process-ivy");
-
-		if ((y != -1) && (x > y)) {
-			processMessage(fileName, "Macrodefs go before process-ivy");
-		}
-
-		int z = content.indexOf("\n\t</target>");
-
-		if ((z != -1) && (x > z)) {
-			processMessage(fileName, "Macrodefs go before targets");
-		}
-
-		checkImportFiles(fileName, content);
-
-		checkTargetNames(fileName, absolutePath, content);
 	}
 
 	protected void formatCustomSQLXML(String fileName, String content)
@@ -1268,34 +1103,15 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return columnNames;
 	}
 
-	protected List<Element> getElementsByName(
-		String name, Element element, List<Element> elements) {
-
-		if (elements == null) {
-			elements = new ArrayList<>();
-		}
-
-		List<Element> childElements = element.elements();
-
-		for (Element childElement : childElements) {
-			String elementName = childElement.getName();
-
-			if (elementName.equals(name)) {
-				elements.add(childElement);
-			}
-
-			elements = getElementsByName(name, childElement, elements);
-		}
-
-		return elements;
-	}
-
 	@Override
 	protected List<FileCheck> getFileChecks() {
 		List<FileCheck> fileChecks = new ArrayList<>();
 
 		fileChecks.add(
 			new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName()));
+
+		fileChecks.add(
+			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));
 
 		if (portalSource || subrepository) {
 			fileChecks.add(
@@ -1350,58 +1166,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return tablesContent;
-	}
-
-	protected List<String> getTargetNames(
-			String buildFileName, String fileName, List<String> targetNames,
-			boolean importFile)
-		throws Exception {
-
-		if (buildFileName.contains(StringPool.OPEN_CURLY_BRACE)) {
-			return null;
-		}
-
-		File file = new File(buildFileName);
-
-		if (!file.exists()) {
-			if (!importFile) {
-				processMessage(
-					fileName,
-					"Ant element points to non-existing build file '" +
-						buildFileName + "'");
-			}
-
-			return null;
-		}
-
-		Document document = readXML(FileUtil.read(file));
-
-		Element rootElement = document.getRootElement();
-
-		if (targetNames == null) {
-			targetNames = new ArrayList<>();
-		}
-
-		List<Element> targetElements = rootElement.elements("target");
-
-		for (Element targetElement : targetElements) {
-			targetNames.add(targetElement.attributeValue("name"));
-		}
-
-		List<Element> importElements = rootElement.elements("import");
-
-		for (Element importElement : importElements) {
-			String buildDirName = buildFileName.substring(
-				0, buildFileName.lastIndexOf(CharPool.SLASH) + 1);
-
-			String importFileName =
-				buildDirName + importElement.attributeValue("file");
-
-			targetNames = getTargetNames(
-				importFileName, fileName, targetNames, true);
-		}
-
-		return targetNames;
 	}
 
 	protected String sortAttributes(String fileName, String content)
@@ -1606,8 +1370,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static final Pattern _commentPattern2 = Pattern.compile(
 		"[\t ]-->\n[\t<]");
 
-	private final Pattern _importFilePattern = Pattern.compile(
-		"<import file=\"(.*)\"");
 	private final Pattern _incorrectDefaultPreferencesFileName =
 		Pattern.compile("/default-([\\w-]+)-portlet-preferences\\.xml$");
 	private final Pattern _poshiClosingTagPattern = Pattern.compile(
@@ -1643,8 +1405,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			"(?:(?:\\n){1,}+|\\</execute\\>)");
 	private final Pattern _poshiWholeTagPattern = Pattern.compile(
 		"<[^\\>^/]*\\/>");
-	private final Pattern _projectNamePattern = Pattern.compile(
-		"/(\\w*-(ext|hooks|layouttpl|portlet|theme|web))/build\\.xml$");
 	private String _tablesContent;
 	private final Map<String, String> _tablesContentMap =
 		new ConcurrentHashMap<>();

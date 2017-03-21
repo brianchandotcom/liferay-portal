@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.trash;
+package com.liferay.document.library.trash.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -24,6 +25,9 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -32,29 +36,34 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
-import com.liferay.portlet.trash.test.DefaultWhenIsAssetable;
-import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
-import com.liferay.portlet.trash.test.WhenCanBeDuplicatedInTrash;
-import com.liferay.portlet.trash.test.WhenHasGrandParent;
-import com.liferay.portlet.trash.test.WhenIsAssetable;
-import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
-import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
-import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
-import com.liferay.portlet.trash.test.WhenIsMoveableFromTrashBaseModel;
-import com.liferay.portlet.trash.test.WhenIsRestorableBaseModel;
-import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
-import com.liferay.portlet.trash.test.WhenParentModelIsSameType;
 import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.test.util.BaseTrashHandlerTestCase;
+import com.liferay.trash.test.util.DefaultWhenIsAssetable;
+import com.liferay.trash.test.util.DefaultWhenIsIndexableBaseModel;
+import com.liferay.trash.test.util.WhenCanBeDuplicatedInTrash;
+import com.liferay.trash.test.util.WhenHasGrandParent;
+import com.liferay.trash.test.util.WhenIsAssetable;
+import com.liferay.trash.test.util.WhenIsAssetableBaseModel;
+import com.liferay.trash.test.util.WhenIsAssetableParentModel;
+import com.liferay.trash.test.util.WhenIsIndexableBaseModel;
+import com.liferay.trash.test.util.WhenIsMoveableFromTrashBaseModel;
+import com.liferay.trash.test.util.WhenIsRestorableBaseModel;
+import com.liferay.trash.test.util.WhenIsUpdatableBaseModel;
+import com.liferay.trash.test.util.WhenParentModelIsSameType;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Alexander Chow
  * @author Eudaldo Alonso
  */
+@RunWith(Arquillian.class)
 @Sync
 public class DLFolderTrashHandlerTest
 	extends BaseTrashHandlerTestCase
@@ -139,6 +148,22 @@ public class DLFolderTrashHandlerTest
 
 		return _whenIsIndexableBaseModel.searchTrashEntriesCount(
 			keywords, serviceContext);
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		setUpPermissionThreadLocal();
+		setUpPrincipalThreadLocal();
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Override
@@ -261,10 +286,40 @@ public class DLFolderTrashHandlerTest
 		DLTrashServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
+	protected void setUpPermissionThreadLocal() throws Exception {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+
+				{
+					init(TestPropsValues.getUser());
+				}
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+			});
+	}
+
+	protected void setUpPrincipalThreadLocal() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
 	private static final String _FOLDER_NAME = RandomTestUtil.randomString(100);
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 	private final WhenIsAssetable _whenIsAssetable =
 		new DefaultWhenIsAssetable();
 	private final WhenIsIndexableBaseModel _whenIsIndexableBaseModel =

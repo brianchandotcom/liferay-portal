@@ -41,10 +41,22 @@ public class LocalGitSyncUtil {
 			String upstreamUsername, String upstreamSHA)
 		throws GitAPIException {
 
-		deleteCachedBranch(
-			getCacheBranchName(
-				senderUsername, senderSHA, upstreamUsername, upstreamSHA),
-			gitWorkingDirectory, getLocalGitRemoteConfigs(gitWorkingDirectory));
+		List<RemoteConfig> localGitRemoteConfigs = null;
+
+		try {
+			localGitRemoteConfigs = getLocalGitRemoteConfigs(
+				gitWorkingDirectory);
+
+			deleteCachedBranch(
+				getCacheBranchName(
+					senderUsername, senderSHA, upstreamUsername, upstreamSHA),
+				gitWorkingDirectory, localGitRemoteConfigs);
+		}
+		finally {
+			if (localGitRemoteConfigs != null) {
+				gitWorkingDirectory.removeRemotes(localGitRemoteConfigs);
+			}
+		}
 	}
 
 	public static String synchronizeToLocalGit(

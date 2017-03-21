@@ -40,6 +40,12 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 
 		content = fixMissingEmptyLineAfterSettingVariable(content);
 
+		content = fixEmptyLinesInMultiLineTags(content);
+
+		content = fixEmptyLinesInNestedTags(content);
+
+		content = fixEmptyLinesBetweenTags(content);
+
 		content = _fixMissingEmptyLines(content);
 
 		content = _fixRedundantEmptyLines(content);

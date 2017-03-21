@@ -51,8 +51,9 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 			properties = new HashMapDictionary();
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.CAPTCHA_ENGINE_IMPL))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.CAPTCHA_ENGINE_IMPL))) {
 
 			properties.put(
 				"captchaEngine",
@@ -60,8 +61,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 					LegacyCaptchaPropsKeys.CAPTCHA_ENGINE_IMPL));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT))) {
 
 			properties.put(
 				"createAccountCaptchaEnabled",
@@ -70,8 +73,9 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 						CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.CAPTCHA_MAX_CHALLENGES))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.CAPTCHA_MAX_CHALLENGES))) {
 
 			properties.put(
 				"maxChallenges",
@@ -79,9 +83,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 					LegacyCaptchaPropsKeys.CAPTCHA_MAX_CHALLENGES));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.
-					CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_CATEGORY))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_CATEGORY))) {
 
 			properties.put(
 				"messageBoardsEditCategoryCaptchaEnabled",
@@ -90,9 +95,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 						CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_CATEGORY));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.
-					CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE))) {
 
 			properties.put(
 				"messageBoardsEditMessageCaptchaEnabled",
@@ -101,9 +107,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 						CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.
-					CAPTCHA_ENGINE_RECAPTCHA_URL_NOSCRIPT))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_ENGINE_RECAPTCHA_URL_NOSCRIPT))) {
 
 			properties.put(
 				"reCaptchaNoScriptUrl",
@@ -112,8 +119,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 						CAPTCHA_ENGINE_RECAPTCHA_URL_NOSCRIPT));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE))) {
 
 			properties.put(
 				"reCaptchaPrivateKey",
@@ -122,8 +131,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 						CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC))) {
 
 			properties.put(
 				"reCaptchaPublicKey",
@@ -132,8 +143,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 						CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.CAPTCHA_ENGINE_RECAPTCHA_URL_SCRIPT))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_ENGINE_RECAPTCHA_URL_SCRIPT))) {
 
 			properties.put(
 				"reCaptchaScriptUrl",
@@ -142,8 +155,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 						CAPTCHA_ENGINE_RECAPTCHA_URL_SCRIPT));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.CAPTCHA_ENGINE_RECAPTCHA_URL_VERIFY))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_ENGINE_RECAPTCHA_URL_VERIFY))) {
 
 			properties.put(
 				"reCaptchaVerifyUrl",
@@ -152,8 +167,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 						CAPTCHA_ENGINE_RECAPTCHA_URL_VERIFY));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.CAPTCHA_CHECK_PORTAL_SEND_PASSWORD))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_CHECK_PORTAL_SEND_PASSWORD))) {
 
 			properties.put(
 				"sendPasswordCaptchaEnabled",
@@ -161,9 +178,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 					LegacyCaptchaPropsKeys.CAPTCHA_CHECK_PORTAL_SEND_PASSWORD));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.
-					CAPTCHA_ENGINE_SIMPLECAPTCHA_BACKGROUND_PRODUCERS))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_ENGINE_SIMPLECAPTCHA_BACKGROUND_PRODUCERS))) {
 
 			properties.put(
 				"simpleCaptchaBackgroundProducers",
@@ -173,9 +191,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 					StringPool.COMMA));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.
-					CAPTCHA_ENGINE_SIMPLECAPTCHA_GIMPY_RENDERERS))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_ENGINE_SIMPLECAPTCHA_GIMPY_RENDERERS))) {
 
 			properties.put(
 				"simpleCaptchaGimpyRenderers",
@@ -185,8 +204,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 					StringPool.COMMA));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.CAPTCHA_ENGINE_SIMPLECAPTCHA_HEIGHT))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_ENGINE_SIMPLECAPTCHA_HEIGHT))) {
 
 			properties.put(
 				"simpleCaptchaHeight",
@@ -195,9 +216,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 						CAPTCHA_ENGINE_SIMPLECAPTCHA_HEIGHT));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.
-					CAPTCHA_ENGINE_SIMPLECAPTCHA_NOISE_PRODUCERS))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_ENGINE_SIMPLECAPTCHA_NOISE_PRODUCERS))) {
 
 			properties.put(
 				"simpleCaptchaNoiseProducers",
@@ -207,9 +229,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 					StringPool.COMMA));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.
-					CAPTCHA_ENGINE_SIMPLECAPTCHA_TEXT_PRODUCERS))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_ENGINE_SIMPLECAPTCHA_TEXT_PRODUCERS))) {
 
 			properties.put(
 				"simpleCaptchaTextProducers",
@@ -219,8 +242,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 					StringPool.COMMA));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.CAPTCHA_ENGINE_SIMPLECAPTCHA_WIDTH))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_ENGINE_SIMPLECAPTCHA_WIDTH))) {
 
 			properties.put(
 				"simpleCaptchaWidth",
@@ -228,9 +253,10 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 					LegacyCaptchaPropsKeys.CAPTCHA_ENGINE_SIMPLECAPTCHA_WIDTH));
 		}
 
-		if (Validator.isNotNull(_prefsProps.getString(
-				LegacyCaptchaPropsKeys.
-					CAPTCHA_ENGINE_SIMPLECAPTCHA_WORD_RENDERERS))) {
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyCaptchaPropsKeys.
+						CAPTCHA_ENGINE_SIMPLECAPTCHA_WORD_RENDERERS))) {
 
 			properties.put(
 				"simpleCaptchaWordRenderers",

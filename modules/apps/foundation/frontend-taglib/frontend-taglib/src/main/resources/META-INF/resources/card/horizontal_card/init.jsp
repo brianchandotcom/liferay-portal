@@ -18,5 +18,6 @@
 
 <%
 String colHTML = (String)request.getAttribute("liferay-frontend:card:colHTML");
+Map<String, Object> linkData = (Map<String, Object>)request.getAttribute("liferay-frontend:card:linkData");
 String text = (String)request.getAttribute("liferay-frontend:card:text");
 %>

@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -24,8 +22,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.FTLIfStatementCheck;
+import com.liferay.source.formatter.checks.FTLWhitespaceCheck;
 import com.liferay.source.formatter.checks.FileCheck;
-import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
@@ -141,8 +139,6 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 		content = fixMissingEmptyLinesAroundComments(content);
 
-		content = formatFTL(fileName, content);
-
 		return StringUtil.replace(content, "\n\n\n", "\n\n");
 	}
 
@@ -219,40 +215,6 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatFTL(String fileName, String content)
-		throws Exception {
-
-		StringBundler sb = new StringBundler();
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				String trimmedLine = StringUtil.trimLeading(line);
-
-				if (trimmedLine.startsWith("<#assign ")) {
-					line = formatWhitespace(line, trimmedLine, true);
-
-					line = formatIncorrectSyntax(line, "=[", "= [", false);
-					line = formatIncorrectSyntax(line, "+[", "+ [", false);
-				}
-
-				sb.append(line);
-				sb.append("\n");
-			}
-		}
-
-		String newContent = sb.toString();
-
-		if (newContent.endsWith("\n")) {
-			newContent = newContent.substring(0, newContent.length() - 1);
-		}
-
-		return newContent;
-	}
-
 	protected String formatStringRelationalOperations(String content) {
 		Matcher matcher = _stringRelationalOperationPattern.matcher(content);
 
@@ -308,7 +270,9 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<FileCheck> getFileChecks() {
 		return Arrays.asList(
-			new FileCheck[] {new FTLIfStatementCheck(), new WhitespaceCheck()});
+			new FileCheck[] {
+				new FTLIfStatementCheck(), new FTLWhitespaceCheck()
+			});
 	}
 
 	protected String sortLiferayVariables(String content) {

@@ -49,4 +49,7 @@ public interface ConfigurationProvider {
 			Class<T> clazz, Layout layout, String portletId)
 		throws ConfigurationException;
 
+	public <T> T getSystemConfiguration(Class<T> clazz)
+		throws ConfigurationException;
+
 }

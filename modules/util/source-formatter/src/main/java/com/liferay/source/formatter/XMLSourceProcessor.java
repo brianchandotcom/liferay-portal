@@ -51,8 +51,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -62,32 +60,6 @@ import org.dom4j.Element;
  * @author Hugo Huijser
  */
 public class XMLSourceProcessor extends BaseSourceProcessor {
-
-	public static String formatXML(String content) {
-		String newContent = content;
-
-		while (true) {
-			Matcher matcher = _commentPattern1.matcher(newContent);
-
-			if (matcher.find()) {
-				newContent = StringUtil.replaceFirst(
-					newContent, ">\n", ">\n\n", matcher.start());
-
-				continue;
-			}
-
-			matcher = _commentPattern2.matcher(newContent);
-
-			if (!matcher.find()) {
-				break;
-			}
-
-			newContent = StringUtil.replaceFirst(
-				newContent, "-->\n", "-->\n\n", matcher.start());
-		}
-
-		return newContent;
-	}
 
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
@@ -248,11 +220,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		String newContent = content;
-
-		newContent = sortAttributes(fileName, newContent);
-
-		return formatXML(newContent);
+		return sortAttributes(fileName, content);
 	}
 
 	@Override
@@ -431,11 +399,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	private static final String _SERVICE_FINDER_COLUMN_SORT_EXCLUDES =
 		"service.finder.column.sort.excludes";
-
-	private static final Pattern _commentPattern1 = Pattern.compile(
-		">\n\t+<!--[\n ]");
-	private static final Pattern _commentPattern2 = Pattern.compile(
-		"[\t ]-->\n[\t<]");
 
 	private List<String> _numericalPortletNameElementExcludes;
 	private List<String> _pluginsInsideModulesDirectoryNames;

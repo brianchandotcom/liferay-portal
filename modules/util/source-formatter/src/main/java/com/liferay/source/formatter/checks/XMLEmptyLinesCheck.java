@@ -48,6 +48,8 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 
 		content = _fixEmptyLinesBetweenTags(fileName, content);
 
+		content = _fixMissingEmptyLinesAroundComments(content);
+
 		return new Tuple(content, Collections.emptySet());
 	}
 
@@ -71,8 +73,30 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
+	private String _fixMissingEmptyLinesAroundComments(String content) {
+		Matcher matcher = _missingEmptyLineAfterCommentPattern.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replaceFirst(
+				content, "-->\n", "-->\n\n", matcher.start());
+		}
+
+		matcher = _missingEmptyLineBeforeCommentPattern.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replaceFirst(
+				content, ">\n", ">\n\n", matcher.start());
+		}
+
+		return content;
+	}
+
 	private final String _baseDirName;
 	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
 		"\n(\t*)<[\\w/].*[^-]>(\n\n)(\t*)<(\\w)");
+	private final Pattern _missingEmptyLineAfterCommentPattern =
+		Pattern.compile("[\t ]-->\n[\t<]");
+	private final Pattern _missingEmptyLineBeforeCommentPattern =
+		Pattern.compile(">\n\t+<!--[\n ]");
 
 }

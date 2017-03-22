@@ -49,7 +49,7 @@
 
 	<command name="editDataProviderOutputParameter">
 		<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD" value1="${outputParameterPath}" />
-		
+
 		<toggle name="LPS-70895">
 			<on>
 				<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD" value1="${outputParameterLabel}" />

@@ -22,7 +22,7 @@ import com.liferay.shopping.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.shopping.upgrade.v1_0_0.UpgradeShopping;
 import com.liferay.shopping.upgrade.v1_0_0.UpgradeShoppingPreferences;
 import com.liferay.shopping.upgrade.v1_0_1.UpgradeShoppingConfiguration;
-import com.liferay.shopping.upgrade.v1_0_1.UpgradeShoppingEmailAddress;
+import com.liferay.shopping.upgrade.v1_0_2.UpgradeShoppingEmailAddress;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -48,7 +48,10 @@ public class ShoppingServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.shopping.service", "1.0.0", "1.0.1",
-			new UpgradeShoppingConfiguration(_configurationAdmin, _prefsProps),
+			new UpgradeShoppingConfiguration(_configurationAdmin, _prefsProps));
+
+		registry.register(
+			"com.liferay.shopping.service", "1.0.1", "1.0.2",
 			new UpgradeShoppingEmailAddress());
 	}
 

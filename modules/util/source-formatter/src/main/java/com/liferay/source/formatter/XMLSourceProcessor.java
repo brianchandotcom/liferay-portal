@@ -31,6 +31,7 @@ import com.liferay.source.formatter.checks.XMLCustomSQLFileCheck;
 import com.liferay.source.formatter.checks.XMLDDLStructuresFileCheck;
 import com.liferay.source.formatter.checks.XMLEmptyLinesCheck;
 import com.liferay.source.formatter.checks.XMLFriendlyURLRoutesFileCheck;
+import com.liferay.source.formatter.checks.XMLHBMFileCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
@@ -266,10 +267,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (fileName.endsWith("-hbm.xml")) {
-			formatHBMXML(fileName, newContent);
-		}
-		else if (fileName.endsWith("-log4j.xml")) {
+		if (fileName.endsWith("-log4j.xml")) {
 			formatLog4jXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("-look-and-feel.xml")) {
@@ -517,16 +515,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	protected void formatHBMXML(String fileName, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		checkOrder(
-			fileName, document.getRootElement(), "import", null,
-			new ElementComparator("class"));
 	}
 
 	protected void formatLog4jXML(String fileName, String content)
@@ -997,6 +985,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		fileChecks.add(new XMLCustomSQLFileCheck());
 		fileChecks.add(new XMLDDLStructuresFileCheck());
 		fileChecks.add(new XMLFriendlyURLRoutesFileCheck());
+		fileChecks.add(new XMLHBMFileCheck());
 
 		fileChecks.add(
 			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));

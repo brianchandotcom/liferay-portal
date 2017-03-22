@@ -158,6 +158,8 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		final String buildProfile = System.getProperty("build.profile");
 		final Set<Path> excludedDirPaths = _getDirPaths(
 			"build.exclude.dirs", rootDirPath);
+		final Set<Path> includedDirPaths = _getDirPaths(
+			"build.include.dirs", rootDirPath);
 		final Set<ProjectDirType> excludedProjectDirTypes = _getFlags(
 			"build.exclude.", ProjectDirType.class);
 
@@ -187,6 +189,12 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
+					if (!includedDirPaths.isEmpty() &&
+						!_startsWith(dirPath, includedDirPaths)) {
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
 					if (Validator.isNotNull(buildProfile) &&
 						Files.notExists(
 							dirPath.resolve(".lfrbuild-" + buildProfile))) {
@@ -202,6 +210,16 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 				}
 
 			});
+	}
+
+	private boolean _startsWith(Path path, Iterable<Path> parentPaths) {
+		for (Path parentPath : parentPaths) {
+			if (path.startsWith(parentPath)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static enum ProjectDirType {

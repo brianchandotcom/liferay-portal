@@ -2322,7 +2322,7 @@ display: table-column; }
 
 /* Skin */
 .lfr-button {
-background: url() no-repeat 0 50%; }
+background: none no-repeat 0 50%; }
 
 .lfr-table > tbody > tr > th, .lfr-table > thead > tr > th, .lfr-table > tfoot > tr > th {
 font-weight: bold; }

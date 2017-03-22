@@ -172,8 +172,8 @@
 			<var name="panelHeading" value="Presentation Settings" />
 		</execute>
 
-		<execute function="Select#select" locator1="Select#FEED_ITEM_CONTENT" value1="${feedContent}" />
-		<execute function="Select#select" locator1="Select#FEED_TYPE" value1="${feedType}" />
+		<execute function="Select" locator1="Select#FEED_ITEM_CONTENT" value1="${feedContent}" />
+		<execute function="Select" locator1="Select#FEED_TYPE" value1="${feedType}" />
 
 		<execute macro="PortletEntry#save" />
 	</command>

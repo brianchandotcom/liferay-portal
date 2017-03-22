@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.document.library.document.conversion.internal;
 
 import com.artofsolving.jodconverter.DefaultDocumentFormatRegistry;
 import com.artofsolving.jodconverter.DocumentConverter;
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.openoffice.OpenOfficeSettings;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DocumentConversion;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -49,115 +50,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Bruno Farache
  * @author Alexander Chow
  */
-public class DocumentConversionUtil {
+@Component(immediate = true, service = DocumentConversion.class)
+public class DocumentConversionImpl implements DocumentConversion {
 
-	public static File convert(
-			String id, InputStream inputStream, String sourceExtension,
-			String targetExtension)
-		throws IOException {
-
-		return _instance._convert(
-			id, inputStream, sourceExtension, targetExtension);
-	}
-
-	public static void disconnect() {
-		_instance._disconnect();
-	}
-
-	public static String[] getConversions(String extension) {
-		return _instance._getConversions(extension);
-	}
-
-	public static String getFilePath(String id, String targetExtension) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
-		sb.append("/liferay/document_conversion/");
-		sb.append(id);
-		sb.append(StringPool.PERIOD);
-		sb.append(targetExtension);
-
-		return sb.toString();
-	}
-
-	public static boolean isComparableVersion(String extension) {
-		boolean enabled = false;
-
-		String periodAndExtension = StringPool.PERIOD.concat(extension);
-
-		for (int i = 0; i < _COMPARABLE_FILE_EXTENSIONS.length; i++) {
-			if (StringPool.STAR.equals(_COMPARABLE_FILE_EXTENSIONS[i]) ||
-				periodAndExtension.equals(_COMPARABLE_FILE_EXTENSIONS[i])) {
-
-				enabled = true;
-
-				break;
-			}
-		}
-
-		if (!enabled) {
-			return false;
-		}
-
-		if (extension.equals("css") || extension.equals("htm") ||
-			extension.equals("html") || extension.equals("js") ||
-			extension.equals("txt") || extension.equals("xml")) {
-
-			return true;
-		}
-
-		try {
-			if (isEnabled() && isConvertBeforeCompare(extension)) {
-				return true;
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return false;
-	}
-
-	public static boolean isConvertBeforeCompare(String extension) {
-		if (extension.equals("txt")) {
-			return false;
-		}
-
-		String[] conversions = getConversions(extension);
-
-		for (int i = 0; i < conversions.length; i++) {
-			if (conversions[i].equals("txt")) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public static boolean isEnabled() {
-		try {
-			return PrefsPropsUtil.getBoolean(
-				PropsKeys.OPENOFFICE_SERVER_ENABLED,
-				PropsValues.OPENOFFICE_SERVER_ENABLED);
-		}
-		catch (Exception e) {
-		}
-
-		return false;
-	}
-
-	private DocumentConversionUtil() {
-		_populateConversionsMap("drawing");
-		_populateConversionsMap("presentation");
-		_populateConversionsMap("spreadsheet");
-		_populateConversionsMap("text");
-	}
-
-	private File _convert(
+	@Override
+	public File convert(
 			String id, InputStream inputStream, String sourceExtension,
 			String targetExtension)
 		throws IOException {
@@ -224,21 +128,15 @@ public class DocumentConversionUtil {
 		return file;
 	}
 
-	private void _disconnect() {
+	@Override
+	public void disconnect() {
 		if (_openOfficeConnection != null) {
 			_openOfficeConnection.disconnect();
 		}
 	}
 
-	private String _fixExtension(String extension) {
-		if (extension.equals("htm")) {
-			extension = "html";
-		}
-
-		return extension;
-	}
-
-	private String[] _getConversions(String extension) {
+	@Override
+	public String[] getConversions(String extension) {
 		extension = _fixExtension(extension);
 
 		String[] conversions = _conversionsMap.get(extension);
@@ -264,6 +162,104 @@ public class DocumentConversionUtil {
 		}
 
 		return conversions;
+	}
+
+	@Override
+	public String getFilePath(String id, String targetExtension) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
+		sb.append("/liferay/document_conversion/");
+		sb.append(id);
+		sb.append(StringPool.PERIOD);
+		sb.append(targetExtension);
+
+		return sb.toString();
+	}
+
+	@Override
+	public boolean isComparableVersion(String extension) {
+		boolean enabled = false;
+
+		String periodAndExtension = StringPool.PERIOD.concat(extension);
+
+		for (int i = 0; i < _COMPARABLE_FILE_EXTENSIONS.length; i++) {
+			if (StringPool.STAR.equals(_COMPARABLE_FILE_EXTENSIONS[i]) ||
+				periodAndExtension.equals(_COMPARABLE_FILE_EXTENSIONS[i])) {
+
+				enabled = true;
+
+				break;
+			}
+		}
+
+		if (!enabled) {
+			return false;
+		}
+
+		if (extension.equals("css") || extension.equals("htm") ||
+			extension.equals("html") || extension.equals("js") ||
+			extension.equals("txt") || extension.equals("xml")) {
+
+			return true;
+		}
+
+		try {
+			if (isEnabled() && isConvertBeforeCompare(extension)) {
+				return true;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isConvertBeforeCompare(String extension) {
+		if (extension.equals("txt")) {
+			return false;
+		}
+
+		String[] conversions = getConversions(extension);
+
+		for (int i = 0; i < conversions.length; i++) {
+			if (conversions[i].equals("txt")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		try {
+			return PrefsPropsUtil.getBoolean(
+				PropsKeys.OPENOFFICE_SERVER_ENABLED,
+				PropsValues.OPENOFFICE_SERVER_ENABLED);
+		}
+		catch (Exception e) {
+		}
+
+		return false;
+	}
+
+	@Activate
+	protected void activate() {
+		_populateConversionsMap("drawing");
+		_populateConversionsMap("presentation");
+		_populateConversionsMap("spreadsheet");
+		_populateConversionsMap("text");
+	}
+
+	private String _fixExtension(String extension) {
+		if (extension.equals("htm")) {
+			extension = "html";
+		}
+
+		return extension;
 	}
 
 	private DocumentConverter _getDocumentConverter() {
@@ -390,10 +386,7 @@ public class DocumentConversionUtil {
 	private static final String _LOCALHOST_IP = "127.0.0.1";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DocumentConversionUtil.class);
-
-	private static final DocumentConversionUtil _instance =
-		new DocumentConversionUtil();
+		DocumentConversionImpl.class);
 
 	private final Map<String, String[]> _conversionsMap = new HashMap<>();
 	private DocumentConverter _documentConverter;

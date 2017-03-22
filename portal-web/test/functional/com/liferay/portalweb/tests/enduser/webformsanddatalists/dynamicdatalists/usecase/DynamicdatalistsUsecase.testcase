@@ -497,7 +497,7 @@
 
 	<command name="AddRecordWithPopulatedWebContentField" priority="5">
 		<description message="This is a use case for LPS-66439." />
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="Navigator#openURL" />
 

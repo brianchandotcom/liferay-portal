@@ -42,6 +42,7 @@ import com.liferay.source.formatter.checks.XMLSpringFileCheck;
 import com.liferay.source.formatter.checks.XMLStrutsConfigFileCheck;
 import com.liferay.source.formatter.checks.XMLTestIgnorableErrorLinesFileCheck;
 import com.liferay.source.formatter.checks.XMLTilesDefsFileCheck;
+import com.liferay.source.formatter.checks.XMLToggleFileCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
@@ -256,13 +257,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (fileName.endsWith(".toggle")) {
-			formatToggleXML(fileName, newContent);
-		}
-		else if (((portalSource || subrepository) &&
-				  fileName.endsWith("portal-web/docroot/WEB-INF/web.xml")) ||
-				 (!portalSource && !subrepository &&
-				  fileName.endsWith("/web.xml"))) {
+		if (((portalSource || subrepository) &&
+			 fileName.endsWith("portal-web/docroot/WEB-INF/web.xml")) ||
+			(!portalSource && !subrepository &&
+			 fileName.endsWith("/web.xml"))) {
 
 			newContent = formatWebXML(fileName, newContent);
 		}
@@ -289,16 +287,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	protected void formatToggleXML(String fileName, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		checkOrder(
-			fileName, document.getRootElement(), "toggle", null,
-			new ElementComparator());
 	}
 
 	protected String formatWebXML(String fileName, String content)
@@ -419,6 +407,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				_portalTablesContent, _pluginsInsideModulesDirectoryNames));
 		fileChecks.add(new XMLSolrSchemaFileCheck());
 		fileChecks.add(new XMLSpringFileCheck());
+		fileChecks.add(new XMLToggleFileCheck());
 
 		fileChecks.add(
 			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));

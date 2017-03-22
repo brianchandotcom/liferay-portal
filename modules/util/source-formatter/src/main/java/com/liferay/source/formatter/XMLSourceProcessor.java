@@ -86,9 +86,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		List<FileCheck> fileChecks = new ArrayList<>();
 
 		fileChecks.add(
-			new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName()));
-
-		fileChecks.add(
 			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));
 		fileChecks.add(new XMLCustomSQLFileCheck());
 		fileChecks.add(new XMLDDLStructuresFileCheck());
@@ -113,14 +110,19 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		fileChecks.add(new XMLToggleFileCheck());
 
 		if (portalSource || subrepository) {
-			fileChecks.add(
-				new XMLEmptyLinesCheck(sourceFormatterArgs.getBaseDirName()));
-
 			fileChecks.add(new XMLStrutsConfigFileCheck());
 			fileChecks.add(new XMLTestIgnorableErrorLinesFileCheck());
 			fileChecks.add(new XMLTilesDefsFileCheck());
 			fileChecks.add(
 				new XMLWebFileCheck(sourceFormatterArgs.getBaseDirName()));
+		}
+
+		fileChecks.add(
+			new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName()));
+
+		if (portalSource || subrepository) {
+			fileChecks.add(
+				new XMLEmptyLinesCheck(sourceFormatterArgs.getBaseDirName()));
 		}
 
 		return fileChecks;

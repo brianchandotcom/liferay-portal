@@ -15,7 +15,7 @@ buildscript {
 }
 
 plugins {
-	id "com.github.jk1.dependency-license-report" version "0.3.8"
+	id "com.github.jk1.dependency-license-report" version "0.3.10"
 }
 
 generateLicenseReport {

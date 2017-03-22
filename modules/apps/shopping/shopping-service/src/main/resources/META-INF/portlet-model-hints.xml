@@ -207,8 +207,12 @@
 		<field name="ppTxnId" type="String" />
 		<field name="ppPaymentStatus" type="String" />
 		<field name="ppPaymentGross" type="double" />
-		<field name="ppReceiverEmail" type="String" />
-		<field name="ppPayerEmail" type="String" />
+		<field name="ppReceiverEmail" type="String">
+			<hint name="max-length">254</hint>
+		</field>
+		<field name="ppPayerEmail" type="String">
+			<hint name="max-length">254</hint>
+		</field>
 		<field name="sendOrderEmail" type="boolean" />
 		<field name="sendShippingEmail" type="boolean" />
 	</model>

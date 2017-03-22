@@ -13,6 +13,7 @@ Export-Package:\
 	com.liferay.portlet.asset.service.persistence.test,\
 	com.liferay.portlet.dynamicdatamapping.util.test,\
 	com.liferay.portlet.expando.util.test,\
+	com.liferay.portlet.layoutsadmin.util.test,\
 	com.liferay.portlet.messageboards.util.test,\
 	com.liferay.portlet.ratings.test,\
 	com.liferay.portlet.ratings.util.test,\

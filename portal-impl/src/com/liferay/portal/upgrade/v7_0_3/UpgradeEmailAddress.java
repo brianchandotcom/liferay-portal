@@ -26,15 +26,9 @@ public class UpgradeEmailAddress extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type EmailAddress address VARCHAR(254) null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				EmailAddressTable.TABLE_NAME, EmailAddressTable.TABLE_COLUMNS,
-				EmailAddressTable.TABLE_SQL_CREATE,
-				EmailAddressTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alter(
+			EmailAddressTable.class,
+			new AlterColumnType("address", "VARCHAR(254) null"));
 	}
 
 }

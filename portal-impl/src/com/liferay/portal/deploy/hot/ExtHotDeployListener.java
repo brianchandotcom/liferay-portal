@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -221,6 +222,16 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 		String portalWebDir = PortalUtil.getPortalWebDir();
 		String portalLibDir = PortalUtil.getPortalLibDir();
 		String pluginWebDir = WebDirDetector.getRootDir(portletClassLoader);
+
+		if (ServerDetector.isTomcat()) {
+			portalLibDir = globalLibDir.concat("/portal/");
+
+			FileUtil.mkdirs(portalLibDir);
+
+			globalLibDir = globalLibDir.concat("/global/");
+
+			FileUtil.mkdirs(globalLibDir);
+		}
 
 		copyJar(servletContext, globalLibDir, "ext-kernel");
 

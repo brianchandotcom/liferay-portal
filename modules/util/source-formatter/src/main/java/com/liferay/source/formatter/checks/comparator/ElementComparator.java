@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.source.formatter;
+package com.liferay.source.formatter.checks.comparator;
 
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 

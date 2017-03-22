@@ -15,8 +15,8 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.ElementComparator;
 import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.HashSet;

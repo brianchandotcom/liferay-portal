@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.awt.Desktop;

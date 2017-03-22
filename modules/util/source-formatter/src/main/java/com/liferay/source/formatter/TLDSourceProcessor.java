@@ -17,6 +17,7 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.WhitespaceCheck;
+import com.liferay.source.formatter.checks.comparator.ElementComparator;
 
 import java.io.File;
 

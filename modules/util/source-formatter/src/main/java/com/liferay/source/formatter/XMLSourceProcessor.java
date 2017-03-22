@@ -64,7 +64,7 @@ import org.dom4j.Element;
 public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	public static String formatXML(String content) {
-		String newContent = StringUtil.replace(content, "\"/>\n", "\" />\n");
+		String newContent = content;
 
 		while (true) {
 			Matcher matcher = _commentPattern1.matcher(newContent);

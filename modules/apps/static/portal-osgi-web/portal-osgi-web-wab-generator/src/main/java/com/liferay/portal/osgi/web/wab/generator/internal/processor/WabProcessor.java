@@ -14,18 +14,19 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.processor;
 
-import aQute.bnd.component.DSAnnotations;
 import aQute.bnd.header.Attrs;
-import aQute.bnd.make.metatype.MetatypePlugin;
-import aQute.bnd.metatype.MetatypeAnnotations;
+import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Analyzer;
+import aQute.bnd.osgi.Builder;
+import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Descriptors.PackageRef;
+import aQute.bnd.osgi.FileResource;
 import aQute.bnd.osgi.Jar;
-import aQute.bnd.osgi.JarResource;
 import aQute.bnd.osgi.Packages;
 import aQute.bnd.osgi.Resource;
 import aQute.bnd.version.Version;
 
+import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.events.GlobalStartupAction;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
@@ -38,8 +39,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.PortalClassLoaderFilter;
 import com.liferay.portal.kernel.servlet.PortalClassLoaderServlet;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,43 +48,35 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
-import com.liferay.portal.osgi.web.wab.generator.internal.introspection.ClassLoaderSource;
-import com.liferay.portal.osgi.web.wab.generator.internal.introspection.Source;
-import com.liferay.portal.osgi.web.wab.generator.internal.util.AntUtil;
-import com.liferay.portal.osgi.web.wab.generator.internal.util.ManifestUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.whip.util.ReflectionUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
-import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -93,19 +84,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.Attributes;
-import java.util.jar.JarEntry;
-import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.depend.DependencyVisitor;
-
-import org.osgi.framework.Constants;
 
 /**
  * @author Raymond Augé
@@ -116,7 +99,6 @@ public class WabProcessor {
 	public WabProcessor(
 		ClassLoader classLoader, File file, Map<String, String[]> parameters) {
 
-		_classLoader = classLoader;
 		_file = file;
 		_parameters = parameters;
 	}
@@ -130,28 +112,19 @@ public class WabProcessor {
 			return null;
 		}
 
-		if (!isValidOSGiBundle()) {
-			transformToOSGiBundle();
+		File outputFile = null;
+
+		try (Jar jar = new Jar(_pluginDir)) {
+			if (jar.getBsn() == null) {
+				outputFile = transformToOSGiBundle(jar);
+			}
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
 		}
 
 		if (_file.isDirectory()) {
 			return _file;
-		}
-
-		File file = _file.getParentFile();
-
-		File outputFile = new File(file, "output.zip");
-
-		try (JarOutputStream jarOutputStream = new JarOutputStream(
-				new FileOutputStream(outputFile))) {
-
-			writeJarPath(
-				jarOutputStream, _ignoredResources, "META-INF/MANIFEST.MF",
-				getManifestFile());
-
-			writeJarPaths(
-				jarOutputStream, _ignoredResources, _pluginDir,
-				_pluginDir.toURI());
 		}
 
 		if (PropsValues.MODULE_FRAMEWORK_WEB_GENERATOR_GENERATED_WABS_STORE) {
@@ -165,79 +138,6 @@ public class WabProcessor {
 		Element childElement = element.addElement(name);
 
 		childElement.addText(GetterUtil.getString(text));
-	}
-
-	protected void addWabLib(Analyzer analyzer, Jar wab, File file)
-		throws IOException {
-
-		if (!file.exists() || file.isDirectory()) {
-			return;
-		}
-
-		Jar jar = new Jar(file);
-
-		jar.setDoNotTouchManifest();
-
-		analyzer.addClose(jar);
-
-		String wabLibPath = "WEB-INF/lib/" + file.getName();
-
-		wab.putResource(wabLibPath, new JarResource(jar));
-
-		Manifest manifest = null;
-
-		try {
-			manifest = jar.getManifest();
-
-			if (manifest == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("No manifest found for " + jar.getName());
-				}
-
-				return;
-			}
-
-			Attributes attributes = manifest.getMainAttributes();
-
-			String classPathHeader = attributes.getValue("Class-Path");
-
-			if (Validator.isNull(classPathHeader)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"No Class-Path header found for " + jar.getName());
-				}
-
-				return;
-			}
-
-			Collection<String> classPathHeaderParts = Analyzer.split(
-				classPathHeader, ",");
-
-			for (String classPathHeaderPart : classPathHeaderParts) {
-				File childFile = Analyzer.getFile(
-					file.getParentFile(), classPathHeaderPart);
-
-				if (!childFile.exists() ||
-					!childFile.getParentFile().equals(file.getParentFile())) {
-
-					analyzer.warning(
-						"Invalid Class-Path entry %s in %s must exist and " +
-							"reside in same directory",
-						childFile, file);
-				}
-				else {
-					wabLibPath = "WEB-INF/lib/" + childFile.getName();
-
-					appendProperty(
-						analyzer, Constants.BUNDLE_CLASSPATH, wabLibPath);
-
-					addWabLib(analyzer, wab, childFile);
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error("Unable to load manifest for " + jar.getName(), e);
-		}
 	}
 
 	protected void appendProperty(
@@ -297,8 +197,17 @@ public class WabProcessor {
 				FileUtil.move(file, deployDir);
 			}
 			else {
-				AntUtil.expandFile(file, deployDir);
+				try (Jar jar = new Jar(file)) {
+					jar.expand(deployDir);
+				}
+				catch (Exception e) {
+					ReflectionUtil.throwException(e);
+				}
 			}
+		}
+
+		if (_autodeployed_wars_store) {
+			writeAutoDeployedWar(deployDir);
 		}
 
 		return deployDir;
@@ -309,7 +218,6 @@ public class WabProcessor {
 			new AutoDeploymentContext();
 
 		autoDeploymentContext.setContext(context);
-
 		autoDeploymentContext.setFile(_file);
 
 		if (_file.isDirectory()) {
@@ -323,30 +231,6 @@ public class WabProcessor {
 		autoDeploymentContext.setDestDir(file.getAbsolutePath());
 
 		return autoDeploymentContext;
-	}
-
-	protected void copyOSGI_INFToWab(Analyzer analyzer) {
-		Jar jar = analyzer.getJar();
-
-		Map<String, Resource> resources = jar.getResources();
-
-		for (Entry<String, Resource> entry : resources.entrySet()) {
-			String path = entry.getKey();
-
-			if (!path.startsWith("OSGI-INF/")) {
-				continue;
-			}
-
-			Resource resource = entry.getValue();
-
-			try {
-				FileUtil.write(
-					new File(_pluginDir, path), resource.openInputStream());
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
 	}
 
 	protected void executeAutoDeployers(
@@ -370,41 +254,6 @@ public class WabProcessor {
 		}
 		finally {
 			DependencyManagementThreadLocal.setEnabled(enabled);
-		}
-	}
-
-	protected void expandServiceJarIntoClassesDir(URI uri, File zipFile)
-		throws IOException {
-
-		URI webInfClasesURI = uri.resolve("WEB-INF/classes");
-
-		try (ZipInputStream zipInputStream = new ZipInputStream(
-				new FileInputStream(zipFile))) {
-
-			for (ZipEntry zipEntry;
-				(zipEntry = zipInputStream.getNextEntry()) != null;
-				zipInputStream.closeEntry()) {
-
-				if (zipEntry.isDirectory()) {
-					File dir = new File(
-						webInfClasesURI.getPath(), zipEntry.getName());
-
-					dir.mkdirs();
-
-					continue;
-				}
-
-				File file = new File(
-					webInfClasesURI.getPath(), zipEntry.getName());
-
-				File parentFile = file.getParentFile();
-
-				parentFile.mkdirs();
-
-				StreamUtil.transfer(
-					StreamUtil.uncloseable(zipInputStream),
-					new FileOutputStream(file));
-			}
 		}
 	}
 
@@ -464,40 +313,6 @@ public class WabProcessor {
 		return deployableAutoDeployListeners.get(0);
 	}
 
-	protected String getFileName(String className) {
-		return className.replace(CharPool.PERIOD, CharPool.SLASH) + ".class";
-	}
-
-	protected Manifest getManifest() throws IOException {
-		File manifestFile = getManifestFile();
-
-		Manifest manifest = new Manifest();
-
-		try (InputStream inputStream = new FileInputStream(manifestFile)) {
-			manifest.read(inputStream);
-		}
-
-		return manifest;
-	}
-
-	protected File getManifestFile() throws IOException {
-		if (_manifestFile != null) {
-			return _manifestFile;
-		}
-
-		File manifestFile = new File(_pluginDir, "META-INF/MANIFEST.MF");
-
-		if (!manifestFile.exists()) {
-			FileUtil.mkdirs(manifestFile.getParent());
-
-			manifestFile.createNewFile();
-		}
-
-		_manifestFile = manifestFile;
-
-		return _manifestFile;
-	}
-
 	protected Properties getPluginPackageProperties() {
 		File file = new File(
 			_pluginDir, "WEB-INF/liferay-plugin-package.properties");
@@ -530,53 +345,23 @@ public class WabProcessor {
 		return webContextpath;
 	}
 
-	protected boolean isValidOSGiBundle() {
-		try {
-			return ManifestUtil.isValidOSGiBundle(getManifest());
-		}
-		catch (IOException ioe) {
-			return false;
-		}
-	}
-
 	protected void processBundleClasspath(
 			Analyzer analyzer, Properties pluginPackageProperties)
 		throws IOException {
+
+		appendProperty(
+			analyzer, Constants.BUNDLE_CLASSPATH, "ext/WEB-INF/classes");
 
 		// Class path order is critical
 
 		Map<String, File> classPath = new LinkedHashMap<>();
 
 		classPath.put(
-			"ext/WEB-INF/classes", new File(_pluginDir, "ext/WEB-INF/classes"));
-		classPath.put(
 			"WEB-INF/classes", new File(_pluginDir, "WEB-INF/classes"));
 
-		String[] portalDependencyJars = new String[0];
+		appendProperty(analyzer, Constants.BUNDLE_CLASSPATH, "WEB-INF/classes");
 
-		if (pluginPackageProperties != null) {
-			portalDependencyJars = StringUtil.split(
-				pluginPackageProperties.getProperty(
-					"portal-dependency-jars", StringPool.BLANK));
-		}
-
-		if (_log.isWarnEnabled() && (portalDependencyJars.length > 0)) {
-			_log.warn(
-				"The property \"portal-dependency-jars\" is deprecated. " +
-					"Specified JARs may not be included in the class path.");
-		}
-
-		processFiles(
-			_pluginDir, _pluginDir.toURI(), classPath, portalDependencyJars);
-
-		Jar wab = analyzer.getJar();
-
-		for (Entry<String, File> entry : classPath.entrySet()) {
-			appendProperty(
-				analyzer, Constants.BUNDLE_CLASSPATH, entry.getKey());
-
-			addWabLib(analyzer, wab, entry.getValue());
-		}
+		processFiles(classPath, analyzer);
 
 		Collection<File> files = classPath.values();
 
@@ -646,106 +431,45 @@ public class WabProcessor {
 		analyzer.setProperty(Constants.BUNDLE_VERSION, _bundleVersion);
 	}
 
-	protected Set<String> processClass(
-		Source source, DependencyVisitor dependencyVisitor, String className) {
+	protected void processClass(Analyzer analyzer, String value) {
+		int index = value.lastIndexOf('.');
 
-		if (className.startsWith("java/")) {
-			return Collections.emptySet();
+		if (index == -1) {
+			return;
 		}
 
-		InputStream inputStream = source.getResourceAsStream(className);
+		Packages packages = analyzer.getReferred();
 
-		if (inputStream == null) {
-			return Collections.emptySet();
-		}
+		String packageName = value.substring(0, index);
 
-		Set<String> packageNames = new HashSet<>();
+		PackageRef packageRef = analyzer.getPackageRef(packageName);
 
-		try {
-			ClassReader classReader = new ClassReader(inputStream);
-
-			classReader.accept(dependencyVisitor, 0);
-
-			for (String packageName : dependencyVisitor.getPackages()) {
-				packageName = packageName.replaceAll(
-					StringPool.SLASH, StringPool.PERIOD);
-
-				if (packageName.startsWith("com.sun.") ||
-					packageName.startsWith("sun.")) {
-
-					continue;
-				}
-
-				packageNames.add(packageName);
-			}
-
-			String superName = classReader.getSuperName();
-
-			if (superName != null) {
-				packageNames.addAll(
-					processReferencedDependencies(
-						source, getFileName(superName)));
-			}
-
-			String[] interfaceNames = classReader.getInterfaces();
-
-			if (ArrayUtil.isNotEmpty(interfaceNames)) {
-				for (String interfaceName : interfaceNames) {
-					packageNames.addAll(
-						processReferencedDependencies(
-							source, getFileName(interfaceName)));
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error("Unable to process class " + className, e);
-		}
-
-		return packageNames;
+		packages.put(packageRef, new Attrs());
 	}
 
-	protected void processDeclarativeReferences() throws IOException {
+	protected void processDeclarativeReferences(Analyzer analyzer)
+		throws IOException {
+
 		processDefaultServletPackages();
-		processTLDDependencies();
+		processTLDDependencies(analyzer);
+
+		Path pluginPath = _pluginDir.toPath();
 
 		processXMLDependencies(
-			"WEB-INF/liferay-hook.xml",
-			new String[] {
-				"indexer-post-processor-impl", "service-impl",
-				"servlet-filter-impl", "struts-action-impl"
-			},
-			null, null);
+			analyzer, "WEB-INF/liferay-hook.xml", _xPath_hook);
+		processXMLDependencies(analyzer, "WEB-INF/web.xml", _xPath_javaee);
 
 		processXMLDependencies(
-			"WEB-INF/liferay-portlet.xml",
-			new String[] {
-				"asset-renderer-factory", "atom-collection-adapter",
-				"configuration-action-class", "control-panel-entry-class",
-				"custom-attributes-display", "friendly-url-mapper-class",
-				"indexer-class", "open-search-class", "permission-propagator",
-				"poller-processor-class", "pop-message-listener-class",
-				"portlet-data-handler-class", "portlet-layout-listener-class",
-				"portlet-url-class", "social-activity-interpreter-class",
-				"social-request-interpreter-class", "url-encoder-class",
-				"webdav-storage-class", "workflow-handler",
-				"xml-rpc-method-class"
-			},
-			null, null);
+			analyzer, "WEB-INF/liferay-portlet.xml", _xPath_liferay);
 
-		processXMLDependencies(
-			"WEB-INF/portlet.xml",
-			new String[] {
-				"x:filter-class", "x:listener-class", "x:portlet-class",
-				"x:resource-bundle"
-			},
-			"x", "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
+		processXMLDependencies(analyzer, "WEB-INF/portlet.xml", _xPath_portlet);
 
-		processXMLDependencies(
-			"WEB-INF/web.xml",
-			new String[] {
-				"x:filter-class", "x:listener-class", "x:servlet-class"
-			},
-			"x", "http://java.sun.com/xml/ns/j2ee");
+		Path classes = pluginPath.resolve("WEB-INF/classes/");
+
+		processPropertiesDependencies(
+			analyzer, classes, ".properties", _knownProperties);
+		processXMLDependencies(analyzer, classes, ".xml", _xPath_hbm);
+		processXMLDependencies(analyzer, classes, ".xml", _xPath_spring);
 	}
 
 	protected void processDefaultServletPackages() {
@@ -753,20 +477,21 @@ public class WabProcessor {
 				PropsValues.
 					MODULE_FRAMEWORK_WEB_GENERATOR_DEFAULT_SERVLET_PACKAGES) {
 
-			int index = value.indexOf(StringPool.SEMICOLON);
+			Parameters defaultPackage = new Parameters(value);
 
-			if (index != -1) {
-				value = value.substring(0, index);
+			for (String packageName : defaultPackage.keySet()) {
+				if (_importPackages.containsKey(packageName)) {
+					continue;
+				}
+
+				_importPackages.add(packageName, _optional);
 			}
-
-			_importPackageNames.add(value.trim());
 		}
 	}
 
 	protected void processExportPackageNames(Analyzer analyzer) {
 		analyzer.setProperty(
-			Constants.EXPORT_PACKAGE,
-			StringUtil.merge(_exportPackageNames.toArray()));
+			Constants.EXPORT_CONTENTS, _exportPackages.toString());
 	}
 
 	protected void processExtraHeaders(Analyzer analyzer) {
@@ -799,74 +524,75 @@ public class WabProcessor {
 			}
 
 			if (Validator.isNotNull(value)) {
+				Parameters parameters = new Parameters(value);
+
 				if (processedKey.equals(Constants.EXPORT_PACKAGE)) {
-					Collections.addAll(
-						_exportPackageNames, StringUtil.split(value));
+					_exportPackages.mergeWith(parameters, true);
 				}
 				else if (processedKey.equals(Constants.IMPORT_PACKAGE)) {
-					Collections.addAll(
-						_importPackageNames, StringUtil.split(value));
+					_importPackages.mergeWith(parameters, true);
 				}
 
-				analyzer.setProperty(processedKey, value);
+				analyzer.setProperty(processedKey, parameters.toString());
 			}
 		}
 	}
 
 	protected void processExtraRequirements() {
-		_importPackageNames.add(
-			"org.eclipse.core.runtime;x-liferay-compatibility:=spring");
+		Attrs attrs = new Attrs(_optional);
+
+		attrs.put("x-liferay-compatibility:", "spring");
+
+		_importPackages.add("org.eclipse.core.runtime", attrs);
+
+		_importPackages.add("!junit.*", new Attrs());
 	}
 
-	protected void processFiles(
-			File dir, URI uri, Map<String, File> classPath,
-			String[] portalDependencyJars)
+	protected void processFiles(Map<String, File> classPath, Analyzer analyzer)
 		throws IOException {
 
-		for (File file : dir.listFiles()) {
-			if (file.isDirectory()) {
-				processFiles(file, uri, classPath, portalDependencyJars);
+		Jar jar = analyzer.getJar();
 
-				continue;
-			}
+		Map<String, Resource> resources = jar.getResources();
 
-			URI relativizedURI = uri.relativize(file.toURI());
+		Set<Entry<String, Resource>> entrySet = resources.entrySet();
 
-			String path = relativizedURI.getPath();
+		Iterator<Entry<String, Resource>> iterator = entrySet.iterator();
 
-			if (ArrayUtil.contains(
-					PropsValues.MODULE_FRAMEWORK_WEB_GENERATOR_EXCLUDED_PATHS,
-					path)) {
+		while (iterator.hasNext()) {
+			Entry<String, Resource> entry = iterator.next();
 
-				continue;
-			}
+			String path = entry.getKey();
+			Resource resource = entry.getValue();
 
 			if (path.equals("WEB-INF/service.xml")) {
-				processServicePackageName(uri, file);
+				processServicePackageName(entry.getValue());
 			}
+			else if (path.startsWith("WEB-INF/lib/")) {
 
-			if (path.startsWith("WEB-INF/lib/")) {
-				if (path.endsWith("-service.jar")) {
-					if (path.endsWith(_context.concat("-service.jar"))) {
-						expandServiceJarIntoClassesDir(uri, file);
+				// Remove any other "-service.jar" so they use real imports
+				// Also remove if in the ignore list
+
+				if ((path.endsWith("-service.jar") &&
+					 !path.endsWith(_context.concat("-service.jar"))) ||
+					_ignoredResources.contains(path)) {
+
+					iterator.remove();
+
+					continue;
+				}
+
+				if (resource instanceof FileResource) {
+					try (FileResource fileResource = (FileResource)resource) {
+						classPath.put(path, fileResource.getFile());
+
+						appendProperty(
+							analyzer, Constants.BUNDLE_CLASSPATH, path);
 					}
-
-					// Ignore any other "-service.jar" so they use real imports
-
-					_ignoredResources.add(path);
-
-					continue;
 				}
-
-				String jar = path.substring("WEB-INF/lib/".length());
-
-				if (ArrayUtil.contains(portalDependencyJars, jar)) {
-					_ignoredResources.add(path);
-
-					continue;
-				}
-
-				classPath.put(path, file);
+			}
+			else if (_ignoredResources.contains(path)) {
+				iterator.remove();
 			}
 		}
 	}
@@ -880,12 +606,11 @@ public class WabProcessor {
 		}
 		else {
 			StringBundler sb = new StringBundler(
-				(_importPackageNames.size() * 3) + 1);
+				(_importPackages.size() * 4) + 1);
 
-			for (String importPackageName : _importPackageNames) {
-				if (Validator.isNull(importPackageName)) {
-					continue;
-				}
+			for (Entry<String, Attrs> entry : _importPackages.entrySet()) {
+				String importPackageName = entry.getKey();
+				Attrs attrs = entry.getValue();
 
 				boolean containedInClasspath = false;
 
@@ -904,7 +629,12 @@ public class WabProcessor {
 				}
 
 				sb.append(importPackageName);
-				sb.append(";resolution:=\"optional\"");
+
+				if (!attrs.isEmpty()) {
+					sb.append(";");
+					sb.append(entry.getValue());
+				}
+
 				sb.append(StringPool.COMMA);
 			}
 
@@ -961,35 +691,78 @@ public class WabProcessor {
 			Constants.EXPORT_PACKAGE);
 
 		if (Validator.isNotNull(exportPackage)) {
-			Collections.addAll(
-				_exportPackageNames, StringUtil.split(exportPackage));
+			Parameters parameters = new Parameters(exportPackage);
+
+			_exportPackages.mergeWith(parameters, true);
+
+			pluginPackageProperties.remove(Constants.EXPORT_PACKAGE);
 		}
 
 		String importPackage = pluginPackageProperties.getProperty(
 			Constants.IMPORT_PACKAGE);
 
 		if (Validator.isNotNull(importPackage)) {
-			Collections.addAll(
-				_importPackageNames, StringUtil.split(importPackage));
+			Parameters parameters = new Parameters(importPackage);
+
+			_importPackages.mergeWith(parameters, true);
+
+			pluginPackageProperties.remove(Constants.IMPORT_PACKAGE);
 		}
 	}
 
-	protected Set<String> processReferencedDependencies(
-		Source source, String className) {
+	protected void processPropertiesDependencies(
+		Analyzer analyzer, File file, String[] knownProperties) {
 
-		DependencyVisitor dependencyVisitor = new DependencyVisitor();
-
-		Set<String> packageNames = processClass(
-			source, dependencyVisitor, className);
-
-		Set<String> globals = dependencyVisitor.getGlobals();
-
-		for (String global : globals) {
-			packageNames.add(
-				global.replaceAll(StringPool.SLASH, StringPool.PERIOD));
+		if (!file.exists()) {
+			return;
 		}
 
-		return packageNames;
+		try (InputStream inputStream = new FileInputStream(file)) {
+			Properties properties = new Properties();
+
+			properties.load(inputStream);
+
+			if (properties.isEmpty()) {
+				return;
+			}
+
+			for (String key : knownProperties) {
+				String text = properties.getProperty(key);
+
+				if (text == null) {
+					continue;
+				}
+
+				text = text.trim();
+
+				processClass(analyzer, text);
+			}
+		}
+		catch (Exception e) {
+
+			// Ignore this case
+
+		}
+	}
+
+	protected void processPropertiesDependencies(
+			Analyzer analyzer, Path path, String suffix,
+			String[] knownProperties)
+		throws IOException {
+
+		File file = path.toFile();
+
+		if (!file.isDirectory()) {
+			return;
+		}
+
+		Files.walk(path).map(Path::toFile).forEach(
+			entry -> {
+				if (entry.getPath().endsWith(suffix)) {
+					processPropertiesDependencies(
+						analyzer, entry, knownProperties);
+				}
+			});
 	}
 
 	protected void processRequiredDeploymentContexts(Analyzer analyzer) {
@@ -1026,9 +799,9 @@ public class WabProcessor {
 		analyzer.setProperty(Constants.REQUIRE_BUNDLE, sb.toString());
 	}
 
-	protected void processServicePackageName(URI uri, File file) {
-		try {
-			Document document = UnsecureSAXReaderUtil.read(file);
+	protected void processServicePackageName(Resource resource) {
+		try (InputStream inputStream = resource.openInputStream()) {
+			Document document = UnsecureSAXReaderUtil.read(inputStream);
 
 			Element rootElement = document.getRootElement();
 
@@ -1041,21 +814,24 @@ public class WabProcessor {
 			};
 
 			for (String partialPackageName : partialPackageNames) {
-				_exportPackageNames.add(
+				Parameters parameters = new Parameters(
 					getVersionedServicePackageName(partialPackageName));
-				_importPackageNames.add(
-					getVersionedServicePackageName(partialPackageName));
+
+				_exportPackages.mergeWith(parameters, false);
+				_importPackages.mergeWith(parameters, false);
 			}
 
-			_importPackageNames.add(
-				"com.liferay.portal.osgi.web.wab.generator");
+			_importPackages.add(
+				"com.liferay.portal.osgi.web.wab.generator", _optional);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 	}
 
-	protected void processTLDDependencies() throws IOException {
+	protected void processTLDDependencies(Analyzer analyzer)
+		throws IOException {
+
 		File dir = new File(_pluginDir, "WEB-INF/tld");
 
 		if (!dir.exists() || !dir.isDirectory()) {
@@ -1067,8 +843,6 @@ public class WabProcessor {
 		for (File file : files) {
 			String content = FileUtil.read(file);
 
-			DependencyVisitor dependencyVisitor = new DependencyVisitor();
-
 			Matcher matcher = _tldPackagesPattern.matcher(content);
 
 			while (matcher.find()) {
@@ -1076,14 +850,7 @@ public class WabProcessor {
 
 				value = value.trim();
 
-				processClass(
-					new ClassLoaderSource(_classLoader), dependencyVisitor,
-					getFileName(value));
-			}
-
-			for (String global : dependencyVisitor.getGlobals()) {
-				_importPackageNames.add(
-					global.replaceAll(StringPool.SLASH, StringPool.PERIOD));
+				processClass(analyzer, value);
 			}
 		}
 	}
@@ -1157,11 +924,7 @@ public class WabProcessor {
 	}
 
 	protected void processXMLDependencies(
-			String fileName, String[] xPathExpressions, String prefix,
-			String namespace)
-		throws IOException {
-
-		File file = new File(_pluginDir, fileName);
+		Analyzer analyzer, File file, String xPathExpression) {
 
 		if (!file.exists()) {
 			return;
@@ -1169,63 +932,83 @@ public class WabProcessor {
 
 		Document document = readDocument(file);
 
+		if (!document.hasContent()) {
+			return;
+		}
+
 		Element rootElement = document.getRootElement();
 
-		DependencyVisitor dependencyVisitor = new DependencyVisitor();
+		XPath xPath = SAXReaderUtil.createXPath(xPathExpression, _xsds);
 
-		for (String xPathExpression : xPathExpressions) {
-			XPath xPath = SAXReaderUtil.createXPath(
-				"//" + xPathExpression, prefix, namespace);
+		List<Node> nodes = xPath.selectNodes(rootElement);
 
-			List<Node> nodes = xPath.selectNodes(rootElement);
+		for (Node node : nodes) {
+			String text = node.getText();
 
-			for (Node node : nodes) {
-				String text = node.getText();
+			text = text.trim();
 
-				text = text.trim();
-
-				processClass(
-					new ClassLoaderSource(_classLoader), dependencyVisitor,
-					getFileName(text));
-			}
-		}
-
-		for (String global : dependencyVisitor.getGlobals()) {
-			_importPackageNames.add(
-				global.replaceAll(StringPool.SLASH, StringPool.PERIOD));
+			processClass(analyzer, text);
 		}
 	}
 
-	protected Document readDocument(File file) throws IOException {
-		String content = FileUtil.read(file);
+	protected void processXMLDependencies(
+			Analyzer analyzer, Path path, String suffix, String xPathExpression)
+		throws IOException {
 
+		File file = path.toFile();
+
+		if (!file.isDirectory()) {
+			return;
+		}
+
+		Files.walk(path).map(Path::toFile).forEach(
+			entry -> {
+				if (entry.getPath().endsWith(suffix)) {
+					processXMLDependencies(analyzer, entry, _xPath_spring);
+				}
+			});
+	}
+
+	protected void processXMLDependencies(
+		Analyzer analyzer, String fileName, String xPathExpression) {
+
+		File file = new File(_pluginDir, fileName);
+
+		processXMLDependencies(analyzer, file, xPathExpression);
+	}
+
+	protected Document readDocument(File file) {
 		try {
+			String content = FileUtil.read(file);
+
 			return UnsecureSAXReaderUtil.read(content);
 		}
-		catch (DocumentException de) {
-			throw new IOException(de);
+		catch (Exception de) {
+			return SAXReaderUtil.createDocument();
 		}
 	}
 
-	protected void transformToOSGiBundle() throws IOException {
-		Analyzer analyzer = new Analyzer();
+	protected File transformToOSGiBundle(Jar jar) throws IOException {
+		Builder analyzer = new Builder();
 
 		analyzer.setBase(_pluginDir);
-		analyzer.setJar(_pluginDir);
+		analyzer.setJar(jar);
 		analyzer.setProperty("-jsp", "*.jsp,*.jspf");
-		analyzer.setProperty(
-			"-plugin", "com.liferay.ant.bnd.jsp.JspAnalyzerPlugin");
 		analyzer.setProperty("Web-ContextPath", getWebContextPath());
 
 		Set<Object> plugins = analyzer.getPlugins();
 
-		plugins.add(_dsAnnotations);
-
-		plugins.add(_metatypePlugin);
-
-		plugins.add(_metatypeAnnotations);
+		plugins.add(new JspAnalyzerPlugin());
 
 		Properties pluginPackageProperties = getPluginPackageProperties();
+
+		if (pluginPackageProperties.containsKey("portal-dependency-jars") &&
+			_log.isWarnEnabled()) {
+
+			_log.warn(
+				"The property \"portal-dependency-jars\" is deprecated. " +
+					"Specified JARs may not be included in the class path.");
+		}
 
 		processBundleVersion(analyzer);
 		processBundleClasspath(analyzer, pluginPackageProperties);
@@ -1240,7 +1023,7 @@ public class WabProcessor {
 		processWebXML("WEB-INF/web.xml");
 		processWebXML("WEB-INF/liferay-web.xml");
 
-		processDeclarativeReferences();
+		processDeclarativeReferences(analyzer);
 
 		processExtraRequirements();
 
@@ -1253,36 +1036,51 @@ public class WabProcessor {
 		analyzer.setProperties(pluginPackageProperties);
 
 		try {
-			analyzer.calcManifest();
+			jar = analyzer.build();
 
-			Packages packages = analyzer.getImports();
+			File outputFile = analyzer.getOutputFile(null);
 
-			Set<Entry<PackageRef, Attrs>> packageRefsSet = packages.entrySet();
+			jar.write(outputFile);
 
-			Iterator<Entry<PackageRef, Attrs>> iterator =
-				packageRefsSet.iterator();
-
-			while (iterator.hasNext()) {
-				Entry<PackageRef, Attrs> entry = iterator.next();
-
-				PackageRef packageRef = entry.getKey();
-
-				String fqn = packageRef.getFQN();
-
-				if (fqn.startsWith("junit.")) {
-					iterator.remove();
-				}
-			}
-
-			writeManifest(analyzer.calcManifest());
-
-			copyOSGI_INFToWab(analyzer);
+			return outputFile;
 		}
 		catch (Exception e) {
 			throw new IOException("Unable to calculate the manifest", e);
 		}
 		finally {
 			analyzer.close();
+		}
+	}
+
+	protected void writeAutoDeployedWar(File pluginDir) {
+		File dir = new File(
+			PropsValues.
+				MODULE_FRAMEWORK_WEB_GENERATOR_GENERATED_WABS_STORE_DIR);
+
+		dir.mkdirs();
+
+		StringBundler sb = new StringBundler(5);
+
+		String name = _file.getName();
+
+		sb.append(name.substring(0, name.lastIndexOf(StringPool.PERIOD)));
+
+		sb.append(StringPool.DASH);
+
+		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			PropsValues.INDEX_DATE_FORMAT_PATTERN);
+
+		sb.append(format.format(new Date()));
+
+		sb.append(".autodeployed.");
+
+		sb.append(FileUtil.getExtension(name));
+
+		try (Jar jar = new Jar(pluginDir)) {
+			jar.write(new File(dir, sb.toString()));
+		}
+		catch (Exception e) {
+			_log.error("Couldn't write jar file for " + pluginDir, e);
 		}
 	}
 
@@ -1306,88 +1104,14 @@ public class WabProcessor {
 
 		sb.append(format.format(new Date()));
 
-		sb.append(StringPool.PERIOD);
+		sb.append(".wab.");
+
 		sb.append(FileUtil.getExtension(name));
 
 		FileUtil.copyFile(file, new File(dir, sb.toString()));
 	}
 
-	protected void writeJarPath(
-			JarOutputStream jarOutputStream, Set<String> paths, String path,
-			File file)
-		throws FileNotFoundException {
-
-		if (paths.contains(path)) {
-			return;
-		}
-
-		paths.add(path);
-
-		try {
-			JarEntry jarEntry = new JarEntry(path);
-
-			jarEntry.setTime(file.lastModified());
-
-			jarOutputStream.putNextEntry(jarEntry);
-
-			StreamUtil.transfer(
-				new FileInputStream(file),
-				StreamUtil.uncloseable(jarOutputStream));
-
-			jarOutputStream.closeEntry();
-		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
-		}
-	}
-
-	protected void writeJarPaths(
-			JarOutputStream jarOutputStream, Set<String> paths, File dir,
-			URI uri)
-		throws IOException {
-
-		for (File file : dir.listFiles()) {
-			URI relativizedURI = uri.relativize(file.toURI());
-
-			String path = relativizedURI.getPath();
-
-			if (file.isDirectory()) {
-				jarOutputStream.putNextEntry(new ZipEntry(path));
-
-				jarOutputStream.closeEntry();
-
-				writeJarPaths(jarOutputStream, paths, file, uri);
-
-				continue;
-			}
-
-			if (ArrayUtil.contains(
-					PropsValues.MODULE_FRAMEWORK_WEB_GENERATOR_EXCLUDED_PATHS,
-					path)) {
-
-				continue;
-			}
-
-			if (path.startsWith("WEB-INF/lib/") &&
-				path.endsWith("-service.jar") &&
-				!path.endsWith(_context.concat("-service.jar"))) {
-
-				continue;
-			}
-
-			writeJarPath(jarOutputStream, paths, path, file);
-		}
-	}
-
-	protected void writeManifest(Manifest manifest) throws IOException {
-		File file = getManifestFile();
-
-		try (OutputStream outputStream = new FileOutputStream(file)) {
-			manifest.write(outputStream);
-		}
-	}
-
-	private void _processExcludedJSPs(Analyzer analyzer) throws IOException {
+	private void _processExcludedJSPs(Analyzer analyzer) {
 		File file = new File(_pluginDir, "/WEB-INF/liferay-hook.xml");
 
 		if (!file.exists()) {
@@ -1395,6 +1119,10 @@ public class WabProcessor {
 		}
 
 		Document document = readDocument(file);
+
+		if (!document.hasContent()) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 
@@ -1417,19 +1145,110 @@ public class WabProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(WabProcessor.class);
 
-	private static final DSAnnotations _dsAnnotations = new DSAnnotations();
-	private static final MetatypeAnnotations _metatypeAnnotations =
-		new MetatypeAnnotations();
-	private static final MetatypePlugin _metatypePlugin = new MetatypePlugin();
+	/**
+	 * Purposely undocumented property used purely for diagnostic testing.
+	 */
+	private static final boolean _autodeployed_wars_store =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				"module.framework.web.generator.autodeployed.wars.store"));
+
+	private static final String[] _knownProperties =
+		new String[] {"jdbc.driverClassName"};
+	private static final Attrs _optional = new Attrs();
+	private static final String _xPath_hbm = StringUtil.merge(
+		new String[] {
+			"//class/@name", "//id/@access", "//import/@class",
+			"//property/@type"
+		},
+		"|");
+	private static final String _xPath_hook = StringUtil.merge(
+		new String[] {
+			"//indexer-post-processor-impl", "//service-impl",
+			"//servlet-filter-impl", "//struts-action-impl"
+		},
+		"|");
+	private static final String _xPath_javaee = StringUtil.merge(
+		new String[] {
+			"//j2ee:filter-class", "//j2ee:listener-class",
+			"//j2ee:servlet-class", "//javaee:filter-class",
+			"//javaee:listener-class", "//javaee:servlet-class"
+		},
+		"|");
+	private static final String _xPath_liferay = StringUtil.merge(
+		new String[] {
+			"//asset-renderer-factory", "//atom-collection-adapter",
+			"//configuration-action-class", "//control-panel-entry-class",
+			"//custom-attributes-display", "//friendly-url-mapper-class",
+			"//indexer-class", "//open-search-class", "//permission-propagator",
+			"//poller-processor-class", "//pop-message-listener-class",
+			"//portlet-data-handler-class", "//portlet-layout-listener-class",
+			"//portlet-url-class", "//social-activity-interpreter-class",
+			"//social-request-interpreter-class", "//url-encoder-class",
+			"//webdav-storage-class", "//workflow-handler",
+			"//xml-rpc-method-class"
+		},
+		"|");
+	private static final String _xPath_portlet = StringUtil.merge(
+		new String[] {
+			"//portlet2:filter-class", "//portlet2:listener-class",
+			"//portlet2:portlet-class", "//portlet2:resource-bundle"
+		},
+		"|");
+	private static final String _xPath_spring = StringUtil.merge(
+		new String[] {
+			"//beans:bean/@class", "//beans:*/@value-type",
+			"//aop:*/@implement-interface", "//aop:*/@default-impl",
+			"//context:load-time-weaver/@weaver-class",
+			"//jee:jndi-lookup/@expected-type",
+			"//jee:jndi-lookup/@proxy-interface", "//jee:remote-slsb/@ejbType",
+			"//jee:*/@business-interface", "//lang:*/@script-interfaces",
+			"//osgi:*/@interface", "//gemini-blueprint:*/@interface",
+			"//blueprint:*/@interface", "//blueprint:*/@class",
+			"//util:list/@list-class", "//util:set/@set-class",
+			"//util:map/@map-class", "//webflow-config:*/@class"
+		},
+		"|");
+	private static final Map<String, String> _xsds = new ConcurrentHashMap<>();
+
+	static {
+		_optional.put("resolution:", "optional");
+
+		_xsds.put("aop", "http://www.springframework.org/schema/aop");
+		_xsds.put("beans", "http://www.springframework.org/schema/beans");
+		_xsds.put("blueprint", "http://www.osgi.org/xmlns/blueprint/v1.0.0");
+		_xsds.put("context", "http://www.springframework.org/schema/context");
+		_xsds.put(
+			"gemini-blueprint",
+			"http://www.eclipse.org/gemini/blueprint/schema/blueprint");
+		_xsds.put("j2ee", "http://java.sun.com/xml/ns/j2ee");
+		_xsds.put("javaee", "http://java.sun.com/xml/ns/javaee");
+		_xsds.put("jee", "http://www.springframework.org/schema/jee");
+		_xsds.put("jms", "http://www.springframework.org/schema/jms");
+		_xsds.put("lang", "http://www.springframework.org/schema/lang");
+		_xsds.put("osgi", "http://www.springframework.org/schema/osgi");
+		_xsds.put(
+			"osgi-compendium",
+			"http://www.springframework.org/schema/osgi-compendium");
+		_xsds.put(
+			"portlet2",
+			"http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
+		_xsds.put("tool", "http://www.springframework.org/schema/tool");
+		_xsds.put("tx", "http://www.springframework.org/schema/tx");
+		_xsds.put("util", "http://www.springframework.org/schema/util");
+		_xsds.put(
+			"webflow-config",
+			"http://www.springframework.org/schema/webflow-config");
+		_xsds.put("xsl", "http://www.w3.org/1999/XSL/Transform");
+	}
 
 	private String _bundleVersion;
-	private final ClassLoader _classLoader;
 	private String _context;
-	private final Set<String> _exportPackageNames = new HashSet<>();
+	private final Parameters _exportPackages = new Parameters();
 	private final File _file;
-	private final Set<String> _ignoredResources = new HashSet<>();
-	private final Set<String> _importPackageNames = new HashSet<>();
-	private File _manifestFile;
+	private final Set<String> _ignoredResources = SetUtil.fromArray(
+		PropsValues.MODULE_FRAMEWORK_WEB_GENERATOR_EXCLUDED_PATHS);
+	private final Parameters _importPackages = new Parameters();
 	private final Map<String, String[]> _parameters;
 	private File _pluginDir;
 	private PluginPackage _pluginPackage;

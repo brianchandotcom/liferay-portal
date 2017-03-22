@@ -180,6 +180,13 @@
 			<then>
 				<execute function="SelectWindow" locator1="title=${contentTitle} - ${pageName} - ${siteName}" />
 			</then>
+			<elseif>
+				<equals arg1="${pageName}" arg2="update_password" />
+				<then>
+					<var name="pageName" value="New Password" />
+					<execute function="SelectWindow" locator1="title=${pageName} - ${siteName}" />
+				</then>
+			</elseif>
 			<else>
 				<execute function="SelectWindow" locator1="title=${pageName} - ${siteName}" />
 			</else>

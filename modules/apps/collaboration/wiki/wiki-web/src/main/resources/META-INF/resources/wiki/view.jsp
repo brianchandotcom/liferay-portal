@@ -34,19 +34,11 @@ if (followRedirect && (redirectPage != null)) {
 
 String title = wikiPage.getTitle();
 
-String parentTitle = StringPool.BLANK;
-
-if (wikiPage != null) {
-	parentTitle = wikiPage.getParentTitle();
-}
+String parentTitle = wikiPage.getParentTitle();
 
 List<WikiPage> childPages = wikiPage.getViewableChildPages();
 
-int attachmentsFileEntriesCount = 0;
-
-if (wikiPage != null) {
-	attachmentsFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
-}
+int attachmentsFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
 
 boolean preview = false;
 boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT);
@@ -80,10 +72,7 @@ addPageURL.setParameter("redirect", currentURL);
 addPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 addPageURL.setParameter("title", StringPool.BLANK);
 addPageURL.setParameter("editTitle", "1");
-
-if (wikiPage != null) {
-	addPageURL.setParameter("parentTitle", wikiPage.getTitle());
-}
+addPageURL.setParameter("parentTitle", wikiPage.getTitle());
 
 PortletURL editPageURL = renderResponse.createRenderURL();
 
@@ -113,13 +102,9 @@ if (Validator.isNotNull(ParamUtil.getString(request, "title"))) {
 	AssetUtil.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(WikiPage.class.getName(), wikiPage.getResourcePrimKey()));
 }
 
-AssetEntry layoutAssetEntry = null;
+AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
 
-if (wikiPage != null) {
-	layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
-
-	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
-}
+request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
@@ -236,7 +221,7 @@ if (portletTitleBasedNavigation) {
 						<c:if test="<%= !print && !portletTitleBasedNavigation %>">
 							<div class="page-actions top-actions">
 								<c:if test="<%= followRedirect || (redirectPage == null) %>">
-									<c:if test="<%= (wikiPage != null) && Validator.isNotNull(formattedContent) && WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.ADD_PAGE) %>">
+									<c:if test="<%= Validator.isNotNull(formattedContent) && WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.ADD_PAGE) %>">
 										<liferay-ui:icon
 											iconCssClass="icon-plus"
 											label="<%= true %>"
@@ -307,13 +292,13 @@ if (portletTitleBasedNavigation) {
 						<liferay-expando:custom-attributes-available className="<%= WikiPage.class.getName() %>">
 							<liferay-expando:custom-attribute-list
 								className="<%= WikiPage.class.getName() %>"
-								classPK="<%= (wikiPage != null) ? wikiPage.getPrimaryKey() : 0 %>"
+								classPK="<%= wikiPage.getPrimaryKey() %>"
 								editable="<%= false %>"
 								label="<%= true %>"
 							/>
 						</liferay-expando:custom-attributes-available>
 
-						<c:if test="<%= (wikiPage != null) && Validator.isNotNull(formattedContent) && (followRedirect || (redirectPage == null)) %>">
+						<c:if test="<%= Validator.isNotNull(formattedContent) && (followRedirect || (redirectPage == null)) %>">
 							<div class="page-actions">
 								<div class="stats">
 
@@ -440,7 +425,7 @@ if (portletTitleBasedNavigation) {
 				</aui:script>
 
 				<%
-				if ((wikiPage != null) && !wikiPage.getTitle().equals(wikiGroupServiceConfiguration.frontPageName())) {
+				if (!wikiPage.getTitle().equals(wikiGroupServiceConfiguration.frontPageName())) {
 					if (!portletName.equals(WikiPortletKeys.WIKI_DISPLAY)) {
 						PortalUtil.setPageSubtitle(wikiPage.getTitle(), request);
 
@@ -474,7 +459,7 @@ if (portletTitleBasedNavigation) {
 			</div>
 		</div>
 
-		<c:if test="<%= (wikiPage != null) && Validator.isNotNull(formattedContent) && (followRedirect || (redirectPage == null)) && !childPages.isEmpty() %>">
+		<c:if test="<%= Validator.isNotNull(formattedContent) && (followRedirect || (redirectPage == null)) && !childPages.isEmpty() %>">
 			<h4 class="text-default">
 				<liferay-ui:message arguments="<%= childPages.size() %>" key="child-pages-x" translateArguments="<%= false %>" />
 			</h4>

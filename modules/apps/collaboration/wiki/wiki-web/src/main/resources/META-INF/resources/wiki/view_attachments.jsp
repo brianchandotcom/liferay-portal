@@ -21,11 +21,7 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 boolean copyPageAttachments = ParamUtil.getBoolean(request, "copyPageAttachments", true);
 
-List<FileEntry> attachmentsFileEntries = null;
-
-if (wikiPage != null) {
-	attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
-}
+List<FileEntry> attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
 
 long templateNodeId = ParamUtil.getLong(request, "templateNodeId");
 String templateTitle = ParamUtil.getString(request, "templateTitle");
@@ -42,11 +38,7 @@ if ((templateNodeId > 0) && Validator.isNotNull(templateTitle)) {
 	}
 }
 
-int deletedAttachmentsCount = 0;
-
-if (wikiPage != null) {
-	deletedAttachmentsCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
-}
+int deletedAttachmentsCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
 %>
 
 <c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) && (deletedAttachmentsCount > 0) %>">

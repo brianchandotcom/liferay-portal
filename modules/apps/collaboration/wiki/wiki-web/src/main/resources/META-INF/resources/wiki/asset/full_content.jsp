@@ -44,7 +44,7 @@ WikiPageDisplay pageDisplay = WikiPageLocalServiceUtil.getPageDisplay(wikiPage, 
 <liferay-expando:custom-attributes-available className="<%= WikiPage.class.getName() %>">
 	<liferay-expando:custom-attribute-list
 		className="<%= WikiPage.class.getName() %>"
-		classPK="<%= (wikiPage != null) ? wikiPage.getPrimaryKey() : 0 %>"
+		classPK="<%= wikiPage.getPrimaryKey() %>"
 		editable="<%= false %>"
 		label="<%= true %>"
 	/>

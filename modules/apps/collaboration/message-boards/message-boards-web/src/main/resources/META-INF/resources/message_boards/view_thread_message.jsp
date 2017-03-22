@@ -384,7 +384,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 			<div class="card-row card-row-padded custom-attributes">
 				<liferay-expando:custom-attribute-list
 					className="<%= MBMessage.class.getName() %>"
-					classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
+					classPK="<%= message.getMessageId() %>"
 					editable="<%= false %>"
 					label="<%= true %>"
 				/>

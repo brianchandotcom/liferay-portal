@@ -21,13 +21,15 @@ MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys
 
 MBMessage message = messageDisplay.getMessage();
 
-MBCategory category = messageDisplay.getCategory();
-
 MBThread thread = messageDisplay.getThread();
 
-if ((message != null) && layout.isTypeControlPanel()) {
+if (layout.isTypeControlPanel()) {
 	MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 }
+
+AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(MBMessage.class.getName(), message.getMessageId());
+
+request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
 AssetEntryServiceUtil.incrementViewCounter(MBMessage.class.getName(), message.getMessageId());
 
@@ -83,8 +85,6 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 <%
 MBThreadFlagLocalServiceUtil.addThreadFlag(themeDisplay.getUserId(), thread, new ServiceContext());
-
-message = messageDisplay.getMessage();
 
 PortalUtil.setPageSubtitle(message.getSubject(), request);
 PortalUtil.setPageDescription(message.getSubject(), request);

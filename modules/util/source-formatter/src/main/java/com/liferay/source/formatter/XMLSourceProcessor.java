@@ -34,6 +34,7 @@ import com.liferay.source.formatter.checks.XMLFriendlyURLRoutesFileCheck;
 import com.liferay.source.formatter.checks.XMLHBMFileCheck;
 import com.liferay.source.formatter.checks.XMLLog4jFileCheck;
 import com.liferay.source.formatter.checks.XMLLookAndFeelFileCheck;
+import com.liferay.source.formatter.checks.XMLModelHintsFileCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
@@ -269,10 +270,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (fileName.endsWith("-model-hints.xml")) {
-			formatModelHintsXML(fileName, newContent);
-		}
-		else if (fileName.endsWith("portlet-preferences.xml")) {
+		if (fileName.endsWith("portlet-preferences.xml")) {
 			formatPortletPreferencesXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("/liferay-portlet.xml") ||
@@ -511,20 +509,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	protected void formatModelHintsXML(String fileName, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		checkOrder(
-			fileName, rootElement, "hint-collection", null,
-			new ElementComparator());
-		checkOrder(
-			fileName, rootElement, "model", null, new ElementComparator());
 	}
 
 	protected void formatPortletPreferencesXML(String fileName, String content)
@@ -952,6 +936,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		fileChecks.add(new XMLHBMFileCheck());
 		fileChecks.add(new XMLLog4jFileCheck());
 		fileChecks.add(new XMLLookAndFeelFileCheck());
+		fileChecks.add(new XMLModelHintsFileCheck());
 
 		fileChecks.add(
 			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));

@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-ddl-form-builder-wizard',
 	function(A) {
-		var TPL_WIZARD_SUCCESSPAGE = '<li class="{state}">' +
+		var TPL_WIZARD_SUCCESSPAGE = '<li class="{state}" data-success-page="true">' +
 				'<div class="progress-bar-title">{title}</div>' +
 				'<div class="progress-bar-success-item divider"></div>' +
 			'</li>';

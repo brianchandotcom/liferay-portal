@@ -198,6 +198,8 @@ AUI.add(
 
 							popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE).hide();
 						}
+
+						instance._syncPopoverContent();
 					},
 
 					toggleControlsTriggerDisabled: function(disabled) {
@@ -405,6 +407,8 @@ AUI.add(
 							);
 						}
 
+						instance._wizard.get('boundingBox').delegate('click', A.bind(instance._onClickItemWizard, instance), 'li');
+
 						return instance._wizard;
 					},
 
@@ -445,6 +449,18 @@ AUI.add(
 						instance._resetSuccessPage();
 
 						instance._getPopover().hide();
+					},
+
+					_onClickItemWizard: function(event) {
+						var instance = this;
+
+						var currentTarget = event.currentTarget;
+
+						var attrSuccessPage = currentTarget.getData('success-page');
+
+						if (!attrSuccessPage) {
+							instance._showLayout();
+						}
 					},
 
 					_onPageControlOptionClick: function(event) {

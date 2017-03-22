@@ -356,27 +356,12 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public void keyDownAndWait(String locator, String keySequence) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void keyPress(String locator, String keySequence) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void keyPressAndWait(String locator, String keySequence) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void keyUp(String locator, String keySequence) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void keyUpAndWait(String locator, String keySequence) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -463,11 +448,6 @@ public abstract class BaseMobileDriverImpl
 
 	public byte[] pullFolder(String remotePath) {
 		return _mobileDriver.pullFolder(remotePath);
-	}
-
-	@Override
-	public void refreshAndWait() {
-		throw new UnsupportedOperationException();
 	}
 
 	public void removeApp(String bundleId) {

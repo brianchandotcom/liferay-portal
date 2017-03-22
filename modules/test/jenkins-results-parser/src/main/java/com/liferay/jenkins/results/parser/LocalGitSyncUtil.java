@@ -149,7 +149,7 @@ public class LocalGitSyncUtil {
 
 				gitWorkingDirectory.clean();
 
-				gitWorkingDirectory.reset("HEAD", ResetType.HARD);
+				gitWorkingDirectory.reset(null, ResetType.HARD);
 
 				gitWorkingDirectory.fetch(upstreamRemoteConfig, null);
 

@@ -1172,6 +1172,14 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		String[] roleNames = portlet.getRolesArray();
 
+		List<String> guestUnsupportedActionIds =
+			ResourceActionsUtil.getPortletResourceGuestUnsupportedActions(
+				portlet.getRootPortletId());
+
+		String actionId = ActionKeys.ADD_TO_PAGE;
+
+		boolean skipGuestRole = guestUnsupportedActionIds.contains(actionId);
+
 		if (roleNames.length == 0) {
 			return;
 		}
@@ -1179,10 +1187,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		List<String> actionIds = ResourceActionsUtil.getPortletResourceActions(
 			portlet.getRootPortletId());
 
-		String actionId = ActionKeys.ADD_TO_PAGE;
-
 		if (actionIds.contains(actionId)) {
 			for (String roleName : roleNames) {
+				if (skipGuestRole && roleName.equals(RoleConstants.GUEST)) {
+					continue;
+				}
+
 				Role role = roleLocalService.getRole(
 					portlet.getCompanyId(), roleName);
 

@@ -35,6 +35,7 @@ import com.liferay.source.formatter.checks.XMLHBMFileCheck;
 import com.liferay.source.formatter.checks.XMLLog4jFileCheck;
 import com.liferay.source.formatter.checks.XMLLookAndFeelFileCheck;
 import com.liferay.source.formatter.checks.XMLModelHintsFileCheck;
+import com.liferay.source.formatter.checks.XMLPortletPreferencesFileCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
@@ -270,14 +271,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (fileName.endsWith("portlet-preferences.xml")) {
-			formatPortletPreferencesXML(fileName, newContent);
-		}
-		else if (fileName.endsWith("/liferay-portlet.xml") ||
-				 ((portalSource || subrepository) &&
-				  fileName.endsWith("/portlet-custom.xml")) ||
-				 (!portalSource && !subrepository &&
-				  fileName.endsWith("/portlet.xml"))) {
+		if (fileName.endsWith("/liferay-portlet.xml") ||
+			((portalSource || subrepository) &&
+			 fileName.endsWith("/portlet-custom.xml")) ||
+			(!portalSource && !subrepository &&
+			 fileName.endsWith("/portlet.xml"))) {
 
 			newContent = formatPortletXML(fileName, absolutePath, newContent);
 		}
@@ -509,26 +507,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	protected void formatPortletPreferencesXML(String fileName, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		checkOrder(
-			fileName, document.getRootElement(), "preference", null,
-			new PortletPreferenceElementComparator());
-
-		Matcher matcher = _incorrectDefaultPreferencesFileName.matcher(
-			fileName);
-
-		if (matcher.find()) {
-			String correctFileName =
-				matcher.group(1) + "-default-portlet-preferences.xml";
-
-			processMessage(fileName, "Rename file to " + correctFileName);
-		}
 	}
 
 	protected String formatPortletXML(
@@ -937,6 +915,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		fileChecks.add(new XMLLog4jFileCheck());
 		fileChecks.add(new XMLLookAndFeelFileCheck());
 		fileChecks.add(new XMLModelHintsFileCheck());
+		fileChecks.add(new XMLPortletPreferencesFileCheck());
 
 		fileChecks.add(
 			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));
@@ -1198,8 +1177,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static final Pattern _commentPattern2 = Pattern.compile(
 		"[\t ]-->\n[\t<]");
 
-	private final Pattern _incorrectDefaultPreferencesFileName =
-		Pattern.compile("/default-([\\w-]+)-portlet-preferences\\.xml$");
 	private final Pattern _poshiClosingTagPattern = Pattern.compile(
 		"</[^>/]*>");
 	private final Pattern _poshiCommandsPattern = Pattern.compile(
@@ -1236,17 +1213,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private String _tablesContent;
 	private final Map<String, String> _tablesContentMap =
 		new ConcurrentHashMap<>();
-
-	private class PortletPreferenceElementComparator extends ElementComparator {
-
-		@Override
-		public String getElementName(Element preferenceElement) {
-			Element nameElement = preferenceElement.element(getNameAttribute());
-
-			return nameElement.getStringValue();
-		}
-
-	}
 
 	private class ResourceActionActionKeyElementComparator
 		extends ElementComparator {

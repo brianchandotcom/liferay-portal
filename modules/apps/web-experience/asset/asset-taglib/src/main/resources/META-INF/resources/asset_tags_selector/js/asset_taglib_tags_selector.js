@@ -91,6 +91,10 @@ AUI.add(
 						value: 'value'
 					},
 
+					maxLength: {
+						value: 75
+					},
+
 					portletURL: {
 						validator: Lang.isString
 					},
@@ -166,6 +170,8 @@ AUI.add(
 					_addEntries: function() {
 						var instance = this;
 
+						var maxLength = instance.get('maxLength');
+
 						var text = Lang.String.escapeHTML(instance.inputNode.val());
 
 						if (text) {
@@ -174,12 +180,16 @@ AUI.add(
 
 								items.forEach(
 									function(item, index) {
-										instance.entries.add(item, {});
+										if (item.length <= maxLength) {
+											instance.entries.add(item, {});
+										}
 									}
 								);
 							}
 							else {
-								instance.entries.add(text, {});
+								if (text.length <= maxLength) {
+									instance.entries.add(text, {});
+								}
 							}
 						}
 

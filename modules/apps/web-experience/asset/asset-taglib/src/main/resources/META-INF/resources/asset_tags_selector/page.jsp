@@ -57,11 +57,11 @@ String tagNames = GetterUtil.getString((String)request.getAttribute("liferay-ass
 				eventName: '<%= eventName %>',
 			</c:if>
 
+			maxLength: <%= ModelHintsConstants.TEXT_MAX_LENGTH %>,
+
 			<c:if test="<%= portletURL != null %>">
 				portletURL: '<%= portletURL.toString() %>',
 			</c:if>
-
-			maxLength: <%= ModelHintsConstants.TEXT_MAX_LENGTH %>,
 
 			tagNames: '<%= HtmlUtil.escapeJS(tagNames) %>'
 		}

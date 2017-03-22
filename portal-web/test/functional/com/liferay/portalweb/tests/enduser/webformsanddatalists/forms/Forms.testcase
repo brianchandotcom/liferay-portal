@@ -280,6 +280,8 @@
 
 		<execute macro="FormsAdmin#editDataProvider">
 			<var name="name" value="Country Names" />
+			<var name="outputParameterLabel" value="Countries Full Name" />
+			<var name="outputParameterLabel2" value="Countries A2" />
 			<var name="outputParameterName" value="Countries Full Name" />
 			<var name="outputParameterName2" value="Countries A2" />
 			<var name="outputParameterPath" value="nameCurrentValue" />
@@ -494,6 +496,7 @@
 
 		<execute macro="FormsAdmin#editDataProvider">
 			<var name="name" value="Liferay Countries" />
+			<var name="outputParameterLabel" value="Country Names" />
 			<var name="outputParameterName" value="Country Names" />
 			<var name="outputParameterPath" value="nameCurrentValue" />
 			<var name="outputParameterType" value="List" />

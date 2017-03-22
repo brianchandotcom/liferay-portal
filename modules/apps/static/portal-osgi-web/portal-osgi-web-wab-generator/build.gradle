@@ -8,7 +8,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.whip", version: "1.0.1"
 	provided group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.5.1-20150728.201454-4-LIFERAY-CACHED"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
@@ -18,4 +18,18 @@ dependencies {
 	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
+
+	testCompile group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.7"
+	testCompile group: "commons-beanutils", name: "commons-beanutils", version: "1.9.2"
+	testCompile group: "commons-configuration", name: "commons-configuration", version: "1.10"
+	testCompile group: "commons-digester", name: "commons-digester", version: "1.8.1"
+	testCompile group: "commons-httpclient", name: "commons-httpclient", version: "3.1"
+	testCompile group: "commons-io", name: "commons-io", version: "2.5"
+	testCompile group: "commons-lang", name: "commons-lang", version: "2.6"
+	testCompile group: "dom4j", name: "dom4j", version: "1.6.1"
+	testCompile group: "easyconf", name: "easyconf", version: "0.9.5", transitive: false
+	testCompile group: "jaxen", name: "jaxen", version: "1.1.1"
+	testCompile group: "org.apache.tika", name: "tika-core", version: "1.14"
+	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
+	testCompile group: "xerces", name: "xercesImpl", version: "2.11.0"
 }

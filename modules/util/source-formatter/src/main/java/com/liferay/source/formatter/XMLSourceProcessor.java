@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportPackage;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.XMLBuildFileCheck;
@@ -35,6 +34,7 @@ import com.liferay.source.formatter.checks.XMLHBMFileCheck;
 import com.liferay.source.formatter.checks.XMLLog4jFileCheck;
 import com.liferay.source.formatter.checks.XMLLookAndFeelFileCheck;
 import com.liferay.source.formatter.checks.XMLModelHintsFileCheck;
+import com.liferay.source.formatter.checks.XMLPortletFileCheck;
 import com.liferay.source.formatter.checks.XMLPortletPreferencesFileCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
@@ -271,18 +271,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (fileName.endsWith("/liferay-portlet.xml") ||
-			((portalSource || subrepository) &&
-			 fileName.endsWith("/portlet-custom.xml")) ||
-			(!portalSource && !subrepository &&
-			 fileName.endsWith("/portlet.xml"))) {
-
-			newContent = formatPortletXML(fileName, absolutePath, newContent);
-		}
-		else if (fileName.endsWith(".action") ||
-				 fileName.endsWith(".function") ||
-				 fileName.endsWith(".macro") ||
-				 fileName.endsWith(".testcase")) {
+		if (fileName.endsWith(".action") || fileName.endsWith(".function") ||
+			fileName.endsWith(".macro") || fileName.endsWith(".testcase")) {
 
 			newContent = formatPoshiXML(fileName, newContent);
 		}
@@ -507,52 +497,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	protected String formatPortletXML(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		boolean checkNumericalPortletNameElement = !isExcludedPath(
-			_NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES, absolutePath);
-
-		List<Element> portletElements = rootElement.elements("portlet");
-
-		for (Element portletElement : portletElements) {
-			if (checkNumericalPortletNameElement) {
-				Element portletNameElement = portletElement.element(
-					"portlet-name");
-
-				String portletNameText = portletNameElement.getText();
-
-				if (!Validator.isNumber(portletNameText)) {
-					processMessage(
-						fileName,
-						"Nonstandard portlet-name element '" + portletNameText +
-							"'");
-				}
-			}
-
-			if (fileName.endsWith("/liferay-portlet.xml")) {
-				continue;
-			}
-
-			sortElementsByChildElement(portletElement, "init-param", "name");
-
-			Element portletPreferencesElement = portletElement.element(
-				"portlet-preferences");
-
-			if (portletPreferencesElement != null) {
-				sortElementsByChildElement(
-					portletPreferencesElement, "preference", "name");
-			}
-		}
-
-		return Dom4jUtil.toString(document);
 	}
 
 	protected String formatPoshiXML(String fileName, String content)
@@ -915,6 +859,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		fileChecks.add(new XMLLog4jFileCheck());
 		fileChecks.add(new XMLLookAndFeelFileCheck());
 		fileChecks.add(new XMLModelHintsFileCheck());
+		fileChecks.add(
+			new XMLPortletFileCheck(
+				_numericalPortletNameElementExcludes, portalSource,
+				subrepository));
 		fileChecks.add(new XMLPortletPreferencesFileCheck());
 
 		fileChecks.add(
@@ -973,6 +921,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return tablesContent;
+	}
+
+	@Override
+	protected void preFormat() throws Exception {
+		_numericalPortletNameElementExcludes = getExcludes(
+			_NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES);
 	}
 
 	protected String sortAttributes(String fileName, String content)
@@ -1177,6 +1131,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static final Pattern _commentPattern2 = Pattern.compile(
 		"[\t ]-->\n[\t<]");
 
+	private List<String> _numericalPortletNameElementExcludes;
 	private final Pattern _poshiClosingTagPattern = Pattern.compile(
 		"</[^>/]*>");
 	private final Pattern _poshiCommandsPattern = Pattern.compile(

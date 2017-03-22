@@ -8,6 +8,9 @@
 		<hint name="editor">true</hint>
 		<hint name="max-length">2000000</hint>
 	</hint-collection>
+	<hint-collection name="EMAIL_ADDRESS">
+		<hint name="max-length">254</hint>
+	</hint-collection>
 	<hint-collection name="SEARCHABLE-DATE">
 		<hint name="month-nullable">true</hint>
 		<hint name="day-nullable">true</hint>

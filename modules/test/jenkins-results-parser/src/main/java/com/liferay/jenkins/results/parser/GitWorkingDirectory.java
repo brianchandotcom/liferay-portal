@@ -819,7 +819,8 @@ public class GitWorkingDirectory {
 		if (!_upstreamBranchName.contains("ee-") &&
 			!_upstreamBranchName.contains("-private") &&
 			!repositoryName.equals("liferay-jenkins-ee") &&
-			!repositoryName.equals("liferay-jenkins-tools-private")) {
+			!repositoryName.equals("liferay-jenkins-tools-private") &&
+			!repositoryName.equals("liferay-qa-portal-legacy-ee")) {
 
 			repositoryName = repositoryName.replace("-ee", "");
 			repositoryName = repositoryName.replace("-private", "");

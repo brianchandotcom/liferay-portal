@@ -37,6 +37,7 @@ import com.liferay.source.formatter.checks.XMLModelHintsFileCheck;
 import com.liferay.source.formatter.checks.XMLPortletFileCheck;
 import com.liferay.source.formatter.checks.XMLPortletPreferencesFileCheck;
 import com.liferay.source.formatter.checks.XMLPoshiFileCheck;
+import com.liferay.source.formatter.checks.XMLResourceActionsFileCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
@@ -252,11 +253,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (fileName.contains("/resource-actions/")) {
-			formatResourceActionXML(fileName, newContent, "model");
-			formatResourceActionXML(fileName, newContent, "portlet");
-		}
-		else if (fileName.endsWith("/service.xml")) {
+		if (fileName.endsWith("/service.xml")) {
 			formatServiceXML(fileName, absolutePath, newContent);
 		}
 		else if (fileName.endsWith("/schema.xml") &&
@@ -315,47 +312,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	protected void formatResourceActionXML(
-			String fileName, String content, String type)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> resourceElements = rootElement.elements(
-			type + "-resource");
-
-		for (Element resourceElement : resourceElements) {
-			Element nameElement = resourceElement.element(type + "-name");
-
-			if (nameElement == null) {
-				continue;
-			}
-
-			String name = nameElement.getText();
-
-			Element permissionsElement = resourceElement.element("permissions");
-
-			if (permissionsElement == null) {
-				continue;
-			}
-
-			List<Element> permissionsChildElements =
-				permissionsElement.elements();
-
-			for (Element permissionsChildElement : permissionsChildElements) {
-				checkOrder(
-					fileName, permissionsChildElement, "action-key", name,
-					new ResourceActionActionKeyElementComparator());
-			}
-		}
-
-		checkOrder(
-			fileName, rootElement, type + "-resource", null,
-			new ResourceActionResourceElementComparator(type + "-name"));
 	}
 
 	protected void formatServiceXML(
@@ -647,6 +603,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				subrepository));
 		fileChecks.add(new XMLPortletPreferencesFileCheck());
 		fileChecks.add(new XMLPoshiFileCheck());
+		fileChecks.add(new XMLResourceActionsFileCheck());
 
 		fileChecks.add(
 			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));
@@ -786,37 +743,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private String _tablesContent;
 	private final Map<String, String> _tablesContentMap =
 		new ConcurrentHashMap<>();
-
-	private class ResourceActionActionKeyElementComparator
-		extends ElementComparator {
-
-		@Override
-		public String getElementName(Element actionKeyElement) {
-			return actionKeyElement.getStringValue();
-		}
-
-	}
-
-	private class ResourceActionResourceElementComparator
-		extends ElementComparator {
-
-		public ResourceActionResourceElementComparator(String nameAttribute) {
-			super(nameAttribute);
-		}
-
-		@Override
-		public String getElementName(Element portletResourceElement) {
-			Element portletNameElement = portletResourceElement.element(
-				getNameAttribute());
-
-			if (portletNameElement == null) {
-				return null;
-			}
-
-			return portletNameElement.getText();
-		}
-
-	}
 
 	private class ServiceExceptionElementComparator extends ElementComparator {
 

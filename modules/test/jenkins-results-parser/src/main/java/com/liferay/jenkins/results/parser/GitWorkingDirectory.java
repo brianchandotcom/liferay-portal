@@ -114,12 +114,6 @@ public class GitWorkingDirectory {
 		return userName.substring(0, userName.indexOf("/"));
 	}
 
-	public GitWorkingDirectory(String workingDirectory)
-		throws GitAPIException, IOException {
-
-		this("master", workingDirectory);
-	}
-
 	public GitWorkingDirectory(
 			String upstreamBranchName, String workingDirectory)
 		throws GitAPIException, IOException {
@@ -337,8 +331,8 @@ public class GitWorkingDirectory {
 	}
 
 	public String createPullRequest(
-			String title, String body, String receiverUserName,
-			String pullRequestBranchName)
+			String body, String pullRequestBranchName, String receiverUserName,
+			String title)
 		throws IOException {
 
 		JSONObject requestJSONObject = new JSONObject();
@@ -376,7 +370,7 @@ public class GitWorkingDirectory {
 		deleteBranchCommand.call();
 	}
 
-	public void fetch(RemoteConfig remoteConfig, RefSpec refSpec)
+	public void fetch(RefSpec refSpec, RemoteConfig remoteConfig)
 		throws GitAPIException {
 
 		FetchCommand fetchCommand = _git.fetch();
@@ -441,7 +435,7 @@ public class GitWorkingDirectory {
 			JenkinsResultsParserUtil.combine(
 				"refs/heads/", remoteBranchName, ":", localBranchName));
 
-		fetch(remoteConfig, refSpec);
+		fetch(refSpec, remoteConfig);
 	}
 
 	public List<Ref> getBranchRefs() throws GitAPIException {
@@ -588,11 +582,11 @@ public class GitWorkingDirectory {
 	public boolean pushToRemote(RemoteConfig remoteConfig)
 		throws GitAPIException {
 
-		return pushToRemote(remoteConfig, getCurrentBranch());
+		return pushToRemote(getCurrentBranch(), remoteConfig);
 	}
 
 	public boolean pushToRemote(
-			RemoteConfig remoteConfig, String remoteBranchName)
+			String remoteBranchName, RemoteConfig remoteConfig)
 		throws GitAPIException {
 
 		return pushToRemote(getCurrentBranch(), remoteBranchName, remoteConfig);
@@ -606,7 +600,7 @@ public class GitWorkingDirectory {
 		try {
 			remoteConfig = addRemote(true, "temp", remoteURL);
 
-			return pushToRemote(remoteConfig, remoteBranchName);
+			return pushToRemote(remoteBranchName, remoteConfig);
 		}
 		finally {
 			removeRemote(remoteConfig);
@@ -661,7 +655,7 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public void rebase(String branchName, String refSHA)
+	public boolean rebase(boolean abortOnFail, String branchName, String sha)
 		throws GitAPIException, IOException {
 
 		if (!branchName.equals(getCurrentBranch())) {
@@ -672,11 +666,11 @@ public class GitWorkingDirectory {
 
 		rebaseCommand.setOperation(RebaseCommand.Operation.BEGIN);
 
-		rebaseCommand.setUpstream(refSHA);
+		rebaseCommand.setUpstream(sha);
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"rebase ", getCurrentBranch(), " ", refSHA));
+				"rebase ", getCurrentBranch(), " ", sha));
 
 		RebaseResult result = rebaseCommand.call();
 
@@ -699,8 +693,14 @@ public class GitWorkingDirectory {
 				}
 			}
 
-			throw new RuntimeException("Rebase failed.");
+			if (abortOnFail) {
+				rebaseAbort();
+			}
+
+			return false;
 		}
+
+		return true;
 	}
 
 	public void rebaseAbort() throws GitAPIException {
@@ -728,13 +728,11 @@ public class GitWorkingDirectory {
 
 	public void removeRemote(RemoteConfig remoteConfig) {
 		try {
-			Set<String> remoteNames = getRemoteNames();
-
-			if (!remoteNames.contains(remoteConfig.getName())) {
+			if (!remoteExists(remoteConfig.getName())) {
 				throw new RuntimeException(
 					JenkinsResultsParserUtil.combine(
 						"Unable to remove Remote ", remoteConfig.getName(),
-						" because ", "it does not exist"));
+						" because it does not exist"));
 			}
 
 			System.out.println("remote remove " + remoteConfig.getName());
@@ -816,13 +814,20 @@ public class GitWorkingDirectory {
 
 		String repositoryName = remoteURL.substring(x, y);
 
-		if (!_upstreamBranchName.contains("ee-") &&
-			!_upstreamBranchName.contains("-private") &&
-			!repositoryName.equals("liferay-jenkins-ee") &&
-			!repositoryName.equals("liferay-jenkins-tools-private") &&
-			!repositoryName.equals("liferay-qa-portal-legacy-ee")) {
+		if (repositoryName.equals("liferay-jenkins-tools-private")) {
+			return repositoryName;
+		}
+
+		if ((repositoryName.equals("liferay-plugins-ee") ||
+			 repositoryName.equals("liferay-portal-ee")) &&
+			!_upstreamBranchName.contains("ee-")) {
 
 			repositoryName = repositoryName.replace("-ee", "");
+		}
+
+		if (repositoryName.contains("-private") &&
+			!_upstreamBranchName.contains("-private")) {
+
 			repositoryName = repositoryName.replace("-private", "");
 		}
 

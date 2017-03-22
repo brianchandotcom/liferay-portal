@@ -37,8 +37,9 @@ public class LocalGitSyncUtil {
 
 	public static void deleteCachedBranch(
 			GitWorkingDirectory gitWorkingDirectory, String receiverUsername,
-			String senderBranchName, String senderUsername, String senderSHA,
-			String upstreamBranchName, String upstreamSHA)
+			String senderBranchName, String senderUsername,
+			String senderBranchSha, String upstreamBranchName,
+			String upstreamBranchSha)
 		throws GitAPIException {
 
 		List<RemoteConfig> localGitRemoteConfigs = null;
@@ -49,7 +50,8 @@ public class LocalGitSyncUtil {
 
 			deleteCachedBranch(
 				getCacheBranchName(
-					receiverUsername, senderUsername, senderSHA, upstreamSHA),
+					receiverUsername, senderUsername, senderBranchSha,
+					upstreamBranchSha),
 				gitWorkingDirectory, localGitRemoteConfigs);
 		}
 		finally {
@@ -83,7 +85,9 @@ public class LocalGitSyncUtil {
 			RemoteConfig remoteConfig = gitWorkingDirectory.getRemoteConfig(
 				localGitRemoteName);
 
-			if (remoteConfig == null) {
+			if ((remoteConfig == null) ||
+				!url.equals(GitWorkingDirectory.getRemoteURL(remoteConfig))) {
+
 				remoteConfig = gitWorkingDirectory.addRemote(
 					true, localGitRemoteName, url);
 			}
@@ -96,8 +100,9 @@ public class LocalGitSyncUtil {
 
 	public static String synchronizeToLocalGit(
 			GitWorkingDirectory gitWorkingDirectory, String receiverUsername,
-			String senderBranchName, String senderUsername, String senderSHA,
-			String upstreamBranchName, String upstreamSHA)
+			String senderBranchName, String senderUsername,
+			String senderBranchSha, String upstreamBranchName,
+			String upstreamBranchSha)
 		throws GitAPIException, IOException {
 
 		long start = System.currentTimeMillis();
@@ -115,10 +120,11 @@ public class LocalGitSyncUtil {
 			upstreamRemoteConfig = gitWorkingDirectory.getRemoteConfig(
 				"upstream");
 
-			boolean pullRequest = !upstreamSHA.equals(senderSHA);
+			boolean pullRequest = !upstreamBranchSha.equals(senderBranchSha);
 
 			String cacheBranchName = getCacheBranchName(
-				receiverUsername, senderUsername, senderSHA, upstreamSHA);
+				receiverUsername, senderUsername, senderBranchSha,
+				upstreamBranchSha);
 
 			List<RemoteConfig> localGitRemoteConfigs = null;
 
@@ -151,18 +157,17 @@ public class LocalGitSyncUtil {
 
 				gitWorkingDirectory.reset(null, ResetType.HARD);
 
-				gitWorkingDirectory.fetch(upstreamRemoteConfig, null);
+				gitWorkingDirectory.fetch(null, upstreamRemoteConfig);
 
 				gitWorkingDirectory.checkoutBranch(
-					upstreamRemoteConfig.getName() + "/master", "-f");
+					JenkinsResultsParserUtil.combine(
+						upstreamRemoteConfig.getName(), "/",
+						gitWorkingDirectory.getUpstreamBranchName()),
+					"-f");
 
 				gitWorkingDirectory.deleteLocalBranch("master");
 
 				gitWorkingDirectory.checkoutBranch("master", "-b");
-
-				// Is this necessary? What does this do?
-
-				// gitWorkingDirectory.copyUpstreamRefsToHeads();
 
 				gitWorkingDirectory.createLocalBranch(
 					cacheBranchName, true, null);
@@ -171,10 +176,14 @@ public class LocalGitSyncUtil {
 					cacheBranchName, senderBranchName, senderRemoteConfig);
 
 				gitWorkingDirectory.createLocalBranch(
-					cacheBranchName, true, senderSHA);
+					cacheBranchName, true, senderBranchSha);
 
 				if (pullRequest) {
-					gitWorkingDirectory.rebase(cacheBranchName, upstreamSHA);
+					if (!gitWorkingDirectory.rebase(
+							true, cacheBranchName, upstreamBranchSha)) {
+
+						throw new RuntimeException("Rebase failed.");
+					}
 				}
 
 				gitWorkingDirectory.checkoutBranch(cacheBranchName);
@@ -194,7 +203,8 @@ public class LocalGitSyncUtil {
 					gitWorkingDirectory.checkoutBranch(originalBranchName);
 				}
 				else {
-					gitWorkingDirectory.checkoutBranch("master");
+					gitWorkingDirectory.checkoutBranch(
+						gitWorkingDirectory.getUpstreamBranchName());
 				}
 
 				gitWorkingDirectory.deleteLocalBranch(cacheBranchName);
@@ -220,10 +230,10 @@ public class LocalGitSyncUtil {
 		gitWorkingDirectory.pushToRemote(remoteConfig);
 
 		gitWorkingDirectory.pushToRemote(
-			remoteConfig,
 			JenkinsResultsParserUtil.combine(
 				localBranchName, "-",
-				Long.toString(System.currentTimeMillis())));
+				Long.toString(System.currentTimeMillis())),
+			remoteConfig);
 	}
 
 	protected static void cacheBranches(
@@ -428,18 +438,18 @@ public class LocalGitSyncUtil {
 			Matcher matcher = _cachedTimestampBranchPattern.matcher(
 				remoteBranchName);
 
+			int branchCount = 0;
+			int deleteCount = 0;
+			long oldestBranchAge = Long.MIN_VALUE;
+
 			if (matcher.matches()) {
+				branchCount++;
+
 				long remoteBranchTimestamp = Long.parseLong(
 					matcher.group("timestamp"));
 
 				long branchAge =
 					System.currentTimeMillis() - remoteBranchTimestamp;
-
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						remoteBranchName, " is ",
-						JenkinsResultsParserUtil.toDurationString(branchAge),
-						" old."));
 
 				if (branchAge > _BRANCH_EXPIRE_AGE_MILLIS) {
 					try {
@@ -449,6 +459,8 @@ public class LocalGitSyncUtil {
 						deleteRemoteRepositoryCachedBranch(
 							gitWorkingDirectory, remoteBranchName,
 							remoteConfig);
+
+						deleteCount++;
 					}
 					catch (GitAPIException gapie) {
 						System.out.println(
@@ -461,7 +473,21 @@ public class LocalGitSyncUtil {
 						gapie.printStackTrace();
 					}
 				}
+				else {
+					oldestBranchAge = Math.max(oldestBranchAge, branchAge);
+				}
 			}
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Found ", Integer.toString(branchCount),
+					" cached branches on ",
+					GitWorkingDirectory.getRemoteURL(remoteConfig), " ",
+					Integer.toString(deleteCount), " were deleted. ",
+					Integer.toString(branchCount - deleteCount),
+					" remain. The oldest branch is ",
+					JenkinsResultsParserUtil.toDurationString(oldestBranchAge),
+					" old."));
 		}
 	}
 

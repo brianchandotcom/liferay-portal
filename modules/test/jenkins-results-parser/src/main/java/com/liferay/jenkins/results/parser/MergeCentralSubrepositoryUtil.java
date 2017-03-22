@@ -136,7 +136,7 @@ public class MergeCentralSubrepositoryUtil {
 			"/commit/", subrepositoryUpstreamCommit, ")");
 
 		centralGitWorkingDirectory.createPullRequest(
-			title, body, receiverUserName, mergeBranchName);
+			body, mergeBranchName, receiverUserName, title);
 	}
 
 	private static String _getCiMergeFilePath(

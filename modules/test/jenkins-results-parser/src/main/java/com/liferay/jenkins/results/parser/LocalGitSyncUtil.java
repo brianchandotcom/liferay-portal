@@ -320,16 +320,16 @@ public class LocalGitSyncUtil {
 			GitWorkingDirectory gitWorkingDirectory, RemoteConfig remoteConfig)
 		throws GitAPIException {
 
+		int branchCount = 0;
+		int deleteCount = 0;
+		long oldestBranchAge = Long.MIN_VALUE;
+
 		for (String remoteBranchName :
 				gitWorkingDirectory.getRemoteRepositoryBranchNames(
 					remoteConfig)) {
 
 			Matcher matcher = _cachedTimestampBranchPattern.matcher(
 				remoteBranchName);
-
-			int branchCount = 0;
-			int deleteCount = 0;
-			long oldestBranchAge = Long.MIN_VALUE;
 
 			if (matcher.matches()) {
 				branchCount++;
@@ -366,18 +366,17 @@ public class LocalGitSyncUtil {
 					oldestBranchAge = Math.max(oldestBranchAge, branchAge);
 				}
 			}
-
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Found ", Integer.toString(branchCount),
-					" cached branches on ",
-					GitWorkingDirectory.getRemoteURL(remoteConfig), " ",
-					Integer.toString(deleteCount), " were deleted. ",
-					Integer.toString(branchCount - deleteCount),
-					" remain. The oldest branch is ",
-					JenkinsResultsParserUtil.toDurationString(oldestBranchAge),
-					" old."));
 		}
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Found ", Integer.toString(branchCount), " cached branches on ",
+				GitWorkingDirectory.getRemoteURL(remoteConfig), " ",
+				Integer.toString(deleteCount), " were deleted. ",
+				Integer.toString(branchCount - deleteCount),
+				" remain. The oldest branch is ",
+				JenkinsResultsParserUtil.toDurationString(oldestBranchAge),
+				" old."));
 	}
 
 	protected static void deleteLocalCacheBranches(
@@ -538,12 +537,12 @@ public class LocalGitSyncUtil {
 				gitWorkingDirectory.checkoutBranch(
 					JenkinsResultsParserUtil.combine(
 						upstreamRemoteConfig.getName(), "/",
-						gitWorkingDirectory.getUpstreamBranchName()),
+						upstreamBranchName),
 					"-f");
 
-				gitWorkingDirectory.deleteLocalBranch("master");
+				gitWorkingDirectory.deleteLocalBranch(upstreamBranchName);
 
-				gitWorkingDirectory.checkoutBranch("master", "-b");
+				gitWorkingDirectory.checkoutBranch(upstreamBranchName, "-b");
 
 				gitWorkingDirectory.createLocalBranch(
 					cacheBranchName, true, null);
@@ -586,6 +585,7 @@ public class LocalGitSyncUtil {
 				}
 
 				localGitRemoteConfigs = null;
+				senderRemoteConfig = null;
 
 				System.out.println(
 					"Synchronization to local-git failed. Retrying");

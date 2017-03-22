@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.upload.BaseUploadHandler;
+import com.liferay.upload.UploadFileEntryHandler;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
@@ -34,18 +34,15 @@ import java.io.InputStream;
 /**
  * @author Roberto Díaz
  */
-public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
+public class PageAttachmentWikiUploadFileEntryHandler
+	implements UploadFileEntryHandler {
 
-	public PageAttachmentWikiUploadHandler(long classPK) {
+	public PageAttachmentWikiUploadFileEntryHandler(long classPK) {
 		_classPK = classPK;
 	}
 
-	protected PageAttachmentWikiUploadHandler() {
-		this(0);
-	}
-
 	@Override
-	protected FileEntry addFileEntry(
+	public FileEntry addFileEntry(
 			long userId, long groupId, long folderId, String fileName,
 			String contentType, InputStream inputStream, long size,
 			ServiceContext serviceContext)
@@ -59,7 +56,7 @@ public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
-	protected void checkPermission(
+	public void checkPermission(
 			long groupId, long folderId, PermissionChecker permissionChecker)
 		throws PortalException {
 
@@ -70,7 +67,7 @@ public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
-	protected FileEntry fetchFileEntry(
+	public FileEntry fetchFileEntry(
 			long userId, long groupId, long folderId, String fileName)
 		throws PortalException {
 
@@ -95,17 +92,21 @@ public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
-	protected String getParameterName() {
+	public String getParameterName() {
 		return "imageSelectorFileName";
 	}
 
 	@Override
-	protected void validateFile(String fileName, String contentType, long size)
+	public void validateFile(String fileName, String contentType, long size)
 		throws PortalException {
 	}
 
+	protected PageAttachmentWikiUploadFileEntryHandler() {
+		this(0);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		PageAttachmentWikiUploadHandler.class);
+		PageAttachmentWikiUploadFileEntryHandler.class);
 
 	private final long _classPK;
 

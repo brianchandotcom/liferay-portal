@@ -17,8 +17,6 @@ package com.liferay.portal.upgrade.v7_0_3;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_0_3.util.MBMailingListTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Ugurcan Cetin
  */
@@ -28,10 +26,7 @@ public class UpgradeMBMailingList extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alter(
 			MBMailingListTable.class,
-			new AlterColumnType("emailAddress", "VARCHAR(254) null"));
-
-		alter(
-			MBMailingListTable.class,
+			new AlterColumnType("emailAddress", "VARCHAR(254) null"),
 			new AlterColumnType("outEmailAddress", "VARCHAR(254) null"));
 	}
 

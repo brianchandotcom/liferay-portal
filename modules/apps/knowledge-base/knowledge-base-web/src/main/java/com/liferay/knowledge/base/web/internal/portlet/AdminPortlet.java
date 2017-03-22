@@ -28,7 +28,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
-import com.liferay.knowledge.base.web.internal.upload.KBArticleAttachmentKBUploadHandler;
+import com.liferay.knowledge.base.web.internal.upload.KBArticleAttachmentKBUploadFileEntryHandler;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.upload.UploadHandler;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -51,6 +50,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.upload.UploadFileEntryHandler;
+import com.liferay.upload.UploadHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -401,10 +402,11 @@ public class AdminPortlet extends BaseKBPortlet {
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 
-		UploadHandler uploadHandler = new KBArticleAttachmentKBUploadHandler(
-			resourcePrimKey);
+		UploadFileEntryHandler uploadFileEntryHandler =
+			new KBArticleAttachmentKBUploadFileEntryHandler(resourcePrimKey);
 
-		uploadHandler.upload(actionRequest, actionResponse);
+		_uploadHandler.upload(
+			uploadFileEntryHandler, actionRequest, actionResponse);
 	}
 
 	@Override
@@ -603,5 +605,8 @@ public class AdminPortlet extends BaseKBPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UploadHandler _uploadHandler;
 
 }

@@ -25,22 +25,23 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.upload.BaseUploadHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.upload.UploadFileEntryHandler;
 
 import java.io.InputStream;
 
 /**
  * @author Roberto Díaz
  */
-public class KBArticleAttachmentKBUploadHandler extends BaseUploadHandler {
+public class KBArticleAttachmentKBUploadFileEntryHandler
+	implements UploadFileEntryHandler {
 
-	public KBArticleAttachmentKBUploadHandler(long resourcePrimKey) {
+	public KBArticleAttachmentKBUploadFileEntryHandler(long resourcePrimKey) {
 		_resourcePrimKey = resourcePrimKey;
 	}
 
 	@Override
-	protected FileEntry addFileEntry(
+	public FileEntry addFileEntry(
 			long userId, long groupId, long folderId, String fileName,
 			String contentType, InputStream inputStream, long size,
 			ServiceContext serviceContext)
@@ -51,7 +52,7 @@ public class KBArticleAttachmentKBUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
-	protected void checkPermission(
+	public void checkPermission(
 			long groupId, long folderId, PermissionChecker permissionChecker)
 		throws PortalException {
 
@@ -63,7 +64,7 @@ public class KBArticleAttachmentKBUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
-	protected FileEntry fetchFileEntry(
+	public FileEntry fetchFileEntry(
 			long userId, long groupId, long folderId, String fileName)
 		throws PortalException {
 
@@ -87,17 +88,17 @@ public class KBArticleAttachmentKBUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
-	protected String getParameterName() {
+	public String getParameterName() {
 		return "imageSelectorFileName";
 	}
 
 	@Override
-	protected void validateFile(String fileName, String contentType, long size)
+	public void validateFile(String fileName, String contentType, long size)
 		throws PortalException {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		KBArticleAttachmentKBUploadHandler.class);
+		KBArticleAttachmentKBUploadFileEntryHandler.class);
 
 	private final long _resourcePrimKey;
 

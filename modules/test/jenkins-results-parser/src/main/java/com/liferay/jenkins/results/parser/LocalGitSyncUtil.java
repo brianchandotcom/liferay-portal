@@ -105,121 +105,10 @@ public class LocalGitSyncUtil {
 			String upstreamBranchSha)
 		throws GitAPIException, IOException {
 
-		long start = System.currentTimeMillis();
-
-		String originalBranchName = gitWorkingDirectory.getCurrentBranch();
-
-		RemoteConfig senderRemoteConfig = null;
-		RemoteConfig upstreamRemoteConfig = null;
-
-		try {
-			senderRemoteConfig = gitWorkingDirectory.addRemote(
-				true, "sender-temp",
-				getGitHubRemoteURL(
-					gitWorkingDirectory.getRepositoryName(), senderUsername));
-			upstreamRemoteConfig = gitWorkingDirectory.getRemoteConfig(
-				"upstream");
-
-			boolean pullRequest = !upstreamBranchSha.equals(senderBranchSha);
-
-			String cacheBranchName = getCacheBranchName(
-				receiverUsername, senderUsername, senderBranchSha,
-				upstreamBranchSha);
-
-			List<RemoteConfig> localGitRemoteConfigs = null;
-
-			try {
-				localGitRemoteConfigs = getLocalGitRemoteConfigs(
-					gitWorkingDirectory);
-
-				deleteLocalCacheBranches(cacheBranchName, gitWorkingDirectory);
-
-				deleteExpiredCacheBranches(
-					gitWorkingDirectory, localGitRemoteConfigs);
-
-				int randomIndex = JenkinsResultsParserUtil.getRandomValue(
-					0, localGitRemoteConfigs.size() - 1);
-
-				List<String> remoteBranchNames =
-					gitWorkingDirectory.getRemoteRepositoryBranchNames(
-						localGitRemoteConfigs.get(randomIndex));
-
-				if (remoteBranchNames.contains(cacheBranchName)) {
-					System.out.println(
-						"cacheBranch " + cacheBranchName + " already exists.");
-
-					return cacheBranchName;
-				}
-
-				gitWorkingDirectory.rebaseAbort();
-
-				gitWorkingDirectory.clean();
-
-				gitWorkingDirectory.reset(null, ResetType.HARD);
-
-				gitWorkingDirectory.fetch(null, upstreamRemoteConfig);
-
-				gitWorkingDirectory.checkoutBranch(
-					JenkinsResultsParserUtil.combine(
-						upstreamRemoteConfig.getName(), "/",
-						gitWorkingDirectory.getUpstreamBranchName()),
-					"-f");
-
-				gitWorkingDirectory.deleteLocalBranch("master");
-
-				gitWorkingDirectory.checkoutBranch("master", "-b");
-
-				gitWorkingDirectory.createLocalBranch(
-					cacheBranchName, true, null);
-
-				gitWorkingDirectory.fetch(
-					cacheBranchName, senderBranchName, senderRemoteConfig);
-
-				gitWorkingDirectory.createLocalBranch(
-					cacheBranchName, true, senderBranchSha);
-
-				if (pullRequest) {
-					if (!gitWorkingDirectory.rebase(
-							true, cacheBranchName, upstreamBranchSha)) {
-
-						throw new RuntimeException("Rebase failed.");
-					}
-				}
-
-				gitWorkingDirectory.checkoutBranch(cacheBranchName);
-
-				cacheBranches(
-					gitWorkingDirectory, cacheBranchName, localGitRemoteConfigs,
-					upstreamBranchName, "liferay");
-
-				return cacheBranchName;
-			}
-			finally {
-				if (localGitRemoteConfigs != null) {
-					gitWorkingDirectory.removeRemotes(localGitRemoteConfigs);
-				}
-
-				if (gitWorkingDirectory.localBranchExists(originalBranchName)) {
-					gitWorkingDirectory.checkoutBranch(originalBranchName);
-				}
-				else {
-					gitWorkingDirectory.checkoutBranch(
-						gitWorkingDirectory.getUpstreamBranchName());
-				}
-
-				gitWorkingDirectory.deleteLocalBranch(cacheBranchName);
-			}
-		}
-		finally {
-			if (senderRemoteConfig != null) {
-				gitWorkingDirectory.removeRemote(senderRemoteConfig);
-			}
-
-			System.out.println(
-				"SynchronizeToLocalGit completed in " +
-					JenkinsResultsParserUtil.toDurationString(
-						System.currentTimeMillis() - start));
-		}
+		return synchronizeToLocalGit(
+			gitWorkingDirectory, receiverUsername, 0, senderBranchName,
+			senderUsername, senderBranchSha, upstreamBranchName,
+			upstreamBranchSha);
 	}
 
 	protected static void cacheBranch(
@@ -583,6 +472,155 @@ public class LocalGitSyncUtil {
 		}
 
 		return localGitRemoteURLs;
+	}
+
+	protected static String synchronizeToLocalGit(
+			GitWorkingDirectory gitWorkingDirectory, String receiverUsername,
+			int retryCount, String senderBranchName, String senderUsername,
+			String senderBranchSha, String upstreamBranchName,
+			String upstreamBranchSha)
+		throws GitAPIException, IOException {
+
+		long start = System.currentTimeMillis();
+
+		String originalBranchName = gitWorkingDirectory.getCurrentBranch();
+
+		RemoteConfig senderRemoteConfig = null;
+		RemoteConfig upstreamRemoteConfig = null;
+
+		try {
+			senderRemoteConfig = gitWorkingDirectory.addRemote(
+				true, "sender-temp",
+				getGitHubRemoteURL(
+					gitWorkingDirectory.getRepositoryName(), senderUsername));
+			upstreamRemoteConfig = gitWorkingDirectory.getRemoteConfig(
+				"upstream");
+
+			boolean pullRequest = !upstreamBranchSha.equals(senderBranchSha);
+
+			String cacheBranchName = getCacheBranchName(
+				receiverUsername, senderUsername, senderBranchSha,
+				upstreamBranchSha);
+
+			List<RemoteConfig> localGitRemoteConfigs = null;
+
+			try {
+				localGitRemoteConfigs = getLocalGitRemoteConfigs(
+					gitWorkingDirectory);
+
+				deleteLocalCacheBranches(cacheBranchName, gitWorkingDirectory);
+
+				deleteExpiredCacheBranches(
+					gitWorkingDirectory, localGitRemoteConfigs);
+
+				int randomIndex = JenkinsResultsParserUtil.getRandomValue(
+					0, localGitRemoteConfigs.size() - 1);
+
+				List<String> remoteBranchNames =
+					gitWorkingDirectory.getRemoteRepositoryBranchNames(
+						localGitRemoteConfigs.get(randomIndex));
+
+				if (remoteBranchNames.contains(cacheBranchName)) {
+					System.out.println(
+						"cacheBranch " + cacheBranchName + " already exists.");
+
+					return cacheBranchName;
+				}
+
+				gitWorkingDirectory.rebaseAbort();
+
+				gitWorkingDirectory.clean();
+
+				gitWorkingDirectory.reset(null, ResetType.HARD);
+
+				gitWorkingDirectory.fetch(null, upstreamRemoteConfig);
+
+				gitWorkingDirectory.checkoutBranch(
+					JenkinsResultsParserUtil.combine(
+						upstreamRemoteConfig.getName(), "/",
+						gitWorkingDirectory.getUpstreamBranchName()),
+					"-f");
+
+				gitWorkingDirectory.deleteLocalBranch("master");
+
+				gitWorkingDirectory.checkoutBranch("master", "-b");
+
+				gitWorkingDirectory.createLocalBranch(
+					cacheBranchName, true, null);
+
+				gitWorkingDirectory.fetch(
+					cacheBranchName, senderBranchName, senderRemoteConfig);
+
+				gitWorkingDirectory.createLocalBranch(
+					cacheBranchName, true, senderBranchSha);
+
+				if (pullRequest) {
+					if (!gitWorkingDirectory.rebase(
+							true, cacheBranchName, upstreamBranchSha)) {
+
+						throw new RuntimeException("Rebase failed.");
+					}
+				}
+
+				gitWorkingDirectory.checkoutBranch(cacheBranchName);
+
+				cacheBranches(
+					gitWorkingDirectory, cacheBranchName, localGitRemoteConfigs,
+					upstreamBranchName, "liferay");
+
+				return cacheBranchName;
+			}
+			catch (Exception e) {
+				if (retryCount == 1) {
+					throw e;
+				}
+
+				try {
+					deleteCachedBranch(
+						gitWorkingDirectory, receiverUsername, senderBranchName,
+						senderUsername, senderBranchSha, upstreamBranchName,
+						upstreamBranchSha);
+				}
+				catch (Exception e2) {
+					e2.printStackTrace();
+				}
+
+				localGitRemoteConfigs = null;
+
+				System.out.println(
+					"Synchronization to local-git failed. Retrying");
+
+				return synchronizeToLocalGit(
+					gitWorkingDirectory, receiverUsername, retryCount + 1,
+					senderBranchName, senderUsername, senderBranchSha,
+					upstreamBranchName, upstreamBranchSha);
+			}
+			finally {
+				if (localGitRemoteConfigs != null) {
+					gitWorkingDirectory.removeRemotes(localGitRemoteConfigs);
+				}
+
+				if (gitWorkingDirectory.localBranchExists(originalBranchName)) {
+					gitWorkingDirectory.checkoutBranch(originalBranchName);
+				}
+				else {
+					gitWorkingDirectory.checkoutBranch(
+						gitWorkingDirectory.getUpstreamBranchName());
+				}
+
+				gitWorkingDirectory.deleteLocalBranch(cacheBranchName);
+			}
+		}
+		finally {
+			if (senderRemoteConfig != null) {
+				gitWorkingDirectory.removeRemote(senderRemoteConfig);
+			}
+
+			System.out.println(
+				"SynchronizeToLocalGit completed in " +
+					JenkinsResultsParserUtil.toDurationString(
+						System.currentTimeMillis() - start));
+		}
 	}
 
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =

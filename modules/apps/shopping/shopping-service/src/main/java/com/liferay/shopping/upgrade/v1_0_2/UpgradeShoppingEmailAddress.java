@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.shopping.upgrade.v1_0_1;
+package com.liferay.shopping.upgrade.v1_0_2;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.shopping.internal.upgrade.v1_0_0.util.ShoppingOrderTable;

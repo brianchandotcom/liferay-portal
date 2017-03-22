@@ -40,6 +40,7 @@ import com.liferay.source.formatter.checks.XMLServiceFileCheck;
 import com.liferay.source.formatter.checks.XMLSolrSchemaFileCheck;
 import com.liferay.source.formatter.checks.XMLSpringFileCheck;
 import com.liferay.source.formatter.checks.XMLStrutsConfigFileCheck;
+import com.liferay.source.formatter.checks.XMLTestIgnorableErrorLinesFileCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
@@ -255,12 +256,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		String newContent = content;
 
 		if ((portalSource || subrepository) &&
-			fileName.endsWith("/test-ignorable-error-lines.xml")) {
-
-			formatTestIgnorableErrorLinesXml(fileName, newContent);
-		}
-		else if ((portalSource || subrepository) &&
-				 fileName.endsWith("/tiles-defs.xml")) {
+			fileName.endsWith("/tiles-defs.xml")) {
 
 			formatTilesDefsXML(fileName, newContent);
 		}
@@ -297,31 +293,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	protected void formatTestIgnorableErrorLinesXml(
-			String fileName, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> javascriptElements = rootElement.elements("javascript");
-
-		for (Element javascriptElement : javascriptElements) {
-			checkOrder(
-				fileName, javascriptElement, "ignore-error", null,
-				new ElementComparator("description"));
-		}
-
-		List<Element> logElements = rootElement.elements("log");
-
-		for (Element logElement : logElements) {
-			checkOrder(
-				fileName, logElement, "ignore-error", null,
-				new ElementComparator("description"));
-		}
 	}
 
 	protected void formatTilesDefsXML(String fileName, String content)
@@ -471,6 +442,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				new XMLEmptyLinesCheck(sourceFormatterArgs.getBaseDirName()));
 
 			fileChecks.add(new XMLStrutsConfigFileCheck());
+			fileChecks.add(new XMLTestIgnorableErrorLinesFileCheck());
 		}
 
 		return fileChecks;

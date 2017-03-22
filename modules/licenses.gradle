@@ -2,7 +2,6 @@ import com.github.jk1.license.ConfigurationData
 import com.github.jk1.license.LicenseReportPlugin
 import com.github.jk1.license.ModuleData
 import com.github.jk1.license.ProjectData
-import com.github.jk1.license.reader.ConfigurationReader
 import com.github.jk1.license.render.SingleInfoReportRenderer
 
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil
@@ -158,20 +157,6 @@ generateLicenseReport {
 		}
 
 		licenseReport.configurations = configurationNames
-	}
-
-	doFirst {
-		MetaMethod readMetaMethod = ConfigurationReader.metaClass.getMetaMethod("read", [Project, Configuration] as Class[])
-
-		ConfigurationReader.metaClass.read = {
-			Project project, Configuration configuration ->
-
-			ConfigurationData configurationData = readMetaMethod.invoke(delegate, project, configuration)
-
-			configurationData.name = configuration.name
-
-			return configurationData
-		}
 	}
 }
 

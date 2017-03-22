@@ -403,7 +403,7 @@ public class GitWorkingDirectory {
 				else {
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
-							"fetch ", remoteConfig.getName(), " ",
+							"fetch ", getRemoteURL(remoteConfig), " ",
 							refSpec.toString()));
 				}
 

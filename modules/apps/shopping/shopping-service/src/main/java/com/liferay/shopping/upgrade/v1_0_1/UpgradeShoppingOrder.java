@@ -27,6 +27,8 @@ public class UpgradeShoppingOrder extends UpgradeProcess {
 		alter(
 			ShoppingOrderTable.class,
 			new AlterColumnType("billingEmailAddress", "VARCHAR(254) null"),
+			new AlterColumnType("ppPayerEmail", "VARCHAR(254) null"),
+			new AlterColumnType("ppReceiverEmail", "VARCHAR(254) null"),
 			new AlterColumnType("shippingEmailAddress", "VARCHAR(254) null"));
 	}
 

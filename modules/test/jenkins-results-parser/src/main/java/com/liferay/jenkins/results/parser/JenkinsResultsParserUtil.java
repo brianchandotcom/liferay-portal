@@ -253,15 +253,26 @@ public class JenkinsResultsParserUtil {
 		Process process = processBuilder.start();
 
 		if (debug) {
+			InputStream inputStream = process.getInputStream();
+
+			inputStream.mark(inputStream.available());
+
 			System.out.println(
-				"Output stream: " + readInputStream(process.getInputStream()));
+				"Output stream: " + readInputStream(inputStream));
+
+			inputStream.reset();
 		}
 
 		int returnCode = process.waitFor();
 
 		if (debug && (returnCode != 0)) {
-			System.out.println(
-				"Error stream: " + readInputStream(process.getErrorStream()));
+			InputStream inputStream = process.getErrorStream();
+
+			inputStream.mark(inputStream.available());
+
+			System.out.println("Error stream: " + readInputStream(inputStream));
+
+			inputStream.reset();
 		}
 
 		return process;

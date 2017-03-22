@@ -17,8 +17,6 @@ package com.liferay.portal.upgrade.v7_0_3;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_0_3.util.ContactTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Ugurcan Cetin
  */

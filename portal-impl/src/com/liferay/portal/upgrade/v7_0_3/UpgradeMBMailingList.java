@@ -26,20 +26,13 @@ public class UpgradeMBMailingList extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL(
-				"alter_column_type MBMailingList emailAddress VARCHAR(254) " +
-					"null");
-			runSQL(
-				"alter_column_type MBMailingList outEmailAddress " +
-					"VARCHAR(254) null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				MBMailingListTable.TABLE_NAME, MBMailingListTable.TABLE_COLUMNS,
-				MBMailingListTable.TABLE_SQL_CREATE,
-				MBMailingListTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alter(
+			MBMailingListTable.class,
+			new AlterColumnType("emailAddress", "VARCHAR(254) null"));
+
+		alter(
+			MBMailingListTable.class,
+			new AlterColumnType("outEmailAddress", "VARCHAR(254) null"));
 	}
 
 }

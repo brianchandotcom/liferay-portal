@@ -20,7 +20,7 @@ import com.liferay.shopping.internal.upgrade.v1_0_0.util.ShoppingOrderTable;
 /**
  * @author Tibor Lipusz
  */
-public class UpgradeShoppingOrder extends UpgradeProcess {
+public class UpgradeShoppingEmailAddress extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

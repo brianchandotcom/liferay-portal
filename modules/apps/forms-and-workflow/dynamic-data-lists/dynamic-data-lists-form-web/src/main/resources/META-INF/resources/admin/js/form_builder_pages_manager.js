@@ -374,7 +374,7 @@ AUI.add(
 
 						var wizard = instance._getWizard();
 
-						if (instance.get('pagesQuantity') > 1 | wizard.get('successPage')) {
+						if (instance.get('pagesQuantity') > 1 || wizard.get('successPage')) {
 							deleteButtonString = instance.get('strings').deleteCurrentPage;
 						}
 						else {
@@ -387,12 +387,12 @@ AUI.add(
 					_getWizard: function() {
 						var instance = this;
 
-						if (!instance.wizard) {
+						if (!instance._wizard) {
 							var builder = instance.get('builder');
 
 							var wizardNode = builder.get('boundingBox').one('.' + CSS_FORM_BUILDER_TABVIEW);
 
-							instance.wizard = new Liferay.DDL.FormBuilderWizard(
+							instance._wizard = new Liferay.DDL.FormBuilderWizard(
 								{
 									after: {
 										selectedChange: A.bind(instance._afterWizardSelectionChange, instance)
@@ -405,7 +405,7 @@ AUI.add(
 							);
 						}
 
-						return instance.wizard;
+						return instance._wizard;
 					},
 
 					_onAddLastPageClick: function() {

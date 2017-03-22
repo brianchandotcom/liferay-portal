@@ -154,8 +154,8 @@ create table ShoppingOrder (
 	ppTxnId VARCHAR(75) null,
 	ppPaymentStatus VARCHAR(75) null,
 	ppPaymentGross DOUBLE,
-	ppReceiverEmail VARCHAR(75) null,
-	ppPayerEmail VARCHAR(75) null,
+	ppReceiverEmail VARCHAR(254) null,
+	ppPayerEmail VARCHAR(254) null,
 	sendOrderEmail BOOLEAN,
 	sendShippingEmail BOOLEAN
 );

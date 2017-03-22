@@ -243,6 +243,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'label')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD_2</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div/div//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'label')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_NAME_FIELD</td>
 	<td>//div[contains(@data-fieldname,'outputParameters')]//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'name')]</td>
 	<td></td>

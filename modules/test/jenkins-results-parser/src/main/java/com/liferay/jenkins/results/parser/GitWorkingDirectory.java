@@ -47,6 +47,7 @@ import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.TransportException;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -773,11 +774,16 @@ public class GitWorkingDirectory {
 
 		resetCommand.setMode(resetType);
 
-		resetCommand.setRef(ref);
+		if (ref != null) {
+			resetCommand.setRef(ref);
+		}
+		else {
+			ref = Constants.HEAD;
+		}
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"reset ", resetType.toString(), " ", ref));
+				"reset ", resetType.toString(), " to ", ref));
 
 		resetCommand.call();
 	}

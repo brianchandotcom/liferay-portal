@@ -15,16 +15,18 @@
 package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.message.boards.web.internal.upload.TempImageMBUploadHandler;
+import com.liferay.message.boards.web.internal.upload.TempImageMBUploadFileEntryHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.upload.UploadHandler;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.upload.UploadFileEntryHandler;
+import com.liferay.upload.UploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrín Chaudhary
@@ -47,9 +49,14 @@ public class UploadTempImageMVCActionCommand extends BaseMVCActionCommand {
 
 		long categoryId = ParamUtil.getLong(actionRequest, "categoryId");
 
-		UploadHandler uploadHandler = new TempImageMBUploadHandler(categoryId);
+		UploadFileEntryHandler uploadFileEntryHandler =
+			new TempImageMBUploadFileEntryHandler(categoryId);
 
-		uploadHandler.upload(actionRequest, actionResponse);
+		_uploadHandler.upload(
+			uploadFileEntryHandler, actionRequest, actionResponse);
 	}
+
+	@Reference
+	private UploadHandler _uploadHandler;
 
 }

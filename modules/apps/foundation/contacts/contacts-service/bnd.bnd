@@ -3,5 +3,5 @@ Bundle-SymbolicName: com.liferay.contacts.service
 Bundle-Version: 2.0.14
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
-Liferay-Require-SchemaVersion: 2.0.1
+Liferay-Require-SchemaVersion: 2.0.2
 Liferay-Service: true

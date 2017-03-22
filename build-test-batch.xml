@@ -1801,7 +1801,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-batch-test>
 			<test-action>
 				<antcall target="run-selenium-test">
-					<param name="test.class" value="${axis.variable}" />
+					<param name="test.class" value="${env.RUN_TEST_CASE_METHOD_GROUP}_${axis.variable}" />
 				</antcall>
 			</test-action>
 		</run-batch-test>

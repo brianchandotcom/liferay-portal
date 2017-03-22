@@ -324,10 +324,24 @@ public class LocalGitSyncUtil {
 		int deleteCount = 0;
 		long oldestBranchAge = Long.MIN_VALUE;
 
-		for (String remoteBranchName :
-				gitWorkingDirectory.getRemoteRepositoryBranchNames(
-					remoteConfig)) {
+		List<String> remoteRepositoryBranchNames = null;
 
+		try {
+			remoteRepositoryBranchNames =
+				gitWorkingDirectory.getRemoteRepositoryBranchNames(
+					remoteConfig);
+		}
+		catch (GitAPIException gapie) {
+			gapie.printStackTrace();
+
+			System.out.println(
+				"Unable to get remote repository branch names from " +
+					GitWorkingDirectory.getRemoteURL(remoteConfig));
+
+			return;
+		}
+
+		for (String remoteBranchName : remoteRepositoryBranchNames) {
 			Matcher matcher = _cachedTimestampBranchPattern.matcher(
 				remoteBranchName);
 

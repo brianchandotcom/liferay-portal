@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ShoppingPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String SCHEMA_VERSION = "1.0.0";
+	public static final String SCHEMA_VERSION = "1.0.2";
 
 	@Override
 	public String getSchemaVersion() {

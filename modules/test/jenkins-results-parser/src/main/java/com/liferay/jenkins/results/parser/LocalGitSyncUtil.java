@@ -386,8 +386,6 @@ public class LocalGitSyncUtil {
 		for (String localBranchName :
 				gitWorkingDirectory.getLocalBranchNames()) {
 
-			System.out.println("Checking local branch: " + localBranchName);
-
 			if (localBranchName.matches(_cachedBranchRegex) &&
 				!localBranchName.equals(excludeBranchName)) {
 

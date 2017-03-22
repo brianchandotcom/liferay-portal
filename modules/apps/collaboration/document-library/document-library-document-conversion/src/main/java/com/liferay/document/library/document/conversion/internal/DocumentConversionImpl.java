@@ -23,6 +23,8 @@ import com.artofsolving.jodconverter.openoffice.connection.SocketOpenOfficeConne
 import com.artofsolving.jodconverter.openoffice.converter.OpenOfficeDocumentConverter;
 import com.artofsolving.jodconverter.openoffice.converter.StreamOpenOfficeDocumentConverter;
 
+import com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -31,7 +33,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DocumentConversion;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -52,12 +53,16 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Bruno Farache
  * @author Alexander Chow
  */
-@Component(immediate = true, service = DocumentConversion.class)
+@Component(
+	configurationPid = "com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration",
+	immediate = true, service = DocumentConversion.class
+)
 public class DocumentConversionImpl implements DocumentConversion {
 
 	@Override
@@ -79,7 +84,7 @@ public class DocumentConversionImpl implements DocumentConversion {
 
 		File file = new File(fileName);
 
-		if (PropsValues.OPENOFFICE_CACHE_ENABLED && file.exists()) {
+		if (_openOfficeConfiguration.cacheEnabled() && file.exists()) {
 			return file;
 		}
 
@@ -235,19 +240,15 @@ public class DocumentConversionImpl implements DocumentConversion {
 
 	@Override
 	public boolean isEnabled() {
-		try {
-			return PrefsPropsUtil.getBoolean(
-				PropsKeys.OPENOFFICE_SERVER_ENABLED,
-				PropsValues.OPENOFFICE_SERVER_ENABLED);
-		}
-		catch (Exception e) {
-		}
-
-		return false;
+		return _openOfficeConfiguration.serverEnabled();
 	}
 
 	@Activate
-	protected void activate() {
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_openOfficeConfiguration = ConfigurableUtil.createConfigurable(
+			OpenOfficeConfiguration.class, properties);
+
 		_populateConversionsMap("drawing");
 		_populateConversionsMap("presentation");
 		_populateConversionsMap("spreadsheet");
@@ -267,11 +268,8 @@ public class DocumentConversionImpl implements DocumentConversion {
 			return _documentConverter;
 		}
 
-		String host = PrefsPropsUtil.getString(
-			PropsKeys.OPENOFFICE_SERVER_HOST);
-		int port = PrefsPropsUtil.getInteger(
-			PropsKeys.OPENOFFICE_SERVER_PORT,
-			PropsValues.OPENOFFICE_SERVER_PORT);
+		String host = _openOfficeConfiguration.serverHost();
+		int port = _openOfficeConfiguration.serverPort();
 
 		if (_isRemoteOpenOfficeHost(host)) {
 			_openOfficeConnection = new SocketOpenOfficeConnection(host, port);
@@ -390,6 +388,7 @@ public class DocumentConversionImpl implements DocumentConversion {
 
 	private final Map<String, String[]> _conversionsMap = new HashMap<>();
 	private DocumentConverter _documentConverter;
+	private volatile OpenOfficeConfiguration _openOfficeConfiguration;
 	private OpenOfficeConnection _openOfficeConnection;
 
 }

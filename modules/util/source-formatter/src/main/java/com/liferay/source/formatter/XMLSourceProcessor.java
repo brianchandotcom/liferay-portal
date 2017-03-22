@@ -39,6 +39,7 @@ import com.liferay.source.formatter.checks.XMLPortletPreferencesFileCheck;
 import com.liferay.source.formatter.checks.XMLPoshiFileCheck;
 import com.liferay.source.formatter.checks.XMLResourceActionsFileCheck;
 import com.liferay.source.formatter.checks.XMLServiceFileCheck;
+import com.liferay.source.formatter.checks.XMLSolrSchemaFileCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
@@ -253,10 +254,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (fileName.endsWith("/schema.xml") && absolutePath.contains("solr")) {
-			formatSolrSchemaXML(fileName, newContent);
-		}
-		else if (fileName.endsWith("-spring.xml")) {
+		if (fileName.endsWith("-spring.xml")) {
 			formatSpringXML(fileName, newContent);
 		}
 		else if ((portalSource || subrepository) &&
@@ -307,21 +305,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	protected void formatSolrSchemaXML(String fileName, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		checkOrder(
-			fileName, rootElement.element("fields"), "field", null,
-			new ElementComparator());
-		checkOrder(
-			fileName, rootElement.element("types"), "fieldType", null,
-			new ElementComparator());
 	}
 
 	protected void formatSpringXML(String fileName, String content)
@@ -507,6 +490,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			new XMLServiceFileCheck(
 				_serviceFinderColumnSortExcludes, portalSource, subrepository,
 				_portalTablesContent, _pluginsInsideModulesDirectoryNames));
+		fileChecks.add(new XMLSolrSchemaFileCheck());
 
 		fileChecks.add(
 			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));

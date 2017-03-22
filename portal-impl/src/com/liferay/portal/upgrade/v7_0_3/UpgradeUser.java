@@ -26,14 +26,9 @@ public class UpgradeUser extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type User_ emailAddress VARCHAR(254) null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				UserTable.TABLE_NAME, UserTable.TABLE_COLUMNS,
-				UserTable.TABLE_SQL_CREATE, UserTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alter(
+			UserTable.class,
+			new AlterColumnType("emailAddress", "VARCHAR(254) null"));
 	}
 
 }

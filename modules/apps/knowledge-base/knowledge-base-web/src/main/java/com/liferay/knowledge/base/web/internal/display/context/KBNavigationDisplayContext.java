@@ -117,6 +117,14 @@ public class KBNavigationDisplayContext {
 		return pageTitle;
 	}
 
+	public long getParentResourcePrimKey() throws PortalException {
+		if (_kbArticle != null) {
+			return _kbArticle.getParentResourcePrimKey();
+		}
+
+		return getRootResourcePrimKey();
+	}
+
 	public long getRootResourcePrimKey() throws PortalException {
 		if (_rootResourcePrimKey == null) {
 			_rootResourcePrimKey = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;

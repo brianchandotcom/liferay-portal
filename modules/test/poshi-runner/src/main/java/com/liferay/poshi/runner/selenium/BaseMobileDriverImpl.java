@@ -568,11 +568,6 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public void waitForPageToLoad(String timeout) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void waitForPopUp(String windowID, String timeout) {
 		throw new UnsupportedOperationException();
 	}

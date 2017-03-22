@@ -33,6 +33,7 @@ import com.liferay.source.formatter.checks.XMLEmptyLinesCheck;
 import com.liferay.source.formatter.checks.XMLFriendlyURLRoutesFileCheck;
 import com.liferay.source.formatter.checks.XMLHBMFileCheck;
 import com.liferay.source.formatter.checks.XMLLog4jFileCheck;
+import com.liferay.source.formatter.checks.XMLLookAndFeelFileCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
@@ -268,10 +269,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (fileName.endsWith("-look-and-feel.xml")) {
-			formatLookAndFeelXML(fileName, newContent);
-		}
-		else if (fileName.endsWith("-model-hints.xml")) {
+		if (fileName.endsWith("-model-hints.xml")) {
 			formatModelHintsXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("portlet-preferences.xml")) {
@@ -513,28 +511,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	protected void formatLookAndFeelXML(String fileName, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> themeElements = rootElement.elements("theme");
-
-		for (Element themeElement : themeElements) {
-			checkOrder(
-				fileName, themeElement, "portlet-decorator", null,
-				new ElementComparator("id"));
-
-			Element settingsElement = themeElement.element("settings");
-
-			checkOrder(
-				fileName, settingsElement, "setting", null,
-				new ElementComparator("key"));
-		}
 	}
 
 	protected void formatModelHintsXML(String fileName, String content)
@@ -975,6 +951,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		fileChecks.add(new XMLFriendlyURLRoutesFileCheck());
 		fileChecks.add(new XMLHBMFileCheck());
 		fileChecks.add(new XMLLog4jFileCheck());
+		fileChecks.add(new XMLLookAndFeelFileCheck());
 
 		fileChecks.add(
 			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));

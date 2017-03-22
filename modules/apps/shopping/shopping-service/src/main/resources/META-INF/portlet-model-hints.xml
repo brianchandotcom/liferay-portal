@@ -169,7 +169,7 @@
 		<field name="billingFirstName" type="String" />
 		<field name="billingLastName" type="String" />
 		<field name="billingEmailAddress" type="String">
-			<hint name="max-length">254</hint>
+			<hint-collection name="EMAILADDRESS" />
 		</field>
 		<field name="billingCompany" type="String" />
 		<field name="billingStreet" type="String" />
@@ -182,7 +182,7 @@
 		<field name="shippingFirstName" type="String" />
 		<field name="shippingLastName" type="String" />
 		<field name="shippingEmailAddress" type="String">
-			<hint name="max-length">254</hint>
+			<hint-collection name="EMAILADDRESS" />
 		</field>
 		<field name="shippingCompany" type="String" />
 		<field name="shippingStreet" type="String" />
@@ -208,10 +208,10 @@
 		<field name="ppPaymentStatus" type="String" />
 		<field name="ppPaymentGross" type="double" />
 		<field name="ppReceiverEmail" type="String">
-			<hint name="max-length">254</hint>
+			<hint-collection name="EMAILADDRESS" />
 		</field>
 		<field name="ppPayerEmail" type="String">
-			<hint name="max-length">254</hint>
+			<hint-collection name="EMAILADDRESS" />
 		</field>
 		<field name="sendOrderEmail" type="boolean" />
 		<field name="sendShippingEmail" type="boolean" />

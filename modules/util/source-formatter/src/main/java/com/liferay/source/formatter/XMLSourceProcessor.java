@@ -39,6 +39,7 @@ import com.liferay.source.formatter.checks.XMLResourceActionsFileCheck;
 import com.liferay.source.formatter.checks.XMLServiceFileCheck;
 import com.liferay.source.formatter.checks.XMLSolrSchemaFileCheck;
 import com.liferay.source.formatter.checks.XMLSpringFileCheck;
+import com.liferay.source.formatter.checks.XMLStrutsConfigFileCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
@@ -254,12 +255,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		String newContent = content;
 
 		if ((portalSource || subrepository) &&
-			fileName.endsWith("/struts-config.xml")) {
-
-			formatStrutsConfigXML(fileName, newContent);
-		}
-		else if ((portalSource || subrepository) &&
-				 fileName.endsWith("/test-ignorable-error-lines.xml")) {
+			fileName.endsWith("/test-ignorable-error-lines.xml")) {
 
 			formatTestIgnorableErrorLinesXml(fileName, newContent);
 		}
@@ -301,18 +297,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	protected void formatStrutsConfigXML(String fileName, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		checkOrder(
-			fileName, rootElement.element("action-mappings"), "action", null,
-			new StrutsActionElementComparator("path"));
 	}
 
 	protected void formatTestIgnorableErrorLinesXml(
@@ -485,6 +469,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		if (portalSource || subrepository) {
 			fileChecks.add(
 				new XMLEmptyLinesCheck(sourceFormatterArgs.getBaseDirName()));
+
+			fileChecks.add(new XMLStrutsConfigFileCheck());
 		}
 
 		return fileChecks;
@@ -612,30 +598,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private String _portalTablesContent;
 	private List<String> _serviceFinderColumnSortExcludes;
-
-	private class StrutsActionElementComparator extends ElementComparator {
-
-		public StrutsActionElementComparator(String nameAttribute) {
-			super(nameAttribute);
-		}
-
-		@Override
-		public int compare(Element actionElement1, Element actionElement2) {
-			String path1 = actionElement1.attributeValue("path");
-			String path2 = actionElement2.attributeValue("path");
-
-			if (!path1.startsWith("/portal/") && path2.startsWith("/portal/")) {
-				return 1;
-			}
-
-			if (path1.startsWith("/portal/") && !path2.startsWith("/portal/")) {
-				return -1;
-			}
-
-			return path1.compareTo(path2);
-		}
-
-	}
 
 	private class TilesDefinitionElementComparator extends ElementComparator {
 

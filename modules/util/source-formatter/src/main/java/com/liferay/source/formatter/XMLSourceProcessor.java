@@ -41,6 +41,7 @@ import com.liferay.source.formatter.checks.XMLSolrSchemaFileCheck;
 import com.liferay.source.formatter.checks.XMLSpringFileCheck;
 import com.liferay.source.formatter.checks.XMLStrutsConfigFileCheck;
 import com.liferay.source.formatter.checks.XMLTestIgnorableErrorLinesFileCheck;
+import com.liferay.source.formatter.checks.XMLTilesDefsFileCheck;
 import com.liferay.source.formatter.checks.XMLWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
@@ -255,12 +256,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if ((portalSource || subrepository) &&
-			fileName.endsWith("/tiles-defs.xml")) {
-
-			formatTilesDefsXML(fileName, newContent);
-		}
-		else if (fileName.endsWith(".toggle")) {
+		if (fileName.endsWith(".toggle")) {
 			formatToggleXML(fileName, newContent);
 		}
 		else if (((portalSource || subrepository) &&
@@ -293,16 +289,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	protected void formatTilesDefsXML(String fileName, String content)
-		throws Exception {
-
-		Document document = readXML(content);
-
-		checkOrder(
-			fileName, document.getRootElement(), "definition", null,
-			new TilesDefinitionElementComparator());
 	}
 
 	protected void formatToggleXML(String fileName, String content)
@@ -443,6 +429,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			fileChecks.add(new XMLStrutsConfigFileCheck());
 			fileChecks.add(new XMLTestIgnorableErrorLinesFileCheck());
+			fileChecks.add(new XMLTilesDefsFileCheck());
 		}
 
 		return fileChecks;
@@ -570,22 +557,5 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private String _portalTablesContent;
 	private List<String> _serviceFinderColumnSortExcludes;
-
-	private class TilesDefinitionElementComparator extends ElementComparator {
-
-		@Override
-		public int compare(
-			Element definitionElement1, Element definitionElement2) {
-
-			String definitionName1 = getElementName(definitionElement1);
-
-			if (definitionName1.equals("portlet")) {
-				return -1;
-			}
-
-			return super.compare(definitionElement1, definitionElement2);
-		}
-
-	}
 
 }

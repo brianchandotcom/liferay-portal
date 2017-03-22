@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.contacts.internal.upgrade.v2_0_1;
+package com.liferay.contacts.internal.upgrade.v2_0_2;
 
-import com.liferay.contacts.internal.upgrade.v2_0_1.util.EntryTable;
+import com.liferay.contacts.internal.upgrade.v2_0_2.util.EntryTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**

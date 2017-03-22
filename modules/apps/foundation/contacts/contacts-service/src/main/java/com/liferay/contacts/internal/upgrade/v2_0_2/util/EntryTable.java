@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contacts.internal.upgrade.v2_0_1.util;
+package com.liferay.contacts.internal.upgrade.v2_0_2.util;
 
 import java.sql.Types;
 

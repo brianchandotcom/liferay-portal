@@ -72,24 +72,6 @@ import org.json.JSONObject;
  */
 public class GitWorkingDirectory {
 
-	public static String getGitHubBranchCommit(
-			String branchName, RemoteConfig remoteConfig, String repositoryName)
-		throws GitAPIException, IOException {
-
-		String userName = getGitHubUserName(remoteConfig);
-
-		String url = JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", userName, "/", repositoryName,
-			"/git/refs/heads/", branchName);
-
-		JSONObject branchJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			url, false);
-
-		JSONObject objectJSONObject = branchJSONObject.getJSONObject("object");
-
-		return objectJSONObject.getString("sha");
-	}
-
 	public static String getGitHubUserName(RemoteConfig remoteConfig)
 		throws GitAPIException {
 
@@ -236,9 +218,8 @@ public class GitWorkingDirectory {
 
 					String remoteName = branchName.substring(0, i);
 
-					String gitHubBranchCommit = getGitHubBranchCommit(
-						remoteBranchName, getRemoteConfig(remoteName),
-						getRepositoryName());
+					String gitHubBranchCommit = getRemoteBranchSha(
+						remoteBranchName, getRemoteConfig(remoteName));
 
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
@@ -495,6 +476,32 @@ public class GitWorkingDirectory {
 		}
 
 		return toShortNameList(allLocalBranchRefs);
+	}
+
+	public String getRemoteBranchSha(
+		String branchName, RemoteConfig remoteConfig) {
+
+		String command = JenkinsResultsParserUtil.combine(
+			"git ls-remote ", getRemoteURL(remoteConfig), " ", branchName);
+
+		try {
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
+				command);
+
+			String output = JenkinsResultsParserUtil.readInputStream(
+				process.getInputStream());
+
+			for (String line : output.split("\n")) {
+				if (line.endsWith("refs/heads/" + branchName)) {
+					return line.substring(0, line.indexOf("\t"));
+				}
+			}
+		}
+		catch (InterruptedException | IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		return null;
 	}
 
 	public RemoteConfig getRemoteConfig(String remoteName)

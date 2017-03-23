@@ -8,7 +8,7 @@
 
 		<var name="jsonURL" value="file://${testBaseDirName}/${testDependenciesDirName}/sample.json" />
 
-		<var name="jsonPath" value="$[\'computer\'][0][\'monitorData\'][\'hudson.node_monitors.SwapSpaceMonitor\'][\'availablePhysicalMemory\']" />
+		<var name="jsonPath" value="$.computer[0].monitorData.['hudson.node_monitors.SwapSpaceMonitor'].availablePhysicalMemory" />
 
 		<var method="JSONCurlUtil#get('${jsonURL}', '${jsonPath}')" name="actual" />
 		<var name="expected" value="2054144000" />

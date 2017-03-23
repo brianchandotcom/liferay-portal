@@ -433,6 +433,29 @@ public class LayoutExportController implements ExportController {
 	 * @deprecated As of 4.0.0
 	 */
 	@Deprecated
+	protected void setBackgroundTaskLocalService(
+		BackgroundTaskLocalService backgroundTaskLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setExportImportLifecycleManager(
+		ExportImportLifecycleManager exportImportLifecycleManager) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
 	protected void setImageLocalService(ImageLocalService imageLocalService) {
 	}
 
@@ -442,6 +465,16 @@ public class LayoutExportController implements ExportController {
 	@Deprecated
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setLayoutPrototypeLocalService(
+		LayoutPrototypeLocalService layoutPrototypeLocalService) {
+
+		_layoutPrototypeLocalService = layoutPrototypeLocalService;
 	}
 
 	/**
@@ -466,6 +499,29 @@ public class LayoutExportController implements ExportController {
 	@Deprecated
 	protected void setLayoutSetLocalService(
 		LayoutSetLocalService layoutSetLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setLayoutSetPrototypeLocalService(
+		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setPortletExportController(
+		PortletExportController portletExportController) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setUserLocalService(UserLocalService userLocalService) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

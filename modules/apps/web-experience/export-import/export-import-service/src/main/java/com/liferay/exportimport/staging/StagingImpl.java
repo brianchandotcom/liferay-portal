@@ -2811,6 +2811,68 @@ public class StagingImpl implements Staging {
 		return 0;
 	}
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setExportImportConfigurationLocalService(
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setLayoutBranchLocalService(
+		LayoutBranchLocalService layoutBranchLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setLayoutRevisionLocalService(
+		LayoutRevisionLocalService layoutRevisionLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setLayoutService(LayoutService layoutService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setLayoutSetBranchLocalService(
+		LayoutSetBranchLocalService layoutSetBranchLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setLockManager(LockManager lockManager) {
+	}
+
 	protected void setRecentLayoutBranchId(
 			long userId, long layoutSetBranchId, long plid, long layoutBranchId)
 		throws PortalException {
@@ -2846,6 +2908,14 @@ public class StagingImpl implements Staging {
 		}
 
 		ProxiedLayoutsThreadLocal.clearProxiedLayouts();
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setRecentLayoutBranchLocalService(
+		RecentLayoutBranchLocalService recentLayoutBranchLocalService) {
 	}
 
 	protected void setRecentLayoutRevisionId(
@@ -2901,6 +2971,14 @@ public class StagingImpl implements Staging {
 			userId, layoutSetBranchId, plid, layoutBranchId);
 	}
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setRecentLayoutRevisionLocalService(
+		RecentLayoutRevisionLocalService recentLayoutRevisionLocalService) {
+	}
+
 	protected void setRecentLayoutSetBranchId(
 			long userId, long layoutSetId, long layoutSetBranchId)
 		throws PortalException {
@@ -2937,6 +3015,37 @@ public class StagingImpl implements Staging {
 		}
 
 		ProxiedLayoutsThreadLocal.clearProxiedLayouts();
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setRecentLayoutSetBranchLocalService(
+		RecentLayoutSetBranchLocalService recentLayoutSetBranchLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setStagingLocalService(
+		StagingLocalService stagingLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setUserLocalService(UserLocalService userLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setWorkflowInstanceLinkLocalService(
+		WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
 	}
 
 	protected void validateRemoteGroup(

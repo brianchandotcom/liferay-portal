@@ -39,6 +39,8 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 
 		content = _formatDirectivesWhitespace(content);
 
+		content = StringUtil.replace(content, "\n\n\n", "\n\n");
+
 		return new Tuple(content, Collections.emptySet());
 	}
 

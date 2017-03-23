@@ -1,12 +1,12 @@
 Bundle-Name: Liferay Portal OSGi Web WAB Generator
 Bundle-SymbolicName: com.liferay.portal.osgi.web.wab.generator
 Bundle-Version: 2.1.22
-Conditional-Package:\
-	com.liferay.ant.bnd.jsp,\
-	com.liferay.whip.util
 Export-Package: com.liferay.portal.osgi.web.wab.generator
 Import-Package:\
 	!com.liferay.util.xml,\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: WAB
+-conditionalpackage:\
+	com.liferay.ant.bnd.jsp,\
+	com.liferay.whip.util

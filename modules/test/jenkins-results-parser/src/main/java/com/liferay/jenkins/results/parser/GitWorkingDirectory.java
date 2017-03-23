@@ -33,6 +33,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.jgit.api.AddCommand;
+import org.eclipse.jgit.api.CleanCommand;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.DeleteBranchCommand;
@@ -51,6 +52,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.merge.ResolveMerger;
 import org.eclipse.jgit.merge.ResolveMerger.MergeFailureReason;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
@@ -255,13 +257,30 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public void clean() {
-		try {
-			JenkinsResultsParserUtil.executeBashCommands(
-				true, _workingDirectory, "git clean -dfx");
+	public void clean() throws GitAPIException {
+		StoredConfig storedConfig = _repository.getConfig();
+
+		boolean requireForce = storedConfig.getBoolean(
+			"clean", "requireForce", true);
+
+		if (requireForce == true) {
+			updateConfig("clean", null, "requireForce", false);
 		}
-		catch (InterruptedException | IOException e) {
-			throw new RuntimeException("Unable to execute git clean.", e);
+
+		try {
+			CleanCommand cleanCommand = _git.clean();
+
+			cleanCommand.setCleanDirectories(true);
+			cleanCommand.setIgnore(true);
+
+			System.out.println("clean -dfx");
+
+			cleanCommand.call();
+		}
+		finally {
+			if (requireForce != false) {
+				updateConfig("clean", null, "requireForce", null);
+			}
 		}
 	}
 
@@ -803,6 +822,31 @@ public class GitWorkingDirectory {
 		System.out.println("Stage file in current branch " + fileName);
 
 		addCommand.call();
+	}
+
+	public void updateConfig(
+		String section, String subsection, String name, Object value) {
+
+		StoredConfig storedConfig = _repository.getConfig();
+
+		if (value == null) {
+			storedConfig.unset(section, subsection, name);
+		}
+
+		if (value instanceof Boolean) {
+			storedConfig.setBoolean(section, subsection, name, (Boolean)value);
+		}
+
+		if (value instanceof String) {
+			storedConfig.setString(section, subsection, name, (String)value);
+		}
+
+		try {
+			storedConfig.save();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to save configuration change.");
+		}
 	}
 
 	protected static String getRemoteURL(RemoteConfig remoteConfig) {

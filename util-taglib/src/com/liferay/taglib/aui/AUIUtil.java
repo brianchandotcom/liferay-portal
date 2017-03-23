@@ -106,6 +106,14 @@ public class AUIUtil {
 		String baseType, boolean inlineField, boolean showForLabel,
 		String forLabel) {
 
+		return AUIUtil.buildLabel(
+			baseType, inlineField, showForLabel, forLabel, false);
+	}
+
+	public static String buildLabel(
+		String baseType, boolean inlineField, boolean showForLabel,
+		String forLabel, boolean disabled) {
+
 		StringBundler sb = new StringBundler(7);
 
 		if (baseType.equals("boolean")) {
@@ -120,7 +128,13 @@ public class AUIUtil {
 			}
 		}
 		else {
-			sb.append("class=\"control-label\" ");
+			sb.append("class=\"control-label");
+
+			if (disabled) {
+				sb.append(" disabled");
+			}
+
+			sb.append("\"");
 		}
 
 		if (showForLabel) {

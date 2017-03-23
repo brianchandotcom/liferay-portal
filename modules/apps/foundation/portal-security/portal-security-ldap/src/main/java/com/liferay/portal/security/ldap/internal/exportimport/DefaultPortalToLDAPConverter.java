@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -435,7 +437,9 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		try {
 			StringBundler sb = new StringBundler(4);
 
-			if (!algorithm.equals(PasswordEncryptorUtil.TYPE_NONE)) {
+			if (!algorithm.equals(PasswordEncryptorUtil.TYPE_NONE) &&
+				!hasLegacyPasswordEncryptionAlgorithm()) {
+
 				sb.append(StringPool.OPEN_CURLY_BRACE);
 				sb.append(algorithm);
 				sb.append(StringPool.CLOSE_CURLY_BRACE);
@@ -525,6 +529,17 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		}
 
 		return bytes;
+	}
+
+	protected boolean hasLegacyPasswordEncryptionAlgorithm() {
+		String legacyPasswordEncryptionAlgorithm = GetterUtil.getString(
+			_props.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY));
+
+		if (Validator.isNotNull(legacyPasswordEncryptionAlgorithm)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void populateCustomAttributeModifications(
@@ -622,6 +637,10 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 	private LDAPSettings _ldapSettings;
 	private PasswordEncryptor _passwordEncryptor;
 	private PortalLDAP _portalLDAP;
+
+	@Reference
+	private Props _props;
+
 	private final Map<String, String> _reservedContactFieldNames =
 		new HashMap<>();
 	private final Map<String, String> _reservedUserFieldNames = new HashMap<>();

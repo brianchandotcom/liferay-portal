@@ -98,7 +98,6 @@ Property Name | Default Value
 [`main`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:main) | `"com.liferay.portal.tools.service.builder.ServiceBuilder"`
 [`systemProperties`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:systemProperties) | `["file.encoding": "UTF-8"]`
 
-
 #### Task Properties
 
 Property Name | Type | Default Value | Description

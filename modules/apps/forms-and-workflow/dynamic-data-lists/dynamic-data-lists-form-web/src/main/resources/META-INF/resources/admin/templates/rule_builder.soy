@@ -45,7 +45,7 @@
 
 							<b class="text-lowercase"><em> {$strings[$condition.operator]} </em></b>
 
-							{if $condition.operands[1].visible}
+							{if $condition.operands[1]}
 								{call .condition}
 									{param operandType: $condition.operands[1].type /}
 									{param operandValue: isNonnull($condition.operands[1].label) ? $condition.operands[1].label : $condition.operands[1].value /}

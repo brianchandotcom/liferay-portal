@@ -73,7 +73,7 @@
 		</aui:col>
 
 		<aui:col width="<%= 50 %>">
-			<c:if test="<%= PropsValues.CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT %>">
+			<c:if test="<%= captchaConfiguration.createAccountCaptchaEnabled() %>">
 				<portlet:resourceURL id="/login/captcha" var="captchaURL" />
 
 				<liferay-captcha:captcha url="<%= captchaURL %>" />

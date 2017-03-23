@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.internal.portlet.action;
 
+import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.message.boards.kernel.exception.CategoryNameException;
 import com.liferay.message.boards.kernel.exception.MailingListEmailAddressException;
 import com.liferay.message.boards.kernel.exception.MailingListInServerNameException;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -40,7 +42,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;
 
@@ -153,6 +154,18 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	protected CaptchaConfiguration getCaptchaConfiguration()
+		throws CaptchaConfigurationException {
+
+		try {
+			return _configurationProvider.getSystemConfiguration(
+				CaptchaConfiguration.class);
+		}
+		catch (Exception e) {
+			throw new CaptchaConfigurationException(e);
+		}
+	}
+
 	protected void restoreTrashEntries(ActionRequest actionRequest)
 		throws Exception {
 
@@ -242,10 +255,10 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			MBCategory.class.getName(), actionRequest);
 
-		if (categoryId <= 0) {
-			if (PropsValues.
-					CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_CATEGORY) {
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
 
+		if (categoryId <= 0) {
+			if (captchaConfiguration.messageBoardsEditMessageCaptchaEnabled()) {
 				CaptchaUtil.check(actionRequest);
 			}
 
@@ -271,6 +284,9 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 				mergeWithParentCategory, serviceContext);
 		}
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	private MBCategoryService _mbCategoryService;
 	private TrashEntryService _trashEntryService;

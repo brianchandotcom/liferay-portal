@@ -16,6 +16,7 @@ package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -75,7 +77,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
@@ -247,6 +248,18 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				"mvcPath", "/message_boards/error.jsp");
 
 			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
+
+	protected CaptchaConfiguration getCaptchaConfiguration()
+		throws CaptchaConfigurationException {
+
+		try {
+			return _configurationProvider.getSystemConfiguration(
+				CaptchaConfiguration.class);
+		}
+		catch (Exception e) {
+			throw new CaptchaConfigurationException(e);
 		}
 	}
 
@@ -424,9 +437,12 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 			MBMessage message = null;
 
+			CaptchaConfiguration captchaConfiguration =
+				getCaptchaConfiguration();
+
 			if (messageId <= 0) {
-				if (PropsValues.
-						CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE) {
+				if (captchaConfiguration.
+						messageBoardsEditMessageCaptchaEnabled()) {
 
 					CaptchaUtil.check(actionRequest);
 				}
@@ -580,6 +596,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private MBMessageFormatUploadHandlerProvider _formatHandlerProvider;

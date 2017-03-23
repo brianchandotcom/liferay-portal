@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,7 +44,6 @@ import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.security.ldap.exportimport.Modifications;
 import com.liferay.portal.security.ldap.exportimport.PortalToLDAPConverter;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -437,8 +438,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			StringBundler sb = new StringBundler(4);
 
 			if (!algorithm.equals(PasswordEncryptorUtil.TYPE_NONE) &&
-				Validator.isNull(
-					PropsValues.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY)) {
+				!hasLegacyPasswordEncryptionAlgorithm()) {
 
 				sb.append(StringPool.OPEN_CURLY_BRACE);
 				sb.append(algorithm);
@@ -529,6 +529,17 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		}
 
 		return bytes;
+	}
+
+	protected boolean hasLegacyPasswordEncryptionAlgorithm() {
+		String legacyPasswordEncryptionAlgorithm = GetterUtil.getString(
+			_props.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY));
+
+		if (Validator.isNotNull(legacyPasswordEncryptionAlgorithm)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void populateCustomAttributeModifications(
@@ -626,6 +637,10 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 	private LDAPSettings _ldapSettings;
 	private PasswordEncryptor _passwordEncryptor;
 	private PortalLDAP _portalLDAP;
+
+	@Reference
+	private Props _props;
+
 	private final Map<String, String> _reservedContactFieldNames =
 		new HashMap<>();
 	private final Map<String, String> _reservedUserFieldNames = new HashMap<>();

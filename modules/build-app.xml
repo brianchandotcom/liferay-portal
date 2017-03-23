@@ -205,7 +205,7 @@
 	<target depends="get-app-version" name="get-app-git-id">
 		<exec dir="${project.dir}" executable="git" outputproperty="git.rev.parse.output">
 			<arg value="rev-parse" />
-			<arg value="head" />
+			<arg value="HEAD" />
 		</exec>
 
 		<property name="app.git.id" value="app.git.id-${app.version}=${git.rev.parse.output}" />

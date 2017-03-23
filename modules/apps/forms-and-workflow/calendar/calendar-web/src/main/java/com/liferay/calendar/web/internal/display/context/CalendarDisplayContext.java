@@ -19,9 +19,15 @@ import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.CalendarService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +47,31 @@ public class CalendarDisplayContext {
 		_themeDisplay = themeDisplay;
 	}
 
-	public List<Calendar> getOtherCalendars(long[] calendarIds)
+	public List<Calendar> getOtherCalendars(User user, long[] calendarIds)
 		throws PortalException {
 
 		List<Calendar> otherCalendars = new ArrayList<>();
 
 		for (long calendarId : calendarIds) {
-			Calendar calendar = _calendarService.fetchCalendar(calendarId);
+			Calendar calendar = null;
+
+			try {
+				calendar = _calendarService.fetchCalendar(calendarId);
+			}
+			catch (PrincipalException pe) {
+				if (_log.isInfoEnabled()) {
+					StringBundler message = new StringBundler();
+
+					message.append("No ");
+					message.append(ActionKeys.VIEW);
+					message.append(" permission for user ");
+					message.append(user.getUserId());
+
+					_log.info(message.toString(), pe);
+				}
+
+				continue;
+			}
 
 			if (calendar == null) {
 				continue;
@@ -100,6 +124,9 @@ public class CalendarDisplayContext {
 
 		return otherCalendars;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CalendarDisplayContext.class.getName());
 
 	private final CalendarLocalService _calendarLocalService;
 	private final CalendarService _calendarService;

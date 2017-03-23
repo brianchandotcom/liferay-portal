@@ -33,7 +33,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -623,7 +623,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(new FileCheck[] {new WhitespaceCheck(true)});
+		return _fileChecks;
 	}
 
 	protected String getPortalPortalProperties() throws Exception {
@@ -687,6 +687,11 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content.substring(y, z);
+	}
+
+	@Override
+	protected void populateFileChecks() {
+		_fileChecks.add(new WhitespaceCheck());
 	}
 
 	protected void populateLanguagePropertiesMap() throws Exception {
@@ -828,6 +833,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	private final Map<String, Map<String, String>>
 		_duplicateFileLanguageKeysMap = new ConcurrentHashMap<>();
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private Map<String, Properties> _languagePropertiesMap;
 	private final Pattern _licensesPattern = Pattern.compile(
 		"\nlicenses=(\\w+)\n");

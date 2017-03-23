@@ -106,6 +106,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		preFormat();
 
+		populateFileChecks();
+
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());
 
@@ -1605,6 +1607,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		return absolutePath.contains("/modules/");
 	}
+
+	protected abstract void populateFileChecks();
 
 	protected void postFormat() throws Exception {
 	}

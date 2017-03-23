@@ -81,51 +81,52 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		List<FileCheck> fileChecks = new ArrayList<>();
+		return _fileChecks;
+	}
 
-		fileChecks.add(
+	@Override
+	protected void populateFileChecks() {
+		_fileChecks.add(
 			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));
-		fileChecks.add(new XMLCustomSQLFileCheck());
-		fileChecks.add(new XMLDDLStructuresFileCheck());
-		fileChecks.add(new XMLFriendlyURLRoutesFileCheck());
-		fileChecks.add(new XMLHBMFileCheck());
-		fileChecks.add(new XMLLog4jFileCheck());
-		fileChecks.add(new XMLLookAndFeelFileCheck());
-		fileChecks.add(new XMLModelHintsFileCheck());
-		fileChecks.add(
+		_fileChecks.add(new XMLCustomSQLFileCheck());
+		_fileChecks.add(new XMLDDLStructuresFileCheck());
+		_fileChecks.add(new XMLFriendlyURLRoutesFileCheck());
+		_fileChecks.add(new XMLHBMFileCheck());
+		_fileChecks.add(new XMLLog4jFileCheck());
+		_fileChecks.add(new XMLLookAndFeelFileCheck());
+		_fileChecks.add(new XMLModelHintsFileCheck());
+		_fileChecks.add(
 			new XMLPortletFileCheck(
 				_numericalPortletNameElementExcludes, portalSource,
 				subrepository));
-		fileChecks.add(new XMLPortletPreferencesFileCheck());
-		fileChecks.add(new XMLPoshiFileCheck());
-		fileChecks.add(new XMLResourceActionsFileCheck());
-		fileChecks.add(
+		_fileChecks.add(new XMLPortletPreferencesFileCheck());
+		_fileChecks.add(new XMLPoshiFileCheck());
+		_fileChecks.add(new XMLResourceActionsFileCheck());
+		_fileChecks.add(
 			new XMLServiceFileCheck(
 				_serviceFinderColumnSortExcludes, portalSource, subrepository,
 				_portalTablesContent, _pluginsInsideModulesDirectoryNames));
-		fileChecks.add(new XMLSolrSchemaFileCheck());
-		fileChecks.add(new XMLSpringFileCheck());
-		fileChecks.add(new XMLToggleFileCheck());
+		_fileChecks.add(new XMLSolrSchemaFileCheck());
+		_fileChecks.add(new XMLSpringFileCheck());
+		_fileChecks.add(new XMLToggleFileCheck());
 
 		if (portalSource || subrepository) {
-			fileChecks.add(new XMLStrutsConfigFileCheck());
-			fileChecks.add(new XMLTestIgnorableErrorLinesFileCheck());
-			fileChecks.add(new XMLTilesDefsFileCheck());
-			fileChecks.add(
+			_fileChecks.add(new XMLStrutsConfigFileCheck());
+			_fileChecks.add(new XMLTestIgnorableErrorLinesFileCheck());
+			_fileChecks.add(new XMLTilesDefsFileCheck());
+			_fileChecks.add(
 				new XMLWebFileCheck(sourceFormatterArgs.getBaseDirName()));
 		}
 
-		fileChecks.add(
+		_fileChecks.add(
 			new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName()));
 
-		fileChecks.add(new XMLTagAttributesCheck());
+		_fileChecks.add(new XMLTagAttributesCheck());
 
 		if (portalSource || subrepository) {
-			fileChecks.add(
+			_fileChecks.add(
 				new XMLEmptyLinesCheck(sourceFormatterArgs.getBaseDirName()));
 		}
-
-		return fileChecks;
 	}
 
 	@Override
@@ -187,6 +188,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static final String _SERVICE_FINDER_COLUMN_SORT_EXCLUDES =
 		"service.finder.column.sort.excludes";
 
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private List<String> _numericalPortletNameElementExcludes;
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private String _portalTablesContent;

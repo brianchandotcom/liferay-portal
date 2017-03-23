@@ -26,7 +26,7 @@ import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -155,7 +155,12 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(new FileCheck[] {new WhitespaceCheck(true)});
+		return _fileChecks;
+	}
+
+	@Override
+	protected void populateFileChecks() {
+		_fileChecks.add(new WhitespaceCheck());
 	}
 
 	protected String sort(String content) {
@@ -214,6 +219,7 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {"**/*.json"};
 
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _incorrectLineBreakPattern = Pattern.compile(
 		"\t[\\}\\]]{2}");
 	private final Pattern _leadingSpacesPattern = Pattern.compile(

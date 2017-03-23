@@ -19,7 +19,7 @@ import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,9 +47,16 @@ public class SoySourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(new FileCheck[] {new WhitespaceCheck()});
+		return _fileChecks;
+	}
+
+	@Override
+	protected void populateFileChecks() {
+		_fileChecks.add(new WhitespaceCheck());
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.soy"};
+
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 
 }

@@ -31,7 +31,7 @@ import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -618,7 +618,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(new FileCheck[] {new WhitespaceCheck()});
+		return _fileChecks;
 	}
 
 	protected Map<String, Map<String, String>>
@@ -679,6 +679,11 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return definitionKeysMap;
+	}
+
+	@Override
+	protected void populateFileChecks() {
+		_fileChecks.add(new WhitespaceCheck());
 	}
 
 	protected String sortDefinitionProperties(
@@ -744,6 +749,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _exportsPattern = Pattern.compile(
 		"\nExport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private Map<String, Map<String, String>> _fileSpecificDefinitionKeysMap;
 	private final Pattern _importsPattern = Pattern.compile(
 		"\nImport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",

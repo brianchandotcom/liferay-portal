@@ -20,7 +20,6 @@ import com.liferay.source.formatter.checks.WhitespaceCheck;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -64,7 +63,12 @@ public class GroovySourceProcessor extends JavaSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(new FileCheck[] {new WhitespaceCheck()});
+		return _fileChecks;
+	}
+
+	@Override
+	protected void populateFileChecks() {
+		_fileChecks.add(new WhitespaceCheck());
 	}
 
 	@Override
@@ -72,5 +76,7 @@ public class GroovySourceProcessor extends JavaSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.groovy"};
+
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 
 }

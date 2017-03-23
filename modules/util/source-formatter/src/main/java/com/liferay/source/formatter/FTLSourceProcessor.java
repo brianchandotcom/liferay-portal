@@ -244,14 +244,15 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		List<FileCheck> fileChecks = new ArrayList<>();
+		return _fileChecks;
+	}
 
-		fileChecks.add(new FTLWhitespaceCheck());
+	@Override
+	protected void populateFileChecks() {
+		_fileChecks.add(new FTLWhitespaceCheck());
 
-		fileChecks.add(new FTLEmptyLinesCheck());
-		fileChecks.add(new FTLIfStatementCheck());
-
-		return fileChecks;
+		_fileChecks.add(new FTLEmptyLinesCheck());
+		_fileChecks.add(new FTLIfStatementCheck());
 	}
 
 	protected String sortLiferayVariables(String content) {
@@ -289,6 +290,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	private final Pattern _assignTagsBlockPattern = Pattern.compile(
 		"((\t*)<#assign[^<#/>]*=[^<#/>]*/>(\n|$)+){2,}", Pattern.MULTILINE);
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _incorrectAssignTagPattern = Pattern.compile(
 		"(<#assign .*=.*[^/])>(\n|$)");
 	private final Pattern _liferayVariablePattern = Pattern.compile(

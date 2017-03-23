@@ -52,16 +52,19 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		List<FileCheck> fileChecks = new ArrayList<>();
+		return _fileChecks;
+	}
 
-		fileChecks.add(new WhitespaceCheck());
+	@Override
+	protected void populateFileChecks() {
+		_fileChecks.add(new WhitespaceCheck());
 
-		fileChecks.add(new TLDElementOrderCheck());
-		fileChecks.add(new TLDTypeCheck());
-
-		return fileChecks;
+		_fileChecks.add(new TLDElementOrderCheck());
+		_fileChecks.add(new TLDTypeCheck());
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.tld"};
+
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 
 }

@@ -984,24 +984,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		List<FileCheck> fileChecks = new ArrayList<>();
-
-		fileChecks.add(new JSPWhitespaceCheck());
-
-		fileChecks.add(new JSPEmptyLinesCheck());
-		fileChecks.add(new JSPIfStatementCheck());
-		fileChecks.add(
-			new JSPTagAttributesCheck(
-				portalSource, subrepository, _primitiveTagAttributeDataTypes,
-				_tagJavaClassesMap));
-
-		if (portalSource) {
-			fileChecks.add(
-				new JSPLanguageKeysCheck(
-					_languageKeysCheckExcludes, _portalLanguageProperties));
-		}
-
-		return fileChecks;
+		return _fileChecks;
 	}
 
 	protected List<String> getJSPDuplicateImports(
@@ -1458,6 +1441,24 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
+	protected void populateFileChecks() {
+		_fileChecks.add(new JSPWhitespaceCheck());
+
+		_fileChecks.add(new JSPEmptyLinesCheck());
+		_fileChecks.add(new JSPIfStatementCheck());
+		_fileChecks.add(
+			new JSPTagAttributesCheck(
+				portalSource, subrepository, _primitiveTagAttributeDataTypes,
+				_tagJavaClassesMap));
+
+		if (portalSource) {
+			_fileChecks.add(
+				new JSPLanguageKeysCheck(
+					_languageKeysCheckExcludes, _portalLanguageProperties));
+		}
+	}
+
+	@Override
 	protected void preFormat() throws Exception {
 		_moveFrequentlyUsedImportsToCommonInit = GetterUtil.getBoolean(
 			getProperty("move.frequently.used.imports.to.common.init"));
@@ -1801,6 +1802,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final List<String> _duplicateImportClassNames = new ArrayList<>();
 	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\n+\t*%>\n");
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final List<String> _importClassNames = new ArrayList<>();
 	private final Map<String, Integer> _importCountMap = new HashMap<>();
 	private final Pattern _importsPattern = Pattern.compile(

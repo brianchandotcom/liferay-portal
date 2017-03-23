@@ -1462,48 +1462,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		List<FileCheck> fileChecks = new ArrayList<>();
-
-		fileChecks.add(new JavaWhitespaceCheck());
-
-		fileChecks.add(new JavaAnnotationsCheck());
-		fileChecks.add(new JavaBooleanUsageCheck());
-		fileChecks.add(
-			new JavaCombineLinesCheck(
-				_fitOnSingleLineExcludes,
-				sourceFormatterArgs.getMaxLineLength()));
-		fileChecks.add(new JavaDataAccessConnectionCheck());
-		fileChecks.add(new JavaDiamondOperatorCheck(_diamondOperatorExcludes));
-		fileChecks.add(new JavaEmptyLinesCheck());
-		fileChecks.add(new JavaExceptionCheck());
-		fileChecks.add(
-			new JavaIfStatementCheck(sourceFormatterArgs.getMaxLineLength()));
-		fileChecks.add(
-			new JavaLineBreakCheck(sourceFormatterArgs.getMaxLineLength()));
-		fileChecks.add(new JavaLogLevelCheck());
-		fileChecks.add(
-			new JavaLongLinesCheck(
-				_lineLengthExcludes, sourceFormatterArgs.getMaxLineLength()));
-		fileChecks.add(new JavaPackagePathCheck());
-
-		if (portalSource || subrepository) {
-			fileChecks.add(
-				new JavaVerifyUpgradeConnectionCheck(
-					_upgradeDataAccessConnectionExcludes));
-			fileChecks.add(
-				new JavaUpgradeClassCheck(_upgradeServiceUtilExcludes));
-			fileChecks.add(
-				new JavaXMLSecurityCheck(
-					_runOutsidePortalExcludes, _secureXMLExcludes));
-		}
-
-		if (portalSource) {
-			fileChecks.add(
-				new LanguageKeysCheck(
-					_languageKeysCheckExcludes, _portalLanguageProperties));
-		}
-
-		return fileChecks;
+		return _fileChecks;
 	}
 
 	protected String getFormattedClassLine(String indent, String classLine) {
@@ -1964,6 +1923,48 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
+	protected void populateFileChecks() {
+		_fileChecks.add(new JavaWhitespaceCheck());
+
+		_fileChecks.add(new JavaAnnotationsCheck());
+		_fileChecks.add(new JavaBooleanUsageCheck());
+		_fileChecks.add(
+			new JavaCombineLinesCheck(
+				_fitOnSingleLineExcludes,
+				sourceFormatterArgs.getMaxLineLength()));
+		_fileChecks.add(new JavaDataAccessConnectionCheck());
+		_fileChecks.add(new JavaDiamondOperatorCheck(_diamondOperatorExcludes));
+		_fileChecks.add(new JavaEmptyLinesCheck());
+		_fileChecks.add(new JavaExceptionCheck());
+		_fileChecks.add(
+			new JavaIfStatementCheck(sourceFormatterArgs.getMaxLineLength()));
+		_fileChecks.add(
+			new JavaLineBreakCheck(sourceFormatterArgs.getMaxLineLength()));
+		_fileChecks.add(new JavaLogLevelCheck());
+		_fileChecks.add(
+			new JavaLongLinesCheck(
+				_lineLengthExcludes, sourceFormatterArgs.getMaxLineLength()));
+		_fileChecks.add(new JavaPackagePathCheck());
+
+		if (portalSource || subrepository) {
+			_fileChecks.add(
+				new JavaVerifyUpgradeConnectionCheck(
+					_upgradeDataAccessConnectionExcludes));
+			_fileChecks.add(
+				new JavaUpgradeClassCheck(_upgradeServiceUtilExcludes));
+			_fileChecks.add(
+				new JavaXMLSecurityCheck(
+					_runOutsidePortalExcludes, _secureXMLExcludes));
+		}
+
+		if (portalSource) {
+			_fileChecks.add(
+				new LanguageKeysCheck(
+					_languageKeysCheckExcludes, _portalLanguageProperties));
+		}
+	}
+
+	@Override
 	protected void postFormat() throws Exception {
 		checkBndInheritAnnotationOption();
 		processCheckStyle();
@@ -2108,6 +2109,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _diamondOperatorExcludes;
 	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private List<String> _fitOnSingleLineExcludes;
 	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
 		"([\n\t])(synchronized) (private|public|protected)");

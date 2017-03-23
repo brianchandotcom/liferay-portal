@@ -44,8 +44,11 @@ public class WhitespaceCheck extends BaseFileCheck {
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
 
-		return new Tuple(
-			_trimContent(fileName, content), Collections.emptySet());
+		content = _trimContent(fileName, content);
+
+		content = StringUtil.replace(content, "\n\n\n", "\n\n");
+
+		return new Tuple(content, Collections.emptySet());
 	}
 
 	protected String formatIncorrectSyntax(String line, String regex) {

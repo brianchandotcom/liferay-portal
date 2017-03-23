@@ -683,9 +683,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		newContent = formatJava(fileName, absolutePath, newContent);
-
-		return StringUtil.replace(newContent, "\n\n\n", "\n\n");
+		return formatJava(fileName, absolutePath, newContent);
 	}
 
 	@Override

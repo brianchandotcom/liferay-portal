@@ -309,11 +309,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			newContent,
 			new String[] {
 				"<br/>", "@page import", "\"%>", ")%>", "function (",
-				"javascript: ", "){\n", ";;\n", "\n\n\n"
+				"javascript: ", "){\n", ";;\n"
 			},
 			new String[] {
 				"<br />", "@ page import", "\" %>", ") %>", "function(",
-				"javascript:", ") {\n", ";\n", "\n\n"
+				"javascript:", ") {\n", ";\n"
 			});
 
 		newContent = fixRedirectBackURL(newContent);

@@ -35,7 +35,7 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		return StringUtil.replace(content, "\n\n\n", "\n\n");
+		return content;
 	}
 
 	@Override

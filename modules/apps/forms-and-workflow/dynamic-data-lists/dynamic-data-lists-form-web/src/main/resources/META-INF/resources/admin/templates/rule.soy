@@ -17,9 +17,12 @@
 
 	<div class="ddl-form-body-content">
 		<ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline {length($conditions) > 1 ? 'can-remove-item' : ''}">
+			{let $showLogicalOperator: (length($conditions) > 1) ? true : false /}
 			{call .rulesHeader}
 				{param extraContent kind="html"}
-					{call .logicOperatorDropDown data="all" /}
+					{call .logicOperatorDropDown}
+						{param logicalOperator: $logicalOperator /}
+					{/call}
 				{/param}
 				{param logicalOperator: $logicalOperator /}
 				{param title: 'Condition' /}

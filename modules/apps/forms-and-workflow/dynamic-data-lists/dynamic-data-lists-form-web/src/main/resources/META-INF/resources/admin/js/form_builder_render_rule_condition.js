@@ -42,6 +42,8 @@ AUI.add(
 				instance.on('logicOperatorChange', A.bind(instance._onLogicOperatorChange, instance));
 
 				instance.after('*:valueChange', A.bind(instance._handleConditionFieldsChange, instance));
+
+				instance._validator = new Liferay.DDL.FormBuilderRuleValidator();
 			},
 
 			_addCondition: function(index, condition) {
@@ -290,6 +292,21 @@ AUI.add(
 				);
 
 				instance._addCondition(index);
+
+				instance._updateLogicOperatorVisibility();
+			},
+
+			_updateLogicOperatorVisibility: function() {
+				var instance = this;
+
+				var logicOperatorNode = instance.get('boundingBox').one('.liferay-ddl-form-builder-rule-condition-list').one('.dropdown button');
+
+				if (instance._conditionsIndexes.length > 1) {
+					logicOperatorNode.removeAttribute('disabled');
+				}
+				else {
+					logicOperatorNode.setAttribute('disabled', '');
+				}
 			},
 
 			_handleConditionFieldsChange: function(event) {
@@ -329,6 +346,8 @@ AUI.add(
 				}
 
 				instance._toggleShowRemoveButton();
+
+				instance._updateLogicOperatorVisibility();
 			},
 
 			_handleLogicOperatorChange: function(event) {

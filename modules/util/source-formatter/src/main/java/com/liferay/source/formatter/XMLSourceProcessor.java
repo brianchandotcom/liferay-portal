@@ -14,10 +14,7 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.FileCheck;
@@ -38,6 +35,7 @@ import com.liferay.source.formatter.checks.XMLServiceFileCheck;
 import com.liferay.source.formatter.checks.XMLSolrSchemaFileCheck;
 import com.liferay.source.formatter.checks.XMLSpringFileCheck;
 import com.liferay.source.formatter.checks.XMLStrutsConfigFileCheck;
+import com.liferay.source.formatter.checks.XMLTagAttributesCheck;
 import com.liferay.source.formatter.checks.XMLTestIgnorableErrorLinesFileCheck;
 import com.liferay.source.formatter.checks.XMLTilesDefsFileCheck;
 import com.liferay.source.formatter.checks.XMLToggleFileCheck;
@@ -59,7 +57,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		return sortAttributes(fileName, content);
+		return content;
 	}
 
 	@Override
@@ -120,6 +118,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		fileChecks.add(
 			new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName()));
 
+		fileChecks.add(new XMLTagAttributesCheck());
+
 		if (portalSource || subrepository) {
 			fileChecks.add(
 				new XMLEmptyLinesCheck(sourceFormatterArgs.getBaseDirName()));
@@ -141,60 +141,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			_pluginsInsideModulesDirectoryNames =
 				_getPluginsInsideModulesDirectoryNames();
 		}
-	}
-
-	protected String sortAttributes(String fileName, String content)
-		throws Exception {
-
-		StringBundler sb = new StringBundler();
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
-
-			String line = null;
-
-			int lineCount = 0;
-
-			boolean sortAttributes = true;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
-
-				String trimmedLine = StringUtil.trimLeading(line);
-
-				if (sortAttributes) {
-					if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
-						trimmedLine.endsWith(StringPool.GREATER_THAN) &&
-						!trimmedLine.startsWith("<?") &&
-						!trimmedLine.startsWith("<%") &&
-						!trimmedLine.startsWith("<!") &&
-						!(line.contains("<![CDATA[") && line.contains("]]>"))) {
-
-						line = formatAttributes(
-							fileName, line, trimmedLine, lineCount, true);
-					}
-					else if (trimmedLine.startsWith("<![CDATA[") &&
-							 !trimmedLine.endsWith("]]>")) {
-
-						sortAttributes = false;
-					}
-				}
-				else if (trimmedLine.endsWith("]]>")) {
-					sortAttributes = true;
-				}
-
-				sb.append(line);
-				sb.append("\n");
-			}
-		}
-
-		content = sb.toString();
-
-		if (content.endsWith("\n")) {
-			content = content.substring(0, content.length() - 1);
-		}
-
-		return content;
 	}
 
 	private List<String> _getPluginsInsideModulesDirectoryNames()

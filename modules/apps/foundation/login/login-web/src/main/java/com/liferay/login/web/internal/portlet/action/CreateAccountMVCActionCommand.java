@@ -14,6 +14,7 @@
 
 package com.liferay.login.web.internal.portlet.action;
 
+import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.login.web.internal.portlet.util.LoginUtil;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -222,7 +224,10 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD)) {
-				if (PropsValues.CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT) {
+				CaptchaConfiguration captchaConfiguration =
+					getCaptchaConfiguration();
+
+				if (captchaConfiguration.createAccountCaptchaEnabled()) {
 					CaptchaUtil.check(actionRequest);
 				}
 
@@ -310,6 +315,18 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			if (_log.isDebugEnabled()) {
 				_log.debug(nsle, nsle);
 			}
+		}
+	}
+
+	protected CaptchaConfiguration getCaptchaConfiguration()
+		throws CaptchaConfigurationException {
+
+		try {
+			return _configurationProvider.getSystemConfiguration(
+				CaptchaConfiguration.class);
+		}
+		catch (Exception e) {
+			throw new CaptchaConfigurationException(e);
 		}
 	}
 
@@ -529,6 +546,9 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AuthenticatedSessionManager _authenticatedSessionManager;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	private LayoutLocalService _layoutLocalService;
 

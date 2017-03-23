@@ -14,6 +14,7 @@
 
 package com.liferay.login.web.internal.portlet.action;
 
+import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.login.web.internal.portlet.util.LoginUtil;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.exception.UserReminderQueryException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -70,9 +72,11 @@ import org.osgi.service.component.annotations.Reference;
 public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void checkCaptcha(ActionRequest actionRequest)
-		throws CaptchaException {
+		throws CaptchaConfigurationException, CaptchaException {
 
-		if (PropsValues.CAPTCHA_CHECK_PORTAL_SEND_PASSWORD) {
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+
+		if (captchaConfiguration.sendPasswordCaptchaEnabled()) {
 			CaptchaUtil.check(actionRequest);
 		}
 	}
@@ -173,6 +177,18 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				_portal.sendError(e, actionRequest, actionResponse);
 			}
+		}
+	}
+
+	protected CaptchaConfiguration getCaptchaConfiguration()
+		throws CaptchaConfigurationException {
+
+		try {
+			return _configurationProvider.getSystemConfiguration(
+				CaptchaConfiguration.class);
+		}
+		catch (Exception e) {
+			throw new CaptchaConfigurationException(e);
 		}
 	}
 
@@ -288,6 +304,9 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Portal _portal;

@@ -1,62 +1,35 @@
-import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.OSDetector
-
-task downloadDependencyVisitor(type: Exec)
-
-String dependencyVisitorUrl = "svn://svn.forge.objectweb.org/svnroot/asm/tags/ASM_5_0_1/examples/dependencies/src/org/objectweb/asm/depend/DependencyVisitor.java"
-
-compileJava {
-	dependsOn downloadDependencyVisitor
-}
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
 
 dependencies {
-	compileInclude group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileInclude group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.3.0"
 
-	provided group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.34"
+	provided group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.34", transitive: false
 	provided group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.whip", version: "1.0.1"
 	provided group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.5.1-20150728.201454-4-LIFERAY-CACHED"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.apache.ant", name: "ant", version: "1.9.4"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	provided group: "org.ow2.asm", name: "asm-debug-all", version: "5.0.1"
 	provided group: "org.springframework", name: "spring-beans", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
-}
 
-downloadDependencyVisitor {
-	File dependencyVisitorDir = file("src/main/java/org/objectweb/asm/depend")
-
-	if (OSDetector.windows) {
-		executable "cmd.exe"
-
-		args "/c"
-	}
-	else {
-		executable "/bin/sh"
-
-		args "-c"
-	}
-
-	args "\"svn export ${dependencyVisitorUrl} ${dependencyVisitorDir}\""
-
-	doFirst {
-		dependencyVisitorDir.mkdirs()
-	}
-
-	doLast {
-		ant.patch(dir: "src/main/java", patchfile: "patches/LPS-47293.patch", strip: 1)
-	}
-
-	onlyIf {
-		File dependencyVisitorFile = new File(dependencyVisitorDir, "DependencyVisitor.java")
-
-		!dependencyVisitorFile.exists()
-	}
-
-	workingDir = file("src/main/java")
+	testCompile group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.7"
+	testCompile group: "commons-beanutils", name: "commons-beanutils", version: "1.9.2"
+	testCompile group: "commons-configuration", name: "commons-configuration", version: "1.10"
+	testCompile group: "commons-digester", name: "commons-digester", version: "1.8.1"
+	testCompile group: "commons-httpclient", name: "commons-httpclient", version: "3.1"
+	testCompile group: "commons-io", name: "commons-io", version: "2.5"
+	testCompile group: "commons-lang", name: "commons-lang", version: "2.6"
+	testCompile group: "dom4j", name: "dom4j", version: "1.6.1"
+	testCompile group: "easyconf", name: "easyconf", version: "0.9.5", transitive: false
+	testCompile group: "jaxen", name: "jaxen", version: "1.1.1"
+	testCompile group: "org.apache.tika", name: "tika-core", version: "1.14"
+	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
+	testCompile group: "xerces", name: "xercesImpl", version: "2.11.0"
 }

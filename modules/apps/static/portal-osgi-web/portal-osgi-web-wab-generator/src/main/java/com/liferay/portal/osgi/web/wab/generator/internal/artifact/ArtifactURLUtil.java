@@ -14,29 +14,24 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.artifact;
 
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.URLCodec;
-import com.liferay.portal.osgi.web.wab.generator.internal.util.ManifestUtil;
+import aQute.bnd.osgi.Jar;
+import aQute.bnd.osgi.Resource;
 
-import java.io.File;
+import com.liferay.whip.util.ReflectionUtil;
+
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.URL;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 import org.osgi.framework.Constants;
 
 /**
  * @author Matthew Tambara
+ * @author Raymond Augé
  */
 public class ArtifactURLUtil {
 
@@ -56,32 +51,22 @@ public class ArtifactURLUtil {
 
 		String contextName = null;
 
-		if ("file".equals(artifact.getProtocol())) {
-			if (ManifestUtil.isValidOSGiBundle(artifact.getPath())) {
+		try (Jar jar = new Jar("WAR", artifact.openStream())) {
+			if (jar.getBsn() != null) {
 				return artifact;
 			}
 
-			contextName = _readServletContextName(
-				new File(URLCodec.decodeURL(artifact.getPath())));
+			contextName = _readServletContextName(jar);
 		}
-		else {
-			Path tempFilePath = Files.createTempFile(null, null);
-
-			try (InputStream inputStream = artifact.openStream()) {
-				Files.copy(inputStream, tempFilePath);
-
-				contextName = _readServletContextName(tempFilePath.toFile());
-			}
-			finally {
-				Files.delete(tempFilePath);
-			}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
 		}
 
 		if (contextName == null) {
 			contextName = symbolicName;
 		}
 
-		StringBundler sb = new StringBundler(7);
+		StringBuilder sb = new StringBuilder();
 
 		sb.append(artifact.getPath());
 		sb.append("?");
@@ -98,23 +83,19 @@ public class ArtifactURLUtil {
 		return url;
 	}
 
-	private static String _readServletContextName(File file)
-		throws IOException {
+	private static String _readServletContextName(Jar jar) throws Exception {
+		Resource resource = jar.getResource(
+			"WEB-INF/liferay-plugin-package.properties");
 
-		try (ZipFile zipFile = new ZipFile(file);
-			InputStream inputStream = zipFile.getInputStream(
-				new ZipEntry("WEB-INF/liferay-plugin-package.properties"))) {
-
-			if (inputStream == null) {
-				return null;
-			}
-
-			Properties properties = new Properties();
-
-			properties.load(inputStream);
-
-			return properties.getProperty("servlet-context-name");
+		if (resource == null) {
+			return null;
 		}
+
+		Properties properties = new Properties();
+
+		properties.load(resource.openInputStream());
+
+		return properties.getProperty("servlet-context-name");
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

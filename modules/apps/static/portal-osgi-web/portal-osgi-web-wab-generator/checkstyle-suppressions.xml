@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+	<suppress checks="com.liferay.source.formatter.checkstyle.checks.Chaining" files="modules/apps/static/portal-osgi-web/portal-osgi-web-wab-generator/src/main/java/com/liferay/portal/osgi/web/wab/generator/internal/processor/WabProcessor\.java" />
+</suppressions>

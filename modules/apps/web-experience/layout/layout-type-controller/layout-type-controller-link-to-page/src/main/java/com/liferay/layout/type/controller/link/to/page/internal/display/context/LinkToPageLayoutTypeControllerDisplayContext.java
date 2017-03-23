@@ -76,6 +76,14 @@ public class LinkToPageLayoutTypeControllerDisplayContext {
 		layoutItemSelectorCriterion.setCheckDisplayPage(false);
 		layoutItemSelectorCriterion.setEnableCurrentPage(false);
 
+		long selPlid = ParamUtil.getLong(_liferayPortletRequest, "selPlid");
+
+		boolean privateLayout = ParamUtil.getBoolean(
+			_liferayPortletRequest, "privateLayout");
+
+		layoutItemSelectorCriterion.setShowPrivatePages(privateLayout);
+		layoutItemSelectorCriterion.setShowPublicPages(!privateLayout);
+
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
@@ -89,8 +97,6 @@ public class LinkToPageLayoutTypeControllerDisplayContext {
 			getEventName(), layoutItemSelectorCriterion);
 
 		itemSelectorURL.setParameter("layoutUuid", getLinkToLayoutUuid());
-
-		long selPlid = ParamUtil.getLong(_liferayPortletRequest, "selPlid");
 
 		itemSelectorURL.setParameter("selPlid", String.valueOf(selPlid));
 

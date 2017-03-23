@@ -378,9 +378,7 @@ public class PortalUtil {
 			canonicalURL, themeDisplay, locale, layout);
 	}
 
-	public static long[] getAncestorSiteGroupIds(long groupId)
-		throws PortalException {
-
+	public static long[] getAncestorSiteGroupIds(long groupId) {
 		return getPortal().getAncestorSiteGroupIds(groupId);
 	}
 

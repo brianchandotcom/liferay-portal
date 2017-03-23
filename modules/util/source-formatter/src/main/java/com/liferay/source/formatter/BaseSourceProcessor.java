@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.source.formatter.checks.FileCheck;
-import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.awt.Desktop;
@@ -56,7 +55,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -78,9 +76,6 @@ import org.apache.tools.ant.types.selectors.SelectorUtils;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.Node;
-import org.dom4j.Text;
 import org.dom4j.io.SAXReader;
 
 /**
@@ -454,65 +449,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 				putBNDSettings(bndSettings);
 			}
-		}
-	}
-
-	protected void checkOrder(
-		String fileName, Element rootElement, String elementName,
-		String parentElementName, ElementComparator elementComparator) {
-
-		if (rootElement == null) {
-			return;
-		}
-
-		Node previousNode = null;
-
-		Iterator<Node> iterator = rootElement.nodeIterator();
-
-		while (iterator.hasNext()) {
-			Node curNode = (Node)iterator.next();
-
-			if (curNode instanceof Text) {
-				continue;
-			}
-
-			if (previousNode == null) {
-				previousNode = curNode;
-
-				continue;
-			}
-
-			if (curNode instanceof Element && previousNode instanceof Element) {
-				Element curElement = (Element)curNode;
-				Element previousElement = (Element)previousNode;
-
-				String curElementName = curElement.getName();
-				String previousElementName = previousElement.getName();
-
-				if (curElementName.equals(elementName) &&
-					previousElementName.equals(elementName) &&
-					(elementComparator.compare(previousElement, curElement) >
-						0)) {
-
-					StringBundler sb = new StringBundler(7);
-
-					sb.append("Incorrect order '");
-					sb.append(elementName);
-					sb.append("':");
-
-					if (Validator.isNotNull(parentElementName)) {
-						sb.append(StringPool.SPACE);
-						sb.append(parentElementName);
-					}
-
-					sb.append(StringPool.SPACE);
-					sb.append(elementComparator.getElementName(curElement));
-
-					processMessage(fileName, sb.toString());
-				}
-			}
-
-			previousNode = curNode;
 		}
 	}
 

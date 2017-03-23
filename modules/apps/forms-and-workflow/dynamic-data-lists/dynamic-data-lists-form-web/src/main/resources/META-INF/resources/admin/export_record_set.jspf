@@ -17,6 +17,7 @@
 <div class="hide" id="<portlet:namespace />exportRecordSet">
 	<aui:select label="file-extension" name="fileExtension">
 		<aui:option value="csv">CSV</aui:option>
+		<aui:option value="xls">XLS</aui:option>
 		<aui:option value="xml">XML</aui:option>
 	</aui:select>
 </div>

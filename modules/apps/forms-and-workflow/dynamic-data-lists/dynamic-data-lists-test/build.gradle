@@ -1,4 +1,10 @@
+copyLibs {
+	enabled = true
+}
+
 dependencies {
+	provided group: "org.apache.poi", name: "poi", version: "3.15"
+
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.exportimport.api", version: "2.0.0"

@@ -107,31 +107,21 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void populateFileChecks() {
+	protected void populateFileChecks() throws Exception {
 		_fileChecks.add(new WhitespaceCheck());
 
 		if (portalSource) {
 			_fileChecks.add(
 				new LanguageKeysCheck(
-					_languageKeysCheckExcludes, _portalLanguageProperties));
-		}
-	}
-
-	@Override
-	protected void preFormat() throws Exception {
-		if (portalSource) {
-			_languageKeysCheckExcludes = getExcludes(
-				LANGUAGE_KEYS_CHECK_EXCLUDES);
-			_portalLanguageProperties = getPortalLanguageProperties();
+					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
+					getPortalLanguageProperties()));
 		}
 	}
 
 	private static final String[] _INCLUDES = {"**/*.js"};
 
 	private final List<FileCheck> _fileChecks = new ArrayList<>();
-	private List<String> _languageKeysCheckExcludes;
 	private final Pattern _multipleVarsOnSingleLinePattern = Pattern.compile(
 		"\t+var \\w+\\, ");
-	private Properties _portalLanguageProperties;
 
 }

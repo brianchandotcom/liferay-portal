@@ -1608,7 +1608,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return absolutePath.contains("/modules/");
 	}
 
-	protected abstract void populateFileChecks();
+	protected abstract void populateFileChecks() throws Exception ;
 
 	protected void postFormat() throws Exception {
 	}

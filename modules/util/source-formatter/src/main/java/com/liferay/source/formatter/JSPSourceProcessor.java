@@ -1441,20 +1441,21 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void populateFileChecks() {
+	protected void populateFileChecks() throws Exception {
 		_fileChecks.add(new JSPWhitespaceCheck());
 
 		_fileChecks.add(new JSPEmptyLinesCheck());
 		_fileChecks.add(new JSPIfStatementCheck());
 		_fileChecks.add(
 			new JSPTagAttributesCheck(
-				portalSource, subrepository, _primitiveTagAttributeDataTypes,
-				_tagJavaClassesMap));
+				portalSource, subrepository,
+				_getPrimitiveTagAttributeDataTypes(), _getTagJavaClassesMap()));
 
 		if (portalSource) {
 			_fileChecks.add(
 				new JSPLanguageKeysCheck(
-					_languageKeysCheckExcludes, _portalLanguageProperties));
+					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
+					getPortalLanguageProperties()));
 		}
 	}
 
@@ -1510,16 +1511,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 		catch (Exception e) {
 			ReflectionUtil.throwException(e);
-		}
-
-		if (portalSource) {
-			_primitiveTagAttributeDataTypes =
-				_getPrimitiveTagAttributeDataTypes();
-			_tagJavaClassesMap = _getTagJavaClassesMap();
-
-			_languageKeysCheckExcludes = getExcludes(
-				LANGUAGE_KEYS_CHECK_EXCLUDES);
-			_portalLanguageProperties = getPortalLanguageProperties();
 		}
 	}
 
@@ -1817,14 +1808,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Map<String, String> _jspContents = new HashMap<>();
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*\\.(jsp[f]?|svg)");
-	private List<String> _languageKeysCheckExcludes;
 	private final Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
-	private Properties _portalLanguageProperties;
-	private Set<String> _primitiveTagAttributeDataTypes;
 	private final Pattern _redirectBackURLPattern = Pattern.compile(
 		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +
 			"\\);)\n(String backURL = ParamUtil\\.getString\\(request, \"" +
@@ -1832,7 +1820,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private boolean _stripJSPImports = true;
 	private final Pattern _subnamePattern = Pattern.compile(
 		"\\s(_?sub[A-Z]\\w+)[; ]");
-	private Map<String, JavaClass> _tagJavaClassesMap;
 	private final Pattern _taglibURIPattern = Pattern.compile(
 		"<%@\\s+taglib uri=.* prefix=\"(.*?)\" %>");
 	private final Pattern _taglibVariablePattern = Pattern.compile(

@@ -85,7 +85,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void populateFileChecks() {
+	protected void populateFileChecks() throws Exception {
 		_fileChecks.add(
 			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));
 		_fileChecks.add(new XMLCustomSQLFileCheck());
@@ -97,15 +97,17 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		_fileChecks.add(new XMLModelHintsFileCheck());
 		_fileChecks.add(
 			new XMLPortletFileCheck(
-				_numericalPortletNameElementExcludes, portalSource,
-				subrepository));
+				getExcludes(_NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES),
+				portalSource, subrepository));
 		_fileChecks.add(new XMLPortletPreferencesFileCheck());
 		_fileChecks.add(new XMLPoshiFileCheck());
 		_fileChecks.add(new XMLResourceActionsFileCheck());
 		_fileChecks.add(
 			new XMLServiceFileCheck(
-				_serviceFinderColumnSortExcludes, portalSource, subrepository,
-				_portalTablesContent, _pluginsInsideModulesDirectoryNames));
+				getExcludes(_SERVICE_FINDER_COLUMN_SORT_EXCLUDES), portalSource,
+				subrepository,
+				getContent("sql/portal-tables.sql", PORTAL_MAX_DIR_LEVEL),
+				_getPluginsInsideModulesDirectoryNames()));
 		_fileChecks.add(new XMLSolrSchemaFileCheck());
 		_fileChecks.add(new XMLSpringFileCheck());
 		_fileChecks.add(new XMLToggleFileCheck());
@@ -126,21 +128,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		if (portalSource || subrepository) {
 			_fileChecks.add(
 				new XMLEmptyLinesCheck(sourceFormatterArgs.getBaseDirName()));
-		}
-	}
-
-	@Override
-	protected void preFormat() throws Exception {
-		_numericalPortletNameElementExcludes = getExcludes(
-			_NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES);
-		_serviceFinderColumnSortExcludes = getExcludes(
-			_SERVICE_FINDER_COLUMN_SORT_EXCLUDES);
-
-		if (portalSource) {
-			_portalTablesContent = getContent(
-				"sql/portal-tables.sql", PORTAL_MAX_DIR_LEVEL);
-			_pluginsInsideModulesDirectoryNames =
-				_getPluginsInsideModulesDirectoryNames();
 		}
 	}
 
@@ -189,9 +176,5 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"service.finder.column.sort.excludes";
 
 	private final List<FileCheck> _fileChecks = new ArrayList<>();
-	private List<String> _numericalPortletNameElementExcludes;
-	private List<String> _pluginsInsideModulesDirectoryNames;
-	private String _portalTablesContent;
-	private List<String> _serviceFinderColumnSortExcludes;
 
 }

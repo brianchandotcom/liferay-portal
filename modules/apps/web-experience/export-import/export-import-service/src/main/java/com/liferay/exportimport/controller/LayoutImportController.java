@@ -710,6 +710,69 @@ public class LayoutImportController implements ImportController {
 	 * @deprecated As of 4.0.0
 	 */
 	@Deprecated
+	protected void setExportImportLifecycleManager(
+		ExportImportLifecycleManager exportImportLifecycleManager) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setLayoutPrototypeLocalService(
+		LayoutPrototypeLocalService layoutPrototypeLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setLayoutSetPrototypeLocalService(
+		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setPortletImportController(
+		PortletImportController portletImportController) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
 	protected void setPortletScope(
 		PortletDataContext portletDataContext, Element portletElement) {
 	}

@@ -5,9 +5,7 @@
 		</execute>
 
 		<if>
-			<not>
-				<isset var="rowNumber" />
-			</not>
+			<contains string="${rowNumber}" substring="{rowNumber}" />
 			<then>
 				<var name="rowNumber" value="1" />
 			</then>

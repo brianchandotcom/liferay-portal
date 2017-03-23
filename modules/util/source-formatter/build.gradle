@@ -19,6 +19,7 @@ dependencies {
 	compile group: "commons-logging", name: "commons-logging", version: "1.2"
 	compile group: "dom4j", name: "dom4j", version: "1.6.1"
 	compile group: "jaxen", name: "jaxen", version: "1.1.1"
+	compile group: "junit", name: "junit", version: "4.12"
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
 	compile group: "org.apache.maven", name: "maven-artifact", version: "3.3.9"
 
@@ -26,7 +27,6 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
-	provided group: "junit", name: "junit", version: "4.12"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 	provided group: "xerces", name: "xercesImpl", transitive: false, version: "2.11.0"
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.asset.kernel.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -33,6 +35,7 @@ import javax.portlet.WindowState;
  * @author Jorge Ferrer
  * @author Juan Fernández
  */
+@ProviderType
 public interface AssetRenderer<T> extends Renderer {
 
 	public static final String TEMPLATE_ABSTRACT = "abstract";

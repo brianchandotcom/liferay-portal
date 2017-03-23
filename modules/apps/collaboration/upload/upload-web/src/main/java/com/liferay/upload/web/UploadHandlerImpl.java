@@ -63,8 +63,8 @@ public class UploadHandlerImpl implements UploadHandler {
 
 	@Override
 	public void upload(
-			UploadFileEntryHandler handler, PortletRequest portletRequest,
-			PortletResponse portletResponse)
+			UploadFileEntryHandler fileEntryHandler,
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -73,9 +73,9 @@ public class UploadHandlerImpl implements UploadHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		handler.checkPermission(
+		fileEntryHandler.checkPermission(
 			themeDisplay.getScopeGroupId(),
-			handler.getFolderId(uploadPortletRequest),
+			fileEntryHandler.getFolderId(uploadPortletRequest),
 			themeDisplay.getPermissionChecker());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -104,7 +104,7 @@ public class UploadHandlerImpl implements UploadHandler {
 			}
 
 			JSONObject imageJSONObject = _getImageJSONObject(
-				handler, portletRequest);
+				fileEntryHandler, portletRequest);
 
 			String randomId = ParamUtil.getString(
 				uploadPortletRequest, "randomId");
@@ -123,7 +123,8 @@ public class UploadHandlerImpl implements UploadHandler {
 		}
 		catch (PortalException pe) {
 			_handleUploadException(
-				handler, portletRequest, portletResponse, pe, jsonObject);
+				fileEntryHandler, portletRequest, portletResponse, pe,
+				jsonObject);
 		}
 	}
 
@@ -133,12 +134,13 @@ public class UploadHandlerImpl implements UploadHandler {
 			bundleContext, UploadFileEntryResponseCustomizer.class, "source");
 	}
 
-	private void _customizeFileJSONResponse(
-			UploadFileEntryHandler handler, PortletRequest portletRequest,
-			FileEntry fileEntry, JSONObject jsonObject)
+	private void _customizeFileJSONObject(
+			UploadFileEntryHandler fileEntryHandler,
+			PortletRequest portletRequest, FileEntry fileEntry,
+			JSONObject jsonObject)
 		throws IOException {
 
-		handler.customizeFileJSONObject(jsonObject);
+		fileEntryHandler.customizeFileJSONObject(jsonObject);
 
 		String source = ParamUtil.getString(
 			portletRequest, "source", StringPool.BLANK);
@@ -153,7 +155,8 @@ public class UploadHandlerImpl implements UploadHandler {
 	}
 
 	private JSONObject _getImageJSONObject(
-			UploadFileEntryHandler handler, PortletRequest portletRequest)
+			UploadFileEntryHandler fileEntryHandler,
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -171,37 +174,38 @@ public class UploadHandlerImpl implements UploadHandler {
 				"attributeDataImageId",
 				EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 
-			String parameterName = handler.getParameterName();
+			String parameterName = fileEntryHandler.getParameterName();
 
 			String fileName = uploadPortletRequest.getFileName(parameterName);
 			String contentType = uploadPortletRequest.getContentType(
 				parameterName);
 			long size = uploadPortletRequest.getSize(parameterName);
 
-			handler.validateFile(fileName, contentType, size);
+			fileEntryHandler.validateFile(fileName, contentType, size);
 
-			long folderId = handler.getFolderId(uploadPortletRequest);
+			long folderId = fileEntryHandler.getFolderId(uploadPortletRequest);
 
 			String uniqueFileName = _getUniqueFileName(
-				handler, themeDisplay, fileName, folderId);
+				fileEntryHandler, themeDisplay, fileName, folderId);
 
 			inputStream = uploadPortletRequest.getFileAsStream(parameterName);
 
-			FileEntry fileEntry = handler.addFileEntry(
+			FileEntry fileEntry = fileEntryHandler.addFileEntry(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				folderId, uniqueFileName, contentType, inputStream, size,
-				handler.getServiceContext(uploadPortletRequest));
+				fileEntryHandler.getServiceContext(uploadPortletRequest));
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 			imageJSONObject.put("groupId", fileEntry.getGroupId());
 			imageJSONObject.put("title", fileEntry.getTitle());
 
 			imageJSONObject.put("type", "document");
-			imageJSONObject.put("url", handler.getURL(fileEntry, themeDisplay));
+			imageJSONObject.put(
+				"url", fileEntryHandler.getURL(fileEntry, themeDisplay));
 			imageJSONObject.put("uuid", fileEntry.getUuid());
 
-			_customizeFileJSONResponse(
-				handler, portletRequest, fileEntry, imageJSONObject);
+			_customizeFileJSONObject(
+				fileEntryHandler, portletRequest, fileEntry, imageJSONObject);
 
 			return imageJSONObject;
 		}
@@ -214,11 +218,11 @@ public class UploadHandlerImpl implements UploadHandler {
 	}
 
 	private String _getUniqueFileName(
-			UploadFileEntryHandler handler, ThemeDisplay themeDisplay,
+			UploadFileEntryHandler fileEntryHandler, ThemeDisplay themeDisplay,
 			String fileName, long folderId)
 		throws PortalException {
 
-		FileEntry fileEntry = handler.fetchFileEntry(
+		FileEntry fileEntry = fileEntryHandler.fetchFileEntry(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), folderId,
 			fileName);
 
@@ -232,7 +236,7 @@ public class UploadHandlerImpl implements UploadHandler {
 			String curFileName = FileUtil.appendParentheticalSuffix(
 				fileName, String.valueOf(suffix));
 
-			fileEntry = handler.fetchFileEntry(
+			fileEntry = fileEntryHandler.fetchFileEntry(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				folderId, curFileName);
 
@@ -248,9 +252,9 @@ public class UploadHandlerImpl implements UploadHandler {
 	}
 
 	private void _handleUploadException(
-			UploadFileEntryHandler handler, PortletRequest portletRequest,
-			PortletResponse portletResponse, PortalException pe,
-			JSONObject jsonObject)
+			UploadFileEntryHandler fileEntryHandler,
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			PortalException pe, JSONObject jsonObject)
 		throws PortalException {
 
 		jsonObject.put("success", Boolean.FALSE);
@@ -293,7 +297,7 @@ public class UploadHandlerImpl implements UploadHandler {
 			jsonObject.put("error", errorJSONObject);
 		}
 		else {
-			handler.doHandleUploadException(
+			fileEntryHandler.doHandleUploadException(
 				portletRequest, portletResponse, pe, jsonObject);
 		}
 

@@ -102,7 +102,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 		</td>
 	</tr>
 
-	<c:if test="<%= PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, GetterUtil.getBoolean(PropsUtil.get(PropsKeys.OPENOFFICE_SERVER_ENABLED)) && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.VIEW)) %>">
+	<c:if test="<%= DocumentConversionUtil.isEnabled() && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.VIEW) %>">
 
 		<%
 		String[] conversions = DocumentConversionUtil.getConversions("html");

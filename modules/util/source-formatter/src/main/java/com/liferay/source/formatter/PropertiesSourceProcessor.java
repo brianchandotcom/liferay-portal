@@ -691,7 +691,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateFileChecks() {
-		_fileChecks.add(new WhitespaceCheck());
+		_fileChecks.add(new WhitespaceCheck(true));
 	}
 
 	protected void populateLanguagePropertiesMap() throws Exception {

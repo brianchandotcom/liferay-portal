@@ -160,7 +160,7 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateFileChecks() {
-		_fileChecks.add(new WhitespaceCheck());
+		_fileChecks.add(new WhitespaceCheck(true));
 	}
 
 	protected String sort(String content) {

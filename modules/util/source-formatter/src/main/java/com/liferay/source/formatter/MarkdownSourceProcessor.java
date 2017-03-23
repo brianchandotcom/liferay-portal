@@ -52,7 +52,7 @@ public class MarkdownSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateFileChecks() {
-		_fileChecks.add(new WhitespaceCheck());
+		_fileChecks.add(new WhitespaceCheck(true));
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.markdown"};

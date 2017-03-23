@@ -30,7 +30,7 @@ ddl.rule_list = function(opt_data, opt_ignored) {
       var conditionListLen197 = conditionList197.length;
       for (var conditionIndex197 = 0; conditionIndex197 < conditionListLen197; conditionIndex197++) {
         var conditionData197 = conditionList197[conditionIndex197];
-        output += ddl.condition({operandType: conditionData197.operands[0].type, operandValue: conditionData197.operands[0].label}) + '<b class="text-lowercase"><em> ' + soy.$$escapeHtml(opt_data.strings[conditionData197.operator]) + ' </em></b>' + ((conditionData197.operands[1].visible) ? ddl.condition({operandType: conditionData197.operands[1].type, operandValue: conditionData197.operands[1].label != null ? conditionData197.operands[1].label : conditionData197.operands[1].value}) : '') + ((! (conditionIndex197 == conditionListLen197 - 1)) ? '<br /><b> ' + soy.$$escapeHtml(conditionData197.logicOperator) + ' </b>' : '');
+        output += ddl.condition({operandType: conditionData197.operands[0].type, operandValue: conditionData197.operands[0].label}) + '<b class="text-lowercase"><em> ' + soy.$$escapeHtml(opt_data.strings[conditionData197.operator]) + ' </em></b>' + ((conditionData197.operands[1]) ? ddl.condition({operandType: conditionData197.operands[1].type, operandValue: conditionData197.operands[1].label != null ? conditionData197.operands[1].label : conditionData197.operands[1].value}) : '') + ((! (conditionIndex197 == conditionListLen197 - 1)) ? '<br /><b> ' + soy.$$escapeHtml(conditionData197.logicOperator) + ' </b>' : '');
       }
       output += '<br />';
       var actionList205 = ruleData219.actions;

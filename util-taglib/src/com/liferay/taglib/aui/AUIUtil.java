@@ -106,7 +106,7 @@ public class AUIUtil {
 		String baseType, boolean inlineField, boolean showForLabel,
 		String forLabel) {
 
-		return AUIUtil.buildLabel(
+		return buildLabel(
 			baseType, inlineField, showForLabel, forLabel, false);
 	}
 

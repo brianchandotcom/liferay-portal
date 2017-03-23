@@ -270,6 +270,9 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		content = StringUtil.replace(content, " \\\n", "\\\n");
 
+		content = StringUtil.replaceFirst(
+			content, "Conditional-Package:", "-conditionalpackage:");
+
 		Matcher matcher = _trailingSemiColonPattern.matcher(content);
 
 		if (matcher.find()) {

@@ -311,4 +311,15 @@
 
 .progress-bar-success-item {
 	margin-bottom: 42px !important;
+
+	&:before {
+		background-color: #CAD3DB;
+		content: '';
+		display: block;
+		height: 12px;
+		margin-top: -5px;
+		position: absolute;
+		right: 0;
+		width: 12px;
+	}
 }

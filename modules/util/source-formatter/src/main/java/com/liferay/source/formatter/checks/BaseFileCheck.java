@@ -20,13 +20,19 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.FileUtil;
+
+import java.io.File;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -124,6 +130,39 @@ public abstract class BaseFileCheck implements FileCheck {
 			}
 
 			previousNode = curNode;
+		}
+	}
+
+	protected BNDSettings getBNDSettings(String fileName) throws Exception {
+		for (Map.Entry<String, BNDSettings> entry :
+				_bndSettingsMap.entrySet()) {
+
+			String bndFileLocation = entry.getKey();
+
+			if (fileName.startsWith(bndFileLocation)) {
+				return entry.getValue();
+			}
+		}
+
+		String bndFileLocation = fileName;
+
+		while (true) {
+			int pos = bndFileLocation.lastIndexOf(StringPool.SLASH);
+
+			if (pos == -1) {
+				return null;
+			}
+
+			bndFileLocation = bndFileLocation.substring(0, pos + 1);
+
+			File file = new File(bndFileLocation + "bnd.bnd");
+
+			if (file.exists()) {
+				return new BNDSettings(bndFileLocation, FileUtil.read(file));
+			}
+
+			bndFileLocation = StringUtil.replaceLast(
+				bndFileLocation, StringPool.SLASH, StringPool.BLANK);
 		}
 	}
 
@@ -325,6 +364,10 @@ public abstract class BaseFileCheck implements FileCheck {
 		return absolutePath.contains("/modules/");
 	}
 
+	protected void putBNDSettings(BNDSettings bndSettings) {
+		_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
+	}
+
 	protected String stripQuotes(String s) {
 		return stripQuotes(s, CharPool.APOSTROPHE, CharPool.QUOTE);
 	}
@@ -371,5 +414,8 @@ public abstract class BaseFileCheck implements FileCheck {
 
 		return sb.toString();
 	}
+
+	private Map<String, BNDSettings> _bndSettingsMap =
+		new ConcurrentHashMap<>();
 
 }

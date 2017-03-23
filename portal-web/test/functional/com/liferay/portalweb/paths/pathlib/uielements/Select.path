@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_SUBTYPE</td>
+	<td>//div[not(contains(@class,'hide'))]/select[contains(@id,'subtype')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AVAILABLE</td>
 	<td>//div[label[contains(.,'Available')]]/select</td>
 	<td></td>

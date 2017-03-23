@@ -122,6 +122,13 @@
 			<var name="rowNumber" value="${rowNumber}" />
 		</execute>
 
+		<if>
+			<isset var="assetSubtype" />
+			<then>
+				<execute function="Select" locator1="Select#ASSET_SUBTYPE" value1="${assetSubtype}" />
+			</then>
+		</if>
+
 		<execute macro="PortletEntry#save" />
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}">

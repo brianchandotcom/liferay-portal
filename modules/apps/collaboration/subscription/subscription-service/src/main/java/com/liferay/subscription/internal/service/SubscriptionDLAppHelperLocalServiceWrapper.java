@@ -86,6 +86,8 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 
 	@Override
 	public void deleteFolder(Folder folder) throws PortalException {
+		super.deleteFolder(folder);
+
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return;
 		}

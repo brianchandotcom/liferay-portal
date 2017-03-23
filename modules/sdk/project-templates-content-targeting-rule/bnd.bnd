@@ -1,4 +1,4 @@
-Bundle-Description: Creates an Audience Targeting rule project.
+Bundle-Description: Creates a Liferay Audience Targeting rule as a module project.
 Bundle-Name: Liferay Project Templates Content Targeting Rule
 Bundle-SymbolicName: com.liferay.project.templates.content.targeting.rule
 Bundle-Version: 1.0.3

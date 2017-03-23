@@ -1,4 +1,4 @@
-Bundle-Description: Customizes the starting and stopping of a Liferay bundle.
+Bundle-Description: Creates a Liferay module project that customizes the starting and stopping of a Liferay bundle.
 Bundle-Name: Liferay Project Templates Activator
 Bundle-SymbolicName: com.liferay.project.templates.activator
 Bundle-Version: 1.0.3

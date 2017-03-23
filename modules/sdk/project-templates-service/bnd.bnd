@@ -1,4 +1,4 @@
-Bundle-Description: Creates an OSGi service project implementing a chosen interface.
+Bundle-Description: Creates a Liferay OSGi service implementing a chosen interface in a module project.
 Bundle-Name: Liferay Project Templates Service
 Bundle-SymbolicName: com.liferay.project.templates.service
 Bundle-Version: 1.0.3

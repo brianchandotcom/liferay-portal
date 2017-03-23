@@ -16,18 +16,15 @@ package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.TLDElementOrderCheck;
 import com.liferay.source.formatter.checks.WhitespaceCheck;
-import com.liferay.source.formatter.checks.comparator.ElementComparator;
 
 import java.io.File;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.dom4j.Document;
-import org.dom4j.Element;
 
 /**
  * @author Hugo Huijser
@@ -55,23 +52,6 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		Document document = readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> tagElements = rootElement.elements("tag");
-
-		for (Element tagElement : tagElements) {
-			Element nameElement = tagElement.element("name");
-
-			checkOrder(
-				fileName, tagElement, "attribute", nameElement.getText(),
-				new TagElementComparator());
-		}
-
-		checkOrder(
-			fileName, rootElement, "tag", null, new TagElementComparator());
-
 		return StringUtil.replace(content, "\n\n\n", "\n\n");
 	}
 
@@ -89,23 +69,18 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(new FileCheck[] {new WhitespaceCheck()});
+		List<FileCheck> fileChecks = new ArrayList<>();
+
+		fileChecks.add(new WhitespaceCheck());
+
+		fileChecks.add(new TLDElementOrderCheck());
+
+		return fileChecks;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.tld"};
 
 	private static final Pattern _typePattern = Pattern.compile(
 		"\n\t*<type>(.*)</type>\n");
-
-	private static class TagElementComparator extends ElementComparator {
-
-		@Override
-		public String getElementName(Element element) {
-			Element nameElement = element.element(getNameAttribute());
-
-			return nameElement.getText();
-		}
-
-	}
 
 }

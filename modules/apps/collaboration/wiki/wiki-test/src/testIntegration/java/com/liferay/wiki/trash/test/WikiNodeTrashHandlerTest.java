@@ -25,9 +25,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
-import com.liferay.portlet.trash.test.WhenCanBeDuplicatedInTrash;
 import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.test.util.BaseTrashHandlerTestCase;
+import com.liferay.trash.test.util.WhenCanBeDuplicatedInTrash;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 

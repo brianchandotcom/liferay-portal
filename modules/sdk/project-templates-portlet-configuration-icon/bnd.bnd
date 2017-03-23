@@ -1,3 +1,4 @@
+Bundle-Description: Customizes a Liferay portlet's configuration icon.
 Bundle-Name: Liferay Project Templates Portlet Configuration Icon
 Bundle-SymbolicName: com.liferay.project.templates.portlet.configuration.icon
 Bundle-Version: 1.0.3

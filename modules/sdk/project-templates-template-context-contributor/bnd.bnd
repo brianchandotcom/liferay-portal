@@ -1,3 +1,4 @@
+Bundle-Description: Injects custom non-JSP template variables into Liferay Portal.
 Bundle-Name: Liferay Project Templates Template Context Contributor
 Bundle-SymbolicName: com.liferay.project.templates.template.context.contributor
 Bundle-Version: 1.0.3

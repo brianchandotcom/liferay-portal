@@ -6045,7 +6045,9 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 				<contains string="${osgi.module.configurations}" substring="maxChallenges" />
 			</not>
 			<then>
-				<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">maxChallenges=&quot;-1&quot;</echo>
+				<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">createAccountCaptchaEnabled=&quot;false&quot;
+maxChallenges=&quot;-1&quot;
+sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 			</then>
 		</if>
 	</target>

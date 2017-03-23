@@ -584,6 +584,10 @@
 			<var name="conditionOperator" value="belongs to" />
 			<var name="ruleNumber" value="1" />
 		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+
+		<execute macro="Form#save" />
 	</command>
 
 	<command name="EditRule" priority="5">

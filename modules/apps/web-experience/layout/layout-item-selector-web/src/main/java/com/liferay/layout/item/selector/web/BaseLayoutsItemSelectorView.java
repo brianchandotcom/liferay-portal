@@ -19,6 +19,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
+import com.liferay.layout.item.selector.view.LayoutItemSelectorView;
 import com.liferay.layout.item.selector.web.internal.display.context.LayoutItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -40,7 +41,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Roberto Díaz
  */
 public abstract class BaseLayoutsItemSelectorView
-	implements ItemSelectorView<LayoutItemSelectorCriterion> {
+	implements ItemSelectorView<LayoutItemSelectorCriterion>,
+			   LayoutItemSelectorView {
 
 	public static final String LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
 		"LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";

@@ -69,6 +69,9 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		return Arrays.asList(languageKeyPattern);
 	}
 
+	protected final Pattern languageKeyPattern = Pattern.compile(
+		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
+
 	private void _checkLanguageKeys(
 			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String fileName, String absolutePath, String content,
@@ -310,7 +313,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 			}
 
 			buildGradleFileLocation = StringUtil.replaceLast(
-				buildGradleFileLocation, StringPool.SLASH, StringPool.BLANK);
+				buildGradleFileLocation, CharPool.SLASH, StringPool.BLANK);
 		}
 
 		Matcher matcher = _applyLangMergerPluginPattern.matcher(
@@ -321,7 +324,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		}
 
 		String moduleLocation = StringUtil.replaceLast(
-			buildGradleFileLocation, StringPool.SLASH, StringPool.BLANK);
+			buildGradleFileLocation, CharPool.SLASH, StringPool.BLANK);
 
 		List<String> moduleLangDirNames = _getModuleLangDirNames(
 			moduleLocation, buildGradleContent);
@@ -402,11 +405,9 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	private final List<String> _excludes;
 	private final Pattern _mergeLangPattern = Pattern.compile(
 		"mergeLang \\{\\s*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);
-	protected final Pattern languageKeyPattern = Pattern.compile(
-		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
-	private Map<String, Properties> _moduleLangLanguagePropertiesMap =
+	private final Map<String, Properties> _moduleLangLanguagePropertiesMap =
 		new HashMap<>();
-	private Map<String, Properties> _moduleLanguagePropertiesMap =
+	private final Map<String, Properties> _moduleLanguagePropertiesMap =
 		new HashMap<>();
 	private final Properties _portalLanguageProperties;
 

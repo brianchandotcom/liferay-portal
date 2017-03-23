@@ -162,7 +162,7 @@ public abstract class BaseFileCheck implements FileCheck {
 			}
 
 			bndFileLocation = StringUtil.replaceLast(
-				bndFileLocation, StringPool.SLASH, StringPool.BLANK);
+				bndFileLocation, CharPool.SLASH, StringPool.BLANK);
 		}
 	}
 
@@ -415,7 +415,7 @@ public abstract class BaseFileCheck implements FileCheck {
 		return sb.toString();
 	}
 
-	private Map<String, BNDSettings> _bndSettingsMap =
+	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
 
 }

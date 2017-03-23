@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.ResourceActionsException;
@@ -1240,22 +1241,23 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			actions = ResourceActionsUtil.getModelResourceActions(name);
 		}
 
-		if (actions.isEmpty()) {
+		if (ListUtil.isEmpty(actions)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"No actions found for " + name + ", checking database");
+					"No portlet or model resource actions found for " + name +
+						", checking other resource actions ");
 			}
 
 			List<ResourceAction> resourceActions =
 				resourceActionLocalService.getResourceActions(name);
 
-			if (resourceActions.isEmpty()) {
-				throw new ResourceActionsException(
+			if (ListUtil.isEmpty(resourceActions)) {
+				throw new NoSuchResourceActionException(
 					"There are no actions associated with the resource " +
 						name);
 			}
 
-			actions = new ArrayList(resourceActions.size());
+			actions = new ArrayList<>(resourceActions.size());
 
 			for (ResourceAction resourceAction : resourceActions) {
 				actions.add(resourceAction.getActionId());

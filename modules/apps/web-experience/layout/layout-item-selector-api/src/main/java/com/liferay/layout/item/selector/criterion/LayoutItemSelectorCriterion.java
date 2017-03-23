@@ -21,12 +21,25 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  */
 public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 
+	public LayoutItemSelectorCriterion() {
+		_showPrivatePages = true;
+		_showPublicPages = true;
+	}
+
 	public boolean isCheckDisplayPage() {
 		return _checkDisplayPage;
 	}
 
 	public boolean isEnableCurrentPage() {
 		return _enableCurrentPage;
+	}
+
+	public boolean isShowPrivatePages() {
+		return _showPrivatePages;
+	}
+
+	public boolean isShowPublicPages() {
+		return _showPublicPages;
 	}
 
 	public void setCheckDisplayPage(boolean checkDisplayPage) {
@@ -37,7 +50,17 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_enableCurrentPage = enableCurrentPage;
 	}
 
+	public void setShowPrivatePages(boolean showPrivatePages) {
+		_showPrivatePages = showPrivatePages;
+	}
+
+	public void setShowPublicPages(boolean showPublicPages) {
+		_showPublicPages = showPublicPages;
+	}
+
 	private boolean _checkDisplayPage;
 	private boolean _enableCurrentPage;
+	private boolean _showPrivatePages;
+	private boolean _showPublicPages;
 
 }

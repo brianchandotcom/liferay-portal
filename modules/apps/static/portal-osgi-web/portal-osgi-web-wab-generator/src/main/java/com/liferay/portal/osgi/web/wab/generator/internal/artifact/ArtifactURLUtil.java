@@ -20,6 +20,7 @@ import aQute.bnd.osgi.Resource;
 import com.liferay.whip.util.ReflectionUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -93,7 +94,9 @@ public class ArtifactURLUtil {
 
 		Properties properties = new Properties();
 
-		properties.load(resource.openInputStream());
+		try (InputStream inputStream = resource.openInputStream()) {
+			properties.load(inputStream);
+		}
 
 		return properties.getProperty("servlet-context-name");
 	}

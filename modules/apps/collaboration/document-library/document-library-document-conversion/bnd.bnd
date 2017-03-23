@@ -2,5 +2,8 @@ Bundle-Name: Liferay Document Library Document Conversion
 Bundle-SymbolicName: com.liferay.document.library.document.conversion
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.document.library.document.conversion.configuration
+Import-Package:\
+	!com.sun.star.lib.unoloader,\
+	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library

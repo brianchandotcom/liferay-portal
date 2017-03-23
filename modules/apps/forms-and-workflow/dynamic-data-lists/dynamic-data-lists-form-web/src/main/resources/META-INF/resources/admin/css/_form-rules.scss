@@ -144,9 +144,9 @@
 			}
 
 			.calculator-add-field-button-container {
+				display: inline-block;
 				margin: 0 auto;
 				padding: 0;
-				display: inline-block;
 
 				.calculator-add-field-button {
 					height: 49px;
@@ -166,9 +166,9 @@
 			}
 
 			.calculator-button-area {
+				display: inline-block;
 				margin: 0 auto;
 				padding: 0;
-				display: inline-block;
 
 				& ul {
 					list-style-type: none;
@@ -321,7 +321,7 @@
 
 .liferay-ddl-form-rule-builder-footer {
 	margin: $baseline * 3 0;
-	padding: 12px 24px;
+	padding: 12px 54px;
 }
 
 .liferay-ddl-form-builder-rule-content {

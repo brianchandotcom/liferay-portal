@@ -190,7 +190,7 @@ public class LocalGitSyncUtil {
 		for (File file : upstreamDir.listFiles()) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"copying ", headsDir.getPath(), " to ",
+					"Copying ", headsDir.getPath(), " to ",
 					upstreamDir.getPath()));
 			JenkinsResultsParserUtil.copy(
 				file, new File(headsDir, file.getName()));
@@ -263,8 +263,8 @@ public class LocalGitSyncUtil {
 			catch (GitAPIException gapie) {
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
-						"WARNING - Unable to delete cached branch ",
-						remoteBranchName, " from ",
+						"Unable to delete cached branch ", remoteBranchName,
+						" from ",
 						GitWorkingDirectory.getRemoteURL(remoteConfig)));
 
 				gapie.printStackTrace();
@@ -368,7 +368,7 @@ public class LocalGitSyncUtil {
 					catch (GitAPIException gapie) {
 						System.out.println(
 							JenkinsResultsParserUtil.combine(
-								"WARNING - Unable to delete cached branch ",
+								"Unable to delete cached branch ",
 								remoteBranchName, " from ",
 								GitWorkingDirectory.getRemoteURL(
 									remoteConfig)));
@@ -533,7 +533,7 @@ public class LocalGitSyncUtil {
 
 				if (remoteBranchNames.contains(cacheBranchName)) {
 					System.out.println(
-						"cacheBranch " + cacheBranchName + " already exists.");
+						"Cache branch " + cacheBranchName + " already exists.");
 
 					return cacheBranchName;
 				}
@@ -600,7 +600,7 @@ public class LocalGitSyncUtil {
 				senderRemoteConfig = null;
 
 				System.out.println(
-					"Synchronization to local-git failed. Retrying");
+					"Synchronization with local-git failed. Retrying.");
 
 				return synchronizeToLocalGit(
 					gitWorkingDirectory, receiverUsername, retryCount + 1,
@@ -629,7 +629,7 @@ public class LocalGitSyncUtil {
 			}
 
 			System.out.println(
-				"SynchronizeToLocalGit completed in " +
+				"Synchronization with local git completed in " +
 					JenkinsResultsParserUtil.toDurationString(
 						System.currentTimeMillis() - start));
 		}

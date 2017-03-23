@@ -126,15 +126,9 @@ public class GitWorkingDirectory {
 			boolean force, String remoteName, String remoteURL)
 		throws GitAPIException {
 
-		String forceString = "";
-
-		if (force) {
-			forceString = "-f ";
-		}
-
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"remote add ", forceString, remoteName, " url: ", remoteURL));
+				"Adding remote ", remoteName, " with url: ", remoteURL));
 
 		RemoteConfig remoteConfig = getRemoteConfig(remoteName);
 
@@ -171,7 +165,7 @@ public class GitWorkingDirectory {
 	public void checkoutBranch(String branchName, String options)
 		throws GitAPIException {
 
-		System.out.println("Checkout branch " + branchName);
+		System.out.println("Checking out branch " + branchName);
 
 		waitForIndexLock();
 
@@ -223,19 +217,8 @@ public class GitWorkingDirectory {
 					String gitHubBranchCommit = getRemoteBranchSha(
 						remoteBranchName, getRemoteConfig(remoteName));
 
-					System.out.println(
-						JenkinsResultsParserUtil.combine(
-							"headContent: \"", headContent, "\""));
-					System.out.println(
-						JenkinsResultsParserUtil.combine(
-							"gitHubBranchCommit: \"", gitHubBranchCommit,
-							"\""));
-
 					if (headContent.equals(gitHubBranchCommit)) {
 						break;
-					}
-					else {
-						System.out.println("Not equal");
 					}
 				}
 
@@ -273,7 +256,7 @@ public class GitWorkingDirectory {
 			cleanCommand.setCleanDirectories(true);
 			cleanCommand.setIgnore(true);
 
-			System.out.println("clean -dfx");
+			System.out.println("Cleaning repository");
 
 			cleanCommand.call();
 		}
@@ -287,7 +270,7 @@ public class GitWorkingDirectory {
 	public void commitFileToCurrentBranch(String fileName, String message)
 		throws GitAPIException {
 
-		System.out.println("Commit file to current branch " + fileName);
+		System.out.println("Committing file to current branch " + fileName);
 
 		stageFileInCurrentBranch(fileName);
 
@@ -297,7 +280,7 @@ public class GitWorkingDirectory {
 	public void commitStagedFilesToCurrentBranch(String message)
 		throws GitAPIException {
 
-		System.out.println("Commit staged files to current branch");
+		System.out.println("Committing staged files to current branch");
 
 		CommitCommand commitCommand = _git.commit();
 
@@ -315,8 +298,7 @@ public class GitWorkingDirectory {
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Create branch ", branchName, " force ",
-				Boolean.toString(force), " SHA ", sha));
+				"Creating branch ", branchName, " at sha ", sha));
 
 		CreateBranchCommand createBranchCommand = _git.branchCreate();
 
@@ -360,7 +342,7 @@ public class GitWorkingDirectory {
 	public void deleteLocalBranch(String localBranchName)
 		throws GitAPIException {
 
-		System.out.println("Delete local branch " + localBranchName);
+		System.out.println("Deleting local branch " + localBranchName);
 
 		DeleteBranchCommand deleteBranchCommand = _git.branchDelete();
 
@@ -392,18 +374,16 @@ public class GitWorkingDirectory {
 				if (refSpec == null) {
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
-							"fetch ", getRemoteURL(remoteConfig)));
+							"Fetching from ", getRemoteURL(remoteConfig)));
 				}
 				else {
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
-							"fetch ", getRemoteURL(remoteConfig), " ",
+							"Fetching from  ", getRemoteURL(remoteConfig), " ",
 							refSpec.toString()));
 				}
 
-				FetchResult fetchResult = fetchCommand.call();
-
-				System.out.println(fetchResult.getMessages());
+				fetchCommand.call();
 
 				return;
 			}
@@ -411,9 +391,9 @@ public class GitWorkingDirectory {
 				if (retries < 3) {
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
-							"Fetch Attempt ", Integer.toString(retries),
-							" failed with a TransportException. ",
-							te.getMessage(), " Retrying fetch."));
+							"Fetch attempt ", Integer.toString(retries),
+							" failed with a transport exception. ",
+							te.getMessage(), "\nRetrying."));
 
 					retries++;
 
@@ -642,7 +622,7 @@ public class GitWorkingDirectory {
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Push ", localBranchName, " to ", remoteURL, " ",
+				"Pushing ", localBranchName, " to ", remoteURL, " ",
 				remoteBranchName));
 
 		PushCommand pushCommand = null;
@@ -670,7 +650,10 @@ public class GitWorkingDirectory {
 						(remoteRefUpdate.getStatus() !=
 							RemoteRefUpdate.Status.OK)) {
 
-						System.out.println(remoteRefUpdate);
+						System.out.println(JenkinsResultsParserUtil.combine(
+							"Unable to push ", localBranchName, " to ",
+							getRemoteURL(remoteConfig), " \n\tPush response: ",
+							remoteRefUpdate.toString()));
 
 						return false;
 					}
@@ -696,7 +679,7 @@ public class GitWorkingDirectory {
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"rebase ", getCurrentBranch(), " ", sha));
+				"Rebasing ", getCurrentBranch(), " to ", sha));
 
 		RebaseResult result = rebaseCommand.call();
 
@@ -704,20 +687,6 @@ public class GitWorkingDirectory {
 
 		if (!status.isSuccessful()) {
 			System.out.println("Rebase failed. " + status.toString());
-
-			Map<String, ResolveMerger.MergeFailureReason> failingPathsMap =
-				result.getFailingPaths();
-
-			if (failingPathsMap != null) {
-				for (Entry<String, MergeFailureReason> entry :
-						failingPathsMap.entrySet()) {
-
-					System.out.println(
-						JenkinsResultsParserUtil.combine(
-							entry.getValue().toString(), " -- ",
-							entry.getKey()));
-				}
-			}
 
 			if (abortOnFail) {
 				rebaseAbort();
@@ -741,7 +710,7 @@ public class GitWorkingDirectory {
 		rebaseCommand.setOperation(RebaseCommand.Operation.ABORT);
 
 		System.out.println(
-			"rebase " + RebaseCommand.Operation.ABORT.toString());
+			"Aborting rebase " + RebaseCommand.Operation.ABORT.toString());
 
 		rebaseCommand.call();
 	}
@@ -761,7 +730,7 @@ public class GitWorkingDirectory {
 						" because it does not exist"));
 			}
 
-			System.out.println("remote remove " + remoteConfig.getName());
+			System.out.println("Removing remote " + remoteConfig.getName());
 
 			try {
 				JenkinsResultsParserUtil.executeBashCommands(
@@ -807,7 +776,7 @@ public class GitWorkingDirectory {
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"reset ", resetType.toString(), " to ", ref));
+				"Resetting ", resetType.toString(), " to ", ref));
 
 		resetCommand.call();
 	}
@@ -819,7 +788,7 @@ public class GitWorkingDirectory {
 
 		addCommand.addFilepattern(fileName);
 
-		System.out.println("Stage file in current branch " + fileName);
+		System.out.println("Staging file in current branch " + fileName);
 
 		addCommand.call();
 	}

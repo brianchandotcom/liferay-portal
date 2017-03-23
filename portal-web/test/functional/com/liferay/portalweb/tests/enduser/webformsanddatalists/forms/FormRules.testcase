@@ -509,6 +509,83 @@
 		</execute>
 	</command>
 
+	<command name="ConfigureUserBelongsToRule" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Public" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Manager" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="FormsAdminNavigator#gotoRules" />
+
+		<execute macro="FormRules#addRule" />
+
+		<execute macro="FormRules#configureConditionOptions">
+			<var name="conditionField" value="User" />=
+			<var name="conditionOperator" value="belongs to" />
+			<var name="conditionRowNumber" value="1" />
+			<var name="conditionValueType" value="Site Administrator" />
+		</execute>
+
+		<execute macro="FormRules#configureActionOptions">
+			<var name="action" value="Show" />
+			<var name="actionRowNumber" value="1" />
+			<var name="actionTarget" value="Manager" />
+		</execute>
+
+		<execute macro="FormRules#addAction" />
+
+		<execute macro="FormRules#configureActionOptions">
+			<var name="action" value="Require" />
+			<var name="actionRowNumber" value="2" />
+			<var name="actionTarget" value="Manager" />
+		</execute>
+
+		<execute macro="FormRules#save" />
+
+		<execute macro="FormRules#viewSummary">
+			<var name="action" value="Require" />
+			<var name="actionTarget" value="Manager" />
+			<var name="conditionField" value="User" />
+			<var name="conditionFieldConstant" value="Site Administrator" />
+			<var name="conditionOperator" value="belongs to" />
+			<var name="ruleNumber" value="1" />
+		</execute>
+
+		<execute macro="FormRules#viewSummary">
+			<var name="action" value="Show" />
+			<var name="actionTarget" value="Manager" />
+			<var name="conditionField" value="User" />
+			<var name="conditionFieldConstant" value="Site Administrator" />
+			<var name="conditionOperator" value="belongs to" />
+			<var name="ruleNumber" value="1" />
+		</execute>
+	</command>
+
 	<command name="EditRule" priority="5">
 		<property name="portal.acceptance" value="pending" />
 

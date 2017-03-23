@@ -1,4 +1,8 @@
 <definition>
+	<command name="addAction">
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_ADD_CONDITION" />
+	</command>
+
 	<command name="addCondition">
 		<execute function="Click" locator1="FormRules#RULE_BUILDER_ADD_CONDITION" />
 

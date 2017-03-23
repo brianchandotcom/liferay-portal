@@ -35,6 +35,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RULE_BUILDER_ADD_CONDITION</td>
+	<td>//a[contains(@class,'form-builder-rule-add-action')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RULE_BUILDER_RULE_CONDITION_DROPDOWN</td>
 	<td>//button[contains(@class,'dropdown-toggle-operator')]</td>
 	<td></td>

@@ -18,18 +18,17 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JSPEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JSPIfStatementCheck;
+import com.liferay.source.formatter.checks.JSPTagAttributesCheck;
 import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
@@ -37,8 +36,7 @@ import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
 import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.JavaMethod;
-import com.thoughtworks.qdox.model.Type;
+
 import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
@@ -46,7 +44,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -326,8 +323,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = fixIncorrectClosingTag(newContent);
 
 		newContent = fixEmptyJavaSourceTag(newContent);
-
-		newContent = formatMultilineTagAttributes(fileName, newContent);
 
 		newContent = fixUnparameterizedClassType(newContent);
 
@@ -747,19 +742,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						lineCount);
 				}
 
-				Matcher matcher = _jspTaglibPattern.matcher(line);
-
-				while (matcher.find()) {
-					line = formatAttributes(
-						fileName, line, line.substring(matcher.start()),
-						lineCount, false);
-				}
-
-				if (trimmedLine.matches("<\\w+ .*>.*")) {
-					line = formatAttributes(
-						fileName, line, trimmedLine, lineCount, false);
-				}
-
 				if (!hasUnsortedExceptions) {
 					int x = line.indexOf("<liferay-ui:error exception=\"<%=");
 
@@ -798,7 +780,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						if (y != -1) {
 							String includeFileName = line.substring(x + 1, y);
 
-							matcher = _jspIncludeFilePattern.matcher(
+							Matcher matcher = _jspIncludeFilePattern.matcher(
 								includeFileName);
 
 							if (!matcher.find()) {
@@ -968,153 +950,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			"Log _log = LogFactoryUtil.getLog(\"" + logFileName + "\")");
 	}
 
-	protected String formatMultilineTagAttributes(
-			String fileName, String content)
-		throws Exception {
-
-		Matcher matcher = _multilineTagPattern.matcher(content);
-
-		while (matcher.find()) {
-			char beforeClosingTagChar = content.charAt(matcher.start(2) - 1);
-
-			if ((beforeClosingTagChar != CharPool.NEW_LINE) &&
-				(beforeClosingTagChar != CharPool.TAB)) {
-
-				String closingTag = matcher.group(2);
-
-				String whitespace = matcher.group(1);
-
-				String tabs = StringUtil.removeChar(
-					whitespace, CharPool.NEW_LINE);
-
-				return StringUtil.replaceFirst(
-					content, closingTag, "\n" + tabs + closingTag,
-					matcher.start(2));
-			}
-
-			String tag = matcher.group();
-
-			String singlelineTag = StringUtil.removeChar(
-				StringUtil.trim(tag), CharPool.TAB);
-
-			singlelineTag = StringUtil.replace(
-				singlelineTag, CharPool.NEW_LINE, CharPool.SPACE);
-
-			String newTag = formatAttributes(
-				fileName, tag, singlelineTag,
-				getLineCount(content, matcher.end(1)), false);
-
-			if (!tag.equals(newTag)) {
-				return StringUtil.replace(content, tag, newTag);
-			}
-		}
-
-		return content;
-	}
-
-	@Override
-	protected String formatTagAttributeType(
-			String line, String tagName, String attributeAndValue)
-		throws Exception {
-
-		if (attributeAndValue.matches(
-				".*=\"<%= Boolean\\.(FALSE|TRUE) %>\".*")) {
-
-			String newAttributeAndValue = StringUtil.replace(
-				attributeAndValue,
-				new String[] {
-					"=\"<%= Boolean.FALSE %>\"", "=\"<%= Boolean.TRUE %>\""
-				},
-				new String[] {"=\"<%= false %>\"", "=\"<%= true %>\""});
-
-			return StringUtil.replace(
-				line, attributeAndValue, newAttributeAndValue);
-		}
-
-		if (!portalSource && !subrepository) {
-			return line;
-		}
-
-		if (!attributeAndValue.endsWith(StringPool.QUOTE) ||
-			attributeAndValue.contains("\"<%=")) {
-
-			return line;
-		}
-
-		JavaClass tagJavaClass = _tagJavaClassesMap.get(tagName);
-
-		if (tagJavaClass == null) {
-			return line;
-		}
-
-		int pos = attributeAndValue.indexOf("=\"");
-
-		String attribute = attributeAndValue.substring(0, pos);
-
-		String setAttributeMethodName =
-			"set" + TextFormatter.format(attribute, TextFormatter.G);
-
-		for (String dataType : getPrimitiveTagAttributeDataTypes()) {
-			Type javaType = new Type(dataType);
-
-			JavaMethod setAttributeMethod = null;
-
-			while (true) {
-
-				// com.thoughtworks.qdox.model.JavaClass is not thread-safe and
-				// can throw NPE as a result of a race condition
-
-				try {
-					setAttributeMethod = tagJavaClass.getMethodBySignature(
-						setAttributeMethodName, new Type[] {javaType}, true);
-
-					break;
-				}
-				catch (Exception e) {
-				}
-			}
-
-			if (setAttributeMethod != null) {
-				String value = attributeAndValue.substring(
-					pos + 2, attributeAndValue.length() - 1);
-
-				if (!isValidTagAttributeValue(value, dataType)) {
-					return line;
-				}
-
-				String newAttributeAndValue = StringUtil.replace(
-					attributeAndValue,
-					StringPool.QUOTE + value + StringPool.QUOTE,
-					"\"<%= " + value + " %>\"");
-
-				return StringUtil.replace(
-					line, attributeAndValue, newAttributeAndValue);
-			}
-		}
-
-		if (!attributeAndValue.matches(".*=\"(false|true)\".*")) {
-			return line;
-		}
-
-		JavaMethod setAttributeMethod = tagJavaClass.getMethodBySignature(
-			setAttributeMethodName, new Type[] {new Type("java.lang.String")},
-			true);
-
-		if (setAttributeMethod == null) {
-			return line;
-		}
-
-		String newAttributeAndValue = StringUtil.replace(
-			attributeAndValue, new String[] {"=\"false\"", "=\"true\""},
-			new String[] {
-				"=\"<%= Boolean.FALSE.toString() %>\"",
-				"=\"<%= Boolean.TRUE.toString() %>\""
-			});
-
-		return StringUtil.replace(
-			line, attributeAndValue, newAttributeAndValue);
-	}
-
 	protected String formatTaglibVariable(String fileName, String content) {
 		Matcher matcher = _taglibVariablePattern.matcher(content);
 
@@ -1158,6 +993,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		fileChecks.add(new JSPEmptyLinesCheck());
 		fileChecks.add(new JSPIfStatementCheck());
+		fileChecks.add(
+			new JSPTagAttributesCheck(
+				portalSource, subrepository, _primitiveTagAttributeDataTypes,
+				_tagJavaClassesMap));
 
 		return fileChecks;
 	}
@@ -1316,19 +1155,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return referenceFileNames;
-	}
-
-	protected Set<String> getPrimitiveTagAttributeDataTypes() {
-		if (_primitiveTagAttributeDataTypes != null) {
-			return _primitiveTagAttributeDataTypes;
-		}
-
-		Set<String> primitiveTagAttributeDataTypes = SetUtil.fromArray(
-			new String[] {"boolean", "double", "int", "long"});
-
-		_primitiveTagAttributeDataTypes = primitiveTagAttributeDataTypes;
-
-		return _primitiveTagAttributeDataTypes;
 	}
 
 	protected int getTaglibXSSVulnerabilityPos(
@@ -1575,29 +1401,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return false;
 	}
 
-	protected boolean isValidTagAttributeValue(String value, String dataType) {
-		if (dataType.equals("boolean")) {
-			return Validator.isBoolean(value);
-		}
-
-		if (dataType.equals("double")) {
-			try {
-				Double.parseDouble(value);
-			}
-			catch (NumberFormatException nfe) {
-				return false;
-			}
-
-			return true;
-		}
-
-		if (dataType.equals("int") || dataType.equals("long")) {
-			return Validator.isNumber(value);
-		}
-
-		return false;
-	}
-
 	protected void moveFrequentlyUsedImportsToCommonInit(int minCount)
 		throws IOException {
 
@@ -1706,7 +1509,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (portalSource) {
-			_populateTagJavaClasses();
+			_primitiveTagAttributeDataTypes =
+				_getPrimitiveTagAttributeDataTypes();
+			_tagJavaClassesMap = _getTagJavaClassesMap();
 		}
 	}
 
@@ -1735,33 +1540,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	@Override
-	protected String sortHTMLAttributes(
-		String line, String value, String attributeAndValue) {
-
-		if (!value.matches("([-a-z0-9]+ )+[-a-z0-9]+")) {
-			return line;
-		}
-
-		List<String> htmlAttributes = ListUtil.fromArray(
-			StringUtil.split(value, StringPool.SPACE));
-
-		Collections.sort(htmlAttributes);
-
-		String newValue = StringUtil.merge(htmlAttributes, StringPool.SPACE);
-
-		if (value.equals(newValue)) {
-			return line;
-		}
-
-		String newAttributeAndValue = StringUtil.replace(
-			attributeAndValue, value, newValue);
-
-		return StringUtil.replace(
-			line, attributeAndValue, newAttributeAndValue);
+	private Set<String> _getPrimitiveTagAttributeDataTypes() {
+		return SetUtil.fromArray(
+			new String[] {"boolean", "double", "int", "long"});
 	}
 
-	private void _populateTagJavaClasses() throws Exception {
+	private Map<String, JavaClass> _getTagJavaClassesMap() throws Exception {
+		Map<String, JavaClass> tagJavaClassesMap = new HashMap<>();
+
 		List<String> tldFileNames = getFileNames(
 			sourceFormatterArgs.getBaseDirName(), null,
 			new String[] {"**/dependencies/**", "**/util-taglib/**"},
@@ -1849,10 +1635,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				String tagName = tagNameElement.getStringValue();
 
-				_tagJavaClassesMap.put(
+				tagJavaClassesMap.put(
 					shortName + StringPool.COLON + tagName, tagJavaClass);
 			}
 		}
+
+		return tagJavaClassesMap;
 	}
 
 	private static final String[] _INCLUDES =
@@ -2020,15 +1808,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Map<String, String> _jspContents = new HashMap<>();
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*\\.(jsp[f]?|svg)");
-	private final Pattern _jspTaglibPattern = Pattern.compile(
-		"<[-\\w]+:[-\\w]+ .");
 	private final Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
-	private final Pattern _multilineTagPattern = Pattern.compile(
-		"(\\s+)<[-\\w]+:[-\\w]+\n.*?(/?>)(\n|$)", Pattern.DOTALL);
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private final Pattern _redirectBackURLPattern = Pattern.compile(
 		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +
@@ -2037,7 +1821,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private boolean _stripJSPImports = true;
 	private final Pattern _subnamePattern = Pattern.compile(
 		"\\s(_?sub[A-Z]\\w+)[; ]");
-	private final Map<String, JavaClass> _tagJavaClassesMap = new HashMap<>();
+	private Map<String, JavaClass> _tagJavaClassesMap;
 	private final Pattern _taglibLanguageKeyPattern1 = Pattern.compile(
 		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +
 			"<=%\\[\\s]+\"");

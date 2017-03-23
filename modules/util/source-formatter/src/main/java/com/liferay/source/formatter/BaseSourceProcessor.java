@@ -70,7 +70,6 @@ import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
 

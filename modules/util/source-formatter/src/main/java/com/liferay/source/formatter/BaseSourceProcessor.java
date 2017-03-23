@@ -357,101 +357,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected void checkLanguageKeys(
-			String fileName, String absolutePath, String content,
-			Pattern pattern)
-		throws Exception {
-
-		String fileExtension = FilenameUtils.getExtension(fileName);
-
-		if (!portalSource || fileExtension.equals("vm") ||
-			isExcludedPath(LANGUAGE_KEYS_CHECK_EXCLUDES, absolutePath)) {
-
-			return;
-		}
-
-		if (_portalLanguageProperties == null) {
-			Properties portalLanguageProperties = new Properties();
-
-			File portalLanguagePropertiesFile = getFile(
-				"portal-impl/src/content/Language.properties",
-				PORTAL_MAX_DIR_LEVEL);
-
-			if (portalLanguagePropertiesFile != null) {
-				InputStream inputStream = new FileInputStream(
-					portalLanguagePropertiesFile);
-
-				portalLanguageProperties.load(inputStream);
-			}
-
-			_portalLanguageProperties = portalLanguageProperties;
-		}
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			String[] languageKeys = getLanguageKeys(matcher);
-
-			for (String languageKey : languageKeys) {
-				if (Validator.isNumber(languageKey) ||
-					languageKey.endsWith(StringPool.CLOSE_CURLY_BRACE) ||
-					languageKey.endsWith(StringPool.DASH) ||
-					languageKey.endsWith(StringPool.OPEN_BRACKET) ||
-					languageKey.endsWith(StringPool.PERIOD) ||
-					languageKey.endsWith(StringPool.UNDERLINE) ||
-					languageKey.startsWith(StringPool.DASH) ||
-					languageKey.startsWith(StringPool.DOLLAR) ||
-					languageKey.startsWith(StringPool.OPEN_BRACKET) ||
-					languageKey.startsWith(StringPool.OPEN_CURLY_BRACE) ||
-					languageKey.startsWith(StringPool.PERIOD) ||
-					languageKey.startsWith(StringPool.UNDERLINE) ||
-					_portalLanguageProperties.containsKey(languageKey)) {
-
-					continue;
-				}
-
-				Properties moduleLanguageProperties =
-					getModuleLanguageProperties(fileName);
-
-				if ((moduleLanguageProperties != null) &&
-					moduleLanguageProperties.containsKey(languageKey)) {
-
-					continue;
-				}
-
-				Properties moduleLangLanguageProperties =
-					getModuleLangLanguageProperties(absolutePath);
-
-				if ((moduleLangLanguageProperties != null) &&
-					moduleLangLanguageProperties.containsKey(languageKey)) {
-
-					continue;
-				}
-
-				BNDSettings bndSettings = getBNDSettings(fileName);
-
-				if (bndSettings == null) {
-					processMessage(
-						fileName, "Missing language key '" + languageKey + "'");
-
-					continue;
-				}
-
-				Properties bndFileLanguageProperties =
-					bndSettings.getLanguageProperties();
-
-				if ((bndFileLanguageProperties != null) &&
-					!bndFileLanguageProperties.containsKey(languageKey)) {
-
-					processMessage(
-						fileName, "Missing language key '" + languageKey + "'");
-				}
-
-				putBNDSettings(bndSettings);
-			}
-		}
-	}
-
 	protected String checkPrincipalException(String content) {
 		String newContent = content;
 
@@ -1282,75 +1187,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _immutableFieldTypes;
 	}
 
-	protected String[] getLanguageKeys(Matcher matcher) {
-		int groupCount = matcher.groupCount();
-
-		if (groupCount == 1) {
-			String languageKey = matcher.group(1);
-
-			if (Validator.isNotNull(languageKey)) {
-				return new String[] {languageKey};
-			}
-		}
-		else if (groupCount == 2) {
-			String languageKey = matcher.group(2);
-
-			languageKey = TextFormatter.format(languageKey, TextFormatter.K);
-
-			return new String[] {languageKey};
-		}
-
-		StringBundler sb = new StringBundler();
-
-		String match = matcher.group();
-
-		int count = 0;
-
-		for (int i = 0; i < match.length(); i++) {
-			char c = match.charAt(i);
-
-			switch (c) {
-				case CharPool.CLOSE_PARENTHESIS:
-					if (count <= 1) {
-						return new String[0];
-					}
-
-					count--;
-
-					break;
-
-				case CharPool.OPEN_PARENTHESIS:
-					count++;
-
-					break;
-
-				case CharPool.QUOTE:
-					if (count > 1) {
-						break;
-					}
-
-					while (i < match.length()) {
-						i++;
-
-						if (match.charAt(i) == CharPool.QUOTE) {
-							String languageKey = sb.toString();
-
-							if (match.startsWith("names")) {
-								return StringUtil.split(languageKey);
-							}
-							else {
-								return new String[] {languageKey};
-							}
-						}
-
-						sb.append(match.charAt(i));
-					}
-			}
-		}
-
-		return new String[0];
-	}
-
 	protected int getLeadingTabCount(String line) {
 		int leadingTabCount = 0;
 
@@ -1514,171 +1350,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return mainReleaseComparableVersion;
 	}
 
-	protected List<String> getModuleLangDirNames(
-		String moduleLocation, String buildGradleContent) {
-
-		List<String> moduleLangDirNames = new ArrayList<>();
-
-		Matcher matcher = mergeLangPattern.matcher(buildGradleContent);
-
-		if (matcher.find()) {
-			String[] sourceDirs = StringUtil.split(matcher.group(1));
-
-			for (String sourceDir : sourceDirs) {
-				sourceDir = StringUtil.trim(sourceDir);
-
-				moduleLangDirNames.add(
-					moduleLocation + StringPool.SLASH +
-						sourceDir.substring(1, sourceDir.length() - 1));
-			}
-
-			return moduleLangDirNames;
-		}
-
-		int x = moduleLocation.lastIndexOf(StringPool.SLASH);
-
-		String baseModuleName = moduleLocation.substring(0, x);
-
-		int y = baseModuleName.lastIndexOf(StringPool.SLASH);
-
-		baseModuleName = baseModuleName.substring(
-			y + 1, baseModuleName.length());
-
-		String moduleLangDirName =
-			moduleLocation.substring(0, x + 1) + baseModuleName +
-				"-lang/src/main/resources/content";
-
-		File moduleLangDir = new File(moduleLangDirName);
-
-		if (!moduleLangDir.exists() &&
-			moduleLangDirName.contains("/modules/ee/")) {
-
-			moduleLangDirName = StringUtil.replaceFirst(
-				moduleLangDirName, "/modules/ee/", "/modules/");
-		}
-
-		moduleLangDirNames.add(moduleLangDirName);
-
-		return moduleLangDirNames;
-	}
-
-	protected Properties getModuleLangLanguageProperties(String absolutePath)
-		throws Exception {
-
-		Properties properties = _moduleLangLanguageProperties.get(absolutePath);
-
-		if (properties != null) {
-			return properties;
-		}
-
-		String buildGradleContent = null;
-		String buildGradleFileLocation = absolutePath;
-
-		while (true) {
-			int pos = buildGradleFileLocation.lastIndexOf(StringPool.SLASH);
-
-			if (pos == -1) {
-				return null;
-			}
-
-			buildGradleFileLocation = buildGradleFileLocation.substring(
-				0, pos + 1);
-
-			File file = new File(buildGradleFileLocation + "build.gradle");
-
-			if (file.exists()) {
-				buildGradleContent = FileUtil.read(file);
-
-				break;
-			}
-
-			buildGradleFileLocation = StringUtil.replaceLast(
-				buildGradleFileLocation, StringPool.SLASH, StringPool.BLANK);
-		}
-
-		Matcher matcher = applyLangMergerPluginPattern.matcher(
-			buildGradleContent);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		String moduleLocation = StringUtil.replaceLast(
-			buildGradleFileLocation, StringPool.SLASH, StringPool.BLANK);
-
-		List<String> moduleLangDirNames = getModuleLangDirNames(
-			moduleLocation, buildGradleContent);
-
-		properties = new Properties();
-
-		for (String moduleLangDirName : moduleLangDirNames) {
-			String moduleLangLanguagePropertiesFileName =
-				moduleLangDirName + "/Language.properties";
-
-			File file = new File(moduleLangLanguagePropertiesFileName);
-
-			if (!file.exists()) {
-				continue;
-			}
-
-			InputStream inputStream = new FileInputStream(file);
-
-			properties.load(inputStream);
-		}
-
-		_moduleLangLanguageProperties.put(absolutePath, properties);
-
-		return properties;
-	}
-
-	protected Properties getModuleLanguageProperties(String fileName) {
-		Properties properties = _moduleLanguageProperties.get(fileName);
-
-		if (properties != null) {
-			return properties;
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		int pos = fileName.indexOf("/docroot/");
-
-		if (pos != -1) {
-			sb.append(fileName.substring(0, pos + 9));
-			sb.append("WEB-INF/src/");
-		}
-		else {
-			pos = fileName.indexOf("src/");
-
-			if (pos == -1) {
-				return null;
-			}
-
-			sb.append(fileName.substring(0, pos + 4));
-
-			if (fileName.contains("src/main/")) {
-				sb.append("main/resources/");
-			}
-		}
-
-		sb.append("content/Language.properties");
-
-		try {
-			properties = new Properties();
-
-			InputStream inputStream = new FileInputStream(sb.toString());
-
-			properties.load(inputStream);
-
-			_moduleLanguageProperties.put(fileName, properties);
-
-			return properties;
-		}
-		catch (Exception e) {
-		}
-
-		return null;
-	}
-
 	protected List<String> getParameterList(String methodCall) {
 		String parameters = null;
 
@@ -1741,6 +1412,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			pluginsInsideModulesDirectoryNames;
 
 		return _pluginsInsideModulesDirectoryNames;
+	}
+
+	protected Properties getPortalLanguageProperties() throws Exception {
+		Properties portalLanguageProperties = new Properties();
+
+		File portalLanguagePropertiesFile = getFile(
+			"portal-impl/src/content/Language.properties",
+			PORTAL_MAX_DIR_LEVEL);
+
+		if (portalLanguagePropertiesFile != null) {
+			InputStream inputStream = new FileInputStream(
+				portalLanguagePropertiesFile);
+
+			portalLanguageProperties.load(inputStream);
+		}
+
+		return portalLanguageProperties;
 	}
 
 	protected String getProperty(String key) {
@@ -2261,9 +1949,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
 
-	protected static Pattern applyLangMergerPluginPattern = Pattern.compile(
-		"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",
-		Pattern.MULTILINE);
 	protected static Pattern emptyArrayPattern = Pattern.compile(
 		"((\\[\\])+) \\{\\}");
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
@@ -2274,10 +1959,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Pattern.DOTALL);
 	protected static Pattern javaSourceInsideJSPLinePattern = Pattern.compile(
 		"<%=(.+?)%>");
-	protected static Pattern languageKeyPattern = Pattern.compile(
-		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
-	protected static Pattern mergeLangPattern = Pattern.compile(
-		"mergeLang \\{\\s*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);
 	protected static boolean portalSource;
 	protected static Pattern principalExceptionPattern = Pattern.compile(
 		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
@@ -2437,13 +2118,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private ComparableVersion _mainReleaseComparableVersion;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
-	private final Map<String, Properties> _moduleLangLanguageProperties =
-		new HashMap<>();
-	private final Map<String, Properties> _moduleLanguageProperties =
-		new HashMap<>();
 	private String _oldCopyright;
 	private List<String> _pluginsInsideModulesDirectoryNames;
-	private Properties _portalLanguageProperties;
 	private String _projectPathPrefix;
 	private Properties _properties;
 	private SourceFormatterHelper _sourceFormatterHelper;

@@ -18,16 +18,19 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JSPEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JSPIfStatementCheck;
+import com.liferay.source.formatter.checks.JSPLanguageKeysCheck;
 import com.liferay.source.formatter.checks.JSPTagAttributesCheck;
 import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
@@ -36,7 +39,8 @@ import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
 import com.thoughtworks.qdox.model.JavaClass;
-
+import com.thoughtworks.qdox.model.JavaMethod;
+import com.thoughtworks.qdox.model.Type;
 import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
@@ -44,10 +48,12 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -380,15 +386,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = removeUnusedTaglibs(
 			fileName, newContent, checkedForIncludesFileNames,
 			includeFileNames);
-
-		checkLanguageKeys(
-			fileName, absolutePath, newContent, languageKeyPattern);
-		checkLanguageKeys(
-			fileName, absolutePath, newContent, _taglibLanguageKeyPattern1);
-		checkLanguageKeys(
-			fileName, absolutePath, newContent, _taglibLanguageKeyPattern2);
-		checkLanguageKeys(
-			fileName, absolutePath, newContent, _taglibLanguageKeyPattern3);
 
 		checkSubnames(fileName, newContent);
 
@@ -998,6 +995,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				portalSource, subrepository, _primitiveTagAttributeDataTypes,
 				_tagJavaClassesMap));
 
+		if (portalSource) {
+			fileChecks.add(
+				new JSPLanguageKeysCheck(
+					_languageKeysCheckExcludes, _portalLanguageProperties));
+		}
+
 		return fileChecks;
 	}
 
@@ -1512,6 +1515,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			_primitiveTagAttributeDataTypes =
 				_getPrimitiveTagAttributeDataTypes();
 			_tagJavaClassesMap = _getTagJavaClassesMap();
+
+			_languageKeysCheckExcludes = getExcludes(
+				LANGUAGE_KEYS_CHECK_EXCLUDES);
+			_portalLanguageProperties = getPortalLanguageProperties();
 		}
 	}
 
@@ -1808,11 +1815,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Map<String, String> _jspContents = new HashMap<>();
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*\\.(jsp[f]?|svg)");
+	private List<String> _languageKeysCheckExcludes;
 	private final Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
+	private Properties _portalLanguageProperties;
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private final Pattern _redirectBackURLPattern = Pattern.compile(
 		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +
@@ -1822,17 +1831,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _subnamePattern = Pattern.compile(
 		"\\s(_?sub[A-Z]\\w+)[; ]");
 	private Map<String, JavaClass> _tagJavaClassesMap;
-	private final Pattern _taglibLanguageKeyPattern1 = Pattern.compile(
-		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +
-			"<=%\\[\\s]+\"");
-	private final Pattern _taglibLanguageKeyPattern2 = Pattern.compile(
-		"(aui:)(?:input|select|field-wrapper) (?!.*label=(?:'|\").*(?:'|\").*" +
-			"name=\"[^<=%\\[\\s]+\")(?!.*name=\"[^<=%\\[\\s]+\".*title=" +
-				"(?:'|\").+(?:'|\"))(?!.*name=\"[^<=%\\[\\s]+\".*type=\"" +
-					"hidden\").*name=\"([^<=%\\[\\s]+)\"");
-	private final Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
-		"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*title=" +
-			"(?:'|\").+(?:'|\"))");
 	private final Pattern _taglibURIPattern = Pattern.compile(
 		"<%@\\s+taglib uri=.* prefix=\"(.*?)\" %>");
 	private final Pattern _taglibVariablePattern = Pattern.compile(

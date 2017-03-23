@@ -43,6 +43,7 @@ import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
 import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
 import com.liferay.source.formatter.checks.JavaWhitespaceCheck;
 import com.liferay.source.formatter.checks.JavaXMLSecurityCheck;
+import com.liferay.source.formatter.checks.LanguageKeysCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -53,6 +54,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -458,9 +460,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName,
 				"Assign ProcessCallable implementation a serialVersionUID");
 		}
-
-		checkLanguageKeys(
-			fileName, absolutePath, newContent, languageKeyPattern);
 
 		newContent = sortMethodCalls(absolutePath, newContent);
 
@@ -1498,6 +1497,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					_runOutsidePortalExcludes, _secureXMLExcludes));
 		}
 
+		if (portalSource) {
+			fileChecks.add(
+				new LanguageKeysCheck(
+					_languageKeysCheckExcludes, _portalLanguageProperties));
+		}
+
 		return fileChecks;
 	}
 
@@ -1965,7 +1970,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void preFormat() {
+	protected void preFormat() throws Exception {
 		_maxLineLength = sourceFormatterArgs.getMaxLineLength();
 
 		_addMissingDeprecationReleaseVersion = GetterUtil.getBoolean(
@@ -1982,6 +1987,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES);
 		_upgradeServiceUtilExcludes = getExcludes(
 			_UPGRADE_SERVICE_UTIL_EXCLUDES);
+
+		if (portalSource) {
+			_languageKeysCheckExcludes = getExcludes(
+				LANGUAGE_KEYS_CHECK_EXCLUDES);
+			_portalLanguageProperties = getPortalLanguageProperties();
+		}
 	}
 
 	protected void processCheckStyle() throws Exception {
@@ -2110,6 +2121,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			Pattern.compile(
 				".*(extends [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL)
 	};
+	private List<String> _languageKeysCheckExcludes;
 	private List<String> _lineLengthExcludes;
 	private final Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
@@ -2123,6 +2135,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private String _portalCustomSQLContent;
 	private final Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
+	private Properties _portalLanguageProperties;
 	private final Pattern _referenceMethodContentPattern = Pattern.compile(
 		"^(\\w+) =\\s+\\w+;$");
 	private final Pattern _referenceMethodPattern = Pattern.compile(

@@ -134,9 +134,11 @@ public class UploadHandlerImpl implements UploadHandler {
 	}
 
 	private void _customizeFileJSONResponse(
-			PortletRequest portletRequest, FileEntry fileEntry,
-			JSONObject jsonObject)
+			UploadFileEntryHandler handler, PortletRequest portletRequest,
+			FileEntry fileEntry, JSONObject jsonObject)
 		throws IOException {
+
+		handler.customizeFileJSONObject(jsonObject);
 
 		String source = ParamUtil.getString(
 			portletRequest, "source", StringPool.BLANK);
@@ -199,7 +201,7 @@ public class UploadHandlerImpl implements UploadHandler {
 			imageJSONObject.put("uuid", fileEntry.getUuid());
 
 			_customizeFileJSONResponse(
-				portletRequest, fileEntry, imageJSONObject);
+				handler, portletRequest, fileEntry, imageJSONObject);
 
 			return imageJSONObject;
 		}

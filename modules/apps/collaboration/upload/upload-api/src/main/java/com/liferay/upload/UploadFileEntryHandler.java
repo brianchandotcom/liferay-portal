@@ -47,6 +47,9 @@ public interface UploadFileEntryHandler {
 			long groupId, long folderId, PermissionChecker permissionChecker)
 		throws PortalException;
 
+	public default void customizeFileJSONObject(JSONObject jsonObject) {
+	}
+
 	public default void doHandleUploadException(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortalException pe, JSONObject jsonObject)

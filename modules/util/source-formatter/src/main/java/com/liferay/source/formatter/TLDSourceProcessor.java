@@ -17,14 +17,13 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.TLDElementOrderCheck;
+import com.liferay.source.formatter.checks.TLDTypeCheck;
 import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -35,22 +34,6 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
-
-		Matcher matcher = _typePattern.matcher(content);
-
-		while (matcher.find()) {
-			String typeName = matcher.group(1);
-
-			if (typeName.matches("[A-Z]\\w*")) {
-				processMessage(
-					fileName, "Use fully qualified class name, see LPS-61841",
-					getLineCount(content, matcher.start(1)));
-			}
-			else if (typeName.equals("java.lang.String")) {
-				content = StringUtil.replaceFirst(
-					content, matcher.group(), "\n");
-			}
-		}
 
 		return StringUtil.replace(content, "\n\n\n", "\n\n");
 	}
@@ -74,13 +57,11 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 		fileChecks.add(new WhitespaceCheck());
 
 		fileChecks.add(new TLDElementOrderCheck());
+		fileChecks.add(new TLDTypeCheck());
 
 		return fileChecks;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.tld"};
-
-	private static final Pattern _typePattern = Pattern.compile(
-		"\n\t*<type>(.*)</type>\n");
 
 }

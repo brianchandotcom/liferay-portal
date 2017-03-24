@@ -1481,8 +1481,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"\n(\t*\\w*(sb|SB)[0-9]?\\.append\\(\".*\"\\);)\n\\s*\\w*(sb|SB)" +
 			"[0-9]?\\.append\\(\" .*\"\\);\n");
 	protected static boolean subrepository;
-	protected static Pattern validatorEqualsPattern = Pattern.compile(
-		"\\WValidator\\.equals\\(");
 
 	protected SourceFormatterArgs sourceFormatterArgs;
 

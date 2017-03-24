@@ -37,6 +37,7 @@ import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
+import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 
@@ -260,18 +261,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkValidatorEquals(String fileName, String content) {
-		Matcher matcher = validatorEqualsPattern.matcher(content);
-
-		while (matcher.find()) {
-			processMessage(
-				fileName,
-				"Use Objects.equals(Object, Object) instead of " +
-					"Validator.equals(Object, Object), see LPS-65135",
-				getLineCount(content, matcher.start()));
-		}
-	}
-
 	protected String compressImportsOrTaglibs(
 		String fileName, String content, String attributePrefix) {
 
@@ -427,8 +416,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		checkPropertyUtils(fileName, newContent);
 
 		checkGetterUtilGet(fileName, newContent);
-
-		checkValidatorEquals(fileName, newContent);
 
 		checkDefineObjectsVariables(fileName, newContent, absolutePath);
 
@@ -1442,6 +1429,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
 		_fileChecks.add(new StringUtilCheck());
 		_fileChecks.add(new UnparameterizedClassCheck());
+		_fileChecks.add(new ValidatorEqualsCheck());
 
 		if (portalSource || subrepository) {
 			_fileChecks.add(

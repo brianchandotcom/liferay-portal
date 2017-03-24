@@ -57,6 +57,7 @@ import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.SessionKeysCheck;
 import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
+import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -438,8 +439,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			processMessage(fileName, sb.toString());
 		}
-
-		newContent = formatValidatorEquals(newContent);
 
 		matcher = _incorrectSynchronizedPattern.matcher(newContent);
 
@@ -843,28 +842,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatValidatorEquals(String content) {
-		Matcher matcher = validatorEqualsPattern.matcher(content);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		content = StringUtil.replaceFirst(
-			content, "Validator.equals(", "Objects.equals(");
-
-		if (content.contains("import java.util.Objects;")) {
-			return content;
-		}
-
-		int pos = content.indexOf("\npackage ");
-
-		pos = content.indexOf("\n", pos + 1);
-
-		return StringUtil.insert(
-			content, "import java.util.Objects;\n", pos + 1);
-	}
-
 	@Override
 	protected List<FileCheck> getFileChecks() {
 		return _fileChecks;
@@ -1094,6 +1071,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_fileChecks.add(new SessionKeysCheck());
 		_fileChecks.add(new StringUtilCheck());
 		_fileChecks.add(new UnparameterizedClassCheck());
+		_fileChecks.add(new ValidatorEqualsCheck());
 
 		if (portalSource || subrepository) {
 			_fileChecks.add(new JavaSystemEventAnnotationCheck());

@@ -36,6 +36,7 @@ import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
 import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.StringUtilCheck;
+import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 
@@ -328,8 +329,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = fixIncorrectClosingTag(newContent);
 
 		newContent = fixEmptyJavaSourceTag(newContent);
-
-		newContent = fixUnparameterizedClassType(newContent);
 
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
 			try {
@@ -1442,6 +1441,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_fileChecks.add(
 			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
 		_fileChecks.add(new StringUtilCheck());
+		_fileChecks.add(new UnparameterizedClassCheck());
 
 		if (portalSource || subrepository) {
 			_fileChecks.add(

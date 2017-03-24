@@ -56,6 +56,7 @@ import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.SessionKeysCheck;
 import com.liferay.source.formatter.checks.StringUtilCheck;
+import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -439,8 +440,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		newContent = formatValidatorEquals(newContent);
-
-		newContent = fixUnparameterizedClassType(newContent);
 
 		matcher = _incorrectSynchronizedPattern.matcher(newContent);
 
@@ -1094,6 +1093,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
 		_fileChecks.add(new SessionKeysCheck());
 		_fileChecks.add(new StringUtilCheck());
+		_fileChecks.add(new UnparameterizedClassCheck());
 
 		if (portalSource || subrepository) {
 			_fileChecks.add(new JavaSystemEventAnnotationCheck());

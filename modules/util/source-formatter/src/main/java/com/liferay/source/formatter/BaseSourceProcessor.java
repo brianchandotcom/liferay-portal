@@ -512,24 +512,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
-	protected String fixUnparameterizedClassType(String content) {
-		Matcher matcher = unparameterizedClassTypePattern1.matcher(content);
-
-		if (matcher.find()) {
-			return StringUtil.replaceFirst(
-				content, "Class", "Class<?>", matcher.start());
-		}
-
-		matcher = unparameterizedClassTypePattern2.matcher(content);
-
-		if (matcher.find()) {
-			return StringUtil.replaceFirst(
-				content, "Class", "Class<?>", matcher.start());
-		}
-
-		return content;
-	}
-
 	protected final String format(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
@@ -1499,10 +1481,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"\n(\t*\\w*(sb|SB)[0-9]?\\.append\\(\".*\"\\);)\n\\s*\\w*(sb|SB)" +
 			"[0-9]?\\.append\\(\" .*\"\\);\n");
 	protected static boolean subrepository;
-	protected static Pattern unparameterizedClassTypePattern1 =
-		Pattern.compile("\\Wnew Class[^<\\w]");
-	protected static Pattern unparameterizedClassTypePattern2 =
-		Pattern.compile("\\WClass[\\[\\]]* \\w+ =");
 	protected static Pattern validatorEqualsPattern = Pattern.compile(
 		"\\WValidator\\.equals\\(");
 

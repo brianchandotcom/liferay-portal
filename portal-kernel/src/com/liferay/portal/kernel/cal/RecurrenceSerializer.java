@@ -58,7 +58,8 @@ public class RecurrenceSerializer {
 			dayOfWeek = StringPool.QUESTION;
 		}
 		else if (frequency == Recurrence.DAILY) {
-			dayOfMonth = 1 + StringPool.FORWARD_SLASH + interval;
+			dayOfMonth = 1 + _getIntervalValue(interval, Recurrence.DAILY);
+
 			month = StringPool.STAR;
 			dayOfWeek = StringPool.QUESTION;
 			year = StringPool.STAR;
@@ -93,11 +94,12 @@ public class RecurrenceSerializer {
 				}
 			}
 
-			dayOfWeek += StringPool.FORWARD_SLASH + interval;
+			dayOfWeek += _getIntervalValue(interval, Recurrence.WEEKLY);
 		}
 		else if (frequency == Recurrence.MONTHLY) {
 			dayOfMonth = StringPool.QUESTION;
-			month = 1 + StringPool.FORWARD_SLASH + interval;
+			month = 1 + _getIntervalValue(interval, Recurrence.MONTHLY);
+
 			dayOfWeek = StringPool.QUESTION;
 			year = StringPool.STAR;
 
@@ -118,7 +120,7 @@ public class RecurrenceSerializer {
 		else if (frequency == Recurrence.YEARLY) {
 			dayOfMonth = StringPool.QUESTION;
 			dayOfWeek = StringPool.QUESTION;
-			year += StringPool.FORWARD_SLASH + interval;
+			year += _getIntervalValue(interval, Recurrence.YEARLY);
 
 			if ((byMonth != null) && (byMonth.length == 1)) {
 				month = String.valueOf(byMonth[0] + 1);
@@ -168,6 +170,17 @@ public class RecurrenceSerializer {
 			"EEE", LocaleUtil.US);
 
 		return StringUtil.toUpperCase(format.format(calendar));
+	}
+
+	private static String _getIntervalValue(int interval, int period) {
+		if ((interval <= 0) && (period == Recurrence.WEEKLY)) {
+			return StringPool.BLANK;
+		}
+		else if (interval <= 0) {
+			return StringPool.FORWARD_SLASH + 1;
+		}
+
+		return StringPool.FORWARD_SLASH + interval;
 	}
 
 }

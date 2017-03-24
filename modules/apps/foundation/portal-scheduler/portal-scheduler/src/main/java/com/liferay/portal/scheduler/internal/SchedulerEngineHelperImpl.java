@@ -211,7 +211,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		}
 		else if (recurrenceType == Recurrence.WEEKLY) {
 			int weeklyInterval = ParamUtil.getInteger(
-				portletRequest, "weeklyInterval", 1);
+				portletRequest, "weeklyInterval", 0);
 
 			recurrence.setInterval(weeklyInterval);
 

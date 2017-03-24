@@ -577,7 +577,7 @@ public class Recurrence implements Serializable {
 	 * Method setInterval
 	 */
 	public void setInterval(int intr) {
-		interval = (intr > 0) ? intr : 1;
+		interval = intr;
 	}
 
 	/**

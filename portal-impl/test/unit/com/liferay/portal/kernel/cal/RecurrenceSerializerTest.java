@@ -130,6 +130,16 @@ public class RecurrenceSerializerTest extends RecurrenceSerializer {
 	}
 
 	@Test
+	public void testWeeklyNoRecurrence() throws Exception {
+		Recurrence recurrence = getRecurrence(
+			_recurrenceCalendar, Recurrence.WEEKLY);
+
+		recurrence.setInterval(0);
+
+		Assert.assertEquals("0 4 3 ? * 7 *", toCronText(recurrence));
+	}
+
+	@Test
 	public void testWeeklyRecurrence() throws Exception {
 		Recurrence recurrence = getRecurrence(
 			_recurrenceCalendar, Recurrence.WEEKLY);

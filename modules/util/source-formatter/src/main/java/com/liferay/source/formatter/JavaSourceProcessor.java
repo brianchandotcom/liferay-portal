@@ -29,6 +29,7 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.CopyrightCheck;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JavaAnnotationsCheck;
+import com.liferay.source.formatter.checks.JavaAssertEqualsCheck;
 import com.liferay.source.formatter.checks.JavaBooleanUsageCheck;
 import com.liferay.source.formatter.checks.JavaCombineLinesCheck;
 import com.liferay.source.formatter.checks.JavaDataAccessConnectionCheck;
@@ -591,8 +592,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName, absolutePath, newContent);
 		}
 
-		newContent = formatAssertEquals(fileName, newContent);
-
 		newContent = formatValidatorEquals(newContent);
 
 		newContent = fixUnparameterizedClassType(newContent);
@@ -723,49 +722,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		return fixSystemExceptions(
 			StringUtil.replaceFirst(content, match, replacement));
-	}
-
-	protected String formatAssertEquals(String fileName, String content) {
-		if (!fileName.endsWith("Test.java")) {
-			return content;
-		}
-
-		Matcher matcher = _assertEqualsPattern.matcher(content);
-
-		while (matcher.find()) {
-			String parameters = StringUtil.trim(matcher.group(1));
-
-			List<String> parametersList = splitParameters(parameters);
-
-			if (parametersList.size() != 2) {
-				continue;
-			}
-
-			String actualParameter = parametersList.get(1);
-
-			String strippedQuotesActualParameter = stripQuotes(actualParameter);
-
-			if (!actualParameter.startsWith("expected") &&
-				!Validator.isDigit(actualParameter) &&
-				Validator.isNotNull(strippedQuotesActualParameter)) {
-
-				continue;
-			}
-
-			String assertEquals = matcher.group();
-			String expectedParameter = parametersList.get(0);
-
-			String newAssertEquals = StringUtil.replaceFirst(
-				assertEquals, expectedParameter, actualParameter,
-				assertEquals.indexOf(CharPool.OPEN_PARENTHESIS));
-
-			newAssertEquals = StringUtil.replaceLast(
-				newAssertEquals, actualParameter, expectedParameter);
-
-			return StringUtil.replace(content, assertEquals, newAssertEquals);
-		}
-
-		return content;
 	}
 
 	protected String formatDeprecatedJavadoc(
@@ -1368,6 +1324,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					sourceFormatterArgs.getCopyrightFileName(),
 					PORTAL_MAX_DIR_LEVEL)));
 		_fileChecks.add(new JavaAnnotationsCheck());
+		_fileChecks.add(new JavaAssertEqualsCheck());
 		_fileChecks.add(new JavaBooleanUsageCheck());
 		_fileChecks.add(
 			new JavaCombineLinesCheck(
@@ -1553,8 +1510,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _allowUseServiceUtilInServiceImpl;
 	private final Pattern _anonymousClassPattern = Pattern.compile(
 		"\n(\t+)(\\S.* )?new (.|\\(\n)*\\) \\{\n\n");
-	private final Pattern _assertEqualsPattern = Pattern.compile(
-		"Assert\\.assertEquals\\((.*?)\\);\n", Pattern.DOTALL);
 	private boolean _checkRegistryInTestClasses;
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");

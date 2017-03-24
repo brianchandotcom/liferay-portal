@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -103,6 +105,10 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			sourceFormatterMessages, content, fileName);
 
 		content = _fixMultiLineComment(content);
+
+		content = _fixArrayLineBreaks(content);
+
+		content = _fixClassLineLineBreaks(content);
 
 		return new Tuple(content, sourceFormatterMessages);
 	}
@@ -361,6 +367,50 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		}
 	}
 
+	private String _fixArrayLineBreaks(String content) {
+		Matcher matcher = _arrayPattern.matcher(content);
+
+		while (matcher.find()) {
+			String newLine =
+				matcher.group(3) + matcher.group(2) + matcher.group(4) +
+					matcher.group(5);
+
+			if (getLineLength(newLine) <= _maxLineLength) {
+				return StringUtil.replace(
+					content, matcher.group(),
+					matcher.group(1) + "\n" + newLine + "\n");
+			}
+		}
+
+		return content;
+	}
+
+	private String _fixClassLineLineBreaks(String content) {
+		Matcher matcher = _classPattern.matcher(content);
+
+		while (matcher.find()) {
+			String firstTrailingNonWhitespace = matcher.group(9);
+			String match = matcher.group(1);
+			String trailingWhitespace = matcher.group(8);
+
+			if (!trailingWhitespace.contains("\n") &&
+				!firstTrailingNonWhitespace.equals("}")) {
+
+				return StringUtil.replace(content, match, match + "\n");
+			}
+
+			String formattedClassLine = _getFormattedClassLine(
+				matcher.group(2), match);
+
+			if (formattedClassLine != null) {
+				content = StringUtil.replace(
+					content, match, formattedClassLine);
+			}
+		}
+
+		return content;
+	}
+
 	private String _fixIncorrectLineBreaks(
 		Set<SourceFormatterMessage> sourceFormatterMessages, String content,
 		String fileName) {
@@ -519,6 +569,130 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		return matcher.replaceAll("$1$2$3");
 	}
 
+	private String _getFormattedClassLine(String indent, String classLine) {
+		while (classLine.contains(StringPool.TAB + StringPool.SPACE)) {
+			classLine = StringUtil.replace(
+				classLine, StringPool.TAB + StringPool.SPACE, StringPool.TAB);
+		}
+
+		String classSingleLine = StringUtil.replace(
+			classLine.substring(1),
+			new String[] {StringPool.TAB, StringPool.NEW_LINE},
+			new String[] {StringPool.BLANK, StringPool.SPACE});
+
+		classSingleLine = indent + classSingleLine;
+
+		List<String> lines = new ArrayList<>();
+
+		outerWhile:
+		while (true) {
+			if (getLineLength(classSingleLine) <= _maxLineLength) {
+				lines.add(classSingleLine);
+
+				break;
+			}
+
+			String newIndent = indent;
+			String newLine = classSingleLine;
+
+			int x = -1;
+
+			while (true) {
+				int y = newLine.indexOf(" extends ", x + 1);
+
+				if (y == -1) {
+					x = newLine.indexOf(" implements ", x + 1);
+				}
+				else {
+					x = y;
+				}
+
+				if (x == -1) {
+					break;
+				}
+
+				String linePart = newLine.substring(0, x);
+
+				if ((getLevel(linePart, "<", ">") == 0) &&
+					(getLineLength(linePart) <= _maxLineLength)) {
+
+					if (lines.isEmpty()) {
+						newIndent = newIndent + StringPool.TAB;
+					}
+
+					lines.add(linePart);
+
+					newLine = newIndent + newLine.substring(x + 1);
+
+					if (getLineLength(newLine) <= _maxLineLength) {
+						lines.add(newLine);
+
+						break outerWhile;
+					}
+
+					x = -1;
+				}
+			}
+
+			if (lines.isEmpty()) {
+				return null;
+			}
+
+			x = newLine.length();
+
+			while (true) {
+				x = newLine.lastIndexOf(", ", x - 1);
+
+				if (x == -1) {
+					return null;
+				}
+
+				String linePart = newLine.substring(0, x + 1);
+
+				if ((getLevel(linePart, "<", ">") == 0) &&
+					(getLineLength(linePart) <= _maxLineLength)) {
+
+					lines.add(linePart);
+
+					if (linePart.contains("\textends")) {
+						newIndent = newIndent + "\t\t";
+					}
+					else if (linePart.contains("\timplements")) {
+						newIndent = newIndent + "\t\t   ";
+					}
+
+					newLine = newIndent + newLine.substring(x + 2);
+
+					if (getLineLength(newLine) <= _maxLineLength) {
+						lines.add(newLine);
+
+						break outerWhile;
+					}
+
+					x = newLine.length();
+				}
+			}
+		}
+
+		String formattedClassLine = null;
+
+		for (String line : lines) {
+			if (formattedClassLine == null) {
+				formattedClassLine = "\n" + line;
+			}
+			else {
+				formattedClassLine = formattedClassLine + "\n" + line;
+			}
+		}
+
+		return formattedClassLine;
+	}
+
+	private final Pattern _arrayPattern = Pattern.compile(
+		"(\n\t*.* =) (new \\w*\\[\\] \\{)\n(\t*)(.+)\n\t*(\\};)\n");
+	private final Pattern _classPattern = Pattern.compile(
+		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
+			"(class|enum|interface) ([\\s\\S]*?) \\{)\n(\\s*)(\\S)");
 	private final Pattern _incorrectLineBreakPattern1 = Pattern.compile(
 		"\n(\t*)(.*\\) \\{)([\t ]*\\}\n)");
 	private final Pattern _incorrectLineBreakPattern2 = Pattern.compile(

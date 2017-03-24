@@ -597,10 +597,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixUnparameterizedClassType(newContent);
 
-		newContent = formatArray(newContent);
-
-		newContent = formatClassLine(newContent);
-
 		matcher = _incorrectSynchronizedPattern.matcher(newContent);
 
 		newContent = matcher.replaceAll("$1$3 $2");
@@ -729,24 +725,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			StringUtil.replaceFirst(content, match, replacement));
 	}
 
-	protected String formatArray(String content) {
-		Matcher matcher = _arrayPattern.matcher(content);
-
-		while (matcher.find()) {
-			String newLine =
-				matcher.group(3) + matcher.group(2) + matcher.group(4) +
-					matcher.group(5);
-
-			if (getLineLength(newLine) <= _maxLineLength) {
-				return StringUtil.replace(
-					content, matcher.group(),
-					matcher.group(1) + "\n" + newLine + "\n");
-			}
-		}
-
-		return content;
-	}
-
 	protected String formatAssertEquals(String fileName, String content) {
 		if (!fileName.endsWith("Test.java")) {
 			return content;
@@ -785,32 +763,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				newAssertEquals, actualParameter, expectedParameter);
 
 			return StringUtil.replace(content, assertEquals, newAssertEquals);
-		}
-
-		return content;
-	}
-
-	protected String formatClassLine(String content) {
-		Matcher matcher = _classPattern.matcher(content);
-
-		while (matcher.find()) {
-			String firstTrailingNonWhitespace = matcher.group(9);
-			String match = matcher.group(1);
-			String trailingWhitespace = matcher.group(8);
-
-			if (!trailingWhitespace.contains("\n") &&
-				!firstTrailingNonWhitespace.equals("}")) {
-
-				return StringUtil.replace(content, match, match + "\n");
-			}
-
-			String formattedClassLine = getFormattedClassLine(
-				matcher.group(2), match);
-
-			if (formattedClassLine != null) {
-				content = StringUtil.replace(
-					content, match, formattedClassLine);
-			}
 		}
 
 		return content;
@@ -1225,125 +1177,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return _fileChecks;
 	}
 
-	protected String getFormattedClassLine(String indent, String classLine) {
-		while (classLine.contains(StringPool.TAB + StringPool.SPACE)) {
-			classLine = StringUtil.replace(
-				classLine, StringPool.TAB + StringPool.SPACE, StringPool.TAB);
-		}
-
-		String classSingleLine = StringUtil.replace(
-			classLine.substring(1),
-			new String[] {StringPool.TAB, StringPool.NEW_LINE},
-			new String[] {StringPool.BLANK, StringPool.SPACE});
-
-		classSingleLine = indent + classSingleLine;
-
-		List<String> lines = new ArrayList<>();
-
-		outerWhile:
-		while (true) {
-			if (getLineLength(classSingleLine) <= _maxLineLength) {
-				lines.add(classSingleLine);
-
-				break;
-			}
-
-			String newIndent = indent;
-			String newLine = classSingleLine;
-
-			int x = -1;
-
-			while (true) {
-				int y = newLine.indexOf(" extends ", x + 1);
-
-				if (y == -1) {
-					x = newLine.indexOf(" implements ", x + 1);
-				}
-				else {
-					x = y;
-				}
-
-				if (x == -1) {
-					break;
-				}
-
-				String linePart = newLine.substring(0, x);
-
-				if ((getLevel(linePart, "<", ">") == 0) &&
-					(getLineLength(linePart) <= _maxLineLength)) {
-
-					if (lines.isEmpty()) {
-						newIndent = newIndent + StringPool.TAB;
-					}
-
-					lines.add(linePart);
-
-					newLine = newIndent + newLine.substring(x + 1);
-
-					if (getLineLength(newLine) <= _maxLineLength) {
-						lines.add(newLine);
-
-						break outerWhile;
-					}
-
-					x = -1;
-				}
-			}
-
-			if (lines.isEmpty()) {
-				return null;
-			}
-
-			x = newLine.length();
-
-			while (true) {
-				x = newLine.lastIndexOf(", ", x - 1);
-
-				if (x == -1) {
-					return null;
-				}
-
-				String linePart = newLine.substring(0, x + 1);
-
-				if ((getLevel(linePart, "<", ">") == 0) &&
-					(getLineLength(linePart) <= _maxLineLength)) {
-
-					lines.add(linePart);
-
-					if (linePart.contains("\textends")) {
-						newIndent = newIndent + "\t\t";
-					}
-					else if (linePart.contains("\timplements")) {
-						newIndent = newIndent + "\t\t   ";
-					}
-
-					newLine = newIndent + newLine.substring(x + 2);
-
-					if (getLineLength(newLine) <= _maxLineLength) {
-						lines.add(newLine);
-
-						break outerWhile;
-					}
-
-					x = newLine.length();
-				}
-			}
-		}
-
-		String formattedClassLine = null;
-
-		for (String line : lines) {
-			if (formattedClassLine == null) {
-				formattedClassLine = "\n" + line;
-			}
-			else {
-				formattedClassLine = formattedClassLine + "\n" + line;
-			}
-		}
-
-		return formattedClassLine;
-	}
-
 	protected String[] getPluginExcludes(String pluginDirectoryName) {
 		return new String[] {
 			pluginDirectoryName + "**/model/*Clp.java",
@@ -1720,14 +1553,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _allowUseServiceUtilInServiceImpl;
 	private final Pattern _anonymousClassPattern = Pattern.compile(
 		"\n(\t+)(\\S.* )?new (.|\\(\n)*\\) \\{\n\n");
-	private final Pattern _arrayPattern = Pattern.compile(
-		"(\n\t*.* =) (new \\w*\\[\\] \\{)\n(\t*)(.+)\n\t*(\\};)\n");
 	private final Pattern _assertEqualsPattern = Pattern.compile(
 		"Assert\\.assertEquals\\((.*?)\\);\n", Pattern.DOTALL);
 	private boolean _checkRegistryInTestClasses;
-	private final Pattern _classPattern = Pattern.compile(
-		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
-			"(class|enum|interface) ([\\s\\S]*?) \\{)\n(\\s*)(\\S)");
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
 	private final Pattern _deprecatedPattern = Pattern.compile(

@@ -99,7 +99,7 @@ public class ModulesStructureTest {
 					Path buildGradlePath = dirPath.resolve("build.gradle");
 					Path buildXMLPath = dirPath.resolve("build.xml");
 
-					if (Files.exists(dirPath.resolve(".gitrepo"))) {
+					if (Files.exists(dirPath.resolve(_GIT_REPO_FILE_NAME))) {
 						_testGitRepoBuildScripts(
 							dirPath, gitRepoBuildGradleTemplate,
 							gitRepoGitAttributesTemplate,
@@ -173,7 +173,7 @@ public class ModulesStructureTest {
 					}
 
 					if (dirPath.equals(_modulesDirPath) ||
-						Files.exists(dirPath.resolve(".gitrepo"))) {
+						Files.exists(dirPath.resolve(_GIT_REPO_FILE_NAME))) {
 
 						_testGitRepoIgnoreFiles(
 							dirPath, gitRepoGitIgnoreTemplate);
@@ -447,7 +447,7 @@ public class ModulesStructureTest {
 					Path buildGradlePath = dirPath.resolve("build.gradle");
 
 					if (Files.exists(buildGradlePath) &&
-						Files.notExists(dirPath.resolve(".gitrepo"))) {
+						Files.notExists(dirPath.resolve(_GIT_REPO_FILE_NAME))) {
 
 						_addGradlePluginNames(
 							pluginNames, "com.liferay.gradle.plugins.",
@@ -499,7 +499,7 @@ public class ModulesStructureTest {
 
 	private boolean _isInGitRepo(Path dirPath) {
 		while (dirPath != null) {
-			if (Files.exists(dirPath.resolve(".gitrepo"))) {
+			if (Files.exists(dirPath.resolve(_GIT_REPO_FILE_NAME))) {
 				return true;
 			}
 
@@ -772,6 +772,8 @@ public class ModulesStructureTest {
 
 	private static final String _APP_BUILD_GRADLE =
 		"apply plugin: \"com.liferay.app.defaults.plugin\"";
+
+	private static final String _GIT_REPO_FILE_NAME = ".gitrepo";
 
 	private static final String _GIT_REPO_GRADLE_PROJECT_GROUP_KEY =
 		"project.group";

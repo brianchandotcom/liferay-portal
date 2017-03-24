@@ -38,6 +38,7 @@ import com.liferay.source.formatter.checks.JavaIfStatementCheck;
 import com.liferay.source.formatter.checks.JavaLineBreakCheck;
 import com.liferay.source.formatter.checks.JavaLogLevelCheck;
 import com.liferay.source.formatter.checks.JavaLongLinesCheck;
+import com.liferay.source.formatter.checks.JavaOSGiReferenceCheck;
 import com.liferay.source.formatter.checks.JavaPackagePathCheck;
 import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
 import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
@@ -56,7 +57,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -67,35 +67,6 @@ import org.apache.maven.artifact.versioning.ComparableVersion;
  * @author Hugo Huijser
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
-
-	protected void checkBndInheritAnnotationOption() {
-		Map<String, BNDSettings> bndSettingsMap = getBNDSettingsMap();
-
-		for (Map.Entry<String, BNDSettings> entry : bndSettingsMap.entrySet()) {
-			BNDSettings bndSettings = entry.getValue();
-
-			String content = bndSettings.getContent();
-			String fileLocation = bndSettings.getFileLocation();
-			boolean inheritRequired = bndSettings.isInheritRequired();
-
-			if (content.contains("-dsannotations-options: inherit")) {
-				/*
-				if (!inheritRequired) {
-					printError(
-						fileLocation,
-						"Redundant '-dsannotations-options: inherit': " +
-							fileLocation + "bnd.bnd");
-				}
-				*/
-			}
-			else if (inheritRequired) {
-				printError(
-					fileLocation,
-					"Add '-dsannotations-options: inherit': " + fileLocation +
-						"bnd.bnd");
-			}
-		}
-	}
 
 	protected void checkDeserializationSecurity(
 		String fileName, String content, boolean isRunOutsidePortalExclusion) {
@@ -906,99 +877,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatDuplicateReferenceMethods(
-			String fileName, String content, String className,
-			String packagePath)
-		throws Exception {
-
-		String moduleSuperClassContent = getModuleSuperClassContent(
-			content, className, packagePath);
-
-		if (Validator.isNull(moduleSuperClassContent) ||
-			!moduleSuperClassContent.contains("@Component") ||
-			!moduleSuperClassContent.contains("@Reference")) {
-
-			setBNDInheritRequiredValue(fileName, false);
-
-			return content;
-		}
-
-		boolean bndInheritRequired = false;
-
-		Matcher matcher = _referenceMethodPattern.matcher(
-			moduleSuperClassContent);
-
-		while (matcher.find()) {
-			String referenceMethod = matcher.group();
-
-			int pos = content.indexOf(referenceMethod);
-
-			if (pos != -1) {
-				String referenceMethodContent = matcher.group(6);
-
-				Matcher referenceMethodContentMatcher =
-					_referenceMethodContentPattern.matcher(
-						referenceMethodContent);
-
-				if (referenceMethodContentMatcher.find()) {
-					String variableName = referenceMethodContentMatcher.group(
-						1);
-
-					if (StringUtil.count(content, variableName) > 1) {
-						continue;
-					}
-				}
-
-				int x = content.lastIndexOf("\n\n", pos);
-				int y = pos + referenceMethod.length();
-
-				String entireMethod = content.substring(x + 1, y);
-
-				content = StringUtil.replace(
-					content, entireMethod, StringPool.BLANK);
-
-				bndInheritRequired = true;
-			}
-			else {
-				String referenceMethodModifierAndName = matcher.group(2);
-
-				Pattern duplicateReferenceMethodPattern = Pattern.compile(
-					referenceMethodModifierAndName +
-						"\\(\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)" +
-							"\\s*?\n\t\\}\n");
-
-				Matcher duplicateReferenceMethodMatcher =
-					duplicateReferenceMethodPattern.matcher(content);
-
-				if (!duplicateReferenceMethodMatcher.find()) {
-					bndInheritRequired = true;
-
-					continue;
-				}
-
-				String methodContent = duplicateReferenceMethodMatcher.group(2);
-				String referenceMethodName = matcher.group(4);
-
-				if (methodContent.startsWith("super." + referenceMethodName)) {
-					int x = content.lastIndexOf(
-						"\n\n", duplicateReferenceMethodMatcher.start());
-					int y = duplicateReferenceMethodMatcher.end();
-
-					String entireMethod = content.substring(x + 1, y);
-
-					content = StringUtil.replace(
-						content, entireMethod, StringPool.BLANK);
-
-					bndInheritRequired = true;
-				}
-			}
-		}
-
-		setBNDInheritRequiredValue(fileName, bndInheritRequired);
-
-		return content;
-	}
-
 	protected String formatJava(
 			String fileName, String absolutePath, String content)
 		throws Exception {
@@ -1266,13 +1144,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"modules, see LPS-57358");
 		}
 
-		// LPS-59076
-
-		if (content.contains("@Component")) {
-			content = formatOSGIComponents(
-				fileName, absolutePath, content, className, packagePath);
-		}
-
 		// LPS-62989
 
 		if (!absolutePath.contains("/modules/core/jaxws-osgi-bridge") &&
@@ -1327,112 +1198,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		checkInternalImports(fileName, absolutePath, content);
 
 		return content;
-	}
-
-	protected String formatOSGIComponents(
-			String fileName, String absolutePath, String content,
-			String className, String packagePath)
-		throws Exception {
-
-		String moduleServicePackagePath = null;
-
-		Matcher matcher = _serviceUtilImportPattern.matcher(content);
-
-		while (matcher.find()) {
-			String serviceUtilClassName = matcher.group(2);
-
-			if (moduleServicePackagePath == null) {
-				moduleServicePackagePath = getModuleServicePackagePath(
-					fileName);
-			}
-
-			if (Validator.isNotNull(moduleServicePackagePath)) {
-				String serviceUtilClassPackagePath = matcher.group(1);
-
-				if (serviceUtilClassPackagePath.startsWith(
-						moduleServicePackagePath)) {
-
-					continue;
-				}
-			}
-
-			processMessage(
-				fileName,
-				"Use @Reference instead of calling " + serviceUtilClassName +
-					" directly, see LPS-59076");
-		}
-
-		matcher = _referenceMethodPattern.matcher(content);
-
-		while (matcher.find()) {
-			String methodName = matcher.group(4);
-
-			if (!methodName.startsWith("set")) {
-				continue;
-			}
-
-			String annotationParameters = matcher.group(1);
-
-			if (!annotationParameters.contains("unbind =")) {
-				if (!content.contains("un" + methodName + "(")) {
-					if (Validator.isNull(annotationParameters)) {
-						return StringUtil.insert(
-							content, "(unbind = \"-\")", matcher.start(1));
-					}
-
-					if (!annotationParameters.contains(StringPool.NEW_LINE)) {
-						return StringUtil.insert(
-							content, ", unbind = \"-\"", matcher.end(1) - 1);
-					}
-
-					if (!annotationParameters.contains("\n\n")) {
-						String indent = "\t\t";
-
-						int x = content.lastIndexOf("\n", matcher.end(1) - 1);
-
-						return StringUtil.replaceFirst(
-							content, "\n",
-							",\n" + indent + "unbind = \"-\"" + "\n", x - 1);
-					}
-				}
-			}
-
-			String methodContent = matcher.group(6);
-
-			Matcher referenceMethodContentMatcher =
-				_referenceMethodContentPattern.matcher(methodContent);
-
-			if (!referenceMethodContentMatcher.find()) {
-				continue;
-			}
-
-			String typeName = matcher.group(5);
-			String variableName = referenceMethodContentMatcher.group(1);
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("private volatile ");
-			sb.append(typeName);
-			sb.append("\\s+");
-			sb.append(variableName);
-			sb.append(StringPool.SEMICOLON);
-
-			Pattern privateVarPattern = Pattern.compile(sb.toString());
-
-			Matcher privateVarMatcher = privateVarPattern.matcher(content);
-
-			if (privateVarMatcher.find()) {
-				String match = privateVarMatcher.group();
-
-				String replacement = StringUtil.replace(
-					match, "private volatile ", "private ");
-
-				return StringUtil.replace(content, match, replacement);
-			}
-		}
-
-		return formatDuplicateReferenceMethods(
-			fileName, content, className, packagePath);
 	}
 
 	protected String formatValidatorEquals(String content) {
@@ -1579,163 +1344,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return formattedClassLine;
-	}
-
-	protected String getModuleClassContent(String fullClassName)
-		throws Exception {
-
-		String classContent = _moduleFileContentsMap.get(fullClassName);
-
-		if (classContent != null) {
-			return classContent;
-		}
-
-		Map<String, String> moduleFileNamesMap = getModuleFileNamesMap();
-
-		String moduleFileName = moduleFileNamesMap.get(fullClassName);
-
-		if (moduleFileName == null) {
-			_moduleFileContentsMap.put(fullClassName, StringPool.BLANK);
-
-			return StringPool.BLANK;
-		}
-
-		File file = new File(moduleFileName);
-
-		classContent = FileUtil.read(file);
-
-		if (classContent != null) {
-			_moduleFileContentsMap.put(fullClassName, classContent);
-		}
-
-		return classContent;
-	}
-
-	protected Map<String, String> getModuleFileNamesMap() throws Exception {
-		if (_moduleFileNamesMap != null) {
-			return _moduleFileNamesMap;
-		}
-
-		Map<String, String> moduleFileNamesMap = new HashMap<>();
-
-		List<String> fileNames = new ArrayList<>();
-
-		String moduleRootDirLocation = "modules/";
-
-		for (int i = 0; i < 6; i++) {
-			File file = new File(
-				sourceFormatterArgs.getBaseDirName() + moduleRootDirLocation);
-
-			if (file.exists()) {
-				fileNames = getFileNames(
-					sourceFormatterArgs.getBaseDirName() +
-						moduleRootDirLocation,
-					null, new String[0], getIncludes());
-
-				break;
-			}
-
-			moduleRootDirLocation = "../" + moduleRootDirLocation;
-		}
-
-		for (String fileName : fileNames) {
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			String className = StringUtil.replace(
-				fileName, CharPool.SLASH, CharPool.PERIOD);
-
-			int pos = className.lastIndexOf(".com.liferay.");
-
-			className = className.substring(pos + 1, fileName.length() - 5);
-
-			moduleFileNamesMap.put(className, fileName);
-		}
-
-		_moduleFileNamesMap = moduleFileNamesMap;
-
-		return _moduleFileNamesMap;
-	}
-
-	protected String getModuleServicePackagePath(String fileName) {
-		String serviceDirLocation = fileName;
-
-		while (true) {
-			int pos = serviceDirLocation.lastIndexOf(StringPool.SLASH);
-
-			if (pos == -1) {
-				return StringPool.BLANK;
-			}
-
-			serviceDirLocation = serviceDirLocation.substring(0, pos + 1);
-
-			File file = new File(serviceDirLocation + "service");
-
-			if (file.exists()) {
-				serviceDirLocation = serviceDirLocation + "service";
-
-				break;
-			}
-
-			file = new File(serviceDirLocation + "liferay");
-
-			if (file.exists()) {
-				return StringPool.BLANK;
-			}
-
-			serviceDirLocation = StringUtil.replaceLast(
-				serviceDirLocation, StringPool.SLASH, StringPool.BLANK);
-		}
-
-		serviceDirLocation = StringUtil.replace(
-			serviceDirLocation, StringPool.SLASH, StringPool.PERIOD);
-
-		int pos = serviceDirLocation.lastIndexOf(".com.");
-
-		return serviceDirLocation.substring(pos + 1);
-	}
-
-	protected String getModuleSuperClassContent(
-			String content, String className, String packagePath)
-		throws Exception {
-
-		Pattern pattern = Pattern.compile(
-			" class " + className + "\\s+extends\\s+([\\w.]+) ");
-
-		Matcher matcher = pattern.matcher(content);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		String superClassName = matcher.group(1);
-
-		if (superClassName.contains(StringPool.PERIOD)) {
-			if (!superClassName.startsWith("com.liferay")) {
-				return null;
-			}
-
-			return getModuleClassContent(superClassName);
-		}
-
-		String superClassPackagePath = packagePath;
-
-		pattern = Pattern.compile("\nimport (.+?)\\." + superClassName + ";");
-
-		matcher = pattern.matcher(content);
-
-		if (matcher.find()) {
-			superClassPackagePath = matcher.group(1);
-		}
-
-		if (!superClassPackagePath.startsWith("com.liferay")) {
-			return null;
-		}
-
-		String superClassFullClassName =
-			superClassPackagePath + StringPool.PERIOD + superClassName;
-
-		return getModuleClassContent(superClassFullClassName);
 	}
 
 	protected String[] getPluginExcludes(String pluginDirectoryName) {
@@ -1948,6 +1556,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource || subrepository) {
 			_fileChecks.add(
+				new JavaOSGiReferenceCheck(
+					_getModuleFileNamesMap(), subrepository));
+			_fileChecks.add(
 				new JavaVerifyUpgradeConnectionCheck(
 					getExcludes(_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES)));
 			_fileChecks.add(
@@ -1969,7 +1580,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void postFormat() throws Exception {
-		checkBndInheritAnnotationOption();
 		processCheckStyle();
 	}
 
@@ -2019,21 +1629,44 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return super.processFileChecks(fileName, absolutePath, content);
 	}
 
-	protected void setBNDInheritRequiredValue(
-			String fileName, boolean bndInheritRequired)
-		throws Exception {
+	private Map<String, String> _getModuleFileNamesMap() throws Exception {
+		Map<String, String> moduleFileNamesMap = new HashMap<>();
 
-		BNDSettings bndSettings = getBNDSettings(fileName);
+		List<String> fileNames = new ArrayList<>();
 
-		if (bndSettings == null) {
-			return;
+		String moduleRootDirLocation = "modules/";
+
+		for (int i = 0; i < 6; i++) {
+			File file = new File(
+				sourceFormatterArgs.getBaseDirName() + moduleRootDirLocation);
+
+			if (file.exists()) {
+				fileNames = getFileNames(
+					sourceFormatterArgs.getBaseDirName() +
+						moduleRootDirLocation,
+					null, new String[0], getIncludes());
+
+				break;
+			}
+
+			moduleRootDirLocation = "../" + moduleRootDirLocation;
 		}
 
-		if (bndInheritRequired) {
-			bndSettings.setInheritRequired(bndInheritRequired);
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			String className = StringUtil.replace(
+				fileName, CharPool.SLASH, CharPool.PERIOD);
+
+			int pos = className.lastIndexOf(".com.liferay.");
+
+			className = className.substring(pos + 1, fileName.length() - 5);
+
+			moduleFileNamesMap.put(className, fileName);
 		}
 
-		putBNDSettings(bndSettings);
+		return moduleFileNamesMap;
 	}
 
 	private static final String _CHECK_JAVA_FIELD_TYPES_EXCLUDES =
@@ -2112,23 +1745,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
 	private int _maxLineLength;
-	private final Map<String, String> _moduleFileContentsMap =
-		new ConcurrentHashMap<>();
-	private Map<String, String> _moduleFileNamesMap;
 	private final Pattern _packagePattern = Pattern.compile(
 		"(\n|^)\\s*package (.*);\n");
 	private String _portalCustomSQLContent;
 	private final Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
-	private final Pattern _referenceMethodContentPattern = Pattern.compile(
-		"^(\\w+) =\\s+\\w+;$");
-	private final Pattern _referenceMethodPattern = Pattern.compile(
-		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
-			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");
-	private final Pattern _serviceUtilImportPattern = Pattern.compile(
-		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 	private final Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(

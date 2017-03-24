@@ -249,7 +249,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				long portletPreferencesId = rs.getLong("portletPreferencesId");
 				String portletId = rs.getString("portletId");
 
-				String newPortletId = StringUtil.replace(
+				String newPortletId = StringUtil.replaceFirst(
 					portletId, oldRootPortletId, newRootPortletId);
 
 				ps2.setString(1, newPortletId);

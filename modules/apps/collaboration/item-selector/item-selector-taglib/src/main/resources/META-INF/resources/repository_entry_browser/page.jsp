@@ -505,11 +505,7 @@ if (Validator.isNotNull(keywords)) {
 			<c:if test="<%= uploadURL != null %>">
 
 				<%
-				String returnType =
-					ItemSelectorRepositoryEntryBrowserUtil.
-						getItemSelectorReturnTypeClassName(
-							itemSelectorReturnTypeResolver,
-							existingFileEntryReturnType);
+				String returnType = ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType);
 
 				uploadURL.setParameter("source", "itemselector");
 				uploadURL.setParameter("returnType", returnType);

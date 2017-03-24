@@ -43,19 +43,16 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 <aui:script use="liferay-item-selector-repository-entry-browser">
 
 	<%
-	ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver =
-		itemSelectorUploadViewDisplayContext.
-			getItemSelectorReturnTypeResolver();
+	ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver = itemSelectorUploadViewDisplayContext.getItemSelectorReturnTypeResolver();
 
-	String returnTypeName =
-		itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass().getName();
+	String returnTypeName = itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass().getName();
 
 	String uploadURL = itemSelectorUploadViewDisplayContext.getURL();
 	String namespace = itemSelectorUploadViewDisplayContext.getNamespace();
 
 	if (Validator.isNotNull(namespace)) {
-		uploadURL += "&" + namespace + "_source=itemselector";
-		uploadURL += "&" + namespace + "_returnType=" + returnTypeName;
+		uploadURL = HttpUtil.addParameter(uploadURL, namespace + "source", "itemselector");
+		uploadURL = HttpUtil.addParameter(uploadURL, namespace + "returnType", returnTypeName);
 	}
 	%>
 

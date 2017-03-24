@@ -19,7 +19,9 @@ import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.upload.web.internal.ItemSelectorUploadView;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
@@ -64,12 +66,12 @@ public class ItemSelectorUploadViewDisplayContext {
 	public String getNamespace() {
 		String portletId = _uploadItemSelectorCriterion.getPortletId();
 
-		if (portletId != null) {
-			return StringPool.UNDERLINE +
-				_uploadItemSelectorCriterion.getPortletId();
+		if (Validator.isNotNull(portletId)) {
+			return PortalUtil.getPortletNamespace(
+				_uploadItemSelectorCriterion.getPortletId());
 		}
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	public String getRepositoryName() {

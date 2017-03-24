@@ -45,6 +45,7 @@ import com.liferay.source.formatter.checks.JavaLogLevelCheck;
 import com.liferay.source.formatter.checks.JavaLongLinesCheck;
 import com.liferay.source.formatter.checks.JavaOSGiReferenceCheck;
 import com.liferay.source.formatter.checks.JavaPackagePathCheck;
+import com.liferay.source.formatter.checks.JavaSystemEventAnnotationCheck;
 import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
 import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
 import com.liferay.source.formatter.checks.JavaWhitespaceCheck;
@@ -102,81 +103,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					fileName,
 					"Do not import internal class from another module",
 					getLineCount(content, matcher.start(1)));
-			}
-		}
-	}
-
-	protected void checkSystemEventAnnotations(String content, String fileName)
-		throws Exception {
-
-		if ((!portalSource && !subrepository) ||
-			!fileName.endsWith("PortletDataHandler.java")) {
-
-			return;
-		}
-
-		int pos = content.indexOf("setDeletionSystemEventStagedModelTypes");
-
-		if (pos == -1) {
-			return;
-		}
-
-		String deletionSystemEventStagedModelTypes = content.substring(
-			pos, content.indexOf(");", pos));
-
-		Matcher matcher = _stagedModelTypesPattern.matcher(
-			deletionSystemEventStagedModelTypes);
-
-		while (matcher.find()) {
-			String stagedModelTypeClassName = matcher.group(1);
-
-			pos = stagedModelTypeClassName.indexOf(".class");
-
-			if (pos == -1) {
-				pos = stagedModelTypeClassName.indexOf("Constants");
-			}
-
-			if (pos == -1) {
-				return;
-			}
-
-			String className = stagedModelTypeClassName.substring(0, pos);
-
-			Pattern packageNamePattern = Pattern.compile(
-				"import (com\\.liferay\\.[a-zA-Z\\.]*)\\.model\\." + className +
-					";");
-
-			Matcher packageNameMatcher = packageNamePattern.matcher(content);
-
-			if (!packageNameMatcher.find()) {
-				return;
-			}
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(fileName.substring(0, fileName.indexOf("/src/") + 5));
-			sb.append(
-				StringUtil.replace(
-					packageNameMatcher.group(1), StringPool.PERIOD,
-					StringPool.SLASH));
-			sb.append("/service/impl/");
-			sb.append(className);
-			sb.append("LocalServiceImpl.java");
-
-			String localServiceImplFileName = sb.toString();
-
-			String localServiceImplContent = FileUtil.read(
-				new File(localServiceImplFileName));
-
-			if (localServiceImplContent == null) {
-				return;
-			}
-
-			if (!localServiceImplContent.contains("@SystemEvent")) {
-				processMessage(
-					fileName,
-					"Missing deletion system event '" +
-						localServiceImplFileName + "', see LPS-46632");
 			}
 		}
 	}
@@ -404,10 +330,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
 					"SecureRandom instead of java.security.SecureRandom");
 		}
-
-		// LPS-46632
-
-		checkSystemEventAnnotations(newContent, fileName);
 
 		// LPS-46017
 
@@ -1229,6 +1151,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_fileChecks.add(new JavaPackagePathCheck());
 
 		if (portalSource || subrepository) {
+			_fileChecks.add(new JavaSystemEventAnnotationCheck());
 			_fileChecks.add(
 				new JavaVerifyUpgradeConnectionCheck(
 					getExcludes(_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES)));
@@ -1415,8 +1338,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"implements ProcessCallable\\b");
 	private final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");
-	private final Pattern _stagedModelTypesPattern = Pattern.compile(
-		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();

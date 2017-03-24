@@ -81,6 +81,10 @@ import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -3355,8 +3359,186 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		alert.accept();
 	}
 
+	protected By getBy(String locator) {
+		if (locator.startsWith("//")) {
+			return By.xpath(locator);
+		}
+		else if (locator.startsWith("class=")) {
+			locator = locator.substring(6);
+
+			return By.className(locator);
+		}
+		else if (locator.startsWith("css=")) {
+			locator = locator.substring(4);
+
+			return By.cssSelector(locator);
+		}
+		else if (locator.startsWith("link=")) {
+			locator = locator.substring(5);
+
+			return By.linkText(locator);
+		}
+		else if (locator.startsWith("name=")) {
+			locator = locator.substring(5);
+
+			return By.name(locator);
+		}
+		else if (locator.startsWith("tag=")) {
+			locator = locator.substring(4);
+
+			return By.tagName(locator);
+		}
+		else if (locator.startsWith("xpath=") || locator.startsWith("xPath=")) {
+			locator = locator.substring(6);
+
+			return By.xpath(locator);
+		}
+		else {
+			return By.id(locator);
+		}
+	}
+
+	protected String getCSSSource(String htmlSource) throws Exception {
+		org.jsoup.nodes.Document htmlDocument = Jsoup.parse(htmlSource);
+
+		Elements elements = htmlDocument.select("link[type=text/css]");
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Element element : elements) {
+			String href = element.attr("href");
+
+			if (!href.contains(PropsValues.PORTAL_URL)) {
+				href = PropsValues.PORTAL_URL + href;
+			}
+
+			Connection connection = Jsoup.connect(href);
+
+			org.jsoup.nodes.Document document = connection.get();
+
+			sb.append(document.text());
+
+			sb.append("\n");
+		}
+
+		return sb.toString();
+	}
+
 	protected String getDefaultWindowHandle() {
 		return _defaultWindowHandle;
+	}
+
+	protected String getEditorName(String locator) {
+		String titleAttribute = getAttribute(locator + "@title");
+
+		if (titleAttribute.contains("Rich Text Editor,")) {
+			int x = titleAttribute.indexOf(",");
+
+			int y = titleAttribute.indexOf(",", x + 1);
+
+			if (y == -1) {
+				y = titleAttribute.length();
+			}
+
+			return titleAttribute.substring(x + 2, y);
+		}
+
+		String idAttribute = getAttribute(locator + "@id");
+
+		if (idAttribute.contains("cke__")) {
+			int x = idAttribute.indexOf("cke__");
+
+			int y = idAttribute.indexOf("cke__", x + 1);
+
+			if (y == -1) {
+				y = idAttribute.length();
+			}
+
+			return idAttribute.substring(x + 4, y);
+		}
+
+		return idAttribute;
+	}
+
+	protected int getElementPositionBottom(String locator) {
+
+		return getElementPositionTop(locator) +
+			getElementHeight(locator);
+	}
+
+	protected int getElementPositionCenterX(String locator) {
+
+		return getElementPositionLeft(locator) +
+			(getElementWidth(locator) / 2);
+	}
+
+	protected int getElementPositionCenterY(
+		WebDriver webDriver, String locator) {
+
+		return getElementPositionTop(locator) +
+			(getElementHeight(locator) / 2);
+	}
+
+	protected int getElementPositionLeft(String locator) {
+
+		WebElement webElement = getWebElement(locator, "1");
+
+		Point point = webElement.getLocation();
+
+		return point.getX();
+	}
+
+	protected int getElementPositionRight(String locator) {
+
+		return getElementPositionLeft(locator) +
+			getElementWidth(locator);
+	}
+
+	protected int getElementPositionTop(String locator) {
+
+		WebElement webElement = getWebElement(locator, "1");
+
+		Point point = webElement.getLocation();
+
+		return point.getY();
+	}
+
+	protected Point getFramePoint() {
+		int x = 0;
+		int y = 0;
+
+		WebElement bodyWebElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		WebDriver.TargetLocator targetLocator = wrappedWebDriver.switchTo();
+
+		targetLocator.window(_defaultWindowHandle);
+
+		for (WebElement webElement : _frameWebElements) {
+			Point point = webElement.getLocation();
+
+			x += point.getX();
+			y += point.getY();
+
+			targetLocator.frame(webElement);
+		}
+
+		return new Point(x, y);
+	}
+
+	protected int getFramePositionLeft(WebDriver webDriver) {
+		Point point = getFramePoint();
+
+		return point.getX();
+	}
+
+	protected int getFramePositionTop(WebDriver webDriver) {
+		Point point = getFramePoint();
+
+		return point.getY();
 	}
 
 	protected ImageTarget getImageTarget(String image) throws Exception {
@@ -3371,6 +3553,38 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	protected int getNavigationBarHeight() {
 		return _navigationBarHeight;
+	}
+
+	protected int getScrollOffsetX() {
+		WebElement bodyWebElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		Object pageXOffset = javascriptExecutor.executeScript(
+			"return window.pageXOffset;");
+
+		return GetterUtil.getInteger(pageXOffset);
+	}
+
+	protected int getScrollOffsetY() {
+		WebElement bodyWebElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		Object pageYOffset = javascriptExecutor.executeScript(
+			"return window.pageYOffset;");
+
+		return GetterUtil.getInteger(pageYOffset);
 	}
 
 	protected Set<Integer> getSpecialCharIndexes(String value) {
@@ -3410,6 +3624,50 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return WebDriverHelper.getWebElements(this, locator, timeout);
 	}
 
+	protected int getViewportHeight() {
+		WebElement bodyWebElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		return GetterUtil.getInteger(
+			javascriptExecutor.executeScript("return window.innerHeight;"));
+	}
+
+	protected int getViewportPositionBottom() {
+		return getScrollOffsetY() + getViewportHeight();
+	}
+
+	protected Point getWindowPoint() {
+		WebElement bodyWebElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		WebDriver.Options options = wrappedWebDriver.manage();
+
+		WebDriver.Window window = options.window();
+
+		return window.getPosition();
+	}
+
+	protected int getWindowPositionLeft() {
+		Point point = getWindowPoint();
+
+		return point.getX();
+	}
+
+	protected int getWindowPositionTop() {
+		Point point = getWindowPoint();
+
+		return point.getY();
+	}
+
 	protected void initKeysSpecialChars() {
 		_keysSpecialChars.put("!", "1");
 		_keysSpecialChars.put("#", "3");
@@ -3432,6 +3690,22 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		}
 
 		return false;
+	}
+
+	protected void saveWebPage(String fileName, String htmlSource)
+		throws Exception {
+
+		if (!PropsValues.SAVE_WEB_PAGE) {
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder(3);
+
+		sb.append("<style>");
+		sb.append(getCSSSource(htmlSource));
+		sb.append("</style></html>");
+
+		FileUtil.write(fileName, htmlSource.replace("<\\html>", sb.toString()));
 	}
 
 	protected void scrollWebElementIntoView(WebElement webElement) {

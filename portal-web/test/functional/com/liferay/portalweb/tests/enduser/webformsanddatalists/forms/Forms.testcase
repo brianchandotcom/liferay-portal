@@ -284,8 +284,8 @@
 			<var name="outputParameterName2" value="Countries A2" />
 			<var name="outputParameterPath" value="nameCurrentValue" />
 			<var name="outputParameterPath2" value="a2" />
-			<var name="outputParameterType" value="Text" />
-			<var name="outputParameterType2" value="Text" />
+			<var name="outputParameterType" value="List" />
+			<var name="outputParameterType2" value="List" />
 			<var name="password" value="test" />
 			<var name="url" value="${portalURL}/api/jsonws/country/get-countries" />
 			<var name="username" value="test@liferay.com" />
@@ -496,7 +496,7 @@
 			<var name="name" value="Liferay Countries" />
 			<var name="outputParameterName" value="Country Names" />
 			<var name="outputParameterPath" value="nameCurrentValue" />
-			<var name="outputParameterType" value="Text" />
+			<var name="outputParameterType" value="List" />
 			<var name="password" value="test" />
 			<var name="url" value="${portalURL}/api/jsonws/country/get-countries" />
 			<var name="username" value="test@liferay.com" />

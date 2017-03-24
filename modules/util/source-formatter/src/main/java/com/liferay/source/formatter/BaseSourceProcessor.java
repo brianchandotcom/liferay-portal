@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -70,7 +69,6 @@ import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
 
 import org.dom4j.Document;
@@ -896,39 +894,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _annotationsExclusions;
 	}
 
-	protected BNDSettings getBNDSettings(String fileName) throws Exception {
-		for (Map.Entry<String, BNDSettings> entry :
-				_bndSettingsMap.entrySet()) {
-
-			String bndFileLocation = entry.getKey();
-
-			if (fileName.startsWith(bndFileLocation)) {
-				return entry.getValue();
-			}
-		}
-
-		String bndFileLocation = fileName;
-
-		while (true) {
-			int pos = bndFileLocation.lastIndexOf(StringPool.SLASH);
-
-			if (pos == -1) {
-				return null;
-			}
-
-			bndFileLocation = bndFileLocation.substring(0, pos + 1);
-
-			File file = new File(bndFileLocation + "bnd.bnd");
-
-			if (file.exists()) {
-				return new BNDSettings(bndFileLocation, FileUtil.read(file));
-			}
-
-			bndFileLocation = StringUtil.replaceLast(
-				bndFileLocation, StringPool.SLASH, StringPool.BLANK);
-		}
-	}
-
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
 		if (_compatClassNamesMap != null) {
 			return _compatClassNamesMap;
@@ -1192,57 +1157,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return x + 1;
-	}
-
-	protected ComparableVersion getMainReleaseComparableVersion(
-			String fileName, String absolutePath, boolean checkModuleVersion)
-		throws Exception {
-
-		boolean usePortalReleaseVersion = true;
-
-		if (checkModuleVersion &&
-			(!portalSource || isModulesFile(absolutePath))) {
-
-			usePortalReleaseVersion = false;
-		}
-
-		String releaseVersion = StringPool.BLANK;
-
-		if (usePortalReleaseVersion) {
-			if (_mainReleaseComparableVersion != null) {
-				return _mainReleaseComparableVersion;
-			}
-
-			releaseVersion = ReleaseInfo.getVersion();
-		}
-		else {
-			BNDSettings bndSettings = getBNDSettings(fileName);
-
-			if (bndSettings == null) {
-				return null;
-			}
-
-			releaseVersion = bndSettings.getReleaseVersion();
-
-			if (releaseVersion == null) {
-				return null;
-			}
-
-			putBNDSettings(bndSettings);
-		}
-
-		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
-
-		String mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
-
-		ComparableVersion mainReleaseComparableVersion = new ComparableVersion(
-			mainReleaseVersion);
-
-		if (usePortalReleaseVersion) {
-			_mainReleaseComparableVersion = mainReleaseComparableVersion;
-		}
-
-		return mainReleaseComparableVersion;
 	}
 
 	protected List<String> getParameterList(String methodCall) {
@@ -1614,10 +1528,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		sourceFormatterMessages.add(sourceFormatterMessage);
 
 		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
-	}
-
-	protected void putBNDSettings(BNDSettings bndSettings) {
-		_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
 	}
 
 	protected Document readXML(String content) throws DocumentException {
@@ -2021,8 +1931,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			"/source-formatter/documentation/";
 
 	private Set<String> _annotationsExclusions;
-	private Map<String, BNDSettings> _bndSettingsMap =
-		new ConcurrentHashMap<>();
 	private boolean _browserStarted;
 	private Map<String, String> _compatClassNamesMap;
 	private final Pattern _definitionPattern = Pattern.compile(
@@ -2031,7 +1939,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Map<String, List<String>> _exclusionPropertiesMap = new HashMap<>();
 	private SourceMismatchException _firstSourceMismatchException;
 	private Set<String> _immutableFieldTypes;
-	private ComparableVersion _mainReleaseComparableVersion;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private List<String> _pluginsInsideModulesDirectoryNames;

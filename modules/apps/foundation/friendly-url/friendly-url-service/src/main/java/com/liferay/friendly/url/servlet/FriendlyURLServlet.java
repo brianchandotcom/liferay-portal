@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,6 +71,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -184,7 +184,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		try {
 			LayoutFriendlyURLComposite layoutFriendlyURLComposite =
-				PortalUtil.getLayoutFriendlyURLComposite(
+				_portal.getLayoutFriendlyURLComposite(
 					group.getGroupId(), _private, friendlyURL, params,
 					requestContext);
 
@@ -192,7 +192,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			request.setAttribute(WebKeys.LAYOUT, layout);
 
-			Locale locale = PortalUtil.getLocale(request);
+			Locale locale = _portal.getLocale(request);
 
 			String layoutFriendlyURLCompositeFriendlyURL =
 				layoutFriendlyURLComposite.getFriendlyURL();
@@ -224,7 +224,7 @@ public class FriendlyURLServlet extends HttpServlet {
 					Locale originalLocale = setAlternativeLayoutFriendlyURL(
 						request, layout, layoutFriendlyURLCompositeFriendlyURL);
 
-					String redirect = PortalUtil.getLocalizedFriendlyURL(
+					String redirect = _portal.getLocalizedFriendlyURL(
 						request, layout, locale, originalLocale);
 
 					Boolean forcePermanentRedirect = Boolean.TRUE;
@@ -245,7 +245,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			for (Layout layout : layouts) {
 				if (layout.matches(request, friendlyURL)) {
-					String redirect = PortalUtil.getLayoutActualURL(
+					String redirect = _portal.getLayoutActualURL(
 						layout, Portal.PATH_MAIN);
 
 					return new Redirect(redirect);
@@ -255,7 +255,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			throw nsle;
 		}
 
-		String actualURL = PortalUtil.getActualURL(
+		String actualURL = _portal.getActualURL(
 			group.getGroupId(), _private, Portal.PATH_MAIN, friendlyURL, params,
 			requestContext);
 
@@ -269,7 +269,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		_private = GetterUtil.getBoolean(
 			servletConfig.getInitParameter("servlet.init.private"));
 
-		String proxyPath = PortalUtil.getPathProxy();
+		String proxyPath = _portal.getPathProxy();
 
 		_user = GetterUtil.getBoolean(
 			servletConfig.getInitParameter("servlet.init.user"));
@@ -277,15 +277,15 @@ public class FriendlyURLServlet extends HttpServlet {
 		if (_private) {
 			if (_user) {
 				_friendlyURLPathPrefix =
-					PortalUtil.getPathFriendlyURLPrivateUser();
+					_portal.getPathFriendlyURLPrivateUser();
 			}
 			else {
 				_friendlyURLPathPrefix =
-					PortalUtil.getPathFriendlyURLPrivateGroup();
+					_portal.getPathFriendlyURLPrivateGroup();
 			}
 		}
 		else {
-			_friendlyURLPathPrefix = PortalUtil.getPathFriendlyURLPublic();
+			_friendlyURLPathPrefix = _portal.getPathFriendlyURLPublic();
 		}
 
 		_pathInfoOffset = _friendlyURLPathPrefix.length() - proxyPath.length();
@@ -318,7 +318,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			if (pe instanceof NoSuchGroupException ||
 				pe instanceof NoSuchLayoutException) {
 
-				PortalUtil.sendError(
+				_portal.sendError(
 					HttpServletResponse.SC_NOT_FOUND, pe, request, response);
 
 				return;
@@ -462,8 +462,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			@Override
 			public ServletContext getServletContext() {
-				return ServletContextPool.get(
-					PortalUtil.getServletContextName());
+				return ServletContextPool.get(_portal.getServletContextName());
 			}
 
 			@Override
@@ -555,8 +554,8 @@ public class FriendlyURLServlet extends HttpServlet {
 		Locale locale = LocaleUtil.fromLanguageId(
 			layoutFriendlyURL.getLanguageId());
 
-		String alternativeLayoutFriendlyURL =
-			PortalUtil.getLocalizedFriendlyURL(request, layout, locale, locale);
+		String alternativeLayoutFriendlyURL = _portal.getLocalizedFriendlyURL(
+			request, layout, locale, locale);
 
 		SessionMessages.add(
 			request, "alternativeLayoutFriendlyURL",
@@ -574,6 +573,10 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	private String _friendlyURLPathPrefix;
 	private int _pathInfoOffset;
+
+	@Reference
+	private Portal _portal;
+
 	private boolean _private;
 	private boolean _user;
 

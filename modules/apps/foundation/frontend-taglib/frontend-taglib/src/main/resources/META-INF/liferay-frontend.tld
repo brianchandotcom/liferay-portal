@@ -285,6 +285,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Data attributes to add to the link. This data is to stored via a map.</description>
+			<name>linkData</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>If you pass in a <![CDATA[<code>rowChecker</code>]]> value, a result row is mandatory. A result row is of type <![CDATA[<code>com.liferay.portal.kernel.dao.search.ResultRow</code>]]>.</description>
 			<name>resultRow</name>
 			<required>false</required>

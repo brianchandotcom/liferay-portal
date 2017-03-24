@@ -121,6 +121,10 @@ public class JSLoaderModule {
 
 		JSONArray namesJSONArray = jsonObject.names();
 
+		if (namesJSONArray == null) {
+			return jsonObject.toString();
+		}
+
 		for (int i = 0; i < namesJSONArray.length(); i++) {
 			String name = (String)namesJSONArray.get(i);
 

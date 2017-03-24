@@ -27,13 +27,22 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.util.DL;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
@@ -503,6 +512,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 					DL.MANUAL_CHECK_IN_REQUIRED,
 					webDAVRequest.isManualCheckInRequired());
 
+				populateServiceContext(serviceContext, fileEntry);
+
 				_dlAppService.checkOutFileEntry(
 					fileEntry.getFileEntryId(), owner, timeout, serviceContext);
 
@@ -729,6 +740,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 					file = FileUtil.createTempFile(is);
 
+					populateServiceContext(serviceContext, destFileEntry);
+
 					_dlAppService.updateFileEntry(
 						destFileEntry.getFileEntryId(),
 						destFileEntry.getTitle(), destFileEntry.getMimeType(),
@@ -746,6 +759,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 					}
 				}
 			}
+
+			populateServiceContext(serviceContext, fileEntry);
 
 			_dlAppService.updateFileEntry(
 				fileEntry.getFileEntryId(), title, fileEntry.getMimeType(),
@@ -930,6 +945,27 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		}
 
 		return lock;
+	}
+
+	@Reference(unbind = "-")
+	public void setDlFileEntryMetadataLocalService(
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
+
+		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setDlFileEntryTypeLocalService(
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
+
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setDlFileVersionLocalService(
+		DLFileVersionLocalService dlFileVersionLocalService) {
+
+		_dlFileVersionLocalService = dlFileVersionLocalService;
 	}
 
 	@Override
@@ -1173,7 +1209,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	protected void populateServiceContext(
-		ServiceContext serviceContext, FileEntry fileEntry) {
+			ServiceContext serviceContext, FileEntry fileEntry)
+		throws PortalException {
 
 		serviceContext.setScopeGroupId(fileEntry.getGroupId());
 
@@ -1204,6 +1241,47 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 		serviceContext.setExpandoBridgeAttributes(
 			expandoBridge.getAttributes());
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		long fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
+
+		if (fileEntryTypeId > 0) {
+			serviceContext.setAttribute(
+				"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());
+
+			DLFileEntryType dlFileEntryType =
+				_dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
+
+			List<DDMStructure> ddmStructures =
+				dlFileEntryType.getDDMStructures();
+
+			boolean checkedOut = dlFileEntry.isCheckedOut();
+
+			DLFileVersion dlFileVersion =
+				_dlFileVersionLocalService.getLatestFileVersion(
+					fileEntry.getFileEntryId(), !checkedOut);
+
+			for (DDMStructure ddmStructure : ddmStructures) {
+				DLFileEntryMetadata dlFileEntryMetadata =
+					_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
+						ddmStructure.getStructureId(),
+						dlFileVersion.getFileVersionId());
+
+				if (dlFileEntryMetadata == null) {
+					continue;
+				}
+
+				DDMFormValues ddmFormValues =
+					StorageEngineManagerUtil.getDDMFormValues(
+						dlFileEntryMetadata.getDDMStorageId());
+
+				serviceContext.setAttribute(
+					DDMFormValues.class.getName() +
+						ddmStructure.getStructureId(),
+					ddmFormValues);
+			}
+		}
 	}
 
 	@Reference(unbind = "-")
@@ -1281,6 +1359,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	private AssetLinkLocalService _assetLinkLocalService;
 	private AssetTagLocalService _assetTagLocalService;
 	private DLAppService _dlAppService;
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private DLFileVersionLocalService _dlFileVersionLocalService;
 	private DLTrashService _dlTrashService;
 
 	@Reference

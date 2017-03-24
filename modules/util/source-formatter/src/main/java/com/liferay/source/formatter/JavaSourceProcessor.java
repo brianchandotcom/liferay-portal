@@ -38,6 +38,7 @@ import com.liferay.source.formatter.checks.JavaDeserializationSecurityCheck;
 import com.liferay.source.formatter.checks.JavaDiamondOperatorCheck;
 import com.liferay.source.formatter.checks.JavaEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JavaExceptionCheck;
+import com.liferay.source.formatter.checks.JavaFinderCacheCheck;
 import com.liferay.source.formatter.checks.JavaIfStatementCheck;
 import com.liferay.source.formatter.checks.JavaLineBreakCheck;
 import com.liferay.source.formatter.checks.JavaLogLevelCheck;
@@ -69,25 +70,6 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
-
-	protected void checkFinderCacheInterfaceMethod(
-		String fileName, String content) {
-
-		if (!fileName.endsWith("FinderImpl.java") ||
-			!content.contains("public static final FinderPath")) {
-
-			return;
-		}
-
-		Matcher matcher = _fetchByPrimaryKeysMethodPattern.matcher(content);
-
-		if (!matcher.find()) {
-			processMessage(
-				fileName,
-				"Missing override of BasePersistenceImpl." +
-					"fetchByPrimaryKeys(Set<Serializable>), see LPS-49552");
-		}
-	}
 
 	protected void checkInternalImports(
 		String fileName, String absolutePath, String content) {
@@ -459,10 +441,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"Never import javax.servlet.jsp.* from portal-kernel, see " +
 					"LPS-47682");
 		}
-
-		// LPS-49552
-
-		checkFinderCacheInterfaceMethod(fileName, newContent);
 
 		// LPS-55690
 
@@ -1238,6 +1216,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
 		_fileChecks.add(new JavaEmptyLinesCheck());
 		_fileChecks.add(new JavaExceptionCheck());
+		_fileChecks.add(new JavaFinderCacheCheck());
 		_fileChecks.add(
 			new JavaIfStatementCheck(sourceFormatterArgs.getMaxLineLength()));
 		_fileChecks.add(
@@ -1419,8 +1398,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _checkRegistryInTestClasses;
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
-	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
-		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
 	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
 		"([\n\t])(synchronized) (private|public|protected)");

@@ -55,7 +55,15 @@ import org.junit.Test;
 public class ModulesStructureTest {
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws IOException {
+		_buildProperties = new Properties();
+
+		try (InputStream inputStream = Files.newInputStream(
+				Paths.get("build.properties"))) {
+
+			_buildProperties.load(inputStream);
+		}
+
 		_modulesDirPath = Paths.get("modules");
 	}
 
@@ -536,6 +544,16 @@ public class ModulesStructureTest {
 		return false;
 	}
 
+	private boolean _isInPrivateModulesDir(Path dirPath) {
+		Path relativePath = _modulesDirPath.relativize(dirPath);
+
+		if (relativePath.startsWith("private")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _read(Path path) throws IOException {
 		Assert.assertTrue("Missing " + path, Files.exists(path));
 
@@ -614,6 +632,8 @@ public class ModulesStructureTest {
 			String gitAttributesTemplate, String settingsGradleTemplate)
 		throws IOException {
 
+		boolean privateRepo = _isInPrivateModulesDir(dirPath);
+
 		for (String fileName : _GRADLE_WRAPPER_FILE_NAMES) {
 			Path path = dirPath.resolve(fileName);
 
@@ -640,6 +660,9 @@ public class ModulesStructureTest {
 		String previousKey = null;
 		String projectGroup = null;
 		String projectPathPrefix = null;
+		String repositoryPrivatePassword = null;
+		String repositoryPrivateUrl = null;
+		String repositoryPrivateUsername = null;
 
 		String[] lines = StringUtil.split(gradleProperties, CharPool.NEW_LINE);
 
@@ -676,6 +699,21 @@ public class ModulesStructureTest {
 			else if (key.equals(_GIT_REPO_GRADLE_PROJECT_PATH_PREFIX_KEY)) {
 				projectPathPrefix = value;
 			}
+			else if (privateRepo &&
+					 key.equals(_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_PASSWORD)) {
+
+				repositoryPrivatePassword = value;
+			}
+			else if (privateRepo &&
+					 key.equals(_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_URL)) {
+
+				repositoryPrivateUrl = value;
+			}
+			else if (privateRepo &&
+					 key.equals(_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_USERNAME)) {
+
+				repositoryPrivateUsername = value;
+			}
 			else {
 				Assert.assertTrue(
 					"Incorrect key \"" + key + "\" in " +
@@ -696,6 +734,20 @@ public class ModulesStructureTest {
 				"\" in " +
 					gradlePropertiesPath,
 			_getProjectPathPrefix(dirPath), projectPathPrefix);
+
+		if (privateRepo) {
+			_testGradleBuildProperty(
+				gradlePropertiesPath,
+				_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_PASSWORD,
+				repositoryPrivatePassword, "build.repository.private.password");
+			_testGradleBuildProperty(
+				gradlePropertiesPath, _GIT_REPO_GRADLE_REPOSITORY_PRIVATE_URL,
+				repositoryPrivateUrl, "build.repository.private.url");
+			_testGradleBuildProperty(
+				gradlePropertiesPath,
+				_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_USERNAME,
+				repositoryPrivateUsername, "build.repository.private.username");
+		}
 
 		String settingsGradle = _read(settingsGradlePath);
 
@@ -750,6 +802,19 @@ public class ModulesStructureTest {
 			messagePrefix + " must match pattern \"" +
 				_gitRepoGradleProjectGroupPattern.pattern() + "\"",
 			matcher.matches());
+	}
+
+	private void _testGradleBuildProperty(
+		Path gradlePropertiesPath, String key, String value,
+		String buildPropertyKey) {
+
+		String expectedValue = _buildProperties.getProperty(buildPropertyKey);
+
+		if (Validator.isNotNull(expectedValue) && Validator.isNotNull(value)) {
+			Assert.assertEquals(
+				"Incorrect \"" + key + "\" in " + gradlePropertiesPath,
+				expectedValue, value);
+		}
 	}
 
 	private void _testThemeBuildScripts(Path dirPath) throws IOException {
@@ -811,6 +876,15 @@ public class ModulesStructureTest {
 	private static final String _GIT_REPO_GRADLE_PROJECT_PATH_PREFIX_KEY =
 		"project.path.prefix";
 
+	private static final String _GIT_REPO_GRADLE_REPOSITORY_PRIVATE_PASSWORD =
+		"systemProp.repository.private.password";
+
+	private static final String _GIT_REPO_GRADLE_REPOSITORY_PRIVATE_URL =
+		"systemProp.repository.private.url";
+
+	private static final String _GIT_REPO_GRADLE_REPOSITORY_PRIVATE_USERNAME =
+		"systemProp.repository.private.username";
+
 	private static final String[] _GRADLE_WRAPPER_FILE_NAMES = {
 		"gradle", "gradlew", "gradlew.bat"
 	};
@@ -818,6 +892,7 @@ public class ModulesStructureTest {
 	private static final String _SOURCE_FORMATTER_IGNORE_FILE_NAME =
 		"source_formatter.ignore";
 
+	private static Properties _buildProperties;
 	private static final Pattern _gitRepoGradleProjectGroupPattern =
 		Pattern.compile("com\\.liferay(?:\\.[a-z]+)+");
 	private static final Set<String> _gitRepoGradlePropertiesKeys =

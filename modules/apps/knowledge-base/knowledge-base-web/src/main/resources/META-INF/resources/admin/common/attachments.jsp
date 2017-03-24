@@ -47,6 +47,10 @@ if (kbArticle != null) {
 		<div id="<portlet:namespace />existingAttachmentsContainer">
 
 			<%
+			Map<String, Object> data = new HashMap<String, Object>();
+
+			data.put("senna-off", "true");
+
 			for (FileEntry fileEntry : attachmentsFileEntries) {
 			%>
 
@@ -57,6 +61,7 @@ if (kbArticle != null) {
 					%>
 
 					<liferay-ui:icon
+						data="<%= data %>"
 						iconCssClass="icon-paper-clip"
 						label="<%= true %>"
 						message='<%= fileEntry.getTitle() + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'

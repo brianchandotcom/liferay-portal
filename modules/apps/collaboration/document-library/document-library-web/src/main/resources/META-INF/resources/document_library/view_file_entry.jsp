@@ -212,10 +212,19 @@ if (portletTitleBasedNavigation) {
 					<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
 						<div class="sidebar-block">
 							<span class="download-document">
+
+								<%
+								Map<String, Object> data = new HashMap<String, Object>();
+
+								data.put("senna-off", "true");
+								%>
+
 								<liferay-ui:icon
+									data="<%= data %>"
 									iconCssClass="icon-download"
 									label="<%= true %>"
 									message='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+									method="get"
 									url="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 								/>
 							</span>

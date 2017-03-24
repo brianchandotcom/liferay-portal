@@ -1842,6 +1842,8 @@ public class VerifyProperties extends VerifyProcess {
 		"multicast.group.port[\"hibernate\"]",
 		"net.sf.ehcache.configurationResourceName",
 		"net.sf.ehcache.configurationResourceName.peerProviderProperties",
+		"openoffice.server.enabled", "openoffice.server.host",
+		"openoffice.server.port", "openoffice.cache.enabled",
 		"organizations.form.add.identification", "organizations.form.add.main",
 		"organizations.form.add.miscellaneous",
 		"organizations.form.update.identification",

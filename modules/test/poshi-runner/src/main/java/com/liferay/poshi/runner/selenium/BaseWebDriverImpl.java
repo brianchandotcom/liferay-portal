@@ -18,6 +18,7 @@ import com.deque.axe.AXE;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
+import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.util.AntCommands;
 import com.liferay.poshi.runner.util.CharPool;
 import com.liferay.poshi.runner.util.EmailCommands;
@@ -76,6 +77,7 @@ import javax.xml.xpath.XPathFactory;
 
 import junit.framework.TestCase;
 
+import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -351,7 +353,82 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void assertJavaScriptErrors(String ignoreJavaScriptError)
 		throws Exception {
 
-		WebDriverHelper.assertJavaScriptErrors(this, ignoreJavaScriptError);
+		if (!PropsValues.TEST_ASSERT_JAVASCRIPT_ERRORS) {
+			return;
+		}
+
+		String location = getLocation();
+
+		if (!location.contains("localhost")) {
+			return;
+		}
+
+		String pageSource = null;
+
+		try {
+			pageSource = getPageSource();
+		}
+		catch (Exception e) {
+			WebDriver.TargetLocator targetLocator = switchTo();
+
+			targetLocator.window(_defaultWindowHandle);
+
+			pageSource = getPageSource();
+		}
+
+		if (pageSource.contains(
+			"html id=\"feedHandler\" xmlns=" +
+				"\"http://www.w3.org/1999/xhtml\"")) {
+
+			return;
+		}
+
+		List<JavaScriptError> javaScriptErrors = new ArrayList<>();
+
+		try {
+			WebElement webElement = getWebElement("//body");
+
+			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+			WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+			javaScriptErrors.addAll(
+				JavaScriptError.readErrors(wrappedWebDriver));
+		}
+		catch (Exception e) {
+		}
+
+		List<Exception> exceptions = new ArrayList<>();
+
+		if (!javaScriptErrors.isEmpty()) {
+			for (JavaScriptError javaScriptError : javaScriptErrors) {
+				String javaScriptErrorValue = javaScriptError.toString();
+
+				if (Validator.isNotNull(ignoreJavaScriptError) &&
+					javaScriptErrorValue.contains(ignoreJavaScriptError)) {
+
+					continue;
+				}
+
+				if (LiferaySeleniumHelper.isInIgnoreErrorsFile(
+					javaScriptErrorValue, "javascript")) {
+
+					continue;
+				}
+
+				String message = "JAVA_SCRIPT_ERROR: " + javaScriptErrorValue;
+
+				System.out.println(message);
+
+				exceptions.add(new PoshiRunnerWarningException(message));
+			}
+		}
+
+		if (!exceptions.isEmpty()) {
+			LiferaySeleniumHelper.addToJavaScriptExceptions(exceptions);
+
+			throw exceptions.get(0);
+		}
 	}
 
 	@Override
@@ -2127,7 +2204,29 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void selectFrame(String locator) {
-		WebDriverHelper.selectFrame(this, locator);
+		WebDriver.TargetLocator targetLocator = switchTo();
+
+		if (locator.equals("relative=parent")) {
+			targetLocator.window(_defaultWindowHandle);
+
+			if (!_frameWebElements.isEmpty()) {
+				_frameWebElements.pop();
+
+				if (!_frameWebElements.isEmpty()) {
+					targetLocator.frame(_frameWebElements.peek());
+				}
+			}
+		}
+		else if (locator.equals("relative=top")) {
+			_frameWebElements = new Stack<>();
+
+			targetLocator.window(_defaultWindowHandle);
+		}
+		else {
+			_frameWebElements.push(getWebElement(locator));
+
+			targetLocator.frame(_frameWebElements.peek());
+		}
 	}
 
 	@Override
@@ -2154,7 +2253,47 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void selectWindow(String windowID) {
-		WebDriverHelper.selectWindow(this, windowID);
+		Set<String> windowHandles = getWindowHandles();
+
+		if (windowID.equals("name=undefined")) {
+			String title = getTitle();
+
+			for (String windowHandle : windowHandles) {
+				WebDriver.TargetLocator targetLocator = switchTo();
+
+				targetLocator.window(windowHandle);
+
+				if (!title.equals(getTitle())) {
+					return;
+				}
+			}
+
+			TestCase.fail("Unable to find the window ID \"" + windowID + "\"");
+		}
+		else if (windowID.equals("null")) {
+			WebDriver.TargetLocator targetLocator = switchTo();
+
+			targetLocator.window(_defaultWindowHandle);
+		}
+		else {
+			String targetWindowTitle = windowID;
+
+			if (targetWindowTitle.startsWith("title=")) {
+				targetWindowTitle = targetWindowTitle.substring(6);
+			}
+
+			for (String windowHandle : windowHandles) {
+				WebDriver.TargetLocator targetLocator = switchTo();
+
+				targetLocator.window(windowHandle);
+
+				if (targetWindowTitle.equals(getTitle())) {
+					return;
+				}
+			}
+
+			TestCase.fail("Unable to find the window ID \"" + windowID + "\"");
+		}
 	}
 
 	@Override

@@ -28,8 +28,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.jgit.api.AddCommand;
@@ -53,10 +51,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.jgit.merge.ResolveMerger;
-import org.eclipse.jgit.merge.ResolveMerger.MergeFailureReason;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.JschConfigSessionFactory;
 import org.eclipse.jgit.transport.OpenSshConfig.Host;
 import org.eclipse.jgit.transport.PushResult;
@@ -293,20 +288,22 @@ public class GitWorkingDirectory {
 		createLocalBranch(branchName, false, "HEAD");
 	}
 
-	public void createLocalBranch(String branchName, boolean force, String sha)
+	public void createLocalBranch(
+			String branchName, boolean force, String startPoint)
 		throws GitAPIException {
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Creating branch ", branchName, " at sha ", sha));
+				"Creating branch ", branchName, " at starting point ",
+				startPoint));
 
 		CreateBranchCommand createBranchCommand = _git.branchCreate();
 
 		createBranchCommand.setForce(force);
 		createBranchCommand.setName(branchName);
 
-		if (sha != null) {
-			createBranchCommand.setStartPoint(sha);
+		if (startPoint != null) {
+			createBranchCommand.setStartPoint(startPoint);
 		}
 
 		createBranchCommand.call();
@@ -463,21 +460,7 @@ public class GitWorkingDirectory {
 		return _gitDirectory;
 	}
 
-	public List<String> getLocalBranchNames() throws GitAPIException {
-		List<Ref> allLocalBranchRefs = new ArrayList<>();
-
-		for (Ref branchRef : getBranchRefs()) {
-			String branchName = branchRef.getName();
-
-			if (branchName.startsWith("refs/heads")) {
-				allLocalBranchRefs.add(branchRef);
-			}
-		}
-
-		return toShortNameList(allLocalBranchRefs);
-	}
-
-	public String getRemoteBranchSha(
+	public String getGitHubBranchSha(
 		String branchName, RemoteConfig remoteConfig) {
 
 		String command = JenkinsResultsParserUtil.combine(
@@ -498,6 +481,66 @@ public class GitWorkingDirectory {
 		}
 		catch (InterruptedException | IOException e) {
 			throw new RuntimeException(e);
+		}
+
+		return null;
+	}
+
+	public List<String> getLocalBranchNames() throws GitAPIException {
+		List<Ref> allLocalBranchRefs = new ArrayList<>();
+
+		for (Ref branchRef : getBranchRefs()) {
+			String branchName = branchRef.getName();
+
+			if (branchName.startsWith("refs/heads")) {
+				allLocalBranchRefs.add(branchRef);
+			}
+		}
+
+		return toShortNameList(allLocalBranchRefs);
+	}
+
+	public List<String> getRemoteBranchNames(RemoteConfig remoteConfig)
+		throws GitAPIException {
+
+		LsRemoteCommand lsRemoteCommand = Git.lsRemoteRepository();
+
+		lsRemoteCommand.setHeads(true);
+		lsRemoteCommand.setRemote(getRemoteURL(remoteConfig));
+		lsRemoteCommand.setTags(false);
+
+		List<String> remoteBranchNames = toShortNameList(
+			lsRemoteCommand.call());
+
+		Collections.sort(remoteBranchNames);
+
+		return remoteBranchNames;
+	}
+
+	public String getRemoteBranchSha(
+			String branchName, RemoteConfig remoteConfig)
+		throws GitAPIException {
+
+		String remoteURL = getRemoteURL(remoteConfig);
+
+		if (remoteURL.contains("git@github.com")) {
+			return getGitHubBranchSha(branchName, remoteConfig);
+		}
+
+		LsRemoteCommand lsRemoteCommand = Git.lsRemoteRepository();
+
+		lsRemoteCommand.setHeads(true);
+		lsRemoteCommand.setRemote(remoteURL);
+		lsRemoteCommand.setTags(false);
+
+		Collection<Ref> remoteRefs = lsRemoteCommand.call();
+
+		for (Ref remoteRef : remoteRefs) {
+			String completeBranchName = "refs/heads/" + branchName;
+
+			if (completeBranchName.equals(remoteRef.getName())) {
+				return remoteRef.getObjectId().getName();
+			}
 		}
 
 		return null;
@@ -543,24 +586,6 @@ public class GitWorkingDirectory {
 		}
 
 		return remoteNames;
-	}
-
-	public List<String> getRemoteRepositoryBranchNames(
-			RemoteConfig remoteConfig)
-		throws GitAPIException {
-
-		LsRemoteCommand lsRemoteCommand = Git.lsRemoteRepository();
-
-		lsRemoteCommand.setHeads(true);
-		lsRemoteCommand.setRemote(getRemoteURL(remoteConfig));
-		lsRemoteCommand.setTags(false);
-
-		List<String> remoteBranchNames = toShortNameList(
-			lsRemoteCommand.call());
-
-		Collections.sort(remoteBranchNames);
-
-		return remoteBranchNames;
 	}
 
 	public String getRepositoryName() {
@@ -650,10 +675,11 @@ public class GitWorkingDirectory {
 						(remoteRefUpdate.getStatus() !=
 							RemoteRefUpdate.Status.OK)) {
 
-						System.out.println(JenkinsResultsParserUtil.combine(
-							"Unable to push ", localBranchName, " to ",
-							getRemoteURL(remoteConfig), " \n\tPush response: ",
-							remoteRefUpdate.toString()));
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"Unable to push ", localBranchName, " to ",
+								getRemoteURL(remoteConfig), "\nPush response: ",
+								remoteRefUpdate.toString()));
 
 						return false;
 					}

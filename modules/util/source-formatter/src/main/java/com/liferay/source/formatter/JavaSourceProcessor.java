@@ -55,6 +55,7 @@ import com.liferay.source.formatter.checks.LanguageKeysCheck;
 import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.SessionKeysCheck;
+import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -405,14 +406,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-62786
 
 		checkPropertyUtils(fileName, newContent);
-
-		// LPS-63953
-
-		if (!absolutePath.contains("poshi") &&
-			!fileName.endsWith("StringUtilTest.java")) {
-
-			checkStringUtilReplace(fileName, newContent);
-		}
 
 		// LPS-65229
 
@@ -1100,6 +1093,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_fileChecks.add(
 			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
 		_fileChecks.add(new SessionKeysCheck());
+		_fileChecks.add(new StringUtilCheck());
 
 		if (portalSource || subrepository) {
 			_fileChecks.add(new JavaSystemEventAnnotationCheck());

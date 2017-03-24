@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -387,59 +386,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				fileName,
 				"Do not use org.apache.commons.beanutils.PropertyUtils, see " +
 					"LPS-62786");
-		}
-	}
-
-	protected void checkStringUtilReplace(String fileName, String content)
-		throws Exception {
-
-		Matcher matcher = stringUtilReplacePattern.matcher(content);
-
-		while (matcher.find()) {
-			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
-				continue;
-			}
-
-			List<String> parametersList = getParameterList(matcher.group());
-
-			if (parametersList.size() != 3) {
-				return;
-			}
-
-			String secondParameter = parametersList.get(1);
-
-			Matcher singleLengthMatcher = singleLengthStringPattern.matcher(
-				secondParameter);
-
-			if (!singleLengthMatcher.find()) {
-				continue;
-			}
-
-			String fieldName = singleLengthMatcher.group(2);
-
-			if (fieldName != null) {
-				Field field = StringPool.class.getDeclaredField(fieldName);
-
-				String value = (String)field.get(null);
-
-				if (value.length() != 1) {
-					continue;
-				}
-			}
-
-			String method = matcher.group(1);
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("Use StringUtil.");
-			sb.append(method);
-			sb.append("(String, char, char) or StringUtil.");
-			sb.append(method);
-			sb.append("(String, char, String) instead");
-
-			processMessage(
-				fileName, sb.toString(),
-				getLineCount(content, matcher.start()));
 		}
 	}
 
@@ -1552,10 +1498,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern sbAppendWithStartingSpacePattern = Pattern.compile(
 		"\n(\t*\\w*(sb|SB)[0-9]?\\.append\\(\".*\"\\);)\n\\s*\\w*(sb|SB)" +
 			"[0-9]?\\.append\\(\" .*\"\\);\n");
-	protected static Pattern singleLengthStringPattern = Pattern.compile(
-		"^(\".\"|StringPool\\.([A-Z_]+))$");
-	protected static Pattern stringUtilReplacePattern = Pattern.compile(
-		"StringUtil\\.(replace(First|Last)?)\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static boolean subrepository;
 	protected static Pattern unparameterizedClassTypePattern1 =
 		Pattern.compile("\\Wnew Class[^<\\w]");

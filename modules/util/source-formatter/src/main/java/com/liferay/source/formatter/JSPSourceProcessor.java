@@ -35,6 +35,7 @@ import com.liferay.source.formatter.checks.JSPTagAttributesCheck;
 import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
 import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
+import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 
@@ -425,10 +426,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		// LPS-62786
 
 		checkPropertyUtils(fileName, newContent);
-
-		// LPS-63953
-
-		checkStringUtilReplace(fileName, newContent);
 
 		checkGetterUtilGet(fileName, newContent);
 
@@ -1444,6 +1441,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				_getPrimitiveTagAttributeDataTypes(), _getTagJavaClassesMap()));
 		_fileChecks.add(
 			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
+		_fileChecks.add(new StringUtilCheck());
 
 		if (portalSource || subrepository) {
 			_fileChecks.add(

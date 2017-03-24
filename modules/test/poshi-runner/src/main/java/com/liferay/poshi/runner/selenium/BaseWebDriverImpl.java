@@ -2829,7 +2829,20 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void typeEditor(String locator, String value) {
-		WebDriverHelper.typeEditor(this, locator, value);
+		WrapsDriver wrapsDriver = (WrapsDriver)getWebElement(locator);
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrapsDriver.getWrappedDriver();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("CKEDITOR.instances[\"");
+		sb.append(getEditorName(locator));
+		sb.append("\"].setData(\"");
+		sb.append(HtmlUtil.escapeJS(value.replace("\\", "\\\\")));
+		sb.append("\");");
+
+		javascriptExecutor.executeScript(sb.toString());
 	}
 
 	@Override
@@ -3357,6 +3370,34 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Alert alert = targetLocator.alert();
 
 		alert.accept();
+	}
+
+	protected void executeJavaScriptEvent(
+		String locator, String eventType, String event) {
+
+		WebElement webElement = getWebElement(locator);
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
+
+		StringBuilder sb = new StringBuilder(6);
+
+		sb.append("var element = arguments[0];");
+		sb.append("var event = document.createEvent('");
+		sb.append(eventType);
+		sb.append("');event.initEvent('");
+		sb.append(event);
+		sb.append("', true, false);element.dispatchEvent(event);");
+
+		javascriptExecutor.executeScript(sb.toString(), webElement);
 	}
 
 	protected By getBy(String locator) {

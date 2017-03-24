@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRM</td>
+	<td>//a[contains(.,'Confirm')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CREATE_ACCOUNT</td>
 	<td>//a[contains(.,'Create Account')]</td>
 	<td></td>

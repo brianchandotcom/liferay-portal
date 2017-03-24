@@ -150,7 +150,7 @@
 			<var name="siteName" value="test" />
 		</execute>
 
-		<execute function="AssertClick" locator1="//span[@class='taglib-text 'and contains(.,'Confirm')]" value1="Confirm" />
+		<execute function="AssertClick" locator1="Link#CONFIRM" value1="Confirm" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Friends Directory Page" />

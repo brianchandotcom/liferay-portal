@@ -53,6 +53,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.Stack;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
@@ -3215,6 +3216,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		alert.accept();
 	}
 
+	protected String getDefaultWindowHandle() {
+		return _defaultWindowHandle;
+	}
+
 	protected ImageTarget getImageTarget(String image) throws Exception {
 		String filePath =
 			FileUtil.getSeparator() + getSikuliImagesDirName() + image;
@@ -3223,6 +3228,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			LiferaySeleniumHelper.getSourceDirFilePath(filePath));
 
 		return new ImageTarget(file);
+	}
+
+	protected int getNavigationBarHeight() {
+		return _navigationBarHeight;
 	}
 
 	protected Set<Integer> getSpecialCharIndexes(String value) {
@@ -3298,6 +3307,14 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		WebDriverHelper.selectByRegexpValue(this, selectLocator, regexp);
 	}
 
+	protected void setDefaultWindowHandle(String defaultWindowHandle) {
+		_defaultWindowHandle = defaultWindowHandle;
+	}
+
+	protected void setNavigationBarHeight(int navigationBarHeight) {
+		_navigationBarHeight = navigationBarHeight;
+	}
+
 	private static final String _CURRENT_DIR_NAME =
 		PoshiRunnerGetterUtil.getCanonicalPath(".");
 
@@ -3309,7 +3326,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	private final Pattern _aceEditorPattern = Pattern.compile(
 		"\\(|\\$\\{line\\.separator\\}");
 	private String _clipBoard = "";
+	private String _defaultWindowHandle;
+	private Stack<WebElement> _frameWebElements = new Stack<>();
 	private final Map<String, String> _keysSpecialChars = new HashMap<>();
+	private int _navigationBarHeight;
 	private final String _outputDirName;
 	private String _primaryTestSuiteName;
 	private int _screenshotCount;

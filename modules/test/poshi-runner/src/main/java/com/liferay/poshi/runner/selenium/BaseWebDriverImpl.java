@@ -3472,8 +3472,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			(getElementWidth(locator) / 2);
 	}
 
-	protected int getElementPositionCenterY(
-		WebDriver webDriver, String locator) {
+	protected int getElementPositionCenterY(String locator) {
 
 		return getElementPositionTop(locator) +
 			(getElementHeight(locator) / 2);
@@ -3529,13 +3528,13 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return new Point(x, y);
 	}
 
-	protected int getFramePositionLeft(WebDriver webDriver) {
+	protected int getFramePositionLeft() {
 		Point point = getFramePoint();
 
 		return point.getX();
 	}
 
-	protected int getFramePositionTop(WebDriver webDriver) {
+	protected int getFramePositionTop() {
 		Point point = getFramePoint();
 
 		return point.getY();
@@ -3609,19 +3608,44 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected WebElement getWebElement(String locator) {
-		return WebDriverHelper.getWebElement(this, locator);
+		return getWebElement(locator, null);
 	}
 
 	protected WebElement getWebElement(String locator, String timeout) {
-		return WebDriverHelper.getWebElement(this, locator, timeout);
+		List<WebElement> webElements = getWebElements(
+			locator, timeout);
+
+		if (!webElements.isEmpty()) {
+			return webElements.get(0);
+		}
+
+		return null;
 	}
 
 	protected List<WebElement> getWebElements(String locator) {
-		return WebDriverHelper.getWebElements(this, locator);
+		return getWebElements(locator, null);
 	}
 
 	protected List<WebElement> getWebElements(String locator, String timeout) {
-		return WebDriverHelper.getWebElements(this, locator, timeout);
+		if (timeout != null) {
+			setTimeoutImplicit(timeout);
+		}
+
+		try {
+			List<WebElement> webElements = new ArrayList<>();
+
+			for (WebElement webElement : findElements(getBy(locator))) {
+
+				webElements.add(new RetryWebElementImpl(locator, webElement));
+			}
+
+			return webElements;
+		}
+		finally {
+			if (timeout != null) {
+				setDefaultTimeoutImplicit();
+			}
+		}
 	}
 
 	protected int getViewportHeight() {
@@ -3680,6 +3704,31 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		_keysSpecialChars.put(">", ".");
 	}
 
+	protected boolean isObscured(WebElement webElement) {
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrapsDriver.getWrappedDriver();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var element = arguments[0];");
+		sb.append("console.log(element);");
+		sb.append("var rect = element.getBoundingClientRect();");
+		sb.append("elementX = (rect.right + rect.left) / 2;");
+		sb.append("elementY = (rect.top + rect.bottom) / 2;");
+		sb.append("var newElement = ");
+		sb.append("document.elementFromPoint(elementX, elementY);");
+		sb.append("if (element == newElement) {");
+		sb.append("return false;}");
+		sb.append("return true;");
+
+		Boolean obscured = (Boolean)javascriptExecutor.executeScript(
+			sb.toString(), webElement);
+
+		return obscured.booleanValue();
+	}
+
 	protected boolean isValidKeycode(String keycode) {
 		for (Keys keys : Keys.values()) {
 			String keysName = keys.name();
@@ -3709,15 +3758,70 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected void scrollWebElementIntoView(WebElement webElement) {
-		WebDriverHelper.scrollWebElementIntoView(this, webElement);
+		if (!webElement.isDisplayed() || isObscured(webElement)) {
+			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+			WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+			JavascriptExecutor javascriptExecutor =
+				(JavascriptExecutor)wrappedWebDriver;
+
+			javascriptExecutor.executeScript(
+				"arguments[0].scrollIntoView(false);", webElement);
+		}
 	}
 
 	protected void selectByRegexpText(String selectLocator, String regexp) {
-		WebDriverHelper.selectByRegexpText(this, selectLocator, regexp);
+		WebElement webElement = getWebElement(selectLocator);
+
+		Select select = new Select(webElement);
+
+		List<WebElement> optionWebElements = select.getOptions();
+
+		Pattern pattern = Pattern.compile(regexp);
+
+		int index = -1;
+
+		for (WebElement optionWebElement : optionWebElements) {
+			String optionWebElementText = optionWebElement.getText();
+
+			Matcher matcher = pattern.matcher(optionWebElementText);
+
+			if (matcher.matches()) {
+				index = optionWebElements.indexOf(optionWebElement);
+
+				break;
+			}
+		}
+
+		select.selectByIndex(index);
 	}
 
 	protected void selectByRegexpValue(String selectLocator, String regexp) {
-		WebDriverHelper.selectByRegexpValue(this, selectLocator, regexp);
+		WebElement webElement = getWebElement(selectLocator);
+
+		Select select = new Select(webElement);
+
+		List<WebElement> optionWebElements = select.getOptions();
+
+		Pattern pattern = Pattern.compile(regexp);
+
+		int index = -1;
+
+		for (WebElement optionWebElement : optionWebElements) {
+			String optionWebElementValue = optionWebElement.getAttribute(
+				"value");
+
+			Matcher matcher = pattern.matcher(optionWebElementValue);
+
+			if (matcher.matches()) {
+				index = optionWebElements.indexOf(optionWebElement);
+
+				break;
+			}
+		}
+
+		select.selectByIndex(index);
 	}
 
 	protected void setDefaultWindowHandle(String defaultWindowHandle) {

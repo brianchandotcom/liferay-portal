@@ -14,12 +14,15 @@
 
 package com.liferay.portal.kernel.security.permission;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.Map;
 import java.util.Set;
 
 /**
  * @author László Csontos
  */
+@ProviderType
 public interface PortletResourceActionsBag extends ResourceActionsBag {
 
 	public String getPortletRootModelResource();

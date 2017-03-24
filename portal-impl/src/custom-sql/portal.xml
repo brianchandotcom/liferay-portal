@@ -1366,6 +1366,26 @@
 				Role_.name ASC
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.findByC_N_S_P">
+		<![CDATA[
+			SELECT
+				Role_.name AS roleName, ResourceAction.actionId AS actionId
+			FROM
+				ResourcePermission
+			INNER JOIN
+				Role_ ON
+					(Role_.roleId = ResourcePermission.roleId)
+			INNER JOIN
+				ResourceAction ON
+					(ResourcePermission.name = ResourceAction.name) AND
+					(MOD(INTEGER_DIV(ResourcePermission.actionIds, ResourceAction.bitwiseValue), 2) = 1)
+			WHERE
+				(ResourcePermission.companyId = ?) AND
+				(ResourcePermission.name = ?) AND
+				(ResourcePermission.scope = ?) AND
+				(ResourcePermission.primKey = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.findByC_N_S_P_A">
 		<![CDATA[
 			SELECT

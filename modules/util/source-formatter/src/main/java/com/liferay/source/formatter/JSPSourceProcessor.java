@@ -30,6 +30,7 @@ import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JSPEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JSPIfStatementCheck;
 import com.liferay.source.formatter.checks.JSPLanguageKeysCheck;
+import com.liferay.source.formatter.checks.JSPSessionKeysCheck;
 import com.liferay.source.formatter.checks.JSPTagAttributesCheck;
 import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
@@ -371,10 +372,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			fileName, newContent, "<%@ page import=");
 		newContent = compressImportsOrTaglibs(
 			fileName, newContent, "<%@ taglib uri=");
-
-		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
-		newContent = fixSessionKey(
-			fileName, newContent, taglibSessionKeyPattern);
 
 		newContent = removeUnusedTaglibs(
 			fileName, newContent, checkedForIncludesFileNames,
@@ -1444,6 +1441,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					PORTAL_MAX_DIR_LEVEL)));
 		_fileChecks.add(new JSPEmptyLinesCheck());
 		_fileChecks.add(new JSPIfStatementCheck());
+		_fileChecks.add(new JSPSessionKeysCheck());
 		_fileChecks.add(
 			new JSPTagAttributesCheck(
 				portalSource, subrepository,

@@ -593,94 +593,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
-	protected String fixSessionKey(
-		String fileName, String content, Pattern pattern) {
-
-		Matcher matcher = pattern.matcher(content);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String newContent = content;
-
-		do {
-			String match = matcher.group();
-
-			String s = null;
-
-			if (pattern.equals(sessionKeyPattern)) {
-				s = StringPool.COMMA;
-			}
-			else if (pattern.equals(taglibSessionKeyPattern)) {
-				s = "key=";
-			}
-
-			int x = match.indexOf(s);
-
-			if (x == -1) {
-				continue;
-			}
-
-			x = x + s.length();
-
-			String substring = match.substring(x).trim();
-
-			String quote = StringPool.BLANK;
-
-			if (substring.startsWith(StringPool.APOSTROPHE)) {
-				quote = StringPool.APOSTROPHE;
-			}
-			else if (substring.startsWith(StringPool.QUOTE)) {
-				quote = StringPool.QUOTE;
-			}
-			else {
-				continue;
-			}
-
-			int y = match.indexOf(quote, x);
-			int z = match.indexOf(quote, y + 1);
-
-			if ((y == -1) || (z == -1)) {
-				continue;
-			}
-
-			String prefix = match.substring(0, y + 1);
-			String suffix = match.substring(z);
-			String oldKey = match.substring(y + 1, z);
-
-			boolean alphaNumericKey = true;
-
-			for (char c : oldKey.toCharArray()) {
-				if (!Validator.isChar(c) && !Validator.isDigit(c) &&
-					(c != CharPool.DASH) && (c != CharPool.UNDERLINE)) {
-
-					alphaNumericKey = false;
-				}
-			}
-
-			if (!alphaNumericKey) {
-				continue;
-			}
-
-			String newKey = TextFormatter.format(oldKey, TextFormatter.O);
-
-			newKey = TextFormatter.format(newKey, TextFormatter.M);
-
-			if (newKey.equals(oldKey)) {
-				continue;
-			}
-
-			String oldSub = prefix.concat(oldKey).concat(suffix);
-			String newSub = prefix.concat(newKey).concat(suffix);
-
-			newContent = StringUtil.replaceFirst(newContent, oldSub, newSub);
-		}
-		while (matcher.find());
-
-		return newContent;
-	}
-
 	protected String fixUnparameterizedClassType(String content) {
 		Matcher matcher = unparameterizedClassTypePattern1.matcher(content);
 
@@ -1779,18 +1691,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern sbAppendWithStartingSpacePattern = Pattern.compile(
 		"\n(\t*\\w*(sb|SB)[0-9]?\\.append\\(\".*\"\\);)\n\\s*\\w*(sb|SB)" +
 			"[0-9]?\\.append\\(\" .*\"\\);\n");
-	protected static Pattern sessionKeyPattern = Pattern.compile(
-		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
-			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),
-		Pattern.MULTILINE);
 	protected static Pattern singleLengthStringPattern = Pattern.compile(
 		"^(\".\"|StringPool\\.([A-Z_]+))$");
 	protected static Pattern stringUtilReplacePattern = Pattern.compile(
 		"StringUtil\\.(replace(First|Last)?)\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static boolean subrepository;
-	protected static Pattern taglibSessionKeyPattern = Pattern.compile(
-		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
-		Pattern.MULTILINE);
 	protected static Pattern unparameterizedClassTypePattern1 =
 		Pattern.compile("\\Wnew Class[^<\\w]");
 	protected static Pattern unparameterizedClassTypePattern2 =

@@ -52,6 +52,7 @@ import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
 import com.liferay.source.formatter.checks.JavaWhitespaceCheck;
 import com.liferay.source.formatter.checks.JavaXMLSecurityCheck;
 import com.liferay.source.formatter.checks.LanguageKeysCheck;
+import com.liferay.source.formatter.checks.SessionKeysCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -159,8 +160,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			processMessage(fileName, "UTF-8");
 		}
-
-		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
 
 		newContent = StringUtil.replace(
 			newContent,
@@ -1102,6 +1101,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				sourceFormatterArgs.getMaxLineLength()));
 		_fileChecks.add(new JavaPackagePathCheck());
 		_fileChecks.add(new JavaSystemExceptionCheck());
+		_fileChecks.add(new SessionKeysCheck());
 
 		if (portalSource || subrepository) {
 			_fileChecks.add(new JavaSystemEventAnnotationCheck());

@@ -14,9 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.XMLBuildFileCheck;
 import com.liferay.source.formatter.checks.XMLCustomSQLFileCheck;
@@ -107,7 +104,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				getExcludes(_SERVICE_FINDER_COLUMN_SORT_EXCLUDES), portalSource,
 				subrepository,
 				getContent("sql/portal-tables.sql", PORTAL_MAX_DIR_LEVEL),
-				_getPluginsInsideModulesDirectoryNames()));
+				getPluginsInsideModulesDirectoryNames()));
 		_fileChecks.add(new XMLSolrSchemaFileCheck());
 		_fileChecks.add(new XMLSpringFileCheck());
 		_fileChecks.add(new XMLToggleFileCheck());
@@ -129,39 +126,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			_fileChecks.add(
 				new XMLEmptyLinesCheck(sourceFormatterArgs.getBaseDirName()));
 		}
-	}
-
-	private List<String> _getPluginsInsideModulesDirectoryNames()
-		throws Exception {
-
-		List<String> pluginsInsideModulesDirectoryNames = new ArrayList<>();
-
-		List<String> pluginBuildFileNames = getFileNames(
-			new String[0],
-			new String[] {
-				"**/modules/apps/**/build.xml",
-				"**/modules/private/apps/**/build.xml"
-			});
-
-		for (String pluginBuildFileName : pluginBuildFileNames) {
-			pluginBuildFileName = StringUtil.replace(
-				pluginBuildFileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			String absolutePath = getAbsolutePath(pluginBuildFileName);
-
-			int x = absolutePath.indexOf("/modules/apps/");
-
-			if (x == -1) {
-				x = absolutePath.indexOf("/modules/private/apps/");
-			}
-
-			int y = absolutePath.lastIndexOf(StringPool.SLASH);
-
-			pluginsInsideModulesDirectoryNames.add(
-				absolutePath.substring(x, y + 1));
-		}
-
-		return pluginsInsideModulesDirectoryNames;
 	}
 
 	private static final String[] _INCLUDES = new String[] {

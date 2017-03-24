@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.engine.file.system.listener;
+package com.liferay.sync.engine.file.system;
 
 import com.liferay.sync.engine.BaseTestCase;
 import com.liferay.sync.engine.model.SyncFile;
@@ -39,7 +39,7 @@ import org.junit.Test;
 /**
  * @author Shinn Lok
  */
-public class SyncSiteWatchEventListenerTest extends BaseTestCase {
+public class WatcherTest extends BaseTestCase {
 
 	@Before
 	@Override
@@ -77,20 +77,20 @@ public class SyncSiteWatchEventListenerTest extends BaseTestCase {
 
 	@Test
 	public void testSyncWatchEventTypeCreate() {
-		SyncSiteWatchEventListener syncSiteWatchEventListener =
-			new SyncSiteWatchEventListener(syncAccount.getSyncAccountId());
+		TestWatcher testWatcher = new TestWatcher(
+			syncAccount.getSyncAccountId());
 
 		String sourceFilePathName = FileUtil.getFilePathName(
 			filePathName, "test-site1", "a.txt");
 
-		syncSiteWatchEventListener.watchEvent(
+		testWatcher.watchEvent(
 			SyncWatchEvent.EVENT_TYPE_RENAME_FROM,
 			Paths.get(sourceFilePathName));
 
 		String targetFilePathName = FileUtil.getFilePathName(
 			filePathName, "test-site2", "a.txt");
 
-		syncSiteWatchEventListener.watchEvent(
+		testWatcher.watchEvent(
 			SyncWatchEvent.EVENT_TYPE_RENAME_TO, Paths.get(targetFilePathName));
 
 		SyncWatchEvent lastSyncWatchEvent =
@@ -104,20 +104,20 @@ public class SyncSiteWatchEventListenerTest extends BaseTestCase {
 
 	@Test
 	public void testSyncWatchEventTypeMove() {
-		SyncSiteWatchEventListener syncSiteWatchEventListener =
-			new SyncSiteWatchEventListener(syncAccount.getSyncAccountId());
+		TestWatcher testWatcher = new TestWatcher(
+			syncAccount.getSyncAccountId());
 
 		String sourceFilePathName = FileUtil.getFilePathName(
 			filePathName, "test-site1", "a.txt");
 
-		syncSiteWatchEventListener.watchEvent(
+		testWatcher.watchEvent(
 			SyncWatchEvent.EVENT_TYPE_RENAME_FROM,
 			Paths.get(sourceFilePathName));
 
 		String targetFilePathName = FileUtil.getFilePathName(
 			filePathName, "test-site1", "test", "a.txt");
 
-		syncSiteWatchEventListener.watchEvent(
+		testWatcher.watchEvent(
 			SyncWatchEvent.EVENT_TYPE_RENAME_TO, Paths.get(targetFilePathName));
 
 		SyncWatchEvent lastSyncWatchEvent =
@@ -130,8 +130,8 @@ public class SyncSiteWatchEventListenerTest extends BaseTestCase {
 
 	@Test
 	public void testSyncWatchEventTypeRename() throws IOException {
-		SyncSiteWatchEventListener syncSiteWatchEventListener =
-			new SyncSiteWatchEventListener(syncAccount.getSyncAccountId());
+		TestWatcher testWatcher = new TestWatcher(
+			syncAccount.getSyncAccountId());
 
 		String sourceFilePathName = FileUtil.getFilePathName(
 			filePathName, "test-site1", "a");
@@ -139,7 +139,7 @@ public class SyncSiteWatchEventListenerTest extends BaseTestCase {
 		Path sourceFilePath = Files.createDirectory(
 			Paths.get(sourceFilePathName));
 
-		syncSiteWatchEventListener.watchEvent(
+		testWatcher.watchEvent(
 			SyncWatchEvent.EVENT_TYPE_RENAME_FROM, sourceFilePath);
 
 		String targetFilePathName = FileUtil.getFilePathName(
@@ -149,7 +149,7 @@ public class SyncSiteWatchEventListenerTest extends BaseTestCase {
 
 		Files.move(sourceFilePath, targetFilePath);
 
-		syncSiteWatchEventListener.watchEvent(
+		testWatcher.watchEvent(
 			SyncWatchEvent.EVENT_TYPE_RENAME_TO, targetFilePath);
 
 		SyncWatchEvent lastSyncWatchEvent =
@@ -166,5 +166,29 @@ public class SyncSiteWatchEventListenerTest extends BaseTestCase {
 
 	private static SyncSite _syncSite1;
 	private static SyncSite _syncSite2;
+
+	private class TestWatcher extends Watcher {
+
+		public TestWatcher(long syncAccountId) {
+			super(syncAccountId, null);
+		}
+
+		@Override
+		public void registerFilePath(Path filePath) throws IOException {
+		}
+
+		@Override
+		public void run() {
+		}
+
+		@Override
+		public void unregisterFilePath(Path filePath) {
+		}
+
+		@Override
+		protected void init() {
+		}
+
+	}
 
 }

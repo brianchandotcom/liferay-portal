@@ -68,9 +68,14 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 
 				<%
 				String taglibFileEntryTitle = "<span class='hide-accessible'>" + fileEntry.getTitle() + "</span>";
+
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				data.put("senna-off", "true");
 				%>
 
 				<liferay-ui:icon
+					data="<%= data %>"
 					iconCssClass="icon-download"
 					label="<%= true %>"
 					message='<%= LanguageUtil.format(request, "download-x", taglibFileEntryTitle, false) + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'

@@ -16,6 +16,8 @@ package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
@@ -33,6 +35,10 @@ public class HorizontalCardTag extends CardTag {
 		_colHTML = colHTML;
 	}
 
+	public void setLinkData(Map<String, Object> linkData) {
+		_linkData = linkData;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -47,6 +53,7 @@ public class HorizontalCardTag extends CardTag {
 	@Override
 	protected void cleanUp() {
 		_colHTML = null;
+		_linkData = null;
 		_text = null;
 	}
 
@@ -60,10 +67,12 @@ public class HorizontalCardTag extends CardTag {
 		super.setAttributes(request);
 
 		request.setAttribute("liferay-frontend:card:colHTML", _colHTML);
+		request.setAttribute("liferay-frontend:card:linkData", _linkData);
 		request.setAttribute("liferay-frontend:card:text", _text);
 	}
 
 	private String _colHTML;
+	private Map<String, Object> _linkData;
 	private String _text;
 
 }

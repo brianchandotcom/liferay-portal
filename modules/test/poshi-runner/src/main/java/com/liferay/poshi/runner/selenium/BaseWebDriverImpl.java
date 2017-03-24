@@ -1265,7 +1265,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				thread.interrupt();
 			}
 
-			System.out.println("WebDriverHelper#getLocation(WebDriver):");
+			System.out.println("getLocation(WebDriver):");
 			System.out.println(this.toString());
 
 			Set<String> windowHandles = this.getWindowHandles();

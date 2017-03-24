@@ -31,14 +31,12 @@ public class IOSMobileDriverImpl extends BaseMobileDriverImpl {
 	protected void tap(String locator) {
 		TouchAction touchAction = new TouchAction(this);
 
-		int screenPositionX = WebDriverHelper.getElementPositionCenterX(
-			this, locator);
+		int screenPositionX = getElementPositionCenterX(locator);
 
 		int navigationBarHeight = 44;
 
-		int screenPositionY =
-			WebDriverHelper.getElementPositionCenterY(this, locator) +
-				navigationBarHeight;
+		int screenPositionY = getElementPositionCenterY(locator) +
+			navigationBarHeight;
 
 		context("NATIVE_APP");
 

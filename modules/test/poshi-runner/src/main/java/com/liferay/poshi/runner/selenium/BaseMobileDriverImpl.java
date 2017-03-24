@@ -294,13 +294,11 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	public boolean isInViewport(String locator) {
-		int elementPositionCenterY = WebDriverHelper.getElementPositionCenterY(
-			this, locator);
+		int elementPositionCenterY = getElementPositionCenterY(locator);
 
-		int viewportPositionBottom = WebDriverHelper.getViewportPositionBottom(
-			this);
+		int viewportPositionBottom = getViewportPositionBottom();
 
-		int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
+		int viewportPositionTop = getScrollOffsetY();
 
 		if ((elementPositionCenterY >= viewportPositionBottom) ||
 			(elementPositionCenterY <= viewportPositionTop)) {
@@ -334,7 +332,7 @@ public abstract class BaseMobileDriverImpl
 			return isInViewport(locator);
 		}
 		else {
-			WebDriverHelper.scrollWebElementIntoView(this, webElement);
+			scrollWebElementIntoView(webElement);
 
 			return webElement.isDisplayed();
 		}
@@ -583,7 +581,7 @@ public abstract class BaseMobileDriverImpl
 	protected void swipeWebElementIntoView(String locator) {
 		WebElement webElement = getWebElement(locator, "1");
 
-		WebDriverHelper.scrollWebElementIntoView(this, webElement);
+		scrollWebElementIntoView(webElement);
 	}
 
 	protected void tap(String locator) {

@@ -90,15 +90,13 @@ public class ChromeMobileDriverImpl extends BaseMobileDriverImpl {
 
 		super.swipeWebElementIntoView(locator);
 
-		int elementPositionCenterX = WebDriverHelper.getElementPositionCenterX(
-			this, locator);
+		int elementPositionCenterX = getElementPositionCenterX(locator);
 
 		int screenPositionX = elementPositionCenterX * 2;
 
-		int elementPositionCenterY = WebDriverHelper.getElementPositionCenterY(
-			this, locator);
+		int elementPositionCenterY = getElementPositionCenterY(locator);
 		int navigationBarHeight = 162;
-		int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
+		int viewportPositionTop = getScrollOffsetY();
 
 		int screenPositionY =
 			((elementPositionCenterY - viewportPositionTop) * 2) +

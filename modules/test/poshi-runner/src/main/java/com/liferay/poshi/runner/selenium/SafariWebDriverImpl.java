@@ -67,23 +67,19 @@ public class SafariWebDriverImpl extends BaseWebDriverImpl {
 
 	@Override
 	public void mouseDown(String locator) {
-		WebDriverHelper.executeJavaScriptEvent(
-			this, locator, "MouseEvent", "mousedown");
+		executeJavaScriptEvent(locator, "MouseEvent", "mousedown");
 	}
 
 	@Override
 	public void mouseOver(String locator) {
-		WebDriverHelper.executeJavaScriptEvent(
-			this, locator, "MouseEvent", "mouseover");
+		executeJavaScriptEvent(locator, "MouseEvent", "mouseover");
 	}
 
 	@Override
 	public void mouseUp(String locator) {
-		WebDriverHelper.executeJavaScriptEvent(
-			this, locator, "MouseEvent", "mouseup");
+		executeJavaScriptEvent(locator, "MouseEvent", "mouseup");
 
-		WebDriverHelper.executeJavaScriptEvent(
-			this, locator, "MouseEvent", "click");
+		executeJavaScriptEvent(locator, "MouseEvent", "click");
 	}
 
 }

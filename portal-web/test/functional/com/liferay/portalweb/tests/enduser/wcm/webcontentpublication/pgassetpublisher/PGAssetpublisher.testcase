@@ -79,6 +79,8 @@
 
 	<command name="AddAssetTypesViaAPAndAddRespectivePortletsToSamePage" priority="5">
 		<description message="This is a use case for LPS-47619." />
+		<property name="osgi.app.includes" value="knowledge-base" />
+		<property name="plugins.deployment.type" value="osgi" />
 
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />

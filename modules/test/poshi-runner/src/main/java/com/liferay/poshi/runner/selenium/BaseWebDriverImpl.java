@@ -166,7 +166,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void addSelection(String locator, String optionLocator) {
-		Select select = new Select(getWebElement(webDriver, locator));
+		Select select = new Select(getWebElement(locator));
 
 		if (optionLocator.startsWith("index=")) {
 			select.selectByIndex(
@@ -285,7 +285,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			String locator, String cssAttribute, String cssValue)
 		throws Exception {
 
-		WebElement webElement = getWebElement(webDriver, locator);
+		WebElement webElement = getWebElement(locator);
 
 		String actualCssValue = webElement.getCssValue(cssAttribute);
 
@@ -598,7 +598,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void check(String locator) {
-		WebElement webElement = getWebElement(webDriver, locator);
+		WebElement webElement = getWebElement(locator);
 
 		if (!webElement.isSelected()) {
 			webElement.click();
@@ -881,7 +881,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		String locator = attributeLocator.substring(0, pos);
 
-		WebElement webElement = getWebElement(webDriver, locator);
+		WebElement webElement = getWebElement(locator);
 
 		String attribute = attributeLocator.substring(pos + 1);
 
@@ -902,9 +902,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public String getConfirmation(String value) {
-		webDriver.switchTo();
+		switchTo();
 
-		WebDriverWait webDriverWait = new WebDriverWait(webDriver, 1);
+		WebDriverWait webDriverWait = new WebDriverWait(this, 1);
 
 		try {
 			Alert alert = webDriverWait.until(
@@ -965,7 +965,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public int getElementHeight(String locator) {
-		WebElement webElement = getWebElement(webDriver, locator, "1");
+		WebElement webElement = getWebElement(locator, "1");
 
 		Dimension dimension = webElement.getSize();
 
@@ -994,7 +994,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public int getElementWidth(String locator) {
-		WebElement webElement = getWebElement(webDriver, locator, "1");
+		WebElement webElement = getWebElement(locator, "1");
 
 		Dimension dimension = webElement.getSize();
 
@@ -1013,7 +1013,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public String getEval(String script) {
-		WebElement webElement = getWebElement(webDriver, "//body");
+		WebElement webElement = getWebElement("//body");
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1155,7 +1155,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 					private WebDriver _webDriver;
 
-				}._init(webDriver));
+				}._init(this));
 
 			Thread thread = new Thread(futureTask);
 
@@ -1184,9 +1184,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			}
 
 			System.out.println("WebDriverHelper#getLocation(WebDriver):");
-			System.out.println(webDriver.toString());
+			System.out.println(this.toString());
 
-			Set<String> windowHandles = webDriver.getWindowHandles();
+			Set<String> windowHandles = this.getWindowHandles();
 
 			for (String windowHandle : windowHandles) {
 				System.out.println(windowHandle);
@@ -1234,7 +1234,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public String getSelectedLabel(String selectLocator, String timeout) {
 		try {
 			WebElement selectLocatorWebElement = getWebElement(
-				webDriver, selectLocator, timeout);
+				selectLocator, timeout);
 
 			Select select = new Select(selectLocatorWebElement);
 
@@ -1251,7 +1251,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public String[] getSelectedLabels(String selectLocator) {
 		WebElement selectLocatorWebElement = getWebElement(
-			webDriver, selectLocator);
+			selectLocator);
 
 		Select select = new Select(selectLocatorWebElement);
 
@@ -1352,7 +1352,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void goBack() {
-		WebDriver.Navigation navigation = webDriver.navigate();
+		WebDriver.Navigation navigation = navigate();
 
 		navigation.back();
 	}
@@ -1412,12 +1412,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isElementNotPresent(String locator) {
-		return !isElementPresent(webDriver, locator);
+		return !isElementPresent(locator);
 	}
 
 	@Override
 	public boolean isElementPresent(String locator) {
-		List<WebElement> webElements = getWebElements(webDriver, locator, "1");
+		List<WebElement> webElements = getWebElements(locator, "1");
 
 		return !webElements.isEmpty();
 	}
@@ -1489,11 +1489,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isNotSelectedLabel(String selectLocator, String pattern) {
-		if (isElementNotPresent(webDriver, selectLocator)) {
+		if (isElementNotPresent(selectLocator)) {
 			return false;
 		}
 
-		String[] selectedLabels = getSelectedLabels(webDriver, selectLocator);
+		String[] selectedLabels = getSelectedLabels(selectLocator);
 
 		List<String> selectedLabelsList = Arrays.asList(selectedLabels);
 
@@ -1517,7 +1517,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isPartialText(String locator, String value) {
-		WebElement webElement = getWebElement(webDriver, locator, "1");
+		WebElement webElement = getWebElement(locator, "1");
 
 		String text = webElement.getText();
 
@@ -1526,7 +1526,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isPartialTextAceEditor(String locator, String value) {
-		WebElement webElement = getWebElement(webDriver, locator, "1");
+		WebElement webElement = getWebElement(locator, "1");
 
 		String text = webElement.getText();
 
@@ -1537,11 +1537,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isSelectedLabel(String selectLocator, String pattern) {
-		if (isElementNotPresent(webDriver, selectLocator)) {
+		if (isElementNotPresent(selectLocator)) {
 			return false;
 		}
 
-		return pattern.equals(getSelectedLabel(webDriver, selectLocator, "1"));
+		return pattern.equals(getSelectedLabel(selectLocator, "1"));
 	}
 
 	@Override
@@ -1702,7 +1702,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void makeVisible(String locator) {
-		WebElement bodyWebElement = getWebElement(webDriver, "//body");
+		WebElement bodyWebElement = getWebElement("//body");
 
 		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
 
@@ -1721,7 +1721,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		sb.append("element.style.opacity = '1';");
 		sb.append("element.style.visibility = 'visible';");
 
-		WebElement locatorWebElement = getWebElement(webDriver, locator);
+		WebElement locatorWebElement = getWebElement(locator);
 
 		javascriptExecutor.executeScript(sb.toString(), locatorWebElement);
 	}
@@ -1953,10 +1953,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			targetURL = PropsValues.PORTAL_URL + targetURL;
 		}
 
-		webDriver.get(targetURL);
+		get(targetURL);
 
 		if (PropsValues.BROWSER_TYPE.equals("internetexplorer")) {
-			refresh(webDriver);
+			refresh();
 		}
 	}
 
@@ -1986,12 +1986,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void refresh() {
-		WebDriver.Navigation navigation = webDriver.navigate();
+		WebDriver.Navigation navigation = navigate();
 
 		navigation.refresh();
 
-		if (isAlertPresent(webDriver)) {
-			getConfirmation(webDriver);
+		if (isAlertPresent()) {
+			getConfirmation();
 		}
 	}
 
@@ -2043,7 +2043,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void scrollBy(String coordString) {
-		WebElement webElement = getWebElement(webDriver, "//html");
+		WebElement webElement = getWebElement("//html");
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -2065,7 +2065,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void select(String selectLocator, String optionLocator) {
-		WebElement webElement = getWebElement(webDriver, selectLocator);
+		WebElement webElement = getWebElement(selectLocator);
 
 		Select select = new Select(webElement);
 
@@ -2084,7 +2084,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			if (value.startsWith("regexp:")) {
 				String regexp = value.substring(7);
 
-				selectByRegexpValue(webDriver, selectLocator, regexp);
+				selectByRegexpValue(selectLocator, regexp);
 			}
 			else {
 				List<WebElement> optionWebElements = select.getOptions();
@@ -2111,7 +2111,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			if (label.startsWith("regexp:")) {
 				String regexp = label.substring(7);
 
-				selectByRegexpText(webDriver, selectLocator, regexp);
+				selectByRegexpText(selectLocator, regexp);
 			}
 			else {
 				select.selectByVisibleText(label);
@@ -2242,7 +2242,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void setDefaultTimeoutImplicit() {
 		int timeout = PropsValues.TIMEOUT_IMPLICIT_WAIT * 1000;
 
-		setTimeoutImplicit(webDriver, String.valueOf(timeout));
+		setTimeoutImplicit(String.valueOf(timeout));
 	}
 
 	@Override
@@ -2256,7 +2256,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void setTimeoutImplicit(String timeout) {
-		WebDriver.Options options = webDriver.manage();
+		WebDriver.Options options = manage();
 
 		WebDriver.Timeouts timeouts = options.timeouts();
 
@@ -2629,7 +2629,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void typeAlloyEditor(String locator, String value) {
-		WebElement webElement = getWebElement(webDriver, locator);
+		WebElement webElement = getWebElement(locator);
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -2642,7 +2642,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		sb.append("CKEDITOR.instances[\"");
 
-		String titleAttribute = getAttribute(webDriver, locator + "@title");
+		String titleAttribute = getAttribute(locator + "@title");
 
 		int x = titleAttribute.indexOf(",");
 		int y = titleAttribute.indexOf(",", x + 1);
@@ -2733,7 +2733,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void uncheck(String locator) {
-		WebElement webElement = getWebElement(webDriver, locator);
+		WebElement webElement = getWebElement(locator);
 
 		if (webElement.isSelected()) {
 			webElement.click();

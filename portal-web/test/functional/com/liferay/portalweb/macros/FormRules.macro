@@ -140,11 +140,17 @@
 
 	<command name="selectConditionValue">
 		<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
-		<var name="key_conditionValueType" value="${conditionValueType}" />
 
-		<execute function="Click" locator1="FormRules#RULE_BUILDER_CONDITION_VALUE_TYPE_FIELD" />
+		<if>
+			<isset var="conditionValueType" />
+			<then>
+				<execute function="Click" locator1="FormRules#RULE_BUILDER_CONDITION_VALUE_TYPE_FIELD" />
 
-		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_SELECT_CONDITION_VALUE_TYPE" value1="${conditionValueType}" />
+				<var name="key_conditionValueType" value="${conditionValueType}" />
+
+				<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_SELECT_CONDITION_VALUE_TYPE" value1="${conditionValueType}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="selectRuleCondition">

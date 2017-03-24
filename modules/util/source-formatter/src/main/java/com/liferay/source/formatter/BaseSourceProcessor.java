@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.source.formatter.checks.FileCheck;
-import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.awt.Desktop;
@@ -56,7 +55,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -72,15 +70,11 @@ import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.Node;
-import org.dom4j.Text;
 import org.dom4j.io.SAXReader;
 
 /**
@@ -110,6 +104,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		preFormat();
+
+		populateFileChecks();
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());
@@ -359,160 +355,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		while (matcher.find()) {
 			checkInefficientStringMethods(
 				matcher.group(1), fileName, lineCount);
-		}
-	}
-
-	protected void checkLanguageKeys(
-			String fileName, String absolutePath, String content,
-			Pattern pattern)
-		throws Exception {
-
-		String fileExtension = FilenameUtils.getExtension(fileName);
-
-		if (!portalSource || fileExtension.equals("vm") ||
-			isExcludedPath(LANGUAGE_KEYS_CHECK_EXCLUDES, absolutePath)) {
-
-			return;
-		}
-
-		if (_portalLanguageProperties == null) {
-			Properties portalLanguageProperties = new Properties();
-
-			File portalLanguagePropertiesFile = getFile(
-				"portal-impl/src/content/Language.properties",
-				PORTAL_MAX_DIR_LEVEL);
-
-			if (portalLanguagePropertiesFile != null) {
-				InputStream inputStream = new FileInputStream(
-					portalLanguagePropertiesFile);
-
-				portalLanguageProperties.load(inputStream);
-			}
-
-			_portalLanguageProperties = portalLanguageProperties;
-		}
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			String[] languageKeys = getLanguageKeys(matcher);
-
-			for (String languageKey : languageKeys) {
-				if (Validator.isNumber(languageKey) ||
-					languageKey.endsWith(StringPool.CLOSE_CURLY_BRACE) ||
-					languageKey.endsWith(StringPool.DASH) ||
-					languageKey.endsWith(StringPool.OPEN_BRACKET) ||
-					languageKey.endsWith(StringPool.PERIOD) ||
-					languageKey.endsWith(StringPool.UNDERLINE) ||
-					languageKey.startsWith(StringPool.DASH) ||
-					languageKey.startsWith(StringPool.DOLLAR) ||
-					languageKey.startsWith(StringPool.OPEN_BRACKET) ||
-					languageKey.startsWith(StringPool.OPEN_CURLY_BRACE) ||
-					languageKey.startsWith(StringPool.PERIOD) ||
-					languageKey.startsWith(StringPool.UNDERLINE) ||
-					_portalLanguageProperties.containsKey(languageKey)) {
-
-					continue;
-				}
-
-				Properties moduleLanguageProperties =
-					getModuleLanguageProperties(fileName);
-
-				if ((moduleLanguageProperties != null) &&
-					moduleLanguageProperties.containsKey(languageKey)) {
-
-					continue;
-				}
-
-				Properties moduleLangLanguageProperties =
-					getModuleLangLanguageProperties(absolutePath);
-
-				if ((moduleLangLanguageProperties != null) &&
-					moduleLangLanguageProperties.containsKey(languageKey)) {
-
-					continue;
-				}
-
-				BNDSettings bndSettings = getBNDSettings(fileName);
-
-				if (bndSettings == null) {
-					processMessage(
-						fileName, "Missing language key '" + languageKey + "'");
-
-					continue;
-				}
-
-				Properties bndFileLanguageProperties =
-					bndSettings.getLanguageProperties();
-
-				if ((bndFileLanguageProperties != null) &&
-					!bndFileLanguageProperties.containsKey(languageKey)) {
-
-					processMessage(
-						fileName, "Missing language key '" + languageKey + "'");
-				}
-
-				putBNDSettings(bndSettings);
-			}
-		}
-	}
-
-	protected void checkOrder(
-		String fileName, Element rootElement, String elementName,
-		String parentElementName, ElementComparator elementComparator) {
-
-		if (rootElement == null) {
-			return;
-		}
-
-		Node previousNode = null;
-
-		Iterator<Node> iterator = rootElement.nodeIterator();
-
-		while (iterator.hasNext()) {
-			Node curNode = (Node)iterator.next();
-
-			if (curNode instanceof Text) {
-				continue;
-			}
-
-			if (previousNode == null) {
-				previousNode = curNode;
-
-				continue;
-			}
-
-			if (curNode instanceof Element && previousNode instanceof Element) {
-				Element curElement = (Element)curNode;
-				Element previousElement = (Element)previousNode;
-
-				String curElementName = curElement.getName();
-				String previousElementName = previousElement.getName();
-
-				if (curElementName.equals(elementName) &&
-					previousElementName.equals(elementName) &&
-					(elementComparator.compare(previousElement, curElement) >
-						0)) {
-
-					StringBundler sb = new StringBundler(7);
-
-					sb.append("Incorrect order '");
-					sb.append(elementName);
-					sb.append("':");
-
-					if (Validator.isNotNull(parentElementName)) {
-						sb.append(StringPool.SPACE);
-						sb.append(parentElementName);
-					}
-
-					sb.append(StringPool.SPACE);
-					sb.append(elementComparator.getElementName(curElement));
-
-					processMessage(fileName, sb.toString());
-				}
-			}
-
-			previousNode = curNode;
 		}
 	}
 
@@ -986,189 +828,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		processFormattedFile(file, fileName, content, newContent);
 	}
 
-	protected String formatAttributes(
-			String fileName, String line, String tag, int lineCount,
-			boolean escapeQuotes)
-		throws Exception {
-
-		String s = tag;
-
-		int y = s.indexOf(CharPool.SPACE);
-
-		if (y == -1) {
-			return line;
-		}
-
-		String tagName = s.substring(1, y);
-
-		s = s.substring(y + 1);
-
-		String previousAttribute = null;
-		String previousAttributeAndValue = null;
-
-		boolean wrongOrder = false;
-
-		for (int x = 0;;) {
-			x = s.indexOf(CharPool.EQUAL);
-
-			if ((x == -1) || (s.length() <= (x + 1))) {
-				return line;
-			}
-
-			String attribute = s.substring(0, x);
-
-			String trimmedAttribute = StringUtil.trim(attribute);
-
-			if (!isAttributName(trimmedAttribute)) {
-				return line;
-			}
-
-			if (!attribute.equals(trimmedAttribute)) {
-				return StringUtil.replace(
-					line, attribute + "=", trimmedAttribute + "=");
-			}
-
-			if (Validator.isNotNull(previousAttribute) &&
-				(previousAttribute.compareToIgnoreCase(attribute) > 0)) {
-
-				wrongOrder = true;
-			}
-
-			s = s.substring(x + 1);
-
-			char delimeter = s.charAt(0);
-
-			if ((delimeter != CharPool.APOSTROPHE) &&
-				(delimeter != CharPool.QUOTE)) {
-
-				if (delimeter == CharPool.SPACE) {
-					return StringUtil.replace(
-						line, attribute + "= ", attribute + "=");
-				}
-
-				if (delimeter != CharPool.AMPERSAND) {
-					processMessage(
-						fileName, "Incorrect delimeter '" + delimeter + "'",
-						lineCount);
-				}
-
-				return line;
-			}
-
-			s = s.substring(1);
-
-			String value = null;
-
-			y = -1;
-
-			while (true) {
-				y = s.indexOf(delimeter, y + 1);
-
-				if ((y == -1) || (s.length() <= (y + 1))) {
-					return line;
-				}
-
-				value = s.substring(0, y);
-
-				if (value.startsWith("<%")) {
-					if (getLevel(value, "<%", "%>") == 0) {
-						break;
-					}
-				}
-				else if (getLevel(
-							value, StringPool.LESS_THAN,
-							StringPool.GREATER_THAN) ==
-								0) {
-
-					break;
-				}
-			}
-
-			if (delimeter == CharPool.APOSTROPHE) {
-				if (escapeQuotes) {
-					String newValue = StringUtil.replace(
-						value, StringPool.QUOTE, "&quot;");
-
-					return StringUtil.replace(
-						line,
-						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
-						StringPool.QUOTE + newValue + StringPool.QUOTE);
-				}
-
-				if (!value.contains(StringPool.QUOTE) ||
-					!tagName.contains(StringPool.COLON)) {
-
-					return StringUtil.replace(
-						line,
-						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
-						StringPool.QUOTE + value + StringPool.QUOTE);
-				}
-			}
-
-			if ((delimeter == CharPool.QUOTE) &&
-				value.contains(StringPool.QUOTE) &&
-				tagName.contains(StringPool.COLON)) {
-
-				return StringUtil.replace(
-					line, StringPool.QUOTE + value + StringPool.QUOTE,
-					StringPool.APOSTROPHE + value + StringPool.APOSTROPHE);
-			}
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(attribute);
-			sb.append(StringPool.EQUAL);
-			sb.append(delimeter);
-			sb.append(value);
-			sb.append(delimeter);
-
-			String currentAttributeAndValue = sb.toString();
-
-			if (!tagName.contains(StringPool.COLON)) {
-				String newLine = sortHTMLAttributes(
-					line, value, currentAttributeAndValue);
-
-				if (!newLine.equals(line)) {
-					return newLine;
-				}
-			}
-
-			String newLine = formatTagAttributeType(
-				line, tagName, currentAttributeAndValue);
-
-			if (!newLine.equals(line)) {
-				return newLine;
-			}
-
-			if (wrongOrder) {
-				if ((StringUtil.count(line, currentAttributeAndValue) == 1) &&
-					(StringUtil.count(line, previousAttributeAndValue) == 1)) {
-
-					line = StringUtil.replaceFirst(
-						line, previousAttributeAndValue,
-						currentAttributeAndValue);
-
-					return StringUtil.replaceLast(
-						line, currentAttributeAndValue,
-						previousAttributeAndValue);
-				}
-
-				return line;
-			}
-
-			s = s.substring(y + 1);
-
-			if (s.startsWith(StringPool.GREATER_THAN)) {
-				return line;
-			}
-
-			s = StringUtil.trimLeading(s);
-
-			previousAttribute = attribute;
-			previousAttributeAndValue = currentAttributeAndValue;
-		}
-	}
-
 	protected String formatDefinitionKey(
 		String fileName, String content, String definitionKey) {
 
@@ -1288,13 +947,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return content;
-	}
-
-	protected String formatTagAttributeType(
-			String line, String tagName, String attributeAndValue)
-		throws Exception {
-
-		return line;
 	}
 
 	protected String getAbsolutePath(String fileName) {
@@ -1536,75 +1188,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _immutableFieldTypes;
 	}
 
-	protected String[] getLanguageKeys(Matcher matcher) {
-		int groupCount = matcher.groupCount();
-
-		if (groupCount == 1) {
-			String languageKey = matcher.group(1);
-
-			if (Validator.isNotNull(languageKey)) {
-				return new String[] {languageKey};
-			}
-		}
-		else if (groupCount == 2) {
-			String languageKey = matcher.group(2);
-
-			languageKey = TextFormatter.format(languageKey, TextFormatter.K);
-
-			return new String[] {languageKey};
-		}
-
-		StringBundler sb = new StringBundler();
-
-		String match = matcher.group();
-
-		int count = 0;
-
-		for (int i = 0; i < match.length(); i++) {
-			char c = match.charAt(i);
-
-			switch (c) {
-				case CharPool.CLOSE_PARENTHESIS:
-					if (count <= 1) {
-						return new String[0];
-					}
-
-					count--;
-
-					break;
-
-				case CharPool.OPEN_PARENTHESIS:
-					count++;
-
-					break;
-
-				case CharPool.QUOTE:
-					if (count > 1) {
-						break;
-					}
-
-					while (i < match.length()) {
-						i++;
-
-						if (match.charAt(i) == CharPool.QUOTE) {
-							String languageKey = sb.toString();
-
-							if (match.startsWith("names")) {
-								return StringUtil.split(languageKey);
-							}
-							else {
-								return new String[] {languageKey};
-							}
-						}
-
-						sb.append(match.charAt(i));
-					}
-			}
-		}
-
-		return new String[0];
-	}
-
 	protected int getLeadingTabCount(String line) {
 		int leadingTabCount = 0;
 
@@ -1768,171 +1351,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return mainReleaseComparableVersion;
 	}
 
-	protected List<String> getModuleLangDirNames(
-		String moduleLocation, String buildGradleContent) {
-
-		List<String> moduleLangDirNames = new ArrayList<>();
-
-		Matcher matcher = mergeLangPattern.matcher(buildGradleContent);
-
-		if (matcher.find()) {
-			String[] sourceDirs = StringUtil.split(matcher.group(1));
-
-			for (String sourceDir : sourceDirs) {
-				sourceDir = StringUtil.trim(sourceDir);
-
-				moduleLangDirNames.add(
-					moduleLocation + StringPool.SLASH +
-						sourceDir.substring(1, sourceDir.length() - 1));
-			}
-
-			return moduleLangDirNames;
-		}
-
-		int x = moduleLocation.lastIndexOf(StringPool.SLASH);
-
-		String baseModuleName = moduleLocation.substring(0, x);
-
-		int y = baseModuleName.lastIndexOf(StringPool.SLASH);
-
-		baseModuleName = baseModuleName.substring(
-			y + 1, baseModuleName.length());
-
-		String moduleLangDirName =
-			moduleLocation.substring(0, x + 1) + baseModuleName +
-				"-lang/src/main/resources/content";
-
-		File moduleLangDir = new File(moduleLangDirName);
-
-		if (!moduleLangDir.exists() &&
-			moduleLangDirName.contains("/modules/ee/")) {
-
-			moduleLangDirName = StringUtil.replaceFirst(
-				moduleLangDirName, "/modules/ee/", "/modules/");
-		}
-
-		moduleLangDirNames.add(moduleLangDirName);
-
-		return moduleLangDirNames;
-	}
-
-	protected Properties getModuleLangLanguageProperties(String absolutePath)
-		throws Exception {
-
-		Properties properties = _moduleLangLanguageProperties.get(absolutePath);
-
-		if (properties != null) {
-			return properties;
-		}
-
-		String buildGradleContent = null;
-		String buildGradleFileLocation = absolutePath;
-
-		while (true) {
-			int pos = buildGradleFileLocation.lastIndexOf(StringPool.SLASH);
-
-			if (pos == -1) {
-				return null;
-			}
-
-			buildGradleFileLocation = buildGradleFileLocation.substring(
-				0, pos + 1);
-
-			File file = new File(buildGradleFileLocation + "build.gradle");
-
-			if (file.exists()) {
-				buildGradleContent = FileUtil.read(file);
-
-				break;
-			}
-
-			buildGradleFileLocation = StringUtil.replaceLast(
-				buildGradleFileLocation, StringPool.SLASH, StringPool.BLANK);
-		}
-
-		Matcher matcher = applyLangMergerPluginPattern.matcher(
-			buildGradleContent);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		String moduleLocation = StringUtil.replaceLast(
-			buildGradleFileLocation, StringPool.SLASH, StringPool.BLANK);
-
-		List<String> moduleLangDirNames = getModuleLangDirNames(
-			moduleLocation, buildGradleContent);
-
-		properties = new Properties();
-
-		for (String moduleLangDirName : moduleLangDirNames) {
-			String moduleLangLanguagePropertiesFileName =
-				moduleLangDirName + "/Language.properties";
-
-			File file = new File(moduleLangLanguagePropertiesFileName);
-
-			if (!file.exists()) {
-				continue;
-			}
-
-			InputStream inputStream = new FileInputStream(file);
-
-			properties.load(inputStream);
-		}
-
-		_moduleLangLanguageProperties.put(absolutePath, properties);
-
-		return properties;
-	}
-
-	protected Properties getModuleLanguageProperties(String fileName) {
-		Properties properties = _moduleLanguageProperties.get(fileName);
-
-		if (properties != null) {
-			return properties;
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		int pos = fileName.indexOf("/docroot/");
-
-		if (pos != -1) {
-			sb.append(fileName.substring(0, pos + 9));
-			sb.append("WEB-INF/src/");
-		}
-		else {
-			pos = fileName.indexOf("src/");
-
-			if (pos == -1) {
-				return null;
-			}
-
-			sb.append(fileName.substring(0, pos + 4));
-
-			if (fileName.contains("src/main/")) {
-				sb.append("main/resources/");
-			}
-		}
-
-		sb.append("content/Language.properties");
-
-		try {
-			properties = new Properties();
-
-			InputStream inputStream = new FileInputStream(sb.toString());
-
-			properties.load(inputStream);
-
-			_moduleLanguageProperties.put(fileName, properties);
-
-			return properties;
-		}
-		catch (Exception e) {
-		}
-
-		return null;
-	}
-
 	protected List<String> getParameterList(String methodCall) {
 		String parameters = null;
 
@@ -1997,6 +1415,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _pluginsInsideModulesDirectoryNames;
 	}
 
+	protected Properties getPortalLanguageProperties() throws Exception {
+		Properties portalLanguageProperties = new Properties();
+
+		File portalLanguagePropertiesFile = getFile(
+			"portal-impl/src/content/Language.properties",
+			PORTAL_MAX_DIR_LEVEL);
+
+		if (portalLanguagePropertiesFile != null) {
+			InputStream inputStream = new FileInputStream(
+				portalLanguagePropertiesFile);
+
+			portalLanguageProperties.load(inputStream);
+		}
+
+		return portalLanguageProperties;
+	}
+
 	protected String getProperty(String key) {
 		return _properties.getProperty(key);
 	}
@@ -2041,16 +1476,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return false;
-	}
-
-	protected boolean isAttributName(String attributeName) {
-		if (Validator.isNull(attributeName)) {
-			return false;
-		}
-
-		Matcher matcher = attributeNamePattern.matcher(attributeName);
-
-		return matcher.matches();
 	}
 
 	protected boolean isExcludedPath(String property, String path) {
@@ -2181,6 +1606,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		return absolutePath.contains("/modules/");
 	}
+
+	protected abstract void populateFileChecks() throws Exception ;
 
 	protected void postFormat() throws Exception {
 	}
@@ -2362,12 +1789,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
-	protected String sortHTMLAttributes(
-		String line, String value, String attributeAndValue) {
-
-		return line;
-	}
-
 	protected String sortMethodCall(
 		String content, String methodName, String... variableTypeRegexStrings) {
 
@@ -2531,11 +1952,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
 
-	protected static Pattern applyLangMergerPluginPattern = Pattern.compile(
-		"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",
-		Pattern.MULTILINE);
-	protected static Pattern attributeNamePattern = Pattern.compile(
-		"[a-z]+[-_a-zA-Z0-9]*");
 	protected static Pattern emptyArrayPattern = Pattern.compile(
 		"((\\[\\])+) \\{\\}");
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
@@ -2546,10 +1962,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Pattern.DOTALL);
 	protected static Pattern javaSourceInsideJSPLinePattern = Pattern.compile(
 		"<%=(.+?)%>");
-	protected static Pattern languageKeyPattern = Pattern.compile(
-		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
-	protected static Pattern mergeLangPattern = Pattern.compile(
-		"mergeLang \\{\\s*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);
 	protected static boolean portalSource;
 	protected static Pattern principalExceptionPattern = Pattern.compile(
 		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
@@ -2709,13 +2121,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private ComparableVersion _mainReleaseComparableVersion;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
-	private final Map<String, Properties> _moduleLangLanguageProperties =
-		new HashMap<>();
-	private final Map<String, Properties> _moduleLanguageProperties =
-		new HashMap<>();
 	private String _oldCopyright;
 	private List<String> _pluginsInsideModulesDirectoryNames;
-	private Properties _portalLanguageProperties;
 	private String _projectPathPrefix;
 	private Properties _properties;
 	private SourceFormatterHelper _sourceFormatterHelper;

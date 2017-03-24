@@ -18,11 +18,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.LanguageKeysCheck;
 import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -76,9 +77,6 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 			newContent = newContent.substring(0, newContent.length() - 1);
 		}
 
-		checkLanguageKeys(
-			fileName, absolutePath, newContent, languageKeyPattern);
-
 		if (newContent.contains("debugger.")) {
 			processMessage(fileName, "debugger");
 		}
@@ -104,11 +102,24 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(new FileCheck[] {new WhitespaceCheck()});
+		return _fileChecks;
+	}
+
+	@Override
+	protected void populateFileChecks() throws Exception {
+		_fileChecks.add(new WhitespaceCheck());
+
+		if (portalSource) {
+			_fileChecks.add(
+				new LanguageKeysCheck(
+					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
+					getPortalLanguageProperties()));
+		}
 	}
 
 	private static final String[] _INCLUDES = {"**/*.js"};
 
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _multipleVarsOnSingleLinePattern = Pattern.compile(
 		"\t+var \\w+\\, ");
 

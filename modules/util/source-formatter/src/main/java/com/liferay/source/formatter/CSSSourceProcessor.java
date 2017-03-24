@@ -26,7 +26,7 @@ import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -152,7 +152,12 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(new FileCheck[] {new WhitespaceCheck()});
+		return _fileChecks;
+	}
+
+	@Override
+	protected void populateFileChecks() {
+		_fileChecks.add(new WhitespaceCheck());
 	}
 
 	protected String sortProperties(String content) {
@@ -201,6 +206,7 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 		"\\{\n\n");
 	private final Pattern _emptyLineBeforeCloseCurlyBrace = Pattern.compile(
 		"\n\n\t*\\}");
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _hexColorPattern = Pattern.compile(
 		"#([0-9a-f]+)[\\( ;,]");
 	private final Pattern _propertiesPattern = Pattern.compile(

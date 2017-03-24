@@ -25,7 +25,7 @@ import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -152,7 +152,12 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		return Arrays.asList(new FileCheck[] {new WhitespaceCheck()});
+		return _fileChecks;
+	}
+
+	@Override
+	protected void populateFileChecks() {
+		_fileChecks.add(new WhitespaceCheck());
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/build.gradle"};
@@ -161,6 +166,7 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 		"name: \"(.*?)\", version: \"default\"");
 	private final Pattern _dependenciesPattern = Pattern.compile(
 		"^dependencies \\{(.+?\n)\\}", Pattern.DOTALL | Pattern.MULTILINE);
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _incorrectWhitespacePattern = Pattern.compile(
 		":[^ \n]");
 

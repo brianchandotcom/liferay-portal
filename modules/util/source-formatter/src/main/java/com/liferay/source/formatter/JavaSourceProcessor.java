@@ -43,6 +43,7 @@ import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
 import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
 import com.liferay.source.formatter.checks.JavaWhitespaceCheck;
 import com.liferay.source.formatter.checks.JavaXMLSecurityCheck;
+import com.liferay.source.formatter.checks.LanguageKeysCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -459,9 +460,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"Assign ProcessCallable implementation a serialVersionUID");
 		}
 
-		checkLanguageKeys(
-			fileName, absolutePath, newContent, languageKeyPattern);
-
 		newContent = sortMethodCalls(absolutePath, newContent);
 
 		newContent = formatStringBundler(fileName, newContent, _maxLineLength);
@@ -685,9 +683,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		newContent = formatJava(fileName, absolutePath, newContent);
-
-		return StringUtil.replace(newContent, "\n\n\n", "\n\n");
+		return formatJava(fileName, absolutePath, newContent);
 	}
 
 	@Override
@@ -1463,42 +1459,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<FileCheck> getFileChecks() {
-		List<FileCheck> fileChecks = new ArrayList<>();
-
-		fileChecks.add(new JavaWhitespaceCheck());
-
-		fileChecks.add(new JavaAnnotationsCheck());
-		fileChecks.add(new JavaBooleanUsageCheck());
-		fileChecks.add(
-			new JavaCombineLinesCheck(
-				_fitOnSingleLineExcludes,
-				sourceFormatterArgs.getMaxLineLength()));
-		fileChecks.add(new JavaDataAccessConnectionCheck());
-		fileChecks.add(new JavaDiamondOperatorCheck(_diamondOperatorExcludes));
-		fileChecks.add(new JavaEmptyLinesCheck());
-		fileChecks.add(new JavaExceptionCheck());
-		fileChecks.add(
-			new JavaIfStatementCheck(sourceFormatterArgs.getMaxLineLength()));
-		fileChecks.add(
-			new JavaLineBreakCheck(sourceFormatterArgs.getMaxLineLength()));
-		fileChecks.add(new JavaLogLevelCheck());
-		fileChecks.add(
-			new JavaLongLinesCheck(
-				_lineLengthExcludes, sourceFormatterArgs.getMaxLineLength()));
-		fileChecks.add(new JavaPackagePathCheck());
-
-		if (portalSource || subrepository) {
-			fileChecks.add(
-				new JavaVerifyUpgradeConnectionCheck(
-					_upgradeDataAccessConnectionExcludes));
-			fileChecks.add(
-				new JavaUpgradeClassCheck(_upgradeServiceUtilExcludes));
-			fileChecks.add(
-				new JavaXMLSecurityCheck(
-					_runOutsidePortalExcludes, _secureXMLExcludes));
-		}
-
-		return fileChecks;
+		return _fileChecks;
 	}
 
 	protected String getFormattedClassLine(String indent, String classLine) {
@@ -1959,29 +1920,67 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
+	protected void populateFileChecks() throws Exception {
+		_fileChecks.add(new JavaWhitespaceCheck());
+
+		_fileChecks.add(new JavaAnnotationsCheck());
+		_fileChecks.add(new JavaBooleanUsageCheck());
+		_fileChecks.add(
+			new JavaCombineLinesCheck(
+				getExcludes(_FIT_ON_SINGLE_LINE_EXCLUDES),
+				sourceFormatterArgs.getMaxLineLength()));
+		_fileChecks.add(new JavaDataAccessConnectionCheck());
+		_fileChecks.add(
+			new JavaDiamondOperatorCheck(
+				getExcludes(_DIAMOND_OPERATOR_EXCLUDES)));
+		_fileChecks.add(new JavaEmptyLinesCheck());
+		_fileChecks.add(new JavaExceptionCheck());
+		_fileChecks.add(
+			new JavaIfStatementCheck(sourceFormatterArgs.getMaxLineLength()));
+		_fileChecks.add(
+			new JavaLineBreakCheck(sourceFormatterArgs.getMaxLineLength()));
+		_fileChecks.add(new JavaLogLevelCheck());
+		_fileChecks.add(
+			new JavaLongLinesCheck(
+				getExcludes(_LINE_LENGTH_EXCLUDES),
+				sourceFormatterArgs.getMaxLineLength()));
+		_fileChecks.add(new JavaPackagePathCheck());
+
+		if (portalSource || subrepository) {
+			_fileChecks.add(
+				new JavaVerifyUpgradeConnectionCheck(
+					getExcludes(_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES)));
+			_fileChecks.add(
+				new JavaUpgradeClassCheck(
+					getExcludes(_UPGRADE_SERVICE_UTIL_EXCLUDES)));
+			_fileChecks.add(
+				new JavaXMLSecurityCheck(
+					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES),
+					getExcludes(_SECURE_XML_EXCLUDES)));
+		}
+
+		if (portalSource) {
+			_fileChecks.add(
+				new LanguageKeysCheck(
+					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
+					getPortalLanguageProperties()));
+		}
+	}
+
+	@Override
 	protected void postFormat() throws Exception {
 		checkBndInheritAnnotationOption();
 		processCheckStyle();
 	}
 
 	@Override
-	protected void preFormat() {
+	protected void preFormat() throws Exception {
 		_maxLineLength = sourceFormatterArgs.getMaxLineLength();
 
 		_addMissingDeprecationReleaseVersion = GetterUtil.getBoolean(
 			getProperty("add.missing.deprecation.release.version"));
 		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
 			getProperty("allow.use.service.util.in.service.impl"));
-
-		_diamondOperatorExcludes = getExcludes(_DIAMOND_OPERATOR_EXCLUDES);
-		_fitOnSingleLineExcludes = getExcludes(_FIT_ON_SINGLE_LINE_EXCLUDES);
-		_lineLengthExcludes = getExcludes(_LINE_LENGTH_EXCLUDES);
-		_runOutsidePortalExcludes = getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES);
-		_secureXMLExcludes = getExcludes(_SECURE_XML_EXCLUDES);
-		_upgradeDataAccessConnectionExcludes = getExcludes(
-			_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES);
-		_upgradeServiceUtilExcludes = getExcludes(
-			_UPGRADE_SERVICE_UTIL_EXCLUDES);
 	}
 
 	protected void processCheckStyle() throws Exception {
@@ -2094,10 +2093,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _deprecatedPattern = Pattern.compile(
 		"(\n\\s*\\* @deprecated)( As of ([0-9\\.]+)(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
-	private List<String> _diamondOperatorExcludes;
 	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
-	private List<String> _fitOnSingleLineExcludes;
+	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
 		"([\n\t])(synchronized) (private|public|protected)");
 	private final Pattern _internalImportPattern = Pattern.compile(
@@ -2110,7 +2108,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			Pattern.compile(
 				".*(extends [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL)
 	};
-	private List<String> _lineLengthExcludes;
 	private final Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
@@ -2130,8 +2127,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");
-	private List<String> _runOutsidePortalExcludes;
-	private List<String> _secureXMLExcludes;
 	private final Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 	private final Pattern _stagedModelTypesPattern = Pattern.compile(
@@ -2139,7 +2134,5 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();
-	private List<String> _upgradeDataAccessConnectionExcludes;
-	private List<String> _upgradeServiceUtilExcludes;
 
 }

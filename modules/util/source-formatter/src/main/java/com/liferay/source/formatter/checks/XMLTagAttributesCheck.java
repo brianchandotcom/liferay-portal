@@ -17,28 +17,34 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.source.formatter.SourceFormatterMessage;
 
-import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
  */
-public class FTLWhitespaceCheck extends WhitespaceCheck {
+public class XMLTagAttributesCheck extends TagAttributesCheck {
 
 	@Override
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
 
-		content = _formatWhitespace(fileName, content);
+		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 
-		content = StringUtil.replace(content, "\n\n\n", "\n\n");
+		content = _formatTagAttributes(
+			sourceFormatterMessages, fileName, content);
 
-		return new Tuple(content, Collections.emptySet());
+		return new Tuple(content, sourceFormatterMessages);
 	}
 
-	private String _formatWhitespace(String fileName, String content)
+	private String _formatTagAttributes(
+			Set<SourceFormatterMessage> sourceFormatterMessages,
+			String fileName, String content)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -48,16 +54,35 @@ public class FTLWhitespaceCheck extends WhitespaceCheck {
 
 			String line = null;
 
+			int lineCount = 0;
+
+			boolean sortAttributes = true;
+
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				line = trimLine(fileName, line);
+				lineCount++;
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
-				if (trimmedLine.startsWith("<#assign ")) {
-					line = formatWhitespace(line, trimmedLine, true);
+				if (sortAttributes) {
+					if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
+						trimmedLine.endsWith(StringPool.GREATER_THAN) &&
+						!trimmedLine.startsWith("<?") &&
+						!trimmedLine.startsWith("<%") &&
+						!trimmedLine.startsWith("<!") &&
+						!(line.contains("<![CDATA[") && line.contains("]]>"))) {
 
-					line = formatIncorrectSyntax(line, "=[", "= [", false);
-					line = formatIncorrectSyntax(line, "+[", "+ [", false);
+						line = formatTagAttributes(
+							sourceFormatterMessages, fileName, line,
+							trimmedLine, lineCount, true);
+					}
+					else if (trimmedLine.startsWith("<![CDATA[") &&
+							 !trimmedLine.endsWith("]]>")) {
+
+						sortAttributes = false;
+					}
+				}
+				else if (trimmedLine.endsWith("]]>")) {
+					sortAttributes = true;
 				}
 
 				sb.append(line);

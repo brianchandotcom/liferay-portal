@@ -35,6 +35,8 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 
 		content = _formatWhitespace(fileName, content);
 
+		content = StringUtil.replace(content, "\n\n\n", "\n\n");
+
 		return new Tuple(content, Collections.emptySet());
 	}
 

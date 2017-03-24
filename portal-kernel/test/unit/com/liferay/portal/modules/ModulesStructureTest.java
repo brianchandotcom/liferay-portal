@@ -16,6 +16,7 @@ package com.liferay.portal.modules;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,7 +35,7 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -793,7 +794,12 @@ public class ModulesStructureTest {
 	private static final Pattern _gitRepoGradleProjectGroupPattern =
 		Pattern.compile("com\\.liferay(?:\\.[a-z]+)+");
 	private static final Set<String> _gitRepoGradlePropertiesKeys =
-		Collections.singleton("com.liferay.source.formatter.version");
+		SetUtil.fromList(
+			Arrays.asList(
+				"com.liferay.source.formatter.version",
+				"systemProp.repository.private.password",
+				"systemProp.repository.private.url",
+				"systemProp.repository.private.username"));
 	private static Path _modulesDirPath;
 
 }

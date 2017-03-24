@@ -1,0 +1,438 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.source.formatter.checks;
+
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.BNDSettings;
+import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.FileUtil;
+
+import java.io.File;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * @author Hugo Huijser
+ */
+public class JavaOSGiReferenceCheck extends BaseFileCheck {
+
+	public JavaOSGiReferenceCheck(
+		Map<String, String> moduleFileNamesMap, boolean subrepository) {
+
+		_moduleFileNamesMap = moduleFileNamesMap;
+		_subrepository = subrepository;
+	}
+
+	@Override
+	public Tuple process(String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (!content.contains("@Component") ||
+			!isModulesFile(absolutePath, _subrepository)) {
+
+			return new Tuple(content, Collections.emptySet());
+		}
+
+		String packagePath = JavaSourceUtil.getPackagePath(content);
+
+		if (!packagePath.startsWith("com.liferay")) {
+			return new Tuple(content, Collections.emptySet());
+		}
+
+		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+
+		_checkMissingReference(sourceFormatterMessages, fileName, content);
+
+		content = _formatDuplicateReferenceMethods(
+			sourceFormatterMessages, fileName, content, packagePath);
+
+		Matcher matcher = _referenceMethodPattern.matcher(content);
+
+		while (matcher.find()) {
+			String methodName = matcher.group(4);
+
+			if (!methodName.startsWith("set")) {
+				continue;
+			}
+
+			String annotationParameters = matcher.group(1);
+			String methodContent = matcher.group();
+
+			content = _formatMissingUnbindAnnotation(
+				content, methodName, methodContent, annotationParameters);
+
+			String methodBody = matcher.group(6);
+			String typeName = matcher.group(5);
+
+			content = _formatVolatileReferenceVariable(
+				content, methodBody, typeName);
+		}
+
+		return new Tuple(content, sourceFormatterMessages);
+	}
+
+	private void _checkMissingReference(
+		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
+		String content) {
+
+		String moduleServicePackagePath = null;
+
+		Matcher matcher = _serviceUtilImportPattern.matcher(content);
+
+		while (matcher.find()) {
+			String serviceUtilClassName = matcher.group(2);
+
+			if (moduleServicePackagePath == null) {
+				moduleServicePackagePath = _getModuleServicePackagePath(
+					fileName);
+			}
+
+			if (Validator.isNotNull(moduleServicePackagePath)) {
+				String serviceUtilClassPackagePath = matcher.group(1);
+
+				if (serviceUtilClassPackagePath.startsWith(
+						moduleServicePackagePath)) {
+
+					continue;
+				}
+			}
+
+			addMessage(
+				sourceFormatterMessages, fileName,
+				"Use @Reference instead of calling " + serviceUtilClassName +
+					" directly, see LPS-59076");
+		}
+	}
+
+	private String _formatDuplicateReferenceMethods(
+			Set<SourceFormatterMessage> sourceFormatterMessages,
+			String fileName, String content, String packagePath)
+		throws Exception {
+
+		String className = JavaSourceUtil.getClassName(fileName);
+
+		String moduleSuperClassContent = _getModuleSuperClassContent(
+			content, className, packagePath);
+
+		if (Validator.isNull(moduleSuperClassContent) ||
+			!moduleSuperClassContent.contains("@Component") ||
+			!moduleSuperClassContent.contains("@Reference")) {
+
+			return content;
+		}
+
+		Matcher matcher = _referenceMethodPattern.matcher(
+			moduleSuperClassContent);
+
+		boolean bndInheritRequired = false;
+
+		while (matcher.find()) {
+			String referenceMethod = matcher.group();
+
+			int pos = content.indexOf(referenceMethod);
+
+			if (pos != -1) {
+				String referenceMethodContent = matcher.group(6);
+
+				Matcher referenceMethodContentMatcher =
+					_referenceMethodContentPattern.matcher(
+						referenceMethodContent);
+
+				if (referenceMethodContentMatcher.find()) {
+					String variableName = referenceMethodContentMatcher.group(
+						1);
+
+					if (StringUtil.count(content, variableName) > 1) {
+						continue;
+					}
+				}
+
+				int x = content.lastIndexOf("\n\n", pos);
+				int y = pos + referenceMethod.length();
+
+				String entireMethod = content.substring(x + 1, y);
+
+				content = StringUtil.replace(
+					content, entireMethod, StringPool.BLANK);
+
+				bndInheritRequired = true;
+			}
+			else {
+				String referenceMethodModifierAndName = matcher.group(2);
+
+				Pattern duplicateReferenceMethodPattern = Pattern.compile(
+					referenceMethodModifierAndName +
+						"\\(\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)" +
+							"\\s*?\n\t\\}\n");
+
+				Matcher duplicateReferenceMethodMatcher =
+					duplicateReferenceMethodPattern.matcher(content);
+
+				if (!duplicateReferenceMethodMatcher.find()) {
+					bndInheritRequired = true;
+
+					continue;
+				}
+
+				String methodContent = duplicateReferenceMethodMatcher.group(2);
+				String referenceMethodName = matcher.group(4);
+
+				if (methodContent.startsWith("super." + referenceMethodName)) {
+					int x = content.lastIndexOf(
+						"\n\n", duplicateReferenceMethodMatcher.start());
+					int y = duplicateReferenceMethodMatcher.end();
+
+					String entireMethod = content.substring(x + 1, y);
+
+					content = StringUtil.replace(
+						content, entireMethod, StringPool.BLANK);
+
+					bndInheritRequired = true;
+				}
+			}
+		}
+
+		if (bndInheritRequired) {
+			BNDSettings bndSettings = getBNDSettings(fileName);
+
+			String bndSettingsContent = bndSettings.getContent();
+			String bndFileName = bndSettings.getFileLocation() + "bnd.bnd";
+
+			if (!bndSettingsContent.contains(
+					"-dsannotations-options: inherit") &&
+				_bndFileNames.add(bndFileName)) {
+
+				addMessage(
+					sourceFormatterMessages,
+					bndSettings.getFileLocation() + "bnd.bnd",
+					"Add '-dsannotations-options: inherit'");
+			}
+		}
+
+		return content;
+	}
+
+	private String _formatMissingUnbindAnnotation(
+		String content, String methodName, String methodContent,
+		String annotationParameters) {
+
+		if (annotationParameters.contains("unbind =") ||
+			content.contains("un" + methodName + "(")) {
+
+			return content;
+		}
+
+		if (Validator.isNull(annotationParameters)) {
+			String newMethodContent = StringUtil.replaceFirst(
+				methodContent, "@Reference", "@Reference(unbind = \"-\")");
+
+			return StringUtil.replace(content, methodContent, newMethodContent);
+		}
+
+		if (!annotationParameters.contains(StringPool.NEW_LINE)) {
+			String newAnnotationParameters = StringUtil.replaceLast(
+				annotationParameters, CharPool.CLOSE_PARENTHESIS,
+				", unbind = \"-\")");
+
+			String newMethodContent = StringUtil.replaceFirst(
+				methodContent, annotationParameters, newAnnotationParameters);
+
+			return StringUtil.replace(content, methodContent, newMethodContent);
+		}
+
+		if (!annotationParameters.contains("\n\n")) {
+			String newAnnotationParameters = StringUtil.replaceLast(
+				annotationParameters, "\n", ",\n\t\tunbind = \"-\"\n");
+
+			String newMethodContent = StringUtil.replaceFirst(
+				methodContent, annotationParameters, newAnnotationParameters);
+
+			return StringUtil.replace(content, methodContent, newMethodContent);
+		}
+
+		return content;
+	}
+
+	private String _formatVolatileReferenceVariable(
+		String content, String methodBody, String typeName) {
+
+		Matcher matcher = _referenceMethodContentPattern.matcher(methodBody);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String variableName = matcher.group(1);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("private volatile ");
+		sb.append(typeName);
+		sb.append("\\s+");
+		sb.append(variableName);
+		sb.append(StringPool.SEMICOLON);
+
+		Pattern privateVarPattern = Pattern.compile(sb.toString());
+
+		matcher = privateVarPattern.matcher(content);
+
+		if (matcher.find()) {
+			String match = matcher.group();
+
+			String replacement = StringUtil.replace(
+				match, "private volatile ", "private ");
+
+			return StringUtil.replace(content, match, replacement);
+		}
+
+		return content;
+	}
+
+	private String _getModuleClassContent(String fullClassName)
+		throws Exception {
+
+		String classContent = _moduleFileContentsMap.get(fullClassName);
+
+		if (classContent != null) {
+			return classContent;
+		}
+
+		String moduleFileName = _moduleFileNamesMap.get(fullClassName);
+
+		if (moduleFileName == null) {
+			_moduleFileContentsMap.put(fullClassName, StringPool.BLANK);
+
+			return StringPool.BLANK;
+		}
+
+		File file = new File(moduleFileName);
+
+		classContent = FileUtil.read(file);
+
+		if (classContent != null) {
+			_moduleFileContentsMap.put(fullClassName, classContent);
+		}
+
+		return classContent;
+	}
+
+	private String _getModuleServicePackagePath(String fileName) {
+		String serviceDirLocation = fileName;
+
+		while (true) {
+			int pos = serviceDirLocation.lastIndexOf(StringPool.SLASH);
+
+			if (pos == -1) {
+				return StringPool.BLANK;
+			}
+
+			serviceDirLocation = serviceDirLocation.substring(0, pos + 1);
+
+			File file = new File(serviceDirLocation + "service");
+
+			if (file.exists()) {
+				serviceDirLocation = serviceDirLocation + "service";
+
+				break;
+			}
+
+			file = new File(serviceDirLocation + "liferay");
+
+			if (file.exists()) {
+				return StringPool.BLANK;
+			}
+
+			serviceDirLocation = StringUtil.replaceLast(
+				serviceDirLocation, CharPool.SLASH, StringPool.BLANK);
+		}
+
+		serviceDirLocation = StringUtil.replace(
+			serviceDirLocation, CharPool.SLASH, CharPool.PERIOD);
+
+		int pos = serviceDirLocation.lastIndexOf(".com.");
+
+		return serviceDirLocation.substring(pos + 1);
+	}
+
+	private String _getModuleSuperClassContent(
+			String content, String className, String packagePath)
+		throws Exception {
+
+		Pattern pattern = Pattern.compile(
+			" class " + className + "\\s+extends\\s+([\\w.]+) ");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String superClassName = matcher.group(1);
+
+		if (superClassName.contains(StringPool.PERIOD)) {
+			if (!superClassName.startsWith("com.liferay")) {
+				return null;
+			}
+
+			return _getModuleClassContent(superClassName);
+		}
+
+		String superClassPackagePath = packagePath;
+
+		pattern = Pattern.compile("\nimport (.+?)\\." + superClassName + ";");
+
+		matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			superClassPackagePath = matcher.group(1);
+		}
+
+		if (!superClassPackagePath.startsWith("com.liferay")) {
+			return null;
+		}
+
+		String superClassFullClassName =
+			superClassPackagePath + StringPool.PERIOD + superClassName;
+
+		return _getModuleClassContent(superClassFullClassName);
+	}
+
+	private final Set<String> _bndFileNames = new CopyOnWriteArraySet<>();
+	private final Map<String, String> _moduleFileContentsMap =
+		new ConcurrentHashMap<>();
+	private final Map<String, String> _moduleFileNamesMap;
+	private final Pattern _referenceMethodContentPattern = Pattern.compile(
+		"^(\\w+) =\\s+\\w+;$");
+	private final Pattern _referenceMethodPattern = Pattern.compile(
+		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
+			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
+	private final Pattern _serviceUtilImportPattern = Pattern.compile(
+		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
+	private final boolean _subrepository;
+
+}

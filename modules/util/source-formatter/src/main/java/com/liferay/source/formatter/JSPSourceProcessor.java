@@ -25,12 +25,19 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
+import com.liferay.source.formatter.checks.CopyrightCheck;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JSPEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JSPIfStatementCheck;
 import com.liferay.source.formatter.checks.JSPLanguageKeysCheck;
+import com.liferay.source.formatter.checks.JSPSessionKeysCheck;
 import com.liferay.source.formatter.checks.JSPTagAttributesCheck;
 import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
+import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
+import com.liferay.source.formatter.checks.ResourceBundleCheck;
+import com.liferay.source.formatter.checks.StringUtilCheck;
+import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
+import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 
@@ -254,18 +261,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkValidatorEquals(String fileName, String content) {
-		Matcher matcher = validatorEqualsPattern.matcher(content);
-
-		while (matcher.find()) {
-			processMessage(
-				fileName,
-				"Use Objects.equals(Object, Object) instead of " +
-					"Validator.equals(Object, Object), see LPS-65135",
-				getLineCount(content, matcher.start()));
-		}
-	}
-
 	protected String compressImportsOrTaglibs(
 		String fileName, String content, String attributePrefix) {
 
@@ -324,8 +319,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixEmptyJavaSourceTag(newContent);
 
-		newContent = fixUnparameterizedClassType(newContent);
-
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
 			try {
 				newContent = formatJSPImportsOrTaglibs(
@@ -353,8 +346,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			processMessage(fileName, "Move imports to init.jsp");
 		}
 
-		newContent = fixCopyright(newContent, absolutePath, fileName, null);
-
 		newContent = StringUtil.replace(
 			newContent,
 			new String[] {
@@ -373,17 +364,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = compressImportsOrTaglibs(
 			fileName, newContent, "<%@ taglib uri=");
 
-		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
-		newContent = fixSessionKey(
-			fileName, newContent, taglibSessionKeyPattern);
-
 		newContent = removeUnusedTaglibs(
 			fileName, newContent, checkedForIncludesFileNames,
 			includeFileNames);
 
 		checkSubnames(fileName, newContent);
-
-		newContent = sortMethodCalls(absolutePath, newContent);
 
 		newContent = formatStringBundler(fileName, newContent, -1);
 
@@ -430,13 +415,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		checkPropertyUtils(fileName, newContent);
 
-		// LPS-63953
-
-		checkStringUtilReplace(fileName, newContent);
-
 		checkGetterUtilGet(fileName, newContent);
-
-		checkValidatorEquals(fileName, newContent);
 
 		checkDefineObjectsVariables(fileName, newContent, absolutePath);
 
@@ -715,10 +694,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						line = StringUtil.replace(line, match, replacement);
 					}
 				}
-
-				// LPS-58529
-
-				checkResourceUtil(line, fileName, absolutePath, lineCount);
 
 				if (!fileName.endsWith("test.jsp") &&
 					line.contains("System.out.print")) {
@@ -1438,12 +1413,29 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected void populateFileChecks() throws Exception {
 		_fileChecks.add(new JSPWhitespaceCheck());
 
+		_fileChecks.add(
+			new CopyrightCheck(
+				getContent(
+					sourceFormatterArgs.getCopyrightFileName(),
+					PORTAL_MAX_DIR_LEVEL)));
 		_fileChecks.add(new JSPEmptyLinesCheck());
 		_fileChecks.add(new JSPIfStatementCheck());
+		_fileChecks.add(new JSPSessionKeysCheck());
 		_fileChecks.add(
 			new JSPTagAttributesCheck(
 				portalSource, subrepository,
 				_getPrimitiveTagAttributeDataTypes(), _getTagJavaClassesMap()));
+		_fileChecks.add(
+			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
+		_fileChecks.add(new StringUtilCheck());
+		_fileChecks.add(new UnparameterizedClassCheck());
+		_fileChecks.add(new ValidatorEqualsCheck());
+
+		if (portalSource || subrepository) {
+			_fileChecks.add(
+				new ResourceBundleCheck(
+					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
+		}
 
 		if (portalSource) {
 			_fileChecks.add(

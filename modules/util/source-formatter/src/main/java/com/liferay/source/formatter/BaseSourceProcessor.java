@@ -20,9 +20,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -70,7 +68,6 @@ import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
 
 import org.dom4j.Document;
@@ -106,6 +103,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		preFormat();
 
 		populateFileChecks();
+
+		if ((portalSource || subrepository) && _containsModuleFile(fileNames)) {
+			populateModuleFileChecks();
+		}
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());
@@ -388,86 +389,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected void checkResourceUtil(
-		String line, String fileName, String absolutePath, int lineCount) {
-
-		if ((!portalSource && !subrepository) ||
-			fileName.endsWith("ResourceBundleUtil.java") ||
-			isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
-
-			return;
-		}
-
-		if (line.contains("ResourceBundle.getBundle(")) {
-			processMessage(
-				fileName,
-				"Use ResourceBundleUtil.getBundle instead of " +
-					"ResourceBundle.getBundle, see LPS-58529",
-				lineCount);
-		}
-
-		if (line.contains("resourceBundle.getString(")) {
-			processMessage(
-				fileName,
-				"Use ResourceBundleUtil.getString instead of " +
-					"resourceBundle.getString, see LPS-58529",
-				lineCount);
-		}
-	}
-
-	protected void checkStringUtilReplace(String fileName, String content)
-		throws Exception {
-
-		Matcher matcher = stringUtilReplacePattern.matcher(content);
-
-		while (matcher.find()) {
-			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
-				continue;
-			}
-
-			List<String> parametersList = getParameterList(matcher.group());
-
-			if (parametersList.size() != 3) {
-				return;
-			}
-
-			String secondParameter = parametersList.get(1);
-
-			Matcher singleLengthMatcher = singleLengthStringPattern.matcher(
-				secondParameter);
-
-			if (!singleLengthMatcher.find()) {
-				continue;
-			}
-
-			String fieldName = singleLengthMatcher.group(2);
-
-			if (fieldName != null) {
-				Field field = StringPool.class.getDeclaredField(fieldName);
-
-				String value = (String)field.get(null);
-
-				if (value.length() != 1) {
-					continue;
-				}
-			}
-
-			String method = matcher.group(1);
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("Use StringUtil.");
-			sb.append(method);
-			sb.append("(String, char, char) or StringUtil.");
-			sb.append(method);
-			sb.append("(String, char, String) instead");
-
-			processMessage(
-				fileName, sb.toString(),
-				getLineCount(content, matcher.start()));
-		}
-	}
-
 	protected void checkUTF8(File file, String fileName) throws Exception {
 		byte[] bytes = FileUtil.getBytes(file);
 
@@ -548,89 +469,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return newContent;
 	}
 
-	protected String fixCopyright(
-			String content, String absolutePath, String fileName,
-			String className)
-		throws IOException {
-
-		if (_copyright == null) {
-			_copyright = getContent(
-				sourceFormatterArgs.getCopyrightFileName(),
-				PORTAL_MAX_DIR_LEVEL);
-		}
-
-		String copyright = _copyright;
-
-		if (fileName.endsWith(".tpl") || fileName.endsWith(".vm") ||
-			Validator.isNull(copyright)) {
-
-			return content;
-		}
-
-		if (_oldCopyright == null) {
-			_oldCopyright = getContent(
-				"old-copyright.txt", PORTAL_MAX_DIR_LEVEL);
-		}
-
-		if (Validator.isNotNull(_oldCopyright) &&
-			content.contains(_oldCopyright)) {
-
-			content = StringUtil.replace(content, _oldCopyright, copyright);
-
-			processMessage(fileName, "File contains old copyright information");
-		}
-
-		if (!content.contains(copyright)) {
-			String customCopyright = getCustomCopyright(absolutePath);
-
-			if (Validator.isNotNull(customCopyright)) {
-				copyright = customCopyright;
-			}
-
-			if (!content.contains(copyright)) {
-				processMessage(fileName, "(c)");
-			}
-			else if (!content.startsWith(copyright) &&
-					 !content.startsWith("<%--\n" + copyright)) {
-
-				processMessage(fileName, "File must start with copyright");
-			}
-		}
-		else if (!content.startsWith(copyright) &&
-				 !content.startsWith("<%--\n" + copyright)) {
-
-			processMessage(fileName, "File must start with copyright");
-		}
-
-		if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) {
-			content = StringUtil.replace(
-				content, "<%\n" + copyright + "\n%>",
-				"<%--\n" + copyright + "\n--%>");
-		}
-
-		int x = content.indexOf("* Copyright (c) 2000-");
-
-		if (x == -1) {
-			return content;
-		}
-
-		int y = content.indexOf("Liferay", x);
-
-		String contentCopyrightYear = content.substring(x, y);
-
-		x = copyright.indexOf("* Copyright (c) 2000-");
-
-		if (x == -1) {
-			return content;
-		}
-
-		y = copyright.indexOf("Liferay", x);
-
-		String copyrightYear = copyright.substring(x, y);
-
-		return StringUtil.replace(content, contentCopyrightYear, copyrightYear);
-	}
-
 	protected String fixIncorrectParameterTypeForLanguageUtil(
 		String content, boolean autoFix, String fileName) {
 
@@ -669,112 +507,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				"(Unicode)LanguageUtil.format/get methods require " +
 					expectedParameter + " parameter instead of " +
 						incorrectParameter);
-		}
-
-		return content;
-	}
-
-	protected String fixSessionKey(
-		String fileName, String content, Pattern pattern) {
-
-		Matcher matcher = pattern.matcher(content);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String newContent = content;
-
-		do {
-			String match = matcher.group();
-
-			String s = null;
-
-			if (pattern.equals(sessionKeyPattern)) {
-				s = StringPool.COMMA;
-			}
-			else if (pattern.equals(taglibSessionKeyPattern)) {
-				s = "key=";
-			}
-
-			int x = match.indexOf(s);
-
-			if (x == -1) {
-				continue;
-			}
-
-			x = x + s.length();
-
-			String substring = match.substring(x).trim();
-
-			String quote = StringPool.BLANK;
-
-			if (substring.startsWith(StringPool.APOSTROPHE)) {
-				quote = StringPool.APOSTROPHE;
-			}
-			else if (substring.startsWith(StringPool.QUOTE)) {
-				quote = StringPool.QUOTE;
-			}
-			else {
-				continue;
-			}
-
-			int y = match.indexOf(quote, x);
-			int z = match.indexOf(quote, y + 1);
-
-			if ((y == -1) || (z == -1)) {
-				continue;
-			}
-
-			String prefix = match.substring(0, y + 1);
-			String suffix = match.substring(z);
-			String oldKey = match.substring(y + 1, z);
-
-			boolean alphaNumericKey = true;
-
-			for (char c : oldKey.toCharArray()) {
-				if (!Validator.isChar(c) && !Validator.isDigit(c) &&
-					(c != CharPool.DASH) && (c != CharPool.UNDERLINE)) {
-
-					alphaNumericKey = false;
-				}
-			}
-
-			if (!alphaNumericKey) {
-				continue;
-			}
-
-			String newKey = TextFormatter.format(oldKey, TextFormatter.O);
-
-			newKey = TextFormatter.format(newKey, TextFormatter.M);
-
-			if (newKey.equals(oldKey)) {
-				continue;
-			}
-
-			String oldSub = prefix.concat(oldKey).concat(suffix);
-			String newSub = prefix.concat(newKey).concat(suffix);
-
-			newContent = StringUtil.replaceFirst(newContent, oldSub, newSub);
-		}
-		while (matcher.find());
-
-		return newContent;
-	}
-
-	protected String fixUnparameterizedClassType(String content) {
-		Matcher matcher = unparameterizedClassTypePattern1.matcher(content);
-
-		if (matcher.find()) {
-			return StringUtil.replaceFirst(
-				content, "Class", "Class<?>", matcher.start());
-		}
-
-		matcher = unparameterizedClassTypePattern2.matcher(content);
-
-		if (matcher.find()) {
-			return StringUtil.replaceFirst(
-				content, "Class", "Class<?>", matcher.start());
 		}
 
 		return content;
@@ -975,43 +707,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _annotationsExclusions;
 	}
 
-	protected BNDSettings getBNDSettings(String fileName) throws Exception {
-		for (Map.Entry<String, BNDSettings> entry :
-				_bndSettingsMap.entrySet()) {
-
-			String bndFileLocation = entry.getKey();
-
-			if (fileName.startsWith(bndFileLocation)) {
-				return entry.getValue();
-			}
-		}
-
-		String bndFileLocation = fileName;
-
-		while (true) {
-			int pos = bndFileLocation.lastIndexOf(StringPool.SLASH);
-
-			if (pos == -1) {
-				return null;
-			}
-
-			bndFileLocation = bndFileLocation.substring(0, pos + 1);
-
-			File file = new File(bndFileLocation + "bnd.bnd");
-
-			if (file.exists()) {
-				return new BNDSettings(bndFileLocation, FileUtil.read(file));
-			}
-
-			bndFileLocation = StringUtil.replaceLast(
-				bndFileLocation, StringPool.SLASH, StringPool.BLANK);
-		}
-	}
-
-	protected Map<String, BNDSettings> getBNDSettingsMap() {
-		return _bndSettingsMap;
-	}
-
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
 		if (_compatClassNamesMap != null) {
 			return _compatClassNamesMap;
@@ -1082,29 +777,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	protected String getCustomCopyright(String absolutePath)
-		throws IOException {
-
-		for (int x = absolutePath.length();;) {
-			x = absolutePath.lastIndexOf(CharPool.SLASH, x);
-
-			if (x == -1) {
-				break;
-			}
-
-			String copyright = FileUtil.read(
-				new File(absolutePath.substring(0, x + 1) + "copyright.txt"));
-
-			if (Validator.isNotNull(copyright)) {
-				return copyright;
-			}
-
-			x = x - 1;
-		}
-
-		return null;
 	}
 
 	protected List<String> getExcludes(String property) {
@@ -1300,57 +972,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return x + 1;
 	}
 
-	protected ComparableVersion getMainReleaseComparableVersion(
-			String fileName, String absolutePath, boolean checkModuleVersion)
-		throws Exception {
-
-		boolean usePortalReleaseVersion = true;
-
-		if (checkModuleVersion &&
-			(!portalSource || isModulesFile(absolutePath))) {
-
-			usePortalReleaseVersion = false;
-		}
-
-		String releaseVersion = StringPool.BLANK;
-
-		if (usePortalReleaseVersion) {
-			if (_mainReleaseComparableVersion != null) {
-				return _mainReleaseComparableVersion;
-			}
-
-			releaseVersion = ReleaseInfo.getVersion();
-		}
-		else {
-			BNDSettings bndSettings = getBNDSettings(fileName);
-
-			if (bndSettings == null) {
-				return null;
-			}
-
-			releaseVersion = bndSettings.getReleaseVersion();
-
-			if (releaseVersion == null) {
-				return null;
-			}
-
-			putBNDSettings(bndSettings);
-		}
-
-		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
-
-		String mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
-
-		ComparableVersion mainReleaseComparableVersion = new ComparableVersion(
-			mainReleaseVersion);
-
-		if (usePortalReleaseVersion) {
-			_mainReleaseComparableVersion = mainReleaseComparableVersion;
-		}
-
-		return mainReleaseComparableVersion;
-	}
-
 	protected List<String> getParameterList(String methodCall) {
 		String parameters = null;
 
@@ -1439,43 +1060,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected List<String> getPropertyList(String key) {
 		return ListUtil.fromString(
 			GetterUtil.getString(getProperty(key)), StringPool.COMMA);
-	}
-
-	protected boolean isAllowedVariableType(
-		String content, String variableName,
-		String[] variableTypeRegexStrings) {
-
-		if (variableTypeRegexStrings.length == 0) {
-			return true;
-		}
-
-		for (String variableTypeRegex : variableTypeRegexStrings) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("[\\s\\S]*\\W");
-			sb.append(variableTypeRegex);
-			sb.append("\\s+");
-			sb.append(variableName);
-			sb.append("\\W[\\s\\S]*");
-
-			if (content.matches(sb.toString())) {
-				return true;
-			}
-
-			sb = new StringBundler(5);
-
-			sb.append("[\\s\\S]*\\W");
-			sb.append(variableName);
-			sb.append(" =\\s+new ");
-			sb.append(variableTypeRegex);
-			sb.append("[\\s\\S]*");
-
-			if (content.matches(sb.toString())) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	protected boolean isExcludedPath(String property, String path) {
@@ -1607,7 +1191,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return absolutePath.contains("/modules/");
 	}
 
-	protected abstract void populateFileChecks() throws Exception ;
+	protected abstract void populateFileChecks()
+		throws Exception;
+
+	protected void populateModuleFileChecks() throws Exception {
+	}
 
 	protected void postFormat() throws Exception {
 	}
@@ -1718,10 +1306,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}
 
-	protected void putBNDSettings(BNDSettings bndSettings) {
-		_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
-	}
-
 	protected Document readXML(String content) throws DocumentException {
 		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
 
@@ -1785,81 +1369,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			previousDefinition = definition;
 		}
-
-		return content;
-	}
-
-	protected String sortMethodCall(
-		String content, String methodName, String... variableTypeRegexStrings) {
-
-		Pattern codeBlockPattern = Pattern.compile(
-			"(\t+(\\w*)\\." + methodName + "\\(\\s*\".*?\\);\n)+",
-			Pattern.DOTALL);
-
-		Matcher codeBlockMatcher = codeBlockPattern.matcher(content);
-
-		PutOrSetParameterNameComparator putOrSetParameterNameComparator =
-			new PutOrSetParameterNameComparator();
-
-		while (codeBlockMatcher.find()) {
-			if (!isAllowedVariableType(
-					content, codeBlockMatcher.group(2),
-					variableTypeRegexStrings)) {
-
-				continue;
-			}
-
-			String codeBlock = codeBlockMatcher.group();
-
-			Pattern singleLineMethodCallPattern = Pattern.compile(
-				"\t*\\w*\\." + methodName + "\\((.*?)\\);\n", Pattern.DOTALL);
-
-			Matcher singleLineMatcher = singleLineMethodCallPattern.matcher(
-				codeBlock);
-
-			String previousParameters = null;
-			String previousPutOrSetParameterName = null;
-
-			while (singleLineMatcher.find()) {
-				String parameters = singleLineMatcher.group(1);
-
-				List<String> parametersList = splitParameters(parameters);
-
-				String putOrSetParameterName = parametersList.get(0);
-
-				if ((previousPutOrSetParameterName != null) &&
-					(putOrSetParameterNameComparator.compare(
-						previousPutOrSetParameterName, putOrSetParameterName) >
-							0)) {
-
-					String newCodeBlock = StringUtil.replaceFirst(
-						codeBlock, previousParameters, parameters);
-					newCodeBlock = StringUtil.replaceLast(
-						newCodeBlock, parameters, previousParameters);
-
-					return StringUtil.replace(content, codeBlock, newCodeBlock);
-				}
-
-				previousParameters = parameters;
-				previousPutOrSetParameterName = putOrSetParameterName;
-			}
-		}
-
-		return content;
-	}
-
-	protected String sortMethodCalls(String absolutePath, String content) {
-		if (isExcludedPath(METHOD_CALL_SORT_EXCLUDES, absolutePath)) {
-			return content;
-		}
-
-		content = sortMethodCall(
-			content, "add", "ConcurrentSkipListSet<.*>", "HashSet<.*>",
-			"TreeSet<.*>");
-		content = sortMethodCall(
-			content, "put", "ConcurrentHashMap<.*>", "HashMap<.*>",
-			"JSONObject", "TreeMap<.*>");
-		content = sortMethodCall(content, "setAttribute");
 
 		return content;
 	}
@@ -1971,26 +1480,25 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern sbAppendWithStartingSpacePattern = Pattern.compile(
 		"\n(\t*\\w*(sb|SB)[0-9]?\\.append\\(\".*\"\\);)\n\\s*\\w*(sb|SB)" +
 			"[0-9]?\\.append\\(\" .*\"\\);\n");
-	protected static Pattern sessionKeyPattern = Pattern.compile(
-		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
-			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),
-		Pattern.MULTILINE);
-	protected static Pattern singleLengthStringPattern = Pattern.compile(
-		"^(\".\"|StringPool\\.([A-Z_]+))$");
-	protected static Pattern stringUtilReplacePattern = Pattern.compile(
-		"StringUtil\\.(replace(First|Last)?)\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static boolean subrepository;
-	protected static Pattern taglibSessionKeyPattern = Pattern.compile(
-		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
-		Pattern.MULTILINE);
-	protected static Pattern unparameterizedClassTypePattern1 =
-		Pattern.compile("\\Wnew Class[^<\\w]");
-	protected static Pattern unparameterizedClassTypePattern2 =
-		Pattern.compile("\\WClass[\\[\\]]* \\w+ =");
-	protected static Pattern validatorEqualsPattern = Pattern.compile(
-		"\\WValidator\\.equals\\(");
 
 	protected SourceFormatterArgs sourceFormatterArgs;
+
+	private boolean _containsModuleFile(List<String> fileNames) {
+		for (String fileName : fileNames) {
+			if (!_isMatchPath(fileName)) {
+				continue;
+			}
+
+			String absolutePath = getAbsolutePath(fileName);
+
+			if (isModulesFile(absolutePath, true)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	private String[] _getExcludes() {
 		if (sourceFormatterArgs.getFileNames() != null) {
@@ -2107,21 +1615,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			"/source-formatter/documentation/";
 
 	private Set<String> _annotationsExclusions;
-	private Map<String, BNDSettings> _bndSettingsMap =
-		new ConcurrentHashMap<>();
 	private boolean _browserStarted;
 	private Map<String, String> _compatClassNamesMap;
-	private String _copyright;
 	private final Pattern _definitionPattern = Pattern.compile(
 		"^([A-Za-z-]+?)[:=](\n|[\\s\\S]*?([^\\\\]\n|\\Z))", Pattern.MULTILINE);
 	private String[] _excludes;
 	private Map<String, List<String>> _exclusionPropertiesMap = new HashMap<>();
 	private SourceMismatchException _firstSourceMismatchException;
 	private Set<String> _immutableFieldTypes;
-	private ComparableVersion _mainReleaseComparableVersion;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
-	private String _oldCopyright;
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private String _projectPathPrefix;
 	private Properties _properties;
@@ -2129,63 +1632,5 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 	private boolean _usePortalCompatImport;
-
-	private class PutOrSetParameterNameComparator
-		extends NaturalOrderStringComparator {
-
-		@Override
-		public int compare(
-			String putOrSetParameterName1, String putOrSetParameterName2) {
-
-			String strippedParameterName1 = stripQuotes(putOrSetParameterName1);
-			String strippedParameterName2 = stripQuotes(putOrSetParameterName2);
-
-			if (strippedParameterName1.contains(StringPool.OPEN_PARENTHESIS) ||
-				strippedParameterName2.contains(StringPool.OPEN_PARENTHESIS)) {
-
-				return 0;
-			}
-
-			Matcher matcher = _multipleLineParameterNamePattern.matcher(
-				putOrSetParameterName1);
-
-			if (matcher.find()) {
-				putOrSetParameterName1 = matcher.replaceAll(StringPool.BLANK);
-			}
-
-			matcher = _multipleLineParameterNamePattern.matcher(
-				putOrSetParameterName2);
-
-			if (matcher.find()) {
-				putOrSetParameterName2 = matcher.replaceAll(StringPool.BLANK);
-			}
-
-			if (putOrSetParameterName1.matches("\".*\"") &&
-				putOrSetParameterName2.matches("\".*\"")) {
-
-				String strippedQuotes1 = putOrSetParameterName1.substring(
-					1, putOrSetParameterName1.length() - 1);
-				String strippedQuotes2 = putOrSetParameterName2.substring(
-					1, putOrSetParameterName2.length() - 1);
-
-				return super.compare(strippedQuotes1, strippedQuotes2);
-			}
-
-			int value = super.compare(
-				putOrSetParameterName1, putOrSetParameterName2);
-
-			if (putOrSetParameterName1.startsWith(StringPool.QUOTE) ^
-				putOrSetParameterName2.startsWith(StringPool.QUOTE)) {
-
-				return -value;
-			}
-
-			return value;
-		}
-
-		private final Pattern _multipleLineParameterNamePattern =
-			Pattern.compile("\" \\+\n\t+\"");
-
-	}
 
 }

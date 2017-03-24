@@ -215,10 +215,6 @@ AUI.add(
 							return;
 						}
 
-						var contentBox = instance.get('contentBox');
-
-						var toolbar = instance.icons.get('contentBox');
-
 						var message = Lang.sub(
 							TPL_ALERT,
 							{
@@ -228,20 +224,7 @@ AUI.add(
 							}
 						);
 
-						contentBox.addClass('has-error');
-
-						var alertNode = toolbar.insertBefore(message, toolbar);
-
-						A.later(
-							5000,
-							instance,
-							function() {
-								alertNode.remove();
-
-								contentBox.removeClass('has-error');
-							}, {}, false
-						);
-
+						instance._showError(message);
 					},
 
 					_getTagsDataSource: function() {
@@ -363,6 +346,28 @@ AUI.add(
 
 					_setGroupIds: function(value) {
 						return value.split(',');
+					},
+
+					_showError: function(message) {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						var toolbar = instance.icons.get('contentBox');
+
+						contentBox.addClass('has-error');
+
+						var alertNode = toolbar.insertBefore(message, toolbar);
+
+						A.later(
+							5000,
+							instance,
+							function() {
+								alertNode.remove();
+
+								contentBox.removeClass('has-error');
+							}, {}, false
+						);
 					},
 
 					_showSelectPopup: function(event) {

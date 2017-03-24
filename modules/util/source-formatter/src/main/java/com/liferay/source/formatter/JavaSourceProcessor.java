@@ -34,6 +34,7 @@ import com.liferay.source.formatter.checks.JavaBooleanUsageCheck;
 import com.liferay.source.formatter.checks.JavaCombineLinesCheck;
 import com.liferay.source.formatter.checks.JavaDataAccessConnectionCheck;
 import com.liferay.source.formatter.checks.JavaDeprecatedJavadocCheck;
+import com.liferay.source.formatter.checks.JavaDeserializationSecurityCheck;
 import com.liferay.source.formatter.checks.JavaDiamondOperatorCheck;
 import com.liferay.source.formatter.checks.JavaEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JavaExceptionCheck;
@@ -64,40 +65,10 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.maven.artifact.versioning.ComparableVersion;
-
 /**
  * @author Hugo Huijser
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
-
-	protected void checkDeserializationSecurity(
-		String fileName, String content, boolean isRunOutsidePortalExclusion) {
-
-		for (Pattern vulnerabilityPattern :
-				_javaSerializationVulnerabilityPatterns) {
-
-			Matcher matcher = vulnerabilityPattern.matcher(content);
-
-			if (!matcher.matches()) {
-				continue;
-			}
-
-			StringBundler sb = new StringBundler(3);
-
-			if (isRunOutsidePortalExclusion) {
-				sb.append("Possible Java Serialization Remote Code Execution ");
-				sb.append("vulnerability using ");
-			}
-			else {
-				sb.append("Use ProtectedObjectInputStream instead of ");
-			}
-
-			sb.append(matcher.group(1));
-
-			processMessage(fileName, sb.toString());
-		}
-	}
 
 	protected void checkFinderCacheInterfaceMethod(
 		String fileName, String content) {
@@ -492,16 +463,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-49552
 
 		checkFinderCacheInterfaceMethod(fileName, newContent);
-
-		// LPS-60358
-
-		if (!fileName.contains("/test/") &&
-			!fileName.contains("/testIntegration/") &&
-			!isExcludedPath(_SECURE_DESERIALIZATION_EXCLUDES, absolutePath)) {
-
-			checkDeserializationSecurity(
-				fileName, content, isRunOutsidePortalExclusion);
-		}
 
 		// LPS-55690
 
@@ -1271,6 +1232,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_fileChecks.add(
 			new JavaDiamondOperatorCheck(
 				getExcludes(_DIAMOND_OPERATOR_EXCLUDES)));
+		_fileChecks.add(
+			new JavaDeserializationSecurityCheck(
+				getExcludes(_SECURE_DESERIALIZATION_EXCLUDES),
+				getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
 		_fileChecks.add(new JavaEmptyLinesCheck());
 		_fileChecks.add(new JavaExceptionCheck());
 		_fileChecks.add(
@@ -1328,8 +1293,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected void preFormat() throws Exception {
 		_maxLineLength = sourceFormatterArgs.getMaxLineLength();
 
-		_addMissingDeprecationReleaseVersion = GetterUtil.getBoolean(
-			getProperty("add.missing.deprecation.release.version"));
 		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
 			getProperty("allow.use.service.util.in.service.impl"));
 	}
@@ -1450,16 +1413,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private static final String _UPGRADE_SERVICE_UTIL_EXCLUDES =
 		"upgrade.service.util.excludes";
 
-	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
 	private final Pattern _anonymousClassPattern = Pattern.compile(
 		"\n(\t+)(\\S.* )?new (.|\\(\n)*\\) \\{\n\n");
 	private boolean _checkRegistryInTestClasses;
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
-	private final Pattern _deprecatedPattern = Pattern.compile(
-		"(\n\\s*\\* @deprecated)( As of ([0-9\\.]+)(.*?)\n\\s*\\*( @|/))?",
-		Pattern.DOTALL);
 	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
 	private final List<FileCheck> _fileChecks = new ArrayList<>();
@@ -1468,13 +1427,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _internalImportPattern = Pattern.compile(
 		"\nimport com\\.liferay\\.(.*\\.internal\\.([a-z].*?\\.)?[A-Z].*?)" +
 			"[\\.|;]");
-	private final Pattern[] _javaSerializationVulnerabilityPatterns =
-		new Pattern[] {
-			Pattern.compile(
-				".*(new [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL),
-			Pattern.compile(
-				".*(extends [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL)
-	};
 	private final Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");

@@ -46,6 +46,7 @@ import com.liferay.source.formatter.checks.JavaLongLinesCheck;
 import com.liferay.source.formatter.checks.JavaOSGiReferenceCheck;
 import com.liferay.source.formatter.checks.JavaPackagePathCheck;
 import com.liferay.source.formatter.checks.JavaSystemEventAnnotationCheck;
+import com.liferay.source.formatter.checks.JavaSystemExceptionCheck;
 import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
 import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
 import com.liferay.source.formatter.checks.JavaWhitespaceCheck;
@@ -336,10 +337,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = StringUtil.replace(
 			newContent, " static interface ", " interface ");
 
-		// LPS-47055
-
-		newContent = fixSystemExceptions(newContent);
-
 		// LPS-47648
 
 		if ((portalSource || subrepository) &&
@@ -534,51 +531,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	protected String fixSystemExceptions(String content) {
-		if (!content.contains("SystemException")) {
-			return content;
-		}
-
-		Matcher matcher = _throwsSystemExceptionPattern.matcher(content);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String match = matcher.group();
-		String replacement = null;
-
-		String afterException = matcher.group(3);
-		String beforeException = matcher.group(2);
-
-		if (Validator.isNull(beforeException) &&
-			Validator.isNull(afterException)) {
-
-			replacement = matcher.group(4);
-
-			String beforeThrows = matcher.group(1);
-
-			if (Validator.isNotNull(StringUtil.trim(beforeThrows))) {
-				replacement = beforeThrows + replacement;
-			}
-		}
-		else if (Validator.isNull(beforeException)) {
-			replacement = StringUtil.replaceFirst(
-				match, "SystemException, ", StringPool.BLANK);
-		}
-		else {
-			replacement = StringUtil.replaceFirst(
-				match, ", SystemException", StringPool.BLANK);
-		}
-
-		if (match.equals(replacement)) {
-			return content;
-		}
-
-		return fixSystemExceptions(
-			StringUtil.replaceFirst(content, match, replacement));
 	}
 
 	protected String formatJava(
@@ -1149,6 +1101,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				getExcludes(_LINE_LENGTH_EXCLUDES),
 				sourceFormatterArgs.getMaxLineLength()));
 		_fileChecks.add(new JavaPackagePathCheck());
+		_fileChecks.add(new JavaSystemExceptionCheck());
 
 		if (portalSource || subrepository) {
 			_fileChecks.add(new JavaSystemEventAnnotationCheck());
@@ -1338,8 +1291,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"implements ProcessCallable\\b");
 	private final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");
-	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
-		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();
 
 }

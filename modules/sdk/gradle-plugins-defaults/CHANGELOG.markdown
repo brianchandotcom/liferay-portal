@@ -1281,6 +1281,11 @@ any publishable subproject.
 - [LPS-71354]: Include only projects in one or more specific directories by
 setting the `build.include.dirs` system property.
 
+## 3.5.5 - 2017-03-22
+
+### Changed
+- [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.2.26.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

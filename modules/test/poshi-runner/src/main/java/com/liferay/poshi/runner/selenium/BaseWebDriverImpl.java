@@ -78,6 +78,7 @@ import javax.xml.xpath.XPathFactory;
 import junit.framework.TestCase;
 
 import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -85,6 +86,7 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -381,8 +383,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		}
 
 		if (pageSource.contains(
-			"html id=\"feedHandler\" xmlns=" +
-				"\"http://www.w3.org/1999/xhtml\"")) {
+				"html id=\"feedHandler\" xmlns=" +
+					"\"http://www.w3.org/1999/xhtml\"")) {
 
 			return;
 		}
@@ -415,7 +417,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				}
 
 				if (LiferaySeleniumHelper.isInIgnoreErrorsFile(
-					javaScriptErrorValue, "javascript")) {
+						javaScriptErrorValue, "javascript")) {
 
 					continue;
 				}
@@ -1266,9 +1268,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			}
 
 			System.out.println("getLocation(WebDriver):");
-			System.out.println(this.toString());
+			System.out.println(toString());
 
-			Set<String> windowHandles = this.getWindowHandles();
+			Set<String> windowHandles = getWindowHandles();
 
 			for (String windowHandle : windowHandles) {
 				System.out.println(windowHandle);
@@ -1332,8 +1334,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public String[] getSelectedLabels(String selectLocator) {
-		WebElement selectLocatorWebElement = getWebElement(
-			selectLocator);
+		WebElement selectLocatorWebElement = getWebElement(selectLocator);
 
 		Select select = new Select(selectLocatorWebElement);
 
@@ -2403,7 +2404,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		if (!PropsValues.BROWSER_TYPE.equals("safari")) {
 			timeouts.implicitlyWait(
-					GetterUtil.getInteger(timeout), TimeUnit.MILLISECONDS);
+				GetterUtil.getInteger(timeout), TimeUnit.MILLISECONDS);
 		}
 	}
 
@@ -2786,6 +2787,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		String titleAttribute = getAttribute(locator + "@title");
 
 		int x = titleAttribute.indexOf(",");
+
 		int y = titleAttribute.indexOf(",", x + 1);
 
 		if (y == -1) {
@@ -3498,25 +3500,18 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected int getElementPositionBottom(String locator) {
-
-		return getElementPositionTop(locator) +
-			getElementHeight(locator);
+		return getElementPositionTop(locator) + getElementHeight(locator);
 	}
 
 	protected int getElementPositionCenterX(String locator) {
-
-		return getElementPositionLeft(locator) +
-			(getElementWidth(locator) / 2);
+		return getElementPositionLeft(locator) + (getElementWidth(locator) / 2);
 	}
 
 	protected int getElementPositionCenterY(String locator) {
-
-		return getElementPositionTop(locator) +
-			(getElementHeight(locator) / 2);
+		return getElementPositionTop(locator) + (getElementHeight(locator) / 2);
 	}
 
 	protected int getElementPositionLeft(String locator) {
-
 		WebElement webElement = getWebElement(locator, "1");
 
 		Point point = webElement.getLocation();
@@ -3525,13 +3520,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected int getElementPositionRight(String locator) {
-
-		return getElementPositionLeft(locator) +
-			getElementWidth(locator);
+		return getElementPositionLeft(locator) + getElementWidth(locator);
 	}
 
 	protected int getElementPositionTop(String locator) {
-
 		WebElement webElement = getWebElement(locator, "1");
 
 		Point point = webElement.getLocation();
@@ -3644,13 +3636,30 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return specialCharIndexes;
 	}
 
+	protected int getViewportHeight() {
+		WebElement bodyWebElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		return GetterUtil.getInteger(
+			javascriptExecutor.executeScript("return window.innerHeight;"));
+	}
+
+	protected int getViewportPositionBottom() {
+		return getScrollOffsetY() + getViewportHeight();
+	}
+
 	protected WebElement getWebElement(String locator) {
 		return getWebElement(locator, null);
 	}
 
 	protected WebElement getWebElement(String locator, String timeout) {
-		List<WebElement> webElements = getWebElements(
-			locator, timeout);
+		List<WebElement> webElements = getWebElements(locator, timeout);
 
 		if (!webElements.isEmpty()) {
 			return webElements.get(0);
@@ -3672,7 +3681,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			List<WebElement> webElements = new ArrayList<>();
 
 			for (WebElement webElement : findElements(getBy(locator))) {
-
 				webElements.add(new RetryWebElementImpl(locator, webElement));
 			}
 
@@ -3683,24 +3691,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				setDefaultTimeoutImplicit();
 			}
 		}
-	}
-
-	protected int getViewportHeight() {
-		WebElement bodyWebElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
-
-		return GetterUtil.getInteger(
-			javascriptExecutor.executeScript("return window.innerHeight;"));
-	}
-
-	protected int getViewportPositionBottom() {
-		return getScrollOffsetY() + getViewportHeight();
 	}
 
 	protected Point getWindowPoint() {

@@ -35,8 +35,8 @@ public class IOSMobileDriverImpl extends BaseMobileDriverImpl {
 
 		int navigationBarHeight = 44;
 
-		int screenPositionY = getElementPositionCenterY(locator) +
-			navigationBarHeight;
+		int screenPositionY =
+			getElementPositionCenterY(locator) + navigationBarHeight;
 
 		context("NATIVE_APP");
 

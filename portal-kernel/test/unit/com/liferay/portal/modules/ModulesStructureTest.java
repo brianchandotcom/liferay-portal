@@ -625,7 +625,7 @@ public class ModulesStructureTest {
 				line.trim(), line);
 
 			Assert.assertFalse(
-				"Forbbiden empty line in " + gradlePropertiesPath,
+				"Forbidden empty line in " + gradlePropertiesPath,
 				Validator.isNull(line));
 
 			int pos = line.indexOf(CharPool.EQUAL);

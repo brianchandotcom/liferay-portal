@@ -1161,43 +1161,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(getProperty(key)), StringPool.COMMA);
 	}
 
-	protected boolean isAllowedVariableType(
-		String content, String variableName,
-		String[] variableTypeRegexStrings) {
-
-		if (variableTypeRegexStrings.length == 0) {
-			return true;
-		}
-
-		for (String variableTypeRegex : variableTypeRegexStrings) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("[\\s\\S]*\\W");
-			sb.append(variableTypeRegex);
-			sb.append("\\s+");
-			sb.append(variableName);
-			sb.append("\\W[\\s\\S]*");
-
-			if (content.matches(sb.toString())) {
-				return true;
-			}
-
-			sb = new StringBundler(5);
-
-			sb.append("[\\s\\S]*\\W");
-			sb.append(variableName);
-			sb.append(" =\\s+new ");
-			sb.append(variableTypeRegex);
-			sb.append("[\\s\\S]*");
-
-			if (content.matches(sb.toString())) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected boolean isExcludedPath(String property, String path) {
 		return isExcludedPath(property, path, -1);
 	}
@@ -1509,81 +1472,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
-	protected String sortMethodCall(
-		String content, String methodName, String... variableTypeRegexStrings) {
-
-		Pattern codeBlockPattern = Pattern.compile(
-			"(\t+(\\w*)\\." + methodName + "\\(\\s*\".*?\\);\n)+",
-			Pattern.DOTALL);
-
-		Matcher codeBlockMatcher = codeBlockPattern.matcher(content);
-
-		PutOrSetParameterNameComparator putOrSetParameterNameComparator =
-			new PutOrSetParameterNameComparator();
-
-		while (codeBlockMatcher.find()) {
-			if (!isAllowedVariableType(
-					content, codeBlockMatcher.group(2),
-					variableTypeRegexStrings)) {
-
-				continue;
-			}
-
-			String codeBlock = codeBlockMatcher.group();
-
-			Pattern singleLineMethodCallPattern = Pattern.compile(
-				"\t*\\w*\\." + methodName + "\\((.*?)\\);\n", Pattern.DOTALL);
-
-			Matcher singleLineMatcher = singleLineMethodCallPattern.matcher(
-				codeBlock);
-
-			String previousParameters = null;
-			String previousPutOrSetParameterName = null;
-
-			while (singleLineMatcher.find()) {
-				String parameters = singleLineMatcher.group(1);
-
-				List<String> parametersList = splitParameters(parameters);
-
-				String putOrSetParameterName = parametersList.get(0);
-
-				if ((previousPutOrSetParameterName != null) &&
-					(putOrSetParameterNameComparator.compare(
-						previousPutOrSetParameterName, putOrSetParameterName) >
-							0)) {
-
-					String newCodeBlock = StringUtil.replaceFirst(
-						codeBlock, previousParameters, parameters);
-					newCodeBlock = StringUtil.replaceLast(
-						newCodeBlock, parameters, previousParameters);
-
-					return StringUtil.replace(content, codeBlock, newCodeBlock);
-				}
-
-				previousParameters = parameters;
-				previousPutOrSetParameterName = putOrSetParameterName;
-			}
-		}
-
-		return content;
-	}
-
-	protected String sortMethodCalls(String absolutePath, String content) {
-		if (isExcludedPath(METHOD_CALL_SORT_EXCLUDES, absolutePath)) {
-			return content;
-		}
-
-		content = sortMethodCall(
-			content, "add", "ConcurrentSkipListSet<.*>", "HashSet<.*>",
-			"TreeSet<.*>");
-		content = sortMethodCall(
-			content, "put", "ConcurrentHashMap<.*>", "HashMap<.*>",
-			"JSONObject", "TreeMap<.*>");
-		content = sortMethodCall(content, "setAttribute");
-
-		return content;
-	}
-
 	protected List<String> splitParameters(String parameters) {
 		List<String> parametersList = new ArrayList<>();
 
@@ -1853,63 +1741,5 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 	private boolean _usePortalCompatImport;
-
-	private class PutOrSetParameterNameComparator
-		extends NaturalOrderStringComparator {
-
-		@Override
-		public int compare(
-			String putOrSetParameterName1, String putOrSetParameterName2) {
-
-			String strippedParameterName1 = stripQuotes(putOrSetParameterName1);
-			String strippedParameterName2 = stripQuotes(putOrSetParameterName2);
-
-			if (strippedParameterName1.contains(StringPool.OPEN_PARENTHESIS) ||
-				strippedParameterName2.contains(StringPool.OPEN_PARENTHESIS)) {
-
-				return 0;
-			}
-
-			Matcher matcher = _multipleLineParameterNamePattern.matcher(
-				putOrSetParameterName1);
-
-			if (matcher.find()) {
-				putOrSetParameterName1 = matcher.replaceAll(StringPool.BLANK);
-			}
-
-			matcher = _multipleLineParameterNamePattern.matcher(
-				putOrSetParameterName2);
-
-			if (matcher.find()) {
-				putOrSetParameterName2 = matcher.replaceAll(StringPool.BLANK);
-			}
-
-			if (putOrSetParameterName1.matches("\".*\"") &&
-				putOrSetParameterName2.matches("\".*\"")) {
-
-				String strippedQuotes1 = putOrSetParameterName1.substring(
-					1, putOrSetParameterName1.length() - 1);
-				String strippedQuotes2 = putOrSetParameterName2.substring(
-					1, putOrSetParameterName2.length() - 1);
-
-				return super.compare(strippedQuotes1, strippedQuotes2);
-			}
-
-			int value = super.compare(
-				putOrSetParameterName1, putOrSetParameterName2);
-
-			if (putOrSetParameterName1.startsWith(StringPool.QUOTE) ^
-				putOrSetParameterName2.startsWith(StringPool.QUOTE)) {
-
-				return -value;
-			}
-
-			return value;
-		}
-
-		private final Pattern _multipleLineParameterNamePattern =
-			Pattern.compile("\" \\+\n\t+\"");
-
-	}
 
 }

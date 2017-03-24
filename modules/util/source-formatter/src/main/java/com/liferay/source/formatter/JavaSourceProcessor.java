@@ -52,6 +52,7 @@ import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
 import com.liferay.source.formatter.checks.JavaWhitespaceCheck;
 import com.liferay.source.formatter.checks.JavaXMLSecurityCheck;
 import com.liferay.source.formatter.checks.LanguageKeysCheck;
+import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
 import com.liferay.source.formatter.checks.SessionKeysCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -309,8 +310,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName,
 				"Assign ProcessCallable implementation a serialVersionUID");
 		}
-
-		newContent = sortMethodCalls(absolutePath, newContent);
 
 		newContent = formatStringBundler(fileName, newContent, _maxLineLength);
 
@@ -1101,6 +1100,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				sourceFormatterArgs.getMaxLineLength()));
 		_fileChecks.add(new JavaPackagePathCheck());
 		_fileChecks.add(new JavaSystemExceptionCheck());
+		_fileChecks.add(
+			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
 		_fileChecks.add(new SessionKeysCheck());
 
 		if (portalSource || subrepository) {

@@ -33,6 +33,7 @@ import com.liferay.source.formatter.checks.JSPLanguageKeysCheck;
 import com.liferay.source.formatter.checks.JSPSessionKeysCheck;
 import com.liferay.source.formatter.checks.JSPTagAttributesCheck;
 import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
+import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 
@@ -378,8 +379,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			includeFileNames);
 
 		checkSubnames(fileName, newContent);
-
-		newContent = sortMethodCalls(absolutePath, newContent);
 
 		newContent = formatStringBundler(fileName, newContent, -1);
 
@@ -1446,6 +1445,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			new JSPTagAttributesCheck(
 				portalSource, subrepository,
 				_getPrimitiveTagAttributeDataTypes(), _getTagJavaClassesMap()));
+		_fileChecks.add(
+			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
 
 		if (portalSource) {
 			_fileChecks.add(

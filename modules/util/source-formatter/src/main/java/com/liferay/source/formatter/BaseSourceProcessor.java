@@ -1012,10 +1012,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected Map<String, BNDSettings> getBNDSettingsMap() {
-		return _bndSettingsMap;
-	}
-
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
 		if (_compatClassNamesMap != null) {
 			return _compatClassNamesMap;

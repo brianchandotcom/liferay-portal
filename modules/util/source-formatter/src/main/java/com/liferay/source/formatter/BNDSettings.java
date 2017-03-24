@@ -89,19 +89,10 @@ public class BNDSettings {
 		return _releaseVersion;
 	}
 
-	public boolean isInheritRequired() {
-		return _inheritRequired;
-	}
-
-	public void setInheritRequired(boolean inheritRequired) {
-		_inheritRequired = inheritRequired;
-	}
-
 	private final String _content;
 	private final Pattern _contentDirPattern = Pattern.compile(
 		"\\scontent=(.*?)(,\\\\|\n|$)");
 	private final String _fileLocation;
-	private boolean _inheritRequired;
 	private Properties _languageProperties;
 	private String _releaseVersion;
 	private final Pattern _releaseVersionPattern = Pattern.compile(

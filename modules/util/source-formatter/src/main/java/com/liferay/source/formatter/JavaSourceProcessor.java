@@ -53,6 +53,7 @@ import com.liferay.source.formatter.checks.JavaWhitespaceCheck;
 import com.liferay.source.formatter.checks.JavaXMLSecurityCheck;
 import com.liferay.source.formatter.checks.LanguageKeysCheck;
 import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
+import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.SessionKeysCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -603,10 +604,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				line = formatEmptyArray(line);
 
-				// LPS-58529
-
-				checkResourceUtil(line, fileName, absolutePath, lineCount);
-
 				if (trimmedLine.startsWith("* @see ") &&
 					(StringUtil.count(trimmedLine, CharPool.AT) > 1)) {
 
@@ -1116,6 +1113,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				new JavaXMLSecurityCheck(
 					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES),
 					getExcludes(_SECURE_XML_EXCLUDES)));
+			_fileChecks.add(
+				new ResourceBundleCheck(
+					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
 		}
 
 		if (portalSource) {

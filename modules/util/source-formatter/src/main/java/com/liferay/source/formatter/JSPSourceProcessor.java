@@ -34,6 +34,7 @@ import com.liferay.source.formatter.checks.JSPSessionKeysCheck;
 import com.liferay.source.formatter.checks.JSPTagAttributesCheck;
 import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
 import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
+import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 
@@ -710,10 +711,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						line = StringUtil.replace(line, match, replacement);
 					}
 				}
-
-				// LPS-58529
-
-				checkResourceUtil(line, fileName, absolutePath, lineCount);
 
 				if (!fileName.endsWith("test.jsp") &&
 					line.contains("System.out.print")) {
@@ -1447,6 +1444,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				_getPrimitiveTagAttributeDataTypes(), _getTagJavaClassesMap()));
 		_fileChecks.add(
 			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
+
+		if (portalSource || subrepository) {
+			_fileChecks.add(
+				new ResourceBundleCheck(
+					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
+		}
 
 		if (portalSource) {
 			_fileChecks.add(

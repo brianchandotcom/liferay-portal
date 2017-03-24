@@ -390,33 +390,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected void checkResourceUtil(
-		String line, String fileName, String absolutePath, int lineCount) {
-
-		if ((!portalSource && !subrepository) ||
-			fileName.endsWith("ResourceBundleUtil.java") ||
-			isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
-
-			return;
-		}
-
-		if (line.contains("ResourceBundle.getBundle(")) {
-			processMessage(
-				fileName,
-				"Use ResourceBundleUtil.getBundle instead of " +
-					"ResourceBundle.getBundle, see LPS-58529",
-				lineCount);
-		}
-
-		if (line.contains("resourceBundle.getString(")) {
-			processMessage(
-				fileName,
-				"Use ResourceBundleUtil.getString instead of " +
-					"resourceBundle.getString, see LPS-58529",
-				lineCount);
-		}
-	}
-
 	protected void checkStringUtilReplace(String fileName, String content)
 		throws Exception {
 

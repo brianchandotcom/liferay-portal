@@ -36,7 +36,9 @@ AUI.add(
 			]
 		);
 
-		var TPL_ALERT = '<div class="help-block">{duplicate} {tag}: {tagName}</div>';
+		var TPL_DUPLICATE_ALERT = '<div class="help-block">{duplicate} {tag}: {tagName}</div>';
+
+		var TPL_MAX_LENGTH_ALERT = '<div class="help-block">{message}</div>';
 
 		/**
 		 * OPTIONS
@@ -148,7 +150,8 @@ AUI.add(
 						entries.after('add', instance._updateHiddenInput, instance);
 						entries.after('remove', instance._updateHiddenInput, instance);
 
-						A.Do.before(instance._checkTag, instance.entries, 'add', instance);
+						A.Do.before(instance._checkDuplicateTag, instance.entries, 'add', instance);
+						A.Do.before(instance._checkMaxLengthTag, instance.entries, 'add', instance);
 					},
 
 					syncUI: function() {
@@ -170,8 +173,6 @@ AUI.add(
 					_addEntries: function() {
 						var instance = this;
 
-						var maxLength = instance.get('maxLength');
-
 						var text = Lang.String.escapeHTML(instance.inputNode.val());
 
 						if (text) {
@@ -180,16 +181,12 @@ AUI.add(
 
 								items.forEach(
 									function(item, index) {
-										if (item.length <= maxLength) {
-											instance.entries.add(item, {});
-										}
+										instance.entries.add(item, {});
 									}
 								);
 							}
 							else {
-								if (text.length <= maxLength) {
-									instance.entries.add(text, {});
-								}
+								instance.entries.add(text, {});
 							}
 						}
 
@@ -206,7 +203,7 @@ AUI.add(
 						instance.get('boundingBox').on('keypress', instance._onKeyPress, instance);
 					},
 
-					_checkTag: function(object) {
+					_checkDuplicateTag: function(object) {
 						var instance = this;
 
 						var tag = !object.value ? object : object.value;
@@ -216,7 +213,7 @@ AUI.add(
 						}
 
 						var message = Lang.sub(
-							TPL_ALERT,
+							TPL_DUPLICATE_ALERT,
 							{
 								duplicate: Liferay.Language.get('duplicate'),
 								tag: Liferay.Language.get('tag'),
@@ -225,6 +222,29 @@ AUI.add(
 						);
 
 						instance._showError(message);
+					},
+
+					_checkMaxLengthTag: function(object) {
+						var instance = this;
+
+						var tag = !object.value ? object : object.value;
+
+						var maxLength = instance.get('maxLength');
+
+						if (!tag.length || (tag.length <= maxLength)) {
+							return;
+						}
+
+						var message = Lang.sub(
+							TPL_MAX_LENGTH_ALERT,
+							{
+								message: Lang.sub(Liferay.Language.get('please-enter-no-more-than-x-characters'), [maxLength])
+							}
+						);
+
+						instance._showError(message);
+
+						return new A.Do.Halt();
 					},
 
 					_getTagsDataSource: function() {

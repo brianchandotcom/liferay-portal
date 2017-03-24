@@ -1556,9 +1556,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource || subrepository) {
 			_fileChecks.add(
-				new JavaOSGiReferenceCheck(
-					_getModuleFileNamesMap(), subrepository));
-			_fileChecks.add(
 				new JavaVerifyUpgradeConnectionCheck(
 					getExcludes(_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES)));
 			_fileChecks.add(
@@ -1576,6 +1573,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
 					getPortalLanguageProperties()));
 		}
+	}
+
+	@Override
+	protected void populateModuleFileChecks() throws Exception {
+		_fileChecks.add(
+			new JavaOSGiReferenceCheck(
+				_getModuleFileNamesMap(), subrepository));
 	}
 
 	@Override

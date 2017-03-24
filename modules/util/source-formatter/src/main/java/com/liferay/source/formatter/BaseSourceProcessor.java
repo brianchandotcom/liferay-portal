@@ -107,6 +107,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		populateFileChecks();
 
+		if ((portalSource || subrepository) && _containsModuleFile(fileNames)) {
+			populateModuleFileChecks();
+		}
+
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());
 
@@ -1607,7 +1611,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return absolutePath.contains("/modules/");
 	}
 
-	protected abstract void populateFileChecks() throws Exception ;
+	protected abstract void populateFileChecks()
+		throws Exception;
+
+	protected void populateModuleFileChecks() throws Exception {
+	}
 
 	protected void postFormat() throws Exception {
 	}
@@ -1991,6 +1999,22 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"\\WValidator\\.equals\\(");
 
 	protected SourceFormatterArgs sourceFormatterArgs;
+
+	private boolean _containsModuleFile(List<String> fileNames) {
+		for (String fileName : fileNames) {
+			if (!_isMatchPath(fileName)) {
+				continue;
+			}
+
+			String absolutePath = getAbsolutePath(fileName);
+
+			if (isModulesFile(absolutePath, true)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	private String[] _getExcludes() {
 		if (sourceFormatterArgs.getFileNames() != null) {

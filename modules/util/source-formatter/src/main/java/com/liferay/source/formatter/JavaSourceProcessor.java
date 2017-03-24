@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.CopyrightCheck;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JavaAnnotationsCheck;
 import com.liferay.source.formatter.checks.JavaBooleanUsageCheck;
@@ -263,9 +264,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			newContent = StringUtil.replace(newContent, "$\n */", "$\n *\n */");
 		}
-
-		newContent = fixCopyright(
-			newContent, absolutePath, fileName, className);
 
 		if (newContent.contains(className + ".java.html")) {
 			processMessage(fileName, "Java2HTML");
@@ -1531,6 +1529,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected void populateFileChecks() throws Exception {
 		_fileChecks.add(new JavaWhitespaceCheck());
 
+		_fileChecks.add(
+			new CopyrightCheck(
+				getContent(
+					sourceFormatterArgs.getCopyrightFileName(),
+					PORTAL_MAX_DIR_LEVEL)));
 		_fileChecks.add(new JavaAnnotationsCheck());
 		_fileChecks.add(new JavaBooleanUsageCheck());
 		_fileChecks.add(

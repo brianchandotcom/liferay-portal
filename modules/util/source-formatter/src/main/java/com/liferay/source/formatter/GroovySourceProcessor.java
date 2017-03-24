@@ -17,8 +17,6 @@ package com.liferay.source.formatter;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.WhitespaceCheck;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,20 +43,6 @@ public class GroovySourceProcessor extends JavaSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	@Override
-	protected String fixCopyright(
-			String content, String absolutePath, String fileName,
-			String className)
-		throws IOException {
-
-		if (Character.isUpperCase(className.charAt(0))) {
-			return super.fixCopyright(
-				content, absolutePath, fileName, className);
-		}
-
-		return content;
 	}
 
 	@Override

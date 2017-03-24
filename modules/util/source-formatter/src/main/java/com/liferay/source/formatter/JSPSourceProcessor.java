@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
+import com.liferay.source.formatter.checks.CopyrightCheck;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JSPEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JSPIfStatementCheck;
@@ -352,8 +353,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			processMessage(fileName, "Move imports to init.jsp");
 		}
-
-		newContent = fixCopyright(newContent, absolutePath, fileName, null);
 
 		newContent = StringUtil.replace(
 			newContent,
@@ -1438,6 +1437,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected void populateFileChecks() throws Exception {
 		_fileChecks.add(new JSPWhitespaceCheck());
 
+		_fileChecks.add(
+			new CopyrightCheck(
+				getContent(
+					sourceFormatterArgs.getCopyrightFileName(),
+					PORTAL_MAX_DIR_LEVEL)));
 		_fileChecks.add(new JSPEmptyLinesCheck());
 		_fileChecks.add(new JSPIfStatementCheck());
 		_fileChecks.add(

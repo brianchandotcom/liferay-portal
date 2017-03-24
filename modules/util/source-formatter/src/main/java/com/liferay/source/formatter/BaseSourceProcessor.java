@@ -552,89 +552,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return newContent;
 	}
 
-	protected String fixCopyright(
-			String content, String absolutePath, String fileName,
-			String className)
-		throws IOException {
-
-		if (_copyright == null) {
-			_copyright = getContent(
-				sourceFormatterArgs.getCopyrightFileName(),
-				PORTAL_MAX_DIR_LEVEL);
-		}
-
-		String copyright = _copyright;
-
-		if (fileName.endsWith(".tpl") || fileName.endsWith(".vm") ||
-			Validator.isNull(copyright)) {
-
-			return content;
-		}
-
-		if (_oldCopyright == null) {
-			_oldCopyright = getContent(
-				"old-copyright.txt", PORTAL_MAX_DIR_LEVEL);
-		}
-
-		if (Validator.isNotNull(_oldCopyright) &&
-			content.contains(_oldCopyright)) {
-
-			content = StringUtil.replace(content, _oldCopyright, copyright);
-
-			processMessage(fileName, "File contains old copyright information");
-		}
-
-		if (!content.contains(copyright)) {
-			String customCopyright = getCustomCopyright(absolutePath);
-
-			if (Validator.isNotNull(customCopyright)) {
-				copyright = customCopyright;
-			}
-
-			if (!content.contains(copyright)) {
-				processMessage(fileName, "(c)");
-			}
-			else if (!content.startsWith(copyright) &&
-					 !content.startsWith("<%--\n" + copyright)) {
-
-				processMessage(fileName, "File must start with copyright");
-			}
-		}
-		else if (!content.startsWith(copyright) &&
-				 !content.startsWith("<%--\n" + copyright)) {
-
-			processMessage(fileName, "File must start with copyright");
-		}
-
-		if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) {
-			content = StringUtil.replace(
-				content, "<%\n" + copyright + "\n%>",
-				"<%--\n" + copyright + "\n--%>");
-		}
-
-		int x = content.indexOf("* Copyright (c) 2000-");
-
-		if (x == -1) {
-			return content;
-		}
-
-		int y = content.indexOf("Liferay", x);
-
-		String contentCopyrightYear = content.substring(x, y);
-
-		x = copyright.indexOf("* Copyright (c) 2000-");
-
-		if (x == -1) {
-			return content;
-		}
-
-		y = copyright.indexOf("Liferay", x);
-
-		String copyrightYear = copyright.substring(x, y);
-
-		return StringUtil.replace(content, contentCopyrightYear, copyrightYear);
-	}
-
 	protected String fixIncorrectParameterTypeForLanguageUtil(
 		String content, boolean autoFix, String fileName) {
 
@@ -1082,29 +999,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	protected String getCustomCopyright(String absolutePath)
-		throws IOException {
-
-		for (int x = absolutePath.length();;) {
-			x = absolutePath.lastIndexOf(CharPool.SLASH, x);
-
-			if (x == -1) {
-				break;
-			}
-
-			String copyright = FileUtil.read(
-				new File(absolutePath.substring(0, x + 1) + "copyright.txt"));
-
-			if (Validator.isNotNull(copyright)) {
-				return copyright;
-			}
-
-			x = x - 1;
-		}
-
-		return null;
 	}
 
 	protected List<String> getExcludes(String property) {
@@ -2131,7 +2025,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		new ConcurrentHashMap<>();
 	private boolean _browserStarted;
 	private Map<String, String> _compatClassNamesMap;
-	private String _copyright;
 	private final Pattern _definitionPattern = Pattern.compile(
 		"^([A-Za-z-]+?)[:=](\n|[\\s\\S]*?([^\\\\]\n|\\Z))", Pattern.MULTILINE);
 	private String[] _excludes;
@@ -2141,7 +2034,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private ComparableVersion _mainReleaseComparableVersion;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
-	private String _oldCopyright;
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private String _projectPathPrefix;
 	private Properties _properties;

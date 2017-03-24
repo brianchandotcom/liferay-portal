@@ -33,6 +33,7 @@ import com.liferay.source.formatter.checks.JavaAssertEqualsCheck;
 import com.liferay.source.formatter.checks.JavaBooleanUsageCheck;
 import com.liferay.source.formatter.checks.JavaCombineLinesCheck;
 import com.liferay.source.formatter.checks.JavaDataAccessConnectionCheck;
+import com.liferay.source.formatter.checks.JavaDeprecatedJavadocCheck;
 import com.liferay.source.formatter.checks.JavaDiamondOperatorCheck;
 import com.liferay.source.formatter.checks.JavaEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JavaExceptionCheck;
@@ -587,11 +588,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processMessage(fileName, sb.toString());
 		}
 
-		if (_addMissingDeprecationReleaseVersion) {
-			newContent = formatDeprecatedJavadoc(
-				fileName, absolutePath, newContent);
-		}
-
 		newContent = formatValidatorEquals(newContent);
 
 		newContent = fixUnparameterizedClassType(newContent);
@@ -722,65 +718,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		return fixSystemExceptions(
 			StringUtil.replaceFirst(content, match, replacement));
-	}
-
-	protected String formatDeprecatedJavadoc(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		ComparableVersion mainReleaseComparableVersion =
-			getMainReleaseComparableVersion(fileName, absolutePath, true);
-
-		if (mainReleaseComparableVersion == null) {
-			return content;
-		}
-
-		Matcher matcher = _deprecatedPattern.matcher(content);
-
-		while (matcher.find()) {
-			if (matcher.group(2) == null) {
-				return StringUtil.insert(
-					content,
-					" As of " + mainReleaseComparableVersion.toString(),
-					matcher.end(1));
-			}
-
-			String version = matcher.group(3);
-
-			ComparableVersion comparableVersion = new ComparableVersion(
-				version);
-
-			if (comparableVersion.compareTo(mainReleaseComparableVersion) > 0) {
-				return StringUtil.replaceFirst(
-					content, version, mainReleaseComparableVersion.toString(),
-					matcher.start());
-			}
-
-			if (StringUtil.count(version, CharPool.PERIOD) == 1) {
-				return StringUtil.insert(content, ".0", matcher.end(3));
-			}
-
-			String deprecatedInfo = matcher.group(4);
-
-			if (Validator.isNull(deprecatedInfo)) {
-				return content;
-			}
-
-			if (!deprecatedInfo.startsWith(StringPool.COMMA)) {
-				return StringUtil.insert(
-					content, StringPool.COMMA, matcher.end(3));
-			}
-
-			if (deprecatedInfo.endsWith(StringPool.PERIOD) &&
-				!deprecatedInfo.matches("[\\S\\s]*\\.[ \n][\\S\\s]*")) {
-
-				return StringUtil.replaceFirst(
-					content, StringPool.PERIOD, StringPool.BLANK,
-					matcher.end(4) - 1);
-			}
-		}
-
-		return content;
 	}
 
 	protected String formatJava(
@@ -1365,6 +1302,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				new LanguageKeysCheck(
 					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
 					getPortalLanguageProperties()));
+		}
+
+		if (GetterUtil.getBoolean(
+				getProperty("add.missing.deprecation.release.version"))) {
+
+			_fileChecks.add(
+				new JavaDeprecatedJavadocCheck(portalSource, subrepository));
 		}
 	}
 

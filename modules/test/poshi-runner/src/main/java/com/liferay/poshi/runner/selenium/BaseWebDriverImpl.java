@@ -132,8 +132,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		initKeysSpecialChars();
 
-		WebDriverHelper.setDefaultWindowHandle(webDriver.getWindowHandle());
-		WebDriverHelper.setNavigationBarHeight(120);
+		setDefaultWindowHandle(webDriver.getWindowHandle());
+		setNavigationBarHeight(120);
 
 		System.setProperty("java.awt.headless", "false");
 
@@ -858,18 +858,18 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public void dragAndDrop(String locator, String coordString) {
 		try {
-			int x = WebDriverHelper.getElementPositionCenterX(this, locator);
+			int x = getElementPositionCenterX(locator);
 
-			x += WebDriverHelper.getFramePositionLeft(this);
-			x += WebDriverHelper.getWindowPositionLeft(this);
-			x -= WebDriverHelper.getScrollOffsetX(this);
+			x += getFramePositionLeft();
+			x += getWindowPositionLeft();
+			x -= getScrollOffsetX();
 
-			int y = WebDriverHelper.getElementPositionCenterY(this, locator);
+			int y = getElementPositionCenterY(locator);
 
-			y += WebDriverHelper.getFramePositionTop(this);
-			y += WebDriverHelper.getNavigationBarHeight();
-			y += WebDriverHelper.getWindowPositionTop(this);
-			y -= WebDriverHelper.getScrollOffsetY(this);
+			y += getFramePositionTop();
+			y += getNavigationBarHeight();
+			y += getWindowPositionTop();
+			y -= getScrollOffsetY();
 
 			Robot robot = new Robot();
 
@@ -1688,20 +1688,17 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void javaScriptClick(String locator) {
-		WebDriverHelper.executeJavaScriptEvent(
-			this, locator, "MouseEvent", "click");
+		executeJavaScriptEvent(locator, "MouseEvent", "click");
 	}
 
 	@Override
 	public void javaScriptMouseDown(String locator) {
-		WebDriverHelper.executeJavaScriptEvent(
-			this, locator, "MouseEvent", "mousedown");
+		executeJavaScriptEvent(locator, "MouseEvent", "mousedown");
 	}
 
 	@Override
 	public void javaScriptMouseUp(String locator) {
-		WebDriverHelper.executeJavaScriptEvent(
-			this, locator, "MouseEvent", "mouseup");
+		executeJavaScriptEvent(locator, "MouseEvent", "mouseup");
 	}
 
 	@Override
@@ -3222,8 +3219,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 					targetLocator.window(windowHandle);
 
 					if (targetWindowTitle.equals(getTitle())) {
-						targetLocator.window(
-							WebDriverHelper.getDefaultWindowHandle());
+						targetLocator.window(getDefaultWindowHandle());
 
 						return;
 					}

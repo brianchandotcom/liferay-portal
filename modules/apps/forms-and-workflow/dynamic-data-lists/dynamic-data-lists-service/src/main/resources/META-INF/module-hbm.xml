@@ -4,6 +4,7 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.dynamic.data.lists.model.DDLRecord" />
 	<import class="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
+	<import class="com.liferay.dynamic.data.lists.model.DDLRecordSetVersion" />
 	<import class="com.liferay.dynamic.data.lists.model.DDLRecordVersion" />
 	<class name="com.liferay.dynamic.data.lists.model.impl.DDLRecordImpl" table="DDLRecord">
 		<id name="recordId" type="long">
@@ -43,6 +44,25 @@
 		<property name="scope" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property column="settings_" name="settings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.dynamic.data.lists.model.impl.DDLRecordSetVersionImpl" table="DDLRecordSetVersion">
+		<id name="recordSetVersionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="recordSetId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="DDMStructureVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionImpl" table="DDLRecordVersion">
 		<id name="recordVersionId" type="long">

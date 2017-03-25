@@ -45,6 +45,23 @@
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
+	<model name="com.liferay.dynamic.data.lists.model.DDLRecordSetVersion">
+		<field name="recordSetVersionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="recordSetId" type="long" />
+		<field name="DDMStructureVersionId" type="long" />
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String" />
+		<field name="version" type="String" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
 	<model name="com.liferay.dynamic.data.lists.model.DDLRecordVersion">
 		<field name="recordVersionId" type="long" />
 		<field name="groupId" type="long" />

@@ -9,6 +9,9 @@
 	<bean class="com.liferay.dynamic.data.lists.service.impl.DDLRecordSetServiceImpl" id="com.liferay.dynamic.data.lists.service.DDLRecordSetService" />
 	<bean class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordSetPersistenceImpl" id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence" parent="basePersistence" />
 	<bean class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordSetFinderImpl" id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder" parent="basePersistence" />
+	<bean class="com.liferay.dynamic.data.lists.service.impl.DDLRecordSetVersionLocalServiceImpl" id="com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalService" />
+	<bean class="com.liferay.dynamic.data.lists.service.impl.DDLRecordSetVersionServiceImpl" id="com.liferay.dynamic.data.lists.service.DDLRecordSetVersionService" />
+	<bean class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordSetVersionPersistenceImpl" id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetVersionPersistence" parent="basePersistence" />
 	<bean class="com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionLocalServiceImpl" id="com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService" />
 	<bean class="com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionServiceImpl" id="com.liferay.dynamic.data.lists.service.DDLRecordVersionService" />
 	<bean class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordVersionPersistenceImpl" id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence" parent="basePersistence" />

@@ -100,6 +100,49 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="WorkflowDefinitionLink" package-path="com.liferay.portal" />
 	</entity>
+	<entity local-service="true" name="DDLRecordSetVersion" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="recordSetVersionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="recordSetId" type="long" />
+		<column name="DDMStructureVersionId" type="long" />
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="version" type="String" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="RecordSetId" return-type="Collection">
+			<finder-column name="recordSetId" />
+		</finder>
+		<finder name="RS_V" return-type="DDLRecordSetVersion" unique="true">
+			<finder-column name="recordSetId" />
+			<finder-column name="version" />
+		</finder>
+		<finder name="RS_S" return-type="Collection">
+			<finder-column name="recordSetId" />
+			<finder-column name="status" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="DDLRecordVersion" remote-service="true">
 
 		<!-- PK fields -->

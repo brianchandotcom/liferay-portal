@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet;
+package com.liferay.friendly.url.servlet;
 
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PortalMessages;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.CharPool;
@@ -52,11 +53,14 @@ import com.liferay.portal.util.PortalInstances;
 
 import java.io.IOException;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -66,148 +70,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Modified;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
  */
-@Deprecated
 public class FriendlyURLServlet extends HttpServlet {
 
-	@Override
-	public void init(ServletConfig servletConfig) throws ServletException {
-		super.init(servletConfig);
-
-		_private = GetterUtil.getBoolean(
-			servletConfig.getInitParameter("private"));
-
-		String proxyPath = PortalUtil.getPathProxy();
-
-		_user = GetterUtil.getBoolean(servletConfig.getInitParameter("user"));
-
-		if (_private) {
-			if (_user) {
-				_friendlyURLPathPrefix =
-					PortalUtil.getPathFriendlyURLPrivateUser();
-			}
-			else {
-				_friendlyURLPathPrefix =
-					PortalUtil.getPathFriendlyURLPrivateGroup();
-			}
-		}
-		else {
-			_friendlyURLPathPrefix = PortalUtil.getPathFriendlyURLPublic();
-		}
-
-		_pathInfoOffset = _friendlyURLPathPrefix.length() - proxyPath.length();
-	}
-
-	@Override
-	public void service(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {
-
-		// Do not set the entire full main path. See LEP-456.
-
-		String pathInfo = getPathInfo(request);
-
-		Redirect redirect = null;
-
-		try {
-			redirect = getRedirect(request, pathInfo);
-
-			if (request.getAttribute(WebKeys.LAST_PATH) == null) {
-				request.setAttribute(
-					WebKeys.LAST_PATH, getLastPath(request, pathInfo));
-			}
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(pe);
-			}
-
-			if (pe instanceof NoSuchGroupException ||
-				pe instanceof NoSuchLayoutException) {
-
-				PortalUtil.sendError(
-					HttpServletResponse.SC_NOT_FOUND, pe, request, response);
-
-				return;
-			}
-		}
-
-		if (redirect == null) {
-			redirect = new Redirect();
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Redirect " + redirect.getPath());
-		}
-
-		if (redirect.isValidForward()) {
-			ServletContext servletContext = getServletContext();
-
-			RequestDispatcher requestDispatcher =
-				servletContext.getRequestDispatcher(redirect.getPath());
-
-			if (requestDispatcher != null) {
-				requestDispatcher.forward(request, response);
-			}
-		}
-		else {
-			if (redirect.isPermanent()) {
-				response.setHeader("Location", redirect.getPath());
-				response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-			}
-			else {
-				response.sendRedirect(redirect.getPath());
-			}
-		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected String getFriendlyURL(String pathInfo) {
-		String friendlyURL = _friendlyURLPathPrefix;
-
-		if (Validator.isNotNull(pathInfo)) {
-			friendlyURL = friendlyURL.concat(pathInfo);
-		}
-
-		return friendlyURL;
-	}
-
-	protected LastPath getLastPath(
-		HttpServletRequest request, String pathInfo) {
-
-		String lifecycle = ParamUtil.getString(request, "p_p_lifecycle");
-
-		if (lifecycle.equals("1")) {
-			return new LastPath(_friendlyURLPathPrefix, pathInfo);
-		}
-		else {
-			return new LastPath(
-				_friendlyURLPathPrefix, pathInfo,
-				HttpUtil.parameterMapToString(request.getParameterMap()));
-		}
-	}
-
-	protected String getPathInfo(HttpServletRequest request) {
-		String requestURI = request.getRequestURI();
-
-		int pos = requestURI.indexOf(Portal.JSESSIONID);
-
-		if (pos == -1) {
-			return requestURI.substring(_pathInfoOffset);
-		}
-
-		return requestURI.substring(_pathInfoOffset, pos);
-	}
-
-	protected Redirect getRedirect(HttpServletRequest request, String path)
+	public Redirect getRedirect(HttpServletRequest request, String path)
 		throws PortalException {
 
 		if (path.length() <= 1) {
@@ -389,51 +262,99 @@ public class FriendlyURLServlet extends HttpServlet {
 		return new Redirect(actualURL);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected Object[] getRedirect(
-			HttpServletRequest request, String path, String mainPath,
-			Map<String, String[]> params)
-		throws Exception {
+	@Override
+	public void init(ServletConfig servletConfig) throws ServletException {
+		super.init(servletConfig);
 
-		Redirect redirect = getRedirect(request, path);
+		_private = GetterUtil.getBoolean(
+			servletConfig.getInitParameter("servlet.init.private"));
 
-		return new Object[] {redirect.getPath(), redirect.isForce()};
-	}
+		String proxyPath = PortalUtil.getPathProxy();
 
-	protected Locale setAlternativeLayoutFriendlyURL(
-		HttpServletRequest request, Layout layout, String friendlyURL) {
+		_user = GetterUtil.getBoolean(
+			servletConfig.getInitParameter("servlet.init.user"));
 
-		List<LayoutFriendlyURL> layoutFriendlyURLs =
-			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
-				layout.getPlid(), friendlyURL, 0, 1);
-
-		if (layoutFriendlyURLs.isEmpty()) {
-			return null;
+		if (_private) {
+			if (_user) {
+				_friendlyURLPathPrefix =
+					PortalUtil.getPathFriendlyURLPrivateUser();
+			}
+			else {
+				_friendlyURLPathPrefix =
+					PortalUtil.getPathFriendlyURLPrivateGroup();
+			}
+		}
+		else {
+			_friendlyURLPathPrefix = PortalUtil.getPathFriendlyURLPublic();
 		}
 
-		LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLs.get(0);
-
-		Locale locale = LocaleUtil.fromLanguageId(
-			layoutFriendlyURL.getLanguageId());
-
-		String alternativeLayoutFriendlyURL =
-			PortalUtil.getLocalizedFriendlyURL(request, layout, locale, locale);
-
-		SessionMessages.add(
-			request, "alternativeLayoutFriendlyURL",
-			alternativeLayoutFriendlyURL);
-
-		PortalMessages.add(
-			request, PortalMessages.KEY_JSP_PATH,
-			"/html/common/themes/layout_friendly_url_redirect.jsp");
-
-		return locale;
+		_pathInfoOffset = _friendlyURLPathPrefix.length() - proxyPath.length();
 	}
 
-	protected static class Redirect {
+	@Override
+	public void service(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		// Do not set the entire full main path. See LEP-456.
+
+		String pathInfo = getPathInfo(request);
+
+		Redirect redirect = null;
+
+		try {
+			redirect = getRedirect(request, pathInfo);
+
+			if (request.getAttribute(WebKeys.LAST_PATH) == null) {
+				request.setAttribute(
+					WebKeys.LAST_PATH, getLastPath(request, pathInfo));
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe);
+			}
+
+			if (pe instanceof NoSuchGroupException ||
+				pe instanceof NoSuchLayoutException) {
+
+				PortalUtil.sendError(
+					HttpServletResponse.SC_NOT_FOUND, pe, request, response);
+
+				return;
+			}
+		}
+
+		if (redirect == null) {
+			redirect = new Redirect();
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Redirect " + redirect.getPath());
+		}
+
+		if (redirect.isValidForward()) {
+			ServletContext servletContext = getServletContext();
+
+			RequestDispatcher requestDispatcher =
+				servletContext.getRequestDispatcher(redirect.getPath());
+
+			if (requestDispatcher != null) {
+				requestDispatcher.forward(request, response);
+			}
+		}
+		else {
+			if (redirect.isPermanent()) {
+				response.setHeader("Location", redirect.getPath());
+				response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+			}
+			else {
+				response.sendRedirect(redirect.getPath());
+			}
+		}
+	}
+
+	public static class Redirect {
 
 		public Redirect() {
 			this(Portal.PATH_MAIN);
@@ -516,6 +437,136 @@ public class FriendlyURLServlet extends HttpServlet {
 		private final String _path;
 		private final boolean _permanent;
 
+	}
+
+	@Activate
+	@Modified
+	protected void activate(final Map<String, Object> properties) {
+		ServletConfig servletConfig = new ServletConfig() {
+
+			@Override
+			public String getInitParameter(String name) {
+				String value = GetterUtil.getString(properties.get(name), null);
+
+				return value;
+			}
+
+			@Override
+			public Enumeration<String> getInitParameterNames() {
+				Set<String> keys = properties.keySet();
+
+				Vector<String> keyNames = new Vector<>(keys);
+
+				return keyNames.elements();
+			}
+
+			@Override
+			public ServletContext getServletContext() {
+				return ServletContextPool.get(
+					PortalUtil.getServletContextName());
+			}
+
+			@Override
+			public String getServletName() {
+				String servletName = GetterUtil.getString(
+					properties.get("osgi.http.whiteboard.servlet.name"));
+
+				return servletName;
+			}
+
+		};
+
+		try {
+			init(servletConfig);
+		}
+		catch (ServletException se) {
+			_log.error("Unable to initialize friendly URL servlet", se);
+		}
+	}
+
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
+	protected String getFriendlyURL(String pathInfo) {
+		String friendlyURL = _friendlyURLPathPrefix;
+
+		if (Validator.isNotNull(pathInfo)) {
+			friendlyURL = friendlyURL.concat(pathInfo);
+		}
+
+		return friendlyURL;
+	}
+
+	protected LastPath getLastPath(
+		HttpServletRequest request, String pathInfo) {
+
+		String lifecycle = ParamUtil.getString(request, "p_p_lifecycle");
+
+		if (lifecycle.equals("1")) {
+			return new LastPath(_friendlyURLPathPrefix, pathInfo);
+		}
+		else {
+			return new LastPath(
+				_friendlyURLPathPrefix, pathInfo,
+				HttpUtil.parameterMapToString(request.getParameterMap()));
+		}
+	}
+
+	protected String getPathInfo(HttpServletRequest request) {
+		String requestURI = request.getRequestURI();
+
+		int pos = requestURI.indexOf(Portal.JSESSIONID);
+
+		if (pos == -1) {
+			return requestURI.substring(_pathInfoOffset);
+		}
+
+		return requestURI.substring(_pathInfoOffset, pos);
+	}
+
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
+	protected Object[] getRedirect(
+			HttpServletRequest request, String path, String mainPath,
+			Map<String, String[]> params)
+		throws Exception {
+
+		Redirect redirect = getRedirect(request, path);
+
+		return new Object[] {redirect.getPath(), redirect.isForce()};
+	}
+
+	protected Locale setAlternativeLayoutFriendlyURL(
+		HttpServletRequest request, Layout layout, String friendlyURL) {
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+				layout.getPlid(), friendlyURL, 0, 1);
+
+		if (layoutFriendlyURLs.isEmpty()) {
+			return null;
+		}
+
+		LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLs.get(0);
+
+		Locale locale = LocaleUtil.fromLanguageId(
+			layoutFriendlyURL.getLanguageId());
+
+		String alternativeLayoutFriendlyURL =
+			PortalUtil.getLocalizedFriendlyURL(request, layout, locale, locale);
+
+		SessionMessages.add(
+			request, "alternativeLayoutFriendlyURL",
+			alternativeLayoutFriendlyURL);
+
+		PortalMessages.add(
+			request, PortalMessages.KEY_JSP_PATH,
+			"/html/common/themes/layout_friendly_url_redirect.jsp");
+
+		return locale;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

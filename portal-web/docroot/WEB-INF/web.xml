@@ -136,37 +136,17 @@
 	</servlet>
 	<servlet>
 		<servlet-name>Friendly URL Servlet - Private Group</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.FriendlyURLServlet</servlet-class>
-		<init-param>
-			<param-name>private</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<init-param>
-			<param-name>user</param-name>
-			<param-value>false</param-value>
-		</init-param>
+		<servlet-class>com.liferay.portal.servlet.PrivateGroupFriendlyURLServletAdapter</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>Friendly URL Servlet - Private User</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.FriendlyURLServlet</servlet-class>
-		<init-param>
-			<param-name>private</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<init-param>
-			<param-name>user</param-name>
-			<param-value>true</param-value>
-		</init-param>
+		<servlet-class>com.liferay.portal.servlet.PrivateUserFriendlyURLServletAdapter</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>Friendly URL Servlet - Public</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.FriendlyURLServlet</servlet-class>
-		<init-param>
-			<param-name>private</param-name>
-			<param-value>false</param-value>
-		</init-param>
+		<servlet-class>com.liferay.portal.servlet.PublicFriendlyURLServletAdapter</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.products.model.CommerceProductDefinition">
+		<field name="uuid" type="String" />
+		<field name="commerceProductDefinitionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="title" type="String" />
+		<field localized="true" name="urlTitle" type="String" />
+		<field localized="true" name="description" type="String" />
+		<field name="productTypeName" type="String" />
+		<field name="availableIndividually" type="boolean" />
+		<field name="DDMStructureKey" type="String" />
+		<field name="baseSKU" type="String" />
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.products.model.CommerceProductInstance">
+		<field name="uuid" type="String" />
+		<field name="commerceProductInstanceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceProductDefinitionId" type="long" />
+		<field name="SKU" type="String" />
+		<field name="DDMContent" type="String" />
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+</model-hints>

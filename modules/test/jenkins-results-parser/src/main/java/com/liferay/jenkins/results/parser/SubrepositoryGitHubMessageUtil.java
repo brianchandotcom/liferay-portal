@@ -72,19 +72,13 @@ public class SubrepositoryGitHubMessageUtil {
 
 			for (int i = 1; i < consoleSnippets.length; i++) {
 				sb.append("<li><strong><a href=\"");
-				sb.append(project.getProperty("top.level.shared.dir.url"));
+				sb.append(project.getProperty("top.level.user.content.url"));
 				sb.append("/");
 
 				String consoleSnippet = consoleSnippets[i];
 
 				String taskName = consoleSnippet.substring(
 					0, consoleSnippet.indexOf("\n"));
-
-				JenkinsResultsParserUtil.write(
-					new File(
-						project.getProperty("top.level.shared.dir") + "/" +
-							taskName + ".log"),
-					consoleSnippet);
 
 				sb.append(taskName);
 
@@ -100,6 +94,36 @@ public class SubrepositoryGitHubMessageUtil {
 				sb.append(_getResult(subrepositoryTask));
 
 				sb.append("</li>");
+
+				String taskFileName = taskName + ".log";
+				String topLevelMasterHostname = project.getProperty(
+					"env.TOP_LEVEL_MASTER_HOSTNAME");
+
+				File taskLogFile = new File(taskFileName);
+
+				JenkinsResultsParserUtil.write(taskLogFile, consoleSnippet);
+
+				String targetDirPath = JenkinsResultsParserUtil.combine(
+					"jobs/", project.getProperty("env.TOP_LEVEL_JOB_NAME"),
+					"/builds/",
+					project.getProperty("env.TOP_LEVEL_BUILD_NUMBER"));
+
+				String makeDirCommand = JenkinsResultsParserUtil.combine(
+					"ssh -o PasswordAuthentication=no ", topLevelMasterHostname,
+					" 'mkdir -p /opt/java/jenkins/userContent/", targetDirPath,
+					"'");
+				String rsyncCommand = JenkinsResultsParserUtil.combine(
+					"rsync -avz --chmod=go=rx ", taskLogFile.getCanonicalPath(),
+					" ", topLevelMasterHostname, "::usercontent/",
+					targetDirPath, "/", taskFileName);
+
+				JenkinsResultsParserUtil.executeBashCommands(
+					new String[] {
+						_escapeParentheses(makeDirCommand),
+						_escapeParentheses(rsyncCommand)
+					});
+
+				taskLogFile.delete();
 			}
 
 			sb.append("</ul>");
@@ -113,6 +137,13 @@ public class SubrepositoryGitHubMessageUtil {
 		sb.append("\">here</a>.</h5>");
 
 		project.setProperty("report.html.content", sb.toString());
+	}
+
+	private static String _escapeParentheses(String command) {
+		command = command.replace(")", "\\)");
+		command = command.replace("(", "\\(");
+
+		return command;
 	}
 
 	private static String _getResult(SubrepositoryTask subrepositoryTask)

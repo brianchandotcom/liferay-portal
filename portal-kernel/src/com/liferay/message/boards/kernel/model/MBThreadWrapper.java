@@ -302,36 +302,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
-	* Returns <code>true</code> if this message boards thread is in the Recycle Bin.
-	*
-	* @return <code>true</code> if this message boards thread is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrash() {
-		return _mbThread.isInTrash();
-	}
-
-	/**
-	* Returns <code>true</code> if the parent of this message boards thread is in the Recycle Bin.
-	*
-	* @return <code>true</code> if the parent of this message boards thread is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrashContainer() {
-		return _mbThread.isInTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashExplicitly() {
-		return _mbThread.isInTrashExplicitly();
-	}
-
-	@Override
-	public boolean isInTrashImplicitly() {
-		return _mbThread.isInTrashImplicitly();
-	}
-
-	/**
 	* Returns <code>true</code> if this message boards thread is inactive.
 	*
 	* @return <code>true</code> if this message boards thread is inactive; <code>false</code> otherwise
@@ -410,27 +380,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThread.addAttachmentsFolder();
-	}
-
-	/**
-	* Returns the trash handler for this message boards thread.
-	*
-	* @return the trash handler for this message boards thread
-	*/
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _mbThread.getTrashHandler();
-	}
-
-	/**
-	* Returns the trash entry created when this message boards thread was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message boards thread.
-	*
-	* @return the trash entry created when this message boards thread was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThread.getTrashEntry();
 	}
 
 	/**
@@ -746,16 +695,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public long getThreadId() {
 		return _mbThread.getThreadId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this message boards thread.
-	*
-	* @return the class primary key of the trash entry for this message boards thread
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _mbThread.getTrashEntryClassPK();
 	}
 
 	/**

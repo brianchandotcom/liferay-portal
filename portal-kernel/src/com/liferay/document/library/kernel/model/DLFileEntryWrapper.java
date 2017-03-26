@@ -353,34 +353,9 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		return _dlFileEntry.isInHiddenFolder();
 	}
 
-	/**
-	* Returns <code>true</code> if this document library file entry is in the Recycle Bin.
-	*
-	* @return <code>true</code> if this document library file entry is in the Recycle Bin; <code>false</code> otherwise
-	*/
 	@Override
 	public boolean isInTrash() {
 		return _dlFileEntry.isInTrash();
-	}
-
-	/**
-	* Returns <code>true</code> if the parent of this document library file entry is in the Recycle Bin.
-	*
-	* @return <code>true</code> if the parent of this document library file entry is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrashContainer() {
-		return _dlFileEntry.isInTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashExplicitly() {
-		return _dlFileEntry.isInTrashExplicitly();
-	}
-
-	@Override
-	public boolean isInTrashImplicitly() {
-		return _dlFileEntry.isInTrashImplicitly();
 	}
 
 	/**
@@ -413,30 +388,9 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		return _dlFileEntry.toCacheModel();
 	}
 
-	/**
-	* Returns the trash handler for this document library file entry.
-	*
-	* @return the trash handler for this document library file entry
-	*/
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _dlFileEntry.getTrashHandler();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties() {
 		return _dlFileEntry.getExtraSettingsProperties();
-	}
-
-	/**
-	* Returns the trash entry created when this document library file entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file entry.
-	*
-	* @return the trash entry created when this document library file entry was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.getTrashEntry();
 	}
 
 	@Override
@@ -459,11 +413,6 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		return _dlFileEntry.getReadCount();
 	}
 
-	/**
-	* Returns the status of this document library file entry.
-	*
-	* @return the status of this document library file entry
-	*/
 	@Override
 	public int getStatus() {
 		return _dlFileEntry.getStatus();
@@ -847,16 +796,6 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	@Override
 	public long getSmallImageId() {
 		return _dlFileEntry.getSmallImageId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this document library file entry.
-	*
-	* @return the class primary key of the trash entry for this document library file entry
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _dlFileEntry.getTrashEntryClassPK();
 	}
 
 	/**

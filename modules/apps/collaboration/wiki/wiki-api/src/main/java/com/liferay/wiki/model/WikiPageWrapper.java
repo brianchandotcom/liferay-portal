@@ -330,36 +330,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
-	* Returns <code>true</code> if this wiki page is in the Recycle Bin.
-	*
-	* @return <code>true</code> if this wiki page is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrash() {
-		return _wikiPage.isInTrash();
-	}
-
-	/**
-	* Returns <code>true</code> if the parent of this wiki page is in the Recycle Bin.
-	*
-	* @return <code>true</code> if the parent of this wiki page is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrashContainer() {
-		return _wikiPage.isInTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashExplicitly() {
-		return _wikiPage.isInTrashExplicitly();
-	}
-
-	@Override
-	public boolean isInTrashImplicitly() {
-		return _wikiPage.isInTrashImplicitly();
-	}
-
-	/**
 	* Returns <code>true</code> if this wiki page is inactive.
 	*
 	* @return <code>true</code> if this wiki page is inactive; <code>false</code> otherwise
@@ -433,27 +403,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPage.addAttachmentsFolder();
-	}
-
-	/**
-	* Returns the trash handler for this wiki page.
-	*
-	* @return the trash handler for this wiki page
-	*/
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _wikiPage.getTrashHandler();
-	}
-
-	/**
-	* Returns the trash entry created when this wiki page was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this wiki page.
-	*
-	* @return the trash entry created when this wiki page was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getTrashEntry();
 	}
 
 	@Override
@@ -858,11 +807,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return _wikiPage.getStatusByUserId();
 	}
 
-	/**
-	* Returns the class primary key of the trash entry for this wiki page.
-	*
-	* @return the class primary key of the trash entry for this wiki page
-	*/
 	@Override
 	public long getTrashEntryClassPK() {
 		return _wikiPage.getTrashEntryClassPK();

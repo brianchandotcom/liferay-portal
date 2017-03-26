@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.TypedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.io.Serializable;
 
@@ -360,6 +362,64 @@ public interface ${entity.name}Model extends
 			public void set${column.methodUserUuidName}(String ${column.userUuidName});
 		</#if>
 	</#list>
+
+	<#if entity.isTrashEnabled()>
+		<#if !entity.isWorkflowEnabled()>
+			/**
+			 * Returns the status of this ${entity.humanName}.
+			 *
+			 * @return the status of this ${entity.humanName}
+			 */
+			@Override
+			public int getStatus();
+		</#if>
+
+		/**
+		 * Returns the trash entry created when this ${entity.humanName} was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this ${entity.humanName}.
+		 *
+		 * @return the trash entry created when this ${entity.humanName} was moved to the Recycle Bin
+		 */
+		@Override
+		public TrashEntry getTrashEntry() throws PortalException;
+
+		/**
+		 * Returns the class primary key of the trash entry for this ${entity.humanName}.
+		 *
+		 * @return the class primary key of the trash entry for this ${entity.humanName}
+		 */
+		@Override
+		public long getTrashEntryClassPK();
+
+		/**
+		 * Returns the trash handler for this ${entity.humanName}.
+		 *
+		 * @return the trash handler for this ${entity.humanName}
+		 */
+		@Override
+		public TrashHandler getTrashHandler();
+
+		/**
+		 * Returns <code>true</code> if this ${entity.humanName} is in the Recycle Bin.
+		 *
+		 * @return <code>true</code> if this ${entity.humanName} is in the Recycle Bin; <code>false</code> otherwise
+		 */
+		@Override
+		public boolean isInTrash();
+
+		/**
+		 * Returns <code>true</code> if the parent of this ${entity.humanName} is in the Recycle Bin.
+		 *
+		 * @return <code>true</code> if the parent of this ${entity.humanName} is in the Recycle Bin; <code>false</code> otherwise
+		 */
+		@Override
+		public boolean isInTrashContainer();
+
+		@Override
+		public boolean isInTrashExplicitly();
+
+		@Override
+		public boolean isInTrashImplicitly();
+	</#if>
 
 	<#if entity.isWorkflowEnabled()>
 		/**

@@ -391,6 +391,36 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	/**
+	* Returns <code>true</code> if this message-boards message is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this message-boards message is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrash() {
+		return _mbMessage.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if the parent of this message-boards message is in the Recycle Bin.
+	*
+	* @return <code>true</code> if the parent of this message-boards message is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrashContainer() {
+		return _mbMessage.isInTrashContainer();
+	}
+
+	@Override
+	public boolean isInTrashExplicitly() {
+		return _mbMessage.isInTrashExplicitly();
+	}
+
+	@Override
+	public boolean isInTrashImplicitly() {
+		return _mbMessage.isInTrashImplicitly();
+	}
+
+	/**
 	* Returns <code>true</code> if this message-boards message is inactive.
 	*
 	* @return <code>true</code> if this message-boards message is inactive; <code>false</code> otherwise
@@ -459,6 +489,27 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessage.addAttachmentsFolder();
+	}
+
+	/**
+	* Returns the trash handler for this message-boards message.
+	*
+	* @return the trash handler for this message-boards message
+	*/
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _mbMessage.getTrashHandler();
+	}
+
+	/**
+	* Returns the trash entry created when this message-boards message was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message-boards message.
+	*
+	* @return the trash entry created when this message-boards message was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getTrashEntry();
 	}
 
 	/**
@@ -814,6 +865,16 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public long getThreadId() {
 		return _mbMessage.getThreadId();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this message-boards message.
+	*
+	* @return the class primary key of the trash entry for this message-boards message
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _mbMessage.getTrashEntryClassPK();
 	}
 
 	/**

@@ -382,6 +382,36 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	/**
+	* Returns <code>true</code> if this blogs entry is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this blogs entry is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrash() {
+		return _blogsEntry.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if the parent of this blogs entry is in the Recycle Bin.
+	*
+	* @return <code>true</code> if the parent of this blogs entry is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrashContainer() {
+		return _blogsEntry.isInTrashContainer();
+	}
+
+	@Override
+	public boolean isInTrashExplicitly() {
+		return _blogsEntry.isInTrashExplicitly();
+	}
+
+	@Override
+	public boolean isInTrashImplicitly() {
+		return _blogsEntry.isInTrashImplicitly();
+	}
+
+	/**
 	* Returns <code>true</code> if this blogs entry is inactive.
 	*
 	* @return <code>true</code> if this blogs entry is inactive; <code>false</code> otherwise
@@ -449,6 +479,27 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<BlogsEntry> toCacheModel() {
 		return _blogsEntry.toCacheModel();
+	}
+
+	/**
+	* Returns the trash handler for this blogs entry.
+	*
+	* @return the trash handler for this blogs entry
+	*/
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _blogsEntry.getTrashHandler();
+	}
+
+	/**
+	* Returns the trash entry created when this blogs entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this blogs entry.
+	*
+	* @return the trash entry created when this blogs entry was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntry.getTrashEntry();
 	}
 
 	@Override
@@ -790,6 +841,16 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public long getStatusByUserId() {
 		return _blogsEntry.getStatusByUserId();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this blogs entry.
+	*
+	* @return the class primary key of the trash entry for this blogs entry
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _blogsEntry.getTrashEntryClassPK();
 	}
 
 	/**

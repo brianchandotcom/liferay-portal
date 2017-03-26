@@ -334,6 +334,36 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	/**
+	* Returns <code>true</code> if this document library folder is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this document library folder is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrash() {
+		return _dlFolder.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if the parent of this document library folder is in the Recycle Bin.
+	*
+	* @return <code>true</code> if the parent of this document library folder is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrashContainer() {
+		return _dlFolder.isInTrashContainer();
+	}
+
+	@Override
+	public boolean isInTrashExplicitly() {
+		return _dlFolder.isInTrashExplicitly();
+	}
+
+	@Override
+	public boolean isInTrashImplicitly() {
+		return _dlFolder.isInTrashImplicitly();
+	}
+
+	/**
 	* Returns <code>true</code> if this document library folder is inactive.
 	*
 	* @return <code>true</code> if this document library folder is inactive; <code>false</code> otherwise
@@ -412,6 +442,27 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<DLFolder> toCacheModel() {
 		return _dlFolder.toCacheModel();
+	}
+
+	/**
+	* Returns the trash handler for this document library folder.
+	*
+	* @return the trash handler for this document library folder
+	*/
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _dlFolder.getTrashHandler();
+	}
+
+	/**
+	* Returns the trash entry created when this document library folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library folder.
+	*
+	* @return the trash entry created when this document library folder was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolder.getTrashEntry();
 	}
 
 	@Override
@@ -732,6 +783,16 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public long getStatusByUserId() {
 		return _dlFolder.getStatusByUserId();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this document library folder.
+	*
+	* @return the class primary key of the trash entry for this document library folder
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _dlFolder.getTrashEntryClassPK();
 	}
 
 	/**

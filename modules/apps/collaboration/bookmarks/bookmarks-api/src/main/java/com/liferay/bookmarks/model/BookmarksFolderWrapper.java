@@ -254,6 +254,36 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
+	* Returns <code>true</code> if this bookmarks folder is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this bookmarks folder is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrash() {
+		return _bookmarksFolder.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if the parent of this bookmarks folder is in the Recycle Bin.
+	*
+	* @return <code>true</code> if the parent of this bookmarks folder is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrashContainer() {
+		return _bookmarksFolder.isInTrashContainer();
+	}
+
+	@Override
+	public boolean isInTrashExplicitly() {
+		return _bookmarksFolder.isInTrashExplicitly();
+	}
+
+	@Override
+	public boolean isInTrashImplicitly() {
+		return _bookmarksFolder.isInTrashImplicitly();
+	}
+
+	/**
 	* Returns <code>true</code> if this bookmarks folder is inactive.
 	*
 	* @return <code>true</code> if this bookmarks folder is inactive; <code>false</code> otherwise
@@ -317,6 +347,27 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<BookmarksFolder> toCacheModel() {
 		return _bookmarksFolder.toCacheModel();
+	}
+
+	/**
+	* Returns the trash handler for this bookmarks folder.
+	*
+	* @return the trash handler for this bookmarks folder
+	*/
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _bookmarksFolder.getTrashHandler();
+	}
+
+	/**
+	* Returns the trash entry created when this bookmarks folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this bookmarks folder.
+	*
+	* @return the trash entry created when this bookmarks folder was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _bookmarksFolder.getTrashEntry();
 	}
 
 	@Override
@@ -595,6 +646,16 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public long getStatusByUserId() {
 		return _bookmarksFolder.getStatusByUserId();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this bookmarks folder.
+	*
+	* @return the class primary key of the trash entry for this bookmarks folder
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _bookmarksFolder.getTrashEntryClassPK();
 	}
 
 	/**

@@ -285,6 +285,36 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	/**
+	* Returns <code>true</code> if this document library file shortcut is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this document library file shortcut is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrash() {
+		return _dlFileShortcut.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if the parent of this document library file shortcut is in the Recycle Bin.
+	*
+	* @return <code>true</code> if the parent of this document library file shortcut is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrashContainer() {
+		return _dlFileShortcut.isInTrashContainer();
+	}
+
+	@Override
+	public boolean isInTrashExplicitly() {
+		return _dlFileShortcut.isInTrashExplicitly();
+	}
+
+	@Override
+	public boolean isInTrashImplicitly() {
+		return _dlFileShortcut.isInTrashImplicitly();
+	}
+
+	/**
 	* Returns <code>true</code> if this document library file shortcut is inactive.
 	*
 	* @return <code>true</code> if this document library file shortcut is inactive; <code>false</code> otherwise
@@ -349,6 +379,27 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	public com.liferay.portal.kernel.repository.model.Folder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcut.getFolder();
+	}
+
+	/**
+	* Returns the trash handler for this document library file shortcut.
+	*
+	* @return the trash handler for this document library file shortcut
+	*/
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _dlFileShortcut.getTrashHandler();
+	}
+
+	/**
+	* Returns the trash entry created when this document library file shortcut was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file shortcut.
+	*
+	* @return the trash entry created when this document library file shortcut was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileShortcut.getTrashEntry();
 	}
 
 	@Override
@@ -580,6 +631,16 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Override
 	public long getToFileEntryId() {
 		return _dlFileShortcut.getToFileEntryId();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this document library file shortcut.
+	*
+	* @return the class primary key of the trash entry for this document library file shortcut
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _dlFileShortcut.getTrashEntryClassPK();
 	}
 
 	/**

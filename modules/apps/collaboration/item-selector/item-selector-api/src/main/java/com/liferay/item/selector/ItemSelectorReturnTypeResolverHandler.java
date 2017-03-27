@@ -125,7 +125,7 @@ public class ItemSelectorReturnTypeResolverHandler {
 		String itemSelectorResolverModelClassName) {
 
 		return itemSelectorResolverReturnTypeClassName + StringPool.UNDERLINE +
-		   itemSelectorResolverModelClassName;
+			itemSelectorResolverModelClassName;
 	}
 
 	private ItemSelectorViewReturnTypeProviderHandler

@@ -63,7 +63,7 @@ public class UploadHandlerImpl implements UploadHandler {
 
 	@Override
 	public void upload(
-			UploadFileEntryHandler fileEntryHandler,
+			UploadFileEntryHandler uploadFileEntryHandler,
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {
 
@@ -73,9 +73,9 @@ public class UploadHandlerImpl implements UploadHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		fileEntryHandler.checkPermission(
+		uploadFileEntryHandler.checkPermission(
 			themeDisplay.getScopeGroupId(),
-			fileEntryHandler.getFolderId(uploadPortletRequest),
+			uploadFileEntryHandler.getFolderId(uploadPortletRequest),
 			themeDisplay.getPermissionChecker());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -104,7 +104,7 @@ public class UploadHandlerImpl implements UploadHandler {
 			}
 
 			JSONObject imageJSONObject = _getImageJSONObject(
-				fileEntryHandler, portletRequest);
+				uploadFileEntryHandler, portletRequest);
 
 			String randomId = ParamUtil.getString(
 				uploadPortletRequest, "randomId");
@@ -123,7 +123,7 @@ public class UploadHandlerImpl implements UploadHandler {
 		}
 		catch (PortalException pe) {
 			_handleUploadException(
-				fileEntryHandler, portletRequest, portletResponse, pe,
+				uploadFileEntryHandler, portletRequest, portletResponse, pe,
 				jsonObject);
 		}
 	}

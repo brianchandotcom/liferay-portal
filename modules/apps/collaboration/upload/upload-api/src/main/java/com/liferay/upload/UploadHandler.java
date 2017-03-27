@@ -25,8 +25,8 @@ import javax.portlet.PortletResponse;
 public interface UploadHandler {
 
 	public void upload(
-			UploadFileEntryHandler handler, PortletRequest portletRequest,
-			PortletResponse portletResponse)
+			UploadFileEntryHandler uploadFileEntryHandler,
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException;
 
 }

@@ -73,15 +73,6 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 	}
 
 	@Override
-	public void doHandleUploadException(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			PortalException pe, JSONObject jsonObject)
-		throws PortalException {
-
-		throw pe;
-	}
-
-	@Override
 	public FileEntry fetchFileEntry(
 			long userId, long groupId, long folderId, String fileName)
 		throws PortalException {

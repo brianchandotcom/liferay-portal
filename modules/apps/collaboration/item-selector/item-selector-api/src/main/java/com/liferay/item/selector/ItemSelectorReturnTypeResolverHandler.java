@@ -64,10 +64,10 @@ public class ItemSelectorReturnTypeResolverHandler {
 	}
 
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver(
-		String itemSelectorReturnTypeClassName, Class<?> modelClass) {
+		String itemSelectorReturnTypeClassName, String modelClassName) {
 
 		return _serviceTrackerMap.getService(
-			_getKey(itemSelectorReturnTypeClassName, modelClass));
+			_getKey(itemSelectorReturnTypeClassName, modelClassName));
 	}
 
 	@Reference(unbind = "-")
@@ -110,19 +110,22 @@ public class ItemSelectorReturnTypeResolverHandler {
 	private String _getKey(
 		Class itemSelectorReturnTypeClass, Class modelClass) {
 
-		String itemSelectorResolverReturnTypeName =
+		String itemSelectorResolverReturnTypeClassName =
 			itemSelectorReturnTypeClass.getName();
 
-		return _getKey(itemSelectorResolverReturnTypeName, modelClass);
+		String itemSelectorResolverModelClassName = modelClass.getName();
+
+		return _getKey(
+			itemSelectorResolverReturnTypeClassName,
+			itemSelectorResolverModelClassName);
 	}
 
 	private String _getKey(
-		String itemSelectorResolverReturnTypeName, Class modelClass) {
+		String itemSelectorResolverReturnTypeClassName,
+		String itemSelectorResolverModelClassName) {
 
-		String itemSelectorResolverModelName = modelClass.getName();
-
-		return itemSelectorResolverReturnTypeName + StringPool.UNDERLINE +
-			itemSelectorResolverModelName;
+		return itemSelectorResolverReturnTypeClassName + StringPool.UNDERLINE +
+		   itemSelectorResolverModelClassName;
 	}
 
 	private ItemSelectorViewReturnTypeProviderHandler

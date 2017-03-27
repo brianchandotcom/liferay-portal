@@ -45,14 +45,16 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 	<%
 	ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver = itemSelectorUploadViewDisplayContext.getItemSelectorReturnTypeResolver();
 
-	String returnTypeName = itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass().getName();
+	Class<?> itemSelectorReturnTypeClass = itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass();
+
+	String itemSelectorReturnTypeClassName = itemSelectorReturnTypeClass.getName();
 
 	String uploadURL = itemSelectorUploadViewDisplayContext.getURL();
 	String namespace = itemSelectorUploadViewDisplayContext.getNamespace();
 
 	if (Validator.isNotNull(namespace)) {
 		uploadURL = HttpUtil.addParameter(uploadURL, namespace + "source", "itemselector");
-		uploadURL = HttpUtil.addParameter(uploadURL, namespace + "returnType", returnTypeName);
+		uploadURL = HttpUtil.addParameter(uploadURL, namespace + "returnType", itemSelectorReturnTypeClassName);
 	}
 	%>
 
@@ -66,7 +68,7 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 				}
 			},
 			rootNode: '#itemSelectorUploadContainer',
-			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(returnTypeName) %>',
+			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(itemSelectorReturnTypeClassName) %>',
 			uploadItemURL: '<%= uploadURL.toString() %>',
 			validExtensions: '<%= ArrayUtil.isEmpty(itemSelectorUploadViewDisplayContext.getExtensions()) ? "*" : StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions()) %>'
 		}

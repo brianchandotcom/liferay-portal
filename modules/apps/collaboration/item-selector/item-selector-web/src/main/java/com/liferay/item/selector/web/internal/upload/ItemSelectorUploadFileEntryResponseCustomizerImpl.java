@@ -51,7 +51,7 @@ public class ItemSelectorUploadFileEntryResponseCustomizerImpl
 			ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver =
 				_itemSelectorReturnTypeResolverHandler.
 					getItemSelectorReturnTypeResolver(
-						returnType, FileEntry.class);
+						returnType, FileEntry.class.getName());
 
 			if (itemSelectorReturnTypeResolver != null) {
 				String resolvedValue = itemSelectorReturnTypeResolver.getValue(

@@ -713,6 +713,8 @@ public class LocalGitSyncUtil {
 				localGitRemoteConfigs = null;
 				senderRemoteConfig = null;
 
+				e.printStackTrace();
+
 				System.out.println(
 					"Synchronization with local-git failed. Retrying.");
 

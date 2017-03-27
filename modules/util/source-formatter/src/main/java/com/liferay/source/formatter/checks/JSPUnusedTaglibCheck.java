@@ -38,8 +38,11 @@ public class JSPUnusedTaglibCheck extends JSPUnusedTermCheck {
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
 
+		Set<String> checkedFileNames = new HashSet<>();
+		Set<String> includeFileNames = new HashSet<>();
+
 		content = _removeUnusedTaglibs(
-			fileName, content, new HashSet<>(), new HashSet<>());
+			fileName, content, checkedFileNames, includeFileNames);
 
 		return new Tuple(content, Collections.emptySet());
 	}

@@ -16,7 +16,7 @@ package com.liferay.friendly.url.internal.servlet;
 
 import com.liferay.friendly.url.servlet.FriendlyURLServlet;
 
-import javax.servlet.http.HttpServlet;
+import javax.servlet.Servlet;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 		"osgi.http.whiteboard.servlet.pattern=/web/*",
 		"servlet.init.private=false", "servlet.type=friendly-url"
 	},
-	service = HttpServlet.class
+	service = Servlet.class
 )
 public class PublicFriendlyURLServlet extends FriendlyURLServlet {
 }

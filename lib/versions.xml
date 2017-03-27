@@ -138,21 +138,6 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/chemistry-opencmis-client-impl.jar</file-name>
-				<version>0.13.0</version>
-				<project-name>OpenCMIS</project-name>
-				<project-url>http://chemistry.apache.org/java/opencmis.html</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					This includes a public patch from CMIS-527.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/closure-compiler.jar</file-name>
 				<version>v20131014</version>
 				<project-name>Closure Compiler</project-name>

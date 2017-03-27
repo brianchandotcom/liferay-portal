@@ -598,9 +598,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		else if (_portletResourceActionsBags.containsKey(portletResource)) {
 			return getPortletResourceGuestUnsupportedActions(portletResource);
 		}
-		else {
-			return Collections.<String>emptyList();
-		}
+
+		return Collections.emptyList();
 	}
 
 	@Override

@@ -43,6 +43,22 @@ import java.util.Map;
  */
 public class WikiTestUtil {
 
+	public static WikiNode addDefaultNode(long groupId) throws Exception {
+		WorkflowThreadLocal.setEnabled(true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		serviceContext = (ServiceContext)serviceContext.clone();
+
+		WikiNode node = WikiNodeLocalServiceUtil.addDefaultNode(
+			TestPropsValues.getUserId(), serviceContext);
+
+		return node;
+	}
+
 	public static WikiNode addNode(long groupId) throws Exception {
 		return addNode(
 			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),

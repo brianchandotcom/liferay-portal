@@ -132,18 +132,36 @@ public class WikiNodeStagedModelDataHandler
 		WikiNode existingNode = fetchStagedModelByUuidAndGroupId(
 			node.getUuid(), portletDataContext.getScopeGroupId());
 
+		String nodeName = node.getName();
+
+		WikiNode nodeWithSameName = _wikiNodeLocalService.fetchNode(
+			portletDataContext.getScopeGroupId(), nodeName);
+
 		if (portletDataContext.isDataStrategyMirror()) {
 			if (existingNode == null) {
+				if (nodeWithSameName != null) {
+					nodeName = getNodeName(
+						portletDataContext, node, nodeName, 2);
+				}
+
 				serviceContext.setUuid(node.getUuid());
 
 				importedNode = _wikiNodeLocalService.addNode(
-					userId, node.getName(), node.getDescription(),
-					serviceContext);
+					userId, nodeName, node.getDescription(), serviceContext);
 			}
 			else {
+				String uuid = existingNode.getUuid();
+
+				if ((nodeWithSameName != null) &&
+					!uuid.equals(nodeWithSameName.getUuid())) {
+
+					nodeName = getNodeName(
+						portletDataContext, node, nodeName, 2);
+				}
+
 				importedNode = _wikiNodeLocalService.updateNode(
-					existingNode.getNodeId(), node.getName(),
-					node.getDescription(), serviceContext);
+					existingNode.getNodeId(), nodeName, node.getDescription(),
+					serviceContext);
 			}
 		}
 		else {
@@ -154,12 +172,11 @@ public class WikiNodeStagedModelDataHandler
 				initialNodeName.equals(existingNode.getName())) {
 
 				importedNode = _wikiNodeLocalService.updateNode(
-					existingNode.getNodeId(), node.getName(),
-					node.getDescription(), serviceContext);
+					existingNode.getNodeId(), nodeName, node.getDescription(),
+					serviceContext);
 			}
 			else {
-				String nodeName = getNodeName(
-					portletDataContext, node, node.getName(), 2);
+				nodeName = getNodeName(portletDataContext, node, nodeName, 2);
 
 				importedNode = _wikiNodeLocalService.addNode(
 					userId, nodeName, node.getDescription(), serviceContext);

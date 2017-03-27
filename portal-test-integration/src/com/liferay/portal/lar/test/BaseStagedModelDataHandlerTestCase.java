@@ -149,6 +149,59 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			portletDataContext, exportedStagedModel);
 	}
 
+	@Test
+	public void testExportImportWithDefaultData() throws Exception {
+
+		// Export default data
+
+		initExport();
+
+		Map<String, List<StagedModel>> defaultDependentStagedModelsMap =
+			addDefaultDependentStagedModelsMap(stagingGroup);
+
+		StagedModel stagedModel = addDefaultStagedModel(
+			stagingGroup, defaultDependentStagedModelsMap);
+
+		if (stagedModel == null) {
+			return;
+		}
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		validateExport(
+			portletDataContext, stagedModel, defaultDependentStagedModelsMap);
+
+		// Add default data to live site
+
+		Map<String, List<StagedModel>> secondDependentStagedModelsMap =
+			addDefaultDependentStagedModelsMap(liveGroup);
+
+		addDefaultStagedModel(liveGroup, secondDependentStagedModelsMap);
+
+		// Import
+
+		initImport();
+
+		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedModel);
+
+		// Import again for more robustness - ie.: filters name problems
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedModel);
+
+		String uuid = exportedStagedModel.getUuid();
+
+		StagedModel importedModel = getStagedModel(uuid, liveGroup);
+
+		Assert.assertNotNull(importedModel);
+	}
+
 	public void testLastPublishDate() throws Exception {
 		if (!supportLastPublishDateUpdate()) {
 			return;
@@ -367,6 +420,21 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			user.getFullName(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(50),
 			new IdentityServiceContextFunction(serviceContext));
+	}
+
+	protected Map<String, List<StagedModel>> addDefaultDependentStagedModelsMap(
+			Group group)
+		throws Exception {
+
+		return new HashMap<>();
+	}
+
+	protected StagedModel addDefaultStagedModel(
+			Group group,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return null;
 	}
 
 	protected List<StagedModel> addDependentStagedModel(

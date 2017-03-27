@@ -50,6 +50,15 @@ public class WikiNodeStagedModelDataHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	protected StagedModel addDefaultStagedModel(
+			Group group,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		return WikiTestUtil.addDefaultNode(group.getGroupId());
+	}
+
+	@Override
 	protected StagedModel addStagedModel(
 			Group group,
 			Map<String, List<StagedModel>> dependentStagedModelsMap)

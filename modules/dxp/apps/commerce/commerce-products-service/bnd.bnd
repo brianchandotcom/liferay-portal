@@ -1,3 +1,4 @@
 Bundle-Name: Liferay Commerce Products Service
 Bundle-SymbolicName: com.liferay.commerce.products.service
 Bundle-Version: 1.0.0
+Liferay-Service: true

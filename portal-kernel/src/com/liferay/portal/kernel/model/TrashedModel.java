@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,6 +32,8 @@ import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
  */
 @ProviderType
 public interface TrashedModel {
+
+	public static final Log log = LogFactoryUtil.getLog(TrashedModel.class);
 
 	public String getModelClassName();
 
@@ -62,7 +66,9 @@ public interface TrashedModel {
 				containerModel = trashHandler.getParentContainerModel(this);
 			}
 			catch (NoSuchModelException nsme) {
-				return null;
+				if (log.isDebugEnabled()) {
+					log.debug("Unable to get parent container model ", nsme);
+				}
 			}
 
 			while (containerModel != null) {
@@ -72,9 +78,12 @@ public interface TrashedModel {
 					return trashedModel.getTrashEntry();
 				}
 
-				trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+				String containerModelClassName =
 					trashHandler.getContainerModelClassName(
-						containerModel.getContainerModelId()));
+						containerModel.getContainerModelId());
+
+				trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+					containerModelClassName);
 
 				if (trashHandler == null) {
 					return null;
@@ -100,34 +109,43 @@ public interface TrashedModel {
 		if (getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public default boolean isInTrashContainer() {
 		TrashHandler trashHandler = getTrashHandler();
 
-		if ((trashHandler == null) ||
-			Validator.isNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
+		if (trashHandler == null) {
 			return false;
 		}
 
+		String containerModelClassName =
+			trashHandler.getContainerModelClassName(getPrimaryKey());
+
+		if (Validator.isNull(containerModelClassName)) {
+			return false;
+		}
+
+		ContainerModel containerModel = null;
+
 		try {
-			ContainerModel containerModel =
-				trashHandler.getParentContainerModel(this);
-
-			if (containerModel == null) {
-				return false;
-			}
-
-			if (containerModel instanceof TrashedModel) {
-				return ((TrashedModel)containerModel).isInTrash();
+			containerModel = trashHandler.getParentContainerModel(this);
+		}
+		catch (PortalException pe) {
+			if (log.isDebugEnabled()) {
+				log.debug("Unable to get parent container model ", pe);
 			}
 		}
-		catch (Exception e) {
+
+		if (containerModel == null) {
+			return false;
+		}
+
+		if (containerModel instanceof TrashedModel) {
+			TrashedModel trashedModel = (TrashedModel)containerModel;
+
+			return trashedModel.isInTrash();
 		}
 
 		return false;

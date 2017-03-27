@@ -183,6 +183,17 @@
 		<istrue value="${liferay.releng.ee}" />
 	</condition>
 
+	<fail message="Please use Java 1.8.">
+		<condition>
+			<not>
+				<or>
+					<equals arg1="${java.specification.version}" arg2="1.8" />
+					<isset property="env.JENKINS_HOME" />
+				</or>
+			</not>
+		</condition>
+	</fail>
+
 	<condition property="correct.ant.version">
 		<antversion atleast="1.7.0" />
 	</condition>

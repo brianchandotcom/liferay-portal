@@ -788,7 +788,7 @@ public class GitWorkingDirectory {
 	public void reset(String ref, ResetCommand.ResetType resetType)
 		throws GitAPIException {
 
-		if (ref.equalsIgnoreCase("HEAD")) {
+		if ((ref != null) && (ref.equals("head") || ref.equals("HEAD"))) {
 			ref = null;
 		}
 

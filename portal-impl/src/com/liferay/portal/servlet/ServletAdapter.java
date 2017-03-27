@@ -15,50 +15,80 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
-import java.io.IOException;
-
+import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author Pavel Savinov
  */
-public abstract class BaseFriendlyURLServletAdapter extends HttpServlet {
+public class ServletAdapter extends HttpServlet {
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 
-		HttpServlet httpServlet = getServlet();
+		Registry registry = RegistryUtil.getRegistry();
 
-		if (httpServlet != null) {
-			httpServlet.init(config);
+		Filter filter = registry.getFilter(
+			"(&(" + config.getInitParameter("filter") + ")" +
+					"(objectClass=" + Servlet.class.getName() + "))");
+
+		_serviceTracker = registry.trackServices(filter);
+
+		_serviceTracker.open();
+
+		Servlet servlet = getServlet();
+
+		if (servlet != null) {
+			servlet.init(config);
 		}
 	}
 
-	protected abstract HttpServlet getServlet();
+	protected Servlet getServlet() {
+		return _serviceTracker.getService();
+	}
+
+	@Override
+	public void destroy() {
+		super.destroy();
+
+		_serviceTracker.close();
+	}
 
 	@Override
 	protected void service(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		HttpServlet httpServlet = getServlet();
+		Servlet servlet = getServlet();
 
-		if (httpServlet == null) {
+		if (servlet == null) {
+			ServletConfig servletConfig = getServletConfig();
+
 			PortalUtil.sendError(
 				HttpServletResponse.SC_SERVICE_UNAVAILABLE,
-				new ServletException("Friendly URL servlets are unavailable"),
+				new ServletException(
+					"A servlet matching the filter " +
+						servletConfig.getInitParameter("filter") +
+						" is unavailable"),
 				request, response);
 
 			return;
 		}
 
-		httpServlet.service(request, response);
+		servlet.service(request, response);
 	}
+
+	private ServiceTracker<Servlet, Servlet> _serviceTracker;
 
 }

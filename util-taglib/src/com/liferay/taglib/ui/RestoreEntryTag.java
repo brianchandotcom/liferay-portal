@@ -22,7 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Roberto Diaz
+ * @deprecated As of 7.0.0
  */
+@Deprecated
 public class RestoreEntryTag extends IncludeTag {
 
 	public void setOverrideMessage(String overrideMessage) {

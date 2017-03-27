@@ -39,12 +39,21 @@ import com.liferay.source.formatter.checks.JavaDiamondOperatorCheck;
 import com.liferay.source.formatter.checks.JavaEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JavaExceptionCheck;
 import com.liferay.source.formatter.checks.JavaFinderCacheCheck;
+import com.liferay.source.formatter.checks.JavaHibernateSQLCheck;
 import com.liferay.source.formatter.checks.JavaIfStatementCheck;
+import com.liferay.source.formatter.checks.JavaIOExceptionCheck;
 import com.liferay.source.formatter.checks.JavaLineBreakCheck;
 import com.liferay.source.formatter.checks.JavaLogLevelCheck;
 import com.liferay.source.formatter.checks.JavaLongLinesCheck;
+import com.liferay.source.formatter.checks.JavaModuleExtendedObjectClassDefinitionCheck;
+import com.liferay.source.formatter.checks.JavaModuleIllegalImportsCheck;
+import com.liferay.source.formatter.checks.JavaModuleInternalImportsCheck;
+import com.liferay.source.formatter.checks.JavaModuleServiceProxyFactoryCheck;
+import com.liferay.source.formatter.checks.JavaModuleTestCheck;
 import com.liferay.source.formatter.checks.JavaOSGiReferenceCheck;
 import com.liferay.source.formatter.checks.JavaPackagePathCheck;
+import com.liferay.source.formatter.checks.JavaSeeAnnotationCheck;
+import com.liferay.source.formatter.checks.JavaStopWatchCheck;
 import com.liferay.source.formatter.checks.JavaSystemEventAnnotationCheck;
 import com.liferay.source.formatter.checks.JavaSystemExceptionCheck;
 import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
@@ -78,41 +87,6 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
-
-	protected void checkInternalImports(
-		String fileName, String absolutePath, String content) {
-
-		if (absolutePath.contains("/modules/core/") ||
-			absolutePath.contains("/modules/util/") ||
-			fileName.contains("/test/") ||
-			fileName.contains("/testIntegration/")) {
-
-			return;
-		}
-
-		Matcher matcher = _internalImportPattern.matcher(content);
-
-		int pos = -1;
-
-		while (matcher.find()) {
-			if (pos == -1) {
-				pos = absolutePath.lastIndexOf("/com/liferay/");
-			}
-
-			String expectedImportFileLocation =
-				absolutePath.substring(0, pos + 13) +
-					StringUtil.replace(matcher.group(1), ".", "/") + ".java";
-
-			File file = new File(expectedImportFileLocation);
-
-			if (!file.exists()) {
-				processMessage(
-					fileName,
-					"Do not import internal class from another module",
-					getLineCount(content, matcher.start(1)));
-			}
-		}
-	}
 
 	@Override
 	protected String doFormat(
@@ -372,13 +346,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"LPS-55690");
 		}
 
-		if ((portalSource || subrepository) && isModulesFile(absolutePath) &&
-			packagePath.startsWith("com.liferay")) {
-
-			newContent = formatModulesFile(
-				fileName, absolutePath, className, packagePath, newContent);
-		}
-
 		// LPS-48156
 
 		newContent = checkPrincipalException(newContent);
@@ -506,10 +473,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource || subrepository) {
 			fileNames = getPortalJavaFiles(includes);
-
-			_checkRegistryInTestClasses = GetterUtil.getBoolean(
-				System.getProperty(
-					"source.formatter.check.registry.in.test.classes"));
 		}
 		else {
 			fileNames = getPluginJavaFiles(includes);
@@ -560,62 +523,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
-				// LPS-42599
-
-				if (!isExcludedPath(
-						_HIBERNATE_SQL_QUERY_EXCLUDES, absolutePath) &&
-					line.contains("= session.createSQLQuery(") &&
-					content.contains(
-						"com.liferay.portal.kernel.dao.orm.Session")) {
-
-					line = StringUtil.replace(
-						line, "createSQLQuery", "createSynchronizedSQLQuery");
-				}
-
 				line = replacePrimitiveWrapperInstantiation(line);
-
-				// LPS-45649
-
-				if (trimmedLine.startsWith("throw new IOException(") &&
-					line.contains("e.getMessage()")) {
-
-					line = StringUtil.replace(
-						line, ".getMessage()", StringPool.BLANK);
-				}
-
-				// LPS-45492
-
-				if (trimmedLine.contains("StopWatch stopWatch = null;")) {
-					processMessage(
-						fileName, "Do not set stopwatch to null, see LPS-45492",
-						lineCount);
-				}
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);
 
 				line = formatEmptyArray(line);
 
-				if (trimmedLine.startsWith("* @see ") &&
-					(StringUtil.count(trimmedLine, CharPool.AT) > 1)) {
-
-					processMessage(
-						fileName, "Do not use @see with another annotation",
-						lineCount);
-				}
-
 				checkInefficientStringMethods(
 					line, fileName, absolutePath, lineCount, true);
-
-				if (line.contains("ActionForm form")) {
-					processMessage(
-						fileName, "Rename 'form' to 'actionForm'", lineCount);
-				}
-
-				if (line.contains("ActionMapping mapping")) {
-					processMessage(
-						fileName, "Rename 'mapping' to 'ActionMapping'",
-						lineCount);
-				}
 
 				int lineLeadingTabCount = getLeadingTabCount(line);
 				int previousLineLeadingTabCount = getLeadingTabCount(
@@ -704,19 +619,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
-				if (line.contains(StringPool.FOUR_SPACES) &&
-					!line.matches("\\s*\\*.*")) {
-
-					if (!fileName.endsWith("StringPool.java")) {
-						processMessage(
-							fileName, "Use tabs instead of spaces", lineCount);
-					}
-				}
-
-				if (line.contains("  {") && !line.matches("\\s*\\*.*")) {
-					processMessage(fileName, "{", lineCount);
-				}
-
 				if (lineCount > 1) {
 					sb.append(previousLine);
 					sb.append("\n");
@@ -735,111 +637,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return newContent;
-	}
-
-	protected String formatModulesFile(
-			String fileName, String absolutePath, String className,
-			String packagePath, String content)
-		throws Exception {
-
-		// LPS-56706 and LPS-57722
-
-		if (fileName.endsWith("Test.java")) {
-			if (absolutePath.contains("/src/testIntegration/java/") ||
-				absolutePath.contains("/test/integration/")) {
-
-				if (content.contains("@RunWith(Arquillian.class)") &&
-					content.contains("import org.powermock.")) {
-
-					processMessage(
-						fileName,
-						"Do not use PowerMock inside Arquillian tests, see " +
-							"LPS-56706");
-				}
-
-				if (!packagePath.endsWith(".test")) {
-					processMessage(
-						fileName,
-						"Module integration test must be under a test " +
-							"subpackage, see LPS-57722");
-				}
-			}
-			else if ((absolutePath.contains("/test/unit/") ||
-					  absolutePath.contains("/src/test/java/")) &&
-					 packagePath.endsWith(".test")) {
-
-				processMessage(
-					fileName,
-					"Module unit test should not be under a test subpackage, " +
-						"see LPS-57722");
-			}
-		}
-
-		// LPS-57358
-
-		if (content.contains(
-			"ServiceProxyFactory.newServiceTrackedInstance(")) {
-
-			processMessage(
-				fileName,
-				"Do not use ServiceProxyFactory.newServiceTrackedInstance in " +
-					"modules, see LPS-57358");
-		}
-
-		// LPS-62989
-
-		if (!absolutePath.contains("/modules/core/jaxws-osgi-bridge") &&
-			!absolutePath.contains("/modules/core/portal-bootstrap") &&
-			!absolutePath.contains("/modules/core/registry-") &&
-			!absolutePath.contains("/modules/core/slim-runtime") &&
-			(_checkRegistryInTestClasses ||
-			 (!absolutePath.contains("/test/") &&
-			  !absolutePath.contains("/testIntegration/")))) {
-
-			Matcher matcher = _registryImportPattern.matcher(content);
-
-			if (matcher.find()) {
-				processMessage(
-					fileName,
-					"Do not use com.liferay.registry classes in modules, " +
-						"see LPS-62989");
-			}
-		}
-
-		// LPS-60186
-
-		if (!absolutePath.contains("/test/") && content.contains("@Meta.OCD") &&
-			!content.contains("@ExtendedObjectClassDefinition")) {
-
-			processMessage(
-				fileName,
-				"Specify category using @ExtendedObjectClassDefinition, see " +
-					"LPS-60186");
-		}
-
-		// LPS-64238
-
-		if (content.contains("import com.liferay.util.dao.orm.CustomSQLUtil")) {
-			processMessage(
-				fileName,
-				"Do not use com.liferay.util.dao.orm.CustomSQLUtil in " +
-					"modules, see LPS-64238");
-		}
-
-		// LPS-64335
-
-		if (content.contains("import com.liferay.util.ContentUtil")) {
-			processMessage(
-				fileName,
-				"Do not use com.liferay.util.ContentUtil in modules, see " +
-					"LPS-64335");
-		}
-
-		// LPS-67042
-
-		checkInternalImports(fileName, absolutePath, content);
-
-		return content;
 	}
 
 	@Override
@@ -1056,7 +853,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_fileChecks.add(new JavaExceptionCheck());
 		_fileChecks.add(new JavaFinderCacheCheck());
 		_fileChecks.add(
+			new JavaHibernateSQLCheck(
+				getExcludes(_HIBERNATE_SQL_QUERY_EXCLUDES)));
+		_fileChecks.add(
 			new JavaIfStatementCheck(sourceFormatterArgs.getMaxLineLength()));
+		_fileChecks.add(new JavaIOExceptionCheck());
 		_fileChecks.add(
 			new JavaLineBreakCheck(sourceFormatterArgs.getMaxLineLength()));
 		_fileChecks.add(new JavaLogLevelCheck());
@@ -1065,6 +866,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				getExcludes(_LINE_LENGTH_EXCLUDES),
 				sourceFormatterArgs.getMaxLineLength()));
 		_fileChecks.add(new JavaPackagePathCheck());
+		_fileChecks.add(new JavaSeeAnnotationCheck());
+		_fileChecks.add(new JavaStopWatchCheck());
 		_fileChecks.add(new JavaSystemExceptionCheck());
 		_fileChecks.add(
 			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
@@ -1107,6 +910,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateModuleFileChecks() throws Exception {
+		_fileChecks.add(new JavaModuleExtendedObjectClassDefinitionCheck(subrepository));
+
+		boolean checkRegistryInTestClasses = GetterUtil.getBoolean(
+			System.getProperty(
+				"source.formatter.check.registry.in.test.classes"));
+
+		_fileChecks.add(
+			new JavaModuleIllegalImportsCheck(
+				subrepository, checkRegistryInTestClasses));
+
+		_fileChecks.add(new JavaModuleInternalImportsCheck(subrepository));
+		_fileChecks.add(new JavaModuleServiceProxyFactoryCheck(subrepository));
+		_fileChecks.add(new JavaModuleTestCheck(subrepository));
 		_fileChecks.add(
 			new JavaOSGiReferenceCheck(
 				_getModuleFileNamesMap(), subrepository));
@@ -1244,15 +1060,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _allowUseServiceUtilInServiceImpl;
 	private final Pattern _anonymousClassPattern = Pattern.compile(
 		"\n(\t+)(\\S.* )?new (.|\\(\n)*\\) \\{\n\n");
-	private boolean _checkRegistryInTestClasses;
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
 	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
 		"([\n\t])(synchronized) (private|public|protected)");
-	private final Pattern _internalImportPattern = Pattern.compile(
-		"\nimport com\\.liferay\\.(.*\\.internal\\.([a-z].*?\\.)?[A-Z].*?)" +
-			"[\\.|;]");
 	private final Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
@@ -1262,8 +1074,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private String _portalCustomSQLContent;
 	private final Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
-	private final Pattern _registryImportPattern = Pattern.compile(
-		"\nimport (com\\.liferay\\.registry\\..+);");
 	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();
 
 }

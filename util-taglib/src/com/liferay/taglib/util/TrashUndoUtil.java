@@ -33,7 +33,9 @@ import javax.portlet.ActionRequest;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of 2.6.0, with no direct replacement
  */
+@Deprecated
 public class TrashUndoUtil {
 
 	public static void addRestoreData(

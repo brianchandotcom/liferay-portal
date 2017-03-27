@@ -1,0 +1,3 @@
+Bundle-SymbolicName: com.example.sample
+Bundle-Version: 1.0.1
+Export-Package: com.example.sample

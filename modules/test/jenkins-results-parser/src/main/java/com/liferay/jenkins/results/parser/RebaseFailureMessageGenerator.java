@@ -93,10 +93,9 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 				getConsoleOutputSnippetElement(consoleText, true, start, end)));
 	}
 
-	private static final String _REBASE_END_STRING =
-		"The copy of the patch that failed is found in";
+	private static final String _REBASE_END_STRING = "Aborting rebase ABORT";
 
 	private static final String _REBASE_START_STRING =
-		"First, rewinding head to replay your work on top of it...";
+		"[beanshell] Rebasing cache-";
 
 }

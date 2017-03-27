@@ -1133,12 +1133,12 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
 		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
+			<execute macro="Navigator#gotoSitePage">
+				<var name="pageName" value="Home" />
+				<var name="siteName" value="Site Name" />
+			</execute>
+
 			<execute macro="Page#viewChildPageDropdown">
 				<var name="childPageName" value="${childPageName}" />
 				<var name="pageName" value="Arenas" />

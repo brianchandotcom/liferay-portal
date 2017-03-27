@@ -172,12 +172,12 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer<DDLRecord> {
 
 	@Override
 	public long getUserId() {
-		return _record.getUserId();
+		return _recordVersion.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		return _record.getUserName();
+		return _recordVersion.getUserName();
 	}
 
 	@Override

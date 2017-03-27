@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.upload.web;
+package com.liferay.upload.web.internal;
 
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.exception.FileNameException;

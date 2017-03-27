@@ -19,8 +19,18 @@ import aQute.bnd.osgi.Constants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.BNDBundleNameCheck;
+import com.liferay.source.formatter.checks.BNDCapabilityCheck;
+import com.liferay.source.formatter.checks.BNDDirectoryNameCheck;
+import com.liferay.source.formatter.checks.BNDExportsCheck;
+import com.liferay.source.formatter.checks.BNDImportsCheck;
+import com.liferay.source.formatter.checks.BNDIncludeResourceCheck;
+import com.liferay.source.formatter.checks.BNDLineBreaksCheck;
+import com.liferay.source.formatter.checks.BNDRangeCheck;
+import com.liferay.source.formatter.checks.BNDSchemaVersionCheck;
+import com.liferay.source.formatter.checks.BNDWebContextPathCheck;
+import com.liferay.source.formatter.checks.BNDWhitespaceCheck;
 import com.liferay.source.formatter.checks.FileCheck;
-import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
 
@@ -229,7 +239,22 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateFileChecks() {
-		_fileChecks.add(new WhitespaceCheck());
+		_fileChecks.add(new BNDWhitespaceCheck());
+
+		_fileChecks.add(new BNDCapabilityCheck());
+		_fileChecks.add(new BNDImportsCheck());
+		_fileChecks.add(new BNDLineBreaksCheck());
+		_fileChecks.add(new BNDRangeCheck());
+		_fileChecks.add(new BNDSchemaVersionCheck());
+		_fileChecks.add(new BNDWebContextPathCheck());
+	}
+
+	@Override
+	protected void populateModuleFileChecks() throws Exception {
+		_fileChecks.add(new BNDBundleNameCheck());
+		_fileChecks.add(new BNDDirectoryNameCheck());
+		_fileChecks.add(new BNDExportsCheck());
+		_fileChecks.add(new BNDIncludeResourceCheck());
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};

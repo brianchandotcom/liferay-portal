@@ -3069,27 +3069,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.0.0 with no direct replacement.</description>
-		<name>restore-entry</name>
-		<tag-class>com.liferay.taglib.ui.RestoreEntryTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>overrideMessage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>renameMessage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>restoreURL</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<description>Creates a clickable link and/or icon to an RSS feed document.</description>
 		<name>rss</name>
 		<tag-class>com.liferay.taglib.ui.RSSTag</tag-class>

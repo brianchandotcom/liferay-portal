@@ -137,7 +137,7 @@
 <!--RULE_BUILDER_AUTOFILL-->
 <tr>
 	<td>RULE_BUILDER_AUTOFILL_OUTPUT_FIELD</td>
-	<td>//div[contains(@class,'action-rule-data-provider')]//div[contains(@class,'parameter-output')]//a[contains(@class,'field-trigger')]</td>
+	<td>//div[contains(@class,'action-rule-data-provider')]//div[contains(@class,'parameter-output')]//div[contains(@class,'field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -242,16 +242,23 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		ldapUser.setOrganizationIds(null);
 		ldapUser.setPasswordReset(false);
 
-		Object portrait = LDAPUtil.getAttributeObject(
-			attributes, userMappings.getProperty(UserConverterKeys.PORTRAIT));
+		String portrait = userMappings.getProperty(UserConverterKeys.PORTRAIT);
 
-		if (portrait != null) {
-			byte[] portraitBytes = (byte[])portrait;
+		if (Validator.isNotNull(portrait)) {
+			Object portraitObject = LDAPUtil.getAttributeObject(
+				attributes, portrait);
 
-			if (portraitBytes.length > 0) {
-				ldapUser.setPortraitBytes((byte[])portrait);
+			if (portraitObject != null) {
+				byte[] portraitBytes = (byte[])portraitObject;
+
+				if (portraitBytes.length > 0) {
+					ldapUser.setPortraitBytes((byte[])portraitObject);
+				}
+
+				ldapUser.setUpdatePortrait(true);
 			}
-
+		}
+		else {
 			ldapUser.setUpdatePortrait(true);
 		}
 

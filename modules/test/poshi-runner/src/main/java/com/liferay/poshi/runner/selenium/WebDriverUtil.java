@@ -31,6 +31,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -183,15 +184,24 @@ public class WebDriverUtil extends PropsValues {
 		firefoxProfile.setPreference("dom.max_chrome_script_run_time", 300);
 		firefoxProfile.setPreference("dom.max_script_run_time", 300);
 
+		DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
+
+		desiredCapabilities.setCapability("locationContextEnabled", false);
+
 		if (Validator.isNotNull(PropsValues.BROWSER_FIREFOX_BIN_FILE)) {
 			File file = new File(PropsValues.BROWSER_FIREFOX_BIN_FILE);
 
 			FirefoxBinary firefoxBinary = new FirefoxBinary(file);
 
-			return new FirefoxDriver(firefoxBinary, firefoxProfile);
+			return new FirefoxDriver(
+				firefoxBinary, firefoxProfile,
+				(Capabilities)desiredCapabilities);
 		}
 		else {
-			return new FirefoxDriver(firefoxProfile);
+			desiredCapabilities.setCapability(
+				FirefoxDriver.PROFILE, firefoxProfile);
+
+			return new FirefoxDriver((Capabilities)desiredCapabilities);
 		}
 	}
 

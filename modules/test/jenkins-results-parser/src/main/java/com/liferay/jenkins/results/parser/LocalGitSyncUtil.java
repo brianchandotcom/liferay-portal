@@ -250,7 +250,7 @@ public class LocalGitSyncUtil {
 			List<RemoteConfig> localGitRemoteConfigs)
 		throws GitAPIException {
 
-		long start = System.currentTimeMillis();
+		final long start = System.currentTimeMillis();
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			localGitRemoteConfigs.size());
@@ -263,7 +263,8 @@ public class LocalGitSyncUtil {
 					public void run() {
 						try {
 							deleteExpiredCacheBranches(
-								gitWorkingDirectory, localGitRemoteConfig);
+								gitWorkingDirectory, localGitRemoteConfig,
+								start);
 						}
 						catch (GitAPIException gapie) {
 							throw new RuntimeException(gapie);
@@ -290,7 +291,8 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static void deleteExpiredCacheBranches(
-			GitWorkingDirectory gitWorkingDirectory, RemoteConfig remoteConfig)
+			GitWorkingDirectory gitWorkingDirectory, RemoteConfig remoteConfig,
+			long timestamp)
 		throws GitAPIException {
 
 		int branchCount = 0;
@@ -323,8 +325,7 @@ public class LocalGitSyncUtil {
 				long remoteBranchTimestamp = Long.parseLong(
 					matcher.group("timestamp"));
 
-				long branchAge =
-					System.currentTimeMillis() - remoteBranchTimestamp;
+				long branchAge = timestamp - remoteBranchTimestamp;
 
 				if (branchAge > _BRANCH_EXPIRE_AGE_MILLIS) {
 					try {

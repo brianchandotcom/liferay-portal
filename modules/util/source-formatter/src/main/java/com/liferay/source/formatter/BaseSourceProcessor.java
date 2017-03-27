@@ -560,12 +560,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		processFormattedFile(file, fileName, content, newContent);
 	}
 
-	protected String formatDefinitionKey(
-		String fileName, String content, String definitionKey) {
-
-		return content;
-	}
-
 	protected String formatEmptyArray(String line) {
 		Matcher matcher = emptyArrayPattern.matcher(line);
 
@@ -1326,53 +1320,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			});
 	}
 
-	protected String sortDefinitions(
-		String fileName, String content, Comparator<String> comparator) {
-
-		String previousDefinition = null;
-
-		Matcher matcher = _definitionPattern.matcher(content);
-
-		while (matcher.find()) {
-			String newContent = formatDefinitionKey(
-				fileName, content, matcher.group(1));
-
-			if (!newContent.equals(content)) {
-				return newContent;
-			}
-
-			String definition = matcher.group();
-
-			if (Validator.isNotNull(matcher.group(1)) &&
-				definition.endsWith("\n")) {
-
-				definition = definition.substring(0, definition.length() - 1);
-			}
-
-			if (Validator.isNotNull(previousDefinition)) {
-				int value = comparator.compare(previousDefinition, definition);
-
-				if (value > 0) {
-					content = StringUtil.replaceFirst(
-						content, previousDefinition, definition);
-					content = StringUtil.replaceLast(
-						content, definition, previousDefinition);
-
-					return content;
-				}
-
-				if (value == 0) {
-					return StringUtil.replaceFirst(
-						content, previousDefinition + "\n", StringPool.BLANK);
-				}
-			}
-
-			previousDefinition = definition;
-		}
-
-		return content;
-	}
-
 	protected List<String> splitParameters(String parameters) {
 		List<String> parametersList = new ArrayList<>();
 
@@ -1617,8 +1564,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Set<String> _annotationsExclusions;
 	private boolean _browserStarted;
 	private Map<String, String> _compatClassNamesMap;
-	private final Pattern _definitionPattern = Pattern.compile(
-		"^([A-Za-z-]+?)[:=](\n|[\\s\\S]*?([^\\\\]\n|\\Z))", Pattern.MULTILINE);
 	private String[] _excludes;
 	private Map<String, List<String>> _exclusionPropertiesMap = new HashMap<>();
 	private SourceMismatchException _firstSourceMismatchException;

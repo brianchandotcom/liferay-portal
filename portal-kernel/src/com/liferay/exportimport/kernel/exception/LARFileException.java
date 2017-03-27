@@ -24,11 +24,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 @ProviderType
 public class LARFileException extends PortalException {
 
-	public static final int DEFAULT = 0;
+	public static final int TYPE_DEFAULT = 0;
 
-	public static final int INVALID_MANIFEST = 2;
+	public static final int TYPE_INVALID_MANIFEST = 2;
 
-	public static final int MISSING_MANIFEST = 1;
+	public static final int TYPE_MISSING_MANIFEST = 1;
 
 	public LARFileException() {
 	}
@@ -75,6 +75,6 @@ public class LARFileException extends PortalException {
 		_type = type;
 	}
 
-	private int _type = DEFAULT;
+	private int _type = TYPE_DEFAULT;
 
 }

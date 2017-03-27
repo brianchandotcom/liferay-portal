@@ -718,6 +718,8 @@ public class LocalGitSyncUtil {
 				System.out.println(
 					"Synchronization with local-git failed. Retrying.");
 
+				gitWorkingDirectory.checkoutBranch(originalBranchName);
+
 				return synchronizeToLocalGit(
 					gitWorkingDirectory, receiverUsername, retryCount + 1,
 					senderBranchName, senderUsername, senderBranchSha,

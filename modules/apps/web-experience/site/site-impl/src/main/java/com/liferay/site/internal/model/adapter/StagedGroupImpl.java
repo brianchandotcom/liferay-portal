@@ -78,7 +78,7 @@ public class StagedGroupImpl implements StagedGroup {
 	}
 
 	@Override
-	public List<Group> getAncestors() throws PortalException {
+	public List<Group> getAncestors() {
 		return _group.getAncestors();
 	}
 
@@ -375,7 +375,7 @@ public class StagedGroupImpl implements StagedGroup {
 	}
 
 	@Override
-	public Group getParentGroup() throws PortalException {
+	public Group getParentGroup() {
 		return _group.getParentGroup();
 	}
 

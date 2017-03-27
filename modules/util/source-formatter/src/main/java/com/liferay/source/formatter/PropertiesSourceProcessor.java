@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.PropertiesDefinitionKeysCheck;
 import com.liferay.source.formatter.checks.WhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -370,9 +370,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				content, matcher.group(1), StringPool.BLANK, matcher.start());
 		}
 
-		content = sortDefinitions(
-			fileName, content, new NaturalOrderStringComparator());
-
 		return fixIncorrectLicenses(absolutePath, content);
 	}
 
@@ -692,6 +689,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected void populateFileChecks() {
 		_fileChecks.add(new WhitespaceCheck(true));
+
+		_fileChecks.add(new PropertiesDefinitionKeysCheck());
 	}
 
 	protected void populateLanguagePropertiesMap() throws Exception {

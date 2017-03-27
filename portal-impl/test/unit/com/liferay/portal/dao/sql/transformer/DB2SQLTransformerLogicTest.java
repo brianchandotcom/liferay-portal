@@ -14,7 +14,8 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
-import com.liferay.portal.dao.db.PostgreSQLDB;
+import com.liferay.portal.dao.db.TestDB;
+import com.liferay.portal.kernel.dao.db.DBType;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,11 +23,27 @@ import org.junit.Test;
 /**
  * @author Manuel de la Peña
  */
-public class PostgreSQLTransformerLogicTest
+public class DB2SQLTransformerLogicTest
 	extends BaseSQLTransformerLogicTestCase {
 
-	public PostgreSQLTransformerLogicTest() {
-		super(new PostgreSQLDB(1, 0));
+	public DB2SQLTransformerLogicTest() {
+		super(new TestDB(DBType.DB2, 1, 0));
+	}
+
+	@Override
+	@Test
+	public void testReplaceBitwiseCheckWithExtraWhitespace() {
+		Assert.assertEquals(
+			getBitwiseCheckTransformedSQL(),
+			sqlTransformer.transform(getBitwiseCheckOriginalSQL()));
+	}
+
+	@Test
+	public void testReplaceLike() {
+		Assert.assertEquals(
+			"select foo from Foo where foo LIKE COALESCE(" +
+				"CAST(? AS VARCHAR(32672)),'')",
+			sqlTransformer.transform("select foo from Foo where foo LIKE ?"));
 	}
 
 	@Override
@@ -37,36 +54,13 @@ public class PostgreSQLTransformerLogicTest
 			sqlTransformer.transform(getModOriginalSQL()));
 	}
 
-	@Test
-	public void testReplaceNegativeComparison() {
-		Assert.assertEquals(
-			"select * from Foo where foo != (-1)",
-			sqlTransformer.transform("select * from Foo where foo != -1"));
-
-		Assert.assertEquals(
-			"select * from Foo where foo != (-1) and bar != (-1)",
-			sqlTransformer.transform(
-				"select * from Foo where foo != -1 and bar != -1"));
+	@Override
+	protected String getBooleanTransformedSQL() {
+		return "select * from Foo where foo = FALSE and bar = TRUE";
 	}
 
-	@Override
-	protected String getBitwiseCheckTransformedSQL() {
-		return "select (foo & bar) from Foo";
-	}
-
-	@Override
 	protected String getCastClobTextTransformedSQL() {
-		return "select CAST(foo AS TEXT) from Foo";
-	}
-
-	@Override
-	protected String getCastLongOriginalSQL() {
-		return "select CAST_LONG(foo) from Foo";
-	}
-
-	@Override
-	protected String getCastLongTransformedSQL() {
-		return "select foo from Foo";
+		return "select CAST(foo AS VARCHAR(254)) from Foo";
 	}
 
 	@Override
@@ -76,7 +70,7 @@ public class PostgreSQLTransformerLogicTest
 
 	@Override
 	protected String getNullDateTransformedSQL() {
-		return "select CAST(NULL AS TIMESTAMP) from Foo";
+		return "select NULL from Foo";
 	}
 
 }

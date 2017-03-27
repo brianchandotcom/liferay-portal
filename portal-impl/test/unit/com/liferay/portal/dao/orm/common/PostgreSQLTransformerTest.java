@@ -12,41 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.dao.sql.transformer;
+package com.liferay.portal.dao.orm.common;
 
 import com.liferay.portal.dao.db.PostgreSQLDB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.Mockito;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Manuel de la Peña
  */
-public class PostgreSQLTransformerLogicTest
-	extends BaseSQLTransformerLogicTestCase {
-
-	public PostgreSQLTransformerLogicTest() {
-		super(new PostgreSQLDB(1, 0));
-	}
-
-	@Override
-	@Test
-	public void testReplaceModWithExtraWhitespace() {
-		Assert.assertEquals(
-			getModTransformedSQL(),
-			sqlTransformer.transform(getModOriginalSQL()));
-	}
+@PrepareForTest(DBManagerUtil.class)
+@RunWith(PowerMockRunner.class)
+public class PostgreSQLTransformerTest extends BaseSQLTransformerTestCase {
 
 	@Test
 	public void testReplaceNegativeComparison() {
 		Assert.assertEquals(
 			"select * from Foo where foo != (-1)",
-			sqlTransformer.transform("select * from Foo where foo != -1"));
-
-		Assert.assertEquals(
-			"select * from Foo where foo != (-1) and bar != (-1)",
-			sqlTransformer.transform(
-				"select * from Foo where foo != -1 and bar != -1"));
+			SQLTransformer.transform("select * from Foo where foo != -1"));
 	}
 
 	@Override
@@ -77,6 +69,13 @@ public class PostgreSQLTransformerLogicTest
 	@Override
 	protected String getNullDateTransformedSQL() {
 		return "select CAST(NULL AS TIMESTAMP) from Foo";
+	}
+
+	@Override
+	protected void mockDB() {
+		PowerMockito.mockStatic(DBManagerUtil.class);
+
+		Mockito.when(DBManagerUtil.getDB()).thenReturn(new PostgreSQLDB(5, 7));
 	}
 
 }

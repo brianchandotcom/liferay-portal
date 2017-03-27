@@ -12,76 +12,39 @@
  * details.
  */
 
-package com.liferay.portal.dao.sql.transformer;
+package com.liferay.portal.dao.orm.common;
 
 import com.liferay.portal.dao.db.MySQLDB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.Mockito;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Manuel de la Peña
  */
-public class MySQLSQLTransformerLogicTest
-	extends BaseSQLTransformerLogicTestCase {
-
-	public MySQLSQLTransformerLogicTest() {
-		super(new MySQLDB(5, 7));
-	}
-
-	@Test
-	public void testReplaceLower() {
-		Assert.assertEquals(
-			"select foo from Foo",
-			sqlTransformer.transform("select lower(foo) from Foo"));
-	}
-
-	@Test
-	public void testReplaceLowerMultiple() {
-		Assert.assertEquals(
-			"select foo, bar, baaz from Foo",
-			sqlTransformer.transform(
-				"select lower(foo), bar, lower(baaz) from Foo"));
-	}
-
-	@Test
-	public void testReplaceLowerRecursive() {
-		Assert.assertEquals(
-			"select lower(foo) from Foo",
-			sqlTransformer.transform("select lower(lower(foo)) from Foo"));
-	}
-
-	@Test
-	public void testReplaceLowerWithoutClosing() {
-		String sql = "select lower(foo from Foo";
-
-		Assert.assertEquals(sql, sqlTransformer.transform(sql));
-	}
-
-	@Override
-	@Test
-	public void testReplaceModWithExtraWhitespace() {
-		Assert.assertEquals(
-			getModTransformedSQL(),
-			sqlTransformer.transform(getModOriginalSQL()));
-	}
+@PrepareForTest(DBManagerUtil.class)
+@RunWith(PowerMockRunner.class)
+public class MySQLSQLTransformerTest extends BaseSQLTransformerTestCase {
 
 	@Test
 	public void testReplaceSupportsStringCaseSensitiveQuery() {
-		MySQLDB mySQLDB = new MySQLDB(5, 7);
-
-		mySQLDB.setSupportsStringCaseSensitiveQuery(true);
-
-		SQLTransformer sqlTransformer = SQLTransformerFactory.getSQLTransformer(
-			mySQLDB);
+		_db.setSupportsStringCaseSensitiveQuery(true);
 
 		String sql = "select * from foo";
 
-		Assert.assertEquals(sql, sqlTransformer.transform(sql));
+		Assert.assertEquals(sql, SQLTransformer.transform(sql));
 
 		sql = "select lower(foo) from Foo";
 
-		Assert.assertEquals(sql, sqlTransformer.transform(sql));
+		Assert.assertEquals(sql, SQLTransformer.transform(sql));
 	}
 
 	@Override
@@ -118,5 +81,16 @@ public class MySQLSQLTransformerLogicTest
 	protected String getNullDateTransformedSQL() {
 		return "select NULL from Foo";
 	}
+
+	@Override
+	protected void mockDB() {
+		PowerMockito.mockStatic(DBManagerUtil.class);
+
+		_db = new MySQLDB(5, 7);
+
+		Mockito.when(DBManagerUtil.getDB()).thenReturn(_db);
+	}
+
+	private MySQLDB _db;
 
 }

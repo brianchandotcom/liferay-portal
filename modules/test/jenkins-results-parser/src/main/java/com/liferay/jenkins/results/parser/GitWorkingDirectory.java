@@ -788,6 +788,10 @@ public class GitWorkingDirectory {
 	public void reset(String ref, ResetCommand.ResetType resetType)
 		throws GitAPIException {
 
+		if (ref.equalsIgnoreCase("HEAD")) {
+			ref = null;
+		}
+
 		ResetCommand resetCommand = _git.reset();
 
 		resetCommand.setMode(resetType);

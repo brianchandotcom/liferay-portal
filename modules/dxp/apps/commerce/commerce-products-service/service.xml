@@ -85,7 +85,7 @@
 
 		<!-- Other fields -->
 
-		<column name="productDefinitionId" type="long" />
+		<column name="commerceProductDefinitionId" type="long" />
 		<column name="SKU" type="String" />
 		<column name="DDMContent" type="String" />
 		<column name="displayDate" type="Date" />

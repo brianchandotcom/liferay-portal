@@ -36,11 +36,22 @@ public class DDLRecordSetVersionServiceImpl
 	extends DDLRecordSetVersionServiceBaseImpl {
 
 	@Override
-	public DDLRecordSetVersion getDDLRecordSetVersion(long recordSetVersionId)
+	public DDLRecordSetVersion getLatestRecordSetVersion(long recordSetId)
+		throws PortalException {
+
+		DDLPermission.check(
+			getPermissionChecker(), recordSetId, ActionKeys.VIEW);
+
+		return ddlRecordSetVersionLocalService.getLatestRecordSetVersion(
+			recordSetId);
+	}
+
+	@Override
+	public DDLRecordSetVersion getRecordSetVersion(long recordSetVersionId)
 		throws PortalException {
 
 		DDLRecordSetVersion recordSetVersion =
-			ddlRecordSetVersionLocalService.getDDLRecordSetVersion(
+			ddlRecordSetVersionLocalService.getRecordSetVersion(
 				recordSetVersionId);
 
 		DDLPermission.check(
@@ -51,7 +62,7 @@ public class DDLRecordSetVersionServiceImpl
 	}
 
 	@Override
-	public List<DDLRecordSetVersion> getDDLRecordSetVersions(
+	public List<DDLRecordSetVersion> getRecordSetVersions(
 			long recordSetId, int start, int end,
 			OrderByComparator<DDLRecordSetVersion> orderByComparator)
 		throws PortalException {
@@ -59,29 +70,18 @@ public class DDLRecordSetVersionServiceImpl
 		DDLPermission.check(
 			getPermissionChecker(), recordSetId, ActionKeys.VIEW);
 
-		return ddlRecordSetVersionLocalService.getDDLRecordSetVersions(
+		return ddlRecordSetVersionLocalService.getRecordSetVersions(
 			recordSetId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getDDLRecordSetVersionsCount(long recordSetId)
+	public int getRecordSetVersionsCount(long recordSetId)
 		throws PortalException {
 
 		DDLPermission.check(
 			getPermissionChecker(), recordSetId, ActionKeys.VIEW);
 
-		return ddlRecordSetVersionLocalService.getDDLRecordSetVersionsCount(
-			recordSetId);
-	}
-
-	@Override
-	public DDLRecordSetVersion getLatestRecordSetVersion(long recordSetId)
-		throws PortalException {
-
-		DDLPermission.check(
-			getPermissionChecker(), recordSetId, ActionKeys.VIEW);
-
-		return ddlRecordSetVersionLocalService.getLatestRecordSetVersion(
+		return ddlRecordSetVersionLocalService.getRecordSetVersionsCount(
 			recordSetId);
 	}
 

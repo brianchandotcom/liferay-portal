@@ -38,38 +38,8 @@ public class DDLRecordSetVersionLocalServiceImpl
 	extends DDLRecordSetVersionLocalServiceBaseImpl {
 
 	@Override
-	public DDLRecordSetVersion getDDLRecordSetVersion(
-			long recordSetId, String version)
-		throws PortalException {
-
-		return ddlRecordSetVersionPersistence.findByRS_V(recordSetId, version);
-	}
-
-	@Override
-	public List<DDLRecordSetVersion> getDDLRecordSetVersions(long recordSetId) {
-		return ddlRecordSetVersionPersistence.findByRecordSetId(recordSetId);
-	}
-
-	@Override
-	public List<DDLRecordSetVersion> getDDLRecordSetVersions(
-		long recordSetId, int start, int end,
-		OrderByComparator<DDLRecordSetVersion> orderByComparator) {
-
-		return ddlRecordSetVersionPersistence.findByRecordSetId(
-			recordSetId, start, end, orderByComparator);
-	}
-
-	@Override
-	public int getDDLRecordSetVersionsCount(long recordSetId) {
-		return ddlRecordSetVersionPersistence.countByRecordSetId(recordSetId);
-	}
-
-	@Override
-	public DDLRecordSetVersion getDLLRecordSetVersion(long recordSetVersionId)
-		throws PortalException {
-
-		return ddlRecordSetVersionPersistence.findByPrimaryKey(
-			recordSetVersionId);
+	public void deleteByRecordSetId(long recordSetId) throws PortalException {
+		ddlRecordSetVersionPersistence.removeByRecordSetId(recordSetId);
 	}
 
 	@Override
@@ -81,7 +51,7 @@ public class DDLRecordSetVersionLocalServiceImpl
 
 		if (recordSetVersions.isEmpty()) {
 			throw new NoSuchRecordSetVersionException(
-				"No record ser versions found for record set ID " +
+				"No record set versions found for record set ID " +
 					recordSetId);
 		}
 
@@ -91,6 +61,41 @@ public class DDLRecordSetVersionLocalServiceImpl
 			recordSetVersions, new DDLRecordSetVersionVersionComparator());
 
 		return recordSetVersions.get(0);
+	}
+
+	@Override
+	public DDLRecordSetVersion getRecordSetVersion(long recordSetVersionId)
+		throws PortalException {
+
+		return ddlRecordSetVersionPersistence.findByPrimaryKey(
+			recordSetVersionId);
+	}
+
+	@Override
+	public DDLRecordSetVersion getRecordSetVersion(
+			long recordSetId, String version)
+		throws PortalException {
+
+		return ddlRecordSetVersionPersistence.findByRS_V(recordSetId, version);
+	}
+
+	@Override
+	public List<DDLRecordSetVersion> getRecordSetVersions(long recordSetId) {
+		return ddlRecordSetVersionPersistence.findByRecordSetId(recordSetId);
+	}
+
+	@Override
+	public List<DDLRecordSetVersion> getRecordSetVersions(
+		long recordSetId, int start, int end,
+		OrderByComparator<DDLRecordSetVersion> orderByComparator) {
+
+		return ddlRecordSetVersionPersistence.findByRecordSetId(
+			recordSetId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getRecordSetVersionsCount(long recordSetId) {
+		return ddlRecordSetVersionPersistence.countByRecordSetId(recordSetId);
 	}
 
 }

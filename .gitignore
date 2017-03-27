@@ -132,6 +132,7 @@
 /lib/portal/cglib-nodep.jar
 /lib/portal/chemistry-opencmis-client-api.jar
 /lib/portal/chemistry-opencmis-client-bindings.jar
+/lib/portal/chemistry-opencmis-client-impl.jar
 /lib/portal/chemistry-opencmis-commons-api.jar
 /lib/portal/chemistry-opencmis-commons-impl.jar
 /lib/portal/commons-beanutils.jar

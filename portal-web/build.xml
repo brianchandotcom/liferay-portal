@@ -352,7 +352,7 @@ ${oversize.files.jsp}</fail>
 			destfile="${war.file}.war"
 			webxml="docroot/WEB-INF/web.xml"
 		>
-            <fileset dir="docroot" />
+			<fileset dir="docroot" />
 			<metainf dir="${project.dir}/oss-licenses">
 				<exclude name="**/development/**" />
 			</metainf>

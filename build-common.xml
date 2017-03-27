@@ -242,15 +242,6 @@ Error-Prone was automatically installed. Please rerun your task.
 		</condition>
 	</fail>
 
-	<condition property="jdk.7.home" value="${env.JAVA_HOME}">
-		<and>
-			<not>
-				<isset property="jdk.7.home" />
-			</not>
-			<equals arg1="${java.specification.version}" arg2="1.6" />
-		</and>
-	</condition>
-
 	<property name="whip.agent" value="-javaagent:${project.dir}/${junit.whip.jar}=${junit.whip.includes};${junit.whip.excludes}" />
 
 	<macrodef name="app-server-properties-reset">

@@ -323,9 +323,4 @@
 	<bean class="com.liferay.portlet.social.service.impl.SocialRequestServiceImpl" id="com.liferay.social.kernel.service.SocialRequestService" />
 	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialRequestPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialRequestPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.social.service.impl.SocialRequestInterpreterLocalServiceImpl" id="com.liferay.social.kernel.service.SocialRequestInterpreterLocalService" />
-	<bean class="com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl" id="com.liferay.trash.kernel.service.TrashEntryLocalService" />
-	<bean class="com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl" id="com.liferay.trash.kernel.service.TrashEntryService" />
-	<bean class="com.liferay.portlet.trash.service.persistence.impl.TrashEntryPersistenceImpl" id="com.liferay.trash.kernel.service.persistence.TrashEntryPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl" id="com.liferay.trash.kernel.service.TrashVersionLocalService" />
-	<bean class="com.liferay.portlet.trash.service.persistence.impl.TrashVersionPersistenceImpl" id="com.liferay.trash.kernel.service.persistence.TrashVersionPersistence" parent="basePersistence" />
 </beans>

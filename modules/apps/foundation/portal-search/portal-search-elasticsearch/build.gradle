@@ -1,13 +1,10 @@
-import com.liferay.gradle.util.FileUtil
+String elasticsearchVersion = "2.2.0"
 
-String[] elasticSearchPlugins = [
-	"analysis-icu",
-	"analysis-kuromoji",
-	"analysis-smartcn",
-	"analysis-stempel"
-]
-
-String elasticSearchVersion = "2.2.0"
+configurations {
+	elasticsearchPlugins {
+		transitive = false
+	}
+}
 
 dependencies {
 	compileInclude group: "com.carrotsearch", name: "hppc", version: "0.7.1"
@@ -16,7 +13,7 @@ dependencies {
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-smile", version: "2.6.2"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.6.2"
 	compileInclude group: "com.google.guava", name: "guava", version: "18.0"
-	compileInclude group: "com.liferay", name: "org.elasticsearch", version: "${elasticSearchVersion}.LIFERAY-PATCHED-2"
+	compileInclude group: "com.liferay", name: "org.elasticsearch", version: "${elasticsearchVersion}.LIFERAY-PATCHED-2"
 	compileInclude group: "com.ning", name: "compress-lzf", version: "1.0.2"
 	compileInclude group: "com.spatial4j", name: "spatial4j", version: "0.5"
 	compileInclude group: "com.tdunning", name: "t-digest", version: "3.0"
@@ -45,6 +42,11 @@ dependencies {
 	compileInclude group: "org.ow2.asm", name: "asm-commons", version: "4.1"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.15"
 
+	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-icu", version: elasticsearchVersion
+	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-kuromoji", version: elasticsearchVersion
+	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-smartcn", version: elasticsearchVersion
+	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-stempel", version: elasticsearchVersion
+
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.ibm.icu", name: "icu4j", version: "54.1.1"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
@@ -59,10 +61,6 @@ dependencies {
 
 processResources {
 	into("plugins") {
-		from {
-			elasticSearchPlugins.collect {
-				FileUtil.get(project, "https://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/${it}/${elasticSearchVersion}/${it}-${elasticSearchVersion}.zip")
-			}
-		}
+		from configurations.elasticsearchPlugins
 	}
 }

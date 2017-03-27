@@ -171,7 +171,7 @@ describe(
 
 						var container = selectField.get('container');
 
-						var beforeSearchList = container.one('.drop-chosen ul').getHTML();
+						var beforeSearchListSize = container.all('.drop-chosen li').size();
 
 						var inputElement = container.one('input');
 
@@ -181,9 +181,9 @@ describe(
 
 						window.setTimeout(
 							function() {
-								var afterSearchList = container.one('.drop-chosen ul').getHTML();
+								var afterSearchListSize = container.all('.drop-chosen li').size();
 
-								assert.strictEqual(beforeSearchList, afterSearchList);
+								assert.strictEqual(beforeSearchListSize, afterSearchListSize);
 
 								done();
 							},

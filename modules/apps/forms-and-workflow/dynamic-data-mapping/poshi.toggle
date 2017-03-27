@@ -1,0 +1,7 @@
+<toggles>
+	<toggle name="LPS-70895">
+		<date>2017-03-22</date>
+		<description>Changing parameter labels of data provider.</description>
+		<owner>Pedro Queiroz</owner>
+	</toggle>
+</toggles>

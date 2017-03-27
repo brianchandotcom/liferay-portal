@@ -1,7 +1,27 @@
 AUI.add(
 	'liferay-ddm-form-field-select',
 	function(A) {
-		var CSS_SELECT_TRIGGER_ACTION = 'form-builder-select-field';
+		var CSS_ACTIVE = A.getClassName('active');
+
+		var CSS_DROP_CHOSEN = A.getClassName('drop', 'chosen');
+
+		var CSS_FORM_FIELD_CONTAINER = A.getClassName('lfr', 'ddm', 'form', 'field', 'container');
+
+		var CSS_HELP_BLOCK = A.getClassName('help', 'block');
+
+		var CSS_HIDE = A.getClassName('hide');
+
+		var CSS_INPUT_SELECT_WRAPPER = A.getClassName('input', 'select', 'wrapper');
+
+		var CSS_SEARCH_CHOSEN = A.getClassName('search', 'chosen');
+
+		var CSS_SELECT_ARROW_DOWN = A.getClassName('select', 'arrow', 'down', 'container');
+
+		var CSS_SELECT_BADGE_ITEM_CLOSE = A.getClassName('trigger', 'badge', 'item', 'close');
+
+		var CSS_SELECT_OPTION_ITEM = A.getClassName('select', 'option', 'item');
+
+		var CSS_SELECT_TRIGGER_ACTION = A.getClassName('select', 'field', 'trigger');
 
 		var Lang = A.Lang;
 
@@ -30,6 +50,7 @@ AUI.add(
 					strings: {
 						value: {
 							chooseAnOption: Liferay.Language.get('choose-an-option'),
+							chooseOptions: Liferay.Language.get('choose-options'),
 							dynamicallyLoadedData: Liferay.Language.get('dynamically-loaded-data')
 						}
 					},
@@ -55,10 +76,11 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						instance._open = false;
+
 						instance._eventHandlers.push(
 							A.one('doc').after('click', A.bind(instance._afterClickOutside, instance)),
-							instance.bindContainerEvent('mousedown', instance._afterClickSelectTrigger, '.' + CSS_SELECT_TRIGGER_ACTION),
-							instance.bindContainerEvent('mousedown', instance._onClickItem, 'li')
+							instance.bindContainerEvent('click', instance._handleContainerClick, '.' + CSS_FORM_FIELD_CONTAINER)
 						);
 					},
 
@@ -78,12 +100,24 @@ AUI.add(
 						if (!instance.get('readOnly') && instance._isListOpen()) {
 							var container = instance.get('container');
 
-							container.one('.drop-chosen').addClass('hide');
+							container.one('.' + CSS_DROP_CHOSEN).addClass(CSS_HIDE);
 
-							container.one('.form-builder-select-field').removeClass('active');
+							container.one('.' + CSS_SELECT_TRIGGER_ACTION).removeClass(CSS_ACTIVE);
+
+							instance._open = false;
 
 							instance.fire('closeList');
 						}
+					},
+
+					focus: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var arrowSelect = container.one('.' + CSS_SELECT_ARROW_DOWN);
+
+						arrowSelect.focus();
 					},
 
 					getTemplateContext: function() {
@@ -92,6 +126,8 @@ AUI.add(
 						return A.merge(
 							SelectField.superclass.getTemplateContext.apply(instance, arguments),
 							{
+								badgeCloseIcon: Liferay.Util.getLexiconIconTpl('times', 'icon-monospaced'),
+								open: instance._open,
 								options: instance.get('options'),
 								selectCaretDoubleIcon: Liferay.Util.getLexiconIconTpl('caret-double-l', 'icon-monospaced'),
 								selectSearchIcon: Liferay.Util.getLexiconIconTpl('search', 'icon-monospaced'),
@@ -106,24 +142,17 @@ AUI.add(
 
 						var inputNode = instance.getInputNode();
 
-						var value;
+						var value = [];
 
-						if (instance.get('multiple')) {
-							value = [];
-
-							inputNode.all('option').each(
-								function(optionNode) {
-									if (optionNode.attr('selected')) {
-										value.push(optionNode.val());
-									}
+						inputNode.all('option').each(
+							function(optionNode) {
+								if (optionNode.attr('selected')) {
+									value.push(optionNode.val());
 								}
-							);
+							}
+						);
 
-							value = value.join();
-						}
-						else {
-							value = inputNode.val();
-						}
+						value = value.join();
 
 						if (!value) {
 							var contextValue = instance._getContextValue();
@@ -149,19 +178,17 @@ AUI.add(
 
 						var values = instance._getOptionsSelected(value);
 
-						if (!instance.get('multiple')) {
-							values = values[0];
-						}
-
 						return values;
 					},
 
 					openList: function() {
 						var instance = this;
 
-						instance._getSelectTriggerAction().addClass('active');
+						instance._getSelectTriggerAction().addClass(CSS_ACTIVE);
 
-						instance.get('container').one('.drop-chosen').toggleClass('hide');
+						instance.get('container').one('.' + CSS_DROP_CHOSEN).removeClass(CSS_HIDE);
+
+						instance._open = true;
 					},
 
 					render: function() {
@@ -218,33 +245,30 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						var inputGroup = container.one('.input-select-wrapper');
+						var inputGroup = container.one('.' + CSS_INPUT_SELECT_WRAPPER);
 
-						inputGroup.insert(container.one('.help-block'), 'after');
+						inputGroup.insert(container.one('.' + CSS_HELP_BLOCK), 'after');
+					},
+
+					toggleList: function() {
+						var instance = this;
+
+						if (instance._isListOpen()) {
+							instance.closeList();
+						}
+						else {
+							instance.openList();
+						}
 					},
 
 					_afterClickOutside: function(event) {
 						var instance = this;
 
-						if (instance._isClickingOutSide(event)) {
+						if (!instance._preventDocumentClick && instance._isClickingOutSide(event)) {
 							instance.closeList();
 						}
-					},
 
-					_afterClickSelectTrigger: function(event) {
-						event.preventDefault();
-
-						var instance = this;
-
-						if (!instance.get('readOnly')) {
-							var target = event.target;
-
-							if (target.ancestor('.search-chosen')) {
-								return;
-							}
-
-							instance.openList();
-						}
+						instance._preventDocumentClick = false;
 					},
 
 					_getContextValue: function() {
@@ -309,6 +333,84 @@ AUI.add(
 						return instance.get('container').one('.' + CSS_SELECT_TRIGGER_ACTION);
 					},
 
+					_handleBadgeItemCloseClick: function(target) {
+						var instance = this;
+
+						var value = target.getAttribute('data-badge-value');
+
+						var values = instance._removeBadge(value);
+
+						instance.setValue(values);
+					},
+
+					_handleContainerClick: function(event) {
+						var instance = this;
+
+						var target = event.target;
+
+						var closeIconNode = target.ancestor('.' + CSS_SELECT_BADGE_ITEM_CLOSE, true);
+
+						var optionNode = target.ancestor('.' + CSS_SELECT_OPTION_ITEM, true);
+
+						if (closeIconNode) {
+							instance._handleBadgeItemCloseClick(closeIconNode);
+						}
+						else if (optionNode) {
+							instance._handleItemClick(optionNode);
+						}
+						else {
+							instance._handleSelectTriggerClick(event);
+						}
+
+						instance._preventDocumentClick = true;
+					},
+
+					_handleItemClick: function(target) {
+						var instance = this;
+
+						var value;
+
+						var currentTarget = target;
+
+						if (instance.get('multiple')) {
+							value = instance.get('value');
+
+							instance._open = true;
+
+							var itemValue = currentTarget.getAttribute('data-option-value');
+
+							if (currentTarget.getAttribute('data-option-selected')) {
+								instance._removeBadge(itemValue);
+							}
+							else {
+								value.push(itemValue);
+							}
+						}
+						else {
+							value = currentTarget.getAttribute('data-option-value');
+
+							instance._open = false;
+						}
+
+						instance.setValue(value);
+
+						instance.focus();
+					},
+
+					_handleSelectTriggerClick: function(event) {
+						var instance = this;
+
+						if (!instance.get('readOnly')) {
+							var target = event.target;
+
+							if (target.ancestor('.' + CSS_SEARCH_CHOSEN)) {
+								return;
+							}
+
+							instance.toggleList();
+						}
+					},
+
 					_hasOption: function(value) {
 						var instance = this;
 
@@ -330,9 +432,9 @@ AUI.add(
 					_isClickingOutSide: function(event) {
 						var instance = this;
 
-						var ancestor = event.target.ancestor('.' + CSS_SELECT_TRIGGER_ACTION);
+						var container = instance.get('container');
 
-						return !ancestor || ancestor !== instance._getSelectTriggerAction();
+						return !container.contains(event.target);
 					},
 
 					_isListOpen: function() {
@@ -340,21 +442,23 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						if (!container.one('.drop-chosen')) {
-							return false;
-						}
-
-						var openList = container.one('.drop-chosen').hasClass('hide');
+						var openList = container.one('.' + CSS_DROP_CHOSEN).hasClass(CSS_HIDE);
 
 						return !openList;
 					},
 
-					_onClickItem: function(event) {
+					_removeBadge: function(value) {
 						var instance = this;
 
-						var value = event.target.getAttribute('data-option-value');
+						var values = instance.get('value');
 
-						instance.setValue(value);
+						var index = values.indexOf(value);
+
+						if (index >= 0) {
+							values.splice(index, 1);
+						}
+
+						return values;
 					},
 
 					_selectDOMOption: function(optionNode, value) {

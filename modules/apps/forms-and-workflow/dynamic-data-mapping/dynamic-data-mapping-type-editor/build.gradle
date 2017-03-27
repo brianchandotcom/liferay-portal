@@ -1,3 +1,7 @@
+configJSModules {
+	includes = ["**/*.es.js*"]
+}
+
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.2.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

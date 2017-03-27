@@ -74,6 +74,74 @@ public class DDMFormEvaluatorHelperTest {
 	}
 
 	@Test
+	public void testAllCondition() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormField ddmFormField0 = createDDMFormField(
+			"field0", "text", FieldConstants.STRING);
+
+		DDMFormField ddmFormField1 = createDDMFormField(
+			"field1", "number", FieldConstants.DOUBLE);
+
+		ddmFormField1.setRepeatable(true);
+
+		ddmForm.addDDMFormField(ddmFormField0);
+		ddmForm.addDDMFormField(ddmFormField1);
+
+		String condition = "all('#value# <= 10', getValue('field1'))";
+
+		String action = "setEnabled(\"field0\", false)";
+
+		DDMFormRule ddmFormRule = new DDMFormRule(
+			condition, Arrays.asList(action));
+
+		ddmForm.addDDMFormRule(ddmFormRule);
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0", new UnlocalizedValue("")));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field1_0", "field1", new UnlocalizedValue("1")));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field1_1", "field1", new UnlocalizedValue("5")));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field1_2", "field1", new UnlocalizedValue("10")));
+
+		DDMFormEvaluatorContext ddmFormEvaluatorContext =
+			new DDMFormEvaluatorContext(ddmForm, ddmFormValues, LocaleUtil.US);
+
+		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
+			new DDMFormEvaluatorHelper(
+				null, null, _ddmExpressionFactory, ddmFormEvaluatorContext,
+				_jsonFactory, _userLocalService);
+
+		DDMFormEvaluationResult ddmFormEvaluationResult =
+			ddmFormEvaluatorHelper.evaluate();
+
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultMap =
+				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
+
+		Assert.assertEquals(
+			ddmFormFieldEvaluationResultMap.toString(), 4,
+			ddmFormFieldEvaluationResultMap.size());
+
+		DDMFormFieldEvaluationResult field0DDMFormFieldEvaluationResult =
+			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+				"field0", "field0_instanceId");
+
+		Assert.assertTrue(field0DDMFormFieldEvaluationResult.isReadOnly());
+	}
+
+	@Test
 	public void testBelongsToCondition() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 
@@ -170,6 +238,71 @@ public class DDMFormEvaluatorHelperTest {
 			ddmFormEvaluationResult.getDisabledPagesIndexes();
 
 		Assert.assertTrue(disabledPagesIndexes.contains(2));
+	}
+
+	@Test
+	public void testNotAllCondition() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormField ddmFormField0 = createDDMFormField(
+			"field0", "text", FieldConstants.STRING);
+
+		DDMFormField ddmFormField1 = createDDMFormField(
+			"field1", "number", FieldConstants.DOUBLE);
+
+		ddmFormField1.setRepeatable(true);
+
+		ddmForm.addDDMFormField(ddmFormField0);
+		ddmForm.addDDMFormField(ddmFormField1);
+
+		String condition =
+			"not(all('between(#value#,2,6)', getValue('field1')))";
+
+		String action = "setVisible(\"field0\", false)";
+
+		DDMFormRule ddmFormRule = new DDMFormRule(
+			condition, Arrays.asList(action));
+
+		ddmForm.addDDMFormRule(ddmFormRule);
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0", new UnlocalizedValue("")));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field1_0", "field1", new UnlocalizedValue("1")));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field1_1", "field1", new UnlocalizedValue("5")));
+
+		DDMFormEvaluatorContext ddmFormEvaluatorContext =
+			new DDMFormEvaluatorContext(ddmForm, ddmFormValues, LocaleUtil.US);
+
+		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
+			new DDMFormEvaluatorHelper(
+				null, null, _ddmExpressionFactory, ddmFormEvaluatorContext,
+				_jsonFactory, _userLocalService);
+
+		DDMFormEvaluationResult ddmFormEvaluationResult =
+			ddmFormEvaluatorHelper.evaluate();
+
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultMap =
+				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
+
+		Assert.assertEquals(
+			ddmFormFieldEvaluationResultMap.toString(), 3,
+			ddmFormFieldEvaluationResultMap.size());
+
+		DDMFormFieldEvaluationResult field0DDMFormFieldEvaluationResult =
+			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+				"field0", "field0_instanceId");
+
+		Assert.assertFalse(field0DDMFormFieldEvaluationResult.isVisible());
 	}
 
 	@Test

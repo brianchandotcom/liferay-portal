@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationExceptio
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorContext;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.AllFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.BelongsToRoleFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.CallFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.GetPropertyFunction;
@@ -91,6 +92,8 @@ public class DDMFormEvaluatorHelper {
 		createDDMFormFieldValues(ddmFormEvaluatorContext.getDDMFormValues());
 
 		createDDMFormFieldRuleEvaluationResultsMap();
+
+		registerDDMExpressionCustomFunctions();
 	}
 
 	public DDMFormEvaluationResult evaluate()
@@ -208,9 +211,7 @@ public class DDMFormEvaluatorHelper {
 		throws DDMFormEvaluationException {
 
 		DDMFormRuleEvaluator ddmFormRuleEvaluator = new DDMFormRuleEvaluator(
-			ddmFormRule, _ddmExpressionFactory);
-
-		registerDDMExpressionCustomFunctions(ddmFormRuleEvaluator);
+			ddmFormRule, _ddmExpressionFactory, _ddmExpressionFunctionRegister);
 
 		ddmFormRuleEvaluator.evaluate();
 	}
@@ -373,42 +374,44 @@ public class DDMFormEvaluatorHelper {
 		}
 	}
 
-	protected void registerDDMExpressionCustomFunctions(
-		DDMFormRuleEvaluator ddmFormRuleEvaluator) {
-
-		ddmFormRuleEvaluator.setDDMExpressionFunction(
+	protected void registerDDMExpressionCustomFunctions() {
+		_ddmExpressionFunctionRegister.registerDDMExpressionFunction(
+			"all",
+			new AllFunction(
+				_ddmExpressionFactory, _ddmExpressionFunctionRegister));
+		_ddmExpressionFunctionRegister.registerDDMExpressionFunction(
 			"belongsTo",
 			new BelongsToRoleFunction(_request, _userLocalService));
-		ddmFormRuleEvaluator.setDDMExpressionFunction(
+		_ddmExpressionFunctionRegister.registerDDMExpressionFunction(
 			"calculate",
 			new SetPropertyFunction(
 				_ddmFormFieldEvaluationResultsMap, "value"));
-		ddmFormRuleEvaluator.setDDMExpressionFunction(
+		_ddmExpressionFunctionRegister.registerDDMExpressionFunction(
 			"call",
 			new CallFunction(
 				_ddmDataProviderContextFactory, _ddmDataProviderInvoker,
 				_ddmFormFieldEvaluationResultsMap, _request, _jsonFactory));
-		ddmFormRuleEvaluator.setDDMExpressionFunction(
+		_ddmExpressionFunctionRegister.registerDDMExpressionFunction(
 			"getValue",
 			new GetPropertyFunction(
 				_ddmFormFieldEvaluationResultsMap, "value"));
-		ddmFormRuleEvaluator.setDDMExpressionFunction(
+		_ddmExpressionFunctionRegister.registerDDMExpressionFunction(
 			"jumpPage", new JumpPageFunction(_pageFlow));
-		ddmFormRuleEvaluator.setDDMExpressionFunction(
+		_ddmExpressionFunctionRegister.registerDDMExpressionFunction(
 			"setEnabled",
 			new SetEnabledFunction(_ddmFormFieldEvaluationResultsMap));
-		ddmFormRuleEvaluator.setDDMExpressionFunction(
+		_ddmExpressionFunctionRegister.registerDDMExpressionFunction(
 			"setInvalid",
 			new SetInvalidFunction(_ddmFormFieldEvaluationResultsMap));
-		ddmFormRuleEvaluator.setDDMExpressionFunction(
+		_ddmExpressionFunctionRegister.registerDDMExpressionFunction(
 			"setRequired",
 			new SetPropertyFunction(
 				_ddmFormFieldEvaluationResultsMap, "required"));
-		ddmFormRuleEvaluator.setDDMExpressionFunction(
+		_ddmExpressionFunctionRegister.registerDDMExpressionFunction(
 			"setValue",
 			new SetPropertyFunction(
 				_ddmFormFieldEvaluationResultsMap, "value"));
-		ddmFormRuleEvaluator.setDDMExpressionFunction(
+		_ddmExpressionFunctionRegister.registerDDMExpressionFunction(
 			"setVisible",
 			new SetPropertyFunction(
 				_ddmFormFieldEvaluationResultsMap, "visible"));
@@ -608,6 +611,8 @@ public class DDMFormEvaluatorHelper {
 	private final DDMDataProviderContextFactory _ddmDataProviderContextFactory;
 	private final DDMDataProviderInvoker _ddmDataProviderInvoker;
 	private final DDMExpressionFactory _ddmExpressionFactory;
+	private final DDMExpressionFunctionRegister _ddmExpressionFunctionRegister =
+		new DDMExpressionFunctionRegister();
 	private final DDMForm _ddmForm;
 	private final Map<String, List<DDMFormFieldEvaluationResult>>
 		_ddmFormFieldEvaluationResultsMap = new HashMap<>();

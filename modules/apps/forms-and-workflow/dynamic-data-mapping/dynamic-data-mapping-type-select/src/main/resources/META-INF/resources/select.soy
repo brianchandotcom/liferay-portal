@@ -10,25 +10,25 @@
 /**
  * Prints the DDM form select field.
  *
+ * @param? badgeCloseIcon
  * @param? childElementsHTML
  * @param dir
  * @param label
  * @param multiple
  * @param name
+ * @param open
  * @param options
  * @param readOnly
  * @param required
  * @param? selectCaretDoubleIcon
  * @param? selectSearchIcon
  * @param showLabel
- * @param tip
  * @param strings
+ * @param tip
  * @param value
  * @param visible
  */
 {template .select autoescape="deprecated-contextual"}
-	{let $optionsSelected: $value /}
-
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		<div class="input-select-wrapper">
 
@@ -42,24 +42,47 @@
 					{call ddm.hidden_select data="all"/}
 				{/if}
 
-				{if not $multiple}
-					<a class="form-control select-field-trigger" dir="{$dir}" href="javascript:;" id="{$name}" name="{$name}">
-						{if not $readOnly}
-							{if $optionsSelected and $optionsSelected.value}
-								<span class="option-selected">{$optionsSelected.label}</span>
+				<div class="form-control select-field-trigger" dir="{$dir}" id="{$name}" name="{$name}">
+					<a class="select-arrow-down-container" href="javascript:;">
+						{if $selectCaretDoubleIcon}
+							{$selectCaretDoubleIcon|noAutoescape}
+						{/if}
+					</a>
+
+					{if $readOnly}
+						<span class="option-selected option-selected-placeholder">{$multiple ? $strings.chooseOptions : $strings.chooseAnOption}</span>
+					{else}
+						{if $multiple}
+							{if length($value) == 0}
+								<span class="option-selected option-selected-placeholder">{$strings.chooseOptions}</span>
+							{else}
+								<ul class="multiple-badge-list">
+									{foreach $currentValue in $value}
+										{call ddm.badge_item}
+											{param badgeCloseIcon: $badgeCloseIcon /}
+											{param value: $currentValue.value /}
+											{param label: $currentValue.label /}
+										{/call}
+									{/foreach}
+								</ul>
+							{/if}
+
+						{else}
+							{if $value and length($value) > 0}
+								{foreach $currentValue in $value}
+									{if $currentValue and $currentValue.label}
+										<span class="option-selected">{$currentValue.label}</span>
+									{/if}
+								{/foreach}
 							{else}
 								<span class="option-selected option-selected-placeholder">{$strings.chooseAnOption}</span>
 							{/if}
-						{else}
-							<span class="option-selected option-selected-placeholder">{$strings.chooseAnOption}</span>
 						{/if}
-					</a>
-				{else}
-					//TODO Multiple select
-				{/if}
+					{/if}
+				</div>
 
 				{if not $readOnly}
-					<div class="drop-chosen hide">
+					<div class="drop-chosen {$open ? '' : 'hide'}">
 						<div class="search-chosen">
 							<div class="select-search-container">
 								{if $selectSearchIcon}
@@ -73,11 +96,6 @@
 						</ul>
 					</div>
 				{/if}
-
-				{if $selectCaretDoubleIcon}
-					<a class="select-arrow-down-container" href="javascript:;">{$selectCaretDoubleIcon|noAutoescape}</a>
-				{/if}
-
 			</div>
 
 			{if $childElementsHTML}
@@ -88,9 +106,25 @@
 {/template}
 
 /**
- * Prints the select label.
- * @param name
+ * Prints the badge item.
+ *
+ * @param badgeCloseIcon
  * @param label
+ * @param value
+ */
+{template .badge_item autoescape="deprecated-contextual"}
+	<li>
+		<span class="badge badge-default badge-sm multiple-badge">
+			{$label}
+			<a class="trigger-badge-item-close" data-badge-value="{$value}" href="javascript:void(0)">{$badgeCloseIcon|noAutoescape}</a>
+		</span>
+	</li>
+{/template}
+
+/**
+ * Prints the select label.
+ * @param label
+ * @param name
  * @param required
  * @param tip
  */
@@ -115,47 +149,74 @@
  * @param name
  * @param options
  * @param readOnly
- * @param value
  * @param strings
+ * @param value
  */
 {template .hidden_select autoescape="deprecated-contextual"}
 	<select class="form-control hide" dir="{$dir}" id="{$name}" name="{$name}" {if $multiple}multiple size="{length($options)}"{/if}>
 		{if not $readOnly}
-			<option dir="{$dir}" disabled {if not $value}selected{/if} value="">
+			<option dir="{$dir}" disabled {if length($value) == 0}selected{/if} value="">
 				{$strings.chooseAnOption}
 			</option>
 		{/if}
 
 		{foreach $option in $options}
-			{let $selectedValue}
-				{if $value and $value.value}
-					{$value.value}
-				{/if}
-			{/let}
-
-			<option dir="{$dir}" {if $selectedValue == $option.value}selected{/if} value="{$option.value}">{$option.label}</option>
+			{call ddm.select_hidden_options}
+				{param dir: $dir /}
+				{param option: $option /}
+				{param values: $value /}
+			{/call}
 		{/foreach}
 	</select>
 {/template}
 
 /**
- * Prints the DDM form select field options.
+ * Prints the DDM form hidden select options.
  *
+ * @param dir
+ * @param option
+ * @param values
+ */
+{template .select_hidden_options autoescape="deprecated-contextual"}
+	{let $selected}
+		{if $values}
+			{foreach $currentValue in $values}
+				{if $currentValue.value == $option.value}
+					selected
+				{/if}
+			{/foreach}
+		{/if}
+	{/let}
+
+	<option dir="{$dir}" {$selected} value="{$option.value}">{$option.label}</option>
+{/template}
+
+/**
+ * Prints the DDM form select field UI itens.
+ *
+ * @param multiple
  * @param options
  * @param value
  */
 {template .select_options autoescape="deprecated-contextual"}
-	{let $optionsSelected: $value /}
-
 	{foreach $option in $options}
-		{let $selectedValue}
-			{if $optionsSelected and $optionsSelected.value}
-				{$optionsSelected.value}
+		{let $selected}
+			{if $value}
+				{foreach $currentValue in $value}
+					{if $currentValue.value == $option.value}
+						selected
+					{/if}
+				{/foreach}
 			{/if}
 		{/let}
 
-		<li class="{if $selectedValue == $option.value}option-selected{/if}" data-option-index="{index($option)}" data-option-value="{$option.value}">
-			{$option.label}
+		<li class="select-option-item {if $selected}option-selected{/if}" data-option-index="{index($option)}" data-option-selected="{if $selected}true{/if}" data-option-value="{$option.value}">
+			{if $multiple}
+				<input type="checkbox" value="" {if $selected}checked{/if}>
+			{/if}
+			<span>
+				{$option.label}
+			</span>
 		</li>
 	{/foreach}
 {/template}

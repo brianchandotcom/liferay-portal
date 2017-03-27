@@ -1,7 +1,11 @@
+apply plugin: "com.liferay.lang.merger"
+
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
-apply plugin: "com.liferay.lang.merger"
+configJSModules {
+	includes = ["**/*.es.js*"]
+}
 
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"

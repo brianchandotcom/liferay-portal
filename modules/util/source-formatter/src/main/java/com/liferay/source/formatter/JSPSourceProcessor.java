@@ -17,7 +17,6 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -32,12 +31,16 @@ import com.liferay.source.formatter.checks.JSPIfStatementCheck;
 import com.liferay.source.formatter.checks.JSPLanguageKeysCheck;
 import com.liferay.source.formatter.checks.JSPSessionKeysCheck;
 import com.liferay.source.formatter.checks.JSPTagAttributesCheck;
+import com.liferay.source.formatter.checks.JSPUnusedImportCheck;
+import com.liferay.source.formatter.checks.JSPUnusedTaglibCheck;
+import com.liferay.source.formatter.checks.JSPUnusedVariableCheck;
 import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
 import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
 import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
+import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 
@@ -50,7 +53,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -92,94 +94,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 
 			_importCountMap.put(importName, count + 1);
-		}
-	}
-
-	protected List<String> addIncludedAndReferencedFileNames(
-		List<String> fileNames, Set<String> checkedFileNames) {
-
-		Set<String> includedAndReferencedFileNames = new HashSet<>();
-
-		for (String fileName : fileNames) {
-			if (!checkedFileNames.add(fileName)) {
-				continue;
-			}
-
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			includedAndReferencedFileNames.addAll(
-				getJSPIncludeFileNames(fileName, fileNames));
-			includedAndReferencedFileNames.addAll(
-				getJSPReferenceFileNames(fileName, fileNames));
-		}
-
-		if (includedAndReferencedFileNames.isEmpty()) {
-			return fileNames;
-		}
-
-		for (String fileName : includedAndReferencedFileNames) {
-			fileName = StringUtil.replace(
-				fileName, CharPool.SLASH, CharPool.BACK_SLASH);
-
-			if (!fileNames.contains(fileName)) {
-				fileNames.add(fileName);
-			}
-		}
-
-		return addIncludedAndReferencedFileNames(fileNames, checkedFileNames);
-	}
-
-	protected void addJSPUnusedImports(
-		String fileName, List<String> importLines, List<String> unneededImports,
-		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames) {
-
-		for (String importLine : importLines) {
-			int x = importLine.indexOf(CharPool.QUOTE);
-			int y = importLine.indexOf(CharPool.QUOTE, x + 1);
-
-			if ((x == -1) || (y == -1)) {
-				continue;
-			}
-
-			String className = importLine.substring(x + 1, y);
-
-			className = className.substring(
-				className.lastIndexOf(CharPool.PERIOD) + 1);
-
-			String regex = "[^A-Za-z0-9_\"]" + className + "[^A-Za-z0-9_\"]";
-
-			if (hasUnusedJSPTerm(
-					fileName, regex, "class", checkedForIncludesFileNames,
-					includeFileNames)) {
-
-				unneededImports.add(importLine);
-			}
-		}
-	}
-
-	protected String buildFullPathIncludeFileName(
-		String fileName, String includeFileName) {
-
-		String path = fileName;
-
-		while (true) {
-			int y = path.lastIndexOf(CharPool.SLASH);
-
-			if (y == -1) {
-				return StringPool.BLANK;
-			}
-
-			String fullPathIncludeFileName =
-				path.substring(0, y) + includeFileName;
-
-			if (_jspContents.containsKey(fullPathIncludeFileName) &&
-				!fullPathIncludeFileName.equals(fileName)) {
-
-				return fullPathIncludeFileName;
-			}
-
-			path = path.substring(0, y);
 		}
 	}
 
@@ -293,12 +207,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<String> checkedForIncludesFileNames = new HashSet<>();
-		Set<String> includeFileNames = new HashSet<>();
-
-		String newContent = formatJSP(
-			fileName, absolutePath, content, checkedForIncludesFileNames,
-			includeFileNames);
+		String newContent = formatJSP(fileName, absolutePath, content);
 
 		newContent = StringUtil.replace(
 			newContent,
@@ -319,21 +228,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixEmptyJavaSourceTag(newContent);
 
-		if (_stripJSPImports && !_jspContents.isEmpty()) {
-			try {
-				newContent = formatJSPImportsOrTaglibs(
-					fileName, newContent, _compressedJSPImportPattern,
-					_uncompressedJSPImportPattern, true,
-					checkedForIncludesFileNames, includeFileNames);
-				newContent = formatJSPImportsOrTaglibs(
-					fileName, newContent, _compressedJSPTaglibPattern,
-					_uncompressedJSPTaglibPattern, false,
-					checkedForIncludesFileNames, includeFileNames);
-			}
-			catch (RuntimeException re) {
-				_stripJSPImports = false;
-			}
-		}
+		newContent = formatJSPImportsOrTaglibs(
+			fileName, newContent, _compressedJSPImportPattern,
+			_uncompressedJSPImportPattern);
+		newContent = formatJSPImportsOrTaglibs(
+			fileName, newContent, _compressedJSPTaglibPattern,
+			_uncompressedJSPTaglibPattern);
 
 		if ((portalSource || subrepository) &&
 			content.contains("page import=") &&
@@ -363,10 +263,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			fileName, newContent, "<%@ page import=");
 		newContent = compressImportsOrTaglibs(
 			fileName, newContent, "<%@ taglib uri=");
-
-		newContent = removeUnusedTaglibs(
-			fileName, newContent, checkedForIncludesFileNames,
-			includeFileNames);
 
 		checkSubnames(fileName, newContent);
 
@@ -443,10 +339,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = jspSourceTabCalculator.calculateTabs(
 			fileName, newContent, (JSPSourceProcessor)this);
 
-		if (!content.equals(newContent)) {
-			_jspContents.put(fileName, newContent);
-		}
-
 		return newContent;
 	}
 
@@ -460,12 +352,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return fileNames;
 		}
 
+		_contentsMap = _getContentsMap();
+
 		if (sourceFormatterArgs.isFormatCurrentBranch() ||
 			sourceFormatterArgs.isFormatLatestAuthor() ||
 			sourceFormatterArgs.isFormatLocalChanges()) {
 
-			return addIncludedAndReferencedFileNames(
-				fileNames, new HashSet<String>());
+			return JSPSourceUtil.addIncludedAndReferencedFileNames(
+				fileNames, new HashSet<String>(), _contentsMap);
 		}
 
 		return fileNames;
@@ -589,9 +483,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatJSP(
-			String fileName, String absolutePath, String content,
-			Set<String> checkedForIncludesFileNames,
-			Set<String> includeFileNames)
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -647,20 +539,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				checkInefficientStringMethods(
 					line, fileName, absolutePath, lineCount, javaSource);
-
-				if (javaSource) {
-					if ((portalSource || subrepository) &&
-						!isExcludedPath(
-							_UNUSED_VARIABLES_EXCLUDES, absolutePath,
-							lineCount) &&
-						!_jspContents.isEmpty() &&
-						hasUnusedVariable(
-							fileName, trimmedLine, checkedForIncludesFileNames,
-							includeFileNames)) {
-
-						continue;
-					}
-				}
 
 				// LPS-47179
 
@@ -800,9 +678,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	protected String formatJSPImportsOrTaglibs(
 			String fileName, String content, Pattern compressedPattern,
-			Pattern uncompressedPattern, boolean checkUnusedImports,
-			Set<String> checkedForIncludesFileNames,
-			Set<String> includeFileNames)
+			Pattern uncompressedPattern)
 		throws IOException {
 
 		if (fileName.endsWith("init-ext.jsp")) {
@@ -820,33 +696,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		String newImports = StringUtil.replace(
 			imports, new String[] {"<%@\r\n", "<%@\n", " %><%@ "},
 			new String[] {"\r\n<%@ ", "\n<%@ ", " %>\n<%@ "});
-
-		if (checkUnusedImports) {
-			List<String> importLines = new ArrayList<>();
-
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(newImports));
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.contains("import=")) {
-					importLines.add(line);
-				}
-			}
-
-			List<String> unneededImports = getJSPDuplicateImports(
-				fileName, content, importLines);
-
-			addJSPUnusedImports(
-				fileName, importLines, unneededImports,
-				checkedForIncludesFileNames, includeFileNames);
-
-			for (String unneededImport : unneededImports) {
-				newImports = StringUtil.replace(
-					newImports, unneededImport, StringPool.BLANK);
-			}
-		}
 
 		content = StringUtil.replaceFirst(content, imports, newImports);
 
@@ -956,162 +805,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return _fileChecks;
 	}
 
-	protected List<String> getJSPDuplicateImports(
-		String fileName, String content, List<String> importLines) {
-
-		List<String> duplicateImports = new ArrayList<>();
-
-		for (String importLine : importLines) {
-			int x = content.indexOf("<%@ include file=");
-
-			if (x == -1) {
-				continue;
-			}
-
-			int y = content.indexOf("<%@ page import=");
-
-			if (y == -1) {
-				continue;
-			}
-
-			if ((x < y) && isJSPDuplicateImport(fileName, importLine, false)) {
-				duplicateImports.add(importLine);
-			}
-		}
-
-		return duplicateImports;
-	}
-
-	protected Set<String> getJSPIncludeFileNames(
-		String fileName, Collection<String> fileNames) {
-
-		Set<String> includeFileNames = new HashSet<>();
-
-		String content = _jspContents.get(fileName);
-
-		if (Validator.isNull(content)) {
-			return includeFileNames;
-		}
-
-		for (int x = 0;;) {
-			x = content.indexOf("<%@ include file=", x);
-
-			if (x == -1) {
-				break;
-			}
-
-			x = content.indexOf(CharPool.QUOTE, x);
-
-			if (x == -1) {
-				break;
-			}
-
-			int y = content.indexOf(CharPool.QUOTE, x + 1);
-
-			if (y == -1) {
-				break;
-			}
-
-			String includeFileName = content.substring(x + 1, y);
-
-			if (!includeFileName.startsWith(StringPool.SLASH)) {
-				includeFileName = StringPool.SLASH + includeFileName;
-			}
-
-			Matcher matcher = _jspIncludeFilePattern.matcher(includeFileName);
-
-			if (!matcher.find()) {
-				throw new RuntimeException(
-					"Invalid include " + includeFileName);
-			}
-
-			String extension = matcher.group(1);
-
-			if (extension.equals("svg")) {
-				x = y;
-
-				continue;
-			}
-
-			includeFileName = buildFullPathIncludeFileName(
-				fileName, includeFileName);
-
-			if ((includeFileName.endsWith("jsp") ||
-				 includeFileName.endsWith("jspf")) &&
-				!includeFileName.endsWith("html/common/init.jsp") &&
-				!includeFileName.endsWith("html/portlet/init.jsp") &&
-				!includeFileName.endsWith("html/taglib/init.jsp") &&
-				!fileNames.contains(includeFileName)) {
-
-				includeFileNames.add(includeFileName);
-			}
-
-			x = y;
-		}
-
-		return includeFileNames;
-	}
-
-	protected Set<String> getJSPReferenceFileNames(
-		String fileName, Collection<String> fileNames) {
-
-		Set<String> referenceFileNames = new HashSet<>();
-
-		if (!fileName.endsWith("init.jsp") && !fileName.endsWith("init.jspf") &&
-			!fileName.contains("init-ext.jsp")) {
-
-			return referenceFileNames;
-		}
-
-		for (Map.Entry<String, String> entry : _jspContents.entrySet()) {
-			String referenceFileName = entry.getKey();
-
-			if (fileNames.contains(referenceFileName)) {
-				continue;
-			}
-
-			String sharedPath = fileName.substring(
-				0, StringUtil.startsWithWeight(referenceFileName, fileName));
-
-			if (Validator.isNull(sharedPath) ||
-				!sharedPath.contains(StringPool.SLASH)) {
-
-				continue;
-			}
-
-			if (!sharedPath.endsWith(StringPool.SLASH)) {
-				sharedPath = sharedPath.substring(
-					0, sharedPath.lastIndexOf(CharPool.SLASH) + 1);
-			}
-
-			String content = null;
-
-			for (int x = -1;;) {
-				x = sharedPath.indexOf(CharPool.SLASH, x + 1);
-
-				if (x == -1) {
-					break;
-				}
-
-				if (content == null) {
-					content = entry.getValue();
-				}
-
-				if (content.contains(
-						"<%@ include file=\"" + fileName.substring(x)) ||
-					content.contains(
-						"<%@ include file=\"" + fileName.substring(x + 1))) {
-
-					referenceFileNames.add(referenceFileName);
-
-					break;
-				}
-			}
-		}
-
-		return referenceFileNames;
-	}
-
 	protected int getTaglibXSSVulnerabilityPos(
 		String content, String vulnerability) {
 
@@ -1182,233 +875,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return _utilTaglibSrcDirName;
 	}
 
-	protected String getVariableName(String line) {
-		if (!line.endsWith(";") || line.startsWith("//")) {
-			return null;
-		}
-
-		String variableName = null;
-
-		int x = line.indexOf(" = ");
-
-		if (x == -1) {
-			int y = line.lastIndexOf(CharPool.SPACE);
-
-			if (y != -1) {
-				variableName = line.substring(y + 1, line.length() - 1);
-			}
-		}
-		else {
-			line = line.substring(0, x);
-
-			int y = line.lastIndexOf(CharPool.SPACE);
-
-			if (y != -1) {
-				variableName = line.substring(y + 1);
-			}
-		}
-
-		if (Validator.isVariableName(variableName)) {
-			return variableName;
-		}
-
-		return null;
-	}
-
-	protected boolean hasUnusedJSPTerm(
-		String fileName, String regex, String type,
-		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames) {
-
-		includeFileNames.add(fileName);
-
-		Set<String> checkedForUnusedJSPTerm = new HashSet<>();
-
-		return !isJSPTermRequired(
-			fileName, regex, type, checkedForUnusedJSPTerm,
-			checkedForIncludesFileNames, includeFileNames);
-	}
-
-	protected boolean hasUnusedVariable(
-		String fileName, String line, Set<String> checkedForIncludesFileNames,
-		Set<String> includeFileNames) {
-
-		if (line.contains(": ")) {
-			return false;
-		}
-
-		String variableName = getVariableName(line);
-
-		if (Validator.isNull(variableName) || variableName.equals("false") ||
-			variableName.equals("true")) {
-
-			return false;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("((/)|(\\*)|(\\+(\\+)?)|(-(-)?)|\\(|=)?( )?");
-		sb.append(variableName);
-		sb.append("( )?(\\.");
-		sb.append("|(((\\+)|(-)|(\\*)|(/)|(%)|(\\|)|(&)|(\\^))?(=))");
-		sb.append("|(\\+(\\+)?)|(-(-)?)");
-		sb.append("|(\\)))?");
-
-		return hasUnusedJSPTerm(
-			fileName, sb.toString(), "variable", checkedForIncludesFileNames,
-			includeFileNames);
-	}
-
-	protected boolean isJSPDuplicateImport(
-		String fileName, String importLine, boolean checkFile) {
-
-		String content = _jspContents.get(fileName);
-
-		if (Validator.isNull(content)) {
-			return false;
-		}
-
-		int x = importLine.indexOf("page");
-
-		if (x == -1) {
-			return false;
-		}
-
-		if (checkFile && content.contains(importLine.substring(x))) {
-			return true;
-		}
-
-		int y = content.indexOf("<%@ include file=");
-
-		if (y == -1) {
-			return false;
-		}
-
-		y = content.indexOf(CharPool.QUOTE, y);
-
-		if (y == -1) {
-			return false;
-		}
-
-		int z = content.indexOf(CharPool.QUOTE, y + 1);
-
-		if (z == -1) {
-			return false;
-		}
-
-		String includeFileName = content.substring(y + 1, z);
-
-		includeFileName = buildFullPathIncludeFileName(
-			fileName, includeFileName);
-
-		return isJSPDuplicateImport(includeFileName, importLine, true);
-	}
-
-	protected boolean isJSPTermRequired(
-		String fileName, String regex, String type,
-		Set<String> checkedForUnusedJSPTerm,
-		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames) {
-
-		if (checkedForUnusedJSPTerm.contains(fileName)) {
-			return false;
-		}
-
-		checkedForUnusedJSPTerm.add(fileName);
-
-		String content = _jspContents.get(fileName);
-
-		if (Validator.isNull(content)) {
-			return false;
-		}
-
-		Pattern pattern = Pattern.compile(regex);
-
-		Matcher matcher = pattern.matcher(content);
-
-		if (matcher.find() &&
-			(!type.equals("variable") || (checkedForUnusedJSPTerm.size() > 1) ||
-			 matcher.find())) {
-
-			return true;
-		}
-
-		if (!checkedForIncludesFileNames.contains(fileName)) {
-			includeFileNames.addAll(
-				getJSPIncludeFileNames(fileName, includeFileNames));
-			includeFileNames.addAll(
-				getJSPReferenceFileNames(fileName, includeFileNames));
-		}
-
-		checkedForIncludesFileNames.add(fileName);
-
-		String[] includeFileNamesArray = includeFileNames.toArray(
-			new String[includeFileNames.size()]);
-
-		for (String includeFileName : includeFileNamesArray) {
-			if (!checkedForUnusedJSPTerm.contains(includeFileName) &&
-				isJSPTermRequired(
-					includeFileName, regex, type, checkedForUnusedJSPTerm,
-					checkedForIncludesFileNames, includeFileNames)) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	protected void moveFrequentlyUsedImportsToCommonInit(int minCount)
-		throws IOException {
-
-		if (_importCountMap.isEmpty()) {
-			return;
-		}
-
-		String commonInitFileName = "portal-web/docroot/html/common/init.jsp";
-
-		File commonInitFile = null;
-		String commonInitFileContent = null;
-
-		int x = -1;
-
-		for (Map.Entry<String, Integer> importCount :
-				_importCountMap.entrySet()) {
-
-			Integer count = importCount.getValue();
-
-			if (count < minCount) {
-				continue;
-			}
-
-			String importName = importCount.getKey();
-
-			int y = importName.lastIndexOf(CharPool.PERIOD);
-
-			String importClassName = importName.substring(y + 1);
-
-			if (_duplicateImportClassNames.contains(importClassName)) {
-				continue;
-			}
-
-			if (commonInitFileContent == null) {
-				commonInitFile = new File(commonInitFileName);
-
-				commonInitFileContent = FileUtil.read(commonInitFile);
-
-				x = commonInitFileContent.indexOf("<%@ page import");
-			}
-
-			commonInitFileContent = StringUtil.insert(
-				commonInitFileContent,
-				"<%@ page import=\"" + importName + "\" %>\n", x);
-		}
-
-		if (commonInitFileContent != null) {
-			FileUtil.write(commonInitFile, commonInitFileContent);
-
-			_jspContents.put(commonInitFileName, commonInitFileContent);
-		}
-	}
-
 	@Override
 	protected void populateFileChecks() throws Exception {
 		_fileChecks.add(new JSPWhitespaceCheck());
@@ -1425,6 +891,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			new JSPTagAttributesCheck(
 				portalSource, subrepository,
 				_getPrimitiveTagAttributeDataTypes(), _getTagJavaClassesMap()));
+		_fileChecks.add(new JSPUnusedImportCheck(_contentsMap));
 		_fileChecks.add(
 			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
 		_fileChecks.add(new StringUtilCheck());
@@ -1432,6 +899,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_fileChecks.add(new ValidatorEqualsCheck());
 
 		if (portalSource || subrepository) {
+			_fileChecks.add(new JSPUnusedTaglibCheck(_contentsMap));
+			_fileChecks.add(
+				new JSPUnusedVariableCheck(
+					getExcludes(_UNUSED_VARIABLES_EXCLUDES), _contentsMap));
 			_fileChecks.add(
 				new ResourceBundleCheck(
 					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
@@ -1445,16 +916,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	@Override
-	protected void preFormat() throws Exception {
-		_moveFrequentlyUsedImportsToCommonInit = GetterUtil.getBoolean(
-			getProperty("move.frequently.used.imports.to.common.init"));
-
+	private Map<String, String> _getContentsMap() throws Exception {
 		String[] excludes = new String[] {"**/null.jsp", "**/tools/**"};
 
 		List<String> allFileNames = getFileNames(
 			sourceFormatterArgs.getBaseDirName(), null, excludes,
 			getIncludes(), true);
+
+		Map<String, String> contentsMap = new HashMap<>();
 
 		try {
 			for (String fileName : allFileNames) {
@@ -1462,8 +931,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 				File file = new File(fileName);
-
-				String absolutePath = getAbsolutePath(fileName);
 
 				String content = FileUtil.read(file);
 
@@ -1480,49 +947,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				processFormattedFile(file, fileName, content, newContent);
 
-				if (portalSource && _moveFrequentlyUsedImportsToCommonInit &&
-					fileName.endsWith("/init.jsp") &&
-					!isModulesFile(absolutePath, true) &&
-					!fileName.endsWith("/common/init.jsp")) {
-
-					addImportCounts(content);
-				}
-
-				_jspContents.put(fileName, newContent);
-			}
-
-			if (portalSource && _moveFrequentlyUsedImportsToCommonInit) {
-				moveFrequentlyUsedImportsToCommonInit(4);
+				contentsMap.put(fileName, newContent);
 			}
 		}
 		catch (Exception e) {
 			ReflectionUtil.throwException(e);
 		}
-	}
 
-	protected String removeUnusedTaglibs(
-		String fileName, String content,
-		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames) {
-
-		if (!portalSource && !subrepository) {
-			return content;
-		}
-
-		Matcher matcher = _taglibURIPattern.matcher(content);
-
-		while (matcher.find()) {
-			String regex =
-				StringPool.LESS_THAN + matcher.group(1) + StringPool.COLON;
-
-			if (hasUnusedJSPTerm(
-					fileName, regex, "taglib", checkedForIncludesFileNames,
-					includeFileNames)) {
-
-				return StringUtil.removeSubstring(content, matcher.group());
-			}
-		}
-
-		return content;
+		return contentsMap;
 	}
 
 	private Set<String> _getPrimitiveTagAttributeDataTypes() {
@@ -1774,6 +1206,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"(<.*\n*page import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _compressedJSPTaglibPattern = Pattern.compile(
 		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
+	private Map<String, String> _contentsMap;
 	private final Pattern _defineObjectsPattern = Pattern.compile(
 		"\n\t*(<.*:defineObjects />)(\n|$)");
 	private final List<String> _duplicateImportClassNames = new ArrayList<>();
@@ -1791,23 +1224,18 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Pattern _javaClassPattern = Pattern.compile(
 		"\n(private|protected|public).* class ([A-Za-z0-9]+) " +
 			"([\\s\\S]*?)\n\\}\n");
-	private final Map<String, String> _jspContents = new HashMap<>();
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*\\.(jsp[f]?|svg)");
 	private final Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
-	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private final Pattern _redirectBackURLPattern = Pattern.compile(
 		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +
 			"\\);)\n(String backURL = ParamUtil\\.getString\\(request, \"" +
 				"backURL\", redirect\\);)");
-	private boolean _stripJSPImports = true;
 	private final Pattern _subnamePattern = Pattern.compile(
 		"\\s(_?sub[A-Z]\\w+)[; ]");
-	private final Pattern _taglibURIPattern = Pattern.compile(
-		"<%@\\s+taglib uri=.* prefix=\"(.*?)\" %>");
 	private final Pattern _taglibVariablePattern = Pattern.compile(
 		"(\n\t*String (taglib\\w+) = (.*);)\n\\s*%>\\s+(<[\\S\\s]*?>)\n");
 	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(

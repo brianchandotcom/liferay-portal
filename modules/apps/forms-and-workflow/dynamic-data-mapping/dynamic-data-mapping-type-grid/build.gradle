@@ -1,12 +1,14 @@
+apply plugin: "com.liferay.gulp"
+apply plugin: "com.liferay.lang.merger"
+
+task testJS
+
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 configJSModules {
-	enabled = false
+	includes = ["**/*.es.js*"]
 }
-
-apply plugin: "com.liferay.gulp"
-apply plugin: "com.liferay.lang.merger"
 
 dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
@@ -18,17 +20,15 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 }
 
-task testJS
-
-testJS {
-	dependsOn gulpTest
-}
-
 mergeLang {
 	sourceDirs = [
 		"../dynamic-data-mapping-lang/src/main/resources/content",
 		"src/main/resources/content"
 	]
+}
+
+testJS {
+	dependsOn gulpTest
 }
 
 transpileJS {

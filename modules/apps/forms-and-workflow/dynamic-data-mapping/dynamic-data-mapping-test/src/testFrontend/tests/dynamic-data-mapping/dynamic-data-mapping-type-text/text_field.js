@@ -111,7 +111,6 @@ describe(
 							}
 						);
 
-
 						it(
 							'should call syncInputHeight only the display style is multiline',
 							function(done) {

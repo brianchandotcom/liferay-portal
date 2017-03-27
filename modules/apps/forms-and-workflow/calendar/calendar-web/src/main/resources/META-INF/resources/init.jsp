@@ -214,7 +214,7 @@ Calendar defaultCalendar = null;
 CalendarDisplayContext calendarDisplayContext = (CalendarDisplayContext)renderRequest.getAttribute(CalendarWebKeys.CALENDAR_DISPLAY_CONTEXT);
 
 if (calendarDisplayContext != null) {
-	otherCalendars = calendarDisplayContext.getOtherCalendars(calendarIds);
+	otherCalendars = calendarDisplayContext.getOtherCalendars(user, calendarIds);
 }
 
 for (Calendar groupCalendar : groupCalendars) {

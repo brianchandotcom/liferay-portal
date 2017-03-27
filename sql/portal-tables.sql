@@ -1453,30 +1453,6 @@ create table Ticket (
 	expirationDate DATE null
 );
 
-create table TrashEntry (
-	entryId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	classNameId LONG,
-	classPK LONG,
-	systemEventSetKey LONG,
-	typeSettings TEXT null,
-	status INTEGER
-);
-
-create table TrashVersion (
-	versionId LONG not null primary key,
-	companyId LONG,
-	entryId LONG,
-	classNameId LONG,
-	classPK LONG,
-	typeSettings TEXT null,
-	status INTEGER
-);
-
 create table UserNotificationDelivery (
 	mvccVersion LONG default 0 not null,
 	userNotificationDeliveryId LONG not null primary key,

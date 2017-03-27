@@ -48,8 +48,8 @@ public class JSPUnusedTaglibCheck extends JSPUnusedTermCheck {
 	}
 
 	private String _removeUnusedTaglibs(
-		String fileName, String content,
-		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames) {
+		String fileName, String content, Set<String> checkedFileNames,
+		Set<String> includeFileNames) {
 
 		Matcher matcher = _taglibURIPattern.matcher(content);
 
@@ -58,7 +58,7 @@ public class JSPUnusedTaglibCheck extends JSPUnusedTermCheck {
 				StringPool.LESS_THAN + matcher.group(1) + StringPool.COLON;
 
 			if (hasUnusedJSPTerm(
-					fileName, regex, "taglib", checkedForIncludesFileNames,
+					fileName, regex, "taglib", checkedFileNames,
 					includeFileNames, _contentsMap)) {
 
 				return StringUtil.removeSubstring(content, matcher.group());

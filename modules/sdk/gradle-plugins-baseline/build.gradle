@@ -3,6 +3,8 @@ apply plugin: "org.ysb33r.gradletest"
 task copyGradleTestDependencies(type: Copy)
 task installGradleTestSmokeSample100(type: GradleBuild)
 
+File userMavenRepoLocalDir = new File(System.getProperty("user.home"), ".m2/repository")
+
 copyGradleTestDependencies {
 	from configurations.compile
 	into jar.destinationDir
@@ -25,5 +27,6 @@ gradleTest {
 
 installGradleTestSmokeSample100 {
 	dir = "src/gradleTest/smoke/dependencies/sample-100"
+	startParameter.systemPropertiesArgs = ["maven.repo.local": userMavenRepoLocalDir.absolutePath]
 	tasks = ["install"]
 }

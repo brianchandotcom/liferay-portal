@@ -34,13 +34,18 @@ import java.util.regex.Pattern;
  */
 public class BNDExportsCheck extends BaseFileCheck {
 
+	public BNDExportsCheck(boolean subrepository) {
+		_subrepository = subrepository;
+	}
+
 	@Override
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (!fileName.endsWith("/bnd.bnd") ||
 			absolutePath.contains("/testIntegration/") ||
-			absolutePath.contains("/third-party/")) {
+			absolutePath.contains("/third-party/") ||
+			!isModulesFile(absolutePath, _subrepository)) {
 
 			return new Tuple(content, Collections.emptySet());
 		}
@@ -116,5 +121,6 @@ public class BNDExportsCheck extends BaseFileCheck {
 	private final Pattern _exportsPattern = Pattern.compile(
 		"\nExport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
+	private final boolean _subrepository;
 
 }

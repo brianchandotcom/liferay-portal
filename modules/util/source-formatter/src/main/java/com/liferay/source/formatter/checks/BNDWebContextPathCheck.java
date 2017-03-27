@@ -27,13 +27,18 @@ import java.util.Set;
  */
 public class BNDWebContextPathCheck extends BaseFileCheck {
 
+	public BNDWebContextPathCheck(boolean subrepository) {
+		_subrepository = subrepository;
+	}
+
 	@Override
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (!fileName.endsWith("/bnd.bnd") ||
 			absolutePath.contains("/testIntegration/") ||
-			absolutePath.contains("/third-party/")) {
+			absolutePath.contains("/third-party/") ||
+			!isModulesFile(absolutePath, _subrepository)) {
 
 			return new Tuple(content, Collections.emptySet());
 		}
@@ -69,5 +74,7 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 				"Incorrect Web-ContextPath '" + webContextPath + "'");
 		}
 	}
+
+	private final boolean _subrepository;
 
 }

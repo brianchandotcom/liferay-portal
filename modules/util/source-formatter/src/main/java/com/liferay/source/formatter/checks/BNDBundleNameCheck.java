@@ -29,13 +29,18 @@ import java.util.Set;
  */
 public class BNDBundleNameCheck extends BaseFileCheck {
 
+	public BNDBundleNameCheck(boolean subrepository) {
+		_subrepository = subrepository;
+	}
+
 	@Override
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (!fileName.endsWith("/bnd.bnd") ||
 			absolutePath.contains("/testIntegration/") ||
-			absolutePath.contains("/third-party/")) {
+			absolutePath.contains("/third-party/") ||
+			!isModulesFile(absolutePath, _subrepository)) {
 
 			return new Tuple(content, Collections.emptySet());
 		}
@@ -101,5 +106,7 @@ public class BNDBundleNameCheck extends BaseFileCheck {
 			}
 		}
 	}
+
+	private final boolean _subrepository;
 
 }

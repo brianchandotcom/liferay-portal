@@ -246,15 +246,15 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		_fileChecks.add(new BNDLineBreaksCheck());
 		_fileChecks.add(new BNDRangeCheck());
 		_fileChecks.add(new BNDSchemaVersionCheck());
-		_fileChecks.add(new BNDWebContextPathCheck());
 	}
 
 	@Override
 	protected void populateModuleFileChecks() throws Exception {
-		_fileChecks.add(new BNDBundleNameCheck());
-		_fileChecks.add(new BNDDirectoryNameCheck());
-		_fileChecks.add(new BNDExportsCheck());
-		_fileChecks.add(new BNDIncludeResourceCheck());
+		_fileChecks.add(new BNDBundleNameCheck(subrepository));
+		_fileChecks.add(new BNDDirectoryNameCheck(subrepository));
+		_fileChecks.add(new BNDExportsCheck(subrepository));
+		_fileChecks.add(new BNDIncludeResourceCheck(subrepository));
+		_fileChecks.add(new BNDWebContextPathCheck(subrepository));
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};

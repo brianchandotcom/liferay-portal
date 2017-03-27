@@ -29,11 +29,17 @@ import java.util.regex.Pattern;
  */
 public class BNDIncludeResourceCheck extends BaseFileCheck {
 
+	public BNDIncludeResourceCheck(boolean subrepository) {
+		_subrepository = subrepository;
+	}
+
 	@Override
 	public Tuple process(String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!fileName.endsWith("test-bnd.bnd")) {
+		if (!fileName.endsWith("test-bnd.bnd") &&
+			isModulesFile(absolutePath, _subrepository)) {
+
 			content = _formatIncludeResource(content);
 		}
 
@@ -154,6 +160,7 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 	private final Pattern _includeResourcePattern = Pattern.compile(
 		"^(-includeresource|Include-Resource):[\\s\\S]*?([^\\\\]\n|\\Z)",
 		Pattern.MULTILINE);
+	private final boolean _subrepository;
 
 	private static class IncludeResourceComparator
 		implements Comparator<String> {

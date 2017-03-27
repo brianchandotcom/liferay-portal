@@ -392,6 +392,11 @@ public class GitWorkingDirectory {
 
 				fetchCommand.call();
 
+				System.out.println(
+					"Fetch completed in " +
+						JenkinsResultsParserUtil.toDurationString(
+							System.currentTimeMillis() - start));
+
 				return;
 			}
 			catch (TransportException te) {
@@ -410,11 +415,6 @@ public class GitWorkingDirectory {
 					throw te;
 				}
 			}
-
-			System.out.println(
-				"Fetch completed in " +
-					JenkinsResultsParserUtil.toDurationString(
-						System.currentTimeMillis() - start));
 		}
 	}
 

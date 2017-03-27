@@ -727,15 +727,15 @@ public class DDLRecordSetLocalServiceImpl
 		validateDDMStructureId(ddmStructureId);
 		validateName(nameMap);
 
+		User user = userLocalService.getUser(userId);
+
 		long oldDDMStructureId = recordSet.getDDMStructureId();
 
-		User user = userLocalService.getUser(userId);
+		recordSet.setDDMStructureId(ddmStructureId);
 
 		DDLRecordSetVersion latestRecordSetVersion =
 			ddlRecordSetVersionLocalService.getLatestRecordSetVersion(
 				recordSet.getRecordSetId());
-
-		recordSet.setDDMStructureId(ddmStructureId);
 
 		boolean majorVersion = GetterUtil.getBoolean(
 			serviceContext.getAttribute("majorVersion"));
@@ -751,10 +751,12 @@ public class DDLRecordSetLocalServiceImpl
 		recordSet.setDescriptionMap(descriptionMap);
 		recordSet.setMinDisplayRows(minDisplayRows);
 
+		ddlRecordSetPersistence.update(recordSet);
+
+		// Record Set Version
+
 		addRecordSetVersion(
 			ddmStructureId, user, recordSet, version, serviceContext);
-
-		ddlRecordSetPersistence.update(recordSet);
 
 		if (oldDDMStructureId != ddmStructureId) {
 

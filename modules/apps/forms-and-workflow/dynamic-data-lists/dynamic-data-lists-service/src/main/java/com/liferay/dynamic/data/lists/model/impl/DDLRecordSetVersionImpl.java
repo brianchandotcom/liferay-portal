@@ -29,14 +29,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DDLRecordSetVersionImpl extends DDLRecordSetVersionBaseImpl {
 
 	@Override
-	public DDLRecordSet getDDLRecordSet() throws PortalException {
-		return DDLRecordSetLocalServiceUtil.getDDLRecordSet(getRecordSetId());
-	}
-
-	@Override
 	public DDMStructureVersion getDDMStructureVersion() throws PortalException {
 		return DDMStructureVersionLocalServiceUtil.getDDMStructureVersion(
 			getDDMStructureVersionId());
+	}
+
+	@Override
+	public DDLRecordSet getRecordSet() throws PortalException {
+		return DDLRecordSetLocalServiceUtil.getRecordSet(getRecordSetId());
 	}
 
 }

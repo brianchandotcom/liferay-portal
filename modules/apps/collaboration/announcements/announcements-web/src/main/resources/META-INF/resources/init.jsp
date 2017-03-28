@@ -83,6 +83,7 @@ page import="com.liferay.portlet.announcements.service.permission.AnnouncementsE
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

@@ -762,6 +762,20 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	/**
+	* Returns the team roles in the company.
+	*
+	* @param companyId the primary key of the company
+	* @param teamIds the primary keys of the teams
+	* @return the team roles in the company
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Role> getTeamRolesByTeamIds(
+		long companyId, long[] teamIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _roleLocalService.getTeamRolesByTeamIds(companyId, teamIds);
+	}
+
+	/**
 	* Returns all the roles of the type.
 	*
 	* @param type the role's type (optionally <code>0</code>)

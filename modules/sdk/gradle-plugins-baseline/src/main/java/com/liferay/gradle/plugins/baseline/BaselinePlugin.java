@@ -30,12 +30,14 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.ComponentSelection;
 import org.gradle.api.artifacts.ComponentSelectionRules;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.plugins.ReportingBasePlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
@@ -90,8 +92,13 @@ public class BaselinePlugin implements Plugin<Project> {
 	private Configuration _addConfigurationBaseline(
 		final AbstractArchiveTask newJarTask) {
 
-		Configuration configuration = GradleUtil.addConfiguration(
-			newJarTask.getProject(), BASELINE_CONFIGURATION_NAME);
+		Project project = newJarTask.getProject();
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration configuration = configurationContainer.maybeCreate(
+			BASELINE_CONFIGURATION_NAME);
 
 		configuration.defaultDependencies(
 			new Action<DependencySet>() {
@@ -146,14 +153,15 @@ public class BaselinePlugin implements Plugin<Project> {
 			"(," + newJarTask.getVersion() + ")", false);
 	}
 
+	@SuppressWarnings("rawtypes")
 	private BaselineTask _addTaskBaseline(
 		final AbstractArchiveTask newJarTask,
 		final BaselineConfigurationExtension baselineConfigurationExtension) {
 
 		final Project project = newJarTask.getProject();
 
-		BaselineTask baselineTask = GradleUtil.addTask(
-			project, BASELINE_TASK_NAME, BaselineTask.class);
+		final BaselineTask baselineTask = GradleUtil.addTask(
+			project, BASELINE_TASK_NAME, BaselineTask.class, true);
 
 		baselineTask.doFirst(
 			new Action<Task>() {
@@ -213,6 +221,19 @@ public class BaselinePlugin implements Plugin<Project> {
 
 			});
 
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withId(
+			"biz.aQute.bnd.builder",
+			new Action<Plugin>() {
+
+				@Override
+				public void execute(Plugin plugin) {
+					_configureTaskBaselineForBndBuilderPlugin(baselineTask);
+				}
+
+			});
+
 		return baselineTask;
 	}
 
@@ -253,6 +274,12 @@ public class BaselinePlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _configureTaskBaselineForBndBuilderPlugin(
+		BaselineTask baselineTask) {
+
+		GradleUtil.setProperty(baselineTask, "bundleTask", null);
 	}
 
 	private void _configureTasksBaseline(Project project) {

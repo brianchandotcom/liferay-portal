@@ -31,6 +31,28 @@
 		<delete file="${dist.dir}/ticket.list.tmp" />
 	</target>
 
+	<target name="build-apps">
+		<fail message="Please provide a comma delimited list of app names.${line.separator}(ex: -Dapp.names=collaboration,forms-and-workflow,foundation,static,web-experience)">
+			<condition>
+				<not>
+					<isset property="app.names" />
+				</not>
+			</condition>
+		</fail>
+
+		<for list="${app.names}" param="app.name">
+			<sequential>
+				<antcall inheritall="false" target="build-app">
+					<param name="app.name" value="@{app.name}" />
+				</antcall>
+			</sequential>
+		</for>
+	</target>
+
+	<target depends="dist-module-artifacts,get-app-change-log" name="build-app-from-changelog">
+		<delete file="${dist.dir}/ticket.list.tmp" />
+	</target>
+
 	<target depends="dist-module-artifacts-lpkg,write-lpkg-marketplace-properties" name="build-app-lpkg" unless="module.dirs.null">
 		<zip basedir="${osgi.dir}/marketplace" destfile="${osgi.dir}/marketplace/${Liferay-Releng-App-Title}.lpkg" includes="*.jar,*.war,liferay-marketplace.properties" />
 
@@ -110,7 +132,7 @@
 			</filterchain>
 		</loadfile>
 
-		<echo message="Checking out public releng info from commit ID: ${git.commit.portal.public}" />
+		<echo message="Checking out ${app.name} public releng info from commit ID: ${git.commit.portal.public}" />
 
 		<exec dir="${project.dir}" executable="git">
 			<arg value="fetch" />
@@ -120,7 +142,7 @@
 		<exec dir="${project.dir}/modules" executable="git">
 			<arg value="checkout" />
 			<arg value="${git.commit.portal.public}" />
-			<arg value=".releng" />
+			<arg value=".releng/apps/${app.name}" />
 		</exec>
 	</target>
 
@@ -138,7 +160,7 @@
 		</exec>
 	</target>
 
-	<target depends="check-stale-artifacts,get-artifact-versions-previous-release" name="dist-module-artifacts">
+	<target depends="check-stale-artifacts,get-app-change-log,get-artifact-versions-previous-release" name="dist-module-artifacts">
 		<mkdir dir="${dist.dir}" />
 
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact">
@@ -214,10 +236,16 @@
 	<target depends="init-build-app" name="get-app-properties">
 		<property file="${releng.app.dir}/app.properties" />
 
+		<condition property="app.version" value="${app.marketplace.version}">
+			<not>
+				<istrue value="${build.app.from.changelog}" />
+			</not>
+		</condition>
+
 		<property name="app.version.previous.release" value="${app.marketplace.version}" />
 	</target>
 
-	<target depends="get-app-properties" name="get-app-version">
+	<target depends="get-app-properties" name="get-app-version" unless="build.app.from.changelog">
 		<loadfile property="app.major.minor.version.previous.release">
 			<filterchain>
 				<replaceregex pattern="(\d{1,2}\.\d{1,2})\.\d{1,2}" replace="\1" />

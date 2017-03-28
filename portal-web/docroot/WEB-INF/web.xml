@@ -139,7 +139,7 @@
 		<servlet-class>com.liferay.portal.servlet.ServletAdapter</servlet-class>
 		<init-param>
 			<param-name>filter</param-name>
-			<param-value>(&amp;(servlet.type=friendly-url)(servlet.init.private=true)(servlet.init.user=false))</param-value>
+			<param-value>(servlet.type=friendly-url)(servlet.init.private=true)(servlet.init.user=false)</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -148,7 +148,7 @@
 		<servlet-class>com.liferay.portal.servlet.ServletAdapter</servlet-class>
 		<init-param>
 			<param-name>filter</param-name>
-			<param-value>(&amp;(servlet.type=friendly-url)(servlet.init.private=true)(servlet.init.user=true))</param-value>
+			<param-value>(servlet.type=friendly-url)(servlet.init.private=true)(servlet.init.user=true)</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -157,7 +157,7 @@
 		<servlet-class>com.liferay.portal.servlet.ServletAdapter</servlet-class>
 		<init-param>
 			<param-name>filter</param-name>
-			<param-value>(&amp;(servlet.type=friendly-url)(servlet.init.private=false))</param-value>
+			<param-value>(servlet.type=friendly-url)(servlet.init.private=false)</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

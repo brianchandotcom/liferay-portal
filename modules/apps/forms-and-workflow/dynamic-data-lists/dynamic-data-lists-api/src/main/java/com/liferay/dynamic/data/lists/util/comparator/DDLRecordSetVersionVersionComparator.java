@@ -39,7 +39,7 @@ public class DDLRecordSetVersionVersionComparator
 		DDLRecordSetVersion recordSetVersion2) {
 
 		return _versionNumberComparator.compare(
-			recordSetVersion1.getVersion(), recordSetVersion1.getVersion());
+			recordSetVersion1.getVersion(), recordSetVersion2.getVersion());
 	}
 
 	public boolean isAscending() {

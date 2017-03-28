@@ -41,6 +41,7 @@ import com.liferay.source.formatter.checks.JavaExceptionCheck;
 import com.liferay.source.formatter.checks.JavaFinderCacheCheck;
 import com.liferay.source.formatter.checks.JavaHibernateSQLCheck;
 import com.liferay.source.formatter.checks.JavaIfStatementCheck;
+import com.liferay.source.formatter.checks.JavaIllegalImportsCheck;
 import com.liferay.source.formatter.checks.JavaIOExceptionCheck;
 import com.liferay.source.formatter.checks.JavaLineBreakCheck;
 import com.liferay.source.formatter.checks.JavaLogLevelCheck;
@@ -141,19 +142,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		newContent = StringUtil.replace(
-			newContent,
-			new String[] {
-				"com.liferay.portal.PortalException",
-				"com.liferay.portal.SystemException",
-				"com.liferay.util.LocalizationUtil"
-			},
-			new String[] {
-				"com.liferay.portal.kernel.exception.PortalException",
-				"com.liferay.portal.kernel.exception.SystemException",
-				"com.liferay.portal.kernel.util.LocalizationUtil"
-			});
-
-		newContent = StringUtil.replace(
 			newContent, " final static ", " static final ");
 
 		newContent = fixCompatClassImports(absolutePath, newContent);
@@ -208,46 +196,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"reference via service.xml instead");
 		}
 
-		boolean isRunOutsidePortalExclusion = isExcludedPath(
-			RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath);
-
-		if (!isRunOutsidePortalExclusion &&
-			!isExcludedPath(_PROXY_EXCLUDES, absolutePath) &&
-			newContent.contains("import java.lang.reflect.Proxy;")) {
-
-			processMessage(
-				fileName, "Use ProxyUtil instead of java.lang.reflect.Proxy");
-		}
-
-		if (newContent.contains("import edu.emory.mathcs.backport.java")) {
-			processMessage(
-				fileName, "Illegal import: edu.emory.mathcs.backport.java");
-		}
-
-		if (newContent.contains("import jodd.util.StringPool")) {
-			processMessage(fileName, "Illegal import: jodd.util.StringPool");
-		}
-
-		// LPS-45027
-
-		if (newContent.contains(
-				"com.liferay.portal.kernel.util.UnmodifiableList")) {
-
-			processMessage(
-				fileName,
-				"Use java.util.Collections.unmodifiableList instead of " +
-					"com.liferay.portal.kernel.util.UnmodifiableList");
-		}
-
-		// LPS-70963
-
-		if (newContent.contains("java.util.WeakHashMap")) {
-			processMessage(
-				fileName,
-				"Do not use java.util.WeakHashMap because it is not " +
-					"thread-safe");
-		}
-
 		// LPS-28266
 
 		for (int pos1 = -1;;) {
@@ -295,19 +243,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent, StringPool.TAB + "for (;;) {",
 			StringPool.TAB + "while (true) {");
 
-		// LPS-39508
-
-		if (!isRunOutsidePortalExclusion &&
-			!isExcludedPath(_SECURE_RANDOM_EXCLUDES, absolutePath) &&
-			content.contains("java.security.SecureRandom") &&
-			!content.contains("javax.crypto.KeyGenerator")) {
-
-			processMessage(
-				fileName,
-				"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
-					"SecureRandom instead of java.security.SecureRandom");
-		}
-
 		// LPS-46017
 
 		newContent = StringUtil.replace(
@@ -337,74 +272,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"LPS-47682");
 		}
 
-		// LPS-55690
-
-		if (newContent.contains("org.testng.Assert")) {
-			processMessage(
-				fileName,
-				"Use org.junit.Assert instead of org.testng.Assert, see " +
-					"LPS-55690");
-		}
-
 		// LPS-48156
 
 		newContent = checkPrincipalException(newContent);
-
-		// LPS-60473
-
-		if (newContent.contains(".supportsBatchUpdates()") &&
-			!fileName.endsWith("AutoBatchPreparedStatementUtil.java")) {
-
-			processMessage(
-				fileName,
-				"Use AutoBatchPreparedStatementUtil instead of " +
-					"DatabaseMetaData.supportsBatchUpdates, see LPS-60473");
-		}
-
-		// LPS-64056
-
-		if (newContent.contains("Configurable.createConfigurable(") &&
-			!fileName.endsWith("ConfigurableUtil.java")) {
-
-			processMessage(
-				fileName,
-				"Use ConfigurableUtil.createConfigurable instead of " +
-					"Configurable.createConfigurable, see LPS-64056");
-		}
 
 		// LPS-62786
 
 		checkPropertyUtils(fileName, newContent);
 
-		// LPS-65229
-
-		if (fileName.endsWith("ResourceCommand.java") &&
-			newContent.contains("ServletResponseUtil.sendFile(")) {
-
-			processMessage(
-				fileName,
-				"Use PortletResponseUtil.sendFile instead of " +
-					"ServletResponseUtil.sendFile");
-		}
-
 		if (!fileName.endsWith("GetterUtilTest.java")) {
 			checkGetterUtilGet(fileName, newContent);
-		}
-
-		// LPS-69494
-
-		if (!fileName.endsWith("AbstractExtender.java") &&
-			newContent.contains(
-				"org.apache.felix.utils.extender.AbstractExtender")) {
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("Use com.liferay.osgi.felix.util.AbstractExtender ");
-			sb.append("instead of ");
-			sb.append("org.apache.felix.utils.extender.AbstractExtender, see ");
-			sb.append("LPS-69494");
-
-			processMessage(fileName, sb.toString());
 		}
 
 		matcher = _incorrectSynchronizedPattern.matcher(newContent);
@@ -730,6 +607,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				getExcludes(_HIBERNATE_SQL_QUERY_EXCLUDES)));
 		_fileChecks.add(
 			new JavaIfStatementCheck(sourceFormatterArgs.getMaxLineLength()));
+		_fileChecks.add(
+			new JavaIllegalImportsCheck(
+				getExcludes(_PROXY_EXCLUDES),
+				getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES),
+				getExcludes(_SECURE_RANDOM_EXCLUDES)));
 		_fileChecks.add(new JavaIOExceptionCheck());
 		_fileChecks.add(
 			new JavaLineBreakCheck(sourceFormatterArgs.getMaxLineLength()));

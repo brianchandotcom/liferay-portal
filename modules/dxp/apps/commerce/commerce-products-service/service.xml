@@ -86,7 +86,7 @@
 		<!-- Other fields -->
 
 		<column name="commerceProductDefinitionId" type="long" />
-		<column name="SKU" type="String" />
+		<column name="sku" type="String" />
 		<column name="DDMContent" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
@@ -116,7 +116,7 @@
 		</finder>
 		<finder name="C_S" return-type="CommerceProductInstance" unique="true">
 			<finder-column name="commerceProductDefinitionId" />
-			<finder-column name="SKU" />
+			<finder-column name="sku" />
 		</finder>
 
 		<!-- References -->

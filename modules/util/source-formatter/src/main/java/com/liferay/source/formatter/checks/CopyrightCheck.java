@@ -62,7 +62,7 @@ public class CopyrightCheck extends BaseFileCheck {
 		String customCopyright = _getCustomCopyright(absolutePath);
 
 		if (!content.contains(_copyright) &&
-			((customCopyright == null) || !content.contains(_copyright))) {
+			((customCopyright == null) || !content.contains(customCopyright))) {
 
 			addMessage(sourceFormatterMessages, fileName, "Missing copyright");
 		}

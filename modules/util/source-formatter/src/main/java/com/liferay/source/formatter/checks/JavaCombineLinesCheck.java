@@ -80,6 +80,93 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 					previousLine);
 				String trimmedLine = StringUtil.trimLeading(line);
 
+				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
+					!trimmedLine.startsWith(StringPool.STAR)) {
+
+					String strippedQuotesLine = stripQuotes(trimmedLine);
+
+					String indent = StringPool.BLANK;
+
+					if (!trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
+						strippedQuotesLine.contains(
+							StringPool.CLOSE_CURLY_BRACE)) {
+
+						if ((getLevel(strippedQuotesLine, "{", "}") < 0) &&
+							(lineLeadingTabCount > 0)) {
+
+							for (int i = 0; i < lineLeadingTabCount - 1; i++) {
+								indent += StringPool.TAB;
+							}
+
+							int x = line.lastIndexOf(
+								CharPool.CLOSE_CURLY_BRACE);
+
+							content = StringUtil.replace(
+								content, "\n" + line + "\n",
+								"\n" + line.substring(0, x) + "\n" + indent +
+									line.substring(x) + "\n");
+
+							return new Tuple(content, Collections.emptySet());
+						}
+					}
+
+					if (!previousLine.contains("\tthrows ") &&
+						!previousLine.contains(" throws ") &&
+						(previousLineLeadingTabCount ==
+							(lineLeadingTabCount - 1))) {
+
+						int x = -1;
+
+						while (true) {
+							x = previousLine.indexOf(", ", x + 1);
+
+							if (x == -1) {
+								break;
+							}
+
+							if (ToolsUtil.isInsideQuotes(previousLine, x)) {
+								continue;
+							}
+
+							String linePart = previousLine.substring(0, x);
+
+							linePart = stripQuotes(linePart);
+
+							if ((getLevel(linePart, "(", ")") != 0) ||
+								(getLevel(linePart, "<", ">") != 0)) {
+
+								continue;
+							}
+
+							linePart = previousLine.substring(x);
+
+							linePart = stripQuotes(linePart, CharPool.QUOTE);
+
+							if ((getLevel(linePart, "(", ")") != 0) ||
+								(getLevel(linePart, "<", ">") != 0)) {
+
+								continue;
+							}
+
+							if (Validator.isNull(indent)) {
+								for (int i = 0; i < lineLeadingTabCount - 1;
+										i++) {
+
+									indent += StringPool.TAB;
+								}
+							}
+
+							content = StringUtil.replace(
+								content, "\n" + previousLine + "\n",
+								"\n" + previousLine.substring(0, x + 1) + "\n" +
+									indent + previousLine.substring(x + 2) +
+										"\n");
+
+							return new Tuple(content, Collections.emptySet());
+						}
+					}
+				}
+
 				String combinedLinesContent = _getCombinedLinesContent(
 					sourceFormatterMessages, content, fileName, absolutePath,
 					line, trimmedLine, lineLength, lineCount, previousLine,

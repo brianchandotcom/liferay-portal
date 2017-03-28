@@ -22,10 +22,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.CopyrightCheck;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JavaAnnotationsCheck;
@@ -408,93 +406,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				checkInefficientStringMethods(
 					line, fileName, absolutePath, lineCount, true);
-
-				int lineLeadingTabCount = getLeadingTabCount(line);
-				int previousLineLeadingTabCount = getLeadingTabCount(
-					previousLine);
-
-				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
-					!trimmedLine.startsWith(StringPool.STAR)) {
-
-					String strippedQuotesLine = stripQuotes(trimmedLine);
-
-					String indent = StringPool.BLANK;
-
-					if (!trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
-						strippedQuotesLine.contains(
-							StringPool.CLOSE_CURLY_BRACE)) {
-
-						if ((getLevel(strippedQuotesLine, "{", "}") < 0) &&
-							(lineLeadingTabCount > 0)) {
-
-							for (int i = 0; i < lineLeadingTabCount - 1; i++) {
-								indent += StringPool.TAB;
-							}
-
-							int x = line.lastIndexOf(
-								CharPool.CLOSE_CURLY_BRACE);
-
-							return StringUtil.replace(
-								content, "\n" + line + "\n",
-								"\n" + line.substring(0, x) + "\n" + indent +
-									line.substring(x) + "\n");
-						}
-					}
-
-					if (!previousLine.contains("\tthrows ") &&
-						!previousLine.contains(" throws ") &&
-						(previousLineLeadingTabCount ==
-							(lineLeadingTabCount - 1))) {
-
-						int x = -1;
-
-						while (true) {
-							x = previousLine.indexOf(", ", x + 1);
-
-							if (x == -1) {
-								break;
-							}
-
-							if (ToolsUtil.isInsideQuotes(previousLine, x)) {
-								continue;
-							}
-
-							String linePart = previousLine.substring(0, x);
-
-							linePart = stripQuotes(linePart);
-
-							if ((getLevel(linePart, "(", ")") != 0) ||
-								(getLevel(linePart, "<", ">") != 0)) {
-
-								continue;
-							}
-
-							linePart = previousLine.substring(x);
-
-							linePart = stripQuotes(linePart, CharPool.QUOTE);
-
-							if ((getLevel(linePart, "(", ")") != 0) ||
-								(getLevel(linePart, "<", ">") != 0)) {
-
-								continue;
-							}
-
-							if (Validator.isNull(indent)) {
-								for (int i = 0; i < lineLeadingTabCount - 1;
-										i++) {
-
-									indent += StringPool.TAB;
-								}
-							}
-
-							return StringUtil.replace(
-								content, "\n" + previousLine + "\n",
-								"\n" + previousLine.substring(0, x + 1) + "\n" +
-									indent + previousLine.substring(x + 2) +
-										"\n");
-						}
-					}
-				}
 
 				if (lineCount > 1) {
 					sb.append(previousLine);

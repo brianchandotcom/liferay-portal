@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.BNDBundleNameCheck;
 import com.liferay.source.formatter.checks.BNDCapabilityCheck;
@@ -26,6 +25,7 @@ import com.liferay.source.formatter.checks.BNDIncludeResourceCheck;
 import com.liferay.source.formatter.checks.BNDLineBreaksCheck;
 import com.liferay.source.formatter.checks.BNDRangeCheck;
 import com.liferay.source.formatter.checks.BNDSchemaVersionCheck;
+import com.liferay.source.formatter.checks.BNDStylingCheck;
 import com.liferay.source.formatter.checks.BNDWebContextPathCheck;
 import com.liferay.source.formatter.checks.BNDWhitespaceCheck;
 import com.liferay.source.formatter.checks.FileCheck;
@@ -34,8 +34,6 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -47,36 +45,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		content = StringUtil.replace(
-			content, new String[] {"/\n", "/,\\\n"},
-			new String[] {"\n", ",\\\n"});
-
-		content = StringUtil.replace(content, " \\\n", "\\\n");
-
 		content = StringUtil.replaceFirst(
 			content, "Conditional-Package:", "-conditionalpackage:");
-
-		Matcher matcher = _trailingSemiColonPattern.matcher(content);
-
-		if (matcher.find()) {
-			content = StringUtil.replaceFirst(
-				content, StringPool.SEMICOLON, StringPool.BLANK,
-				matcher.start());
-		}
-
-		matcher = _incorrectTabPattern.matcher(content);
-
-		if (matcher.find()) {
-			content = StringUtil.replaceFirst(
-				content, matcher.group(1), StringPool.TAB, matcher.start());
-		}
-
-		matcher = _singleValueOnMultipleLinesPattern.matcher(content);
-
-		if (matcher.find()) {
-			content = StringUtil.replaceFirst(
-				content, matcher.group(1), StringPool.SPACE, matcher.start());
-		}
 
 		return content;
 	}
@@ -106,6 +76,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		_fileChecks.add(new BNDLineBreaksCheck());
 		_fileChecks.add(new BNDRangeCheck());
 		_fileChecks.add(new BNDSchemaVersionCheck());
+		_fileChecks.add(new BNDStylingCheck());
 	}
 
 	@Override
@@ -120,11 +91,5 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};
 
 	private final List<FileCheck> _fileChecks = new ArrayList<>();
-	private final Pattern _incorrectTabPattern = Pattern.compile(
-		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
-	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
-		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
-	private final Pattern _trailingSemiColonPattern = Pattern.compile(
-		";(\n|\\Z)");
 
 }

@@ -69,34 +69,6 @@ import org.dom4j.Element;
  */
 public class JSPSourceProcessor extends BaseSourceProcessor {
 
-	protected void addImportCounts(String content) {
-		Matcher matcher = _importsPattern.matcher(content);
-
-		while (matcher.find()) {
-			String importName = matcher.group(1);
-
-			int count = 0;
-
-			if (_importCountMap.containsKey(importName)) {
-				count = _importCountMap.get(importName);
-			}
-			else {
-				int pos = importName.lastIndexOf(CharPool.PERIOD);
-
-				String importClassName = importName.substring(pos + 1);
-
-				if (_importClassNames.contains(importClassName)) {
-					_duplicateImportClassNames.add(importClassName);
-				}
-				else {
-					_importClassNames.add(importClassName);
-				}
-			}
-
-			_importCountMap.put(importName, count + 1);
-		}
-	}
-
 	protected void checkDefineObjectsVariables(
 		String fileName, String content, String absolutePath) {
 
@@ -1209,14 +1181,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Map<String, String> _contentsMap;
 	private final Pattern _defineObjectsPattern = Pattern.compile(
 		"\n\t*(<.*:defineObjects />)(\n|$)");
-	private final List<String> _duplicateImportClassNames = new ArrayList<>();
 	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\n+\t*%>\n");
 	private final List<FileCheck> _fileChecks = new ArrayList<>();
-	private final List<String> _importClassNames = new ArrayList<>();
-	private final Map<String, Integer> _importCountMap = new HashMap<>();
-	private final Pattern _importsPattern = Pattern.compile(
-		"page import=\"(.+)\"");
 	private final Pattern _includeFilePattern = Pattern.compile(
 		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 	private final Pattern _incorrectClosingTagPattern = Pattern.compile(

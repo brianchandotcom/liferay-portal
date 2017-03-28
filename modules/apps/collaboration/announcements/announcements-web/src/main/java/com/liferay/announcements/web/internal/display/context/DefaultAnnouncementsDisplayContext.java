@@ -100,7 +100,7 @@ public class DefaultAnnouncementsDisplayContext
 		}
 		else {
 			scopes = AnnouncementsUtil.getAnnouncementScopes(
-				_announcementsRequestHelper.getUserId());
+				_announcementsRequestHelper.getUser());
 		}
 
 		scopes.put(Long.valueOf(0), new long[] {0});

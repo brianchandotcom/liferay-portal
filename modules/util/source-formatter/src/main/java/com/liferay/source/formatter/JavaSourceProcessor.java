@@ -42,6 +42,7 @@ import com.liferay.source.formatter.checks.JavaIfStatementCheck;
 import com.liferay.source.formatter.checks.JavaIllegalImportsCheck;
 import com.liferay.source.formatter.checks.JavaIOExceptionCheck;
 import com.liferay.source.formatter.checks.JavaLineBreakCheck;
+import com.liferay.source.formatter.checks.JavaLogClassNameCheck;
 import com.liferay.source.formatter.checks.JavaLogLevelCheck;
 import com.liferay.source.formatter.checks.JavaLongLinesCheck;
 import com.liferay.source.formatter.checks.JavaModuleExtendedObjectClassDefinitionCheck;
@@ -51,8 +52,11 @@ import com.liferay.source.formatter.checks.JavaModuleServiceProxyFactoryCheck;
 import com.liferay.source.formatter.checks.JavaModuleTestCheck;
 import com.liferay.source.formatter.checks.JavaOSGiReferenceCheck;
 import com.liferay.source.formatter.checks.JavaPackagePathCheck;
+import com.liferay.source.formatter.checks.JavaProcessCallableCheck;
+import com.liferay.source.formatter.checks.JavaResultSetCheck;
 import com.liferay.source.formatter.checks.JavaSeeAnnotationCheck;
 import com.liferay.source.formatter.checks.JavaStopWatchCheck;
+import com.liferay.source.formatter.checks.JavaStylingCheck;
 import com.liferay.source.formatter.checks.JavaSystemEventAnnotationCheck;
 import com.liferay.source.formatter.checks.JavaSystemExceptionCheck;
 import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
@@ -422,14 +426,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_fileChecks.add(new JavaIOExceptionCheck());
 		_fileChecks.add(
 			new JavaLineBreakCheck(sourceFormatterArgs.getMaxLineLength()));
+		_fileChecks.add(new JavaLogClassNameCheck());
 		_fileChecks.add(new JavaLogLevelCheck());
 		_fileChecks.add(
 			new JavaLongLinesCheck(
 				getExcludes(_LINE_LENGTH_EXCLUDES),
 				sourceFormatterArgs.getMaxLineLength()));
 		_fileChecks.add(new JavaPackagePathCheck());
+		_fileChecks.add(new JavaProcessCallableCheck());
+		_fileChecks.add(new JavaResultSetCheck());
 		_fileChecks.add(new JavaSeeAnnotationCheck());
 		_fileChecks.add(new JavaStopWatchCheck());
+		_fileChecks.add(new JavaStylingCheck());
 		_fileChecks.add(new JavaSystemExceptionCheck());
 		_fileChecks.add(
 			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));

@@ -15,62 +15,132 @@
 package com.liferay.blogs.web.internal.upload;
 
 import com.liferay.blogs.constants.BlogsConstants;
+import com.liferay.blogs.exception.EntryImageNameException;
+import com.liferay.blogs.exception.EntryImageSizeException;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.blogs.service.permission.BlogsPermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ResourcePermissionCheckerUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.upload.UploadFileEntryHandler;
 
+import java.io.IOException;
 import java.io.InputStream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * @author Roberto Díaz
+ * @author Alejandro Tardín
  */
+@Component(service = ImageBlogsUploadFileEntryHandler.class)
 public class ImageBlogsUploadFileEntryHandler
-	extends BaseBlogsUploadFileEntryHandler {
+	implements UploadFileEntryHandler {
 
 	@Override
-	public FileEntry addFileEntry(
-			long userId, long groupId, long folderId, String fileName,
-			String contentType, InputStream inputStream, long size,
-			ServiceContext serviceContext)
+	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
+		throws IOException, PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)uploadPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
+		String contentType = uploadPortletRequest.getContentType(
+			_PARAMETER_NAME);
+		long size = uploadPortletRequest.getSize(_PARAMETER_NAME);
+
+		_checkPermission(themeDisplay);
+		_validateFile(fileName, size);
+
+		try (InputStream inputStream =
+				uploadPortletRequest.getFileAsStream(_PARAMETER_NAME)) {
+
+			return addFileEntry(
+				fileName, contentType, inputStream, themeDisplay);
+		}
+	}
+
+	protected FileEntry addFileEntry(
+			String fileName, String contentType, InputStream inputStream,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
-			userId, groupId);
+		long userId = themeDisplay.getUserId();
+		long groupId = themeDisplay.getScopeGroupId();
+
+		Folder folder = blogsLocalService.addAttachmentsFolder(userId, groupId);
+
+		String uniqueFileName = PortletFileRepositoryUtil.getUniqueFileName(
+			groupId, folder.getFolderId(), fileName);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
 			groupId, userId, BlogsEntry.class.getName(), 0,
 			BlogsConstants.SERVICE_NAME, folder.getFolderId(), inputStream,
-			fileName, contentType, true);
+			uniqueFileName, contentType, true);
 	}
 
-	@Override
-	public FileEntry fetchFileEntry(
-			long userId, long groupId, long folderId, String fileName)
+	@Reference
+	protected BlogsEntryLocalService blogsLocalService;
+
+	private void _checkPermission(ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
-			userId, groupId);
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
 
-		try {
-			return PortletFileRepositoryUtil.getPortletFileEntry(
-				groupId, folder.getFolderId(), fileName);
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
+		boolean containsResourcePermission =
+			ResourcePermissionCheckerUtil.containsResourcePermission(
+				permissionChecker, BlogsPermission.RESOURCE_NAME,
+				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY);
 
-			return null;
+		if (!containsResourcePermission) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, BlogsPermission.RESOURCE_NAME,
+				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY);
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ImageBlogsUploadFileEntryHandler.class);
+	private void _validateFile(String fileName, long size)
+		throws PortalException {
+
+		long maxSize = PropsValues.BLOGS_IMAGE_MAX_SIZE;
+
+		if ((maxSize > 0) && (size > maxSize)) {
+			throw new EntryImageSizeException();
+		}
+
+		String extension = FileUtil.getExtension(fileName);
+
+		String[] imageExtensions = PrefsPropsUtil.getStringArray(
+			PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
+
+		for (String imageExtension : imageExtensions) {
+			if (StringPool.STAR.equals(imageExtension) ||
+				imageExtension.equals(StringPool.PERIOD + extension)) {
+
+				return;
+			}
+		}
+
+		throw new EntryImageNameException(
+			"Invalid image for file name " + fileName);
+	}
+
+	private static final String _PARAMETER_NAME = "imageSelectorFileName";
 
 }

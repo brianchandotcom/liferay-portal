@@ -15,6 +15,7 @@
 package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.blogs.web.internal.upload.ImageBlogsUploadResponseHandler;
 import com.liferay.blogs.web.internal.upload.TempImageBlogsUploadFileEntryHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -46,13 +47,16 @@ public class UploadCoverImageMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		_uploadHandler.upload(
-			_tempImageBlogsUploadFileEntryHandler, actionRequest,
-			actionResponse);
+			_tempImageBlogsUploadFileEntryHandler,
+			_imageBlogsUploadResponseHandler, actionRequest, actionResponse);
 	}
 
-	private final TempImageBlogsUploadFileEntryHandler
-		_tempImageBlogsUploadFileEntryHandler =
-			new TempImageBlogsUploadFileEntryHandler();
+	@Reference
+	private ImageBlogsUploadResponseHandler _imageBlogsUploadResponseHandler;
+
+	@Reference
+	private TempImageBlogsUploadFileEntryHandler
+		_tempImageBlogsUploadFileEntryHandler;
 
 	@Reference
 	private UploadHandler _uploadHandler;

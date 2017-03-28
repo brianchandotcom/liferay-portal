@@ -15,52 +15,35 @@
 package com.liferay.blogs.web.internal.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 
 import java.io.InputStream;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Sergio González
- * @author Adolfo Pérez
- * @author Roberto Díaz
+ * @author Alejandro Tardín
  */
+@Component(service = TempImageBlogsUploadFileEntryHandler.class)
 public class TempImageBlogsUploadFileEntryHandler
-	extends BaseBlogsUploadFileEntryHandler {
+	extends ImageBlogsUploadFileEntryHandler {
 
 	@Override
-	public FileEntry addFileEntry(
-			long userId, long groupId, long folderId, String fileName,
-			String contentType, InputStream inputStream, long size,
-			ServiceContext serviceContext)
+	protected FileEntry addFileEntry(
+			String fileName, String contentType, InputStream inputStream,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		String uniqueFileName = TempFileEntryUtil.getTempFileName(fileName);
+
 		return TempFileEntryUtil.addTempFileEntry(
-			groupId, userId, TEMP_FOLDER_NAME, fileName, inputStream,
-			contentType);
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			_TEMP_FOLDER_NAME, uniqueFileName, inputStream, contentType);
 	}
 
-	@Override
-	public FileEntry fetchFileEntry(
-		long userId, long groupId, long folderId, String fileName) {
-
-		try {
-			return TempFileEntryUtil.getTempFileEntry(
-				groupId, userId, TEMP_FOLDER_NAME, fileName);
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return null;
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TempImageBlogsUploadFileEntryHandler.class);
+	private static final String _TEMP_FOLDER_NAME =
+		TempImageBlogsUploadFileEntryHandler.class.getName();
 
 }

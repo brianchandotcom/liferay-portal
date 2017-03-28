@@ -16,6 +16,7 @@ package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.blogs.web.internal.upload.ImageBlogsUploadFileEntryHandler;
+import com.liferay.blogs.web.internal.upload.ImageBlogsUploadResponseHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.upload.UploadHandler;
@@ -46,12 +47,15 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		_uploadHandler.upload(
-			_imageBlogsUploadFileEntryHandler, actionRequest, actionResponse);
+			_imageBlogsUploadFileEntryHandler, _imageBlogsUploadResponseHandler,
+			actionRequest, actionResponse);
 	}
 
-	private final ImageBlogsUploadFileEntryHandler
-		_imageBlogsUploadFileEntryHandler =
-			new ImageBlogsUploadFileEntryHandler();
+	@Reference
+	private ImageBlogsUploadFileEntryHandler _imageBlogsUploadFileEntryHandler;
+
+	@Reference
+	private ImageBlogsUploadResponseHandler _imageBlogsUploadResponseHandler;
 
 	@Reference
 	private UploadHandler _uploadHandler;

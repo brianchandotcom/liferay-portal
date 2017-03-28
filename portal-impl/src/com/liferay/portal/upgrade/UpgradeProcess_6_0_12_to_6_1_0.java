@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeAsset;
+import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeBreadcrumb;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeCompanyId;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeDocumentLibrary;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeDynamicDataMapping;
@@ -55,6 +56,7 @@ public class UpgradeProcess_6_0_12_to_6_1_0 extends Pre7UpgradeProcess {
 		upgrade(UpgradeUserName.class);
 
 		upgrade(UpgradeAdminPortlets.class);
+		upgrade(UpgradeBreadcrumb.class);
 		upgrade(UpgradeCamelCasePortletPreferences.class);
 		upgrade(UpgradeCountry.class);
 		upgrade(UpgradeDocumentLibrary.class);

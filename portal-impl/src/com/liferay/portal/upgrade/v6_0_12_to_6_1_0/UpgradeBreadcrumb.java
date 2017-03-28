@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v6_2_0;
+package com.liferay.portal.upgrade.v6_0_12_to_6_1_0;
 
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;

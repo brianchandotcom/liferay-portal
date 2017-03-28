@@ -31,7 +31,7 @@
 		<delete file="${dist.dir}/ticket.list.tmp" />
 	</target>
 
-	<target name="build-apps">
+	<target name="build-app-all">
 		<fail message="Please provide a comma delimited list of app names.${line.separator}(ex: -Dapp.names=collaboration,forms-and-workflow,foundation,static,web-experience)">
 			<condition>
 				<not>

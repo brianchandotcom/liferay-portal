@@ -120,27 +120,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (newContent.contains("$\n */")) {
-			processMessage(fileName, "*");
-
-			newContent = StringUtil.replace(newContent, "$\n */", "$\n *\n */");
-		}
-
 		if (newContent.contains(className + ".java.html")) {
 			processMessage(fileName, "Java2HTML");
 		}
-
-		if (newContent.contains(" * @author Raymond Aug") &&
-			!newContent.contains(" * @author Raymond Aug\u00e9")) {
-
-			newContent = newContent.replaceFirst(
-				"Raymond Aug.++", "Raymond Aug\u00e9");
-
-			processMessage(fileName, "UTF-8");
-		}
-
-		newContent = StringUtil.replace(
-			newContent, " final static ", " static final ");
 
 		newContent = fixCompatClassImports(absolutePath, newContent);
 
@@ -149,36 +131,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = importsFormatter.format(
 			newContent, packagePath, className);
 
-		newContent = StringUtil.replace(
-			newContent,
-			new String[] {";\n/**", "\t/*\n\t *", ";;\n", "\n/**\n *\n *"},
-			new String[] {";\n\n/**", "\t/**\n\t *", ";\n", "\n/**\n *"});
-
-		matcher = _logPattern.matcher(newContent);
-
-		if (matcher.find()) {
-			String logClassName = matcher.group(1);
-
-			if (!logClassName.equals(className)) {
-				newContent = StringUtil.replaceLast(
-					newContent, logClassName + ".class)",
-					className + ".class)");
-			}
-		}
-
 		if (!isExcludedPath(_STATIC_LOG_EXCLUDES, absolutePath)) {
 			newContent = StringUtil.replace(
 				newContent, "private Log _log",
 				"private static final Log _log");
-		}
-
-		newContent = StringUtil.replace(
-			newContent,
-			new String[] {"!Validator.isNotNull(", "!Validator.isNull("},
-			new String[] {"Validator.isNull(", "Validator.isNotNull("});
-
-		if (newContent.contains("*/\npackage ")) {
-			processMessage(fileName, "package");
 		}
 
 		if ((portalSource ||subrepository) &&
@@ -194,67 +150,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"reference via service.xml instead");
 		}
 
-		// LPS-28266
-
-		for (int pos1 = -1;;) {
-			pos1 = newContent.indexOf(StringPool.TAB + "try {", pos1 + 1);
-
-			if (pos1 == -1) {
-				break;
-			}
-
-			int pos2 = newContent.indexOf(StringPool.TAB + "try {", pos1 + 1);
-			int pos3 = newContent.indexOf("\"select count(", pos1);
-
-			if ((pos2 != -1) && (pos3 != -1) && (pos2 < pos3)) {
-				continue;
-			}
-
-			int pos4 = newContent.indexOf("rs.getLong(1)", pos1);
-			int pos5 = newContent.indexOf(StringPool.TAB + "finally {", pos1);
-
-			if ((pos3 == -1) || (pos4 == -1) || (pos5 == -1)) {
-				break;
-			}
-
-			if ((pos3 < pos4) && (pos4 < pos5)) {
-				processMessage(
-					fileName, "Use rs.getInt(1) for count, see LPS-28266");
-			}
-		}
-
-		// LPS-33070
-
-		matcher = _processCallablePattern.matcher(content);
-
-		if (matcher.find() &&
-			!content.contains("private static final long serialVersionUID")) {
-
-			processMessage(
-				fileName,
-				"Assign ProcessCallable implementation a serialVersionUID");
-		}
-
 		newContent = formatStringBundler(fileName, newContent, _maxLineLength);
-
-		newContent = StringUtil.replace(
-			newContent, StringPool.TAB + "for (;;) {",
-			StringPool.TAB + "while (true) {");
 
 		// LPS-46017
 
 		newContent = StringUtil.replace(
 			newContent, " static interface ", " interface ");
-
-		// LPS-47648
-
-		if ((portalSource || subrepository) &&
-			(fileName.contains("/test/integration/") ||
-			 fileName.contains("/testIntegration/java"))) {
-
-			newContent = StringUtil.replace(
-				newContent, "FinderCacheUtil.clearCache();", StringPool.BLANK);
-		}
 
 		// LPS-47682
 
@@ -281,10 +182,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (!fileName.endsWith("GetterUtilTest.java")) {
 			checkGetterUtilGet(fileName, newContent);
 		}
-
-		matcher = _incorrectSynchronizedPattern.matcher(newContent);
-
-		newContent = matcher.replaceAll("$1$3 $2");
 
 		pos = newContent.indexOf("\npublic ");
 
@@ -512,7 +409,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
 		_fileChecks.add(new JavaEmptyLinesCheck());
 		_fileChecks.add(new JavaExceptionCheck());
-		_fileChecks.add(new JavaFinderCacheCheck());
 		_fileChecks.add(
 			new JavaHibernateSQLCheck(
 				getExcludes(_HIBERNATE_SQL_QUERY_EXCLUDES)));
@@ -543,6 +439,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_fileChecks.add(new ValidatorEqualsCheck());
 
 		if (portalSource || subrepository) {
+			_fileChecks.add(new JavaFinderCacheCheck());
 			_fileChecks.add(new JavaSystemEventAnnotationCheck());
 			_fileChecks.add(
 				new JavaVerifyUpgradeConnectionCheck(
@@ -856,17 +753,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
 	private final List<FileCheck> _fileChecks = new ArrayList<>();
-	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
-		"([\n\t])(synchronized) (private|public|protected)");
-	private final Pattern _logPattern = Pattern.compile(
-		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
-			"\t*(.+)\\.class\\)");
 	private int _maxLineLength;
 	private final Pattern _packagePattern = Pattern.compile(
 		"(\n|^)\\s*package (.*);\n");
 	private String _portalCustomSQLContent;
-	private final Pattern _processCallablePattern = Pattern.compile(
-		"implements ProcessCallable\\b");
 	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();
 
 }

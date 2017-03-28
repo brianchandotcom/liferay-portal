@@ -446,32 +446,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return _fileChecks;
 	}
 
-	protected String getUtilTaglibSrcDirName() {
-		if (_utilTaglibSrcDirName != null) {
-			return _utilTaglibSrcDirName;
-		}
-
-		File utilTaglibDir = getFile("util-taglib/src", PORTAL_MAX_DIR_LEVEL);
-
-		String utilTaglibSrcDirName = null;
-
-		if (utilTaglibDir != null) {
-			utilTaglibSrcDirName = utilTaglibDir.getAbsolutePath();
-
-			utilTaglibSrcDirName = StringUtil.replace(
-				utilTaglibSrcDirName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			utilTaglibSrcDirName += StringPool.SLASH;
-		}
-		else {
-			utilTaglibSrcDirName = StringPool.BLANK;
-		}
-
-		_utilTaglibSrcDirName = utilTaglibSrcDirName;
-
-		return _utilTaglibSrcDirName;
-	}
-
 	@Override
 	protected void populateFileChecks() throws Exception {
 		_fileChecks.add(new JSPWhitespaceCheck());
@@ -624,7 +598,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 								"/src/main/java/";
 					}
 					else {
-						srcDir = getUtilTaglibSrcDirName();
+						srcDir = _getUtilTaglibSrcDirName();
 
 						if (Validator.isNull(srcDir)) {
 							continue outerLoop;
@@ -670,6 +644,32 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return tagJavaClassesMap;
+	}
+
+	private String _getUtilTaglibSrcDirName() {
+		if (_utilTaglibSrcDirName != null) {
+			return _utilTaglibSrcDirName;
+		}
+
+		File utilTaglibDir = getFile("util-taglib/src", PORTAL_MAX_DIR_LEVEL);
+
+		String utilTaglibSrcDirName = null;
+
+		if (utilTaglibDir != null) {
+			utilTaglibSrcDirName = utilTaglibDir.getAbsolutePath();
+
+			utilTaglibSrcDirName = StringUtil.replace(
+				utilTaglibSrcDirName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			utilTaglibSrcDirName += StringPool.SLASH;
+		}
+		else {
+			utilTaglibSrcDirName = StringPool.BLANK;
+		}
+
+		_utilTaglibSrcDirName = utilTaglibSrcDirName;
+
+		return _utilTaglibSrcDirName;
 	}
 
 	private static final String[] _INCLUDES =

@@ -26,6 +26,7 @@ public interface UploadHandler {
 
 	public void upload(
 			UploadFileEntryHandler uploadFileEntryHandler,
+			UploadResponseHandler uploadResponseHandler,
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException;
 

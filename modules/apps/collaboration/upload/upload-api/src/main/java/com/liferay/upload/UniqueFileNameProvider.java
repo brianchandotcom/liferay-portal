@@ -14,20 +14,16 @@
 
 package com.liferay.upload;
 
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.exception.PortalException;
 
-import java.io.IOException;
-
-import javax.portlet.PortletRequest;
+import java.util.function.Predicate;
 
 /**
  * @author Alejandro Tardín
  */
-public interface UploadFileEntryResponseCustomizer {
+public interface UniqueFileNameProvider {
 
-	public void customize(
-			FileEntry fileEntry, JSONObject jsonObject, PortletRequest request)
-		throws IOException;
+	public String provide(String fileName, Predicate<String> exists)
+		throws PortalException;
 
 }

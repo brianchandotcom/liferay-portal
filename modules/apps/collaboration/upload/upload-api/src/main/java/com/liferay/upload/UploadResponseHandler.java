@@ -15,17 +15,22 @@
 package com.liferay.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 
-import java.io.IOException;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Alejandro Tardín
  */
-public interface UploadFileEntryHandler {
+public interface UploadResponseHandler {
 
-	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
-		throws IOException, PortalException;
+	public JSONObject onFailure(
+			PortletRequest portletRequest, PortalException pe)
+		throws PortalException;
+
+	public JSONObject onSuccess(
+			PortletRequest portletRequest, FileEntry fileEntry)
+		throws PortalException;
 
 }

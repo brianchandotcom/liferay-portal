@@ -399,6 +399,21 @@ public interface DDLRecordSetVersionModel extends BaseModel<DDLRecordSetVersion>
 		Locale defaultLocale);
 
 	/**
+	 * Returns the settings of this ddl record set version.
+	 *
+	 * @return the settings of this ddl record set version
+	 */
+	@AutoEscape
+	public String getSettings();
+
+	/**
+	 * Sets the settings of this ddl record set version.
+	 *
+	 * @param settings the settings of this ddl record set version
+	 */
+	public void setSettings(String settings);
+
+	/**
 	 * Returns the version of this ddl record set version.
 	 *
 	 * @return the version of this ddl record set version

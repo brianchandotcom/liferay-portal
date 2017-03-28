@@ -88,6 +88,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 			{ "DDMStructureVersionId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
+			{ "settings_", Types.VARCHAR },
 			{ "version", Types.VARCHAR },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
@@ -107,6 +108,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 		TABLE_COLUMNS_MAP.put("DDMStructureVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("settings_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -114,7 +116,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDLRecordSetVersion (recordSetVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,recordSetId LONG,DDMStructureVersionId LONG,name STRING null,description STRING null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDLRecordSetVersion (recordSetVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,recordSetId LONG,DDMStructureVersionId LONG,name STRING null,description STRING null,settings_ VARCHAR(75) null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDLRecordSetVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddlRecordSetVersion.recordSetVersionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDLRecordSetVersion.recordSetVersionId ASC";
@@ -158,6 +160,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 		model.setDDMStructureVersionId(soapModel.getDDMStructureVersionId());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setSettings(soapModel.getSettings());
 		model.setVersion(soapModel.getVersion());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
@@ -238,6 +241,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 		attributes.put("DDMStructureVersionId", getDDMStructureVersionId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("settings", getSettings());
 		attributes.put("version", getVersion());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -311,6 +315,12 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		String settings = (String)attributes.get("settings");
+
+		if (settings != null) {
+			setSettings(settings);
 		}
 
 		String version = (String)attributes.get("version");
@@ -669,6 +679,22 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 
 	@JSON
 	@Override
+	public String getSettings() {
+		if (_settings == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _settings;
+		}
+	}
+
+	@Override
+	public void setSettings(String settings) {
+		_settings = settings;
+	}
+
+	@JSON
+	@Override
 	public String getVersion() {
 		if (_version == null) {
 			return StringPool.BLANK;
@@ -973,6 +999,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 		ddlRecordSetVersionImpl.setDDMStructureVersionId(getDDMStructureVersionId());
 		ddlRecordSetVersionImpl.setName(getName());
 		ddlRecordSetVersionImpl.setDescription(getDescription());
+		ddlRecordSetVersionImpl.setSettings(getSettings());
 		ddlRecordSetVersionImpl.setVersion(getVersion());
 		ddlRecordSetVersionImpl.setStatus(getStatus());
 		ddlRecordSetVersionImpl.setStatusByUserId(getStatusByUserId());
@@ -1102,6 +1129,14 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 			ddlRecordSetVersionCacheModel.description = null;
 		}
 
+		ddlRecordSetVersionCacheModel.settings = getSettings();
+
+		String settings = ddlRecordSetVersionCacheModel.settings;
+
+		if ((settings != null) && (settings.length() == 0)) {
+			ddlRecordSetVersionCacheModel.settings = null;
+		}
+
 		ddlRecordSetVersionCacheModel.version = getVersion();
 
 		String version = ddlRecordSetVersionCacheModel.version;
@@ -1136,7 +1171,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{recordSetVersionId=");
 		sb.append(getRecordSetVersionId());
@@ -1158,6 +1193,8 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", settings=");
+		sb.append(getSettings());
 		sb.append(", version=");
 		sb.append(getVersion());
 		sb.append(", status=");
@@ -1175,7 +1212,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.dynamic.data.lists.model.DDLRecordSetVersion");
@@ -1222,6 +1259,10 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>settings</column-name><column-value><![CDATA[");
+		sb.append(getSettings());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>version</column-name><column-value><![CDATA[");
 		sb.append(getVersion());
 		sb.append("]]></column-value></column>");
@@ -1265,6 +1306,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 	private String _nameCurrentLanguageId;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
+	private String _settings;
 	private String _version;
 	private String _originalVersion;
 	private int _status;

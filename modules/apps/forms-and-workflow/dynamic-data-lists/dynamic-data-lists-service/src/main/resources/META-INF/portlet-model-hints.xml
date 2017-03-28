@@ -25,6 +25,8 @@
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
+		<field name="versionUserId" type="long" />
+		<field name="versionUserName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="DDMStructureId" type="long" />
@@ -32,6 +34,7 @@
 			<hint name="upper-case">true</hint>
 			<hint name="auto-escape">false</hint>
 		</field>
+		<field name="version" type="String" />
 		<field localized="true" name="name" type="String">
 			<validator name="required" />
 		</field>
@@ -56,6 +59,7 @@
 		<field name="DDMStructureVersionId" type="long" />
 		<field localized="true" name="name" type="String" />
 		<field localized="true" name="description" type="String" />
+		<field name="settings" type="String" />
 		<field name="version" type="String" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

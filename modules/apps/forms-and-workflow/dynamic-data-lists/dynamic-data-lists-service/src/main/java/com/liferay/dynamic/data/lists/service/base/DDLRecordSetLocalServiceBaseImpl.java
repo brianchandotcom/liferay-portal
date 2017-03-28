@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence;
+import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetVersionPersistence;
 
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -698,6 +699,44 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 		this.workflowDefinitionLinkPersistence = workflowDefinitionLinkPersistence;
 	}
 
+	/**
+	 * Returns the ddl record set version local service.
+	 *
+	 * @return the ddl record set version local service
+	 */
+	public com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalService getDDLRecordSetVersionLocalService() {
+		return ddlRecordSetVersionLocalService;
+	}
+
+	/**
+	 * Sets the ddl record set version local service.
+	 *
+	 * @param ddlRecordSetVersionLocalService the ddl record set version local service
+	 */
+	public void setDDLRecordSetVersionLocalService(
+		com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalService ddlRecordSetVersionLocalService) {
+		this.ddlRecordSetVersionLocalService = ddlRecordSetVersionLocalService;
+	}
+
+	/**
+	 * Returns the ddl record set version persistence.
+	 *
+	 * @return the ddl record set version persistence
+	 */
+	public DDLRecordSetVersionPersistence getDDLRecordSetVersionPersistence() {
+		return ddlRecordSetVersionPersistence;
+	}
+
+	/**
+	 * Sets the ddl record set version persistence.
+	 *
+	 * @param ddlRecordSetVersionPersistence the ddl record set version persistence
+	 */
+	public void setDDLRecordSetVersionPersistence(
+		DDLRecordSetVersionPersistence ddlRecordSetVersionPersistence) {
+		this.ddlRecordSetVersionPersistence = ddlRecordSetVersionPersistence;
+	}
+
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.dynamic.data.lists.model.DDLRecordSet",
 			ddlRecordSetLocalService);
@@ -778,6 +817,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	protected com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService;
 	@ServiceReference(type = WorkflowDefinitionLinkPersistence.class)
 	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
+	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalService.class)
+	protected com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalService ddlRecordSetVersionLocalService;
+	@BeanReference(type = DDLRecordSetVersionPersistence.class)
+	protected DDLRecordSetVersionPersistence ddlRecordSetVersionPersistence;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

@@ -3498,10 +3498,13 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		ddlRecordSetImpl.setCompanyId(ddlRecordSet.getCompanyId());
 		ddlRecordSetImpl.setUserId(ddlRecordSet.getUserId());
 		ddlRecordSetImpl.setUserName(ddlRecordSet.getUserName());
+		ddlRecordSetImpl.setVersionUserId(ddlRecordSet.getVersionUserId());
+		ddlRecordSetImpl.setVersionUserName(ddlRecordSet.getVersionUserName());
 		ddlRecordSetImpl.setCreateDate(ddlRecordSet.getCreateDate());
 		ddlRecordSetImpl.setModifiedDate(ddlRecordSet.getModifiedDate());
 		ddlRecordSetImpl.setDDMStructureId(ddlRecordSet.getDDMStructureId());
 		ddlRecordSetImpl.setRecordSetKey(ddlRecordSet.getRecordSetKey());
+		ddlRecordSetImpl.setVersion(ddlRecordSet.getVersion());
 		ddlRecordSetImpl.setName(ddlRecordSet.getName());
 		ddlRecordSetImpl.setDescription(ddlRecordSet.getDescription());
 		ddlRecordSetImpl.setMinDisplayRows(ddlRecordSet.getMinDisplayRows());

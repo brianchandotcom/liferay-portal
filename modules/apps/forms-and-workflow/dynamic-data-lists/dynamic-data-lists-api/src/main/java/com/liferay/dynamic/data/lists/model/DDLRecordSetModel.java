@@ -182,6 +182,49 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>,
 	public void setUserName(String userName);
 
 	/**
+	 * Returns the version user ID of this ddl record set.
+	 *
+	 * @return the version user ID of this ddl record set
+	 */
+	public long getVersionUserId();
+
+	/**
+	 * Sets the version user ID of this ddl record set.
+	 *
+	 * @param versionUserId the version user ID of this ddl record set
+	 */
+	public void setVersionUserId(long versionUserId);
+
+	/**
+	 * Returns the version user uuid of this ddl record set.
+	 *
+	 * @return the version user uuid of this ddl record set
+	 */
+	public String getVersionUserUuid();
+
+	/**
+	 * Sets the version user uuid of this ddl record set.
+	 *
+	 * @param versionUserUuid the version user uuid of this ddl record set
+	 */
+	public void setVersionUserUuid(String versionUserUuid);
+
+	/**
+	 * Returns the version user name of this ddl record set.
+	 *
+	 * @return the version user name of this ddl record set
+	 */
+	@AutoEscape
+	public String getVersionUserName();
+
+	/**
+	 * Sets the version user name of this ddl record set.
+	 *
+	 * @param versionUserName the version user name of this ddl record set
+	 */
+	public void setVersionUserName(String versionUserName);
+
+	/**
 	 * Returns the create date of this ddl record set.
 	 *
 	 * @return the create date of this ddl record set
@@ -240,6 +283,21 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>,
 	 * @param recordSetKey the record set key of this ddl record set
 	 */
 	public void setRecordSetKey(String recordSetKey);
+
+	/**
+	 * Returns the version of this ddl record set.
+	 *
+	 * @return the version of this ddl record set
+	 */
+	@AutoEscape
+	public String getVersion();
+
+	/**
+	 * Sets the version of this ddl record set.
+	 *
+	 * @param version the version of this ddl record set
+	 */
+	public void setVersion(String version);
 
 	/**
 	 * Returns the name of this ddl record set.

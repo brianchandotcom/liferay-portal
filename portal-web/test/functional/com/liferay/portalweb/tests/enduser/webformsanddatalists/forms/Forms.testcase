@@ -2882,7 +2882,6 @@
 			<var name="validationArgument" value="Contains" />
 			<var name="validationErrorMessage" value="Text must contain &apos;&apos;Test&apos;&apos;" />
 			<var name="validationInput" value="Test" />
-			<var name="validationType" value="Text" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />

@@ -106,8 +106,6 @@
 	</command>
 
 	<command name="editValidation">
-		<execute function="Select" locator1="FormFields#VALIDATION_TYPE" value1="${validationType}" />
-
 		<execute function="Select" locator1="FormFields#VALIDATION_ARGUMENT" value1="${validationArgument}" />
 
 		<execute function="Type" locator1="FormFields#VALIDATION_INPUT" value1="${validationInput}" />

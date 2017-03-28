@@ -61,6 +61,14 @@ runGradleTest {
 
 		assert packageInfoFile.exists()
 		assert packageInfoFile.text == "version 2.0.0"
+
+		File generatedLogFile = new File(reporting.baseDir, "baseline/baseline.log")
+
+		assert generatedLogFile.exists()
+
+		File expectedLogFile = file(generatedLogFile.name + ".expected")
+
+		assert expectedLogFile.text.normalize() == generatedLogFile.text.normalize()
 	}
 }
 

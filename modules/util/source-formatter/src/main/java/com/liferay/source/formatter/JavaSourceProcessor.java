@@ -93,7 +93,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (hasGeneratedTag(content)) {
+		if (_hasGeneratedTag(content)) {
 			return content;
 		}
 
@@ -472,10 +472,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Collection<String> fileNames = null;
 
 		if (portalSource || subrepository) {
-			fileNames = getPortalJavaFiles(includes);
+			fileNames = _getPortalJavaFiles(includes);
 		}
 		else {
-			fileNames = getPluginJavaFiles(includes);
+			fileNames = _getPluginJavaFiles(includes);
 		}
 
 		return new ArrayList<>(fileNames);
@@ -672,18 +672,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		};
 	}
 
-	protected Collection<String> getPluginJavaFiles(String[] includes)
-		throws Exception {
-
-		Collection<String> fileNames = new TreeSet<>();
-
-		String[] excludes = getPluginExcludes(StringPool.BLANK);
-
-		fileNames.addAll(getFileNames(excludes, includes));
-
-		return fileNames;
-	}
-
 	protected String getPortalCustomSQLContent() throws Exception {
 		if (_portalCustomSQLContent != null) {
 			return _portalCustomSQLContent;
@@ -708,121 +696,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_portalCustomSQLContent = portalCustomSQLContent;
 
 		return _portalCustomSQLContent;
-	}
-
-	protected Collection<String> getPortalJavaFiles(String[] includes)
-		throws Exception {
-
-		Collection<String> fileNames = new TreeSet<>();
-
-		String[] excludes = new String[] {
-			"**/*_IW.java", "**/counter/service/**", "**/jsp/*",
-			"**/model/impl/*Model.java", "**/model/impl/*ModelImpl.java",
-			"**/portal/service/**", "**/portal-client/**",
-			"**/portal-web/test/**/*Test.java", "**/test/*-generated/**"
-		};
-
-		for (String directoryName : getPluginsInsideModulesDirectoryNames()) {
-			excludes = ArrayUtil.append(
-				excludes, getPluginExcludes("**" + directoryName));
-		}
-
-		fileNames.addAll(getFileNames(excludes, includes));
-
-		excludes = new String[] {
-			"**/portal-client/**", "**/tools/ext_tmpl/**", "**/*_IW.java",
-			"**/test/**/*PersistenceTest.java"
-		};
-		includes = new String[] {
-			"**/com/liferay/portal/kernel/service/ServiceContext*.java",
-			"**/model/BaseModel.java", "**/model/impl/BaseModelImpl.java",
-			"**/portal-test/**/portal/service/**/*.java",
-			"**/portal-test-integration/**/portal/service/**/*.java",
-			"**/service/Base*.java",
-			"**/service/PersistedModelLocalService*.java",
-			"**/service/configuration/**/*.java",
-			"**/service/http/*HttpTest.java", "**/service/http/*SoapTest.java",
-			"**/service/http/TunnelUtil.java", "**/service/impl/*.java",
-			"**/service/jms/*.java", "**/service/permission/*.java",
-			"**/service/persistence/BasePersistence.java",
-			"**/service/persistence/BatchSession*.java",
-			"**/service/persistence/*FinderImpl.java",
-			"**/service/persistence/*Query.java",
-			"**/service/persistence/impl/*.java",
-			"**/portal-impl/test/**/*.java", "**/util-bridges/**/*.java"
-		};
-
-		fileNames.addAll(getFileNames(excludes, includes));
-
-		return fileNames;
-	}
-
-	protected List<File> getSuppressionsFiles() throws Exception {
-		String fileName = "checkstyle-suppressions.xml";
-
-		List<File> suppressionsFiles = new ArrayList<>();
-
-		// Find suppressions file in portal-impl/src/
-
-		if (portalSource) {
-			File suppressionsFile = getFile(
-				"portal-impl/src/" + fileName, PORTAL_MAX_DIR_LEVEL);
-
-			if (suppressionsFile != null) {
-				suppressionsFiles.add(suppressionsFile);
-			}
-		}
-
-		// Find suppressions files in any parent directory
-
-		int maxDirLevel = PLUGINS_MAX_DIR_LEVEL;
-		String parentDirName = sourceFormatterArgs.getBaseDirName();
-
-		if (portalSource || subrepository) {
-			maxDirLevel = PORTAL_MAX_DIR_LEVEL - 1;
-			parentDirName += "../";
-		}
-
-		for (int i = 0; i < maxDirLevel; i++) {
-			File suppressionsFile = new File(parentDirName + fileName);
-
-			if (suppressionsFile.exists()) {
-				suppressionsFiles.add(suppressionsFile);
-			}
-
-			parentDirName += "../";
-		}
-
-		if (!portalSource && !subrepository) {
-			return suppressionsFiles;
-		}
-
-		// Find suppressions files in any child directory
-
-		List<String> moduleSuppressionsFileNames = getFileNames(
-			sourceFormatterArgs.getBaseDirName(), null, new String[0],
-			new String[] {"**/modules/**/" + fileName});
-
-		for (String moduleSuppressionsFileName : moduleSuppressionsFileNames) {
-			moduleSuppressionsFileName = StringUtil.replace(
-				moduleSuppressionsFileName, CharPool.BACK_SLASH,
-				CharPool.SLASH);
-
-			suppressionsFiles.add(new File(moduleSuppressionsFileName));
-		}
-
-		return suppressionsFiles;
-	}
-
-	protected boolean hasGeneratedTag(String content) {
-		if ((content.contains("* @generated") || content.contains("$ANTLR")) &&
-			!content.contains("hasGeneratedTag")) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	@Override
@@ -930,7 +803,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void postFormat() throws Exception {
-		processCheckStyle();
+		_processCheckStyle();
 	}
 
 	@Override
@@ -941,36 +814,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			getProperty("allow.use.service.util.in.service.impl"));
 	}
 
-	protected void processCheckStyle() throws Exception {
-		if (_ungeneratedFiles.isEmpty()) {
-			return;
-		}
-
-		Set<SourceFormatterMessage> sourceFormatterMessages =
-			CheckStyleUtil.process(
-				_ungeneratedFiles, getSuppressionsFiles(),
-				sourceFormatterArgs.getBaseDirName());
-
-		for (SourceFormatterMessage sourceFormatterMessage :
-				sourceFormatterMessages) {
-
-			processMessage(
-				sourceFormatterMessage.getFileName(),
-				sourceFormatterMessage.getMessage(),
-				sourceFormatterMessage.getLineCount());
-
-			printError(
-				sourceFormatterMessage.getFileName(),
-				sourceFormatterMessage.toString());
-		}
-	}
-
 	@Override
 	protected String processFileChecks(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (hasGeneratedTag(content)) {
+		if (_hasGeneratedTag(content)) {
 			return content;
 		}
 
@@ -1015,6 +864,157 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return moduleFileNamesMap;
+	}
+
+	private Collection<String> _getPluginJavaFiles(String[] includes)
+		throws Exception {
+
+		Collection<String> fileNames = new TreeSet<>();
+
+		String[] excludes = getPluginExcludes(StringPool.BLANK);
+
+		fileNames.addAll(getFileNames(excludes, includes));
+
+		return fileNames;
+	}
+
+	private Collection<String> _getPortalJavaFiles(String[] includes)
+		throws Exception {
+
+		Collection<String> fileNames = new TreeSet<>();
+
+		String[] excludes = new String[] {
+			"**/*_IW.java", "**/counter/service/**", "**/jsp/*",
+			"**/model/impl/*Model.java", "**/model/impl/*ModelImpl.java",
+			"**/portal/service/**", "**/portal-client/**",
+			"**/portal-web/test/**/*Test.java", "**/test/*-generated/**"
+		};
+
+		for (String directoryName : getPluginsInsideModulesDirectoryNames()) {
+			excludes = ArrayUtil.append(
+				excludes, getPluginExcludes("**" + directoryName));
+		}
+
+		fileNames.addAll(getFileNames(excludes, includes));
+
+		excludes = new String[] {
+			"**/portal-client/**", "**/tools/ext_tmpl/**", "**/*_IW.java",
+			"**/test/**/*PersistenceTest.java"
+		};
+		includes = new String[] {
+			"**/com/liferay/portal/kernel/service/ServiceContext*.java",
+			"**/model/BaseModel.java", "**/model/impl/BaseModelImpl.java",
+			"**/portal-test/**/portal/service/**/*.java",
+			"**/portal-test-integration/**/portal/service/**/*.java",
+			"**/service/Base*.java",
+			"**/service/PersistedModelLocalService*.java",
+			"**/service/configuration/**/*.java",
+			"**/service/http/*HttpTest.java", "**/service/http/*SoapTest.java",
+			"**/service/http/TunnelUtil.java", "**/service/impl/*.java",
+			"**/service/jms/*.java", "**/service/permission/*.java",
+			"**/service/persistence/BasePersistence.java",
+			"**/service/persistence/BatchSession*.java",
+			"**/service/persistence/*FinderImpl.java",
+			"**/service/persistence/*Query.java",
+			"**/service/persistence/impl/*.java",
+			"**/portal-impl/test/**/*.java", "**/util-bridges/**/*.java"
+		};
+
+		fileNames.addAll(getFileNames(excludes, includes));
+
+		return fileNames;
+	}
+
+	private List<File> _getSuppressionsFiles() throws Exception {
+		String fileName = "checkstyle-suppressions.xml";
+
+		List<File> suppressionsFiles = new ArrayList<>();
+
+		// Find suppressions file in portal-impl/src/
+
+		if (portalSource) {
+			File suppressionsFile = getFile(
+				"portal-impl/src/" + fileName, PORTAL_MAX_DIR_LEVEL);
+
+			if (suppressionsFile != null) {
+				suppressionsFiles.add(suppressionsFile);
+			}
+		}
+
+		// Find suppressions files in any parent directory
+
+		int maxDirLevel = PLUGINS_MAX_DIR_LEVEL;
+		String parentDirName = sourceFormatterArgs.getBaseDirName();
+
+		if (portalSource || subrepository) {
+			maxDirLevel = PORTAL_MAX_DIR_LEVEL - 1;
+			parentDirName += "../";
+		}
+
+		for (int i = 0; i < maxDirLevel; i++) {
+			File suppressionsFile = new File(parentDirName + fileName);
+
+			if (suppressionsFile.exists()) {
+				suppressionsFiles.add(suppressionsFile);
+			}
+
+			parentDirName += "../";
+		}
+
+		if (!portalSource && !subrepository) {
+			return suppressionsFiles;
+		}
+
+		// Find suppressions files in any child directory
+
+		List<String> moduleSuppressionsFileNames = getFileNames(
+			sourceFormatterArgs.getBaseDirName(), null, new String[0],
+			new String[] {"**/modules/**/" + fileName});
+
+		for (String moduleSuppressionsFileName : moduleSuppressionsFileNames) {
+			moduleSuppressionsFileName = StringUtil.replace(
+				moduleSuppressionsFileName, CharPool.BACK_SLASH,
+				CharPool.SLASH);
+
+			suppressionsFiles.add(new File(moduleSuppressionsFileName));
+		}
+
+		return suppressionsFiles;
+	}
+
+	private boolean _hasGeneratedTag(String content) {
+		if ((content.contains("* @generated") || content.contains("$ANTLR")) &&
+			!content.contains("hasGeneratedTag")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private void _processCheckStyle() throws Exception {
+		if (_ungeneratedFiles.isEmpty()) {
+			return;
+		}
+
+		Set<SourceFormatterMessage> sourceFormatterMessages =
+			CheckStyleUtil.process(
+				_ungeneratedFiles, _getSuppressionsFiles(),
+				sourceFormatterArgs.getBaseDirName());
+
+		for (SourceFormatterMessage sourceFormatterMessage :
+				sourceFormatterMessages) {
+
+			processMessage(
+				sourceFormatterMessage.getFileName(),
+				sourceFormatterMessage.getMessage(),
+				sourceFormatterMessage.getLineCount());
+
+			printError(
+				sourceFormatterMessage.getFileName(),
+				sourceFormatterMessage.toString());
+		}
 	}
 
 	private static final String _CHECK_JAVA_FIELD_TYPES_EXCLUDES =

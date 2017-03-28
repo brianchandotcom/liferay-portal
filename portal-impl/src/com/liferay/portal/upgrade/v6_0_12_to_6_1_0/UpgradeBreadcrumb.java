@@ -36,16 +36,16 @@ public class UpgradeBreadcrumb extends BaseUpgradePortletPreferences {
 		throws Exception {
 
 		String displayStyle = portletPreferences.getValue(
-			"displayStyle", StringPool.BLANK);
+			"display-style", StringPool.BLANK);
 
 		if (displayStyle.equals("1")) {
-			portletPreferences.setValue("displayStyle", "horizontal");
+			portletPreferences.setValue("display-style", "horizontal");
 		}
 		else if (displayStyle.equals("2")) {
-			portletPreferences.setValue("displayStyle", "vertical");
+			portletPreferences.setValue("display-style", "vertical");
 		}
 		else {
-			portletPreferences.reset("displayStyle");
+			portletPreferences.reset("display-style");
 		}
 	}
 

@@ -21,11 +21,13 @@
 
 	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", announcementsDisplayContext.getPageDelta(), portletURL, null, "no-entries-were-found");
 
-	int entriesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flag);
+	LinkedHashMap<Long, long[]> scopes = announcementsDisplayContext.getAnnouncementScopes();
+
+	int entriesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), scopes, portletName.equals(AnnouncementsPortletKeys.ALERTS), flag);
 
 	searchContainer.setTotal(entriesCount);
 
-	List<AnnouncementsEntry> entries = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flag, searchContainer.getStart(), searchContainer.getEnd());
+	List<AnnouncementsEntry> entries = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), scopes, portletName.equals(AnnouncementsPortletKeys.ALERTS), flag, searchContainer.getStart(), searchContainer.getEnd());
 
 	searchContainer.setResults(entries);
 

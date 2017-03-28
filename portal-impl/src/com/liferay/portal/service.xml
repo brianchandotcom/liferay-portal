@@ -2350,10 +2350,10 @@
 			<finder-column name="type" />
 			<finder-column name="subtype" />
 		</finder>
-		<finder name="C_C_C" return-type="Role" unique="true">
+		<finder name="C_C_C" return-type="Collection" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column arrayable-operator="OR" name="classPK" />
 		</finder>
 
 		<!-- References -->

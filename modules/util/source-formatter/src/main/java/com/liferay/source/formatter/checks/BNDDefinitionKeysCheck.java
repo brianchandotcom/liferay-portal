@@ -79,8 +79,14 @@ public class BNDDefinitionKeysCheck extends DefinitionKeysCheck {
 
 		String lowerCaseDefinitionKey = StringUtil.toLowerCase(definitionKey);
 
-		String correctKey = generalDefinitionKeysMap.get(
-			lowerCaseDefinitionKey);
+		String correctKey = null;
+
+		if (definitionKey.equals("Conditional-Package")) {
+			correctKey = "-conditionalpackage";
+		}
+		else {
+			correctKey = generalDefinitionKeysMap.get(lowerCaseDefinitionKey);
+		}
 
 		if (correctKey == null) {
 			int pos = fileName.lastIndexOf(StringPool.SLASH);

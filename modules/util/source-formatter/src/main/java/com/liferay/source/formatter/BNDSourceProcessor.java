@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.BNDBundleNameCheck;
 import com.liferay.source.formatter.checks.BNDCapabilityCheck;
 import com.liferay.source.formatter.checks.BNDDefinitionKeysCheck;
@@ -44,9 +43,6 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
-
-		content = StringUtil.replaceFirst(
-			content, "Conditional-Package:", "-conditionalpackage:");
 
 		return content;
 	}

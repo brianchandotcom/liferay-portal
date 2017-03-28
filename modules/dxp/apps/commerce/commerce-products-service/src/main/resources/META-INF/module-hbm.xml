@@ -43,7 +43,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="commerceProductDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="DDMContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="DDMContent" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="displayDate" type="org.hibernate.type.TimestampType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />

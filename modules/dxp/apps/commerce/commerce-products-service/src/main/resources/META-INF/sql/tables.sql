@@ -34,7 +34,7 @@ create table CommerceProductInstance (
 	modifiedDate DATE null,
 	commerceProductDefinitionId LONG,
 	sku VARCHAR(75) null,
-	DDMContent VARCHAR(75) null,
+	DDMContent TEXT null,
 	displayDate DATE null,
 	expirationDate DATE null,
 	lastPublishDate DATE null,

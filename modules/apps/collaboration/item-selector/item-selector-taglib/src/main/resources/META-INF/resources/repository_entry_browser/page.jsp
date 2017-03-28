@@ -507,7 +507,6 @@ if (Validator.isNotNull(keywords)) {
 				<%
 				String returnType = ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType);
 
-				uploadURL.setParameter("source", "itemselector");
 				uploadURL.setParameter("returnType", returnType);
 				%>
 

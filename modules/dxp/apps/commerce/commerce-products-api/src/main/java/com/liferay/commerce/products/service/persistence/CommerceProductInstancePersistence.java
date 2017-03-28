@@ -778,57 +778,57 @@ public interface CommerceProductInstancePersistence extends BasePersistence<Comm
 		long commerceProductDefinitionId);
 
 	/**
-	* Returns the commerce product instance where commerceProductDefinitionId = &#63; and SKU = &#63; or throws a {@link NoSuchProductInstanceException} if it could not be found.
+	* Returns the commerce product instance where commerceProductDefinitionId = &#63; and sku = &#63; or throws a {@link NoSuchProductInstanceException} if it could not be found.
 	*
 	* @param commerceProductDefinitionId the commerce product definition ID
-	* @param SKU the sku
+	* @param sku the sku
 	* @return the matching commerce product instance
 	* @throws NoSuchProductInstanceException if a matching commerce product instance could not be found
 	*/
 	public CommerceProductInstance findByC_S(long commerceProductDefinitionId,
-		java.lang.String SKU) throws NoSuchProductInstanceException;
+		java.lang.String sku) throws NoSuchProductInstanceException;
 
 	/**
-	* Returns the commerce product instance where commerceProductDefinitionId = &#63; and SKU = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the commerce product instance where commerceProductDefinitionId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param commerceProductDefinitionId the commerce product definition ID
-	* @param SKU the sku
+	* @param sku the sku
 	* @return the matching commerce product instance, or <code>null</code> if a matching commerce product instance could not be found
 	*/
 	public CommerceProductInstance fetchByC_S(
-		long commerceProductDefinitionId, java.lang.String SKU);
+		long commerceProductDefinitionId, java.lang.String sku);
 
 	/**
-	* Returns the commerce product instance where commerceProductDefinitionId = &#63; and SKU = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the commerce product instance where commerceProductDefinitionId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param commerceProductDefinitionId the commerce product definition ID
-	* @param SKU the sku
+	* @param sku the sku
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce product instance, or <code>null</code> if a matching commerce product instance could not be found
 	*/
 	public CommerceProductInstance fetchByC_S(
-		long commerceProductDefinitionId, java.lang.String SKU,
+		long commerceProductDefinitionId, java.lang.String sku,
 		boolean retrieveFromCache);
 
 	/**
-	* Removes the commerce product instance where commerceProductDefinitionId = &#63; and SKU = &#63; from the database.
+	* Removes the commerce product instance where commerceProductDefinitionId = &#63; and sku = &#63; from the database.
 	*
 	* @param commerceProductDefinitionId the commerce product definition ID
-	* @param SKU the sku
+	* @param sku the sku
 	* @return the commerce product instance that was removed
 	*/
 	public CommerceProductInstance removeByC_S(
-		long commerceProductDefinitionId, java.lang.String SKU)
+		long commerceProductDefinitionId, java.lang.String sku)
 		throws NoSuchProductInstanceException;
 
 	/**
-	* Returns the number of commerce product instances where commerceProductDefinitionId = &#63; and SKU = &#63;.
+	* Returns the number of commerce product instances where commerceProductDefinitionId = &#63; and sku = &#63;.
 	*
 	* @param commerceProductDefinitionId the commerce product definition ID
-	* @param SKU the sku
+	* @param sku the sku
 	* @return the number of matching commerce product instances
 	*/
-	public int countByC_S(long commerceProductDefinitionId, java.lang.String SKU);
+	public int countByC_S(long commerceProductDefinitionId, java.lang.String sku);
 
 	/**
 	* Caches the commerce product instance in the entity cache if it is enabled.

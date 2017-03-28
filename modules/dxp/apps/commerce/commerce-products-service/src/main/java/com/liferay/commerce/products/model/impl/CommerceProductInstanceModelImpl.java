@@ -93,7 +93,7 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceProductDefinitionId", Types.BIGINT },
-			{ "SKU", Types.VARCHAR },
+			{ "sku", Types.VARCHAR },
 			{ "DDMContent", Types.VARCHAR },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
@@ -115,7 +115,7 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceProductDefinitionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("SKU", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMContent", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
@@ -126,7 +126,7 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceProductInstance (uuid_ VARCHAR(75) null,commerceProductInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductDefinitionId LONG,SKU VARCHAR(75) null,DDMContent VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceProductInstance (uuid_ VARCHAR(75) null,commerceProductInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductDefinitionId LONG,sku VARCHAR(75) null,DDMContent VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceProductInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceProductInstance.displayDate DESC, commerceProductInstance.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceProductInstance.displayDate DESC, CommerceProductInstance.createDate DESC";
@@ -142,10 +142,10 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.products.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.products.model.CommerceProductInstance"),
 			true);
-	public static final long SKU_COLUMN_BITMASK = 1L;
-	public static final long COMMERCEPRODUCTDEFINITIONID_COLUMN_BITMASK = 2L;
-	public static final long COMPANYID_COLUMN_BITMASK = 4L;
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long COMMERCEPRODUCTDEFINITIONID_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long SKU_COLUMN_BITMASK = 8L;
 	public static final long UUID_COLUMN_BITMASK = 16L;
 	public static final long DISPLAYDATE_COLUMN_BITMASK = 32L;
 	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
@@ -173,7 +173,7 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCommerceProductDefinitionId(soapModel.getCommerceProductDefinitionId());
-		model.setSKU(soapModel.getSKU());
+		model.setSku(soapModel.getSku());
 		model.setDDMContent(soapModel.getDDMContent());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
@@ -258,7 +258,7 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceProductDefinitionId",
 			getCommerceProductDefinitionId());
-		attributes.put("SKU", getSKU());
+		attributes.put("sku", getSku());
 		attributes.put("DDMContent", getDDMContent());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -332,10 +332,10 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 			setCommerceProductDefinitionId(commerceProductDefinitionId);
 		}
 
-		String SKU = (String)attributes.get("SKU");
+		String sku = (String)attributes.get("sku");
 
-		if (SKU != null) {
-			setSKU(SKU);
+		if (sku != null) {
+			setSku(sku);
 		}
 
 		String DDMContent = (String)attributes.get("DDMContent");
@@ -566,28 +566,28 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 
 	@JSON
 	@Override
-	public String getSKU() {
-		if (_SKU == null) {
+	public String getSku() {
+		if (_sku == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _SKU;
+			return _sku;
 		}
 	}
 
 	@Override
-	public void setSKU(String SKU) {
+	public void setSku(String sku) {
 		_columnBitmask |= SKU_COLUMN_BITMASK;
 
-		if (_originalSKU == null) {
-			_originalSKU = _SKU;
+		if (_originalSku == null) {
+			_originalSku = _sku;
 		}
 
-		_SKU = SKU;
+		_sku = sku;
 	}
 
-	public String getOriginalSKU() {
-		return GetterUtil.getString(_originalSKU);
+	public String getOriginalSku() {
+		return GetterUtil.getString(_originalSku);
 	}
 
 	@JSON
@@ -958,7 +958,7 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		commerceProductInstanceImpl.setCreateDate(getCreateDate());
 		commerceProductInstanceImpl.setModifiedDate(getModifiedDate());
 		commerceProductInstanceImpl.setCommerceProductDefinitionId(getCommerceProductDefinitionId());
-		commerceProductInstanceImpl.setSKU(getSKU());
+		commerceProductInstanceImpl.setSku(getSku());
 		commerceProductInstanceImpl.setDDMContent(getDDMContent());
 		commerceProductInstanceImpl.setDisplayDate(getDisplayDate());
 		commerceProductInstanceImpl.setExpirationDate(getExpirationDate());
@@ -1055,7 +1055,7 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 
 		commerceProductInstanceModelImpl._setOriginalCommerceProductDefinitionId = false;
 
-		commerceProductInstanceModelImpl._originalSKU = commerceProductInstanceModelImpl._SKU;
+		commerceProductInstanceModelImpl._originalSku = commerceProductInstanceModelImpl._sku;
 
 		commerceProductInstanceModelImpl._columnBitmask = 0;
 	}
@@ -1108,12 +1108,12 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 
 		commerceProductInstanceCacheModel.commerceProductDefinitionId = getCommerceProductDefinitionId();
 
-		commerceProductInstanceCacheModel.SKU = getSKU();
+		commerceProductInstanceCacheModel.sku = getSku();
 
-		String SKU = commerceProductInstanceCacheModel.SKU;
+		String sku = commerceProductInstanceCacheModel.sku;
 
-		if ((SKU != null) && (SKU.length() == 0)) {
-			commerceProductInstanceCacheModel.SKU = null;
+		if ((sku != null) && (sku.length() == 0)) {
+			commerceProductInstanceCacheModel.sku = null;
 		}
 
 		commerceProductInstanceCacheModel.DDMContent = getDDMContent();
@@ -1197,8 +1197,8 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		sb.append(getModifiedDate());
 		sb.append(", commerceProductDefinitionId=");
 		sb.append(getCommerceProductDefinitionId());
-		sb.append(", SKU=");
-		sb.append(getSKU());
+		sb.append(", sku=");
+		sb.append(getSku());
 		sb.append(", DDMContent=");
 		sb.append(getDDMContent());
 		sb.append(", displayDate=");
@@ -1265,8 +1265,8 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		sb.append(getCommerceProductDefinitionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>SKU</column-name><column-value><![CDATA[");
-		sb.append(getSKU());
+			"<column><column-name>sku</column-name><column-value><![CDATA[");
+		sb.append(getSku());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>DDMContent</column-name><column-value><![CDATA[");
@@ -1327,8 +1327,8 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 	private long _commerceProductDefinitionId;
 	private long _originalCommerceProductDefinitionId;
 	private boolean _setOriginalCommerceProductDefinitionId;
-	private String _SKU;
-	private String _originalSKU;
+	private String _sku;
+	private String _originalSku;
 	private String _DDMContent;
 	private Date _displayDate;
 	private Date _expirationDate;

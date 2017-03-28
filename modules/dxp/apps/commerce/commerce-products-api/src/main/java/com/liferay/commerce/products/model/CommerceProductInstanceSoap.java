@@ -44,7 +44,7 @@ public class CommerceProductInstanceSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCommerceProductDefinitionId(model.getCommerceProductDefinitionId());
-		soapModel.setSKU(model.getSKU());
+		soapModel.setSku(model.getSku());
 		soapModel.setDDMContent(model.getDDMContent());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
@@ -180,12 +180,12 @@ public class CommerceProductInstanceSoap implements Serializable {
 		_commerceProductDefinitionId = commerceProductDefinitionId;
 	}
 
-	public String getSKU() {
-		return _SKU;
+	public String getSku() {
+		return _sku;
 	}
 
-	public void setSKU(String SKU) {
-		_SKU = SKU;
+	public void setSku(String sku) {
+		_sku = sku;
 	}
 
 	public String getDDMContent() {
@@ -261,7 +261,7 @@ public class CommerceProductInstanceSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _commerceProductDefinitionId;
-	private String _SKU;
+	private String _sku;
 	private String _DDMContent;
 	private Date _displayDate;
 	private Date _expirationDate;

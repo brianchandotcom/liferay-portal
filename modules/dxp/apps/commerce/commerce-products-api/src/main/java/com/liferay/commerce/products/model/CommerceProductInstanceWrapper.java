@@ -72,7 +72,7 @@ public class CommerceProductInstanceWrapper implements CommerceProductInstance,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceProductDefinitionId",
 			getCommerceProductDefinitionId());
-		attributes.put("SKU", getSKU());
+		attributes.put("sku", getSku());
 		attributes.put("DDMContent", getDDMContent());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -143,10 +143,10 @@ public class CommerceProductInstanceWrapper implements CommerceProductInstance,
 			setCommerceProductDefinitionId(commerceProductDefinitionId);
 		}
 
-		String SKU = (String)attributes.get("SKU");
+		String sku = (String)attributes.get("sku");
 
-		if (SKU != null) {
-			setSKU(SKU);
+		if (sku != null) {
+			setSku(sku);
 		}
 
 		String DDMContent = (String)attributes.get("DDMContent");
@@ -410,8 +410,8 @@ public class CommerceProductInstanceWrapper implements CommerceProductInstance,
 	* @return the sku of this commerce product instance
 	*/
 	@Override
-	public java.lang.String getSKU() {
-		return _commerceProductInstance.getSKU();
+	public java.lang.String getSku() {
+		return _commerceProductInstance.getSku();
 	}
 
 	/**
@@ -763,11 +763,11 @@ public class CommerceProductInstanceWrapper implements CommerceProductInstance,
 	/**
 	* Sets the sku of this commerce product instance.
 	*
-	* @param SKU the sku of this commerce product instance
+	* @param sku the sku of this commerce product instance
 	*/
 	@Override
-	public void setSKU(java.lang.String SKU) {
-		_commerceProductInstance.setSKU(SKU);
+	public void setSku(java.lang.String sku) {
+		_commerceProductInstance.setSku(sku);
 	}
 
 	/**

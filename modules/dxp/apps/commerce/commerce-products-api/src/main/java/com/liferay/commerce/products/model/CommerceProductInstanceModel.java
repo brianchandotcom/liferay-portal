@@ -235,14 +235,14 @@ public interface CommerceProductInstanceModel extends BaseModel<CommerceProductI
 	 * @return the sku of this commerce product instance
 	 */
 	@AutoEscape
-	public String getSKU();
+	public String getSku();
 
 	/**
 	 * Sets the sku of this commerce product instance.
 	 *
-	 * @param SKU the sku of this commerce product instance
+	 * @param sku the sku of this commerce product instance
 	 */
-	public void setSKU(String SKU);
+	public void setSku(String sku);
 
 	/**
 	 * Returns the ddm content of this commerce product instance.

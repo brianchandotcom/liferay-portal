@@ -86,8 +86,8 @@ public class CommerceProductInstanceCacheModel implements CacheModel<CommercePro
 		sb.append(modifiedDate);
 		sb.append(", commerceProductDefinitionId=");
 		sb.append(commerceProductDefinitionId);
-		sb.append(", SKU=");
-		sb.append(SKU);
+		sb.append(", sku=");
+		sb.append(sku);
 		sb.append(", DDMContent=");
 		sb.append(DDMContent);
 		sb.append(", displayDate=");
@@ -148,11 +148,11 @@ public class CommerceProductInstanceCacheModel implements CacheModel<CommercePro
 
 		commerceProductInstanceImpl.setCommerceProductDefinitionId(commerceProductDefinitionId);
 
-		if (SKU == null) {
-			commerceProductInstanceImpl.setSKU(StringPool.BLANK);
+		if (sku == null) {
+			commerceProductInstanceImpl.setSku(StringPool.BLANK);
 		}
 		else {
-			commerceProductInstanceImpl.setSKU(SKU);
+			commerceProductInstanceImpl.setSku(sku);
 		}
 
 		if (DDMContent == null) {
@@ -223,7 +223,7 @@ public class CommerceProductInstanceCacheModel implements CacheModel<CommercePro
 		modifiedDate = objectInput.readLong();
 
 		commerceProductDefinitionId = objectInput.readLong();
-		SKU = objectInput.readUTF();
+		sku = objectInput.readUTF();
 		DDMContent = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
@@ -266,11 +266,11 @@ public class CommerceProductInstanceCacheModel implements CacheModel<CommercePro
 
 		objectOutput.writeLong(commerceProductDefinitionId);
 
-		if (SKU == null) {
+		if (sku == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(SKU);
+			objectOutput.writeUTF(sku);
 		}
 
 		if (DDMContent == null) {
@@ -307,7 +307,7 @@ public class CommerceProductInstanceCacheModel implements CacheModel<CommercePro
 	public long createDate;
 	public long modifiedDate;
 	public long commerceProductDefinitionId;
-	public String SKU;
+	public String sku;
 	public String DDMContent;
 	public long displayDate;
 	public long expirationDate;

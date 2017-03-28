@@ -141,7 +141,7 @@ public class CommerceProductInstancePersistenceTest {
 
 		newCommerceProductInstance.setCommerceProductDefinitionId(RandomTestUtil.nextLong());
 
-		newCommerceProductInstance.setSKU(RandomTestUtil.randomString());
+		newCommerceProductInstance.setSku(RandomTestUtil.randomString());
 
 		newCommerceProductInstance.setDDMContent(RandomTestUtil.randomString());
 
@@ -184,8 +184,8 @@ public class CommerceProductInstancePersistenceTest {
 			Time.getShortTimestamp(newCommerceProductInstance.getModifiedDate()));
 		Assert.assertEquals(existingCommerceProductInstance.getCommerceProductDefinitionId(),
 			newCommerceProductInstance.getCommerceProductDefinitionId());
-		Assert.assertEquals(existingCommerceProductInstance.getSKU(),
-			newCommerceProductInstance.getSKU());
+		Assert.assertEquals(existingCommerceProductInstance.getSku(),
+			newCommerceProductInstance.getSku());
 		Assert.assertEquals(existingCommerceProductInstance.getDDMContent(),
 			newCommerceProductInstance.getDDMContent());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -296,7 +296,7 @@ public class CommerceProductInstancePersistenceTest {
 			"uuid", true, "commerceProductInstanceId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "commerceProductDefinitionId", true,
-			"SKU", true, "DDMContent", true, "displayDate", true,
+			"sku", true, "DDMContent", true, "displayDate", true,
 			"expirationDate", true, "lastPublishDate", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
@@ -528,9 +528,9 @@ public class CommerceProductInstancePersistenceTest {
 			ReflectionTestUtil.<Long>invoke(existingCommerceProductInstance,
 				"getOriginalCommerceProductDefinitionId", new Class<?>[0]));
 		Assert.assertTrue(Objects.equals(
-				existingCommerceProductInstance.getSKU(),
+				existingCommerceProductInstance.getSku(),
 				ReflectionTestUtil.invoke(existingCommerceProductInstance,
-					"getOriginalSKU", new Class<?>[0])));
+					"getOriginalSku", new Class<?>[0])));
 	}
 
 	protected CommerceProductInstance addCommerceProductInstance()
@@ -555,7 +555,7 @@ public class CommerceProductInstancePersistenceTest {
 
 		commerceProductInstance.setCommerceProductDefinitionId(RandomTestUtil.nextLong());
 
-		commerceProductInstance.setSKU(RandomTestUtil.randomString());
+		commerceProductInstance.setSku(RandomTestUtil.randomString());
 
 		commerceProductInstance.setDDMContent(RandomTestUtil.randomString());
 

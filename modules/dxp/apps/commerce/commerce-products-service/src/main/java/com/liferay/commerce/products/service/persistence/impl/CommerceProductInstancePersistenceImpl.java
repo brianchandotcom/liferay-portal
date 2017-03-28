@@ -3078,18 +3078,18 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the commerce product instance where commerceProductDefinitionId = &#63; and SKU = &#63; or throws a {@link NoSuchProductInstanceException} if it could not be found.
+	 * Returns the commerce product instance where commerceProductDefinitionId = &#63; and sku = &#63; or throws a {@link NoSuchProductInstanceException} if it could not be found.
 	 *
 	 * @param commerceProductDefinitionId the commerce product definition ID
-	 * @param SKU the sku
+	 * @param sku the sku
 	 * @return the matching commerce product instance
 	 * @throws NoSuchProductInstanceException if a matching commerce product instance could not be found
 	 */
 	@Override
 	public CommerceProductInstance findByC_S(long commerceProductDefinitionId,
-		String SKU) throws NoSuchProductInstanceException {
+		String sku) throws NoSuchProductInstanceException {
 		CommerceProductInstance commerceProductInstance = fetchByC_S(commerceProductDefinitionId,
-				SKU);
+				sku);
 
 		if (commerceProductInstance == null) {
 			StringBundler msg = new StringBundler(6);
@@ -3099,8 +3099,8 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 			msg.append("commerceProductDefinitionId=");
 			msg.append(commerceProductDefinitionId);
 
-			msg.append(", SKU=");
-			msg.append(SKU);
+			msg.append(", sku=");
+			msg.append(sku);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -3115,30 +3115,30 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Returns the commerce product instance where commerceProductDefinitionId = &#63; and SKU = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the commerce product instance where commerceProductDefinitionId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param commerceProductDefinitionId the commerce product definition ID
-	 * @param SKU the sku
+	 * @param sku the sku
 	 * @return the matching commerce product instance, or <code>null</code> if a matching commerce product instance could not be found
 	 */
 	@Override
 	public CommerceProductInstance fetchByC_S(
-		long commerceProductDefinitionId, String SKU) {
-		return fetchByC_S(commerceProductDefinitionId, SKU, true);
+		long commerceProductDefinitionId, String sku) {
+		return fetchByC_S(commerceProductDefinitionId, sku, true);
 	}
 
 	/**
-	 * Returns the commerce product instance where commerceProductDefinitionId = &#63; and SKU = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the commerce product instance where commerceProductDefinitionId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param commerceProductDefinitionId the commerce product definition ID
-	 * @param SKU the sku
+	 * @param sku the sku
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching commerce product instance, or <code>null</code> if a matching commerce product instance could not be found
 	 */
 	@Override
 	public CommerceProductInstance fetchByC_S(
-		long commerceProductDefinitionId, String SKU, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { commerceProductDefinitionId, SKU };
+		long commerceProductDefinitionId, String sku, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { commerceProductDefinitionId, sku };
 
 		Object result = null;
 
@@ -3151,7 +3151,7 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 			CommerceProductInstance commerceProductInstance = (CommerceProductInstance)result;
 
 			if ((commerceProductDefinitionId != commerceProductInstance.getCommerceProductDefinitionId()) ||
-					!Objects.equals(SKU, commerceProductInstance.getSKU())) {
+					!Objects.equals(sku, commerceProductInstance.getSku())) {
 				result = null;
 			}
 		}
@@ -3163,16 +3163,16 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 
 			query.append(_FINDER_COLUMN_C_S_COMMERCEPRODUCTDEFINITIONID_2);
 
-			boolean bindSKU = false;
+			boolean bindSku = false;
 
-			if (SKU == null) {
+			if (sku == null) {
 				query.append(_FINDER_COLUMN_C_S_SKU_1);
 			}
-			else if (SKU.equals(StringPool.BLANK)) {
+			else if (sku.equals(StringPool.BLANK)) {
 				query.append(_FINDER_COLUMN_C_S_SKU_3);
 			}
 			else {
-				bindSKU = true;
+				bindSku = true;
 
 				query.append(_FINDER_COLUMN_C_S_SKU_2);
 			}
@@ -3190,8 +3190,8 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 
 				qPos.add(commerceProductDefinitionId);
 
-				if (bindSKU) {
-					qPos.add(SKU);
+				if (bindSku) {
+					qPos.add(sku);
 				}
 
 				List<CommerceProductInstance> list = q.list();
@@ -3208,8 +3208,8 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 					cacheResult(commerceProductInstance);
 
 					if ((commerceProductInstance.getCommerceProductDefinitionId() != commerceProductDefinitionId) ||
-							(commerceProductInstance.getSKU() == null) ||
-							!commerceProductInstance.getSKU().equals(SKU)) {
+							(commerceProductInstance.getSku() == null) ||
+							!commerceProductInstance.getSku().equals(sku)) {
 						finderCache.putResult(FINDER_PATH_FETCH_BY_C_S,
 							finderArgs, commerceProductInstance);
 					}
@@ -3234,34 +3234,34 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Removes the commerce product instance where commerceProductDefinitionId = &#63; and SKU = &#63; from the database.
+	 * Removes the commerce product instance where commerceProductDefinitionId = &#63; and sku = &#63; from the database.
 	 *
 	 * @param commerceProductDefinitionId the commerce product definition ID
-	 * @param SKU the sku
+	 * @param sku the sku
 	 * @return the commerce product instance that was removed
 	 */
 	@Override
 	public CommerceProductInstance removeByC_S(
-		long commerceProductDefinitionId, String SKU)
+		long commerceProductDefinitionId, String sku)
 		throws NoSuchProductInstanceException {
 		CommerceProductInstance commerceProductInstance = findByC_S(commerceProductDefinitionId,
-				SKU);
+				sku);
 
 		return remove(commerceProductInstance);
 	}
 
 	/**
-	 * Returns the number of commerce product instances where commerceProductDefinitionId = &#63; and SKU = &#63;.
+	 * Returns the number of commerce product instances where commerceProductDefinitionId = &#63; and sku = &#63;.
 	 *
 	 * @param commerceProductDefinitionId the commerce product definition ID
-	 * @param SKU the sku
+	 * @param sku the sku
 	 * @return the number of matching commerce product instances
 	 */
 	@Override
-	public int countByC_S(long commerceProductDefinitionId, String SKU) {
+	public int countByC_S(long commerceProductDefinitionId, String sku) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_S;
 
-		Object[] finderArgs = new Object[] { commerceProductDefinitionId, SKU };
+		Object[] finderArgs = new Object[] { commerceProductDefinitionId, sku };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -3272,16 +3272,16 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 
 			query.append(_FINDER_COLUMN_C_S_COMMERCEPRODUCTDEFINITIONID_2);
 
-			boolean bindSKU = false;
+			boolean bindSku = false;
 
-			if (SKU == null) {
+			if (sku == null) {
 				query.append(_FINDER_COLUMN_C_S_SKU_1);
 			}
-			else if (SKU.equals(StringPool.BLANK)) {
+			else if (sku.equals(StringPool.BLANK)) {
 				query.append(_FINDER_COLUMN_C_S_SKU_3);
 			}
 			else {
-				bindSKU = true;
+				bindSku = true;
 
 				query.append(_FINDER_COLUMN_C_S_SKU_2);
 			}
@@ -3299,8 +3299,8 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 
 				qPos.add(commerceProductDefinitionId);
 
-				if (bindSKU) {
-					qPos.add(SKU);
+				if (bindSku) {
+					qPos.add(sku);
 				}
 
 				count = (Long)q.uniqueResult();
@@ -3322,9 +3322,9 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 
 	private static final String _FINDER_COLUMN_C_S_COMMERCEPRODUCTDEFINITIONID_2 =
 		"commerceProductInstance.commerceProductDefinitionId = ? AND ";
-	private static final String _FINDER_COLUMN_C_S_SKU_1 = "commerceProductInstance.SKU IS NULL";
-	private static final String _FINDER_COLUMN_C_S_SKU_2 = "commerceProductInstance.SKU = ?";
-	private static final String _FINDER_COLUMN_C_S_SKU_3 = "(commerceProductInstance.SKU IS NULL OR commerceProductInstance.SKU = '')";
+	private static final String _FINDER_COLUMN_C_S_SKU_1 = "commerceProductInstance.sku IS NULL";
+	private static final String _FINDER_COLUMN_C_S_SKU_2 = "commerceProductInstance.sku = ?";
+	private static final String _FINDER_COLUMN_C_S_SKU_3 = "(commerceProductInstance.sku IS NULL OR commerceProductInstance.sku = '')";
 
 	public CommerceProductInstancePersistenceImpl() {
 		setModelClass(CommerceProductInstance.class);
@@ -3350,7 +3350,7 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 		finderCache.putResult(FINDER_PATH_FETCH_BY_C_S,
 			new Object[] {
 				commerceProductInstance.getCommerceProductDefinitionId(),
-				commerceProductInstance.getSKU()
+				commerceProductInstance.getSku()
 			}, commerceProductInstance);
 
 		commerceProductInstance.resetOriginalValues();
@@ -3443,7 +3443,7 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 
 		args = new Object[] {
 				commerceProductInstanceModelImpl.getCommerceProductDefinitionId(),
-				commerceProductInstanceModelImpl.getSKU()
+				commerceProductInstanceModelImpl.getSku()
 			};
 
 		finderCache.putResult(FINDER_PATH_COUNT_BY_C_S, args, Long.valueOf(1),
@@ -3479,7 +3479,7 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					commerceProductInstanceModelImpl.getCommerceProductDefinitionId(),
-					commerceProductInstanceModelImpl.getSKU()
+					commerceProductInstanceModelImpl.getSku()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
@@ -3490,7 +3490,7 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 				FINDER_PATH_FETCH_BY_C_S.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					commerceProductInstanceModelImpl.getOriginalCommerceProductDefinitionId(),
-					commerceProductInstanceModelImpl.getOriginalSKU()
+					commerceProductInstanceModelImpl.getOriginalSku()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
@@ -3848,7 +3848,7 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 		commerceProductInstanceImpl.setCreateDate(commerceProductInstance.getCreateDate());
 		commerceProductInstanceImpl.setModifiedDate(commerceProductInstance.getModifiedDate());
 		commerceProductInstanceImpl.setCommerceProductDefinitionId(commerceProductInstance.getCommerceProductDefinitionId());
-		commerceProductInstanceImpl.setSKU(commerceProductInstance.getSKU());
+		commerceProductInstanceImpl.setSku(commerceProductInstance.getSku());
 		commerceProductInstanceImpl.setDDMContent(commerceProductInstance.getDDMContent());
 		commerceProductInstanceImpl.setDisplayDate(commerceProductInstance.getDisplayDate());
 		commerceProductInstanceImpl.setExpirationDate(commerceProductInstance.getExpirationDate());

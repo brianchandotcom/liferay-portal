@@ -20,7 +20,7 @@ import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.FolderNameException;
 import com.liferay.document.library.kernel.exception.InvalidFileVersionException;
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.File;
 import java.io.InputStream;
@@ -35,8 +35,6 @@ public class DLValidatorUtil {
 	}
 
 	public static DLValidator getDLValidator() {
-		PortalRuntimePermission.checkGetBeanProperty(DLValidatorUtil.class);
-
 		return _dlValidator;
 	}
 
@@ -100,12 +98,15 @@ public class DLValidatorUtil {
 		getDLValidator().validateVersionLabel(versionLabel);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setDLValidator(DLValidator dlValidator) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_dlValidator = dlValidator;
 	}
 
-	private static DLValidator _dlValidator;
+	private static volatile DLValidator _dlValidator =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			DLValidator.class, DLValidatorUtil.class, "_dlValidator", false);
 
 }

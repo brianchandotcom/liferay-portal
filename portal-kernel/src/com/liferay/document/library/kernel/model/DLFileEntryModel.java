@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -27,9 +26,6 @@ import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.trash.TrashHandler;
-
-import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.io.Serializable;
 
@@ -554,60 +550,6 @@ public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
-	/**
-	 * Returns the status of this document library file entry.
-	 *
-	 * @return the status of this document library file entry
-	 */
-	@Override
-	public int getStatus();
-
-	/**
-	 * Returns the trash entry created when this document library file entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file entry.
-	 *
-	 * @return the trash entry created when this document library file entry was moved to the Recycle Bin
-	 */
-	@Override
-	public TrashEntry getTrashEntry() throws PortalException;
-
-	/**
-	 * Returns the class primary key of the trash entry for this document library file entry.
-	 *
-	 * @return the class primary key of the trash entry for this document library file entry
-	 */
-	@Override
-	public long getTrashEntryClassPK();
-
-	/**
-	 * Returns the trash handler for this document library file entry.
-	 *
-	 * @return the trash handler for this document library file entry
-	 */
-	@Override
-	public TrashHandler getTrashHandler();
-
-	/**
-	 * Returns <code>true</code> if this document library file entry is in the Recycle Bin.
-	 *
-	 * @return <code>true</code> if this document library file entry is in the Recycle Bin; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isInTrash();
-
-	/**
-	 * Returns <code>true</code> if the parent of this document library file entry is in the Recycle Bin.
-	 *
-	 * @return <code>true</code> if the parent of this document library file entry is in the Recycle Bin; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isInTrashContainer();
-
-	@Override
-	public boolean isInTrashExplicitly();
-
-	@Override
-	public boolean isInTrashImplicitly();
 
 	@Override
 	public boolean isNew();

@@ -239,36 +239,6 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	/**
-	* Returns <code>true</code> if this wiki node is in the Recycle Bin.
-	*
-	* @return <code>true</code> if this wiki node is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrash() {
-		return _wikiNode.isInTrash();
-	}
-
-	/**
-	* Returns <code>true</code> if the parent of this wiki node is in the Recycle Bin.
-	*
-	* @return <code>true</code> if the parent of this wiki node is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrashContainer() {
-		return _wikiNode.isInTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashExplicitly() {
-		return _wikiNode.isInTrashExplicitly();
-	}
-
-	@Override
-	public boolean isInTrashImplicitly() {
-		return _wikiNode.isInTrashImplicitly();
-	}
-
-	/**
 	* Returns <code>true</code> if this wiki node is inactive.
 	*
 	* @return <code>true</code> if this wiki node is inactive; <code>false</code> otherwise
@@ -327,27 +297,6 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNode.addAttachmentsFolder();
-	}
-
-	/**
-	* Returns the trash handler for this wiki node.
-	*
-	* @return the trash handler for this wiki node
-	*/
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _wikiNode.getTrashHandler();
-	}
-
-	/**
-	* Returns the trash entry created when this wiki node was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this wiki node.
-	*
-	* @return the trash entry created when this wiki node was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNode.getTrashEntry();
 	}
 
 	@Override
@@ -599,16 +548,6 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	@Override
 	public long getStatusByUserId() {
 		return _wikiNode.getStatusByUserId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this wiki node.
-	*
-	* @return the class primary key of the trash entry for this wiki node
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _wikiNode.getTrashEntryClassPK();
 	}
 
 	/**

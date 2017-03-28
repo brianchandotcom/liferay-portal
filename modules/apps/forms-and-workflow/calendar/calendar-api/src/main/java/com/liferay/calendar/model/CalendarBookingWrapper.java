@@ -373,36 +373,6 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	}
 
 	/**
-	* Returns <code>true</code> if this calendar booking is in the Recycle Bin.
-	*
-	* @return <code>true</code> if this calendar booking is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrash() {
-		return _calendarBooking.isInTrash();
-	}
-
-	/**
-	* Returns <code>true</code> if the parent of this calendar booking is in the Recycle Bin.
-	*
-	* @return <code>true</code> if the parent of this calendar booking is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrashContainer() {
-		return _calendarBooking.isInTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashExplicitly() {
-		return _calendarBooking.isInTrashExplicitly();
-	}
-
-	@Override
-	public boolean isInTrashImplicitly() {
-		return _calendarBooking.isInTrashImplicitly();
-	}
-
-	/**
 	* Returns <code>true</code> if this calendar booking is inactive.
 	*
 	* @return <code>true</code> if this calendar booking is inactive; <code>false</code> otherwise
@@ -491,27 +461,6 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<CalendarBooking> toCacheModel() {
 		return _calendarBooking.toCacheModel();
-	}
-
-	/**
-	* Returns the trash handler for this calendar booking.
-	*
-	* @return the trash handler for this calendar booking
-	*/
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _calendarBooking.getTrashHandler();
-	}
-
-	/**
-	* Returns the trash entry created when this calendar booking was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this calendar booking.
-	*
-	* @return the trash entry created when this calendar booking was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _calendarBooking.getTrashEntry();
 	}
 
 	@Override
@@ -1017,16 +966,6 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	@Override
 	public long getStatusByUserId() {
 		return _calendarBooking.getStatusByUserId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this calendar booking.
-	*
-	* @return the class primary key of the trash entry for this calendar booking
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _calendarBooking.getTrashEntryClassPK();
 	}
 
 	/**

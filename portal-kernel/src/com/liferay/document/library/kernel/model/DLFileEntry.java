@@ -102,11 +102,15 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 
 	public java.lang.String getLuceneProperties();
 
+	public int getStatus();
+
 	public boolean hasLock();
 
 	public boolean isCheckedOut();
 
 	public boolean isInHiddenFolder();
+
+	public boolean isInTrash();
 
 	public void setExtraSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties extraSettingsProperties);

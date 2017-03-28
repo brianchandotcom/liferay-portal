@@ -101,6 +101,8 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 	public WikiPage getRedirectPage()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public long getTrashEntryClassPK();
+
 	public java.util.List<WikiPage> getViewableChildPages();
 
 	public WikiPage getViewableParentPage();

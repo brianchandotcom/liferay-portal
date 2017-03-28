@@ -50,20 +50,6 @@ public class JavaFinderCacheCheck extends BaseFileCheck {
 		return new Tuple(content, sourceFormatterMessages);
 	}
 
-	private String _fixClearCache(String fileName, String content) {
-
-		// LPS-47648
-
-		if (fileName.contains("/test/integration/") ||
-			fileName.contains("/testIntegration/java")) {
-
-			content = StringUtil.replace(
-				content, "FinderCacheUtil.clearCache();", StringPool.BLANK);
-		}
-
-		return content;
-	}
-
 	private void _checkFinderCacheInterfaceMethod(
 		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
 		String content) {
@@ -76,6 +62,20 @@ public class JavaFinderCacheCheck extends BaseFileCheck {
 				"Missing override of BasePersistenceImpl." +
 					"fetchByPrimaryKeys(Set<Serializable>), see LPS-49552");
 		}
+	}
+
+	private String _fixClearCache(String fileName, String content) {
+
+		// LPS-47648
+
+		if (fileName.contains("/test/integration/") ||
+			fileName.contains("/testIntegration/java")) {
+
+			content = StringUtil.replace(
+				content, "FinderCacheUtil.clearCache();", StringPool.BLANK);
+		}
+
+		return content;
 	}
 
 	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(

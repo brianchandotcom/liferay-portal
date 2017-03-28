@@ -150,7 +150,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 
 							if (Validator.isNull(indent)) {
 								for (int i = 0; i < lineLeadingTabCount - 1;
-										i++) {
+									 i++) {
 
 									indent += StringPool.TAB;
 								}

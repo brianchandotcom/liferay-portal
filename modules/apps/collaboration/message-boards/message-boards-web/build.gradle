@@ -8,7 +8,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.expando.taglib", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.3.0"
-	provided group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.3"
+	provided group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.message.boards.api", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.message.boards.service", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"

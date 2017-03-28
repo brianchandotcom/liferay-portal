@@ -66,25 +66,44 @@ String rootLayoutType = siteNavigationMenuDisplayContext.getRootLayoutType();
 									</aui:select>
 								</div>
 
-								<div class="<%= rootLayoutType.equals("select") ? "" : "hide" %>" id="<portlet:namespace />rootLayoutUuid">
-									<aui:select label="" name="preferences--rootLayoutUuid--">
-										<aui:option value="" />
+								<div class="<%= rootLayoutType.equals("select") ? "" : "hide" %>" id="<portlet:namespace />rootLayoutUuidPanel">
+									<aui:input label="" name="rootLayoutName" type="resource" value="<%= siteNavigationMenuDisplayContext.getRootLayoutName() %>" />
+									<aui:input id="rootLayoutUuid" ignoreRequestValue="<%= true %>" name="preferences--rootLayoutUuid--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootLayoutUuid() %>" />
 
-										<%
-										for (LayoutDescription layoutDescription : siteNavigationMenuDisplayContext.getLayoutDescriptions()) {
-											Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
+									<aui:button name="chooseRootPage" value="choose" />
 
-											if (layoutDescriptionLayout != null) {
-										%>
+									<aui:script use="liferay-item-selector-dialog">
+										$('#<portlet:namespace />chooseRootPage').on(
+											'click',
+											function(event) {
+												event.preventDefault();
 
-												<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Objects.equals(layoutDescriptionLayout.getUuid(), siteNavigationMenuDisplayContext.getRootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
+												var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+													{
+														eventName: '<%= siteNavigationMenuDisplayContext.getRootLayoutSelectorEventName() %>',
+														on: {
+															selectedItemChange: function(event) {
+																var selectedItem = event.newVal;
 
-										<%
+																var rootLayoutName = A.one('#<portlet:namespace />rootLayoutName');
+																var rootLayoutUuid = A.one('#<portlet:namespace />rootLayoutUuid');
+
+																if (selectedItem) {
+																	rootLayoutName.val(selectedItem.name);
+																	rootLayoutUuid.val(selectedItem.id);
+																}
+															}
+														},
+														'strings.add': '<liferay-ui:message key="done" />',
+														title: '<liferay-ui:message key="select-layout" />',
+														url: '<%= siteNavigationMenuDisplayContext.getRootLayoutItemSelectorURL() %>'
+													}
+												);
+
+												itemSelectorDialog.open();
 											}
-										}
-										%>
-
-									</aui:select>
+										);
+									</aui:script>
 								</div>
 
 								<aui:select name="preferences--displayDepth--">

@@ -14,24 +14,44 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+
+import java.io.IOException;
+
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @author Pavel Savinov
  */
 public class ServletAdapter extends HttpServlet {
+
+	@Override
+	public void destroy() {
+		super.destroy();
+
+		_serviceTracker.close();
+	}
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -40,29 +60,17 @@ public class ServletAdapter extends HttpServlet {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
-			"(&(" + config.getInitParameter("filter") + ")" +
-					"(objectClass=" + Servlet.class.getName() + "))");
+			"(&" + config.getInitParameter("filter") + "(objectClass=" +
+				Servlet.class.getName() + "))");
 
-		_serviceTracker = registry.trackServices(filter);
+		_serviceTracker = registry.trackServices(
+			filter, new ServletTrackerCustomizer());
 
 		_serviceTracker.open();
-
-		Servlet servlet = getServlet();
-
-		if (servlet != null) {
-			servlet.init(config);
-		}
 	}
 
 	protected Servlet getServlet() {
 		return _serviceTracker.getService();
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		_serviceTracker.close();
 	}
 
 	@Override
@@ -80,7 +88,7 @@ public class ServletAdapter extends HttpServlet {
 				new ServletException(
 					"A servlet matching the filter " +
 						servletConfig.getInitParameter("filter") +
-						" is unavailable"),
+							" is unavailable"),
 				request, response);
 
 			return;
@@ -89,6 +97,80 @@ public class ServletAdapter extends HttpServlet {
 		servlet.service(request, response);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(ServletAdapter.class);
+
 	private ServiceTracker<Servlet, Servlet> _serviceTracker;
+
+	private static class ServletTrackerCustomizer
+		implements ServiceTrackerCustomizer<Servlet, Servlet> {
+
+		@Override
+		public Servlet addingService(
+			ServiceReference<Servlet> serviceReference) {
+
+			Map<String, Object> properties = serviceReference.getProperties();
+
+			ServletConfig servletConfig = new ServletConfig() {
+
+				@Override
+				public String getInitParameter(String name) {
+					String value = GetterUtil.getString(
+						properties.get(name), null);
+
+					return value;
+				}
+
+				@Override
+				public Enumeration<String> getInitParameterNames() {
+					Set<String> keys = properties.keySet();
+
+					Vector<String> keyNames = new Vector<>(keys);
+
+					return keyNames.elements();
+				}
+
+				@Override
+				public ServletContext getServletContext() {
+					return ServletContextPool.get(
+						PortalUtil.getServletContextName());
+				}
+
+				@Override
+				public String getServletName() {
+					String servletName = GetterUtil.getString(
+						properties.get("osgi.http.whiteboard.servlet.name"));
+
+					return servletName;
+				}
+
+			};
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			Servlet servlet = registry.getService(serviceReference);
+
+			try {
+				servlet.init(servletConfig);
+			}
+			catch (ServletException se) {
+				_log.error("Unable to initialize servlet", se);
+			}
+
+			return servlet;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Servlet> serviceReference, Servlet service) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Servlet> serviceReference, Servlet service) {
+
+			service.destroy();
+		}
+
+	}
 
 }

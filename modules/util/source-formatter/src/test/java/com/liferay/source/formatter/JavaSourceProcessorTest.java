@@ -338,7 +338,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"SecureRandomNumberGeneration.testjava",
 			"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
-				"SecureRandom instead of java.security.SecureRandom");
+				"SecureRandom instead of java.security.SecureRandom, see " +
+					"LPS-39058");
 	}
 
 	@Test

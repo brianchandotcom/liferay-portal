@@ -796,7 +796,7 @@ public class LayoutImportController implements ImportController {
 		String xml = zipReader.getEntryAsString("/manifest.xml");
 
 		if (xml == null) {
-			throw new LARFileException(LARFileException.MISSING_MANIFEST);
+			throw new LARFileException(LARFileException.TYPE_MISSING_MANIFEST);
 		}
 
 		Element rootElement = null;
@@ -807,7 +807,8 @@ public class LayoutImportController implements ImportController {
 			rootElement = document.getRootElement();
 		}
 		catch (Exception e) {
-			throw new LARFileException(LARFileException.INVALID_MANIFEST, e);
+			throw new LARFileException(
+				LARFileException.TYPE_INVALID_MANIFEST, e);
 		}
 
 		// Bundle compatibility
@@ -822,7 +823,7 @@ public class LayoutImportController implements ImportController {
 
 			if (buildNumber != importBuildNumber) {
 				throw new LayoutImportException(
-					LayoutImportException.WRONG_BUILD_NUMBER,
+					LayoutImportException.TYPE_WRONG_BUILD_NUMBER,
 					new Object[] {importBuildNumber, buildNumber});
 			}
 		}
@@ -867,7 +868,7 @@ public class LayoutImportController implements ImportController {
 					Version.getInstance(importSchemaVersion))) {
 
 				throw new LayoutImportException(
-					LayoutImportException.WRONG_LAR_SCHEMA_VERSION,
+					LayoutImportException.TYPE_WRONG_LAR_SCHEMA_VERSION,
 					new Object[] {
 						importSchemaVersion,
 						ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION
@@ -963,7 +964,7 @@ public class LayoutImportController implements ImportController {
 
 			if (!portletDataHandler.validateSchemaVersion(schemaVersion)) {
 				throw new LayoutImportException(
-					LayoutImportException.WRONG_PORTLET_SCHEMA_VERSION,
+					LayoutImportException.TYPE_WRONG_PORTLET_SCHEMA_VERSION,
 					new Object[] {
 						schemaVersion, portletId,
 						portletDataHandler.getSchemaVersion()

@@ -1377,7 +1377,7 @@ public class PortletImportController implements ImportController {
 		String xml = zipReader.getEntryAsString("/manifest.xml");
 
 		if (xml == null) {
-			throw new LARFileException(LARFileException.MISSING_MANIFEST);
+			throw new LARFileException(LARFileException.TYPE_MISSING_MANIFEST);
 		}
 
 		Element rootElement = null;
@@ -1388,7 +1388,8 @@ public class PortletImportController implements ImportController {
 			rootElement = document.getRootElement();
 		}
 		catch (Exception e) {
-			throw new LARFileException(LARFileException.INVALID_MANIFEST, e);
+			throw new LARFileException(
+				LARFileException.TYPE_INVALID_MANIFEST, e);
 		}
 
 		// Build compatibility
@@ -1402,7 +1403,7 @@ public class PortletImportController implements ImportController {
 
 		if (buildNumber != importBuildNumber) {
 			throw new LayoutImportException(
-				LayoutImportException.WRONG_BUILD_NUMBER,
+				LayoutImportException.TYPE_WRONG_BUILD_NUMBER,
 				new Object[] {importBuildNumber, buildNumber});
 		}
 

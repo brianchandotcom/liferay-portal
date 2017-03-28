@@ -24,13 +24,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 @ProviderType
 public class LayoutImportException extends PortalException {
 
-	public static final int DEFAULT = 0;
+	public static final int TYPE_DEFAULT = 0;
 
-	public static final int WRONG_BUILD_NUMBER = 1;
+	public static final int TYPE_WRONG_BUILD_NUMBER = 1;
 
-	public static final int WRONG_LAR_SCHEMA_VERSION = 2;
+	public static final int TYPE_WRONG_LAR_SCHEMA_VERSION = 2;
 
-	public static final int WRONG_PORTLET_SCHEMA_VERSION = 3;
+	public static final int TYPE_WRONG_PORTLET_SCHEMA_VERSION = 3;
 
 	public LayoutImportException() {
 	}
@@ -91,6 +91,6 @@ public class LayoutImportException extends PortalException {
 	}
 
 	private Object[] _arguments = {};
-	private int _type = DEFAULT;
+	private int _type = TYPE_DEFAULT;
 
 }

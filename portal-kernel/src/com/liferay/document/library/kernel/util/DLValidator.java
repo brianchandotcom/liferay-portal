@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.kernel.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
@@ -27,6 +29,7 @@ import java.io.InputStream;
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface DLValidator {
 
 	public String fixName(String name);

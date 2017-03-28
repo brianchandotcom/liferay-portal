@@ -647,29 +647,20 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private String _getUtilTaglibSrcDirName() {
-		if (_utilTaglibSrcDirName != null) {
-			return _utilTaglibSrcDirName;
-		}
-
 		File utilTaglibDir = getFile("util-taglib/src", PORTAL_MAX_DIR_LEVEL);
 
-		String utilTaglibSrcDirName = null;
-
-		if (utilTaglibDir != null) {
-			utilTaglibSrcDirName = utilTaglibDir.getAbsolutePath();
-
-			utilTaglibSrcDirName = StringUtil.replace(
-				utilTaglibSrcDirName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			utilTaglibSrcDirName += StringPool.SLASH;
-		}
-		else {
-			utilTaglibSrcDirName = StringPool.BLANK;
+		if (utilTaglibDir == null) {
+			return StringPool.BLANK;
 		}
 
-		_utilTaglibSrcDirName = utilTaglibSrcDirName;
+		String utilTaglibSrcDirName = utilTaglibDir.getAbsolutePath();
 
-		return _utilTaglibSrcDirName;
+		utilTaglibSrcDirName = StringUtil.replace(
+			utilTaglibSrcDirName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+		utilTaglibSrcDirName += StringPool.SLASH;
+
+		return utilTaglibSrcDirName;
 	}
 
 	private static final String[] _INCLUDES =
@@ -695,6 +686,5 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"(<.*page import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(
 		"(<.*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
-	private String _utilTaglibSrcDirName;
 
 }

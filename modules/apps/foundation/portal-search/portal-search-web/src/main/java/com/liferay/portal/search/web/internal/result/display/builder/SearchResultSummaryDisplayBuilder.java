@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
@@ -75,8 +76,7 @@ public class SearchResultSummaryDisplayBuilder {
 		long classPK = GetterUtil.getLong(_document.get(Field.ENTRY_CLASS_PK));
 
 		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
+			getAssetRendererFactoryByClassName(className);
 
 		AssetRenderer<?> assetRenderer = null;
 
@@ -110,6 +110,12 @@ public class SearchResultSummaryDisplayBuilder {
 		_assetEntryLocalService = assetEntryLocalService;
 	}
 
+	public void setAssetRendererFactoryLookup(
+		AssetRendererFactoryLookup assetRendererFactoryLookup) {
+
+		_assetRendererFactoryLookup = assetRendererFactoryLookup;
+	}
+
 	public void setCurrentURL(String currentURL) {
 		_currentURL = currentURL;
 	}
@@ -124,6 +130,10 @@ public class SearchResultSummaryDisplayBuilder {
 
 	public void setImageRequested(boolean imageRequested) {
 		_imageRequested = imageRequested;
+	}
+
+	public void setIndexerRegistry(IndexerRegistry indexerRegistry) {
+		_indexerRegistry = indexerRegistry;
 	}
 
 	public void setLanguage(Language language) {
@@ -170,6 +180,12 @@ public class SearchResultSummaryDisplayBuilder {
 		SearchResultPreferences searchResultPreferences) {
 
 		_searchResultPreferences = searchResultPreferences;
+	}
+
+	public void setSearchResultViewURLSupplier(
+		SearchResultViewURLSupplier searchResultViewURLSupplier) {
+
+		_searchResultViewURLSupplier = searchResultViewURLSupplier;
 	}
 
 	public void setThemeDisplay(ThemeDisplay themeDisplay) {
@@ -424,9 +440,7 @@ public class SearchResultSummaryDisplayBuilder {
 		String className, long classPK,
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		String viewURL = SearchUtil.getSearchResultViewURL(
-			_renderRequest, _renderResponse, className, classPK,
-			_searchResultPreferences.isViewInContext(), _currentURL);
+		String viewURL = getSearchResultViewURL(className, classPK);
 
 		searchResultSummaryDisplayContext.setViewURL(viewURL);
 	}
@@ -454,13 +468,43 @@ public class SearchResultSummaryDisplayBuilder {
 		return assetEntry.getUserId();
 	}
 
+	protected AssetRendererFactory<?> getAssetRendererFactoryByClassName(
+		String className) {
+
+		if (_assetRendererFactoryLookup != null) {
+			return _assetRendererFactoryLookup.
+				getAssetRendererFactoryByClassName(className);
+		}
+
+		return AssetRendererFactoryRegistryUtil.
+			getAssetRendererFactoryByClassName(className);
+	}
+
+	protected Indexer<Object> getIndexer(String className) {
+		if (_indexerRegistry != null) {
+			return _indexerRegistry.getIndexer(className);
+		}
+
+		return IndexerRegistryUtil.getIndexer(className);
+	}
+
+	protected String getSearchResultViewURL(String className, long classPK) {
+		if (_searchResultViewURLSupplier != null) {
+			return _searchResultViewURLSupplier.getSearchResultViewURL();
+		}
+
+		return SearchUtil.getSearchResultViewURL(
+			_renderRequest, _renderResponse, className, classPK,
+			_searchResultPreferences.isViewInContext(), _currentURL);
+	}
+
 	protected Summary getSummary(
 			String className, AssetRenderer<?> assetRenderer)
 		throws SearchException {
 
 		Summary summary = null;
 
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(className);
+		Indexer indexer = getIndexer(className);
 
 		if (indexer != null) {
 			String snippet = _document.get(Field.SNIPPET);
@@ -553,10 +597,12 @@ public class SearchResultSummaryDisplayBuilder {
 
 	private boolean _abridged;
 	private AssetEntryLocalService _assetEntryLocalService;
+	private AssetRendererFactoryLookup _assetRendererFactoryLookup;
 	private String _currentURL;
 	private Document _document;
 	private boolean _highlightEnabled;
 	private boolean _imageRequested;
+	private IndexerRegistry _indexerRegistry;
 	private Language _language;
 	private Locale _locale;
 	private PortletURLFactory _portletURLFactory;
@@ -568,6 +614,7 @@ public class SearchResultSummaryDisplayBuilder {
 	private Stream<SearchResultImageContributor>
 		_searchResultImageContributorsStream = Stream.empty();
 	private SearchResultPreferences _searchResultPreferences;
+	private SearchResultViewURLSupplier _searchResultViewURLSupplier;
 	private ThemeDisplay _themeDisplay;
 
 }

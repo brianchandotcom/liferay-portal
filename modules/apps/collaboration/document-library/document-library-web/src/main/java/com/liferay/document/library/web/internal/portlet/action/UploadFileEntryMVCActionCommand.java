@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.upload.DLUploadFileEntryHandler;
+import com.liferay.document.library.web.internal.upload.DLUploadResponseHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.upload.UploadHandler;
@@ -46,11 +47,15 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		_uploadHandler.upload(
-			_dlUploadFileEntryHandler, actionRequest, actionResponse);
+			_dlUploadFileEntryHandler, _dlUploadResponseHandler, actionRequest,
+			actionResponse);
 	}
 
 	@Reference
 	private DLUploadFileEntryHandler _dlUploadFileEntryHandler;
+
+	@Reference
+	private DLUploadResponseHandler _dlUploadResponseHandler;
 
 	@Reference
 	private UploadHandler _uploadHandler;

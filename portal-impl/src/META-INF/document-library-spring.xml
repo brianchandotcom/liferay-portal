@@ -18,11 +18,6 @@
 			<bean class="com.liferay.portlet.documentlibrary.util.DLImpl" destroy-method="destroy" />
 		</property>
 	</bean>
-	<bean class="com.liferay.document.library.kernel.util.DLValidatorUtil" id="com.liferay.document.library.kernel.util.DLValidatorUtil">
-		<property name="DLValidator">
-			<bean class="com.liferay.portlet.documentlibrary.util.DLValidatorImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" id="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" />
 	<bean class="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" id="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" />
 	<bean class="com.liferay.portlet.documentlibrary.service.permission.DLPermission" id="com.liferay.portlet.documentlibrary.service.permission.DLPermission" />

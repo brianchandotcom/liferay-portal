@@ -558,33 +558,40 @@ public class JenkinsResultsParserUtil {
 			remoteURL = fixFileName(remoteURL);
 		}
 
-		Matcher matcher = _localURLPattern1.matcher(remoteURL);
+		String localURL = remoteURL;
+		String localURLQueryString = "";
 
-		if (matcher.find()) {
-			StringBuilder sb = new StringBuilder();
+		int x = remoteURL.indexOf("?");
 
-			sb.append("http://test-");
-			sb.append(matcher.group(1));
-			sb.append("/");
-			sb.append(matcher.group(1));
-			sb.append("/");
-
-			return remoteURL.replaceAll(matcher.group(0), sb.toString());
+		if (x != -1) {
+			localURL = remoteURL.substring(0, x);
+			localURLQueryString = remoteURL.substring(x);
 		}
 
-		matcher = _localURLPattern2.matcher(remoteURL);
+		Matcher remoteURLAuthorityMatcher1 =
+			_remoteURLAuthorityPattern1.matcher(localURL);
+		Matcher remoteURLAuthorityMatcher2 =
+			_remoteURLAuthorityPattern2.matcher(localURL);
 
-		if (matcher.find()) {
-			StringBuilder sb = new StringBuilder();
+		if (remoteURLAuthorityMatcher1.find()) {
+			String localURLAuthority = combine(
+				"http://test-", remoteURLAuthorityMatcher1.group(1), "/",
+				remoteURLAuthorityMatcher1.group(1), "/");
+			String remoteURLAuthority = remoteURLAuthorityMatcher1.group(0);
 
-			sb.append("http://");
-			sb.append(matcher.group(1));
-			sb.append("/");
+			localURL = localURL.replaceAll(
+				remoteURLAuthority, localURLAuthority);
+		}
+		else if (remoteURLAuthorityMatcher2.find()) {
+			String localURLAuthority = combine(
+				"http://", remoteURLAuthorityMatcher2.group(1), "/");
+			String remoteURLAuthority = remoteURLAuthorityMatcher2.group(0);
 
-			return remoteURL.replaceAll(matcher.group(0), sb.toString());
+			localURL = localURL.replaceAll(
+				remoteURLAuthority, localURLAuthority);
 		}
 
-		return remoteURL;
+		return localURL + localURLQueryString;
 	}
 
 	public static List<String> getMasters(
@@ -1187,9 +1194,9 @@ public class JenkinsResultsParserUtil {
 
 	private static Hashtable<?, ?> _buildProperties;
 	private static String[] _buildPropertiesURLs;
-	private static final Pattern _localURLPattern1 = Pattern.compile(
+	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");
-	private static final Pattern _localURLPattern2 = Pattern.compile(
+	private static final Pattern _remoteURLAuthorityPattern2 = Pattern.compile(
 		"https://(test-[0-9]+-[0-9]+).liferay.com/");
 
 	private static final Map<String, String> _toStringCache =

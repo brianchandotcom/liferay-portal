@@ -14,20 +14,24 @@
 
 package com.liferay.site.navigation.menu.web.internal.portlet.action;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
+import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuWebKeys;
 
 import java.io.IOException;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,6 +52,18 @@ public class SiteNavigationMenuConfigurationAction
 	@Override
 	public String getJspPath(HttpServletRequest request) {
 		return "/configuration.jsp";
+	}
+
+	@Override
+	public void include(
+			PortletConfig portletConfig, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
+
+		request.setAttribute(
+			SiteNavigationMenuWebKeys.ITEM_SELECTOR, _itemSelector);
+
+		super.include(portletConfig, request, response);
 	}
 
 	@Override
@@ -76,6 +92,9 @@ public class SiteNavigationMenuConfigurationAction
 
 		_portletDisplayTemplate = portletDisplayTemplate;
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	private PortletDisplayTemplate _portletDisplayTemplate;
 

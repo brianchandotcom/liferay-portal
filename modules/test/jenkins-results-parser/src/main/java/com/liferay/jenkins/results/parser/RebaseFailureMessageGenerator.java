@@ -67,8 +67,7 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 		String consoleText = build.getConsoleText();
 
 		if (!consoleText.contains(_REBASE_END_STRING) ||
-			!consoleText.contains(_REBASE_START_STRING) ||
-			!consoleText.contains("CONFLICT")) {
+			!consoleText.contains(_REBASE_START_STRING)) {
 
 			return null;
 		}

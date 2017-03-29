@@ -124,11 +124,13 @@
 /lib/portal/axiom-api.jar
 /lib/portal/axiom-impl.jar
 /lib/portal/axis-ant.jar
+/lib/portal/axis.jar
 /lib/portal/bcmail.jar
 /lib/portal/bcprov.jar
 /lib/portal/bsf.jar
 /lib/portal/c3p0.jar
 /lib/portal/ccpp.jar
+/lib/portal/ccpp-ri.jar
 /lib/portal/cglib-nodep.jar
 /lib/portal/chemistry-opencmis-client-api.jar
 /lib/portal/chemistry-opencmis-client-bindings.jar
@@ -181,6 +183,7 @@
 /lib/portal/juh.jar
 /lib/portal/juniversalchardet.jar
 /lib/portal/jurt.jar
+/lib/portal/kxml2.jar
 /lib/portal/log4j.jar
 /lib/portal/log4j-extras.jar
 /lib/portal/mchange-commons-java.jar
@@ -199,9 +202,11 @@
 /lib/portal/poi-ooxml-schemas.jar
 /lib/portal/poi-scratchpad.jar
 /lib/portal/poi.jar
+/lib/portal/rometools.jar
 /lib/portal/saaj-api.jar
 /lib/portal/saaj-impl.jar
 /lib/portal/serializer.jar
+/lib/portal/simplecaptcha.jar
 /lib/portal/slf4j-api.jar
 /lib/portal/soap.jar
 /lib/portal/stax-ex.jar
@@ -229,6 +234,7 @@
 /lib/portal/xml-apis.jar
 /lib/portal/xmlsec.jar
 /lib/portal/xmpcore.jar
+/lib/portal/xpp3.jar
 /lib/portal/xstream.jar
 /lib/portal/xuggle-xuggler-noarch.jar
 /lib/portal/xz.jar

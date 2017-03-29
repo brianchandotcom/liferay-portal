@@ -31,7 +31,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -194,14 +193,13 @@ public class WebDriverUtil extends PropsValues {
 			FirefoxBinary firefoxBinary = new FirefoxBinary(file);
 
 			return new FirefoxDriver(
-				firefoxBinary, firefoxProfile,
-				(Capabilities)desiredCapabilities);
+				firefoxBinary, firefoxProfile, desiredCapabilities);
 		}
 		else {
 			desiredCapabilities.setCapability(
 				FirefoxDriver.PROFILE, firefoxProfile);
 
-			return new FirefoxDriver((Capabilities)desiredCapabilities);
+			return new FirefoxDriver(desiredCapabilities);
 		}
 	}
 

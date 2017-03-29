@@ -19,26 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.commerce.products.service.base.CommerceProductInstanceLocalServiceBaseImpl;
 
 /**
- * The implementation of the commerce product instance local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.products.service.CommerceProductInstanceLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Marco Leo
- * @see CommerceProductInstanceLocalServiceBaseImpl
- * @see com.liferay.commerce.products.service.CommerceProductInstanceLocalServiceUtil
  */
 @ProviderType
 public class CommerceProductInstanceLocalServiceImpl
 	extends CommerceProductInstanceLocalServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.products.service.CommerceProductInstanceLocalServiceUtil} to access the commerce product instance local service.
-	 */
 }

@@ -19,26 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.commerce.products.service.base.CommerceProductInstanceServiceBaseImpl;
 
 /**
- * The implementation of the commerce product instance remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.products.service.CommerceProductInstanceService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Marco Leo
- * @see CommerceProductInstanceServiceBaseImpl
- * @see com.liferay.commerce.products.service.CommerceProductInstanceServiceUtil
  */
 @ProviderType
 public class CommerceProductInstanceServiceImpl
 	extends CommerceProductInstanceServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.products.service.CommerceProductInstanceServiceUtil} to access the commerce product instance remote service.
-	 */
 }

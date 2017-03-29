@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.commerce.product.service.impl.CommerceProductDefinitionLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceProductDefinitionLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CommerceProductDefinitionServiceImpl" id="com.liferay.commerce.product.service.CommerceProductDefinitionService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceProductDefinitionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceProductDefinitionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CommerceProductInstanceLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceProductInstanceLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CommerceProductInstanceServiceImpl" id="com.liferay.commerce.product.service.CommerceProductInstanceService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceProductInstancePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceProductInstancePersistence" parent="basePersistence" />
+</beans>

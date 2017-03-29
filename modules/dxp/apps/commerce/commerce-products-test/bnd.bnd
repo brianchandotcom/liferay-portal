@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Commerce Products Test
-Bundle-SymbolicName: com.liferay.commerce.products.test
-Bundle-Version: 1.0.0
--includeresource: test-classes/integration

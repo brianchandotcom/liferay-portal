@@ -16,64 +16,82 @@ package com.liferay.knowledge.base.web.internal.upload;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.upload.UniqueFileNameProvider;
 import com.liferay.upload.UploadFileEntryHandler;
 
+import java.io.IOException;
 import java.io.InputStream;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
  */
+@Component(service = KBArticleAttachmentKBUploadFileEntryHandler.class)
 public class KBArticleAttachmentKBUploadFileEntryHandler
 	implements UploadFileEntryHandler {
 
-	public KBArticleAttachmentKBUploadFileEntryHandler(long resourcePrimKey) {
-		_resourcePrimKey = resourcePrimKey;
-	}
-
 	@Override
-	public FileEntry addFileEntry(
-			long userId, long groupId, long folderId, String fileName,
-			String contentType, InputStream inputStream, long size,
-			ServiceContext serviceContext)
-		throws PortalException {
+	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
+		throws IOException, PortalException {
 
-		return KBArticleLocalServiceUtil.addAttachment(
-			userId, _resourcePrimKey, fileName, inputStream, contentType);
-	}
+		final ThemeDisplay themeDisplay =
+			(ThemeDisplay)uploadPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-	@Override
-	public void checkPermission(
-			long groupId, long folderId, PermissionChecker permissionChecker)
-		throws PortalException {
+		long resourcePrimKey = ParamUtil.getLong(
+			uploadPortletRequest, "resourcePrimKey");
 
-		KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
-			_resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+		String originalFileName = uploadPortletRequest.getFileName(
+			_PARAMETER_NAME);
+		String contentType = uploadPortletRequest.getContentType(
+			_PARAMETER_NAME);
+
+		final KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
+			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		KBArticlePermission.check(
-			permissionChecker, kbArticle, KBActionKeys.UPDATE);
+			themeDisplay.getPermissionChecker(), kbArticle,
+			KBActionKeys.UPDATE);
+
+		try (InputStream inputStream =
+				uploadPortletRequest.getFileAsStream(_PARAMETER_NAME)) {
+
+			String uniqueFileName = _uniqueFileNameProvider.provide(
+				originalFileName,
+				fileName -> _fileExists(themeDisplay, kbArticle, fileName));
+
+			return _kbArticleLocalService.addAttachment(
+				themeDisplay.getUserId(), resourcePrimKey, uniqueFileName,
+				inputStream, contentType);
+		}
 	}
 
-	@Override
-	public FileEntry fetchFileEntry(
-			long userId, long groupId, long folderId, String fileName)
-		throws PortalException {
+	private boolean _fileExists(
+		ThemeDisplay themeDisplay, KBArticle kbArticle, String fileName) {
 
 		try {
-			KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
-				_resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+			if (PortletFileRepositoryUtil.getPortletFileEntry(
+					themeDisplay.getScopeGroupId(),
+					kbArticle.getAttachmentsFolderId(), fileName) != null) {
 
-			return PortletFileRepositoryUtil.getPortletFileEntry(
-				groupId, kbArticle.getAttachmentsFolderId(), fileName);
+				return true;
+			}
+
+			return false;
 		}
 		catch (PortalException pe) {
 
@@ -83,23 +101,19 @@ public class KBArticleAttachmentKBUploadFileEntryHandler
 				_log.debug(pe, pe);
 			}
 
-			return null;
+			return false;
 		}
 	}
 
-	@Override
-	public String getParameterName() {
-		return "imageSelectorFileName";
-	}
-
-	@Override
-	public void validateFile(String fileName, String contentType, long size)
-		throws PortalException {
-	}
+	private static final String _PARAMETER_NAME = "imageSelectorFileName";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleAttachmentKBUploadFileEntryHandler.class);
 
-	private final long _resourcePrimKey;
+	@Reference
+	private KBArticleLocalService _kbArticleLocalService;
+
+	@Reference
+	private UniqueFileNameProvider _uniqueFileNameProvider;
 
 }

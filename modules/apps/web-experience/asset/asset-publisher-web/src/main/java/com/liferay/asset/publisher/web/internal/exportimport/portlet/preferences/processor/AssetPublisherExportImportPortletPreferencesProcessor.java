@@ -28,8 +28,10 @@ import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -67,6 +69,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -696,6 +699,49 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		portletPreferences.setValues(key, newValues);
 	}
 
+	protected void updateExportOrderByColumnClassPKs(
+			PortletDataContext portletDataContext, Portlet portlet,
+			PortletPreferences portletPreferences, String key, String className)
+		throws Exception {
+
+		String value = portletPreferences.getValue(key, null);
+
+		String[] values = StringUtil.split(
+			value, DDMIndexer.DDM_FIELD_SEPARATOR);
+
+		String primaryKey = values[2];
+
+		if (!Validator.isNumber(primaryKey)) {
+			return;
+		}
+
+		long primaryKeyLong = GetterUtil.getLong(primaryKey);
+
+		String newPreferencesValue = getExportPortletPreferencesValue(
+			portletDataContext, portlet, className, primaryKeyLong);
+
+		if (Validator.isNull(newPreferencesValue)) {
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Unable to export portlet preferences ");
+				sb.append("value for class ");
+				sb.append(className);
+				sb.append(" with primary key ");
+				sb.append(primaryKeyLong);
+
+				_log.warn(sb.toString());
+			}
+
+			return;
+		}
+
+		values[2] = newPreferencesValue;
+
+		portletPreferences.setValue(
+			key, StringUtil.merge(values, DDMIndexer.DDM_FIELD_SEPARATOR));
+	}
+
 	protected PortletPreferences updateExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
@@ -883,6 +929,14 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences, name,
 					AssetVocabulary.class.getName());
+			}
+			else if (name.startsWith("orderByColumn") &&
+					 value.startsWith(
+						 DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX)) {
+
+				updateExportOrderByColumnClassPKs(
+					portletDataContext, portlet, portletPreferences, name,
+					DDMStructure.class.getName());
 			}
 			else if (name.startsWith("queryName") &&
 					 StringUtil.equalsIgnoreCase(value, "assetCategories")) {

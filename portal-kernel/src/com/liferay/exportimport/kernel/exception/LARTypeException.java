@@ -24,11 +24,50 @@ import com.liferay.portal.kernel.exception.PortalException;
 @ProviderType
 public class LARTypeException extends PortalException {
 
+	public static final int COMPANY_GROUP = 5;
+
+	public static final int DEFAULT = 0;
+
+	public static final int GROUP = 4;
+
+	public static final int LAYOUT_PROTOTYPE = 1;
+
+	public static final int LAYOUT_SET = 2;
+
+	public static final int LAYOUT_SET_PROTOTYPE = 3;
+
 	public LARTypeException() {
+	}
+
+	public LARTypeException(int type) {
+		_type = type;
+	}
+
+	public LARTypeException(int type, String msg) {
+		this(msg);
+
+		_type = type;
+	}
+
+	public LARTypeException(int type, String msg, Throwable cause) {
+		this(msg, cause);
+
+		_type = type;
+	}
+
+	public LARTypeException(int type, Throwable cause) {
+		this(cause);
+
+		_type = type;
 	}
 
 	public LARTypeException(String msg) {
 		super(msg);
+	}
+
+	public LARTypeException(String actualLARType, String[] expectedLARTypes) {
+		_actualLARType = actualLARType;
+		_expectedLARTypes = expectedLARTypes;
 	}
 
 	public LARTypeException(String msg, Throwable cause) {
@@ -38,5 +77,33 @@ public class LARTypeException extends PortalException {
 	public LARTypeException(Throwable cause) {
 		super(cause);
 	}
+
+	public String getActualLARType() {
+		return _actualLARType;
+	}
+
+	public String[] getExpectedLARTypes() {
+		return _expectedLARTypes;
+	}
+
+	public int getType() {
+		return _type;
+	}
+
+	public void setActualLARType(String actualLARType) {
+		_actualLARType = actualLARType;
+	}
+
+	public void setExpectedLARTypes(String[] expectedLARTypes) {
+		_expectedLARTypes = expectedLARTypes;
+	}
+
+	public void setType(int type) {
+		_type = type;
+	}
+
+	private String _actualLARType;
+	private String[] _expectedLARTypes;
+	private int _type = DEFAULT;
 
 }

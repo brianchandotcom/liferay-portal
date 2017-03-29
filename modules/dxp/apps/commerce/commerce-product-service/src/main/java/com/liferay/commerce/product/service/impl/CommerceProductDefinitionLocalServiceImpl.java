@@ -57,7 +57,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceProductDefinition addCommerceProductDefinition(
-			long userId, long groupId, String baseSku,
+			long userId, long groupId, String baseSKU,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String productTypeName, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -100,7 +100,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 		commerceProductDefinition.setUserName(user.getFullName());
 		commerceProductDefinition.setTitleMap(titleMap);
 		commerceProductDefinition.setDescriptionMap(descriptionMap);
-		commerceProductDefinition.setBaseSKU(baseSku);
+		commerceProductDefinition.setBaseSKU(baseSKU);
 		commerceProductDefinition.setProductTypeName(productTypeName);
 		commerceProductDefinition.setDDMStructureKey(ddmStructureKey);
 		commerceProductDefinition.setDisplayDate(displayDate);
@@ -238,7 +238,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceProductDefinition updateCommerceProductDefinition(
 			long userId, long groupId, long commerceProductDefinitionId,
-			String baseSku, Map<Locale, String> titleMap,
+			String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String productTypeName,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -278,7 +278,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 		commerceProductDefinition.setUserName(user.getFullName());
 		commerceProductDefinition.setTitleMap(titleMap);
 		commerceProductDefinition.setDescriptionMap(descriptionMap);
-		commerceProductDefinition.setBaseSKU(baseSku);
+		commerceProductDefinition.setBaseSKU(baseSKU);
 		commerceProductDefinition.setProductTypeName(productTypeName);
 		commerceProductDefinition.setDDMStructureKey(ddmStructureKey);
 		commerceProductDefinition.setDisplayDate(displayDate);

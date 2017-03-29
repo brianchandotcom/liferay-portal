@@ -29,4 +29,6 @@ public class DDLRecordSetConstants {
 
 	public static final int SCOPE_KALEO_FORMS = 1;
 
+	public static final String VERSION_DEFAULT = "1.0";
+
 }

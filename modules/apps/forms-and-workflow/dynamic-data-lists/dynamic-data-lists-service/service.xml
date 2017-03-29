@@ -68,6 +68,8 @@
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
+		<column name="versionUserId" type="long" />
+		<column name="versionUserName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -75,6 +77,7 @@
 
 		<column name="DDMStructureId" type="long" />
 		<column name="recordSetKey" type="String" />
+		<column name="version" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="minDisplayRows" type="int" />
@@ -95,6 +98,7 @@
 		<!-- References -->
 
 		<reference entity="DDLRecord" package-path="com.liferay.dynamic.data.lists" />
+		<reference entity="DDLRecordSetVersion" package-path="com.liferay.dynamic.data.lists" />
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
@@ -123,6 +127,7 @@
 		<column name="DDMStructureVersionId" type="long" />
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
+		<column name="settings" type="String" />
 		<column name="version" type="String" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />

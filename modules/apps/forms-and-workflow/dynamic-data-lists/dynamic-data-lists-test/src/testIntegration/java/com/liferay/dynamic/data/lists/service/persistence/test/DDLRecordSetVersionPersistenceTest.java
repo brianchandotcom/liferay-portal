@@ -143,6 +143,8 @@ public class DDLRecordSetVersionPersistenceTest {
 
 		newDDLRecordSetVersion.setDescription(RandomTestUtil.randomString());
 
+		newDDLRecordSetVersion.setSettings(RandomTestUtil.randomString());
+
 		newDDLRecordSetVersion.setVersion(RandomTestUtil.randomString());
 
 		newDDLRecordSetVersion.setStatus(RandomTestUtil.nextInt());
@@ -178,6 +180,8 @@ public class DDLRecordSetVersionPersistenceTest {
 			newDDLRecordSetVersion.getName());
 		Assert.assertEquals(existingDDLRecordSetVersion.getDescription(),
 			newDDLRecordSetVersion.getDescription());
+		Assert.assertEquals(existingDDLRecordSetVersion.getSettings(),
+			newDDLRecordSetVersion.getSettings());
 		Assert.assertEquals(existingDDLRecordSetVersion.getVersion(),
 			newDDLRecordSetVersion.getVersion());
 		Assert.assertEquals(existingDDLRecordSetVersion.getStatus(),
@@ -242,8 +246,9 @@ public class DDLRecordSetVersionPersistenceTest {
 			"recordSetVersionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"recordSetId", true, "DDMStructureVersionId", true, "name", true,
-			"description", true, "version", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"description", true, "settings", true, "version", true, "status",
+			true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -482,6 +487,8 @@ public class DDLRecordSetVersionPersistenceTest {
 		ddlRecordSetVersion.setName(RandomTestUtil.randomString());
 
 		ddlRecordSetVersion.setDescription(RandomTestUtil.randomString());
+
+		ddlRecordSetVersion.setSettings(RandomTestUtil.randomString());
 
 		ddlRecordSetVersion.setVersion(RandomTestUtil.randomString());
 

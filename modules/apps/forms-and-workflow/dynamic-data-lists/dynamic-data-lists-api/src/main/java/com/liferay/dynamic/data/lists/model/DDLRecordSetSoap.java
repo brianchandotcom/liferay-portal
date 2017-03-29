@@ -40,10 +40,13 @@ public class DDLRecordSetSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
+		soapModel.setVersionUserId(model.getVersionUserId());
+		soapModel.setVersionUserName(model.getVersionUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setDDMStructureId(model.getDDMStructureId());
 		soapModel.setRecordSetKey(model.getRecordSetKey());
+		soapModel.setVersion(model.getVersion());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setMinDisplayRows(model.getMinDisplayRows());
@@ -150,6 +153,22 @@ public class DDLRecordSetSoap implements Serializable {
 		_userName = userName;
 	}
 
+	public long getVersionUserId() {
+		return _versionUserId;
+	}
+
+	public void setVersionUserId(long versionUserId) {
+		_versionUserId = versionUserId;
+	}
+
+	public String getVersionUserName() {
+		return _versionUserName;
+	}
+
+	public void setVersionUserName(String versionUserName) {
+		_versionUserName = versionUserName;
+	}
+
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -180,6 +199,14 @@ public class DDLRecordSetSoap implements Serializable {
 
 	public void setRecordSetKey(String recordSetKey) {
 		_recordSetKey = recordSetKey;
+	}
+
+	public String getVersion() {
+		return _version;
+	}
+
+	public void setVersion(String version) {
+		_version = version;
 	}
 
 	public String getName() {
@@ -236,10 +263,13 @@ public class DDLRecordSetSoap implements Serializable {
 	private long _companyId;
 	private long _userId;
 	private String _userName;
+	private long _versionUserId;
+	private String _versionUserName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _DDMStructureId;
 	private String _recordSetKey;
+	private String _version;
 	private String _name;
 	private String _description;
 	private int _minDisplayRows;

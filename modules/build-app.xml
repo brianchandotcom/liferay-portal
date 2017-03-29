@@ -29,6 +29,8 @@
 
 	<target depends="dist-module-artifacts,update-app-marketplace-verson,write-app-change-log" name="build-app">
 		<delete file="${dist.dir}/ticket.list.tmp" />
+
+		<antcall target="git-finalize" />
 	</target>
 
 	<target name="build-app-all">
@@ -44,6 +46,7 @@
 			<sequential>
 				<antcall inheritall="false" target="build-app">
 					<param name="app.name" value="@{app.name}" />
+					<param name="git.finalize" value="true" />
 				</antcall>
 			</sequential>
 		</for>
@@ -290,6 +293,28 @@
 
 			<flattenmapper />
 		</pathconvert>
+	</target>
+
+	<target if="git.finalize" name="git-finalize">
+		<exec dir="${modules.dir}" executable="git" failonerror="true">
+			<arg value="reset" />
+		</exec>
+
+		<exec dir="${modules.dir}" executable="git" failonerror="true">
+			<arg value="clean" />
+			<arg value="-df" />
+		</exec>
+
+		<exec dir="${modules.dir}" executable="git" failonerror="true">
+			<arg value="add" />
+			<arg value=".releng" />
+		</exec>
+
+		<exec dir="${modules.dir}" executable="git" failonerror="true">
+			<arg value="commit" />
+			<arg value="-m" />
+			<arg value="${Liferay-Releng-App-Title} ${app.version}" />
+		</exec>
 	</target>
 
 	<target name="index-modules-and-app-lpkgs">

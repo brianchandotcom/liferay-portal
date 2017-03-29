@@ -94,7 +94,7 @@ CKEDITOR.dialog.add(
 										editor.execCommand(
 											'linkselector',
 											function(newVal) {
-												urlField.setValue(newVal);
+												urlField.setValue(location.origin + newVal);
 											}
 										);
 									}

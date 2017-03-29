@@ -22,12 +22,12 @@ import org.junit.Test;
 /**
  * @author Manuel de la Peña
  */
-public class JpqlToHqlTransformerLogicTest {
+public class JPQLToHQLTransformerLogicTest {
 
 	@Test
 	public void testReplaceCount() {
 		Function<String, String> function =
-			JpqlToHqlTransformerLogic.getCountFunction();
+			JPQLToHQLTransformerLogic.getCountFunction();
 
 		Assert.assertEquals(
 			"SELECT COUNT(*) FROM Foo foo",
@@ -37,7 +37,7 @@ public class JpqlToHqlTransformerLogicTest {
 	@Test
 	public void testReplaceCountNotMatching() {
 		Function<String, String> function =
-			JpqlToHqlTransformerLogic.getCountFunction();
+			JPQLToHQLTransformerLogic.getCountFunction();
 
 		String sql = "SELECT * FROM Foo where foo != 1";
 
@@ -47,7 +47,7 @@ public class JpqlToHqlTransformerLogicTest {
 	@Test
 	public void testReplaceCountWithAliasDifferentThanFieldCount() {
 		Function<String, String> function =
-			JpqlToHqlTransformerLogic.getCountFunction();
+			JPQLToHQLTransformerLogic.getCountFunction();
 
 		String sql = "SELECT COUNT(bar) FROM Foo foo";
 

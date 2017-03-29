@@ -58,17 +58,18 @@ public class CommerceProductDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceProductDefinition addCommerceProductDefinition(
-			long userId, long groupId, String baseSKU,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String productTypeName, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			long userId, String baseSKU, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String productTypeName,
+			String ddmStructureKey, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
+		long groupId = serviceContext.getScopeGroupId();
 
 		Date displayDate = null;
 		Date expirationDate = null;
@@ -240,18 +241,18 @@ public class CommerceProductDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceProductDefinition updateCommerceProductDefinition(
-			long userId, long groupId, long commerceProductDefinitionId,
-			String baseSKU, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String productTypeName,
-			String ddmStructureKey, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			long userId, long commerceProductDefinitionId, String baseSKU,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String productTypeName, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
+		long groupId = serviceContext.getScopeGroupId();
 		CommerceProductDefinition commerceProductDefinition =
 			commerceProductDefinitionPersistence.create(
 				commerceProductDefinitionId);

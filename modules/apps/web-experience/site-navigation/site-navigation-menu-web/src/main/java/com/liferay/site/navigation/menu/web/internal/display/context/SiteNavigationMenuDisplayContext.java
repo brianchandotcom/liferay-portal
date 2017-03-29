@@ -128,6 +128,15 @@ public class SiteNavigationMenuDisplayContext {
 		return _displayStyleGroupId;
 	}
 
+	public String getEventName() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getNamespace() + "selectLayout";
+	}
+
 	public String getIncludedLayouts() {
 		if (_includedLayouts != null) {
 			return _includedLayouts;
@@ -138,6 +147,41 @@ public class SiteNavigationMenuDisplayContext {
 			_siteNavigationMenuPortletInstanceConfiguration.includedLayouts());
 
 		return _includedLayouts;
+	}
+
+	public String getItemSelectorURL() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ItemSelector itemSelector = (ItemSelector)_request.getAttribute(
+			SiteNavigationMenuWebKeys.ITEM_SELECTOR);
+
+		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
+			new LayoutItemSelectorCriterion();
+
+		Layout layout = themeDisplay.getLayout();
+
+		layoutItemSelectorCriterion.setCheckDisplayPage(false);
+		layoutItemSelectorCriterion.setEnableCurrentPage(true);
+		layoutItemSelectorCriterion.setShowPrivatePages(
+			layout.isPrivateLayout());
+		layoutItemSelectorCriterion.setShowPublicPages(layout.isPublicLayout());
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
+
+		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_request), getEventName(),
+			layoutItemSelectorCriterion);
+
+		itemSelectorURL.setParameter("layoutUuid", getRootLayoutUuid());
+
+		return itemSelectorURL.toString();
 	}
 
 	public String getLayoutBreadcrumb(Layout layout) throws Exception {
@@ -186,42 +230,6 @@ public class SiteNavigationMenuDisplayContext {
 			themeDisplay.getLocale());
 	}
 
-	public String getRootLayoutItemSelectorURL() {
-		ItemSelector itemSelector = (ItemSelector)_request.getAttribute(
-			SiteNavigationMenuWebKeys.ITEM_SELECTOR);
-
-		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
-			new LayoutItemSelectorCriterion();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout currentLayout = themeDisplay.getLayout();
-
-		layoutItemSelectorCriterion.setCheckDisplayPage(false);
-		layoutItemSelectorCriterion.setEnableCurrentPage(true);
-		layoutItemSelectorCriterion.setShowPrivatePages(
-			currentLayout.isPrivateLayout());
-		layoutItemSelectorCriterion.setShowPublicPages(
-			currentLayout.isPublicLayout());
-
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			new ArrayList<>();
-
-		desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
-
-		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			desiredItemSelectorReturnTypes);
-
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_request),
-			getRootLayoutSelectorEventName(), layoutItemSelectorCriterion);
-
-		itemSelectorURL.setParameter("layoutUuid", getRootLayoutUuid());
-
-		return itemSelectorURL.toString();
-	}
-
 	public int getRootLayoutLevel() {
 		if (_rootLayoutLevel != null) {
 			return _rootLayoutLevel;
@@ -235,31 +243,20 @@ public class SiteNavigationMenuDisplayContext {
 	}
 
 	public String getRootLayoutName() throws Exception {
-		String rootLayoutUuid = getRootLayoutUuid();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout currentLayout = themeDisplay.getLayout();
+		Layout layout = themeDisplay.getLayout();
 
 		Layout rootLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-			rootLayoutUuid, themeDisplay.getScopeGroupId(),
-			currentLayout.isPrivateLayout());
+			getRootLayoutUuid(), themeDisplay.getScopeGroupId(),
+			layout.isPrivateLayout());
 
 		if (rootLayout == null) {
 			return StringPool.BLANK;
 		}
 
 		return getLayoutBreadcrumb(rootLayout);
-	}
-
-	public String getRootLayoutSelectorEventName() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return portletDisplay.getNamespace() + "selectRootLayout";
 	}
 
 	public String getRootLayoutType() {

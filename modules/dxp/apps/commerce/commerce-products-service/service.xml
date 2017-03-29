@@ -127,4 +127,8 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
+	<exceptions>
+		<exception>CommerceProductDefinitionDisplayDate</exception>
+		<exception>CommerceProductDefinitionExpirationDate</exception>
+	</exceptions>
 </service-builder>

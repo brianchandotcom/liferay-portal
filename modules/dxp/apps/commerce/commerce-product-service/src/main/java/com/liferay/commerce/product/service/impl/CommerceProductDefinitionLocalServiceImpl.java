@@ -56,6 +56,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 	extends CommerceProductDefinitionLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CommerceProductDefinition addCommerceProductDefinition(
 			long userId, long groupId, String baseSKU,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
@@ -211,6 +212,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 			commerceProductDefinitionId);
 	}
 
+	@Override
 	public void updateAsset(
 			long userId, CommerceProductDefinition commerceProductDefinition,
 			long[] assetCategoryIds, String[] assetTagNames,
@@ -236,6 +238,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CommerceProductDefinition updateCommerceProductDefinition(
 			long userId, long groupId, long commerceProductDefinitionId,
 			String baseSKU, Map<Locale, String> titleMap,

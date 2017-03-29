@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.ResourceActionsException;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PermissionedModel;
 import com.liferay.portal.kernel.model.Resource;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -41,6 +43,7 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.ResourceLocalServiceBaseImpl;
 import com.liferay.portal.util.ResourcePermissionsThreadLocal;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -1238,9 +1241,27 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			actions = ResourceActionsUtil.getModelResourceActions(name);
 		}
 
-		if (actions.isEmpty()) {
-			throw new ResourceActionsException(
-				"There are no actions associated with the resource " + name);
+		if (ListUtil.isEmpty(actions)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No portlet or model resource actions found for " + name +
+						", checking other resource actions ");
+			}
+
+			List<ResourceAction> resourceActions =
+				resourceActionLocalService.getResourceActions(name);
+
+			if (ListUtil.isEmpty(resourceActions)) {
+				throw new NoSuchResourceActionException(
+					"There are no actions associated with the resource " +
+						name);
+			}
+
+			actions = new ArrayList<>(resourceActions.size());
+
+			for (ResourceAction resourceAction : resourceActions) {
+				actions.add(resourceAction.getActionId());
+			}
 		}
 	}
 

@@ -2062,6 +2062,7 @@
 
 		<!-- References -->
 
+		<reference entity="ResourceAction" package-path="com.liferay.portal" />
 		<reference entity="ResourceBlock" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />

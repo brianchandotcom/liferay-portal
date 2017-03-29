@@ -4,7 +4,7 @@
 
 		<execute argument1="5000" selenium="pause" />
 
-		<execute function="Select#select" />
+		<execute selenium="select" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

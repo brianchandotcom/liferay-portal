@@ -97,7 +97,7 @@
 			</then>
 		</if>
 
-		<execute function="Click#click" />
+		<execute selenium="click" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

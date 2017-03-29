@@ -224,7 +224,7 @@
 		<execute function="Type#typePause" locator1="SOMembersPortlet#MEMBERS_LIST_SEARCH" value1="${userEmailAddress}" />
 		<execute function="AssertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
 		<execute function="AssertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute function="Click#pauseTextClickAt" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
 		<execute function="AssertClick" locator1="SOMembersPortlet#MESSAGE_BUTTON" value1="Message" />
 
 		<execute function="SelectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
@@ -308,7 +308,7 @@
 		<execute function="Type#typePause" locator1="SOMembersPortlet#MEMBERS_LIST_SEARCH" value1="${userEmailAddress}" />
 		<execute function="AssertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
 		<execute function="AssertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute function="Click#pauseTextClickAt" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
 
 		<execute function="AssertTextEquals" locator1="SOMembersPortlet#USER_DETAILS_NAME" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="SOMembersPortlet#USER_DETAILS_EMAIL" value1="${userEmailAddress}" />

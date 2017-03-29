@@ -29,18 +29,13 @@ import java.util.regex.Pattern;
  */
 public class BNDExportsCheck extends BaseFileCheck {
 
-	public BNDExportsCheck(boolean subrepository) {
-		_subrepository = subrepository;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
 		if (!fileName.endsWith("/bnd.bnd") ||
 			absolutePath.contains("/testIntegration/") ||
-			absolutePath.contains("/third-party/") ||
-			!isModulesFile(absolutePath, _subrepository)) {
+			absolutePath.contains("/third-party/")) {
 
 			return content;
 		}
@@ -111,6 +106,5 @@ public class BNDExportsCheck extends BaseFileCheck {
 	private final Pattern _exportsPattern = Pattern.compile(
 		"\nExport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
-	private final boolean _subrepository;
 
 }

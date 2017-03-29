@@ -21,18 +21,13 @@ import com.liferay.source.formatter.checks.util.BNDSourceUtil;
  */
 public class BNDWebContextPathCheck extends BaseFileCheck {
 
-	public BNDWebContextPathCheck(boolean subrepository) {
-		_subrepository = subrepository;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
 		if (!fileName.endsWith("/bnd.bnd") ||
 			absolutePath.contains("/testIntegration/") ||
-			absolutePath.contains("/third-party/") ||
-			!isModulesFile(absolutePath, _subrepository)) {
+			absolutePath.contains("/third-party/")) {
 
 			return content;
 		}
@@ -63,7 +58,5 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 				fileName, "Incorrect Web-ContextPath '" + webContextPath + "'");
 		}
 	}
-
-	private final boolean _subrepository;
 
 }

@@ -21,17 +21,11 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
  */
 public class JavaModuleTestCheck extends BaseFileCheck {
 
-	public JavaModuleTestCheck(boolean subrepository) {
-		_subrepository = subrepository;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!fileName.endsWith("Test.java") ||
-			!isModulesFile(absolutePath, _subrepository)) {
-
+		if (!fileName.endsWith("Test.java")) {
 			return content;
 		}
 
@@ -79,7 +73,5 @@ public class JavaModuleTestCheck extends BaseFileCheck {
 					"LPS-57722");
 		}
 	}
-
-	private final boolean _subrepository;
 
 }

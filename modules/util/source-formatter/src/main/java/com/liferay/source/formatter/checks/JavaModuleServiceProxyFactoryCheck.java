@@ -21,17 +21,11 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
  */
 public class JavaModuleServiceProxyFactoryCheck extends BaseFileCheck {
 
-	public JavaModuleServiceProxyFactoryCheck(boolean subrepository) {
-		_subrepository = subrepository;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!isModulesFile(absolutePath, _subrepository) ||
-			fileName.endsWith("JavaModuleServiceProxyFactoryCheck.java")) {
-
+		if (fileName.endsWith("JavaModuleServiceProxyFactoryCheck.java")) {
 			return content;
 		}
 
@@ -52,7 +46,5 @@ public class JavaModuleServiceProxyFactoryCheck extends BaseFileCheck {
 
 		return content;
 	}
-
-	private final boolean _subrepository;
 
 }

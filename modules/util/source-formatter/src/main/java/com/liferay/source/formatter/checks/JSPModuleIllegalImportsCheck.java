@@ -19,17 +19,9 @@ package com.liferay.source.formatter.checks;
  */
 public class JSPModuleIllegalImportsCheck extends BaseFileCheck {
 
-	public JSPModuleIllegalImportsCheck(boolean subrepository) {
-		_subrepository = subrepository;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
-
-		if (!isModulesFile(absolutePath, _subrepository)) {
-			return content;
-		}
 
 		// LPS-62989
 
@@ -51,7 +43,5 @@ public class JSPModuleIllegalImportsCheck extends BaseFileCheck {
 
 		return content;
 	}
-
-	private final boolean _subrepository;
 
 }

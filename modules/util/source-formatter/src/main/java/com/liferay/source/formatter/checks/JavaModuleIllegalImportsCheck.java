@@ -24,10 +24,7 @@ import java.util.regex.Pattern;
  */
 public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 
-	public JavaModuleIllegalImportsCheck(
-		boolean subrepository, boolean checkRegistryInTestClasses) {
-
-		_subrepository = subrepository;
+	public JavaModuleIllegalImportsCheck(boolean checkRegistryInTestClasses) {
 		_checkRegistryInTestClasses = checkRegistryInTestClasses;
 	}
 
@@ -35,9 +32,7 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!isModulesFile(absolutePath, _subrepository) ||
-			fileName.endsWith("JavaModuleIllegalImportsCheck.java")) {
-
+		if (fileName.endsWith("JavaModuleIllegalImportsCheck.java")) {
 			return content;
 		}
 
@@ -91,6 +86,5 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 	private final boolean _checkRegistryInTestClasses;
 	private final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");
-	private final boolean _subrepository;
 
 }

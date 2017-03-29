@@ -37,11 +37,8 @@ import java.util.regex.Pattern;
  */
 public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
-	public JavaOSGiReferenceCheck(
-		Map<String, String> moduleFileNamesMap, boolean subrepository) {
-
+	public JavaOSGiReferenceCheck(Map<String, String> moduleFileNamesMap) {
 		_moduleFileNamesMap = moduleFileNamesMap;
-		_subrepository = subrepository;
 	}
 
 	@Override
@@ -49,9 +46,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!content.contains("@Component") ||
-			!isModulesFile(absolutePath, _subrepository)) {
-
+		if (!content.contains("@Component")) {
 			return content;
 		}
 
@@ -424,6 +419,5 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private final Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
-	private final boolean _subrepository;
 
 }

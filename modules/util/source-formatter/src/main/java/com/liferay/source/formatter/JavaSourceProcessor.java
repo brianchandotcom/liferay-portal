@@ -487,24 +487,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected void populateModuleFileChecks() throws Exception {
 		_moduleFileChecks.add(
-			new JavaModuleExtendedObjectClassDefinitionCheck(subrepository));
+			new JavaModuleExtendedObjectClassDefinitionCheck());
 
 		boolean checkRegistryInTestClasses = GetterUtil.getBoolean(
 			System.getProperty(
 				"source.formatter.check.registry.in.test.classes"));
 
 		_moduleFileChecks.add(
-			new JavaModuleIllegalImportsCheck(
-				subrepository, checkRegistryInTestClasses));
+			new JavaModuleIllegalImportsCheck(checkRegistryInTestClasses));
 
+		_moduleFileChecks.add(new JavaModuleInternalImportsCheck());
+		_moduleFileChecks.add(new JavaModuleServiceProxyFactoryCheck());
+		_moduleFileChecks.add(new JavaModuleTestCheck());
 		_moduleFileChecks.add(
-			new JavaModuleInternalImportsCheck(subrepository));
-		_moduleFileChecks.add(
-			new JavaModuleServiceProxyFactoryCheck(subrepository));
-		_moduleFileChecks.add(new JavaModuleTestCheck(subrepository));
-		_moduleFileChecks.add(
-			new JavaOSGiReferenceCheck(
-				_getModuleFileNamesMap(), subrepository));
+			new JavaOSGiReferenceCheck(_getModuleFileNamesMap()));
 	}
 
 	@Override

@@ -27,10 +27,6 @@ import java.util.regex.Pattern;
  */
 public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 
-	public JavaModuleInternalImportsCheck(boolean subrepository) {
-		_subrepository = subrepository;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
@@ -38,8 +34,7 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 		if (absolutePath.contains("/modules/core/") ||
 			absolutePath.contains("/modules/util/") ||
 			fileName.contains("/test/") ||
-			fileName.contains("/testIntegration/") ||
-			!isModulesFile(absolutePath, _subrepository)) {
+			fileName.contains("/testIntegration/")) {
 
 			return content;
 		}
@@ -85,6 +80,5 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 	private final Pattern _internalImportPattern = Pattern.compile(
 		"\nimport com\\.liferay\\.(.*\\.internal\\.([a-z].*?\\.)?[A-Z].*?)" +
 			"[\\.|;]");
-	private final boolean _subrepository;
 
 }

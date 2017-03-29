@@ -23,18 +23,13 @@ import com.liferay.source.formatter.checks.util.BNDSourceUtil;
  */
 public class BNDBundleNameCheck extends BaseFileCheck {
 
-	public BNDBundleNameCheck(boolean subrepository) {
-		_subrepository = subrepository;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
 		if (!fileName.endsWith("/bnd.bnd") ||
 			absolutePath.contains("/testIntegration/") ||
-			absolutePath.contains("/third-party/") ||
-			!isModulesFile(absolutePath, _subrepository)) {
+			absolutePath.contains("/third-party/")) {
 
 			return content;
 		}
@@ -95,7 +90,5 @@ public class BNDBundleNameCheck extends BaseFileCheck {
 			}
 		}
 	}
-
-	private final boolean _subrepository;
 
 }

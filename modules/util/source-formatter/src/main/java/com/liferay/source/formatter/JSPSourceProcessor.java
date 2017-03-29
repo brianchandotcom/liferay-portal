@@ -504,7 +504,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateModuleFileChecks() throws Exception {
-		_moduleFileChecks.add(new JSPModuleIllegalImportsCheck(subrepository));
+		_moduleFileChecks.add(new JSPModuleIllegalImportsCheck());
 	}
 
 	private Map<String, String> _getContentsMap() throws Exception {

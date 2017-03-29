@@ -22,17 +22,12 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 public class JavaModuleExtendedObjectClassDefinitionCheck
 	extends BaseFileCheck {
 
-	public JavaModuleExtendedObjectClassDefinitionCheck(boolean subrepository) {
-		_subrepository = subrepository;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
 		if (absolutePath.contains("/test/") || !content.contains("@Meta.OCD") ||
-			content.contains("@ExtendedObjectClassDefinition") ||
-			!isModulesFile(absolutePath, _subrepository)) {
+			content.contains("@ExtendedObjectClassDefinition")) {
 
 			return content;
 		}
@@ -50,7 +45,5 @@ public class JavaModuleExtendedObjectClassDefinitionCheck
 
 		return content;
 	}
-
-	private final boolean _subrepository;
 
 }

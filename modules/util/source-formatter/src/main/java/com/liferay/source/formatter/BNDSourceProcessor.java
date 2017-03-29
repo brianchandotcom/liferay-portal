@@ -82,11 +82,11 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateModuleFileChecks() throws Exception {
-		_moduleFileChecks.add(new BNDBundleNameCheck(subrepository));
-		_moduleFileChecks.add(new BNDDirectoryNameCheck(subrepository));
-		_moduleFileChecks.add(new BNDExportsCheck(subrepository));
-		_moduleFileChecks.add(new BNDIncludeResourceCheck(subrepository));
-		_moduleFileChecks.add(new BNDWebContextPathCheck(subrepository));
+		_moduleFileChecks.add(new BNDBundleNameCheck());
+		_moduleFileChecks.add(new BNDDirectoryNameCheck());
+		_moduleFileChecks.add(new BNDExportsCheck());
+		_moduleFileChecks.add(new BNDIncludeResourceCheck());
+		_moduleFileChecks.add(new BNDWebContextPathCheck());
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};

@@ -151,6 +151,10 @@
             var modifySelection = { advance: true };
 
             if (linkHref) {
+            	if (editor.plugins && editor.plugins.creole) {
+            		linkHref = location.origin + linkHref;
+            	}
+
                 if (this.state.element) {
                     linkAttrs.href = linkHref;
 

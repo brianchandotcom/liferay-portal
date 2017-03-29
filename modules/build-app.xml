@@ -29,6 +29,8 @@
 
 	<target depends="dist-module-artifacts,update-app-marketplace-verson,write-app-change-log" name="build-app">
 		<delete file="${dist.dir}/ticket.list.tmp" />
+
+		<antcall target="git-finalize" />
 	</target>
 
 	<target name="build-app-all">
@@ -44,6 +46,7 @@
 			<sequential>
 				<antcall inheritall="false" target="build-app">
 					<param name="app.name" value="@{app.name}" />
+					<param name="git.finalize" value="true" />
 				</antcall>
 			</sequential>
 		</for>
@@ -160,7 +163,7 @@
 		</exec>
 	</target>
 
-	<target depends="check-stale-artifacts,get-app-change-log,get-artifact-versions-previous-release" name="dist-module-artifacts">
+	<target depends="check-stale-artifacts,get-artifact-versions-previous-release" name="dist-module-artifacts">
 		<mkdir dir="${dist.dir}" />
 
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact">
@@ -193,7 +196,7 @@
 		<property name="app.artifacts" value="app.artifacts-${app.version}=\${line.separator}&#x0009;${module.versions.list}" />
 	</target>
 
-	<target depends="init-build-app,get-app-version" name="get-app-change-log">
+	<target depends="dist-module-artifacts,init-build-app,get-app-version" name="get-app-change-log">
 		<loadfile failonerror="false" property="app.ticket.list" srcfile="${dist.dir}/ticket.list.tmp">
 			<filterchain>
 				<tokenfilter>
@@ -290,6 +293,28 @@
 
 			<flattenmapper />
 		</pathconvert>
+	</target>
+
+	<target if="git.finalize" name="git-finalize">
+		<exec dir="${modules.dir}" executable="git" failonerror="true">
+			<arg value="reset" />
+		</exec>
+
+		<exec dir="${modules.dir}" executable="git" failonerror="true">
+			<arg value="clean" />
+			<arg value="-df" />
+		</exec>
+
+		<exec dir="${modules.dir}" executable="git" failonerror="true">
+			<arg value="add" />
+			<arg value=".releng" />
+		</exec>
+
+		<exec dir="${modules.dir}" executable="git" failonerror="true">
+			<arg value="commit" />
+			<arg value="-m" />
+			<arg value="${Liferay-Releng-App-Title} ${app.version}" />
+		</exec>
 	</target>
 
 	<target name="index-modules-and-app-lpkgs">

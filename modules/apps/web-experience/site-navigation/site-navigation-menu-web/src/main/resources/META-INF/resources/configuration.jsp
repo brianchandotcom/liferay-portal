@@ -71,39 +71,6 @@ String rootLayoutType = siteNavigationMenuDisplayContext.getRootLayoutType();
 									<aui:input id="rootLayoutUuid" ignoreRequestValue="<%= true %>" name="preferences--rootLayoutUuid--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootLayoutUuid() %>" />
 
 									<aui:button name="chooseRootPage" value="choose" />
-
-									<aui:script use="liferay-item-selector-dialog">
-										$('#<portlet:namespace />chooseRootPage').on(
-											'click',
-											function(event) {
-												event.preventDefault();
-
-												var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-													{
-														eventName: '<%= siteNavigationMenuDisplayContext.getRootLayoutSelectorEventName() %>',
-														on: {
-															selectedItemChange: function(event) {
-																var selectedItem = event.newVal;
-
-																var rootLayoutName = A.one('#<portlet:namespace />rootLayoutName');
-																var rootLayoutUuid = A.one('#<portlet:namespace />rootLayoutUuid');
-
-																if (selectedItem) {
-																	rootLayoutName.val(selectedItem.name);
-																	rootLayoutUuid.val(selectedItem.id);
-																}
-															}
-														},
-														'strings.add': '<liferay-ui:message key="done" />',
-														title: '<liferay-ui:message key="select-layout" />',
-														url: '<%= siteNavigationMenuDisplayContext.getRootLayoutItemSelectorURL() %>'
-													}
-												);
-
-												itemSelectorDialog.open();
-											}
-										);
-									</aui:script>
 								</div>
 
 								<aui:select name="preferences--displayDepth--">
@@ -120,18 +87,6 @@ String rootLayoutType = siteNavigationMenuDisplayContext.getRootLayoutType();
 									%>
 
 								</aui:select>
-
-								<aui:script>
-									Liferay.Util.toggleSelectBox('<portlet:namespace />rootLayoutType', 'select', '<portlet:namespace />rootLayoutUuid');
-
-									Liferay.Util.toggleSelectBox(
-										'<portlet:namespace />rootLayoutType',
-										function(currentValue, value) {
-											return currentValue === 'absolute' || currentValue === 'relative';
-										},
-										'<portlet:namespace />rootLayoutLevel'
-									);
-								</aui:script>
 
 								<aui:select name="preferences--includedLayouts--" value="<%= siteNavigationMenuDisplayContext.getIncludedLayouts() %>">
 									<aui:option label="auto" />
@@ -188,5 +143,48 @@ String rootLayoutType = siteNavigationMenuDisplayContext.getRootLayoutType();
 
 			Liferay.Portlet.refresh(curPortletBoundaryId, data);
 		}
+	);
+</aui:script>
+
+<aui:script use="liferay-item-selector-dialog">
+	$('#<portlet:namespace />chooseRootPage').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<%= siteNavigationMenuDisplayContext.getRootLayoutSelectorEventName() %>',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+
+							var rootLayoutName = A.one('#<portlet:namespace />rootLayoutName');
+							var rootLayoutUuid = A.one('#<portlet:namespace />rootLayoutUuid');
+
+							if (selectedItem) {
+								rootLayoutName.val(selectedItem.name);
+								rootLayoutUuid.val(selectedItem.id);
+							}
+						}
+					},
+					'strings.add': '<liferay-ui:message key="done" />',
+					title: '<liferay-ui:message key="select-layout" />',
+					url: '<%= siteNavigationMenuDisplayContext.getRootLayoutItemSelectorURL() %>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
+
+	Liferay.Util.toggleSelectBox('<portlet:namespace />rootLayoutType', 'select', '<portlet:namespace />rootLayoutUuid');
+
+	Liferay.Util.toggleSelectBox(
+		'<portlet:namespace />rootLayoutType',
+		function(currentValue, value) {
+			return currentValue === 'absolute' || currentValue === 'relative';
+		},
+		'<portlet:namespace />rootLayoutLevel'
 	);
 </aui:script>

@@ -1126,6 +1126,41 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		portletPreferences.setValues(key, newValues);
 	}
 
+	protected void updateImportOrderByColumnClassPKs(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences, String key, Class<?> clazz,
+			long companyGroupId)
+		throws Exception {
+
+		String value = portletPreferences.getValue(key, null);
+
+		Map<Long, Long> primaryKeys =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(clazz);
+
+		String[] values = StringUtil.split(
+			value, DDMIndexer.DDM_FIELD_SEPARATOR);
+
+		String portletPreferencesOldValue = values[2];
+
+		Long newPrimaryKey = getImportPortletPreferencesNewValue(
+			portletDataContext, clazz, companyGroupId, primaryKeys,
+			portletPreferencesOldValue);
+
+		if (Validator.isNull(newPrimaryKey)) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Unable to import portlet preferences value " +
+						portletPreferencesOldValue);
+			}
+		}
+		else {
+			values[2] = String.valueOf(newPrimaryKey);
+
+			portletPreferences.setValue(
+				key, StringUtil.merge(values, DDMIndexer.DDM_FIELD_SEPARATOR));
+		}
+	}
+
 	protected PortletPreferences updateImportPortletPreferences(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences)
@@ -1178,6 +1213,14 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
 					AssetVocabulary.class, companyGroup.getGroupId());
+			}
+			else if (name.startsWith("orderByColumn") &&
+					 value.startsWith(
+						 DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX)) {
+
+				updateImportOrderByColumnClassPKs(
+					portletDataContext, portletPreferences, name,
+					DDMStructure.class, companyGroup.getGroupId());
 			}
 			else if (name.startsWith("queryName") &&
 					 StringUtil.equalsIgnoreCase(value, "assetCategories")) {

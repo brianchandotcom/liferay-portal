@@ -34,11 +34,9 @@ public class JavaSystemEventAnnotationCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!fileName.endsWith("PortletDataHandler.java")) {
-			return content;
+		if (fileName.endsWith("PortletDataHandler.java")) {
+			_checkSystemEventAnnotations(fileName, content);
 		}
-
-		_checkSystemEventAnnotations(fileName, content);
 
 		return content;
 	}

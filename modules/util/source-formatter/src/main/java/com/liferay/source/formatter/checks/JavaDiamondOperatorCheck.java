@@ -33,11 +33,9 @@ public class JavaDiamondOperatorCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (isExcludedPath(_excludes, absolutePath)) {
-			return content;
+		if (!isExcludedPath(_excludes, absolutePath)) {
+			content = _applyDiamondOperator(content);
 		}
-
-		content = _applyDiamondOperator(content);
 
 		return content;
 	}

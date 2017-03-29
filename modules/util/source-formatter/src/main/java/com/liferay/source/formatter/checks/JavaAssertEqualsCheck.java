@@ -32,11 +32,9 @@ public class JavaAssertEqualsCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!fileName.endsWith("Test.java")) {
-			return content;
+		if (fileName.endsWith("Test.java")) {
+			content = _formatAssertEquals(content);
 		}
-
-		content = _formatAssertEquals(content);
 
 		return content;
 	}

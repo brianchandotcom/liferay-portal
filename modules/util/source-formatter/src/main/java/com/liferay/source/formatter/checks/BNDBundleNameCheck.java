@@ -27,14 +27,12 @@ public class BNDBundleNameCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!fileName.endsWith("/bnd.bnd") ||
-			absolutePath.contains("/testIntegration/") ||
-			absolutePath.contains("/third-party/")) {
+		if (fileName.endsWith("/bnd.bnd") &&
+			!absolutePath.contains("/testIntegration/") &&
+			!absolutePath.contains("/third-party/")) {
 
-			return content;
+			_checkBundleName(fileName, absolutePath, content);
 		}
-
-		_checkBundleName(fileName, absolutePath, content);
 
 		return content;
 	}

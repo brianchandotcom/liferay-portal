@@ -35,13 +35,11 @@ public class CopyrightCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (fileName.endsWith(".tpl") || fileName.endsWith(".vm") ||
-			Validator.isNull(_copyright)) {
+		if (!fileName.endsWith(".tpl") && !fileName.endsWith(".vm") &&
+			Validator.isNotNull(_copyright)) {
 
-			return content;
+			content = _fixCopyright(fileName, absolutePath, content);
 		}
-
-		content = _fixCopyright(fileName, absolutePath, content);
 
 		return content;
 	}

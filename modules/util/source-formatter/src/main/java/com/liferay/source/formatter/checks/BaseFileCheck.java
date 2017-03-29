@@ -444,7 +444,7 @@ public abstract class BaseFileCheck implements FileCheck {
 
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
-	private Map<String, Set<SourceFormatterMessage>>
+	private final Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 
 }

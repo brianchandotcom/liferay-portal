@@ -30,11 +30,9 @@ public class JavaLogLevelCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.contains("Log")) {
-			return content;
+		if (!fileName.contains("Log")) {
+			_checkLogLevel(content, fileName);
 		}
-
-		_checkLogLevel(content, fileName);
 
 		return content;
 	}

@@ -26,11 +26,9 @@ public class ValidatorEqualsCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("ValidatorEqualsCheck.java")) {
-			return content;
+		if (!fileName.endsWith("ValidatorEqualsCheck.java")) {
+			_checkValidatorEquals(fileName, content);
 		}
-
-		_checkValidatorEquals(fileName, content);
 
 		return content;
 	}

@@ -26,14 +26,12 @@ public class BNDDirectoryNameCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!fileName.endsWith("/bnd.bnd") ||
-			absolutePath.contains("/testIntegration/") ||
-			absolutePath.contains("/third-party/")) {
+		if (fileName.endsWith("/bnd.bnd") &&
+			!absolutePath.contains("/testIntegration/") &&
+			!absolutePath.contains("/third-party/")) {
 
-			return content;
+			_checkDirectoryName(fileName, absolutePath);
 		}
-
-		_checkDirectoryName(fileName, absolutePath);
 
 		return content;
 	}

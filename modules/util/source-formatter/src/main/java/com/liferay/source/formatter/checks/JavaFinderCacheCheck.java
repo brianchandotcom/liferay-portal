@@ -29,15 +29,13 @@ public class JavaFinderCacheCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!fileName.endsWith("FinderImpl.java") ||
-			!content.contains("public static final FinderPath")) {
+		if (fileName.endsWith("FinderImpl.java") &&
+			content.contains("public static final FinderPath")) {
 
-			return content;
+			_checkFinderCacheInterfaceMethod(fileName, content);
+
+			content = _fixClearCache(fileName, content);
 		}
-
-		_checkFinderCacheInterfaceMethod(fileName, content);
-
-		content = _fixClearCache(fileName, content);
 
 		return content;
 	}

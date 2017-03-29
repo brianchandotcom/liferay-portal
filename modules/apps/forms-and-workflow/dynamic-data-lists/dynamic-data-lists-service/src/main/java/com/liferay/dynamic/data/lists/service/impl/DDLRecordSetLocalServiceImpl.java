@@ -126,7 +126,7 @@ public class DDLRecordSetLocalServiceImpl
 		ddlRecordSetPersistence.update(recordSet);
 
 		// Resources
-									   e
+
 		if (serviceContext.isAddGroupPermissions() ||
 			serviceContext.isAddGuestPermissions()) {
 

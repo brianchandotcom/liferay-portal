@@ -39,12 +39,17 @@ import com.liferay.portal.servlet.I18nServlet;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
@@ -89,6 +94,18 @@ public class FriendlyURLServletTest {
 
 		GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), availableLocales, LocaleUtil.US);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(&(servlet.type=friendly-url)(servlet.init.private=false)" +
+				"(objectClass=" + Servlet.class.getName() + "))");
+
+		_serviceTracker = registry.trackServices(filter);
+
+		_serviceTracker.open();
+
+		_friendlyURLServlet = (FriendlyURLServlet)_serviceTracker.getService();
 	}
 
 	@After
@@ -101,6 +118,8 @@ public class FriendlyURLServletTest {
 			PropsUtil.get(PropsKeys.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE));
 
 		LanguageUtil.init();
+
+		_serviceTracker.close();
 	}
 
 	@Test
@@ -233,13 +252,13 @@ public class FriendlyURLServletTest {
 		Assert.assertEquals(expectedRedirect, actualRedirect);
 	}
 
-	private final FriendlyURLServlet _friendlyURLServlet =
-		new FriendlyURLServlet();
+	private FriendlyURLServlet _friendlyURLServlet;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private final I18nServlet _i18nServlet = new I18nServlet();
 	private Layout _layout;
+	private ServiceTracker<Servlet, Servlet> _serviceTracker;
 
 }

@@ -282,19 +282,7 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		return false;
 	}
 
-	public static boolean isTestProject(Project project) {
-		String projectName = project.getName();
-
-		if (projectName.endsWith("-test")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public static void setProjectSnapshotVersion(
-		Project project, String... propertyNames) {
-
+	public static boolean isSnapshot(Project project, String... propertyNames) {
 		boolean snapshot = false;
 
 		if (project.hasProperty(SNAPSHOT_PROPERTY_NAME)) {
@@ -313,9 +301,27 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 			}
 		}
 
+		return snapshot;
+	}
+
+	public static boolean isTestProject(Project project) {
+		String projectName = project.getName();
+
+		if (projectName.endsWith("-test")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static void setProjectSnapshotVersion(
+		Project project, String... propertyNames) {
+
 		String version = String.valueOf(project.getVersion());
 
-		if (snapshot && !version.endsWith(SNAPSHOT_VERSION_SUFFIX)) {
+		if (isSnapshot(project, propertyNames) &&
+			!version.endsWith(SNAPSHOT_VERSION_SUFFIX)) {
+
 			project.setVersion(version + SNAPSHOT_VERSION_SUFFIX);
 		}
 	}

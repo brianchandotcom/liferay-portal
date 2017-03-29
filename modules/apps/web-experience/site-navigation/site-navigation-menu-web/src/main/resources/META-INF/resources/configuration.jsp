@@ -178,7 +178,7 @@ String rootLayoutType = siteNavigationMenuDisplayContext.getRootLayoutType();
 		}
 	);
 
-	Liferay.Util.toggleSelectBox('<portlet:namespace />rootLayoutType', 'select', '<portlet:namespace />rootLayoutUuid');
+	Liferay.Util.toggleSelectBox('<portlet:namespace />rootLayoutType', 'select', '<portlet:namespace />rootLayoutUuidPanel');
 
 	Liferay.Util.toggleSelectBox(
 		'<portlet:namespace />rootLayoutType',

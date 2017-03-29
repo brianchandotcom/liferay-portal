@@ -1468,31 +1468,34 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		ArtifactHandler artifactHandler = project.getArtifacts();
 
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
+		if (!GradleUtil.isSnapshot(project, _SNAPSHOT_PROPERTY_NAMES)) {
+			SourceSet sourceSet = GradleUtil.getSourceSet(
+				project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		FileCollection resourcesFileCollection = sourceSet.getResources();
+			FileCollection resourcesFileCollection = sourceSet.getResources();
 
-		FileCollection jspFileCollection = resourcesFileCollection.filter(
-			new Spec<File>() {
+			FileCollection jspFileCollection = resourcesFileCollection.filter(
+				new Spec<File>() {
 
-				@Override
-				public boolean isSatisfiedBy(File file) {
-					String fileName = file.getName();
+					@Override
+					public boolean isSatisfiedBy(File file) {
+						String fileName = file.getName();
 
-					if (fileName.endsWith(".jsp") ||
-						fileName.endsWith(".jspf")) {
+						if (fileName.endsWith(".jsp") ||
+							fileName.endsWith(".jspf")) {
 
-						return true;
+							return true;
+						}
+
+						return false;
 					}
 
-					return false;
-				}
+				});
 
-			});
-
-		if (!jspFileCollection.isEmpty()) {
-			artifactHandler.add(Dependency.ARCHIVES_CONFIGURATION, jarJSPTask);
+			if (!jspFileCollection.isEmpty()) {
+				artifactHandler.add(
+					Dependency.ARCHIVES_CONFIGURATION, jarJSPTask);
+			}
 		}
 
 		Spec<File> spec = new Spec<File>() {

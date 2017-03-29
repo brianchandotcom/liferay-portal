@@ -42,12 +42,30 @@ public class SQLTransformer {
 		return sqlTransformer.transform(sql);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #transformFromHQLToJQPL(
+	 *             String)}
+	 */
+	@Deprecated
 	public static String transformFromHqlToJpql(String sql) {
-		return _instance._transformFromHqlToJpql(sql);
+		return transformFromHQLToJQPL(sql);
 	}
 
+	public static String transformFromHQLToJQPL(String sql) {
+		return _instance._transformFromHQLToJPQL(sql);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #transformFromJPQLToHQL(
+	 *             String)}
+	 */
+	@Deprecated
 	public static String transformFromJpqlToHql(String sql) {
-		return _instance._transformFromJpqlToHql(sql);
+		return transformFromJPQLToHQL(sql);
+	}
+
+	public static String transformFromJPQLToHQL(String sql) {
+		return _instance._transformFromJPQLToHQL(sql);
 	}
 
 	private SQLTransformer() {
@@ -73,7 +91,7 @@ public class SQLTransformer {
 		_sqlTransformer = SQLTransformerFactory.getSQLTransformer(db);
 	}
 
-	private String _transformFromHqlToJpql(String sql) {
+	private String _transformFromHQLToJPQL(String sql) {
 		String newSQL = _transformedSqls.get(sql);
 
 		if (newSQL != null) {
@@ -97,7 +115,7 @@ public class SQLTransformer {
 		return newSQL;
 	}
 
-	private String _transformFromJpqlToHql(String sql) {
+	private String _transformFromJPQLToHQL(String sql) {
 		String newSQL = _transformedSqls.get(sql);
 
 		if (newSQL != null) {

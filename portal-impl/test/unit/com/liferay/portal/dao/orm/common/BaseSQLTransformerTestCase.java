@@ -118,7 +118,7 @@ public abstract class BaseSQLTransformerTestCase {
 
 		Assert.assertEquals(
 			"select * from Foo where foo.bar = 1",
-			SQLTransformer.transformFromHqlToJpql(sql));
+			SQLTransformer.transformFromHQLToJQPL(sql));
 	}
 
 	@Test
@@ -127,14 +127,14 @@ public abstract class BaseSQLTransformerTestCase {
 
 		Assert.assertEquals(
 			"select * from Foo where foo <> 1",
-			SQLTransformer.transformFromHqlToJpql(sql));
+			SQLTransformer.transformFromHQLToJQPL(sql));
 	}
 
 	@Test
 	public void testTransformFromJpqlToHql() {
 		Assert.assertEquals(
 			"SELECT COUNT(*) FROM Foo foo",
-			SQLTransformer.transformFromJpqlToHql(
+			SQLTransformer.transformFromJPQLToHQL(
 				"SELECT COUNT(foo) FROM Foo foo"));
 	}
 
@@ -142,14 +142,14 @@ public abstract class BaseSQLTransformerTestCase {
 	public void testTransformFromJpqlToHqlNotMatching() {
 		String sql = "SELECT * FROM Foo where foo != 1";
 
-		Assert.assertEquals(sql, SQLTransformer.transformFromJpqlToHql(sql));
+		Assert.assertEquals(sql, SQLTransformer.transformFromJPQLToHQL(sql));
 	}
 
 	@Test
 	public void testTransformFromJpqlToHqlWithAliasDifferentThanFieldCount() {
 		Assert.assertEquals(
 			"SELECT COUNT(bar) FROM Foo foo",
-			SQLTransformer.transformFromJpqlToHql(
+			SQLTransformer.transformFromJPQLToHQL(
 				"SELECT COUNT(bar) FROM Foo foo"));
 	}
 
@@ -167,7 +167,7 @@ public abstract class BaseSQLTransformerTestCase {
 		}
 
 		Assert.assertEquals(
-			expectedSql, SQLTransformer.transformFromHqlToJpql(sql));
+			expectedSql, SQLTransformer.transformFromHQLToJQPL(sql));
 	}
 
 	@Test
@@ -176,14 +176,14 @@ public abstract class BaseSQLTransformerTestCase {
 
 		Assert.assertEquals(
 			"select * from Foo where foo = ?1",
-			SQLTransformer.transformFromHqlToJpql(sql));
+			SQLTransformer.transformFromHQLToJQPL(sql));
 	}
 
 	@Test
 	public void testTransformWithZeroQuestions() {
 		String sql = "select * from Foo";
 
-		Assert.assertEquals(sql, SQLTransformer.transformFromHqlToJpql(sql));
+		Assert.assertEquals(sql, SQLTransformer.transformFromHQLToJQPL(sql));
 	}
 
 	protected String getBitwiseCheckOriginalSQL() {

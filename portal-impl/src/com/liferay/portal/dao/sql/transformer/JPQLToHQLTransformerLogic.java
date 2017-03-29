@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 /**
  * @author Manuel de la Peña
  */
-public class JpqlToHqlTransformerLogic {
+public class JPQLToHQLTransformerLogic {
 
 	public static final Function<String, String> getCountFunction() {
 		return (String sql) -> {

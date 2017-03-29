@@ -22,12 +22,12 @@ import org.junit.Test;
 /**
  * @author Manuel de la Peña
  */
-public class HqlToJpqlTransformerLogicTest {
+public class HQLToJPQLTransformerLogicTest {
 
 	@Test
 	public void testReplaceCompositeId() {
 		Function<String, String> function =
-			HqlToJpqlTransformerLogic.getCompositeIdMarkerFunction();
+			HQLToJPQLTransformerLogic.getCompositeIdMarkerFunction();
 
 		Assert.assertEquals(
 			"select * from Foo where foo.a = 1",
@@ -37,7 +37,7 @@ public class HqlToJpqlTransformerLogicTest {
 	@Test
 	public void testReplaceNotEquals() {
 		Function<String, String> function =
-			HqlToJpqlTransformerLogic.getNotEqualsFunction();
+			HQLToJPQLTransformerLogic.getNotEqualsFunction();
 
 		Assert.assertEquals(
 			"select * from Foo where foo <> 1",

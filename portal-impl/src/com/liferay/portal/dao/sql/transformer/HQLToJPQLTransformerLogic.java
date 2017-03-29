@@ -24,7 +24,7 @@ import java.util.function.Function;
 /**
  * @author Manuel de la Peña
  */
-public class HqlToJpqlTransformerLogic {
+public class HQLToJPQLTransformerLogic {
 
 	public static final Function<String, String>
 		getCompositeIdMarkerFunction() {

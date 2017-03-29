@@ -14,8 +14,8 @@
 
 package com.liferay.portal.dao.orm.common;
 
-import com.liferay.portal.dao.sql.transformer.HqlToJpqlTransformerLogic;
-import com.liferay.portal.dao.sql.transformer.JpqlToHqlTransformerLogic;
+import com.liferay.portal.dao.sql.transformer.HQLToJPQLTransformerLogic;
+import com.liferay.portal.dao.sql.transformer.JPQLToHQLTransformerLogic;
 import com.liferay.portal.dao.sql.transformer.SQLTransformerFactory;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -83,9 +83,9 @@ public class SQLTransformer {
 		newSQL = _sqlTransformer.transform(sql);
 
 		Function[] functions = {
-			HqlToJpqlTransformerLogic.getPositionalParameterFunction(),
-			HqlToJpqlTransformerLogic.getNotEqualsFunction(),
-			HqlToJpqlTransformerLogic.getCompositeIdMarkerFunction()
+			HQLToJPQLTransformerLogic.getPositionalParameterFunction(),
+			HQLToJPQLTransformerLogic.getNotEqualsFunction(),
+			HQLToJPQLTransformerLogic.getCompositeIdMarkerFunction()
 		};
 
 		for (Function<String, String> function : functions) {
@@ -107,7 +107,7 @@ public class SQLTransformer {
 		newSQL = _sqlTransformer.transform(sql);
 
 		Function<String, String> countFunction =
-			JpqlToHqlTransformerLogic.getCountFunction();
+			JPQLToHQLTransformerLogic.getCountFunction();
 
 		newSQL = countFunction.apply(newSQL);
 

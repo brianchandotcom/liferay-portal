@@ -61,6 +61,6 @@ public class PostgreSQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	private static final Pattern _negativeComparisonPattern = Pattern.compile(
-		"(!?=)( -([0-9]+)?)", Pattern.CASE_INSENSITIVE);
+		"(!?=)\\s*(-([0-9]+)?)", Pattern.CASE_INSENSITIVE);
 
 }

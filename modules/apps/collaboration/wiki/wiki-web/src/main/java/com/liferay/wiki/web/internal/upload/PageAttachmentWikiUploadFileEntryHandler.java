@@ -15,99 +15,64 @@
 package com.liferay.wiki.web.internal.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadFileEntryHandler;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 
+import java.io.IOException;
 import java.io.InputStream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * @author Roberto Díaz
+ * @author Alejandro Tardín
  */
+@Component(service = PageAttachmentWikiUploadFileEntryHandler.class)
 public class PageAttachmentWikiUploadFileEntryHandler
 	implements UploadFileEntryHandler {
 
-	public PageAttachmentWikiUploadFileEntryHandler(long classPK) {
-		_classPK = classPK;
-	}
-
 	@Override
-	public FileEntry addFileEntry(
-			long userId, long groupId, long folderId, String fileName,
-			String contentType, InputStream inputStream, long size,
-			ServiceContext serviceContext)
-		throws PortalException {
+	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
+		throws IOException, PortalException {
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(_classPK);
+		long classPK = ParamUtil.getLong(
+			uploadPortletRequest, "resourcePrimKey");
 
-		return WikiPageServiceUtil.addPageAttachment(
-			page.getNodeId(), page.getTitle(), fileName, inputStream,
-			contentType);
-	}
+		String filename = uploadPortletRequest.getFileName(_PARAMETER_NAME);
 
-	@Override
-	public void checkPermission(
-			long groupId, long folderId, PermissionChecker permissionChecker)
-		throws PortalException {
+		String contentType = uploadPortletRequest.getContentType(
+			_PARAMETER_NAME);
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(_classPK);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)uploadPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		WikiPage page = _wikiPageService.getPage(classPK);
 
 		WikiNodePermissionChecker.check(
-			permissionChecker, page.getNodeId(), ActionKeys.ADD_ATTACHMENT);
-	}
+			themeDisplay.getPermissionChecker(), page.getNodeId(),
+			ActionKeys.ADD_ATTACHMENT);
 
-	@Override
-	public FileEntry fetchFileEntry(
-			long userId, long groupId, long folderId, String fileName)
-		throws PortalException {
+		try (InputStream inputStream =
+				uploadPortletRequest.getFileAsStream(_PARAMETER_NAME)) {
 
-		try {
-			WikiPage page = WikiPageLocalServiceUtil.getPage(_classPK);
-
-			Folder folder = page.addAttachmentsFolder();
-
-			return PortletFileRepositoryUtil.getPortletFileEntry(
-				groupId, folder.getFolderId(), fileName);
-		}
-		catch (PortalException pe) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return null;
+			return _wikiPageService.addPageAttachment(
+				page.getNodeId(), page.getTitle(), filename, inputStream,
+				contentType);
 		}
 	}
 
-	@Override
-	public String getParameterName() {
-		return "imageSelectorFileName";
-	}
+	private static final String _PARAMETER_NAME = "imageSelectorFileName";
 
-	@Override
-	public void validateFile(String fileName, String contentType, long size)
-		throws PortalException {
-	}
-
-	protected PageAttachmentWikiUploadFileEntryHandler() {
-		this(0);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PageAttachmentWikiUploadFileEntryHandler.class);
-
-	private final long _classPK;
+	@Reference
+	private WikiPageService _wikiPageService;
 
 }

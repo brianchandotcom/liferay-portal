@@ -14,6 +14,7 @@
 
 package com.liferay.social.privatemessaging.web.internal.portlet;
 
+import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
@@ -44,8 +45,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -85,7 +84,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	configurationPid = "com.liferay.social.privatemessaging.configuration.PrivateMessagingConfiguration",
+	configurationPid = {
+		"com.liferay.document.library.configuration.DLConfiguration",
+		"com.liferay.social.privatemessaging.configuration.PrivateMessagingConfiguration"
+	},
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -315,6 +317,9 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		_dlConfiguration = ConfigurableUtil.createConfigurable(
+			DLConfiguration.class, properties);
+
 		_privateMessagingConfiguration = ConfigurableUtil.createConfigurable(
 			PrivateMessagingConfiguration.class, properties);
 	}
@@ -332,8 +337,7 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 			message +=
 				CharPool.SPACE +
 					StringUtil.merge(
-						PrefsPropsUtil.getStringArray(
-							PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA),
+						_dlConfiguration.fileExtensions(),
 						StringPool.COMMA_AND_SPACE);
 		}
 		else if (key instanceof FileNameException) {
@@ -462,6 +466,8 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PrivateMessagingPortlet.class);
+
+	private volatile DLConfiguration _dlConfiguration;
 
 	@Reference
 	private DLValidator _dlValidator;

@@ -160,7 +160,7 @@
 		</exec>
 	</target>
 
-	<target depends="check-stale-artifacts,get-app-change-log,get-artifact-versions-previous-release" name="dist-module-artifacts">
+	<target depends="check-stale-artifacts,get-artifact-versions-previous-release" name="dist-module-artifacts">
 		<mkdir dir="${dist.dir}" />
 
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact">
@@ -193,7 +193,7 @@
 		<property name="app.artifacts" value="app.artifacts-${app.version}=\${line.separator}&#x0009;${module.versions.list}" />
 	</target>
 
-	<target depends="init-build-app,get-app-version" name="get-app-change-log">
+	<target depends="dist-module-artifacts,init-build-app,get-app-version" name="get-app-change-log">
 		<loadfile failonerror="false" property="app.ticket.list" srcfile="${dist.dir}/ticket.list.tmp">
 			<filterchain>
 				<tokenfilter>

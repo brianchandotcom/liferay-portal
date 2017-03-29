@@ -55,6 +55,31 @@ public class CommerceProductDefinitionLocalServiceUtil {
 	}
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link CommerceProductDefinitionLocalServiceUtil} to access the commerce product definition local service.
+	*/
+	public static com.liferay.commerce.products.model.CommerceProductDefinition addCommerceProductDefinition(
+		long userId, long groupId, java.lang.String baseSku,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceProductDefinition(userId, groupId, baseSku,
+			titleMap, descriptionMap, productTypeName, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
+	}
+
+	/**
 	* Creates a new commerce product definition with the primary key. Does not add the commerce product definition to the database.
 	*
 	* @param commerceProductDefinitionId the primary key for the new commerce product definition
@@ -71,9 +96,11 @@ public class CommerceProductDefinitionLocalServiceUtil {
 	*
 	* @param commerceProductDefinition the commerce product definition
 	* @return the commerce product definition that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.products.model.CommerceProductDefinition deleteCommerceProductDefinition(
-		com.liferay.commerce.products.model.CommerceProductDefinition commerceProductDefinition) {
+		com.liferay.commerce.products.model.CommerceProductDefinition commerceProductDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteCommerceProductDefinition(commerceProductDefinition);
 	}
@@ -150,6 +177,28 @@ public class CommerceProductDefinitionLocalServiceUtil {
 		com.liferay.commerce.products.model.CommerceProductDefinition commerceProductDefinition) {
 		return getService()
 				   .updateCommerceProductDefinition(commerceProductDefinition);
+	}
+
+	public static com.liferay.commerce.products.model.CommerceProductDefinition updateCommerceProductDefinition(
+		long userId, long groupId, long commerceProductDefinitionId,
+		java.lang.String baseSku,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceProductDefinition(userId, groupId,
+			commerceProductDefinitionId, baseSku, titleMap, descriptionMap,
+			productTypeName, ddmStructureKey, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -322,6 +371,16 @@ public class CommerceProductDefinitionLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void updateAsset(long userId,
+		com.liferay.commerce.products.model.CommerceProductDefinition commerceProductDefinition,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds, java.lang.Double priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateAsset(userId, commerceProductDefinition, assetCategoryIds,
+			assetTagNames, assetLinkEntryIds, priority);
 	}
 
 	public static CommerceProductDefinitionLocalService getService() {

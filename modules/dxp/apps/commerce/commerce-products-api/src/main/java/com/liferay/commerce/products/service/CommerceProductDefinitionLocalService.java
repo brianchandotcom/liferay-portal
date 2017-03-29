@@ -28,10 +28,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -40,6 +43,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CommerceProductDefinition. Methods of this
@@ -75,6 +80,23 @@ public interface CommerceProductDefinitionLocalService extends BaseLocalService,
 		CommerceProductDefinition commerceProductDefinition);
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link CommerceProductDefinitionLocalServiceUtil} to access the commerce product definition local service.
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceProductDefinition addCommerceProductDefinition(long userId,
+		long groupId, java.lang.String baseSku,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
 	* Creates a new commerce product definition with the primary key. Does not add the commerce product definition to the database.
 	*
 	* @param commerceProductDefinitionId the primary key for the new commerce product definition
@@ -88,10 +110,13 @@ public interface CommerceProductDefinitionLocalService extends BaseLocalService,
 	*
 	* @param commerceProductDefinition the commerce product definition
 	* @return the commerce product definition that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceProductDefinition deleteCommerceProductDefinition(
-		CommerceProductDefinition commerceProductDefinition);
+		CommerceProductDefinition commerceProductDefinition)
+		throws PortalException;
 
 	/**
 	* Deletes the commerce product definition with the primary key from the database. Also notifies the appropriate model listeners.
@@ -151,6 +176,18 @@ public interface CommerceProductDefinitionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceProductDefinition updateCommerceProductDefinition(
 		CommerceProductDefinition commerceProductDefinition);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceProductDefinition updateCommerceProductDefinition(
+		long userId, long groupId, long commerceProductDefinitionId,
+		java.lang.String baseSku, Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -288,4 +325,10 @@ public interface CommerceProductDefinitionLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void updateAsset(long userId,
+		CommerceProductDefinition commerceProductDefinition,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds, java.lang.Double priority)
+		throws PortalException;
 }

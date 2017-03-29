@@ -47,6 +47,31 @@ public class CommerceProductDefinitionLocalServiceWrapper
 	}
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link CommerceProductDefinitionLocalServiceUtil} to access the commerce product definition local service.
+	*/
+	@Override
+	public com.liferay.commerce.products.model.CommerceProductDefinition addCommerceProductDefinition(
+		long userId, long groupId, java.lang.String baseSku,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionLocalService.addCommerceProductDefinition(userId,
+			groupId, baseSku, titleMap, descriptionMap, productTypeName,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
+	}
+
+	/**
 	* Creates a new commerce product definition with the primary key. Does not add the commerce product definition to the database.
 	*
 	* @param commerceProductDefinitionId the primary key for the new commerce product definition
@@ -63,10 +88,12 @@ public class CommerceProductDefinitionLocalServiceWrapper
 	*
 	* @param commerceProductDefinition the commerce product definition
 	* @return the commerce product definition that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.products.model.CommerceProductDefinition deleteCommerceProductDefinition(
-		com.liferay.commerce.products.model.CommerceProductDefinition commerceProductDefinition) {
+		com.liferay.commerce.products.model.CommerceProductDefinition commerceProductDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceProductDefinitionLocalService.deleteCommerceProductDefinition(commerceProductDefinition);
 	}
 
@@ -144,6 +171,28 @@ public class CommerceProductDefinitionLocalServiceWrapper
 	public com.liferay.commerce.products.model.CommerceProductDefinition updateCommerceProductDefinition(
 		com.liferay.commerce.products.model.CommerceProductDefinition commerceProductDefinition) {
 		return _commerceProductDefinitionLocalService.updateCommerceProductDefinition(commerceProductDefinition);
+	}
+
+	@Override
+	public com.liferay.commerce.products.model.CommerceProductDefinition updateCommerceProductDefinition(
+		long userId, long groupId, long commerceProductDefinitionId,
+		java.lang.String baseSku,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionLocalService.updateCommerceProductDefinition(userId,
+			groupId, commerceProductDefinitionId, baseSku, titleMap,
+			descriptionMap, productTypeName, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override
@@ -333,6 +382,17 @@ public class CommerceProductDefinitionLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _commerceProductDefinitionLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void updateAsset(long userId,
+		com.liferay.commerce.products.model.CommerceProductDefinition commerceProductDefinition,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds, java.lang.Double priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceProductDefinitionLocalService.updateAsset(userId,
+			commerceProductDefinition, assetCategoryIds, assetTagNames,
+			assetLinkEntryIds, priority);
 	}
 
 	@Override

@@ -146,11 +146,13 @@ public abstract class CommerceProductDefinitionLocalServiceBaseImpl
 	 *
 	 * @param commerceProductDefinition the commerce product definition
 	 * @return the commerce product definition that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceProductDefinition deleteCommerceProductDefinition(
-		CommerceProductDefinition commerceProductDefinition) {
+		CommerceProductDefinition commerceProductDefinition)
+		throws PortalException {
 		return commerceProductDefinitionPersistence.remove(commerceProductDefinition);
 	}
 

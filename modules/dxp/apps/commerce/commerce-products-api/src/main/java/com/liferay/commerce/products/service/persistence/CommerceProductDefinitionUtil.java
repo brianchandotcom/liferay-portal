@@ -661,6 +661,72 @@ public class CommerceProductDefinitionUtil {
 	}
 
 	/**
+	* Returns all the commerce product definitions that the user has permission to view where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the matching commerce product definitions that the user has permission to view
+	*/
+	public static List<CommerceProductDefinition> filterFindByGroupId(
+		long groupId) {
+		return getPersistence().filterFindByGroupId(groupId);
+	}
+
+	/**
+	* Returns a range of all the commerce product definitions that the user has permission to view where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of commerce product definitions
+	* @param end the upper bound of the range of commerce product definitions (not inclusive)
+	* @return the range of matching commerce product definitions that the user has permission to view
+	*/
+	public static List<CommerceProductDefinition> filterFindByGroupId(
+		long groupId, int start, int end) {
+		return getPersistence().filterFindByGroupId(groupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce product definitions that the user has permissions to view where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of commerce product definitions
+	* @param end the upper bound of the range of commerce product definitions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce product definitions that the user has permission to view
+	*/
+	public static List<CommerceProductDefinition> filterFindByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<CommerceProductDefinition> orderByComparator) {
+		return getPersistence()
+				   .filterFindByGroupId(groupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the commerce product definitions before and after the current commerce product definition in the ordered set of commerce product definitions that the user has permission to view where groupId = &#63;.
+	*
+	* @param commerceProductDefinitionId the primary key of the current commerce product definition
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce product definition
+	* @throws NoSuchProductDefinitionException if a commerce product definition with the primary key could not be found
+	*/
+	public static CommerceProductDefinition[] filterFindByGroupId_PrevAndNext(
+		long commerceProductDefinitionId, long groupId,
+		OrderByComparator<CommerceProductDefinition> orderByComparator)
+		throws com.liferay.commerce.products.exception.NoSuchProductDefinitionException {
+		return getPersistence()
+				   .filterFindByGroupId_PrevAndNext(commerceProductDefinitionId,
+			groupId, orderByComparator);
+	}
+
+	/**
 	* Removes all the commerce product definitions where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -677,6 +743,16 @@ public class CommerceProductDefinitionUtil {
 	*/
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of commerce product definitions that the user has permission to view where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching commerce product definitions that the user has permission to view
+	*/
+	public static int filterCountByGroupId(long groupId) {
+		return getPersistence().filterCountByGroupId(groupId);
 	}
 
 	/**

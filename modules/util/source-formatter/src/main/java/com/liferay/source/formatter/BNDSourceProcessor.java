@@ -63,6 +63,11 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
+	protected List<FileCheck> getModuleFileChecks() {
+		return _moduleFileChecks;
+	}
+
+	@Override
 	protected void populateFileChecks() {
 		_fileChecks.add(new BNDWhitespaceCheck());
 
@@ -77,15 +82,16 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateModuleFileChecks() throws Exception {
-		_fileChecks.add(new BNDBundleNameCheck(subrepository));
-		_fileChecks.add(new BNDDirectoryNameCheck(subrepository));
-		_fileChecks.add(new BNDExportsCheck(subrepository));
-		_fileChecks.add(new BNDIncludeResourceCheck(subrepository));
-		_fileChecks.add(new BNDWebContextPathCheck(subrepository));
+		_moduleFileChecks.add(new BNDBundleNameCheck(subrepository));
+		_moduleFileChecks.add(new BNDDirectoryNameCheck(subrepository));
+		_moduleFileChecks.add(new BNDExportsCheck(subrepository));
+		_moduleFileChecks.add(new BNDIncludeResourceCheck(subrepository));
+		_moduleFileChecks.add(new BNDWebContextPathCheck(subrepository));
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};
 
 	private final List<FileCheck> _fileChecks = new ArrayList<>();
+	private final List<FileCheck> _moduleFileChecks = new ArrayList<>();
 
 }

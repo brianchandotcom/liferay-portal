@@ -964,6 +964,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return x + 1;
 	}
 
+	protected List<FileCheck> getModuleFileChecks() {
+		return null;
+	}
+
 	protected List<String> getParameterList(String methodCall) {
 		String parameters = null;
 
@@ -1205,23 +1209,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		List<FileCheck> fileChecks = getFileChecks();
+		content = _processFileChecks(
+			fileName, absolutePath, content, getFileChecks());
 
-		if (fileChecks == null) {
-			return content;
-		}
-
-		for (FileCheck fileCheck : fileChecks) {
-			content = fileCheck.process(fileName, absolutePath, content);
-
-			Set<SourceFormatterMessage> sourceFormatterMessages =
-				fileCheck.getSourceFormatterMessage(fileName);
-
-			for (SourceFormatterMessage sourceFormatterMessage :
-					sourceFormatterMessages) {
-
-				processMessage(fileName, sourceFormatterMessage);
-			}
+		if (isModulesFile(absolutePath)) {
+			content = _processFileChecks(
+				fileName, absolutePath, content, getModuleFileChecks());
 		}
 
 		return content;
@@ -1551,6 +1544,31 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return pattern;
+	}
+
+	private String _processFileChecks(
+			String fileName, String absolutePath, String content,
+			List<FileCheck> fileChecks)
+		throws Exception {
+
+		if (fileChecks == null) {
+			return content;
+		}
+
+		for (FileCheck fileCheck : fileChecks) {
+			content = fileCheck.process(fileName, absolutePath, content);
+
+			Set<SourceFormatterMessage> sourceFormatterMessages =
+				fileCheck.getSourceFormatterMessage(fileName);
+
+			for (SourceFormatterMessage sourceFormatterMessage :
+					sourceFormatterMessages) {
+
+				processMessage(fileName, sourceFormatterMessage);
+			}
+		}
+
+		return content;
 	}
 
 	private static final String _DOCUMENTATION_URL =

@@ -333,6 +333,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return _fileChecks;
 	}
 
+	@Override
+	protected List<FileCheck> getModuleFileChecks() {
+		return _moduleFileChecks;
+	}
+
 	protected String[] getPluginExcludes(String pluginDirectoryName) {
 		return new String[] {
 			pluginDirectoryName + "**/model/*Clp.java",
@@ -481,20 +486,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateModuleFileChecks() throws Exception {
-		_fileChecks.add(new JavaModuleExtendedObjectClassDefinitionCheck(subrepository));
+		_moduleFileChecks.add(
+			new JavaModuleExtendedObjectClassDefinitionCheck(subrepository));
 
 		boolean checkRegistryInTestClasses = GetterUtil.getBoolean(
 			System.getProperty(
 				"source.formatter.check.registry.in.test.classes"));
 
-		_fileChecks.add(
+		_moduleFileChecks.add(
 			new JavaModuleIllegalImportsCheck(
 				subrepository, checkRegistryInTestClasses));
 
-		_fileChecks.add(new JavaModuleInternalImportsCheck(subrepository));
-		_fileChecks.add(new JavaModuleServiceProxyFactoryCheck(subrepository));
-		_fileChecks.add(new JavaModuleTestCheck(subrepository));
-		_fileChecks.add(
+		_moduleFileChecks.add(
+			new JavaModuleInternalImportsCheck(subrepository));
+		_moduleFileChecks.add(
+			new JavaModuleServiceProxyFactoryCheck(subrepository));
+		_moduleFileChecks.add(new JavaModuleTestCheck(subrepository));
+		_moduleFileChecks.add(
 			new JavaOSGiReferenceCheck(
 				_getModuleFileNamesMap(), subrepository));
 	}
@@ -762,6 +770,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"<sql file=\"(.*)\" \\/>");
 	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private int _maxLineLength;
+	private final List<FileCheck> _moduleFileChecks = new ArrayList<>();
 	private final Pattern _packagePattern = Pattern.compile(
 		"(\n|^)\\s*package (.*);\n");
 	private String _portalCustomSQLContent;

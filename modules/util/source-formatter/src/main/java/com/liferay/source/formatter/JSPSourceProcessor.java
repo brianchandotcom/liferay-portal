@@ -447,6 +447,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
+	protected List<FileCheck> getModuleFileChecks() {
+		return _moduleFileChecks;
+	}
+
+	@Override
 	protected void populateFileChecks() throws Exception {
 		_fileChecks.add(new JSPWhitespaceCheck());
 
@@ -499,7 +504,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateModuleFileChecks() throws Exception {
-		_fileChecks.add(new JSPModuleIllegalImportsCheck(subrepository));
+		_moduleFileChecks.add(new JSPModuleIllegalImportsCheck(subrepository));
 	}
 
 	private Map<String, String> _getContentsMap() throws Exception {
@@ -682,6 +687,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			"([\\s\\S]*?)\n\\}\n");
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*\\.(jsp[f]?|svg)");
+	private final List<FileCheck> _moduleFileChecks = new ArrayList<>();
 	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
 		"(<.*page import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(

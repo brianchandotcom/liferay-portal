@@ -545,29 +545,17 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
 
-		long dlFileEntryPreviewableProcessorMaxSize = ParamUtil.getLong(
-			actionRequest, "dlFileEntryPreviewableProcessorMaxSize");
 		long dlFileEntryThumbnailMaxHeight = ParamUtil.getLong(
 			actionRequest, "dlFileEntryThumbnailMaxHeight");
 		long dlFileEntryThumbnailMaxWidth = ParamUtil.getLong(
 			actionRequest, "dlFileEntryThumbnailMaxWidth");
-		String dlFileExtensions = getFileExtensions(
-			actionRequest, "dlFileExtensions");
-		long dlFileMaxSize = ParamUtil.getLong(actionRequest, "dlFileMaxSize");
 
-		portletPreferences.setValue(
-			PropsKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE,
-			String.valueOf(dlFileEntryPreviewableProcessorMaxSize));
 		portletPreferences.setValue(
 			PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT,
 			String.valueOf(dlFileEntryThumbnailMaxHeight));
 		portletPreferences.setValue(
 			PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH,
 			String.valueOf(dlFileEntryThumbnailMaxWidth));
-		portletPreferences.setValue(
-			PropsKeys.DL_FILE_EXTENSIONS, dlFileExtensions);
-		portletPreferences.setValue(
-			PropsKeys.DL_FILE_MAX_SIZE, String.valueOf(dlFileMaxSize));
 
 		portletPreferences.store();
 	}

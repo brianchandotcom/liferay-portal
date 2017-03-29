@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 
 import java.util.Map;
@@ -29,7 +28,8 @@ import java.util.regex.Pattern;
 public class BNDWhitespaceCheck extends WhitespaceCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		int pos = fileName.lastIndexOf(StringPool.SLASH);
@@ -38,7 +38,7 @@ public class BNDWhitespaceCheck extends WhitespaceCheck {
 
 		content = _formatWhitespace(shortFileName, content);
 
-		return super.process(fileName, absolutePath, content);
+		return super.doProcess(fileName, absolutePath, content);
 	}
 
 	private String _formatWhitespace(

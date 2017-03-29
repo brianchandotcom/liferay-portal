@@ -14,15 +14,10 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,33 +31,28 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (!fileName.contains("/upgrade/")) {
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
-		_checkLocaleUtil(sourceFormatterMessages, fileName, content);
-		_checkServiceUtil(
-			sourceFormatterMessages, fileName, absolutePath, content);
-		_checkTimestamp(sourceFormatterMessages, fileName, content);
+		_checkLocaleUtil(fileName, content);
+		_checkServiceUtil(fileName, absolutePath, content);
+		_checkTimestamp(fileName, content);
 
 		if (!fileName.endsWith("Upgrade.java")) {
-			return new Tuple(content, sourceFormatterMessages);
+			return content;
 		}
 
-		_checkAnnotation(sourceFormatterMessages, fileName, content);
-		_checkRegistryVersion(sourceFormatterMessages, fileName, content);
+		_checkAnnotation(fileName, content);
+		_checkRegistryVersion(fileName, content);
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private void _checkAnnotation(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String content) {
+	private void _checkAnnotation(String fileName, String content) {
 
 		// LPS-59828
 
@@ -79,15 +69,11 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 		String componentAnnotation = matcher.group();
 
 		if (!componentAnnotation.contains("service =")) {
-			addMessage(
-				sourceFormatterMessages, fileName,
-				"@Component requires 'service' parameter");
+			addMessage(fileName, "@Component requires 'service' parameter");
 		}
 	}
 
-	private void _checkLocaleUtil(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String content) {
+	private void _checkLocaleUtil(String fileName, String content) {
 
 		// LPS-41205
 
@@ -95,16 +81,14 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 
 		if (pos != -1) {
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Use UpgradeProcessUtil.getDefaultLanguageId(companyId) " +
 					"instead of LocaleUtil.getDefault()",
 				getLineCount(content, pos));
 		}
 	}
 
-	private void _checkRegistryVersion(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String content) {
+	private void _checkRegistryVersion(String fileName, String content) {
 
 		// LPS-65685
 
@@ -140,7 +124,7 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 						0)) {
 
 					addMessage(
-						sourceFormatterMessages, fileName,
+						fileName,
 						"Break up Upgrade classes with a minor version " +
 							"increment or order alphabetically, see LPS-65685",
 						getLineCount(content, matcher1.start()));
@@ -154,8 +138,7 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 	}
 
 	private void _checkServiceUtil(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String absolutePath, String content) {
+		String fileName, String absolutePath, String content) {
 
 		// LPS-34911
 
@@ -168,7 +151,7 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 
 			if (pos != -1) {
 				addMessage(
-					sourceFormatterMessages, fileName,
+					fileName,
 					"Do not use *ServiceUtil classes in upgrade classes, see " +
 						"LPS-34911",
 					getLineCount(content, pos));
@@ -176,9 +159,7 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _checkTimestamp(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String content) {
+	private void _checkTimestamp(String fileName, String content) {
 
 		// LPS-41205
 
@@ -186,8 +167,7 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 
 		if (pos != -1) {
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"Use rs.getTimestamp instead of rs.getDate",
+				fileName, "Use rs.getTimestamp instead of rs.getDate",
 				getLineCount(content, pos));
 		}
 	}

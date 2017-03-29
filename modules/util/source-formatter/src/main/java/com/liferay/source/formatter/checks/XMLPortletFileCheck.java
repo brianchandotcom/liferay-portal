@@ -14,16 +14,12 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.checks.util.XMLSourceUtil;
 import com.liferay.util.xml.Dom4jUtil;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -42,10 +38,9 @@ public class XMLPortletFileCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 
 		if (fileName.endsWith("/liferay-portlet.xml") ||
 			((_portalSource || _subrepository) &&
@@ -53,15 +48,13 @@ public class XMLPortletFileCheck extends BaseFileCheck {
 			(!_portalSource && !_subrepository &&
 			 fileName.endsWith("/portlet.xml"))) {
 
-			content = _formatPortletXML(
-				sourceFormatterMessages, fileName, absolutePath, content);
+			content = _formatPortletXML(fileName, absolutePath, content);
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private String _formatPortletXML(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
@@ -83,7 +76,7 @@ public class XMLPortletFileCheck extends BaseFileCheck {
 
 				if (!Validator.isNumber(portletNameText)) {
 					addMessage(
-						sourceFormatterMessages, fileName,
+						fileName,
 						"Nonstandard portlet-name element '" + portletNameText +
 							"'");
 				}

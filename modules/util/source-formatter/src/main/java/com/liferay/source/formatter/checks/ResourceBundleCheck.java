@@ -14,13 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
-
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -32,23 +26,21 @@ public class ResourceBundleCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith("ResourceBundleCheck.java") ||
 			fileName.endsWith("ResourceBundleUtil.java") ||
 			isExcludedPath(_excludes, absolutePath)) {
 
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 
 		int pos = content.indexOf("ResourceBundle.getBundle(");
 
 		if (pos != -1) {
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Use ResourceBundleUtil.getBundle instead of " +
 					"ResourceBundle.getBundle, see LPS-58529",
 				getLineCount(content, pos));
@@ -58,13 +50,13 @@ public class ResourceBundleCheck extends BaseFileCheck {
 
 		if (pos != -1) {
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Use ResourceBundleUtil.getString instead of " +
 					"resourceBundle.getString, see LPS-58529",
 				getLineCount(content, pos));
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private final List<String> _excludes;

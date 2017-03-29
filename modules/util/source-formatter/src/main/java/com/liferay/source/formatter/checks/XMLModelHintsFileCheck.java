@@ -14,13 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -31,21 +26,18 @@ import org.dom4j.Element;
 public class XMLModelHintsFileCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
 		if (fileName.endsWith("-model-hints.xml")) {
-			_checkModelHintsXML(sourceFormatterMessages, fileName, content);
+			_checkModelHintsXML(fileName, content);
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private void _checkModelHintsXML(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
-			String fileName, String content)
+	private void _checkModelHintsXML(String fileName, String content)
 		throws Exception {
 
 		Document document = SourceUtil.readXML(content);
@@ -53,11 +45,10 @@ public class XMLModelHintsFileCheck extends BaseFileCheck {
 		Element rootElement = document.getRootElement();
 
 		checkElementOrder(
-			sourceFormatterMessages, fileName, rootElement, "hint-collection",
-			null, new ElementComparator());
-		checkElementOrder(
-			sourceFormatterMessages, fileName, rootElement, "model", null,
+			fileName, rootElement, "hint-collection", null,
 			new ElementComparator());
+		checkElementOrder(
+			fileName, rootElement, "model", null, new ElementComparator());
 	}
 
 }

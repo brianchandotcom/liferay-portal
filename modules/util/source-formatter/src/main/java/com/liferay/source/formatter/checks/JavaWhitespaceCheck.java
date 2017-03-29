@@ -20,9 +20,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
-
-import java.util.Collections;
 
 /**
  * @author Hugo Huijser
@@ -30,14 +27,15 @@ import java.util.Collections;
 public class JavaWhitespaceCheck extends WhitespaceCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		content = _formatWhitespace(fileName, content);
 
 		content = StringUtil.replace(content, "\n\n\n", "\n\n");
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private String _formatWhitespace(String fileName, String content)

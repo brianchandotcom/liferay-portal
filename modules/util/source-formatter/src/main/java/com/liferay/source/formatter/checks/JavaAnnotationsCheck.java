@@ -20,12 +20,10 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,12 +34,13 @@ import java.util.regex.Pattern;
 public class JavaAnnotationsCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		content = _formatAnnotations(content);
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private String _fixAnnotationLineBreaks(String annotation, String indent) {

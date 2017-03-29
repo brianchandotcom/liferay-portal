@@ -17,15 +17,10 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,24 +30,20 @@ import java.util.regex.Pattern;
 public class JavaSystemEventAnnotationCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (!fileName.endsWith("PortletDataHandler.java")) {
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		_checkSystemEventAnnotations(fileName, content);
 
-		_checkSystemEventAnnotations(
-			sourceFormatterMessages, fileName, content);
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private void _checkSystemEventAnnotations(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
-			String fileName, String content)
+	private void _checkSystemEventAnnotations(String fileName, String content)
 		throws Exception {
 
 		int pos = content.indexOf("setDeletionSystemEventStagedModelTypes");
@@ -114,7 +105,7 @@ public class JavaSystemEventAnnotationCheck extends BaseFileCheck {
 
 			if (!localServiceImplContent.contains("@SystemEvent")) {
 				addMessage(
-					sourceFormatterMessages, fileName,
+					fileName,
 					"Missing deletion system event '" +
 						localServiceImplFileName + "', see LPS-46632");
 			}

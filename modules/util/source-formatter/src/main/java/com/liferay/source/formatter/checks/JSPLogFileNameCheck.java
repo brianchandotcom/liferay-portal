@@ -17,9 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 
-import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,8 +31,8 @@ public class JSPLogFileNameCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (!isModulesFile(absolutePath, _subrepository) &&
 			!absolutePath.contains("/portal-web/")) {
@@ -42,7 +40,7 @@ public class JSPLogFileNameCheck extends BaseFileCheck {
 			content = _formatLogFileName(absolutePath, content);
 		}
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private String _formatLogFileName(String absolutePath, String content) {

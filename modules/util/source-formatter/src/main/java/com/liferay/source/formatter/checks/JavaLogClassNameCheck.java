@@ -15,10 +15,8 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
-import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,8 +26,8 @@ import java.util.regex.Pattern;
 public class JavaLogClassNameCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		Matcher matcher = _logPattern.matcher(content);
 
@@ -43,7 +41,7 @@ public class JavaLogClassNameCheck extends BaseFileCheck {
 			}
 		}
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private final Pattern _logPattern = Pattern.compile(

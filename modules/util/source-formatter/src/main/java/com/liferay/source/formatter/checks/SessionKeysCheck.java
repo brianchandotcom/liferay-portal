@@ -18,11 +18,9 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,12 +31,12 @@ import java.util.regex.Pattern;
 public class SessionKeysCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		content = _fixSessionKeys(content, getPatterns());
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	protected List<Pattern> getPatterns() {

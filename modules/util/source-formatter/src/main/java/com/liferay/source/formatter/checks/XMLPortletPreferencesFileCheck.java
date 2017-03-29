@@ -14,13 +14,9 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,29 +29,25 @@ import org.dom4j.Element;
 public class XMLPortletPreferencesFileCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
 		if (fileName.endsWith("portlet-preferences.xml")) {
-			_checkPortletPreferencesXML(
-				sourceFormatterMessages, fileName, content);
+			_checkPortletPreferencesXML(fileName, content);
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private void _checkPortletPreferencesXML(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
-			String fileName, String content)
+	private void _checkPortletPreferencesXML(String fileName, String content)
 		throws Exception {
 
 		Document document = SourceUtil.readXML(content);
 
 		checkElementOrder(
-			sourceFormatterMessages, fileName, document.getRootElement(),
-			"preference", null, new PortletPreferenceElementComparator());
+			fileName, document.getRootElement(), "preference", null,
+			new PortletPreferenceElementComparator());
 
 		Matcher matcher = _incorrectDefaultPreferencesFileName.matcher(
 			fileName);
@@ -64,9 +56,7 @@ public class XMLPortletPreferencesFileCheck extends BaseFileCheck {
 			String correctFileName =
 				matcher.group(1) + "-default-portlet-preferences.xml";
 
-			addMessage(
-				sourceFormatterMessages, fileName,
-				"Rename file to " + correctFileName);
+			addMessage(fileName, "Rename file to " + correctFileName);
 		}
 	}
 

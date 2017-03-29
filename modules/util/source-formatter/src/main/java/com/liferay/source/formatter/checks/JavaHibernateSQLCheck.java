@@ -15,9 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,8 +28,8 @@ public class JavaHibernateSQLCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (!isExcludedPath(_excludes, absolutePath) &&
 			content.contains("= session.createSynchronizedSQLQuery(") &&
@@ -42,7 +40,7 @@ public class JavaHibernateSQLCheck extends BaseFileCheck {
 				"= session.createSynchronizedSQLQuery(");
 		}
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private final List<String> _excludes;

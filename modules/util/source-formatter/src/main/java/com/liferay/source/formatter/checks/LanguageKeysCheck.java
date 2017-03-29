@@ -19,10 +19,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
@@ -32,11 +30,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,16 +49,13 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
 
-		_checkLanguageKeys(
-			sourceFormatterMessages, fileName, absolutePath, content,
-			getPatterns());
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	protected List<Pattern> getPatterns() {
@@ -73,7 +66,6 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
 
 	private void _checkLanguageKeys(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String fileName, String absolutePath, String content,
 			List<Pattern> patterns)
 		throws Exception {
@@ -85,14 +77,11 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		}
 
 		for (Pattern pattern : patterns) {
-			_checkLanguageKeys(
-				sourceFormatterMessages, fileName, absolutePath, content,
-				pattern);
+			_checkLanguageKeys(fileName, absolutePath, content, pattern);
 		}
 	}
 
 	private void _checkLanguageKeys(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String fileName, String absolutePath, String content,
 			Pattern pattern)
 		throws Exception {
@@ -142,8 +131,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 				if (bndSettings == null) {
 					addMessage(
-						sourceFormatterMessages, fileName,
-						"Missing language key '" + languageKey + "'");
+						fileName, "Missing language key '" + languageKey + "'");
 
 					continue;
 				}
@@ -155,8 +143,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					!bndFileLanguageProperties.containsKey(languageKey)) {
 
 					addMessage(
-						sourceFormatterMessages, fileName,
-						"Missing language key '" + languageKey + "'");
+						fileName, "Missing language key '" + languageKey + "'");
 				}
 
 				putBNDSettings(bndSettings);

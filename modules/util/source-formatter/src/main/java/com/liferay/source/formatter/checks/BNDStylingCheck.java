@@ -16,9 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 
-import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,8 +26,8 @@ import java.util.regex.Pattern;
 public class BNDStylingCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		content = StringUtil.replace(
 			content, new String[] {"/\n", "/,\\\n", " \\\n"},
@@ -41,7 +39,7 @@ public class BNDStylingCheck extends BaseFileCheck {
 
 		content = _formatSingleValueOnMultipleLines(content);
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private String _fixIncorrectIndent(String content) {

@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -28,9 +26,7 @@ import com.liferay.source.formatter.util.FileUtil;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,21 +52,18 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
 		if (fileName.endsWith("/service.xml")) {
-			_checkServiceXML(
-				sourceFormatterMessages, fileName, absolutePath, content);
+			_checkServiceXML(fileName, absolutePath, content);
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private void _checkServiceXML(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
@@ -100,26 +93,24 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 					String finderName = finderElement.attributeValue("name");
 
 					checkElementOrder(
-						sourceFormatterMessages, fileName, finderElement,
-						"finder-column", entityName + "#" + finderName,
+						fileName, finderElement, "finder-column",
+						entityName + "#" + finderName,
 						serviceFinderColumnElementComparator);
 				}
 			}
 
 			checkElementOrder(
-				sourceFormatterMessages, fileName, entityElement, "finder",
-				entityName, new ServiceFinderElementComparator(columnNames));
+				fileName, entityElement, "finder", entityName,
+				new ServiceFinderElementComparator(columnNames));
 			checkElementOrder(
-				sourceFormatterMessages, fileName, entityElement, "reference",
-				entityName, serviceReferenceElementComparator);
+				fileName, entityElement, "reference", entityName,
+				serviceReferenceElementComparator);
 		}
 
 		checkElementOrder(
-			sourceFormatterMessages, fileName, rootElement, "entity", null,
-			new ElementComparator());
+			fileName, rootElement, "entity", null, new ElementComparator());
 		checkElementOrder(
-			sourceFormatterMessages, fileName,
-			rootElement.element("exceptions"), "exception", null,
+			fileName, rootElement.element("exceptions"), "exception", null,
 			new ServiceExceptionElementComparator());
 	}
 

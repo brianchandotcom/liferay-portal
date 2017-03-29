@@ -14,14 +14,10 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -32,19 +28,16 @@ import org.dom4j.Element;
 public class TLDElementOrderCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		_checkElementOrder(fileName, content);
 
-		_checkElementOrder(sourceFormatterMessages, fileName, content);
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private void _checkElementOrder(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
-			String fileName, String content)
+	private void _checkElementOrder(String fileName, String content)
 		throws Exception {
 
 		Document document = SourceUtil.readXML(content);
@@ -57,13 +50,12 @@ public class TLDElementOrderCheck extends BaseFileCheck {
 			Element nameElement = tagElement.element("name");
 
 			checkElementOrder(
-				sourceFormatterMessages, fileName, tagElement, "attribute",
-				nameElement.getText(), new TagElementComparator());
+				fileName, tagElement, "attribute", nameElement.getText(),
+				new TagElementComparator());
 		}
 
 		checkElementOrder(
-			sourceFormatterMessages, fileName, rootElement, "tag", null,
-			new TagElementComparator());
+			fileName, rootElement, "tag", null, new TagElementComparator());
 	}
 
 	private static class TagElementComparator extends ElementComparator {

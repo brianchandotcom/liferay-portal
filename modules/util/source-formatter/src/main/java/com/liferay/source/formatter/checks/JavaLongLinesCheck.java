@@ -19,16 +19,11 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,10 +38,9 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
@@ -98,17 +92,14 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 				if ((truncateLongLinesContent != null) &&
 					!truncateLongLinesContent.equals(content)) {
 
-					return new Tuple(
-						truncateLongLinesContent, Collections.emptySet());
+					return truncateLongLinesContent;
 				}
 
-				addMessage(
-					sourceFormatterMessages, fileName, "> " + _maxLineLength,
-					lineCount);
+				addMessage(fileName, "> " + _maxLineLength, lineCount);
 			}
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private int _getIfClauseLineBreakPos(String line) {

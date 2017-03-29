@@ -16,9 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 
-import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,11 +26,11 @@ import java.util.regex.Pattern;
 public class JavaStylingCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith("JavaStylingCheck.java")) {
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
 		if (content.contains("$\n */")) {
@@ -67,7 +65,7 @@ public class JavaStylingCheck extends BaseFileCheck {
 
 		content = matcher.replaceAll("$1$3 $2");
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(

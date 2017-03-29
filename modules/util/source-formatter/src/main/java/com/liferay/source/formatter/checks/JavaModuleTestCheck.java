@@ -14,13 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -32,33 +26,29 @@ public class JavaModuleTestCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (!fileName.endsWith("Test.java") ||
 			!isModulesFile(absolutePath, _subrepository)) {
 
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
 		String packagePath = JavaSourceUtil.getPackagePath(content);
 
 		if (!packagePath.startsWith("com.liferay")) {
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		_checkTestPackage(fileName, absolutePath, content, packagePath);
 
-		_checkTestPackage(
-			sourceFormatterMessages, fileName, absolutePath, content,
-			packagePath);
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private void _checkTestPackage(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String absolutePath, String content, String packagePath) {
+		String fileName, String absolutePath, String content,
+		String packagePath) {
 
 		if (absolutePath.contains("/src/testIntegration/java/") ||
 			absolutePath.contains("/test/integration/")) {
@@ -67,14 +57,14 @@ public class JavaModuleTestCheck extends BaseFileCheck {
 				content.contains("import org.powermock.")) {
 
 				addMessage(
-					sourceFormatterMessages, fileName,
+					fileName,
 					"Do not use PowerMock inside Arquillian tests, see " +
 						"LPS-56706");
 			}
 
 			if (!packagePath.endsWith(".test")) {
 				addMessage(
-					sourceFormatterMessages, fileName,
+					fileName,
 					"Module integration test must be under a test " +
 						"subpackage, see LPS-57722");
 			}
@@ -84,7 +74,7 @@ public class JavaModuleTestCheck extends BaseFileCheck {
 				 packagePath.endsWith(".test")) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Module unit test should not be under a test subpackage, see " +
 					"LPS-57722");
 		}

@@ -14,13 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * @author Hugo Huijser
  */
@@ -31,20 +24,18 @@ public class JSPModuleIllegalImportsCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (!isModulesFile(absolutePath, _subrepository)) {
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 
 		// LPS-62989
 
 		if (content.contains("import=\"com.liferay.registry.Registry")) {
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Do not use com.liferay.registry.Registry in modules, see " +
 					"LPS-62989");
 		}
@@ -53,12 +44,12 @@ public class JSPModuleIllegalImportsCheck extends BaseFileCheck {
 
 		if (content.contains("import=\"com.liferay.util.ContentUtil")) {
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Do not use com.liferay.util.ContentUtil in modules, see " +
 					"LPS-64335");
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private final boolean _subrepository;

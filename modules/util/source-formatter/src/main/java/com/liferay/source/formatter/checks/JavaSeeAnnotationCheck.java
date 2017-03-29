@@ -14,11 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
-
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,21 +23,18 @@ import java.util.regex.Pattern;
 public class JavaSeeAnnotationCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		Matcher matcher = _seeAnnotationPattern.matcher(content);
 
 		while (matcher.find()) {
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"Do not use @see with another annotation",
+				fileName, "Do not use @see with another annotation",
 				getLineCount(content, matcher.start() + 1));
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private final Pattern _seeAnnotationPattern = Pattern.compile(

@@ -16,11 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,21 +26,15 @@ import java.util.regex.Pattern;
 public class JSPTaglibVariableCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		content = _formatTaglibVariable(fileName, content);
 
-		content = _formatTaglibVariable(
-			sourceFormatterMessages, fileName, content);
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private String _formatTaglibVariable(
-		Set<SourceFormatterMessage> sourceFormatterMessage, String fileName,
-		String content) {
-
+	private String _formatTaglibVariable(String fileName, String content) {
 		Matcher matcher = _taglibVariablePattern.matcher(content);
 
 		while (matcher.find()) {
@@ -62,7 +52,7 @@ public class JSPTaglibVariableCheck extends BaseFileCheck {
 
 			if (!nextTag.contains(taglibName)) {
 				addMessage(
-					sourceFormatterMessage, fileName,
+					fileName,
 					"No need to specify taglib variable '" + taglibName + "'",
 					getLineCount(content, matcher.start()));
 

@@ -19,14 +19,10 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.SourceFormatterMessage;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,10 +36,9 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
@@ -60,8 +55,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 				if (trimmedLine.startsWith(StringPool.SEMICOLON)) {
 					addMessage(
-						sourceFormatterMessages, fileName,
-						"Line should not start with ';'", lineCount);
+						fileName, "Line should not start with ';'", lineCount);
 				}
 
 				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
@@ -69,16 +63,16 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 					if (trimmedLine.startsWith(StringPool.PERIOD)) {
 						addMessage(
-							sourceFormatterMessages, fileName,
-							"Line should not start with '.'", lineCount);
+							fileName, "Line should not start with '.'",
+							lineCount);
 					}
 
 					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
 						trimmedLine.startsWith(StringPool.CLOSE_PARENTHESIS)) {
 
 						addMessage(
-							sourceFormatterMessages, fileName,
-							"Line should not start with ')'", lineCount);
+							fileName, "Line should not start with ')'",
+							lineCount);
 					}
 				}
 
@@ -89,20 +83,16 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 					!line.matches("\\s*\\*.*") &&
 					(lineLength <= _maxLineLength)) {
 
-					_checkLineBreaks(
-						sourceFormatterMessages, line, previousLine, fileName,
-						lineCount);
+					_checkLineBreaks(line, previousLine, fileName, lineCount);
 				}
 
 				previousLine = line;
 			}
 		}
 
-		content = _fixIncorrectLineBreaks(
-			sourceFormatterMessages, content, fileName);
+		content = _fixIncorrectLineBreaks(content, fileName);
 
-		content = _fixLineStartingWithCloseParenthesis(
-			sourceFormatterMessages, content, fileName);
+		content = _fixLineStartingWithCloseParenthesis(content, fileName);
 
 		content = _fixMultiLineComment(content);
 
@@ -110,12 +100,11 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 		content = _fixClassLineLineBreaks(content);
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private void _checkLineBreaks(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String line,
-		String previousLine, String fileName, int lineCount) {
+		String line, String previousLine, String fileName, int lineCount) {
 
 		String trimmedLine = StringUtil.trimLeading(line);
 
@@ -127,8 +116,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 		if (trimmedLine.startsWith("},") && !trimmedLine.equals("},")) {
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"There should be a line break after '},'", lineCount);
+				fileName, "There should be a line break after '},'", lineCount);
 		}
 
 		int lineLeadingTabCount = getLeadingTabCount(line);
@@ -140,8 +128,8 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			(lineLeadingTabCount > previousLineLeadingTabCount)) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"There should be a line break after '('", lineCount - 1);
+				fileName, "There should be a line break after '('",
+				lineCount - 1);
 		}
 
 		if (previousLine.endsWith(StringPool.PERIOD)) {
@@ -152,9 +140,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				(trimmedLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
 				 (trimmedLine.charAt(x + 1) != CharPool.CLOSE_PARENTHESIS))) {
 
-				addMessage(
-					sourceFormatterMessages, fileName, "Incorrect line break",
-					lineCount);
+				addMessage(fileName, "Incorrect line break", lineCount);
 			}
 		}
 
@@ -168,9 +154,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			(strippedQuotesLineOpenParenthesisCount > 0) &&
 			(getLevel(trimmedLine) > 0)) {
 
-			addMessage(
-				sourceFormatterMessages, fileName, "Incorrect line break",
-				lineCount);
+			addMessage(fileName, "Incorrect line break", lineCount);
 		}
 
 		if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
@@ -181,7 +165,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 			if (z != -1) {
 				addMessage(
-					sourceFormatterMessages, fileName,
+					fileName,
 					"There should be a line break after '" +
 						line.substring(z + 1, z + 3) + "'",
 					lineCount);
@@ -196,8 +180,8 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 					(getLevel(linePart, "[", "]") == 0)) {
 
 					addMessage(
-						sourceFormatterMessages, fileName,
-						"There should be a line break after '+'", lineCount);
+						fileName, "There should be a line break after '+'",
+						lineCount);
 				}
 			}
 
@@ -220,7 +204,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 					(getLevel(linePart, "<", ">") == 0)) {
 
 					addMessage(
-						sourceFormatterMessages, fileName,
+						fileName,
 						"There should be a line break after '" +
 							trimmedLine.substring(0, x + 1) + "'",
 						lineCount);
@@ -234,7 +218,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			int pos = trimmedLine.indexOf(StringPool.OPEN_PARENTHESIS);
 
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"There should be a line break after '" +
 					trimmedLine.substring(0, pos + 1) + "'",
 				lineCount);
@@ -242,8 +226,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 		if (trimmedLine.matches("^[^(].*\\+$") && (getLevel(trimmedLine) > 0)) {
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"There should be a line break after '('", lineCount);
+				fileName, "There should be a line break after '('", lineCount);
 		}
 
 		if (!trimmedLine.contains("\t//") && !line.endsWith("{") &&
@@ -251,8 +234,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			!strippedQuotesLine.contains("}")) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"There should be a line break after '{'", lineCount);
+				fileName, "There should be a line break after '{'", lineCount);
 		}
 
 		if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
@@ -280,7 +262,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 					(previousLine.endsWith(StringPool.PLUS) && (level <= 0))) {
 
 					addMessage(
-						sourceFormatterMessages, fileName,
+						fileName,
 						"There should be a line break after '" + linePart + "'",
 						lineCount);
 				}
@@ -295,7 +277,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 				if (getLevel(linePart) < 0) {
 					addMessage(
-						sourceFormatterMessages, fileName,
+						fileName,
 						"There should be a line break after '" + linePart + "'",
 						lineCount);
 				}
@@ -305,9 +287,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				 !trimmedLine.startsWith("for (")) {
 
 			if (getLevel(trimmedLine) > 0) {
-				addMessage(
-					sourceFormatterMessages, fileName, "Incorrect line break",
-					lineCount);
+				addMessage(fileName, "Incorrect line break", lineCount);
 			}
 		}
 
@@ -321,8 +301,8 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 				if ((y == -1) || (x < y)) {
 					addMessage(
-						sourceFormatterMessages, fileName,
-						"There should be a line break after '='", lineCount);
+						fileName, "There should be a line break after '='",
+						lineCount);
 				}
 			}
 		}
@@ -335,22 +315,20 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			  line.endsWith(StringPool.SEMICOLON)))) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"There should be a line break before 'throws'", lineCount);
+				fileName, "There should be a line break before 'throws'",
+				lineCount);
 		}
 
 		if (line.endsWith(StringPool.PERIOD) &&
 			line.contains(StringPool.EQUAL)) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"There should be a line break after '='", lineCount);
+				fileName, "There should be a line break after '='", lineCount);
 		}
 
 		if (trimmedLine.matches("^\\} (catch|else|finally) .*")) {
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"There should be a line break after '}'", lineCount);
+				fileName, "There should be a line break after '}'", lineCount);
 		}
 
 		Matcher matcher = _incorrectLineBreakPattern6.matcher(trimmedLine);
@@ -361,7 +339,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			String linePart = trimmedLine.substring(0, x + 1);
 
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"There should be a line break after '" + linePart + "'",
 				lineCount);
 		}
@@ -411,10 +389,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _fixIncorrectLineBreaks(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String content,
-		String fileName) {
-
+	private String _fixIncorrectLineBreaks(String content, String fileName) {
 		while (true) {
 			Matcher matcher = _incorrectLineBreakPattern1.matcher(content);
 
@@ -505,7 +480,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				int lineCount = getLineCount(content, matcher.start());
 
 				addMessage(
-					sourceFormatterMessages, fileName,
+					fileName,
 					"There should be a line break before '" + matcher.group(1) +
 						"'",
 					lineCount);
@@ -516,8 +491,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 	}
 
 	private String _fixLineStartingWithCloseParenthesis(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String content,
-		String fileName) {
+		String content, String fileName) {
 
 		Matcher matcher = _lineStartingWithOpenParenthesisPattern.matcher(
 			content);
@@ -531,8 +505,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 			if (lastCharacterPreviousLine.equals(StringPool.OPEN_PARENTHESIS)) {
 				addMessage(
-					sourceFormatterMessages, fileName,
-					"Line should not start with ')'",
+					fileName, "Line should not start with ')'",
 					getLineCount(content, matcher.start(1)));
 
 				return content;

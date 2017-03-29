@@ -14,11 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
-
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,10 +23,8 @@ import java.util.regex.Pattern;
 public class FTLIfStatementCheck extends IfStatementCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		Matcher matcher = _ifStatementPattern.matcher(content);
 
@@ -39,11 +32,10 @@ public class FTLIfStatementCheck extends IfStatementCheck {
 			String ifClause = "if (" + matcher.group(2) + ") {";
 
 			checkIfClauseParentheses(
-				sourceFormatterMessages, ifClause, fileName,
-				getLineCount(content, matcher.start(2)));
+				ifClause, fileName, getLineCount(content, matcher.start(2)));
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private final Pattern _ifStatementPattern = Pattern.compile(

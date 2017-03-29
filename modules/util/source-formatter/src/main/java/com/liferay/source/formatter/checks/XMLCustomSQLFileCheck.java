@@ -18,14 +18,10 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,28 +34,25 @@ import org.dom4j.Element;
 public class XMLCustomSQLFileCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
 		if (fileName.contains("/custom-sql/")) {
-			_checkCustomSQLXML(sourceFormatterMessages, fileName, content);
+			_checkCustomSQLXML(fileName, content);
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private void _checkCustomSQLXML(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
-			String fileName, String content)
+	private void _checkCustomSQLXML(String fileName, String content)
 		throws Exception {
 
 		Document document = SourceUtil.readXML(content);
 
 		checkElementOrder(
-			sourceFormatterMessages, fileName, document.getRootElement(), "sql",
-			null, new CustomSQLElementComparator("id"));
+			fileName, document.getRootElement(), "sql", null,
+			new CustomSQLElementComparator("id"));
 
 		Matcher matcher = _whereNotInSQLPattern.matcher(content);
 
@@ -71,7 +64,7 @@ public class XMLCustomSQLFileCheck extends BaseFileCheck {
 			int z = content.indexOf(CharPool.QUOTE, y + 1);
 
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Avoid using WHERE ... NOT IN: " + content.substring(y + 1, z) +
 					", see LPS-51315");
 		}

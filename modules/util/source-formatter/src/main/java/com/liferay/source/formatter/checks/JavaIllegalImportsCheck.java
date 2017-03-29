@@ -16,13 +16,8 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -39,11 +34,11 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith("JavaIllegalImportsCheck.java")) {
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
 		content = StringUtil.replace(
@@ -59,27 +54,21 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 				"com.liferay.portal.kernel.util.LocalizationUtil"
 			});
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
 		if (!isExcludedPath(_runOutsidePortalExcludes, absolutePath) &&
 			!isExcludedPath(_proxyExcludes, absolutePath) &&
 			content.contains("import java.lang.reflect.Proxy;")) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"Use ProxyUtil instead of java.lang.reflect.Proxy");
+				fileName, "Use ProxyUtil instead of java.lang.reflect.Proxy");
 		}
 
 		if (content.contains("import edu.emory.mathcs.backport.java")) {
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"Illegal import: edu.emory.mathcs.backport.java");
+				fileName, "Illegal import: edu.emory.mathcs.backport.java");
 		}
 
 		if (content.contains("import jodd.util.StringPool")) {
-			addMessage(
-				sourceFormatterMessages, fileName,
-				"Illegal import: jodd.util.StringPool");
+			addMessage(fileName, "Illegal import: jodd.util.StringPool");
 		}
 
 		// LPS-45027
@@ -88,7 +77,7 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 				"com.liferay.portal.kernel.util.UnmodifiableList")) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Use java.util.Collections.unmodifiableList instead of " +
 					"com.liferay.portal.kernel.util.UnmodifiableList, see " +
 						"LPS-45027");
@@ -102,7 +91,7 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 			!content.contains("javax.crypto.KeyGenerator")) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
 					"SecureRandom instead of java.security.SecureRandom, see " +
 						"LPS-39058");
@@ -112,7 +101,7 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 
 		if (content.contains("org.testng.Assert")) {
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Use org.junit.Assert instead of org.testng.Assert, see " +
 					"LPS-55690");
 		}
@@ -123,7 +112,7 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 			!fileName.endsWith("AutoBatchPreparedStatementUtil.java")) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Use AutoBatchPreparedStatementUtil instead of " +
 					"DatabaseMetaData.supportsBatchUpdates, see LPS-60473");
 		}
@@ -134,7 +123,7 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 			!fileName.endsWith("ConfigurableUtil.java")) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Use ConfigurableUtil.createConfigurable instead of " +
 					"Configurable.createConfigurable, see LPS-64056");
 		}
@@ -145,7 +134,7 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 			content.contains("ServletResponseUtil.sendFile(")) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Use PortletResponseUtil.sendFile instead of " +
 					"ServletResponseUtil.sendFile, see LPS-65229");
 		}
@@ -163,19 +152,19 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 			sb.append("org.apache.felix.utils.extender.AbstractExtender, see ");
 			sb.append("LPS-69494");
 
-			addMessage(sourceFormatterMessages, fileName, sb.toString());
+			addMessage(fileName, sb.toString());
 		}
 
 		// LPS-70963
 
 		if (content.contains("java.util.WeakHashMap")) {
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Do not use java.util.WeakHashMap because it is not " +
 					"thread-safe, see LPS-70963");
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private final List<String> _proxyExcludes;

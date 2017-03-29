@@ -15,11 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,21 +25,15 @@ import java.util.regex.Pattern;
 public class TLDTypeCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		content = _formatTypes(fileName, content);
 
-		content = _formatTypes(sourceFormatterMessages, fileName, content);
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private String _formatTypes(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
-			String fileName, String content)
-		throws Exception {
-
+	private String _formatTypes(String fileName, String content) {
 		Matcher matcher = _typePattern.matcher(content);
 
 		while (matcher.find()) {
@@ -51,8 +41,7 @@ public class TLDTypeCheck extends BaseFileCheck {
 
 			if (typeName.matches("[A-Z]\\w*")) {
 				addMessage(
-					sourceFormatterMessages, fileName,
-					"Use fully qualified class name, see LPS-61841",
+					fileName, "Use fully qualified class name, see LPS-61841",
 					getLineCount(content, matcher.start(1)));
 			}
 			else if (typeName.equals("java.lang.String")) {

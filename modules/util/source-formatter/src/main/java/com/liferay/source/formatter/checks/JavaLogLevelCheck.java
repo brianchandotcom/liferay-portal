@@ -17,12 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,24 +27,19 @@ import java.util.regex.Pattern;
 public class JavaLogLevelCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.contains("Log")) {
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		_checkLogLevel(content, fileName);
 
-		_checkLogLevel(sourceFormatterMessages, content, fileName);
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private void _checkLogLevel(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String content,
-		String fileName) {
-
+	private void _checkLogLevel(String content, String fileName) {
 		Matcher matcher = _logLevelPattern.matcher(content);
 
 		while (matcher.find()) {
@@ -76,13 +66,11 @@ public class JavaLogLevelCheck extends BaseFileCheck {
 
 				if (codeBlock.contains(s)) {
 					addMessage(
-						sourceFormatterMessages, fileName,
-						"Do not use _log.isErrorEnabled()", lineCount);
+						fileName, "Do not use _log.isErrorEnabled()",
+						lineCount);
 				}
 				else {
-					addMessage(
-						sourceFormatterMessages, fileName, "Use " + s,
-						lineCount);
+					addMessage(fileName, "Use " + s, lineCount);
 				}
 			}
 		}

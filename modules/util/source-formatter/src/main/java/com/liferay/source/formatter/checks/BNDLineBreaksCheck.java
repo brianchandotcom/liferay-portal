@@ -16,10 +16,8 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,8 +28,8 @@ import java.util.regex.Pattern;
 public class BNDLineBreaksCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		int pos = fileName.lastIndexOf(StringPool.SLASH);
 
@@ -39,7 +37,7 @@ public class BNDLineBreaksCheck extends BaseFileCheck {
 
 		content = _formatLineBreaks(shortFileName, content);
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private String _formatLineBreaks(

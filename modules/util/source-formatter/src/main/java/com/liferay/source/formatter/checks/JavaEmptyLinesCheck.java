@@ -14,18 +14,14 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-
-import java.util.Collections;
-
 /**
  * @author Hugo Huijser
  */
 public class JavaEmptyLinesCheck extends EmptyLinesCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		content = fixMissingEmptyLines(content);
 
@@ -35,7 +31,7 @@ public class JavaEmptyLinesCheck extends EmptyLinesCheck {
 
 		content = fixMissingEmptyLineAfterSettingVariable(content);
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 }

@@ -14,13 +14,9 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.BNDImportsFormatter;
-import com.liferay.source.formatter.SourceFormatterMessage;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,20 +26,15 @@ import java.util.regex.Pattern;
 public class BNDImportsCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
 		_checkWildcardImports(
-			sourceFormatterMessages, fileName, absolutePath, content,
-			_conditionalPackagePattern);
+			fileName, absolutePath, content, _conditionalPackagePattern);
 		_checkWildcardImports(
-			sourceFormatterMessages, fileName, absolutePath, content,
-			_exportContentsPattern);
-		_checkWildcardImports(
-			sourceFormatterMessages, fileName, absolutePath, content,
-			_exportsPattern);
+			fileName, absolutePath, content, _exportContentsPattern);
+		_checkWildcardImports(fileName, absolutePath, content, _exportsPattern);
 
 		ImportsFormatter importsFormatter = new BNDImportsFormatter();
 
@@ -52,12 +43,11 @@ public class BNDImportsCheck extends BaseFileCheck {
 		content = importsFormatter.format(content, _exportsPattern);
 		content = importsFormatter.format(content, _importsPattern);
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private void _checkWildcardImports(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String absolutePath, String content, Pattern pattern) {
+		String fileName, String absolutePath, String content, Pattern pattern) {
 
 		if (absolutePath.contains("/portal-kernel/") ||
 			absolutePath.contains("/third-party/") ||
@@ -84,7 +74,7 @@ public class BNDImportsCheck extends BaseFileCheck {
 
 			if (wildcardImport.matches("^!?com\\.liferay\\..+")) {
 				addMessage(
-					sourceFormatterMessages, fileName,
+					fileName,
 					"Do not use wildcard in Export-Package '" + wildcardImport +
 						"'");
 			}

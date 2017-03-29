@@ -19,10 +19,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -41,11 +39,12 @@ public class JSPUnusedVariableCheck extends JSPUnusedTermCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (_contentsMap.isEmpty()) {
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
 		Set<String> checkedFileNames = new HashSet<>();
@@ -92,7 +91,7 @@ public class JSPUnusedVariableCheck extends JSPUnusedTermCheck {
 			content = content.substring(0, content.length() - 1);
 		}
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private String _getVariableName(String line) {

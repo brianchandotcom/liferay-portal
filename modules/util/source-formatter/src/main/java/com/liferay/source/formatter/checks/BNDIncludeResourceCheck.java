@@ -16,10 +16,8 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.tools.ImportPackage;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,8 +32,8 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (!fileName.endsWith("test-bnd.bnd") &&
 			isModulesFile(absolutePath, _subrepository)) {
@@ -43,7 +41,7 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 			content = _formatIncludeResource(content);
 		}
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private String _formatIncludeResource(String content) {

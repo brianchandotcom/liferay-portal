@@ -14,12 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,29 +23,24 @@ import java.util.regex.Pattern;
 public class ValidatorEqualsCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith("ValidatorEqualsCheck.java")) {
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		_checkValidatorEquals(fileName, content);
 
-		_checkValidatorEquals(sourceFormatterMessages, fileName, content);
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private void _checkValidatorEquals(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String content) {
-
+	private void _checkValidatorEquals(String fileName, String content) {
 		Matcher matcher = _validatorEqualsPattern.matcher(content);
 
 		while (matcher.find()) {
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Use Objects.equals(Object, Object) instead of " +
 					"Objects.equals(Object, Object), see LPS-65135",
 				getLineCount(content, matcher.start()));

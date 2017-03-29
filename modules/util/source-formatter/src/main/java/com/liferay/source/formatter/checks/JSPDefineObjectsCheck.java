@@ -15,13 +15,9 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.SourceFormatterMessage;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,33 +37,29 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		content = _formatDefineObjects(content);
 
-		_checkDefineObjectsVariables(
-			sourceFormatterMessages, fileName, absolutePath, content);
+		_checkDefineObjectsVariables(fileName, absolutePath, content);
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private void _checkDefineObjectsVariables(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String absolutePath, String content) {
+		String fileName, String absolutePath, String content) {
 
 		for (String[] defineObject : _LIFERAY_THEME_DEFINE_OBJECTS) {
 			_checkDefineObjectsVariables(
-				sourceFormatterMessages, fileName, content, defineObject[0],
-				defineObject[1], defineObject[2], "liferay-theme");
+				fileName, content, defineObject[0], defineObject[1],
+				defineObject[2], "liferay-theme");
 		}
 
 		for (String[] defineObject : _PORTLET_DEFINE_OBJECTS) {
 			_checkDefineObjectsVariables(
-				sourceFormatterMessages, fileName, content, defineObject[0],
-				defineObject[1], defineObject[2], "portlet");
+				fileName, content, defineObject[0], defineObject[1],
+				defineObject[2], "portlet");
 		}
 
 		if (_portalSource ||
@@ -77,16 +69,15 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 
 			for (String[] defineObject : _LIFERAY_FRONTEND_DEFINE_OBJECTS) {
 				_checkDefineObjectsVariables(
-					sourceFormatterMessages, fileName, content, defineObject[0],
-					defineObject[1], defineObject[2], "liferay-frontend");
+					fileName, content, defineObject[0], defineObject[1],
+					defineObject[2], "liferay-frontend");
 			}
 		}
 	}
 
 	private void _checkDefineObjectsVariables(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String content, String objectType, String variableName, String value,
-		String tag) {
+		String fileName, String content, String objectType, String variableName,
+		String value, String tag) {
 
 		int x = -1;
 
@@ -107,7 +98,7 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 			}
 
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Use '" + tag + ":defineObjects' or rename var, see LPS-62493",
 				getLineCount(content, x));
 		}

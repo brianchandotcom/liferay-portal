@@ -16,16 +16,11 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,19 +30,17 @@ import java.util.regex.Pattern;
 public class BNDDefinitionKeysCheck extends DefinitionKeysCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		List<String> definitions = getDefinitions(content);
 
 		if (definitions.isEmpty()) {
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
 		content = sortDefinitionKeys(
 			content, definitions, new DefinitionComparator());
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 
 		Map<String, Map<String, String>> fileSpecificDefinitionKeysMap =
 			BNDSourceUtil.getFileSpecificDefinitionKeysMap();
@@ -56,16 +49,15 @@ public class BNDDefinitionKeysCheck extends DefinitionKeysCheck {
 
 		for (String definition : definitions) {
 			content = _formatDefinitionKey(
-				sourceFormatterMessages, fileName, content, definition,
-				fileSpecificDefinitionKeysMap, generalDefinitionKeysMap);
+				fileName, content, definition, fileSpecificDefinitionKeysMap,
+				generalDefinitionKeysMap);
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private String _formatDefinitionKey(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String content, String definition,
+		String fileName, String content, String definition,
 		Map<String, Map<String, String>> fileSpecificDefinitionKeysMap,
 		Map<String, String> generalDefinitionKeysMap) {
 
@@ -102,9 +94,7 @@ public class BNDDefinitionKeysCheck extends DefinitionKeysCheck {
 		}
 
 		if (correctKey == null) {
-			addMessage(
-				sourceFormatterMessages, fileName,
-				"Unknown key \"" + definitionKey + "\"");
+			addMessage(fileName, "Unknown key \"" + definitionKey + "\"");
 
 			return content;
 		}

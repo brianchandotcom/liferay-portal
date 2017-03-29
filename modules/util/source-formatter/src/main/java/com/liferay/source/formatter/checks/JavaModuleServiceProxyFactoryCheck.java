@@ -14,13 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -32,33 +26,31 @@ public class JavaModuleServiceProxyFactoryCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (!isModulesFile(absolutePath, _subrepository) ||
 			fileName.endsWith("JavaModuleServiceProxyFactoryCheck.java")) {
 
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
 		String packagePath = JavaSourceUtil.getPackagePath(content);
 
 		if (!packagePath.startsWith("com.liferay")) {
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 
 		if (content.contains(
 				"ServiceProxyFactory.newServiceTrackedInstance(")) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Do not use ServiceProxyFactory.newServiceTrackedInstance in " +
 					"modules, see LPS-57358");
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private final boolean _subrepository;

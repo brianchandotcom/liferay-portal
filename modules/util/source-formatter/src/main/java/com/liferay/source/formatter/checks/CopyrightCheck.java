@@ -16,16 +16,10 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -37,25 +31,22 @@ public class CopyrightCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (fileName.endsWith(".tpl") || fileName.endsWith(".vm") ||
 			Validator.isNull(_copyright)) {
 
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		content = _fixCopyright(fileName, absolutePath, content);
 
-		content = _fixCopyright(
-			sourceFormatterMessages, fileName, absolutePath, content);
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private String _fixCopyright(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
@@ -64,7 +55,7 @@ public class CopyrightCheck extends BaseFileCheck {
 		if (!content.contains(_copyright) &&
 			((customCopyright == null) || !content.contains(customCopyright))) {
 
-			addMessage(sourceFormatterMessages, fileName, "Missing copyright");
+			addMessage(fileName, "Missing copyright");
 		}
 		else if (!content.startsWith(_copyright) &&
 				 !content.startsWith("<%--\n" + _copyright) &&
@@ -72,9 +63,7 @@ public class CopyrightCheck extends BaseFileCheck {
 				  (!content.startsWith(customCopyright) &&
 				   !content.startsWith("<%--\n" + customCopyright)))) {
 
-			addMessage(
-				sourceFormatterMessages, fileName,
-				"File must start with copyright");
+			addMessage(fileName, "File must start with copyright");
 		}
 
 		if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) {

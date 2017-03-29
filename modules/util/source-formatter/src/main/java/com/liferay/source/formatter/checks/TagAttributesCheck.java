@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.SourceFormatterMessage;
 
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,7 +29,6 @@ import java.util.regex.Pattern;
 public abstract class TagAttributesCheck extends BaseFileCheck {
 
 	protected String formatTagAttributes(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String fileName, String line, String tag, int lineCount,
 			boolean escapeQuotes)
 		throws Exception {
@@ -93,8 +90,8 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 
 				if (delimeter != CharPool.AMPERSAND) {
 					addMessage(
-						sourceFormatterMessages, fileName,
-						"Incorrect delimeter '" + delimeter + "'", lineCount);
+						fileName, "Incorrect delimeter '" + delimeter + "'",
+						lineCount);
 				}
 
 				return line;

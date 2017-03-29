@@ -14,12 +14,10 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.checks.util.XMLSourceUtil;
 import com.liferay.util.xml.Dom4jUtil;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -33,14 +31,15 @@ import org.dom4j.Element;
 public class XMLDDLStructuresFileCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (fileName.endsWith("structures.xml")) {
 			content = _formatDDLStructuresXML(content);
 		}
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private String _formatDDLStructuresXML(String content) throws Exception {

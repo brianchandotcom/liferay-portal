@@ -15,9 +15,6 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
-import com.liferay.portal.kernel.util.Tuple;
-
-import java.util.Collections;
 
 /**
  * @author Hugo Huijser
@@ -25,8 +22,8 @@ import java.util.Collections;
 public class PropertiesDefinitionKeysCheck extends DefinitionKeysCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith("/liferay-plugin-package.properties")) {
 			content = sortDefinitionKeys(
@@ -34,7 +31,7 @@ public class PropertiesDefinitionKeysCheck extends DefinitionKeysCheck {
 				new NaturalOrderStringComparator());
 		}
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 }

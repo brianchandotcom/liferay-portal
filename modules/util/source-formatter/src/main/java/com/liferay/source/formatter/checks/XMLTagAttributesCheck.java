@@ -19,11 +19,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -31,20 +26,16 @@ import java.util.Set;
 public class XMLTagAttributesCheck extends TagAttributesCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		content = _formatTagAttributes(fileName, content);
 
-		content = _formatTagAttributes(
-			sourceFormatterMessages, fileName, content);
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private String _formatTagAttributes(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
-			String fileName, String content)
+	private String _formatTagAttributes(String fileName, String content)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -72,8 +63,7 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 						!(line.contains("<![CDATA[") && line.contains("]]>"))) {
 
 						line = formatTagAttributes(
-							sourceFormatterMessages, fileName, line,
-							trimmedLine, lineCount, true);
+							fileName, line, trimmedLine, lineCount, true);
 					}
 					else if (trimmedLine.startsWith("<![CDATA[") &&
 							 !trimmedLine.endsWith("]]>")) {

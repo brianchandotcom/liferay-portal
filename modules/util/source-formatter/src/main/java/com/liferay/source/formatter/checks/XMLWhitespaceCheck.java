@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 
 /**
  * @author Hugo Huijser
@@ -27,12 +26,13 @@ public class XMLWhitespaceCheck extends WhitespaceCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		content = StringUtil.replace(content, "\"/>\n", "\" />\n");
 
-		return super.process(fileName, absolutePath, content);
+		return super.doProcess(fileName, absolutePath, content);
 	}
 
 	@Override

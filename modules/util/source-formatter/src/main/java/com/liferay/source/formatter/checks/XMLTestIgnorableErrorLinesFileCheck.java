@@ -14,14 +14,10 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -32,21 +28,18 @@ import org.dom4j.Element;
 public class XMLTestIgnorableErrorLinesFileCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
 		if (fileName.endsWith("/test-ignorable-error-lines.xml")) {
-			_checkTestIgnorableErrorLinesXml(
-				sourceFormatterMessages, fileName, content);
+			_checkTestIgnorableErrorLinesXml(fileName, content);
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private void _checkTestIgnorableErrorLinesXml(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String fileName, String content)
 		throws Exception {
 
@@ -58,16 +51,16 @@ public class XMLTestIgnorableErrorLinesFileCheck extends BaseFileCheck {
 
 		for (Element javascriptElement : javascriptElements) {
 			checkElementOrder(
-				sourceFormatterMessages, fileName, javascriptElement,
-				"ignore-error", null, new ElementComparator("description"));
+				fileName, javascriptElement, "ignore-error", null,
+				new ElementComparator("description"));
 		}
 
 		List<Element> logElements = rootElement.elements("log");
 
 		for (Element logElement : logElements) {
 			checkElementOrder(
-				sourceFormatterMessages, fileName, logElement, "ignore-error",
-				null, new ElementComparator("description"));
+				fileName, logElement, "ignore-error", null,
+				new ElementComparator("description"));
 		}
 	}
 

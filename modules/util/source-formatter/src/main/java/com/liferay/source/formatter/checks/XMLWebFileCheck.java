@@ -19,13 +19,11 @@ import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -40,14 +38,15 @@ public class XMLWebFileCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (fileName.endsWith("portal-web/docroot/WEB-INF/web.xml")) {
 			content = _formatWebXML(content);
 		}
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private String _formatWebXML(String content) throws Exception {

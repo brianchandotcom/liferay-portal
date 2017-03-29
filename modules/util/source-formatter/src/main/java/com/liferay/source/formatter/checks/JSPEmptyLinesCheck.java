@@ -16,10 +16,8 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
-import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,8 +27,8 @@ import java.util.regex.Pattern;
 public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		content = fixMissingEmptyLines(content);
 
@@ -50,7 +48,7 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 
 		content = _fixRedundantEmptyLines(content);
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	@Override

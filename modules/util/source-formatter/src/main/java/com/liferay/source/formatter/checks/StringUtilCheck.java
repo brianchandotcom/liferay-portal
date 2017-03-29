@@ -16,17 +16,12 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.lang.reflect.Field;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,25 +31,22 @@ import java.util.regex.Pattern;
 public class StringUtilCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (absolutePath.contains("poshi") ||
 			fileName.endsWith("StringUtilTest.java")) {
 
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		_checkReplaceCalls(fileName, content);
 
-		_checkReplaceCalls(sourceFormatterMessages, fileName, content);
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private void _checkReplaceCalls(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
-			String fileName, String content)
+	private void _checkReplaceCalls(String fileName, String content)
 		throws Exception {
 
 		Matcher matcher = _stringUtilReplacePattern.matcher(content);
@@ -103,7 +95,7 @@ public class StringUtilCheck extends BaseFileCheck {
 			sb.append("(String, char, String) instead");
 
 			addMessage(
-				sourceFormatterMessages, fileName, sb.toString(),
+				fileName, sb.toString(),
 				getLineCount(content, matcher.start()));
 		}
 	}

@@ -16,8 +16,6 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -25,9 +23,7 @@ import com.liferay.source.formatter.util.FileUtil;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,25 +40,20 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 
 		if (fileName.startsWith(_baseDirName + "build") ||
 			(fileName.contains("/build") && !fileName.contains("/tools/"))) {
 
-			_checkBuildXML(
-				sourceFormatterMessages, fileName, absolutePath, content);
+			_checkBuildXML(fileName, absolutePath, content);
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private void _checkBuildProjectName(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		Document document) {
-
+	private void _checkBuildProjectName(String fileName, Document document) {
 		Matcher matcher = _projectNamePattern.matcher(fileName);
 
 		if (!matcher.find()) {
@@ -77,54 +68,44 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 
 		if (!projectName.equals(expectedProjectName)) {
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"Incorrect project name '" + projectName + "'");
+				fileName, "Incorrect project name '" + projectName + "'");
 		}
 	}
 
 	private void _checkBuildXML(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		Document document = SourceUtil.readXML(content);
 
-		_checkBuildProjectName(sourceFormatterMessages, fileName, document);
+		_checkBuildProjectName(fileName, document);
 
 		checkElementOrder(
-			sourceFormatterMessages, fileName, document.getRootElement(),
-			"macrodef", null, new ElementComparator());
+			fileName, document.getRootElement(), "macrodef", null,
+			new ElementComparator());
 		checkElementOrder(
-			sourceFormatterMessages, fileName, document.getRootElement(),
-			"target", null, new ElementComparator());
+			fileName, document.getRootElement(), "target", null,
+			new ElementComparator());
 
 		int x = content.lastIndexOf("\n\t</macrodef>");
 		int y = content.indexOf("\n\t<process-ivy");
 
 		if ((y != -1) && (x > y)) {
-			addMessage(
-				sourceFormatterMessages, fileName,
-				"Macrodefs go before process-ivy");
+			addMessage(fileName, "Macrodefs go before process-ivy");
 		}
 
 		int z = content.indexOf("\n\t</target>");
 
 		if ((z != -1) && (x > z)) {
-			addMessage(
-				sourceFormatterMessages, fileName,
-				"Macrodefs go before targets");
+			addMessage(fileName, "Macrodefs go before targets");
 		}
 
-		_checkImportFiles(sourceFormatterMessages, fileName, content);
+		_checkImportFiles(fileName, content);
 
-		_checkTargetNames(
-			sourceFormatterMessages, fileName, absolutePath, content);
+		_checkTargetNames(fileName, absolutePath, content);
 	}
 
-	private void _checkImportFiles(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String content) {
-
+	private void _checkImportFiles(String fileName, String content) {
 		Matcher matcher = _importFilePattern.matcher(content);
 
 		while (matcher.find()) {
@@ -144,19 +125,18 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 
 			if (!file.exists()) {
 				addMessage(
-					sourceFormatterMessages, fileName,
+					fileName,
 					"Incorrect import file '" + matcher.group(1) + "'");
 			}
 		}
 	}
 
 	private void _checkTargetName(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String targetName, String buildFileName, String fileName)
 		throws Exception {
 
 		List<String> targetNames = _getTargetNames(
-			sourceFormatterMessages, buildFileName, fileName, null, false);
+			buildFileName, fileName, null, false);
 
 		if ((targetNames == null) || targetNames.contains(targetName)) {
 			return;
@@ -169,14 +149,11 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 		}
 
 		if (!targetNames.contains(targetName)) {
-			addMessage(
-				sourceFormatterMessages, fileName,
-				"Target '" + targetName + "' does not exist");
+			addMessage(fileName, "Target '" + targetName + "' does not exist");
 		}
 	}
 
 	private void _checkTargetNames(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
@@ -196,8 +173,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 				continue;
 			}
 
-			_checkTargetName(
-				sourceFormatterMessages, targetName, absolutePath, fileName);
+			_checkTargetName(targetName, absolutePath, fileName);
 		}
 
 		String fileDirName = fileName.substring(
@@ -233,9 +209,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 				antFileName = "build.xml";
 			}
 
-			_checkTargetName(
-				sourceFormatterMessages, targetName, fullDirName + antFileName,
-				fileName);
+			_checkTargetName(targetName, fullDirName + antFileName, fileName);
 		}
 	}
 
@@ -262,7 +236,6 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 	}
 
 	private List<String> _getTargetNames(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String buildFileName, String fileName, List<String> targetNames,
 			boolean importFile)
 		throws Exception {
@@ -276,7 +249,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 		if (!file.exists()) {
 			if (!importFile) {
 				addMessage(
-					sourceFormatterMessages, fileName,
+					fileName,
 					"Ant element points to non-existing build file '" +
 						buildFileName + "'");
 			}
@@ -308,8 +281,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 				buildDirName + importElement.attributeValue("file");
 
 			targetNames = _getTargetNames(
-				sourceFormatterMessages, importFileName, fileName, targetNames,
-				true);
+				importFileName, fileName, targetNames, true);
 		}
 
 		return targetNames;

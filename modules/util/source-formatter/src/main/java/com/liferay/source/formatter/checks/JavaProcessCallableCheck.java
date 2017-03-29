@@ -14,12 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,8 +23,8 @@ import java.util.regex.Pattern;
 public class JavaProcessCallableCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		// LPS-33070
 
@@ -39,16 +33,14 @@ public class JavaProcessCallableCheck extends BaseFileCheck {
 		if (!matcher.find() ||
 			content.contains("private static final long serialVersionUID")) {
 
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
 		addMessage(
-			sourceFormatterMessages, fileName,
+			fileName,
 			"Assign ProcessCallable implementation a serialVersionUID");
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private final Pattern _processCallablePattern = Pattern.compile(

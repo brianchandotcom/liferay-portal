@@ -15,13 +15,8 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 
 import java.io.File;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -29,13 +24,10 @@ import java.util.Set;
 public class BNDSchemaVersionCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
-		_checkMissingSchemaVersion(
-			sourceFormatterMessages, fileName, absolutePath, content);
+		_checkMissingSchemaVersion(fileName, absolutePath, content);
 
 		// LPS-61288
 
@@ -43,17 +35,16 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 			content.contains("Liferay-Require-SchemaVersion: 1.0.0")) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Do not include the header Liferay-Require-SchemaVersion in " +
 					"web modules");
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private void _checkMissingSchemaVersion(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String absolutePath, String content) {
+		String fileName, String absolutePath, String content) {
 
 		if (content.contains("Liferay-Require-SchemaVersion:") ||
 			!content.contains("Liferay-Service: true")) {
@@ -68,7 +59,7 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 
 		if (serviceXMLfile.exists()) {
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Missing 'Liferay-Require-SchemaVersion', see LPS-69385");
 		}
 	}

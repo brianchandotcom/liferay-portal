@@ -14,33 +14,24 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
-
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * @author Hugo Huijser
  */
 public class BNDRangeCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		int pos = content.indexOf("\"${range");
 
 		if (pos != -1) {
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"Do not use range expression, see LPS-70519",
+				fileName, "Do not use range expression, see LPS-70519",
 				getLineCount(content, pos));
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 }

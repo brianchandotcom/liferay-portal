@@ -15,11 +15,6 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -27,12 +22,10 @@ import java.util.Set;
 public class JavaResultSetCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		// LPS-28266
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 
 		for (int pos1 = -1;;) {
 			pos1 = content.indexOf(StringPool.TAB + "try {", pos1 + 1);
@@ -57,12 +50,11 @@ public class JavaResultSetCheck extends BaseFileCheck {
 
 			if ((pos3 < pos4) && (pos4 < pos5)) {
 				addMessage(
-					sourceFormatterMessages, fileName,
-					"Use rs.getInt(1) for count, see LPS-28266");
+					fileName, "Use rs.getInt(1) for count, see LPS-28266");
 			}
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 }

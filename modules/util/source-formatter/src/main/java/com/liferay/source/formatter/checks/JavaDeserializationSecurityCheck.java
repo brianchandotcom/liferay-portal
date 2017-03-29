@@ -15,13 +15,8 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,27 +34,23 @@ public class JavaDeserializationSecurityCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.contains("/test/") ||
 			fileName.contains("/testIntegration/") ||
 			isExcludedPath(_secureDeserializationExcludes, absolutePath)) {
 
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		_checkDeserializationSecurity(fileName, content, absolutePath);
 
-		_checkDeserializationSecurity(
-			sourceFormatterMessages, fileName, content, absolutePath);
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private void _checkDeserializationSecurity(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String content, String absolutePath) {
+		String fileName, String content, String absolutePath) {
 
 		for (Pattern vulnerabilityPattern :
 				_javaSerializationVulnerabilityPatterns) {
@@ -82,7 +73,7 @@ public class JavaDeserializationSecurityCheck extends BaseFileCheck {
 
 			sb.append(matcher.group(1));
 
-			addMessage(sourceFormatterMessages, fileName, sb.toString());
+			addMessage(fileName, sb.toString());
 		}
 	}
 

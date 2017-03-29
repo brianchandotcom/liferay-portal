@@ -15,15 +15,10 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.io.File;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,8 +32,8 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (absolutePath.contains("/modules/core/") ||
 			absolutePath.contains("/modules/util/") ||
@@ -46,26 +41,22 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 			fileName.contains("/testIntegration/") ||
 			!isModulesFile(absolutePath, _subrepository)) {
 
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
 		String packagePath = JavaSourceUtil.getPackagePath(content);
 
 		if (!packagePath.startsWith("com.liferay")) {
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		_checkInternalImports(fileName, absolutePath, content);
 
-		_checkInternalImports(
-			sourceFormatterMessages, fileName, absolutePath, content);
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private void _checkInternalImports(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String absolutePath, String content) {
+		String fileName, String absolutePath, String content) {
 
 		Matcher matcher = _internalImportPattern.matcher(content);
 
@@ -84,7 +75,7 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 
 			if (!file.exists()) {
 				addMessage(
-					sourceFormatterMessages, fileName,
+					fileName,
 					"Do not import internal class from another module",
 					getLineCount(content, matcher.start(1)));
 			}

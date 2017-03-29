@@ -15,9 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 
-import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,15 +29,15 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.matches(".*\\.(action|function|macro|testcase)") ||
 			fileName.startsWith(_baseDirName + "build") ||
 			fileName.matches(".*/(build|tools/).*") ||
 			fileName.endsWith("/content.xml")) {
 
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
 		content = fixEmptyLinesInMultiLineTags(content);
@@ -50,7 +48,7 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 
 		content = _fixMissingEmptyLinesAroundComments(content);
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private String _fixEmptyLinesBetweenTags(String fileName, String content) {

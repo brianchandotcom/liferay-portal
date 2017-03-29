@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
@@ -51,7 +50,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1214,12 +1212,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		for (FileCheck fileCheck : fileChecks) {
-			Tuple tuple = fileCheck.process(fileName, absolutePath, content);
-
-			content = (String)tuple.getObject(0);
+			content = fileCheck.process(fileName, absolutePath, content);
 
 			Set<SourceFormatterMessage> sourceFormatterMessages =
-				(Set<SourceFormatterMessage>)tuple.getObject(1);
+				fileCheck.getSourceFormatterMessage(fileName);
 
 			for (SourceFormatterMessage sourceFormatterMessage :
 					sourceFormatterMessages) {

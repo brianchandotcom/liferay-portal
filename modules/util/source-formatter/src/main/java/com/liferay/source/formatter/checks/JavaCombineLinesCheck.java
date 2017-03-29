@@ -19,16 +19,11 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,10 +38,9 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
@@ -106,7 +100,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 								"\n" + line.substring(0, x) + "\n" + indent +
 									line.substring(x) + "\n");
 
-							return new Tuple(content, Collections.emptySet());
+							return content;
 						}
 					}
 
@@ -162,21 +156,20 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 									indent + previousLine.substring(x + 2) +
 										"\n");
 
-							return new Tuple(content, Collections.emptySet());
+							return content;
 						}
 					}
 				}
 
 				String combinedLinesContent = _getCombinedLinesContent(
-					sourceFormatterMessages, content, fileName, absolutePath,
-					line, trimmedLine, lineLength, lineCount, previousLine,
-					lineLeadingTabCount, previousLineLeadingTabCount);
+					content, fileName, absolutePath, line, trimmedLine,
+					lineLength, lineCount, previousLine, lineLeadingTabCount,
+					previousLineLeadingTabCount);
 
 				if ((combinedLinesContent != null) &&
 					!combinedLinesContent.equals(content)) {
 
-					return new Tuple(
-						combinedLinesContent, Collections.emptySet());
+					return combinedLinesContent;
 				}
 
 				previousLine = line;
@@ -187,14 +180,158 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		content = _getCombinedLinesContent(content, _combinedLinesPattern1);
 		content = _getCombinedLinesContent(content, _combinedLinesPattern2);
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
+	}
+
+	private String _getCombinedLinesContent(String content) {
+		Matcher matcher = _combinedLinesPattern3.matcher(content);
+
+		content = matcher.replaceAll("$1 $3");
+
+		matcher = _combinedLinesPattern4.matcher(content);
+
+		return matcher.replaceAll("$1 $3");
+	}
+
+	private String _getCombinedLinesContent(String content, Pattern pattern) {
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String tabs = matcher.group(1);
+
+			int x = matcher.start(1);
+
+			String openChar = matcher.group(matcher.groupCount());
+
+			int y = -1;
+
+			if (openChar.equals(StringPool.OPEN_CURLY_BRACE)) {
+				y = content.indexOf(
+					StringPool.NEW_LINE + tabs + StringPool.CLOSE_CURLY_BRACE,
+					x);
+			}
+			else if (openChar.equals(StringPool.OPEN_PARENTHESIS)) {
+				y = content.indexOf(
+					StringPool.NEW_LINE + tabs + StringPool.CLOSE_PARENTHESIS,
+					x);
+			}
+
+			y = content.indexOf(CharPool.NEW_LINE, y + 1);
+
+			if (y < x) {
+				return content;
+			}
+
+			String match = content.substring(x, y);
+
+			String replacement = match;
+
+			while (replacement.contains("\n\t")) {
+				replacement = StringUtil.replace(replacement, "\n\t", "\n");
+			}
+
+			replacement = StringUtil.replace(
+				replacement, new String[] {",\n", "\n"},
+				new String[] {StringPool.COMMA_AND_SPACE, StringPool.BLANK});
+
+			if (getLineLength(replacement) <= _maxLineLength) {
+				return _getCombinedLinesContent(
+					StringUtil.replace(content, match, replacement), pattern);
+			}
+		}
+
+		return content;
 	}
 
 	private String _getCombinedLinesContent(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String content,
-		String fileName, String absolutePath, String line, String trimmedLine,
-		int lineLength, int lineCount, String previousLine, int lineTabCount,
-		int previousLineTabCount) {
+		String content, String line, String trimmedLine, int lineLength,
+		int lineCount, String previousLine, String linePart,
+		boolean addToPreviousLine, boolean extraSpace,
+		int numNextLinesRemoveLeadingTab) {
+
+		int previousLineStartPos = getLineStartPos(content, lineCount - 1);
+
+		if (linePart == null) {
+			String combinedLine = previousLine;
+
+			if (extraSpace) {
+				combinedLine += StringPool.SPACE;
+			}
+
+			combinedLine += trimmedLine;
+
+			String nextLine = getLine(content, lineCount + 1);
+
+			if (nextLine == null) {
+				return null;
+			}
+
+			if (numNextLinesRemoveLeadingTab > 0) {
+				int nextLineStartPos = getLineStartPos(content, lineCount + 1);
+
+				for (int i = 0; i < numNextLinesRemoveLeadingTab; i++) {
+					content = StringUtil.replaceFirst(
+						content, StringPool.TAB, StringPool.BLANK,
+						nextLineStartPos);
+
+					nextLineStartPos =
+						content.indexOf(CharPool.NEW_LINE, nextLineStartPos) +
+							1;
+				}
+			}
+
+			return StringUtil.replaceFirst(
+				content, previousLine + "\n" + line, combinedLine,
+				previousLineStartPos);
+		}
+
+		String firstLine = previousLine;
+		String secondLine = line;
+
+		if (addToPreviousLine) {
+			if (extraSpace) {
+				firstLine += StringPool.SPACE;
+			}
+
+			firstLine += linePart;
+
+			secondLine = StringUtil.replaceFirst(
+				line, linePart, StringPool.BLANK);
+		}
+		else {
+			if (((linePart.length() + lineLength) <= _maxLineLength) &&
+				(line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
+				 line.endsWith(StringPool.SEMICOLON))) {
+
+				firstLine = StringUtil.replaceLast(
+					firstLine, StringUtil.trim(linePart), StringPool.BLANK);
+
+				if (extraSpace) {
+					secondLine = StringUtil.replaceLast(
+						line, StringPool.TAB,
+						StringPool.TAB + linePart + StringPool.SPACE);
+				}
+				else {
+					secondLine = StringUtil.replaceLast(
+						line, StringPool.TAB, StringPool.TAB + linePart);
+				}
+			}
+			else {
+				return null;
+			}
+		}
+
+		firstLine = StringUtil.trimTrailing(firstLine);
+
+		return StringUtil.replaceFirst(
+			content, previousLine + "\n" + line, firstLine + "\n" + secondLine,
+			previousLineStartPos);
+	}
+
+	private String _getCombinedLinesContent(
+		String content, String fileName, String absolutePath, String line,
+		String trimmedLine, int lineLength, int lineCount, String previousLine,
+		int lineTabCount, int previousLineTabCount) {
 
 		if (Validator.isNull(line) || Validator.isNull(previousLine) ||
 			isExcludedPath(_excludes, absolutePath, lineCount)) {
@@ -320,7 +457,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 			if (previousLine.endsWith(StringPool.EQUAL)) {
 				if (line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
 					addMessage(
-						sourceFormatterMessages, fileName,
+						fileName,
 						"'" + trimmedLine + "' should be added to previous " +
 							"line",
 						lineCount);
@@ -345,7 +482,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 							}
 
 							addMessage(
-								sourceFormatterMessages, fileName,
+								fileName,
 								"'" + trimmedLine + "' should be added to " +
 									"previous line",
 								lineCount);
@@ -506,9 +643,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 				}
 
 				if (trimmedLine.equals(linePart)) {
-					addMessage(
-						sourceFormatterMessages, fileName,
-						"Incorrect line break", lineCount);
+					addMessage(fileName, "Incorrect line break", lineCount);
 
 					return null;
 				}
@@ -721,151 +856,6 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		}
 
 		return null;
-	}
-
-	private String _getCombinedLinesContent(String content) {
-		Matcher matcher = _combinedLinesPattern3.matcher(content);
-
-		content = matcher.replaceAll("$1 $3");
-
-		matcher = _combinedLinesPattern4.matcher(content);
-
-		return matcher.replaceAll("$1 $3");
-	}
-
-	private String _getCombinedLinesContent(String content, Pattern pattern) {
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			String tabs = matcher.group(1);
-
-			int x = matcher.start(1);
-
-			String openChar = matcher.group(matcher.groupCount());
-
-			int y = -1;
-
-			if (openChar.equals(StringPool.OPEN_CURLY_BRACE)) {
-				y = content.indexOf(
-					StringPool.NEW_LINE + tabs + StringPool.CLOSE_CURLY_BRACE,
-					x);
-			}
-			else if (openChar.equals(StringPool.OPEN_PARENTHESIS)) {
-				y = content.indexOf(
-					StringPool.NEW_LINE + tabs + StringPool.CLOSE_PARENTHESIS,
-					x);
-			}
-
-			y = content.indexOf(CharPool.NEW_LINE, y + 1);
-
-			if (y < x) {
-				return content;
-			}
-
-			String match = content.substring(x, y);
-
-			String replacement = match;
-
-			while (replacement.contains("\n\t")) {
-				replacement = StringUtil.replace(replacement, "\n\t", "\n");
-			}
-
-			replacement = StringUtil.replace(
-				replacement, new String[] {",\n", "\n"},
-				new String[] {StringPool.COMMA_AND_SPACE, StringPool.BLANK});
-
-			if (getLineLength(replacement) <= _maxLineLength) {
-				return _getCombinedLinesContent(
-					StringUtil.replace(content, match, replacement), pattern);
-			}
-		}
-
-		return content;
-	}
-
-	private String _getCombinedLinesContent(
-		String content, String line, String trimmedLine, int lineLength,
-		int lineCount, String previousLine, String linePart,
-		boolean addToPreviousLine, boolean extraSpace,
-		int numNextLinesRemoveLeadingTab) {
-
-		int previousLineStartPos = getLineStartPos(content, lineCount - 1);
-
-		if (linePart == null) {
-			String combinedLine = previousLine;
-
-			if (extraSpace) {
-				combinedLine += StringPool.SPACE;
-			}
-
-			combinedLine += trimmedLine;
-
-			String nextLine = getLine(content, lineCount + 1);
-
-			if (nextLine == null) {
-				return null;
-			}
-
-			if (numNextLinesRemoveLeadingTab > 0) {
-				int nextLineStartPos = getLineStartPos(content, lineCount + 1);
-
-				for (int i = 0; i < numNextLinesRemoveLeadingTab; i++) {
-					content = StringUtil.replaceFirst(
-						content, StringPool.TAB, StringPool.BLANK,
-						nextLineStartPos);
-
-					nextLineStartPos =
-						content.indexOf(CharPool.NEW_LINE, nextLineStartPos) +
-							1;
-				}
-			}
-
-			return StringUtil.replaceFirst(
-				content, previousLine + "\n" + line, combinedLine,
-				previousLineStartPos);
-		}
-
-		String firstLine = previousLine;
-		String secondLine = line;
-
-		if (addToPreviousLine) {
-			if (extraSpace) {
-				firstLine += StringPool.SPACE;
-			}
-
-			firstLine += linePart;
-
-			secondLine = StringUtil.replaceFirst(
-				line, linePart, StringPool.BLANK);
-		}
-		else {
-			if (((linePart.length() + lineLength) <= _maxLineLength) &&
-				(line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
-				 line.endsWith(StringPool.SEMICOLON))) {
-
-				firstLine = StringUtil.replaceLast(
-					firstLine, StringUtil.trim(linePart), StringPool.BLANK);
-
-				if (extraSpace) {
-					secondLine = StringUtil.replaceLast(
-						line, StringPool.TAB,
-						StringPool.TAB + linePart + StringPool.SPACE);
-				}
-				else {
-					secondLine = StringUtil.replaceLast(
-						line, StringPool.TAB, StringPool.TAB + linePart);
-				}
-			}
-			else {
-				return null;
-			}
-		}
-
-		firstLine = StringUtil.trimTrailing(firstLine);
-
-		return StringUtil.replaceFirst(
-			content, previousLine + "\n" + line, firstLine + "\n" + secondLine,
-			previousLineStartPos);
 	}
 
 	private final Pattern _combinedLinesPattern1 = Pattern.compile(

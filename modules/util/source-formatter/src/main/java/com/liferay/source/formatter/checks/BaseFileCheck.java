@@ -28,10 +28,12 @@ import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.dom4j.Element;
@@ -43,39 +45,61 @@ import org.dom4j.Text;
  */
 public abstract class BaseFileCheck implements FileCheck {
 
-	protected void addMessage(
-		Set<SourceFormatterMessage> messages, String fileName, String message) {
+	@Override
+	public Set<SourceFormatterMessage> getSourceFormatterMessage(
+		String fileName) {
 
-		addMessage(messages, fileName, message, -1);
+		if (_sourceFormatterMessagesMap.containsKey(fileName)) {
+			return _sourceFormatterMessagesMap.get(fileName);
+		}
+
+		return Collections.emptySet();
+	}
+
+	@Override
+	public String process(String fileName, String absolutePath, String content)
+		throws Exception {
+
+		_sourceFormatterMessagesMap.remove(fileName);
+
+		return doProcess(fileName, absolutePath, content);
+	}
+
+	protected void addMessage(String fileName, String message) {
+		addMessage(fileName, message, -1);
+	}
+
+	protected void addMessage(String fileName, String message, int lineCount) {
+		addMessage(fileName, message, null, lineCount);
 	}
 
 	protected void addMessage(
-		Set<SourceFormatterMessage> messages, String fileName, String message,
+		String fileName, String message, String markdownFileName) {
+
+		addMessage(fileName, message, markdownFileName, -1);
+	}
+
+	protected void addMessage(
+		String fileName, String message, String markdownFileName,
 		int lineCount) {
 
-		addMessage(messages, fileName, message, null, lineCount);
-	}
+		Set<SourceFormatterMessage> sourceFormatterMessages =
+			_sourceFormatterMessagesMap.get(fileName);
 
-	protected void addMessage(
-		Set<SourceFormatterMessage> messages, String fileName, String message,
-		String markdownFileName) {
+		if (sourceFormatterMessages == null) {
+			sourceFormatterMessages = new TreeSet<>();
+		}
 
-		addMessage(messages, fileName, message, markdownFileName, -1);
-	}
-
-	protected void addMessage(
-		Set<SourceFormatterMessage> messages, String fileName, String message,
-		String markdownFileName, int lineCount) {
-
-		messages.add(
+		sourceFormatterMessages.add(
 			new SourceFormatterMessage(
 				fileName, message, markdownFileName, lineCount));
+
+		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}
 
 	protected void checkElementOrder(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		Element rootElement, String elementName, String parentElementName,
-		ElementComparator elementComparator) {
+		String fileName, Element rootElement, String elementName,
+		String parentElementName, ElementComparator elementComparator) {
 
 		if (rootElement == null) {
 			return;
@@ -124,14 +148,17 @@ public abstract class BaseFileCheck implements FileCheck {
 					sb.append(StringPool.SPACE);
 					sb.append(elementComparator.getElementName(curElement));
 
-					addMessage(
-						sourceFormatterMessages, fileName, sb.toString());
+					addMessage(fileName, sb.toString());
 				}
 			}
 
 			previousNode = curNode;
 		}
 	}
+
+	protected abstract String doProcess(
+			String fileName, String absolutePath, String content)
+		throws Exception;
 
 	protected BNDSettings getBNDSettings(String fileName) throws Exception {
 		for (Map.Entry<String, BNDSettings> entry :
@@ -417,5 +444,7 @@ public abstract class BaseFileCheck implements FileCheck {
 
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
+	private Map<String, Set<SourceFormatterMessage>>
+		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 
 }

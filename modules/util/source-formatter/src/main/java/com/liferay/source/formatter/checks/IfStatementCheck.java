@@ -18,9 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.SourceFormatterMessage;
 
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,8 +28,7 @@ import java.util.regex.Pattern;
 public abstract class IfStatementCheck extends BaseFileCheck {
 
 	protected void checkIfClauseParentheses(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String ifClause,
-		String fileName, int lineCount) {
+		String ifClause, String fileName, int lineCount) {
 
 		ifClause = stripQuotes(ifClause);
 
@@ -41,8 +38,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 			!ifClause.matches("[^()]*\\([^()]*\\)[^()]*")) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"Redundant parentheses in if-statement", lineCount);
+				fileName, "Redundant parentheses in if-statement", lineCount);
 
 			return;
 		}
@@ -53,15 +49,13 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 			return;
 		}
 
-		_checkMissingParentheses(
-			sourceFormatterMessages, ifClause, fileName, lineCount);
+		_checkMissingParentheses(ifClause, fileName, lineCount);
 
 		if (_hasRedundantParentheses(ifClause, "||", "&&") ||
 			_hasRedundantParentheses(ifClause, "&&", "||")) {
 
 			addMessage(
-				sourceFormatterMessages, fileName,
-				"Redundant parentheses in if-statement", lineCount);
+				fileName, "Redundant parentheses in if-statement", lineCount);
 
 			return;
 		}
@@ -98,8 +92,8 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 						_hasRedundantParentheses(s)) {
 
 						addMessage(
-							sourceFormatterMessages, fileName,
-							"Redundant parentheses in if-statement", lineCount);
+							fileName, "Redundant parentheses in if-statement",
+							lineCount);
 
 						return;
 					}
@@ -111,8 +105,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 	}
 
 	private void _checkMissingParentheses(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String ifClause,
-		String fileName, int lineCount) {
+		String ifClause, String fileName, int lineCount) {
 
 		outerLoop:
 		while (true) {
@@ -158,8 +151,8 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 
 				if (_hasMissingParentheses(s)) {
 					addMessage(
-						sourceFormatterMessages, fileName,
-						"Missing parentheses in if-statement", lineCount);
+						fileName, "Missing parentheses in if-statement",
+						lineCount);
 
 					return;
 				}

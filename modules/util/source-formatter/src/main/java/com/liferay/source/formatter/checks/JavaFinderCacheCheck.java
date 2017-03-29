@@ -16,12 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,34 +26,30 @@ import java.util.regex.Pattern;
 public class JavaFinderCacheCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		if (!fileName.endsWith("FinderImpl.java") ||
 			!content.contains("public static final FinderPath")) {
 
-			return new Tuple(content, Collections.emptySet());
+			return content;
 		}
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
-		_checkFinderCacheInterfaceMethod(
-			sourceFormatterMessages, fileName, content);
+		_checkFinderCacheInterfaceMethod(fileName, content);
 
 		content = _fixClearCache(fileName, content);
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private void _checkFinderCacheInterfaceMethod(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String content) {
+		String fileName, String content) {
 
 		Matcher matcher = _fetchByPrimaryKeysMethodPattern.matcher(content);
 
 		if (!matcher.find()) {
 			addMessage(
-				sourceFormatterMessages, fileName,
+				fileName,
 				"Missing override of BasePersistenceImpl." +
 					"fetchByPrimaryKeys(Set<Serializable>), see LPS-49552");
 		}

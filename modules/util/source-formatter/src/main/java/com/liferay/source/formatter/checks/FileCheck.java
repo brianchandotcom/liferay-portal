@@ -14,14 +14,19 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.source.formatter.SourceFormatterMessage;
+
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
  */
 public interface FileCheck {
 
-	public Tuple process(String fileName, String absolutePath, String content)
+	public Set<SourceFormatterMessage> getSourceFormatterMessage(
+		String fileName);
+
+	public String process(String fileName, String absolutePath, String content)
 		throws Exception;
 
 }

@@ -14,13 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -31,28 +26,25 @@ import org.dom4j.Element;
 public class XMLTilesDefsFileCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
 		if (fileName.endsWith("/tiles-defs.xml")) {
-			_checkTilesDefsXML(sourceFormatterMessages, fileName, content);
+			_checkTilesDefsXML(fileName, content);
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private void _checkTilesDefsXML(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
-			String fileName, String content)
+	private void _checkTilesDefsXML(String fileName, String content)
 		throws Exception {
 
 		Document document = SourceUtil.readXML(content);
 
 		checkElementOrder(
-			sourceFormatterMessages, fileName, document.getRootElement(),
-			"definition", null, new TilesDefinitionElementComparator());
+			fileName, document.getRootElement(), "definition", null,
+			new TilesDefinitionElementComparator());
 	}
 
 	private class TilesDefinitionElementComparator extends ElementComparator {

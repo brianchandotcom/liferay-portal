@@ -15,9 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 
-import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,12 +25,12 @@ import java.util.regex.Pattern;
 public class JSPRedirectBackURLCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		content = _fixRedirectBackURL(content);
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private String _fixRedirectBackURL(String content) {

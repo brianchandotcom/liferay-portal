@@ -14,14 +14,10 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -32,23 +28,19 @@ import org.dom4j.Element;
 public class XMLResourceActionsFileCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
 		if (fileName.contains("/resource-actions/")) {
-			_checkResourceActionXML(
-				sourceFormatterMessages, fileName, content, "model");
-			_checkResourceActionXML(
-				sourceFormatterMessages, fileName, content, "portlet");
+			_checkResourceActionXML(fileName, content, "model");
+			_checkResourceActionXML(fileName, content, "portlet");
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private void _checkResourceActionXML(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String fileName, String content, String type)
 		throws Exception {
 
@@ -79,15 +71,14 @@ public class XMLResourceActionsFileCheck extends BaseFileCheck {
 
 			for (Element permissionsChildElement : permissionsChildElements) {
 				checkElementOrder(
-					sourceFormatterMessages, fileName, permissionsChildElement,
-					"action-key", name,
+					fileName, permissionsChildElement, "action-key", name,
 					new ResourceActionActionKeyElementComparator());
 			}
 		}
 
 		checkElementOrder(
-			sourceFormatterMessages, fileName, rootElement, type + "-resource",
-			null, new ResourceActionResourceElementComparator(type + "-name"));
+			fileName, rootElement, type + "-resource", null,
+			new ResourceActionResourceElementComparator(type + "-name"));
 	}
 
 	private class ResourceActionActionKeyElementComparator

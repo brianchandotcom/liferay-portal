@@ -16,9 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -35,8 +33,8 @@ public class JSPUnusedTaglibCheck extends JSPUnusedTermCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
 		Set<String> checkedFileNames = new HashSet<>();
 		Set<String> includeFileNames = new HashSet<>();
@@ -44,7 +42,7 @@ public class JSPUnusedTaglibCheck extends JSPUnusedTermCheck {
 		content = _removeUnusedTaglibs(
 			fileName, content, checkedFileNames, includeFileNames);
 
-		return new Tuple(content, Collections.emptySet());
+		return content;
 	}
 
 	private String _removeUnusedTaglibs(

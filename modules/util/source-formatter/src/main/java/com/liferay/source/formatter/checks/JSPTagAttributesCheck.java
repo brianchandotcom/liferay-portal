@@ -22,16 +22,13 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.SourceFormatterMessage;
 
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.Type;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -55,18 +52,15 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
+		content = _formatSingleLineTagAttribues(fileName, content);
 
-		content = _formatSingleLineTagAttribues(
-			sourceFormatterMessages, fileName, content);
+		content = _formatMultiLinesTagAttribues(fileName, content);
 
-		content = _formatMultiLinesTagAttribues(
-			sourceFormatterMessages, fileName, content);
-
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	@Override
@@ -199,7 +193,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	private String _formatMultiLinesTagAttribues(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String fileName, String content)
 		throws Exception {
 
@@ -232,7 +225,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 				singlelineTag, CharPool.NEW_LINE, CharPool.SPACE);
 
 			String newTag = formatTagAttributes(
-				sourceFormatterMessages, fileName, tag, singlelineTag,
+				fileName, tag, singlelineTag,
 				getLineCount(content, matcher.end(1)), false);
 
 			if (!tag.equals(newTag)) {
@@ -244,7 +237,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	private String _formatSingleLineTagAttribues(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
 			String fileName, String content)
 		throws Exception {
 
@@ -264,16 +256,15 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 				if (trimmedLine.matches("<\\w+ .*>.*")) {
 					line = formatTagAttributes(
-						sourceFormatterMessages, fileName, line, trimmedLine,
-						lineCount, false);
+						fileName, line, trimmedLine, lineCount, false);
 				}
 
 				Matcher matcher = _jspTaglibPattern.matcher(line);
 
 				while (matcher.find()) {
 					line = formatTagAttributes(
-						sourceFormatterMessages, fileName, line,
-						line.substring(matcher.start()), lineCount, false);
+						fileName, line, line.substring(matcher.start()),
+						lineCount, false);
 				}
 
 				sb.append(line);

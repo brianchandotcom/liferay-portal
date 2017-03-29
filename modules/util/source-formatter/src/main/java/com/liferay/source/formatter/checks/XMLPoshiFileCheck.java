@@ -17,15 +17,11 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,42 +35,34 @@ import org.dom4j.Element;
 public class XMLPoshiFileCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
-
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
 
 		if (fileName.endsWith(".action") || fileName.endsWith(".function") ||
 			fileName.endsWith(".macro") || fileName.endsWith(".testcase")) {
 
-			content = _formatPoshiXML(
-				sourceFormatterMessages, fileName, content);
+			content = _formatPoshiXML(fileName, content);
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
 	private void _checkPoshiCharactersAfterDefinition(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String content) {
+		String fileName, String content) {
 
 		if (content.contains("/definition>") &&
 			!content.endsWith("/definition>")) {
 
-			addMessage(
-				sourceFormatterMessages, fileName,
-				"Characters found after definition element");
+			addMessage(fileName, "Characters found after definition element");
 		}
 	}
 
 	private void _checkPoshiCharactersBeforeDefinition(
-		Set<SourceFormatterMessage> sourceFormatterMessages, String fileName,
-		String content) {
+		String fileName, String content) {
 
 		if (!content.startsWith("<definition")) {
-			addMessage(
-				sourceFormatterMessages, fileName,
-				"Characters found before definition element");
+			addMessage(fileName, "Characters found before definition element");
 		}
 	}
 
@@ -236,15 +224,11 @@ public class XMLPoshiFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _formatPoshiXML(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
-			String fileName, String content)
+	private String _formatPoshiXML(String fileName, String content)
 		throws Exception {
 
-		_checkPoshiCharactersAfterDefinition(
-			sourceFormatterMessages, fileName, content);
-		_checkPoshiCharactersBeforeDefinition(
-			sourceFormatterMessages, fileName, content);
+		_checkPoshiCharactersAfterDefinition(fileName, content);
+		_checkPoshiCharactersBeforeDefinition(fileName, content);
 
 		try {
 			Document document = SourceUtil.readXML(content);
@@ -255,8 +239,8 @@ public class XMLPoshiFileCheck extends BaseFileCheck {
 
 			for (Element commandElement : commandElements) {
 				checkElementOrder(
-					sourceFormatterMessages, fileName, commandElement,
-					"property", null, new ElementComparator());
+					fileName, commandElement, "property", null,
+					new ElementComparator());
 			}
 		}
 		catch (Exception e) {

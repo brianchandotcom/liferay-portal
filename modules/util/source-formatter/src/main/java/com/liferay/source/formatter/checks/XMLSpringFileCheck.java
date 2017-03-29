@@ -17,14 +17,10 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.tools.ImportPackage;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,28 +33,25 @@ import org.dom4j.Element;
 public class XMLSpringFileCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
 		if (fileName.endsWith("-spring.xml")) {
-			_checkSpringXML(sourceFormatterMessages, fileName, content);
+			_checkSpringXML(fileName, content);
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private void _checkSpringXML(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
-			String fileName, String content)
+	private void _checkSpringXML(String fileName, String content)
 		throws Exception {
 
 		Document document = SourceUtil.readXML(content);
 
 		checkElementOrder(
-			sourceFormatterMessages, fileName, document.getRootElement(),
-			"bean", null, new SpringBeanElementComparator("id"));
+			fileName, document.getRootElement(), "bean", null,
+			new SpringBeanElementComparator("id"));
 	}
 
 	private class SpringBeanElementComparator extends ElementComparator {

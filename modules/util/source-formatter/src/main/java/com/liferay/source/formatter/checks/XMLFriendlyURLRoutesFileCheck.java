@@ -18,14 +18,10 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -36,22 +32,18 @@ import org.dom4j.Element;
 public class XMLFriendlyURLRoutesFileCheck extends BaseFileCheck {
 
 	@Override
-	public Tuple process(String fileName, String absolutePath, String content)
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<SourceFormatterMessage> sourceFormatterMessages = new HashSet<>();
-
 		if (fileName.endsWith("routes.xml")) {
-			content = _formatFriendlyURLRoutesXML(
-				sourceFormatterMessages, fileName, content);
+			content = _formatFriendlyURLRoutesXML(fileName, content);
 		}
 
-		return new Tuple(content, sourceFormatterMessages);
+		return content;
 	}
 
-	private String _formatFriendlyURLRoutesXML(
-			Set<SourceFormatterMessage> sourceFormatterMessages,
-			String fileName, String content)
+	private String _formatFriendlyURLRoutesXML(String fileName, String content)
 		throws Exception {
 
 		Document document = SourceUtil.readXML(content);
@@ -64,14 +56,14 @@ public class XMLFriendlyURLRoutesFileCheck extends BaseFileCheck {
 
 		for (Element routeElement : routeElements) {
 			checkElementOrder(
-				sourceFormatterMessages, fileName, routeElement,
-				"ignored-parameter", null, elementComparator);
+				fileName, routeElement, "ignored-parameter", null,
+				elementComparator);
 			checkElementOrder(
-				sourceFormatterMessages, fileName, routeElement,
-				"implicit-parameter", null, elementComparator);
+				fileName, routeElement, "implicit-parameter", null,
+				elementComparator);
 			checkElementOrder(
-				sourceFormatterMessages, fileName, routeElement,
-				"overridden-parameter", null, elementComparator);
+				fileName, routeElement, "overridden-parameter", null,
+				elementComparator);
 		}
 
 		int pos = content.indexOf("<routes>\n");

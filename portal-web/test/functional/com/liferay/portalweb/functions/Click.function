@@ -27,24 +27,6 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="clickAtSidebarClickAt">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute argument1="//ul[contains(@data-namespace,'ControlMenuPortlet')]" selenium="clickAt" />
-
-		<execute argument1="//script[contains(@src,'/classic/js/main.js')]" selenium="waitForElementPresent" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute function="Click#clickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="clickAtSidebarClickAtWaitForScript">
 		<execute function="WaitForSPARefresh" />
 
@@ -155,20 +137,6 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="partialTextClickAt">
-		<execute function="WaitForSPARefresh" />
-
-		<execute function="AssertTextEquals#assertPartialText" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="clickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="pauseClickAt">
 		<execute function="WaitForSPARefresh" />
 
@@ -189,112 +157,6 @@
 		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#makeVisibleClickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="pauseTextClickAt">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute function="Click#textClickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="textClick">
-		<execute function="WaitForSPARefresh" />
-
-		<execute function="AssertTextEquals#assertText" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="click" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="textClickAt">
-		<execute function="WaitForSPARefresh" />
-
-		<execute function="AssertTextEquals#assertText" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="clickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="textClickAtAndWait">
-		<execute function="WaitForSPARefresh" />
-
-		<execute function="AssertTextEquals#assertText" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="clickAtAndWait" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="textClickAtAndWaitCKEditor">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
-
-		<execute function="Click#textClickAtAndWait" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="textClickAtClickDockbar">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="//div[@id='_145_dockbar']" selenium="click" />
-
-		<execute argument1="//script[contains(@src,'/liferay/node.js')]" selenium="waitForElementPresent" />
-
-		<execute function="Click#textClickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="valueClickAt">
-		<execute function="WaitForSPARefresh" />
-
-		<execute function="AssertTextEquals#assertValue" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="clickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="valueClickAtAndWaitCKEditor">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
-
-		<execute function="Click#valueClickAtAndWait" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

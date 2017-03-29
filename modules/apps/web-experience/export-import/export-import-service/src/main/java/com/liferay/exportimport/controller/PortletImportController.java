@@ -1377,7 +1377,7 @@ public class PortletImportController implements ImportController {
 		String xml = zipReader.getEntryAsString("/manifest.xml");
 
 		if (xml == null) {
-			throw new LARFileException("manifest.xml not found in the LAR");
+			throw new LARFileException(LARFileException.MISSING_MANIFEST);
 		}
 
 		Element rootElement = null;
@@ -1388,7 +1388,7 @@ public class PortletImportController implements ImportController {
 			rootElement = document.getRootElement();
 		}
 		catch (Exception e) {
-			throw new LARFileException(e);
+			throw new LARFileException(LARFileException.INVALID_MANIFEST, e);
 		}
 
 		// Build compatibility
@@ -1402,8 +1402,8 @@ public class PortletImportController implements ImportController {
 
 		if (buildNumber != importBuildNumber) {
 			throw new LayoutImportException(
-				"LAR build number " + importBuildNumber + " does not match " +
-					"portal build number " + buildNumber);
+				LayoutImportException.WRONG_BUILD_NUMBER,
+				new Object[] {importBuildNumber, buildNumber});
 		}
 
 		// Type
@@ -1411,17 +1411,18 @@ public class PortletImportController implements ImportController {
 		String larType = headerElement.attributeValue("type");
 
 		if (!larType.equals("portlet")) {
-			throw new LARTypeException(larType);
+			throw new LARTypeException(larType, new String[] {"portlet"});
 		}
 
 		// Portlet compatibility
 
 		String rootPortletId = headerElement.attributeValue("root-portlet-id");
 
-		if (!PortletConstants.getRootPortletId(portletId).equals(
-				rootPortletId)) {
+		String expectedRootPortletId = PortletConstants.getRootPortletId(
+			portletId);
 
-			throw new PortletIdException("Invalid portlet id " + rootPortletId);
+		if (!expectedRootPortletId.equals(rootPortletId)) {
+			throw new PortletIdException(expectedRootPortletId);
 		}
 
 		// Available locales
@@ -1441,9 +1442,7 @@ public class PortletImportController implements ImportController {
 						sourceAvailableLocale)) {
 
 					LocaleException le = new LocaleException(
-						LocaleException.TYPE_EXPORT_IMPORT,
-						"Locale " + sourceAvailableLocale + " is not " +
-							"available in company " + companyId);
+						LocaleException.TYPE_EXPORT_IMPORT);
 
 					le.setSourceAvailableLocales(sourceAvailableLocales);
 					le.setTargetAvailableLocales(

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.shopping.internal.upgrade.v1_0_1.util;
+package com.liferay.shopping.internal.upgrade.v1_0_2.util;
 
 import java.sql.Types;
 

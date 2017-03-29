@@ -680,14 +680,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			modifiedDate = new Date();
 		}
 
-		Group group = null;
-
 		if (entry == null) {
 			long entryId = counterLocalService.increment();
 
 			entry = assetEntryPersistence.create(entryId);
 
-			group = groupLocalService.getGroup(groupId);
+			Group group = groupLocalService.getGroup(groupId);
 
 			entry.setCompanyId(group.getCompanyId());
 
@@ -757,12 +755,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		// Tags
 
 		if (tagNames != null) {
-			if (Validator.isNull(group)) {
-				group = groupLocalService.getGroup(groupId);
-			}
+			long siteGroupId = PortalUtil.getSiteGroupId(groupId);
+
+			Group siteGroup = groupLocalService.getGroup(siteGroupId);
 
 			List<AssetTag> tags = assetTagLocalService.checkTags(
-				userId, group, tagNames);
+				userId, siteGroup, tagNames);
 
 			List<AssetTag> oldTags = assetEntryPersistence.getAssetTags(
 				entry.getEntryId());

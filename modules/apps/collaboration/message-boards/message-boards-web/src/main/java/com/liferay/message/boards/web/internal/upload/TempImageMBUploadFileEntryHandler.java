@@ -15,80 +15,62 @@
 package com.liferay.message.boards.web.internal.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.upload.UploadFileEntryHandler;
 
+import java.io.IOException;
 import java.io.InputStream;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ambrín Chaudhary
  */
+@Component(service = TempImageMBUploadFileEntryHandler.class)
 public class TempImageMBUploadFileEntryHandler
 	implements UploadFileEntryHandler {
 
-	public TempImageMBUploadFileEntryHandler(long categoryId) {
-		_categoryId = categoryId;
-	}
-
 	@Override
-	public FileEntry addFileEntry(
-			long userId, long groupId, long folderId, String fileName,
-			String contentType, InputStream inputStream, long size,
-			ServiceContext serviceContext)
-		throws PortalException {
+	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
+		throws IOException, PortalException {
 
-		return TempFileEntryUtil.addTempFileEntry(
-			groupId, userId, TEMP_FOLDER_NAME, fileName, inputStream,
-			contentType);
-	}
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)uploadPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-	@Override
-	public void checkPermission(
-			long groupId, long folderId, PermissionChecker permissionChecker)
-		throws PortalException {
+		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
+		String contentType = uploadPortletRequest.getContentType(
+			_PARAMETER_NAME);
+
+		long categoryId = ParamUtil.getLong(uploadPortletRequest, "categoryId");
+		long userId = themeDisplay.getUserId();
+		long groupId = themeDisplay.getScopeGroupId();
 
 		MBCategoryPermission.check(
-			permissionChecker, groupId, _categoryId, ActionKeys.ADD_FILE);
-	}
+			themeDisplay.getPermissionChecker(), groupId, categoryId,
+			ActionKeys.ADD_FILE);
 
-	@Override
-	public FileEntry fetchFileEntry(
-			long userId, long groupId, long folderId, String fileName)
-		throws PortalException {
+		try (InputStream inputStream =
+				uploadPortletRequest.getFileAsStream(_PARAMETER_NAME)) {
 
-		try {
-			return TempFileEntryUtil.getTempFileEntry(
-				groupId, userId, TEMP_FOLDER_NAME, fileName);
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
+			String uniqueFileName = TempFileEntryUtil.getTempFileName(fileName);
 
-			return null;
+			return TempFileEntryUtil.addTempFileEntry(
+				groupId, userId, _TEMP_FOLDER_NAME, uniqueFileName, inputStream,
+				contentType);
 		}
 	}
 
-	@Override
-	public String getParameterName() {
-		return "imageSelectorFileName";
-	}
+	private static final String _PARAMETER_NAME = "imageSelectorFileName";
 
-	@Override
-	public void validateFile(String fileName, String contentType, long size)
-		throws PortalException {
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TempImageMBUploadFileEntryHandler.class);
-
-	private final long _categoryId;
+	private static final String _TEMP_FOLDER_NAME =
+		TempImageMBUploadFileEntryHandler.class.getName();
 
 }

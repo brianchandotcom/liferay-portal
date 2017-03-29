@@ -1296,9 +1296,10 @@ multi-project builds by setting the `build.include.dirs` system property.
 ### Changed
 - [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.2.28.
 
-## 3.5.8 - 2017-03-27
+## 3.5.8 - 2017-03-28
 
 ### Changed
+- [LPS-71164]: Update the [Liferay Gradle Plugins] dependency to version 3.2.29.
 - [LPS-71535]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.1.4.
 

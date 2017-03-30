@@ -269,11 +269,6 @@ public class CommerceProductDefinitionLocalServiceImpl
 
 		validateReferences(groupId, ddmStructureKey);
 
-		commerceProductDefinition.setUuid(serviceContext.getUuid());
-		commerceProductDefinition.setGroupId(groupId);
-		commerceProductDefinition.setCompanyId(user.getCompanyId());
-		commerceProductDefinition.setUserId(user.getUserId());
-		commerceProductDefinition.setUserName(user.getFullName());
 		commerceProductDefinition.setTitleMap(titleMap);
 		commerceProductDefinition.setDescriptionMap(descriptionMap);
 		commerceProductDefinition.setBaseSKU(baseSKU);

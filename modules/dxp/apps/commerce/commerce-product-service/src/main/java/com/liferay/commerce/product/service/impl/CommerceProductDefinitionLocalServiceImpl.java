@@ -68,6 +68,8 @@ public class CommerceProductDefinitionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		// Product definition
+
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -152,6 +154,8 @@ public class CommerceProductDefinitionLocalServiceImpl
 	public CommerceProductDefinition deleteCommerceProductDefinition(
 			CommerceProductDefinition commerceProductDefinition)
 		throws PortalException {
+
+		// Product definition
 
 		commerceProductDefinitionPersistence.remove(commerceProductDefinition);
 
@@ -250,6 +254,8 @@ public class CommerceProductDefinitionLocalServiceImpl
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
+
+		// Product definition
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();

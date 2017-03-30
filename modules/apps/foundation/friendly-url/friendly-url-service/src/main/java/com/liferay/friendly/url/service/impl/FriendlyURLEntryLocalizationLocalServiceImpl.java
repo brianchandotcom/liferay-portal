@@ -128,6 +128,28 @@ public class FriendlyURLEntryLocalizationLocalServiceImpl
 	}
 
 	@Override
+	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
+			long groupId, String urlTitle, String languageId)
+		throws PortalException {
+
+		return friendlyURLEntryLocalizationPersistence.findByG_U_L(
+			groupId, urlTitle, languageId);
+	}
+
+	@Override
+	public List<FriendlyURLEntryLocalization> getFriendlyURLEntryLocalizations(
+		FriendlyURLEntry friendlyURLEntry) {
+
+		if (friendlyURLEntry == null) {
+			return Collections.emptyList();
+		}
+
+		return friendlyURLEntryLocalizationPersistence.findByG_F(
+			friendlyURLEntry.getGroupId(),
+			friendlyURLEntry.getFriendlyURLEntryId());
+	}
+
+	@Override
 	public int getFriendlyURLEntryLocalizationsCount(
 		FriendlyURLEntry friendlyURLEntry) {
 

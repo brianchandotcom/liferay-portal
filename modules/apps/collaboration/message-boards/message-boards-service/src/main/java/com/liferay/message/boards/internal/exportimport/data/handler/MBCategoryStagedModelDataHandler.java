@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -211,7 +212,8 @@ public class MBCategoryStagedModelDataHandler
 			return;
 		}
 
-		TrashHandler trashHandler = existingCategory.getTrashHandler();
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			MBCategory.class.getName());
 
 		if (trashHandler.isRestorable(existingCategory.getCategoryId())) {
 			trashHandler.restoreTrashEntry(

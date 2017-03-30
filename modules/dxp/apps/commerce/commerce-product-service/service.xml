@@ -4,6 +4,50 @@
 <service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.product">
 	<author>Marco Leo</author>
 	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceProductAttribute" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceProductAttributeId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="DDMFormFieldTypeName" type="String" />
+		<column name="DDMFormFieldTypeSettings" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
 	<entity local-service="true" name="CommerceProductDefinition" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->

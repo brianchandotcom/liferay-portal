@@ -58,7 +58,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceProductDefinition addCommerceProductDefinition(
-			long userId, String baseSKU, Map<Locale, String> titleMap,
+			String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String productTypeName,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -68,7 +68,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
 		Date displayDate = null;
@@ -116,7 +116,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 				WorkflowConstants.STATUS_EXPIRED);
 		}
 
-		commerceProductDefinition.setStatusByUserId(userId);
+		commerceProductDefinition.setStatusByUserId(user.getUserId());
 		commerceProductDefinition.setStatusDate(
 			serviceContext.getModifiedDate(now));
 		commerceProductDefinition.setExpandoBridgeAttributes(serviceContext);
@@ -131,7 +131,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 		// Asset
 
 		updateAsset(
-			userId, commerceProductDefinition,
+			user.getUserId(), commerceProductDefinition,
 			serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds(),
@@ -140,7 +140,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 		// Workflow
 
 		startWorkflowInstance(
-			userId, commerceProductDefinition, serviceContext);
+			user.getUserId(), commerceProductDefinition, serviceContext);
 
 		return commerceProductDefinitionPersistence.findByPrimaryKey(
 			commerceProductDefinition.getPrimaryKey());
@@ -241,7 +241,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceProductDefinition updateCommerceProductDefinition(
-			long userId, long commerceProductDefinitionId, String baseSKU,
+			long commerceProductDefinitionId, String baseSKU,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String productTypeName, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -251,7 +251,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 		CommerceProductDefinition commerceProductDefinition =
 			commerceProductDefinitionPersistence.create(
@@ -296,7 +296,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 				WorkflowConstants.STATUS_EXPIRED);
 		}
 
-		commerceProductDefinition.setStatusByUserId(userId);
+		commerceProductDefinition.setStatusByUserId(user.getUserId());
 		commerceProductDefinition.setStatusDate(
 			serviceContext.getModifiedDate(now));
 		commerceProductDefinition.setExpandoBridgeAttributes(serviceContext);
@@ -306,7 +306,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 		// Asset
 
 		updateAsset(
-			userId, commerceProductDefinition,
+			user.getUserId(), commerceProductDefinition,
 			serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds(),
@@ -315,7 +315,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 		// Workflow
 
 		startWorkflowInstance(
-			userId, commerceProductDefinition, serviceContext);
+			user.getUserId(), commerceProductDefinition, serviceContext);
 
 		return commerceProductDefinitionPersistence.findByPrimaryKey(
 			commerceProductDefinition.getPrimaryKey());

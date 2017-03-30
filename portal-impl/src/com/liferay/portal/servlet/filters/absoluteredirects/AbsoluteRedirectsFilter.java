@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.TryFilter;
 import com.liferay.portal.kernel.servlet.WrapHttpServletResponseFilter;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PortalInstances;
@@ -51,7 +50,6 @@ public class AbsoluteRedirectsFilter
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		request.setCharacterEncoding(StringPool.UTF8);
 		//response.setContentType(ContentTypes.TEXT_HTML_UTF8);
 
 		// Company id needs to always be called here so that it's properly set

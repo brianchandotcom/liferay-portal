@@ -439,6 +439,17 @@ public class LocalizationImplTest {
 			LocalizationUtil.getLocalization(xml, _ENGLISH_LANGUAGE_ID));
 	}
 
+	@Test
+	public void testUpdateLocalizationWithInvalidXmlCharacter() {
+		String xml = LocalizationUtil.updateLocalization(
+			StringPool.BLANK, "greeting", _INVALID_ENGLISH_HELLO,
+			_ENGLISH_LANGUAGE_ID, _ENGLISH_LANGUAGE_ID);
+
+		Assert.assertEquals(
+			_ENGLISH_HELLO,
+			LocalizationUtil.getLocalization(xml, _ENGLISH_LANGUAGE_ID));
+	}
+
 	private static final String _ENGLISH_HELLO = "Hello World";
 
 	private static final String _ENGLISH_LANGUAGE_ID = LocaleUtil.toLanguageId(
@@ -448,6 +459,8 @@ public class LocalizationImplTest {
 
 	private static final String _GERMAN_LANGUAGE_ID = LocaleUtil.toLanguageId(
 		LocaleUtil.GERMANY);
+
+	private static final String _INVALID_ENGLISH_HELLO = "Hello\u0008 World";
 
 	private static final String _SPANISH_LANGUAGE_ID = LocaleUtil.toLanguageId(
 		LocaleUtil.SPAIN);

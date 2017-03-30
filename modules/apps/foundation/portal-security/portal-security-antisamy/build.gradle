@@ -58,7 +58,13 @@ processSanitizerConfiguration {
 				|	</allowed-empty-tags>
 				|
 				|${line}
-				|		<tag name="picture" action="validate" />
+				|		<tag name="picture" action="validate">
+				|			<attribute name="data-fileEntryId" onInvalid="removeAttribute">
+				|				<regexp-list>
+				|					<regexp name="positiveInteger" />
+				|				</regexp-list>
+				|			</attribute>
+				|		</tag>
 				|		<tag name="source" action="validate">
 				|			<attribute name="srcset">
 				|				<regexp-list>

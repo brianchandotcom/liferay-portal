@@ -62,16 +62,20 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 				defineObject[2], "portlet");
 		}
 
-		if (_portalSource ||
-			isModulesFile(
-				absolutePath, _subrepository,
-				_pluginsInsideModulesDirectoryNames)) {
+		if (!_portalSource && !_subrepository) {
+			return;
+		}
 
-			for (String[] defineObject : _LIFERAY_FRONTEND_DEFINE_OBJECTS) {
-				_checkDefineObjectsVariables(
-					fileName, content, defineObject[0], defineObject[1],
-					defineObject[2], "liferay-frontend");
+		for (String directoryName : _pluginsInsideModulesDirectoryNames) {
+			if (absolutePath.contains(directoryName)) {
+				return;
 			}
+		}
+
+		for (String[] defineObject : _LIFERAY_FRONTEND_DEFINE_OBJECTS) {
+			_checkDefineObjectsVariables(
+				fileName, content, defineObject[0], defineObject[1],
+				defineObject[2], "liferay-frontend");
 		}
 	}
 

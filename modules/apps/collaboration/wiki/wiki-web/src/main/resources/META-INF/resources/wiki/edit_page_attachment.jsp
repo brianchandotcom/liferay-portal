@@ -19,6 +19,8 @@
 <%
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
+
+DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 %>
 
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">
@@ -29,7 +31,7 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 	<aui:input name="numOfFiles" type="hidden" value="3" />
 
 	<%
-	String acceptedExtensions = StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA));
+	String acceptedExtensions = StringUtil.merge(dlConfiguration.fileExtensions(), StringPool.COMMA_AND_SPACE);
 	%>
 
 	<aui:input label='<%= LanguageUtil.get(request, "file") + " 1" %>' name="file1" type="file">
@@ -81,8 +83,8 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 
 			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 			fallback: '#<portlet:namespace />fallback',
-			fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
-			maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %> ',
+			fileDescription: '<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
+			maxFileSize: '<%= dlConfiguration.fileMaxSize() %> ',
 			namespace: '<portlet:namespace />',
 			removeOnComplete: true,
 			rootElement: '#<portlet:namespace />uploaderContainer',

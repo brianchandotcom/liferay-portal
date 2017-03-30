@@ -3,6 +3,10 @@ import com.liferay.gradle.util.FileUtil
 
 import groovy.json.JsonSlurper
 
+import java.nio.file.Path
+
+import java.util.regex.Pattern
+
 import org.ajoberstar.grgit.Commit
 import org.ajoberstar.grgit.CommitDiff
 import org.ajoberstar.grgit.Grgit
@@ -36,6 +40,7 @@ buildscript {
 apply plugin: "org.ajoberstar.grgit"
 
 task cherryPickArtifacts
+task lockDependencyVersion
 task syncGitRepoReleases
 
 cherryPickArtifacts {
@@ -61,6 +66,96 @@ cherryPickArtifacts {
 	}
 
 	group = "releng"
+}
+
+lockDependencyVersion {
+	description = "Replaces 'default' or project dependencies with a specific version. Required properties: '-PdependencyName', '-PdependencyVersion'."
+
+	doLast {
+		assert project.properties["dependencyName"] : "Please provide a value for the '-PdependencyName' property"
+		assert project.properties["dependencyVersion"] : "Please provide a value for the '-PdependencyVersion' property"
+
+		assert dependencyName.startsWith("com.liferay.") : "Please provide a value for the '-PdependencyName' property which starts with 'com.liferay.'"
+
+		Path repositoryRootDirPath = grgit.repository.rootDir.parentFile.toPath()
+
+		Pattern dependencyPattern
+		String dependencyGroup = "com.liferay"
+
+		String dependencyProjectName = dependencyName.substring(12)
+
+		dependencyProjectName = dependencyProjectName.replace('.' as char, '-' as char)
+
+		if (dependencyName.startsWith("com.liferay.portal.")) {
+			dependencyGroup = "com.liferay.portal"
+			dependencyPattern = ~/provided\s+group:\s*"${dependencyGroup}",\s*name:\s*"${dependencyName}",\s*version:\s*"default"/
+		}
+		else {
+			dependencyPattern = ~/provided project\(".+:${dependencyProjectName}"\)/
+		}
+
+		String dependencyReplacement = "provided group: \"${dependencyGroup}\", name: \"${dependencyName}\", version: \"${dependencyVersion}\""
+
+		NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)
+
+		boolean commitChanges = false
+
+		FileTree buildGradleFileTree = fileTree(dir: projectDir, includes: ["apps/**/build.gradle", "core/**/build.gradle"])
+
+		buildGradleFileTree.each {
+			File buildGradleFile ->
+
+			File moduleDir = buildGradleFile.parentFile
+
+			String buildGradle = buildGradleFile.text
+
+			String newBuildGradle = buildGradle.replaceFirst(dependencyPattern, dependencyReplacement)
+
+			if (buildGradle == newBuildGradle) {
+				return
+			}
+
+			buildGradleFile.text = newBuildGradle
+
+			String moduleTaskPrefix = _getModuleTaskPrefix(moduleDir)
+
+			StartParameter startParameter = gradle.startParameter.newBuild()
+
+			startParameter.taskNames = [moduleTaskPrefix + "compileJava", moduleTaskPrefix + "compileJSP", moduleTaskPrefix + "formatSource"]
+
+			GradleLauncher gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
+
+			try {
+				gradleLauncher.run()
+			}
+			catch (Exception e) {
+				println "Unable to lock dependency '${dependencyName}' version to ${dependencyVersion} in ${relativePath(moduleDir)}"
+
+				e.printStackTrace()
+
+				buildGradleFile.text = buildGradle
+
+				return
+			}
+			finally {
+				gradleLauncher.stop()
+			}
+
+			String buildGradleRelativePath = String.valueOf(repositoryRootDirPath.relativize(buildGradleFile.toPath()))
+
+			buildGradleRelativePath = buildGradleRelativePath.replace(File.separatorChar, '/' as char)
+
+			grgit.add patterns: [buildGradleRelativePath]
+
+			commitChanges = true
+
+			println "Dependency '${dependencyName}' version locked to ${dependencyVersion} in ${relativePath(moduleDir)}"
+		}
+
+		if (commitChanges) {
+			grgit.commit message: "${dependencyProjectName} ${dependencyVersion} apply"
+		}
+	}
 }
 
 syncGitRepoReleases {
@@ -299,6 +394,12 @@ private InputStream _getCommitFileStream(String commitId, String fileName) {
 	finally {
 		treeWalk.close()
 	}
+}
+
+private String _getModuleTaskPrefix(File moduleDir) {
+	String moduleTaskPrefix = relativePath(moduleDir)
+
+	":" + moduleTaskPrefix.replace(File.separatorChar, ':' as char) + ":"
 }
 
 private RevCommit _getRevCommit(String commitId) {

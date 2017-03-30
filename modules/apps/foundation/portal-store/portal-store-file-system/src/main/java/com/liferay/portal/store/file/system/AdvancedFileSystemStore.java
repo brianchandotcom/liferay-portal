@@ -120,8 +120,6 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 				new FileSystemStoreRootDirException());
 		}
 
-		validate();
-
 		initializeRootDir();
 	}
 

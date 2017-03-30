@@ -17,19 +17,22 @@ class ColorPickerInput extends Component {
 	rendered() {
 		let instance = this;
 
-		AUI().use('aui-color-picker-popover', function(A) {
-			instance.colorPickerPopover = new A.ColorPickerPopover(
-				{
-					constrain: true,
-					color: instance.color,
-					trigger: '#' + instance.id,
-					zIndex: Liferay.zIndex.POPOVER
-				}
-			);
+		AUI().use(
+			'aui-color-picker-popover',
+			function(A) {
+				instance.colorPickerPopover = new A.ColorPickerPopover(
+					{
+						constrain: true,
+						color: instance.color,
+						trigger: '#' + instance.id,
+						zIndex: Liferay.zIndex.POPOVER
+					}
+				);
 
-			instance.colorPickerPopover.render(instance.element);
-			instance.colorPickerPopover.after('select', instance.setColor_, instance);
-		});
+				instance.colorPickerPopover.render(instance.element);
+				instance.colorPickerPopover.after('select', instance.setColor_, instance);
+			}
+		);
 	}
 
 	/**
@@ -49,10 +52,10 @@ class ColorPickerInput extends Component {
  */
 ColorPickerInput.STATE = {
 	/**
-	 * Input css class
+	 * Current selected color
 	 * @type {String}
 	 */
-	cssClass: {
+	color: {
 		validator: core.isString
 	},
 
@@ -74,6 +77,14 @@ ColorPickerInput.STATE = {
 	},
 
 	/**
+	 * Input css classes
+	 * @type {String}
+	 */
+	inputClasses: {
+		validator: core.isString
+	},
+
+	/**
 	 * Label for the input
 	 * @type {String}
 	 */
@@ -86,22 +97,6 @@ ColorPickerInput.STATE = {
 	 * @type {String}
 	 */
 	name: {
-		validator: core.isString
-	},
-
-	/**
-	 * Current selected color
-	 * @type {String}
-	 */
-	color: {
-		validator: core.isString
-	},
-
-	/**
-	 * Form group css class
-	 * @type {String}
-	 */
-	wrapperCssClass: {
 		validator: core.isString
 	}
 }

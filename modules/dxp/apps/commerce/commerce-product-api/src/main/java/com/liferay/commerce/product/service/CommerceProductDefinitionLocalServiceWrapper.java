@@ -46,14 +46,9 @@ public class CommerceProductDefinitionLocalServiceWrapper
 		return _commerceProductDefinitionLocalService.addCommerceProductDefinition(commerceProductDefinition);
 	}
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this class directly. Always use {@link CommerceProductDefinitionLocalServiceUtil} to access the commerce product definition local service.
-	*/
 	@Override
 	public com.liferay.commerce.product.model.CommerceProductDefinition addCommerceProductDefinition(
-		long userId, long groupId, java.lang.String baseSku,
+		java.lang.String baseSKU,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
@@ -63,12 +58,12 @@ public class CommerceProductDefinitionLocalServiceWrapper
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceProductDefinitionLocalService.addCommerceProductDefinition(userId,
-			groupId, baseSku, titleMap, descriptionMap, productTypeName,
-			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+		return _commerceProductDefinitionLocalService.addCommerceProductDefinition(baseSKU,
+			titleMap, descriptionMap, productTypeName, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	/**
@@ -175,8 +170,7 @@ public class CommerceProductDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CommerceProductDefinition updateCommerceProductDefinition(
-		long userId, long groupId, long commerceProductDefinitionId,
-		java.lang.String baseSku,
+		long commerceProductDefinitionId, java.lang.String baseSKU,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
@@ -186,13 +180,12 @@ public class CommerceProductDefinitionLocalServiceWrapper
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceProductDefinitionLocalService.updateCommerceProductDefinition(userId,
-			groupId, commerceProductDefinitionId, baseSku, titleMap,
-			descriptionMap, productTypeName, ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+		return _commerceProductDefinitionLocalService.updateCommerceProductDefinition(commerceProductDefinitionId,
+			baseSKU, titleMap, descriptionMap, productTypeName,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override
@@ -241,6 +234,11 @@ public class CommerceProductDefinitionLocalServiceWrapper
 	@Override
 	public int getCommerceProductDefinitionsCount() {
 		return _commerceProductDefinitionLocalService.getCommerceProductDefinitionsCount();
+	}
+
+	@Override
+	public int getCommerceProductDefinitionsCount(long groupId) {
+		return _commerceProductDefinitionLocalService.getCommerceProductDefinitionsCount(groupId);
 	}
 
 	/**
@@ -323,6 +321,21 @@ public class CommerceProductDefinitionLocalServiceWrapper
 		int start, int end) {
 		return _commerceProductDefinitionLocalService.getCommerceProductDefinitions(start,
 			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceProductDefinition> getCommerceProductDefinitions(
+		long groupId, int start, int end) {
+		return _commerceProductDefinitionLocalService.getCommerceProductDefinitions(groupId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceProductDefinition> getCommerceProductDefinitions(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductDefinition> orderByComparator) {
+		return _commerceProductDefinitionLocalService.getCommerceProductDefinitions(groupId,
+			start, end, orderByComparator);
 	}
 
 	/**

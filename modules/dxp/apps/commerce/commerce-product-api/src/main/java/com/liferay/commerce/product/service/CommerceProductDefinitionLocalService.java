@@ -79,15 +79,9 @@ public interface CommerceProductDefinitionLocalService extends BaseLocalService,
 	public CommerceProductDefinition addCommerceProductDefinition(
 		CommerceProductDefinition commerceProductDefinition);
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this class directly. Always use {@link CommerceProductDefinitionLocalServiceUtil} to access the commerce product definition local service.
-	*/
 	@Indexable(type = IndexableType.REINDEX)
-	public CommerceProductDefinition addCommerceProductDefinition(long userId,
-		long groupId, java.lang.String baseSku,
-		Map<Locale, java.lang.String> titleMap,
+	public CommerceProductDefinition addCommerceProductDefinition(
+		java.lang.String baseSKU, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -179,8 +173,8 @@ public interface CommerceProductDefinitionLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceProductDefinition updateCommerceProductDefinition(
-		long userId, long groupId, long commerceProductDefinitionId,
-		java.lang.String baseSku, Map<Locale, java.lang.String> titleMap,
+		long commerceProductDefinitionId, java.lang.String baseSKU,
+		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -220,6 +214,9 @@ public interface CommerceProductDefinitionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceProductDefinitionsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceProductDefinitionsCount(long groupId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -281,6 +278,15 @@ public interface CommerceProductDefinitionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceProductDefinition> getCommerceProductDefinitions(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductDefinition> getCommerceProductDefinitions(
+		long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductDefinition> getCommerceProductDefinitions(
+		long groupId, int start, int end,
+		OrderByComparator<CommerceProductDefinition> orderByComparator);
 
 	/**
 	* Returns all the commerce product definitions matching the UUID and company.

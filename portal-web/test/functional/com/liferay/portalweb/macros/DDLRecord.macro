@@ -300,13 +300,13 @@
 			<var name="pagePrivacy" value="${pagePrivacy}" />
 		</execute>
 
-		<execute macro="DDLRecord#selectLinkToPageRadio">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="parentPage" value="${parentPage}" />
-		</execute>
-
 		<toggle name="LPS-68869">
 			<on>
+				<execute macro="DDLRecord#selectLinkToPagePage">
+					<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+					<var name="parentPage" value="${parentPage}" />
+				</execute>
+
 				<execute function="SelectFrameTop" />
 
 				<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
@@ -325,6 +325,11 @@
 			</on>
 
 			<off>
+				<execute macro="DDLRecord#selectLinkToPageRadio">
+					<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+					<var name="parentPage" value="${parentPage}" />
+				</execute>
+
 				<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
 				<var name="key_fieldName" value="${fieldName}" />
@@ -478,6 +483,23 @@
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="selectLinkToPagePage">
+		<if>
+			<isset var="parentPage" />
+			<then>
+				<execute macro="DDLRecord#gotoLinkToPageChildPages">
+					<var name="parentPage" value="${parentPage}" />
+				</execute>
+			</then>
+		</if>
+
+		<var name="key_pageName" value="${ddlRecordFieldData}" />
+
+		<execute function="RunScript" locator1="$('.top-ended').scrollTop(1000)" />
+
+		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE" />
 	</command>
 
 	<command name="selectLinkToPageRadio">

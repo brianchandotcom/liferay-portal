@@ -22,6 +22,14 @@
 		<param-value>/o/</param-value>
 	</context-param>
 	<filter>
+		<filter-name>Encoding Filter</filter-name>
+		<filter-class>com.liferay.portal.servlet.filters.encoding.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter>
 		<filter-name>Invoker Filter - ERROR</filter-name>
 		<filter-class>com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter</filter-class>
 		<init-param>
@@ -69,6 +77,15 @@
 			<param-value>false</param-value>
 		</init-param>
 	</filter>
+	<filter-mapping>
+		<filter-name>Encoding Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>ASYNC</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Invoker Filter - ERROR</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -132,6 +149,11 @@
 	<servlet>
 		<servlet-name>Dynamic Resource Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.webserver.DynamicResourceServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>Facebook Servlet</servlet-name>
+		<servlet-class>com.liferay.portal.facebook.FacebookServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
@@ -297,6 +319,10 @@
 	<servlet-mapping>
 		<servlet-name>Dynamic Resource Servlet</servlet-name>
 		<url-pattern>/sprite/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Facebook Servlet</servlet-name>
+		<url-pattern>/facebook/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Friendly URL Servlet - Private Group</servlet-name>

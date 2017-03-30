@@ -142,27 +142,23 @@ String defaultLanguageId = themeDisplay.getLanguageId();
 Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
 
 if (fileEntryTypeId > 0) {
-	try {
-		for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
-			try {
-				DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+	for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
+		try {
+			DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-				com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+			com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
 
-				if (ddmFormValues != null) {
-					Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();
+			if (ddmFormValues != null) {
+				Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();
 
-					availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
+				availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 
-					break;
-				}
-			}
-			catch (Exception e) {
+				break;
 			}
 		}
-	}
-	catch (Exception e) {
-		_log.error(e, e);
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
 	}
 }
 %>

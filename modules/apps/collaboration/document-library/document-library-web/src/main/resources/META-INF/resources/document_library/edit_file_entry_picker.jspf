@@ -22,7 +22,7 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 	<c:when test="<%= dlFilePicker == null %>">
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="file" onChange='<%= renderResponse.getNamespace() + "updateTitle();" %>' type="file">
 			<aui:validator name="acceptFiles">
-				'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+				'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>'
 			</aui:validator>
 		</aui:input>
 	</c:when>

@@ -319,9 +319,7 @@ private void _cherryPickPrepNext(Commit commit) {
 
 	StartParameter startParameter = gradle.startParameter.newBuild()
 
-	String moduleTaskPrefix = relativePath(moduleDir)
-
-	moduleTaskPrefix = ":" + moduleTaskPrefix.replace(File.separatorChar, ':' as char) + ":"
+	String moduleTaskPrefix = _getModuleTaskPrefix(moduleDir)
 
 	startParameter.excludedTaskNames = excludedTaskNames.collect {
 		moduleTaskPrefix + it

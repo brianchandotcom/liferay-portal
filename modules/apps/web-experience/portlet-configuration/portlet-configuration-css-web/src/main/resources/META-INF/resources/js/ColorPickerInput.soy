@@ -3,22 +3,22 @@
 /**
  * Prints the color picker input.
  *
+ * @param? color
  * @param? disabled
- * @param? cssClass
+ * @param? elementClasses
  * @param id
+ * @param? inputClasses
  * @param label
  * @param? name
- * @param? color
- * @param? wrapperCssClass
  */
 {template .render}
-	<div class="form-group {$wrapperCssClass ? $wrapperCssClass : ''}">
+	<div class="form-group{$elementClasses ? ' ' + $elementClasses : ''}">
 		<label>
 			{$label}
 		</label>
 
 		{let $inputAttributes kind="attributes"}
-			class="form-control {$cssClass ? $cssClass : ''}"
+			class="form-control{$inputClasses ? ' ' + $inputClasses : ''}"
 
 			{if $disabled}
 				disabled="true"

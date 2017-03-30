@@ -164,10 +164,10 @@
 			Map<String, Object> contextBorderTop = new HashMap<>();
 
 			contextBorderTop.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("top", "borderColor"));
+			contextBorderTop.put("elementClasses", "field-row");
 			contextBorderTop.put("id", renderResponse.getNamespace() + "borderColorTop");
 			contextBorderTop.put("label", LanguageUtil.get(request, "top"));
 			contextBorderTop.put("name", renderResponse.getNamespace() + "borderColorTop");
-			contextBorderTop.put("wrapperCssClass", "field-row");
 			%>
 
 			<soy:template-renderer
@@ -180,12 +180,12 @@
 			Map<String, Object> contextBorderRight = new HashMap<>();
 
 			contextBorderRight.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("right", "borderColor"));
-			contextBorderRight.put("cssClass", "same-border-color");
 			contextBorderRight.put("disabled", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
+			contextBorderRight.put("elementClasses", "field-row");
 			contextBorderRight.put("id", renderResponse.getNamespace() + "borderColorRight");
+			contextBorderRight.put("inputClasses", "same-border-color");
 			contextBorderRight.put("label", LanguageUtil.get(request, "right"));
 			contextBorderRight.put("name", renderResponse.getNamespace() + "borderColorRight");
-			contextBorderRight.put("wrapperCssClass", "field-row");
 			%>
 
 			<soy:template-renderer
@@ -198,12 +198,12 @@
 			Map<String, Object> contextBorderBottom = new HashMap<>();
 
 			contextBorderBottom.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("bottom", "borderColor"));
-			contextBorderBottom.put("cssClass", "same-border-color");
 			contextBorderBottom.put("disabled", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
+			contextBorderBottom.put("elementClasses", "field-row");
 			contextBorderBottom.put("id", renderResponse.getNamespace() + "borderColorBottom");
+			contextBorderBottom.put("inputClasses", "same-border-color");
 			contextBorderBottom.put("label", LanguageUtil.get(request, "bottom"));
 			contextBorderBottom.put("name", renderResponse.getNamespace() + "borderColorBottom");
-			contextBorderBottom.put("wrapperCssClass", "field-row");
 			%>
 
 			<soy:template-renderer
@@ -216,12 +216,12 @@
 			Map<String, Object> contextBorderLeft = new HashMap<>();
 
 			contextBorderLeft.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("left", "borderColor"));
-			contextBorderLeft.put("cssClass", "same-border-color");
 			contextBorderLeft.put("disabled", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
+			contextBorderLeft.put("elementClasses", "field-row");
 			contextBorderLeft.put("id", renderResponse.getNamespace() + "borderColorLeft");
+			contextBorderLeft.put("inputClasses", "same-border-color");
 			contextBorderLeft.put("label", LanguageUtil.get(request, "left"));
 			contextBorderLeft.put("name", renderResponse.getNamespace() + "borderColorLeft");
-			contextBorderLeft.put("wrapperCssClass", "field-row");
 			%>
 
 			<soy:template-renderer

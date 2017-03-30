@@ -206,6 +206,14 @@ AUI.add(
 						return instance._getInputLanguage(languageId).val();
 					},
 
+					removeInputLanguage: function(locale) {
+						var instance  = this;
+
+						var inputLanguage = instance._getInputLanguage(locale);
+
+						inputLanguage.remove();
+					},
+
 					selectFlag: function(languageId) {
 						var instance = this;
 

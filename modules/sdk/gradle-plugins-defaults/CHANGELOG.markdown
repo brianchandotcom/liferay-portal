@@ -1303,6 +1303,12 @@ multi-project builds by setting the `build.include.dirs` system property.
 - [LPS-71535]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.1.4.
 
+## 3.5.9 - 2017-03-30
+
+### Removed
+- [LPS-70819]: Avoid publishing the JAR file with the compiled JSP classes of an
+OSGi project snapshot with the `install` and `uploadArchives` tasks.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

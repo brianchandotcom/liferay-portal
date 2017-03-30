@@ -38,14 +38,8 @@
 				<action-key>UPDATE_COMMERCE_PRODUCT_INSTANCE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<site-member-defaults>
-				<action-key>ADD_DISCUSSION</action-key>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>ADD_DISCUSSION</action-key>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
+			<site-member-defaults />
+			<guest-defaults />
 			<guest-unsupported>
 				<action-key>DELETE</action-key>
 				<action-key>DELETE_DISCUSSION</action-key>

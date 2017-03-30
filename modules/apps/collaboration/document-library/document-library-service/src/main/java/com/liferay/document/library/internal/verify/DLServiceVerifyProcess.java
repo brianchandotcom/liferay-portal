@@ -769,30 +769,72 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 	protected void updateFolderAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<DLFolder> dlFolders =
-				_dlFolderLocalService.getNoAssetFolders();
+			ActionableDynamicQuery actionableDynamicQuery =
+				_dlFolderLocalService.getActionableDynamicQuery();
+
+			actionableDynamicQuery.setAddCriteriaMethod(
+				new ActionableDynamicQuery.AddCriteriaMethod() {
+
+					@Override
+					public void addCriteria(DynamicQuery dynamicQuery) {
+						Property folderIdProperty = PropertyFactoryUtil.forName(
+							"folderId");
+
+						DynamicQuery assetEntryDynamicQuery =
+							DynamicQueryFactoryUtil.forClass(AssetEntry.class);
+
+						Property classNameIdProperty =
+							PropertyFactoryUtil.forName("classNameId");
+
+						long classNameId = PortalUtil.getClassNameId(
+							DLFolder.class);
+
+						assetEntryDynamicQuery.add(
+							classNameIdProperty.eq(classNameId));
+
+						Projection projection = ProjectionFactoryUtil.property(
+							"classPK");
+
+						assetEntryDynamicQuery.setProjection(projection);
+
+						dynamicQuery.add(
+							folderIdProperty.notIn(assetEntryDynamicQuery));
+					}
+
+				});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Processing " + dlFolders.size() +
-						" folders with no asset");
+				long count = actionableDynamicQuery.performCount();
+
+				_log.debug("Processing " + count + " folders with no asset");
 			}
 
-			for (DLFolder dlFolder : dlFolders) {
-				Folder folder = new LiferayFolder(dlFolder);
+			actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.PerformActionMethod<DLFolder>() {
 
-				try {
-					_dlAppHelperLocalService.updateAsset(
-						dlFolder.getUserId(), folder, null, null, null);
-				}
-				catch (Exception e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to update asset for folder " +
-								dlFolder.getFolderId() + ": " + e.getMessage());
+					@Override
+					public void performAction(DLFolder dlFolder)
+						throws PortalException {
+
+						Folder folder = new LiferayFolder(dlFolder);
+
+						try {
+							_dlAppHelperLocalService.updateAsset(
+								dlFolder.getUserId(), folder, null, null, null);
+						}
+						catch (Exception e) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Unable to update asset for folder " +
+										dlFolder.getFolderId() + ": " +
+											e.getMessage());
+							}
+						}
 					}
-				}
-			}
+
+				});
+
+			actionableDynamicQuery.performActions();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Assets verified for folders");

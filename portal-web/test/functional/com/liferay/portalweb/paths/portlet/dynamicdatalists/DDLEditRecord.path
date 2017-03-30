@@ -185,6 +185,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LINK_TO_PAGE_PAGE_TOGGLER</td>
+	<td>//li[@class='treeview-node']//div[@data-treeitemname='${key_pageName}']/div[@class='treeview-node-toggler']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LINK_TO_PAGE_SELECT_PAGE_BUTTON</td>
 	<td>//div[@data-fieldname='${key_fieldName}']//button[contains(.,'Select')]</td>
 	<td></td>

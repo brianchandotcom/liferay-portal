@@ -144,7 +144,15 @@
 	<command name="gotoLinkToPageChildPages">
 		<var name="key_pageName" value="${parentPage}" />
 
-		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_CARET" />
+		<toggle name="LPS-68869">
+			<on>
+				<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_TOGGLER" />
+			</on>
+
+			<off>
+				<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_CARET" />
+			</off>
+		</toggle>
 	</command>
 
 	<command name="gotoLinkToPageNavItem">

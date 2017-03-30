@@ -398,8 +398,10 @@ public interface ${entity.name}Model extends
 		 * Returns the trash handler for this ${entity.humanName}.
 		 *
 		 * @return the trash handler for this ${entity.humanName}
+		 * @deprecated As of 7.0.0, with no direct replacement
 		 */
 		@Override
+		@Deprecated
 		public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler();
 
 		/**

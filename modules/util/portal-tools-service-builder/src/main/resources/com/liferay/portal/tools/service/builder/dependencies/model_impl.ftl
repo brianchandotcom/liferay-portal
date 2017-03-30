@@ -912,7 +912,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			return getPrimaryKey();
 		}
 
+		/**
+		* @deprecated As of 7.0.0, with no direct replacement
+		*/
 		@Override
+		@Deprecated
 		public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
 			return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
 		}

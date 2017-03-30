@@ -14,7 +14,7 @@
 				<action-key>ADD_COMMERCE_PRODUCT_DEFINITION</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
-			<site-member-defaults/>
+			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_COMMERCE_PRODUCT_DEFINITION</action-key>

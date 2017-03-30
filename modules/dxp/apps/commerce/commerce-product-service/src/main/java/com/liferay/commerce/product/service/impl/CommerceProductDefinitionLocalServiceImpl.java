@@ -141,11 +141,8 @@ public class CommerceProductDefinitionLocalServiceImpl
 
 		// Workflow
 
-		startWorkflowInstance(
+		return startWorkflowInstance(
 			user.getUserId(), commerceProductDefinition, serviceContext);
-
-		return commerceProductDefinitionPersistence.findByPrimaryKey(
-			commerceProductDefinition.getPrimaryKey());
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -320,11 +317,8 @@ public class CommerceProductDefinitionLocalServiceImpl
 
 		// Workflow
 
-		startWorkflowInstance(
+		return startWorkflowInstance(
 			user.getUserId(), commerceProductDefinition, serviceContext);
-
-		return commerceProductDefinitionPersistence.findByPrimaryKey(
-			commerceProductDefinition.getPrimaryKey());
 	}
 
 	protected CommerceProductDefinition startWorkflowInstance(

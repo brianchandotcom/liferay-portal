@@ -66,7 +66,7 @@ public class DDLRecordSetVersionCacheModel implements CacheModel<DDLRecordSetVer
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{recordSetVersionId=");
 		sb.append(recordSetVersionId);
@@ -88,6 +88,8 @@ public class DDLRecordSetVersionCacheModel implements CacheModel<DDLRecordSetVer
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", settings=");
+		sb.append(settings);
 		sb.append(", version=");
 		sb.append(version);
 		sb.append(", status=");
@@ -143,6 +145,13 @@ public class DDLRecordSetVersionCacheModel implements CacheModel<DDLRecordSetVer
 			ddlRecordSetVersionImpl.setDescription(description);
 		}
 
+		if (settings == null) {
+			ddlRecordSetVersionImpl.setSettings(StringPool.BLANK);
+		}
+		else {
+			ddlRecordSetVersionImpl.setSettings(settings);
+		}
+
 		if (version == null) {
 			ddlRecordSetVersionImpl.setVersion(StringPool.BLANK);
 		}
@@ -189,6 +198,7 @@ public class DDLRecordSetVersionCacheModel implements CacheModel<DDLRecordSetVer
 		DDMStructureVersionId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		settings = objectInput.readUTF();
 		version = objectInput.readUTF();
 
 		status = objectInput.readInt();
@@ -236,6 +246,13 @@ public class DDLRecordSetVersionCacheModel implements CacheModel<DDLRecordSetVer
 			objectOutput.writeUTF(description);
 		}
 
+		if (settings == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(settings);
+		}
+
 		if (version == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -267,6 +284,7 @@ public class DDLRecordSetVersionCacheModel implements CacheModel<DDLRecordSetVer
 	public long DDMStructureVersionId;
 	public String name;
 	public String description;
+	public String settings;
 	public String version;
 	public int status;
 	public long statusByUserId;

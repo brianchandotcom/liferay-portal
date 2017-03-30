@@ -150,7 +150,17 @@
 	<command name="gotoLinkToPageNavItem">
 		<var name="key_navItem" value="${pagePrivacy} Pages" />
 
-		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_NAV_ITEM" value1="${pagePrivacy} Pages" />
+		<toggle name="LPS-68869">
+			<on>
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+				<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_NAV_BAR" value1="${pagePrivacy} Pages" />
+			</on>
+
+			<off>
+				<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_NAV_ITEM" value1="${pagePrivacy} Pages" />
+			</off>
+		</toggle>
 	</command>
 
 	<command name="gotoLinkToPageSelect">

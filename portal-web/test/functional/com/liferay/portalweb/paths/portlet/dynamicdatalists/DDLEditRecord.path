@@ -165,6 +165,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LINK_TO_PAGE_NAV_BAR</td>
+	<td>//ul[contains(@class,'navbar')]//a[contains(.,'${key_navItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LINK_TO_PAGE_BREADCRUMB</td>
 	<td>//ul[contains(@class,'breadcrumb')]/li[${key_number}]</td>
 	<td></td>

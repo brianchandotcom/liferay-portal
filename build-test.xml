@@ -6038,8 +6038,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 	</target>
 
 	<target name="prepare-portal-ext-properties">
-		<prepare-fix-pack-bundle />
-
 		<delete file="portal-impl/src/portal-ext.properties" />
 
 		<if>

@@ -206,15 +206,6 @@ public class CommerceProductDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public CommerceProductDefinition getCommerceProductDefinition(
-			long commerceProductDefinitionId)
-		throws PortalException {
-
-		return commerceProductDefinitionPersistence.fetchByPrimaryKey(
-			commerceProductDefinitionId);
-	}
-
-	@Override
 	public void updateAsset(
 			long userId, CommerceProductDefinition commerceProductDefinition,
 			long[] assetCategoryIds, String[] assetTagNames,

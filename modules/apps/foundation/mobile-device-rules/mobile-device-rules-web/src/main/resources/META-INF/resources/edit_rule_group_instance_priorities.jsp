@@ -33,7 +33,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group_instance" />
 </portlet:actionURL>
 
-<aui:form action="<%= editRuleGroupInstancesURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "saveRuleGroupInstancesPriorities()" %>'>
+<aui:form action="<%= editRuleGroupInstancesURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "saveRuleGroupInstancesPriorities(event)" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="ruleGroupsInstancesJSON" type="hidden" />
@@ -75,10 +75,11 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />saveRuleGroupInstancesPriorities() {
+	function <portlet:namespace />saveRuleGroupInstancesPriorities(event) {
 		var $ = AUI.$;
+		event.preventDefault();
 
-		var ruleGroupInstances = $('#<portlet:namespace />ruleGroupInstancesPriorities .rule-group-instance').map(
+		var ruleGroupInstances = $('#<portlet:namespace />ruleGroupInstancesPriorities [data-rule-group-instance-id]').map(
 			function(index, item) {
 				return {
 					priority: index,

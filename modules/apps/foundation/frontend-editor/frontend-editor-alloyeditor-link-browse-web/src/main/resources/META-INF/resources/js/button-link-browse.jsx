@@ -75,7 +75,7 @@
          */
     	render() {
             if (this.props.renderExclusive) {
-                var props = this.mergeButtonCfgProps();
+                this.props = this.mergeButtonCfgProps();
 
                 return (
                     <AlloyEditor.ButtonLinkEditBrowse {...this.props} />

@@ -19,6 +19,8 @@
 <%
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
+
+DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 %>
 
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">
@@ -46,10 +48,10 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 			if (value) {
 				var extension = value.substring(value.lastIndexOf('.')).toLowerCase();
-				var validExtensions = ['<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA), "', '") %>'];
+				var validExtensions = ['<%= StringUtil.merge(dlConfiguration.fileExtensions(), "', '") %>'];
 
 				if ((validExtensions.indexOf('*') == -1) && (validExtensions.indexOf(extension) == -1)) {
-					alert('<%= UnicodeLanguageUtil.get(request, "document-names-must-end-with-one-of-the-following-extensions") %> <%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA), StringPool.COMMA_AND_SPACE) %>');
+					alert('<%= UnicodeLanguageUtil.get(request, "document-names-must-end-with-one-of-the-following-extensions") %> <%= StringUtil.merge(dlConfiguration.fileExtensions(), StringPool.COMMA_AND_SPACE) %>');
 
 					currentTarget.val('');
 				}
@@ -88,8 +90,8 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 
 			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 			fallback: '#<portlet:namespace />fallback',
-			fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
-			maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %> ',
+			fileDescription: '<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
+			maxFileSize: '<%= dlConfiguration.fileMaxSize() %> ',
 			namespace: '<portlet:namespace />',
 			removeOnComplete: true,
 			rootElement: '#<portlet:namespace />uploaderContainer',

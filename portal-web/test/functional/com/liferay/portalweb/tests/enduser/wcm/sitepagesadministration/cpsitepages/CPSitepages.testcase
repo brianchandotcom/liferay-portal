@@ -244,7 +244,7 @@
 	</command>
 
 	<command name="AddSitePublicChildPage" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Site Pages Administration" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

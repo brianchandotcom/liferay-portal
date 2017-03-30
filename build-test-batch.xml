@@ -1319,6 +1319,45 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<target name="central-requirements-jdk8">
+		<fail message="Please set the property ${central.requirements.tests}." unless="central.requirements.tests" />
+
+		<run-batch-test>
+			<test-action>
+				<propertyfile file="${project.dir}/test.class.file.names.properties">
+					<entry key="TEST_CLASS_GROUP_0" value="${central.requirements.tests}" />
+				</propertyfile>
+
+				<ant dir="portal-kernel" inheritAll="false" target="test-class-group">
+					<property name="test.class.group.index" value="0" />
+				</ant>
+
+				<ant dir="portal-impl" inheritAll="false" target="test-class-group">
+					<property name="test.class.group.index" value="0" />
+					<property name="test.type" value="unit" />
+				</ant>
+
+				<ant dir="util-java" inheritAll="false" target="test-class-group">
+					<property name="test.class.group.index" value="0" />
+				</ant>
+			</test-action>
+
+			<test-set-up>
+				<if>
+					<isset property="env.DIST_PATH" />
+					<then>
+						<prepare-test-environment />
+					</then>
+					<else>
+						<ant target="compile" />
+
+						<ant target="install-portal-snapshots" />
+					</else>
+				</if>
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="compile-jsp-jdk8">
 		<run-batch-test>
 			<test-action>

@@ -354,10 +354,10 @@ public class CommerceProductDefinitionLocalServiceImpl
 	protected void validateReferences(long groupId, String ddmStructureKey)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(
-			CommerceProductDefinition.class.getName());
-
 		if (Validator.isNotNull(ddmStructureKey)) {
+			long classNameId = classNameLocalService.getClassNameId(
+				CommerceProductDefinition.class.getName());
+
 			DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
 				groupId, classNameId, ddmStructureKey, true);
 

@@ -25,16 +25,13 @@ class ToggleDisableInputs extends Component {
 	 * Disables the inputs based on switch state and disableOnChecked logic
 	 */
 	disableInputs_() {
-		let inputs = document.querySelectorAll(this.inputSelector);
+		const {checked, disableOnChecked, inputSelector} = this;
+
+		const inputs = document.querySelectorAll(inputSelector);
 
 		inputs.forEach(
-			(input) => {
-				if (this.disableOnChecked) {
-					input.disabled = this.checked;
-				}
-				else {
-					input.disabled = !this.checked;
-				}
+			input => {
+				input.disabled = disableOnChecked ? checked : !checked;
 			}
 		);
 	}
@@ -56,12 +53,20 @@ ToggleDisableInputs.STATE = {
 	},
 
 	/**
+	 * Flag to specify the logic for disabling inputs based on switch state
+	 * @type {Boolean}
+	 */
+	disableOnChecked: {
+		validator: core.isBoolean,
+		value: true
+	},
+
+	/**
 	 * CSS Selector for the inputs to enable/disable
 	 * @type {String}
 	 */
 	inputSelector: {
-		validator: core.isString,
-		value: []
+		validator: core.isString
 	},
 
 	/**
@@ -70,15 +75,6 @@ ToggleDisableInputs.STATE = {
 	 */
 	label: {
 		validator: core.isString
-	},
-
-	/**
-	 * Flag to specify the logic for disabling inputs based on switch state
-	 * @type {Boolean}
-	 */
-	disableOnChecked: {
-		validator: core.isBoolean,
-		value: true
 	}
 }
 

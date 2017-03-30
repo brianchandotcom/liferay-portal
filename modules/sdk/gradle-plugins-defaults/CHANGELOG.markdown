@@ -1303,6 +1303,11 @@ multi-project builds by setting the `build.include.dirs` system property.
 - [LPS-71535]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.1.4.
 
+## 3.5.9 - 2017-03-30
+
+### Changed
+- [LPS-71558]: Update the [Liferay Gradle Plugins] dependency to version 3.2.30.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -1435,6 +1440,7 @@ version 1.1.4.
 [LPS-71354]: https://issues.liferay.com/browse/LPS-71354
 [LPS-71376]: https://issues.liferay.com/browse/LPS-71376
 [LPS-71535]: https://issues.liferay.com/browse/LPS-71535
+[LPS-71558]: https://issues.liferay.com/browse/LPS-71558
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

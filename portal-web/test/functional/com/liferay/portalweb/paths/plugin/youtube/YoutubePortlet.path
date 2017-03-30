@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>VIDEO_TITLE</td>
-	<td>//div[contains(@class,'ytp-title')]//span[last()]</td>
+	<td>//div/a[contains(@class,'ytp-title-link')]</td>
 	<td></td>
 </tr>
 </tbody>

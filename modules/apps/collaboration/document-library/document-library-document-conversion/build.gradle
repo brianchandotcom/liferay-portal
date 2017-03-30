@@ -4,7 +4,7 @@ dependencies {
 	compileInclude group: "org.openoffice", name: "jurt", version: "2.3.0"
 	compileInclude group: "org.openoffice", name: "ridl", version: "2.3.0"
 	compileInclude group: "org.openoffice", name: "unoil", version: "2.3.0"
-	
+
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"

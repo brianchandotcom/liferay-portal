@@ -143,15 +143,11 @@ Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLangu
 
 if (fileEntryTypeId > 0) {
 	try {
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
-
+		for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
 			try {
 				DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-				ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+				com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
 
 				if (ddmFormValues != null) {
 					Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();

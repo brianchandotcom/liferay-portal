@@ -50,59 +50,29 @@ public class UpgradeOpenOfficeConfiguration extends UpgradeProcess {
 			properties = new HashMapDictionary();
 		}
 
-		if (Validator.isNotNull(
-				_prefsProps.getString(_OLD_KEY_OPENOFFICE_CACHE_ENABLED))) {
+		PortletPreferences portletPreferences = _prefsProps.getPreferences();
 
-			properties.put(
-				"cacheEnabled",
-				_prefsProps.getString(_OLD_KEY_OPENOFFICE_CACHE_ENABLED));
-		}
+		String[][] propertyMethodNamePairs = {
+			{"openoffice.cache.enabled", "cacheEnabled"},
+			{"openoffice.server.enabled", "serverEnabled"},
+			{"openoffice.server.host", "serverHost"},
+			{"openoffice.server.port", "serverPort"}
+		};
 
-		if (Validator.isNotNull(
-				_prefsProps.getString(_OLD_KEY_OPENOFFICE_SERVER_ENABLED))) {
+		for (String[] propertyMethodNamePair : propertyMethodNamePairs) {
+			String oldPropertyKey = propertyMethodNamePair[0];
 
-			properties.put(
-				"serverEnabled",
-				_prefsProps.getString(_OLD_KEY_OPENOFFICE_SERVER_ENABLED));
-		}
+			String oldPropertyValue = _prefsProps.getString(oldPropertyKey);
 
-		if (Validator.isNotNull(
-				_prefsProps.getString(_OLD_KEY_OPENOFFICE_SERVER_HOST))) {
+			if (Validator.isNotNull(oldPropertyValue)) {
+				properties.put(propertyMethodNamePair[1], oldPropertyValue);
 
-			properties.put(
-				"serverHost",
-				_prefsProps.getString(_OLD_KEY_OPENOFFICE_SERVER_HOST));
-		}
-
-		if (Validator.isNotNull(
-				_prefsProps.getString(_OLD_KEY_OPENOFFICE_SERVER_PORT))) {
-
-			properties.put(
-				"serverPort",
-				_prefsProps.getString(_OLD_KEY_OPENOFFICE_SERVER_PORT));
+				portletPreferences.reset(oldPropertyKey);
+			}
 		}
 
 		configuration.update(properties);
-
-		PortletPreferences portletPreferences = _prefsProps.getPreferences();
-
-		portletPreferences.reset(_OLD_KEY_OPENOFFICE_CACHE_ENABLED);
-		portletPreferences.reset(_OLD_KEY_OPENOFFICE_SERVER_ENABLED);
-		portletPreferences.reset(_OLD_KEY_OPENOFFICE_SERVER_HOST);
-		portletPreferences.reset(_OLD_KEY_OPENOFFICE_SERVER_PORT);
 	}
-
-	private static final String _OLD_KEY_OPENOFFICE_CACHE_ENABLED =
-		"openoffice.cache.enabled";
-
-	private static final String _OLD_KEY_OPENOFFICE_SERVER_ENABLED =
-		"openoffice.server.enabled";
-
-	private static final String _OLD_KEY_OPENOFFICE_SERVER_HOST =
-		"openoffice.server.host";
-
-	private static final String _OLD_KEY_OPENOFFICE_SERVER_PORT =
-		"openoffice.server.port";
 
 	private final ConfigurationAdmin _configurationAdmin;
 	private final PrefsProps _prefsProps;

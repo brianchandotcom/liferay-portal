@@ -88,7 +88,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 			{ "DDMStructureVersionId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "settings_", Types.VARCHAR },
+			{ "settings_", Types.CLOB },
 			{ "version", Types.VARCHAR },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
@@ -108,7 +108,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 		TABLE_COLUMNS_MAP.put("DDMStructureVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("settings_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("settings_", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -116,7 +116,7 @@ public class DDLRecordSetVersionModelImpl extends BaseModelImpl<DDLRecordSetVers
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDLRecordSetVersion (recordSetVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,recordSetId LONG,DDMStructureVersionId LONG,name STRING null,description STRING null,settings_ VARCHAR(75) null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDLRecordSetVersion (recordSetVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,recordSetId LONG,DDMStructureVersionId LONG,name STRING null,description STRING null,settings_ TEXT null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDLRecordSetVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddlRecordSetVersion.recordSetVersionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDLRecordSetVersion.recordSetVersionId ASC";

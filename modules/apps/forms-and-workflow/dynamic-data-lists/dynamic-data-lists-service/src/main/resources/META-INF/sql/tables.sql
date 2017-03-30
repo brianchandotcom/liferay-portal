@@ -49,7 +49,7 @@ create table DDLRecordSetVersion (
 	DDMStructureVersionId LONG,
 	name STRING null,
 	description STRING null,
-	settings_ VARCHAR(75) null,
+	settings_ TEXT null,
 	version VARCHAR(75) null,
 	status INTEGER,
 	statusByUserId LONG,

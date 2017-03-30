@@ -246,9 +246,8 @@ public class DDLRecordSetVersionPersistenceTest {
 			"recordSetVersionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"recordSetId", true, "DDMStructureVersionId", true, "name", true,
-			"description", true, "settings", true, "version", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"description", true, "version", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test

@@ -26,6 +26,8 @@
 	</tear-down>
 
 	<command name="AddADTViaBreadcrumb" priority="4">
+		<property name="testray.component.names" value="Breadcrumb,Content and Appliation Templates" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Page Name" />
 		</execute>
@@ -63,6 +65,8 @@
 	</command>
 
 	<command name="ConfigureNoSave" priority="3">
+		<property name="testray.component.names" value="Breadcrumb" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -124,6 +128,7 @@
 
 	<command name="DisableShowApplicationBreadcrumb" priority="4">
 		<property name="custom.properties" value="default.layout.template.id=1_column" />
+		<property name="testray.component.names" value="Breadcrumb" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -288,6 +293,7 @@
 
 	<command name="DisableShowCurrentSite" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Breadcrumb" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -394,6 +400,7 @@
 
 	<command name="DisableShowPage" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Breadcrumb" />
 
 		<execute macro="SitePageNavigator#gotoPages">
 			<var name="page" value="Public Pages" />
@@ -461,6 +468,8 @@
 	</command>
 
 	<command name="DisableShowParentSite" priority="4">
+		<property name="testray.component.names" value="Breadcrumb" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -555,6 +564,8 @@
 	</command>
 
 	<command name="DisplayTemplateWithHorizontalStyle" priority="4">
+		<property name="testray.component.names" value="Breadcrumb" />
+
 		<execute macro="SitePageNavigator#gotoPages">
 			<var name="page" value="Public Pages" />
 		</execute>
@@ -603,6 +614,8 @@
 	</command>
 
 	<command name="DisplayTemplateWithVerticalStyle" priority="4">
+		<property name="testray.component.names" value="Breadcrumb" />
+
 		<execute macro="SitePageNavigator#gotoPages">
 			<var name="page" value="Public Pages" />
 		</execute>
@@ -651,6 +664,8 @@
 	</command>
 
 	<command name="EnableShowGuestSite" priority="4">
+		<property name="testray.component.names" value="Breadcrumb" />
+
 		<execute macro="SitePageNavigator#gotoPages">
 			<var name="page" value="Public Pages" />
 		</execute>

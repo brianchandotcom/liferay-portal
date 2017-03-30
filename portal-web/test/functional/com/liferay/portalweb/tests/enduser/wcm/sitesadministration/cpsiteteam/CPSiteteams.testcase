@@ -30,6 +30,8 @@
 	</tear-down>
 
 	<command name="AddSiteTeam" priority="4">
+		<property name="testray.component.names" value="Site Administration" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -58,6 +60,8 @@
 	</command>
 
 	<command name="AddSiteTeamAssignUser" priority="4">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -126,6 +130,8 @@
 	</command>
 
 	<command name="AddSiteTeamAssignUserGroup" priority="4">
+		<property name="testray.component.names" value="Site Administration,User Groups" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -198,6 +204,7 @@
 
 	<command name="AddSiteTeamMultiple" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Site Administration" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -257,6 +264,7 @@
 
 	<command name="AddSiteTeamRemoveUser" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -345,6 +353,8 @@
 	</command>
 
 	<command name="AddSiteTeamRemoveUserGroup" priority="4">
+		<property name="testray.component.names" value="Site Administration,User Groups" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -434,6 +444,8 @@
 	</command>
 
 	<command name="AddSiteTeamSearchUserGroups">
+		<property name="testray.component.names" value="Site Administration,User Groups" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -507,6 +519,8 @@
 	</command>
 
 	<command name="AddSiteTeamSearchUsers">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -590,6 +604,7 @@
 
 	<command name="DeleteSiteTeam" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Site Administration" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -624,6 +639,7 @@
 
 	<command name="EditSiteTeam" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Site Administration" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />

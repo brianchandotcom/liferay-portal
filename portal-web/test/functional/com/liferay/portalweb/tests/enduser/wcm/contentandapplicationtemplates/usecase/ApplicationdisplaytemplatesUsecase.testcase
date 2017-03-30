@@ -48,6 +48,7 @@
 
 	<command name="AddRSSADTViaPortletConfiguration" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Content and Application Templates,RSS" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="ADT Test Page" />
@@ -109,6 +110,8 @@
 	</command>
 
 	<command name="AddRSSADTWithCorruptScript" priority="3">
+		<property name="testray.component.names" value="Content and Application Templates,RSS" />
+
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
@@ -160,6 +163,8 @@
 	</command>
 
 	<command name="AddRSSADTWithScript" priority="3">
+		<property name="testray.component.names" value="Content and Application Templates,RSS" />
+
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
@@ -214,6 +219,8 @@
 	</command>
 
 	<command name="ADTAssetPublisher" priority="3">
+		<property name="testray.component.names" value="Asset Publisher,Content and Application Templates" />
+
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Test Site Name" />
 		</execute>
@@ -282,6 +289,7 @@
 
 	<command name="ADTBreadcrumb" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Breadcrumb,Content and Application Templates" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="ADT Test Page" />
@@ -317,6 +325,7 @@
 
 	<command name="ADTCategoriesNavigation" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Categories,Content and Application Templates" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Test Site Name" />
@@ -385,6 +394,8 @@
 	</command>
 
 	<command name="ADTDMMediaGallery" priority="3">
+		<property name="testray.component.names" value="Content and Application Templates,Documents Management" />
+
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Test Site Name" />
 		</execute>
@@ -480,6 +491,8 @@
 	</command>
 
 	<command name="ADTSiteMap" priority="3">
+		<property name="testray.component.names" value="Content and Application Templates,Sitemap" />
+
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Test Site Name" />
 		</execute>
@@ -569,6 +582,8 @@
 	</command>
 
 	<command name="ADTStagingCategoriesNavigation" priority="3">
+		<property name="testray.component.names" value="Categories,Content and Application Templates,Staging" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Test Site Name" />
 		</execute>
@@ -659,6 +674,7 @@
 
 	<command name="ADTTagsNavigationPortlet" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Content and Application Templates,Tags" />
 
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Test Site Name" />
@@ -785,6 +801,8 @@
 	</command>
 
 	<command name="ADTWiki" priority="3">
+		<property name="testray.component.names" value="Content and Application Templates,Wiki" />
+
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Test Site Name" />
 		</execute>

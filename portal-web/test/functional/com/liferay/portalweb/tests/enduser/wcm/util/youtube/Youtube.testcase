@@ -1,6 +1,7 @@
 <definition component-name="portal-wcm">
 	<property name="portal.release" value="false" />
 	<property name="portal.upstream" value="true" />
+	<property name="testray.component.names" value="YouTube" />
 	<property name="testray.main.component.name" value="YouTube" />
 
 	<set-up>

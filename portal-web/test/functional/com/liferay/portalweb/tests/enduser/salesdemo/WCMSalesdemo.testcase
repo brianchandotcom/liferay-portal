@@ -28,6 +28,8 @@
 	</tear-down>
 
 	<command name="IFrameDemo" priority="4">
+		<property name="testray.component.names" value="IFrame Portlet" />
+
 		<execute macro="Page#add">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="IFrame Page" />
@@ -60,6 +62,8 @@
 	</command>
 
 	<command name="SalesDemo" priority="4">
+		<property name="testray.component.names" value="Web Content Administration,Web Content Display" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

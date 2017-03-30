@@ -2,6 +2,7 @@
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="plugins.deployment.type" value="osgi" />
+	<property name="testray.component.names" value="Google" />
 	<property name="testray.main.component.name" value="Google" />
 
 	<set-up>

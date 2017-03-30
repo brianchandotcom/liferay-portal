@@ -26,6 +26,8 @@
 	</tear-down>
 
 	<command name="DisplayMySitesPagination" priority="3">
+		<property name="testray.component.names" value="Site Administration" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -70,6 +72,8 @@
 	</command>
 
 	<command name="JoinSiteOpen" priority="4">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -123,6 +127,7 @@
 
 	<command name="JoinSitePrivateNo" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -178,6 +183,8 @@
 	</command>
 
 	<command name="JoinSiteRestricted" priority="5">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -281,6 +288,7 @@
 
 	<command name="LeaveSite" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -340,6 +348,8 @@
 	</command>
 
 	<command name="SearchSite" priority="4">
+		<property name="testray.component.names" value="Site Administration" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -382,6 +392,8 @@
 	</command>
 
 	<command name="ViewMembershipAssignViaSiteCP" priority="3">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -475,6 +487,8 @@
 	</command>
 
 	<command name="ViewNoInactiveSite" priority="3">
+		<property name="testray.component.names" value="Site Administration" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -528,6 +542,8 @@
 	</command>
 
 	<command name="ViewNoJoinOption" priority="3">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -616,6 +632,8 @@
 	</command>
 
 	<command name="ViewNoLeaveOption" priority="3">
+		<property name="testray.component.names" value="Site Administration" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -664,6 +682,8 @@
 	</command>
 
 	<command name="ViewSitePages" priority="3">
+		<property name="testray.component.names" value="Site Administration" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -723,6 +743,8 @@
 	</command>
 
 	<command name="ViewSiteWithTags" priority="4">
+		<property name="testray.component.names" value="Site Administration,Tags" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />

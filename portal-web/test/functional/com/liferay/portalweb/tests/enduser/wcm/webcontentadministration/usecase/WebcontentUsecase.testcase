@@ -38,6 +38,8 @@
 	</tear-down>
 
 	<command name="AddAndViewStructureAndTemplateWithPermissions" priority="4">
+		<property name="testray.component.names" value="Roles,Permissions,Web Content Administration" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -266,6 +268,7 @@
 
 	<command name="AddAudioViaWebContent" priority="4">
 		<property name="custom.properties" value="editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor" />
+		<property name="testray.component.names" value="Web Content Administration" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
@@ -360,6 +363,7 @@
 
 	<command name="AddEmbeddedPortletFreemarkerTemplate" priority="3">
 		<property name="osgi.app.includes" value="currency-converter" />
+		<property name="testray.component.names" value="Web Content Administration" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -456,6 +460,7 @@
 
 	<command name="AddEmbeddedPortletVelocityTemplate" priority="3">
 		<property name="osgi.app.includes" value="currency-converter" />
+		<property name="testray.component.names" value="Web Content Administration" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -550,6 +555,8 @@
 	</command>
 
 	<command name="AddExistingPageAsDisplayPageInSiteCP" priority="3">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -633,6 +640,8 @@
 	</command>
 
 	<command name="AddImageToWebContentViaItemSelector" priority="4">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Image Page" />
 		</execute>
@@ -686,6 +695,7 @@
 
 	<command name="AddVideoViaWebContent" priority="4">
 		<property name="custom.properties" value="editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor" />
+		<property name="testray.component.names" value="Web Content Administration" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
@@ -777,6 +787,8 @@
 	</command>
 
 	<command name="AddWebContentRemoveGuestViewPermission" priority="4">
+		<property name="testray.component.names" value="Permissions,Web Content Administration" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="System Settings" />
 		</execute>
@@ -867,6 +879,8 @@
 	</command>
 
 	<command name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="4">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
 		</execute>
@@ -943,6 +957,8 @@
 	</command>
 
 	<command name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="3">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
 		</execute>
@@ -1086,6 +1102,8 @@
 	</command>
 
 	<command name="DeleteTemplateAndStructureWithReferencedWebContent" priority="4">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1187,6 +1205,8 @@
 	</command>
 
 	<command name="EditArticleMadeFromGlobalStructure" priority="4">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
 		</execute>
@@ -1279,6 +1299,8 @@
 	</command>
 
 	<command name="EditContentWithTitleAndAllFieldsNull" priority="4">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1365,6 +1387,8 @@
 	</command>
 
 	<command name="EditGlobalWebContentTemplate" priority="4">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
 		</execute>
@@ -1470,6 +1494,8 @@
 	</command>
 
 	<command name="EditWebContentTemplate" priority="4">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1589,6 +1615,8 @@
 	</command>
 
 	<command name="ExpireMultipleWebContent" priority="4">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -1634,6 +1662,8 @@
 	</command>
 
 	<command name="MoveMultipleWebContentToFolder" priority="4">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -1684,6 +1714,8 @@
 	</command>
 
 	<command name="StagingPublishExpiredWebContentViaWCD" priority="4">
+		<property name="testray.component.names" value="Staging,Web Content Administration" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -1804,6 +1836,8 @@
 	</command>
 
 	<command name="UseStructureAndTemplateFromParentSiteHierarchy" priority="4">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -1917,6 +1951,7 @@
 
 	<command name="ViewArticleEmailNotification" priority="4">
 		<property name="test.smtp.server.enabled" value="true" />
+		<property name="testray.component.names" value="Web Content Administration" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -1991,6 +2026,8 @@
 	</command>
 
 	<command name="ViewGlobalStructureViaAddMenuInLiferaySite" priority="3">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
 		</execute>
@@ -2028,6 +2065,8 @@
 	</command>
 
 	<command name="ViewMultipleCategoriesViaWebContent" priority="4">
+		<property name="testray.component.names" value="Categories,Web Content Administration" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -2097,6 +2136,8 @@
 	</command>
 
 	<command name="ViewMultipleVocabulariesViaAddWebContent" priority="4">
+		<property name="testray.component.names" value="Categories,Web Content Administration" />
+
 		<for list="Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3,Vocabulary Name 4,Vocabulary Name 5" param="vocabularyName">
 			<execute macro="Navigator#openURL" />
 
@@ -2128,6 +2169,8 @@
 	</command>
 
 	<command name="WebContentAdministrationDataValidation" priority="4">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -2219,6 +2262,8 @@
 	</command>
 
 	<command name="WebContentAdministrationLocalization" priority="4">
+		<property name="testray.component.names" value="Localization,Web Content Administration" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -2434,6 +2479,8 @@
 	</command>
 
 	<command name="WebContentAdministrationPaginatingRelatedAssets" priority="3">
+		<property name="testray.component.names" value="Related Assets,Web Content Administration" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -2583,6 +2630,8 @@
 	</command>
 
 	<command name="WebcontentAdministrationTemplateValidation" priority="4">
+		<property name="testray.component.names" value="Web Content Administration" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>

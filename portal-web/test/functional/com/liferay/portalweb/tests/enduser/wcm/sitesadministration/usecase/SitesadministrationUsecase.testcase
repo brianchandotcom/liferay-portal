@@ -34,6 +34,8 @@
 	</tear-down>
 
 	<command name="AddOrganizationSitesAndDeactivate" priority="4">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -215,6 +217,8 @@
 	</command>
 
 	<command name="AddSiteNameTranslations" priority="4">
+		<property name="testray.component.names" value="Localization,Site Administration" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -271,6 +275,8 @@
 	</command>
 
 	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="3">
+		<property name="testray.component.names" value="Site Administration,Users and Organization" />
+
 		<for list="Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name" param="siteNameListsCount" >
 			<execute macro="ProductMenu#gotoControlPanelSites">
 				<var name="portlet" value="Sites" />
@@ -321,6 +327,8 @@
 	</command>
 
 	<command name="OnlySiteOwnersCanAssignSiteRolesToUserGroups" priority="3">
+		<property name="testray.component.names" value="Site Administration,User Groups" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -487,6 +495,8 @@
 	</command>
 
 	<command name="PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage" priority="4">
+		<property name="testray.component.names" value="Site Administration" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -576,6 +586,7 @@
 
 	<command name="ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" priority="3">
 		<property name="custom.properties" value="layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true" />
+		<property name="testray.component.names" value="Site Administration" />
 
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
@@ -743,6 +754,8 @@
 	</command>
 
 	<command name="SiteFriendlyURLLayoutImporter" priority="3">
+		<property name="testray.component.names" value="Site Administration" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="User Groups" />
 		</execute>
@@ -834,6 +847,8 @@
 	</command>
 
 	<command name="SitesDeactivated" priority="3">
+		<property name="testray.component.names" value="Site Administration" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -947,6 +962,8 @@
 	</command>
 
 	<command name="SitesDemoSiteManagement" priority="4">
+		<property name="testray.component.names" value="Site Administration,Site Pages Administration" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -1148,6 +1165,8 @@
 	</command>
 
 	<command name="SiteTeamsPermissions" priority="4">
+		<property name="testray.component.names" value="Permissions,Site Administration" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -1328,6 +1347,8 @@
 	</command>
 
 	<command name="SiteTeamsXSS" priority="4">
+		<property name="testray.component.names" value="Site Administration,XSS" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

@@ -5,6 +5,7 @@
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="false" />
 	<property name="test.run.environment" value="EE" />
+	<property name="testray.component.names" value="Content Targeting" />
 	<property name="testray.main.component.name" value="Content Targeting" />
 
 	<set-up>

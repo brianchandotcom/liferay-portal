@@ -1,6 +1,7 @@
 <definition component-name="portal-wcm">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
+	<property name="testray.component.names" value="Site Pages Administration" />
 	<property name="testray.main.component.name" value="Site Pages Administration" />
 
 	<set-up>

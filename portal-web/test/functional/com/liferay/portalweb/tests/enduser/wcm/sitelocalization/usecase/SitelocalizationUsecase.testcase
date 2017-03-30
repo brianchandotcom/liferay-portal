@@ -28,6 +28,7 @@
 	<command name="AvailableSiteLocalesSubsetOfAvailablePortalLocales" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#AvailableSiteLocalesSubsetOfAvailablePortalLocales" />
+		<property name="testray.component.names" value="Site Localization" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Language Test Page" />
@@ -77,6 +78,7 @@
 
 	<command name="LocalizationStyle0" priority="3">
 		<property name="custom.properties" value="locale.prepend.friendly.url.style=0" />
+		<property name="testray.component.names" value="Site Localization" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Language Test Page" />
@@ -119,6 +121,7 @@
 
 	<command name="LocalizationStyle1" priority="3">
 		<property name="custom.properties" value="locale.prepend.friendly.url.style=1" />
+		<property name="testray.component.names" value="Site Localization" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Language Test Page" />
@@ -161,6 +164,7 @@
 
 	<command name="LocalizationStyle2" priority="3">
 		<property name="custom.properties" value="locale.prepend.friendly.url.style=2" />
+		<property name="testray.component.names" value="Site Localization" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Language Test Page" />
@@ -202,6 +206,8 @@
 	</command>
 
 	<command name="LocalizeCountryName" priority="3">
+		<property name="testray.component.names" value="Site Localization,Users and Organizations" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -277,6 +283,8 @@
 	</command>
 
 	<command name="NoLocalePrependedWhenLocaleMatchMyPreferredLocalization" priority="3">
+		<property name="testray.component.names" value="Site Localization" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -419,6 +427,8 @@
 	</command>
 
 	<command name="PortletInteractionLocalization" priority="4">
+		<property name="testray.component.names" value="Site Localization" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -582,6 +592,7 @@
 	<command name="SiteTemplateLocalization" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#SiteTemplateLocalization" />
+		<property name="testray.component.names" value="Site and Page Templates,Site Localization" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Site Templates" />
@@ -640,6 +651,8 @@
 	</command>
 
 	<command name="ViewAvailableSiteLocaleAlternatives" priority="4">
+		<property name="testray.component.names" value="Site Localization" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -716,6 +729,8 @@
 	</command>
 
 	<command name="ViewEditURLLocale" priority="4">
+		<property name="testray.component.names" value="Site Localization" />
+
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Site Settings" />
 		</execute>
@@ -802,6 +817,7 @@
 	<command name="ViewSiteLocalizationAfterDeletingOriginalLocale" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#ViewSiteLocalizationAfterDeletingOriginalLocale" />
+		<property name="testray.component.names" value="Site Localization" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />

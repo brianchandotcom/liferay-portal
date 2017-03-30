@@ -45,6 +45,8 @@
 	</tear-down>
 
 	<command name="SearchWebContent" priority="4">
+		<property name="testray.component.names" value="Categories,Web Content Search" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -158,6 +160,8 @@
 	</command>
 
 	<command name="SearchWebContentCategory" priority="4">
+		<property name="testray.component.names" value="Categories,Web Content Search" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -256,6 +260,8 @@
 	</command>
 
 	<command name="SearchWebContentCategoryQuotes" priority="3">
+		<property name="testray.component.names" value="Categories,Web Content Search" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -362,6 +368,8 @@
 	</command>
 
 	<command name="SearchWebContentQuotes" priority="3">
+		<property name="testray.component.names" value="Web Content Search" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -518,6 +526,8 @@
 	</command>
 
 	<command name="SearchWebContentTag" priority="4">
+		<property name="testray.component.names" value="Tag,Web Content Search" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -598,6 +608,8 @@
 	</command>
 
 	<command name="SearchWebContentTagQuotes" priority="3">
+		<property name="testray.component.names" value="Web Content Search" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

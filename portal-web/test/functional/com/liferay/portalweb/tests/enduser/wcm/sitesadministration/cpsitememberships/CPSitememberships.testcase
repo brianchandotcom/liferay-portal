@@ -30,6 +30,8 @@
 	</tear-down>
 
 	<command name="AddMember" priority="4">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -65,6 +67,8 @@
 	</command>
 
 	<command name="AddMemberAssignSiteRole" priority="4">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -106,6 +110,8 @@
 	</command>
 
 	<command name="AddMemberOrganization" priority="4">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -134,6 +140,7 @@
 
 	<command name="AddMembersSiteUser" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -186,6 +193,8 @@
 	</command>
 
 	<command name="AddMemberUserGroup" priority="4">
+		<property name="testray.component.names" value="Site Administration,User Groups" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="User Groups" />
 		</execute>
@@ -212,6 +221,8 @@
 	</command>
 
 	<command name="AddMemberUserGroupAssignSiteRole" priority="4">
+		<property name="testray.component.names" value="Site Administration,User Groups" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="User Groups" />
 		</execute>
@@ -256,6 +267,8 @@
 	</command>
 
 	<command name="LimitMembershipParentSite" priority="4">
+		<property name="testray.component.names" value="Site Administration" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -398,6 +411,7 @@
 	<command name="OrganizationsView" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 		<property name="test.name.skip.portal.instance" value="CPSitememberships#OrganizationsView" />
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
@@ -581,6 +595,7 @@
 
 	<command name="RemoveMember" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -632,6 +647,8 @@
 	</command>
 
 	<command name="SiteMembershipSearchOrganization" priority="3">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<for list="1,2" param="n">
 			<execute macro="ProductMenu#gotoControlPanelUsers">
 				<var name="portlet" value="Users and Organizations" />
@@ -670,6 +687,8 @@
 	</command>
 
 	<command name="SiteMembershipSearchUserGroup" priority="3">
+		<property name="testray.component.names" value="Site Administration,User Groups" />
+
 		<for list="1,2" param="n">
 			<execute macro="ProductMenu#gotoControlPanelUsers">
 				<var name="portlet" value="User Groups" />
@@ -707,6 +726,8 @@
 	</command>
 
 	<command name="SiteMembershipsPagination" priority="3">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -832,6 +853,8 @@
 	</command>
 
 	<command name="SiteMembershipsSearch" priority="4">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -1043,6 +1066,8 @@
 	</command>
 
 	<command name="ViewMembershipRequestWithSiteMembershipScope" priority="3">
+		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
 		<for list="1,2" param="i">
 			<execute macro="ProductMenu#gotoControlPanelSites">
 				<var name="portlet" value="Sites" />
@@ -1116,6 +1141,8 @@
 	</command>
 
 	<command name="ViewNoManualMembershipManagement" priority="3">
+		<property name="testray.component.names" value="Site Administration" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />

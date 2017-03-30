@@ -2,6 +2,7 @@
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="portlet.plugins.includes" value="test-localized-portlet" />
+	<property name="testray.component.names" value="Site Localization" />
 	<property name="testray.main.component.name" value="Site Localization" />
 
 	<var name="pageName" value="Test Localization" />

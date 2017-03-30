@@ -3,6 +3,7 @@
 	<property name="plugins.deployment.type" value="osgi" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
+	<property name="testray.component.names" value="Weather" />
 	<property name="testray.main.component.name" value="Weather" />
 
 	<set-up>

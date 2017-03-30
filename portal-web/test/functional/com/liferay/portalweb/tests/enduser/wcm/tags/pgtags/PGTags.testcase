@@ -26,6 +26,8 @@
 	</tear-down>
 
 	<command name="AddAutoAssertionTagViaBlogs" priority="4">
+		<property name="testray.component.names" value="Blogs,Tags" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -90,6 +92,8 @@
 	</command>
 
 	<command name="AddFrontPageTag" priority="4">
+		<property name="testray.component.names" value="Tags,Wiki" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -124,6 +128,8 @@
 	</command>
 
 	<command name="AddMultipleTagsViaBlogs" priority="4">
+		<property name="testray.component.names" value="Blogs,Tags" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -177,6 +183,7 @@
 
 	<command name="AddSelectTagViaBlogs" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Blogs,Tags" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -259,6 +266,7 @@
 
 	<command name="AddTagViaBlogs" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Blogs,Tags" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -312,6 +320,7 @@
 
 	<command name="DisplayTagCloud" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Tags" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Tags Navigation Page" />
@@ -406,6 +415,8 @@
 	</command>
 
 	<command name="DisplayTagUsageStatistics" priority="3">
+		<property name="testray.component.names" value="Tags" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
@@ -497,6 +508,8 @@
 	</command>
 
 	<command name="DisplayUnusedTags" priority="3">
+		<property name="testray.component.names" value="Tags" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
@@ -539,6 +552,8 @@
 	</command>
 
 	<command name="RemoveSelectTagViaBlogs" priority="3">
+		<property name="testray.component.names" value="Blogs,Tags" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -631,6 +646,7 @@
 
 	<command name="RemoveTagViaBlogs" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Blogs,Tags" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -715,6 +731,8 @@
 	</command>
 
 	<command name="SearchMultipleTagsViaBlogs" priority="3">
+		<property name="testray.component.names" value="Blogs,Tags" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -795,6 +813,7 @@
 
 	<command name="ViewTagCloudDisplayConfiguration" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Tags" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Tag Cloud Page" />
@@ -819,6 +838,7 @@
 
 	<command name="ViewTagCloudIncrease" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Tags" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Tags Navigation Page" />

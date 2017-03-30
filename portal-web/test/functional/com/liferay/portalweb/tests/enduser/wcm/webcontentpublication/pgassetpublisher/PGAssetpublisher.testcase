@@ -56,6 +56,8 @@
 	</tear-down>
 
 	<command name="AddAPMultiplePortlet" priority="4">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
@@ -76,6 +78,8 @@
 	</command>
 
 	<command name="AddBookmarkViaAP" priority="4">
+		<property name="testray.component.names" value="Asset Publishe,Bookmarks" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
@@ -118,6 +122,8 @@
 	</command>
 
 	<command name="AddCustomTitleViaAP" priority="3">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Page" />
 		</execute>
@@ -150,6 +156,8 @@
 	</command>
 
 	<command name="ConfigureAPPortletDisplaytemplateWithBookmarks" priority="4">
+		<property name="testray.component.names" value="Asset Publisher,Bookmarks,Content and Display Templates" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
@@ -250,6 +258,8 @@
 	</command>
 
 	<command name="ConfigureAPPortletEnableRatings" priority="4">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -321,6 +331,8 @@
 	</command>
 
 	<command name="ConfigureAPPortletScopeMultipleSites" priority="4">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -361,6 +373,8 @@
 	</command>
 
 	<command name="ConfigureAPPortletSelectedBlogsEntry" priority="4">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<execute macro="AssetPublisherPortlet#configureSelectedPG">
 			<var name="selectedAsset" value="Blogs Entry" />
 		</execute>
@@ -376,6 +390,8 @@
 	</command>
 
 	<command name="ConfigureAPPortletSelectedBookmarksEntry" priority="4">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<execute macro="AssetPublisherPortlet#configureSelectedPG">
 			<var name="selectedAsset" value="Bookmarks Entry" />
 		</execute>
@@ -391,6 +407,8 @@
 	</command>
 
 	<command name="ConfigureAPPortletSelectedDocument" priority="4">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<execute macro="AssetPublisherPortlet#configureSelectedPG">
 			<var name="selectedAsset" value="Document" />
 		</execute>
@@ -407,6 +425,7 @@
 
 	<command name="ConfigureAPPortletSelectedWebContent" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Asset Publisher" />
 
 		<execute macro="AssetPublisherPortlet#configureSelectedPG">
 			<var name="selectedAsset" value="Web Content Article" />
@@ -423,6 +442,8 @@
 	</command>
 
 	<command name="ConfigureAPPortletSetAsDefault" priority="4">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
 			<var name="portletName" value="Asset Publisher" />
 			<var name="setAsDefaultPage" value="true" />
@@ -438,6 +459,8 @@
 	</command>
 
 	<command name="ConfigureAPPortletWithSelectedBookmarksEntry" priority="4">
+		<property name="testray.component.names" value="Asset Publisher,Bookmarks" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
@@ -504,6 +527,8 @@
 	</command>
 
 	<command name="FilterTagsByNameAP" priority="4">
+		<property name="testray.component.names" value="Asset Publisher,Tags" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
@@ -604,6 +629,8 @@
 	</command>
 
 	<command name="FindSiteAPViaSearchScopeSelector" priority="4">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -622,6 +649,8 @@
 	</command>
 
 	<command name="OrderContentByModifiedDateViaAP" priority="3">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
@@ -686,6 +715,8 @@
 	</command>
 
 	<command name="OrderWCByModifiedDateViaAP" priority="3">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
@@ -759,6 +790,8 @@
 	</command>
 
 	<command name="OrderWCByPriorityViaAP" priority="4">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<for list="1,5,3" param="i">
 			<execute macro="ProductMenu#gotoSitesContent">
 				<var name="portlet" value="Web Content" />
@@ -856,6 +889,8 @@
 	</command>
 
 	<command name="OrderWCByPublishDateViaAP" priority="3">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
@@ -917,6 +952,8 @@
 	</command>
 
 	<command name="RestoreAPArchivedSetup" priority="4">
+		<property name="testray.component.names" value="Asset Publisher" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

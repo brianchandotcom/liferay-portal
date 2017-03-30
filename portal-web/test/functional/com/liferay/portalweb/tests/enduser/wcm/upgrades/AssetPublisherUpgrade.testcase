@@ -2,6 +2,7 @@
 	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
+	<property name="testray.component.names" value="Asset Publisher,Upgrades WEM" />
 	<property name="testray.main.component.name" value="Upgrades WEM" />
 
 	<set-up>

@@ -126,7 +126,7 @@ public class DDLRecordSetLocalServiceImpl
 		ddlRecordSetPersistence.update(recordSet);
 
 		// Resources
-
+									   e
 		if (serviceContext.isAddGroupPermissions() ||
 			serviceContext.isAddGuestPermissions()) {
 
@@ -140,7 +140,7 @@ public class DDLRecordSetLocalServiceImpl
 				serviceContext.getGuestPermissions());
 		}
 
-		// Record Set Version
+		// Record set version
 
 		long ddmStructureVersionId = getDDMStructureVersionId(ddmStructureId);
 
@@ -217,11 +217,6 @@ public class DDLRecordSetLocalServiceImpl
 
 		ddlRecordSetPersistence.remove(recordSet);
 
-		// Record set versions
-
-		ddlRecordSetVersionLocalService.deleteByRecordSetId(
-			recordSet.getRecordSetId());
-
 		// Resources
 
 		resourceLocalService.deleteResource(
@@ -231,6 +226,11 @@ public class DDLRecordSetLocalServiceImpl
 		// Records
 
 		ddlRecordLocalService.deleteRecords(recordSet.getRecordSetId());
+
+		// Record set versions
+
+		ddlRecordSetVersionLocalService.deleteByRecordSetId(
+			recordSet.getRecordSetId());
 
 		// Dynamic data mapping structure link
 
@@ -756,7 +756,7 @@ public class DDLRecordSetLocalServiceImpl
 
 		ddlRecordSetPersistence.update(recordSet);
 
-		// Record Set Version
+		// Record set version
 
 		long ddmStructureVersionId = getDDMStructureVersionId(ddmStructureId);
 

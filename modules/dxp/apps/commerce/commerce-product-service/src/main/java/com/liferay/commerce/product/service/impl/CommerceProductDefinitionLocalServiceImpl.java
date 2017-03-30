@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,6 +46,7 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -203,6 +205,28 @@ public class CommerceProductDefinitionLocalServiceImpl
 
 		return commerceProductDefinitionLocalService.
 			deleteCommerceProductDefinition(commerceProductDefinition);
+	}
+
+	@Override
+	public List<CommerceProductDefinition> getCommerceProductDefinitions(
+		long groupId, int start, int end) {
+
+		return commerceProductDefinitionPersistence.findByGroupId(
+			groupId, start, end);
+	}
+
+	@Override
+	public List<CommerceProductDefinition> getCommerceProductDefinitions(
+		long groupId, int start, int end,
+		OrderByComparator<CommerceProductDefinition> orderByComparator) {
+
+		return commerceProductDefinitionPersistence.findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceProductDefinitionsCount(long groupId) {
+		return commerceProductDefinitionPersistence.countByGroupId(groupId);
 	}
 
 	@Override

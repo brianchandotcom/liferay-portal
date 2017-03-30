@@ -59,10 +59,14 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 			<aui:input name="tempImageFileName" type="hidden" value="<%= tempImageFileName %>" />
 			<aui:input name="imageUploaded" type="hidden" value='<%= SessionMessages.contains(renderRequest, "imageUploaded") %>' />
 
+			<%
+			DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
+			%>
+
 			<div class="dialog-body">
 				<div class="container-fluid-1280">
 					<liferay-ui:error exception="<%= FileExtensionException.class %>">
-						<liferay-ui:message arguments="<%= StringUtil.merge(PropsValues.DL_FILE_EXTENSIONS, StringPool.COMMA) %>" key="please-enter-a-file-with-a-valid-extension-x" translateArguments="<%= false %>" />
+						<liferay-ui:message arguments="<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>" key="please-enter-a-file-with-a-valid-extension-x" translateArguments="<%= false %>" />
 					</liferay-ui:error>
 
 					<liferay-ui:error exception="<%= FileSizeException.class %>">
@@ -97,7 +101,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 
 								<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="hide" label="" name="fileName" type="file">
 									<aui:validator name="acceptFiles">
-										'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+										'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>'
 									</aui:validator>
 								</aui:input>
 							</div>

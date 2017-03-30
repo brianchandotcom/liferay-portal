@@ -124,6 +124,14 @@ public class FriendlyURLEntryLocalizationLocalServiceWrapper
 		return _friendlyURLEntryLocalizationLocalService.fetchFriendlyURLEntryLocalization(friendlyURLEntryLocalizationId);
 	}
 
+	@Override
+	public com.liferay.friendly.url.model.FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
+		long groupId, java.lang.String urlTitle, java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _friendlyURLEntryLocalizationLocalService.fetchFriendlyURLEntryLocalization(groupId,
+			urlTitle, languageId);
+	}
+
 	/**
 	* Returns the friendly url entry localization with the primary key.
 	*
@@ -260,6 +268,12 @@ public class FriendlyURLEntryLocalizationLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _friendlyURLEntryLocalizationLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.friendly.url.model.FriendlyURLEntryLocalization> getFriendlyURLEntryLocalizations(
+		com.liferay.friendly.url.model.FriendlyURLEntry friendlyURLEntry) {
+		return _friendlyURLEntryLocalizationLocalService.getFriendlyURLEntryLocalizations(friendlyURLEntry);
 	}
 
 	/**

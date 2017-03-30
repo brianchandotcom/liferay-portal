@@ -124,6 +124,11 @@ public interface FriendlyURLEntryLocalizationLocalService
 	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
 		long friendlyURLEntryLocalizationId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
+		long groupId, java.lang.String urlTitle, java.lang.String languageId)
+		throws PortalException;
+
 	/**
 	* Returns the friendly url entry localization with the primary key.
 	*
@@ -222,6 +227,10 @@ public interface FriendlyURLEntryLocalizationLocalService
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FriendlyURLEntryLocalization> getFriendlyURLEntryLocalizations(
+		FriendlyURLEntry friendlyURLEntry);
 
 	/**
 	* Returns a range of all the friendly url entry localizations.

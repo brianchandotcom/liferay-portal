@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -86,12 +87,17 @@ public abstract class BaseShellDoulosRequestProcessor
 				_log.info("Skip invalid payload");
 			}
 
+			responseJSONObject.put(
+				"queueSize", new ArrayList<String>(_shellStatuses.keySet()));
+
 			return;
 		}
 
 		ShellStatus shellStatus = queue(payloadJSONObject);
 
 		populateResponseJSONObject(responseJSONObject, shellStatus);
+
+		responseJSONObject.put("queueSize", _queue.size());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

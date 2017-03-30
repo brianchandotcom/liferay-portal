@@ -14,4 +14,4 @@
  */
 --%>
 
-<%@ include file="/commerce_products/init.jsp" %>
+<%@ include file="/commerce_product_definitions/init.jsp" %>

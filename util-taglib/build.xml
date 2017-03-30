@@ -124,7 +124,7 @@
 		</publish-portal-artifact>
 	</target>
 
-	<target depends="validate-tld" name="taglibdoc">
+	<target name="taglibdoc">
 		<property name="doc.taglibs.dir" value="${doc.dir}/taglibs/util-taglib" />
 
 		<mkdir dir="${doc.taglibs.dir}" />

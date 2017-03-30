@@ -59,7 +59,9 @@
 		<field name="DDMStructureVersionId" type="long" />
 		<field localized="true" name="name" type="String" />
 		<field localized="true" name="description" type="String" />
-		<field name="settings" type="String" />
+		<field name="settings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="version" type="String" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

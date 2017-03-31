@@ -3024,6 +3024,592 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 
 	private static final String _FINDER_COLUMN_R_U_RECORDSETID_2 = "ddlRecord.recordSetId = ? AND ";
 	private static final String _FINDER_COLUMN_R_U_USERID_2 = "ddlRecord.userId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_R = new FinderPath(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
+			DDLRecordModelImpl.FINDER_CACHE_ENABLED, DDLRecordImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_R",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R = new FinderPath(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
+			DDLRecordModelImpl.FINDER_CACHE_ENABLED, DDLRecordImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_R",
+			new String[] { Long.class.getName(), String.class.getName() },
+			DDLRecordModelImpl.RECORDSETID_COLUMN_BITMASK |
+			DDLRecordModelImpl.RECORDSETVERSION_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_R_R = new FinderPath(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
+			DDLRecordModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns all the ddl records where recordSetId = &#63; and recordSetVersion = &#63;.
+	 *
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 * @return the matching ddl records
+	 */
+	@Override
+	public List<DDLRecord> findByR_R(long recordSetId, String recordSetVersion) {
+		return findByR_R(recordSetId, recordSetVersion, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the ddl records where recordSetId = &#63; and recordSetVersion = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @return the range of matching ddl records
+	 */
+	@Override
+	public List<DDLRecord> findByR_R(long recordSetId, String recordSetVersion,
+		int start, int end) {
+		return findByR_R(recordSetId, recordSetVersion, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl records where recordSetId = &#63; and recordSetVersion = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddl records
+	 */
+	@Override
+	public List<DDLRecord> findByR_R(long recordSetId, String recordSetVersion,
+		int start, int end, OrderByComparator<DDLRecord> orderByComparator) {
+		return findByR_R(recordSetId, recordSetVersion, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl records where recordSetId = &#63; and recordSetVersion = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching ddl records
+	 */
+	@Override
+	public List<DDLRecord> findByR_R(long recordSetId, String recordSetVersion,
+		int start, int end, OrderByComparator<DDLRecord> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R;
+			finderArgs = new Object[] { recordSetId, recordSetVersion };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_R_R;
+			finderArgs = new Object[] {
+					recordSetId, recordSetVersion,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<DDLRecord> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<DDLRecord>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DDLRecord ddlRecord : list) {
+					if ((recordSetId != ddlRecord.getRecordSetId()) ||
+							!Objects.equals(recordSetVersion,
+								ddlRecord.getRecordSetVersion())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_DDLRECORD_WHERE);
+
+			query.append(_FINDER_COLUMN_R_R_RECORDSETID_2);
+
+			boolean bindRecordSetVersion = false;
+
+			if (recordSetVersion == null) {
+				query.append(_FINDER_COLUMN_R_R_RECORDSETVERSION_1);
+			}
+			else if (recordSetVersion.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_R_RECORDSETVERSION_3);
+			}
+			else {
+				bindRecordSetVersion = true;
+
+				query.append(_FINDER_COLUMN_R_R_RECORDSETVERSION_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(DDLRecordModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(recordSetId);
+
+				if (bindRecordSetVersion) {
+					qPos.add(recordSetVersion);
+				}
+
+				if (!pagination) {
+					list = (List<DDLRecord>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDLRecord>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first ddl record in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
+	 *
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddl record
+	 * @throws NoSuchRecordException if a matching ddl record could not be found
+	 */
+	@Override
+	public DDLRecord findByR_R_First(long recordSetId, String recordSetVersion,
+		OrderByComparator<DDLRecord> orderByComparator)
+		throws NoSuchRecordException {
+		DDLRecord ddlRecord = fetchByR_R_First(recordSetId, recordSetVersion,
+				orderByComparator);
+
+		if (ddlRecord != null) {
+			return ddlRecord;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("recordSetId=");
+		msg.append(recordSetId);
+
+		msg.append(", recordSetVersion=");
+		msg.append(recordSetVersion);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRecordException(msg.toString());
+	}
+
+	/**
+	 * Returns the first ddl record in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
+	 *
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddl record, or <code>null</code> if a matching ddl record could not be found
+	 */
+	@Override
+	public DDLRecord fetchByR_R_First(long recordSetId,
+		String recordSetVersion, OrderByComparator<DDLRecord> orderByComparator) {
+		List<DDLRecord> list = findByR_R(recordSetId, recordSetVersion, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last ddl record in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
+	 *
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddl record
+	 * @throws NoSuchRecordException if a matching ddl record could not be found
+	 */
+	@Override
+	public DDLRecord findByR_R_Last(long recordSetId, String recordSetVersion,
+		OrderByComparator<DDLRecord> orderByComparator)
+		throws NoSuchRecordException {
+		DDLRecord ddlRecord = fetchByR_R_Last(recordSetId, recordSetVersion,
+				orderByComparator);
+
+		if (ddlRecord != null) {
+			return ddlRecord;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("recordSetId=");
+		msg.append(recordSetId);
+
+		msg.append(", recordSetVersion=");
+		msg.append(recordSetVersion);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRecordException(msg.toString());
+	}
+
+	/**
+	 * Returns the last ddl record in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
+	 *
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
+	 */
+	@Override
+	public DDLRecord fetchByR_R_Last(long recordSetId, String recordSetVersion,
+		OrderByComparator<DDLRecord> orderByComparator) {
+		int count = countByR_R(recordSetId, recordSetVersion);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DDLRecord> list = findByR_R(recordSetId, recordSetVersion,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the ddl records before and after the current ddl record in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
+	 *
+	 * @param recordId the primary key of the current ddl record
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ddl record
+	 * @throws NoSuchRecordException if a ddl record with the primary key could not be found
+	 */
+	@Override
+	public DDLRecord[] findByR_R_PrevAndNext(long recordId, long recordSetId,
+		String recordSetVersion, OrderByComparator<DDLRecord> orderByComparator)
+		throws NoSuchRecordException {
+		DDLRecord ddlRecord = findByPrimaryKey(recordId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DDLRecord[] array = new DDLRecordImpl[3];
+
+			array[0] = getByR_R_PrevAndNext(session, ddlRecord, recordSetId,
+					recordSetVersion, orderByComparator, true);
+
+			array[1] = ddlRecord;
+
+			array[2] = getByR_R_PrevAndNext(session, ddlRecord, recordSetId,
+					recordSetVersion, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DDLRecord getByR_R_PrevAndNext(Session session,
+		DDLRecord ddlRecord, long recordSetId, String recordSetVersion,
+		OrderByComparator<DDLRecord> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_DDLRECORD_WHERE);
+
+		query.append(_FINDER_COLUMN_R_R_RECORDSETID_2);
+
+		boolean bindRecordSetVersion = false;
+
+		if (recordSetVersion == null) {
+			query.append(_FINDER_COLUMN_R_R_RECORDSETVERSION_1);
+		}
+		else if (recordSetVersion.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_R_R_RECORDSETVERSION_3);
+		}
+		else {
+			bindRecordSetVersion = true;
+
+			query.append(_FINDER_COLUMN_R_R_RECORDSETVERSION_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(DDLRecordModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(recordSetId);
+
+		if (bindRecordSetVersion) {
+			qPos.add(recordSetVersion);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(ddlRecord);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DDLRecord> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the ddl records where recordSetId = &#63; and recordSetVersion = &#63; from the database.
+	 *
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 */
+	@Override
+	public void removeByR_R(long recordSetId, String recordSetVersion) {
+		for (DDLRecord ddlRecord : findByR_R(recordSetId, recordSetVersion,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(ddlRecord);
+		}
+	}
+
+	/**
+	 * Returns the number of ddl records where recordSetId = &#63; and recordSetVersion = &#63;.
+	 *
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 * @return the number of matching ddl records
+	 */
+	@Override
+	public int countByR_R(long recordSetId, String recordSetVersion) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_R;
+
+		Object[] finderArgs = new Object[] { recordSetId, recordSetVersion };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_DDLRECORD_WHERE);
+
+			query.append(_FINDER_COLUMN_R_R_RECORDSETID_2);
+
+			boolean bindRecordSetVersion = false;
+
+			if (recordSetVersion == null) {
+				query.append(_FINDER_COLUMN_R_R_RECORDSETVERSION_1);
+			}
+			else if (recordSetVersion.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_R_RECORDSETVERSION_3);
+			}
+			else {
+				bindRecordSetVersion = true;
+
+				query.append(_FINDER_COLUMN_R_R_RECORDSETVERSION_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(recordSetId);
+
+				if (bindRecordSetVersion) {
+					qPos.add(recordSetVersion);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_R_R_RECORDSETID_2 = "ddlRecord.recordSetId = ? AND ";
+	private static final String _FINDER_COLUMN_R_R_RECORDSETVERSION_1 = "ddlRecord.recordSetVersion IS NULL";
+	private static final String _FINDER_COLUMN_R_R_RECORDSETVERSION_2 = "ddlRecord.recordSetVersion = ?";
+	private static final String _FINDER_COLUMN_R_R_RECORDSETVERSION_3 = "(ddlRecord.recordSetVersion IS NULL OR ddlRecord.recordSetVersion = '')";
 
 	public DDLRecordPersistenceImpl() {
 		setModelClass(DDLRecord.class);
@@ -3353,6 +3939,15 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_U,
 				args);
 
+			args = new Object[] {
+					ddlRecordModelImpl.getRecordSetId(),
+					ddlRecordModelImpl.getRecordSetVersion()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_R_R, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -3451,6 +4046,27 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_U,
 					args);
 			}
+
+			if ((ddlRecordModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						ddlRecordModelImpl.getOriginalRecordSetId(),
+						ddlRecordModelImpl.getOriginalRecordSetVersion()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R,
+					args);
+
+				args = new Object[] {
+						ddlRecordModelImpl.getRecordSetId(),
+						ddlRecordModelImpl.getRecordSetVersion()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R,
+					args);
+			}
 		}
 
 		entityCache.putResult(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
@@ -3486,6 +4102,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		ddlRecordImpl.setModifiedDate(ddlRecord.getModifiedDate());
 		ddlRecordImpl.setDDMStorageId(ddlRecord.getDDMStorageId());
 		ddlRecordImpl.setRecordSetId(ddlRecord.getRecordSetId());
+		ddlRecordImpl.setRecordSetVersion(ddlRecord.getRecordSetVersion());
 		ddlRecordImpl.setVersion(ddlRecord.getVersion());
 		ddlRecordImpl.setDisplayIndex(ddlRecord.getDisplayIndex());
 		ddlRecordImpl.setLastPublishDate(ddlRecord.getLastPublishDate());

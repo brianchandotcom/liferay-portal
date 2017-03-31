@@ -114,6 +114,31 @@ public class DDLRecordServiceTest {
 		_recordSetTestHelper = new DDLRecordSetTestHelper(_group);
 	}
 
+	@Test
+	public void testAddRecordVerifyRecordSetVersion() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		ddmForm.addDDMFormField(createTextDDMFormField("Name", true, false));
+
+		DDMFormValues expectedDDMFormValues = createDDMFormValues(ddmForm);
+
+		DDLRecordSet recordSet = addRecordSet(ddmForm);
+
+		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
+			_group, recordSet);
+
+		DDLRecord record = recordTestHelper.addRecord(
+			expectedDDMFormValues, WorkflowConstants.ACTION_PUBLISH);
+
+		Assert.assertEquals(
+			recordSet.getVersion(), record.getRecordSetVersion());
+
+		DDLRecordVersion recordVersion = record.getRecordVersion();
+
+		Assert.assertEquals(
+			recordSet.getVersion(), recordVersion.getRecordSetVersion());
+	}
+
 	@Test(expected = RecordGroupIdException.class)
 	public void testAddRecordWithDifferentGroupIdFromRecordSet()
 		throws Exception {
@@ -259,6 +284,49 @@ public class DDLRecordServiceTest {
 			createUnlocalizedDDMFormFieldValue("Name", "Joe Bloggs"));
 
 		assertRecordDDMFormValues(ddmForm, expectedDDMFormValues);
+	}
+
+	@Test
+	public void testAddRecordWithUpdatedRecordSet() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		ddmForm.addDDMFormField(createTextDDMFormField("Name", true, false));
+		ddmForm.addDDMFormField(
+			createTextDDMFormField("Description", true, false));
+
+		DDMFormValues expectedDDMFormValues = createDDMFormValues(ddmForm);
+
+		DDLRecordSet recordSet = addRecordSet(ddmForm);
+
+		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
+			_group, recordSet);
+
+		DDLRecord record = recordTestHelper.addRecord(
+			expectedDDMFormValues, WorkflowConstants.ACTION_PUBLISH);
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		ddmFormFields.remove(1);
+
+		DDMStructure ddmStructure = _ddmStructureTestHelper.updateStructure(
+			recordSet.getDDMStructureId(), ddmForm);
+
+		_recordSetTestHelper.updateRecordSet(
+			recordSet.getRecordSetId(), ddmStructure);
+
+		expectedDDMFormValues = createDDMFormValues(ddmForm);
+
+		record = recordTestHelper.updateRecord(
+			record.getRecordId(), false, 0, expectedDDMFormValues,
+			WorkflowConstants.ACTION_PUBLISH);
+
+		Assert.assertEquals(
+			recordSet.getVersion(), record.getRecordSetVersion());
+
+		DDLRecordVersion recordVersion = record.getRecordVersion();
+
+		Assert.assertEquals(
+			recordSet.getVersion(), recordVersion.getRecordSetVersion());
 	}
 
 	@Test

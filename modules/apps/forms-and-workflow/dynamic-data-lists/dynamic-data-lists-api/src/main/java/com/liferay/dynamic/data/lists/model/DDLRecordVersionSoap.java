@@ -42,6 +42,7 @@ public class DDLRecordVersionSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setDDMStorageId(model.getDDMStorageId());
 		soapModel.setRecordSetId(model.getRecordSetId());
+		soapModel.setRecordSetVersion(model.getRecordSetVersion());
 		soapModel.setRecordId(model.getRecordId());
 		soapModel.setVersion(model.getVersion());
 		soapModel.setDisplayIndex(model.getDisplayIndex());
@@ -167,6 +168,14 @@ public class DDLRecordVersionSoap implements Serializable {
 		_recordSetId = recordSetId;
 	}
 
+	public String getRecordSetVersion() {
+		return _recordSetVersion;
+	}
+
+	public void setRecordSetVersion(String recordSetVersion) {
+		_recordSetVersion = recordSetVersion;
+	}
+
 	public long getRecordId() {
 		return _recordId;
 	}
@@ -231,6 +240,7 @@ public class DDLRecordVersionSoap implements Serializable {
 	private Date _createDate;
 	private long _DDMStorageId;
 	private long _recordSetId;
+	private String _recordSetVersion;
 	private long _recordId;
 	private String _version;
 	private int _displayIndex;

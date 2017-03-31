@@ -66,6 +66,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("DDMStorageId", getDDMStorageId());
 		attributes.put("recordSetId", getRecordSetId());
+		attributes.put("recordSetVersion", getRecordSetVersion());
 		attributes.put("recordId", getRecordId());
 		attributes.put("version", getVersion());
 		attributes.put("displayIndex", getDisplayIndex());
@@ -125,6 +126,12 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 
 		if (recordSetId != null) {
 			setRecordSetId(recordSetId);
+		}
+
+		String recordSetVersion = (String)attributes.get("recordSetVersion");
+
+		if (recordSetVersion != null) {
+			setRecordSetVersion(recordSetVersion);
 		}
 
 		Long recordId = (Long)attributes.get("recordId");
@@ -341,6 +348,16 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	@Override
 	public java.lang.Object clone() {
 		return new DDLRecordVersionWrapper((DDLRecordVersion)_ddlRecordVersion.clone());
+	}
+
+	/**
+	* Returns the record set version of this ddl record version.
+	*
+	* @return the record set version of this ddl record version
+	*/
+	@Override
+	public java.lang.String getRecordSetVersion() {
+		return _ddlRecordVersion.getRecordSetVersion();
 	}
 
 	/**
@@ -627,6 +644,16 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	@Override
 	public void setRecordSetId(long recordSetId) {
 		_ddlRecordVersion.setRecordSetId(recordSetId);
+	}
+
+	/**
+	* Sets the record set version of this ddl record version.
+	*
+	* @param recordSetVersion the record set version of this ddl record version
+	*/
+	@Override
+	public void setRecordSetVersion(java.lang.String recordSetVersion) {
+		_ddlRecordVersion.setRecordSetVersion(recordSetVersion);
 	}
 
 	/**

@@ -66,7 +66,7 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{recordVersionId=");
 		sb.append(recordVersionId);
@@ -84,6 +84,8 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		sb.append(DDMStorageId);
 		sb.append(", recordSetId=");
 		sb.append(recordSetId);
+		sb.append(", recordSetVersion=");
+		sb.append(recordSetVersion);
 		sb.append(", recordId=");
 		sb.append(recordId);
 		sb.append(", version=");
@@ -128,6 +130,14 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 
 		ddlRecordVersionImpl.setDDMStorageId(DDMStorageId);
 		ddlRecordVersionImpl.setRecordSetId(recordSetId);
+
+		if (recordSetVersion == null) {
+			ddlRecordVersionImpl.setRecordSetVersion(StringPool.BLANK);
+		}
+		else {
+			ddlRecordVersionImpl.setRecordSetVersion(recordSetVersion);
+		}
+
 		ddlRecordVersionImpl.setRecordId(recordId);
 
 		if (version == null) {
@@ -175,6 +185,7 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		DDMStorageId = objectInput.readLong();
 
 		recordSetId = objectInput.readLong();
+		recordSetVersion = objectInput.readUTF();
 
 		recordId = objectInput.readLong();
 		version = objectInput.readUTF();
@@ -212,6 +223,13 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 
 		objectOutput.writeLong(recordSetId);
 
+		if (recordSetVersion == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(recordSetVersion);
+		}
+
 		objectOutput.writeLong(recordId);
 
 		if (version == null) {
@@ -245,6 +263,7 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 	public long createDate;
 	public long DDMStorageId;
 	public long recordSetId;
+	public String recordSetVersion;
 	public long recordId;
 	public String version;
 	public int displayIndex;

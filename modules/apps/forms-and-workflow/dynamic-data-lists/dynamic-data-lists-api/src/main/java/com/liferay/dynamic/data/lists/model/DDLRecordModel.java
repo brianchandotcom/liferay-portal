@@ -281,6 +281,21 @@ public interface DDLRecordModel extends BaseModel<DDLRecord>, ShardedModel,
 	public void setRecordSetId(long recordSetId);
 
 	/**
+	 * Returns the record set version of this ddl record.
+	 *
+	 * @return the record set version of this ddl record
+	 */
+	@AutoEscape
+	public String getRecordSetVersion();
+
+	/**
+	 * Sets the record set version of this ddl record.
+	 *
+	 * @param recordSetVersion the record set version of this ddl record
+	 */
+	public void setRecordSetVersion(String recordSetVersion);
+
+	/**
 	 * Returns the version of this ddl record.
 	 *
 	 * @return the version of this ddl record

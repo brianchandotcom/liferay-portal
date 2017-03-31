@@ -90,6 +90,19 @@ public class DDLRecordTestHelper {
 		return _recordSet;
 	}
 
+	public DDLRecord updateRecord(
+			long recordId, boolean majorVersion, int displayIndex,
+			DDMFormValues ddmFormValues, int workflowAction)
+		throws Exception {
+
+		ServiceContext serviceContext = DDLRecordTestUtil.getServiceContext(
+			workflowAction);
+
+		return DDLRecordLocalServiceUtil.updateRecord(
+			TestPropsValues.getUserId(), recordId, majorVersion, displayIndex,
+			ddmFormValues, serviceContext);
+	}
+
 	protected DDMFormFieldValue createLocalizedDDMFormFieldValue(
 		String name, String enValue) {
 

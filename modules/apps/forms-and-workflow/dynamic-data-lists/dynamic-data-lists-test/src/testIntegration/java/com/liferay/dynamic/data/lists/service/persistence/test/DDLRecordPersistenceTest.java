@@ -147,6 +147,8 @@ public class DDLRecordPersistenceTest {
 
 		newDDLRecord.setRecordSetId(RandomTestUtil.nextLong());
 
+		newDDLRecord.setRecordSetVersion(RandomTestUtil.randomString());
+
 		newDDLRecord.setVersion(RandomTestUtil.randomString());
 
 		newDDLRecord.setDisplayIndex(RandomTestUtil.nextInt());
@@ -182,6 +184,8 @@ public class DDLRecordPersistenceTest {
 			newDDLRecord.getDDMStorageId());
 		Assert.assertEquals(existingDDLRecord.getRecordSetId(),
 			newDDLRecord.getRecordSetId());
+		Assert.assertEquals(existingDDLRecord.getRecordSetVersion(),
+			newDDLRecord.getRecordSetVersion());
 		Assert.assertEquals(existingDDLRecord.getVersion(),
 			newDDLRecord.getVersion());
 		Assert.assertEquals(existingDDLRecord.getDisplayIndex(),
@@ -241,6 +245,15 @@ public class DDLRecordPersistenceTest {
 	}
 
 	@Test
+	public void testCountByR_R() throws Exception {
+		_persistence.countByR_R(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+		_persistence.countByR_R(0L, StringPool.NULL);
+
+		_persistence.countByR_R(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDLRecord newDDLRecord = addDDLRecord();
 
@@ -267,8 +280,8 @@ public class DDLRecordPersistenceTest {
 			"recordId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "versionUserId", true, "versionUserName",
 			true, "createDate", true, "modifiedDate", true, "DDMStorageId",
-			true, "recordSetId", true, "version", true, "displayIndex", true,
-			"lastPublishDate", true);
+			true, "recordSetId", true, "recordSetVersion", true, "version",
+			true, "displayIndex", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -505,6 +518,8 @@ public class DDLRecordPersistenceTest {
 		ddlRecord.setDDMStorageId(RandomTestUtil.nextLong());
 
 		ddlRecord.setRecordSetId(RandomTestUtil.nextLong());
+
+		ddlRecord.setRecordSetVersion(RandomTestUtil.randomString());
 
 		ddlRecord.setVersion(RandomTestUtil.randomString());
 

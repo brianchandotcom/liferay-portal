@@ -66,7 +66,7 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -92,6 +92,8 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 		sb.append(DDMStorageId);
 		sb.append(", recordSetId=");
 		sb.append(recordSetId);
+		sb.append(", recordSetVersion=");
+		sb.append(recordSetVersion);
 		sb.append(", version=");
 		sb.append(version);
 		sb.append(", displayIndex=");
@@ -152,6 +154,13 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 		ddlRecordImpl.setDDMStorageId(DDMStorageId);
 		ddlRecordImpl.setRecordSetId(recordSetId);
 
+		if (recordSetVersion == null) {
+			ddlRecordImpl.setRecordSetVersion(StringPool.BLANK);
+		}
+		else {
+			ddlRecordImpl.setRecordSetVersion(recordSetVersion);
+		}
+
 		if (version == null) {
 			ddlRecordImpl.setVersion(StringPool.BLANK);
 		}
@@ -194,6 +203,7 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 		DDMStorageId = objectInput.readLong();
 
 		recordSetId = objectInput.readLong();
+		recordSetVersion = objectInput.readUTF();
 		version = objectInput.readUTF();
 
 		displayIndex = objectInput.readInt();
@@ -241,6 +251,13 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 
 		objectOutput.writeLong(recordSetId);
 
+		if (recordSetVersion == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(recordSetVersion);
+		}
+
 		if (version == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -264,6 +281,7 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 	public long modifiedDate;
 	public long DDMStorageId;
 	public long recordSetId;
+	public String recordSetVersion;
 	public String version;
 	public int displayIndex;
 	public long lastPublishDate;

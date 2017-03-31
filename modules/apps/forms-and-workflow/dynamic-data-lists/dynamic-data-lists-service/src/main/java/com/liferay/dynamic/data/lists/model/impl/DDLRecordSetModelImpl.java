@@ -86,10 +86,13 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
+			{ "versionUserId", Types.BIGINT },
+			{ "versionUserName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "DDMStructureId", Types.BIGINT },
 			{ "recordSetKey", Types.VARCHAR },
+			{ "version", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "minDisplayRows", Types.INTEGER },
@@ -106,10 +109,13 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("versionUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("versionUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("DDMStructureId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("recordSetKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("minDisplayRows", Types.INTEGER);
@@ -118,7 +124,7 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDLRecordSet (uuid_ VARCHAR(75) null,recordSetId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDMStructureId LONG,recordSetKey VARCHAR(75) null,name STRING null,description STRING null,minDisplayRows INTEGER,scope INTEGER,settings_ TEXT null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDLRecordSet (uuid_ VARCHAR(75) null,recordSetId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDMStructureId LONG,recordSetKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description STRING null,minDisplayRows INTEGER,scope INTEGER,settings_ TEXT null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDLRecordSet";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddlRecordSet.recordSetId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDLRecordSet.recordSetId ASC";
@@ -159,10 +165,13 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
+		model.setVersionUserId(soapModel.getVersionUserId());
+		model.setVersionUserName(soapModel.getVersionUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setDDMStructureId(soapModel.getDDMStructureId());
 		model.setRecordSetKey(soapModel.getRecordSetKey());
+		model.setVersion(soapModel.getVersion());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setMinDisplayRows(soapModel.getMinDisplayRows());
@@ -239,10 +248,13 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
+		attributes.put("versionUserId", getVersionUserId());
+		attributes.put("versionUserName", getVersionUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("DDMStructureId", getDDMStructureId());
 		attributes.put("recordSetKey", getRecordSetKey());
+		attributes.put("version", getVersion());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("minDisplayRows", getMinDisplayRows());
@@ -294,6 +306,18 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 			setUserName(userName);
 		}
 
+		Long versionUserId = (Long)attributes.get("versionUserId");
+
+		if (versionUserId != null) {
+			setVersionUserId(versionUserId);
+		}
+
+		String versionUserName = (String)attributes.get("versionUserName");
+
+		if (versionUserName != null) {
+			setVersionUserName(versionUserName);
+		}
+
 		Date createDate = (Date)attributes.get("createDate");
 
 		if (createDate != null) {
@@ -316,6 +340,12 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 		if (recordSetKey != null) {
 			setRecordSetKey(recordSetKey);
+		}
+
+		String version = (String)attributes.get("version");
+
+		if (version != null) {
+			setVersion(version);
 		}
 
 		String name = (String)attributes.get("name");
@@ -481,6 +511,49 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	@JSON
 	@Override
+	public long getVersionUserId() {
+		return _versionUserId;
+	}
+
+	@Override
+	public void setVersionUserId(long versionUserId) {
+		_versionUserId = versionUserId;
+	}
+
+	@Override
+	public String getVersionUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getVersionUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
+	}
+
+	@Override
+	public void setVersionUserUuid(String versionUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getVersionUserName() {
+		if (_versionUserName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _versionUserName;
+		}
+	}
+
+	@Override
+	public void setVersionUserName(String versionUserName) {
+		_versionUserName = versionUserName;
+	}
+
+	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -542,6 +615,22 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	public String getOriginalRecordSetKey() {
 		return GetterUtil.getString(_originalRecordSetKey);
+	}
+
+	@JSON
+	@Override
+	public String getVersion() {
+		if (_version == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _version;
+		}
+	}
+
+	@Override
+	public void setVersion(String version) {
+		_version = version;
 	}
 
 	@JSON
@@ -928,10 +1017,13 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		ddlRecordSetImpl.setCompanyId(getCompanyId());
 		ddlRecordSetImpl.setUserId(getUserId());
 		ddlRecordSetImpl.setUserName(getUserName());
+		ddlRecordSetImpl.setVersionUserId(getVersionUserId());
+		ddlRecordSetImpl.setVersionUserName(getVersionUserName());
 		ddlRecordSetImpl.setCreateDate(getCreateDate());
 		ddlRecordSetImpl.setModifiedDate(getModifiedDate());
 		ddlRecordSetImpl.setDDMStructureId(getDDMStructureId());
 		ddlRecordSetImpl.setRecordSetKey(getRecordSetKey());
+		ddlRecordSetImpl.setVersion(getVersion());
 		ddlRecordSetImpl.setName(getName());
 		ddlRecordSetImpl.setDescription(getDescription());
 		ddlRecordSetImpl.setMinDisplayRows(getMinDisplayRows());
@@ -1047,6 +1139,16 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 			ddlRecordSetCacheModel.userName = null;
 		}
 
+		ddlRecordSetCacheModel.versionUserId = getVersionUserId();
+
+		ddlRecordSetCacheModel.versionUserName = getVersionUserName();
+
+		String versionUserName = ddlRecordSetCacheModel.versionUserName;
+
+		if ((versionUserName != null) && (versionUserName.length() == 0)) {
+			ddlRecordSetCacheModel.versionUserName = null;
+		}
+
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
@@ -1073,6 +1175,14 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 		if ((recordSetKey != null) && (recordSetKey.length() == 0)) {
 			ddlRecordSetCacheModel.recordSetKey = null;
+		}
+
+		ddlRecordSetCacheModel.version = getVersion();
+
+		String version = ddlRecordSetCacheModel.version;
+
+		if ((version != null) && (version.length() == 0)) {
+			ddlRecordSetCacheModel.version = null;
 		}
 
 		ddlRecordSetCacheModel.name = getName();
@@ -1119,7 +1229,7 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1133,6 +1243,10 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		sb.append(getUserId());
 		sb.append(", userName=");
 		sb.append(getUserName());
+		sb.append(", versionUserId=");
+		sb.append(getVersionUserId());
+		sb.append(", versionUserName=");
+		sb.append(getVersionUserName());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
@@ -1141,6 +1255,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		sb.append(getDDMStructureId());
 		sb.append(", recordSetKey=");
 		sb.append(getRecordSetKey());
+		sb.append(", version=");
+		sb.append(getVersion());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", description=");
@@ -1160,7 +1276,7 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.dynamic.data.lists.model.DDLRecordSet");
@@ -1191,6 +1307,14 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		sb.append(getUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>versionUserId</column-name><column-value><![CDATA[");
+		sb.append(getVersionUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>versionUserName</column-name><column-value><![CDATA[");
+		sb.append(getVersionUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
 		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
@@ -1205,6 +1329,10 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		sb.append(
 			"<column><column-name>recordSetKey</column-name><column-value><![CDATA[");
 		sb.append(getRecordSetKey());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>version</column-name><column-value><![CDATA[");
+		sb.append(getVersion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -1251,12 +1379,15 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
+	private long _versionUserId;
+	private String _versionUserName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _DDMStructureId;
 	private String _recordSetKey;
 	private String _originalRecordSetKey;
+	private String _version;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _description;

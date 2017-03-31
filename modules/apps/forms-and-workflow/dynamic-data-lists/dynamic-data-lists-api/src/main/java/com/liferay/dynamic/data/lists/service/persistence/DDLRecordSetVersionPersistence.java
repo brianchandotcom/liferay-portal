@@ -490,4 +490,7 @@ public interface DDLRecordSetVersionPersistence extends BasePersistence<DDLRecor
 	* @return the number of ddl record set versions
 	*/
 	public int countAll();
+
+	@Override
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

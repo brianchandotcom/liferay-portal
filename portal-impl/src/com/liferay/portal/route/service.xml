@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder api-package-path="com.liferay.portal.kernel.route" auto-import-default-references="false" mvcc-enabled="true" package-path="com.liferay.portal.route">
+	<namespace>Portal</namespace>
+	<entity local-service="true" name="GroupFriendlyURL" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="groupFriendlyURLId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="friendlyURL" type="String" />
+		<column name="languageId" type="String" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="C_G" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="C_F" return-type="GroupFriendlyURL" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="friendlyURL" />
+		</finder>
+		<finder name="C_G_L" return-type="GroupFriendlyURL" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="groupId" />
+			<finder-column name="languageId" />
+		</finder>
+		<finder name="C_F_L" return-type="GroupFriendlyURL" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="friendlyURL" />
+			<finder-column name="languageId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+</service-builder>

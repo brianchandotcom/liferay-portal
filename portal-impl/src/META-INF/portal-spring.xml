@@ -109,6 +109,8 @@
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFinderImpl" id="com.liferay.message.boards.kernel.service.persistence.MBThreadFinder" parent="basePersistence" />
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBThreadFlagLocalService" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFlagPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBThreadFlagPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.route.service.impl.GroupFriendlyURLLocalServiceImpl" id="com.liferay.portal.kernel.route.service.GroupFriendlyURLLocalService" />
+	<bean class="com.liferay.portal.route.service.persistence.impl.GroupFriendlyURLPersistenceImpl" id="com.liferay.portal.kernel.route.service.persistence.GroupFriendlyURLPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.impl.AccountLocalServiceImpl" id="com.liferay.portal.kernel.service.AccountLocalService" />
 	<bean class="com.liferay.portal.service.impl.AccountServiceImpl" id="com.liferay.portal.kernel.service.AccountService" />
 	<bean class="com.liferay.portal.service.persistence.impl.AccountPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.AccountPersistence" parent="basePersistence" />

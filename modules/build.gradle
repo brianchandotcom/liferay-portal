@@ -173,12 +173,6 @@ gradle.beforeProject {
 				}
 			}
 		}
-
-		pluginManager.withPlugin("com.liferay.tlddoc.builder") {
-			validateTLD {
-				enabled = false
-			}
-		}
 	}
 }
 

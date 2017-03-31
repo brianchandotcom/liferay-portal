@@ -55,17 +55,22 @@ public class TrashHandlerRegistryUtilTest {
 		List<TrashHandler> trashHandlers =
 			TrashHandlerRegistryUtil.getTrashHandlers();
 
+		boolean exists = false;
+
 		for (TrashHandler trashHandler : trashHandlers) {
 			Class<?> clazz = trashHandler.getClass();
 
 			String className = clazz.getName();
 
 			if (className.equals(TestTrashHandler.class.getName())) {
-				return;
+				exists = true;
+
+				break;
 			}
 		}
 
-		Assert.fail();
+		Assert.assertTrue(
+			TestTrashHandler.class.getName() + " is not registered", exists);
 	}
 
 }

@@ -12,14 +12,23 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.source.formatter.parser;
 
 /**
  * @author Hugo Huijser
  */
-public interface FileCheck extends SourceCheck {
+public interface JavaTerm {
 
-	public String process(String fileName, String absolutePath, String content)
-		throws Exception;
+	public String getAccessModifier();
+
+	public String getContent();
+
+	public String getName();
+
+	public JavaClass getParentJavaClass();
+
+	public boolean isStatic();
+
+	public void setParentJavaClass(JavaClass javaClass);
 
 }

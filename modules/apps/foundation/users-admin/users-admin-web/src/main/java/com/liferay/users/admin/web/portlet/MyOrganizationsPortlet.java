@@ -46,5 +46,6 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
-)public class MyOrganizationsPortlet extends UsersAdminPortlet {
+)
+public class MyOrganizationsPortlet extends UsersAdminPortlet {
 }

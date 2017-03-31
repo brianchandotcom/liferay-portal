@@ -12,14 +12,32 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.source.formatter.parser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Hugo Huijser
  */
-public interface FileCheck extends SourceCheck {
+public class JavaClass extends BaseJavaTerm {
 
-	public String process(String fileName, String absolutePath, String content)
-		throws Exception;
+	public JavaClass(
+		String name, String content, String accessModifier, boolean isStatic) {
+
+		super(name, content, accessModifier, isStatic);
+	}
+
+	public void addChildJavaTerm(JavaTerm javaTerm) {
+		javaTerm.setParentJavaClass(this);
+
+		_childJavaTerms.add(javaTerm);
+	}
+
+	public List<JavaTerm> getChildJavaTerms() {
+		return _childJavaTerms;
+	}
+
+	private final List<JavaTerm> _childJavaTerms = new ArrayList<>();
 
 }

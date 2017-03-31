@@ -18,6 +18,16 @@ component of the same application.
 library documentation of the app by using the `appTLDDocBuilder.subprojects`
 property.
 
+## 1.3.0 - 2017-03-31
+
+### Added
+- [LPS-71591]: Add the ability to set a custom XML parser to be used by
+`ValidateSchemaTask` tasks.
+- [LPS-71591]: Automatically configure the `validateTLD` task to use the version
+0.12.5 of [XML Resolver].
+
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-68666]: https://issues.liferay.com/browse/LPS-68666
+[LPS-71591]: https://issues.liferay.com/browse/LPS-71591
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023
+[XML Resolver]: http://xmlresolver.org/

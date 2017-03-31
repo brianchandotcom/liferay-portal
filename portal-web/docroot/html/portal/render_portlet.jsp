@@ -730,12 +730,6 @@ sb.append("&refresh=1");
 
 portletDisplay.setURLMin(sb.toString());
 
-// URL portlet css
-
-String urlPortletCss = "javascript:;";
-
-portletDisplay.setURLPortletCss(urlPortletCss.toString());
-
 // URL print
 
 LiferayPortletURL urlPrint = PortletURLFactoryUtil.create(request, portlet, PortletRequest.RENDER_PHASE);

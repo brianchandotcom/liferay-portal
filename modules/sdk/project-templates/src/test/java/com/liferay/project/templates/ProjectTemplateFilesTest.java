@@ -34,6 +34,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -107,6 +108,24 @@ public class ProjectTemplateFilesTest {
 	private void _testProjectTemplateFiles(
 			Path projectTemplateDirPath, String gitIgnoreTemplate)
 		throws IOException {
+
+		Path bndBndPath = projectTemplateDirPath.resolve("bnd.bnd");
+
+		Properties properties = FileTestUtil.readProperties(bndBndPath);
+
+		String bundleDescription = properties.getProperty("Bundle-Description");
+
+		Assert.assertTrue(
+			"Missing 'Bundle-Description' header in " + bndBndPath,
+			Validator.isNotNull(bundleDescription));
+
+		Matcher matcher = _bundleDescriptionPattern.matcher(bundleDescription);
+
+		Assert.assertTrue(
+			"Header 'Bundle-Description' in " + bndBndPath +
+				" must match pattern '" + _bundleDescriptionPattern.pattern() +
+					"'",
+			matcher.matches());
 
 		String projectTemplateDirName = String.valueOf(
 			projectTemplateDirPath.getFileName());
@@ -294,6 +313,8 @@ public class ProjectTemplateFilesTest {
 	private static final String _XML_DECLARATION =
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
 
+	private static final Pattern _bundleDescriptionPattern = Pattern.compile(
+		"Creates a .+\\.");
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
 			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));

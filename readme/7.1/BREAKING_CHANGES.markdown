@@ -352,3 +352,38 @@ This change was made as part of the modularization efforts to ease portal
 configuration changes.
 
 ---------------------------------------
+
+### Moved three DL File Properties to OSGi Configurations
+- **Date:** 2017-August-01
+- **JIRA Ticket:** LPS-69208
+
+#### What changed?
+
+Two DL File properties have been moved from Server Administration to the OSGi
+configuration `DLConfiguration`, and one to `DLFileEntryConfiguration`. Both configurations are located in the `document-library-api` module.
+
+#### Who is affected?
+
+This affects anyone who is using the following portal properties:
+
+- `dl.file.extensions`
+- `dl.file.max.size`
+- `dl.file.entry.previewable.processor.max.size`
+
+#### How should I update my code?
+
+Instead of overriding the `portal.properties` file, you can manage the
+properties from Portal's configuration administrator. This can be accessed by
+navigating to Liferay's *Control Panel* &rarr; *Configuration* &rarr; *System
+Settings* &rarr; *Configuration* &rarr; *Documents & Media Service* or *Documents & Media File Entries* and editing the settings there.
+
+If you would like to include the new configuration in your application, follow
+the instructions for
+[making your applications configurable in Liferay 7.0](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
+
+#### Why was this change made?
+
+This change was made as part of the modularization efforts to ease portal
+configuration changes.
+
+---------------------------------------

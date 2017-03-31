@@ -55,6 +55,10 @@ AUI.add(
 						}
 					},
 
+					triggers: {
+						value: []
+					},
+
 					type: {
 						value: 'select'
 					},
@@ -419,6 +423,12 @@ AUI.add(
 						var instance = this;
 
 						var container = instance.get('container');
+
+						var triggers = instance.get('triggers');
+
+						if (triggers) {
+							return !container.contains(event.target) && !triggers.includes(event.target);
+						}
 
 						return !container.contains(event.target);
 					},

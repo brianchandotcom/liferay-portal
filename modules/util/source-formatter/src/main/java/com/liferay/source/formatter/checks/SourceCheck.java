@@ -14,12 +14,16 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.SourceFormatterMessage;
+
+import java.util.Set;
+
 /**
  * @author Hugo Huijser
  */
-public interface FileCheck extends SourceCheck {
+public interface SourceCheck {
 
-	public String process(String fileName, String absolutePath, String content)
-		throws Exception;
+	public Set<SourceFormatterMessage> getSourceFormatterMessage(
+		String fileName);
 
 }

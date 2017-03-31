@@ -20,6 +20,8 @@
 List<MicroblogsEntry> microblogsEntries = (List<MicroblogsEntry>)request.getAttribute(WebKeys.MICROBLOGS_ENTRIES);
 
 PortletURL microblogsEntriesURL = (PortletURL)request.getAttribute(WebKeys.MICROBLOGS_ENTRIES_URL);
+
+boolean comment = GetterUtil.getBoolean((String)request.getAttribute("view_comments.jsp-comment"));
 %>
 
 <c:if test="<%= microblogsEntries.isEmpty() %>">
@@ -52,11 +54,14 @@ if (microblogsEntries != null) {
 		String userFullName = HtmlUtil.escape(PortalUtil.getUserName(microblogsEntry));
 
 		User curUser = UserLocalServiceUtil.fetchUserById(microblogsEntry.getUserId());
+
+		String userPortraitClass = comment ? "user-icon-xs" : "";
 %>
 
 		<div class="microblogs-entry" id="<portlet:namespace />microblogsEntry<%= microblogsEntry.getMicroblogsEntryId() %>">
 			<span class="thumbnail">
 				<liferay-ui:user-portrait
+					cssClass="<%= userPortraitClass %>"
 					userId="<%= microblogsEntry.getUserId() %>"
 				/>
 			</span>

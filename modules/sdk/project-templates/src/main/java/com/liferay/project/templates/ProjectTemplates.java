@@ -66,10 +66,9 @@ public class ProjectTemplates {
 				Iterator<Path> iterator = directoryStream.iterator();
 
 				while (iterator.hasNext()) {
-					Path templateBundleFile = iterator.next();
+					Path path = iterator.next();
 
-					String template = String.valueOf(
-						templateBundleFile.getFileName());
+					String template = String.valueOf(path.getFileName());
 
 					template = template.substring(
 						TEMPLATE_BUNDLE_PREFIX.length(),
@@ -78,9 +77,7 @@ public class ProjectTemplates {
 					template = template.replace('.', '-');
 
 					if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
-						try (JarFile jarFile = new JarFile(
-								templateBundleFile.toFile())) {
-
+						try (JarFile jarFile = new JarFile(path.toFile())) {
 							Manifest manifest = jarFile.getManifest();
 
 							Attributes attributes =

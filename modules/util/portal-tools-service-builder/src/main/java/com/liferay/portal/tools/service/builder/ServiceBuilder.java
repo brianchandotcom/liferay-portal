@@ -1533,6 +1533,9 @@ public class ServiceBuilder {
 		else if (type.equals("Date")) {
 			return "TIMESTAMP";
 		}
+		else if (type.equals("String")) {
+			return "VARCHAR";
+		}
 		else {
 			return null;
 		}

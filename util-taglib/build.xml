@@ -155,7 +155,7 @@
 	</target>
 
 	<target name="validate-tld">
-		<schemavalidate>
+		<schemavalidate classname="org.xmlresolver.tools.ResolvingXMLReader" classpathref="lib.classpath">
 			<fileset dir="${project.dir}/util-taglib/src/META-INF">
 				<include name="*.tld" />
 			</fileset>

@@ -30,7 +30,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.JavaTermCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
+import com.liferay.source.formatter.parser.JavaParser;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.awt.Desktop;
@@ -1557,11 +1559,31 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return content;
 		}
 
+		com.liferay.source.formatter.parser.JavaClass javaClass = null;
+
 		for (SourceCheck sourceCheck : sourceChecks) {
 			if (sourceCheck instanceof FileCheck) {
 				FileCheck fileCheck = (FileCheck)sourceCheck;
 
 				content = fileCheck.process(fileName, absolutePath, content);
+
+				for (SourceFormatterMessage sourceFormatterMessage :
+						sourceCheck.getSourceFormatterMessage(fileName)) {
+
+					processMessage(fileName, sourceFormatterMessage);
+				}
+			}
+			else if ((sourceCheck instanceof JavaTermCheck) &&
+					 (this instanceof JavaSourceProcessor)) {
+
+				JavaTermCheck javaTermCheck = (JavaTermCheck)sourceCheck;
+
+				if (javaClass == null) {
+					javaClass = JavaParser.parseJavaClass(fileName, content);
+				}
+
+				content = javaTermCheck.process(
+					fileName, absolutePath, javaClass, content);
 
 				for (SourceFormatterMessage sourceFormatterMessage :
 						sourceCheck.getSourceFormatterMessage(fileName)) {

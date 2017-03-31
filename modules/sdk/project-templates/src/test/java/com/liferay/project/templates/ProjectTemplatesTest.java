@@ -43,7 +43,6 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -1109,8 +1108,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testListTemplates() throws Exception {
-		Set<String> templates = new HashSet<>(
-			Arrays.asList(ProjectTemplates.getTemplates()));
+		Map<String, String> templates = ProjectTemplates.getTemplates();
 
 		final Set<String> expectedTemplates = new HashSet<>();
 
@@ -1129,7 +1127,7 @@ public class ProjectTemplatesTest {
 			}
 		}
 
-		Assert.assertEquals(expectedTemplates, templates);
+		Assert.assertEquals(expectedTemplates, templates.keySet());
 	}
 
 	@Rule

@@ -1761,6 +1761,20 @@
 	<model name="com.liferay.portal.kernel.workflow.WorkflowTask">
 		<field name="dueDate" type="Date" />
 	</model>
+	<model name="com.liferay.portal.kernel.route.model.GroupFriendlyURL">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="groupFriendlyURLId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="friendlyURL" type="String" />
+		<field name="languageId" type="String" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
 	<model name="com.liferay.ratings.kernel.model.RatingsEntry">
 		<field name="uuid" type="String" />
 		<field name="entryId" type="long" />

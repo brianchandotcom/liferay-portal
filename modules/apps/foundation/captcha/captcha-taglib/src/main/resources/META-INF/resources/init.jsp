@@ -33,8 +33,6 @@ page import="com.liferay.portal.util.PropsValues" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 %>

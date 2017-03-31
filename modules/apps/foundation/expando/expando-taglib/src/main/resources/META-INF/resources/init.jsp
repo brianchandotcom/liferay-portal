@@ -65,5 +65,3 @@ page import="java.util.Map" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
-
-<portlet:defineObjects />

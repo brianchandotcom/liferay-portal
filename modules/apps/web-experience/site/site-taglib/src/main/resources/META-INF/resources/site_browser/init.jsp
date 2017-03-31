@@ -39,5 +39,3 @@ page import="java.util.Map" %>
 <%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-theme:defineObjects />
-
-<portlet:defineObjects />

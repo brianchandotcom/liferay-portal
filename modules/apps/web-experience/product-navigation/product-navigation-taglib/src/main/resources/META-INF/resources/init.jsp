@@ -31,5 +31,3 @@ page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 <%@ page import="java.util.List" %>
 
 <liferay-theme:defineObjects />
-
-<portlet:defineObjects />

@@ -49,8 +49,6 @@ page import="javax.portlet.PortletURL" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%
 FlagsGroupServiceConfiguration flagsGroupServiceConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(FlagsGroupServiceConfiguration.class, themeDisplay.getCompanyId());
 

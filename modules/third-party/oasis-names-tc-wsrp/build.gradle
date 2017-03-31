@@ -1,7 +1,7 @@
+task fixGeneratedJavaFiles
+
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
-
-task fixGeneratedJavaFiles
 
 afterEvaluate {
 	["Wsrp10service", "Wsrp20service"].each {

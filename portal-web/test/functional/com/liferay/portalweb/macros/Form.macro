@@ -89,6 +89,18 @@
 		<execute macro="Button#clickDone" />
 	</command>
 
+	<command name="deleteCurrentPage">
+		<var name="key_formPageName" value="${formPageName}" />
+
+		<execute function="AssertElementPresent" locator1="FormPortlet#FORM_PAGE_ACTIVE" />
+
+		<execute function="Click" locator1="Form#PAGE_CONTROLS_ELLIPSIS_ICON" />
+
+		<execute function="AssertClick" locator1="Form#PAGE_CONTROLS_DELETE_CURRENT_PAGE" value1="Delete Current Page" />
+
+		<execute function="AssertElementNotPresent" locator1="FormPortlet#FORM_PAGE" />
+	</command>
+
 	<command name="editDescription">
 		<execute function="Type#typeAceEditor" locator1="Form#DESCRIPTION_FIELD" value1="${formDescription}" />
 	</command>

@@ -9,8 +9,6 @@ AUI.add(
 
 		var CSS_FORM_BUILDER_PAGE_MANAGER_DELETE_PAGE = A.getClassName('form', 'builder', 'page', 'manager', 'delete', 'page');
 
-		var CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE = A.getClassName('form', 'builder', 'page', 'manager', 'remove', 'success', 'page');
-
 		var CSS_FORM_BUILDER_PAGE_MANAGER_SWITCH_MODE = A.getClassName('form', 'builder', 'page', 'manager', 'switch', 'mode');
 
 		var CSS_FORM_BUILDER_PAGE_POPOVER_CONTENT = A.getClassName('form', 'builder', 'pages', 'popover', 'content');
@@ -21,7 +19,7 @@ AUI.add(
 
 		var CSS_FORM_BUILDER_SUCCESS_PAGE = A.getClassName('form', 'builder', 'success', 'page');
 
-		var CSS_FORM_BUILDER_SUCCESS_PAGE_DESCRIPTION = A.getClassName('form', 'builder', 'success', 'page', 'description');
+		var CSS_FORM_BUILDER_SUCCESS_PAGE_CONTENT = A.getClassName('form', 'builder', 'success', 'page', 'content');
 
 		var CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE = A.getClassName('form', 'builder', 'success', 'page', 'title');
 
@@ -55,9 +53,10 @@ AUI.add(
 							addPageLastPosition: Liferay.Language.get('add-new-page'),
 							addSuccessPage: Liferay.Language.get('add-success-page'),
 							aditionalInfo: Liferay.Language.get('add-a-short-description-for-this-page'),
+							content: Liferay.Language.get('content'),
+							defaultContent: Liferay.Language.get('your-information-was-successfully-received-thanks-for-fill-out'),
+							defaultTitle: Liferay.Language.get('done'),
 							deleteCurrentPage: Liferay.Language.get('delete-current-page'),
-							description: Liferay.Language.get('description'),
-							removeSuccessPage: Liferay.Language.get('remove-success-page'),
 							resetPage: Liferay.Language.get('reset-page'),
 							switchMode: Liferay.Language.get('switch-pagination-mode'),
 							title: Liferay.Language.get('title'),
@@ -94,13 +93,12 @@ AUI.add(
 					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_PAGE_LAST_POSITION + '">{addPageLastPosition}</li>' +
 					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_DELETE_PAGE + '">{deleteCurrentPage}</li>' +
 					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE + '">{addSuccessPage}</li>' +
-					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE + '" hidden="hidden">{removeSuccessPage}</li>' +
 					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_SWITCH_MODE + '">{switchMode}</li>' +
 					'</ul>',
 
 					TPL_SUCCESS_PAGE: '<div class="' + CSS_FORM_BUILDER_SUCCESS_PAGE + '">' +
 					'<label class="control-label">{title}</label><input class="' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE + ' form-control" type="text"><br>' +
-					'<label class="control-label">{description}</label><input class="' + CSS_FORM_BUILDER_SUCCESS_PAGE_DESCRIPTION + ' form-control" type="text">' +
+					'<label class="control-label">{content}</label><input class="' + CSS_FORM_BUILDER_SUCCESS_PAGE_CONTENT + ' form-control" type="text">' +
 					'</div>',
 
 					initializer: function() {
@@ -121,7 +119,7 @@ AUI.add(
 							A.Lang.sub(
 								instance.TPL_SUCCESS_PAGE,
 								{
-									description: strings.description,
+									content: strings.content,
 									title: strings.title
 								}
 							)
@@ -166,7 +164,7 @@ AUI.add(
 						var wizard = instance._getWizard();
 
 						var successPageDefinition = {
-							body: successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_DESCRIPTION).val(),
+							body: successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_CONTENT).val(),
 							enabled: wizard.get('successPage'),
 							title: successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE).val()
 						};
@@ -188,9 +186,9 @@ AUI.add(
 						if (successPageDefinition.enabled) {
 							wizard.set('successPage', successPageDefinition.enabled);
 
-							successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_DESCRIPTION).val(successPageDefinition.body);
-
 							successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE).val(successPageDefinition.title);
+
+							successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_CONTENT).val(successPageDefinition.body);
 
 							instance._uiSetMode(instance.get('mode'));
 
@@ -199,9 +197,9 @@ AUI.add(
 							var popoverBoundingBox = instance._getPopover().get('boundingBox');
 
 							popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE).hide();
-
-							popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE).show();
 						}
+
+						instance._syncPopoverContent();
 					},
 
 					toggleControlsTriggerDisabled: function(disabled) {
@@ -300,7 +298,6 @@ AUI.add(
 										addPageNextPosition: strings.addPageNextPosition,
 										addSuccessPage: strings.addSuccessPage,
 										deleteCurrentPage: this._getDeleteButtonString(),
-										removeSuccessPage: strings.removeSuccessPage,
 										switchMode: strings.switchMode
 									}
 								),
@@ -316,7 +313,6 @@ AUI.add(
 						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_PAGE_LAST_POSITION).on('click', A.bind('_onAddLastPageClick', instance));
 						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_DELETE_PAGE).on('click', A.bind('_onRemovePageClick', instance));
 						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE).on('click', A.bind('_onAddSuccessClick', instance));
-						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE).on('click', A.bind('_onRemoveSuccessClick', instance));
 
 						var switchModeNode = popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_SWITCH_MODE);
 
@@ -373,15 +369,32 @@ AUI.add(
 						return items;
 					},
 
+					_getDeleteButtonString: function() {
+						var instance = this;
+
+						var deleteButtonString;
+
+						var wizard = instance._getWizard();
+
+						if (instance.get('pagesQuantity') > 1 || wizard.get('successPage')) {
+							deleteButtonString = instance.get('strings').deleteCurrentPage;
+						}
+						else {
+							deleteButtonString = instance.get('strings').resetPage;
+						}
+
+						return deleteButtonString;
+					},
+
 					_getWizard: function() {
 						var instance = this;
 
-						if (!instance.wizard) {
+						if (!instance._wizard) {
 							var builder = instance.get('builder');
 
 							var wizardNode = builder.get('boundingBox').one('.' + CSS_FORM_BUILDER_TABVIEW);
 
-							instance.wizard = new Liferay.DDL.FormBuilderWizard(
+							instance._wizard = new Liferay.DDL.FormBuilderWizard(
 								{
 									after: {
 										selectedChange: A.bind(instance._afterWizardSelectionChange, instance)
@@ -394,7 +407,9 @@ AUI.add(
 							);
 						}
 
-						return instance.wizard;
+						instance._wizard.get('boundingBox').delegate('click', A.bind(instance._onClickItemWizard, instance), 'li');
+
+						return instance._wizard;
 					},
 
 					_onAddLastPageClick: function() {
@@ -425,13 +440,27 @@ AUI.add(
 
 						wizard.activate(pagesQuantity);
 
+						instance._syncPopoverContent();
+
 						var popoverBoundingBox = instance._getPopover().get('boundingBox');
 
 						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE).hide();
 
-						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE).show();
+						instance._resetSuccessPage();
 
 						instance._getPopover().hide();
+					},
+
+					_onClickItemWizard: function(event) {
+						var instance = this;
+
+						var currentTarget = event.currentTarget;
+
+						var attrSuccessPage = currentTarget.getData('success-page');
+
+						if (!attrSuccessPage) {
+							instance._showLayout();
+						}
 					},
 
 					_onPageControlOptionClick: function(event) {
@@ -457,62 +486,53 @@ AUI.add(
 					_onRemovePageClick: function() {
 						var instance = this;
 
-						var activePageNumber = instance.get('activePageNumber');
+						var wizard = instance._getWizard();
 
-						var pagination = instance._getPagination();
+						if (!wizard.isSuccessPageSelected()) {
+							var activePageNumber = instance.get('activePageNumber');
 
-						pagination.prev();
+							var pagination = instance._getPagination();
 
-						instance.set('pagesQuantity', instance.get('pagesQuantity') - 1);
+							pagination.prev();
 
-						instance.fire(
-							'remove',
-							{
-								removedIndex: activePageNumber - 1
+							instance.set('pagesQuantity', instance.get('pagesQuantity') - 1);
+
+							instance.fire(
+								'remove',
+								{
+									removedIndex: activePageNumber - 1
+								}
+							);
+
+							var page = Math.max(1, activePageNumber - 1);
+
+							pagination.getItem(page).addClass('active');
+
+							var titles = instance.get('titles');
+
+							titles.splice(activePageNumber - 1, 1);
+
+							instance.set('titles', titles);
+							instance.set('activePageNumber', page);
+
+							instance._removeWizardPage(activePageNumber - 1);
+
+							if (!instance.get('pagesQuantity')) {
+								instance._addPage();
+								instance._addWizardPage();
+
+								wizard.activate(0);
 							}
-						);
-
-						var page = Math.max(1, activePageNumber - 1);
-
-						pagination.getItem(page).addClass('active');
-
-						var titles = instance.get('titles');
-
-						titles.splice(activePageNumber - 1, 1);
-
-						instance.set('titles', titles);
-						instance.set('activePageNumber', page);
-
-						instance._removeWizardPage(activePageNumber - 1);
-
-						if (!instance.get('pagesQuantity')) {
-							instance._addPage();
-							instance._addWizardPage();
-
-							instance._getWizard().activate(0);
+						}
+						else {
+							instance._removeSuccessPage();
 						}
 					},
 
-					_onRemoveSuccessClick: function() {
+					_onRemoveSuccessPageClick: function() {
 						var instance = this;
 
-						var wizard = instance._getWizard();
-
-						wizard.set('successPage', false);
-
-						instance._uiSetMode(instance.get('mode'));
-
-						instance._syncControlTriggersUI();
-
-						var popoverBoundingBox = instance._getPopover().get('boundingBox');
-
-						instance._resetSuccessPage();
-
-						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE).show();
-
-						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_REMOVE_SUCCESS_PAGE).hide();
-
-						instance._showLayout();
+						instance._removeSuccessPage();
 					},
 
 					_onSwitchViewClick: function() {
@@ -558,6 +578,28 @@ AUI.add(
 						}
 
 						node.autosize._uiAutoSize();
+					},
+
+					_removeSuccessPage: function() {
+						var instance = this;
+
+						var wizard = instance._getWizard();
+
+						wizard.set('successPage', false);
+
+						instance._uiSetMode(instance.get('mode'));
+
+						instance._syncControlTriggersUI();
+
+						var popoverBoundingBox = instance._getPopover().get('boundingBox');
+
+						instance._resetSuccessPage();
+
+						popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE).show();
+
+						instance._syncPopoverContent();
+
+						instance._showLayout();
 					},
 
 					_removeWizardPage: function(index) {
@@ -623,9 +665,11 @@ AUI.add(
 
 						var successPage = boundingBox.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE);
 
-						successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_DESCRIPTION).val('');
+						var strings = instance.get('strings');
 
-						successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE).val('');
+						successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE).val(strings.defaultTitle);
+
+						successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_CONTENT).val(strings.defaultContent);
 					},
 
 					_setCharacterLimitToPageDescription: function(maxLength) {
@@ -711,6 +755,14 @@ AUI.add(
 
 						instance._plugAutoSize(pageDescription);
 						instance._plugAutoSize(pageTitle);
+					},
+
+					_syncPopoverContent: function() {
+						var instance = this;
+
+						var deletePageButton = instance._getPopover().get('boundingBox').one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_DELETE_PAGE);
+
+						deletePageButton.text(instance._getDeleteButtonString());
 					},
 
 					_syncWizardItems: function() {

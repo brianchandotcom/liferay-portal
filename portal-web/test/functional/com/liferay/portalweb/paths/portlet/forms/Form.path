@@ -85,6 +85,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_CONTROLS_DELETE_CURRENT_PAGE</td>
+	<td>//li[@class='form-builder-page-manager-delete-page' and contains(text(),'Delete Current Page')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -134,7 +139,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_PAGE_DESCRIPTION_FIELD</td>
-	<td>//div[@class='form-builder-success-page']//input[contains(@class,'success-page-description')]</td>
+	<td>//div[@class='form-builder-success-page']//input[contains(@class,'success-page-content')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -110,24 +110,36 @@
 		.calculate-container-calculator-component {
 			padding-bottom: 30px;
 			padding-top: 30px;
+			padding-left: 55px;
 
 			.calculator-add-field-button-container {
 				margin: 0 auto;
 				padding: 0;
-				text-align: center;
 
 				.calculator-add-field-button {
 					height: 49px;
 					margin-bottom: 5px;
 					width: 206px;
+					margin-left: 1px;
+				}
+
+				.form-builder-select-field {
+					margin-left: -9px;
+					margin-top: -28px;
+
+					.select-field-trigger {
+						display: none;
+					}
 				}
 			}
 
 			.calculator-button-area {
-				list-style-type: none;
 				margin: 0 auto;
 				padding: 0;
-				text-align: center;
+
+				& ul {
+					list-style-type: none;
+				}
 
 				.calculator-buttons {
 					display: inline-block;

@@ -29,10 +29,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface UploadServletRequestConfiguration {
 
-	@Meta.AD(deflt = "104857600", required = false)
+	@Meta.AD(
+		deflt = "104857600", description = "max-size-help",
+		name = "overall-maximum-upload-request-size", required = false
+	)
 	public long maxSize();
 
-	@Meta.AD(required = false)
+	@Meta.AD(
+		description = "temp-dir-help", name = "temporary-storage-directory",
+		required = false
+	)
 	public String tempDir();
 
 }

@@ -100,28 +100,27 @@ public class ProjectTemplates {
 						continue;
 					}
 
-					String bundleDescription = "";
-
-					try (InputStream inputStream = jarFile.getInputStream(
-							jarEntry);
-						JarInputStream jarInputStream = new JarInputStream(
-							inputStream)) {
-
-						Manifest manifest = jarInputStream.getManifest();
-
-						Attributes attributes = manifest.getMainAttributes();
-
-						bundleDescription = attributes.getValue(
-							"Bundle-Description");
-					}
-
 					template = template.substring(
 						TEMPLATE_BUNDLE_PREFIX.length(), template.indexOf("-"));
 
 					template = template.replace('.', '-');
 
 					if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
-						templates.put(template, bundleDescription);
+						try (InputStream inputStream = jarFile.getInputStream(
+								jarEntry);
+							JarInputStream jarInputStream = new JarInputStream(
+								inputStream)) {
+
+							Manifest manifest = jarInputStream.getManifest();
+
+							Attributes attributes =
+								manifest.getMainAttributes();
+
+							String bundleDescription = attributes.getValue(
+								"Bundle-Description");
+
+							templates.put(template, bundleDescription);
+						}
 					}
 				}
 			}

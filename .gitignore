@@ -102,6 +102,7 @@
 /lib/development/saxpath.jar
 /lib/development/sdk-addon-api-0.2.jar
 /lib/development/servlet-api.jar
+/lib/development/slf4j-simple.jar
 /lib/development/smtp.jar
 /lib/development/spring-instrument.jar
 /lib/development/spring-instrument-tomcat.jar
@@ -112,6 +113,7 @@
 /lib/development/velocity.jar
 /lib/development/velocity-tools.jar
 /lib/development/websocket-api.jar
+/lib/development/xmlresolver.jar
 /lib/portal/abdera.jar
 /lib/portal/ant.jar
 /lib/portal/antlr2.jar

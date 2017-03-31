@@ -19,10 +19,14 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.dynamic.data.lists.exporter.DDLExporter;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -37,6 +41,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -97,6 +102,9 @@ public abstract class BaseDDLExporter implements DDLExporter {
 			long recordSetId, int status, int start, int end,
 			OrderByComparator<DDLRecord> orderByComparator)
 		throws Exception;
+
+	protected abstract DDLRecordSetVersionService
+		getDDLRecordSetVersionService();
 
 	protected DDMFormFieldRenderedValue getDDMFormFieldRenderedValue(
 		DDMFormField ddmFormField, Fields fields) {
@@ -182,6 +190,23 @@ public abstract class BaseDDLExporter implements DDLExporter {
 	protected abstract
 		DDMFormValuesToFieldsConverter getDDMFormValuesToFieldsConverter();
 
+	protected Map<String, DDMFormField> getDistinctFields(long recordSetId)
+		throws Exception {
+
+		List<DDMStructureVersion> ddmStructureVersions = getStructureVersions(
+			recordSetId);
+
+		Map<String, DDMFormField> ddmFormFields = new HashMap<>();
+
+		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
+			DDMForm ddmForm = ddmStructureVersion.getDDMForm();
+
+			ddmFormFields.putAll(ddmForm.getDDMFormFieldsMap(true));
+		}
+
+		return ddmFormFields;
+	}
+
 	protected List<DDMFormFieldRenderedValue> getRenderedValues(
 			int scope, List<DDMFormField> ddmFormFields,
 			DDMFormValues ddmFormValues, DDMStructure ddmStructure)
@@ -202,6 +227,25 @@ public abstract class BaseDDLExporter implements DDLExporter {
 		String statusLabel = WorkflowConstants.getStatusLabel(status);
 
 		return LanguageUtil.get(_locale, statusLabel);
+	}
+
+	protected List<DDMStructureVersion> getStructureVersions(long recordSetId)
+		throws Exception {
+
+		DDLRecordSetVersionService recordSetVersionService =
+			getDDLRecordSetVersionService();
+
+		List<DDLRecordSetVersion> recordSetVersions =
+			recordSetVersionService.getRecordSetVersions(
+				recordSetId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		List<DDMStructureVersion> ddmStructureVersions = new ArrayList<>();
+
+		for (DDLRecordSetVersion recordSetVersion : recordSetVersions) {
+			ddmStructureVersions.add(recordSetVersion.getDDMStructureVersion());
+		}
+
+		return ddmStructureVersions;
 	}
 
 	protected static class DDMFormFieldRenderedValue {

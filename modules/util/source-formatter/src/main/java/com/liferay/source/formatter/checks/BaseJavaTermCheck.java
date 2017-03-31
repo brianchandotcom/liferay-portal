@@ -44,7 +44,7 @@ public abstract class BaseJavaTermCheck
 
 	protected abstract String[] getCheckableJavaTermNames();
 
-	protected static final String JAVA_CLASS = JavaTerm.class.getName();
+	protected static final String JAVA_CLASS = JavaClass.class.getName();
 
 	protected static final String JAVA_CONSTRUCTOR =
 		JavaConstructor.class.getName();

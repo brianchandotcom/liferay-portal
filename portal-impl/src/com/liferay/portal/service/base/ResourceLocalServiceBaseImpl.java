@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourceBlockFinder;
 import com.liferay.portal.kernel.service.persistence.ResourceBlockPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder;
@@ -93,6 +94,44 @@ public abstract class ResourceLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setCounterLocalService(
 		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
+	}
+
+	/**
+	 * Returns the resource action local service.
+	 *
+	 * @return the resource action local service
+	 */
+	public com.liferay.portal.kernel.service.ResourceActionLocalService getResourceActionLocalService() {
+		return resourceActionLocalService;
+	}
+
+	/**
+	 * Sets the resource action local service.
+	 *
+	 * @param resourceActionLocalService the resource action local service
+	 */
+	public void setResourceActionLocalService(
+		com.liferay.portal.kernel.service.ResourceActionLocalService resourceActionLocalService) {
+		this.resourceActionLocalService = resourceActionLocalService;
+	}
+
+	/**
+	 * Returns the resource action persistence.
+	 *
+	 * @return the resource action persistence
+	 */
+	public ResourceActionPersistence getResourceActionPersistence() {
+		return resourceActionPersistence;
+	}
+
+	/**
+	 * Sets the resource action persistence.
+	 *
+	 * @param resourceActionPersistence the resource action persistence
+	 */
+	public void setResourceActionPersistence(
+		ResourceActionPersistence resourceActionPersistence) {
+		this.resourceActionPersistence = resourceActionPersistence;
 	}
 
 	/**
@@ -307,6 +346,10 @@ public abstract class ResourceLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceActionLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceActionLocalService resourceActionLocalService;
+	@BeanReference(type = ResourceActionPersistence.class)
+	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = com.liferay.portal.kernel.service.ResourceBlockLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceBlockLocalService resourceBlockLocalService;
 	@BeanReference(type = ResourceBlockPersistence.class)

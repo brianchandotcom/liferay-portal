@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.gradle.plugins.source.formatter</artifactId>
-  <version>1.0.107</version>
+  <version>1.0.108</version>
   <description>Liferay Gradle Plugins Source Formatter</description>
   <licenses>
     <license>
@@ -34,7 +34,7 @@
     <dependency>
       <groupId>com.liferay</groupId>
       <artifactId>com.liferay.source.formatter</artifactId>
-      <version>1.0.374</version>
+      <version>1.0.375</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

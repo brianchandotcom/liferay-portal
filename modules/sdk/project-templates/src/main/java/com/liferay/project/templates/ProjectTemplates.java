@@ -78,7 +78,19 @@ public class ProjectTemplates {
 					template = template.replace('.', '-');
 
 					if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
-						templates.put(template, "");
+						try (JarFile jarFile = new JarFile(
+								templateBundleFile.toFile())) {
+
+							Manifest manifest = jarFile.getManifest();
+
+							Attributes attributes =
+								manifest.getMainAttributes();
+
+							String bundleDescription = attributes.getValue(
+								"Bundle-Description");
+
+							templates.put(template, bundleDescription);
+						}
 					}
 				}
 			}

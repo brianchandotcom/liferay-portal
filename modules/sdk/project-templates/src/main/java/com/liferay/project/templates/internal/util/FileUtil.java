@@ -37,6 +37,7 @@ import java.security.ProtectionDomain;
 
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Properties;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -213,6 +214,16 @@ public class FileUtil {
 			Files.readAllBytes(path), StandardCharsets.UTF_8);
 
 		return content.replace("\r\n", "\n");
+	}
+
+	public static Properties readProperties(Path path) throws IOException {
+		Properties properties = new Properties();
+
+		try (InputStream inputStream = Files.newInputStream(path)) {
+			properties.load(inputStream);
+		}
+
+		return properties;
 	}
 
 	public static void setPosixFilePermissions(

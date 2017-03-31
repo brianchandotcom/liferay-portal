@@ -95,7 +95,7 @@ public class ProjectTemplatesTest {
 
 		_gradleDistribution = URI.create(gradleDistribution);
 
-		_projectTemplateVersions = FileTestUtil.readProperties(
+		_projectTemplateVersions = FileUtil.readProperties(
 			Paths.get("build", "project-template-versions.properties"));
 	}
 
@@ -1119,7 +1119,7 @@ public class ProjectTemplatesTest {
 					FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX.length());
 
 				if (!template.equals(WorkspaceUtil.WORKSPACE)) {
-					Properties properties = FileTestUtil.readProperties(
+					Properties properties = FileUtil.readProperties(
 						path.resolve("bnd.bnd"));
 
 					String bundleDescription = properties.getProperty(

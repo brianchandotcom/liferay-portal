@@ -111,7 +111,7 @@ public class ProjectTemplateFilesTest {
 
 		Path bndBndPath = projectTemplateDirPath.resolve("bnd.bnd");
 
-		Properties properties = FileTestUtil.readProperties(bndBndPath);
+		Properties properties = FileUtil.readProperties(bndBndPath);
 
 		String bundleDescription = properties.getProperty("Bundle-Description");
 

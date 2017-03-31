@@ -150,7 +150,8 @@ public class AssetEntryQuery {
 
 		if (Validator.isNotNull(tagName)) {
 			_allTagIds = AssetTagLocalServiceUtil.getTagIds(
-				themeDisplay.getScopeGroupId(), new String[] {tagName});
+				PortalUtil.getSiteGroupId(themeDisplay.getScopeGroupId()),
+				new String[] {tagName});
 
 			if (_allTagIds.length == 0) {
 				_allTagIds = new long[] {0};

@@ -38,7 +38,8 @@ public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			FriendlyURLEntryLocalizationLocalServiceUtil.
-				fetchFriendlyURLEntryLocalization(this, languageId);
+				fetchFriendlyURLEntryLocalization(
+					getFriendlyURLEntryId(), languageId);
 
 		if (friendlyURLEntryLocalization != null) {
 			return friendlyURLEntryLocalization.getUrlTitle();
@@ -51,7 +52,7 @@ public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 	public boolean isLocalized() {
 		int count =
 			FriendlyURLEntryLocalizationLocalServiceUtil.
-				getFriendlyURLEntryLocalizationsCount(this);
+				getFriendlyURLEntryLocalizationsCount(getFriendlyURLEntryId());
 
 		if (count > 0) {
 			return true;

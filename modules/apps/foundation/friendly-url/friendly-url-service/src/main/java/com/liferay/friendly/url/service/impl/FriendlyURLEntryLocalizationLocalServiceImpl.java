@@ -39,9 +39,11 @@ public class FriendlyURLEntryLocalizationLocalServiceImpl
 
 	@Override
 	public FriendlyURLEntryLocalization addFriendlyURLEntryLocalization(
-			FriendlyURLEntry friendlyURLEntry, String urlTitle,
-			String languageId)
+			long friendlyURLEntryId, String urlTitle, String languageId)
 		throws PortalException {
+
+		FriendlyURLEntry friendlyURLEntry =
+			friendlyURLEntryPersistence.fetchByPrimaryKey(friendlyURLEntryId);
 
 		if (friendlyURLEntry == null) {
 			return null;
@@ -58,8 +60,7 @@ public class FriendlyURLEntryLocalizationLocalServiceImpl
 
 		friendlyURLEntryLocalization.setCompanyId(companyId);
 		friendlyURLEntryLocalization.setGroupId(groupId);
-		friendlyURLEntryLocalization.setFriendlyURLEntryId(
-			friendlyURLEntry.getFriendlyURLEntryId());
+		friendlyURLEntryLocalization.setFriendlyURLEntryId(friendlyURLEntryId);
 		friendlyURLEntryLocalization.setUrlTitle(urlTitle);
 		friendlyURLEntryLocalization.setLanguageId(languageId);
 
@@ -71,43 +72,33 @@ public class FriendlyURLEntryLocalizationLocalServiceImpl
 
 	@Override
 	public FriendlyURLEntryLocalization deleteFriendlyURLEntryLocalization(
-			FriendlyURLEntry friendlyURLEntry, String languageId)
+			long friendlyURLEntryId, String languageId)
 		throws PortalException {
+
+		FriendlyURLEntry friendlyURLEntry =
+			friendlyURLEntryPersistence.fetchByPrimaryKey(friendlyURLEntryId);
 
 		if (friendlyURLEntry == null) {
 			return null;
 		}
 
 		return friendlyURLEntryLocalizationPersistence.removeByG_F_L(
-			friendlyURLEntry.getGroupId(),
-			friendlyURLEntry.getFriendlyURLEntryId(), languageId);
+			friendlyURLEntry.getGroupId(), friendlyURLEntryId, languageId);
 	}
 
 	@Override
-	public void deleteFriendlyURLEntryLocalizations(
-			FriendlyURLEntry friendlyURLEntry)
+	public void deleteFriendlyURLEntryLocalizations(long friendlyURLEntryId)
 		throws PortalException {
+
+		FriendlyURLEntry friendlyURLEntry =
+			friendlyURLEntryPersistence.fetchByPrimaryKey(friendlyURLEntryId);
 
 		if (friendlyURLEntry == null) {
 			return;
 		}
 
 		friendlyURLEntryLocalizationPersistence.removeByG_F(
-			friendlyURLEntry.getGroupId(),
-			friendlyURLEntry.getFriendlyURLEntryId());
-	}
-
-	@Override
-	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
-		FriendlyURLEntry friendlyURLEntry, String languageId) {
-
-		if (friendlyURLEntry == null) {
-			return null;
-		}
-
-		return friendlyURLEntryLocalizationPersistence.fetchByG_F_L(
-			friendlyURLEntry.getGroupId(),
-			friendlyURLEntry.getFriendlyURLEntryId(), languageId);
+			friendlyURLEntry.getGroupId(), friendlyURLEntryId);
 	}
 
 	@Override
@@ -129,6 +120,21 @@ public class FriendlyURLEntryLocalizationLocalServiceImpl
 
 	@Override
 	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
+		long friendlyURLEntryId, String languageId) {
+
+		FriendlyURLEntry friendlyURLEntry =
+			friendlyURLEntryPersistence.fetchByPrimaryKey(friendlyURLEntryId);
+
+		if (friendlyURLEntry == null) {
+			return null;
+		}
+
+		return friendlyURLEntryLocalizationPersistence.fetchByG_F_L(
+			friendlyURLEntry.getGroupId(), friendlyURLEntryId, languageId);
+	}
+
+	@Override
+	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
 			long groupId, String urlTitle, String languageId)
 		throws PortalException {
 
@@ -138,36 +144,40 @@ public class FriendlyURLEntryLocalizationLocalServiceImpl
 
 	@Override
 	public List<FriendlyURLEntryLocalization> getFriendlyURLEntryLocalizations(
-		FriendlyURLEntry friendlyURLEntry) {
+		long friendlyURLEntryId) {
+
+		FriendlyURLEntry friendlyURLEntry =
+			friendlyURLEntryPersistence.fetchByPrimaryKey(friendlyURLEntryId);
 
 		if (friendlyURLEntry == null) {
 			return Collections.emptyList();
 		}
 
 		return friendlyURLEntryLocalizationPersistence.findByG_F(
-			friendlyURLEntry.getGroupId(),
-			friendlyURLEntry.getFriendlyURLEntryId());
+			friendlyURLEntry.getGroupId(), friendlyURLEntryId);
 	}
 
 	@Override
-	public int getFriendlyURLEntryLocalizationsCount(
-		FriendlyURLEntry friendlyURLEntry) {
+	public int getFriendlyURLEntryLocalizationsCount(long friendlyURLEntryId) {
+		FriendlyURLEntry friendlyURLEntry =
+			friendlyURLEntryPersistence.fetchByPrimaryKey(friendlyURLEntryId);
 
 		if (friendlyURLEntry == null) {
 			return 0;
 		}
 
 		return friendlyURLEntryLocalizationPersistence.countByG_F(
-			friendlyURLEntry.getGroupId(),
-			friendlyURLEntry.getFriendlyURLEntryId());
+			friendlyURLEntry.getGroupId(), friendlyURLEntryId);
 	}
 
 	@Override
 	public List<FriendlyURLEntryLocalization>
 			updateFriendlyURLEntryLocalizations(
-				FriendlyURLEntry friendlyURLEntry,
-				Map<Locale, String> urlTitleMap)
+				long friendlyURLEntryId, Map<Locale, String> urlTitleMap)
 		throws PortalException {
+
+		FriendlyURLEntry friendlyURLEntry =
+			friendlyURLEntryPersistence.fetchByPrimaryKey(friendlyURLEntryId);
 
 		if (friendlyURLEntry == null) {
 			return Collections.emptyList();
@@ -185,7 +195,7 @@ public class FriendlyURLEntryLocalizationLocalServiceImpl
 
 			if (Validator.isNull(urlTitle)) {
 				deleteFriendlyURLEntryLocalization(
-					friendlyURLEntry, languageId);
+					friendlyURLEntryId, languageId);
 
 				continue;
 			}
@@ -201,7 +211,7 @@ public class FriendlyURLEntryLocalizationLocalServiceImpl
 			}
 
 			friendlyURLEntryLocalization = addFriendlyURLEntryLocalization(
-				friendlyURLEntry, urlTitle, languageId);
+				friendlyURLEntryId, urlTitle, languageId);
 
 			friendlyURLEntryLocalizations.add(friendlyURLEntryLocalization);
 		}

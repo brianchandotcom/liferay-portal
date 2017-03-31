@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.util.ArrayList;
@@ -46,13 +46,13 @@ public class GroovySourceProcessor extends JavaSourceProcessor {
 	}
 
 	@Override
-	protected List<FileCheck> getFileChecks() {
-		return _fileChecks;
+	protected List<SourceCheck> getSourceChecks() {
+		return _sourceChecks;
 	}
 
 	@Override
-	protected void populateFileChecks() {
-		_fileChecks.add(new WhitespaceCheck());
+	protected void populateSourceChecks() {
+		_sourceChecks.add(new WhitespaceCheck());
 	}
 
 	@Override
@@ -61,6 +61,6 @@ public class GroovySourceProcessor extends JavaSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {"**/*.groovy"};
 
-	private final List<FileCheck> _fileChecks = new ArrayList<>();
+	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

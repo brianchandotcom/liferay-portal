@@ -24,7 +24,7 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.FTLEmptyLinesCheck;
 import com.liferay.source.formatter.checks.FTLIfStatementCheck;
 import com.liferay.source.formatter.checks.FTLWhitespaceCheck;
-import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.SourceCheck;
 
 import java.io.File;
 
@@ -241,16 +241,16 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<FileCheck> getFileChecks() {
-		return _fileChecks;
+	protected List<SourceCheck> getSourceChecks() {
+		return _sourceChecks;
 	}
 
 	@Override
-	protected void populateFileChecks() {
-		_fileChecks.add(new FTLWhitespaceCheck());
+	protected void populateSourceChecks() {
+		_sourceChecks.add(new FTLWhitespaceCheck());
 
-		_fileChecks.add(new FTLEmptyLinesCheck());
-		_fileChecks.add(new FTLIfStatementCheck());
+		_sourceChecks.add(new FTLEmptyLinesCheck());
+		_sourceChecks.add(new FTLIfStatementCheck());
 	}
 
 	protected String sortLiferayVariables(String content) {
@@ -288,7 +288,6 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	private final Pattern _assignTagsBlockPattern = Pattern.compile(
 		"((\t*)<#assign[^<#/>]*=[^<#/>]*/>(\n|$)+){2,}", Pattern.MULTILINE);
-	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _incorrectAssignTagPattern = Pattern.compile(
 		"(<#assign .*=.*[^/])>(\n|$)");
 	private final Pattern _liferayVariablePattern = Pattern.compile(
@@ -299,6 +298,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*)<@.+=.+=.+/>");
 	private final Pattern _singleParameterTagPattern = Pattern.compile(
 		"(<@[\\w\\.]+ \\w+)( )?=([^=]+?)/>");
+	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 	private final Pattern _stringRelationalOperationPattern = Pattern.compile(
 		"(\\W)([\\w.]+) ([!=]=) \"(\\w*)\"(.)");
 

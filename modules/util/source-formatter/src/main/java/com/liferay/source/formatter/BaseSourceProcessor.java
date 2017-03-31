@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.awt.Desktop;
@@ -100,10 +101,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		preFormat();
 
-		populateFileChecks();
+		populateSourceChecks();
 
 		if ((portalSource || subrepository) && _containsModuleFile(fileNames)) {
-			populateModuleFileChecks();
+			populateModuleSourceChecks();
 		}
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
@@ -525,7 +526,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				fileName, "Only *.java files are allowed in /src/*/java/");
 		}
 
-		String newContent = processFileChecks(fileName, absolutePath, content);
+		String newContent = processSourceChecks(
+			fileName, absolutePath, content);
 
 		newContent = doFormat(file, fileName, absolutePath, newContent);
 
@@ -790,8 +792,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			sourceFormatterArgs.getBaseDirName(), fileName, level);
 	}
 
-	protected abstract List<FileCheck> getFileChecks();
-
 	protected List<String> getFileNames(
 			String basedir, List<String> recentChangesFileNames,
 			String[] excludes, String[] includes)
@@ -964,7 +964,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return x + 1;
 	}
 
-	protected List<FileCheck> getModuleFileChecks() {
+	protected List<SourceCheck> getModuleSourceChecks() {
 		return null;
 	}
 
@@ -1057,6 +1057,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return ListUtil.fromString(
 			GetterUtil.getString(getProperty(key)), StringPool.COMMA);
 	}
+
+	protected abstract List<SourceCheck> getSourceChecks();
 
 	protected boolean isExcludedPath(String property, String path) {
 		return isExcludedPath(property, path, -1);
@@ -1187,10 +1189,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return absolutePath.contains("/modules/");
 	}
 
-	protected abstract void populateFileChecks()
+	protected abstract void populateSourceChecks()
 		throws Exception;
 
-	protected void populateModuleFileChecks() throws Exception {
+	protected void populateModuleSourceChecks() throws Exception {
 	}
 
 	protected void postFormat() throws Exception {
@@ -1205,16 +1207,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected String processFileChecks(
+	protected String processSourceChecks(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		content = _processFileChecks(
-			fileName, absolutePath, content, getFileChecks());
+		content = _processSourceChecks(
+			fileName, absolutePath, content, getSourceChecks());
 
 		if (isModulesFile(absolutePath)) {
-			content = _processFileChecks(
-				fileName, absolutePath, content, getModuleFileChecks());
+			content = _processSourceChecks(
+				fileName, absolutePath, content, getModuleSourceChecks());
 		}
 
 		return content;
@@ -1546,25 +1548,26 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return pattern;
 	}
 
-	private String _processFileChecks(
+	private String _processSourceChecks(
 			String fileName, String absolutePath, String content,
-			List<FileCheck> fileChecks)
+			List<SourceCheck> sourceChecks)
 		throws Exception {
 
-		if (fileChecks == null) {
+		if (ListUtil.isEmpty(sourceChecks)) {
 			return content;
 		}
 
-		for (FileCheck fileCheck : fileChecks) {
-			content = fileCheck.process(fileName, absolutePath, content);
+		for (SourceCheck sourceCheck : sourceChecks) {
+			if (sourceCheck instanceof FileCheck) {
+				FileCheck fileCheck = (FileCheck)sourceCheck;
 
-			Set<SourceFormatterMessage> sourceFormatterMessages =
-				fileCheck.getSourceFormatterMessage(fileName);
+				content = fileCheck.process(fileName, absolutePath, content);
 
-			for (SourceFormatterMessage sourceFormatterMessage :
-					sourceFormatterMessages) {
+				for (SourceFormatterMessage sourceFormatterMessage :
+						sourceCheck.getSourceFormatterMessage(fileName)) {
 
-				processMessage(fileName, sourceFormatterMessage);
+					processMessage(fileName, sourceFormatterMessage);
+				}
 			}
 		}
 

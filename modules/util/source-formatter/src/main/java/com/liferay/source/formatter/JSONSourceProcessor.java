@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
@@ -154,13 +154,13 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<FileCheck> getFileChecks() {
-		return _fileChecks;
+	protected List<SourceCheck> getSourceChecks() {
+		return _sourceChecks;
 	}
 
 	@Override
-	protected void populateFileChecks() {
-		_fileChecks.add(new WhitespaceCheck(true));
+	protected void populateSourceChecks() {
+		_sourceChecks.add(new WhitespaceCheck(true));
 	}
 
 	protected String sort(String content) {
@@ -219,11 +219,11 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {"**/*.json"};
 
-	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _incorrectLineBreakPattern = Pattern.compile(
 		"\t[\\}\\]]{2}");
 	private final Pattern _leadingSpacesPattern = Pattern.compile(
 		"(^[\t ]*)(  )([^ ])");
 	private final Pattern _missingWhitespacePattern = Pattern.compile(":\\S");
+	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

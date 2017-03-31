@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.source.formatter.checks.CopyrightCheck;
-import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JavaAnnotationsCheck;
 import com.liferay.source.formatter.checks.JavaAssertEqualsCheck;
 import com.liferay.source.formatter.checks.JavaBooleanUsageCheck;
@@ -67,6 +66,7 @@ import com.liferay.source.formatter.checks.LanguageKeysCheck;
 import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.SessionKeysCheck;
+import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
 import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
@@ -329,13 +329,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<FileCheck> getFileChecks() {
-		return _fileChecks;
+	protected List<SourceCheck> getModuleSourceChecks() {
+		return _moduleSourceChecks;
 	}
 
 	@Override
-	protected List<FileCheck> getModuleFileChecks() {
-		return _moduleFileChecks;
+	protected List<SourceCheck> getSourceChecks() {
+		return _sourceChecks;
 	}
 
 	protected String[] getPluginExcludes(String pluginDirectoryName) {
@@ -393,84 +393,103 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void populateFileChecks() throws Exception {
-		_fileChecks.add(new JavaWhitespaceCheck());
+	protected void populateModuleSourceChecks() throws Exception {
+		_moduleSourceChecks.add(
+			new JavaModuleExtendedObjectClassDefinitionCheck());
 
-		_fileChecks.add(
+		boolean checkRegistryInTestClasses = GetterUtil.getBoolean(
+			System.getProperty(
+				"source.formatter.check.registry.in.test.classes"));
+
+		_moduleSourceChecks.add(
+			new JavaModuleIllegalImportsCheck(checkRegistryInTestClasses));
+
+		_moduleSourceChecks.add(new JavaModuleInternalImportsCheck());
+		_moduleSourceChecks.add(new JavaModuleServiceProxyFactoryCheck());
+		_moduleSourceChecks.add(new JavaModuleTestCheck());
+		_moduleSourceChecks.add(
+			new JavaOSGiReferenceCheck(_getModuleFileNamesMap()));
+	}
+
+	@Override
+	protected void populateSourceChecks() throws Exception {
+		_sourceChecks.add(new JavaWhitespaceCheck());
+
+		_sourceChecks.add(
 			new CopyrightCheck(
 				getContent(
 					sourceFormatterArgs.getCopyrightFileName(),
 					PORTAL_MAX_DIR_LEVEL)));
-		_fileChecks.add(new JavaAnnotationsCheck());
-		_fileChecks.add(new JavaAssertEqualsCheck());
-		_fileChecks.add(new JavaBooleanUsageCheck());
-		_fileChecks.add(
+		_sourceChecks.add(new JavaAnnotationsCheck());
+		_sourceChecks.add(new JavaAssertEqualsCheck());
+		_sourceChecks.add(new JavaBooleanUsageCheck());
+		_sourceChecks.add(
 			new JavaCombineLinesCheck(
 				getExcludes(_FIT_ON_SINGLE_LINE_EXCLUDES),
 				sourceFormatterArgs.getMaxLineLength()));
-		_fileChecks.add(new JavaDataAccessConnectionCheck());
-		_fileChecks.add(
+		_sourceChecks.add(new JavaDataAccessConnectionCheck());
+		_sourceChecks.add(
 			new JavaDiamondOperatorCheck(
 				getExcludes(_DIAMOND_OPERATOR_EXCLUDES)));
-		_fileChecks.add(
+		_sourceChecks.add(
 			new JavaDeserializationSecurityCheck(
 				getExcludes(_SECURE_DESERIALIZATION_EXCLUDES),
 				getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
-		_fileChecks.add(new JavaEmptyLinesCheck());
-		_fileChecks.add(new JavaExceptionCheck());
-		_fileChecks.add(
+		_sourceChecks.add(new JavaEmptyLinesCheck());
+		_sourceChecks.add(new JavaExceptionCheck());
+		_sourceChecks.add(
 			new JavaHibernateSQLCheck(
 				getExcludes(_HIBERNATE_SQL_QUERY_EXCLUDES)));
-		_fileChecks.add(
+		_sourceChecks.add(
 			new JavaIfStatementCheck(sourceFormatterArgs.getMaxLineLength()));
-		_fileChecks.add(
+		_sourceChecks.add(
 			new JavaIllegalImportsCheck(
 				getExcludes(_PROXY_EXCLUDES),
 				getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES),
 				getExcludes(_SECURE_RANDOM_EXCLUDES)));
-		_fileChecks.add(new JavaIOExceptionCheck());
-		_fileChecks.add(
+		_sourceChecks.add(new JavaIOExceptionCheck());
+		_sourceChecks.add(
 			new JavaLineBreakCheck(sourceFormatterArgs.getMaxLineLength()));
-		_fileChecks.add(new JavaLogClassNameCheck());
-		_fileChecks.add(new JavaLogLevelCheck());
-		_fileChecks.add(
+		_sourceChecks.add(new JavaLogClassNameCheck());
+		_sourceChecks.add(new JavaLogLevelCheck());
+		_sourceChecks.add(
 			new JavaLongLinesCheck(
 				getExcludes(_LINE_LENGTH_EXCLUDES),
 				sourceFormatterArgs.getMaxLineLength()));
-		_fileChecks.add(new JavaPackagePathCheck());
-		_fileChecks.add(new JavaProcessCallableCheck());
-		_fileChecks.add(new JavaResultSetCheck());
-		_fileChecks.add(new JavaSeeAnnotationCheck());
-		_fileChecks.add(new JavaStopWatchCheck());
-		_fileChecks.add(new JavaStylingCheck());
-		_fileChecks.add(new JavaSystemExceptionCheck());
-		_fileChecks.add(
+		_sourceChecks.add(new JavaPackagePathCheck());
+		_sourceChecks.add(new JavaProcessCallableCheck());
+		_sourceChecks.add(new JavaResultSetCheck());
+		_sourceChecks.add(new JavaSeeAnnotationCheck());
+		_sourceChecks.add(new JavaStopWatchCheck());
+		_sourceChecks.add(new JavaStylingCheck());
+		_sourceChecks.add(new JavaSystemExceptionCheck());
+		_sourceChecks.add(
 			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
-		_fileChecks.add(new SessionKeysCheck());
-		_fileChecks.add(new StringUtilCheck());
-		_fileChecks.add(new UnparameterizedClassCheck());
-		_fileChecks.add(new ValidatorEqualsCheck());
+		_sourceChecks.add(new SessionKeysCheck());
+		_sourceChecks.add(new StringUtilCheck());
+		_sourceChecks.add(new UnparameterizedClassCheck());
+		_sourceChecks.add(new ValidatorEqualsCheck());
 
 		if (portalSource || subrepository) {
-			_fileChecks.add(new JavaFinderCacheCheck());
-			_fileChecks.add(new JavaSystemEventAnnotationCheck());
-			_fileChecks.add(
+			_sourceChecks.add(new JavaFinderCacheCheck());
+			_sourceChecks.add(new JavaSystemEventAnnotationCheck());
+			_sourceChecks.add(
 				new JavaVerifyUpgradeConnectionCheck(
 					getExcludes(_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES)));
-			_fileChecks.add(
+			_sourceChecks.add(
 				new JavaUpgradeClassCheck(
 					getExcludes(_UPGRADE_SERVICE_UTIL_EXCLUDES)));
-			_fileChecks.add(
+			_sourceChecks.add(
 				new JavaXMLSecurityCheck(
 					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES),
 					getExcludes(_SECURE_XML_EXCLUDES)));
-			_fileChecks.add(
+			_sourceChecks.add(
 				new ResourceBundleCheck(
 					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
 		}
 
 		if (portalSource) {
-			_fileChecks.add(
+			_sourceChecks.add(
 				new LanguageKeysCheck(
 					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
 					getPortalLanguageProperties()));
@@ -479,28 +498,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (GetterUtil.getBoolean(
 				getProperty("add.missing.deprecation.release.version"))) {
 
-			_fileChecks.add(
+			_sourceChecks.add(
 				new JavaDeprecatedJavadocCheck(portalSource, subrepository));
 		}
-	}
-
-	@Override
-	protected void populateModuleFileChecks() throws Exception {
-		_moduleFileChecks.add(
-			new JavaModuleExtendedObjectClassDefinitionCheck());
-
-		boolean checkRegistryInTestClasses = GetterUtil.getBoolean(
-			System.getProperty(
-				"source.formatter.check.registry.in.test.classes"));
-
-		_moduleFileChecks.add(
-			new JavaModuleIllegalImportsCheck(checkRegistryInTestClasses));
-
-		_moduleFileChecks.add(new JavaModuleInternalImportsCheck());
-		_moduleFileChecks.add(new JavaModuleServiceProxyFactoryCheck());
-		_moduleFileChecks.add(new JavaModuleTestCheck());
-		_moduleFileChecks.add(
-			new JavaOSGiReferenceCheck(_getModuleFileNamesMap()));
 	}
 
 	@Override
@@ -517,7 +517,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected String processFileChecks(
+	protected String processSourceChecks(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
@@ -525,7 +525,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return content;
 		}
 
-		return super.processFileChecks(fileName, absolutePath, content);
+		return super.processSourceChecks(fileName, absolutePath, content);
 	}
 
 	private Map<String, String> _getModuleFileNamesMap() throws Exception {
@@ -764,12 +764,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t+)(\\S.* )?new (.|\\(\n)*\\) \\{\n\n");
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
-	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private int _maxLineLength;
-	private final List<FileCheck> _moduleFileChecks = new ArrayList<>();
+	private final List<SourceCheck> _moduleSourceChecks = new ArrayList<>();
 	private final Pattern _packagePattern = Pattern.compile(
 		"(\n|^)\\s*package (.*);\n");
 	private String _portalCustomSQLContent;
+	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();
 
 }

@@ -17,8 +17,8 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.LanguageKeysCheck;
+import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
@@ -101,16 +101,16 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<FileCheck> getFileChecks() {
-		return _fileChecks;
+	protected List<SourceCheck> getSourceChecks() {
+		return _sourceChecks;
 	}
 
 	@Override
-	protected void populateFileChecks() throws Exception {
-		_fileChecks.add(new WhitespaceCheck());
+	protected void populateSourceChecks() throws Exception {
+		_sourceChecks.add(new WhitespaceCheck());
 
 		if (portalSource) {
-			_fileChecks.add(
+			_sourceChecks.add(
 				new LanguageKeysCheck(
 					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
 					getPortalLanguageProperties()));
@@ -119,8 +119,8 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = {"**/*.js"};
 
-	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _multipleVarsOnSingleLinePattern = Pattern.compile(
 		"\t+var \\w+\\, ");
+	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

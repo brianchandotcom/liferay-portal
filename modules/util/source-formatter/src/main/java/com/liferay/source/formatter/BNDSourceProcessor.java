@@ -27,7 +27,7 @@ import com.liferay.source.formatter.checks.BNDSchemaVersionCheck;
 import com.liferay.source.formatter.checks.BNDStylingCheck;
 import com.liferay.source.formatter.checks.BNDWebContextPathCheck;
 import com.liferay.source.formatter.checks.BNDWhitespaceCheck;
-import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.SourceCheck;
 
 import java.io.File;
 
@@ -58,40 +58,40 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<FileCheck> getFileChecks() {
-		return _fileChecks;
+	protected List<SourceCheck> getModuleSourceChecks() {
+		return _moduleSourceChecks;
 	}
 
 	@Override
-	protected List<FileCheck> getModuleFileChecks() {
-		return _moduleFileChecks;
+	protected List<SourceCheck> getSourceChecks() {
+		return _sourceChecks;
 	}
 
 	@Override
-	protected void populateFileChecks() {
-		_fileChecks.add(new BNDWhitespaceCheck());
-
-		_fileChecks.add(new BNDCapabilityCheck());
-		_fileChecks.add(new BNDDefinitionKeysCheck());
-		_fileChecks.add(new BNDImportsCheck());
-		_fileChecks.add(new BNDLineBreaksCheck());
-		_fileChecks.add(new BNDRangeCheck());
-		_fileChecks.add(new BNDSchemaVersionCheck());
-		_fileChecks.add(new BNDStylingCheck());
+	protected void populateModuleSourceChecks() throws Exception {
+		_moduleSourceChecks.add(new BNDBundleNameCheck());
+		_moduleSourceChecks.add(new BNDDirectoryNameCheck());
+		_moduleSourceChecks.add(new BNDExportsCheck());
+		_moduleSourceChecks.add(new BNDIncludeResourceCheck());
+		_moduleSourceChecks.add(new BNDWebContextPathCheck());
 	}
 
 	@Override
-	protected void populateModuleFileChecks() throws Exception {
-		_moduleFileChecks.add(new BNDBundleNameCheck());
-		_moduleFileChecks.add(new BNDDirectoryNameCheck());
-		_moduleFileChecks.add(new BNDExportsCheck());
-		_moduleFileChecks.add(new BNDIncludeResourceCheck());
-		_moduleFileChecks.add(new BNDWebContextPathCheck());
+	protected void populateSourceChecks() {
+		_sourceChecks.add(new BNDWhitespaceCheck());
+
+		_sourceChecks.add(new BNDCapabilityCheck());
+		_sourceChecks.add(new BNDDefinitionKeysCheck());
+		_sourceChecks.add(new BNDImportsCheck());
+		_sourceChecks.add(new BNDLineBreaksCheck());
+		_sourceChecks.add(new BNDRangeCheck());
+		_sourceChecks.add(new BNDSchemaVersionCheck());
+		_sourceChecks.add(new BNDStylingCheck());
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};
 
-	private final List<FileCheck> _fileChecks = new ArrayList<>();
-	private final List<FileCheck> _moduleFileChecks = new ArrayList<>();
+	private final List<SourceCheck> _moduleSourceChecks = new ArrayList<>();
+	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

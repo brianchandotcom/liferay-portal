@@ -1310,6 +1310,28 @@ public class ServiceBuilder {
 		return mappingEntitiesPKList;
 	}
 
+	public LinkedHashMap<String, List<EntityColumn>> getMappingEntitiesMap(
+			String mappingTable)
+		throws Exception {
+
+		LinkedHashMap<String, List<EntityColumn>> mappingEntitiesPKMap =
+			new LinkedHashMap<>();
+
+		EntityMapping entityMapping = _entityMappings.get(mappingTable);
+
+		for (int i = 0; i < 3; i++) {
+			Entity entity = getEntity(entityMapping.getEntity(i));
+
+			if (entity == null) {
+				return null;
+			}
+
+			mappingEntitiesPKMap.put(entity.getName(), entity.getPKList());
+		}
+
+		return mappingEntitiesPKMap;
+	}
+
 	public int getMaxLength(String model, String field) {
 		Map<String, String> hints = ModelHintsUtil.getHints(
 			_apiPackagePath + ".model." + model, field);

@@ -16,8 +16,10 @@ package com.liferay.dynamic.data.lists.model.impl;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -64,6 +66,19 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 	@Override
 	public List<DDLRecord> getRecords() {
 		return DDLRecordLocalServiceUtil.getRecords(getRecordSetId());
+	}
+
+	@Override
+	public DDLRecordSetVersion getRecordSetVersion() throws PortalException {
+		return getRecordSetVersion(getVersion());
+	}
+
+	@Override
+	public DDLRecordSetVersion getRecordSetVersion(String version)
+		throws PortalException {
+
+		return DDLRecordSetVersionLocalServiceUtil.getRecordSetVersion(
+			getRecordSetId(), version);
 	}
 
 	@Override

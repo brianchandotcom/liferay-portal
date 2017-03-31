@@ -12,23 +12,26 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.model;
+package com.liferay.dynamic.data.lists.internal.upgrade.v1_0_3;
+
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Leonardo Barros
  */
-public class DDLRecordSetConstants {
+public class UpgradeSchema extends UpgradeProcess {
 
-	public static final int MIN_DISPLAY_ROWS_DEFAULT = 10;
+	@Override
+	protected void doUpgrade() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String template = StringUtil.read(
+				UpgradeSchema.class.getResourceAsStream(
+					"dependencies/update.sql"));
 
-	public static final int SCOPE_ANY = -1;
-
-	public static final int SCOPE_DYNAMIC_DATA_LISTS = 0;
-
-	public static final int SCOPE_FORMS = 2;
-
-	public static final int SCOPE_KALEO_FORMS = 1;
-
-	public static final String VERSION_DEFAULT = "1.0";
+			runSQLTemplateString(template, false, false);
+		}
+	}
 
 }

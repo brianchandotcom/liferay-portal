@@ -56,6 +56,11 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.dynamic.data.lists.service", "1.0.1", "1.0.2",
 			new UpgradeDDLRecordSetSettings(_jsonFactory));
+
+		registry.register(
+			"com.liferay.dynamic.data.lists.service", "1.0.2", "1.0.3",
+			new com.liferay.dynamic.data.lists.internal.upgrade.v1_0_3.
+				UpgradeSchema());
 	}
 
 	@Reference(unbind = "-")

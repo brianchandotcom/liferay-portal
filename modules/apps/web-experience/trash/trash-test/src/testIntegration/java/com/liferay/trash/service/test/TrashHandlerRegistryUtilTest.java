@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.trash;
+package com.liferay.trash.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.trash.bundle.trashhandlerregistryutil.TestTrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.trash.service.test.trashhandlerresgistryutil.TestTrashHandler;
 
 import java.util.List;
 
@@ -25,18 +27,18 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Peter Fellwock
  */
+@RunWith(Arquillian.class)
 public class TrashHandlerRegistryUtilTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.trashhandlerregistryutil"));
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testGetTrashHandler() {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.trash.bundle.trashhandlerregistryutil;
+package com.liferay.trash.service.test.trashhandlerresgistryutil;
 
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.SystemEvent;
@@ -51,7 +51,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 1.0.0
 	 */
 	@Deprecated
 	@Override

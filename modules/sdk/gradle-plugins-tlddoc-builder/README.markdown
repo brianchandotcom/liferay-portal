@@ -71,7 +71,7 @@ depending on whether the [`java`](https://docs.gradle.org/current/userguide/java
 plugin is applied:
 
 Property Name | Default Value with the `java` plugin
-------------- | -------------
+------------- | ------------------------------------
 [`destinationDir`](#destinationdir) | `${project.docsDir}/tlddoc`
 [`includes`](#includes) | `["**/*.tld"]`
 [`source`](#source) | `project.sourceSets.main.resources.srcDirs`

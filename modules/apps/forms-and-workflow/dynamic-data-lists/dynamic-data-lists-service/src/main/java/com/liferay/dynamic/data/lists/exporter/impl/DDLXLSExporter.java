@@ -23,19 +23,21 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.ByteArrayOutputStream;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -79,7 +81,8 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 	protected void createDataRow(
 		int rowIndex, Sheet sheet, String status, CellStyle style,
-		List<DDMFormFieldRenderedValue> values) {
+		Map<String, DDMFormField> ddmFormFields,
+		Map<String, DDMFormFieldRenderedValue> values) {
 
 		Row row = sheet.createRow(rowIndex);
 
@@ -87,11 +90,21 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 		Cell cell = null;
 
-		for (DDMFormFieldRenderedValue value : values) {
+		for (Map.Entry<String, DDMFormField> entry : ddmFormFields.entrySet()) {
 			cell = row.createCell(cellIndex++, CellType.STRING);
 
 			cell.setCellStyle(style);
-			cell.setCellValue(GetterUtil.getString(value.getValue()));
+
+			if (values.containsKey(entry.getKey())) {
+				DDMFormFieldRenderedValue ddmFormFieldRenderedValue =
+					values.get(entry.getKey());
+
+				cell.setCellValue(
+					GetterUtil.getString(ddmFormFieldRenderedValue.getValue()));
+			}
+			else {
+				cell.setCellValue(StringPool.BLANK);
+			}
 		}
 
 		cell = row.createCell(cellIndex++, CellType.STRING);
@@ -101,7 +114,8 @@ public class DDLXLSExporter extends BaseDDLExporter {
 	}
 
 	protected void createHeaderRow(
-		List<DDMFormField> ddmFormFields, Sheet sheet, Workbook workbook) {
+		Collection<DDMFormField> ddmFormFields, Sheet sheet,
+		Workbook workbook) {
 
 		Row row = sheet.createRow(0);
 
@@ -135,9 +149,8 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
-
-		List<DDMFormField> ddmFormFields = getDDMFormFields(ddmStructure);
+		Map<String, DDMFormField> ddmFormFields = getDistinctFields(
+			recordSetId);
 
 		try (ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
@@ -145,7 +158,7 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 			Sheet sheet = workbook.createSheet();
 
-			createHeaderRow(ddmFormFields, sheet, workbook);
+			createHeaderRow(ddmFormFields.values(), sheet, workbook);
 
 			List<DDLRecord> records = _ddlRecordLocalService.getRecords(
 				recordSetId, status, start, end, orderByComparator);
@@ -165,14 +178,15 @@ public class DDLXLSExporter extends BaseDDLExporter {
 				DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
 					recordVersion.getDDMStorageId());
 
-				List<DDMFormFieldRenderedValue> values = getRenderedValues(
-					recordSet.getScope(), ddmFormFields, ddmFormValues,
-					ddmStructure);
+				Map<String, DDMFormFieldRenderedValue> values =
+					getRenderedValues(
+						recordSet.getScope(), ddmFormFields.values(),
+						ddmFormValues);
 
 				createDataRow(
 					rowIndex++, sheet,
 					getStatusMessage(recordVersion.getStatus()), cellStyle,
-					values);
+					ddmFormFields, values);
 			}
 
 			workbook.write(byteArrayOutputStream);
@@ -197,10 +211,10 @@ public class DDLXLSExporter extends BaseDDLExporter {
 	}
 
 	@Override
-	protected
-		DDMFormValuesToFieldsConverter getDDMFormValuesToFieldsConverter() {
+	protected DDMFormFieldValueRendererRegistry
+		getDDMFormFieldValueRendererRegistry() {
 
-		return _ddmFormValuesToFieldsConverter;
+		return _ddmFormFieldValueRendererRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -232,10 +246,10 @@ public class DDLXLSExporter extends BaseDDLExporter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormValuesToFieldsConverter(
-		DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter) {
+	protected void setDDMFormFieldValueRendererRegistry(
+		DDMFormFieldValueRendererRegistry ddmFormFieldValueRendererRegistry) {
 
-		_ddmFormValuesToFieldsConverter = ddmFormValuesToFieldsConverter;
+		_ddmFormFieldValueRendererRegistry = ddmFormFieldValueRendererRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -247,7 +261,8 @@ public class DDLXLSExporter extends BaseDDLExporter {
 	private DDLRecordSetService _ddlRecordSetService;
 	private DDLRecordSetVersionService _ddlRecordSetVersionService;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+	private DDMFormFieldValueRendererRegistry
+		_ddmFormFieldValueRendererRegistry;
 	private StorageEngine _storageEngine;
 
 }

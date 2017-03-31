@@ -96,32 +96,32 @@ public class ProjectTemplates {
 
 					String template = jarEntry.getName();
 
-					if (template.startsWith(TEMPLATE_BUNDLE_PREFIX)) {
-						String bundleDescription = "";
+					if (!template.startsWith(TEMPLATE_BUNDLE_PREFIX)) {
+						continue;
+					}
 
-						try (InputStream inputStream = jarFile.getInputStream(
-								jarEntry);
-							JarInputStream jarInputStream = new JarInputStream(
-								inputStream)) {
+					String bundleDescription = "";
 
-							Manifest manifest = jarInputStream.getManifest();
+					try (InputStream inputStream = jarFile.getInputStream(
+							jarEntry);
+						JarInputStream jarInputStream = new JarInputStream(
+							inputStream)) {
 
-							Attributes attributes =
-								manifest.getMainAttributes();
+						Manifest manifest = jarInputStream.getManifest();
 
-							bundleDescription = attributes.getValue(
-								"Bundle-Description");
-						}
+						Attributes attributes = manifest.getMainAttributes();
 
-						template = template.substring(
-							TEMPLATE_BUNDLE_PREFIX.length(),
-							template.indexOf("-"));
+						bundleDescription = attributes.getValue(
+							"Bundle-Description");
+					}
 
-						template = template.replace('.', '-');
+					template = template.substring(
+						TEMPLATE_BUNDLE_PREFIX.length(), template.indexOf("-"));
 
-						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
-							templates.put(template, bundleDescription);
-						}
+					template = template.replace('.', '-');
+
+					if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
+						templates.put(template, bundleDescription);
 					}
 				}
 			}

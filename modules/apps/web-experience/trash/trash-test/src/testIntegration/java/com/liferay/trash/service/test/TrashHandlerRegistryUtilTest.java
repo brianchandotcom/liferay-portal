@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.trash;
+package com.liferay.trash.service.test;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.trash.bundle.trashhandlerregistryutil.TestTrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.trash.service.test.trashhandlerresgistryutil.TestTrashHandler;
 
 import java.util.List;
 

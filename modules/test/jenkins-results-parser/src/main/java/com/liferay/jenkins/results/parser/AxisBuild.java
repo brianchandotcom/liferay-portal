@@ -266,12 +266,15 @@ public class AxisBuild extends BaseBuild {
 						"li", downstreamBuildOrderedListElement);
 
 				if (failureCount < 3) {
+					String testReportURL = testResult.getTestReportURL();
+
 					downstreamBuildListItemElement.add(
 						Dom4JUtil.getNewAnchorElement(
-							testResult.getTestReportURL(),
-							testResult.getDisplayName()));
+							testReportURL, testResult.getDisplayName()));
 
-					if (jobVariant.contains("functional")) {
+					if (testReportURL.contains(
+							"com.liferay.poshi.runner/PoshiRunner")) {
+
 						Dom4JUtil.addToElement(
 							downstreamBuildListItemElement, " - ",
 							Dom4JUtil.getNewAnchorElement(

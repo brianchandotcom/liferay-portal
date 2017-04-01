@@ -201,7 +201,7 @@ public class DDLExporterTest {
 
 			cell = row.getCell(0);
 
-			Assert.assertEquals("false", cell.getStringCellValue());
+			Assert.assertEquals("No", cell.getStringCellValue());
 
 			cell = row.getCell(1);
 
@@ -209,7 +209,7 @@ public class DDLExporterTest {
 
 			cell = row.getCell(2);
 
-			Assert.assertEquals("1.0", cell.getStringCellValue());
+			Assert.assertEquals("1", cell.getStringCellValue());
 
 			cell = row.getCell(3);
 

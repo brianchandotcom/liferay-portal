@@ -39,10 +39,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -151,7 +151,7 @@ public abstract class BaseDDLExporter implements DDLExporter {
 		List<DDMStructureVersion> ddmStructureVersions = getStructureVersions(
 			recordSetId);
 
-		Map<String, DDMFormField> ddmFormFields = new TreeMap<>();
+		Map<String, DDMFormField> ddmFormFields = new LinkedHashMap<>();
 
 		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
 			DDMForm ddmForm = ddmStructureVersion.getDDMForm();

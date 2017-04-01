@@ -36,9 +36,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(immediate = true, service = DLValidator.class)
 public final class DLValidatorImpl implements DLValidator {
 
 	@Override

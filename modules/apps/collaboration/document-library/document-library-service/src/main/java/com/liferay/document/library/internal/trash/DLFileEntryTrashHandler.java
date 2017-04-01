@@ -24,7 +24,7 @@ import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.service.DLTrashLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.document.library.kernel.util.DLValidatorUtil;
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -328,7 +328,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		throws PortalException {
 
 		if (Validator.isNotNull(newName) &&
-			!DLValidatorUtil.isValidName(newName)) {
+			!_dlValidator.isValidName(newName)) {
 
 			RestoreEntryException ree = new RestoreEntryException(
 				RestoreEntryException.INVALID_NAME);
@@ -493,5 +493,8 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 	private DLFolderLocalService _dlFolderLocalService;
 	private DLTrashLocalService _dlTrashLocalService;
+
+	@Reference
+	private DLValidator _dlValidator;
 
 }

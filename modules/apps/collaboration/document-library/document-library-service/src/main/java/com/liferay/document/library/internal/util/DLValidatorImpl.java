@@ -186,7 +186,9 @@ public final class DLValidatorImpl implements DLValidator {
 		long maxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
 
 		if ((maxSize > 0) && (size > maxSize)) {
-			throw new FileSizeException(fileName);
+			throw new FileSizeException(
+				size + " exceeds the maximum permitted size of " + maxSize +
+					" for file " + fileName);
 		}
 	}
 

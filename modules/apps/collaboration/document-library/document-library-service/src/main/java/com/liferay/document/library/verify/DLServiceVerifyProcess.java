@@ -31,7 +31,7 @@ import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.document.library.kernel.util.DLValidatorUtil;
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.kernel.util.comparator.DLFileVersionVersionComparator;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -354,11 +354,10 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 						String title = dlFileEntry.getTitle();
 
-						if (!DLValidatorUtil.isValidName(title)) {
+						if (!_dlValidator.isValidName(title)) {
 							try {
 								dlFileEntry = renameTitle(
-									dlFileEntry,
-									DLValidatorUtil.fixName(title));
+									dlFileEntry, _dlValidator.fixName(title));
 							}
 							catch (Exception e) {
 								if (_log.isWarnEnabled()) {
@@ -773,6 +772,9 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private DLValidator _dlValidator;
 
 	@Reference
 	private PortalInstancesLocalService _portalInstancesLocalService;

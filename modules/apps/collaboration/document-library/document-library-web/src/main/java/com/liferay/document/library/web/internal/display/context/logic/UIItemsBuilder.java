@@ -471,11 +471,15 @@ public class UIItemsBuilder {
 			return;
 		}
 
+		URLToolbarItem urlToolbarItem = new URLToolbarItem();
+
 		_addURLUIItem(
-			new URLToolbarItem(), toolbarItems, DLUIItemKeys.DOWNLOAD,
+			urlToolbarItem, toolbarItems, DLUIItemKeys.DOWNLOAD,
 			LanguageUtil.get(_resourceBundle, "download"),
 			DLUtil.getDownloadURL(
 				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
+
+		urlToolbarItem.setTarget("_blank");
 	}
 
 	public void addEditMenuItem(List<MenuItem> menuItems)

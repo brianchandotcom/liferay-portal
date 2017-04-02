@@ -236,6 +236,7 @@ if (portletTitleBasedNavigation) {
 								%>
 
 									<liferay-ui:icon
+										data="<%= data %>"
 										iconCssClass="<%= DLUtil.getFileIconCssClass(conversion) %>"
 										label="<%= true %>"
 										message="<%= StringUtil.toUpperCase(conversion) %>"

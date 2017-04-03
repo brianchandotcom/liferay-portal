@@ -44,9 +44,9 @@ import org.powermock.api.mockito.PowerMockito;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
- * @author Roberto Díaz
+ * @author Sergio González
  */
-public class WikiAttachmentCreoleEditorConfigContributorTest
+public class WikiAttachmentImageHTMLEditorConfigContributorTest
 	extends PowerMockito {
 
 	@Before
@@ -87,13 +87,14 @@ public class WikiAttachmentCreoleEditorConfigContributorTest
 		when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
-			"itemSelectorPortletURLWithUrlSelectionViews"
+			"itemSelectorPortletURLWithImageUrlSelectionViews"
 		);
 
 		when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
-				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
+				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class),
+				Mockito.any(ItemSelectorCriterion.class))
 		).thenReturn(
 			itemSelectorPortletURL
 		);
@@ -104,13 +105,14 @@ public class WikiAttachmentCreoleEditorConfigContributorTest
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
 
-		WikiAttachmentCreoleEditorConfigContributor
-			wikiAttachmentEditorConfigContributor =
-				new WikiAttachmentCreoleEditorConfigContributor();
+		WikiAttachmentImageHTMLEditorConfigContributor
+			wikiAttachmentImageHTMLEditorConfigContributor =
+				new WikiAttachmentImageHTMLEditorConfigContributor();
 
-		wikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
+		wikiAttachmentImageHTMLEditorConfigContributor.setItemSelector(
+			_itemSelector);
 
-		wikiAttachmentEditorConfigContributor.populateConfigJSONObject(
+		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -118,10 +120,10 @@ public class WikiAttachmentCreoleEditorConfigContributorTest
 
 		expectedJSONObject.put(
 			"filebrowserImageBrowseLinkUrl",
-			"itemSelectorPortletURLWithUrlSelectionViews");
+			"itemSelectorPortletURLWithImageUrlSelectionViews");
 		expectedJSONObject.put(
 			"filebrowserImageBrowseUrl",
-			"itemSelectorPortletURLWithUrlSelectionViews");
+			"itemSelectorPortletURLWithImageUrlSelectionViews");
 		expectedJSONObject.put("removePlugins", "plugin1,ae_addimages");
 
 		JSONAssert.assertEquals(
@@ -140,13 +142,14 @@ public class WikiAttachmentCreoleEditorConfigContributorTest
 		when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
-			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
+			"itemSelectorPortletURLWithWikiImageUrlAndUploadSelectionViews"
 		);
 
 		when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class),
+				Mockito.any(ItemSelectorCriterion.class),
 				Mockito.any(ItemSelectorCriterion.class),
 				Mockito.any(ItemSelectorCriterion.class))
 		).thenReturn(
@@ -155,13 +158,14 @@ public class WikiAttachmentCreoleEditorConfigContributorTest
 
 		JSONObject jsonObject = getJSONObjectWithDefaultItemSelectorURL();
 
-		WikiAttachmentCreoleEditorConfigContributor
-			wikiAttachmentEditorConfigContributor =
-				new WikiAttachmentCreoleEditorConfigContributor();
+		WikiAttachmentImageHTMLEditorConfigContributor
+			wikiAttachmentImageHTMLEditorConfigContributor =
+				new WikiAttachmentImageHTMLEditorConfigContributor();
 
-		wikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
+		wikiAttachmentImageHTMLEditorConfigContributor.setItemSelector(
+			_itemSelector);
 
-		wikiAttachmentEditorConfigContributor.populateConfigJSONObject(
+		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -169,10 +173,10 @@ public class WikiAttachmentCreoleEditorConfigContributorTest
 
 		expectedJSONObject.put(
 			"filebrowserImageBrowseLinkUrl",
-			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews");
+			"itemSelectorPortletURLWithWikiImageUrlAndUploadSelectionViews");
 		expectedJSONObject.put(
 			"filebrowserImageBrowseUrl",
-			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews");
+			"itemSelectorPortletURLWithWikiImageUrlAndUploadSelectionViews");
 		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(
@@ -192,13 +196,14 @@ public class WikiAttachmentCreoleEditorConfigContributorTest
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
 
-		WikiAttachmentCreoleEditorConfigContributor
-			wikiAttachmentEditorConfigContributor =
-				new WikiAttachmentCreoleEditorConfigContributor();
+		WikiAttachmentImageHTMLEditorConfigContributor
+			wikiAttachmentImageHTMLEditorConfigContributor =
+				new WikiAttachmentImageHTMLEditorConfigContributor();
 
-		wikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
+		wikiAttachmentImageHTMLEditorConfigContributor.setItemSelector(
+			_itemSelector);
 
-		wikiAttachmentEditorConfigContributor.populateConfigJSONObject(
+		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -224,13 +229,14 @@ public class WikiAttachmentCreoleEditorConfigContributorTest
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
 
-		WikiAttachmentCreoleEditorConfigContributor
-			wikiAttachmentEditorConfigContributor =
-				new WikiAttachmentCreoleEditorConfigContributor();
+		WikiAttachmentImageHTMLEditorConfigContributor
+			wikiAttachmentImageHTMLEditorConfigContributor =
+				new WikiAttachmentImageHTMLEditorConfigContributor();
 
-		wikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
+		wikiAttachmentImageHTMLEditorConfigContributor.setItemSelector(
+			_itemSelector);
 
-		wikiAttachmentEditorConfigContributor.populateConfigJSONObject(
+		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 

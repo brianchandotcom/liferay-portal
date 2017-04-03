@@ -136,7 +136,6 @@ AUI.add(
 						var inputPlaceholder = instance.get(STR_INPUT_PLACEHOLDER);
 
 						var eventHandles = [
-							A.after(instance._afterRenderUI, instance, 'renderUI'),
 							instance.after(
 								{
 									focusedChange: instance._onFocusedChange,
@@ -169,6 +168,7 @@ AUI.add(
 						);
 
 						instance._inputPlaceholderDescription = boundingBox.one('#' + inputPlaceholder.attr('id') + '_desc');
+						instance._flags = boundingBox.one('.palette-container');
 					},
 
 					destructor: function() {
@@ -281,12 +281,6 @@ AUI.add(
 						}
 
 						translatedLanguages[action](selectedLanguageId);
-					},
-
-					_afterRenderUI: function() {
-						var instance = this;
-
-						instance._flags = instance.get('boundingBox').one('.palette-container');
 					},
 
 					_animate: function(input) {

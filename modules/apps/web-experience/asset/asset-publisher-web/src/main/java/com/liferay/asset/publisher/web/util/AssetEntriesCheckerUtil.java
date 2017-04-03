@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
@@ -118,11 +117,6 @@ public class AssetEntriesCheckerUtil {
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetEntryService(AssetEntryService assetEntryService) {
-		_assetEntryService = assetEntryService;
 	}
 
 	@Reference(unbind = "-")
@@ -327,9 +321,7 @@ public class AssetEntriesCheckerUtil {
 		}
 
 		List<AssetEntry> assetEntries = _getAssetEntries(
-			portletPreferences, layout, layout.getGroupId(),
-			AssetPublisherWebConfigurationValues.DYNAMIC_SUBSCRIPTION_LIMIT,
-			false);
+			portletPreferences, layout);
 
 		if (assetEntries.isEmpty()) {
 			return;
@@ -374,12 +366,10 @@ public class AssetEntriesCheckerUtil {
 	}
 
 	private List<AssetEntry> _getAssetEntries(
-			PortletPreferences portletPreferences, Layout layout,
-			long scopeGroupId, int max, boolean checkPermission)
-		throws PortalException {
+		PortletPreferences portletPreferences, Layout layout) {
 
 		long[] groupIds = _assetPublisherUtil.getGroupIds(
-			portletPreferences, scopeGroupId, layout);
+			portletPreferences, layout.getGroupId(), layout);
 
 		AssetEntryQuery assetEntryQuery =
 			_assetPublisherUtil.getAssetEntryQuery(
@@ -411,7 +401,8 @@ public class AssetEntriesCheckerUtil {
 
 		assetEntryQuery.setEnablePermissions(enablePermissions);
 
-		assetEntryQuery.setEnd(max);
+		assetEntryQuery.setEnd(
+			AssetPublisherWebConfigurationValues.DYNAMIC_SUBSCRIPTION_LIMIT);
 
 		boolean excludeZeroViewCount = GetterUtil.getBoolean(
 			portletPreferences.getValue("excludeZeroViewCount", null));
@@ -447,16 +438,10 @@ public class AssetEntriesCheckerUtil {
 
 		assetEntryQuery.setStart(0);
 
-		if (checkPermission) {
-			return _assetEntryService.getEntries(assetEntryQuery);
-		}
-		else {
-			return _assetEntryLocalService.getEntries(assetEntryQuery);
-		}
+		return _assetEntryLocalService.getEntries(assetEntryQuery);
 	}
 
 	private static AssetEntryLocalService _assetEntryLocalService;
-	private static AssetEntryService _assetEntryService;
 	private static AssetPublisherUtil _assetPublisherUtil;
 	private static LayoutLocalService _layoutLocalService;
 	private static PortletPreferencesLocalService

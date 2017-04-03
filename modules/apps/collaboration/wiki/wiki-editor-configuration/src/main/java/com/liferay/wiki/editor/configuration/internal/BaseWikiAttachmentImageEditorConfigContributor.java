@@ -42,7 +42,7 @@ import javax.portlet.PortletURL;
  * @author Sergio González
  * @author Roberto Díaz
  */
-public abstract class BaseWikiAttachmentEditorConfigContributor
+public abstract class BaseWikiAttachmentImageEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override

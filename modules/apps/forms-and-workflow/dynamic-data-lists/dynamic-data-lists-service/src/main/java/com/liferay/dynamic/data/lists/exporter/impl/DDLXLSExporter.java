@@ -34,9 +34,13 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.ByteArrayOutputStream;
 
+import java.time.format.DateTimeFormatter;
+
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -80,7 +84,8 @@ public class DDLXLSExporter extends BaseDDLExporter {
 	}
 
 	protected void createDataRow(
-		int rowIndex, Sheet sheet, String status, CellStyle style,
+		int rowIndex, Sheet sheet, DateTimeFormatter dateTimeFormatter,
+		String author, String status, Date statusDate, CellStyle style,
 		Map<String, DDMFormField> ddmFormFields,
 		Map<String, DDMFormFieldRenderedValue> values) {
 
@@ -111,6 +116,16 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 		cell.setCellStyle(style);
 		cell.setCellValue(status);
+
+		cell = row.createCell(cellIndex++, CellType.STRING);
+
+		cell.setCellStyle(style);
+		cell.setCellValue(formatDate(statusDate, dateTimeFormatter));
+
+		cell = row.createCell(cellIndex++, CellType.STRING);
+
+		cell.setCellStyle(style);
+		cell.setCellValue(author);
 	}
 
 	protected void createHeaderRow(
@@ -126,19 +141,31 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 		Cell cell = null;
 
+		Locale locale = getLocale();
+
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			LocalizedValue label = ddmFormField.getLabel();
 
 			cell = row.createCell(cellIndex++, CellType.STRING);
 
 			cell.setCellStyle(cellStyle);
-			cell.setCellValue(label.getString(getLocale()));
+			cell.setCellValue(label.getString(locale));
 		}
 
 		cell = row.createCell(cellIndex++, CellType.STRING);
 
 		cell.setCellStyle(cellStyle);
-		cell.setCellValue(LanguageUtil.get(getLocale(), "status"));
+		cell.setCellValue(LanguageUtil.get(locale, "status"));
+
+		cell = row.createCell(cellIndex++, CellType.STRING);
+
+		cell.setCellStyle(cellStyle);
+		cell.setCellValue(LanguageUtil.get(locale, "modified-date"));
+
+		cell = row.createCell(cellIndex++, CellType.STRING);
+
+		cell.setCellStyle(cellStyle);
+		cell.setCellValue(LanguageUtil.get(locale, "author"));
 	}
 
 	@Override
@@ -151,6 +178,8 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 		Map<String, DDMFormField> ddmFormFields = getDistinctFields(
 			recordSetId);
+
+		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter();
 
 		try (ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
@@ -184,9 +213,11 @@ public class DDLXLSExporter extends BaseDDLExporter {
 						ddmFormValues);
 
 				createDataRow(
-					rowIndex++, sheet,
-					getStatusMessage(recordVersion.getStatus()), cellStyle,
-					ddmFormFields, values);
+					rowIndex++, sheet, dateTimeFormatter,
+					recordVersion.getUserName(),
+					getStatusMessage(recordVersion.getStatus()),
+					recordVersion.getStatusDate(), cellStyle, ddmFormFields,
+					values);
 			}
 
 			workbook.write(byteArrayOutputStream);

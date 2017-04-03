@@ -40,8 +40,14 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -104,6 +110,22 @@ public abstract class BaseDDLExporter implements DDLExporter {
 			long recordSetId, int status, int start, int end,
 			OrderByComparator<DDLRecord> orderByComparator)
 		throws Exception;
+
+	protected String formatDate(
+		Date date, DateTimeFormatter dateTimeFormatter) {
+
+		LocalDateTime localDateTime = LocalDateTime.ofInstant(
+			date.toInstant(), ZoneId.systemDefault());
+
+		return dateTimeFormatter.format(localDateTime);
+	}
+
+	protected DateTimeFormatter getDateTimeFormatter() {
+		DateTimeFormatter dateTimeFormatter =
+			DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+
+		return dateTimeFormatter.withLocale(getLocale());
+	}
 
 	protected abstract DDLRecordSetVersionService
 		getDDLRecordSetVersionService();

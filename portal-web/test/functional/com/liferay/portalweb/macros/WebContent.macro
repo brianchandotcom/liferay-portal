@@ -722,15 +722,12 @@
 	</command>
 
 	<command name="copyCP">
-		<var name="key_rowEntry" value="${webContentTitle}" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Copy" />
+			<var name="rowEntry" value="${webContentTitle}" />
+		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#COPY" value1="Copy" />
-
-		<execute function="AssertClick" locator1="Button#COPY" value1="Copy" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="deleteCP">

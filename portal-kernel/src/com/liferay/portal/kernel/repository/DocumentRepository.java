@@ -90,6 +90,14 @@ public interface DocumentRepository extends CapabilityProvider {
 			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException;
 
+	public default List<FileEntry> getFileEntries(
+			long folderId, String[] mimeTypes, int status, int start, int end,
+			OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		return getFileEntries(folderId, status, start, end, obc);
+	}
+
 	public List<RepositoryEntry> getFileEntriesAndFileShortcuts(
 			long folderId, int status, int start, int end)
 		throws PortalException;
@@ -101,6 +109,13 @@ public interface DocumentRepository extends CapabilityProvider {
 
 	public int getFileEntriesCount(long folderId, int status)
 		throws PortalException;
+
+	public default int getFileEntriesCount(
+			long folderId, String[] mimeTypes, int status)
+		throws PortalException {
+
+		return getFileEntriesCount(folderId, status);
+	}
 
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException;
 

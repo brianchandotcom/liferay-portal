@@ -465,6 +465,18 @@ public class CapabilityRepository
 
 	@Override
 	public List<FileEntry> getFileEntries(
+			long folderId, String[] mimeTypes, int status, int start, int end,
+			OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		Repository repository = getRepository();
+
+		return repository.getFileEntries(
+			folderId, mimeTypes, status, start, end, obc);
+	}
+
+	@Override
+	public List<FileEntry> getFileEntries(
 			long folderId, String[] mimeTypes, int start, int end,
 			OrderByComparator<FileEntry> obc)
 		throws PortalException {
@@ -523,6 +535,16 @@ public class CapabilityRepository
 		throws PortalException {
 
 		return getRepository().getFileEntriesCount(folderId, mimeTypes);
+	}
+
+	@Override
+	public int getFileEntriesCount(
+			long folderId, String[] mimeTypes, int status)
+		throws PortalException {
+
+		Repository repository = getRepository();
+
+		return repository.getFileEntriesCount(folderId, mimeTypes, status);
 	}
 
 	@Override

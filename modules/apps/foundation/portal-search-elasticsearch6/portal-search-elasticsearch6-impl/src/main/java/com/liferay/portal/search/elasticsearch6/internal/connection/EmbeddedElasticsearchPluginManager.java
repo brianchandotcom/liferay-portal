@@ -23,11 +23,12 @@ import java.io.IOException;
 
 import java.nio.file.Path;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.elasticsearch.Version;
-import org.elasticsearch.common.cli.Terminal;
-import org.elasticsearch.common.cli.Terminal.Verbosity;
 
 /**
  * @author Artur Aquino
@@ -46,7 +47,7 @@ public class EmbeddedElasticsearchPluginManager {
 		_pluginZipFactory = pluginZipFactory;
 	}
 
-	public void install() throws IOException {
+	public void install() throws Exception {
 		if (isAlreadyInstalled()) {
 			return;
 		}
@@ -61,7 +62,7 @@ public class EmbeddedElasticsearchPluginManager {
 		}
 	}
 
-	public void removeObsoletePlugin() throws IOException {
+	public void removeObsoletePlugin() throws Exception {
 		PluginManager pluginManager =
 			_pluginManagerFactory.createPluginManager();
 
@@ -75,17 +76,17 @@ public class EmbeddedElasticsearchPluginManager {
 			return;
 		}
 
-		pluginManager.removePlugin(_pluginName, getTerminal());
+		pluginManager.remove(_pluginName);
 	}
 
 	protected PluginZip createPluginZip() throws IOException {
 		return _pluginZipFactory.createPluginZip(
 			StringBundler.concat(
-				"/plugins/", _pluginName, "-", String.valueOf(Version.CURRENT),
-				".zip"));
+				"/plugins/", getPluginZipFileName(_pluginName), "-",
+				String.valueOf(Version.CURRENT), ".zip"));
 	}
 
-	protected void downloadAndExtract(PluginZip pluginZip) throws IOException {
+	protected void downloadAndExtract(PluginZip pluginZip) throws Exception {
 		File file = new File(_pluginsPathString);
 
 		file.mkdirs();
@@ -94,7 +95,7 @@ public class EmbeddedElasticsearchPluginManager {
 			pluginZip);
 
 		try {
-			pluginManager.downloadAndExtract(_pluginName, getTerminal(), true);
+			pluginManager.install(_pluginName);
 		}
 		catch (IOException ioe) {
 			if (!handle(ioe)) {
@@ -106,25 +107,16 @@ public class EmbeddedElasticsearchPluginManager {
 	protected Optional<Path> getInstalledPluginPath(PluginManager pluginManager)
 		throws IOException {
 
-		Path[] paths = pluginManager.getInstalledPluginsPaths();
+		Stream<Path> stream = Stream.of(
+			pluginManager.getInstalledPluginsPaths());
 
-		if (paths != null) {
-			for (Path path : paths) {
-				if (path.endsWith(_pluginName)) {
-					return Optional.of(path);
-				}
-			}
-		}
-
-		return Optional.empty();
+		return stream.filter(
+			path -> path.endsWith(_pluginName)
+		).findAny();
 	}
 
-	protected Terminal getTerminal() {
-		Terminal terminal = Terminal.DEFAULT;
-
-		terminal.verbosity(Verbosity.SILENT);
-
-		return terminal;
+	protected String getPluginZipFileName(String pluginName) {
+		return _pluginZipFileNames.get(pluginName);
 	}
 
 	protected boolean handle(IOException ioe) {
@@ -170,5 +162,20 @@ public class EmbeddedElasticsearchPluginManager {
 	private final String _pluginName;
 	private final String _pluginsPathString;
 	private final PluginZipFactory _pluginZipFactory;
+	private final Map<String, String> _pluginZipFileNames =
+		new HashMap<String, String>() {
+			{
+				put("analysis-icu", "org.elasticsearch.plugin.analysis.icu");
+				put(
+					"analysis-kuromoji",
+					"org.elasticsearch.plugin.analysis.kuromoji");
+				put(
+					"analysis-smartcn",
+					"org.elasticsearch.plugin.analysis.smartcn");
+				put(
+					"analysis-stempel",
+					"org.elasticsearch.plugin.analysis.stempel");
+			}
+		};
 
 }

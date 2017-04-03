@@ -14,22 +14,37 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.connection;
 
-import java.io.IOException;
-
-import java.nio.file.Path;
+import java.util.function.Supplier;
 
 /**
- * @author Artur Aquino
  * @author André de Oliveira
  */
-public interface PluginManager {
+public class PluginJarConflictCheckSuppression {
 
-	public Path[] getInstalledPluginsPaths() throws IOException;
+	public static void execute(Runnable runnable) {
+		execute(
+			() -> {
+				runnable.run();
 
-	public void install(String name) throws Exception;
+				return null;
+			});
+	}
 
-	public boolean isCurrentVersion(Path path) throws IOException;
+	public static <T> T execute(Supplier<T> supplier) {
+		String old = System.getProperty("java.class.path");
 
-	public void remove(String name) throws Exception;
+		System.setProperty("java.class.path", ".");
+
+		String replaced = System.getProperty("java.class.path");
+
+		try {
+			return supplier.get();
+		}
+		finally {
+			System.setProperty("java.class.path", replaced);
+
+			System.setProperty("java.class.path", old);
+		}
+	}
 
 }

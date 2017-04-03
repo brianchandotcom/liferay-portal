@@ -17,7 +17,6 @@ package com.liferay.portal.search.elasticsearch6.internal.connection;
 import java.net.URL;
 
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.env.Environment;
 
 /**
@@ -40,10 +39,7 @@ public class PluginManagerFactoryImpl implements PluginManagerFactory {
 	}
 
 	protected PluginManager doCreatePluginManager(URL url) {
-		return new PluginManagerImpl(
-			new Environment(_settings), url,
-			org.elasticsearch.plugins.PluginManager.OutputMode.SILENT,
-			TimeValue.timeValueMinutes(1));
+		return new PluginManagerImpl(new Environment(_settings, null), url);
 	}
 
 	private final Settings _settings;

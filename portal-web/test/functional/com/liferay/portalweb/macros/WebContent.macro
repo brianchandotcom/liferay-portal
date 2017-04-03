@@ -1402,8 +1402,6 @@
 	</command>
 
 	<command name="viewCategorizationCategoryCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Metadata" />
 		</execute>
@@ -1416,8 +1414,6 @@
 	</command>
 
 	<command name="viewCategorizationCategoryNotVisibleCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Metadata" />
 		</execute>

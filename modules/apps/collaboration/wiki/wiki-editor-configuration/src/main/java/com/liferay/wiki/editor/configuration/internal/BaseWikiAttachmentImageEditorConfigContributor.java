@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 
@@ -172,7 +173,9 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
 		ItemSelectorCriterion attachmentItemSelectorCriterion =
-			new WikiAttachmentItemSelectorCriterion(wikiPageResourcePrimKey);
+			new WikiAttachmentItemSelectorCriterion(
+				wikiPageResourcePrimKey,
+				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
 
 		attachmentItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);

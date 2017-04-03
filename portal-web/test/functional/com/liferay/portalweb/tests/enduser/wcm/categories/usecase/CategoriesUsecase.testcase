@@ -1054,7 +1054,7 @@
 
 		<execute macro="WebContent#viewCP">
 			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
+			<var name="webContentTitle" value="Web Content Title Duplicate 1" />
 		</execute>
 
 		<execute macro="WebContent#viewCategorizationVocabularyCP">

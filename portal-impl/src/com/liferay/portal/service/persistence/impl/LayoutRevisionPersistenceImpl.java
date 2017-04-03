@@ -5862,6 +5862,299 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static final String _FINDER_COLUMN_L_P_S_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_S_PLID_2 = "layoutRevision.plid = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_S_STATUS_2 = "layoutRevision.status = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_L_L_H_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
+			LayoutRevisionImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByL_L_H_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), Long.class.getName()
+			},
+			LayoutRevisionModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
+			LayoutRevisionModelImpl.LAYOUTBRANCHID_COLUMN_BITMASK |
+			LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
+			LayoutRevisionModelImpl.PLID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_L_L_H_P = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_L_H_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), Long.class.getName()
+			});
+
+	/**
+	 * Returns the layout revision where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63; or throws a {@link NoSuchLayoutRevisionException} if it could not be found.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param layoutBranchId the layout branch ID
+	 * @param head the head
+	 * @param plid the plid
+	 * @return the matching layout revision
+	 * @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
+	 */
+	@Override
+	public LayoutRevision findByL_L_H_P(long layoutSetBranchId,
+		long layoutBranchId, boolean head, long plid)
+		throws NoSuchLayoutRevisionException {
+		LayoutRevision layoutRevision = fetchByL_L_H_P(layoutSetBranchId,
+				layoutBranchId, head, plid);
+
+		if (layoutRevision == null) {
+			StringBundler msg = new StringBundler(10);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("layoutSetBranchId=");
+			msg.append(layoutSetBranchId);
+
+			msg.append(", layoutBranchId=");
+			msg.append(layoutBranchId);
+
+			msg.append(", head=");
+			msg.append(head);
+
+			msg.append(", plid=");
+			msg.append(plid);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchLayoutRevisionException(msg.toString());
+		}
+
+		return layoutRevision;
+	}
+
+	/**
+	 * Returns the layout revision where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param layoutBranchId the layout branch ID
+	 * @param head the head
+	 * @param plid the plid
+	 * @return the matching layout revision, or <code>null</code> if a matching layout revision could not be found
+	 */
+	@Override
+	public LayoutRevision fetchByL_L_H_P(long layoutSetBranchId,
+		long layoutBranchId, boolean head, long plid) {
+		return fetchByL_L_H_P(layoutSetBranchId, layoutBranchId, head, plid,
+			true);
+	}
+
+	/**
+	 * Returns the layout revision where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param layoutBranchId the layout branch ID
+	 * @param head the head
+	 * @param plid the plid
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching layout revision, or <code>null</code> if a matching layout revision could not be found
+	 */
+	@Override
+	public LayoutRevision fetchByL_L_H_P(long layoutSetBranchId,
+		long layoutBranchId, boolean head, long plid, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] {
+				layoutSetBranchId, layoutBranchId, head, plid
+			};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_L_L_H_P,
+					finderArgs, this);
+		}
+
+		if (result instanceof LayoutRevision) {
+			LayoutRevision layoutRevision = (LayoutRevision)result;
+
+			if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
+					(layoutBranchId != layoutRevision.getLayoutBranchId()) ||
+					(head != layoutRevision.getHead()) ||
+					(plid != layoutRevision.getPlid())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_SELECT_LAYOUTREVISION_WHERE);
+
+			query.append(_FINDER_COLUMN_L_L_H_P_LAYOUTSETBRANCHID_2);
+
+			query.append(_FINDER_COLUMN_L_L_H_P_LAYOUTBRANCHID_2);
+
+			query.append(_FINDER_COLUMN_L_L_H_P_HEAD_2);
+
+			query.append(_FINDER_COLUMN_L_L_H_P_PLID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(layoutSetBranchId);
+
+				qPos.add(layoutBranchId);
+
+				qPos.add(head);
+
+				qPos.add(plid);
+
+				List<LayoutRevision> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_L_L_H_P,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"LayoutRevisionPersistenceImpl.fetchByL_L_H_P(long, long, boolean, long, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					LayoutRevision layoutRevision = list.get(0);
+
+					result = layoutRevision;
+
+					cacheResult(layoutRevision);
+
+					if ((layoutRevision.getLayoutSetBranchId() != layoutSetBranchId) ||
+							(layoutRevision.getLayoutBranchId() != layoutBranchId) ||
+							(layoutRevision.getHead() != head) ||
+							(layoutRevision.getPlid() != plid)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_L_L_H_P,
+							finderArgs, layoutRevision);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_L_L_H_P,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (LayoutRevision)result;
+		}
+	}
+
+	/**
+	 * Removes the layout revision where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63; from the database.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param layoutBranchId the layout branch ID
+	 * @param head the head
+	 * @param plid the plid
+	 * @return the layout revision that was removed
+	 */
+	@Override
+	public LayoutRevision removeByL_L_H_P(long layoutSetBranchId,
+		long layoutBranchId, boolean head, long plid)
+		throws NoSuchLayoutRevisionException {
+		LayoutRevision layoutRevision = findByL_L_H_P(layoutSetBranchId,
+				layoutBranchId, head, plid);
+
+		return remove(layoutRevision);
+	}
+
+	/**
+	 * Returns the number of layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63;.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param layoutBranchId the layout branch ID
+	 * @param head the head
+	 * @param plid the plid
+	 * @return the number of matching layout revisions
+	 */
+	@Override
+	public int countByL_L_H_P(long layoutSetBranchId, long layoutBranchId,
+		boolean head, long plid) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_L_L_H_P;
+
+		Object[] finderArgs = new Object[] {
+				layoutSetBranchId, layoutBranchId, head, plid
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_LAYOUTREVISION_WHERE);
+
+			query.append(_FINDER_COLUMN_L_L_H_P_LAYOUTSETBRANCHID_2);
+
+			query.append(_FINDER_COLUMN_L_L_H_P_LAYOUTBRANCHID_2);
+
+			query.append(_FINDER_COLUMN_L_L_H_P_HEAD_2);
+
+			query.append(_FINDER_COLUMN_L_L_H_P_PLID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(layoutSetBranchId);
+
+				qPos.add(layoutBranchId);
+
+				qPos.add(head);
+
+				qPos.add(plid);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_L_L_H_P_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
+	private static final String _FINDER_COLUMN_L_L_H_P_LAYOUTBRANCHID_2 = "layoutRevision.layoutBranchId = ? AND ";
+	private static final String _FINDER_COLUMN_L_L_H_P_HEAD_2 = "layoutRevision.head = ? AND ";
+	private static final String _FINDER_COLUMN_L_L_H_P_PLID_2 = "layoutRevision.plid = ?";
 
 	public LayoutRevisionPersistenceImpl() {
 		setModelClass(LayoutRevision.class);
@@ -5881,6 +6174,13 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		finderCache.putResult(FINDER_PATH_FETCH_BY_L_H_P,
 			new Object[] {
 				layoutRevision.getLayoutSetBranchId(), layoutRevision.getHead(),
+				layoutRevision.getPlid()
+			}, layoutRevision);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_L_L_H_P,
+			new Object[] {
+				layoutRevision.getLayoutSetBranchId(),
+				layoutRevision.getLayoutBranchId(), layoutRevision.getHead(),
 				layoutRevision.getPlid()
 			}, layoutRevision);
 
@@ -5966,6 +6266,18 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			Long.valueOf(1), false);
 		finderCache.putResult(FINDER_PATH_FETCH_BY_L_H_P, args,
 			layoutRevisionModelImpl, false);
+
+		args = new Object[] {
+				layoutRevisionModelImpl.getLayoutSetBranchId(),
+				layoutRevisionModelImpl.getLayoutBranchId(),
+				layoutRevisionModelImpl.getHead(),
+				layoutRevisionModelImpl.getPlid()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_L_L_H_P, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_L_L_H_P, args,
+			layoutRevisionModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -5991,6 +6303,31 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_L_H_P, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_L_H_P, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					layoutRevisionModelImpl.getLayoutSetBranchId(),
+					layoutRevisionModelImpl.getLayoutBranchId(),
+					layoutRevisionModelImpl.getHead(),
+					layoutRevisionModelImpl.getPlid()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_L_L_H_P, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_L_L_H_P, args);
+		}
+
+		if ((layoutRevisionModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_L_L_H_P.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					layoutRevisionModelImpl.getOriginalLayoutSetBranchId(),
+					layoutRevisionModelImpl.getOriginalLayoutBranchId(),
+					layoutRevisionModelImpl.getOriginalHead(),
+					layoutRevisionModelImpl.getOriginalPlid()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_L_L_H_P, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_L_L_H_P, args);
 		}
 	}
 

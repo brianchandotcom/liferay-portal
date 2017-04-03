@@ -139,6 +139,13 @@ public class LayoutRevisionLocalServiceUtil {
 		return getService().fetchLayoutRevision(layoutSetBranchId, head, plid);
 	}
 
+	public static com.liferay.portal.kernel.model.LayoutRevision fetchLayoutRevision(
+		long layoutSetBranchId, long layoutBranchId, boolean head, long plid) {
+		return getService()
+				   .fetchLayoutRevision(layoutSetBranchId, layoutBranchId,
+			head, plid);
+	}
+
 	/**
 	* Returns the layout revision with the primary key.
 	*

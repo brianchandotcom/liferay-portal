@@ -129,6 +129,10 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 	public LayoutRevision fetchLayoutRevision(long layoutSetBranchId,
 		boolean head, long plid);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutRevision fetchLayoutRevision(long layoutSetBranchId,
+		long layoutBranchId, boolean head, long plid);
+
 	/**
 	* Returns the layout revision with the primary key.
 	*

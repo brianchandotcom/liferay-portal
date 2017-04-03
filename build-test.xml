@@ -6037,6 +6037,19 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<start-android-device />
 	</target>
 
+	<target name="prepare-osgi-module-configurations">
+		<get-testcase-property property.name="osgi.module.configurations" />
+
+		<if>
+			<not>
+				<contains string="${osgi.module.configurations}" substring="maxChallenges" />
+			</not>
+			<then>
+				<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">maxChallenges=&quot;-1&quot;</echo>
+			</then>
+		</if>
+	</target>
+
 	<target name="prepare-portal-ext-properties">
 		<delete file="portal-impl/src/portal-ext.properties" />
 
@@ -6089,8 +6102,6 @@ jdbc.counter.maxActive=5
 jdbc.counter.maxIdle=0
 jdbc.counter.minIdle=0
 
-captcha.max.challenges=-1
-
 browser.launcher.url=
 
 index.on.startup=true
@@ -6114,15 +6125,6 @@ tunnel.servlet.hosts.allowed=</echo>
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties"><![CDATA[
 jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_TIMEOUT=0]]></echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="captcha.max.challenges" />
-
-		<if>
-			<isset property="captcha.max.challenges" />
-			<then>
-				<replace file="portal-impl/src/portal-ext.properties" token="captcha.max.challenges=-1" value="captcha.max.challenges=${captcha.max.challenges}" />
 			</then>
 		</if>
 
@@ -9023,6 +9025,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<delete failonerror="false" file="${app.server.classes.portal.dir}/system-ext.properties" />
 			</then>
 			<else>
+				<antcall target="prepare-osgi-module-configurations" />
+
 				<antcall target="prepare-portal-properties" />
 
 				<antcall target="prepare-portal-ext-properties" />

@@ -14,8 +14,10 @@
 
 package com.liferay.login.web.internal.portlet.action;
 
+import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.login.web.internal.portlet.util.LoginUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
@@ -74,6 +76,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
@@ -82,7 +86,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -93,6 +99,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
+	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
 	property = {
 		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
 		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
@@ -101,6 +108,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_captchaConfiguration = ConfigurableUtil.createConfigurable(
+			CaptchaConfiguration.class, properties);
+	}
 
 	protected void addUser(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -222,7 +236,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD)) {
-				if (PropsValues.CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT) {
+				if (_captchaConfiguration.createAccountCaptchaEnabled()) {
 					CaptchaUtil.check(actionRequest);
 				}
 
@@ -530,6 +544,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private AuthenticatedSessionManager _authenticatedSessionManager;
 
+	private volatile CaptchaConfiguration _captchaConfiguration;
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference

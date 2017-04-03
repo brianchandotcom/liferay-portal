@@ -14,8 +14,10 @@
 
 package com.liferay.login.web.internal.portlet.action;
 
+import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.login.web.internal.portlet.util.LoginUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
@@ -44,6 +46,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
@@ -51,7 +55,9 @@ import javax.portlet.PortletSession;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -60,6 +66,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
+	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
 	property = {
 		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
 		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
@@ -69,10 +76,17 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_captchaConfiguration = ConfigurableUtil.createConfigurable(
+			CaptchaConfiguration.class, properties);
+	}
+
 	protected void checkCaptcha(ActionRequest actionRequest)
 		throws CaptchaException {
 
-		if (PropsValues.CAPTCHA_CHECK_PORTAL_SEND_PASSWORD) {
+		if (_captchaConfiguration.sendPasswordCaptchaEnabled()) {
 			CaptchaUtil.check(actionRequest);
 		}
 	}
@@ -288,6 +302,8 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
+
+	private volatile CaptchaConfiguration _captchaConfiguration;
 
 	@Reference
 	private Portal _portal;

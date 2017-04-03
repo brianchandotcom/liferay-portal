@@ -221,6 +221,10 @@ AUI.add(
 					selectFlag: function(languageId) {
 						var instance = this;
 
+						if (!Lang.isValue(languageId)) {
+							languageId = defaultLanguageId;
+						}
+
 						var inputPlaceholder = instance.get(STR_INPUT_PLACEHOLDER);
 
 						var defaultLanguageValue = instance.getValue(defaultLanguageId);
@@ -256,10 +260,14 @@ AUI.add(
 						}
 					},
 
-					updateInputLanguage: function(value) {
+					updateInputLanguage: function(value, languageId) {
 						var instance = this;
 
-						var selectedLanguageId = instance.getSelectedLanguageId();
+						var selectedLanguageId = languageId || instance.getSelectedLanguageId();
+
+						if (!Lang.isValue(selectedLanguageId)) {
+							selectedLanguageId = defaultLanguageId;
+						}
 
 						var defaultInputLanguage = instance._getInputLanguage(defaultLanguageId);
 						var inputLanguage = instance._getInputLanguage(selectedLanguageId);

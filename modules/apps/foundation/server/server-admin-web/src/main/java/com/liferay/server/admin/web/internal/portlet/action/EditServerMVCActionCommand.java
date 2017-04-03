@@ -14,8 +14,6 @@
 
 package com.liferay.server.admin.web.internal.portlet.action;
 
-import com.liferay.captcha.recaptcha.ReCaptchaImpl;
-import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.service.MailService;
@@ -206,9 +204,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (cmd.equals("threadDump")) {
 			threadDump();
-		}
-		else if (cmd.equals("updateCaptcha")) {
-			updateCaptcha(actionRequest, portletPreferences);
 		}
 		else if (cmd.equals("updateExternalServices")) {
 			updateExternalServices(actionRequest, portletPreferences);
@@ -510,43 +505,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void updateCaptcha(
-			ActionRequest actionRequest, PortletPreferences portletPreferences)
-		throws Exception {
-
-		boolean reCaptchaEnabled = ParamUtil.getBoolean(
-			actionRequest, "reCaptchaEnabled");
-		String reCaptchaPrivateKey = ParamUtil.getString(
-			actionRequest, "reCaptchaPrivateKey");
-		String reCaptchaPublicKey = ParamUtil.getString(
-			actionRequest, "reCaptchaPublicKey");
-
-		String captchaClassName = StringPool.BLANK;
-
-		if (reCaptchaEnabled) {
-			captchaClassName = ReCaptchaImpl.class.getName();
-		}
-		else {
-			captchaClassName = SimpleCaptchaImpl.class.getName();
-		}
-
-		validateCaptcha(actionRequest);
-
-		if (SessionErrors.isEmpty(actionRequest)) {
-			portletPreferences.setValue(
-				PropsKeys.CAPTCHA_ENGINE_IMPL, captchaClassName);
-
-			portletPreferences.setValue(
-				PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE,
-				reCaptchaPrivateKey);
-			portletPreferences.setValue(
-				PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC,
-				reCaptchaPublicKey);
-
-			portletPreferences.store();
-		}
-	}
-
 	protected void updateExternalServices(
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
@@ -728,29 +686,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		portletPreferences.store();
 
 		_mailService.clearSession();
-	}
-
-	protected void validateCaptcha(ActionRequest actionRequest)
-		throws Exception {
-
-		boolean reCaptchaEnabled = ParamUtil.getBoolean(
-			actionRequest, "reCaptchaEnabled");
-
-		if (!reCaptchaEnabled) {
-			return;
-		}
-
-		String reCaptchaPrivateKey = ParamUtil.getString(
-			actionRequest, "reCaptchaPrivateKey");
-		String reCaptchaPublicKey = ParamUtil.getString(
-			actionRequest, "reCaptchaPublicKey");
-
-		if (Validator.isNull(reCaptchaPublicKey)) {
-			SessionErrors.add(actionRequest, "reCaptchaPublicKey");
-		}
-		else if (Validator.isNull(reCaptchaPrivateKey)) {
-			SessionErrors.add(actionRequest, "reCaptchaPrivateKey");
-		}
 	}
 
 	protected void verifyMembershipPolicies() throws Exception {

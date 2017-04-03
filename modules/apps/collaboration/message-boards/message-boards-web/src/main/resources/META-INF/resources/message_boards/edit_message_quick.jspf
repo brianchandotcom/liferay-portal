@@ -155,7 +155,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 
 					<aui:input name="body" type="hidden" />
 
-					<c:if test="<%= PropsValues.CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE %>">
+					<c:if test="<%= captchaConfiguration.messageBoardsEditMessageCaptchaEnabled() %>">
 						<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
 
 						<liferay-captcha:captcha url="<%= captchaURL %>" />

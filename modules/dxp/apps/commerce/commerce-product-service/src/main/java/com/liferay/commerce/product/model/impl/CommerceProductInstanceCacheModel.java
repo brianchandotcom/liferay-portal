@@ -66,7 +66,7 @@ public class CommerceProductInstanceCacheModel implements CacheModel<CommercePro
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,6 +88,8 @@ public class CommerceProductInstanceCacheModel implements CacheModel<CommercePro
 		sb.append(commerceProductDefinitionId);
 		sb.append(", sku=");
 		sb.append(sku);
+		sb.append(", LSIN=");
+		sb.append(LSIN);
 		sb.append(", DDMContent=");
 		sb.append(DDMContent);
 		sb.append(", displayDate=");
@@ -153,6 +155,13 @@ public class CommerceProductInstanceCacheModel implements CacheModel<CommercePro
 		}
 		else {
 			commerceProductInstanceImpl.setSku(sku);
+		}
+
+		if (LSIN == null) {
+			commerceProductInstanceImpl.setLSIN(StringPool.BLANK);
+		}
+		else {
+			commerceProductInstanceImpl.setLSIN(LSIN);
 		}
 
 		if (DDMContent == null) {
@@ -224,6 +233,7 @@ public class CommerceProductInstanceCacheModel implements CacheModel<CommercePro
 
 		commerceProductDefinitionId = objectInput.readLong();
 		sku = objectInput.readUTF();
+		LSIN = objectInput.readUTF();
 		DDMContent = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
@@ -273,6 +283,13 @@ public class CommerceProductInstanceCacheModel implements CacheModel<CommercePro
 			objectOutput.writeUTF(sku);
 		}
 
+		if (LSIN == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(LSIN);
+		}
+
 		if (DDMContent == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -308,6 +325,7 @@ public class CommerceProductInstanceCacheModel implements CacheModel<CommercePro
 	public long modifiedDate;
 	public long commerceProductDefinitionId;
 	public String sku;
+	public String LSIN;
 	public String DDMContent;
 	public long displayDate;
 	public long expirationDate;

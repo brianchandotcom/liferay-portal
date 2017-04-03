@@ -3849,6 +3849,7 @@ public class CommerceProductInstancePersistenceImpl extends BasePersistenceImpl<
 		commerceProductInstanceImpl.setModifiedDate(commerceProductInstance.getModifiedDate());
 		commerceProductInstanceImpl.setCommerceProductDefinitionId(commerceProductInstance.getCommerceProductDefinitionId());
 		commerceProductInstanceImpl.setSku(commerceProductInstance.getSku());
+		commerceProductInstanceImpl.setLSIN(commerceProductInstance.getLSIN());
 		commerceProductInstanceImpl.setDDMContent(commerceProductInstance.getDDMContent());
 		commerceProductInstanceImpl.setDisplayDate(commerceProductInstance.getDisplayDate());
 		commerceProductInstanceImpl.setExpirationDate(commerceProductInstance.getExpirationDate());

@@ -27,6 +27,33 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
+	<model name="com.liferay.commerce.product.model.CommerceProductDefintionOptionRel">
+		<field name="commerceProductDefintionOptionRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceProductOptionId" type="long" />
+		<field name="commerceProductDefinitionId" type="long" />
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String" />
+		<field name="DDMFormFieldTypeName" type="String" />
+		<field name="priority" type="String" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CommerceProductDefintionOptionValueRel">
+		<field name="commerceProductDefintionOptionValueRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceProductDefintionOptionRelId" type="long" />
+		<field localized="true" name="title" type="String" />
+		<field name="priority" type="long" />
+	</model>
 	<model name="com.liferay.commerce.product.model.CommerceProductInstance">
 		<field name="uuid" type="String" />
 		<field name="commerceProductInstanceId" type="long" />
@@ -38,6 +65,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceProductDefinitionId" type="long" />
 		<field name="sku" type="String" />
+		<field name="LSIN" type="String" />
 		<field name="DDMContent" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -48,5 +76,29 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CommerceProductOption">
+		<field name="commerceProductOptionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String" />
+		<field name="DDMFormFieldTypeName" type="String" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CommerceProductOptionValue">
+		<field name="commerceProductOptionValueId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceProductOptionId" type="long" />
+		<field localized="true" name="title" type="String" />
+		<field name="priority" type="long" />
 	</model>
 </model-hints>

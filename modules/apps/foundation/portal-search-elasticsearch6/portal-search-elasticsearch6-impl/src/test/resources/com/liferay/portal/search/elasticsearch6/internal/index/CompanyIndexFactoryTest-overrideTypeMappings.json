@@ -2,10 +2,9 @@
 	"properties": {
 		"title": {
 			"analyzer": "kuromoji_liferay_custom",
-			"index": "analyzed",
-			"store": "yes",
+			"store": true,
 			"term_vector": "with_positions_offsets",
-			"type": "string"
+			"type": "text"
 		}
 	}
 }

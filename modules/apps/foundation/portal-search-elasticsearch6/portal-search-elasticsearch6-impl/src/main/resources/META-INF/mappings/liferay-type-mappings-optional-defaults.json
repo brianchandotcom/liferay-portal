@@ -3,9 +3,8 @@
 		{
 			"template_": {
 				"mapping": {
-					"index": "analyzed",
-					"store": "true",
-					"type": "string"
+					"store": true,
+					"type": "text"
 				},
 				"match": "*",
 				"match_mapping_type": "string"

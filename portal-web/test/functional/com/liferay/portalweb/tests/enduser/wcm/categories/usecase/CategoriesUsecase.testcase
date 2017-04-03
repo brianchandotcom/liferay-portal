@@ -1048,7 +1048,9 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="WebContent#gotoEditDuplicateEntryCP" />
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title Duplicate 1" />
+		</execute>
 
 		<execute macro="WebContent#viewCP">
 			<var name="webContentContent" value="Web Content Content" />

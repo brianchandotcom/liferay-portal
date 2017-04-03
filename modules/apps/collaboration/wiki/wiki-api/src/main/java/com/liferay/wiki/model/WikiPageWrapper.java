@@ -507,6 +507,12 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
+	public int getAttachmentsFileEntriesCount(java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getAttachmentsFileEntriesCount(mimeTypes);
+	}
+
+	@Override
 	public int getDeletedAttachmentsFileEntriesCount()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPage.getDeletedAttachmentsFileEntriesCount();
@@ -725,6 +731,14 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPage.getAttachmentsFileEntries(start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
+		java.lang.String[] mimeTypes, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getAttachmentsFileEntries(mimeTypes, start, end, obc);
 	}
 
 	@Override

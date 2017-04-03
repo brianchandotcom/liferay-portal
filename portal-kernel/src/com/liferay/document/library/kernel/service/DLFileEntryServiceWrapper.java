@@ -240,6 +240,13 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 
 	@Override
 	public int getFileEntriesCount(long groupId, long folderId,
+		java.lang.String[] mimeTypes, int status) {
+		return _dlFileEntryService.getFileEntriesCount(groupId, folderId,
+			mimeTypes, status);
+	}
+
+	@Override
+	public int getFileEntriesCount(long groupId, long folderId,
 		long fileEntryTypeId) {
 		return _dlFileEntryService.getFileEntriesCount(groupId, folderId,
 			fileEntryTypeId);
@@ -327,6 +334,16 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryService.getFileEntries(groupId, folderId, mimeTypes,
 			start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getFileEntries(
+		long groupId, long folderId, java.lang.String[] mimeTypes, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryService.getFileEntries(groupId, folderId, mimeTypes,
+			status, start, end, obc);
 	}
 
 	@Override

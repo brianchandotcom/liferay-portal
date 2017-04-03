@@ -1,7 +1,9 @@
 AUI.add(
 	'liferay-ddl-form-builder-action-calculate',
 	function(A) {
-		var Lang = A.Lang;
+		var CSS_CALCULATE_CONTAINER_CALCULATOR = A.getClassName('calculate', 'container', 'calculator', 'component');
+
+		var CSS_CALCULATE_CONTAINER_FIELDS = A.getClassName('calculate', 'container', 'fields');
 
 		var FormBuilderActionCalculate = A.Component.create(
 			{
@@ -39,16 +41,31 @@ AUI.add(
 					render: function() {
 						var instance = this;
 
-						var strings = instance.get('strings');
-
 						var index = instance.get('index');
 
-						var container = instance.get('boundingBox').one('.additional-info-' + index);
+						var boundingBox = instance.get('boundingBox');
 
-						container.addClass('col-md-6');
+						var calculateContainer = boundingBox.one('.additional-info-' + index);
 
-						instance._createTargetField().render(container);
-						instance._createExpressionField().render(container);
+						calculateContainer.setHTML(instance._getRuleContainerTemplate());
+
+						instance._getCalculator().render(calculateContainer.one('.' + CSS_CALCULATE_CONTAINER_CALCULATOR));
+
+						instance._createExpressionField().render(calculateContainer.one('.' + CSS_CALCULATE_CONTAINER_FIELDS));
+
+						instance._createTargetField().render(calculateContainer.one('.' + CSS_CALCULATE_CONTAINER_FIELDS));
+					},
+
+					_createCalculator: function() {
+						var instance = this;
+
+						var calculator = new Liferay.DDL.FormBuilderCalculator(
+							{
+								options: instance.get('options')
+							}
+						);
+
+						return calculator;
 					},
 
 					_createExpressionField: function() {
@@ -97,6 +114,24 @@ AUI.add(
 						);
 
 						return instance._targetField;
+					},
+
+					_getCalculator: function() {
+						var instance = this;
+
+						if (!instance._calculator) {
+							instance._calculator = instance._createCalculator();
+						}
+
+						return instance._calculator;
+					},
+
+					_getRuleContainerTemplate: function() {
+						var instance = this;
+
+						var calculateTemplateRenderer = Liferay.DDM.SoyTemplateUtil.getTemplateRenderer('ddl.calculate.settings');
+
+						return calculateTemplateRenderer();
 					}
 				}
 			}
@@ -106,6 +141,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddl-form-builder-action']
+		requires: ['liferay-ddl-form-builder-action', 'liferay-ddl-form-builder-calculator']
 	}
 );

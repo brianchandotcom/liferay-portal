@@ -46,15 +46,19 @@
 						},
 						'liferay-ddl-form-builder-action-calculate': {
 							path: 'form_builder_action_calculate.js',
-							requires: ['liferay-ddl-form-builder-action']
+							requires: [
+								'liferay-ddl-form-builder-action',
+								'liferay-ddl-form-builder-calculate-template',
+								'liferay-ddl-form-builder-calculator'
+							]
 						},
 						'liferay-ddl-form-builder-action-factory': {
 							path: 'form_builder_action_factory.js',
 							requires: [
 								'liferay-ddl-form-builder-action-autofill',
+								'liferay-ddl-form-builder-action-calculate',
 								'liferay-ddl-form-builder-action-jump-to-page',
-								'liferay-ddl-form-builder-action-property',
-								'liferay-ddl-form-builder-action-calculate'
+								'liferay-ddl-form-builder-action-property'
 							]
 						},
 						'liferay-ddl-form-builder-action-jump-to-page': {
@@ -67,6 +71,25 @@
 						},
 						'liferay-ddl-form-builder-autocomplete-template': {
 							path: '../templates/autocomplete.soy.js',
+							requires: [
+								'soyutils'
+							]
+						},
+						'liferay-ddl-form-builder-calculate-template': {
+							path: '../templates/calculate.soy.js',
+							requires: [
+								'soyutils'
+							]
+						},
+						'liferay-ddl-form-builder-calculator': {
+							path: 'form_builder_calculator.js',
+							requires: [
+								'liferay-ddl-form-builder-calculator-template',
+								'liferay-ddm-form-field-select'
+							]
+						},
+						'liferay-ddl-form-builder-calculator-template': {
+							path: '../templates/calculator.soy.js',
 							requires: [
 								'soyutils'
 							]

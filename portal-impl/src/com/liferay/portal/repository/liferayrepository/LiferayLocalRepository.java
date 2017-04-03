@@ -57,6 +57,7 @@ import com.liferay.portlet.documentlibrary.util.comparator.DLFolderOrderByCompar
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -260,6 +261,34 @@ public class LiferayLocalRepository
 	}
 
 	@Override
+	public List<FileEntry> getFileEntries(
+			long folderId, String[] mimeTypes, int status, int start, int end,
+			OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		List<Long> folderIds = new ArrayList<>(1);
+
+		folderIds.add(folderId);
+
+		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>(
+			status, start, end,
+			DLFileEntryOrderByComparator.getOrderByComparator(obc));
+
+		List<DLFileEntry> dlFileEntries = null;
+
+		try {
+			dlFileEntries = dlFileEntryLocalService.getFileEntries(
+				getGroupId(), 0, new ArrayList<>(), toFolderIds(folderIds),
+				mimeTypes, queryDefinition);
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
+
+		return RepositoryModelUtil.toFileEntries(dlFileEntries);
+	}
+
+	@Override
 	public List<RepositoryEntry> getFileEntriesAndFileShortcuts(
 		long folderId, int status, int start, int end) {
 
@@ -293,6 +322,28 @@ public class LiferayLocalRepository
 	public int getFileEntriesCount(long folderId, int status) {
 		return dlFileEntryLocalService.getFileEntriesCount(
 			getGroupId(), toFolderId(folderId), status);
+	}
+
+	@Override
+	public int getFileEntriesCount(
+			long folderId, String[] mimeTypes, int status)
+		throws PortalException {
+
+		List<Long> folderIds = new ArrayList<>(1);
+
+		folderIds.add(folderId);
+
+		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>(
+			status);
+
+		try {
+			return dlFileEntryLocalService.getFileEntriesCount(
+				getGroupId(), 0, new ArrayList<>(), toFolderIds(folderIds),
+				mimeTypes, queryDefinition);
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
 	}
 
 	@Override

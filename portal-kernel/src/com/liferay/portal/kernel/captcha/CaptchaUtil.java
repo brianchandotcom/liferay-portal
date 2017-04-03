@@ -15,15 +15,12 @@
 package com.liferay.portal.kernel.captcha;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.io.IOException;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -55,8 +52,7 @@ public class CaptchaUtil {
 			return null;
 		}
 
-		String captchaClassName = PrefsPropsUtil.getString(
-			PropsKeys.CAPTCHA_ENGINE_IMPL, _CAPTCHA_ENGINE_IMPL);
+		String captchaClassName = _captchaSettings.getCaptchaEngine();
 
 		return _serviceTrackerMap.getService(captchaClassName);
 	}
@@ -90,19 +86,15 @@ public class CaptchaUtil {
 	public void setCaptcha(Captcha captcha) throws Exception {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences();
-
 		Class<?> clazz = captcha.getClass();
 
-		portletPreferences.setValue(
-			PropsKeys.CAPTCHA_ENGINE_IMPL, clazz.getName());
-
-		portletPreferences.store();
+		_captchaSettings.setCaptchaEngine(clazz.getName());
 	}
 
-	private static final String _CAPTCHA_ENGINE_IMPL = PropsUtil.get(
-		PropsKeys.CAPTCHA_ENGINE_IMPL);
-
+	private static volatile CaptchaSettings _captchaSettings =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			CaptchaSettings.class, CaptchaUtil.class, "_captchaSettings",
+			false);
 	private static final ServiceTrackerMap<String, Captcha> _serviceTrackerMap =
 		ServiceTrackerCollections.openSingleValueMap(
 			Captcha.class, "captcha.engine.impl");

@@ -17,15 +17,15 @@
 <%@ include file="/captcha/init.jsp" %>
 
 <c:if test="<%= captchaEnabled %>">
-	<script src="<%= PropsValues.CAPTCHA_ENGINE_RECAPTCHA_URL_SCRIPT %>?hl=<%= locale.getLanguage() %>" type="text/javascript"></script>
+	<script src="<%= captchaConfiguration.reCaptchaScriptUrl() %>?hl=<%= locale.getLanguage() %>" type="text/javascript"></script>
 
-	<div class="g-recaptcha" data-sitekey="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC, PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC) %>"></div>
+	<div class="g-recaptcha" data-sitekey="<%= captchaConfiguration.reCaptchaPublicKey() %>"></div>
 
 	<noscript>
 		<div style="height: 525px; width: 302px;">
 			<div style="height: 525px; position: relative; width: 302px;">
 				<div style="height: 525px; position: absolute; width: 302px;">
-					<iframe frameborder="0" scrolling="no" src="<%= PropsValues.CAPTCHA_ENGINE_RECAPTCHA_URL_NOSCRIPT %><%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC, PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC) %>" style="border-style: none; height: 525px; width: 302px;"></iframe>
+					<iframe frameborder="0" scrolling="no" src="<%= captchaConfiguration.reCaptchaNoScriptUrl() %><%= captchaConfiguration.reCaptchaPublicKey() %>" style="border-style: none; height: 525px; width: 302px;"></iframe>
 				</div>
 
 				<div style="background: #F9F9F9; border-radius: 3px; border: 1px solid #C1C1C1; bottom: 25px; height: 60px; left: 0; margin: 0; padding: 0; position: absolute; right: 25px; width: 300px;">

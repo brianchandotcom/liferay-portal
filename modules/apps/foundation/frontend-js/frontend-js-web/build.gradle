@@ -126,6 +126,7 @@ buildLiferayAMDLoader {
 	eachFile new StripPathSegmentsAction(2)
 	from npmInstall.nodeModulesDir
 	include "liferay-amd-loader/dist/loader.js"
+	include "liferay-amd-loader/dist/es6-promise.map"
 	includeEmptyDirs = false
 	into new File(jsDestinationDir, "loader")
 }

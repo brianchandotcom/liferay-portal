@@ -1021,16 +1021,6 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
-	<command name="gotoEditDuplicateEntryCP">
-		<var name="key_rowIndexNumber" value="2" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS_N" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute function="AssertVisible" locator1="TextInput#TITLE" />
-	</command>
-
 	<command name="gotoViewSpecificVersionHistoryCP">
 		<var name="key_rowEntry" value="${webContentTitle}" />
 

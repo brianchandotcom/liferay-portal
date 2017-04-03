@@ -90,11 +90,12 @@
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="DDMFormFieldTypeName" type="String" />
+		<column name="priority" type="String" />
 
 		<!-- Order -->
 
 		<order by="desc">
-			<order-column name="name" />
+			<order-column name="priority" />
 		</order>
 
 		<!-- Finder methods -->
@@ -137,7 +138,7 @@
 		<!-- Order -->
 
 		<order by="desc">
-			<order-column name="name" />
+			<order-column name="priority" />
 		</order>
 
 		<!-- Finder methods -->

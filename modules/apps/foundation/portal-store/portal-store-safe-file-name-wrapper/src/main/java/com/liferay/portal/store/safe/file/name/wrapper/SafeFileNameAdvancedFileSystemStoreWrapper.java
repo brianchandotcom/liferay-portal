@@ -34,16 +34,14 @@ import org.osgi.service.component.annotations.Reference;
 public class SafeFileNameAdvancedFileSystemStoreWrapper
 	implements StoreWrapper {
 
-	@Reference(
-		target = "(store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore)",
-		unbind = "-"
-	)
-	public void setStore(Store store) {
-	}
-
 	@Override
 	public Store wrap(Store store) {
 		return new SafeFileNameStore(store);
 	}
+
+	@Reference(
+		target = "(store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore)"
+	)
+	private Store _store;
 
 }

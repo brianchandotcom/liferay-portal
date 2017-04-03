@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.portlet.data.handler.PortletDataHandlerHelper;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -63,6 +64,12 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
+	}
+
+	@Override
+	public boolean validateSchemaVersion(String schemaVersion) {
+		return _portletDataHandlerHelper.validateSchemaVersion(
+			schemaVersion, getSchemaVersion());
 	}
 
 	@Activate
@@ -219,5 +226,8 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		_bookmarksEntryStagedModelRepository;
 	private StagedModelRepository<BookmarksFolder>
 		_bookmarksFolderStagedModelRepository;
+
+	@Reference
+	private PortletDataHandlerHelper _portletDataHandlerHelper;
 
 }

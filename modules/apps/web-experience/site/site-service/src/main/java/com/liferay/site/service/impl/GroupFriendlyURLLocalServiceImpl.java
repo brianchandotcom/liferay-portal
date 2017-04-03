@@ -160,26 +160,17 @@ public class GroupFriendlyURLLocalServiceImpl
 
 		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
 			String friendlyURL = friendlyURLMap.get(locale);
-
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			GroupFriendlyURL groupFriendlyURL =
-				groupFriendlyURLPersistence.fetchByC_F_L(
-					companyId, friendlyURL, languageId);
-
-			if (Validator.isNull(friendlyURL) && (groupFriendlyURL != null)) {
+			if (Validator.isNull(friendlyURL)) {
 				deleteGroupFriendlyURL(companyId, groupId, languageId);
 			}
-			else if (Validator.isNotNull(friendlyURL)) {
-				groupFriendlyURL = updateGroupFriendlyURL(
-					userId, companyId, groupId, friendlyURL,
-					LocaleUtil.toLanguageId(locale), serviceContext);
 
-				groupFriendlyURLs.add(groupFriendlyURL);
-			}
-			else {
-				continue;
-			}
+			GroupFriendlyURL groupFriendlyURL = updateGroupFriendlyURL(
+				userId, companyId, groupId, friendlyURL, languageId,
+				serviceContext);
+
+			groupFriendlyURLs.add(groupFriendlyURL);
 		}
 
 		return groupFriendlyURLs;

@@ -39,6 +39,7 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -81,47 +82,45 @@ public class UserIndexerTest {
 
 	@Test
 	public void testEmailAddress() throws Exception {
-		addUserEmailAddress("Em.Ail@liferay.com");
+		User user = addUserEmailAddress("Em.Ail@liferay.com");
 
-		User user = assertSearchOneUser("Em.Ail@liferay.com");
+		user = assertSearchOneUser("Em.Ail@liferay.com", user);
 
 		Assert.assertEquals("em.ail@liferay.com", user.getEmailAddress());
 	}
 
 	@Test
 	public void testEmailAddressField() throws Exception {
-		addUserEmailAddress("Em.Ail@liferay.com");
+		User user = addUserEmailAddress("Em.Ail@liferay.com");
 
-		User user = assertSearchOneUser("emailAddress", "em.ail@liferay.com");
+		user = assertSearchOneUser("emailAddress", "em.ail@liferay.com", user);
 
 		Assert.assertEquals("em.ail@liferay.com", user.getEmailAddress());
 	}
 
 	@Test
 	public void testEmailAddressPrefix() throws Exception {
-		addUserEmailAddress("Em.Ail@liferay.com");
+		User user = addUserEmailAddress("Em.Ail@liferay.com");
 
-		User user = assertSearchOneUser("EM.AIL");
+		user = assertSearchOneUser("EM.AIL", user);
 
 		Assert.assertEquals("em.ail@liferay.com", user.getEmailAddress());
 	}
 
 	@Test
 	public void testEmailAddressSubstring() throws Exception {
-		addUserEmailAddress("Em.Ail@liferay.com");
+		User user = addUserEmailAddress("Em.Ail@liferay.com");
 
-		User user = assertSearchOneUser("ail@life");
+		user = assertSearchOneUser("ail@life", user);
 
 		Assert.assertEquals("em.ail@liferay.com", user.getEmailAddress());
 	}
 
 	@Test
 	public void testEmptyQuery() throws Exception {
-		List<User> users = getUsers(StringPool.BLANK);
+		User user = addUser();
 
-		users.add(addUser());
-
-		assertSearch(StringPool.BLANK, users);
+		assertSearch(StringPool.BLANK, user);
 	}
 
 	@Test
@@ -130,9 +129,9 @@ public class UserIndexerTest {
 		String middleName = "Watson";
 		String lastName = "Parker";
 
-		addUserNameFields(firstName, lastName, middleName);
+		User user = addUserNameFields(firstName, lastName, middleName);
 
-		User user = assertSearchOneUser("firstName", "\"Mary Jane\"");
+		user = assertSearchOneUser("firstName", "\"Mary Jane\"", user);
 
 		Assert.assertEquals(firstName, user.getFirstName());
 	}
@@ -143,34 +142,30 @@ public class UserIndexerTest {
 		String middleName = "Joanne";
 		String lastName = "Parker";
 
-		addUserNameFields(firstName, lastName, middleName);
+		User user = addUserNameFields(firstName, lastName, middleName);
 
 		assertNoHits("firstName", "\"Mary Watson\"");
 		assertNoHits("firstName", "\"Mary Jane\" Missingword");
 
-		User user = assertSearchOneUser("firstName", "Mary \"Jane Watson\"");
+		user = assertSearchOneUser("firstName", "Mary \"Jane Watson\"", user);
 
 		Assert.assertEquals(firstName, user.getFirstName());
 	}
 
 	@Test
 	public void testLikeCharacter() throws Exception {
-		List<User> users = getUsers(StringPool.PERCENT);
+		User user = addUser();
 
-		users.add(addUser());
-
-		assertSearch(StringPool.PERCENT, users);
+		assertSearch(StringPool.PERCENT, user);
 
 		assertNoHits(StringPool.PERCENT + RandomTestUtil.randomString());
 	}
 
 	@Test
 	public void testLuceneQueryParserUnfriendlyCharacters() throws Exception {
-		List<User> users = getUsers(StringPool.AT);
+		User user = addUser();
 
-		users.add(addUser());
-
-		assertSearch(StringPool.AT, users);
+		assertSearch(StringPool.AT, user);
 
 		assertNoHits(StringPool.AT + RandomTestUtil.randomString());
 		assertNoHits(StringPool.EXCLAMATION);
@@ -201,17 +196,17 @@ public class UserIndexerTest {
 		String lastName = "Last";
 		String middleName = "Middle";
 
-		addUserNameFields(firstName, lastName, middleName);
+		User user = addUserNameFields(firstName, lastName, middleName);
 
-		User user = assertSearchOneUser("Fir");
+		user = assertSearchOneUser("Fir", user);
 
 		Assert.assertEquals("First", user.getFirstName());
 
-		user = assertSearchOneUser("LasT");
+		user = assertSearchOneUser("LasT", user);
 
 		Assert.assertEquals("Last", user.getLastName());
 
-		user = assertSearchOneUser("midd");
+		user = assertSearchOneUser("midd", user);
 
 		Assert.assertEquals("Middle", user.getMiddleName());
 	}
@@ -222,52 +217,52 @@ public class UserIndexerTest {
 		String lastName = "Last";
 		String middleName = "Middle";
 
-		addUserNameFields(firstName, lastName, middleName);
+		User user = addUserNameFields(firstName, lastName, middleName);
 
-		User user = assertSearchOneUser("Fir");
+		user = assertSearchOneUser("Fir", user);
 
 		Assert.assertEquals("First", user.getFirstName());
 
-		user = assertSearchOneUser("asT");
+		user = assertSearchOneUser("asT", user);
 
 		Assert.assertEquals("Last", user.getLastName());
 
-		user = assertSearchOneUser("idd");
+		user = assertSearchOneUser("idd", user);
 
 		Assert.assertEquals("Middle", user.getMiddleName());
 	}
 
 	@Test
 	public void testScreenName() throws Exception {
-		addUserScreenName("Open4Life");
+		User user = addUserScreenName("Open4Life");
 
-		User user = assertSearchOneUser("Open4Life");
+		user = assertSearchOneUser("Open4Life", user);
 
 		Assert.assertEquals("open4life", user.getScreenName());
 	}
 
 	@Test
 	public void testScreenNameField() throws Exception {
-		addUserScreenName("Open4Life");
+		User user = addUserScreenName("Open4Life");
 
-		User user = assertSearchOneUser("screenName", "open4life");
+		user = assertSearchOneUser("screenName", "open4life", user);
 
 		Assert.assertEquals("open4life", user.getScreenName());
 	}
 
 	@Test
 	public void testScreenNameSubstring() throws Exception {
-		addUserScreenName("Open4Life");
+		User user = addUserScreenName("Open4Life");
 
-		User user = assertSearchOneUser("open lite");
-
-		Assert.assertEquals("open4life", user.getScreenName());
-
-		user = assertSearchOneUser("OPE");
+		user = assertSearchOneUser("open lite", user);
 
 		Assert.assertEquals("open4life", user.getScreenName());
 
-		user = assertSearchOneUser("4lif");
+		user = assertSearchOneUser("OPE", user);
+
+		Assert.assertEquals("open4life", user.getScreenName());
+
+		user = assertSearchOneUser("4lif", user);
 
 		Assert.assertEquals("open4life", user.getScreenName());
 	}
@@ -322,32 +317,35 @@ public class UserIndexerTest {
 		return user;
 	}
 
-	protected void addUserEmailAddress(String emailAddress) throws Exception {
+	protected User addUserEmailAddress(String emailAddress) throws Exception {
 		String firstName = RandomTestUtil.randomString();
 		String lastName = RandomTestUtil.randomString();
 		String middleName = RandomTestUtil.randomString();
 		String screenName = RandomTestUtil.randomString();
 
-		addUser(firstName, lastName, middleName, screenName, emailAddress);
+		return addUser(
+			firstName, lastName, middleName, screenName, emailAddress);
 	}
 
-	protected void addUserNameFields(
+	protected User addUserNameFields(
 			String firstName, String lastName, String middleName)
 		throws Exception {
 
 		String screenName = RandomTestUtil.randomString();
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 
-		addUser(firstName, lastName, middleName, screenName, emailAddress);
+		return addUser(
+			firstName, lastName, middleName, screenName, emailAddress);
 	}
 
-	protected void addUserScreenName(String screenName) throws Exception {
+	protected User addUserScreenName(String screenName) throws Exception {
 		String firstName = RandomTestUtil.randomString();
 		String lastName = RandomTestUtil.randomString();
 		String middleName = RandomTestUtil.randomString();
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 
-		addUser(firstName, lastName, middleName, screenName, emailAddress);
+		return addUser(
+			firstName, lastName, middleName, screenName, emailAddress);
 	}
 
 	protected void assertLength(Hits hits, int length) {
@@ -366,39 +364,68 @@ public class UserIndexerTest {
 		assertLength(hits, 0);
 	}
 
-	protected void assertSearch(String keywords, List<User> expectedUsers)
+	protected List<User> assertSearch(Hits hits, User... expectedUsers)
 		throws Exception {
 
-		List<User> actualUsers = getUsers(keywords);
+		List<User> actualUsers = getUsers(hits);
 
-		Assert.assertEquals(
-			getScreenNames(expectedUsers), getScreenNames(actualUsers));
+		List<String> actualScreenNames = getScreenNames(actualUsers);
+
+		List<String> expectedScreenNames = getScreenNames(
+			Arrays.asList(expectedUsers));
+
+		if (!actualScreenNames.containsAll(expectedScreenNames)) {
+			Assert.assertEquals(
+				toString(expectedScreenNames), toString(actualScreenNames));
+		}
+
+		return actualUsers;
 	}
 
-	protected User assertSearchOneUser(String keywords) throws Exception {
+	protected List<User> assertSearch(String keywords, User... expectedUsers)
+		throws Exception {
+
 		Hits hits = search(keywords);
 
-		return getUser(hits);
+		return assertSearch(hits, expectedUsers);
 	}
 
-	protected User assertSearchOneUser(String field, String value)
+	protected User assertSearchOneUser(String field, String value, User user)
 		throws Exception {
 
 		Hits hits = search(field, value);
 
-		return getUser(hits);
+		List<User> actualUsers = assertSearch(hits, user);
+
+		return findByUserId(actualUsers, user.getUserId());
 	}
 
-	protected String getScreenNames(List<User> users) {
+	protected User assertSearchOneUser(String keywords, User user)
+		throws Exception {
+
+		List<User> actualUsers = assertSearch(keywords, user);
+
+		return findByUserId(actualUsers, user.getUserId());
+	}
+
+	protected User findByUserId(List<User> users, long userId) {
+		for (User user : users) {
+			if (user.getUserId() == userId) {
+				return user;
+			}
+		}
+
+		return null;
+	}
+
+	protected List<String> getScreenNames(List<User> users) {
 		List<String> screenNames = new ArrayList<>(users.size());
 
 		for (User user : users) {
 			screenNames.add(user.getScreenName());
 		}
 
-		Collections.sort(screenNames);
-
-		return screenNames.toString();
+		return screenNames;
 	}
 
 	protected SearchContext getSearchContext() throws Exception {
@@ -416,17 +443,7 @@ public class UserIndexerTest {
 		return _userLocalService.getUser(userId);
 	}
 
-	protected User getUser(Hits hits) throws Exception {
-		assertLength(hits, 1);
-
-		Document document = hits.doc(0);
-
-		return getUser(document);
-	}
-
-	protected List<User> getUsers(String keywords) throws Exception {
-		Hits hits = search(keywords);
-
+	protected List<User> getUsers(Hits hits) throws Exception {
 		Document[] documents = hits.getDocs();
 
 		List<User> users = new ArrayList<>(documents.length);
@@ -462,19 +479,25 @@ public class UserIndexerTest {
 			String firstName, String lastName, String middleName)
 		throws Exception {
 
-		addUserNameFields(firstName, lastName, middleName);
+		User user = addUserNameFields(firstName, lastName, middleName);
 
-		User user = assertSearchOneUser("firstName", firstName);
+		user = assertSearchOneUser("firstName", firstName, user);
 
 		Assert.assertEquals(firstName, user.getFirstName());
 
-		user = assertSearchOneUser("lastName", lastName);
+		user = assertSearchOneUser("lastName", lastName, user);
 
 		Assert.assertEquals(lastName, user.getLastName());
 
-		user = assertSearchOneUser("middleName", middleName);
+		user = assertSearchOneUser("middleName", middleName, user);
 
 		Assert.assertEquals(middleName, user.getMiddleName());
+	}
+
+	protected String toString(List<String> strings) {
+		Collections.sort(strings);
+
+		return strings.toString();
 	}
 
 	private Indexer<User> _indexer;

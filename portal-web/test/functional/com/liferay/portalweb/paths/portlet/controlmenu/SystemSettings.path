@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SHOW_INACTIVE_REQUEST_MESSAGE</td>
+	<td>//input[contains(@id,'show.inactive.request.message')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_ARTICLE_VIEW_PERMISSIONS_CHECK_ENABLED</td>
 	<td>//label[contains(@for,'articleViewPermissionsCheckEnabled')]/input</td>
 	<td></td>

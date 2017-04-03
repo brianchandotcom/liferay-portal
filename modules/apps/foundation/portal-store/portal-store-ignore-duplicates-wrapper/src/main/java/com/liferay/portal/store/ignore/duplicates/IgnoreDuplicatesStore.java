@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.internal.store;
+package com.liferay.portal.store.ignore.duplicates;
 
 import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.store.Store;

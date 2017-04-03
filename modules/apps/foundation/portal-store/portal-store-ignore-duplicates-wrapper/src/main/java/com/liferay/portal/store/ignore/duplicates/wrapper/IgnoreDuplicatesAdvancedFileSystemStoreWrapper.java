@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.document.library.internal.store.wrapper;
+package com.liferay.portal.store.ignore.duplicates.wrapper;
 
-import com.liferay.document.library.internal.store.IgnoreDuplicatesStore;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.store.StoreWrapper;
+import com.liferay.portal.store.ignore.duplicates.IgnoreDuplicatesStore;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,11 +27,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"store.type=com.liferay.portal.store.file.system.FileSystemStore"
+		"store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore"
 	},
 	service = StoreWrapper.class
 )
-public class IgnoreDuplicatesFileSystemStoreWrapper implements StoreWrapper {
+public class IgnoreDuplicatesAdvancedFileSystemStoreWrapper
+	implements StoreWrapper {
 
 	@Override
 	public Store wrap(Store store) {
@@ -39,7 +40,7 @@ public class IgnoreDuplicatesFileSystemStoreWrapper implements StoreWrapper {
 	}
 
 	@Reference(
-		target = "(store.type=com.liferay.portal.store.file.system.FileSystemStore)"
+		target = "(store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore)"
 	)
 	private Store _store;
 

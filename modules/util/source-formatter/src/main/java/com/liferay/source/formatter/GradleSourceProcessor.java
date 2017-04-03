@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
@@ -151,13 +151,13 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<FileCheck> getFileChecks() {
-		return _fileChecks;
+	protected List<SourceCheck> getSourceChecks() {
+		return _sourceChecks;
 	}
 
 	@Override
-	protected void populateFileChecks() {
-		_fileChecks.add(new WhitespaceCheck());
+	protected void populateSourceChecks() {
+		_sourceChecks.add(new WhitespaceCheck());
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/build.gradle"};
@@ -166,8 +166,8 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 		"name: \"(.*?)\", version: \"default\"");
 	private final Pattern _dependenciesPattern = Pattern.compile(
 		"^dependencies \\{(.+?\n)\\}", Pattern.DOTALL | Pattern.MULTILINE);
-	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _incorrectWhitespacePattern = Pattern.compile(
 		":[^ \n]");
+	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

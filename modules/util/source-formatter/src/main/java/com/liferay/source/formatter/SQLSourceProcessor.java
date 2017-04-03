@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
@@ -101,17 +101,17 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<FileCheck> getFileChecks() {
-		return _fileChecks;
+	protected List<SourceCheck> getSourceChecks() {
+		return _sourceChecks;
 	}
 
 	@Override
-	protected void populateFileChecks() {
-		_fileChecks.add(new WhitespaceCheck());
+	protected void populateSourceChecks() {
+		_sourceChecks.add(new WhitespaceCheck());
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.sql"};
 
-	private final List<FileCheck> _fileChecks = new ArrayList<>();
+	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

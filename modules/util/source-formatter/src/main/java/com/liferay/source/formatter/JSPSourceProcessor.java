@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.checks.CopyrightCheck;
-import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JSPDefineObjectsCheck;
 import com.liferay.source.formatter.checks.JSPEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JSPIfStatementCheck;
@@ -45,6 +44,7 @@ import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
 import com.liferay.source.formatter.checks.JSPXSSVulnerabilitiesCheck;
 import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
+import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
 import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
@@ -442,60 +442,60 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<FileCheck> getFileChecks() {
-		return _fileChecks;
+	protected List<SourceCheck> getSourceChecks() {
+		return _sourceChecks;
 	}
 
 	@Override
-	protected List<FileCheck> getModuleFileChecks() {
-		return _moduleFileChecks;
+	protected List<SourceCheck> getModuleSourceChecks() {
+		return _moduleSourceChecks;
 	}
 
 	@Override
-	protected void populateFileChecks() throws Exception {
-		_fileChecks.add(new JSPWhitespaceCheck());
+	protected void populateSourceChecks() throws Exception {
+		_sourceChecks.add(new JSPWhitespaceCheck());
 
-		_fileChecks.add(
+		_sourceChecks.add(
 			new CopyrightCheck(
 				getContent(
 					sourceFormatterArgs.getCopyrightFileName(),
 					PORTAL_MAX_DIR_LEVEL)));
-		_fileChecks.add(
+		_sourceChecks.add(
 			new JSPDefineObjectsCheck(
 				portalSource, subrepository,
 				getPluginsInsideModulesDirectoryNames()));
-		_fileChecks.add(new JSPEmptyLinesCheck());
-		_fileChecks.add(new JSPIfStatementCheck());
-		_fileChecks.add(new JSPLogFileNameCheck(subrepository));
-		_fileChecks.add(new JSPRedirectBackURLCheck());
-		_fileChecks.add(new JSPSessionKeysCheck());
-		_fileChecks.add(new JSPStylingCheck());
-		_fileChecks.add(new JSPSubnameCheck());
-		_fileChecks.add(
+		_sourceChecks.add(new JSPEmptyLinesCheck());
+		_sourceChecks.add(new JSPIfStatementCheck());
+		_sourceChecks.add(new JSPLogFileNameCheck(subrepository));
+		_sourceChecks.add(new JSPRedirectBackURLCheck());
+		_sourceChecks.add(new JSPSessionKeysCheck());
+		_sourceChecks.add(new JSPStylingCheck());
+		_sourceChecks.add(new JSPSubnameCheck());
+		_sourceChecks.add(
 			new JSPTagAttributesCheck(
 				portalSource, subrepository,
 				_getPrimitiveTagAttributeDataTypes(), _getTagJavaClassesMap()));
-		_fileChecks.add(new JSPTaglibVariableCheck());
-		_fileChecks.add(new JSPUnusedImportCheck(_contentsMap));
-		_fileChecks.add(new JSPXSSVulnerabilitiesCheck());
-		_fileChecks.add(
+		_sourceChecks.add(new JSPTaglibVariableCheck());
+		_sourceChecks.add(new JSPUnusedImportCheck(_contentsMap));
+		_sourceChecks.add(new JSPXSSVulnerabilitiesCheck());
+		_sourceChecks.add(
 			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
-		_fileChecks.add(new StringUtilCheck());
-		_fileChecks.add(new UnparameterizedClassCheck());
-		_fileChecks.add(new ValidatorEqualsCheck());
+		_sourceChecks.add(new StringUtilCheck());
+		_sourceChecks.add(new UnparameterizedClassCheck());
+		_sourceChecks.add(new ValidatorEqualsCheck());
 
 		if (portalSource || subrepository) {
-			_fileChecks.add(new JSPUnusedTaglibCheck(_contentsMap));
-			_fileChecks.add(
+			_sourceChecks.add(new JSPUnusedTaglibCheck(_contentsMap));
+			_sourceChecks.add(
 				new JSPUnusedVariableCheck(
 					getExcludes(_UNUSED_VARIABLES_EXCLUDES), _contentsMap));
-			_fileChecks.add(
+			_sourceChecks.add(
 				new ResourceBundleCheck(
 					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
 		}
 
 		if (portalSource) {
-			_fileChecks.add(
+			_sourceChecks.add(
 				new JSPLanguageKeysCheck(
 					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
 					getPortalLanguageProperties()));
@@ -503,8 +503,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void populateModuleFileChecks() throws Exception {
-		_moduleFileChecks.add(new JSPModuleIllegalImportsCheck());
+	protected void populateModuleSourceChecks() throws Exception {
+		_moduleSourceChecks.add(new JSPModuleIllegalImportsCheck());
 	}
 
 	private Map<String, String> _getContentsMap() throws Exception {
@@ -679,7 +679,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _compressedJSPTaglibPattern = Pattern.compile(
 		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 	private Map<String, String> _contentsMap;
-	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _includeFilePattern = Pattern.compile(
 		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 	private Pattern _javaClassPattern = Pattern.compile(
@@ -687,7 +686,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			"([\\s\\S]*?)\n\\}\n");
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*\\.(jsp[f]?|svg)");
-	private final List<FileCheck> _moduleFileChecks = new ArrayList<>();
+	private final List<SourceCheck> _moduleSourceChecks = new ArrayList<>();
+	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
 		"(<.*page import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(

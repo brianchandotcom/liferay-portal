@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.PropertiesDefinitionKeysCheck;
+import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.WhitespaceCheck;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -618,11 +618,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		};
 	}
 
-	@Override
-	protected List<FileCheck> getFileChecks() {
-		return _fileChecks;
-	}
-
 	protected String getPortalPortalProperties() throws Exception {
 		if (_portalPortalPropertiesContent != null) {
 			return _portalPortalPropertiesContent;
@@ -658,6 +653,11 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		return _portalPortalPropertiesContent;
 	}
 
+	@Override
+	protected List<SourceCheck> getSourceChecks() {
+		return _sourceChecks;
+	}
+
 	protected String getTranslatedKey(String content, String key) {
 		if (content.startsWith(key + "=")) {
 			int x = content.indexOf("\n");
@@ -684,13 +684,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content.substring(y, z);
-	}
-
-	@Override
-	protected void populateFileChecks() {
-		_fileChecks.add(new WhitespaceCheck(true));
-
-		_fileChecks.add(new PropertiesDefinitionKeysCheck());
 	}
 
 	protected void populateLanguagePropertiesMap() throws Exception {
@@ -721,6 +714,13 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 
 		_languagePropertiesMap = languagePropertiesMap;
+	}
+
+	@Override
+	protected void populateSourceChecks() {
+		_sourceChecks.add(new WhitespaceCheck(true));
+
+		_sourceChecks.add(new PropertiesDefinitionKeysCheck());
 	}
 
 	@Override
@@ -832,7 +832,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	private final Map<String, Map<String, String>>
 		_duplicateFileLanguageKeysMap = new ConcurrentHashMap<>();
-	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private Map<String, Properties> _languagePropertiesMap;
 	private final Pattern _licensesPattern = Pattern.compile(
 		"\nlicenses=(\\w+)\n");
@@ -840,5 +839,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	private String _portalPortalPropertiesContent;
 	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
 		"\n.*=(\\\\\n *).*(\n[^ ]|\\Z)");
+	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.WhitespaceCheck;
 
 import java.io.File;
@@ -151,13 +151,13 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<FileCheck> getFileChecks() {
-		return _fileChecks;
+	protected List<SourceCheck> getSourceChecks() {
+		return _sourceChecks;
 	}
 
 	@Override
-	protected void populateFileChecks() {
-		_fileChecks.add(new WhitespaceCheck());
+	protected void populateSourceChecks() {
+		_sourceChecks.add(new WhitespaceCheck());
 	}
 
 	protected String sortProperties(String content) {
@@ -206,11 +206,11 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 		"\\{\n\n");
 	private final Pattern _emptyLineBeforeCloseCurlyBrace = Pattern.compile(
 		"\n\n\t*\\}");
-	private final List<FileCheck> _fileChecks = new ArrayList<>();
 	private final Pattern _hexColorPattern = Pattern.compile(
 		"#([0-9a-f]+)[\\( ;,]");
 	private final Pattern _propertiesPattern = Pattern.compile(
 		"(^(\t*)[a-z]\\S*: .+;\n)+", Pattern.MULTILINE);
+	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 	private class PropertyComparator extends NaturalOrderStringComparator {
 

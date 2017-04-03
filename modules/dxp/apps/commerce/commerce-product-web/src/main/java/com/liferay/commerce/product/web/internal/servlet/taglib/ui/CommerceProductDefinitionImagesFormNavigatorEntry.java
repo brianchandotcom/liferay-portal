@@ -26,36 +26,36 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-    property = {"form.navigator.entry.order:Integer=100"},
-    service = FormNavigatorEntry.class
+	property = {"form.navigator.entry.order:Integer=100"},
+	service = FormNavigatorEntry.class
 )
 public class CommerceProductDefinitionImagesFormNavigatorEntry
-        extends BaseJSPFormNavigatorEntry<CommerceProductDefinition>
-        implements FormNavigatorEntry<CommerceProductDefinition> {
+	extends BaseJSPFormNavigatorEntry<CommerceProductDefinition>
+	implements FormNavigatorEntry<CommerceProductDefinition> {
 
-    @Override
-    public String getCategoryKey() {
-        return FormNavigatorConstants.CATEGORY_KEY_COMMERCE_PRODUCT_IMAGES;
-    }
+	@Override
+	public String getCategoryKey() {
+		return FormNavigatorConstants.CATEGORY_KEY_COMMERCE_PRODUCT_IMAGES;
+	}
 
-    @Override
-    public String getFormNavigatorId() {
-        return FormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
-    }
+	@Override
+	public String getFormNavigatorId() {
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
+	}
 
-    @Override
-    public String getKey() {
-        return "images";
-    }
+	@Override
+	public String getKey() {
+		return "images";
+	}
 
-    @Override
-    public String getLabel(Locale locale) {
-        return "images";
-    }
+	@Override
+	public String getLabel(Locale locale) {
+		return "images";
+	}
 
-    @Override
-    protected String getJspPath() {
-        return "/commerce_product_definitions/product/images.jsp";
-    }
+	@Override
+	protected String getJspPath() {
+		return "/commerce_product_definitions/product/images.jsp";
+	}
 
 }

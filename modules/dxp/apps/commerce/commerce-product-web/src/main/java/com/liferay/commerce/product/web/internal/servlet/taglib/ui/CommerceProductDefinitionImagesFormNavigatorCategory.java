@@ -25,25 +25,25 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-    property = {"form.navigator.category.order:Integer=90"},
-    service = FormNavigatorCategory.class
+	property = {"form.navigator.category.order:Integer=90"},
+	service = FormNavigatorCategory.class
 )
 public class CommerceProductDefinitionImagesFormNavigatorCategory
-        implements FormNavigatorCategory {
+	implements FormNavigatorCategory {
 
-    @Override
-    public String getFormNavigatorId() {
-        return FormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
-    }
+	@Override
+	public String getFormNavigatorId() {
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
+	}
 
-    @Override
-    public String getKey() {
-        return FormNavigatorConstants.CATEGORY_KEY_COMMERCE_PRODUCT_IMAGES;
-    }
+	@Override
+	public String getKey() {
+		return FormNavigatorConstants.CATEGORY_KEY_COMMERCE_PRODUCT_IMAGES;
+	}
 
-    @Override
-    public String getLabel(Locale locale) {
-        return LanguageUtil.get(locale, "images");
-    }
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "images");
+	}
 
 }

@@ -4,6 +4,7 @@ Bundle-Version: 2.2.0
 Export-Package:\
 	com.liferay.exportimport.constants,\
 	com.liferay.exportimport.content.processor,\
+	com.liferay.exportimport.portlet.data.handler.helper,\
 	com.liferay.exportimport.portlet.data.handler.provider,\
 	com.liferay.exportimport.portlet.preferences.processor,\
 	com.liferay.exportimport.staged.model.repository,\

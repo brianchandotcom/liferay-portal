@@ -669,8 +669,10 @@ public class LocalGitSyncUtil {
 
 					gitWorkingDirectory.deleteLocalBranch(upstreamBranchName);
 
-					gitWorkingDirectory.checkoutBranch(
-						upstreamBranchName, "-b");
+					gitWorkingDirectory.createLocalBranch(
+						upstreamBranchName, true, upstreamBranchSha);
+
+					gitWorkingDirectory.checkoutBranch(upstreamBranchName);
 				}
 				finally {
 					gitWorkingDirectory.deleteLocalBranch(tempBranchName);

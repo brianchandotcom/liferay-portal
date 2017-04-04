@@ -17,13 +17,14 @@ package com.liferay.source.formatter.parser;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,6 +32,44 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JavaClassParser {
+
+	public static List<JavaClass> parseAnonymousClasses(String content)
+		throws Exception {
+
+		List<JavaClass> anonymousClasses = new ArrayList<>();
+
+		Matcher matcher = _anonymousClassPattern.matcher(content);
+
+		while (matcher.find()) {
+			String s = content.substring(matcher.start(2), matcher.end());
+
+			if (JavaSourceUtil.getLevel(s) != 0) {
+				continue;
+			}
+
+			int x = matcher.start() + 1;
+			int y = matcher.end();
+
+			while (true) {
+				String classContent = content.substring(x, y);
+
+				if (JavaSourceUtil.getLevel(classContent, "{", "}") != 0) {
+					y++;
+
+					continue;
+				}
+
+				anonymousClasses.add(
+					_parseJavaClass(
+						StringPool.BLANK, classContent,
+						JavaTerm.ACCESS_MODIFIER_PRIVATE, false));
+
+				break;
+			}
+		}
+
+		return anonymousClasses;
+	}
 
 	public static JavaClass parseJavaClass(String fileName, String content)
 		throws Exception {
@@ -237,7 +276,7 @@ public class JavaClassParser {
 		JavaClass javaClass = new JavaClass(
 			className, classContent, accessModifier, isStatic);
 
-		String indent = SourceUtil.getIndent(classContent);
+		String indent = SourceUtil.getIndent(classContent) + StringPool.TAB;
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(classContent));
@@ -311,5 +350,8 @@ public class JavaClassParser {
 
 		return javaClass;
 	}
+
+	private static final Pattern _anonymousClassPattern = Pattern.compile(
+		"\n\t+(\\S.* )?new ((.|\\(\n)*\\)) \\{\n\n");
 
 }

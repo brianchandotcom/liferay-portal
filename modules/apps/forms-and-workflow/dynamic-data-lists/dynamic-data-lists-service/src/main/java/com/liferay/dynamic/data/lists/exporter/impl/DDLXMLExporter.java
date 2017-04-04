@@ -20,22 +20,27 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.io.Serializable;
 
+import java.time.format.DateTimeFormatter;
+
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,11 +58,24 @@ public class DDLXMLExporter extends BaseDDLExporter {
 	}
 
 	protected void addFieldElement(
-		DDMFormFieldRenderedValue ddmFormFieldRenderedValue, Element element) {
+		DDMFormFieldRenderedValue ddmFormFieldRenderedValue, Element element,
+		Map.Entry<String, DDMFormField> entry) {
 
-		LocalizedValue label = ddmFormFieldRenderedValue.getLabel();
+		LocalizedValue label = null;
+		String value = null;
 
-		String value = ddmFormFieldRenderedValue.getValue();
+		if (ddmFormFieldRenderedValue == null) {
+			DDMFormField ddmFormField = entry.getValue();
+
+			label = ddmFormField.getLabel();
+
+			value = StringPool.BLANK;
+		}
+		else {
+			label = ddmFormFieldRenderedValue.getLabel();
+
+			value = ddmFormFieldRenderedValue.getValue();
+		}
 
 		addFieldElement(element, label.getString(getLocale()), value);
 	}
@@ -84,9 +102,8 @@ public class DDLXMLExporter extends BaseDDLExporter {
 
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
-
-		List<DDMFormField> ddmFormFields = getDDMFormFields(ddmStructure);
+		Map<String, DDMFormField> ddmFormFields = getDistinctFields(
+			recordSetId);
 
 		Document document = SAXReaderUtil.createDocument();
 
@@ -94,6 +111,8 @@ public class DDLXMLExporter extends BaseDDLExporter {
 
 		List<DDLRecord> records = _ddlRecordLocalService.getRecords(
 			recordSetId, status, start, end, orderByComparator);
+
+		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter();
 
 		for (DDLRecord record : records) {
 			Element fieldsElement = rootElement.addElement("fields");
@@ -103,20 +122,42 @@ public class DDLXMLExporter extends BaseDDLExporter {
 			DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
 				recordVersion.getDDMStorageId());
 
-			List<DDMFormFieldRenderedValue> values = getRenderedValues(
-				recordSet.getScope(), ddmFormFields, ddmFormValues,
-				ddmStructure);
+			Map<String, DDMFormFieldRenderedValue> values = getRenderedValues(
+				recordSet.getScope(), ddmFormFields.values(), ddmFormValues);
 
-			values.forEach(value -> addFieldElement(value, fieldsElement));
+			for (Map.Entry<String, DDMFormField> entry :
+					ddmFormFields.entrySet()) {
+
+				DDMFormFieldRenderedValue ddmFormFieldRenderedValue =
+					values.get(entry.getKey());
+
+				addFieldElement(
+					ddmFormFieldRenderedValue, fieldsElement, entry);
+			}
+
+			Locale locale = getLocale();
 
 			addFieldElement(
-				fieldsElement, LanguageUtil.get(getLocale(), "status"),
+				fieldsElement, LanguageUtil.get(locale, "status"),
 				getStatusMessage(recordVersion.getStatus()));
+
+			addFieldElement(
+				fieldsElement, LanguageUtil.get(locale, "modified-date"),
+				formatDate(recordVersion.getStatusDate(), dateTimeFormatter));
+
+			addFieldElement(
+				fieldsElement, LanguageUtil.get(locale, "author"),
+				recordVersion.getUserName());
 		}
 
 		String xml = document.asXML();
 
 		return xml.getBytes();
+	}
+
+	@Override
+	protected DDLRecordSetVersionService getDDLRecordSetVersionService() {
+		return _ddlRecordSetVersionService;
 	}
 
 	@Override
@@ -127,10 +168,10 @@ public class DDLXMLExporter extends BaseDDLExporter {
 	}
 
 	@Override
-	protected
-		DDMFormValuesToFieldsConverter getDDMFormValuesToFieldsConverter() {
+	protected DDMFormFieldValueRendererRegistry
+		getDDMFormFieldValueRendererRegistry() {
 
-		return _ddmFormValuesToFieldsConverter;
+		return _ddmFormFieldValueRendererRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -148,6 +189,13 @@ public class DDLXMLExporter extends BaseDDLExporter {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDLRecordSetVersionService(
+		DDLRecordSetVersionService ddlRecordSetVersionService) {
+
+		_ddlRecordSetVersionService = ddlRecordSetVersionService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMFormFieldTypeServicesTracker(
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
 
@@ -155,10 +203,10 @@ public class DDLXMLExporter extends BaseDDLExporter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormValuesToFieldsConverter(
-		DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter) {
+	protected void setDDMFormFieldValueRendererRegistry(
+		DDMFormFieldValueRendererRegistry ddmFormFieldValueRendererRegistry) {
 
-		_ddmFormValuesToFieldsConverter = ddmFormValuesToFieldsConverter;
+		_ddmFormFieldValueRendererRegistry = ddmFormFieldValueRendererRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -168,8 +216,10 @@ public class DDLXMLExporter extends BaseDDLExporter {
 
 	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordSetService _ddlRecordSetService;
+	private DDLRecordSetVersionService _ddlRecordSetVersionService;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+	private DDMFormFieldValueRendererRegistry
+		_ddmFormFieldValueRendererRegistry;
 	private StorageEngine _storageEngine;
 
 }

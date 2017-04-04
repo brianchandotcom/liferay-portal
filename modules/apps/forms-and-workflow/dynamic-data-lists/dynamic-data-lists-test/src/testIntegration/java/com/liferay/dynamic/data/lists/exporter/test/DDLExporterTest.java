@@ -21,15 +21,20 @@ import com.liferay.dynamic.data.lists.exporter.DDLExporter;
 import com.liferay.dynamic.data.lists.exporter.DDLExporterFactory;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -47,11 +52,15 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -59,9 +68,17 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Serializable;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -111,9 +128,6 @@ public class DDLExporterTest {
 
 	@After
 	public void tearDown() throws Exception {
-		FileUtil.delete("record-set.xml");
-		FileUtil.delete("record-set.csv");
-
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
@@ -137,21 +151,208 @@ public class DDLExporterTest {
 		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
 			_group, recordSet);
 
-		recordTestHelper.addRecord(
+		DDLRecord record = recordTestHelper.addRecord(
 			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
+
+		DDLRecordVersion recordVersion = record.getRecordVersion();
 
 		DDLExporter ddlExporter = _ddlExporterFactory.getDDLExporter("csv");
 
 		byte[] bytes = ddlExporter.export(recordSet.getRecordSetId());
 
-		File file = new File("record-set.csv");
+		try (ByteArrayInputStream byteArrayInputStream =
+				new ByteArrayInputStream(bytes);
+			BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(byteArrayInputStream))) {
 
-		FileUtil.write(file, bytes);
+			String header = bufferedReader.readLine();
 
-		String expectedFileContent = read("test-record-set-export.csv");
-		String actualFileContent = FileUtil.read(file);
+			Assert.assertEquals(
+				"Field0,Field1,Field2,Field3,Field4,Field5,Field6,Field7," +
+					"Field8,Field9,Field10,Field11,Field12,Status," +
+						"Modified Date,Author",
+				header);
 
-		Assert.assertEquals(expectedFileContent, actualFileContent);
+			StringBundler sb = new StringBundler(31);
+
+			sb.append("No");
+			sb.append(CharPool.COMMA);
+
+			sb.append("1/1/70");
+			sb.append(CharPool.COMMA);
+
+			sb.append("1");
+			sb.append(CharPool.COMMA);
+
+			sb.append("file.txt");
+			sb.append(CharPool.COMMA);
+
+			sb.append("\"Latitude: -8.035, Longitude: -34.918\"");
+			sb.append(CharPool.COMMA);
+
+			sb.append("2");
+			sb.append(CharPool.COMMA);
+
+			sb.append("Link to Page content");
+			sb.append(CharPool.COMMA);
+
+			sb.append("3");
+			sb.append(CharPool.COMMA);
+
+			sb.append("Option 1");
+			sb.append(CharPool.COMMA);
+
+			sb.append("Option 1");
+			sb.append(CharPool.COMMA);
+
+			sb.append("Text content");
+			sb.append(CharPool.COMMA);
+
+			sb.append("Text Area content");
+			sb.append(CharPool.COMMA);
+
+			sb.append("Text HTML content");
+			sb.append(CharPool.COMMA);
+
+			sb.append("Approved");
+			sb.append(CharPool.COMMA);
+
+			sb.append(formatDate(recordVersion.getStatusDate()));
+			sb.append(CharPool.COMMA);
+
+			sb.append(recordVersion.getUserName());
+
+			String data = bufferedReader.readLine();
+
+			Assert.assertEquals(sb.toString(), data);
+		}
+	}
+
+	@Test
+	public void testExportRecordsWithDistinctFields() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			_availableLocales, _defaultLocale);
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"field0", false, false, false));
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm, _availableLocales, _defaultLocale);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0", new UnlocalizedValue("text0")));
+
+		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
+			_group);
+
+		DDLRecordSet recordSet = recordSetTestHelper.addRecordSet(ddmForm);
+
+		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
+			_group, recordSet);
+
+		DDLRecord record0 = recordTestHelper.addRecord(
+			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
+
+		DDLRecordVersion recordVersion0 = record0.getRecordVersion();
+
+		ddmForm.getDDMFormFields().clear();
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"field1", false, false, false));
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"field2", false, false, false));
+
+		ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm, _availableLocales, _defaultLocale);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field1", new UnlocalizedValue("text1")));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field2", new UnlocalizedValue("text2")));
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(DDLRecordSet.class), _group);
+
+		ddmStructure = ddmStructureTestHelper.updateStructure(
+			ddmStructure.getStructureId(), ddmForm);
+
+		recordSet = recordSetTestHelper.updateRecordSet(
+			recordSet.getRecordSetId(), ddmStructure);
+
+		recordTestHelper = new DDLRecordTestHelper(_group, recordSet);
+
+		DDLRecord record1 = recordTestHelper.addRecord(
+			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
+
+		DDLRecordVersion recordVersion1 = record1.getRecordVersion();
+
+		DDLExporter ddlExporter = _ddlExporterFactory.getDDLExporter("csv");
+
+		byte[] bytes = ddlExporter.export(recordSet.getRecordSetId());
+
+		try (ByteArrayInputStream byteArrayInputStream =
+				new ByteArrayInputStream(bytes);
+			BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(byteArrayInputStream))) {
+
+			String header = bufferedReader.readLine();
+
+			Assert.assertEquals(
+				"field0,field1,field2,Status,Modified Date,Author", header);
+
+			String row2 = bufferedReader.readLine();
+
+			StringBundler sb = new StringBundler(10);
+
+			sb.append(CharPool.COMMA);
+
+			sb.append("text1");
+			sb.append(CharPool.COMMA);
+
+			sb.append("text2");
+			sb.append(CharPool.COMMA);
+
+			sb.append("Approved");
+			sb.append(CharPool.COMMA);
+
+			sb.append(formatDate(recordVersion1.getStatusDate()));
+			sb.append(CharPool.COMMA);
+
+			sb.append(recordVersion1.getUserName());
+
+			Assert.assertEquals(sb.toString(), row2);
+
+			String row1 = bufferedReader.readLine();
+
+			sb = new StringBundler(9);
+
+			sb.append("text0");
+			sb.append(CharPool.COMMA);
+
+			sb.append(CharPool.COMMA);
+			sb.append(CharPool.COMMA);
+
+			sb.append("Approved");
+			sb.append(CharPool.COMMA);
+
+			sb.append(formatDate(recordVersion0.getStatusDate()));
+			sb.append(CharPool.COMMA);
+
+			sb.append(recordVersion0.getUserName());
+
+			Assert.assertEquals(sb.toString(), row1);
+		}
 	}
 
 	@Test
@@ -174,8 +375,10 @@ public class DDLExporterTest {
 		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
 			_group, recordSet);
 
-		recordTestHelper.addRecord(
+		DDLRecord record = recordTestHelper.addRecord(
 			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
+
+		DDLRecordVersion recordVersion = record.getRecordVersion();
 
 		DDLExporter ddlExporter = _ddlExporterFactory.getDDLExporter("xls");
 
@@ -201,7 +404,7 @@ public class DDLExporterTest {
 
 			cell = row.getCell(0);
 
-			Assert.assertEquals("false", cell.getStringCellValue());
+			Assert.assertEquals("No", cell.getStringCellValue());
 
 			cell = row.getCell(1);
 
@@ -209,7 +412,7 @@ public class DDLExporterTest {
 
 			cell = row.getCell(2);
 
-			Assert.assertEquals("1.0", cell.getStringCellValue());
+			Assert.assertEquals("1", cell.getStringCellValue());
 
 			cell = row.getCell(3);
 
@@ -257,6 +460,17 @@ public class DDLExporterTest {
 			cell = row.getCell(13);
 
 			Assert.assertEquals("Approved", cell.getStringCellValue());
+
+			cell = row.getCell(14);
+
+			Assert.assertEquals(
+				formatDate(recordVersion.getStatusDate()),
+				cell.getStringCellValue());
+
+			cell = row.getCell(15);
+
+			Assert.assertEquals(
+				recordVersion.getUserName(), cell.getStringCellValue());
 		}
 	}
 
@@ -280,21 +494,58 @@ public class DDLExporterTest {
 		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
 			_group, recordSet);
 
-		recordTestHelper.addRecord(
+		DDLRecord record = recordTestHelper.addRecord(
 			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
+
+		DDLRecordVersion recordVersion = record.getRecordVersion();
 
 		DDLExporter ddlExporter = _ddlExporterFactory.getDDLExporter("xml");
 
 		byte[] bytes = ddlExporter.export(recordSet.getRecordSetId());
 
-		File file = new File("record-set.xml");
+		Document document = SAXReaderUtil.createDocument();
 
-		FileUtil.write(file, bytes);
+		Element rootElement = document.addElement("root");
 
-		String expectedFileContent = read("test-record-set-export.xml");
-		String actualFileContent = FileUtil.read(file);
+		Element fieldsElement = rootElement.addElement("fields");
 
-		Assert.assertEquals(expectedFileContent, actualFileContent);
+		addFieldElement(fieldsElement, "Field0", "No");
+		addFieldElement(fieldsElement, "Field1", "1/1/70");
+		addFieldElement(fieldsElement, "Field2", "1");
+		addFieldElement(fieldsElement, "Field3", "file.txt");
+		addFieldElement(
+			fieldsElement, "Field4", "Latitude: -8.035, Longitude: -34.918");
+		addFieldElement(fieldsElement, "Field5", "2");
+		addFieldElement(fieldsElement, "Field6", "Link to Page content");
+		addFieldElement(fieldsElement, "Field7", "3");
+		addFieldElement(fieldsElement, "Field8", "Option 1");
+		addFieldElement(fieldsElement, "Field9", "Option 1");
+		addFieldElement(fieldsElement, "Field10", "Text content");
+		addFieldElement(fieldsElement, "Field11", "Text Area content");
+		addFieldElement(fieldsElement, "Field12", "Text HTML content");
+		addFieldElement(fieldsElement, "Status", "Approved");
+		addFieldElement(
+			fieldsElement, "Modified Date",
+			formatDate(recordVersion.getStatusDate()));
+		addFieldElement(fieldsElement, "Author", recordVersion.getUserName());
+
+		String xml = document.asXML();
+
+		Assert.assertEquals(new String(bytes), xml);
+	}
+
+	protected void addFieldElement(
+		Element fieldsElement, String label, Serializable value) {
+
+		Element fieldElement = fieldsElement.addElement("field");
+
+		Element labelElement = fieldElement.addElement("label");
+
+		labelElement.addText(label);
+
+		Element valueElement = fieldElement.addElement("value");
+
+		valueElement.addText(String.valueOf(value));
 	}
 
 	protected DDMFormField createDDMFormField(
@@ -394,12 +645,16 @@ public class DDLExporterTest {
 		return jsonArray.toString();
 	}
 
-	protected String read(String fileName) throws Exception {
-		Class<?> clazz = getClass();
+	protected String formatDate(Date date) {
+		DateTimeFormatter dateTimeFormatter =
+			DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
 
-		return StringUtil.read(
-			clazz.getClassLoader(),
-			"com/liferay/dynamic/data/lists/dependencies/" + fileName);
+		dateTimeFormatter = dateTimeFormatter.withLocale(_defaultLocale);
+
+		LocalDateTime localDateTime = LocalDateTime.ofInstant(
+			date.toInstant(), ZoneId.systemDefault());
+
+		return dateTimeFormatter.format(localDateTime);
 	}
 
 	protected void setDDMFormFieldOptions(

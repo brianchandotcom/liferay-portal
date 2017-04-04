@@ -20,13 +20,13 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -34,10 +34,12 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.time.format.DateTimeFormatter;
+
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,25 +66,32 @@ public class DDLCSVExporter extends BaseDDLExporter {
 
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
+		Map<String, DDMFormField> ddmFormFields = getDistinctFields(
+			recordSetId);
 
-		List<DDMFormField> ddmFormFields = getDDMFormFields(ddmStructure);
+		Locale locale = getLocale();
 
-		for (DDMFormField ddmFormField : ddmFormFields) {
+		for (DDMFormField ddmFormField : ddmFormFields.values()) {
 			LocalizedValue label = ddmFormField.getLabel();
 
-			sb.append(CSVUtil.encode(label.getString(getLocale())));
+			sb.append(CSVUtil.encode(label.getString(locale)));
 
 			sb.append(CharPool.COMMA);
 		}
 
-		sb.append(LanguageUtil.get(getLocale(), "status"));
+		sb.append(LanguageUtil.get(locale, "status"));
+		sb.append(CharPool.COMMA);
+		sb.append(LanguageUtil.get(locale, "modified-date"));
+		sb.append(CharPool.COMMA);
+		sb.append(LanguageUtil.get(locale, "author"));
 		sb.append(StringPool.NEW_LINE);
 
 		List<DDLRecord> records = _ddlRecordLocalService.getRecords(
 			recordSetId, status, start, end, orderByComparator);
 
 		Iterator<DDLRecord> iterator = records.iterator();
+
+		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter();
 
 		while (iterator.hasNext()) {
 			DDLRecord record = iterator.next();
@@ -92,21 +101,36 @@ public class DDLCSVExporter extends BaseDDLExporter {
 			DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
 				recordVersion.getDDMStorageId());
 
-			List<DDMFormFieldRenderedValue> values = getRenderedValues(
-				recordSet.getScope(), ddmFormFields, ddmFormValues,
-				ddmStructure);
+			Map<String, DDMFormFieldRenderedValue> values = getRenderedValues(
+				recordSet.getScope(), ddmFormFields.values(), ddmFormValues);
 
-			Stream<String> valueStream = values.stream().map(
-				value -> CSVUtil.encode(value.getValue()));
+			for (Map.Entry<String, DDMFormField> entry :
+					ddmFormFields.entrySet()) {
 
-			String joinedValue = valueStream.collect(
-				Collectors.joining(StringPool.COMMA));
+				if (values.containsKey(entry.getKey())) {
+					DDMFormFieldRenderedValue ddmFormFieldRenderedValue =
+						values.get(entry.getKey());
 
-			sb.append(joinedValue);
+					sb.append(
+						CSVUtil.encode(ddmFormFieldRenderedValue.getValue()));
+				}
+				else {
+					sb.append(StringPool.BLANK);
+				}
+
+				sb.append(CharPool.COMMA);
+			}
+
+			sb.append(getStatusMessage(recordVersion.getStatus()));
 
 			sb.append(CharPool.COMMA);
 
-			sb.append(getStatusMessage(recordVersion.getStatus()));
+			sb.append(
+				formatDate(recordVersion.getStatusDate(), dateTimeFormatter));
+
+			sb.append(CharPool.COMMA);
+
+			sb.append(CSVUtil.encode(recordVersion.getUserName()));
 
 			if (iterator.hasNext()) {
 				sb.append(StringPool.NEW_LINE);
@@ -119,6 +143,11 @@ public class DDLCSVExporter extends BaseDDLExporter {
 	}
 
 	@Override
+	protected DDLRecordSetVersionService getDDLRecordSetVersionService() {
+		return _ddlRecordSetVersionService;
+	}
+
+	@Override
 	protected
 		DDMFormFieldTypeServicesTracker getDDMFormFieldTypeServicesTracker() {
 
@@ -126,10 +155,10 @@ public class DDLCSVExporter extends BaseDDLExporter {
 	}
 
 	@Override
-	protected
-		DDMFormValuesToFieldsConverter getDDMFormValuesToFieldsConverter() {
+	protected DDMFormFieldValueRendererRegistry
+		getDDMFormFieldValueRendererRegistry() {
 
-		return _ddmFormValuesToFieldsConverter;
+		return _ddmFormFieldValueRendererRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -147,6 +176,13 @@ public class DDLCSVExporter extends BaseDDLExporter {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDLRecordSetVersionService(
+		DDLRecordSetVersionService ddlRecordSetVersionService) {
+
+		_ddlRecordSetVersionService = ddlRecordSetVersionService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMFormFieldTypeServicesTracker(
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
 
@@ -154,10 +190,10 @@ public class DDLCSVExporter extends BaseDDLExporter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormValuesToFieldsConverter(
-		DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter) {
+	protected void setDDMFormFieldValueRendererRegistry(
+		DDMFormFieldValueRendererRegistry ddmFormFieldValueRendererRegistry) {
 
-		_ddmFormValuesToFieldsConverter = ddmFormValuesToFieldsConverter;
+		_ddmFormFieldValueRendererRegistry = ddmFormFieldValueRendererRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -167,8 +203,10 @@ public class DDLCSVExporter extends BaseDDLExporter {
 
 	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordSetService _ddlRecordSetService;
+	private DDLRecordSetVersionService _ddlRecordSetVersionService;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+	private DDMFormFieldValueRendererRegistry
+		_ddmFormFieldValueRendererRegistry;
 	private StorageEngine _storageEngine;
 
 }

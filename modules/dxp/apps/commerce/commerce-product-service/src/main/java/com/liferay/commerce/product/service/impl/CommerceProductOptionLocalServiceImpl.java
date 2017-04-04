@@ -14,18 +14,21 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.model.CommerceProductOption;
 import com.liferay.commerce.product.service.base.CommerceProductOptionLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
- * The implementation of the commerce product option local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.product.service.CommerceProductOptionLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Marco Leo
  * @see CommerceProductOptionLocalServiceBaseImpl
  * @see com.liferay.commerce.product.service.CommerceProductOptionLocalServiceUtil
@@ -33,9 +36,120 @@ import com.liferay.commerce.product.service.base.CommerceProductOptionLocalServi
 public class CommerceProductOptionLocalServiceImpl
 	extends CommerceProductOptionLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CommerceProductOptionLocalServiceUtil} to access the commerce product option local service.
-	 */
+	@Override
+	public CommerceProductOption addCommerceProductOption(
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String ddmFormFieldTypeName, ServiceContext serviceContext)
+		throws PortalException {
+
+		//Product Option
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
+		long groupId = serviceContext.getScopeGroupId();
+
+		long commerceProductOptionId = counterLocalService.increment();
+
+		CommerceProductOption commerceProductOption =
+			commerceProductOptionPersistence.create(commerceProductOptionId);
+
+		commerceProductOption.setGroupId(groupId);
+		commerceProductOption.setCompanyId(user.getCompanyId());
+		commerceProductOption.setUserId(user.getUserId());
+		commerceProductOption.setUserName(user.getFullName());
+		commerceProductOption.setNameMap(nameMap);
+		commerceProductOption.setDescriptionMap(descriptionMap);
+		commerceProductOption.setDDMFormFieldTypeName(ddmFormFieldTypeName);
+		commerceProductOption.setExpandoBridgeAttributes(serviceContext);
+		commerceProductOptionPersistence.update(commerceProductOption);
+
+		// Resources
+
+		resourceLocalService.addModelResources(
+			commerceProductOption, serviceContext);
+
+		return commerceProductOption;
+	}
+
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CommerceProductOption deleteCommerceProductOption(
+			CommerceProductOption commerceProductOption)
+		throws PortalException {
+
+		// Product option
+
+		commerceProductOptionPersistence.remove(commerceProductOption);
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			commerceProductOption.getCompanyId(),
+			CommerceProductOption.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			commerceProductOption.getCommerceProductOptionId());
+
+		// Expando
+
+		expandoRowLocalService.deleteRows(
+			commerceProductOption.getCommerceProductOptionId());
+
+		return commerceProductOption;
+	}
+
+	@Override
+	public CommerceProductOption deleteCommerceProductOption(
+			long commerceProductOptionId)
+		throws PortalException {
+
+		CommerceProductOption commerceProductOption =
+			commerceProductOptionPersistence.findByPrimaryKey(
+				commerceProductOptionId);
+
+		return commerceProductOptionLocalService.deleteCommerceProductOption(
+			commerceProductOption);
+	}
+
+	@Override
+	public List<CommerceProductOption> getCommerceProductOptions(
+		long groupId, int start, int end) {
+
+		return commerceProductOptionPersistence.findByGroupId(
+			groupId, start, end);
+	}
+
+	@Override
+	public List<CommerceProductOption> getCommerceProductOptions(
+		long groupId, int start, int end,
+		OrderByComparator<CommerceProductOption> orderByComparator) {
+
+		return commerceProductOptionPersistence.findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceProductOptionsCount(long groupId) {
+		return commerceProductOptionPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public CommerceProductOption updateCommerceProductOption(
+			long commerceProductOptionId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		// Product option
+
+		CommerceProductOption commerceProductOption =
+			commerceProductOptionPersistence.create(commerceProductOptionId);
+
+		commerceProductOption.setNameMap(nameMap);
+		commerceProductOption.setDescriptionMap(descriptionMap);
+		commerceProductOption.setDDMFormFieldTypeName(ddmFormFieldTypeName);
+		commerceProductOption.setExpandoBridgeAttributes(serviceContext);
+		commerceProductOptionPersistence.update(commerceProductOption);
+
+		return commerceProductOption;
+	}
+
 }

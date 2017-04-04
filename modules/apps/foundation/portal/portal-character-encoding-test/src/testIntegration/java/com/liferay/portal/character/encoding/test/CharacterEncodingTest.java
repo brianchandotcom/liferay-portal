@@ -40,9 +40,7 @@ public class CharacterEncodingTest {
 
 	@Test
 	public void testWithCharacterEncoding() throws IOException {
-		String output = _testCharacterEncoding(true);
-
-		Assert.assertEquals(_JAPANESE_TEST, output);
+		Assert.assertEquals(_JAPANESE_TEST, _testCharacterEncoding(true));
 	}
 
 	@Test
@@ -50,6 +48,14 @@ public class CharacterEncodingTest {
 		String output = _testCharacterEncoding(false);
 
 		Assert.assertNotEquals(_JAPANESE_TEST, output);
+
+		String serverSideString = new String(
+			_JAPANESE_TEST.getBytes(_CHARSET), StringPool.UTF8);
+
+		String clientSideString = new String(
+			serverSideString.getBytes(StringPool.UTF8), _CHARSET);
+
+		Assert.assertEquals(clientSideString, output);
 	}
 
 	private String _testCharacterEncoding(boolean addCharacterEncoding)

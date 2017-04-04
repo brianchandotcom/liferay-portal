@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
@@ -24,6 +26,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.product.exception.NoSuchProductDefinitionException" %><%@
 page import="com.liferay.commerce.product.model.CommerceProductDefinition" %><%@
+page import="com.liferay.commerce.product.web.internal.constants.CommerceProductPortletKeys" %><%@
 page import="com.liferay.commerce.product.web.internal.constants.CommerceProductWebKeys" %><%@
 page import="com.liferay.commerce.product.web.internal.display.context.CommerceProductDisplayContext" %><%@
 page import="com.liferay.commerce.product.web.internal.servlet.taglib.ui.FormNavigatorConstants" %><%@
@@ -34,6 +37,11 @@ page import="com.liferay.portal.kernel.util.*" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.Locale" %>
+<%@
+page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
@@ -45,4 +53,8 @@ page import="com.liferay.taglib.search.ResultRow" %>
 
 <%
 CommerceProductDisplayContext commerceProductDisplayContext = (CommerceProductDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
+
 %>

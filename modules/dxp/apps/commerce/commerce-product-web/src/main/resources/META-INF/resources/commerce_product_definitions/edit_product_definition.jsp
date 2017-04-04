@@ -25,25 +25,39 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
 
-Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
 %>
 
 <portlet:actionURL name="/editProductDefinition" var="editProductDefinitionActionURL">
 	<portlet:param name="commerceProductDefinitionId" value="<%= String.valueOf(commerceProductDefinitionId) %>" />
 </portlet:actionURL>
 
+
+
+<portlet:actionURL name="/editProductDefinition" var="editProductDefinitionActionURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+	<portlet:param name="commerceProductDefinitionId" value="<%= String.valueOf(commerceProductDefinitionId) %>" />
+</portlet:actionURL>
+
+<liferay-frontend:info-bar>
+	<c:if test="<%= (commerceProductDefinition != null) && !commerceProductDefinition.isNew() %>">
+		<liferay-frontend:info-bar>
+			<aui:workflow-status
+				id="<%= String.valueOf(commerceProductDefinitionId) %>"
+				markupView="lexicon"
+				showHelpMessage="<%= false %>"
+				showIcon="<%= false %>"
+				showLabel="<%= false %>"
+				status="<%= commerceProductDisplayContext.getStatus() %>"
+			/>
+		</liferay-frontend:info-bar>
+	</c:if>
+</liferay-frontend:info-bar>
+
 <aui:form action="<%= editProductDefinitionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<div class="lfr-form-content">
-		<liferay-frontend:translation-manager
-			availableLocales="<%= availableLocales %>"
-			changeableDefaultLanguage="<%= false %>"
-			componentId='<%= renderResponse.getNamespace() + "translationManager" %>'
-			defaultLanguageId="<%= defaultLanguageId %>"
-			id="translationManager"
-		/>
-
 		<liferay-ui:form-navigator
 			backURL="<%= backURL %>"
 			formModelBean="<%= commerceProductDefinition %>"

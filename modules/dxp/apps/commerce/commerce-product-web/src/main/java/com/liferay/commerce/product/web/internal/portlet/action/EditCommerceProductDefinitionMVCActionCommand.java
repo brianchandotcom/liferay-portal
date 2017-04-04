@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -36,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antionio Rendina
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
@@ -48,80 +50,99 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceProductDefinitionMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void deleteCommerceProductDefinition(ActionRequest actionRequest)
 		throws Exception {
 
 		Long commerceProductDefinitionId = ParamUtil.getLong(
 			actionRequest, "commerceProductDefinitionId");
 
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "title");
+		_commerceProductDefinitionLocalService.deleteCommerceProductDefinition(
+			commerceProductDefinitionId);
+	}
 
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
 
-		String productTypeName = ParamUtil.getString(
-			actionRequest, "productTypeName");
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String baseSKU = ParamUtil.getString(actionRequest, "baseSKU");
-
-		int displayDateMonth = ParamUtil.getInteger(
-			actionRequest, "displayDateMonth");
-		int displayDateDay = ParamUtil.getInteger(
-			actionRequest, "displayDateDay");
-		int displayDateYear = ParamUtil.getInteger(
-			actionRequest, "displayDateYear");
-		int displayDateHour = ParamUtil.getInteger(
-			actionRequest, "displayDateHour");
-		int displayDateMinute = ParamUtil.getInteger(
-			actionRequest, "displayDateMinute");
-		int displayDateAmPm = ParamUtil.getInteger(
-			actionRequest, "displayDateAmPm");
-
-		if (displayDateAmPm == Calendar.PM) {
-			displayDateHour += 12;
+		if (cmd.equals(Constants.DELETE)) {
+			deleteCommerceProductDefinition(actionRequest);
 		}
+		else if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+			Long commerceProductDefinitionId = ParamUtil.getLong(
+				actionRequest, "commerceProductDefinitionId");
 
-		int expirationDateMonth = ParamUtil.getInteger(
-			actionRequest, "expirationDateMonth");
-		int expirationDateDay = ParamUtil.getInteger(
-			actionRequest, "expirationDateDay");
-		int expirationDateYear = ParamUtil.getInteger(
-			actionRequest, "expirationDateYear");
-		int expirationDateHour = ParamUtil.getInteger(
-			actionRequest, "expirationDateHour");
-		int expirationDateMinute = ParamUtil.getInteger(
-			actionRequest, "expirationDateMinute");
-		int expirationDateAmPm = ParamUtil.getInteger(
-			actionRequest, "expirationDateAmPm");
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+				actionRequest, "title");
 
-		if (expirationDateAmPm == Calendar.PM) {
-			expirationDateHour += 12;
-		}
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					actionRequest, "description");
 
-		Boolean neverExpire = ParamUtil.getBoolean(
-			actionRequest, "neverExpire");
+			String productTypeName = ParamUtil.getString(
+				actionRequest, "productTypeName");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceProductDefinition.class.getName(), actionRequest);
+			String baseSKU = ParamUtil.getString(actionRequest, "baseSKU");
 
-		if (commerceProductDefinitionId == 0) {
-			_commerceProductDefinitionLocalService.addCommerceProductDefinition(
-				baseSKU, titleMap, descriptionMap, productTypeName, null,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
-		}
-		else {
-			_commerceProductDefinitionLocalService.updateCommerceProductDefinition(
-				commerceProductDefinitionId, baseSKU, titleMap, descriptionMap,
-				productTypeName, null, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateMinute, 0, neverExpire, serviceContext);
+			int displayDateMonth = ParamUtil.getInteger(
+				actionRequest, "displayDateMonth");
+			int displayDateDay = ParamUtil.getInteger(
+				actionRequest, "displayDateDay");
+			int displayDateYear = ParamUtil.getInteger(
+				actionRequest, "displayDateYear");
+			int displayDateHour = ParamUtil.getInteger(
+				actionRequest, "displayDateHour");
+			int displayDateMinute = ParamUtil.getInteger(
+				actionRequest, "displayDateMinute");
+			int displayDateAmPm = ParamUtil.getInteger(
+				actionRequest, "displayDateAmPm");
+
+			if (displayDateAmPm == Calendar.PM) {
+				displayDateHour += 12;
+			}
+
+			int expirationDateMonth = ParamUtil.getInteger(
+				actionRequest, "expirationDateMonth");
+			int expirationDateDay = ParamUtil.getInteger(
+				actionRequest, "expirationDateDay");
+			int expirationDateYear = ParamUtil.getInteger(
+				actionRequest, "expirationDateYear");
+			int expirationDateHour = ParamUtil.getInteger(
+				actionRequest, "expirationDateHour");
+			int expirationDateMinute = ParamUtil.getInteger(
+				actionRequest, "expirationDateMinute");
+			int expirationDateAmPm = ParamUtil.getInteger(
+				actionRequest, "expirationDateAmPm");
+
+			if (expirationDateAmPm == Calendar.PM) {
+				expirationDateHour += 12;
+			}
+
+			Boolean neverExpire = ParamUtil.getBoolean(
+				actionRequest, "neverExpire");
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CommerceProductDefinition.class.getName(), actionRequest);
+
+			if (commerceProductDefinitionId == 0) {
+				_commerceProductDefinitionLocalService.addCommerceProductDefinition(
+					baseSKU, titleMap, descriptionMap, productTypeName, null,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
+			}
+			else {
+				_commerceProductDefinitionLocalService.updateCommerceProductDefinition(
+					commerceProductDefinitionId, baseSKU, titleMap,
+					descriptionMap, productTypeName, null, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateMinute, 0, neverExpire,
+					serviceContext);
+			}
 		}
 	}
 

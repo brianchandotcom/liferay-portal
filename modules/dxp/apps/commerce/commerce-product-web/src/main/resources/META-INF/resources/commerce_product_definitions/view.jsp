@@ -23,6 +23,18 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-produ
 
 SearchContainer productDefinitionSearchContainer = commerceProductDisplayContext.getSearchContainer();
 
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = portalPreferences.getValue(CommerceProductPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, "display-style", "list");
+}
+else {
+	portalPreferences.setValue(CommerceProductPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, "display-style", displayStyle);
+
+	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+}
+
+
 PortletURL portletURL = commerceProductDisplayContext.getPortletURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
@@ -52,6 +64,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			/>
 		</liferay-frontend:management-bar-filters>
+
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
@@ -76,6 +94,14 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
+
+				name="type"
+				property="productTypeName"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+
 				name="SKU"
 				property="baseSKU"
 			/>
@@ -84,6 +110,19 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				cssClass="table-cell-content"
 				name="status"
 				status="<%= commerceProductDisplayContext.getStatus() %>"
+			/>
+
+
+			<liferay-ui:search-container-column-date
+				cssClass="table-cell-content"
+				name="modified-date"
+				property="modifiedDate"
+			/>
+
+			<liferay-ui:search-container-column-date
+				cssClass="table-cell-content"
+				name="display-date"
+				property="displayDate"
 			/>
 
 			<liferay-ui:search-container-column-jsp

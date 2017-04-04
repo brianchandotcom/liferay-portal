@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.internal.portlet.data.handler.provider;
 
-import com.liferay.exportimport.portlet.data.handler.PortletDataHandlerHelper;
+import com.liferay.exportimport.portlet.data.handler.helper.PortletDataHandlerHelper;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.util.GetterUtil;
 

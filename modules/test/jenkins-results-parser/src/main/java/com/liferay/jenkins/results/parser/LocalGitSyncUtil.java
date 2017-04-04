@@ -681,7 +681,7 @@ public class LocalGitSyncUtil {
 
 				if (pullRequest) {
 					if (!gitWorkingDirectory.rebase(
-							true, cacheBranchName, upstreamBranchSha)) {
+							true, upstreamBranchSha, cacheBranchName)) {
 
 						throw new RuntimeException("Rebase failed.");
 					}

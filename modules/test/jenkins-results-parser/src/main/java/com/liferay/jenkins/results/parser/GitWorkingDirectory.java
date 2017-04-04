@@ -44,7 +44,6 @@ import org.eclipse.jgit.api.ListBranchCommand.ListMode;
 import org.eclipse.jgit.api.LsRemoteCommand;
 import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.RebaseCommand;
-import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.TransportException;
@@ -689,29 +688,37 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public boolean rebase(boolean abortOnFail, String branchName, String sha)
-		throws GitAPIException, IOException {
+	public boolean rebase(
+			boolean abortOnFail, String sourceBranchName,
+			String targetBranchName)
+		throws GitAPIException {
 
-		if (!branchName.equals(getCurrentBranch())) {
-			checkoutBranch(branchName);
-		}
-
-		RebaseCommand rebaseCommand = _git.rebase();
-
-		rebaseCommand.setOperation(RebaseCommand.Operation.BEGIN);
-
-		rebaseCommand.setUpstream(sha);
+		String rebaseCommand = JenkinsResultsParserUtil.combine(
+			"git rebase ", sourceBranchName, " ", targetBranchName);
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Rebasing ", getCurrentBranch(), " to ", sha));
+				"Rebasing ", getCurrentBranch(), " to ", sourceBranchName));
 
-		RebaseResult result = rebaseCommand.call();
+		try {
+			JenkinsResultsParserUtil.executeBashCommands(
+				true, getWorkingDirectory(), rebaseCommand);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to rebase ", targetBranchName, " to ",
+					sourceBranchName),
+				e);
+		}
 
-		RebaseResult.Status status = result.getStatus();
+		RepositoryState repositoryState = _repository.getRepositoryState();
 
-		if (!status.isSuccessful()) {
-			System.out.println("Rebase failed. " + status.toString());
+		if (_rebaseRepositoryStates.contains(repositoryState)) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Unable to rebase. Repository is in the ",
+					repositoryState.toString(), " state."));
 
 			if (abortOnFail) {
 				rebaseAbort();

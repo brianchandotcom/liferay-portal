@@ -26,7 +26,8 @@ public class JavaModuleExtendedObjectClassDefinitionCheck
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (absolutePath.contains("/test/") || !content.contains("@Meta.OCD") ||
+		if (absolutePath.contains("/test/") ||
+			!content.contains("@Meta.OCD(") ||
 			content.contains("@ExtendedObjectClassDefinition")) {
 
 			return content;

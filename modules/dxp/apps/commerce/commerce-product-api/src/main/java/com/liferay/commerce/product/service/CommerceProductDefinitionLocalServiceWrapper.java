@@ -189,6 +189,16 @@ public class CommerceProductDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CommerceProductDefinition updateStatus(
+		long userId, long commerceProductDefinitionId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionLocalService.updateStatus(userId,
+			commerceProductDefinitionId, status, serviceContext, workflowContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _commerceProductDefinitionLocalService.getActionableDynamicQuery();
 	}

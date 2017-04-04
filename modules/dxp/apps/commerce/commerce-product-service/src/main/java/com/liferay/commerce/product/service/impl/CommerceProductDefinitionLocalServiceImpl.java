@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.commerce.product.exception.CommerceProductDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CommerceProductDefinitionExpirationDateException;
@@ -34,9 +35,9 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -331,27 +332,116 @@ public class CommerceProductDefinitionLocalServiceImpl
 			user.getUserId(), commerceProductDefinition, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceProductDefinition updateStatus(
+			long userId, long commerceProductDefinitionId, int status,
+			ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		// CommerceProductDefinition
+
+		User user = userLocalService.getUser(userId);
+		Date now = new Date();
+
+		CommerceProductDefinition commerceProductDefinition =
+			commerceProductDefinitionPersistence.findByPrimaryKey(
+				commerceProductDefinitionId);
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(commerceProductDefinition.getDisplayDate() != null) &&
+			now.before(commerceProductDefinition.getDisplayDate())) {
+
+			status = WorkflowConstants.STATUS_SCHEDULED;
+		}
+
+		int oldStatus = commerceProductDefinition.getStatus();
+
+		Date modifiedDate = serviceContext.getModifiedDate(now);
+
+		commerceProductDefinition.setModifiedDate(modifiedDate);
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			Date expirationDate = commerceProductDefinition.getExpirationDate();
+
+			if ((expirationDate != null) && expirationDate.before(now)) {
+				commerceProductDefinition.setExpirationDate(null);
+			}
+		}
+
+		if (status == WorkflowConstants.STATUS_EXPIRED) {
+			commerceProductDefinition.setExpirationDate(now);
+		}
+
+		commerceProductDefinition.setStatus(status);
+		commerceProductDefinition.setStatusByUserId(user.getUserId());
+		commerceProductDefinition.setStatusByUserName(user.getFullName());
+		commerceProductDefinition.setStatusDate(modifiedDate);
+
+		commerceProductDefinitionPersistence.update(commerceProductDefinition);
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+
+			// Asset
+
+			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+				AssetEntry draftAssetEntry = assetEntryLocalService.fetchEntry(
+					CommerceProductDefinition.class.getName(),
+					commerceProductDefinition.getPrimaryKey());
+
+				if (draftAssetEntry != null) {
+					long[] assetCategoryIds = draftAssetEntry.getCategoryIds();
+					String[] assetTagNames = draftAssetEntry.getTagNames();
+
+					List<AssetLink> assetLinks =
+						assetLinkLocalService.getDirectLinks(
+							draftAssetEntry.getEntryId(),
+							AssetLinkConstants.TYPE_RELATED, false);
+
+					long[] assetLinkEntryIds = ListUtil.toLongArray(
+						assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
+
+					AssetEntry assetEntry = assetEntryLocalService.updateEntry(
+						userId, commerceProductDefinition.getGroupId(),
+						commerceProductDefinition.getCreateDate(),
+						commerceProductDefinition.getModifiedDate(),
+						CommerceProductDefinition.class.getName(),
+						commerceProductDefinition.
+							getCommerceProductDefinitionId(),
+						commerceProductDefinition.getUuid(), 0,
+						assetCategoryIds, assetTagNames, true, true, null, null,
+						commerceProductDefinition.getCreateDate(), null,
+						ContentTypes.TEXT_PLAIN,
+						commerceProductDefinition.getTitle(),
+						commerceProductDefinition.getDescription(), null,
+						commerceProductDefinition.getUrlTitle(), null, 0, 0,
+						draftAssetEntry.getPriority());
+
+					assetLinkLocalService.updateLinks(
+						userId, assetEntry.getEntryId(), assetLinkEntryIds,
+						AssetLinkConstants.TYPE_RELATED);
+
+					assetEntryLocalService.deleteEntry(draftAssetEntry);
+				}
+			}
+
+			assetEntryLocalService.updateEntry(
+				CommerceProductDefinition.class.getName(),
+				commerceProductDefinition.getCommerceProductDefinitionId(),
+				commerceProductDefinition.getDisplayDate(),
+				commerceProductDefinition.getExpirationDate(), true, true);
+		}
+
+		return commerceProductDefinition;
+	}
+
 	protected CommerceProductDefinition startWorkflowInstance(
 			long userId, CommerceProductDefinition commerceProductDefinition,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		Map<String, Serializable> workflowContext = new HashMap<>();
-
-		String userPortraitURL = StringPool.BLANK;
-		String userURL = StringPool.BLANK;
-
-		if (serviceContext.getThemeDisplay() != null) {
-			User user = userLocalService.getUser(userId);
-
-			userPortraitURL = user.getPortraitURL(
-				serviceContext.getThemeDisplay());
-			userURL = user.getDisplayURL(serviceContext.getThemeDisplay());
-		}
-
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_USER_PORTRAIT_URL, userPortraitURL);
-		workflowContext.put(WorkflowConstants.CONTEXT_USER_URL, userURL);
 
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			commerceProductDefinition.getCompanyId(),

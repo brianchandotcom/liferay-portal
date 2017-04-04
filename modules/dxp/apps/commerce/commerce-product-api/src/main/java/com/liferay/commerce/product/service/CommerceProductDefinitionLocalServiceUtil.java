@@ -194,6 +194,16 @@ public class CommerceProductDefinitionLocalServiceUtil {
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductDefinition updateStatus(
+		long userId, long commerceProductDefinitionId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateStatus(userId, commerceProductDefinitionId, status,
+			serviceContext, workflowContext);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

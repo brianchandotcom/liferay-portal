@@ -28,11 +28,13 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class CommerceProductDefintionOptionValueRelImpl
 	extends CommerceProductDefintionOptionValueRelBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a commerce product defintion option value rel model instance should use the {@link com.liferay.commerce.product.model.CommerceProductDefintionOptionValueRel} interface instead.
 	 */
 	public CommerceProductDefintionOptionValueRelImpl() {
 	}
+
 }

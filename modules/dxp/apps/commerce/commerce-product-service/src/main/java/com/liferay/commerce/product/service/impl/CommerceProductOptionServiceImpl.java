@@ -32,7 +32,8 @@ import com.liferay.commerce.product.service.base.CommerceProductOptionServiceBas
  */
 public class CommerceProductOptionServiceImpl
 	extends CommerceProductOptionServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CommerceProductOptionServiceUtil} to access the commerce product option remote service.

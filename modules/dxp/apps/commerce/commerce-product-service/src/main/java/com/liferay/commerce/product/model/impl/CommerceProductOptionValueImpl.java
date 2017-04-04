@@ -28,11 +28,13 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class CommerceProductOptionValueImpl
 	extends CommerceProductOptionValueBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a commerce product option value model instance should use the {@link com.liferay.commerce.product.model.CommerceProductOptionValue} interface instead.
 	 */
 	public CommerceProductOptionValueImpl() {
 	}
+
 }

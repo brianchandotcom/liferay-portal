@@ -32,7 +32,8 @@ import com.liferay.commerce.product.service.base.CommerceProductDefintionOptionV
  */
 public class CommerceProductDefintionOptionValueRelLocalServiceImpl
 	extends CommerceProductDefintionOptionValueRelLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CommerceProductDefintionOptionValueRelLocalServiceUtil} to access the commerce product defintion option value rel local service.

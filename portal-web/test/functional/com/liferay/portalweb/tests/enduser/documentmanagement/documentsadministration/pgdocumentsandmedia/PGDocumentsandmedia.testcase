@@ -1058,25 +1058,6 @@
 		</execute>
 	</command>
 
-	<command name="EditFolder" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#editPG">
-			<var name="dmFolderDescriptionEdit" value="DM Folder Description Edit" />
-			<var name="dmFolderName" value="DM Folder Name" />
-			<var name="dmFolderNameEdit" value="DM Folder Name Edit" />
-		</execute>
-	</command>
-
 	<command name="EditFolderDocument" priority="5">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />

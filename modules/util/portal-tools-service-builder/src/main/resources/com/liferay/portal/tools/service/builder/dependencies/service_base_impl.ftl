@@ -72,6 +72,12 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 	import ${packagePath}.model.impl.${entity.name}Impl;
 </#if>
 
+<#if entity.hasLocalizationColumns()>
+	<#assign localizationEntity = entity.toLocalizationEntity() />
+
+	import ${apiPackagePath}.model.${localizationEntity.name};
+</#if>
+
 <#list referenceList as tempEntity>
 	<#if tempEntity.hasColumns() && (stringUtil.equals(entity.name, "Counter") || !stringUtil.equals(tempEntity.name, "Counter"))>
 		import ${tempEntity.apiPackagePath}.service.persistence.${tempEntity.name}Persistence;
@@ -1127,6 +1133,20 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 					currentThread.setContextClassLoader(contextClassLoader);
 				}
 			}
+		}
+	</#if>
+
+	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasLocalizationColumns()>
+		<#assign localizationEntity = entity.toLocalizationEntity() />
+
+		@Override
+		public ${localizationEntity.name} fetch${localizationEntity.name}(${entity.PKClassName} ${entity.PKVarName}, String languageId) {
+			return ${localizationEntity.varName}Persistence.fetchBy${localizationEntity.localizationFinderName}(${entity.PKVarName}, languageId);
+		}
+
+		@Override
+		public ${localizationEntity.name} get${localizationEntity.name}(${entity.PKClassName} ${entity.PKVarName}, String languageId) throws PortalException {
+			return ${localizationEntity.varName}Persistence.findBy${localizationEntity.localizationFinderName}(${entity.PKVarName}, languageId);
 		}
 	</#if>
 

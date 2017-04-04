@@ -328,6 +328,10 @@ public class Entity {
 		return TextFormatter.formatPlural(_humanName);
 	}
 
+	public List<LocalizationColumn> getLocalizationColumns() {
+		return _localizationColumns;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -897,7 +901,7 @@ public class Entity {
 		_transients = transients;
 	}
 
-	public Entity toLocalizationEntity() {
+	public LocalizationEntity toLocalizationEntity() {
 		if (_localizationEntity != null) {
 			return _localizationEntity;
 		}
@@ -929,7 +933,6 @@ public class Entity {
 		List<EntityColumn> blobList = Collections.emptyList();
 		List<EntityColumn> collectionList = Collections.emptyList();
 		List<EntityColumn> columnList = new ArrayList<>();
-		List<LocalizationColumn> localizationColumns = Collections.emptyList();
 
 		if (_localizationMVCCEnabled) {
 			EntityColumn mvccEntityColumn = new EntityColumn(
@@ -954,9 +957,8 @@ public class Entity {
 				companyIdEntityColumn.getDBName(),
 				companyIdEntityColumn.getType(), false, false, false,
 				companyIdEntityColumn.getEJBName(), null,
-				companyIdEntityColumn.isCaseSensitive(),
-				false, false, StringPool.EQUAL, null,
-				companyIdEntityColumn.getIdType(),
+				companyIdEntityColumn.isCaseSensitive(), false, false,
+				StringPool.EQUAL, null, companyIdEntityColumn.getIdType(),
 				companyIdEntityColumn.getIdParam(),
 				companyIdEntityColumn.isConvertNull(), false, false, false,
 				false, false);
@@ -971,8 +973,8 @@ public class Entity {
 
 		EntityColumn primaryEntityPKColumn = new EntityColumn(
 			primaryEntityPKColumnName, primaryEntityPKColumnName,
-			entityColumnPK.getType(), false, false, false,
-			null, null, entityColumnPK.isCaseSensitive(),
+			entityColumnPK.getType(), false, false, false, null, null,
+			entityColumnPK.isCaseSensitive(),
 			entityColumnPK.isOrderByAscending(), false, StringPool.EQUAL, null,
 			entityColumnPK.getIdType(), entityColumnPK.getIdParam(),
 			entityColumnPK.isConvertNull(), false, false, false, false, false);
@@ -1038,17 +1040,18 @@ public class Entity {
 				sb.toString(), _name.concat("Localization"), true, null, true,
 				findByPKLanguageIdColumns));
 
-		_localizationEntity = new Entity(
+		_localizationEntity = new LocalizationEntity(
 			_packagePath, _apiPackagePath, _portletName, _portletShortName,
 			_name.concat("Localization"), _humanName.concat(" localization"),
-			_table.concat("Localization"), _alias.concat("Localization"), false,
-			false, false, false, _persistenceClass.concat("Localization"),
-			StringPool.BLANK, _dataSource, _sessionFactory, _txManager,
-			_cacheEnabled, _dynamicUpdateEnabled, false, _mvccEnabled, false,
-			_deprecated, pkList, regularColList, blobList, collectionList,
-			columnList, localizationColumns, null, false, null, finderList,
-			Collections.singletonList(this), Collections.<String>emptyList(),
-			_txRequiredList, false);
+			_table.concat("Localization"), _alias.concat("Localization"),
+			_persistenceClass.concat("Localization"), _dataSource,
+			_sessionFactory, _txManager, _cacheEnabled, _dynamicUpdateEnabled,
+			_mvccEnabled, _deprecated, pkList, regularColList, blobList,
+			collectionList, columnList, finderList,
+			Collections.singletonList(this), _txRequiredList);
+
+		_localizationEntity.setPrimaryEntityName(primaryEntityName);
+		_localizationEntity.setPrimaryEntityVarName(primaryEntityVarName);
 
 		return _localizationEntity;
 	}
@@ -1086,7 +1089,7 @@ public class Entity {
 	private final String _humanName;
 	private final boolean _jsonEnabled;
 	private final List<LocalizationColumn> _localizationColumns;
-	private Entity _localizationEntity;
+	private LocalizationEntity _localizationEntity;
 	private final boolean _localizationMVCCEnabled;
 	private final String _localizationPrimaryEntityName;
 	private final boolean _localService;

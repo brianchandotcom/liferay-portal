@@ -3,6 +3,8 @@
 
 .notifications-portlet .user-notifications {
 	.archived, .archived:hover {
-		background-color: #F3F3F3;
+		.list-group-item-field, .list-group-item-content {
+			background-color: #F3F3F3;
+		}
 	}
 }

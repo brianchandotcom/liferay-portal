@@ -46,6 +46,17 @@ public class CommerceProductOptionValueLocalServiceWrapper
 		return _commerceProductOptionValueLocalService.addCommerceProductOptionValue(commerceProductOptionValue);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductOptionValue addCommerceProductOptionValue(
+		long commerceProductOptionId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		long priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductOptionValueLocalService.addCommerceProductOptionValue(commerceProductOptionId,
+			titleMap, priority, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce product option value with the primary key. Does not add the commerce product option value to the database.
 	*
@@ -63,10 +74,12 @@ public class CommerceProductOptionValueLocalServiceWrapper
 	*
 	* @param commerceProductOptionValue the commerce product option value
 	* @return the commerce product option value that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CommerceProductOptionValue deleteCommerceProductOptionValue(
-		com.liferay.commerce.product.model.CommerceProductOptionValue commerceProductOptionValue) {
+		com.liferay.commerce.product.model.CommerceProductOptionValue commerceProductOptionValue)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceProductOptionValueLocalService.deleteCommerceProductOptionValue(commerceProductOptionValue);
 	}
 
@@ -117,6 +130,17 @@ public class CommerceProductOptionValueLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CommerceProductOptionValue updateCommerceProductOptionValue(
+		long commerceProductOptionValueId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		long priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductOptionValueLocalService.updateCommerceProductOptionValue(commerceProductOptionValueId,
+			titleMap, priority, serviceContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _commerceProductOptionValueLocalService.getActionableDynamicQuery();
 	}
@@ -156,6 +180,11 @@ public class CommerceProductOptionValueLocalServiceWrapper
 	@Override
 	public int getCommerceProductOptionValuesCount() {
 		return _commerceProductOptionValueLocalService.getCommerceProductOptionValuesCount();
+	}
+
+	@Override
+	public int getCommerceProductOptionValuesCount(long commerceProductOptionId) {
+		return _commerceProductOptionValueLocalService.getCommerceProductOptionValuesCount(commerceProductOptionId);
 	}
 
 	/**
@@ -238,6 +267,21 @@ public class CommerceProductOptionValueLocalServiceWrapper
 		int start, int end) {
 		return _commerceProductOptionValueLocalService.getCommerceProductOptionValues(start,
 			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceProductOptionValue> getCommerceProductOptionValues(
+		long commerceProductOptionId, int start, int end) {
+		return _commerceProductOptionValueLocalService.getCommerceProductOptionValues(commerceProductOptionId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceProductOptionValue> getCommerceProductOptionValues(
+		long commerceProductOptionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductOptionValue> orderByComparator) {
+		return _commerceProductOptionValueLocalService.getCommerceProductOptionValues(commerceProductOptionId,
+			start, end, orderByComparator);
 	}
 
 	/**

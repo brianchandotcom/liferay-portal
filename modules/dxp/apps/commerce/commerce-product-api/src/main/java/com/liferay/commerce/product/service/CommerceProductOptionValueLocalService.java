@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -37,6 +40,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CommerceProductOptionValue. Methods of this
@@ -71,6 +76,10 @@ public interface CommerceProductOptionValueLocalService extends BaseLocalService
 	public CommerceProductOptionValue addCommerceProductOptionValue(
 		CommerceProductOptionValue commerceProductOptionValue);
 
+	public CommerceProductOptionValue addCommerceProductOptionValue(
+		long commerceProductOptionId, Map<Locale, java.lang.String> titleMap,
+		long priority, ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new commerce product option value with the primary key. Does not add the commerce product option value to the database.
 	*
@@ -85,10 +94,13 @@ public interface CommerceProductOptionValueLocalService extends BaseLocalService
 	*
 	* @param commerceProductOptionValue the commerce product option value
 	* @return the commerce product option value that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceProductOptionValue deleteCommerceProductOptionValue(
-		CommerceProductOptionValue commerceProductOptionValue);
+		CommerceProductOptionValue commerceProductOptionValue)
+		throws PortalException;
 
 	/**
 	* Deletes the commerce product option value with the primary key from the database. Also notifies the appropriate model listeners.
@@ -126,6 +138,11 @@ public interface CommerceProductOptionValueLocalService extends BaseLocalService
 	public CommerceProductOptionValue updateCommerceProductOptionValue(
 		CommerceProductOptionValue commerceProductOptionValue);
 
+	public CommerceProductOptionValue updateCommerceProductOptionValue(
+		long commerceProductOptionValueId,
+		Map<Locale, java.lang.String> titleMap, long priority,
+		ServiceContext serviceContext) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -153,6 +170,9 @@ public interface CommerceProductOptionValueLocalService extends BaseLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceProductOptionValuesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceProductOptionValuesCount(long commerceProductOptionId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -214,6 +234,15 @@ public interface CommerceProductOptionValueLocalService extends BaseLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceProductOptionValue> getCommerceProductOptionValues(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductOptionValue> getCommerceProductOptionValues(
+		long commerceProductOptionId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductOptionValue> getCommerceProductOptionValues(
+		long commerceProductOptionId, int start, int end,
+		OrderByComparator<CommerceProductOptionValue> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

@@ -126,11 +126,13 @@ public abstract class CommerceProductOptionValueLocalServiceBaseImpl
 	 *
 	 * @param commerceProductOptionValue the commerce product option value
 	 * @return the commerce product option value that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceProductOptionValue deleteCommerceProductOptionValue(
-		CommerceProductOptionValue commerceProductOptionValue) {
+		CommerceProductOptionValue commerceProductOptionValue)
+		throws PortalException {
 		return commerceProductOptionValuePersistence.remove(commerceProductOptionValue);
 	}
 

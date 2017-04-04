@@ -284,19 +284,21 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDocument" priority="5">
+	<command name="DeleteCheckedoutDocument" priority="5">
+		<description message="This is a use case for LPS-68454" />
+
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Document_1.doc" />
+			<var name="dmDocumentFile" value="Document_3.txt" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 
-		<execute macro="DMDocument#deleteCP">
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-			<var name="recycleBinDisabled" value="true" />
+		<execute macro="DMDocument#checkoutCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -305,14 +307,33 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="ProductMenuHelper#closeProductMenu" />
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
+		</execute>
+
+		<execute macro="DMDocument#viewIconLockedCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+		</execute>
+
+		<execute macro="DMDocument#deleteCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+			<var name="recycleBinDisabled" value="true" />
+		</execute>
+
+		<execute function="AssertConsoleTextNotPresent" value1="Cannot prune sysobject Document_3.txt version tree since one or more of its versions are locked." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
 
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#cannotViewCP">
-			<var name="dmDocumentTitle" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 	</command>
 

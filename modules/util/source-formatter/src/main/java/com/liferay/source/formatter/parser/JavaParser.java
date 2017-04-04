@@ -48,7 +48,7 @@ public class JavaParser {
 		String classContent = content.substring(y + 2);
 
 		return _parseJavaClass(
-			className, classContent, _ACCESS_MODIFIER_PUBLIC, false);
+			className, classContent, JavaTerm.ACCESS_MODIFIER_PUBLIC, false);
 	}
 
 	private static String _getClassName(String line) {
@@ -123,7 +123,7 @@ public class JavaParser {
 			s, new String[] {"\t", "(\n", "\n", " synchronized "},
 			new String[] {"", "(", " ", " "});
 
-		for (String accessModifier : _ACCESS_MODIFIERS) {
+		for (String accessModifier : JavaTerm.ACCESS_MODIFIERS) {
 			JavaTerm javaTerm = _getJavaTerm(
 				javaTermContent, s, accessModifier);
 
@@ -327,16 +327,5 @@ public class JavaParser {
 
 		return javaClass;
 	}
-
-	private static final String _ACCESS_MODIFIER_PRIVATE = "private";
-
-	private static final String _ACCESS_MODIFIER_PROTECTED = "protected";
-
-	private static final String _ACCESS_MODIFIER_PUBLIC = "public";
-
-	private static final String[] _ACCESS_MODIFIERS = {
-		_ACCESS_MODIFIER_PRIVATE, _ACCESS_MODIFIER_PROTECTED,
-		_ACCESS_MODIFIER_PUBLIC
-	};
 
 }

@@ -21,10 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.UnsupportedEncodingException;
-
 import java.net.URL;
-import java.net.URLEncoder;
 
 /**
  * @author Raymond Augé

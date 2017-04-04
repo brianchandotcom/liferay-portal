@@ -25,4 +25,16 @@ public class JavaMethod extends BaseJavaTerm {
 		super(name, content, accessModifier, isStatic);
 	}
 
+	@Override
+	public JavaSignature getSignature() {
+		if (_signature == null) {
+			_signature = JavaSignatureParser.parseJavaSignature(
+				getContent(), getAccessModifier(), true);
+		}
+
+		return _signature;
+	}
+
+	private JavaSignature _signature;
+
 }

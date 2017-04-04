@@ -16,6 +16,7 @@ package com.liferay.wiki.internal.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -176,10 +177,8 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		WikiNode node = _wikiNodeLocalService.getNode(classPK);
-
-		return node.getTrashEntry();
+	public TrashedModel getTrashedModel(long classPK) {
+		return _wikiNodeLocalService.fetchWikiNode(classPK);
 	}
 
 	@Override
@@ -220,13 +219,6 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 	@Override
 	public boolean isContainerModel() {
 		return true;
-	}
-
-	@Override
-	public boolean isInTrash(long classPK) throws PortalException {
-		WikiNode node = _wikiNodeLocalService.getNode(classPK);
-
-		return node.isInTrash();
 	}
 
 	@Override

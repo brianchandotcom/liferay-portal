@@ -21,13 +21,13 @@ import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker
 import com.liferay.bookmarks.util.BookmarksUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.trash.kernel.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
 
@@ -108,10 +108,8 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		BookmarksFolder folder = getBookmarksFolder(classPK);
-
-		return folder.getTrashEntry();
+	public TrashedModel getTrashedModel(long classPK) {
+		return _bookmarksFolderLocalService.fetchBookmarksFolder(classPK);
 	}
 
 	@Override
@@ -139,20 +137,6 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 	@Override
 	public boolean isContainerModel() {
 		return true;
-	}
-
-	@Override
-	public boolean isInTrash(long classPK) throws PortalException {
-		BookmarksFolder folder = getBookmarksFolder(classPK);
-
-		return folder.isInTrash();
-	}
-
-	@Override
-	public boolean isInTrashContainer(long classPK) throws PortalException {
-		BookmarksFolder folder = getBookmarksFolder(classPK);
-
-		return folder.isInTrashContainer();
 	}
 
 	@Override

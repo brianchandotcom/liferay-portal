@@ -37,13 +37,15 @@ public class JavaParser {
 
 		String className = JavaSourceUtil.getClassName(fileName);
 
-		int pos = content.indexOf("\npublic ");
+		int x = content.indexOf("\npublic ");
 
-		if (pos == -1) {
+		if (x == -1) {
 			return null;
 		}
 
-		String classContent = content.substring(pos + 1);
+		int y = content.lastIndexOf("\n\n", x + 1);
+
+		String classContent = content.substring(y + 2);
 
 		return _parseJavaClass(
 			className, classContent, _ACCESS_MODIFIER_PUBLIC, false);

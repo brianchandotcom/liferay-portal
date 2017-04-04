@@ -22,18 +22,37 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortletCategoryKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.PrefsProps;
+import com.liferay.portal.kernel.util.StringPool;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
+import javax.portlet.ValidatorException;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -178,8 +197,20 @@ public class PanelAppRegistry {
 	protected GroupProvider groupProvider;
 	protected PortletLocalService portletLocalService;
 
+	@Reference
+	protected ResourcePermissionLocalService resourcePermissionLocalService;
+
+	@Reference
+	protected RoleLocalService roleLocalService;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PanelAppRegistry.class);
+
+	@Reference
+	private PortletPreferencesFactory _portletPreferencesFactory;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 	private ServiceTrackerMap<String, List<PanelApp>> _serviceTrackerMap;
 
@@ -249,6 +280,13 @@ public class PanelAppRegistry {
 			if (portlet != null) {
 				portlet.setControlPanelEntryCategory(panelCategoryKey);
 
+				try {
+					initPersonalControlPanelPortletPermission(portlet);
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
+
 				panelApp.setPortlet(portlet);
 			}
 			else if (_log.isDebugEnabled()) {
@@ -261,6 +299,56 @@ public class PanelAppRegistry {
 			ServiceTrackerMap<String, List<PanelApp>> serviceTrackerMap,
 			String panelCategoryKey, PanelApp panelApp,
 			List<PanelApp> panelApps) {
+		}
+
+		protected void initPersonalControlPanelPortletPermission(
+				Portlet portlet)
+			throws IOException, PortalException, ReadOnlyException,
+				ValidatorException {
+
+			String category = portlet.getControlPanelEntryCategory();
+
+			if ((category == null) ||
+				!category.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
+
+				return;
+			}
+
+			long companyId = portlet.getCompanyId();
+			String portletId = portlet.getPortletId();
+
+			PortletPreferences portletPreferences =
+				_portletPreferencesFactory.getLayoutPortletSetup(
+					companyId, companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+					LayoutConstants.DEFAULT_PLID, portletId,
+					PortletConstants.DEFAULT_PREFERENCES);
+
+			if (_prefsProps.getBoolean(
+					portletPreferences, "myAccountPermissionsInitialized")) {
+
+				return;
+			}
+
+			Role userRole = roleLocalService.getRole(
+				companyId, RoleConstants.USER);
+
+			List<String> actionIds =
+				ResourceActionsUtil.getPortletResourceActions(
+					portlet.getRootPortletId());
+
+			String actionId = ActionKeys.ACCESS_IN_CONTROL_PANEL;
+
+			if (actionIds.contains(actionId)) {
+				resourcePermissionLocalService.addResourcePermission(
+					companyId, portlet.getRootPortletId(),
+					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+					userRole.getRoleId(), actionId);
+			}
+
+			portletPreferences.setValue(
+				"myAccountPermissionsInitialized", StringPool.TRUE);
+
+			portletPreferences.store();
 		}
 
 	}

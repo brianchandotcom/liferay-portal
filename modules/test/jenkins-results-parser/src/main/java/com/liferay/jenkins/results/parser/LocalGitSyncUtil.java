@@ -660,15 +660,21 @@ public class LocalGitSyncUtil {
 
 				gitWorkingDirectory.fetch(null, upstreamRemoteConfig);
 
-				gitWorkingDirectory.checkoutBranch(
-					JenkinsResultsParserUtil.combine(
-						upstreamRemoteConfig.getName(), "/",
-						upstreamBranchName),
-					"-f");
+				String tempBranchName = "temp-" + start;
 
-				gitWorkingDirectory.deleteLocalBranch(upstreamBranchName);
+				try {
+					gitWorkingDirectory.createLocalBranch(tempBranchName);
 
-				gitWorkingDirectory.checkoutBranch(upstreamBranchName, "-b");
+					gitWorkingDirectory.checkoutBranch(tempBranchName);
+
+					gitWorkingDirectory.deleteLocalBranch(upstreamBranchName);
+
+					gitWorkingDirectory.checkoutBranch(
+						upstreamBranchName, "-b");
+				}
+				finally {
+					gitWorkingDirectory.deleteLocalBranch(tempBranchName);
+				}
 
 				gitWorkingDirectory.createLocalBranch(
 					cacheBranchName, true, null);

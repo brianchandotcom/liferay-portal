@@ -233,7 +233,7 @@
 		<execute macro="Blogs#addEntryWithTags">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
-			<var name="tagNameList" value="tag 1,tag3" />
+			<var name="tagNameList" value="tag1,tag3" />
 		</execute>
 
 		<for list="tag1,tag3" param="tagName">

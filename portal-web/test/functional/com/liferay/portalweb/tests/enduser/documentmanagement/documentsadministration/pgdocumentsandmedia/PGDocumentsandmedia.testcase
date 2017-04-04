@@ -554,62 +554,6 @@
 		<execute macro="DMPortlet#viewDefaultPG" />
 	</command>
 
-	<command name="AddFolders" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder1 Description" />
-			<var name="dmFolderName" value="Folder1 Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="Folder1 Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewPG">
-			<var name="dmFolderDescription" value="DM Folder1 Description" />
-			<var name="dmFolderName" value="Folder1 Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder2 Description" />
-			<var name="dmFolderName" value="Folder2 Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="Folder2 Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewPG">
-			<var name="dmFolderDescription" value="DM Folder2 Description" />
-			<var name="dmFolderName" value="Folder2 Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder3 Description" />
-			<var name="dmFolderName" value="Folder3 Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="Folder3 Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewPG">
-			<var name="dmFolderDescription" value="DM Folder3 Description" />
-			<var name="dmFolderName" value="Folder3 Name" />
-		</execute>
-	</command>
-
 	<command name="AddSubFolderDocument" priority="5">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />

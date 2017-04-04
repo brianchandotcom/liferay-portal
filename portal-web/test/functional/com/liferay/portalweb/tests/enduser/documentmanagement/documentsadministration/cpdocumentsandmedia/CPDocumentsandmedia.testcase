@@ -67,23 +67,6 @@
 		</execute>
 	</command>
 
-	<command name="AddFolder" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addCP">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-	</command>
-
 	<command name="AddShortcutToSiteDocument" priority="3">
 		<execute macro="Navigator#openURL" />
 
@@ -331,6 +314,10 @@
 
 		<execute macro="DMFolder#addCP">
 			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 

@@ -61,8 +61,6 @@ public class CharacterEncodingTest {
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)url.openConnection();
 
-		httpURLConnection.setRequestMethod("POST");
-
 		String contentType = "application/x-www-form-urlencoded";
 
 		if (addCharacterEncoding) {
@@ -72,6 +70,7 @@ public class CharacterEncodingTest {
 		httpURLConnection.addRequestProperty("Content-Type", contentType);
 
 		httpURLConnection.setDoOutput(true);
+		httpURLConnection.setRequestMethod("POST");
 
 		try (OutputStream outputStream = httpURLConnection.getOutputStream()) {
 			outputStream.write(_PARAMETER_STRING.getBytes(_CHARSET));

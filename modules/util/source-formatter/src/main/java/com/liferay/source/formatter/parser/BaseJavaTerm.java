@@ -49,6 +49,11 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	}
 
 	@Override
+	public JavaSignature getSignature() {
+		return null;
+	}
+
+	@Override
 	public boolean isStatic() {
 		return _isStatic;
 	}

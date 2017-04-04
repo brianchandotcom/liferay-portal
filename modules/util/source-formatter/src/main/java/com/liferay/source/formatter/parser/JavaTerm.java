@@ -38,6 +38,8 @@ public interface JavaTerm {
 
 	public JavaClass getParentJavaClass();
 
+	public JavaSignature getSignature();
+
 	public boolean isStatic();
 
 	public void setParentJavaClass(JavaClass javaClass);

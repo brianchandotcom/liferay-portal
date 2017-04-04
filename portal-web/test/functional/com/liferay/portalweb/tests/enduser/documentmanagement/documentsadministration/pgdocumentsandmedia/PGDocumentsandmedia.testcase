@@ -832,31 +832,6 @@
 		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
 
-	<command name="DeleteFolderImageActions" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Image Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="DM Image Title" />
-		</execute>
-
-		<execute macro="DMDocument#deleteViaActionsPG">
-			<var name="dmDocumentTitle" value="DM Image Title" />
-		</execute>
-	</command>
-
 	<command name="DeleteFolderWithDocument" priority="5">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />

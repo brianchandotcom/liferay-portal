@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -48,6 +50,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -72,6 +75,7 @@ import org.apache.commons.collections.map.ReferenceMap;
  * @author Connor McKay
  */
 @DoPrivileged
+@ProviderType
 public class LocalizationImpl implements Localization {
 
 	@Override
@@ -172,6 +176,33 @@ public class LocalizationImpl implements Localization {
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		return _getRootAttributeValue(xml, _DEFAULT_LOCALE, defaultLanguageId);
+	}
+
+	@Override
+	public String getLocalization(
+		Function<String, String> localizationFunction,
+		String requestedLanguageId, String defaultLanguageId) {
+
+		String result = localizationFunction.apply(requestedLanguageId);
+
+		if (!Validator.isBlank(result)) {
+			return result;
+		}
+
+		requestedLanguageId = LanguageUtil.getLanguageId(
+			LocaleUtil.getDefault());
+
+		result = localizationFunction.apply(requestedLanguageId);
+
+		if (!Validator.isBlank(result)) {
+			return result;
+		}
+
+		if (defaultLanguageId != null) {
+			return localizationFunction.apply(defaultLanguageId);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override

@@ -206,10 +206,10 @@ AUI.add(
 						return instance._getInputLanguage(languageId).val();
 					},
 
-					removeInputLanguage: function(locale) {
+					removeInputLanguage: function(languageId) {
 						var instance  = this;
 
-						var inputLanguage = instance._getInputLanguage(locale);
+						var inputLanguage = instance._getInputLanguage(languageId);
 
 						inputLanguage.remove();
 					},

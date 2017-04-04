@@ -1035,10 +1035,12 @@ public class Entity {
 
 		sb.append("_L");
 
+		String localizationFinderName = sb.toString();
+
 		finderList.add(
 			new EntityFinder(
-				sb.toString(), _name.concat("Localization"), true, null, true,
-				findByPKLanguageIdColumns));
+				localizationFinderName, _name.concat("Localization"), true,
+				null, true, findByPKLanguageIdColumns));
 
 		_localizationEntity = new LocalizationEntity(
 			_packagePath, _apiPackagePath, _portletName, _portletShortName,
@@ -1049,6 +1051,8 @@ public class Entity {
 			_mvccEnabled, _deprecated, pkList, regularColList, blobList,
 			collectionList, columnList, finderList,
 			Collections.singletonList(this), _txRequiredList);
+
+		_localizationEntity.setLocalizationFinderName(localizationFinderName);
 
 		_localizationEntity.setPrimaryEntityName(primaryEntityName);
 		_localizationEntity.setPrimaryEntityVarName(primaryEntityVarName);

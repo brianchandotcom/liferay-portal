@@ -50,12 +50,20 @@ public class LocalizationEntity extends Entity {
 			Collections.<String>emptyList(), txRequiredList, false);
 	}
 
+	public String getLocalizationFinderName() {
+		return _localizationFinderName;
+	}
+
 	public String getPrimaryEntityName() {
 		return _primaryEntityName;
 	}
 
 	public String getPrimaryEntityVarName() {
 		return _primaryEntityVarName;
+	}
+
+	public void setLocalizationFinderName(String localizationFinderName) {
+		_localizationFinderName = localizationFinderName;
 	}
 
 	public void setPrimaryEntityName(String primaryEntityName) {
@@ -66,6 +74,7 @@ public class LocalizationEntity extends Entity {
 		_primaryEntityVarName = primaryEntityVarName;
 	}
 
+	private String _localizationFinderName;
 	private String _primaryEntityName;
 	private String _primaryEntityVarName;
 

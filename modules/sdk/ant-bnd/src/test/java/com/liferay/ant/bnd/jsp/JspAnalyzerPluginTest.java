@@ -16,7 +16,7 @@ package com.liferay.ant.bnd.jsp;
 
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;
-
+import aQute.bnd.osgi.Packages;
 import aQute.lib.io.IO;
 
 import java.io.InputStream;
@@ -25,6 +25,7 @@ import java.net.URL;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -70,6 +71,36 @@ public class JspAnalyzerPluginTest {
 		int size = taglibURIs.size();
 
 		Assert.assertEquals(8, size);
+	}
+
+	@Test
+	public void testImportsWithMulitplesAndStatics() throws Exception {
+		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
+
+		URL url = getResource(
+			"dependencies/imports_without_mutlipackagesAndStatics.jsp");
+
+		InputStream inputStream = url.openStream();
+
+		String content = IO.collect(inputStream);
+
+		Builder builder = new Builder();
+
+		builder.build();
+
+		jspAnalyzerPlugin.addApiUses(builder, content);
+
+		Packages referred = builder.getReferred();
+
+		Assert.assertTrue(referred.containsFQN("java.io"));
+		Assert.assertTrue(referred.containsFQN("java.util"));
+		Assert.assertTrue(referred.containsFQN("java.util.logging"));
+		Assert.assertTrue(referred.containsFQN("javax.portlet"));
+		Assert.assertTrue(referred.containsFQN("javax.portlet.filter"));
+		Assert.assertTrue(referred.containsFQN("javax.portlet.tck.beans"));
+		Assert.assertTrue(referred.containsFQN("javax.portlet.tck.constants"));
+		Assert.assertTrue(referred.containsFQN("javax.servlet"));
+		Assert.assertTrue(referred.containsFQN("javax.servlet.http"));
 	}
 
 	@Test

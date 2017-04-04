@@ -37,6 +37,10 @@
 			<var name="pageName" value="Redirect Landing Page" />
 		</execute>
 
+		<execute macro="Page#add">
+			<var name="pageName" value="Page for Windows" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
@@ -54,7 +58,26 @@
 		<execute macro="MobileDevice#addRuleCP">
 			<var name="deviceType" value="Any" />
 			<var name="mobileDeviceFamilyName" value="Mobile Device Family Name" />
-			<var name="operatingSystem" value="Any Operating System" />
+			<var name="operatingSystem" value="CentOS" />
+			<var name="ruleName" value="Rule Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Mobile Device Families" />
+		</execute>
+
+		<execute macro="MobileDevice#addCP">
+			<var name="deviceFamilyName" value="Windows Device Family Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Mobile Device Families" />
+		</execute>
+
+		<execute macro="MobileDevice#addRuleCP">
+			<var name="deviceType" value="Any" />
+			<var name="mobileDeviceFamilyName" value="Windows Device Family Name" />
+			<var name="operatingSystem" value="Windows" />
 			<var name="ruleName" value="Rule Name" />
 		</execute>
 
@@ -84,6 +107,17 @@
 			<var name="actionName" value="Mobile Device Family Test Action" />
 			<var name="actionType" value="Redirect to Site" />
 			<var name="pageName" value="Redirect Landing Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#selectMobileDeviceFamily">
+			<var name="deviceFamilyName" value="Windows Device Family Name" />
+		</execute>
+
+		<execute macro="Page#manageDeviceFamilyActions">
+			<var name="actionName" value="Windows Device Family Test Action" />
+			<var name="actionType" value="Redirect to Site" />
+			<var name="pageName" value="Page for Windows" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 

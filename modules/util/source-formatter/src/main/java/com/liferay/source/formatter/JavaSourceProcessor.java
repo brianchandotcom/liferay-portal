@@ -58,6 +58,8 @@ import com.liferay.source.formatter.checks.JavaStopWatchCheck;
 import com.liferay.source.formatter.checks.JavaStylingCheck;
 import com.liferay.source.formatter.checks.JavaSystemEventAnnotationCheck;
 import com.liferay.source.formatter.checks.JavaSystemExceptionCheck;
+import com.liferay.source.formatter.checks.JavaTermDividersCheck;
+import com.liferay.source.formatter.checks.JavaTermOrderCheck;
 import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
 import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
 import com.liferay.source.formatter.checks.JavaWhitespaceCheck;
@@ -67,6 +69,7 @@ import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.SessionKeysCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
+import com.liferay.source.formatter.checks.StaticBlockCheck;
 import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
 import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
@@ -701,6 +704,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private void _populateJavaTermChecks() throws Exception {
+		_sourceChecks.add(
+			new JavaTermOrderCheck(
+				getExcludes(_JAVATERM_SORT_EXCLUDES), portalSource,
+				subrepository, getPortalCustomSQLContent()));
+
+		_sourceChecks.add(new JavaTermDividersCheck());
+
+		_sourceChecks.add(
+			new StaticBlockCheck(getExcludes(_JAVATERM_SORT_EXCLUDES)));
+
 	}
 
 	private void _processCheckStyle() throws Exception {

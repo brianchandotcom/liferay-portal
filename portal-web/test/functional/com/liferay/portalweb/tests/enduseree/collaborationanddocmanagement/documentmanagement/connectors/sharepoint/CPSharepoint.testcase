@@ -136,11 +136,19 @@
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
 
+		<execute macro="DMDocument#viewIconLockedCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+		</execute>
+
 		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 
 		<execute function="Pause" locator1="5000" />
+
+		<execute macro="DMDocument#viewCheckedoutCP" >
+			<var name="dmRepositoryName" value="true" />
+		</execute>
 
 		<execute macro="DMDocument#checkinCP">
 			<var name="dmRepositoryName" value="true" />
@@ -166,48 +174,6 @@
 
 		<execute macro="DMDocument#viewCheckedinCP" >
 			<var name="dmDocumentVersionNumber" value="2.0" />
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-	</command>
-
-	<command name="CheckoutDocument" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPSharepoint#DeleteDocumentInSubfolder" />
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_4.txt" />
-			<var name="dmDocumentTitle" value="Document_4.txt" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="DMDocument#checkoutCP">
-			<var name="dmDocumentTitle" value="Document_4.txt" />
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
-		</execute>
-
-		<execute macro="DMDocument#viewIconLockedCP">
-			<var name="dmDocumentTitle" value="Document_4.txt" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_4.txt" />
-		</execute>
-
-		<execute macro="DMDocument#viewCheckedoutCP" >
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 	</command>

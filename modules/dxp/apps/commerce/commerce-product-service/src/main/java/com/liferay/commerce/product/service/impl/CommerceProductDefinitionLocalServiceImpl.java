@@ -385,46 +385,6 @@ public class CommerceProductDefinitionLocalServiceImpl
 
 			// Asset
 
-			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
-				AssetEntry draftAssetEntry = assetEntryLocalService.fetchEntry(
-					CommerceProductDefinition.class.getName(),
-					commerceProductDefinition.getPrimaryKey());
-
-				if (draftAssetEntry != null) {
-					long[] assetCategoryIds = draftAssetEntry.getCategoryIds();
-					String[] assetTagNames = draftAssetEntry.getTagNames();
-
-					List<AssetLink> assetLinks =
-						assetLinkLocalService.getDirectLinks(
-							draftAssetEntry.getEntryId(),
-							AssetLinkConstants.TYPE_RELATED, false);
-
-					long[] assetLinkEntryIds = ListUtil.toLongArray(
-						assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
-
-					AssetEntry assetEntry = assetEntryLocalService.updateEntry(
-						userId, commerceProductDefinition.getGroupId(),
-						commerceProductDefinition.getCreateDate(),
-						commerceProductDefinition.getModifiedDate(),
-						CommerceProductDefinition.class.getName(),
-						commerceProductDefinition.
-							getCommerceProductDefinitionId(),
-						commerceProductDefinition.getUuid(), 0,
-						assetCategoryIds, assetTagNames, true, true, null, null,
-						commerceProductDefinition.getCreateDate(), null,
-						ContentTypes.TEXT_PLAIN,
-						commerceProductDefinition.getTitle(),
-						commerceProductDefinition.getDescription(), null,
-						commerceProductDefinition.getUrlTitle(), null, 0, 0,
-						draftAssetEntry.getPriority());
-
-					assetLinkLocalService.updateLinks(
-						userId, assetEntry.getEntryId(), assetLinkEntryIds,
-						AssetLinkConstants.TYPE_RELATED);
-
-					assetEntryLocalService.deleteEntry(draftAssetEntry);
-				}
-			}
 
 			assetEntryLocalService.updateEntry(
 				CommerceProductDefinition.class.getName(),

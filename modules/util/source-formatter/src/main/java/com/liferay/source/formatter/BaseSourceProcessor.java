@@ -32,7 +32,7 @@ import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JavaTermCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
-import com.liferay.source.formatter.parser.JavaParser;
+import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.awt.Desktop;
@@ -1579,7 +1579,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				JavaTermCheck javaTermCheck = (JavaTermCheck)sourceCheck;
 
 				if (javaClass == null) {
-					javaClass = JavaParser.parseJavaClass(fileName, content);
+					javaClass = JavaClassParser.parseJavaClass(
+						fileName, content);
 				}
 
 				content = javaTermCheck.process(

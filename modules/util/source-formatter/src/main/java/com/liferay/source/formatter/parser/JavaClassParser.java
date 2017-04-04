@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JavaParser {
+public class JavaClassParser {
 
 	public static JavaClass parseJavaClass(String fileName, String content)
 		throws Exception {

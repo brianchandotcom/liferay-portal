@@ -15,7 +15,7 @@
 package com.liferay.asset.publisher.web.internal.messaging;
 
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
-import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.asset.publisher.web.util.AssetEntriesCheckerUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -68,14 +68,14 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_assetPublisherUtil.checkAssetEntries();
+		_assetEntriesCheckerUtil.checkAssetEntries();
 	}
 
 	@Reference(unbind = "-")
-	protected void setAssetPublisherUtil(
-		AssetPublisherUtil assetPublisherUtil) {
+	protected void setAssetEntriesCheckerUtil(
+		AssetEntriesCheckerUtil assetEntriesCheckerUtil) {
 
-		_assetPublisherUtil = assetPublisherUtil;
+		_assetEntriesCheckerUtil = assetEntriesCheckerUtil;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -94,7 +94,7 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private AssetPublisherUtil _assetPublisherUtil;
+	private AssetEntriesCheckerUtil _assetEntriesCheckerUtil;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference

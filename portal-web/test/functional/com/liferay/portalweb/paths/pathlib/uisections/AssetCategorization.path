@@ -144,6 +144,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TAGS_DUPLICATE_WARNING</td>
+	<td>//div[contains(@class,'help-block')]</td>
+	<td>q</td>
+</tr>
+<tr>
 	<td>TAGS_SELECT_BUTTON</td>
 	<td>//button[@title='Select Tags']</td>
 	<td></td>

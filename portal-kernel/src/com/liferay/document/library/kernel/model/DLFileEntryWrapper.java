@@ -417,7 +417,9 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* Returns the trash handler for this document library file entry.
 	*
 	* @return the trash handler for this document library file entry
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
 		return _dlFileEntry.getTrashHandler();

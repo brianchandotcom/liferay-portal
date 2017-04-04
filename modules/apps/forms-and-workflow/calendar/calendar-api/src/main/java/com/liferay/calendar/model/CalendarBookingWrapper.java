@@ -497,7 +497,9 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	* Returns the trash handler for this calendar booking.
 	*
 	* @return the trash handler for this calendar booking
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
 		return _calendarBooking.getTrashHandler();

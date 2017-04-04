@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 
+import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.servlet.Filter;
@@ -53,7 +54,7 @@ public class CharacterEncodingFilter extends BaseFilter {
 	protected void processFilter(
 			HttpServletRequest request, HttpServletResponse response,
 			FilterChain filterChain)
-		throws Exception {
+		throws IOException {
 
 		String parameter = request.getParameter(REQUEST_PARAMETER_NAME);
 

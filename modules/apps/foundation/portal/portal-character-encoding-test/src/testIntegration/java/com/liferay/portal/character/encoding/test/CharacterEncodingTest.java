@@ -16,9 +16,9 @@ package com.liferay.portal.character.encoding.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.character.encoding.filter.CharacterEncodingFilter;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -42,14 +42,14 @@ public class CharacterEncodingTest {
 	public void testWithCharacterEncoding() throws IOException {
 		String output = _testCharacterEncoding(true);
 
-		Assert.assertEquals(output, _JAPANESE_TEST, output);
+		Assert.assertEquals(_JAPANESE_TEST, output);
 	}
 
 	@Test
 	public void testWithoutCharacterEncoding() throws IOException {
 		String output = _testCharacterEncoding(false);
 
-		Assert.assertNotEquals(output, _JAPANESE_TEST, output);
+		Assert.assertNotEquals(_JAPANESE_TEST, output);
 	}
 
 	private String _testCharacterEncoding(boolean addCharacterEncoding)
@@ -75,11 +75,12 @@ public class CharacterEncodingTest {
 			outputStream.write(_PARAMETER_STRING.getBytes(_CHARSET));
 		}
 
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(
-					httpURLConnection.getInputStream(), _CHARSET))) {
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(
+						httpURLConnection.getInputStream(), _CHARSET))) {
 
-			return bufferedReader.readLine();
+			return unsyncBufferedReader.readLine();
 		}
 		finally {
 			httpURLConnection.disconnect();

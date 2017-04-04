@@ -349,13 +349,30 @@ AUI.add(
 						);
 					},
 
-					_afterActivePageNumberChange: function() {
+					_afterActivePageNumberChange: function(event) {
 						var instance = this;
 
-						FormBuilder.superclass._afterActivePageNumberChange.apply(instance, arguments);
+						if (event.newVal > instance.get('layouts').length) {
+							instance.fire(
+								'successPageVisibility',
+								{
+									visible: true
+								}
+							);
+						}
+						else {
+							instance.fire(
+								'successPageVisibility',
+								{
+									visible: false
+								}
+							);
 
-						instance._syncRequiredFieldsWarning();
-						instance._syncRowsLastColumnUI();
+							FormBuilder.superclass._afterActivePageNumberChange.apply(instance, arguments);
+
+							instance._syncRequiredFieldsWarning();
+							instance._syncRowsLastColumnUI();
+						}
 					},
 
 					_afterFieldClick: function(event) {

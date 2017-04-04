@@ -800,6 +800,33 @@
 		</execute>
 	</command>
 
+	<command name="ViewDuplicateTagWarningMessage" priority="3">
+		<property name="testray.component.names" value="Tags" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC Content" />
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Metadata" />
+		</execute>
+
+		<execute macro="AssetCategorization#addTag">
+			<var name="tagName" value="tagname" />
+		</execute>
+
+		<execute macro="AssetCategorization#addDuplicateTag">
+			<var name="tagName" value="tagname" />
+		</execute>
+	</command>
+
 	<command name="ViewTagCloudDisplayConfiguration" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Tags" />

@@ -124,7 +124,7 @@
 		</publish-portal-artifact>
 	</target>
 
-	<target name="taglibdoc">
+	<target depends="validate-tld" name="taglibdoc">
 		<property name="doc.taglibs.dir" value="${doc.dir}/taglibs/util-taglib" />
 
 		<mkdir dir="${doc.taglibs.dir}" />
@@ -155,7 +155,7 @@
 	</target>
 
 	<target name="validate-tld">
-		<schemavalidate>
+		<schemavalidate classname="org.xmlresolver.tools.ResolvingXMLReader" classpathref="lib.classpath">
 			<fileset dir="${project.dir}/util-taglib/src/META-INF">
 				<include name="*.tld" />
 			</fileset>

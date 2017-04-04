@@ -20,7 +20,3 @@ runGradleTest {
 		}
 	}
 }
-
-validateTLD {
-	enabled = false
-}

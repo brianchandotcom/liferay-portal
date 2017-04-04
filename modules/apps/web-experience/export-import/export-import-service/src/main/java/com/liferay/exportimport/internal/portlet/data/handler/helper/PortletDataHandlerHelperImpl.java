@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.internal.portlet.data.handler.provider;
+package com.liferay.exportimport.internal.portlet.data.handler.helper;
 
 import com.liferay.exportimport.portlet.data.handler.helper.PortletDataHandlerHelper;
 import com.liferay.portal.kernel.plugin.Version;

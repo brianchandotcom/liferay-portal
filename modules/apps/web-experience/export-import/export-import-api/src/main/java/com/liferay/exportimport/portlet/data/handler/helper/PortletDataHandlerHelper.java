@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.portlet.data.handler;
+package com.liferay.exportimport.portlet.data.handler.helper;
 
 import aQute.bnd.annotation.ProviderType;
 

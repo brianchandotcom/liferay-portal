@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Marco Leo
  */
 @ProviderType
-public class NoSuchProductDefintionOptionRelException extends NoSuchModelException {
+public class NoSuchProductDefintionOptionRelException
+	extends NoSuchModelException {
 
 	public NoSuchProductDefintionOptionRelException() {
 	}
@@ -30,7 +31,9 @@ public class NoSuchProductDefintionOptionRelException extends NoSuchModelExcepti
 		super(msg);
 	}
 
-	public NoSuchProductDefintionOptionRelException(String msg, Throwable cause) {
+	public NoSuchProductDefintionOptionRelException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

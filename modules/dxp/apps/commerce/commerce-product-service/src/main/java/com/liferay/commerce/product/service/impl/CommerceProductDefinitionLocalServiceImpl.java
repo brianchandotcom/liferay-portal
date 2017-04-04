@@ -17,7 +17,6 @@ package com.liferay.commerce.product.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.commerce.product.exception.CommerceProductDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CommerceProductDefinitionExpirationDateException;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -384,7 +382,6 @@ public class CommerceProductDefinitionLocalServiceImpl
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 
 			// Asset
-
 
 			assetEntryLocalService.updateEntry(
 				CommerceProductDefinition.class.getName(),

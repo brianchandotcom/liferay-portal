@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Marco Leo
  */
 @ProviderType
-public class CommerceProductDefinitionExpirationDateException extends PortalException {
+public class CommerceProductDefinitionExpirationDateException
+	extends PortalException {
 
 	public CommerceProductDefinitionExpirationDateException() {
 	}
@@ -30,7 +31,9 @@ public class CommerceProductDefinitionExpirationDateException extends PortalExce
 		super(msg);
 	}
 
-	public CommerceProductDefinitionExpirationDateException(String msg, Throwable cause) {
+	public CommerceProductDefinitionExpirationDateException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

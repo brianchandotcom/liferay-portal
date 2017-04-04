@@ -197,12 +197,6 @@ public class PanelAppRegistry {
 	protected GroupProvider groupProvider;
 	protected PortletLocalService portletLocalService;
 
-	@Reference
-	protected ResourcePermissionLocalService resourcePermissionLocalService;
-
-	@Reference
-	protected RoleLocalService roleLocalService;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PanelAppRegistry.class);
 
@@ -211,6 +205,12 @@ public class PanelAppRegistry {
 
 	@Reference
 	private PrefsProps _prefsProps;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	private ServiceTrackerMap<String, List<PanelApp>> _serviceTrackerMap;
 
@@ -330,7 +330,7 @@ public class PanelAppRegistry {
 				return;
 			}
 
-			Role userRole = roleLocalService.getRole(
+			Role userRole = _roleLocalService.getRole(
 				companyId, RoleConstants.USER);
 
 			List<String> actionIds =
@@ -340,7 +340,7 @@ public class PanelAppRegistry {
 			String actionId = ActionKeys.ACCESS_IN_CONTROL_PANEL;
 
 			if (actionIds.contains(actionId)) {
-				resourcePermissionLocalService.addResourcePermission(
+				_resourcePermissionLocalService.addResourcePermission(
 					companyId, portlet.getRootPortletId(),
 					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
 					userRole.getRoleId(), actionId);

@@ -305,12 +305,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 
 	@Override
 	@SuppressWarnings("unused")
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		return null;
-	}
-
-	@Override
-	@SuppressWarnings("unused")
 	public int getTrashModelsCount(long classPK) throws PortalException {
 		return 0;
 	}
@@ -376,12 +370,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	@Override
 	public boolean isDeletable() {
 		return true;
-	}
-
-	@Override
-	@SuppressWarnings("unused")
-	public boolean isInTrashContainer(long classPK) throws PortalException {
-		return false;
 	}
 
 	@Override

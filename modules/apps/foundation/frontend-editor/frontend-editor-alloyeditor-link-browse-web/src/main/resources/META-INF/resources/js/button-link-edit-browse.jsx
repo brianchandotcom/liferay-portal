@@ -124,6 +124,7 @@
 								}
 							}
 						},
+						title: Liferay.Language.get('select-item'),
 						eventName: editor.name + 'selectDocument',
 						url: url
 					}

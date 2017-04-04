@@ -15,7 +15,6 @@
 package com.liferay.asset.publisher.web.internal.messaging;
 
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
-import com.liferay.asset.publisher.web.util.AssetEntriesCheckerUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;

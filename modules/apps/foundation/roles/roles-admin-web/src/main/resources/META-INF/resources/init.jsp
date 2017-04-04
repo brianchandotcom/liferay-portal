@@ -51,6 +51,7 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Company" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
+page import="com.liferay.portal.kernel.model.GroupConstants" %><%@
 page import="com.liferay.portal.kernel.model.Organization" %><%@
 page import="com.liferay.portal.kernel.model.OrganizationConstants" %><%@
 page import="com.liferay.portal.kernel.model.Permission" %><%@

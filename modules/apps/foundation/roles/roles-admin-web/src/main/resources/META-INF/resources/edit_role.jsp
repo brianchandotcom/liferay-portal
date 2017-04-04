@@ -25,6 +25,12 @@ long roleId = ParamUtil.getLong(request, "roleId");
 
 Role role = RoleServiceUtil.fetchRole(roleId);
 
+String roleName = null;
+
+if (role != null) {
+	roleName = role.getName();
+}
+
 int type = ParamUtil.getInteger(request, "type");
 String subtype = BeanParamUtil.getString(role, request, "subtype");
 
@@ -44,10 +50,10 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 <c:if test="<%= role != null %>">
 	<c:choose>
 		<c:when test="<%= role.getType() == RoleConstants.TYPE_REGULAR %>">
-			<liferay-ui:success key="roleCreated" message='<%= LanguageUtil.format(request, "x-was-created-successfully.-you-can-now-define-its-permissions-and-assign-users", role.getName()) %>' />
+			<liferay-ui:success key="roleCreated" message='<%= LanguageUtil.format(request, "x-was-created-successfully.-you-can-now-define-its-permissions-and-assign-users", roleName) %>' />
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:success key="roleCreated" message='<%= LanguageUtil.format(request, "x-was-created-successfully.-you-can-now-define-its-permissions", role.getName()) %>' />
+			<liferay-ui:success key="roleCreated" message='<%= LanguageUtil.format(request, "x-was-created-successfully.-you-can-now-define-its-permissions", roleName) %>' />
 		</c:otherwise>
 	</c:choose>
 </c:if>
@@ -138,12 +144,16 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 
 			<c:choose>
 				<c:when test="<%= (role != null) && role.isSystem() %>">
-					<aui:input name="name" type="hidden" value="<%= role.getName() %>" />
+					<aui:input name="name" type="hidden" value="<%= roleName %>" />
 				</c:when>
 				<c:otherwise>
 					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="key-field-help" label="key" name="name" />
 				</c:otherwise>
 			</c:choose>
+
+			<c:if test="<%= (role != null) && roleName.equals(RoleConstants.SITE_ADMINISTRATOR) %>">
+				<aui:input label="allow-subsite-management" name="manageSubsites" type="toggle-switch" value="<%= ResourcePermissionLocalServiceUtil.hasResourcePermission(company.getCompanyId(), Group.class.getName(), ResourceConstants.SCOPE_GROUP_TEMPLATE, String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID), roleId, ActionKeys.MANAGE_SUBGROUPS) %>" />
+			</c:if>
 
 			<%
 			ExpandoBridge roleExpandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), Role.class.getName(), (role != null) ? role.getRoleId() : 0);

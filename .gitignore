@@ -133,6 +133,7 @@
 /lib/portal/ccpp.jar
 /lib/portal/ccpp-ri.jar
 /lib/portal/cglib-nodep.jar
+/lib/portal/chardet.jar
 /lib/portal/chemistry-opencmis-client-api.jar
 /lib/portal/chemistry-opencmis-client-bindings.jar
 /lib/portal/chemistry-opencmis-client-impl.jar
@@ -158,12 +159,17 @@
 /lib/portal/commons-pool.jar
 /lib/portal/commons-validator.jar
 /lib/portal/concurrent.jar
+/lib/portal/crypt.jar
+/lib/portal/daisydiff.jar
 /lib/portal/displaytag.jar
 /lib/portal/dom4j.jar
 /lib/portal/easyconf.jar
 /lib/portal/ecs.jar
 /lib/portal/fontbox.jar
+/lib/portal/gif89.jar
+/lib/portal/hessian.jar
 /lib/portal/hibernate-commons-annotations.jar
+/lib/portal/hibernate-core.jar
 /lib/portal/hikaricp.jar
 /lib/portal/htmlparser.jar
 /lib/portal/httpclient.jar
@@ -171,6 +177,7 @@
 /lib/portal/im4java.jar
 /lib/portal/isoparser.jar
 /lib/portal/jai_codec.jar
+/lib/portal/jai_core.jar
 /lib/portal/java-libpst.jar
 /lib/portal/javassist.jar
 /lib/portal/jaxb-impl.jar
@@ -178,10 +185,12 @@
 /lib/portal/jaxws-rt.jar
 /lib/portal/jcl-over-slf4j.jar
 /lib/portal/jcommon.jar
+/lib/portal/jdom.jar
 /lib/portal/jempbox.jar
 /lib/portal/jericho-html.jar
 /lib/portal/jfreechart.jar
 /lib/portal/jhighlight.jar
+/lib/portal/jhlabs-filters.jar
 /lib/portal/jna.jar
 /lib/portal/jsr107cache.jar
 /lib/portal/jstl-api.jar
@@ -197,6 +206,7 @@
 /lib/portal/mime4j-core.jar
 /lib/portal/mime4j-dom.jar
 /lib/portal/mimepull.jar
+/lib/portal/monte-cc.jar
 /lib/portal/nekohtml.jar
 /lib/portal/netcdf.jar
 /lib/portal/netty-all.jar
@@ -211,6 +221,7 @@
 /lib/portal/rometools.jar
 /lib/portal/saaj-api.jar
 /lib/portal/saaj-impl.jar
+/lib/portal/scribe.jar
 /lib/portal/serializer.jar
 /lib/portal/simplecaptcha.jar
 /lib/portal/slf4j-api.jar

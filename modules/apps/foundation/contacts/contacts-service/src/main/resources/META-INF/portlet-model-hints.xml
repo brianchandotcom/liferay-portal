@@ -13,6 +13,7 @@
 			<validator name="required" />
 		</field>
 		<field name="emailAddress" type="String">
+			<hint-collection name="EMAILADDRESS" />
 			<validator name="email" />
 			<validator name="required" />
 		</field>

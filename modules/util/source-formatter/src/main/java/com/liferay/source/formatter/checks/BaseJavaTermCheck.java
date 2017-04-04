@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaConstructor;
 import com.liferay.source.formatter.parser.JavaMethod;
+import com.liferay.source.formatter.parser.JavaStaticBlock;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
 
@@ -50,6 +51,9 @@ public abstract class BaseJavaTermCheck
 		JavaConstructor.class.getName();
 
 	protected static final String JAVA_METHOD = JavaMethod.class.getName();
+
+	protected static final String JAVA_STATIC_BLOCK =
+		JavaStaticBlock.class.getName();
 
 	protected static final String JAVA_VARIABLE = JavaVariable.class.getName();
 

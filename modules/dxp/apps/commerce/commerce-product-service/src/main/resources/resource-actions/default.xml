@@ -6,6 +6,7 @@
 		<model-name>com.liferay.commerce.product</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_product_web_internal_portlet_CommerceProductDefinitionsPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_product_web_internal_portlet_CommerceProductOptionsPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -55,7 +56,7 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.product.model.CommerceProductOption</model-name>
 		<portlet-ref>
-			<portlet-name />
+			<portlet-name>com_liferay_commerce_product_web_internal_portlet_CommerceProductOptionsPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

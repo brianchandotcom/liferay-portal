@@ -52,8 +52,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -65,8 +63,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -868,18 +864,18 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 
 		@Override
-		public TrashEntry getTrashEntry() throws PortalException {
+		public com.liferay.trash.kernel.model.TrashEntry getTrashEntry() throws PortalException {
 			if (!isInTrash()) {
 				return null;
 			}
 
-			TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
+			com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
 
 			if (trashEntry != null) {
 				return trashEntry;
 			}
 
-			TrashHandler trashHandler = getTrashHandler();
+			com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
 			if (!Validator.isNull(trashHandler.getContainerModelClassName(getPrimaryKey()))) {
 				ContainerModel containerModel = null;
@@ -898,7 +894,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 						return trashedModel.getTrashEntry();
 					}
 
-					trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(containerModel.getContainerModelId()));
+					trashHandler = com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(containerModel.getContainerModelId()));
 
 					if (trashHandler == null) {
 						return null;
@@ -917,8 +913,8 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 
 		@Override
-		public TrashHandler getTrashHandler() {
-			return TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
+		public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+			return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
 		}
 
 		@Override
@@ -933,7 +929,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		@Override
 		public boolean isInTrashContainer() {
-			TrashHandler trashHandler = getTrashHandler();
+			com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
 			if ((trashHandler == null) || Validator.isNull(trashHandler.getContainerModelClassName(getPrimaryKey()))) {
 				return false;
@@ -962,7 +958,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				return false;
 			}
 
-			TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
+			com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
 
 			if (trashEntry != null) {
 				return true;
@@ -977,7 +973,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				return false;
 			}
 
-			TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
+			com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
 
 			if (trashEntry != null) {
 				return false;

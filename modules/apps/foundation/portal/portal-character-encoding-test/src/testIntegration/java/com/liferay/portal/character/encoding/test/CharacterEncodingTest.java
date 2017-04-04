@@ -16,7 +16,6 @@ package com.liferay.portal.character.encoding.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.character.encoding.filter.CharacterEncodingFilter;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.BufferedReader;
@@ -76,23 +75,15 @@ public class CharacterEncodingTest {
 			outputStream.write(_PARAMETER_STRING.getBytes(_CHARSET));
 		}
 
-		StringBundler sb = new StringBundler(1);
-
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(
 					httpURLConnection.getInputStream(), _CHARSET))) {
 
-			String output = null;
-
-			while ((output = bufferedReader.readLine()) != null) {
-				sb.append(output);
-			}
+			return bufferedReader.readLine();
 		}
 		finally {
 			httpURLConnection.disconnect();
 		}
-
-		return sb.toString();
 	}
 
 	private static final Charset _CHARSET = Charset.forName("Shift_JIS");

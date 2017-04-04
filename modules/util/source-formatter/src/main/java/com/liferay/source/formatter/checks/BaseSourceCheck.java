@@ -14,9 +14,13 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterMessage;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -72,6 +76,104 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected void clearSourceFormatterMessages(String fileName) {
 		_sourceFormatterMessagesMap.remove(fileName);
+	}
+
+	protected boolean isExcludedPath(List<String> excludes, String path) {
+		return isExcludedPath(excludes, path, -1);
+	}
+
+	protected boolean isExcludedPath(
+		List<String> excludes, String path, int lineCount) {
+
+		return isExcludedPath(excludes, path, lineCount, null);
+	}
+
+	protected boolean isExcludedPath(
+		List<String> excludes, String path, int lineCount, String parameter) {
+
+		if (ListUtil.isEmpty(excludes)) {
+			return false;
+		}
+
+		String pathWithParameter = null;
+
+		if (Validator.isNotNull(parameter)) {
+			pathWithParameter = path + StringPool.AT + parameter;
+		}
+
+		String pathWithLineCount = null;
+
+		if (lineCount > 0) {
+			pathWithLineCount = path + StringPool.AT + lineCount;
+		}
+
+		for (String exclude : excludes) {
+			if (Validator.isNull(exclude)) {
+				continue;
+			}
+
+			if (exclude.startsWith("**")) {
+				exclude = exclude.substring(2);
+			}
+
+			if (exclude.endsWith("**")) {
+				exclude = exclude.substring(0, exclude.length() - 2);
+
+				if (path.contains(exclude)) {
+					return true;
+				}
+
+				continue;
+			}
+
+			if (path.endsWith(exclude) ||
+				((pathWithParameter != null) &&
+				 pathWithParameter.endsWith(exclude)) ||
+				((pathWithLineCount != null) &&
+				 pathWithLineCount.endsWith(exclude))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean isExcludedPath(
+		List<String> excludes, String path, String parameter) {
+
+		return isExcludedPath(excludes, path, -1, parameter);
+	}
+
+	protected boolean isModulesFile(
+		String absolutePath, boolean subrepository) {
+
+		return isModulesFile(absolutePath, subrepository, null);
+	}
+
+	protected boolean isModulesFile(
+		String absolutePath, boolean subrepository,
+		List<String> pluginsInsideModulesDirectoryNames) {
+
+		if (subrepository) {
+			return true;
+		}
+
+		if (pluginsInsideModulesDirectoryNames == null) {
+			return absolutePath.contains("/modules/");
+		}
+
+		try {
+			for (String directoryName : pluginsInsideModulesDirectoryNames) {
+				if (absolutePath.contains(directoryName)) {
+					return false;
+				}
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return absolutePath.contains("/modules/");
 	}
 
 	private final Map<String, Set<SourceFormatterMessage>>

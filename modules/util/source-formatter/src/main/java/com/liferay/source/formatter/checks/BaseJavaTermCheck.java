@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaConstructor;
 import com.liferay.source.formatter.parser.JavaMethod;
@@ -38,8 +39,7 @@ public abstract class BaseJavaTermCheck
 	}
 
 	protected abstract String doProcess(
-			String filename, String absolutePath, JavaTerm javaTerm,
-			String content)
+			String filename, String absolutePath, JavaTerm javaTerm)
 		throws Exception;
 
 	protected abstract String[] getCheckableJavaTermNames();
@@ -69,26 +69,51 @@ public abstract class BaseJavaTermCheck
 
 	private String _walkJavaClass(
 			String fileName, String absolutePath, JavaClass javaClass,
-			String content)
+			String parentContent)
 		throws Exception {
 
+		String javaClassContent = javaClass.getContent();
+
+		String newJavaClassContent = javaClassContent;
+
 		if (_isCheckableJavaTerm(javaClass)) {
-			content = doProcess(fileName, absolutePath, javaClass, content);
+			newJavaClassContent = doProcess(fileName, absolutePath, javaClass);
+
+			if (!javaClassContent.equals(newJavaClassContent)) {
+				return StringUtil.replace(
+					parentContent, javaClassContent, newJavaClassContent);
+			}
 		}
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
 			if (javaTerm instanceof JavaClass) {
 				JavaClass childJavaClass = (JavaClass)javaTerm;
 
-				content = _walkJavaClass(
-					fileName, absolutePath, childJavaClass, content);
+				newJavaClassContent = _walkJavaClass(
+					fileName, absolutePath, childJavaClass, javaClassContent);
+
+				if (!newJavaClassContent.equals(javaClassContent)) {
+					return StringUtil.replace(
+						parentContent, javaClassContent, newJavaClassContent);
+				}
 			}
 			else if (_isCheckableJavaTerm(javaTerm)) {
-				content = doProcess(fileName, absolutePath, javaTerm, content);
+				String javaTermContent = javaTerm.getContent();
+
+				String newJavaTermContent = doProcess(
+					fileName, absolutePath, javaTerm);
+
+				if (!javaTermContent.equals(newJavaTermContent)) {
+					newJavaClassContent = StringUtil.replace(
+						javaClassContent, javaTermContent, newJavaTermContent);
+
+					return StringUtil.replace(
+						parentContent, javaClassContent, newJavaClassContent);
+				}
 			}
 		}
 
-		return content;
+		return parentContent;
 	}
 
 }

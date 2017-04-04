@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -91,18 +90,11 @@ public class FacebookConnectImpl implements FacebookConnect {
 		try {
 			String content = HttpUtil.URLtoString(options);
 
-			if (Validator.isNotNull(content)) {
-				int x = content.indexOf("access_token=");
+			String access_token = (String)JSONFactoryUtil.createJSONObject(
+				content).get("access_token");
 
-				if (x >= 0) {
-					int y = content.indexOf(CharPool.AMPERSAND, x);
-
-					if (y < x) {
-						y = content.length();
-					}
-
-					return content.substring(x + 13, y);
-				}
+			if (Validator.isNotNull(access_token)) {
+				return access_token;
 			}
 		}
 		catch (Exception e) {

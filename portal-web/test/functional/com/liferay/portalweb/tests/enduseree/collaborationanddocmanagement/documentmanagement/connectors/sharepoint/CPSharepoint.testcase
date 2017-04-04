@@ -107,20 +107,6 @@
 		</if>
 	</tear-down>
 
-	<command name="AddSubfolder" priority="4">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
-		</execute>
-
-		<execute macro="DMFolder#addSubfolderCP">
-			<var name="dmSubFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-	</command>
-
 	<command name="CheckinDocument" priority="4">
 		<property name="test.name.skip.portal.instance" value="CPSharepoint#CheckinDocument" />
 

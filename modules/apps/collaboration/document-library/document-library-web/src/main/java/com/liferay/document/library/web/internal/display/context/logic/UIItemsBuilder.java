@@ -436,8 +436,16 @@ public class UIItemsBuilder {
 
 		label = _themeDisplay.translate("download") + " (" + label + ")";
 
-		boolean appendVersion = !StringUtil.equalsIgnoreCase(
-			_fileEntry.getVersion(), _fileVersion.getVersion());
+		final boolean appendVersion;
+
+		if (StringUtil.equalsIgnoreCase(
+				_fileEntry.getVersion(), _fileVersion.getVersion())) {
+
+			appendVersion = false;
+		}
+		else {
+			appendVersion = true;
+		}
 
 		String url = DLUtil.getDownloadURL(
 			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,

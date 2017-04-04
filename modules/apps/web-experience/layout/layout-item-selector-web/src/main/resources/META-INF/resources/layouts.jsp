@@ -62,7 +62,8 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 						);
 					}
 				},
-				nodes: [<%= layoutItemSelectorViewDisplayContext.getLayoutsJSONObject() %>]
+				nodes: [<%= layoutItemSelectorViewDisplayContext.getLayoutsJSONObject() %>],
+				pathThemeImages: '<%= themeDisplay.getPathThemeImages() %>'
 			},
 			'#<portlet:namespace />displayPageContainer'
 		);

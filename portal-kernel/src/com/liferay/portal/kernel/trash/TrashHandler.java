@@ -468,6 +468,8 @@ public interface TrashHandler {
 			long classPK, int start, int end)
 		throws PortalException;
 
+	public TrashedModel getTrashedModel(long classPK);
+
 	public TrashEntry getTrashEntry(long classPK) throws PortalException;
 
 	public int getTrashModelsCount(long classPK) throws PortalException;

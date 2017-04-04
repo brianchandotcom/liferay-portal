@@ -56,7 +56,7 @@ public class CharacterEncodingTest {
 	private String _testCharacterEncoding(boolean addCharacterEncoding)
 		throws IOException {
 
-		URL url = new URL(_URL);
+		URL url = new URL("http://localhost:8080");
 
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)url.openConnection();
@@ -103,7 +103,5 @@ public class CharacterEncodingTest {
 	private static final String _PARAMETER_STRING =
 		CharacterEncodingFilter.REQUEST_PARAMETER_NAME + StringPool.EQUAL +
 			_JAPANESE_TEST;
-
-	private static final String _URL = "http://localhost:8080";
 
 }

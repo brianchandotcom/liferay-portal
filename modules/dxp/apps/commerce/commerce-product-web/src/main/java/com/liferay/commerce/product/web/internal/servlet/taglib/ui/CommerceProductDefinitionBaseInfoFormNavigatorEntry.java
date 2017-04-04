@@ -23,6 +23,7 @@ import java.util.Locale;
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
@@ -40,7 +41,8 @@ public class CommerceProductDefinitionBaseInfoFormNavigatorEntry
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
+		return FormNavigatorConstants.
+			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
 	}
 
 	@Override

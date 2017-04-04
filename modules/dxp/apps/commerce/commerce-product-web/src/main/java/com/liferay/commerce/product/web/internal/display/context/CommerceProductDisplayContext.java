@@ -51,7 +51,8 @@ public class CommerceProductDisplayContext {
 			HttpServletRequest request,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			CommerceProductDefinitionLocalService commerceProductDefinitionLocalService)
+			CommerceProductDefinitionLocalService
+				commerceProductDefinitionLocalService)
 		throws PortalException {
 
 		_request = request;
@@ -95,8 +96,9 @@ public class CommerceProductDisplayContext {
 		}
 
 		_commerceProductDefinition =
-			_commerceProductDefinitionLocalService.fetchCommerceProductDefinition(
-				getCommerceProductDefinitionId());
+			_commerceProductDefinitionLocalService.
+				fetchCommerceProductDefinition(
+					getCommerceProductDefinitionId());
 
 		return _commerceProductDefinition;
 	}
@@ -191,8 +193,9 @@ public class CommerceProductDisplayContext {
 			_liferayPortletRequest, getPortletURL(), null, null);
 
 		OrderByComparator<CommerceProductDefinition> orderByComparator =
-			CommerceProductDefinitionsPortletUtil.getCommerceProductDefinitionOrderByComparator(
-				getOrderByCol(), getOrderByType());
+			CommerceProductDefinitionsPortletUtil.
+				getCommerceProductDefinitionOrderByComparator(
+					getOrderByCol(), getOrderByType());
 
 		productDefinitionSearchContainer.setOrderByCol(getOrderByCol());
 		productDefinitionSearchContainer.setOrderByComparator(
@@ -202,16 +205,19 @@ public class CommerceProductDisplayContext {
 		productDefinitionSearchContainer.setRowChecker(getRowChecker());
 
 		int total =
-			_commerceProductDefinitionLocalService.getCommerceProductDefinitionsCount(
-				themeDisplay.getScopeGroupId());
+			_commerceProductDefinitionLocalService.
+				getCommerceProductDefinitionsCount(
+					themeDisplay.getScopeGroupId());
 
 		productDefinitionSearchContainer.setTotal(total);
 
 		List results =
-			_commerceProductDefinitionLocalService.getCommerceProductDefinitions(
-				themeDisplay.getScopeGroupId(),
-				productDefinitionSearchContainer.getStart(),
-				productDefinitionSearchContainer.getEnd(), orderByComparator);
+			_commerceProductDefinitionLocalService.
+				getCommerceProductDefinitions(
+					themeDisplay.getScopeGroupId(),
+					productDefinitionSearchContainer.getStart(),
+					productDefinitionSearchContainer.getEnd(),
+					orderByComparator);
 
 		productDefinitionSearchContainer.setResults(results);
 

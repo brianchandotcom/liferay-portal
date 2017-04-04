@@ -13,9 +13,11 @@ CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition
 		<portlet:param name="commerceProductDefinitionId"
 			value="<%= String.valueOf(commerceProductDefinition.getCommerceProductDefinitionId()) %>"
 		/>
+
 		<portlet:param name="mvcRenderCommandName"
 			value="/commerce_product_definitions/edit_product_definition"
 		/>
+
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
@@ -26,9 +28,6 @@ CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition
 		url="<%= editURL %>"
 	/>
 
-
-
-
 	<portlet:actionURL name="/editProductDefinition" var="deleteURL">
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
@@ -36,12 +35,10 @@ CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition
 		<portlet:param name="commerceProductDefinitionId" value="<%= String.valueOf(commerceProductDefinition.getCommerceProductDefinitionId()) %>" />
 	</portlet:actionURL>
 
-
-	<liferay-ui:icon-delete  url="<%= deleteURL %>" />
+	<liferay-ui:icon-delete url="<%= deleteURL %>" />
 
 	<liferay-ui:icon
 		message="delete"
 		url="<%= deleteURL %>"
 	/>
-
 </liferay-ui:icon-menu>

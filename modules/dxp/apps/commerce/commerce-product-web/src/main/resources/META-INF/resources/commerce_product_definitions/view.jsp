@@ -34,7 +34,6 @@ else {
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
-
 PortletURL portletURL = commerceProductDisplayContext.getPortletURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
@@ -111,7 +110,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				name="status"
 				status="<%= commerceProductDisplayContext.getStatus() %>"
 			/>
-
 
 			<liferay-ui:search-container-column-date
 				cssClass="table-cell-content"

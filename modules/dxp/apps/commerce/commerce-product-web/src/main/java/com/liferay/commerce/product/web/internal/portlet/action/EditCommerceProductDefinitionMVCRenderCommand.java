@@ -73,7 +73,8 @@ public class EditCommerceProductDefinitionMVCRenderCommand
 
 	@Reference(unbind = "-")
 	protected void setCommerceProductDefinitionLocalService(
-		CommerceProductDefinitionLocalService commerceProductDefinitionLocalService) {
+		CommerceProductDefinitionLocalService
+			commerceProductDefinitionLocalService) {
 
 		_commerceProductDefinitionLocalService =
 			commerceProductDefinitionLocalService;
@@ -90,8 +91,8 @@ public class EditCommerceProductDefinitionMVCRenderCommand
 
 		if (commerceProductDefinitionId > 0) {
 			commerceProductDefinition =
-				_commerceProductDefinitionLocalService.getCommerceProductDefinition(
-					commerceProductDefinitionId);
+				_commerceProductDefinitionLocalService.
+					getCommerceProductDefinition(commerceProductDefinitionId);
 		}
 
 		renderRequest.setAttribute(

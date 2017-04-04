@@ -127,28 +127,32 @@ public class EditCommerceProductDefinitionMVCActionCommand
 				CommerceProductDefinition.class.getName(), actionRequest);
 
 			if (commerceProductDefinitionId == 0) {
-				_commerceProductDefinitionLocalService.addCommerceProductDefinition(
-					baseSKU, titleMap, descriptionMap, productTypeName, null,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+				_commerceProductDefinitionLocalService.
+					addCommerceProductDefinition(
+						baseSKU, titleMap, descriptionMap, productTypeName,
+						null, displayDateMonth, displayDateDay, displayDateYear,
+						displayDateHour, displayDateMinute, expirationDateMonth,
+						expirationDateDay, expirationDateYear,
+						expirationDateHour, expirationDateMinute, neverExpire,
+						serviceContext);
 			}
 			else {
-				_commerceProductDefinitionLocalService.updateCommerceProductDefinition(
-					commerceProductDefinitionId, baseSKU, titleMap,
-					descriptionMap, productTypeName, null, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateMinute, 0, neverExpire,
-					serviceContext);
+				_commerceProductDefinitionLocalService.
+					updateCommerceProductDefinition(
+						commerceProductDefinitionId, baseSKU, titleMap,
+						descriptionMap, productTypeName, null, displayDateMonth,
+						displayDateDay, displayDateYear, displayDateHour,
+						displayDateMinute, expirationDateMonth,
+						expirationDateDay, expirationDateYear,
+						expirationDateMinute, 0, neverExpire, serviceContext);
 			}
 		}
 	}
 
 	@Reference(unbind = "-")
 	protected void setCommerceProductDefinitionLocalService(
-		CommerceProductDefinitionLocalService commerceProductDefinitionLocalService) {
+		CommerceProductDefinitionLocalService
+			commerceProductDefinitionLocalService) {
 
 		_commerceProductDefinitionLocalService =
 			commerceProductDefinitionLocalService;

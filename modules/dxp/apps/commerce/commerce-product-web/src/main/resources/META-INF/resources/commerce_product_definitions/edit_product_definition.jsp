@@ -27,14 +27,11 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
-
 %>
 
 <portlet:actionURL name="/editProductDefinition" var="editProductDefinitionActionURL">
 	<portlet:param name="commerceProductDefinitionId" value="<%= String.valueOf(commerceProductDefinitionId) %>" />
 </portlet:actionURL>
-
-
 
 <portlet:actionURL name="/editProductDefinition" var="editProductDefinitionActionURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />

@@ -24,8 +24,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
  */
 public class CommerceProductDefinitionsPortletUtil {
 
-	public static OrderByComparator<CommerceProductDefinition> getCommerceProductDefinitionOrderByComparator(
-		String orderByCol, String orderByType) {
+	public static OrderByComparator<CommerceProductDefinition>
+		getCommerceProductDefinitionOrderByComparator(
+			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
 

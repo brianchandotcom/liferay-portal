@@ -96,7 +96,8 @@ public class CommerceProductDefinitionsPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
 	protected void setCommerceProductDefinitionLocalService(
-		CommerceProductDefinitionLocalService commerceProductDefinitionLocalService) {
+		CommerceProductDefinitionLocalService
+			commerceProductDefinitionLocalService) {
 
 		_commerceProductDefinitionLocalService =
 			commerceProductDefinitionLocalService;

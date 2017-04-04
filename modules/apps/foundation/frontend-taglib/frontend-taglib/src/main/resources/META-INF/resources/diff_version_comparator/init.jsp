@@ -24,5 +24,3 @@ page import="com.liferay.portal.kernel.util.LocaleUtil" %>
 
 <%@ page import="java.util.Locale" %><%@
 page import="java.util.Set" %>
-
-<portlet:defineObjects />

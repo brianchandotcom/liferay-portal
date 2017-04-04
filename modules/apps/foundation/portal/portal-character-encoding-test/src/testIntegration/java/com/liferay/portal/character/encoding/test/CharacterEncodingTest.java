@@ -89,6 +89,9 @@ public class CharacterEncodingTest {
 				sb.append(output);
 			}
 		}
+		finally {
+			httpURLConnection.disconnect();
+		}
 
 		return sb.toString();
 	}

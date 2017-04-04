@@ -317,23 +317,6 @@
 		</execute>
 	</command>
 
-	<command name="AddDocumentWithSlashesInTitle" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="/D/M/Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="/D/M/Document Title" />
-		</execute>
-	</command>
-
 	<command name="AddFolder" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -972,6 +955,17 @@
 			<var name="dmDocumentTitle" value="/D/M/Document Title" />
 		</execute>
 
+		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="/D/M/Document Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+		
 		<execute macro="DMDocument#deletePG">
 			<var name="dmDocumentTitle" value="/D/M/Document Title" />
 		</execute>

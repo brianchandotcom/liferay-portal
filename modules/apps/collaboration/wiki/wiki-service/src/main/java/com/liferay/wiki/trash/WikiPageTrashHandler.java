@@ -267,11 +267,9 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		WikiPage page = _wikiPageLocalService.getLatestPage(
+	public TrashedModel getTrashedModel(long classPK) {
+		return _wikiPageLocalService.fetchLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);
-
-		return page.getTrashEntry();
 	}
 
 	@Override
@@ -338,22 +336,6 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	@Override
 	public boolean isContainerModel() {
 		return true;
-	}
-
-	@Override
-	public boolean isInTrash(long classPK) throws PortalException {
-		WikiPage page = _wikiPageLocalService.getLatestPage(
-			classPK, WorkflowConstants.STATUS_ANY, false);
-
-		return page.isInTrash();
-	}
-
-	@Override
-	public boolean isInTrashContainer(long classPK) throws PortalException {
-		WikiPage page = _wikiPageLocalService.getLatestPage(
-			classPK, WorkflowConstants.STATUS_ANY, false);
-
-		return page.isInTrashContainer();
 	}
 
 	@Override

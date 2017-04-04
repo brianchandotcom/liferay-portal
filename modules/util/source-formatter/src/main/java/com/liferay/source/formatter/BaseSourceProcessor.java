@@ -1560,12 +1560,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		com.liferay.source.formatter.parser.JavaClass javaClass = null;
+		List<com.liferay.source.formatter.parser.JavaClass> anonymousClasses =
+			null;
 
 		for (SourceCheck sourceCheck : sourceChecks) {
+			String newContent = null;
+
 			if (sourceCheck instanceof FileCheck) {
 				FileCheck fileCheck = (FileCheck)sourceCheck;
 
-				content = fileCheck.process(fileName, absolutePath, content);
+				newContent = fileCheck.process(fileName, absolutePath, content);
 
 				for (SourceFormatterMessage sourceFormatterMessage :
 						sourceCheck.getSourceFormatterMessage(fileName)) {
@@ -1579,11 +1583,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				JavaTermCheck javaTermCheck = (JavaTermCheck)sourceCheck;
 
 				if (javaClass == null) {
+					anonymousClasses = JavaClassParser.parseAnonymousClasses(
+						content);
 					javaClass = JavaClassParser.parseJavaClass(
 						fileName, content);
 				}
 
-				content = javaTermCheck.process(
+				newContent = javaTermCheck.process(
 					fileName, absolutePath, javaClass, content);
 
 				for (SourceFormatterMessage sourceFormatterMessage :
@@ -1591,6 +1597,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 					processMessage(fileName, sourceFormatterMessage);
 				}
+
+				for (com.liferay.source.formatter.parser.JavaClass
+						anonymousClass : anonymousClasses) {
+
+					newContent = javaTermCheck.process(
+						fileName, absolutePath, anonymousClass, newContent);
+
+					for (SourceFormatterMessage sourceFormatterMessage :
+							sourceCheck.getSourceFormatterMessage(fileName)) {
+
+						processMessage(fileName, sourceFormatterMessage);
+					}
+				}
+			}
+
+			if (!newContent.equals(content)) {
+				return newContent;
 			}
 		}
 

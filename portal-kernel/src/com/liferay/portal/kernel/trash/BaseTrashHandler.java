@@ -299,6 +299,11 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
+	public TrashedModel getTrashedModel(long classPK) {
+		return null;
+	}
+
+	@Override
 	@SuppressWarnings("unused")
 	public TrashEntry getTrashEntry(long classPK) throws PortalException {
 		return null;

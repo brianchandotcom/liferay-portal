@@ -22,6 +22,7 @@ import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
-import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -161,10 +161,8 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		MBThread thread = _mbThreadLocalService.getThread(classPK);
-
-		return thread.getTrashEntry();
+	public TrashedModel getTrashedModel(long classPK) {
+		return _mbThreadLocalService.fetchMBThread(classPK);
 	}
 
 	@Override
@@ -185,20 +183,6 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		return super.hasTrashPermission(
 			permissionChecker, groupId, classPK, trashActionId);
-	}
-
-	@Override
-	public boolean isInTrash(long classPK) throws PortalException {
-		MBThread thread = _mbThreadLocalService.getThread(classPK);
-
-		return thread.isInTrash();
-	}
-
-	@Override
-	public boolean isInTrashContainer(long classPK) throws PortalException {
-		MBThread thread = _mbThreadLocalService.getThread(classPK);
-
-		return thread.isInTrashContainer();
 	}
 
 	@Override

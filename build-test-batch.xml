@@ -550,6 +550,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="" name="test.license.xml.url" />
 		<attribute default="" name="test.plugin.zip.url" />
 		<attribute default="" name="test.plugins.war.zip.url" />
+		<attribute default="false" name="test.portal.log.assert" />
 		<attribute default="" name="test.portal.bundle.dependencies.zip.url" />
 		<attribute default="" name="test.portal.bundle.osgi.zip.url" />
 		<attribute default="" name="test.portal.bundle.version" />
@@ -578,26 +579,40 @@ app.server.type=@{app.server.type}]]></echo>
 				<test-action>
 					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}">
 						<test-action>
-							<ant antfile="build-test-${app.server.type}.xml" inheritAll="false" target="run-selenium-${app.server.type}">
-								<property name="database.type" value="@{database.type}" />
-								<property name="liferay.portal.bundle" value="@{test.portal.bundle.version}" />
-								<property name="test.build.plugins.war.zip.url" value="@{test.plugins.war.zip.url}" />
-								<property name="test.class" value="${test.class}" />
-							</ant>
-
-							<if>
-								<equals arg1="@{test.legacy.database.dump}" arg2="true" />
-								<then>
-									<get-testcase-property property.name="data.archive.type" />
-
-									<ant dir="${portal.legacy.dir}" target="export-database">
-										<property name="data.archive.type" value="${data.archive.type}" />
+							<trycatch>
+								<try>
+									<ant antfile="build-test-${app.server.type}.xml" inheritAll="false" target="run-selenium-${app.server.type}">
 										<property name="database.type" value="@{database.type}" />
-										<property name="database.version" value="@{database.version}" />
+										<property name="liferay.portal.bundle" value="@{test.portal.bundle.version}" />
+										<property name="test.build.plugins.war.zip.url" value="@{test.plugins.war.zip.url}" />
 										<property name="test.class" value="${test.class}" />
 									</ant>
-								</then>
-							</if>
+
+									<if>
+										<equals arg1="@{test.legacy.database.dump}" arg2="true" />
+										<then>
+											<get-testcase-property property.name="data.archive.type" />
+
+											<ant dir="${portal.legacy.dir}" target="export-database">
+												<property name="data.archive.type" value="${data.archive.type}" />
+												<property name="database.type" value="@{database.type}" />
+												<property name="database.version" value="@{database.version}" />
+												<property name="test.class" value="${test.class}" />
+											</ant>
+										</then>
+									</if>
+								</try>
+								<finally>
+									<if>
+										<equals arg1="@{test.portal.log.assert}" arg2="true" />
+										<then>
+											<ant dir="portal-kernel" inheritAll="false" target="test-class">
+												<property name="test.class" value="PortalLogAssertorTest" />
+											</ant>
+										</then>
+									</if>
+								</finally>
+							</trycatch>
 						</test-action>
 					</database-test-run-test>
 				</test-action>
@@ -1556,51 +1571,51 @@ app.server.type=@{app.server.type}]]></echo>
 	</target>
 
 	<target name="functional-smoke-jboss70-mysql56-jdk8">
-		<run-functional-test app.server.type="jboss" database.type="mysql" />
+		<run-functional-test app.server.type="jboss" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-resin40-mysql56-jdk8">
-		<run-functional-test app.server.type="resin" database.type="mysql" />
+		<run-functional-test app.server.type="resin" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tcserver31-mysql56-jdk8">
-		<run-functional-test app.server.type="tcserver" database.type="mysql" />
+		<run-functional-test app.server.type="tcserver" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-db2105-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="db2" />
+		<run-functional-test app.server.type="tomcat" database.type="db2" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-mariadb100-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
+		<run-functional-test app.server.type="tomcat" database.type="mariadb" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-mysql56-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-oracle121-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="oracle" />
+		<run-functional-test app.server.type="tomcat" database.type="oracle" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-postgresql94-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
+		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-sybase160-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="sybase" />
+		<run-functional-test app.server.type="tomcat" database.type="sybase" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-weblogic121-mysql56-jdk8">
-		<run-functional-test app.server.type="weblogic" database.type="mysql" />
+		<run-functional-test app.server.type="weblogic" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-websphere85-mysql56-jdk8">
-		<run-functional-test app.server.type="websphere" database.type="mysql" />
+		<run-functional-test app.server.type="websphere" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-wildfly100-mariadb100-jdk8">
-		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
+		<run-functional-test app.server.type="wildfly" database.type="mariadb" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-tomcat80-hypersonic20-jdk8">

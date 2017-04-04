@@ -845,24 +845,6 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDocument" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#deletePG">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-	</command>
-
 	<command name="DeleteDocumentInFolder" priority="5">
 		<property name="portal.acceptance" value="true" />
 

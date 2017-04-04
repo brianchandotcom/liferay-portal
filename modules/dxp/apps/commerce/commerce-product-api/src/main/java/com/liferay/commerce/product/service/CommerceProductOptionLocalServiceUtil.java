@@ -53,6 +53,17 @@ public class CommerceProductOptionLocalServiceUtil {
 		return getService().addCommerceProductOption(commerceProductOption);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductOption addCommerceProductOption(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String ddmFormFieldTypeName,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceProductOption(nameMap, descriptionMap,
+			ddmFormFieldTypeName, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce product option with the primary key. Does not add the commerce product option to the database.
 	*
@@ -69,9 +80,11 @@ public class CommerceProductOptionLocalServiceUtil {
 	*
 	* @param commerceProductOption the commerce product option
 	* @return the commerce product option that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.product.model.CommerceProductOption deleteCommerceProductOption(
-		com.liferay.commerce.product.model.CommerceProductOption commerceProductOption) {
+		com.liferay.commerce.product.model.CommerceProductOption commerceProductOption)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceProductOption(commerceProductOption);
 	}
 
@@ -117,6 +130,18 @@ public class CommerceProductOptionLocalServiceUtil {
 		return getService().updateCommerceProductOption(commerceProductOption);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductOption updateCommerceProductOption(
+		long commerceProductOptionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String ddmFormFieldTypeName,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceProductOption(commerceProductOptionId,
+			nameMap, descriptionMap, ddmFormFieldTypeName, serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -151,6 +176,10 @@ public class CommerceProductOptionLocalServiceUtil {
 	*/
 	public static int getCommerceProductOptionsCount() {
 		return getService().getCommerceProductOptionsCount();
+	}
+
+	public static int getCommerceProductOptionsCount(long groupId) {
+		return getService().getCommerceProductOptionsCount(groupId);
 	}
 
 	/**
@@ -226,6 +255,19 @@ public class CommerceProductOptionLocalServiceUtil {
 	public static java.util.List<com.liferay.commerce.product.model.CommerceProductOption> getCommerceProductOptions(
 		int start, int end) {
 		return getService().getCommerceProductOptions(start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductOption> getCommerceProductOptions(
+		long groupId, int start, int end) {
+		return getService().getCommerceProductOptions(groupId, start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductOption> getCommerceProductOptions(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductOption> orderByComparator) {
+		return getService()
+				   .getCommerceProductOptions(groupId, start, end,
+			orderByComparator);
 	}
 
 	/**

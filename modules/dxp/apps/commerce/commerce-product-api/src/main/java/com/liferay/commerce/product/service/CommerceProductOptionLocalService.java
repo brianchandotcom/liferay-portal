@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -37,6 +40,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CommerceProductOption. Methods of this
@@ -71,6 +76,12 @@ public interface CommerceProductOptionLocalService extends BaseLocalService,
 	public CommerceProductOption addCommerceProductOption(
 		CommerceProductOption commerceProductOption);
 
+	public CommerceProductOption addCommerceProductOption(
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String ddmFormFieldTypeName, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new commerce product option with the primary key. Does not add the commerce product option to the database.
 	*
@@ -85,10 +96,12 @@ public interface CommerceProductOptionLocalService extends BaseLocalService,
 	*
 	* @param commerceProductOption the commerce product option
 	* @return the commerce product option that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceProductOption deleteCommerceProductOption(
-		CommerceProductOption commerceProductOption);
+		CommerceProductOption commerceProductOption) throws PortalException;
 
 	/**
 	* Deletes the commerce product option with the primary key from the database. Also notifies the appropriate model listeners.
@@ -126,6 +139,12 @@ public interface CommerceProductOptionLocalService extends BaseLocalService,
 	public CommerceProductOption updateCommerceProductOption(
 		CommerceProductOption commerceProductOption);
 
+	public CommerceProductOption updateCommerceProductOption(
+		long commerceProductOptionId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String ddmFormFieldTypeName, ServiceContext serviceContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -153,6 +172,9 @@ public interface CommerceProductOptionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceProductOptionsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceProductOptionsCount(long groupId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -214,6 +236,15 @@ public interface CommerceProductOptionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceProductOption> getCommerceProductOptions(int start,
 		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductOption> getCommerceProductOptions(long groupId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductOption> getCommerceProductOptions(long groupId,
+		int start, int end,
+		OrderByComparator<CommerceProductOption> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

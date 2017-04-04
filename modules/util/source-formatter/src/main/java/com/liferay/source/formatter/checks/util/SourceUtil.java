@@ -15,6 +15,8 @@
 package com.liferay.source.formatter.checks.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
@@ -27,6 +29,20 @@ import org.dom4j.io.SAXReader;
  * @author Hugo Huijser
  */
 public class SourceUtil {
+
+	public static String getIndent(String s) {
+		StringBundler sb = new StringBundler(s.length());
+
+		for (int i = 0; i < s.length(); i++) {
+			if (s.charAt(i) != CharPool.TAB) {
+				break;
+			}
+
+			sb.append(CharPool.TAB);
+		}
+
+		return sb.toString();
+	}
 
 	public static int getLevel(String s) {
 		return getLevel(

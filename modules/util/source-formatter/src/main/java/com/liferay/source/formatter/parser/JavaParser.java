@@ -87,22 +87,6 @@ public class JavaParser {
 		return line.substring(x + 1);
 	}
 
-	private static String _getIndent(String classContent) {
-		StringBundler sb = new StringBundler(classContent.length());
-
-		for (int i = 0; i < classContent.length(); i++) {
-			if (classContent.charAt(i) != CharPool.TAB) {
-				break;
-			}
-
-			sb.append(CharPool.TAB);
-		}
-
-		sb.append(CharPool.TAB);
-
-		return sb.toString();
-	}
-
 	private static JavaTerm _getJavaTerm(String javaTermContent, String indent)
 		throws Exception {
 
@@ -253,7 +237,7 @@ public class JavaParser {
 		JavaClass javaClass = new JavaClass(
 			className, classContent, accessModifier, isStatic);
 
-		String indent = _getIndent(classContent);
+		String indent = SourceUtil.getIndent(classContent);
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(classContent));

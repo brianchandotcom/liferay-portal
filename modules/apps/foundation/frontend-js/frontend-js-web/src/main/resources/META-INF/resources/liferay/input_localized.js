@@ -209,9 +209,13 @@ AUI.add(
 					removeInputLanguage: function(languageId) {
 						var instance  = this;
 
-						var inputLanguage = instance._getInputLanguage(languageId);
+						var boundingBox = instance.get('boundingBox');
 
-						inputLanguage.remove();
+						var inputLanguage = boundingBox.one(instance._getInputLanguageId(languageId));
+
+						if (inputLanguage) {
+							inputLanguage.remove();
+						}
 					},
 
 					selectFlag: function(languageId) {
@@ -347,7 +351,7 @@ AUI.add(
 							fieldNameSuffix = fieldPrefixSeparator;
 						}
 
-						var inputLanguage = boundingBox.one('#' + namespace + id + '_' + languageId);
+						var inputLanguage = boundingBox.one(instance._getInputLanguageId(languageId));
 
 						if (!inputLanguage) {
 							inputLanguage = A.Node.create(
@@ -368,6 +372,16 @@ AUI.add(
 						}
 
 						return inputLanguage;
+					},
+
+					_getInputLanguageId: function(languageId) {
+						var instance = this;
+
+						var boundingBox = instance.get('boundingBox');
+						var id = instance.get('id');
+						var namespace = instance.get('namespace');
+
+						return '#' + namespace + id + '_' + languageId;
 					},
 
 					_initializeTooltip: function() {

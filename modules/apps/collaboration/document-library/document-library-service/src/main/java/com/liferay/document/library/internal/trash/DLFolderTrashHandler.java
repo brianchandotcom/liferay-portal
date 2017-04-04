@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
@@ -165,10 +166,17 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		DLFolder dlFolder = getDLFolder(classPK);
+	public TrashedModel getTrashedModel(long classPK) {
+		try {
+			return getDLFolder(classPK);
+		}
+		catch (PortalException | UnsupportedCapabilityException e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 
-		return dlFolder.getTrashEntry();
+			return null;
+		}
 	}
 
 	@Override
@@ -198,38 +206,6 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 	@Override
 	public boolean isContainerModel() {
 		return true;
-	}
-
-	@Override
-	public boolean isInTrash(long classPK) throws PortalException {
-		try {
-			DLFolder dlFolder = getDLFolder(classPK);
-
-			return dlFolder.isInTrash();
-		}
-		catch (UnsupportedCapabilityException uce) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(uce, uce);
-			}
-
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isInTrashContainer(long classPK) throws PortalException {
-		try {
-			DLFolder dlFolder = getDLFolder(classPK);
-
-			return dlFolder.isInTrashContainer();
-		}
-		catch (UnsupportedCapabilityException uce) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(uce, uce);
-			}
-
-			return false;
-		}
 	}
 
 	@Override

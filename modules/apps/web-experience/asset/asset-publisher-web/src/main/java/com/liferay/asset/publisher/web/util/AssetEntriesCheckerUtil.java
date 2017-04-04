@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
@@ -31,6 +30,9 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -41,11 +43,14 @@ import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
+import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
+import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -110,13 +115,6 @@ public class AssetEntriesCheckerUtil {
 			});
 
 		actionableDynamicQuery.performActions();
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -438,10 +436,26 @@ public class AssetEntriesCheckerUtil {
 
 		assetEntryQuery.setStart(0);
 
-		return _assetEntryLocalService.getEntries(assetEntryQuery);
+		try {
+			SearchContext searchContext = SearchContextFactory.getInstance(
+				new long[0], new String[0], null, layout.getCompanyId(),
+				StringPool.BLANK, layout,
+				LocaleThreadLocal.getSiteDefaultLocale(), layout.getGroupId(),
+				TimeZoneThreadLocal.getDefaultTimeZone(), 0);
+
+			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
+				AssetUtil.searchAssetEntries(
+					searchContext, assetEntryQuery, 0,
+					AssetPublisherWebConfigurationValues.
+						DYNAMIC_SUBSCRIPTION_LIMIT);
+
+			return baseModelSearchResult.getBaseModels();
+		}
+		catch (Exception e) {
+			return Collections.emptyList();
+		}
 	}
 
-	private static AssetEntryLocalService _assetEntryLocalService;
 	private static AssetPublisherUtil _assetPublisherUtil;
 	private static LayoutLocalService _layoutLocalService;
 	private static PortletPreferencesLocalService

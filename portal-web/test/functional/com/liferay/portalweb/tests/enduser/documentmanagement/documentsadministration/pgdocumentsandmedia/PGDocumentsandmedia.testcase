@@ -812,7 +812,7 @@
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
-		
+
 		<execute macro="DMDocument#deletePG">
 			<var name="dmDocumentTitle" value="/D/M/Document Title" />
 		</execute>

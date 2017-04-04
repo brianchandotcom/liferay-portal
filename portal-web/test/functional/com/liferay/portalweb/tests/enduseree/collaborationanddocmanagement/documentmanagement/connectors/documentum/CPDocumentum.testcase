@@ -193,8 +193,16 @@
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
+		<execute macro="DMDocument#viewIconLockedCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+		</execute>
+
 		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="Document_3.txt" />
+		</execute>
+
+		<execute macro="DMDocument#viewCheckedoutCP">
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="DMDocument#checkinCP">
@@ -237,50 +245,6 @@
 		<execute macro="DMDocument#deleteCP">
 			<var name="dmDocumentTitle" value="Document_3.txt" />
 			<var name="recycleBinDisabled" value="true" />
-		</execute>
-	</command>
-
-	<command name="CheckoutDocument" priority="5">
-		<property name="test.name.skip.portal.instance" value="CPDocumentum#DeleteCheckedoutDocument" />
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Documentum Repository Name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_4.txt" />
-			<var name="dmDocumentTitle" value="Document_4.txt" />
-		</execute>
-
-		<execute macro="DMDocument#checkoutCP">
-			<var name="dmDocumentTitle" value="Document_4.txt" />
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Documentum Repository Name" />
-		</execute>
-
-		<execute macro="DMDocument#viewIconLockedCP">
-			<var name="dmDocumentTitle" value="Document_4.txt" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_4.txt" />
-		</execute>
-
-		<execute macro="DMDocument#viewCheckedoutCP" >
-			<var name="dmRepositoryName" value="true" />
-		</execute>
-
-		<execute macro="DMDocument#cancelCheckoutCP">
-			<var name="dmRepositoryName" value="true" />
 		</execute>
 	</command>
 

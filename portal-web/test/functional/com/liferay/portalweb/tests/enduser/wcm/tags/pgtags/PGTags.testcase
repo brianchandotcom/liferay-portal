@@ -230,22 +230,11 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addEntryContent">
+		<execute macro="Blogs#addEntryWithTags">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
+			<var name="tagNameList" value="tag 1, tag3" />
 		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Categorization" />
-		</execute>
-
-		<execute macro="BlogsEntry#addTagList">
-			<var name="tagNameList" value="tag1,tag3" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
 
 		<for list="tag1,tag3" param="tagName">
 			<execute macro="Navigator#gotoSitePage">

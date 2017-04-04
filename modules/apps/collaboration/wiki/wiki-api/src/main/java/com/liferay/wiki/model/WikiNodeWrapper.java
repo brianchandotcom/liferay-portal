@@ -333,7 +333,9 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* Returns the trash handler for this wiki node.
 	*
 	* @return the trash handler for this wiki node
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
 		return _wikiNode.getTrashHandler();

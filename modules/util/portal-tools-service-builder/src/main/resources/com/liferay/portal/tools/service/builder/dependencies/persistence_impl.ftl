@@ -954,6 +954,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				session = openSession();
 
 				Query q = session.createQuery(sql);
+				<#if stringUtil.equals(entity.PKClassName, "String")>
+
+					QueryPos qPos = QueryPos.getInstance(q);
+
+					for (Serializable primaryKey : uncachedPrimaryKeys) {
+						qPos.add((String)primaryKey);
+					}
+				</#if>
 
 				<#if stringUtil.equals(entity.PKClassName, "String")>
 					QueryPos qPos = QueryPos.getInstance(q);

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
@@ -175,7 +176,9 @@ public class DLPortletInstanceSettingsHelper {
 		String portletResource = _dlRequestHelper.getPortletResource();
 
 		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
-			portletResource.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+			portletResource.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
+			portletName.equals(PortletKeys.MY_WORKFLOW_TASK) ||
+			portletResource.equals(PortletKeys.MY_WORKFLOW_TASK)) {
 
 			return true;
 		}

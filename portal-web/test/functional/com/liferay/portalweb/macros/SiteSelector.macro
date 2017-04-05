@@ -1,7 +1,7 @@
 <definition>
 	<command name="_searchSite">
 		<if>
-			<equals arg1="${site}" arg2="Liferay" />
+			<contains string="${site}" substring="Liferay" />
 			<then>
 				<var name="searchTerm" value="guest" />
 			</then>

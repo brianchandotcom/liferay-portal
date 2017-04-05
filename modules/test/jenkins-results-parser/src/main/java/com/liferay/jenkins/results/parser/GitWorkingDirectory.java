@@ -162,7 +162,16 @@ public class GitWorkingDirectory {
 	public void checkoutBranch(String branchName, String options)
 		throws GitAPIException {
 
-		System.out.println("Checking out branch " + branchName);
+		String currentBranchName = getCurrentBranch();
+
+		if (currentBranchName.equals(branchName)) {
+			System.out.println(branchName + " is already checked out.");
+		}
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"The current branch is ", currentBranchName,
+				". Checking out branch ", branchName));
 
 		waitForIndexLock();
 

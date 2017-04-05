@@ -606,12 +606,13 @@ public class LocalGitSyncUtil {
 
 		File repositoryDirectory = gitWorkingDirectory.getWorkingDirectory();
 
+		String originalBranchName = gitWorkingDirectory.getCurrentBranch();
+
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"Starting synchronization with local-git. Current repository ",
-				"directory is ", repositoryDirectory.getPath(), "."));
-
-		String originalBranchName = gitWorkingDirectory.getCurrentBranch();
+				"directory is ", repositoryDirectory.getPath(), ". Current",
+				"branch is ", originalBranchName));
 
 		RemoteConfig senderRemoteConfig = null;
 		RemoteConfig upstreamRemoteConfig = null;
@@ -670,9 +671,10 @@ public class LocalGitSyncUtil {
 				String tempBranchName = "temp-" + start;
 
 				try {
-					gitWorkingDirectory.createLocalBranch(tempBranchName);
+					gitWorkingDirectory.createLocalBranch(
+						tempBranchName, true, upstreamBranchSha);
 
-					gitWorkingDirectory.checkoutBranch(tempBranchName);
+					gitWorkingDirectory.checkoutBranch(tempBranchName, "-f");
 
 					gitWorkingDirectory.deleteLocalBranch(upstreamBranchName);
 

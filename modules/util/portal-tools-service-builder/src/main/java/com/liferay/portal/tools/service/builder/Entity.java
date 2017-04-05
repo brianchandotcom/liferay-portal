@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -92,8 +93,9 @@ public class Entity {
 		this(
 			null, null, null, null, name, null, null, null, false, false, false,
 			true, null, null, null, null, null, true, false, false, false,
-			false, false, null, null, null, null, null, null, null, null, null,
-			null, false);
+			false, false, null, null, null, null, null,
+			Collections.<LocalizationColumn>emptyList(), null, false, null,
+			null, null, null, null, false);
 	}
 
 	public Entity(
@@ -106,10 +108,12 @@ public class Entity {
 		boolean mvccEnabled, boolean trashEnabled, boolean deprecated,
 		List<EntityColumn> pkList, List<EntityColumn> regularColList,
 		List<EntityColumn> blobList, List<EntityColumn> collectionList,
-		List<EntityColumn> columnList, EntityOrder order,
-		List<EntityFinder> finderList, List<Entity> referenceList,
-		List<String> unresolvedReferenceList, List<String> txRequiredList,
-		boolean resourceActionModel) {
+		List<EntityColumn> columnList,
+		List<LocalizationColumn> localizationColumns,
+		String localizationPrimaryEntityName, boolean localizationMVCCEnabled,
+		EntityOrder order, List<EntityFinder> finderList,
+		List<Entity> referenceList, List<String> unresolvedReferenceList,
+		List<String> txRequiredList, boolean resourceActionModel) {
 
 		_packagePath = packagePath;
 		_apiPackagePath = apiPackagePath;
@@ -140,6 +144,9 @@ public class Entity {
 		_blobList = blobList;
 		_collectionList = collectionList;
 		_columnList = columnList;
+		_localizationColumns = localizationColumns;
+		_localizationPrimaryEntityName = localizationPrimaryEntityName;
+		_localizationMVCCEnabled = localizationMVCCEnabled;
 		_order = order;
 		_finderList = finderList;
 		_referenceList = referenceList;
@@ -187,6 +194,10 @@ public class Entity {
 		}
 
 		_containerModel = containerModel;
+
+		if (hasLocalizationColumns()) {
+			_referenceList.add(toLocalizationEntity());
+		}
 	}
 
 	public void addReference(Entity reference) {
@@ -559,6 +570,10 @@ public class Entity {
 		return false;
 	}
 
+	public boolean hasLocalizationColumns() {
+		return !_localizationColumns.isEmpty();
+	}
+
 	public boolean hasLocalService() {
 		return _localService;
 	}
@@ -882,6 +897,162 @@ public class Entity {
 		_transients = transients;
 	}
 
+	public Entity toLocalizationEntity() {
+		if (_localizationEntity != null) {
+			return _localizationEntity;
+		}
+
+		String primaryEntityName = _localizationPrimaryEntityName;
+
+		if (primaryEntityName == null) {
+			primaryEntityName = _name;
+		}
+
+		EntityColumn entityColumnPK = _getPKColumn();
+
+		String primaryEntityVarName = TextFormatter.format(
+			primaryEntityName, TextFormatter.I);
+
+		String entityLocalizationIdName = primaryEntityVarName.concat(
+			"LocalizationId");
+
+		EntityColumn entityLocalizedColumnPK = new EntityColumn(
+			entityLocalizationIdName, entityLocalizationIdName, "long", true,
+			false, false, null, null, entityColumnPK.isCaseSensitive(),
+			entityColumnPK.isOrderByAscending(), false, null, null, null, null,
+			false, false, false, false, false, false);
+
+		List<EntityColumn> pkList = Collections.singletonList(
+			entityLocalizedColumnPK);
+
+		List<EntityColumn> regularColList = new ArrayList<>();
+		List<EntityColumn> blobList = Collections.emptyList();
+		List<EntityColumn> collectionList = Collections.emptyList();
+		List<EntityColumn> columnList = new ArrayList<>();
+		List<LocalizationColumn> localizationColumns = Collections.emptyList();
+
+		if (_localizationMVCCEnabled) {
+			EntityColumn mvccEntityColumn = new EntityColumn(
+				"mvccVersion", "mvccVersion", "long", false, false, false, null,
+				null, true, true, false, null, null, null, null, false, false,
+				false, false, false, false);
+
+			regularColList.add(mvccEntityColumn);
+			columnList.add(mvccEntityColumn);
+		}
+
+		regularColList.add(entityLocalizedColumnPK);
+		columnList.add(entityLocalizedColumnPK);
+
+		int index = _columnList.indexOf(new EntityColumn("companyId"));
+
+		if (index != -1) {
+			EntityColumn companyIdEntityColumn = _columnList.get(index);
+
+			EntityColumn entityColumn = new EntityColumn(
+				companyIdEntityColumn.getName(),
+				companyIdEntityColumn.getDBName(),
+				companyIdEntityColumn.getType(), false, false, false,
+				companyIdEntityColumn.getEJBName(), null,
+				companyIdEntityColumn.isCaseSensitive(),
+				false, false, StringPool.EQUAL, null,
+				companyIdEntityColumn.getIdType(),
+				companyIdEntityColumn.getIdParam(),
+				companyIdEntityColumn.isConvertNull(), false, false, false,
+				false, false);
+
+			regularColList.add(entityColumn);
+			columnList.add(entityColumn);
+		}
+
+		List<EntityColumn> finderColsList = new ArrayList<>();
+
+		String primaryEntityPKColumnName = primaryEntityVarName.concat("PK");
+
+		EntityColumn primaryEntityPKColumn = new EntityColumn(
+			primaryEntityPKColumnName, primaryEntityPKColumnName,
+			entityColumnPK.getType(), false, false, false,
+			null, null, entityColumnPK.isCaseSensitive(),
+			entityColumnPK.isOrderByAscending(), false, StringPool.EQUAL, null,
+			entityColumnPK.getIdType(), entityColumnPK.getIdParam(),
+			entityColumnPK.isConvertNull(), false, false, false, false, false);
+
+		primaryEntityPKColumn.setFinderPath(true);
+
+		primaryEntityPKColumn.setArrayableOperator(StringPool.BLANK);
+		primaryEntityPKColumn.setCaseSensitive(
+			entityColumnPK.isCaseSensitive());
+		primaryEntityPKColumn.setComparator(StringPool.EQUAL);
+
+		primaryEntityPKColumn.validate();
+
+		finderColsList.add(primaryEntityPKColumn);
+
+		regularColList.addAll(finderColsList);
+		columnList.addAll(finderColsList);
+
+		regularColList.addAll(_localizationColumns);
+		columnList.addAll(_localizationColumns);
+
+		LocalizationColumn languageIdColumn = new LocalizationColumn(
+			"languageId", "languageId");
+
+		languageIdColumn.setFinderPath(true);
+
+		languageIdColumn.setArrayableOperator(StringPool.BLANK);
+		languageIdColumn.setCaseSensitive(entityColumnPK.isCaseSensitive());
+		languageIdColumn.setComparator(StringPool.EQUAL);
+
+		languageIdColumn.validate();
+
+		regularColList.add(languageIdColumn);
+		columnList.add(languageIdColumn);
+
+		List<EntityFinder> finderList = new ArrayList<>(2);
+
+		EntityFinder collectionFinder = new EntityFinder(
+			primaryEntityName.concat("PK"), "Collection", false, null, true,
+			finderColsList);
+
+		finderList.add(collectionFinder);
+
+		List<EntityColumn> findByPKLanguageIdColumns = new ArrayList<>(
+			finderColsList);
+
+		findByPKLanguageIdColumns.add(languageIdColumn);
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < primaryEntityName.length(); i++) {
+			char c = primaryEntityName.charAt(i);
+
+			if (Character.isUpperCase(c)) {
+				sb.append(c);
+			}
+		}
+
+		sb.append("_L");
+
+		finderList.add(
+			new EntityFinder(
+				sb.toString(), _name.concat("Localization"), true, null, true,
+				findByPKLanguageIdColumns));
+
+		_localizationEntity = new Entity(
+			_packagePath, _apiPackagePath, _portletName, _portletShortName,
+			_name.concat("Localization"), _humanName.concat(" localization"),
+			_table.concat("Localization"), _alias.concat("Localization"), false,
+			false, false, false, _persistenceClass.concat("Localization"),
+			StringPool.BLANK, _dataSource, _sessionFactory, _txManager,
+			_cacheEnabled, _dynamicUpdateEnabled, false, _mvccEnabled, false,
+			_deprecated, pkList, regularColList, blobList, collectionList,
+			columnList, localizationColumns, null, false, null, finderList,
+			Collections.singletonList(this), Collections.<String>emptyList(),
+			_txRequiredList, false);
+
+		return _localizationEntity;
+	}
+
 	private EntityColumn _getPKColumn() {
 		if (_pkList.isEmpty()) {
 			throw new RuntimeException(
@@ -914,6 +1085,10 @@ public class Entity {
 	private final List<EntityFinder> _finderList;
 	private final String _humanName;
 	private final boolean _jsonEnabled;
+	private final List<LocalizationColumn> _localizationColumns;
+	private Entity _localizationEntity;
+	private final boolean _localizationMVCCEnabled;
+	private final String _localizationPrimaryEntityName;
 	private final boolean _localService;
 	private final boolean _mvccEnabled;
 	private final String _name;

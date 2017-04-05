@@ -25,19 +25,12 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId", "co
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= commerceProductDisplayContext.getPortletURL() %>"
+		<c:if test="<%= commerceProductDisplayContext.isShowInfoPanel() %>">
+			<liferay-frontend:management-bar-sidenav-toggler-button
+				icon="info-circle"
+				label="info"
 			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= commerceProductDisplayContext.getOrderByCol() %>"
-				orderByType="<%= commerceProductDisplayContext.getOrderByType() %>"
-				orderColumns='<%= new String[] {"create-date", "display-date"} %>'
-				portletURL="<%= commerceProductDisplayContext.getPortletURL() %>"
-			/>
-		</liferay-frontend:management-bar-filters>
+		</c:if>
 
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
@@ -45,4 +38,27 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId", "co
 			selectedDisplayStyle="<%= commerceProductDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= commerceProductDisplayContext.getPortletURL() %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= commerceProductDisplayContext.getOrderByCol() %>"
+			orderByType="<%= commerceProductDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"create-date", "display-date"} %>'
+			portletURL="<%= commerceProductDisplayContext.getPortletURL() %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<c:if test="<%= commerceProductDisplayContext.isShowInfoPanel() %>">
+			<liferay-frontend:management-bar-sidenav-toggler-button
+				icon="info-circle"
+				label="info"
+			/>
+		</c:if>
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>

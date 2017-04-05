@@ -27,7 +27,6 @@ PortletURL portletURL = commerceProductDisplayContext.getPortletURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
 portletURL.setParameter("searchContainerId", "commerceProductDefinitions");
-portletURL.setParameter("jspPage", "/commerce_product_definitions/view.jsp");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
@@ -59,24 +58,48 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <div id="<portlet:namespace />journalContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-			<liferay-ui:search-container
-				emptyResultsMessage="no-product-was-found"
-				id="commerceProductDefinitions"
-				searchContainer="<%= productDefinitionSearchContainer %>"
-			>
-				<liferay-ui:search-container-row
-					className="com.liferay.commerce.product.model.CommerceProductDefinition"
-					escapedModel="<%= true %>"
-					keyProperty="commerceProductDefinitionId"
-					modelVar="commerceProductDefinition"
-				>
-					<%@ include file="/commerce_product_definitions/search_columns.jspf" %>
-				</liferay-ui:search-container-row>
+		<c:if test="<%= commerceProductDisplayContext.isShowInfoPanel() %>">
+			<liferay-portlet:resourceURL
+				copyCurrentRenderParameters="<%= false %>"
+				id="/commerce_product_definitions/info_panel"
+				var="sidebarPanelURL"
+			/>
 
-				<liferay-ui:search-iterator markupView="lexicon" />
-			</liferay-ui:search-container>
-		</aui:form>
+			<liferay-frontend:sidebar-panel
+				resourceURL="<%= sidebarPanelURL %>"
+				searchContainerId="commerceProductDefinitions"
+			>
+				<liferay-util:include page="/commerce_product_definitions/info_panel.jsp" servletContext="<%= application %>" />
+			</liferay-frontend:sidebar-panel>
+		</c:if>
+
+		<div class="sidenav-content">
+			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
+				<liferay-util:include page="/commerce_product_definitions/breadcrumb.jsp" servletContext="<%= application %>" />
+			</div>
+
+			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+				<div class="journal-container" id="<portlet:namespace />entriesContainer">
+					<liferay-ui:section>
+						<liferay-ui:search-container
+							emptyResultsMessage="no-product-was-found"
+							id="commerceProductDefinitions"
+							searchContainer="<%= productDefinitionSearchContainer %>"
+						>
+							<liferay-ui:search-container-row
+								className="com.liferay.commerce.product.model.CommerceProductDefinition"
+								keyProperty="commerceProductDefinitionId"
+								modelVar="commerceProductDefinition"
+							>
+								<%@ include file="/commerce_product_definitions/search_columns.jspf" %>
+							</liferay-ui:search-container-row>
+
+							<liferay-ui:search-iterator markupView="lexicon" />
+						</liferay-ui:search-container>
+					</liferay-ui:section>
+				</div>
+			</aui:form>
+		</div>
 	</div>
 </div>
 

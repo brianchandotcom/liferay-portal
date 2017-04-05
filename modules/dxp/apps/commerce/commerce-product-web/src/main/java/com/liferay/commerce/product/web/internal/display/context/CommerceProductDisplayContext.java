@@ -36,11 +36,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
+import javax.portlet.ResourceRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -294,6 +296,26 @@ public class CommerceProductDisplayContext {
 		}
 
 		return true;
+	}
+
+	public List<CommerceProductDefinition> getCommerceProductDefinitions(ResourceRequest request)
+			throws Exception {
+
+		String[] commerceProductDefinitionIds = ParamUtil.getStringValues(
+				request, "rowIdsCommerceProductDefinition");
+
+		List<CommerceProductDefinition> commerceProductDefinitions = new ArrayList<>();
+
+		for (String commerceProductDefinitionId : commerceProductDefinitionIds) {
+			CommerceProductDefinition commerceProductDefinition =
+				_commerceProductDefinitionLocalService.
+					getCommerceProductDefinition(
+						Long.parseLong(commerceProductDefinitionId));
+
+			commerceProductDefinitions.add(commerceProductDefinition);
+		}
+
+		return commerceProductDefinitions;
 	}
 
 	protected String getDisplayStyle(

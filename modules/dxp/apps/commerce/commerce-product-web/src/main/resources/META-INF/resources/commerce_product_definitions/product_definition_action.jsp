@@ -5,7 +5,14 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition)row.getObject();
+CommerceProductDefinition commerceProductDefinition = null;
+
+if (row != null) {
+	commerceProductDefinition = (CommerceProductDefinition)row.getObject();
+}
+else {
+	commerceProductDefinition = (CommerceProductDefinition)request.getAttribute("info_panel.jsp-entry");
+}
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
@@ -34,8 +41,6 @@ CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition
 		<portlet:param name="groupId" value="<%= String.valueOf(commerceProductDefinition.getGroupId()) %>" />
 		<portlet:param name="commerceProductDefinitionId" value="<%= String.valueOf(commerceProductDefinition.getCommerceProductDefinitionId()) %>" />
 	</portlet:actionURL>
-
-	<liferay-ui:icon-delete url="<%= deleteURL %>" />
 
 	<liferay-ui:icon
 		message="delete"

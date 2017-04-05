@@ -18,11 +18,32 @@ import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.web.internal.util.comparator.CommerceProductDefinitionCreateDateComparator;
 import com.liferay.commerce.product.web.internal.util.comparator.CommerceProductDefinitionDisplayDateComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
+
+import javax.portlet.PortletURL;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
  */
 public class CommerceProductDefinitionsPortletUtil {
+
+	public static void addPortletBreadcrumbEntries(
+			CommerceProductDefinition commerceProductDefinition, HttpServletRequest request,
+			PortletURL portletURL)
+			throws Exception {
+
+		CommerceProductDefinition unescapedcommerceProductDefinition = commerceProductDefinition.toUnescapedModel();
+
+		portletURL.setParameter("mvcPath", "/commerce_product_definitions/edit_product_definition.jsp");
+		portletURL.setParameter(
+				"groupId", String.valueOf(commerceProductDefinition.getGroupId()));
+		portletURL.setParameter(
+				"commerceProductDefinitionId", String.valueOf(commerceProductDefinition.getCommerceProductDefinitionId()));
+
+		PortalUtil.addPortletBreadcrumbEntry(
+				request, unescapedcommerceProductDefinition.getTitle(), portletURL.toString());
+	}
 
 	public static OrderByComparator<CommerceProductDefinition>
 		getCommerceProductDefinitionOrderByComparator(

@@ -41,8 +41,8 @@ import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
-
 import javax.portlet.ResourceRequest;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -111,6 +111,30 @@ public class CommerceProductDisplayContext {
 			_commerceProductDefinitionRequestHelper.getPortletPreferences(),
 			_commerceProductDefinitionRequestHelper.getRenderRequest(),
 			"commerceProductDefinitionId");
+	}
+
+	public List<CommerceProductDefinition> getCommerceProductDefinitions(
+			ResourceRequest request)
+		throws Exception {
+
+		String[] commerceProductDefinitionIds = ParamUtil.getStringValues(
+			request, "rowIdsCommerceProductDefinition");
+
+		List<CommerceProductDefinition> commerceProductDefinitions =
+			new ArrayList<>();
+
+		for (String commerceProductDefinitionId :
+				commerceProductDefinitionIds) {
+
+			CommerceProductDefinition commerceProductDefinition =
+				_commerceProductDefinitionLocalService.
+					getCommerceProductDefinition(
+						Long.parseLong(commerceProductDefinitionId));
+
+			commerceProductDefinitions.add(commerceProductDefinition);
+		}
+
+		return commerceProductDefinitions;
 	}
 
 	public String getDDMStructureKey() {
@@ -298,26 +322,6 @@ public class CommerceProductDisplayContext {
 		return true;
 	}
 
-	public List<CommerceProductDefinition> getCommerceProductDefinitions(ResourceRequest request)
-			throws Exception {
-
-		String[] commerceProductDefinitionIds = ParamUtil.getStringValues(
-				request, "rowIdsCommerceProductDefinition");
-
-		List<CommerceProductDefinition> commerceProductDefinitions = new ArrayList<>();
-
-		for (String commerceProductDefinitionId : commerceProductDefinitionIds) {
-			CommerceProductDefinition commerceProductDefinition =
-				_commerceProductDefinitionLocalService.
-					getCommerceProductDefinition(
-						Long.parseLong(commerceProductDefinitionId));
-
-			commerceProductDefinitions.add(commerceProductDefinition);
-		}
-
-		return commerceProductDefinitions;
-	}
-
 	protected String getDisplayStyle(
 		HttpServletRequest request, PortalPreferences portalPreferences) {
 
@@ -325,13 +329,13 @@ public class CommerceProductDisplayContext {
 
 		if (Validator.isNull(displayStyle)) {
 			displayStyle = portalPreferences.getValue(
-					CommerceProductPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
-					"display-style", "list");
+				CommerceProductPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
+				"display-style", "list");
 		}
 		else {
 			portalPreferences.setValue(
-					CommerceProductPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
-					"display-style", displayStyle);
+				CommerceProductPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
+				"display-style", displayStyle);
 
 			request.setAttribute(
 				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);

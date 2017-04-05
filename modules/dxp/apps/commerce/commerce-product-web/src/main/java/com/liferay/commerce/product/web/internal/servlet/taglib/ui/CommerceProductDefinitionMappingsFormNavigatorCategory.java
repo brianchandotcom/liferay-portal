@@ -33,7 +33,8 @@ public class CommerceProductDefinitionMappingsFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
+		return FormNavigatorConstants.
+			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
 	}
 
 	@Override

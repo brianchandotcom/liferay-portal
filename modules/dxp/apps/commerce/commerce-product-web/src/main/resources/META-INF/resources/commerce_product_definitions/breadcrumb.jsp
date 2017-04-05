@@ -1,5 +1,3 @@
-<%@ page import="com.liferay.commerce.product.web.internal.util.CommerceProductDefinitionsPortletUtil" %>
-
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.

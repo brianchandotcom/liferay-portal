@@ -230,6 +230,8 @@ public class LayoutItemSelectorViewDisplayContext {
 			jsonObject.put("layoutId", layout.getLayoutId());
 			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
 			jsonObject.put("privateLayout", layout.isPrivateLayout());
+			jsonObject.put(
+				"url", layout.getFriendlyURL(themeDisplay.getLocale()));
 
 			if (Objects.equals(layout.getUuid(), selectedLayoutUuid)) {
 				jsonObject.put("selected", true);

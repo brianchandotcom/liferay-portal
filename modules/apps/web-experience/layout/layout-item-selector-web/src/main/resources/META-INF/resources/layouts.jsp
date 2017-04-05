@@ -36,9 +36,8 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 		</aui:fieldset-group>
 	</aui:form>
 
-	<aui:script require="journal-web/js/CardsTreeView.es,metal-dom/src/dom">
+	<aui:script require="journal-web/js/CardsTreeView.es">
 		var CardsTreeView = journalWebJsCardsTreeViewEs.default;
-		var dom = metalDomSrcDom.default;
 
 		new CardsTreeView(
 			{
@@ -51,7 +50,8 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 							id: node.id,
 							layoutId: node.layoutId,
 							name: node.value,
-							privateLayout: node.privateLayout
+							privateLayout: node.privateLayout,
+							value: node.url
 						};
 
 						Liferay.Util.getOpener().Liferay.fire(
@@ -62,7 +62,8 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 						);
 					}
 				},
-				nodes: [<%= layoutItemSelectorViewDisplayContext.getLayoutsJSONObject() %>]
+				nodes: [<%= layoutItemSelectorViewDisplayContext.getLayoutsJSONObject() %>],
+				pathThemeImages: '<%= themeDisplay.getPathThemeImages() %>'
 			},
 			'#<portlet:namespace />displayPageContainer'
 		);

@@ -906,6 +906,23 @@ public class Entity {
 			return _localizationEntity;
 		}
 
+		List<EntityColumn> regularColList = new ArrayList<>();
+		List<EntityColumn> columnList = new ArrayList<>();
+
+		// MVCC column
+
+		if (_localizationMVCCEnabled) {
+			EntityColumn mvccEntityColumn = new EntityColumn(
+				"mvccVersion", "mvccVersion", "long", false, false, false, null,
+				null, true, true, false, null, null, null, null, false, false,
+				false, false, false, false);
+
+			regularColList.add(mvccEntityColumn);
+			columnList.add(mvccEntityColumn);
+		}
+
+		// PK column
+
 		String primaryEntityName = _localizationPrimaryEntityName;
 
 		if (primaryEntityName == null) {
@@ -920,32 +937,16 @@ public class Entity {
 		String entityLocalizationIdName = primaryEntityVarName.concat(
 			"LocalizationId");
 
-		EntityColumn entityLocalizedColumnPK = new EntityColumn(
+		EntityColumn entityLocalizationIDColumn = new EntityColumn(
 			entityLocalizationIdName, entityLocalizationIdName, "long", true,
 			false, false, null, null, entityColumnPK.isCaseSensitive(),
 			entityColumnPK.isOrderByAscending(), false, null, null, null, null,
 			false, false, false, false, false, false);
 
-		List<EntityColumn> pkList = Collections.singletonList(
-			entityLocalizedColumnPK);
+		regularColList.add(entityLocalizationIDColumn);
+		columnList.add(entityLocalizationIDColumn);
 
-		List<EntityColumn> regularColList = new ArrayList<>();
-		List<EntityColumn> blobList = Collections.emptyList();
-		List<EntityColumn> collectionList = Collections.emptyList();
-		List<EntityColumn> columnList = new ArrayList<>();
-
-		if (_localizationMVCCEnabled) {
-			EntityColumn mvccEntityColumn = new EntityColumn(
-				"mvccVersion", "mvccVersion", "long", false, false, false, null,
-				null, true, true, false, null, null, null, null, false, false,
-				false, false, false, false);
-
-			regularColList.add(mvccEntityColumn);
-			columnList.add(mvccEntityColumn);
-		}
-
-		regularColList.add(entityLocalizedColumnPK);
-		columnList.add(entityLocalizedColumnPK);
+		// Company ID column
 
 		int index = _columnList.indexOf(new EntityColumn("companyId"));
 
@@ -967,7 +968,7 @@ public class Entity {
 			columnList.add(entityColumn);
 		}
 
-		List<EntityColumn> finderColsList = new ArrayList<>();
+		// Primary entity PK column
 
 		String primaryEntityPKColumnName = primaryEntityVarName.concat("PK");
 
@@ -988,13 +989,10 @@ public class Entity {
 
 		primaryEntityPKColumn.validate();
 
-		finderColsList.add(primaryEntityPKColumn);
+		regularColList.add(primaryEntityPKColumn);
+		columnList.add(primaryEntityPKColumn);
 
-		regularColList.addAll(finderColsList);
-		columnList.addAll(finderColsList);
-
-		regularColList.addAll(_localizationColumns);
-		columnList.addAll(_localizationColumns);
+		// Language ID column
 
 		LocalizationColumn languageIdColumn = new LocalizationColumn(
 			"languageId", "languageId");
@@ -1010,17 +1008,24 @@ public class Entity {
 		regularColList.add(languageIdColumn);
 		columnList.add(languageIdColumn);
 
+		// User selected localization columns
+
+		regularColList.addAll(_localizationColumns);
+		columnList.addAll(_localizationColumns);
+
+		// Finders
+
 		List<EntityFinder> finderList = new ArrayList<>(2);
 
 		EntityFinder collectionFinder = new EntityFinder(
 			primaryEntityName.concat("PK"), "Collection", false, null, true,
-			finderColsList);
+			Collections.singletonList(primaryEntityPKColumn));
 
 		finderList.add(collectionFinder);
 
-		List<EntityColumn> findByPKLanguageIdColumns = new ArrayList<>(
-			finderColsList);
+		List<EntityColumn> findByPKLanguageIdColumns = new ArrayList<>();
 
+		findByPKLanguageIdColumns.add(primaryEntityPKColumn);
 		findByPKLanguageIdColumns.add(languageIdColumn);
 
 		StringBuilder sb = new StringBuilder();
@@ -1048,8 +1053,10 @@ public class Entity {
 			_table.concat("Localization"), _alias.concat("Localization"),
 			_persistenceClass.concat("Localization"), _dataSource,
 			_sessionFactory, _txManager, _cacheEnabled, _dynamicUpdateEnabled,
-			_mvccEnabled, _deprecated, pkList, regularColList, blobList,
-			collectionList, columnList, finderList,
+			_mvccEnabled, _deprecated,
+			Collections.singletonList(entityLocalizationIDColumn),
+			regularColList, Collections.<EntityColumn>emptyList(),
+			Collections.<EntityColumn>emptyList(), columnList, finderList,
 			Collections.singletonList(this), _txRequiredList);
 
 		_localizationEntity.setLocalizationFinderName(localizationFinderName);

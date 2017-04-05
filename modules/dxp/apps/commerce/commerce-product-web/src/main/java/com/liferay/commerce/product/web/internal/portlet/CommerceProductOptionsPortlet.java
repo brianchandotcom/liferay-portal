@@ -14,25 +14,12 @@
 
 package com.liferay.commerce.product.web.internal.portlet;
 
-import com.liferay.commerce.product.service.CommerceProductDefinitionLocalService;
 import com.liferay.commerce.product.web.internal.constants.CommerceProductPortletKeys;
-import com.liferay.commerce.product.web.internal.display.context.CommerceProductDisplayContext;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marco Leo
@@ -61,5 +48,4 @@ import java.io.IOException;
 	service = {CommerceProductOptionsPortlet.class, Portlet.class}
 )
 public class CommerceProductOptionsPortlet extends MVCPortlet {
-
 }

@@ -78,6 +78,18 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		_sourceFormatterMessagesMap.remove(fileName);
 	}
 
+	protected int getLeadingTabCount(String line) {
+		int leadingTabCount = 0;
+
+		while (line.startsWith(StringPool.TAB)) {
+			line = line.substring(1);
+
+			leadingTabCount++;
+		}
+
+		return leadingTabCount;
+	}
+
 	protected boolean isExcludedPath(List<String> excludes, String path) {
 		return isExcludedPath(excludes, path, -1);
 	}

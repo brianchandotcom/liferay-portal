@@ -783,6 +783,12 @@
 		</if>
 	</command>
 
+	<command name="viewInactiveRequestMessage">
+		<execute function="AssertTextEquals" locator1="Home#STATUS_MESSAGE" value1="This ${resource} is inactive. Please contact the administrator.">
+			<var name="key_resource" value="${resource}" />
+		</execute>
+	</command>
+
 	<command name="viewLoadMoreResultsPages">
 		<execute macro="ProductMenuHelper#expandPageTree" />
 

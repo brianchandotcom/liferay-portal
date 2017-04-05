@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.upload.FileEntryDLUploadHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -23,7 +24,9 @@ import com.liferay.portal.kernel.upload.UploadHandler;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -39,6 +42,11 @@ import org.osgi.service.component.annotations.Component;
 )
 public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
+	@Activate
+	protected void activate() {
+		_uploadHandler = new FileEntryDLUploadHandler(_dlValidator);
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -47,6 +55,9 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		_uploadHandler.upload(actionRequest, actionResponse);
 	}
 
-	private final UploadHandler _uploadHandler = new FileEntryDLUploadHandler();
+	@Reference
+	private DLValidator _dlValidator;
+
+	private UploadHandler _uploadHandler;
 
 }

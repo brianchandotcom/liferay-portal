@@ -16,9 +16,7 @@ package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -27,12 +25,6 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.util.FileUtil;
-
-import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
-import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
-import com.thoughtworks.qdox.model.JavaMethod;
-import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
 
@@ -105,10 +97,6 @@ public class JavaClass {
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
 
-			if (javaTerm.isConstructor()) {
-				checkConstructor(javaTerm);
-			}
-
 			if (javaTerm.isClass()) {
 				_formatMissingLineBreak(javaTerm);
 			}
@@ -153,9 +141,6 @@ public class JavaClass {
 				return _classContent;
 			}
 
-			fixTabsAndIncorrectEmptyLines(javaTerm);
-			formatAnnotations(javaTerm, testAnnotationsExcludesProperty);
-
 			if (!originalContent.equals(_classContent)) {
 				return _classContent;
 			}
@@ -190,216 +175,6 @@ public class JavaClass {
 
 	public String getContent() {
 		return _classContent;
-	}
-
-	protected void checkAnnotationForMethod(
-		JavaTerm javaTerm, String annotation, String requiredMethodNameRegex,
-		int requiredMethodType) {
-
-		String methodName = javaTerm.getName();
-
-		Pattern pattern = Pattern.compile(requiredMethodNameRegex);
-
-		Matcher matcher = pattern.matcher(methodName);
-
-		if (javaTerm.hasAnnotation(annotation)) {
-			if (!matcher.find()) {
-				_javaSourceProcessor.processMessage(
-					_fileName,
-					"Incorrect method name '" + methodName +
-						"', see LPS-36303");
-			}
-			else if (javaTerm.getType() != requiredMethodType) {
-				_javaSourceProcessor.processMessage(
-					_fileName,
-					"Incorrect method type for '" + methodName +
-						"', see LPS-36303");
-			}
-		}
-		else if (matcher.find() && !javaTerm.hasAnnotation("Override")) {
-			_javaSourceProcessor.processMessage(
-				_fileName,
-				"Annotation @" + annotation + " required for '" + methodName +
-					"', see LPS-36303");
-		}
-	}
-
-	protected void checkCleanUpMethodValue(
-		String cleanUpMethodContent, JavaTerm javaTerm, String defaultValue) {
-
-		String javaTermName = javaTerm.getName();
-
-		if (!cleanUpMethodContent.contains(javaTermName + " =")) {
-			return;
-		}
-
-		Pattern pattern = Pattern.compile(javaTermName + " =\\s+[a-z]\\w*\\.");
-
-		Matcher matcher = pattern.matcher(cleanUpMethodContent);
-
-		if (matcher.find()) {
-			return;
-		}
-
-		String javaTermContent = javaTerm.getContent();
-
-		int x = javaTermContent.indexOf(javaTermName);
-
-		String setVariableCommand = javaTermContent.substring(x);
-
-		if (!setVariableCommand.contains(" =")) {
-			setVariableCommand = StringUtil.replaceLast(
-				setVariableCommand, CharPool.SEMICOLON,
-				" = " + defaultValue + ";");
-		}
-
-		setVariableCommand = StringUtil.replace(
-			setVariableCommand,
-			new String[] {StringPool.TAB, StringPool.NEW_LINE},
-			new String[] {StringPool.BLANK, StringPool.SPACE});
-
-		String setVariableCommandRegex = StringUtil.replace(
-			setVariableCommand,
-			new String[] {
-				StringPool.CLOSE_PARENTHESIS, StringPool.OPEN_PARENTHESIS,
-				StringPool.SPACE, "0\\.0"
-			},
-			new String[] {"\\)", "\\(", "\\s*", "0(\\.0)?"});
-
-		pattern = Pattern.compile(setVariableCommandRegex);
-
-		matcher = pattern.matcher(cleanUpMethodContent);
-
-		if (!matcher.find()) {
-			_javaSourceProcessor.processMessage(
-				_fileName,
-				"Initial value differs from value in cleanUp method, see " +
-					"LPS-66242",
-				javaTerm.getLineCount());
-		}
-	}
-
-	protected void checkConstructor(JavaTerm javaTerm) throws Exception {
-		String javaTermContent = javaTerm.getContent();
-
-		if (javaTermContent.contains(StringPool.TAB + "super();")) {
-			String newJavaTermContent = StringUtil.replace(
-				javaTermContent, StringPool.TAB + "super();", StringPool.BLANK);
-
-			_classContent = StringUtil.replace(
-				_classContent, javaTermContent, newJavaTermContent);
-
-			return;
-		}
-
-		if (!ListUtil.isEmpty(javaTerm.getParameterTypes())) {
-			checkConstructorParameterOrder(javaTerm);
-
-			return;
-		}
-
-		if ((_packagePath == null) || (_constructorCount > 1) ||
-			!javaTermContent.contains("{\n" + _indent + "}\n")) {
-
-			return;
-		}
-
-		String accessModifier = getAccessModifier();
-
-		if ((javaTerm.isPrivate() &&
-			 !accessModifier.equals(_ACCESS_MODIFIER_PRIVATE)) ||
-			(javaTerm.isProtected() &&
-			 !accessModifier.equals(_ACCESS_MODIFIER_PRIVATE) &&
-			 !accessModifier.equals(_ACCESS_MODIFIER_PROTECTED))) {
-
-			return;
-		}
-
-		Pattern pattern = Pattern.compile("class " + _name + "[ \t\n]+extends");
-
-		Matcher matcher = pattern.matcher(_classContent);
-
-		if (!matcher.find()) {
-			return;
-		}
-
-		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(
-			new DefaultDocletTagFactory(), new ThreadSafeClassLibrary());
-
-		try {
-			javaDocBuilder.addSource(_file);
-		}
-		catch (ParseException pe) {
-			return;
-		}
-
-		com.thoughtworks.qdox.model.JavaClass javaClass =
-			javaDocBuilder.getClassByName(getClassName());
-
-		com.thoughtworks.qdox.model.JavaClass superJavaClass =
-			javaClass.getSuperJavaClass();
-
-		JavaMethod superJavaClassConstructor =
-			superJavaClass.getMethodBySignature(superJavaClass.getName(), null);
-
-		if ((superJavaClassConstructor != null) &&
-			ArrayUtil.isEmpty(superJavaClassConstructor.getExceptions())) {
-
-			_classContent = StringUtil.replace(
-				_classContent, javaTermContent, StringPool.BLANK);
-		}
-	}
-
-	protected void checkConstructorParameterOrder(JavaTerm javaTerm) {
-		String previousParameterName = null;
-		int previousPos = -1;
-
-		for (String parameterName : javaTerm.getParameterNames()) {
-			Pattern pattern = Pattern.compile(
-				"\\{\n([\\s\\S]*?)(_" + parameterName + " =[ \t\n]+" +
-					parameterName + ";)");
-
-			Matcher matcher = pattern.matcher(javaTerm.getContent());
-
-			if (!matcher.find()) {
-				continue;
-			}
-
-			String beforeParameter = matcher.group(1);
-
-			if (beforeParameter.contains(parameterName + " =")) {
-				continue;
-			}
-
-			int pos = matcher.start(2);
-
-			if (previousPos < pos) {
-				previousParameterName = parameterName;
-				previousPos = pos;
-
-				continue;
-			}
-
-			StringBundler sb = new StringBundler(9);
-
-			sb.append("'_");
-			sb.append(previousParameterName);
-			sb.append(" = ");
-			sb.append(previousParameterName);
-			sb.append(";' should come before '_");
-			sb.append(parameterName);
-			sb.append(" = ");
-			sb.append(parameterName);
-			sb.append(";' to match order of constructor parameters");
-
-			_javaSourceProcessor.processMessage(
-				_fileName, sb.toString(),
-				javaTerm.getLineCount() - 1 +
-					_javaSourceProcessor.getLineCount(
-						javaTerm.getContent(), matcher.start(2)));
-
-			return;
-		}
 	}
 
 	protected void checkFinalableFieldType(
@@ -493,13 +268,6 @@ public class JavaClass {
 						_classContent, javaTermContent,
 						matcher.replaceFirst(";$1"));
 				}
-			}
-
-			// LPS-66242
-
-			if (_fileName.endsWith("Tag.java")) {
-				checkCleanUpMethodValue(
-					getCleanUpMethodContent(javaTerms), javaTerm, defaultValue);
 			}
 		}
 
@@ -599,195 +367,6 @@ public class JavaClass {
 			_classContent, javaTermContent, newJavaTermContent);
 	}
 
-	protected void checkTestAnnotations(JavaTerm javaTerm) {
-		int methodType = javaTerm.getType();
-
-		if ((methodType != JavaTerm.TYPE_METHOD_PUBLIC) &&
-			(methodType != JavaTerm.TYPE_METHOD_PUBLIC_STATIC)) {
-
-			return;
-		}
-
-		checkAnnotationForMethod(
-			javaTerm, "After", "\\btearDown(?!Class)",
-			JavaTerm.TYPE_METHOD_PUBLIC);
-		checkAnnotationForMethod(
-			javaTerm, "AfterClass", "\\btearDownClass",
-			JavaTerm.TYPE_METHOD_PUBLIC_STATIC);
-		checkAnnotationForMethod(
-			javaTerm, "Before", "\\bsetUp(?!Class)",
-			JavaTerm.TYPE_METHOD_PUBLIC);
-		checkAnnotationForMethod(
-			javaTerm, "BeforeClass", "\\bsetUpClass",
-			JavaTerm.TYPE_METHOD_PUBLIC_STATIC);
-		checkAnnotationForMethod(
-			javaTerm, "Test", "^.*test", JavaTerm.TYPE_METHOD_PUBLIC);
-	}
-
-	protected String fixLeadingTabs(
-		String content, String line, int expectedTabCount) {
-
-		int leadingTabCount = _javaSourceProcessor.getLeadingTabCount(line);
-
-		String newLine = line;
-
-		while (leadingTabCount != expectedTabCount) {
-			if (leadingTabCount > expectedTabCount) {
-				newLine = StringUtil.replaceFirst(
-					newLine, CharPool.TAB, StringPool.BLANK);
-
-				leadingTabCount--;
-			}
-			else {
-				newLine = StringPool.TAB + newLine;
-
-				leadingTabCount++;
-			}
-		}
-
-		return StringUtil.replace(content, line, newLine);
-	}
-
-	protected void fixTabsAndIncorrectEmptyLines(JavaTerm javaTerm) {
-		if (!javaTerm.isConstructor() && !javaTerm.isMethod()) {
-			return;
-		}
-
-		String javaTermContent = "\n" + javaTerm.getContent();
-
-		Pattern methodNameAndParametersPattern = Pattern.compile(
-			"\n" + _indent + "(private |protected |public ).*?(\\{|;)\n",
-			Pattern.DOTALL);
-
-		Matcher matcher = methodNameAndParametersPattern.matcher(
-			javaTermContent);
-
-		if (!matcher.find()) {
-			return;
-		}
-
-		String methodNameAndParameters = matcher.group();
-
-		String[] lines = StringUtil.splitLines(methodNameAndParameters);
-
-		if (lines.length == 1) {
-			if (methodNameAndParameters.endsWith("{\n") &&
-				javaTermContent.contains(methodNameAndParameters + "\n") &&
-				!javaTermContent.contains(
-					methodNameAndParameters + "\n" + _indent + StringPool.TAB +
-						"/*") &&
-				!javaTermContent.contains(
-					methodNameAndParameters + "\n" + _indent + StringPool.TAB +
-						"// ")) {
-
-				String trimmedJavaTermContent = StringUtil.trimTrailing(
-					javaTermContent);
-
-				if (!trimmedJavaTermContent.endsWith(
-						"\n\n" + _indent + StringPool.CLOSE_CURLY_BRACE)) {
-
-					_classContent = StringUtil.replace(
-						_classContent, methodNameAndParameters + "\n",
-						methodNameAndParameters);
-				}
-			}
-
-			return;
-		}
-
-		if (methodNameAndParameters.endsWith("{\n") &&
-			!javaTermContent.contains(methodNameAndParameters + "\n") &&
-			!javaTermContent.contains(
-				methodNameAndParameters + _indent +
-					StringPool.CLOSE_CURLY_BRACE)) {
-
-			_classContent = StringUtil.replace(
-				_classContent, methodNameAndParameters,
-				methodNameAndParameters + "\n");
-		}
-
-		boolean throwsException = methodNameAndParameters.contains(
-			_indent + "throws ");
-
-		String newMethodNameAndParameters = methodNameAndParameters;
-
-		int expectedTabCount = -1;
-
-		for (int i = 0; i < lines.length; i++) {
-			String line = lines[i];
-
-			if (line.contains(_indent + "throws ")) {
-				newMethodNameAndParameters = fixLeadingTabs(
-					newMethodNameAndParameters, line, _indent.length() + 1);
-
-				break;
-			}
-
-			if (expectedTabCount == -1) {
-				if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
-					expectedTabCount = Math.max(
-						_javaSourceProcessor.getLeadingTabCount(line),
-						_indent.length()) + 1;
-
-					if (throwsException &&
-						(expectedTabCount == (_indent.length() + 1))) {
-
-						expectedTabCount += 1;
-					}
-				}
-			}
-			else {
-				String previousLine = lines[i - 1];
-
-				if (previousLine.endsWith(StringPool.COMMA) ||
-					previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
-
-					newMethodNameAndParameters = fixLeadingTabs(
-						newMethodNameAndParameters, line, expectedTabCount);
-				}
-				else {
-					newMethodNameAndParameters = fixLeadingTabs(
-						newMethodNameAndParameters, line,
-						_javaSourceProcessor.getLeadingTabCount(previousLine) +
-							1);
-				}
-			}
-		}
-
-		_classContent = StringUtil.replace(
-			_classContent, methodNameAndParameters, newMethodNameAndParameters);
-	}
-
-	protected void formatAnnotations(
-			JavaTerm javaTerm, String testAnnotationsExcludesProperty)
-		throws Exception {
-
-		if ((_indent.length() == 1) &&
-			!_javaSourceProcessor.isExcludedPath(
-				testAnnotationsExcludesProperty, _absolutePath) &&
-			_fileName.endsWith("Test.java")) {
-
-			checkTestAnnotations(javaTerm);
-		}
-	}
-
-	protected String getAccessModifier() {
-		Matcher matcher = _classPattern.matcher(_classContent);
-
-		if (matcher.find()) {
-			String accessModifier = matcher.group(1);
-
-			if (accessModifier.equals(_ACCESS_MODIFIER_PRIVATE) ||
-				accessModifier.equals(_ACCESS_MODIFIER_PROTECTED) ||
-				accessModifier.equals(_ACCESS_MODIFIER_PUBLIC)) {
-
-				return accessModifier;
-			}
-		}
-
-		return _ACCESS_MODIFIER_UNKNOWN;
-	}
-
 	protected String getClassName(String line) {
 		int pos = line.indexOf(" extends ");
 
@@ -814,32 +393,6 @@ public class JavaClass {
 		pos = line.lastIndexOf(CharPool.SPACE);
 
 		return line.substring(pos + 1);
-	}
-
-	protected String getCleanUpMethodContent(Set<JavaTerm> javaTerms) {
-		if (_cleanUpMethodContent != null) {
-			return _cleanUpMethodContent;
-		}
-
-		String cleanUpMethodContent = StringPool.BLANK;
-
-		for (JavaTerm javaTerm : javaTerms) {
-			if (!javaTerm.isMethod()) {
-				continue;
-			}
-
-			String javaTermName = javaTerm.getName();
-
-			if (javaTermName.equals("cleanUp")) {
-				cleanUpMethodContent = javaTerm.getContent();
-
-				break;
-			}
-		}
-
-		_cleanUpMethodContent = cleanUpMethodContent;
-
-		return _cleanUpMethodContent;
 	}
 
 	protected String getConstructorOrMethodName(String line, int pos) {
@@ -912,10 +465,6 @@ public class JavaClass {
 			_fileName.endsWith("FinderImpl.java")) {
 
 			javaTerm.setCustomSQLContent(getCustomSQLContent());
-		}
-
-		if (javaTerm.isConstructor()) {
-			_constructorCount++;
 		}
 
 		if (!javaTerm.isClass()) {
@@ -1614,8 +1163,6 @@ public class JavaClass {
 
 	private static final String _ACCESS_MODIFIER_PUBLIC = "public";
 
-	private static final String _ACCESS_MODIFIER_UNKNOWN = "unknown";
-
 	private static final String[] _ACCESS_MODIFIERS = {
 		_ACCESS_MODIFIER_PRIVATE, _ACCESS_MODIFIER_PROTECTED,
 		_ACCESS_MODIFIER_PUBLIC
@@ -1635,8 +1182,6 @@ public class JavaClass {
 	private final Pattern _classPattern = Pattern.compile(
 		"(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?) \\{\n");
-	private String _cleanUpMethodContent;
-	private int _constructorCount;
 	private final String _content;
 	private String _customSQLContent;
 	private final Pattern _enumTypePattern = Pattern.compile(

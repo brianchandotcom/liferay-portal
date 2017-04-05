@@ -31,10 +31,13 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
+@Component
 @DoPrivileged
 public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 

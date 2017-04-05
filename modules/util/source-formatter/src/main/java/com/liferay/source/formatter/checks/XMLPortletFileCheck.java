@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.checks.util.XMLSourceUtil;
@@ -98,7 +99,8 @@ public class XMLPortletFileCheck extends BaseFileCheck {
 			}
 		}
 
-		return Dom4jUtil.toString(document);
+		return StringUtil.replace(
+			Dom4jUtil.toString(document), "\"/>\n", "\" />\n");
 	}
 
 	private final List<String> _excludes;

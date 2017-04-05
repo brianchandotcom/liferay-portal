@@ -14,29 +14,41 @@
 
 package com.liferay.gradle.plugins.workspace.configurators;
 
+import com.liferay.gradle.plugins.workspace.ProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.tasks.UpdatePropertiesTask;
+import com.liferay.gradle.util.StringUtil;
+import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.gradle.api.Action;
 import org.gradle.api.AntBuilder;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.FileTree;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
+import org.gradle.util.CollectionUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -44,7 +56,12 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin;
  */
 public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 
+	public static final String PLUGINS_SDK_CONFIGURATION_NAME = "pluginsSDK";
+
 	public static final String UPDATE_PROPERTIES_TASK_NAME = "updateProperties";
+
+	public static final String UPGRADE_PLUGINS_SDK_TASK_NAME =
+		"upgradePluginsSDK";
 
 	public PluginsProjectConfigurator(Settings settings) {
 		super(settings);
@@ -74,6 +91,17 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	@Override
+	public void configureRootProject(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		Configuration pluginsSDKConfiguration = _addRootConfigurationPluginsSDK(
+			project);
+
+		_addRootTaskUpgradePluginsSDK(
+			project, pluginsSDKConfiguration, workspaceExtension);
+	}
+
+	@Override
 	public String getName() {
 		return _NAME;
 	}
@@ -97,6 +125,114 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 	@Override
 	protected String getDefaultRootDirPropertyName() {
 		return _DEFAULT_ROOT_DIR_PROPERTY_NAME;
+	}
+
+	private Configuration _addRootConfigurationPluginsSDK(
+		final Project project) {
+
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, PLUGINS_SDK_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					_addRootDependenciesPluginsSDK(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures the Plugins SDK for this Liferay Workspace.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
+	private void _addRootDependenciesPluginsSDK(Project project) {
+		DependencyHandler dependencyHandler = project.getDependencies();
+
+		Map<String, Object> dependencyNotation = new HashMap<>();
+
+		dependencyNotation.put("classifier", "withdependencies");
+		dependencyNotation.put("ext", "zip");
+		dependencyNotation.put("group", "com.liferay.portal");
+		dependencyNotation.put("name", "com.liferay.portal.plugins.sdk");
+		dependencyNotation.put("version", "latest.release");
+
+		dependencyHandler.add(
+			PLUGINS_SDK_CONFIGURATION_NAME, dependencyNotation);
+	}
+
+	private Task _addRootTaskUpgradePluginsSDK(
+		Project project, Configuration pluginsSDKConfiguration,
+		WorkspaceExtension workspaceExtension) {
+
+		ProjectConfigurator projectConfigurator =
+			workspaceExtension.propertyMissing(
+				PluginsProjectConfigurator._NAME);
+
+		Collection<File> dirs =
+			(Collection<File>)projectConfigurator.getDefaultRootDirs();
+
+		if (dirs.size() == 1) {
+			return _addRootTaskUpgradePluginsSDK(
+				project, UPGRADE_PLUGINS_SDK_TASK_NAME,
+				CollectionUtils.first(dirs), pluginsSDKConfiguration);
+		}
+
+		Task task = project.task(UPGRADE_PLUGINS_SDK_TASK_NAME);
+
+		for (File dir : projectConfigurator.getDefaultRootDirs()) {
+			String taskName =
+				UPGRADE_PLUGINS_SDK_TASK_NAME +
+					StringUtil.capitalize(dir.getName());
+
+			Copy copy = _addRootTaskUpgradePluginsSDK(
+				project, taskName, dir, pluginsSDKConfiguration);
+
+			task.dependsOn(copy);
+		}
+
+		task.setDescription(
+			"Downloads and upgrades all Plugins SDK directories.");
+
+		return task;
+	}
+
+	private Copy _addRootTaskUpgradePluginsSDK(
+		final Project project, String taskName, File dir,
+		final Configuration pluginsSDKConfiguration) {
+
+		Copy copy = GradleUtil.addTask(project, taskName, Copy.class);
+
+		copy.from(
+			new Callable<FileTree>() {
+
+				@Override
+				public FileTree call() throws Exception {
+					return project.zipTree(
+						pluginsSDKConfiguration.getSingleFile());
+				}
+
+			},
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.eachFile(new StripPathSegmentsAction(1));
+				}
+
+			});
+
+		copy.into(dir);
+		copy.setDescription(
+			"Downloads the Liferay Plugins SDK zip file into " +
+				project.relativePath(dir) + ", upgrading if necessary.");
+		copy.setIncludeEmptyDirs(false);
+
+		return copy;
 	}
 
 	private Task _addTaskBuild(

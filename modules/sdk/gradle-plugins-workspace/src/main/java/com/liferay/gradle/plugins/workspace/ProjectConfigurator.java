@@ -24,6 +24,9 @@ import org.gradle.api.Project;
  */
 public interface ProjectConfigurator extends Plugin<Project> {
 
+	public void configureRootProject(
+		Project project, WorkspaceExtension workspaceExtension);
+
 	public Iterable<File> getDefaultRootDirs();
 
 	public String getName();

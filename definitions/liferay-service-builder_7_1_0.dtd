@@ -59,7 +59,7 @@ If an entity does have columns, then the value object, the POJO class that
 is mapped to the database, and other persistence utilities are also generated
 based on the order and finder elements.
 -->
-<!ELEMENT entity (column*, order?, finder*, reference*, tx-required*)>
+<!ELEMENT entity (column*, localization?, order?, finder*, reference*, tx-required*)>
 
 <!--
 The name value specifies the name of the entity.
@@ -299,7 +299,11 @@ The lazy value is only valid when type is Blob. It specifies whether or not to
 do a lazy fetch for Blob. The default value is true.
 
 The localized value specifies whether or not the value of the column can have
-different values for different locales. The default value is false.
+different values for different locales. The default value is false. Localization
+can also be performed by using a generated localization table using the
+localization and localized-column elements. The localized value cannot be
+set to true when the entity contains a localization element. Using the
+localization element with a separate table is recommended.
 
 The json-enabled value specifies whether or not the column should be annotated
 for JSON serialization. By default, if the json-enabled value in the entity
@@ -328,6 +332,43 @@ primary key of a parent container model.
 	json-enabled CDATA #IMPLIED
 	container-model CDATA #IMPLIED
 	parent-container-model CDATA #IMPLIED
+>
+
+<!--
+The localization element represents a table with a one to many mapping from the
+entity table to the localization table. The localization table is designed to
+be used instead of setting column element's localized attribute to true.
+-->
+<!ELEMENT localization (localized-column+)>
+
+<!--
+The mvcc-enabled value specifies whether or not to enable MVCC for this
+entity to prevent lost updates. The default value is true.
+
+The primary-entity-name value specifies an alternate name to use for the entity
+in code generation. The default value is the name attribute of the enclosing
+entity.
+-->
+<!ATTLIST localization
+	mvcc-enabled CDATA #IMPLIED
+	primary-entity-name CDATA #IMPLIED
+>
+
+<!--
+The localized-column element represents a column in the localization table.
+-->
+<!ELEMENT localized-column (#PCDATA)>
+
+<!--
+The name value specifies the getter and setter name in the entity and
+localization entity.
+
+Set db-name to map the field to a physical database column that is different
+from the localized-column name.
+-->
+<!ATTLIST localized-column
+	name CDATA #REQUIRED
+	db-name CDATA #IMPLIED
 >
 
 <!--

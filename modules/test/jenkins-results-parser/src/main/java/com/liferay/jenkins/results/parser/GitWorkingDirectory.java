@@ -244,49 +244,56 @@ public class GitWorkingDirectory {
 
 		File headFile = new File(_gitDirectory, "HEAD");
 
+		String expectedContent = null;
+
+		if (!branchName.contains("/")) {
+			expectedContent = JenkinsResultsParserUtil.combine(
+				"ref: refs/heads/", branchName);
+		}
+		else {
+			int i = branchName.indexOf("/");
+
+			String remoteBranchName = branchName.substring(i + 1);
+
+			String remoteName = branchName.substring(0, i);
+
+			expectedContent = getRemoteBranchSha(
+				remoteBranchName, getRemoteConfig(remoteName));
+		}
+
 		while (true) {
+			String headContent = null;
+
 			try {
-				String headContent = JenkinsResultsParserUtil.read(headFile);
-
-				headContent = headContent.trim();
-
-				if (!branchName.contains("/")) {
-					if (headContent.matches(
-							JenkinsResultsParserUtil.combine(
-								"ref: refs/heads/", branchName))) {
-
-						break;
-					}
-				}
-				else {
-					int i = branchName.indexOf("/");
-
-					String remoteBranchName = branchName.substring(i + 1);
-
-					String remoteName = branchName.substring(0, i);
-
-					String gitHubBranchCommit = getRemoteBranchSha(
-						remoteBranchName, getRemoteConfig(remoteName));
-
-					if (headContent.equals(gitHubBranchCommit)) {
-						break;
-					}
-				}
-
-				System.out.println("Waiting for branch to be updated");
-
-				JenkinsResultsParserUtil.sleep(5000);
-
-				timeout++;
-
-				if (timeout >= 59) {
-					throw new RuntimeException(
-						"Unable to checkout branch " + branchName);
-				}
+				headContent = JenkinsResultsParserUtil.read(headFile);
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(
 					"Unable to read file " + headFile.getPath(), ioe);
+			}
+
+			headContent = headContent.trim();
+
+			if (headContent.equals(expectedContent)) {
+				return;
+			}
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"HEAD file content is currently ", headContent,
+					"Waiting for branch to be updated"));
+
+			JenkinsResultsParserUtil.sleep(5000);
+
+			timeout++;
+
+			if (timeout >= 59) {
+				if (branchName.equals(getCurrentBranch())) {
+					return;
+				}
+
+				throw new RuntimeException(
+					"Unable to checkout branch " + branchName);
 			}
 		}
 	}

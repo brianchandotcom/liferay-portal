@@ -287,7 +287,7 @@ public class GitWorkingDirectory {
 	}
 
 	public void createLocalBranch(String branchName) throws GitAPIException {
-		createLocalBranch(branchName, false, "HEAD");
+		createLocalBranch(branchName, false, null);
 	}
 
 	public void createLocalBranch(

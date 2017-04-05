@@ -5204,12 +5204,12 @@ public class ServiceBuilder {
 
 		Element localizationElement = entityElement.element("localization");
 
-		String localizedPrimaryEntityName = null;
+		String localizationPrimaryEntityName = null;
 
 		boolean localizationMVCCEnabled = true;
 
 		if (localizationElement != null) {
-			localizedPrimaryEntityName = localizationElement.attributeValue(
+			localizationPrimaryEntityName = localizationElement.attributeValue(
 				"primary-entity-name");
 
 			localizationMVCCEnabled = GetterUtil.getBoolean(
@@ -5518,7 +5518,7 @@ public class ServiceBuilder {
 			sessionFactory, txManager, cacheEnabled, dynamicUpdateEnabled,
 			jsonEnabled, mvccEnabled, trashEnabled, deprecated, pkList,
 			regularColList, blobList, collectionList, columnList,
-			localizationColumns, localizedPrimaryEntityName,
+			localizationColumns, localizationPrimaryEntityName,
 			localizationMVCCEnabled, order, finderList, referenceList,
 			unresolvedReferenceList, txRequiredList, resourceActionModel);
 

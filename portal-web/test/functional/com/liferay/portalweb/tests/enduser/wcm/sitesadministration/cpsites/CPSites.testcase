@@ -97,7 +97,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_INFO" value1="This site is inactive. Please contact the administrator." />
+		<execute function="AssertTextNotPresent" value1="This site is inactive. Please contact the administrator." />
 	</command>
 
 	<command name="AddChildChildSite" priority="4">

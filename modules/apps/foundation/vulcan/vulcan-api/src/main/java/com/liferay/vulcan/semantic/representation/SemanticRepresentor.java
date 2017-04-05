@@ -20,13 +20,9 @@ import com.liferay.vulcan.semantic.representation.builder.SemanticRepresentation
  * @author Carlos Sierra Andrés
  * @author Alejandro Hernández
  */
-public interface SemanticRepresentation<T> {
+public interface SemanticRepresentor<T> {
 
 	public void buildSemanticRepresentation(
 		SemanticRepresentationBuilder<T> semanticRepresentationBuilder);
-
-	public String getIdentifier(T t);
-
-	public String[] getTypes();
 
 }

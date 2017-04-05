@@ -29,4 +29,9 @@ public interface SemanticRepresentationBuilder<T> {
 	public SemanticRepresentationBuilder<T> addField(
 		String key, Function<T, Object> valueFunction);
 
+	public SemanticRepresentationBuilder<T> addIdentifier(
+		Function<T, String> identifierFunction);
+
+	public SemanticRepresentationBuilder<T> addType(String type);
+
 }

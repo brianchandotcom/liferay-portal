@@ -34,9 +34,8 @@ public class StaticBlockCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, JavaTerm javaTerm,
-			String fileContent)
-		throws Exception {
+		String fileName, String absolutePath, JavaTerm javaTerm,
+		String fileContent) {
 
 		JavaClass javaClass = (JavaClass)javaTerm;
 

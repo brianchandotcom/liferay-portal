@@ -13,7 +13,7 @@
 			<validator name="required" />
 		</field>
 		<field name="emailAddress" type="String">
-			<hint-collection name="EMAILADDRESS" />
+			<hint-collection name="EMAIL-ADDRESS" />
 			<validator name="email" />
 			<validator name="required" />
 		</field>

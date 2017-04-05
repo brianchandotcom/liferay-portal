@@ -28,7 +28,8 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, JavaTerm javaTerm)
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
 		throws Exception {
 
 		JavaClass javaClass = (JavaClass)javaTerm;

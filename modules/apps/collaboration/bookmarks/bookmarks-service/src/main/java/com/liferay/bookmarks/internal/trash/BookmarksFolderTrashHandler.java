@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.trash;
+package com.liferay.bookmarks.internal.trash;
 
 import com.liferay.bookmarks.asset.BookmarksFolderAssetRenderer;
 import com.liferay.bookmarks.model.BookmarksFolder;

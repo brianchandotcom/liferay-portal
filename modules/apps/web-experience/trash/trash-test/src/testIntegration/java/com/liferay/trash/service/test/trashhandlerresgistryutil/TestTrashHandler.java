@@ -235,6 +235,11 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	@Override
+	public TrashedModel getTrashedModel(long classPK) {
+		return null;
+	}
+
+	@Override
 	public TrashEntry getTrashEntry(long classPK) {
 		return null;
 	}

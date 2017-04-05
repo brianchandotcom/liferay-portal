@@ -36,11 +36,13 @@ public abstract class BaseJavaTermCheck
 
 		clearSourceFormatterMessages(fileName);
 
-		return _walkJavaClass(fileName, absolutePath, javaClass, content);
+		return _walkJavaClass(
+			fileName, absolutePath, javaClass, content, content);
 	}
 
 	protected abstract String doProcess(
-			String filename, String absolutePath, JavaTerm javaTerm)
+			String filename, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
 		throws Exception;
 
 	protected abstract String[] getCheckableJavaTermNames();
@@ -73,7 +75,7 @@ public abstract class BaseJavaTermCheck
 
 	private String _walkJavaClass(
 			String fileName, String absolutePath, JavaClass javaClass,
-			String parentContent)
+			String parentContent, String fileContent)
 		throws Exception {
 
 		String javaClassContent = javaClass.getContent();
@@ -81,7 +83,8 @@ public abstract class BaseJavaTermCheck
 		String newJavaClassContent = javaClassContent;
 
 		if (_isCheckableJavaTerm(javaClass)) {
-			newJavaClassContent = doProcess(fileName, absolutePath, javaClass);
+			newJavaClassContent = doProcess(
+				fileName, absolutePath, javaClass, fileContent);
 
 			if (!javaClassContent.equals(newJavaClassContent)) {
 				return StringUtil.replace(
@@ -94,7 +97,8 @@ public abstract class BaseJavaTermCheck
 				JavaClass childJavaClass = (JavaClass)javaTerm;
 
 				newJavaClassContent = _walkJavaClass(
-					fileName, absolutePath, childJavaClass, javaClassContent);
+					fileName, absolutePath, childJavaClass, javaClassContent,
+					fileContent);
 
 				if (!newJavaClassContent.equals(javaClassContent)) {
 					return StringUtil.replace(
@@ -105,7 +109,7 @@ public abstract class BaseJavaTermCheck
 				String javaTermContent = javaTerm.getContent();
 
 				String newJavaTermContent = doProcess(
-					fileName, absolutePath, javaTerm);
+					fileName, absolutePath, javaTerm, fileContent);
 
 				if (!javaTermContent.equals(newJavaTermContent)) {
 					newJavaClassContent = StringUtil.replace(

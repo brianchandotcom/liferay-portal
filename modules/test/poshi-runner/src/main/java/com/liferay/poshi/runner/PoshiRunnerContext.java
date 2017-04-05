@@ -50,6 +50,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.tools.ant.DirectoryScanner;
 
 import org.dom4j.Document;
@@ -959,16 +960,18 @@ public class PoshiRunnerContext {
 	}
 
 	private static void _readPoshiFiles() throws Exception {
+		String[] poshiFileNames = {
+			"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
+			"**\\*.testcase"
+		};
+
 		List<String> testBaseDirFilePaths = _getFilePaths(
-			_TEST_BASE_DIR_NAME,
-			new String[] {
-				"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
-				"**\\*.testcase"
-			});
+			_TEST_BASE_DIR_NAME, poshiFileNames);
 
 		_filePathsList.addAll(testBaseDirFilePaths);
 
-		String[] testIncludeDirNames = PropsValues.TEST_INCLUDE_DIR_NAMES;
+		String[] testIncludeDirNames = ArrayUtils.addAll(
+			PropsValues.TEST_INCLUDE_DIR_NAMES, PropsValues.TEST_SUBREPO_DIRS);
 
 		if (Validator.isNotNull(testIncludeDirNames)) {
 			for (String testIncludeDirName : testIncludeDirNames) {
@@ -977,11 +980,7 @@ public class PoshiRunnerContext {
 				}
 
 				List<String> testIncludeDirFilePaths = _getFilePaths(
-					testIncludeDirName,
-					new String[] {
-						"**\\*.action", "**\\*.function", "**\\*.macro",
-						"**\\*.path"
-					});
+					testIncludeDirName, poshiFileNames);
 
 				_filePathsList.addAll(testIncludeDirFilePaths);
 			}

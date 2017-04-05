@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.oopsconsultancy</groupId>
+  <artifactId>xmltask</artifactId>
+  <version>1.16</version>
+
+  <name>OOPS Consultancy XmlTask</name>
+  <url>http://www.oopsconsultancy.com/software/xmltask/</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 1.1</name>
+      <url>http://www.apache.org/licenses/LICENSE-1.1.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+</project>

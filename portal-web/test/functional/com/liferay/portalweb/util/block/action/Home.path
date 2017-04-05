@@ -120,17 +120,12 @@
 </tr>
 <tr>
 	<td>STATUS_MESSAGE</td>
-	<td>//tr[1]/td</td>
+	<td>//div[contains(.,'This ${key_resource} is inactive. Please contact the administrator.')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ERROR_MESSAGE_EXPIRED_SESSION</td>
 	<td>//div[contains(@class,'liferayalert')]//div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ERROR_MESSAGE_ALERT_INFO</td>
-	<td>//div[contains(.,'This site is inactive. Please contact the administrator.')]</td>
 	<td></td>
 </tr>
 <tr>

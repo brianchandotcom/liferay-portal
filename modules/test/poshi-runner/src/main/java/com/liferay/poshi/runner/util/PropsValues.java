@@ -248,6 +248,9 @@ public class PropsValues {
 	public static final boolean TEST_SKIP_TEAR_DOWN = GetterUtil.getBoolean(
 		PropsUtil.get("test.skip.tear.down"));
 
+	public static final String[] TEST_SUBREPO_DIRS = StringUtil.split(
+		PropsUtil.get("test.subrepo.dirs"));
+
 	public static final String[] TEST_TOGGLE_FILE_NAMES = StringUtil.split(
 		PropsUtil.get("test.toggle.file.names"));
 

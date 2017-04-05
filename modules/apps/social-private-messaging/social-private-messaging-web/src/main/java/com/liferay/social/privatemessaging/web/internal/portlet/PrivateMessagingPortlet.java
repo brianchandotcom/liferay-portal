@@ -17,13 +17,13 @@ package com.liferay.social.privatemessaging.web.internal.portlet;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
-import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -57,7 +57,6 @@ import com.liferay.social.privatemessaging.constants.PrivateMessagingPortletKeys
 import com.liferay.social.privatemessaging.service.UserThreadLocalService;
 import com.liferay.social.privatemessaging.util.PrivateMessagingUtil;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -417,43 +416,9 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 	protected void validateAttachment(String fileName, InputStream inputStream)
 		throws Exception {
 
-		if (inputStream instanceof ByteArrayFileInputStream) {
-			ByteArrayFileInputStream byteArrayFileInputStream =
-				(ByteArrayFileInputStream)inputStream;
-
-			File file = byteArrayFileInputStream.getFile();
-
-			if ((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-				((file == null) ||
-				 (file.length() >
-					 PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
-
-				throw new FileSizeException(fileName);
-			}
-		}
-
-		if (!isValidName(fileName)) {
-			throw new FileNameException(fileName);
-		}
-
-		String[] fileExtensions = PrefsPropsUtil.getStringArray(
-			PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
-
-		boolean validFileExtension = false;
-
-		for (String fileExtension : fileExtensions) {
-			if (StringPool.STAR.equals(fileExtension) ||
-				StringUtil.endsWith(fileName, fileExtension)) {
-
-				validFileExtension = true;
-
-				break;
-			}
-		}
-
-		if (!validFileExtension) {
-			throw new FileExtensionException(fileName);
-		}
+		_dlValidator.validateFileSize(fileName, inputStream);
+		_dlValidator.validateFileName(fileName);
+		_dlValidator.validateFileExtension(fileName);
 	}
 
 	protected void validateTo(String to, ThemeDisplay themeDisplay)
@@ -519,6 +484,9 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PrivateMessagingPortlet.class);
+
+	@Reference
+	private DLValidator _dlValidator;
 
 	@Reference
 	private MBMessageLocalService _mBMessageLocalService;

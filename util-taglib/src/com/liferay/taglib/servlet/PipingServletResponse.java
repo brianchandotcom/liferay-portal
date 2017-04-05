@@ -18,8 +18,11 @@ import com.liferay.portal.kernel.io.WriterOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletOutputStreamAdapter;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -49,6 +52,15 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 			// Unable to unwrap page context with pushed body
 
 			return new PipingServletResponse(httpServletResponse, jspWriter);
+		}
+
+		if (!ServerDetector.isTomcat()) {
+			try {
+				jspWriter.flush();
+			}
+			catch (IOException ioe) {
+				ReflectionUtil.throwException(ioe);
+			}
 		}
 
 		return httpServletResponse;

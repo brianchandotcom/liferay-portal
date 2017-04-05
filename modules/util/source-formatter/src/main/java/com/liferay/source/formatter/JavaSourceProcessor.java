@@ -59,6 +59,7 @@ import com.liferay.source.formatter.checks.JavaRedundantConstructorCheck;
 import com.liferay.source.formatter.checks.JavaResultSetCheck;
 import com.liferay.source.formatter.checks.JavaSeeAnnotationCheck;
 import com.liferay.source.formatter.checks.JavaSignatureStylingCheck;
+import com.liferay.source.formatter.checks.JavaStaticBlockCheck;
 import com.liferay.source.formatter.checks.JavaStopWatchCheck;
 import com.liferay.source.formatter.checks.JavaStylingCheck;
 import com.liferay.source.formatter.checks.JavaSystemEventAnnotationCheck;
@@ -75,7 +76,6 @@ import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.SessionKeysCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
-import com.liferay.source.formatter.checks.StaticBlockCheck;
 import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
 import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
@@ -718,7 +718,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JavaTermDividersCheck());
 
 		_sourceChecks.add(
-			new StaticBlockCheck(getExcludes(_JAVATERM_SORT_EXCLUDES)));
+			new JavaStaticBlockCheck(getExcludes(_JAVATERM_SORT_EXCLUDES)));
 
 		_sourceChecks.add(new JavaConstructorParameterOrder());
 		_sourceChecks.add(new JavaConstructorSuperCallCheck());

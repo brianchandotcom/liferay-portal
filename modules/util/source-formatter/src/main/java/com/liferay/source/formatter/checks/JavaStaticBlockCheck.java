@@ -26,9 +26,9 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class StaticBlockCheck extends BaseJavaTermCheck {
+public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 
-	public StaticBlockCheck(List<String> excludes) {
+	public JavaStaticBlockCheck(List<String> excludes) {
 		_excludes = excludes;
 	}
 

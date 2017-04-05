@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.exportimport.web.trash;
+package com.liferay.exportimport.web.internal.trash;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.exportimport.web.trash.ExportImportConfigurationTrashRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;

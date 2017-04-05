@@ -80,6 +80,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String INIT_BUNDLE_TASK_NAME = "initBundle";
 
+	/**
+	 * @deprecated As of 1.4.0, replaced by {@link
+	 *             #RootProjectConfigurator(Settings)}
+	 */
+	@Deprecated
+	public RootProjectConfigurator() {
+	}
+
 	public RootProjectConfigurator(Settings settings) {
 		_defaultRepositoryEnabled = GradleUtil.getProperty(
 			settings,

@@ -54,6 +54,7 @@ public class WorkspaceExtension {
 		_configsDir = _getProperty(settings, "configs.dir", _CONFIGS_DIR);
 		_environment = _getProperty(settings, "environment", _ENVIRONMENT);
 		_homeDir = _getProperty(settings, "home.dir", _HOME_DIR);
+		_rootProjectConfigurator = new RootProjectConfigurator(settings);
 	}
 
 	public String getBundleDistRootDirName() {
@@ -141,7 +142,6 @@ public class WorkspaceExtension {
 	private Object _homeDir;
 	private final Set<ProjectConfigurator> _projectConfigurators =
 		new HashSet<>();
-	private final Plugin<Project> _rootProjectConfigurator =
-		new RootProjectConfigurator();
+	private final Plugin<Project> _rootProjectConfigurator;
 
 }

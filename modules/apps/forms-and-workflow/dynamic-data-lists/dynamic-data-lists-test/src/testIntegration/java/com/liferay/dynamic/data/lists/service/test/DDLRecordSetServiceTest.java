@@ -33,14 +33,21 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.AfterClass;
@@ -135,6 +142,132 @@ public class DDLRecordSetServiceTest {
 				ddlRecordSet.getRecordSetId());
 
 		Assert.assertEquals(0, actualCount);
+	}
+
+	@Test
+	public void testDraftVersionCombinedWithApprovedVersion() throws Exception {
+		DDMForm ddmStructureDDMForm = DDMFormTestUtil.createDDMForm("Field");
+
+		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
+			ddmStructureDDMForm, StorageType.JSON.toString());
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.US, RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAttribute("status", WorkflowConstants.STATUS_DRAFT);
+
+		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.addRecordSet(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			ddmStructure.getStructureId(), null, nameMap, null,
+			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
+			DDLRecordSetConstants.SCOPE_FORMS, serviceContext);
+
+		long recordSetId = recordSet.getRecordSetId();
+
+		DDLRecordSetVersion recordSetVersion = recordSet.getRecordSetVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, recordSetVersion.getStatus());
+		Assert.assertEquals(
+			recordSet.getVersion(), recordSetVersion.getVersion());
+
+		serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		recordSet = DDLRecordSetLocalServiceUtil.updateRecordSet(
+			recordSetId, ddmStructure.getStructureId(), nameMap, null,
+			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
+
+		recordSetVersion = recordSet.getRecordSetVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, recordSetVersion.getStatus());
+		Assert.assertEquals(
+			recordSet.getVersion(), recordSetVersion.getVersion());
+
+		List<DDLRecordSetVersion> recordSetVersions =
+			DDLRecordSetVersionLocalServiceUtil.getRecordSetVersions(
+				recordSetId);
+
+		Assert.assertEquals(
+			recordSetVersions.toString(), 2, recordSetVersions.size());
+
+		serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		serviceContext.setAttribute("status", WorkflowConstants.STATUS_DRAFT);
+
+		recordSet = DDLRecordSetLocalServiceUtil.updateRecordSet(
+			recordSetId, ddmStructure.getStructureId(), nameMap, null,
+			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
+
+		recordSetVersion = recordSet.getRecordSetVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, recordSetVersion.getStatus());
+		Assert.assertEquals(
+			recordSet.getVersion(), recordSetVersion.getVersion());
+
+		recordSetVersions =
+			DDLRecordSetVersionLocalServiceUtil.getRecordSetVersions(
+				recordSetId);
+
+		Assert.assertEquals(
+			recordSetVersions.toString(), 3, recordSetVersions.size());
+	}
+
+	@Test
+	public void testUpdateDraftVersion() throws Exception {
+		DDMForm ddmStructureDDMForm = DDMFormTestUtil.createDDMForm("Field");
+
+		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
+			ddmStructureDDMForm, StorageType.JSON.toString());
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.US, RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAttribute("status", WorkflowConstants.STATUS_DRAFT);
+
+		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.addRecordSet(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			ddmStructure.getStructureId(), null, nameMap, null,
+			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
+			DDLRecordSetConstants.SCOPE_FORMS, serviceContext);
+
+		long recordSetId = recordSet.getRecordSetId();
+
+		DDLRecordSetVersion recordSetVersion = recordSet.getRecordSetVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, recordSetVersion.getStatus());
+		Assert.assertEquals(
+			recordSet.getVersion(), recordSetVersion.getVersion());
+
+		recordSet = DDLRecordSetLocalServiceUtil.updateRecordSet(
+			recordSetId, ddmStructure.getStructureId(), nameMap, null,
+			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
+
+		recordSetVersion = recordSet.getRecordSetVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, recordSetVersion.getStatus());
+		Assert.assertEquals(
+			recordSet.getVersion(), recordSetVersion.getVersion());
+
+		List<DDLRecordSetVersion> recordSetVersions =
+			DDLRecordSetVersionLocalServiceUtil.getRecordSetVersions(
+				recordSetId);
+
+		Assert.assertEquals(
+			recordSetVersions.toString(), 1, recordSetVersions.size());
 	}
 
 	@Test

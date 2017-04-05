@@ -21,13 +21,22 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -59,12 +68,19 @@ public class SaveRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 
 		Map<String, Object> response = new HashMap<>();
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
 		try {
 			DDLRecordSet recordSet = saveRecordSetInTransaction(
 				resourceRequest, resourceResponse);
 
 			response.put("ddmStructureId", recordSet.getDDMStructureId());
-			response.put("modifiedDate", recordSet.getModifiedDate());
+			response.put(
+				"modifiedDate",
+				formatDate(recordSet.getModifiedDate(), locale));
 			response.put("recordSetId", recordSet.getRecordSetId());
 		}
 		catch (Throwable t) {
@@ -79,6 +95,18 @@ public class SaveRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 
 		PortletResponseUtil.write(
 			resourceResponse, jsonSerializer.serializeDeep(response));
+	}
+
+	protected String formatDate(Date date, Locale locale) {
+		DateTimeFormatter dateTimeFormatter =
+			DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+
+		dateTimeFormatter = dateTimeFormatter.withLocale(locale);
+
+		LocalDateTime localDateTime = LocalDateTime.ofInstant(
+			date.toInstant(), ZoneId.systemDefault());
+
+		return dateTimeFormatter.format(localDateTime);
 	}
 
 	protected DDLRecordSet saveRecordSetInTransaction(

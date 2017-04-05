@@ -209,7 +209,9 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="publishRecordSet" var="publishRecordSetURL" />
 
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="saveRecordSet" var="saveRecordSetURL" />
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="saveRecordSet" var="autoSaveRecordSetURL">
+			<portlet:param name="autoSave" value="true" />
+		</liferay-portlet:resourceURL>
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getDataProviderInstances" var="getDataProviderInstancesURL" />
 
@@ -252,7 +254,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 										{
 											availableLanguageIds: definition.availableLanguageIds,
 											autosaveInterval: '<%= ddlFormAdminDisplayContext.getAutosaveInterval() %>',
-											autosaveURL: '<%= saveRecordSetURL.toString() %>',
+											autosaveURL: '<%= autoSaveRecordSetURL.toString() %>',
 											defaultLanguageId: definition.defaultLanguageId,
 											definition: definition,
 											description: '<%= HtmlUtil.escapeJS(description) %>',

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -139,6 +140,11 @@ public class SaveRecordSetMVCCommandHelper {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), portletRequest);
+
+		if (ParamUtil.getBoolean(portletRequest, "autoSave")) {
+			serviceContext.setAttribute(
+				"status", WorkflowConstants.STATUS_DRAFT);
+		}
 
 		return ddlRecordSetService.addRecordSet(
 			groupId, ddmStructureId, recordSetKey, nameMap, descriptionMap,
@@ -314,6 +320,11 @@ public class SaveRecordSetMVCCommandHelper {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), portletRequest);
+
+		if (ParamUtil.getBoolean(portletRequest, "autoSave")) {
+			serviceContext.setAttribute(
+				"status", WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
 
 		return ddlRecordSetService.updateRecordSet(
 			recordSetId, ddmStructureId,

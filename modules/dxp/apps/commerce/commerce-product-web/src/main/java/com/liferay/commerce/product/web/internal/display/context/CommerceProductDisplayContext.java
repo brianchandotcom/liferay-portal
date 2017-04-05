@@ -16,6 +16,7 @@ package com.liferay.commerce.product.web.internal.display.context;
 
 import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.service.CommerceProductDefinitionLocalService;
+import com.liferay.commerce.product.web.internal.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.web.internal.constants.CommerceProductWebKeys;
 import com.liferay.commerce.product.web.internal.display.context.util.CommerceProductDefinitionRequestHelper;
 import com.liferay.commerce.product.web.internal.util.CommerceProductDefinitionsPortletUtil;
@@ -110,6 +111,34 @@ public class CommerceProductDisplayContext {
 			"commerceProductDefinitionId");
 	}
 
+	public String getDDMStructureKey() {
+		if (_ddmStructureKey != null) {
+			return _ddmStructureKey;
+		}
+
+		_ddmStructureKey = ParamUtil.getString(_request, "ddmStructureKey");
+
+		return _ddmStructureKey;
+	}
+
+	public String getDisplayStyle() {
+		if (_displayStyle == null) {
+			_displayStyle = getDisplayStyle(_request, _portalPreferences);
+		}
+
+		return _displayStyle;
+	}
+
+	public String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
+	}
+
 	public String getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
@@ -162,6 +191,12 @@ public class CommerceProductDisplayContext {
 
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		String displayStyle = ParamUtil.getString(_request, "displayStyle");
+
+		if (Validator.isNotNull(displayStyle)) {
+			portletURL.setParameter("displayStyle", getDisplayStyle());
+		}
 
 		return portletURL;
 	}
@@ -241,11 +276,56 @@ public class CommerceProductDisplayContext {
 		return _status;
 	}
 
+	public boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowInfoPanel() {
+		if (Validator.isNotNull(getDDMStructureKey())) {
+			return false;
+		}
+
+		if (isSearch()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	protected String getDisplayStyle(
+		HttpServletRequest request, PortalPreferences portalPreferences) {
+
+		String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = portalPreferences.getValue(
+					CommerceProductPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
+					"display-style", "list");
+		}
+		else {
+			portalPreferences.setValue(
+					CommerceProductPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
+					"display-style", displayStyle);
+
+			request.setAttribute(
+				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+		}
+
+		return displayStyle;
+	}
+
 	private CommerceProductDefinition _commerceProductDefinition;
 	private final CommerceProductDefinitionLocalService
 		_commerceProductDefinitionLocalService;
 	private final CommerceProductDefinitionRequestHelper
 		_commerceProductDefinitionRequestHelper;
+	private String _ddmStructureKey;
+	private String _displayStyle;
+	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;

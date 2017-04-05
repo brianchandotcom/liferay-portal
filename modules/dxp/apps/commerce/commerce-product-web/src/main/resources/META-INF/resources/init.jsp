@@ -22,23 +22,28 @@
 <%@taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.product.exception.NoSuchProductDefinitionException" %><%@
 page import="com.liferay.commerce.product.model.CommerceProductDefinition" %><%@
-page import="com.liferay.commerce.product.web.internal.constants.CommerceProductPortletKeys" %><%@
 page import="com.liferay.commerce.product.web.internal.constants.CommerceProductWebKeys" %><%@
 page import="com.liferay.commerce.product.web.internal.display.context.CommerceProductDisplayContext" %><%@
 page import="com.liferay.commerce.product.web.internal.servlet.taglib.ui.FormNavigatorConstants" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.*" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
+
+<%@ page import="java.text.Format" %>
+
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Date" %><%@
+page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
@@ -49,7 +54,5 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <portlet:defineObjects />
 
 <%
-CommerceProductDisplayContext commerceProductDisplayContext = (CommerceProductDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
+Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

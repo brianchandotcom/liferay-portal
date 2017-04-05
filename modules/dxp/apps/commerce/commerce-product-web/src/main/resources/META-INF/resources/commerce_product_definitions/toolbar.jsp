@@ -1,20 +1,48 @@
-<liferay-portlet:renderURL varImpl="viewProductsURL">
-	<portlet:param name="toolbarItem" value="view-all-product-definitions" />
-	<portlet:param name="jspPage" value="/commerce_product_definitions/view.jsp" />
-</liferay-portlet:renderURL>
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item
-			href="<%= viewProductsURL.toString() %>"
-			label="Catalog"
-			selected='<%= toolbarItem.equals("view-all-product-definitions") %>'
+<%@ include file="/commerce_product_definitions/init.jsp" %>
+
+<%
+String searchContainerId = ParamUtil.getString(request, "searchContainerId", "commerceProductDefinitions");
+%>
+
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="<%= searchContainerId %>"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= commerceProductDisplayContext.getPortletURL() %>"
+			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= commerceProductDisplayContext.getOrderByCol() %>"
+				orderByType="<%= commerceProductDisplayContext.getOrderByType() %>"
+				orderColumns='<%= new String[] {"create-date", "display-date"} %>'
+				portletURL="<%= commerceProductDisplayContext.getPortletURL() %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= commerceProductDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= commerceProductDisplayContext.getDisplayStyle() %>"
 		/>
-	</aui:nav>
-
-	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-		<aui:nav-bar-search>
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:nav-bar-search>
-	</aui:form>
-</aui:nav-bar>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>

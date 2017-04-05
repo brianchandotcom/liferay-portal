@@ -17,121 +17,68 @@
 <%@ include file="/commerce_product_definitions/init.jsp" %>
 
 <%
-String searchContainerId = ParamUtil.getString(request, "searchContainerId", "commerceProductDefinitions");
-
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-definitions");
 
 SearchContainer productDefinitionSearchContainer = commerceProductDisplayContext.getSearchContainer();
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(CommerceProductPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, "display-style", "list");
-}
-else {
-	portalPreferences.setValue(CommerceProductPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, "display-style", displayStyle);
-
-	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-}
+String displayStyle = commerceProductDisplayContext.getDisplayStyle();
 
 PortletURL portletURL = commerceProductDisplayContext.getPortletURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("searchContainerId", searchContainerId);
+portletURL.setParameter("searchContainerId", "commerceProductDefinitions");
 portletURL.setParameter("jspPage", "/commerce_product_definitions/view.jsp");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<%@ include file="/commerce_product_definitions/toolbar.jspf" %>
+<liferay-portlet:renderURL varImpl="viewProductsURL">
+	<portlet:param name="toolbarItem" value="view-all-product-definitions" />
+	<portlet:param name="jspPage" value="/commerce_product_definitions/view.jsp" />
+</liferay-portlet:renderURL>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="<%= searchContainerId %>"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= productDefinitionSearchContainer.getOrderByCol() %>"
-				orderByType="<%= productDefinitionSearchContainer.getOrderByType() %>"
-				orderColumns='<%= new String[] {"create-date", "display-date"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			/>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item
+			href="<%= viewProductsURL.toString() %>"
+			label="Catalog"
+			selected='<%= toolbarItem.equals("view-all-product-definitions") %>'
 		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+	</aui:nav>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<liferay-ui:search-container
-		emptyResultsMessage="no-product-was-found"
-		id="<%= searchContainerId %>"
-		searchContainer="<%= productDefinitionSearchContainer %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.commerce.product.model.CommerceProductDefinition"
-			escapedModel="<%= true %>"
-			keyProperty="commerceProductDefinitionId"
-			modelVar="commerceProductDefinition"
-		>
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="product-name"
+	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+		<aui:nav-bar-search>
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:nav-bar-search>
+	</aui:form>
+</aui:nav-bar>
+
+<liferay-util:include page="/commerce_product_definitions/toolbar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchContainerId" value="commerceProductDefinitions" />
+</liferay-util:include>
+
+<div id="<portlet:namespace />journalContainer">
+	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+		<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+			<liferay-ui:search-container
+				emptyResultsMessage="no-product-was-found"
+				id="commerceProductDefinitions"
+				searchContainer="<%= productDefinitionSearchContainer %>"
 			>
-				<%= commerceProductDefinition.getTitle(themeDisplay.getLocale()) %>
-			</liferay-ui:search-container-column-text>
+				<liferay-ui:search-container-row
+					className="com.liferay.commerce.product.model.CommerceProductDefinition"
+					escapedModel="<%= true %>"
+					keyProperty="commerceProductDefinitionId"
+					modelVar="commerceProductDefinition"
+				>
+					<%@ include file="/commerce_product_definitions/search_columns.jspf" %>
+				</liferay-ui:search-container-row>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-
-				name="type"
-				property="productTypeName"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-
-				name="SKU"
-				property="baseSKU"
-			/>
-
-			<liferay-ui:search-container-column-status
-				cssClass="table-cell-content"
-				name="status"
-				status="<%= commerceProductDisplayContext.getStatus() %>"
-			/>
-
-			<liferay-ui:search-container-column-date
-				cssClass="table-cell-content"
-				name="modified-date"
-				property="modifiedDate"
-			/>
-
-			<liferay-ui:search-container-column-date
-				cssClass="table-cell-content"
-				name="display-date"
-				property="displayDate"
-			/>
-
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/commerce_product_definitions/product_definition_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator markupView="lexicon" />
-	</liferay-ui:search-container>
-</aui:form>
+				<liferay-ui:search-iterator markupView="lexicon" />
+			</liferay-ui:search-container>
+		</aui:form>
+	</div>
+</div>
 
 <liferay-portlet:renderURL var="editProductDefinitionURL">
 	<portlet:param name="mvcRenderCommandName" value="/commerce_product_definitions/edit_product_definition" />

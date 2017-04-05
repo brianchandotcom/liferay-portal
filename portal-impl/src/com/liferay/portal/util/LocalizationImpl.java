@@ -14,8 +14,6 @@
 
 package com.liferay.portal.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -75,7 +73,6 @@ import org.apache.commons.collections.map.ReferenceMap;
  * @author Connor McKay
  */
 @DoPrivileged
-@ProviderType
 public class LocalizationImpl implements Localization {
 
 	@Override

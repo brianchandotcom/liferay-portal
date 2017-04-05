@@ -1047,13 +1047,16 @@ public class Entity {
 				localizationFinderName, _name.concat("Localization"), true,
 				null, true, findByPKLanguageIdColumns));
 
+		String persistenceClass = StringUtil.replace(
+			_persistenceClass, "PersistenceImpl",
+			"LocalizationPersistenceImpl");
+
 		_localizationEntity = new LocalizationEntity(
 			_packagePath, _apiPackagePath, _portletName, _portletShortName,
 			_name.concat("Localization"), _humanName.concat(" localization"),
 			_table.concat("Localization"), _alias.concat("Localization"),
-			_persistenceClass.concat("Localization"), _dataSource,
-			_sessionFactory, _txManager, _cacheEnabled, _dynamicUpdateEnabled,
-			_mvccEnabled, _deprecated,
+			persistenceClass, _dataSource, _sessionFactory, _txManager,
+			_cacheEnabled, _dynamicUpdateEnabled, _mvccEnabled, _deprecated,
 			Collections.singletonList(entityLocalizationIDColumn),
 			regularColList, Collections.<EntityColumn>emptyList(),
 			Collections.<EntityColumn>emptyList(), columnList, finderList,

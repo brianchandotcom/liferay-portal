@@ -140,14 +140,31 @@ public class GitWorkingDirectory {
 			}
 		}
 
+		Process process = null;
+
 		try {
-			JenkinsResultsParserUtil.executeBashCommands(
+			process = JenkinsResultsParserUtil.executeBashCommands(
 				true, _workingDirectory,
 				JenkinsResultsParserUtil.combine(
 					"git remote add ", remoteName, " ", remoteURL));
 		}
 		catch (InterruptedException | IOException e) {
 			throw new RuntimeException("Unable to add remote " + remoteName, e);
+		}
+
+		if ((process != null) && (process.exitValue() != 0)) {
+			try {
+				System.out.println(
+					JenkinsResultsParserUtil.readInputStream(
+						process.getErrorStream()));
+			}
+			catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to add remote ", remoteName));
 		}
 
 		_remoteConfigs = null;
@@ -164,8 +181,19 @@ public class GitWorkingDirectory {
 
 		String currentBranchName = getCurrentBranch();
 
+		List<String> localBranchNames = getLocalBranchNames();
+
+		if (!localBranchNames.contains(branchName)) {
+			throw new IllegalArgumentException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to checkout ", branchName,
+					" because it does not exist"));
+		}
+
 		if (currentBranchName.equals(branchName)) {
 			System.out.println(branchName + " is already checked out");
+
+			return;
 		}
 
 		System.out.println(
@@ -186,13 +214,30 @@ public class GitWorkingDirectory {
 
 		sb.append(branchName);
 
+		Process process = null;
+
 		try {
-			JenkinsResultsParserUtil.executeBashCommands(
+			process = JenkinsResultsParserUtil.executeBashCommands(
 				true, _workingDirectory, sb.toString());
 		}
 		catch (InterruptedException | IOException e) {
 			throw new RuntimeException(
 				"Unable to checkout branch " + branchName, e);
+		}
+
+		if ((process != null) && (process.exitValue() != 0)) {
+			try {
+				System.out.println(
+					JenkinsResultsParserUtil.readInputStream(
+						process.getErrorStream()));
+			}
+			catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to checkout branch ", branchName));
 		}
 
 		int timeout = 0;
@@ -476,6 +521,17 @@ public class GitWorkingDirectory {
 			Process process = JenkinsResultsParserUtil.executeBashCommands(
 				command);
 
+			if (process.exitValue() != 0) {
+				System.out.println(
+					JenkinsResultsParserUtil.readInputStream(
+						process.getErrorStream()));
+
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to get branch sha for ", branchName, " on ",
+						getRemoteURL(remoteConfig)));
+			}
+
 			String output = JenkinsResultsParserUtil.readInputStream(
 				process.getInputStream());
 
@@ -709,8 +765,10 @@ public class GitWorkingDirectory {
 			JenkinsResultsParserUtil.combine(
 				"Rebasing ", getCurrentBranch(), " to ", sourceBranchName));
 
+		Process process = null;
+
 		try {
-			JenkinsResultsParserUtil.executeBashCommands(
+			process = JenkinsResultsParserUtil.executeBashCommands(
 				true, getWorkingDirectory(), rebaseCommand);
 		}
 		catch (Exception e) {
@@ -719,6 +777,22 @@ public class GitWorkingDirectory {
 					"Unable to rebase ", targetBranchName, " to ",
 					sourceBranchName),
 				e);
+		}
+
+		if ((process != null) && (process.exitValue() != 0)) {
+			try {
+				System.out.println(
+					JenkinsResultsParserUtil.readInputStream(
+						process.getErrorStream()));
+			}
+			catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to rebase", targetBranchName, " to ",
+					sourceBranchName));
 		}
 
 		RepositoryState repositoryState = _repository.getRepositoryState();
@@ -773,14 +847,31 @@ public class GitWorkingDirectory {
 
 			System.out.println("Removing remote " + remoteConfig.getName());
 
+			Process process = null;
+
 			try {
-				JenkinsResultsParserUtil.executeBashCommands(
+				process = JenkinsResultsParserUtil.executeBashCommands(
 					true, _workingDirectory,
 					"git remote remove " + remoteConfig.getName());
 			}
 			catch (InterruptedException | IOException e) {
 				throw new RuntimeException(
 					"Unable to remove remote " + remoteConfig.getName(), e);
+			}
+
+			if ((process != null) && (process.exitValue() != 0)) {
+				try {
+					System.out.println(
+						JenkinsResultsParserUtil.readInputStream(
+							process.getErrorStream()));
+				}
+				catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to remove remote", remoteConfig.getName()));
 			}
 
 			if (_remoteConfigs.contains(remoteConfig)) {

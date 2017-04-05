@@ -1062,7 +1062,6 @@ public class Entity {
 		_localizationEntity.setLocalizationFinderName(localizationFinderName);
 
 		_localizationEntity.setPrimaryEntityName(primaryEntityName);
-		_localizationEntity.setPrimaryEntityVarName(primaryEntityVarName);
 
 		return _localizationEntity;
 	}

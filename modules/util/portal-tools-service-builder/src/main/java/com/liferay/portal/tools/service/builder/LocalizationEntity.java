@@ -54,10 +54,6 @@ public class LocalizationEntity extends Entity {
 		return _primaryEntityName;
 	}
 
-	public String getPrimaryEntityVarName() {
-		return _primaryEntityVarName;
-	}
-
 	public void setLocalizationFinderName(String localizationFinderName) {
 		_localizationFinderName = localizationFinderName;
 	}
@@ -66,12 +62,7 @@ public class LocalizationEntity extends Entity {
 		_primaryEntityName = primaryEntityName;
 	}
 
-	public void setPrimaryEntityVarName(String primaryEntityVarName) {
-		_primaryEntityVarName = primaryEntityVarName;
-	}
-
 	private String _localizationFinderName;
 	private String _primaryEntityName;
-	private String _primaryEntityVarName;
 
 }

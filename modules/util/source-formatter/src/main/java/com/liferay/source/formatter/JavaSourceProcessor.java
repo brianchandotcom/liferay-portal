@@ -727,7 +727,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource || subrepository) {
 			_sourceChecks.add(new JavaCleanUpMethodVariablesCheck());
-			_sourceChecks.add(new JavaTestMethodAnnotationsCheck());
+			_sourceChecks.add(
+				new JavaTestMethodAnnotationsCheck(
+					getExcludes(_TEST_ANNOTATIONS_EXCLUDES)));
 		}
 	}
 

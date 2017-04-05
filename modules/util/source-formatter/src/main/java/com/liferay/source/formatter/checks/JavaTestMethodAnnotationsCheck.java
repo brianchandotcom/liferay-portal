@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,12 +26,18 @@ import java.util.regex.Pattern;
  */
 public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 
+	public JavaTestMethodAnnotationsCheck(List<String> excludes) {
+		_excludes = excludes;
+	}
+
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		if (!fileName.endsWith("Test.java")) {
+		if (!fileName.endsWith("Test.java") ||
+			isExcludedPath(_excludes, absolutePath)) {
+
 			return javaTerm.getContent();
 		}
 
@@ -94,5 +101,7 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 					"', see LPS-36303");
 		}
 	}
+
+	private final List<String> _excludes;
 
 }

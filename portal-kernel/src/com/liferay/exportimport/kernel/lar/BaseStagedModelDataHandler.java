@@ -422,7 +422,11 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			throw pde;
 		}
 		catch (Exception e) {
-			throw new PortletDataException(e);
+			PortletDataException pde = new PortletDataException(e);
+
+			pde.setStagedModel(stagedModel);
+
+			throw pde;
 		}
 	}
 

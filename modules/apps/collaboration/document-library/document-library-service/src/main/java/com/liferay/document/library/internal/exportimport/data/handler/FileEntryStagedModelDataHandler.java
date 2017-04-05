@@ -883,8 +883,12 @@ public class FileEntryStagedModelDataHandler
 				!ArrayUtil.contains(
 					getExportableStatuses(), fileVersion.getStatus())) {
 
-				throw new PortletDataException(
+				PortletDataException pde = new PortletDataException(
 					PortletDataException.STATUS_UNAVAILABLE);
+
+				pde.setStagedModel(fileVersion);
+
+				throw pde;
 			}
 		}
 		catch (PortletDataException pde) {

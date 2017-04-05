@@ -28,8 +28,7 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
 		if (!consoleOutput.contains(_REBASE_END_STRING) ||
-			!consoleOutput.contains(_REBASE_START_STRING) ||
-			!consoleOutput.contains("CONFLICT")) {
+			!consoleOutput.contains(_REBASE_START_STRING)) {
 
 			return null;
 		}
@@ -94,7 +93,6 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 	private static final String _REBASE_END_STRING = "Aborting rebase ABORT";
 
-	private static final String _REBASE_START_STRING =
-		"[beanshell] Rebasing cache-";
+	private static final String _REBASE_START_STRING = "Unable to rebase.";
 
 }

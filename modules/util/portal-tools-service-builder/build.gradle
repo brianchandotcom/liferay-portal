@@ -41,6 +41,16 @@ liferay {
 }
 
 processResources {
+	from {
+		File portalImplJarFile = configurations.provided.find {
+			it.name.startsWith "com.liferay.portal.impl-"
+		}
+
+		zipTree(portalImplJarFile)
+	} {
+		include "META-INF/portal-model-hints.xml"
+	}
+
 	into("com/liferay/blogs") {
 		from "../../../modules/apps/collaboration/blogs/blogs-service/service.xml"
 	}

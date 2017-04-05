@@ -6661,6 +6661,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="test.subrepo.dirs" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.subrepo.dirs=${test.subrepo.dirs}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<contains string="${test.class}" substring="," />
 			<then>
 				<propertyregex

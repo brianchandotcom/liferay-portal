@@ -267,7 +267,9 @@
 			<var name="url" value="http://www.able.com:8080" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#STATUS_MESSAGE" value1="This instance is inactive. Please contact the administrator." />
+		<execute macro="Page#viewInactiveRequestMessage">
+			<var name="resource" value="instance" />
+		</execute>
 	</command>
 
 	<command name="ViewVirtualHostPrivateSitePage" priority="4">

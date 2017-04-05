@@ -1611,11 +1611,11 @@ app.server.type=@{app.server.type}]]></echo>
 	</target>
 
 	<target name="functional-smoke-weblogic121-mysql56-jdk8">
-		<run-functional-test app.server.type="weblogic" database.type="mysql" test.portal.log.assert="true" />
+		<run-functional-test app.server.type="weblogic" database.type="mysql" test.portal.log.assert="false" />
 	</target>
 
 	<target name="functional-smoke-websphere85-mysql56-jdk8">
-		<run-functional-test app.server.type="websphere" database.type="mysql" test.portal.log.assert="true" />
+		<run-functional-test app.server.type="websphere" database.type="mysql" test.portal.log.assert="false" />
 	</target>
 
 	<target name="functional-smoke-wildfly100-mariadb100-jdk8">

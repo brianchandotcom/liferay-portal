@@ -24,10 +24,6 @@ import java.util.List;
  */
 public class LocalizationEntity extends Entity {
 
-	public LocalizationEntity(String name) {
-		super(name);
-	}
-
 	public LocalizationEntity(
 		String packagePath, String apiPackagePath, String portletName,
 		String portletShortName, String name, String humanName, String table,

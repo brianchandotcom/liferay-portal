@@ -19,10 +19,6 @@ package com.liferay.portal.tools.service.builder;
  */
 public class LocalizationColumn extends EntityColumn {
 
-	public LocalizationColumn(String name) {
-		this(name, null);
-	}
-
 	public LocalizationColumn(String name, String dbName) {
 		super(
 			name, dbName, "String", false, false, false, null, null, null, null,

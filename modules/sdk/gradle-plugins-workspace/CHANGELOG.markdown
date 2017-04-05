@@ -92,6 +92,16 @@ the `liferay.workspace.modules.jsp.precompile.enabled` property in
 - [LPS-67573]: Move all properties available in the `gradle.liferayWorkspace`
 extension object into the public API.
 
+## 1.4.0 - 2017-04-05
+
+### Added
+- [LPS-71724]: Add the ability to download and upgrade the Plugins SDK
+directories by executing the `upgradePluginsSDK` task in the root project.
+- [LPS-71724]: Add the [Liferay CDN](https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public)
+as default repository in the root project. This behavior can be disabled by
+setting the `liferay.workspace.default.repository.enabled` property in
+`gradle.properties` to `false`.
+
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
@@ -112,3 +122,4 @@ extension object into the public API.
 [LPS-70362]: https://issues.liferay.com/browse/LPS-70362
 [LPS-70515]: https://issues.liferay.com/browse/LPS-70515
 [LPS-70677]: https://issues.liferay.com/browse/LPS-70677
+[LPS-71724]: https://issues.liferay.com/browse/LPS-71724

@@ -1,0 +1,25 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn upgradePluginsSDK
+
+	doLast {
+		for (String generatedDirName : ["pluginsBar", "pluginsFoo"]) {
+			File generatedDir = file(generatedDirName)
+
+			assert generatedDir.exists()
+
+			generatedDir.eachDirRecurse {
+				assert it.listFiles()
+			}
+		}
+
+		File extraFile = file("pluginsBar/hello-world.txt")
+
+		assert extraFile.exists()
+
+		File upgradedFile = file("pluginsBar/build.properties")
+
+		assert upgradedFile.text.normalize() != "Hello World"
+	}
+}

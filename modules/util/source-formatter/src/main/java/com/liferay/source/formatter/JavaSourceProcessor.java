@@ -28,7 +28,10 @@ import com.liferay.source.formatter.checks.CopyrightCheck;
 import com.liferay.source.formatter.checks.JavaAnnotationsCheck;
 import com.liferay.source.formatter.checks.JavaAssertEqualsCheck;
 import com.liferay.source.formatter.checks.JavaBooleanUsageCheck;
+import com.liferay.source.formatter.checks.JavaCleanUpMethodVariablesCheck;
 import com.liferay.source.formatter.checks.JavaCombineLinesCheck;
+import com.liferay.source.formatter.checks.JavaConstructorParameterOrder;
+import com.liferay.source.formatter.checks.JavaConstructorSuperCallCheck;
 import com.liferay.source.formatter.checks.JavaDataAccessConnectionCheck;
 import com.liferay.source.formatter.checks.JavaDeprecatedJavadocCheck;
 import com.liferay.source.formatter.checks.JavaDeserializationSecurityCheck;
@@ -52,14 +55,17 @@ import com.liferay.source.formatter.checks.JavaModuleTestCheck;
 import com.liferay.source.formatter.checks.JavaOSGiReferenceCheck;
 import com.liferay.source.formatter.checks.JavaPackagePathCheck;
 import com.liferay.source.formatter.checks.JavaProcessCallableCheck;
+import com.liferay.source.formatter.checks.JavaRedundantConstructorCheck;
 import com.liferay.source.formatter.checks.JavaResultSetCheck;
 import com.liferay.source.formatter.checks.JavaSeeAnnotationCheck;
+import com.liferay.source.formatter.checks.JavaSignatureStylingCheck;
 import com.liferay.source.formatter.checks.JavaStopWatchCheck;
 import com.liferay.source.formatter.checks.JavaStylingCheck;
 import com.liferay.source.formatter.checks.JavaSystemEventAnnotationCheck;
 import com.liferay.source.formatter.checks.JavaSystemExceptionCheck;
 import com.liferay.source.formatter.checks.JavaTermDividersCheck;
 import com.liferay.source.formatter.checks.JavaTermOrderCheck;
+import com.liferay.source.formatter.checks.JavaTestMethodAnnotationsCheck;
 import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
 import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
 import com.liferay.source.formatter.checks.JavaWhitespaceCheck;
@@ -714,6 +720,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(
 			new StaticBlockCheck(getExcludes(_JAVATERM_SORT_EXCLUDES)));
 
+		_sourceChecks.add(new JavaConstructorParameterOrder());
+		_sourceChecks.add(new JavaConstructorSuperCallCheck());
+		_sourceChecks.add(new JavaRedundantConstructorCheck());
+		_sourceChecks.add(new JavaSignatureStylingCheck());
+
+		if (portalSource || subrepository) {
+			_sourceChecks.add(new JavaCleanUpMethodVariablesCheck());
+			_sourceChecks.add(new JavaTestMethodAnnotationsCheck());
+		}
 	}
 
 	private void _processCheckStyle() throws Exception {

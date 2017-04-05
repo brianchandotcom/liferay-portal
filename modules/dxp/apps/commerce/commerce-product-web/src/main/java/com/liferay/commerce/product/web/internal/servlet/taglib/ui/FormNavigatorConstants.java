@@ -24,6 +24,14 @@ public class FormNavigatorConstants {
 
 	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_IMAGES = "images";
 
+	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_MAPPINGS =
+		"mappings";
+
+	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_OPTIONS =
+		"options";
+
+	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_SKUS = "skus";
+
 	public static final String FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION =
 		"commerce.product.definition.form";
 

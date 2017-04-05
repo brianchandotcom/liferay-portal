@@ -207,7 +207,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				className, packagePath, file, fileName, absolutePath,
 				newContent, javaClassContent, javaClassLineCount,
 				StringPool.BLANK, _CHECK_JAVA_FIELD_TYPES_EXCLUDES,
-				_JAVATERM_SORT_EXCLUDES, _TEST_ANNOTATIONS_EXCLUDES);
+				_JAVATERM_SORT_EXCLUDES);
 		}
 
 		matcher = _anonymousClassPattern.matcher(newContent);
@@ -236,8 +236,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					StringPool.BLANK, StringPool.BLANK, file, fileName,
 					absolutePath, newContent, javaClassContent,
 					javaClassLineCount, matcher.group(1),
-					_CHECK_JAVA_FIELD_TYPES_EXCLUDES, _JAVATERM_SORT_EXCLUDES,
-					_TEST_ANNOTATIONS_EXCLUDES);
+					_CHECK_JAVA_FIELD_TYPES_EXCLUDES, _JAVATERM_SORT_EXCLUDES);
 
 				break;
 			}

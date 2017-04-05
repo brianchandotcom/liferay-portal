@@ -66,8 +66,7 @@ public class JavaClass {
 	public String formatJavaTerms(
 			Set<String> annotationsExclusions, Set<String> immutableFieldTypes,
 			String checkJavaFieldTypesExcludesProperty,
-			String javaTermSortExcludesProperty,
-			String testAnnotationsExcludesProperty)
+			String javaTermSortExcludesProperty)
 		throws Exception {
 
 		Set<JavaTerm> javaTerms = Collections.emptySet();
@@ -152,7 +151,7 @@ public class JavaClass {
 			String newInnerClassContent = innerClass.formatJavaTerms(
 				annotationsExclusions, immutableFieldTypes,
 				checkJavaFieldTypesExcludesProperty,
-				javaTermSortExcludesProperty, testAnnotationsExcludesProperty);
+				javaTermSortExcludesProperty);
 
 			if (!innerClassContent.equals(newInnerClassContent)) {
 				_classContent = StringUtil.replace(

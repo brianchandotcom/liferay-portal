@@ -15,7 +15,7 @@
 package com.liferay.portal.character.encoding.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.character.encoding.filter.CharacterEncodingFilter;
+import com.liferay.portal.character.encoding.test.filter.CharacterEncodingFilter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.StringPool;
 

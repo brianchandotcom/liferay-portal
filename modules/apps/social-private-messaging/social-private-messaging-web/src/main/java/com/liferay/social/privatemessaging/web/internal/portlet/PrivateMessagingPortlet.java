@@ -392,20 +392,6 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 		writeJSON(resourceRequest, resourceResponse, resultsJSONObject);
 	}
 
-	protected boolean isValidName(String name) {
-		if ((name == null) || name.contains("\\") || name.contains("\\\\") ||
-			name.contains("//") || name.contains(":") || name.contains("*") ||
-			name.contains("?") || name.contains("\"") || name.contains("<") ||
-			name.contains(">") || name.contains("|") || name.contains("[") ||
-			name.contains("]") || name.contains("../") ||
-			name.contains("/..")) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.social.privatemessaging.web)(release.schema.version=1.0.1))",
 		unbind = "-"

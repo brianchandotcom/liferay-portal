@@ -683,14 +683,9 @@ public class LocalGitSyncUtil {
 					cacheBranchName, true, senderBranchSHA);
 
 				if (pullRequest) {
-					if (!gitWorkingDirectory.rebase(
-							true, upstreamBranchSHA, cacheBranchName)) {
-
-						throw new RuntimeException("Rebase failed.");
-					}
+					gitWorkingDirectory.rebase(
+						true, upstreamBranchSHA, cacheBranchName);
 				}
-
-				gitWorkingDirectory.checkoutBranch(cacheBranchName);
 
 				cacheBranches(
 					gitWorkingDirectory, cacheBranchName, localGitRemoteConfigs,

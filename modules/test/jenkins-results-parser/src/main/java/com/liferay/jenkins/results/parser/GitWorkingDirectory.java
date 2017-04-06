@@ -762,7 +762,7 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public boolean rebase(
+	public void rebase(
 			boolean abortOnFail, String sourceBranchName,
 			String targetBranchName)
 		throws GitAPIException {
@@ -774,52 +774,40 @@ public class GitWorkingDirectory {
 			JenkinsResultsParserUtil.combine(
 				"Rebasing ", getCurrentBranch(), " to ", sourceBranchName));
 
-		Process process = null;
-
 		try {
-			process = JenkinsResultsParserUtil.executeBashCommands(
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
 				true, getWorkingDirectory(), rebaseCommand);
+
+			if ((process != null) && (process.exitValue() != 0)) {
+				try {
+					System.out.println(
+						JenkinsResultsParserUtil.readInputStream(
+							process.getErrorStream()));
+				}
+				catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+
+				throw new RuntimeException("Unable to rebase");
+			}
 		}
 		catch (Exception e) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to rebase ", targetBranchName, " to ",
-					sourceBranchName),
-				e);
-		}
+			RepositoryState repositoryState = _repository.getRepositoryState();
 
-		if ((process != null) && (process.exitValue() != 0)) {
 			try {
-				System.out.println(
-					JenkinsResultsParserUtil.readInputStream(
-						process.getErrorStream()));
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to rebase ", targetBranchName, " to ",
+						sourceBranchName, ". Repository is in the ",
+						repositoryState.toString(), " state."),
+					e);
 			}
-			catch (IOException ioe) {
-				ioe.printStackTrace();
+			finally {
+				if (abortOnFail) {
+					rebaseAbort();
+				}
 			}
-
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to rebase", targetBranchName, " to ",
-					sourceBranchName));
 		}
-
-		RepositoryState repositoryState = _repository.getRepositoryState();
-
-		if (_rebaseRepositoryStates.contains(repositoryState)) {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Unable to rebase. Repository is in the ",
-					repositoryState.toString(), " state."));
-
-			if (abortOnFail) {
-				rebaseAbort();
-			}
-
-			return false;
-		}
-
-		return true;
 	}
 
 	public void rebaseAbort() throws GitAPIException {

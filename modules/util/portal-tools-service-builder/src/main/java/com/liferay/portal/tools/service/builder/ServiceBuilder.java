@@ -729,6 +729,8 @@ public class ServiceBuilder {
 			}
 
 			if (build) {
+				Collections.sort(_ejbList);
+
 				for (int x = 0; x < _ejbList.size(); x++) {
 					Entity entity = _ejbList.get(x);
 
@@ -5522,11 +5524,11 @@ public class ServiceBuilder {
 			localizationMVCCEnabled, order, finderList, referenceList,
 			unresolvedReferenceList, txRequiredList, resourceActionModel);
 
+		_ejbList.add(entity);
+
 		if (entity.hasLocalizationColumns()) {
 			_ejbList.add(entity.toLocalizationEntity());
 		}
-
-		_ejbList.add(entity);
 	}
 
 	private String _processTemplate(String name, Map<String, Object> context)

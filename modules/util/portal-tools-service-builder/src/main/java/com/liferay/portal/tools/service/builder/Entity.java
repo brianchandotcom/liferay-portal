@@ -33,7 +33,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class Entity {
+public class Entity implements Comparable<Entity> {
 
 	public static final Accessor<Entity, String> NAME_ACCESSOR =
 		new Accessor<Entity, String>() {
@@ -202,6 +202,11 @@ public class Entity {
 
 	public void addReference(Entity reference) {
 		_referenceList.add(reference);
+	}
+
+	@Override
+	public int compareTo(Entity entity) {
+		return _name.compareToIgnoreCase(entity._name);
 	}
 
 	@Override

@@ -93,6 +93,6 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 	private static final String _REBASE_END_STRING = "Aborting rebase ABORT";
 
-	private static final String _REBASE_START_STRING = "Unable to rebase.";
+	private static final String _REBASE_START_STRING = "Unable to rebase";
 
 }

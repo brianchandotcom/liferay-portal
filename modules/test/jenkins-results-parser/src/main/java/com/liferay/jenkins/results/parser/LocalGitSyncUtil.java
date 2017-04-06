@@ -134,6 +134,10 @@ public class LocalGitSyncUtil {
 			final String upstreamBranchName, final String upstreamUsername)
 		throws GitAPIException {
 
+		if (!localBranchName.equals(gitWorkingDirectory.getCurrentBranch())) {
+			gitWorkingDirectory.checkoutBranch(localBranchName, "-f");
+		}
+
 		final long start = System.currentTimeMillis();
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
@@ -806,7 +810,7 @@ public class LocalGitSyncUtil {
 
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
-							"Updating existing timestamp ", "branch name: ",
+							"Updating existing timestamp for branch ",
 							remoteCacheBranchName, " to ",
 							newTimestampBranchName));
 

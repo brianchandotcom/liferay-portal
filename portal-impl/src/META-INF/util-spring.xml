@@ -362,6 +362,7 @@
 			<bean class="com.liferay.portal.util.FileImpl" />
 		</property>
 	</bean>
+	<bean class="com.liferay.portal.util.FriendlyURLNormalizerImpl" id="com.liferay.portal.kernel.util.FriendlyURLNormalizer" />
 	<bean class="com.liferay.portal.kernel.util.HashCodeFactoryUtil" id="com.liferay.portal.kernel.util.HashCodeFactoryUtil">
 		<property name="hashCodeFactory">
 			<bean class="com.liferay.portal.util.HashCodeFactoryImpl" />

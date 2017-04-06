@@ -18,6 +18,7 @@ import com.liferay.document.library.display.context.DLEditFileEntryDisplayContex
 import com.liferay.document.library.display.context.DLFilePicker;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.web.internal.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.internal.display.context.logic.FileVersionDisplayContextHelper;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
@@ -50,16 +51,20 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	public DefaultDLEditFileEntryDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
-		DLFileEntryType dlFileEntryType, StorageEngine storageEngine) {
+		DLFileEntryType dlFileEntryType, DLValidator dlValidator,
+		StorageEngine storageEngine) {
 
-		this(request, dlFileEntryType, null, storageEngine);
+		this(request, dlFileEntryType, dlValidator, null, storageEngine);
 	}
 
 	public DefaultDLEditFileEntryDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry, StorageEngine storageEngine) {
+		DLValidator dlValidator, FileEntry fileEntry,
+		StorageEngine storageEngine) {
 
-		this(request, (DLFileEntryType)null, fileEntry, storageEngine);
+		this(
+			request, (DLFileEntryType)null, dlValidator, fileEntry,
+			storageEngine);
 	}
 
 	@Override
@@ -82,13 +87,7 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public long getMaximumUploadSize() {
-		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
-
-		if (fileMaxSize == 0) {
-			fileMaxSize = getMaximumUploadRequestSize();
-		}
-
-		return fileMaxSize;
+		return _dlValidator.getMaxAllowableSize();
 	}
 
 	@Override
@@ -216,10 +215,12 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	private DefaultDLEditFileEntryDisplayContext(
 		HttpServletRequest request, DLFileEntryType dlFileEntryType,
-		FileEntry fileEntry, StorageEngine storageEngine) {
+		DLValidator dlValidator, FileEntry fileEntry,
+		StorageEngine storageEngine) {
 
 		try {
 			_dlRequestHelper = new DLRequestHelper(request);
+			_dlValidator = dlValidator;
 			_fileEntry = fileEntry;
 			_storageEngine = storageEngine;
 
@@ -283,6 +284,7 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	private final DLFileEntryType _dlFileEntryType;
 	private final DLRequestHelper _dlRequestHelper;
+	private final DLValidator _dlValidator;
 	private final FileEntry _fileEntry;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
 	private final FileVersion _fileVersion;

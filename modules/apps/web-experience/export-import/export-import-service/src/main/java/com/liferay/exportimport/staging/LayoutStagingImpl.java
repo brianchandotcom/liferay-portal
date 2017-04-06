@@ -119,7 +119,10 @@ public class LayoutStagingImpl implements LayoutStaging {
 				layout.getGroup(), layout.isPrivateLayout());
 		}
 		catch (Exception e) {
-			throw new IllegalStateException(e);
+			throw new IllegalStateException(
+				"An error occured when trying to find out if layout " +
+					layout.getPlid() + " is enabled for versioning",
+				e);
 		}
 	}
 

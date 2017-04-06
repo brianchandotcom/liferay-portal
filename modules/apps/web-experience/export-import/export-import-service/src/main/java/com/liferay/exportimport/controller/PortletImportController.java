@@ -45,6 +45,7 @@ import com.liferay.exportimport.kernel.lar.MissingReference;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
@@ -401,7 +402,11 @@ public class PortletImportController implements ImportController {
 					element = preferencesDocument.getRootElement();
 				}
 				catch (DocumentException de) {
-					throw new SystemException(de);
+					throw new SystemException(
+						"Unable to parse XML portlet preferences for " +
+							portletDataContext.getPortletId() +
+								" during importing the portlet preferences",
+						de);
 				}
 
 				long ownerId = GetterUtil.getLong(
@@ -835,7 +840,10 @@ public class PortletImportController implements ImportController {
 			portletElement = portletDocument.getRootElement();
 		}
 		catch (DocumentException de) {
-			throw new SystemException(de);
+			throw new SystemException(
+				"Unable to parse XML document for " +
+					portletDataContext.getPortletId() + " during importing",
+				de);
 		}
 
 		LayoutCache layoutCache = new LayoutCache();
@@ -962,7 +970,16 @@ public class PortletImportController implements ImportController {
 				}
 			}
 			catch (DocumentException de) {
-				throw new SystemException(de);
+				throw new SystemException(
+					"Unable to parse XML service information for " +
+						portletDataContext.getPortletId() + "during import",
+					de);
+			}
+			catch (PortalException pe) {
+				throw new PortletDataException(
+					"Unable to import service preferences for " +
+						portletDataContext.getPortletId(),
+					pe);
 			}
 		}
 

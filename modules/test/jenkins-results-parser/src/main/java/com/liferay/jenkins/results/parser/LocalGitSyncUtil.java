@@ -810,7 +810,7 @@ public class LocalGitSyncUtil {
 
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
-							"Updating existing timestamp ", "branch name: ",
+							"Updating existing timestamp for branch ",
 							remoteCacheBranchName, " to ",
 							newTimestampBranchName));
 

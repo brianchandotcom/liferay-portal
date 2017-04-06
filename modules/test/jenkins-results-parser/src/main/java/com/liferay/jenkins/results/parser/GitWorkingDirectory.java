@@ -283,7 +283,7 @@ public class GitWorkingDirectory {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"HEAD file content is currently ", headContent,
-					"Waiting for branch to be updated"));
+					" Waiting for branch to be updated"));
 
 			JenkinsResultsParserUtil.sleep(5000);
 

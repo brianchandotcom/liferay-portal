@@ -23,7 +23,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -42,6 +42,7 @@ import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortle
 import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -86,7 +87,9 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -163,6 +166,13 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
+			AssetPublisherWebConfiguration.class, properties);
+	}
+
 	protected void exportAssetObjects(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences)
@@ -180,7 +190,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			"selectionStyle", "dynamic");
 
 		if (selectionStyle.equals("dynamic")) {
-			if (!AssetPublisherWebConfigurationValues.DYNAMIC_EXPORT_ENABLED) {
+			if (!_assetPublisherWebConfiguration.dynamicExportEnabled()) {
 				return;
 			}
 
@@ -213,7 +223,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			assetEntries = baseModelSearchResult.getBaseModels();
 		}
 		else {
-			if (!AssetPublisherWebConfigurationValues.MANUAL_EXPORT_ENABLED) {
+			if (!_assetPublisherWebConfiguration.manualExportEnabled()) {
 				return;
 			}
 
@@ -259,7 +269,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 		assetEntryQuery.setEnablePermissions(false);
 
-		int end = AssetPublisherWebConfigurationValues.DYNAMIC_EXPORT_LIMIT;
+		int end = _assetPublisherWebConfiguration.dynamicExportLimit();
 
 		if (end == 0) {
 			end = QueryUtil.ALL_POS;
@@ -1358,6 +1368,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		_assetPublisherPortletDisplayTemplateExportCapability;
 	private AssetPublisherPortletDisplayTemplateImportCapability
 		_assetPublisherPortletDisplayTemplateImportCapability;
+	private AssetPublisherWebConfiguration _assetPublisherWebConfiguration;
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 	private CompanyLocalService _companyLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;

@@ -29,7 +29,6 @@ import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -151,16 +150,11 @@ public class AssetPublisherConfigurationAction
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailAssetEntryAddedBody_" + languageId,
-			ContentUtil.get(
-				AssetPublisherConfigurationAction.class.getClassLoader(),
-				emailAssetEntryAddedBodyMap.get(LocaleUtil.getSiteDefault())));
+			emailAssetEntryAddedBodyMap.get(LocaleUtil.getSiteDefault()));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailAssetEntryAddedSubject_" + languageId,
-			ContentUtil.get(
-				AssetPublisherConfigurationAction.class.getClassLoader(),
-				emailAssetEntryAddedSubjectMap.get(
-					LocaleUtil.getSiteDefault())));
+			emailAssetEntryAddedSubjectMap.get(LocaleUtil.getSiteDefault()));
 	}
 
 	@Override

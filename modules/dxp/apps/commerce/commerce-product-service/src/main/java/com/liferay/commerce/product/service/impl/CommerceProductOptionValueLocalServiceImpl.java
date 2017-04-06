@@ -60,6 +60,7 @@ public class CommerceProductOptionValueLocalServiceImpl
 			commerceProductOptionId);
 		commerceProductOptionValue.setPriority(priority);
 		commerceProductOptionValue.setExpandoBridgeAttributes(serviceContext);
+
 		commerceProductOptionValuePersistence.update(
 			commerceProductOptionValue);
 
@@ -152,6 +153,7 @@ public class CommerceProductOptionValueLocalServiceImpl
 		commerceProductOptionValue.setTitleMap(titleMap);
 		commerceProductOptionValue.setPriority(priority);
 		commerceProductOptionValue.setExpandoBridgeAttributes(serviceContext);
+
 		commerceProductOptionValuePersistence.update(
 			commerceProductOptionValue);
 

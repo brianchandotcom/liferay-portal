@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean class="com.liferay.site.service.impl.GroupFriendlyURLLocalServiceImpl" id="com.liferay.site.service.GroupFriendlyURLLocalService" />
-	<bean class="com.liferay.site.service.persistence.impl.GroupFriendlyURLPersistenceImpl" id="com.liferay.site.service.persistence.GroupFriendlyURLPersistence" parent="basePersistence" />
+	<bean class="com.liferay.site.service.impl.SiteFriendlyURLLocalServiceImpl" id="com.liferay.site.service.SiteFriendlyURLLocalService" />
+	<bean class="com.liferay.site.service.persistence.impl.SiteFriendlyURLPersistenceImpl" id="com.liferay.site.service.persistence.SiteFriendlyURLPersistence" parent="basePersistence" />
 </beans>

@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.site.model.GroupFriendlyURL;
-import com.liferay.site.service.base.GroupFriendlyURLLocalServiceBaseImpl;
+import com.liferay.site.model.SiteFriendlyURL;
+import com.liferay.site.service.base.SiteFriendlyURLLocalServiceBaseImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,43 +31,43 @@ import java.util.Map;
 /**
  * @author Pavel Savinov
  */
-public class GroupFriendlyURLLocalServiceImpl
-	extends GroupFriendlyURLLocalServiceBaseImpl {
+public class SiteFriendlyURLLocalServiceImpl
+	extends SiteFriendlyURLLocalServiceBaseImpl {
 
 	@Override
-	public GroupFriendlyURL addGroupFriendlyURL(
+	public SiteFriendlyURL addSiteFriendlyURL(
 			long userId, long companyId, long groupId, String friendlyURL,
 			String languageId, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
 
-		long groupFriendlyURLId = counterLocalService.increment();
+		long siteFriendlyURLId = counterLocalService.increment();
 
-		GroupFriendlyURL groupFriendlyURL = groupFriendlyURLPersistence.create(
-			groupFriendlyURLId);
+		SiteFriendlyURL siteFriendlyURL = siteFriendlyURLPersistence.create(
+			siteFriendlyURLId);
 
 		if (serviceContext != null) {
-			groupFriendlyURL.setUuid(serviceContext.getUuid());
+			siteFriendlyURL.setUuid(serviceContext.getUuid());
 		}
 
-		groupFriendlyURL.setGroupId(groupId);
-		groupFriendlyURL.setCompanyId(companyId);
-		groupFriendlyURL.setUserId(user.getUserId());
-		groupFriendlyURL.setUserName(user.getFullName());
-		groupFriendlyURL.setFriendlyURL(friendlyURL);
-		groupFriendlyURL.setLanguageId(languageId);
+		siteFriendlyURL.setGroupId(groupId);
+		siteFriendlyURL.setCompanyId(companyId);
+		siteFriendlyURL.setUserId(user.getUserId());
+		siteFriendlyURL.setUserName(user.getFullName());
+		siteFriendlyURL.setFriendlyURL(friendlyURL);
+		siteFriendlyURL.setLanguageId(languageId);
 
-		return groupFriendlyURLPersistence.update(groupFriendlyURL);
+		return siteFriendlyURLPersistence.update(siteFriendlyURL);
 	}
 
 	@Override
-	public List<GroupFriendlyURL> addGroupFriendlyURLs(
+	public List<SiteFriendlyURL> addSiteFriendlyURLs(
 			long userId, long companyId, long groupId,
 			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		List<GroupFriendlyURL> groupFriendlyURLs = new ArrayList<>();
+		List<SiteFriendlyURL> siteFriendlyURLs = new ArrayList<>();
 
 		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
 			String friendlyURL = friendlyURLMap.get(locale);
@@ -76,104 +76,108 @@ public class GroupFriendlyURLLocalServiceImpl
 				continue;
 			}
 
-			GroupFriendlyURL groupFriendlyURL = addGroupFriendlyURL(
+			SiteFriendlyURL siteFriendlyURL = addSiteFriendlyURL(
 				userId, companyId, groupId, friendlyURL,
 				LocaleUtil.toLanguageId(locale), serviceContext);
 
-			groupFriendlyURLs.add(groupFriendlyURL);
+			siteFriendlyURLs.add(siteFriendlyURL);
 		}
 
-		return groupFriendlyURLs;
+		return siteFriendlyURLs;
 	}
 
 	@Override
-	public GroupFriendlyURL deleteGroupFriendlyURL(
-		GroupFriendlyURL groupFriendlyURL) {
-
-		return groupFriendlyURLPersistence.remove(groupFriendlyURL);
-	}
-
-	@Override
-	public GroupFriendlyURL deleteGroupFriendlyURL(
+	public SiteFriendlyURL deleteSiteFriendlyURL(
 			long companyId, long groupId, String languageId)
 		throws PortalException {
 
-		return groupFriendlyURLPersistence.removeByC_G_L(
+		return siteFriendlyURLPersistence.removeByC_G_L(
 			companyId, groupId, languageId);
 	}
 
 	@Override
-	public void deleteGroupFriendlyURLs(long companyId, long groupId) {
-		groupFriendlyURLPersistence.removeByC_G(companyId, groupId);
+	public SiteFriendlyURL deleteSiteFriendlyURL(
+		SiteFriendlyURL siteFriendlyURL) {
+
+		return siteFriendlyURLPersistence.remove(siteFriendlyURL);
 	}
 
 	@Override
-	public GroupFriendlyURL fetchGroupFriendlyURL(
+	public void deleteSiteFriendlyURLs(long companyId, long groupId) {
+		siteFriendlyURLPersistence.removeByC_G(companyId, groupId);
+	}
+
+	@Override
+	public SiteFriendlyURL fetchSiteFriendlyURL(
 		long companyId, long groupId, String languageId) {
 
-		return groupFriendlyURLPersistence.fetchByC_G_L(
+		return siteFriendlyURLPersistence.fetchByC_G_L(
 			companyId, groupId, languageId);
 	}
 
 	@Override
-	public GroupFriendlyURL fetchGroupFriendlyURLByFriendlyURL(
+	public SiteFriendlyURL fetchSiteFriendlyURLByFriendlyURL(
 		long companyId, String friendlyURL) {
 
-		return groupFriendlyURLPersistence.fetchByC_F(companyId, friendlyURL);
+		return siteFriendlyURLPersistence.fetchByC_F(companyId, friendlyURL);
 	}
 
 	@Override
-	public List<GroupFriendlyURL> getGroupFriendlyURLs(
+	public List<SiteFriendlyURL> getSiteFriendlyURLs(
 		long companyId, long groupId) {
 
-		return groupFriendlyURLPersistence.findByC_G(companyId, groupId);
+		return siteFriendlyURLPersistence.findByC_G(companyId, groupId);
 	}
 
 	@Override
-	public GroupFriendlyURL updateGroupFriendlyURL(
+	public SiteFriendlyURL updateSiteFriendlyURL(
 			long userId, long companyId, long groupId, String friendlyURL,
 			String languageId, ServiceContext serviceContext)
 		throws PortalException {
 
-		GroupFriendlyURL groupFriendlyURL =
-			groupFriendlyURLPersistence.fetchByC_G_L(
+		SiteFriendlyURL siteFriendlyURL =
+			siteFriendlyURLPersistence.fetchByC_G_L(
 				companyId, groupId, languageId);
 
-		if (groupFriendlyURL == null) {
-			groupFriendlyURL = addGroupFriendlyURL(
+		if (siteFriendlyURL == null) {
+			siteFriendlyURL = addSiteFriendlyURL(
 				userId, companyId, groupId, friendlyURL, languageId,
 				serviceContext);
 		}
 
-		groupFriendlyURL.setFriendlyURL(friendlyURL);
+		siteFriendlyURL.setFriendlyURL(friendlyURL);
 
-		return groupFriendlyURLPersistence.update(groupFriendlyURL);
+		return siteFriendlyURLPersistence.update(siteFriendlyURL);
 	}
 
 	@Override
-	public List<GroupFriendlyURL> updateGroupFriendlyURLs(
+	public List<SiteFriendlyURL> updateSiteFriendlyURLs(
 			long userId, long companyId, long groupId,
 			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		List<GroupFriendlyURL> groupFriendlyURLs = new ArrayList<>();
+		List<SiteFriendlyURL> siteFriendlyURLs = new ArrayList<>();
 
 		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
 			String friendlyURL = friendlyURLMap.get(locale);
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			if (Validator.isNull(friendlyURL)) {
-				deleteGroupFriendlyURL(companyId, groupId, languageId);
+			SiteFriendlyURL siteFriendlyURL =
+				siteFriendlyURLPersistence.fetchByC_G_L(
+					companyId, groupId, languageId);
+
+			if (Validator.isNull(friendlyURL) && (siteFriendlyURL != null)) {
+				deleteSiteFriendlyURL(companyId, groupId, languageId);
 			}
 
-			GroupFriendlyURL groupFriendlyURL = updateGroupFriendlyURL(
+			siteFriendlyURL = updateSiteFriendlyURL(
 				userId, companyId, groupId, friendlyURL, languageId,
 				serviceContext);
 
-			groupFriendlyURLs.add(groupFriendlyURL);
+			siteFriendlyURLs.add(siteFriendlyURL);
 		}
 
-		return groupFriendlyURLs;
+		return siteFriendlyURLs;
 	}
 
 }

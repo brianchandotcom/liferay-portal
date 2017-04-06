@@ -3,11 +3,11 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.site">
 	<namespace>Site</namespace>
-	<entity local-service="true" name="GroupFriendlyURL" remote-service="false" uuid="true">
+	<entity local-service="true" name="SiteFriendlyURL" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="groupFriendlyURLId" primary="true" type="long" />
+		<column name="siteFriendlyURLId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -33,16 +33,16 @@
 			<finder-column name="companyId" />
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="C_F" return-type="GroupFriendlyURL" unique="true">
+		<finder name="C_F" return-type="SiteFriendlyURL" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="friendlyURL" />
 		</finder>
-		<finder name="C_G_L" return-type="GroupFriendlyURL" unique="true">
+		<finder name="C_G_L" return-type="SiteFriendlyURL" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="groupId" />
 			<finder-column name="languageId" />
 		</finder>
-		<finder name="C_F_L" return-type="GroupFriendlyURL" unique="true">
+		<finder name="C_F_L" return-type="SiteFriendlyURL" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="friendlyURL" />
 			<finder-column name="languageId" />

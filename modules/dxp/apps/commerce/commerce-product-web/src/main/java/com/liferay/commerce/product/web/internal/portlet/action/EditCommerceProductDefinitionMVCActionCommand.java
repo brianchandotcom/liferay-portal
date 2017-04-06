@@ -71,8 +71,6 @@ public class EditCommerceProductDefinitionMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		CommerceProductDefinition commerceProductDefinition = null;
-
 		try {
 			if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceProductDefinition(actionRequest);
@@ -80,8 +78,7 @@ public class EditCommerceProductDefinitionMVCActionCommand
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				commerceProductDefinition = updateCommerceProductDefinition(
-					actionRequest);
+				updateCommerceProductDefinition(actionRequest);
 			}
 		}
 		catch (Exception e) {

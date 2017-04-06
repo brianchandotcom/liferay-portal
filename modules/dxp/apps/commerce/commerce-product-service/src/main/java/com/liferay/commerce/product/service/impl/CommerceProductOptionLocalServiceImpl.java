@@ -58,6 +58,7 @@ public class CommerceProductOptionLocalServiceImpl
 		commerceProductOption.setDescriptionMap(descriptionMap);
 		commerceProductOption.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		commerceProductOption.setExpandoBridgeAttributes(serviceContext);
+
 		commerceProductOptionPersistence.update(commerceProductOption);
 
 		// Resources
@@ -145,6 +146,7 @@ public class CommerceProductOptionLocalServiceImpl
 		commerceProductOption.setDescriptionMap(descriptionMap);
 		commerceProductOption.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		commerceProductOption.setExpandoBridgeAttributes(serviceContext);
+
 		commerceProductOptionPersistence.update(commerceProductOption);
 
 		return commerceProductOption;

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alessio Antionio Rendina
+ * @author Alessio Antonio Rendina
  * @author Alessio Antonio Rendina
  */
 @Component(

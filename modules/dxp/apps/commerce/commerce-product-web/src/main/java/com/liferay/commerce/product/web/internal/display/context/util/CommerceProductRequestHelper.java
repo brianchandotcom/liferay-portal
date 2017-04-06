@@ -24,7 +24,7 @@ import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Alessio Antionio Rendina
+ * @author Alessio Antonio Rendina
  */
 public class CommerceProductRequestHelper extends BaseRequestHelper {
 

@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.web.internal.constants;
 
 /**
- * @author Alessio Antionio Rendina
+ * @author Alessio Antonio Rendina
  */
 public class CommerceProductWebKeys {
 

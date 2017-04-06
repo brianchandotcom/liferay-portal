@@ -69,13 +69,14 @@ public class CommerceProductDefinitionsPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				renderRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
 
 			CommerceProductDefinitionsDisplayContext
 				commerceProductDefinitionsDisplayContext =
 					new CommerceProductDefinitionsDisplayContext(
-						request, _commerceProductDefinitionLocalService);
+						httpServletRequest,
+						_commerceProductDefinitionLocalService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

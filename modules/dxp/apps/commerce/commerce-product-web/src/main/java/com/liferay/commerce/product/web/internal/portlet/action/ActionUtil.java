@@ -29,21 +29,19 @@ import javax.portlet.ResourceRequest;
 public class ActionUtil {
 
 	public static List<CommerceProductDefinition> getCommerceProductDefinitions(
-			ResourceRequest request)
+			ResourceRequest resourceRequest)
 		throws Exception {
 
-		long[] commerceProductDefinitionsIds = ParamUtil.getLongValues(
-			request, "rowIdsCommerceProductDefinition");
+		long[] commerceProductDefinitionIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIdsCommerceProductDefinition");
 
 		List<CommerceProductDefinition> commerceProductDefinitions =
 			new ArrayList<>();
 
-		for (long commerceProductDefinitionsId :
-				commerceProductDefinitionsIds) {
-
+		for (long commerceProductDefinitionId : commerceProductDefinitionIds) {
 			CommerceProductDefinition commerceProductDefinition =
 				CommerceProductDefinitionLocalServiceUtil.
-					getCommerceProductDefinition(commerceProductDefinitionsId);
+					getCommerceProductDefinition(commerceProductDefinitionId);
 
 			commerceProductDefinitions.add(commerceProductDefinition);
 		}

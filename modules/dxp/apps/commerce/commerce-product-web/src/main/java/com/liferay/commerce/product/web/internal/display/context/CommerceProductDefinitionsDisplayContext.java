@@ -50,15 +50,15 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceProductDefinitionsDisplayContext {
 
 	public CommerceProductDefinitionsDisplayContext(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			CommerceProductDefinitionLocalService
 				commerceProductDefinitionLocalService)
 		throws PortalException {
 
-		_request = request;
+		_httpServletRequest = httpServletRequest;
 
 		_commerceProductRequestHelper = new CommerceProductRequestHelper(
-			request);
+			httpServletRequest);
 
 		_liferayPortletRequest =
 			_commerceProductRequestHelper.getLiferayPortletRequest();
@@ -69,7 +69,7 @@ public class CommerceProductDefinitionsDisplayContext {
 			commerceProductDefinitionLocalService;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_request);
+			_httpServletRequest);
 
 		CommerceProductDefinition commerceProductDefinition =
 			getCommerceProductDefinition();
@@ -140,7 +140,8 @@ public class CommerceProductDefinitionsDisplayContext {
 
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
-			_displayStyle = getDisplayStyle(_request, _portalPreferences);
+			_displayStyle = getDisplayStyle(
+				_httpServletRequest, _portalPreferences);
 		}
 
 		return _displayStyle;
@@ -151,7 +152,7 @@ public class CommerceProductDefinitionsDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -161,7 +162,7 @@ public class CommerceProductDefinitionsDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_request, "orderByCol");
+		_orderByCol = ParamUtil.getString(_httpServletRequest, "orderByCol");
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = _portalPreferences.getValue(
@@ -169,7 +170,8 @@ public class CommerceProductDefinitionsDisplayContext {
 				"order-by-col", "create-date");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(
+				_httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
@@ -186,7 +188,7 @@ public class CommerceProductDefinitionsDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType");
+		_orderByType = ParamUtil.getString(_httpServletRequest, "orderByType");
 
 		if (Validator.isNull(_orderByType)) {
 			_orderByType = _portalPreferences.getValue(
@@ -194,7 +196,8 @@ public class CommerceProductDefinitionsDisplayContext {
 				"order-by-type", "desc");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(
+				_httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
@@ -209,7 +212,8 @@ public class CommerceProductDefinitionsDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
-		String displayStyle = ParamUtil.getString(_request, "displayStyle");
+		String displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
 
 		if (Validator.isNotNull(displayStyle)) {
 			portletURL.setParameter("displayStyle", getDisplayStyle());
@@ -234,12 +238,13 @@ public class CommerceProductDefinitionsDisplayContext {
 	}
 
 	public SearchContainer getSearchContainer() throws PortalException {
-		if (_productSearchContainer != null) {
-			return _productSearchContainer;
+		if (_searchContainer != null) {
+			return _searchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SearchContainer productDefinitionSearchContainer = new SearchContainer(
 			_liferayPortletRequest, getPortletURL(), null, null);
@@ -273,9 +278,9 @@ public class CommerceProductDefinitionsDisplayContext {
 
 		productDefinitionSearchContainer.setResults(results);
 
-		_productSearchContainer = productDefinitionSearchContainer;
+		_searchContainer = productDefinitionSearchContainer;
 
-		return _productSearchContainer;
+		return _searchContainer;
 	}
 
 	public boolean isSearch() {
@@ -321,14 +326,14 @@ public class CommerceProductDefinitionsDisplayContext {
 		_commerceProductDefinitionLocalService;
 	private final CommerceProductRequestHelper _commerceProductRequestHelper;
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
-	private SearchContainer _productSearchContainer;
-	private final HttpServletRequest _request;
 	private RowChecker _rowChecker;
+	private SearchContainer _searchContainer;
 
 }

@@ -40,7 +40,7 @@ public class CommerceProductOptionLocalServiceImpl
 			String ddmFormFieldTypeName, ServiceContext serviceContext)
 		throws PortalException {
 
-		//Product Option
+		//Product option
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();

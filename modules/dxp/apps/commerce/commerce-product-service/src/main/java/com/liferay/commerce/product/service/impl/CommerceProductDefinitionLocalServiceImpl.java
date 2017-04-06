@@ -338,7 +338,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		// CommerceProductDefinition
+		// Product definition
 
 		User user = userLocalService.getUser(userId);
 		Date now = new Date();

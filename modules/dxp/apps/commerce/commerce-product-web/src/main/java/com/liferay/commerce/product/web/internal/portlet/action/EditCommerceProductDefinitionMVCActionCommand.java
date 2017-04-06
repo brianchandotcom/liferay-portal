@@ -119,13 +119,10 @@ public class EditCommerceProductDefinitionMVCActionCommand
 
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
-
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-
 		String productTypeName = ParamUtil.getString(
 			actionRequest, "productTypeName");
-
 		String baseSKU = ParamUtil.getString(actionRequest, "baseSKU");
 
 		int displayDateMonth = ParamUtil.getInteger(

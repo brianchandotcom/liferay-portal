@@ -354,8 +354,6 @@ public class CommerceProductDefinitionLocalServiceImpl
 			status = WorkflowConstants.STATUS_SCHEDULED;
 		}
 
-		int oldStatus = commerceProductDefinition.getStatus();
-
 		Date modifiedDate = serviceContext.getModifiedDate(now);
 
 		commerceProductDefinition.setModifiedDate(modifiedDate);

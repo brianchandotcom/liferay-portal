@@ -274,18 +274,17 @@ public class LiferayLocalRepository
 			status, start, end,
 			DLFileEntryOrderByComparator.getOrderByComparator(obc));
 
-		List<DLFileEntry> dlFileEntries = null;
-
 		try {
-			dlFileEntries = dlFileEntryLocalService.getFileEntries(
-				getGroupId(), 0, new ArrayList<>(), toFolderIds(folderIds),
-				mimeTypes, queryDefinition);
+			List<DLFileEntry> dlFileEntries =
+				dlFileEntryLocalService.getFileEntries(
+					getGroupId(), 0, new ArrayList<>(), toFolderIds(folderIds),
+					mimeTypes, queryDefinition);
+
+			return RepositoryModelUtil.toFileEntries(dlFileEntries);
 		}
 		catch (Exception e) {
 			throw new PortalException(e);
 		}
-
-		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
 
 	@Override

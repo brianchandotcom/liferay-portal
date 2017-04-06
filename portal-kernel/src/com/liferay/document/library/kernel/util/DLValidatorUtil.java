@@ -38,6 +38,10 @@ public class DLValidatorUtil {
 		return _dlValidator;
 	}
 
+	public static long getMaxAllowableSize() {
+		return getDLValidator().getMaxAllowableSize();
+	}
+
 	public static boolean isValidName(String name) {
 		return getDLValidator().isValidName(name);
 	}

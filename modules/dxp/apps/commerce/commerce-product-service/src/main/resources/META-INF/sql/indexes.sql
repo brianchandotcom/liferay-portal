@@ -3,11 +3,11 @@ create index IX_431C435D on CommerceProductDefinition (groupId);
 create index IX_91058CA1 on CommerceProductDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_E61AC763 on CommerceProductDefinition (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_C91CF2C8 on CommerceProductDefintionOptionRel (companyId);
-create index IX_9538B4A on CommerceProductDefintionOptionRel (groupId);
+create index IX_2F156E05 on CommerceProductDefinitionOptionRel (companyId);
+create index IX_A8BBB1C7 on CommerceProductDefinitionOptionRel (groupId);
 
-create index IX_FC45FD7B on CommerceProductDefintionOptionValueRel (companyId);
-create index IX_495A6BD on CommerceProductDefintionOptionValueRel (groupId);
+create index IX_DD7A005E on CommerceProductDefinitionOptionValueRel (companyId);
+create index IX_73A30660 on CommerceProductDefinitionOptionValueRel (groupId);
 
 create unique index IX_3FFDEE0A on CommerceProductInstance (commerceProductDefinitionId, sku[$COLUMN_LENGTH:75$]);
 create index IX_17E9F919 on CommerceProductInstance (companyId);

@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CommerceProductOption;
 import com.liferay.commerce.product.service.CommerceProductOptionLocalService;
+import com.liferay.commerce.product.service.persistence.CommerceProductDefinitionOptionRelPersistence;
+import com.liferay.commerce.product.service.persistence.CommerceProductDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CommerceProductDefinitionPersistence;
-import com.liferay.commerce.product.service.persistence.CommerceProductDefintionOptionRelPersistence;
-import com.liferay.commerce.product.service.persistence.CommerceProductDefintionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CommerceProductInstancePersistence;
 import com.liferay.commerce.product.service.persistence.CommerceProductOptionPersistence;
 import com.liferay.commerce.product.service.persistence.CommerceProductOptionValuePersistence;
@@ -369,79 +369,79 @@ public abstract class CommerceProductOptionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce product defintion option rel local service.
+	 * Returns the commerce product definition option rel local service.
 	 *
-	 * @return the commerce product defintion option rel local service
+	 * @return the commerce product definition option rel local service
 	 */
-	public com.liferay.commerce.product.service.CommerceProductDefintionOptionRelLocalService getCommerceProductDefintionOptionRelLocalService() {
-		return commerceProductDefintionOptionRelLocalService;
+	public com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelLocalService getCommerceProductDefinitionOptionRelLocalService() {
+		return commerceProductDefinitionOptionRelLocalService;
 	}
 
 	/**
-	 * Sets the commerce product defintion option rel local service.
+	 * Sets the commerce product definition option rel local service.
 	 *
-	 * @param commerceProductDefintionOptionRelLocalService the commerce product defintion option rel local service
+	 * @param commerceProductDefinitionOptionRelLocalService the commerce product definition option rel local service
 	 */
-	public void setCommerceProductDefintionOptionRelLocalService(
-		com.liferay.commerce.product.service.CommerceProductDefintionOptionRelLocalService commerceProductDefintionOptionRelLocalService) {
-		this.commerceProductDefintionOptionRelLocalService = commerceProductDefintionOptionRelLocalService;
+	public void setCommerceProductDefinitionOptionRelLocalService(
+		com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelLocalService commerceProductDefinitionOptionRelLocalService) {
+		this.commerceProductDefinitionOptionRelLocalService = commerceProductDefinitionOptionRelLocalService;
 	}
 
 	/**
-	 * Returns the commerce product defintion option rel persistence.
+	 * Returns the commerce product definition option rel persistence.
 	 *
-	 * @return the commerce product defintion option rel persistence
+	 * @return the commerce product definition option rel persistence
 	 */
-	public CommerceProductDefintionOptionRelPersistence getCommerceProductDefintionOptionRelPersistence() {
-		return commerceProductDefintionOptionRelPersistence;
+	public CommerceProductDefinitionOptionRelPersistence getCommerceProductDefinitionOptionRelPersistence() {
+		return commerceProductDefinitionOptionRelPersistence;
 	}
 
 	/**
-	 * Sets the commerce product defintion option rel persistence.
+	 * Sets the commerce product definition option rel persistence.
 	 *
-	 * @param commerceProductDefintionOptionRelPersistence the commerce product defintion option rel persistence
+	 * @param commerceProductDefinitionOptionRelPersistence the commerce product definition option rel persistence
 	 */
-	public void setCommerceProductDefintionOptionRelPersistence(
-		CommerceProductDefintionOptionRelPersistence commerceProductDefintionOptionRelPersistence) {
-		this.commerceProductDefintionOptionRelPersistence = commerceProductDefintionOptionRelPersistence;
+	public void setCommerceProductDefinitionOptionRelPersistence(
+		CommerceProductDefinitionOptionRelPersistence commerceProductDefinitionOptionRelPersistence) {
+		this.commerceProductDefinitionOptionRelPersistence = commerceProductDefinitionOptionRelPersistence;
 	}
 
 	/**
-	 * Returns the commerce product defintion option value rel local service.
+	 * Returns the commerce product definition option value rel local service.
 	 *
-	 * @return the commerce product defintion option value rel local service
+	 * @return the commerce product definition option value rel local service
 	 */
-	public com.liferay.commerce.product.service.CommerceProductDefintionOptionValueRelLocalService getCommerceProductDefintionOptionValueRelLocalService() {
-		return commerceProductDefintionOptionValueRelLocalService;
+	public com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelLocalService getCommerceProductDefinitionOptionValueRelLocalService() {
+		return commerceProductDefinitionOptionValueRelLocalService;
 	}
 
 	/**
-	 * Sets the commerce product defintion option value rel local service.
+	 * Sets the commerce product definition option value rel local service.
 	 *
-	 * @param commerceProductDefintionOptionValueRelLocalService the commerce product defintion option value rel local service
+	 * @param commerceProductDefinitionOptionValueRelLocalService the commerce product definition option value rel local service
 	 */
-	public void setCommerceProductDefintionOptionValueRelLocalService(
-		com.liferay.commerce.product.service.CommerceProductDefintionOptionValueRelLocalService commerceProductDefintionOptionValueRelLocalService) {
-		this.commerceProductDefintionOptionValueRelLocalService = commerceProductDefintionOptionValueRelLocalService;
+	public void setCommerceProductDefinitionOptionValueRelLocalService(
+		com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelLocalService commerceProductDefinitionOptionValueRelLocalService) {
+		this.commerceProductDefinitionOptionValueRelLocalService = commerceProductDefinitionOptionValueRelLocalService;
 	}
 
 	/**
-	 * Returns the commerce product defintion option value rel persistence.
+	 * Returns the commerce product definition option value rel persistence.
 	 *
-	 * @return the commerce product defintion option value rel persistence
+	 * @return the commerce product definition option value rel persistence
 	 */
-	public CommerceProductDefintionOptionValueRelPersistence getCommerceProductDefintionOptionValueRelPersistence() {
-		return commerceProductDefintionOptionValueRelPersistence;
+	public CommerceProductDefinitionOptionValueRelPersistence getCommerceProductDefinitionOptionValueRelPersistence() {
+		return commerceProductDefinitionOptionValueRelPersistence;
 	}
 
 	/**
-	 * Sets the commerce product defintion option value rel persistence.
+	 * Sets the commerce product definition option value rel persistence.
 	 *
-	 * @param commerceProductDefintionOptionValueRelPersistence the commerce product defintion option value rel persistence
+	 * @param commerceProductDefinitionOptionValueRelPersistence the commerce product definition option value rel persistence
 	 */
-	public void setCommerceProductDefintionOptionValueRelPersistence(
-		CommerceProductDefintionOptionValueRelPersistence commerceProductDefintionOptionValueRelPersistence) {
-		this.commerceProductDefintionOptionValueRelPersistence = commerceProductDefintionOptionValueRelPersistence;
+	public void setCommerceProductDefinitionOptionValueRelPersistence(
+		CommerceProductDefinitionOptionValueRelPersistence commerceProductDefinitionOptionValueRelPersistence) {
+		this.commerceProductDefinitionOptionValueRelPersistence = commerceProductDefinitionOptionValueRelPersistence;
 	}
 
 	/**
@@ -765,14 +765,14 @@ public abstract class CommerceProductOptionLocalServiceBaseImpl
 	protected com.liferay.commerce.product.service.CommerceProductDefinitionLocalService commerceProductDefinitionLocalService;
 	@BeanReference(type = CommerceProductDefinitionPersistence.class)
 	protected CommerceProductDefinitionPersistence commerceProductDefinitionPersistence;
-	@BeanReference(type = com.liferay.commerce.product.service.CommerceProductDefintionOptionRelLocalService.class)
-	protected com.liferay.commerce.product.service.CommerceProductDefintionOptionRelLocalService commerceProductDefintionOptionRelLocalService;
-	@BeanReference(type = CommerceProductDefintionOptionRelPersistence.class)
-	protected CommerceProductDefintionOptionRelPersistence commerceProductDefintionOptionRelPersistence;
-	@BeanReference(type = com.liferay.commerce.product.service.CommerceProductDefintionOptionValueRelLocalService.class)
-	protected com.liferay.commerce.product.service.CommerceProductDefintionOptionValueRelLocalService commerceProductDefintionOptionValueRelLocalService;
-	@BeanReference(type = CommerceProductDefintionOptionValueRelPersistence.class)
-	protected CommerceProductDefintionOptionValueRelPersistence commerceProductDefintionOptionValueRelPersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelLocalService.class)
+	protected com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelLocalService commerceProductDefinitionOptionRelLocalService;
+	@BeanReference(type = CommerceProductDefinitionOptionRelPersistence.class)
+	protected CommerceProductDefinitionOptionRelPersistence commerceProductDefinitionOptionRelPersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelLocalService.class)
+	protected com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelLocalService commerceProductDefinitionOptionValueRelLocalService;
+	@BeanReference(type = CommerceProductDefinitionOptionValueRelPersistence.class)
+	protected CommerceProductDefinitionOptionValueRelPersistence commerceProductDefinitionOptionValueRelPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CommerceProductInstanceLocalService.class)
 	protected com.liferay.commerce.product.service.CommerceProductInstanceLocalService commerceProductInstanceLocalService;
 	@BeanReference(type = CommerceProductInstancePersistence.class)

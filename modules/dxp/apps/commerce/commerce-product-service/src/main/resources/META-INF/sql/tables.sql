@@ -23,8 +23,8 @@ create table CommerceProductDefinition (
 	statusDate DATE null
 );
 
-create table CommerceProductDefintionOptionRel (
-	commerceProductDefintionOptionRelId LONG not null primary key,
+create table CommerceProductDefinitionOptionRel (
+	commerceProductDefinitionOptionRelId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -39,15 +39,15 @@ create table CommerceProductDefintionOptionRel (
 	priority VARCHAR(75) null
 );
 
-create table CommerceProductDefintionOptionValueRel (
-	commerceProductDefintionOptionValueRelId LONG not null primary key,
+create table CommerceProductDefinitionOptionValueRel (
+	commerceProductDefinitionOptionValueRelId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	commerceProductDefintionOptionRelId LONG,
+	commerceProductDefinitionOptionRelId LONG,
 	title STRING null,
 	priority LONG
 );

@@ -3,8 +3,8 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.commerce.product.model.CommerceProductDefinition" />
-	<import class="com.liferay.commerce.product.model.CommerceProductDefintionOptionRel" />
-	<import class="com.liferay.commerce.product.model.CommerceProductDefintionOptionValueRel" />
+	<import class="com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel" />
+	<import class="com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel" />
 	<import class="com.liferay.commerce.product.model.CommerceProductInstance" />
 	<import class="com.liferay.commerce.product.model.CommerceProductOption" />
 	<import class="com.liferay.commerce.product.model.CommerceProductOptionValue" />
@@ -34,8 +34,8 @@
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.commerce.product.model.impl.CommerceProductDefintionOptionRelImpl" table="CommerceProductDefintionOptionRel">
-		<id name="commerceProductDefintionOptionRelId" type="long">
+	<class name="com.liferay.commerce.product.model.impl.CommerceProductDefinitionOptionRelImpl" table="CommerceProductDefinitionOptionRel">
+		<id name="commerceProductDefinitionOptionRelId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -51,8 +51,8 @@
 		<property name="DDMFormFieldTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.commerce.product.model.impl.CommerceProductDefintionOptionValueRelImpl" table="CommerceProductDefintionOptionValueRel">
-		<id name="commerceProductDefintionOptionValueRelId" type="long">
+	<class name="com.liferay.commerce.product.model.impl.CommerceProductDefinitionOptionValueRelImpl" table="CommerceProductDefinitionOptionValueRel">
+		<id name="commerceProductDefinitionOptionValueRelId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -61,7 +61,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="commerceProductDefintionOptionRelId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceProductDefinitionOptionRelId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>

@@ -27,8 +27,8 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.commerce.product.model.CommerceProductDefintionOptionRel">
-		<field name="commerceProductDefintionOptionRelId" type="long" />
+	<model name="com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel">
+		<field name="commerceProductDefinitionOptionRelId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -42,15 +42,15 @@
 		<field name="DDMFormFieldTypeName" type="String" />
 		<field name="priority" type="String" />
 	</model>
-	<model name="com.liferay.commerce.product.model.CommerceProductDefintionOptionValueRel">
-		<field name="commerceProductDefintionOptionValueRelId" type="long" />
+	<model name="com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel">
+		<field name="commerceProductDefinitionOptionValueRelId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="commerceProductDefintionOptionRelId" type="long" />
+		<field name="commerceProductDefinitionOptionRelId" type="long" />
 		<field localized="true" name="title" type="String" />
 		<field name="priority" type="long" />
 	</model>

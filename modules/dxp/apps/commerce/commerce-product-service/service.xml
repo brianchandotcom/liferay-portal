@@ -65,11 +65,11 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
-	<entity local-service="true" name="CommerceProductDefintionOptionRel" remote-service="true">
+	<entity local-service="true" name="CommerceProductDefinitionOptionRel" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="commerceProductDefintionOptionRelId" primary="true" type="long" />
+		<column name="commerceProductDefinitionOptionRelId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -111,11 +111,11 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CommerceProductDefintionOptionValueRel" remote-service="true">
+	<entity local-service="true" name="CommerceProductDefinitionOptionValueRel" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="commerceProductDefintionOptionValueRelId" primary="true" type="long" />
+		<column name="commerceProductDefinitionOptionValueRelId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -131,7 +131,7 @@
 
 		<!-- Other fields -->
 
-		<column name="commerceProductDefintionOptionRelId"  type="long" />
+		<column name="commerceProductDefinitionOptionRelId"  type="long" />
 		<column localized="true" name="title" type="String" />
 		<column name="priority" type="long" />
 

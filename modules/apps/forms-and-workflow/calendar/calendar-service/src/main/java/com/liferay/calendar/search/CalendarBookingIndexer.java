@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
@@ -41,8 +42,11 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Locale;
@@ -196,8 +200,46 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Summary summary = createSummary(
-			document, Field.TITLE, Field.DESCRIPTION);
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			document.get("defaultLanguageId"));
+
+		Locale snippetLocale = getSnippetLocale(document, locale);
+
+		String localizedTitleName = DocumentImpl.getLocalizedName(
+			locale, Field.TITLE);
+
+		if ((snippetLocale == null) &&
+			(document.getField(localizedTitleName) == null)) {
+
+			snippetLocale = defaultLocale;
+		}
+		else {
+			snippetLocale = locale;
+		}
+
+		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
+
+		String title = document.get(
+			snippetLocale, prefix + Field.TITLE, Field.TITLE);
+
+		if (Validator.isNull(title) && !snippetLocale.equals(defaultLocale)) {
+			title = document.get(
+				defaultLocale, prefix + Field.TITLE, Field.TITLE);
+		}
+
+		String description = document.get(
+			snippetLocale, prefix + Field.DESCRIPTION, Field.DESCRIPTION);
+
+		if (Validator.isNull(description) &&
+			!snippetLocale.equals(defaultLocale)) {
+
+			description = document.get(
+				defaultLocale, prefix + Field.DESCRIPTION, Field.DESCRIPTION);
+		}
+
+		description = HtmlUtil.extractText(description);
+
+		Summary summary = new Summary(snippetLocale, title, description);
 
 		summary.setMaxContentLength(200);
 

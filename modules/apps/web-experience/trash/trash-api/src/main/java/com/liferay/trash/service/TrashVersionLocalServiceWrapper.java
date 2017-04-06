@@ -77,6 +77,15 @@ public class TrashVersionLocalServiceWrapper implements TrashVersionLocalService
 		return _trashVersionLocalService.addTrashVersion(trashVersion);
 	}
 
+	@Override
+	public com.liferay.trash.model.TrashVersion addTrashVersion(
+		long trashEntryId, java.lang.String className, long classPK,
+		int status,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
+		return _trashVersionLocalService.addTrashVersion(trashEntryId,
+			className, classPK, status, typeSettingsProperties);
+	}
+
 	/**
 	* Creates a new trash version with the primary key. Does not add the trash version to the database.
 	*
@@ -101,6 +110,12 @@ public class TrashVersionLocalServiceWrapper implements TrashVersionLocalService
 		return _trashVersionLocalService.deleteTrashVersion(trashVersion);
 	}
 
+	@Override
+	public com.liferay.trash.model.TrashVersion deleteTrashVersion(
+		java.lang.String className, long classPK) {
+		return _trashVersionLocalService.deleteTrashVersion(className, classPK);
+	}
+
 	/**
 	* Deletes the trash version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -119,6 +134,23 @@ public class TrashVersionLocalServiceWrapper implements TrashVersionLocalService
 	public com.liferay.trash.model.TrashVersion fetchTrashVersion(
 		long versionId) {
 		return _trashVersionLocalService.fetchTrashVersion(versionId);
+	}
+
+	@Override
+	public com.liferay.trash.model.TrashVersion fetchVersion(
+		java.lang.String className, long classPK) {
+		return _trashVersionLocalService.fetchVersion(className, classPK);
+	}
+
+	/**
+	* @deprecated As of 1.0.0, replaced by {@link #fetchVersion(String, long)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.trash.model.TrashVersion fetchVersion(long entryId,
+		java.lang.String className, long classPK) {
+		return _trashVersionLocalService.fetchVersion(entryId, className,
+			classPK);
 	}
 
 	/**
@@ -234,6 +266,18 @@ public class TrashVersionLocalServiceWrapper implements TrashVersionLocalService
 	public java.util.List<com.liferay.trash.model.TrashVersion> getTrashVersions(
 		int start, int end) {
 		return _trashVersionLocalService.getTrashVersions(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.trash.model.TrashVersion> getVersions(
+		long entryId) {
+		return _trashVersionLocalService.getVersions(entryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.trash.model.TrashVersion> getVersions(
+		long entryId, java.lang.String className) {
+		return _trashVersionLocalService.getVersions(entryId, className);
 	}
 
 	/**

@@ -50,7 +50,7 @@ public class CommerceProductOptionValueLocalServiceWrapper
 	public com.liferay.commerce.product.model.CommerceProductOptionValue addCommerceProductOptionValue(
 		long commerceProductOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		long priority,
+		int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceProductOptionValueLocalService.addCommerceProductOptionValue(commerceProductOptionId,
@@ -133,7 +133,7 @@ public class CommerceProductOptionValueLocalServiceWrapper
 	public com.liferay.commerce.product.model.CommerceProductOptionValue updateCommerceProductOptionValue(
 		long commerceProductOptionValueId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		long priority,
+		int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceProductOptionValueLocalService.updateCommerceProductOptionValue(commerceProductOptionValueId,

@@ -78,7 +78,7 @@ public interface CommerceProductOptionValueLocalService extends BaseLocalService
 
 	public CommerceProductOptionValue addCommerceProductOptionValue(
 		long commerceProductOptionId, Map<Locale, java.lang.String> titleMap,
-		long priority, ServiceContext serviceContext) throws PortalException;
+		int priority, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce product option value with the primary key. Does not add the commerce product option value to the database.
@@ -140,7 +140,7 @@ public interface CommerceProductOptionValueLocalService extends BaseLocalService
 
 	public CommerceProductOptionValue updateCommerceProductOptionValue(
 		long commerceProductOptionValueId,
-		Map<Locale, java.lang.String> titleMap, long priority,
+		Map<Locale, java.lang.String> titleMap, int priority,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

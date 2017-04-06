@@ -206,6 +206,12 @@ public class CommerceProductOptionPersistenceTest {
 			getOrderByComparator());
 	}
 
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
 	protected OrderByComparator<CommerceProductOption> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CommerceProductOption",
 			"commerceProductOptionId", true, "groupId", true, "companyId",

@@ -144,15 +144,15 @@ configuration changes.
 
 ---------------------------------------
 
-### Moved Captcha Portal Properties to OSGi Configuration
+### Moved CAPTCHA Portal Properties to OSGi Configuration
 - **Date:** 2017-Feb-13
 - **JIRA Ticket:** LPS-67830
 
 #### What changed?
 
-The captcha properties have been moved from portal.properties and Server
-Administration to an OSGi configuration named
-`CaptchaConfiguration.java` in the `captcha-api` module.
+The CAPTCHA properties have been moved from `portal.properties` and Server
+Administration to an OSGi configuration named `CaptchaConfiguration.java` in the
+`captcha-api` module.
 
 #### Who is affected?
 
@@ -181,8 +181,8 @@ This affects anyone who is using the following portal properties:
 
 Instead of overriding the `portal.properties` file, you can manage the
 properties from Portal's configuration administrator. This can be accessed by
-navigating to Liferay's *Control Panel* &rarr; *Configuration* &rarr; *System
-Settings* &rarr; *Captcha* and editing the settings there.
+navigating to Liferay Portal's *Control Panel* &rarr; *Configuration* &rarr;
+*System Settings* &rarr; *Captcha* and editing the settings there.
 
 If you would like to include the new configuration in your application, follow
 the instructions for

@@ -28,15 +28,6 @@ import java.util.regex.Pattern;
 public class FriendlyURLNormalizerUtil {
 
 	public static FriendlyURLNormalizer getFriendlyURLNormalizer() {
-		if (_serviceTracker == null) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			_serviceTracker = registry.trackServices(
-				FriendlyURLNormalizer.class);
-
-			_serviceTracker.open();
-		}
-
 		return _serviceTracker.getService();
 	}
 
@@ -79,5 +70,14 @@ public class FriendlyURLNormalizerUtil {
 	private static FriendlyURLNormalizer _friendlyURLNormalizer;
 	private static ServiceTracker<FriendlyURLNormalizer, FriendlyURLNormalizer>
 		_serviceTracker;
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			FriendlyURLNormalizer.class);
+
+		_serviceTracker.open();
+	}
 
 }

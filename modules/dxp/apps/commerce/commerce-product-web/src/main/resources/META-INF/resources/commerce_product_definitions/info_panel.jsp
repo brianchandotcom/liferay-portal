@@ -25,7 +25,7 @@ if (ListUtil.isEmpty(commerceProductDefinitions)) {
 %>
 
 <c:choose>
-	<c:when test="<%= ListUtil.isNotEmpty(commerceProductDefinitions) && (commerceProductDefinitions.size() == 1) %>">
+	<c:when test="<%= commerceProductDefinitions.size() == 1 %>">
 
 		<%
 		CommerceProductDefinition commerceProductDefinition = commerceProductDefinitions.get(0);
@@ -66,7 +66,7 @@ if (ListUtil.isEmpty(commerceProductDefinitions)) {
 			</p>
 		</div>
 	</c:when>
-	<c:when test="<%= ListUtil.isNotEmpty(commerceProductDefinitions) && (commerceProductDefinitions.size() > 1) %>">
+	<c:when test="<%= commerceProductDefinitions.size() > 1 %>">
 		<div class="sidebar-header">
 			<h4><liferay-ui:message arguments="<%= commerceProductDefinitions.size() %>" key="x-items-are-selected" /></h4>
 		</div>

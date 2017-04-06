@@ -170,11 +170,7 @@ if (portletTitleBasedNavigation) {
 		<liferay-ui:error exception="<%= FileSizeException.class %>">
 
 			<%
-			long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
-
-			if (fileMaxSize == 0) {
-				fileMaxSize = uploadServletRequestImplMaxSize;
-			}
+			long fileMaxSize = DLValidatorUtil.getMaxAllowableSize();
 			%>
 
 			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />

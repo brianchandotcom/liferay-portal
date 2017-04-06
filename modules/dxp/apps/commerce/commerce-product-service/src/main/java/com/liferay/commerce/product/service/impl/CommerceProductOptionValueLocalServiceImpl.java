@@ -55,9 +55,9 @@ public class CommerceProductOptionValueLocalServiceImpl
 		commerceProductOptionValue.setCompanyId(user.getCompanyId());
 		commerceProductOptionValue.setUserId(user.getUserId());
 		commerceProductOptionValue.setUserName(user.getFullName());
-		commerceProductOptionValue.setTitleMap(titleMap);
 		commerceProductOptionValue.setCommerceProductOptionId(
 			commerceProductOptionId);
+		commerceProductOptionValue.setTitleMap(titleMap);
 		commerceProductOptionValue.setPriority(priority);
 		commerceProductOptionValue.setExpandoBridgeAttributes(serviceContext);
 

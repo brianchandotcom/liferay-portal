@@ -68,6 +68,22 @@ public class TrashEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.trash.model.TrashEntry> searchTrashEntries(
+		long companyId, long groupId, long userId, java.lang.String keywords,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort) {
+		return getService()
+				   .searchTrashEntries(companyId, groupId, userId, keywords,
+			start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(long companyId,
+		long groupId, long userId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort) {
+		return getService()
+				   .search(companyId, groupId, userId, keywords, start, end,
+			sort);
+	}
+
 	/**
 	* Adds the trash entry to the database. Also notifies the appropriate model listeners.
 	*
@@ -80,6 +96,36 @@ public class TrashEntryLocalServiceUtil {
 	}
 
 	/**
+	* Moves an entry to trash.
+	*
+	* @param userId the primary key of the user removing the entity
+	* @param groupId the primary key of the entry's group
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @param classUuid the UUID of the entity's class
+	* @param referrerClassName the referrer class name used to add a deletion
+	{@link SystemEvent}
+	* @param status the status of the entity prior to being moved to trash
+	* @param statusOVPs the primary keys and statuses of any of the entry's
+	versions (e.g., {@link
+	com.liferay.portlet.documentlibrary.model.DLFileVersion})
+	* @param typeSettingsProperties the type settings properties
+	* @return the trashEntry
+	*/
+	public static com.liferay.trash.model.TrashEntry addTrashEntry(
+		long userId, long groupId, java.lang.String className, long classPK,
+		java.lang.String classUuid, java.lang.String referrerClassName,
+		int status,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.Integer>> statusOVPs,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addTrashEntry(userId, groupId, className, classPK,
+			classUuid, referrerClassName, status, statusOVPs,
+			typeSettingsProperties);
+	}
+
+	/**
 	* Creates a new trash entry with the primary key. Does not add the trash entry to the database.
 	*
 	* @param entryId the primary key for the new trash entry
@@ -88,6 +134,33 @@ public class TrashEntryLocalServiceUtil {
 	public static com.liferay.trash.model.TrashEntry createTrashEntry(
 		long entryId) {
 		return getService().createTrashEntry(entryId);
+	}
+
+	public static com.liferay.trash.model.TrashEntry deleteEntry(
+		com.liferay.trash.model.TrashEntry trashEntry) {
+		return getService().deleteEntry(trashEntry);
+	}
+
+	/**
+	* Deletes the trash entry with the entity class name and primary key.
+	*
+	* @param className the class name of entity
+	* @param classPK the primary key of the entry
+	* @return the trash entry with the entity class name and primary key
+	*/
+	public static com.liferay.trash.model.TrashEntry deleteEntry(
+		java.lang.String className, long classPK) {
+		return getService().deleteEntry(className, classPK);
+	}
+
+	/**
+	* Deletes the trash entry with the primary key.
+	*
+	* @param entryId the primary key of the trash entry
+	* @return the trash entry with the primary key
+	*/
+	public static com.liferay.trash.model.TrashEntry deleteEntry(long entryId) {
+		return getService().deleteEntry(entryId);
 	}
 
 	/**
@@ -114,9 +187,55 @@ public class TrashEntryLocalServiceUtil {
 		return getService().deleteTrashEntry(entryId);
 	}
 
+	/**
+	* Returns the trash entry with the entity class name and primary key.
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @return the trash entry with the entity class name and primary key
+	*/
+	public static com.liferay.trash.model.TrashEntry fetchEntry(
+		java.lang.String className, long classPK) {
+		return getService().fetchEntry(className, classPK);
+	}
+
+	/**
+	* Returns the trash entry with the primary key.
+	*
+	* @param entryId the primary key of the entry
+	* @return the trash entry with the primary key
+	*/
+	public static com.liferay.trash.model.TrashEntry fetchEntry(long entryId) {
+		return getService().fetchEntry(entryId);
+	}
+
 	public static com.liferay.trash.model.TrashEntry fetchTrashEntry(
 		long entryId) {
 		return getService().fetchTrashEntry(entryId);
+	}
+
+	/**
+	* Returns the entry with the entity class name and primary key.
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @return the trash entry with the entity class name and primary key
+	*/
+	public static com.liferay.trash.model.TrashEntry getEntry(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getEntry(className, classPK);
+	}
+
+	/**
+	* Returns the trash entry with the primary key.
+	*
+	* @param entryId the primary key of the trash entry
+	* @return the trash entry with the primary key
+	*/
+	public static com.liferay.trash.model.TrashEntry getEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getEntry(entryId);
 	}
 
 	/**
@@ -140,6 +259,16 @@ public class TrashEntryLocalServiceUtil {
 	public static com.liferay.trash.model.TrashEntry updateTrashEntry(
 		com.liferay.trash.model.TrashEntry trashEntry) {
 		return getService().updateTrashEntry(trashEntry);
+	}
+
+	/**
+	* Returns the number of trash entries with the group ID.
+	*
+	* @param groupId the primary key of the group
+	* @return the number of matching trash entries
+	*/
+	public static int getEntriesCount(long groupId) {
+		return getService().getEntriesCount(groupId);
 	}
 
 	/**
@@ -211,6 +340,54 @@ public class TrashEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns the trash entries with the matching group ID.
+	*
+	* @param groupId the primary key of the group
+	* @return the trash entries with the group ID
+	*/
+	public static java.util.List<com.liferay.trash.model.TrashEntry> getEntries(
+		long groupId) {
+		return getService().getEntries(groupId);
+	}
+
+	/**
+	* Returns a range of all the trash entries matching the group ID.
+	*
+	* @param groupId the primary key of the group
+	* @param start the lower bound of the range of trash entries to return
+	* @param end the upper bound of the range of trash entries to return (not
+	inclusive)
+	* @return the range of matching trash entries
+	*/
+	public static java.util.List<com.liferay.trash.model.TrashEntry> getEntries(
+		long groupId, int start, int end) {
+		return getService().getEntries(groupId, start, end);
+	}
+
+	/**
+	* Returns a range of all the trash entries matching the group ID.
+	*
+	* @param groupId the primary key of the group
+	* @param start the lower bound of the range of trash entries to return
+	* @param end the upper bound of the range of trash entries to return (not
+	inclusive)
+	* @param obc the comparator to order the trash entries (optionally
+	<code>null</code>)
+	* @return the range of matching trash entries ordered by comparator
+	<code>obc</code>
+	*/
+	public static java.util.List<com.liferay.trash.model.TrashEntry> getEntries(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.trash.model.TrashEntry> obc) {
+		return getService().getEntries(groupId, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.trash.model.TrashEntry> getEntries(
+		long groupId, java.lang.String className) {
+		return getService().getEntries(groupId, className);
+	}
+
+	/**
 	* Returns a range of all the trash entries.
 	*
 	* <p>
@@ -248,6 +425,15 @@ public class TrashEntryLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void checkEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkEntries();
+	}
+
+	public static void deleteEntries(long groupId) {
+		getService().deleteEntries(groupId);
 	}
 
 	public static TrashEntryLocalService getService() {

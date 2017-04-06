@@ -466,7 +466,7 @@
 		</subant>
 	</target>
 
-	<target depends="get-app-version,get-artifact-versions-previous-release" name="update-app-marketplace-verson">
+	<target depends="get-app-version,get-artifact-versions-previous-release" name="update-app-marketplace-verson" unless="build.app.from.changelog">
 		<echo message="app.version.previous.release = ${app.version.previous.release}" />
 
 		<echo message="app.version = ${app.version}" />
@@ -480,7 +480,7 @@
 		/>
 	</target>
 
-	<target depends="dist-module-artifacts,get-app-artifacts,get-app-change-log,get-app-change-log-header,get-app-git-id,release-tool-dependencies" name="write-app-change-log">
+	<target depends="dist-module-artifacts,get-app-artifacts,get-app-change-log,get-app-change-log-header,get-app-git-id,release-tool-dependencies" name="write-app-change-log" unless="build.app.from.changelog">
 		<property name="double.space" value="${line.separator}${line.separator}" />
 
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log.header}" />

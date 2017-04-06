@@ -82,6 +82,7 @@
 	<classpathentry kind="lib" path="lib/development/saxpath.jar"/>
 	<classpathentry kind="lib" path="lib/development/sdk-addon-api-0.2.jar"/>
 	<classpathentry kind="lib" path="lib/development/servlet-api.jar"/>
+	<classpathentry kind="lib" path="lib/development/slf4j-simple.jar"/>
 	<classpathentry kind="lib" path="lib/development/smtp.jar"/>
 	<classpathentry kind="lib" path="lib/development/spring-instrument.jar"/>
 	<classpathentry kind="lib" path="lib/development/spring-instrument-tomcat.jar"/>
@@ -92,6 +93,7 @@
 	<classpathentry kind="lib" path="lib/development/velocity.jar"/>
 	<classpathentry kind="lib" path="lib/development/velocity-tools.jar"/>
 	<classpathentry kind="lib" path="lib/development/websocket-api.jar"/>
+	<classpathentry kind="lib" path="lib/development/xmlresolver.jar"/>
 	<classpathentry kind="lib" path="lib/development/xmltask.jar"/>
 	<classpathentry kind="lib" path="lib/global/portlet.jar"/>
 	<classpathentry kind="lib" path="lib/portal/abdera.jar"/>

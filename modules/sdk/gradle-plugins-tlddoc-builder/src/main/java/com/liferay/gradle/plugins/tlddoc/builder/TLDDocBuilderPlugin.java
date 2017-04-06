@@ -52,11 +52,17 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 
 	public static final String VALIDATE_TLD_TASK_NAME = "validateTLD";
 
+	public static final String XML_PARSER_CONFIGURATION_NAME = "xmlParser";
+
 	@Override
 	public void apply(Project project) {
 		Configuration tlddocConfiguration = addConfigurationTLDDoc(project);
+		Configuration xmlParserConfiguration = _addConfigurationXMLParser(
+			project);
 
-		ValidateSchemaTask validateTLDTask = _addTaskValidateTLD(project);
+		ValidateSchemaTask validateTLDTask = _addTaskValidateTLD(
+			project, "org.xmlresolver.tools.ResolvingXMLReader",
+			xmlParserConfiguration);
 
 		Copy copyTLDDocResourcesTask = _addTaskCopyTLDDocResources(project);
 
@@ -91,6 +97,33 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 	private static void _addDependenciesTLDDoc(Project project) {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "taglibrarydoc", "tlddoc", "1.3");
+	}
+
+	private static void _addDependenciesXMLParser(Project project) {
+		GradleUtil.addDependency(
+			project, XML_PARSER_CONFIGURATION_NAME, "org.xmlresolver",
+			"xmlresolver", "0.12.5");
+	}
+
+	private Configuration _addConfigurationXMLParser(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, XML_PARSER_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					_addDependenciesXMLParser(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures the XML Parser to use during schema validation.");
+		configuration.setVisible(false);
+
+		return configuration;
 	}
 
 	private Copy _addTaskCopyTLDDocResources(final Project project) {
@@ -145,11 +178,16 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 		return tlddocTask;
 	}
 
-	private ValidateSchemaTask _addTaskValidateTLD(Project project) {
+	private ValidateSchemaTask _addTaskValidateTLD(
+		Project project, String xmlParserClassName,
+		FileCollection xmlParserClasspath) {
+
 		final ValidateSchemaTask validateSchemaTask = GradleUtil.addTask(
 			project, VALIDATE_TLD_TASK_NAME, ValidateSchemaTask.class);
 
 		validateSchemaTask.setDescription("Validates TLD files.");
+		validateSchemaTask.setXMLParserClassName(xmlParserClassName);
+		validateSchemaTask.setXMLParserClasspath(xmlParserClasspath);
 
 		PluginContainer pluginContainer = project.getPlugins();
 

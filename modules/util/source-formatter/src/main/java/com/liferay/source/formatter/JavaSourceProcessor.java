@@ -28,7 +28,10 @@ import com.liferay.source.formatter.checks.CopyrightCheck;
 import com.liferay.source.formatter.checks.JavaAnnotationsCheck;
 import com.liferay.source.formatter.checks.JavaAssertEqualsCheck;
 import com.liferay.source.formatter.checks.JavaBooleanUsageCheck;
+import com.liferay.source.formatter.checks.JavaCleanUpMethodVariablesCheck;
 import com.liferay.source.formatter.checks.JavaCombineLinesCheck;
+import com.liferay.source.formatter.checks.JavaConstructorParameterOrder;
+import com.liferay.source.formatter.checks.JavaConstructorSuperCallCheck;
 import com.liferay.source.formatter.checks.JavaDataAccessConnectionCheck;
 import com.liferay.source.formatter.checks.JavaDeprecatedJavadocCheck;
 import com.liferay.source.formatter.checks.JavaDeserializationSecurityCheck;
@@ -52,14 +55,18 @@ import com.liferay.source.formatter.checks.JavaModuleTestCheck;
 import com.liferay.source.formatter.checks.JavaOSGiReferenceCheck;
 import com.liferay.source.formatter.checks.JavaPackagePathCheck;
 import com.liferay.source.formatter.checks.JavaProcessCallableCheck;
+import com.liferay.source.formatter.checks.JavaRedundantConstructorCheck;
 import com.liferay.source.formatter.checks.JavaResultSetCheck;
 import com.liferay.source.formatter.checks.JavaSeeAnnotationCheck;
+import com.liferay.source.formatter.checks.JavaSignatureStylingCheck;
+import com.liferay.source.formatter.checks.JavaStaticBlockCheck;
 import com.liferay.source.formatter.checks.JavaStopWatchCheck;
 import com.liferay.source.formatter.checks.JavaStylingCheck;
 import com.liferay.source.formatter.checks.JavaSystemEventAnnotationCheck;
 import com.liferay.source.formatter.checks.JavaSystemExceptionCheck;
 import com.liferay.source.formatter.checks.JavaTermDividersCheck;
 import com.liferay.source.formatter.checks.JavaTermOrderCheck;
+import com.liferay.source.formatter.checks.JavaTestMethodAnnotationsCheck;
 import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
 import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
 import com.liferay.source.formatter.checks.JavaWhitespaceCheck;
@@ -69,7 +76,6 @@ import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.SessionKeysCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
-import com.liferay.source.formatter.checks.StaticBlockCheck;
 import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
 import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
@@ -201,7 +207,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				className, packagePath, file, fileName, absolutePath,
 				newContent, javaClassContent, javaClassLineCount,
 				StringPool.BLANK, _CHECK_JAVA_FIELD_TYPES_EXCLUDES,
-				_JAVATERM_SORT_EXCLUDES, _TEST_ANNOTATIONS_EXCLUDES);
+				_JAVATERM_SORT_EXCLUDES);
 		}
 
 		matcher = _anonymousClassPattern.matcher(newContent);
@@ -230,8 +236,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					StringPool.BLANK, StringPool.BLANK, file, fileName,
 					absolutePath, newContent, javaClassContent,
 					javaClassLineCount, matcher.group(1),
-					_CHECK_JAVA_FIELD_TYPES_EXCLUDES, _JAVATERM_SORT_EXCLUDES,
-					_TEST_ANNOTATIONS_EXCLUDES);
+					_CHECK_JAVA_FIELD_TYPES_EXCLUDES, _JAVATERM_SORT_EXCLUDES);
 
 				break;
 			}
@@ -716,8 +721,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JavaTermDividersCheck());
 
 		_sourceChecks.add(
-			new StaticBlockCheck(getExcludes(_JAVATERM_SORT_EXCLUDES)));
+			new JavaStaticBlockCheck(getExcludes(_JAVATERM_SORT_EXCLUDES)));
 
+		_sourceChecks.add(new JavaConstructorParameterOrder());
+		_sourceChecks.add(new JavaConstructorSuperCallCheck());
+		_sourceChecks.add(new JavaRedundantConstructorCheck());
+		_sourceChecks.add(new JavaSignatureStylingCheck());
+
+		if (portalSource || subrepository) {
+			_sourceChecks.add(new JavaCleanUpMethodVariablesCheck());
+			_sourceChecks.add(
+				new JavaTestMethodAnnotationsCheck(
+					getExcludes(_TEST_ANNOTATIONS_EXCLUDES)));
+		}
 	}
 
 	private void _processCheckStyle() throws Exception {

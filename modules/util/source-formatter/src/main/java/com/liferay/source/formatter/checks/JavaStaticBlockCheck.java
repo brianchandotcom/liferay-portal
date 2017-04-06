@@ -26,16 +26,16 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class StaticBlockCheck extends BaseJavaTermCheck {
+public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 
-	public StaticBlockCheck(List<String> excludes) {
+	public JavaStaticBlockCheck(List<String> excludes) {
 		_excludes = excludes;
 	}
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, JavaTerm javaTerm)
-		throws Exception {
+		String fileName, String absolutePath, JavaTerm javaTerm,
+		String fileContent) {
 
 		JavaClass javaClass = (JavaClass)javaTerm;
 

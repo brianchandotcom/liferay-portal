@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.parser;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Hugo Huijser
  */
@@ -51,6 +53,18 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	@Override
 	public JavaSignature getSignature() {
 		return null;
+	}
+
+	@Override
+	public boolean hasAnnotation(String annotation) {
+		if (_content.contains("\t@" + annotation + "\n") ||
+			_content.contains(
+				"\t@" + annotation + StringPool.OPEN_PARENTHESIS)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

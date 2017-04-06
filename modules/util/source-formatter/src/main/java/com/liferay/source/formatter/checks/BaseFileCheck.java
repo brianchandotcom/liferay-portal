@@ -147,18 +147,6 @@ public abstract class BaseFileCheck
 		}
 	}
 
-	protected int getLeadingTabCount(String line) {
-		int leadingTabCount = 0;
-
-		while (line.startsWith(StringPool.TAB)) {
-			line = line.substring(1);
-
-			leadingTabCount++;
-		}
-
-		return leadingTabCount;
-	}
-
 	protected int getLevel(String s) {
 		return SourceUtil.getLevel(s);
 	}

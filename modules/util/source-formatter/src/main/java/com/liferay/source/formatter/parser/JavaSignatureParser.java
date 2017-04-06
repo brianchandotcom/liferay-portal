@@ -97,7 +97,7 @@ public class JavaSignatureParser {
 				return javaSignature;
 			}
 
-			String parameterName = parameters.substring(x + 1);
+			String parameterName = parameters.substring(x + 1, y);
 
 			javaSignature.addParameter(parameterName, parameterType);
 

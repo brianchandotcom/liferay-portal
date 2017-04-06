@@ -40,6 +40,8 @@ public interface JavaTerm {
 
 	public JavaSignature getSignature();
 
+	public boolean hasAnnotation(String annotation);
+
 	public boolean isStatic();
 
 	public void setParentJavaClass(JavaClass javaClass);

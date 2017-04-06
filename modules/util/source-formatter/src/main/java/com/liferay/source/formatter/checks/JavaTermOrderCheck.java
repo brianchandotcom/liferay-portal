@@ -42,7 +42,8 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, JavaTerm javaTerm)
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
 		throws Exception {
 
 		String javaTermContent = javaTerm.getContent();

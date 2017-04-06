@@ -73,6 +73,13 @@ public class WorkspacePlugin implements Plugin<Settings> {
 					Plugin<Project> plugin = null;
 
 					if (project.getParent() == null) {
+						for (ProjectConfigurator projectConfigurator :
+								workspaceExtension.getProjectConfigurators()) {
+
+							projectConfigurator.configureRootProject(
+								project, workspaceExtension);
+						}
+
 						plugin =
 							workspaceExtension.getRootProjectConfigurator();
 					}

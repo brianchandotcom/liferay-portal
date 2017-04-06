@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
+import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
@@ -44,6 +45,7 @@ import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.RelativePath;
+import org.gradle.api.initialization.Settings;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.specs.Spec;
@@ -78,12 +80,31 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String INIT_BUNDLE_TASK_NAME = "initBundle";
 
+	/**
+	 * @deprecated As of 1.4.0, replaced by {@link
+	 *             #RootProjectConfigurator(Settings)}
+	 */
+	@Deprecated
+	public RootProjectConfigurator() {
+	}
+
+	public RootProjectConfigurator(Settings settings) {
+		_defaultRepositoryEnabled = GradleUtil.getProperty(
+			settings,
+			WorkspacePlugin.PROPERTY_PREFIX + ".default.repository.enabled",
+			_DEFAULT_REPOSITORY_ENABLED);
+	}
+
 	@Override
 	public void apply(Project project) {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
 		GradleUtil.applyPlugin(project, LifecycleBasePlugin.class);
+
+		if (isDefaultRepositoryEnabled()) {
+			GradleUtil.addDefaultRepositories(project);
+		}
 
 		Download downloadBundleTask = _addTaskDownloadBundle(
 			project, workspaceExtension);
@@ -103,6 +124,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			workspaceExtension);
 
 		_addTaskInitBundle(project, downloadBundleTask, workspaceExtension);
+	}
+
+	public boolean isDefaultRepositoryEnabled() {
+		return _defaultRepositoryEnabled;
+	}
+
+	public void setDefaultRepositoryEnabled(boolean defaultRepositoryEnabled) {
+		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
 	private Copy _addTaskCopyBundle(
@@ -461,5 +490,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 	}
+
+	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
+
+	private boolean _defaultRepositoryEnabled;
 
 }

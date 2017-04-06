@@ -25,12 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.tiles.ComponentContext;
 import org.apache.struts.tiles.taglib.ComponentConstants;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Raymond Augé
  */
-@Component
 public class DoIncludeJSPDynamicInclude extends BaseDynamicInclude {
 
 	@Override

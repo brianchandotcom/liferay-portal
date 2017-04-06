@@ -663,14 +663,14 @@ public class LocalGitSyncUtil {
 					if (!localBranchNames.contains(upstreamBranchName)) {
 						updateLocalUpstreamBranch(
 							gitWorkingDirectory, upstreamBranchName,
-							upstreamBranchSha, upstreamRemoteConfig);
+							upstreamRemoteConfig);
 					}
 
 					return cacheBranchName;
 				}
 
 				updateLocalUpstreamBranch(
-					gitWorkingDirectory, upstreamBranchName, upstreamBranchSha,
+					gitWorkingDirectory, upstreamBranchName,
 					upstreamRemoteConfig);
 
 				gitWorkingDirectory.createLocalBranch(
@@ -861,8 +861,11 @@ public class LocalGitSyncUtil {
 
 	protected static void updateLocalUpstreamBranch(
 			GitWorkingDirectory gitWorkingDirectory, String upstreamBranchName,
-			String upstreamBranchSha, RemoteConfig upstreamRemoteConfig)
+			RemoteConfig upstreamRemoteConfig)
 		throws GitAPIException {
+
+		String upstreamBranchSha = gitWorkingDirectory.getRemoteBranchSha(
+			upstreamBranchName, upstreamRemoteConfig);
 
 		gitWorkingDirectory.rebaseAbort();
 

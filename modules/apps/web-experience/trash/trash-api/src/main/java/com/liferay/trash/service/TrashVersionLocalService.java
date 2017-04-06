@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import com.liferay.trash.model.TrashVersion;
 
@@ -89,6 +90,10 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public TrashVersion addTrashVersion(TrashVersion trashVersion);
 
+	public TrashVersion addTrashVersion(long trashEntryId,
+		java.lang.String className, long classPK, int status,
+		UnicodeProperties typeSettingsProperties);
+
 	/**
 	* Creates a new trash version with the primary key. Does not add the trash version to the database.
 	*
@@ -106,6 +111,9 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public TrashVersion deleteTrashVersion(TrashVersion trashVersion);
 
+	public TrashVersion deleteTrashVersion(java.lang.String className,
+		long classPK);
+
 	/**
 	* Deletes the trash version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -119,6 +127,17 @@ public interface TrashVersionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TrashVersion fetchTrashVersion(long versionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TrashVersion fetchVersion(java.lang.String className, long classPK);
+
+	/**
+	* @deprecated As of 1.0.0, replaced by {@link #fetchVersion(String, long)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TrashVersion fetchVersion(long entryId, java.lang.String className,
+		long classPK);
 
 	/**
 	* Returns the trash version with the primary key.
@@ -207,6 +226,13 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<TrashVersion> getTrashVersions(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TrashVersion> getVersions(long entryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TrashVersion> getVersions(long entryId,
+		java.lang.String className);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

@@ -167,6 +167,16 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
+	public boolean isTrashEntry(java.lang.Class<?> clazz, long classPK) {
+		return _trashEntry.isTrashEntry(clazz, classPK);
+	}
+
+	@Override
+	public boolean isTrashEntry(java.lang.String className, long classPK) {
+		return _trashEntry.isTrashEntry(className, classPK);
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _trashEntry.getExpandoBridge();
 	}
@@ -174,6 +184,16 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<TrashEntry> toCacheModel() {
 		return _trashEntry.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+		return _trashEntry.getTypeSettingsProperties();
+	}
+
+	@Override
+	public TrashEntry getRootEntry() {
+		return _trashEntry.getRootEntry();
 	}
 
 	@Override
@@ -224,6 +244,17 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	@Override
 	public java.lang.String getTypeSettings() {
 		return _trashEntry.getTypeSettings();
+	}
+
+	@Override
+	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
+		return _trashEntry.getTypeSettingsProperty(key);
+	}
+
+	@Override
+	public java.lang.String getTypeSettingsProperty(java.lang.String key,
+		java.lang.String defaultValue) {
+		return _trashEntry.getTypeSettingsProperty(key, defaultValue);
 	}
 
 	/**
@@ -457,6 +488,11 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 		_trashEntry.setPrimaryKeyObj(primaryKeyObj);
 	}
 
+	@Override
+	public void setRootEntry(TrashEntry rootEntry) {
+		_trashEntry.setRootEntry(rootEntry);
+	}
+
 	/**
 	* Sets the status of this trash entry.
 	*
@@ -485,6 +521,12 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	@Override
 	public void setTypeSettings(java.lang.String typeSettings) {
 		_trashEntry.setTypeSettings(typeSettings);
+	}
+
+	@Override
+	public void setTypeSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
+		_trashEntry.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
 	/**

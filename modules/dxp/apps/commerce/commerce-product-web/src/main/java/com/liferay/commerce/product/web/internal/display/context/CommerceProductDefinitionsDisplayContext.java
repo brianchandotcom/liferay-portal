@@ -47,9 +47,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceProductDisplayContext {
+public class CommerceProductDefinitionsDisplayContext {
 
-	public CommerceProductDisplayContext(
+	public CommerceProductDefinitionsDisplayContext(
 			HttpServletRequest request,
 			CommerceProductDefinitionLocalService
 				commerceProductDefinitionLocalService)

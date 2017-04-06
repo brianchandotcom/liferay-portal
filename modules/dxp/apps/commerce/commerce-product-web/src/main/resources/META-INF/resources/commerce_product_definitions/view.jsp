@@ -19,11 +19,11 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-definitions");
 
-SearchContainer productDefinitionSearchContainer = commerceProductDisplayContext.getSearchContainer();
+SearchContainer productDefinitionSearchContainer = commerceProductDefinitionsDisplayContext.getSearchContainer();
 
-String displayStyle = commerceProductDisplayContext.getDisplayStyle();
+String displayStyle = commerceProductDefinitionsDisplayContext.getDisplayStyle();
 
-PortletURL portletURL = commerceProductDisplayContext.getPortletURL();
+PortletURL portletURL = commerceProductDefinitionsDisplayContext.getPortletURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
 portletURL.setParameter("searchContainerId", "commerceProductDefinitions");
@@ -58,7 +58,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <div id="<portlet:namespace />productsContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<c:if test="<%= commerceProductDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= commerceProductDefinitionsDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL
 				copyCurrentRenderParameters="<%= false %>"
 				id="/commerce_product_definitions/info_panel"
@@ -103,7 +103,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 											actionJspServletContext="<%= application %>"
 											icon="web-content"
 											resultRow="<%= row %>"
-											rowChecker="<%= commerceProductDisplayContext.getRowChecker() %>"
+											rowChecker="<%= commerceProductDefinitionsDisplayContext.getRowChecker() %>"
 											title="<%= HtmlUtil.escape(commerceProductDefinition.getTitle(locale)) %>"
 										>
 											<%@ include file="/commerce_product_definitions/commerce_product_definition_vertical_card.jspf" %>

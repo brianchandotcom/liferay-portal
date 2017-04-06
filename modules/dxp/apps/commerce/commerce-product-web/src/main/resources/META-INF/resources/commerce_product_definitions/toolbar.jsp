@@ -25,7 +25,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId", "co
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= commerceProductDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= commerceProductDefinitionsDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
@@ -34,27 +34,27 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId", "co
 
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= commerceProductDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= commerceProductDisplayContext.getDisplayStyle() %>"
+			portletURL="<%= commerceProductDefinitionsDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= commerceProductDefinitionsDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= commerceProductDisplayContext.getPortletURL() %>"
+			portletURL="<%= commerceProductDefinitionsDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceProductDisplayContext.getOrderByCol() %>"
-			orderByType="<%= commerceProductDisplayContext.getOrderByType() %>"
+			orderByCol="<%= commerceProductDefinitionsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= commerceProductDefinitionsDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"create-date", "display-date"} %>'
-			portletURL="<%= commerceProductDisplayContext.getPortletURL() %>"
+			portletURL="<%= commerceProductDefinitionsDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<c:if test="<%= commerceProductDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= commerceProductDefinitionsDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"

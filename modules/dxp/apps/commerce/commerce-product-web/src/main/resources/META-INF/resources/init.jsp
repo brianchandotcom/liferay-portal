@@ -28,7 +28,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.commerce.product.exception.NoSuchProductDefinitionException" %><%@
 page import="com.liferay.commerce.product.model.CommerceProductDefinition" %><%@
 page import="com.liferay.commerce.product.web.internal.constants.CommerceProductWebKeys" %><%@
-page import="com.liferay.commerce.product.web.internal.display.context.CommerceProductDisplayContext" %><%@
+page import="com.liferay.commerce.product.web.internal.display.context.CommerceProductDefinitionsDisplayContext" %><%@
 page import="com.liferay.commerce.product.web.internal.servlet.taglib.ui.CommerceProductFormNavigatorConstants" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

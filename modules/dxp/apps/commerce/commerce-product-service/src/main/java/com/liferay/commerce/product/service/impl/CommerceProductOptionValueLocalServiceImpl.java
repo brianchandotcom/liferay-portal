@@ -30,8 +30,6 @@ import java.util.Map;
 
 /**
  * @author Marco Leo
- * @see CommerceProductOptionValueLocalServiceBaseImpl
- * @see com.liferay.commerce.product.service.CommerceProductOptionValueLocalServiceUtil
  */
 public class CommerceProductOptionValueLocalServiceImpl
 	extends CommerceProductOptionValueLocalServiceBaseImpl {

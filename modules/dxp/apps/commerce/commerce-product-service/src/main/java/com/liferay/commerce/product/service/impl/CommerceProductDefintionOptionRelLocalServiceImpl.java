@@ -17,25 +17,8 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.service.base.CommerceProductDefintionOptionRelLocalServiceBaseImpl;
 
 /**
- * The implementation of the commerce product defintion option rel local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.product.service.CommerceProductDefintionOptionRelLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Marco Leo
- * @see CommerceProductDefintionOptionRelLocalServiceBaseImpl
- * @see com.liferay.commerce.product.service.CommerceProductDefintionOptionRelLocalServiceUtil
  */
 public class CommerceProductDefintionOptionRelLocalServiceImpl
 	extends CommerceProductDefintionOptionRelLocalServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CommerceProductDefintionOptionRelLocalServiceUtil} to access the commerce product defintion option rel local service.
-	 */
 }

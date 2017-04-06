@@ -49,12 +49,18 @@ public class FormNavigatorEntryConfigurationParser {
 
 		List<String> formNavigatorEntryKeys = null;
 
-		if (Validator.isNotNull(context)) {
+		boolean hasCategory = Validator.isNotNull(categoryKey);
+		boolean hasContext = Validator.isNotNull(context);
+
+		if (hasContext && hasCategory) {
 			formNavigatorEntryKeys = _formNavigatorEntryKeysMap.get(
 				context + StringPool.PERIOD + categoryKey);
 		}
+		else if (hasContext) {
+			formNavigatorEntryKeys = _formNavigatorEntryKeysMap.get(context);
+		}
 
-		if (formNavigatorEntryKeys == null) {
+		if ((formNavigatorEntryKeys == null) && hasCategory) {
 			formNavigatorEntryKeys = _formNavigatorEntryKeysMap.get(
 				categoryKey);
 		}

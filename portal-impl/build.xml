@@ -208,6 +208,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="service.hbm.file=${basedir}/src/META-INF/portal-hbm.xml" />
 			<arg value="service.impl.dir=${basedir}/src" />
 			<arg value="service.input.file=${service.file}" />
+			<arg value="service.model.hints.configs=${basedir}/src/META-INF/portal-model-hints.xml" />
 			<arg value="service.model.hints.file=${basedir}/src/META-INF/portal-model-hints.xml" />
 			<arg value="service.osgi.module=false" />
 			<arg value="service.plugin.name=" />

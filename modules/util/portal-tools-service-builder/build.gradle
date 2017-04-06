@@ -12,6 +12,10 @@ buildPluginDescriptor {
 	goalPrefix = "service-builder"
 }
 
+configurations {
+	xmltask
+}
+
 dependencies {
 	compile group: "com.thoughtworks.qdox", name: "qdox", transitive: false, version: "1.12.1"
 	compile group: "dom4j", name: "dom4j", transitive: false, version: "1.6.1"
@@ -26,6 +30,8 @@ dependencies {
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 	provided group: "xerces", name: "xercesImpl", transitive: false, version: "2.11.0"
+
+	xmltask group: "com.oopsconsultancy", name: "xmltask", version: "1.16"
 }
 
 formatSource {
@@ -41,6 +47,20 @@ liferay {
 }
 
 processResources {
+	doLast {
+		File portalModelHintsXmlFile = new File(destinationDir, "META-INF/portal-model-hints.xml")
+
+		ant.taskdef classname: "com.oopsconsultancy.xmltask.ant.XmlTask", classpath: configurations.xmltask.asPath, name: "xmltask"
+
+		ant.xmltask(dest: portalModelHintsXmlFile, outputter: "simple:4", source: portalModelHintsXmlFile) {
+			remove path: "/model-hints/model/*"
+		}
+
+		String portalModelHintsXml = portalModelHintsXmlFile.text.trim()
+
+		portalModelHintsXmlFile.text = portalModelHintsXml.replace(' ' * 4, '\t')
+	}
+
 	from {
 		File portalImplJarFile = configurations.provided.find {
 			it.name.startsWith "com.liferay.portal.impl-"

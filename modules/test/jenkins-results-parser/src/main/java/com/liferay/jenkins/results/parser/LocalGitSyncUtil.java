@@ -606,12 +606,13 @@ public class LocalGitSyncUtil {
 
 		File repositoryDirectory = gitWorkingDirectory.getWorkingDirectory();
 
+		String originalBranchName = gitWorkingDirectory.getCurrentBranch();
+
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"Starting synchronization with local-git. Current repository ",
-				"directory is ", repositoryDirectory.getPath(), "."));
-
-		String originalBranchName = gitWorkingDirectory.getCurrentBranch();
+				"directory is ", repositoryDirectory.getPath(), ". Current",
+				"branch is ", originalBranchName));
 
 		RemoteConfig senderRemoteConfig = null;
 		RemoteConfig upstreamRemoteConfig = null;
@@ -656,34 +657,21 @@ public class LocalGitSyncUtil {
 						cacheBranchName, gitWorkingDirectory,
 						localGitRemoteConfigs);
 
+					List<String> localBranchNames =
+						gitWorkingDirectory.getLocalBranchNames();
+
+					if (!localBranchNames.contains(upstreamBranchName)) {
+						updateLocalUpstreamBranch(
+							gitWorkingDirectory, upstreamBranchName,
+							upstreamBranchSha, upstreamRemoteConfig);
+					}
+
 					return cacheBranchName;
 				}
 
-				gitWorkingDirectory.rebaseAbort();
-
-				gitWorkingDirectory.clean();
-
-				gitWorkingDirectory.reset(null, ResetType.HARD);
-
-				gitWorkingDirectory.fetch(null, upstreamRemoteConfig);
-
-				String tempBranchName = "temp-" + start;
-
-				try {
-					gitWorkingDirectory.createLocalBranch(tempBranchName);
-
-					gitWorkingDirectory.checkoutBranch(tempBranchName);
-
-					gitWorkingDirectory.deleteLocalBranch(upstreamBranchName);
-
-					gitWorkingDirectory.createLocalBranch(
-						upstreamBranchName, true, upstreamBranchSha);
-
-					gitWorkingDirectory.checkoutBranch(upstreamBranchName);
-				}
-				finally {
-					gitWorkingDirectory.deleteLocalBranch(tempBranchName);
-				}
+				updateLocalUpstreamBranch(
+					gitWorkingDirectory, upstreamBranchName, upstreamBranchSha,
+					upstreamRemoteConfig);
 
 				gitWorkingDirectory.createLocalBranch(
 					cacheBranchName, true, null);
@@ -869,6 +857,39 @@ public class LocalGitSyncUtil {
 			"Cache branch timestamp updated in " +
 				JenkinsResultsParserUtil.toDurationString(
 					System.currentTimeMillis() - start));
+	}
+
+	protected static void updateLocalUpstreamBranch(
+			GitWorkingDirectory gitWorkingDirectory, String upstreamBranchName,
+			String upstreamBranchSha, RemoteConfig upstreamRemoteConfig)
+		throws GitAPIException {
+
+		gitWorkingDirectory.rebaseAbort();
+
+		gitWorkingDirectory.clean();
+
+		gitWorkingDirectory.reset(null, ResetType.HARD);
+
+		gitWorkingDirectory.fetch(null, upstreamRemoteConfig);
+
+		String tempBranchName = "temp-" + System.currentTimeMillis();
+
+		try {
+			gitWorkingDirectory.createLocalBranch(
+				tempBranchName, true, upstreamBranchSha);
+
+			gitWorkingDirectory.checkoutBranch(tempBranchName, "-f");
+
+			gitWorkingDirectory.deleteLocalBranch(upstreamBranchName);
+
+			gitWorkingDirectory.createLocalBranch(
+				upstreamBranchName, true, upstreamBranchSha);
+
+			gitWorkingDirectory.checkoutBranch(upstreamBranchName);
+		}
+		finally {
+			gitWorkingDirectory.deleteLocalBranch(tempBranchName);
+		}
 	}
 
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =

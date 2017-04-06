@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.web.portlet;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
@@ -24,6 +25,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -50,6 +52,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -63,7 +66,9 @@ import javax.portlet.ResourceResponse;
 
 import javax.servlet.ServletException;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -279,6 +284,13 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			themeDisplay.getPpid());
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
+			AssetPublisherWebConfiguration.class, properties);
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -295,6 +307,10 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER,
 				assetPublisherCustomizer);
+
+			renderRequest.setAttribute(
+				AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION,
+				assetPublisherWebConfiguration);
 
 			renderRequest.setAttribute(
 				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
@@ -328,6 +344,8 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 	@Reference
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
+
+	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
 
 	@Reference
 	protected Portal portal;

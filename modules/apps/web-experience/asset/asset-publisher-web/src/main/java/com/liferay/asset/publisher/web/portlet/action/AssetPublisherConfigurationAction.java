@@ -22,7 +22,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
@@ -30,6 +30,7 @@ import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.content.ContentUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -61,6 +63,7 @@ import com.liferay.portlet.PortletPreferencesImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -73,7 +76,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -121,6 +126,10 @@ public class AssetPublisherConfigurationAction
 			AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER,
 			assetPublisherCustomizer);
 
+		request.setAttribute(
+			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION,
+			assetPublisherWebConfiguration);
+
 		request.setAttribute(AssetPublisherWebKeys.ITEM_SELECTOR, itemSelector);
 
 		super.include(portletConfig, request, response);
@@ -134,20 +143,24 @@ public class AssetPublisherConfigurationAction
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
+		LocalizedValuesMap emailAssetEntryAddedBodyMap =
+			assetPublisherWebConfiguration.emailAssetEntryAddedBody();
+		LocalizedValuesMap emailAssetEntryAddedSubjectMap =
+			assetPublisherWebConfiguration.emailAssetEntryAddedSubject();
+
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailAssetEntryAddedBody_" + languageId,
 			ContentUtil.get(
 				AssetPublisherConfigurationAction.class.getClassLoader(),
-				AssetPublisherWebConfigurationValues.
-					EMAIL_ASSET_ENTRY_ADDED_BODY));
+				emailAssetEntryAddedBodyMap.get(LocaleUtil.getSiteDefault())));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailAssetEntryAddedSubject_" + languageId,
 			ContentUtil.get(
 				AssetPublisherConfigurationAction.class.getClassLoader(),
-				AssetPublisherWebConfigurationValues.
-					EMAIL_ASSET_ENTRY_ADDED_SUBJECT));
+				emailAssetEntryAddedSubjectMap.get(
+					LocaleUtil.getSiteDefault())));
 	}
 
 	@Override
@@ -254,6 +267,13 @@ public class AssetPublisherConfigurationAction
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
+			AssetPublisherWebConfiguration.class, properties);
 	}
 
 	protected void addScope(
@@ -747,6 +767,7 @@ public class AssetPublisherConfigurationAction
 	@Reference
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
 
+	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
 	protected AssetTagLocalService assetTagLocalService;
 	protected GroupLocalService groupLocalService;
 	protected ItemSelector itemSelector;

@@ -37,7 +37,7 @@ public class CommerceProductOptionValueLocalServiceImpl
 	@Override
 	public CommerceProductOptionValue addCommerceProductOptionValue(
 			long commerceProductOptionId, Map<Locale, String> titleMap,
-			long priority, ServiceContext serviceContext)
+			int priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		//Product Option
@@ -141,7 +141,7 @@ public class CommerceProductOptionValueLocalServiceImpl
 	@Override
 	public CommerceProductOptionValue updateCommerceProductOptionValue(
 			long commerceProductOptionValueId, Map<Locale, String> titleMap,
-			long priority, ServiceContext serviceContext)
+			int priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Product option

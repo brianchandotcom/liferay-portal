@@ -90,7 +90,7 @@
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="DDMFormFieldTypeName" type="String" />
-		<column name="priority" type="String" />
+		<column name="priority" type="int" />
 
 		<!-- Order -->
 
@@ -133,7 +133,7 @@
 
 		<column name="commerceProductDefinitionOptionRelId"  type="long" />
 		<column localized="true" name="title" type="String" />
-		<column name="priority" type="long" />
+		<column name="priority" type="int" />
 
 		<!-- Order -->
 
@@ -283,7 +283,7 @@
 
 		<column name="commerceProductOptionId"  type="long" />
 		<column localized="true" name="title" type="String" />
-		<column name="priority" type="long" />
+		<column name="priority" type="int" />
 
 		<!-- Order -->
 

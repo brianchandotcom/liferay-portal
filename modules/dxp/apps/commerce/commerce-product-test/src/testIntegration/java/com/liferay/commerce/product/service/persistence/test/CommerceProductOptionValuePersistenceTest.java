@@ -138,7 +138,7 @@ public class CommerceProductOptionValuePersistenceTest {
 
 		newCommerceProductOptionValue.setTitle(RandomTestUtil.randomString());
 
-		newCommerceProductOptionValue.setPriority(RandomTestUtil.nextLong());
+		newCommerceProductOptionValue.setPriority(RandomTestUtil.nextInt());
 
 		_commerceProductOptionValues.add(_persistence.update(
 				newCommerceProductOptionValue));
@@ -455,7 +455,7 @@ public class CommerceProductOptionValuePersistenceTest {
 
 		commerceProductOptionValue.setTitle(RandomTestUtil.randomString());
 
-		commerceProductOptionValue.setPriority(RandomTestUtil.nextLong());
+		commerceProductOptionValue.setPriority(RandomTestUtil.nextInt());
 
 		_commerceProductOptionValues.add(_persistence.update(
 				commerceProductOptionValue));

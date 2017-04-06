@@ -157,12 +157,7 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 			commerceProductDefinitionOptionRelImpl.setDDMFormFieldTypeName(DDMFormFieldTypeName);
 		}
 
-		if (priority == null) {
-			commerceProductDefinitionOptionRelImpl.setPriority(StringPool.BLANK);
-		}
-		else {
-			commerceProductDefinitionOptionRelImpl.setPriority(priority);
-		}
+		commerceProductDefinitionOptionRelImpl.setPriority(priority);
 
 		commerceProductDefinitionOptionRelImpl.resetOriginalValues();
 
@@ -188,7 +183,8 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		DDMFormFieldTypeName = objectInput.readUTF();
-		priority = objectInput.readUTF();
+
+		priority = objectInput.readInt();
 	}
 
 	@Override
@@ -237,12 +233,7 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 			objectOutput.writeUTF(DDMFormFieldTypeName);
 		}
 
-		if (priority == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(priority);
-		}
+		objectOutput.writeInt(priority);
 	}
 
 	public long commerceProductDefinitionOptionRelId;
@@ -257,5 +248,5 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 	public String name;
 	public String description;
 	public String DDMFormFieldTypeName;
-	public String priority;
+	public int priority;
 }

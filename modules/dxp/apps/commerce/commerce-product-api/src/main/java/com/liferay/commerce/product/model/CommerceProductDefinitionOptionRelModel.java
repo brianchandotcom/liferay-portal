@@ -445,15 +445,14 @@ public interface CommerceProductDefinitionOptionRelModel extends BaseModel<Comme
 	 *
 	 * @return the priority of this commerce product definition option rel
 	 */
-	@AutoEscape
-	public String getPriority();
+	public int getPriority();
 
 	/**
 	 * Sets the priority of this commerce product definition option rel.
 	 *
 	 * @param priority the priority of this commerce product definition option rel
 	 */
-	public void setPriority(String priority);
+	public void setPriority(int priority);
 
 	@Override
 	public boolean isNew();

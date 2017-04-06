@@ -157,7 +157,7 @@ public class CommerceProductDefinitionOptionRelWrapper
 			setDDMFormFieldTypeName(DDMFormFieldTypeName);
 		}
 
-		String priority = (String)attributes.get("priority");
+		Integer priority = (Integer)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -203,6 +203,16 @@ public class CommerceProductDefinitionOptionRelWrapper
 	public int compareTo(
 		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel) {
 		return _commerceProductDefinitionOptionRel.compareTo(commerceProductDefinitionOptionRel);
+	}
+
+	/**
+	* Returns the priority of this commerce product definition option rel.
+	*
+	* @return the priority of this commerce product definition option rel
+	*/
+	@Override
+	public int getPriority() {
+		return _commerceProductDefinitionOptionRel.getPriority();
 	}
 
 	@Override
@@ -371,16 +381,6 @@ public class CommerceProductDefinitionOptionRelWrapper
 	@Override
 	public java.lang.String getNameCurrentValue() {
 		return _commerceProductDefinitionOptionRel.getNameCurrentValue();
-	}
-
-	/**
-	* Returns the priority of this commerce product definition option rel.
-	*
-	* @return the priority of this commerce product definition option rel
-	*/
-	@Override
-	public java.lang.String getPriority() {
-		return _commerceProductDefinitionOptionRel.getPriority();
 	}
 
 	/**
@@ -801,7 +801,7 @@ public class CommerceProductDefinitionOptionRelWrapper
 	* @param priority the priority of this commerce product definition option rel
 	*/
 	@Override
-	public void setPriority(java.lang.String priority) {
+	public void setPriority(int priority) {
 		_commerceProductDefinitionOptionRel.setPriority(priority);
 	}
 

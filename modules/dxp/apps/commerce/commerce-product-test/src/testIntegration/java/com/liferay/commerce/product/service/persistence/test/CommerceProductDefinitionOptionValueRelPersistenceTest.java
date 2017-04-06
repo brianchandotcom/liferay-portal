@@ -143,7 +143,7 @@ public class CommerceProductDefinitionOptionValueRelPersistenceTest {
 
 		newCommerceProductDefinitionOptionValueRel.setTitle(RandomTestUtil.randomString());
 
-		newCommerceProductDefinitionOptionValueRel.setPriority(RandomTestUtil.nextLong());
+		newCommerceProductDefinitionOptionValueRel.setPriority(RandomTestUtil.nextInt());
 
 		_commerceProductDefinitionOptionValueRels.add(_persistence.update(
 				newCommerceProductDefinitionOptionValueRel));
@@ -468,7 +468,7 @@ public class CommerceProductDefinitionOptionValueRelPersistenceTest {
 
 		commerceProductDefinitionOptionValueRel.setTitle(RandomTestUtil.randomString());
 
-		commerceProductDefinitionOptionValueRel.setPriority(RandomTestUtil.nextLong());
+		commerceProductDefinitionOptionValueRel.setPriority(RandomTestUtil.nextInt());
 
 		_commerceProductDefinitionOptionValueRels.add(_persistence.update(
 				commerceProductDefinitionOptionValueRel));

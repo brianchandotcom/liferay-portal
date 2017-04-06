@@ -36,7 +36,7 @@ create table CommerceProductDefinitionOptionRel (
 	name STRING null,
 	description STRING null,
 	DDMFormFieldTypeName VARCHAR(75) null,
-	priority VARCHAR(75) null
+	priority INTEGER
 );
 
 create table CommerceProductDefinitionOptionValueRel (
@@ -49,7 +49,7 @@ create table CommerceProductDefinitionOptionValueRel (
 	modifiedDate DATE null,
 	commerceProductDefinitionOptionRelId LONG,
 	title STRING null,
-	priority LONG
+	priority INTEGER
 );
 
 create table CommerceProductInstance (
@@ -97,5 +97,5 @@ create table CommerceProductOptionValue (
 	modifiedDate DATE null,
 	commerceProductOptionId LONG,
 	title STRING null,
-	priority LONG
+	priority INTEGER
 );

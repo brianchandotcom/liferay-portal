@@ -133,7 +133,7 @@ public class CommerceProductOptionValueWrapper
 			setTitle(title);
 		}
 
-		Long priority = (Long)attributes.get("priority");
+		Integer priority = (Integer)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -178,6 +178,16 @@ public class CommerceProductOptionValueWrapper
 	@Override
 	public int compareTo(CommerceProductOptionValue commerceProductOptionValue) {
 		return _commerceProductOptionValue.compareTo(commerceProductOptionValue);
+	}
+
+	/**
+	* Returns the priority of this commerce product option value.
+	*
+	* @return the priority of this commerce product option value
+	*/
+	@Override
+	public int getPriority() {
+		return _commerceProductOptionValue.getPriority();
 	}
 
 	@Override
@@ -383,16 +393,6 @@ public class CommerceProductOptionValueWrapper
 	}
 
 	/**
-	* Returns the priority of this commerce product option value.
-	*
-	* @return the priority of this commerce product option value
-	*/
-	@Override
-	public long getPriority() {
-		return _commerceProductOptionValue.getPriority();
-	}
-
-	/**
 	* Returns the user ID of this commerce product option value.
 	*
 	* @return the user ID of this commerce product option value
@@ -528,7 +528,7 @@ public class CommerceProductOptionValueWrapper
 	* @param priority the priority of this commerce product option value
 	*/
 	@Override
-	public void setPriority(long priority) {
+	public void setPriority(int priority) {
 		_commerceProductOptionValue.setPriority(priority);
 	}
 

@@ -87,7 +87,7 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceProductDefinitionOptionRelId", Types.BIGINT },
 			{ "title", Types.VARCHAR },
-			{ "priority", Types.BIGINT }
+			{ "priority", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -103,10 +103,10 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 		TABLE_COLUMNS_MAP.put("commerceProductDefinitionOptionRelId",
 			Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("priority", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinitionOptionValueRel (commerceProductDefinitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductDefinitionOptionRelId LONG,title STRING null,priority LONG)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinitionOptionValueRel (commerceProductDefinitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductDefinitionOptionRelId LONG,title STRING null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceProductDefinitionOptionValueRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceProductDefinitionOptionValueRel.priority DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceProductDefinitionOptionValueRel.priority DESC";
@@ -292,7 +292,7 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 			setTitle(title);
 		}
 
-		Long priority = (Long)attributes.get("priority");
+		Integer priority = (Integer)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -541,12 +541,12 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 
 	@JSON
 	@Override
-	public long getPriority() {
+	public int getPriority() {
 		return _priority;
 	}
 
 	@Override
-	public void setPriority(long priority) {
+	public void setPriority(int priority) {
 		_columnBitmask = -1L;
 
 		_priority = priority;
@@ -899,7 +899,7 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 	private long _commerceProductDefinitionOptionRelId;
 	private String _title;
 	private String _titleCurrentLanguageId;
-	private long _priority;
+	private int _priority;
 	private long _columnBitmask;
 	private CommerceProductDefinitionOptionValueRel _escapedModel;
 }

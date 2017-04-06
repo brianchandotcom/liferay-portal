@@ -173,11 +173,11 @@ public class CommerceProductOptionValueSoap implements Serializable {
 		_title = title;
 	}
 
-	public long getPriority() {
+	public int getPriority() {
 		return _priority;
 	}
 
-	public void setPriority(long priority) {
+	public void setPriority(int priority) {
 		_priority = priority;
 	}
 
@@ -190,5 +190,5 @@ public class CommerceProductOptionValueSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _commerceProductOptionId;
 	private String _title;
-	private long _priority;
+	private int _priority;
 }

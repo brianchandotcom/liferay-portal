@@ -315,14 +315,14 @@ public interface CommerceProductOptionValueModel extends BaseModel<CommerceProdu
 	 *
 	 * @return the priority of this commerce product option value
 	 */
-	public long getPriority();
+	public int getPriority();
 
 	/**
 	 * Sets the priority of this commerce product option value.
 	 *
 	 * @param priority the priority of this commerce product option value
 	 */
-	public void setPriority(long priority);
+	public void setPriority(int priority);
 
 	@Override
 	public boolean isNew();

@@ -134,7 +134,7 @@ public class CommerceProductDefinitionOptionValueRelWrapper
 			setTitle(title);
 		}
 
-		Long priority = (Long)attributes.get("priority");
+		Integer priority = (Integer)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -180,6 +180,16 @@ public class CommerceProductDefinitionOptionValueRelWrapper
 	public int compareTo(
 		CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel) {
 		return _commerceProductDefinitionOptionValueRel.compareTo(commerceProductDefinitionOptionValueRel);
+	}
+
+	/**
+	* Returns the priority of this commerce product definition option value rel.
+	*
+	* @return the priority of this commerce product definition option value rel
+	*/
+	@Override
+	public int getPriority() {
+		return _commerceProductDefinitionOptionValueRel.getPriority();
 	}
 
 	@Override
@@ -387,16 +397,6 @@ public class CommerceProductDefinitionOptionValueRelWrapper
 	}
 
 	/**
-	* Returns the priority of this commerce product definition option value rel.
-	*
-	* @return the priority of this commerce product definition option value rel
-	*/
-	@Override
-	public long getPriority() {
-		return _commerceProductDefinitionOptionValueRel.getPriority();
-	}
-
-	/**
 	* Returns the user ID of this commerce product definition option value rel.
 	*
 	* @return the user ID of this commerce product definition option value rel
@@ -533,7 +533,7 @@ public class CommerceProductDefinitionOptionValueRelWrapper
 	* @param priority the priority of this commerce product definition option value rel
 	*/
 	@Override
-	public void setPriority(long priority) {
+	public void setPriority(int priority) {
 		_commerceProductDefinitionOptionValueRel.setPriority(priority);
 	}
 

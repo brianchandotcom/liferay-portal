@@ -89,7 +89,7 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "DDMFormFieldTypeName", Types.VARCHAR },
-			{ "priority", Types.VARCHAR }
+			{ "priority", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -107,10 +107,10 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMFormFieldTypeName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("priority", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinitionOptionRel (commerceProductDefinitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductOptionId LONG,commerceProductDefinitionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,priority VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinitionOptionRel (commerceProductDefinitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductOptionId LONG,commerceProductDefinitionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceProductDefinitionOptionRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceProductDefinitionOptionRel.priority DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceProductDefinitionOptionRel.priority DESC";
@@ -322,7 +322,7 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 			setDDMFormFieldTypeName(DDMFormFieldTypeName);
 		}
 
-		String priority = (String)attributes.get("priority");
+		Integer priority = (Integer)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -700,17 +700,12 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 
 	@JSON
 	@Override
-	public String getPriority() {
-		if (_priority == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _priority;
-		}
+	public int getPriority() {
+		return _priority;
 	}
 
 	@Override
-	public void setPriority(String priority) {
+	public void setPriority(int priority) {
 		_columnBitmask = -1L;
 
 		_priority = priority;
@@ -854,8 +849,15 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel) {
 		int value = 0;
 
-		value = getPriority()
-					.compareTo(commerceProductDefinitionOptionRel.getPriority());
+		if (getPriority() < commerceProductDefinitionOptionRel.getPriority()) {
+			value = -1;
+		}
+		else if (getPriority() > commerceProductDefinitionOptionRel.getPriority()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
 
 		value = value * -1;
 
@@ -991,12 +993,6 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 
 		commerceProductDefinitionOptionRelCacheModel.priority = getPriority();
 
-		String priority = commerceProductDefinitionOptionRelCacheModel.priority;
-
-		if ((priority != null) && (priority.length() == 0)) {
-			commerceProductDefinitionOptionRelCacheModel.priority = null;
-		}
-
 		return commerceProductDefinitionOptionRelCacheModel;
 	}
 
@@ -1125,7 +1121,7 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _DDMFormFieldTypeName;
-	private String _priority;
+	private int _priority;
 	private long _columnBitmask;
 	private CommerceProductDefinitionOptionRel _escapedModel;
 }

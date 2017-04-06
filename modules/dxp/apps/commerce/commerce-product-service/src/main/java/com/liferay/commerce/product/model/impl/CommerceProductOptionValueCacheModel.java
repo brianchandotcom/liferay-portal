@@ -157,7 +157,7 @@ public class CommerceProductOptionValueCacheModel implements CacheModel<Commerce
 		commerceProductOptionId = objectInput.readLong();
 		title = objectInput.readUTF();
 
-		priority = objectInput.readLong();
+		priority = objectInput.readInt();
 	}
 
 	@Override
@@ -190,7 +190,7 @@ public class CommerceProductOptionValueCacheModel implements CacheModel<Commerce
 			objectOutput.writeUTF(title);
 		}
 
-		objectOutput.writeLong(priority);
+		objectOutput.writeInt(priority);
 	}
 
 	public long commerceProductOptionValueId;
@@ -202,5 +202,5 @@ public class CommerceProductOptionValueCacheModel implements CacheModel<Commerce
 	public long modifiedDate;
 	public long commerceProductOptionId;
 	public String title;
-	public long priority;
+	public int priority;
 }

@@ -316,14 +316,14 @@ public interface CommerceProductDefinitionOptionValueRelModel extends BaseModel<
 	 *
 	 * @return the priority of this commerce product definition option value rel
 	 */
-	public long getPriority();
+	public int getPriority();
 
 	/**
 	 * Sets the priority of this commerce product definition option value rel.
 	 *
 	 * @param priority the priority of this commerce product definition option value rel
 	 */
-	public void setPriority(long priority);
+	public void setPriority(int priority);
 
 	@Override
 	public boolean isNew();

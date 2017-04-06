@@ -86,7 +86,7 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceProductOptionId", Types.BIGINT },
 			{ "title", Types.VARCHAR },
-			{ "priority", Types.BIGINT }
+			{ "priority", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -100,10 +100,10 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceProductOptionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("priority", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceProductOptionValue (commerceProductOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductOptionId LONG,title STRING null,priority LONG)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceProductOptionValue (commerceProductOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductOptionId LONG,title STRING null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceProductOptionValue";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceProductOptionValue.title DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceProductOptionValue.title DESC";
@@ -289,7 +289,7 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 			setTitle(title);
 		}
 
-		Long priority = (Long)attributes.get("priority");
+		Integer priority = (Integer)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -551,12 +551,12 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 
 	@JSON
 	@Override
-	public long getPriority() {
+	public int getPriority() {
 		return _priority;
 	}
 
 	@Override
-	public void setPriority(long priority) {
+	public void setPriority(int priority) {
 		_priority = priority;
 	}
 
@@ -900,7 +900,7 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 	private boolean _setOriginalCommerceProductOptionId;
 	private String _title;
 	private String _titleCurrentLanguageId;
-	private long _priority;
+	private int _priority;
 	private long _columnBitmask;
 	private CommerceProductOptionValue _escapedModel;
 }

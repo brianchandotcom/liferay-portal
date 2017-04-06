@@ -160,7 +160,7 @@ public class CommerceProductDefinitionOptionValueRelCacheModel
 		commerceProductDefinitionOptionRelId = objectInput.readLong();
 		title = objectInput.readUTF();
 
-		priority = objectInput.readLong();
+		priority = objectInput.readInt();
 	}
 
 	@Override
@@ -193,7 +193,7 @@ public class CommerceProductDefinitionOptionValueRelCacheModel
 			objectOutput.writeUTF(title);
 		}
 
-		objectOutput.writeLong(priority);
+		objectOutput.writeInt(priority);
 	}
 
 	public long commerceProductDefinitionOptionValueRelId;
@@ -205,5 +205,5 @@ public class CommerceProductDefinitionOptionValueRelCacheModel
 	public long modifiedDate;
 	public long commerceProductDefinitionOptionRelId;
 	public String title;
-	public long priority;
+	public int priority;
 }

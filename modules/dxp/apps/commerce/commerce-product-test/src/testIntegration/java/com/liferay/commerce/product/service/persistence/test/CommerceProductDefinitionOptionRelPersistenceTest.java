@@ -148,7 +148,7 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 
 		newCommerceProductDefinitionOptionRel.setDDMFormFieldTypeName(RandomTestUtil.randomString());
 
-		newCommerceProductDefinitionOptionRel.setPriority(RandomTestUtil.randomString());
+		newCommerceProductDefinitionOptionRel.setPriority(RandomTestUtil.nextInt());
 
 		_commerceProductDefinitionOptionRels.add(_persistence.update(
 				newCommerceProductDefinitionOptionRel));
@@ -485,7 +485,7 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 
 		commerceProductDefinitionOptionRel.setDDMFormFieldTypeName(RandomTestUtil.randomString());
 
-		commerceProductDefinitionOptionRel.setPriority(RandomTestUtil.randomString());
+		commerceProductDefinitionOptionRel.setPriority(RandomTestUtil.nextInt());
 
 		_commerceProductDefinitionOptionRels.add(_persistence.update(
 				commerceProductDefinitionOptionRel));

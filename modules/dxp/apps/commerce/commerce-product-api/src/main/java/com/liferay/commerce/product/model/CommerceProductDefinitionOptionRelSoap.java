@@ -200,11 +200,11 @@ public class CommerceProductDefinitionOptionRelSoap implements Serializable {
 		_DDMFormFieldTypeName = DDMFormFieldTypeName;
 	}
 
-	public String getPriority() {
+	public int getPriority() {
 		return _priority;
 	}
 
-	public void setPriority(String priority) {
+	public void setPriority(int priority) {
 		_priority = priority;
 	}
 
@@ -220,5 +220,5 @@ public class CommerceProductDefinitionOptionRelSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private String _DDMFormFieldTypeName;
-	private String _priority;
+	private int _priority;
 }

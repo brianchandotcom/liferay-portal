@@ -469,9 +469,7 @@ public class CapabilityRepository
 			OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
-		Repository repository = getRepository();
-
-		return repository.getFileEntries(
+		return getRepository().getFileEntries(
 			folderId, mimeTypes, status, start, end, obc);
 	}
 
@@ -542,9 +540,7 @@ public class CapabilityRepository
 			long folderId, String[] mimeTypes, int status)
 		throws PortalException {
 
-		Repository repository = getRepository();
-
-		return repository.getFileEntriesCount(folderId, mimeTypes, status);
+		return getRepository().getFileEntriesCount(folderId, mimeTypes, status);
 	}
 
 	@Override

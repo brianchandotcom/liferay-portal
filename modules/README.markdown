@@ -114,7 +114,7 @@ closure arguments.
 	3. `ext { ... }` block.
 	4. Task creation: `task taskName(type: TaskType)` or simply `task taskName`
 	for default tasks. Don't declare the task dependencies here.
-	5. Project property assignments, like `sourceCompatibility`.
+	5. Project property assignments (e.g., `sourceCompatibility`).
 	6. Variables used globally by the whole script, like a URL or a relative
 	path.
 	7. Blocks `{ ... }` to configure tasks, extension objects, etc. These must be

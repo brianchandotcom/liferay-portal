@@ -58,7 +58,7 @@ public class EditCommerceProductDefinitionMVCActionCommand
 	protected void deleteCommerceProductDefinition(ActionRequest actionRequest)
 		throws Exception {
 
-		Long commerceProductDefinitionId = ParamUtil.getLong(
+		long commerceProductDefinitionId = ParamUtil.getLong(
 			actionRequest, "commerceProductDefinitionId");
 
 		_commerceProductDefinitionLocalService.deleteCommerceProductDefinition(
@@ -118,7 +118,7 @@ public class EditCommerceProductDefinitionMVCActionCommand
 			ActionRequest actionRequest)
 		throws Exception {
 
-		Long commerceProductDefinitionId = ParamUtil.getLong(
+		long commerceProductDefinitionId = ParamUtil.getLong(
 			actionRequest, "commerceProductDefinitionId");
 
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
@@ -166,7 +166,7 @@ public class EditCommerceProductDefinitionMVCActionCommand
 			expirationDateHour += 12;
 		}
 
-		Boolean neverExpire = ParamUtil.getBoolean(
+		boolean neverExpire = ParamUtil.getBoolean(
 			actionRequest, "neverExpire");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

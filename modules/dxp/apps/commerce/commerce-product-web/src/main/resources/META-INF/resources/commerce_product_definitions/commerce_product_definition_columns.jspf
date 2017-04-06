@@ -1,0 +1,57 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
+	name="product-name"
+>
+	<%= commerceProductDefinition.getTitle(locale) %>
+</liferay-ui:search-container-column-text>
+
+<liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
+	name="type"
+	property="productTypeName"
+/>
+
+<liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
+	name="SKU"
+	property="baseSKU"
+/>
+
+<liferay-ui:search-container-column-status
+	cssClass="table-cell-content"
+	name="status"
+	status="<%= commerceProductDefinition.getStatus() %>"
+/>
+
+<liferay-ui:search-container-column-date
+	cssClass="table-cell-content"
+	name="modified-date"
+	property="modifiedDate"
+/>
+
+<liferay-ui:search-container-column-date
+	cssClass="table-cell-content"
+	name="display-date"
+	property="displayDate"
+/>
+
+<liferay-ui:search-container-column-jsp
+	cssClass="entry-action-column"
+	path="/commerce_product_definitions/commerce_product_definition_action.jsp"
+/>

@@ -47,7 +47,7 @@ portletDisplay.setURLBack(backURL);
 				showHelpMessage="<%= false %>"
 				showIcon="<%= false %>"
 				showLabel="<%= false %>"
-				status="<%= commerceProductDisplayContext.getStatus() %>"
+				status="<%= commerceProductDefinition.getStatus() %>"
 			/>
 		</liferay-frontend:info-bar>
 	</c:if>
@@ -58,7 +58,7 @@ portletDisplay.setURLBack(backURL);
 		<liferay-ui:form-navigator
 			backURL="<%= backURL %>"
 			formModelBean="<%= commerceProductDefinition %>"
-			id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION %>"
+			id="<%= CommerceProductFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION %>"
 			markupView="lexicon"
 		/>
 	</div>

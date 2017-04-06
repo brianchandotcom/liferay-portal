@@ -33,13 +33,14 @@ public class CommerceProductDefinitionOptionsFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.
+		return CommerceProductFormNavigatorConstants.
 			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
 	}
 
 	@Override
 	public String getKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_COMMERCE_PRODUCT_OPTIONS;
+		return CommerceProductFormNavigatorConstants.
+			CATEGORY_KEY_COMMERCE_PRODUCT_OPTIONS;
 	}
 
 	@Override

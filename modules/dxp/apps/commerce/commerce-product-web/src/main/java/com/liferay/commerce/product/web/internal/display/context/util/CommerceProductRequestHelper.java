@@ -19,19 +19,22 @@ import com.liferay.portal.kernel.util.JavaConstants;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antionio Rendina
  */
-public class CommerceProductDefinitionRequestHelper extends BaseRequestHelper {
+public class CommerceProductRequestHelper extends BaseRequestHelper {
 
-	public CommerceProductDefinitionRequestHelper(HttpServletRequest request) {
+	public CommerceProductRequestHelper(HttpServletRequest request) {
 		super(request);
 
 		_renderRequest = (RenderRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
+		_renderResponse = (RenderResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		_portletPreferences = _renderRequest.getPreferences();
 	}
@@ -44,7 +47,12 @@ public class CommerceProductDefinitionRequestHelper extends BaseRequestHelper {
 		return _renderRequest;
 	}
 
+	public RenderResponse getRenderResponse() {
+		return _renderResponse;
+	}
+
 	private final PortletPreferences _portletPreferences;
 	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 
 }

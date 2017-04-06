@@ -17,7 +17,11 @@
 <%@ include file="/commerce_product_definitions/init.jsp" %>
 
 <%
-List<CommerceProductDefinition> commerceProductDefinitions = commerceProductDisplayContext.getCommerceProductDefinitions(resourceRequest);
+List<CommerceProductDefinition> commerceProductDefinitions = (List<CommerceProductDefinition>)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITIONS);
+
+if (ListUtil.isEmpty(commerceProductDefinitions)) {
+	commerceProductDefinitions = new ArrayList<CommerceProductDefinition>();
+}
 %>
 
 <c:choose>
@@ -33,7 +37,7 @@ List<CommerceProductDefinition> commerceProductDefinitions = commerceProductDisp
 			<ul class="sidebar-header-actions">
 				<li>
 					<liferay-util:include
-						page="/commerce_product_definitions/product_definition_action.jsp"
+						page="/commerce_product_definitions/commerce_product_definition_action.jsp"
 						servletContext="<%= application %>"
 					/>
 				</li>
@@ -58,19 +62,7 @@ List<CommerceProductDefinition> commerceProductDefinitions = commerceProductDisp
 			<h5><liferay-ui:message key="status" /></h5>
 
 			<p>
-				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commerceProductDisplayContext.getStatus() %>" />
-			</p>
-
-			<h5><liferay-ui:message key="title" /></h5>
-
-			<p>
-				<%= HtmlUtil.escape(commerceProductDefinition.getTitle(locale)) %>
-			</p>
-
-			<h5><liferay-ui:message key="display-date" /></h5>
-
-			<p>
-				<%= dateFormatDateTime.format(commerceProductDefinition.getDisplayDate()) %>
+				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commerceProductDefinition.getStatus() %>" />
 			</p>
 		</div>
 	</c:when>
@@ -90,6 +82,12 @@ List<CommerceProductDefinition> commerceProductDefinitions = commerceProductDisp
 		</div>
 	</c:when>
 	<c:otherwise>
+		<aui:nav-bar>
+			<aui:nav cssClass="navbar-nav">
+				<aui:nav-item label="details" selected="<%= true %>" />
+			</aui:nav>
+		</aui:nav-bar>
+
 		<div class="sidebar-header">
 			<h4><liferay-ui:message arguments="<%= commerceProductDefinitions.size() %>" key="x-items-are-selected" /></h4>
 		</div>

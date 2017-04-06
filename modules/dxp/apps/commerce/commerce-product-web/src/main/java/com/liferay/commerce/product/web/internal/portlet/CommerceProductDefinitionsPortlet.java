@@ -18,8 +18,6 @@ import com.liferay.commerce.product.service.CommerceProductDefinitionLocalServic
 import com.liferay.commerce.product.web.internal.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.web.internal.display.context.CommerceProductDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
@@ -74,15 +72,9 @@ public class CommerceProductDefinitionsPortlet extends MVCPortlet {
 			HttpServletRequest request = _portal.getHttpServletRequest(
 				renderRequest);
 
-			LiferayPortletRequest liferayPortletRequest =
-				_portal.getLiferayPortletRequest(renderRequest);
-			LiferayPortletResponse liferayPortletResponse =
-				_portal.getLiferayPortletResponse(renderResponse);
-
 			CommerceProductDisplayContext commerceProductDisplayContext =
 				new CommerceProductDisplayContext(
-					request, liferayPortletRequest, liferayPortletResponse,
-					_commerceProductDefinitionLocalService);
+					request, _commerceProductDefinitionLocalService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceProductDisplayContext);

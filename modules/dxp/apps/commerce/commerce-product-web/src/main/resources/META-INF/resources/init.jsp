@@ -29,8 +29,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.commerce.product.model.CommerceProductDefinition" %><%@
 page import="com.liferay.commerce.product.web.internal.constants.CommerceProductWebKeys" %><%@
 page import="com.liferay.commerce.product.web.internal.display.context.CommerceProductDisplayContext" %><%@
-page import="com.liferay.commerce.product.web.internal.servlet.taglib.ui.FormNavigatorConstants" %><%@
-page import="com.liferay.commerce.product.web.internal.util.CommerceProductDefinitionsPortletUtil" %><%@
+page import="com.liferay.commerce.product.web.internal.servlet.taglib.ui.CommerceProductFormNavigatorConstants" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -40,9 +39,8 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
-<%@ page import="java.text.Format" %>
-
-<%@ page import="java.util.Date" %><%@
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Date" %><%@
 page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
@@ -54,5 +52,4 @@ page import="java.util.List" %>
 <portlet:defineObjects />
 
 <%
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

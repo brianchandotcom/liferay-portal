@@ -14,15 +14,16 @@
  */
 --%>
 
-<liferay-frontend:vertical-card-sticker-bottom>
+<liferay-ui:search-container-column-text>
 	<liferay-ui:user-portrait
-		cssClass="sticker sticker-bottom"
-		imageCssClass="user-icon-lg"
+		cssClass="user-icon-lg"
 		userId="<%= commerceProductDefinition.getUserId() %>"
 	/>
-</liferay-frontend:vertical-card-sticker-bottom>
+</liferay-ui:search-container-column-text>
 
-<liferay-frontend:vertical-card-header>
+<liferay-ui:search-container-column-text
+	colspan="<%= 2 %>"
+>
 
 	<%
 	Date createDate = commerceProductDefinition.getModifiedDate();
@@ -30,9 +31,19 @@
 	String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 	%>
 
-	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(commerceProductDefinition.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-</liferay-frontend:vertical-card-header>
+	<h6 class="text-default">
+		<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(commerceProductDefinition.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+	</h6>
 
-<liferay-frontend:vertical-card-footer>
-	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commerceProductDisplayContext.getStatus() %>" />
-</liferay-frontend:vertical-card-footer>
+	<h5>
+		<%= HtmlUtil.escape(commerceProductDefinition.getTitle(locale)) %>
+	</h5>
+
+	<h6 class="text-default">
+		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commerceProductDefinition.getStatus() %>" />
+	</h6>
+</liferay-ui:search-container-column-text
+
+<liferay-ui:search-container-column-jsp
+	path="/commerce_product_definitions/commerce_product_definition_action.jsp"
+/>

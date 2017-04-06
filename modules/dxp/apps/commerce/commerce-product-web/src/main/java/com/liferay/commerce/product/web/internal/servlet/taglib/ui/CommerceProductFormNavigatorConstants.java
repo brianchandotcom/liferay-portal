@@ -17,7 +17,7 @@ package com.liferay.commerce.product.web.internal.servlet.taglib.ui;
 /**
  * @author Alessio Antonio Rendina
  */
-public class FormNavigatorConstants {
+public class CommerceProductFormNavigatorConstants {
 
 	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_DETAILS =
 		"details";

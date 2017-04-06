@@ -36,12 +36,13 @@ public class CommerceProductDefinitionImagesFormNavigatorEntry
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_COMMERCE_PRODUCT_IMAGES;
+		return CommerceProductFormNavigatorConstants.
+			CATEGORY_KEY_COMMERCE_PRODUCT_IMAGES;
 	}
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.
+		return CommerceProductFormNavigatorConstants.
 			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
 	}
 

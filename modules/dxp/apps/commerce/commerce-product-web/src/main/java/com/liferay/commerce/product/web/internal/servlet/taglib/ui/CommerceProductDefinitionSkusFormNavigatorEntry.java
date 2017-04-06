@@ -35,12 +35,13 @@ public class CommerceProductDefinitionSkusFormNavigatorEntry
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_COMMERCE_PRODUCT_SKUS;
+		return CommerceProductFormNavigatorConstants.
+			CATEGORY_KEY_COMMERCE_PRODUCT_SKUS;
 	}
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.
+		return CommerceProductFormNavigatorConstants.
 			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
 	}
 

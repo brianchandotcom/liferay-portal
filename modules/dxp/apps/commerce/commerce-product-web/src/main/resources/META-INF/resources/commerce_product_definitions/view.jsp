@@ -56,7 +56,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	<liferay-util:param name="searchContainerId" value="commerceProductDefinitions" />
 </liferay-util:include>
 
-<div id="<portlet:namespace />journalContainer">
+<div id="<portlet:namespace />productsContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<c:if test="<%= commerceProductDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL
@@ -74,29 +74,50 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		</c:if>
 
 		<div class="sidenav-content">
-			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-				<liferay-util:include page="/commerce_product_definitions/breadcrumb.jsp" servletContext="<%= application %>" />
-			</div>
-
 			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-				<div class="journal-container" id="<portlet:namespace />entriesContainer">
-					<liferay-ui:section>
-						<liferay-ui:search-container
-							emptyResultsMessage="no-product-was-found"
-							id="commerceProductDefinitions"
-							searchContainer="<%= productDefinitionSearchContainer %>"
+				<div class="products-container" id="<portlet:namespace />entriesContainer">
+					<liferay-ui:search-container
+						emptyResultsMessage="no-product-was-found"
+						id="commerceProductDefinitions"
+						searchContainer="<%= productDefinitionSearchContainer %>"
+					>
+						<liferay-ui:search-container-row
+							className="com.liferay.commerce.product.model.CommerceProductDefinition"
+							cssClass="entry-display-style"
+							keyProperty="commerceProductDefinitionId"
+							modelVar="commerceProductDefinition"
 						>
-							<liferay-ui:search-container-row
-								className="com.liferay.commerce.product.model.CommerceProductDefinition"
-								keyProperty="commerceProductDefinitionId"
-								modelVar="commerceProductDefinition"
-							>
-								<%@ include file="/commerce_product_definitions/search_columns.jspf" %>
-							</liferay-ui:search-container-row>
+							<c:choose>
+								<c:when test='<%= displayStyle.equals("descriptive") %>'>
+									<%@ include file="/commerce_product_definitions/commerce_product_definition_descriptive.jspf" %>
+								</c:when>
+								<c:when test='<%= displayStyle.equals("icon") %>'>
 
-							<liferay-ui:search-iterator markupView="lexicon" />
-						</liferay-ui:search-container>
-					</liferay-ui:section>
+									<%
+									row.setCssClass("entry-card lfr-asset-folder " + row.getCssClass());
+									%>
+
+									<liferay-ui:search-container-column-text>
+										<liferay-frontend:icon-vertical-card
+											actionJsp="/commerce_product_definitions/commerce_product_definition_action.jsp"
+											actionJspServletContext="<%= application %>"
+											icon="web-content"
+											resultRow="<%= row %>"
+											rowChecker="<%= commerceProductDisplayContext.getRowChecker() %>"
+											title="<%= HtmlUtil.escape(commerceProductDefinition.getTitle(locale)) %>"
+										>
+											<%@ include file="/commerce_product_definitions/commerce_product_definition_vertical_card.jspf" %>
+										</liferay-frontend:icon-vertical-card>
+									</liferay-ui:search-container-column-text>
+								</c:when>
+								<c:otherwise>
+									<%@ include file="/commerce_product_definitions/commerce_product_definition_columns.jspf" %>
+								</c:otherwise>
+							</c:choose>
+						</liferay-ui:search-container-row>
+
+						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= productDefinitionSearchContainer %>" />
+					</liferay-ui:search-container>
 				</div>
 			</aui:form>
 		</div>

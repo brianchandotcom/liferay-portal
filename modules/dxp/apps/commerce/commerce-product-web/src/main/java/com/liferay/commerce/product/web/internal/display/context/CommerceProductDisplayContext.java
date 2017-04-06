@@ -18,7 +18,7 @@ import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.service.CommerceProductDefinitionLocalService;
 import com.liferay.commerce.product.web.internal.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.web.internal.constants.CommerceProductWebKeys;
-import com.liferay.commerce.product.web.internal.display.context.util.CommerceProductDefinitionRequestHelper;
+import com.liferay.commerce.product.web.internal.display.context.util.CommerceProductRequestHelper;
 import com.liferay.commerce.product.web.internal.util.CommerceProductDefinitionsPortletUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,30 +51,32 @@ public class CommerceProductDisplayContext {
 
 	public CommerceProductDisplayContext(
 			HttpServletRequest request,
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
 			CommerceProductDefinitionLocalService
 				commerceProductDefinitionLocalService)
 		throws PortalException {
 
 		_request = request;
-		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
+
+		_commerceProductRequestHelper = new CommerceProductRequestHelper(
+			request);
+
+		_liferayPortletRequest =
+			_commerceProductRequestHelper.getLiferayPortletRequest();
+		_liferayPortletResponse =
+			_commerceProductRequestHelper.getLiferayPortletResponse();
+
 		_commerceProductDefinitionLocalService =
 			commerceProductDefinitionLocalService;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_request);
 
-		_commerceProductDefinitionRequestHelper =
-			new CommerceProductDefinitionRequestHelper(request);
-
 		CommerceProductDefinition commerceProductDefinition =
 			getCommerceProductDefinition();
 
 		if (commerceProductDefinition == null) {
 			RenderRequest renderRequest =
-				_commerceProductDefinitionRequestHelper.getRenderRequest();
+				_commerceProductRequestHelper.getRenderRequest();
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
@@ -88,7 +89,7 @@ public class CommerceProductDisplayContext {
 		}
 
 		RenderRequest renderRequest =
-			_commerceProductDefinitionRequestHelper.getRenderRequest();
+			_commerceProductRequestHelper.getRenderRequest();
 
 		_commerceProductDefinition =
 			(CommerceProductDefinition)renderRequest.getAttribute(
@@ -108,8 +109,8 @@ public class CommerceProductDisplayContext {
 
 	public long getCommerceProductDefinitionId() {
 		return PrefsParamUtil.getLong(
-			_commerceProductDefinitionRequestHelper.getPortletPreferences(),
-			_commerceProductDefinitionRequestHelper.getRenderRequest(),
+			_commerceProductRequestHelper.getPortletPreferences(),
+			_commerceProductRequestHelper.getRenderRequest(),
 			"commerceProductDefinitionId");
 	}
 
@@ -135,16 +136,6 @@ public class CommerceProductDisplayContext {
 		}
 
 		return commerceProductDefinitions;
-	}
-
-	public String getDDMStructureKey() {
-		if (_ddmStructureKey != null) {
-			return _ddmStructureKey;
-		}
-
-		_ddmStructureKey = ParamUtil.getString(_request, "ddmStructureKey");
-
-		return _ddmStructureKey;
 	}
 
 	public String getDisplayStyle() {
@@ -287,21 +278,6 @@ public class CommerceProductDisplayContext {
 		return _productSearchContainer;
 	}
 
-	public int getStatus() {
-		if (_status != null) {
-			return _status;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		int defaultStatus = WorkflowConstants.STATUS_APPROVED;
-
-		_status = ParamUtil.getInteger(_request, "status", defaultStatus);
-
-		return _status;
-	}
-
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -311,10 +287,6 @@ public class CommerceProductDisplayContext {
 	}
 
 	public boolean isShowInfoPanel() {
-		if (Validator.isNotNull(getDDMStructureKey())) {
-			return false;
-		}
-
 		if (isSearch()) {
 			return false;
 		}
@@ -347,9 +319,7 @@ public class CommerceProductDisplayContext {
 	private CommerceProductDefinition _commerceProductDefinition;
 	private final CommerceProductDefinitionLocalService
 		_commerceProductDefinitionLocalService;
-	private final CommerceProductDefinitionRequestHelper
-		_commerceProductDefinitionRequestHelper;
-	private String _ddmStructureKey;
+	private final CommerceProductRequestHelper _commerceProductRequestHelper;
 	private String _displayStyle;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
@@ -360,6 +330,5 @@ public class CommerceProductDisplayContext {
 	private SearchContainer _productSearchContainer;
 	private final HttpServletRequest _request;
 	private RowChecker _rowChecker;
-	private Integer _status;
 
 }

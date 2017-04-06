@@ -951,7 +951,19 @@
 
 		<var name="key_pageName" value="${ddlRecordFieldData}" />
 
-		<execute function="AssertChecked" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
+		<toggle name="LPS-68869">
+			<on>
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+				<execute function="AssertElementPresent" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_SELECTED" />
+
+				<execute function="SelectFrameTop" />
+			</on>
+
+			<off>
+				<execute function="AssertChecked" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
+			</off>
+		</toggle>
 
 		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
 	</command>

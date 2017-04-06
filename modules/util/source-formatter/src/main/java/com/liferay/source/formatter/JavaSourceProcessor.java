@@ -370,6 +370,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String getPortalCustomSQLContent() throws Exception {
+		if (!portalSource) {
+			return null;
+		}
+
 		if (_portalCustomSQLContent != null) {
 			return _portalCustomSQLContent;
 		}

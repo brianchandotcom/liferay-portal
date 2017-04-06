@@ -47,9 +47,12 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		if (jspWriter instanceof BodyContent) {
+		if ((jspWriter instanceof BodyContent) || ServerDetector.isWebLogic()) {
 
 			// Unable to unwrap page context with pushed body
+			// Weblogic relies on the WriterOutputStream bridging logic insde
+			// getOutputStream(), so this shortcut optimization can not applied
+			// to Weblogic.
 
 			return new PipingServletResponse(httpServletResponse, jspWriter);
 		}

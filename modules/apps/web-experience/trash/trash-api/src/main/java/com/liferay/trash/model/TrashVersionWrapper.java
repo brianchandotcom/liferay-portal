@@ -149,6 +149,11 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+		return _trashVersion.getTypeSettingsProperties();
+	}
+
+	@Override
 	public int compareTo(TrashVersion trashVersion) {
 		return _trashVersion.compareTo(trashVersion);
 	}
@@ -196,6 +201,17 @@ public class TrashVersionWrapper implements TrashVersion,
 	@Override
 	public java.lang.String getTypeSettings() {
 		return _trashVersion.getTypeSettings();
+	}
+
+	@Override
+	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
+		return _trashVersion.getTypeSettingsProperty(key);
+	}
+
+	@Override
+	public java.lang.String getTypeSettingsProperty(java.lang.String key,
+		java.lang.String defaultValue) {
+		return _trashVersion.getTypeSettingsProperty(key, defaultValue);
 	}
 
 	@Override
@@ -377,6 +393,12 @@ public class TrashVersionWrapper implements TrashVersion,
 	@Override
 	public void setTypeSettings(java.lang.String typeSettings) {
 		_trashVersion.setTypeSettings(typeSettings);
+	}
+
+	@Override
+	public void setTypeSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
+		_trashVersion.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
 	/**

@@ -1348,8 +1348,6 @@ rerun your task.
 					<propertyref name="liferay.releng.product.display.name" />
 					<propertyref name="liferay.releng.public" />
 					<propertyref name="liferay.releng.supported" />
-					<propertyref name="microsoft.translator.client.id" />
-					<propertyref name="microsoft.translator.client.secret" />
 					<propertyref name="release.versions.test.other.dir" />
 					<propertyref name="sass.compiler.class.name" />
 					<propertyref name="sass.generate.source.map" />
@@ -1360,6 +1358,7 @@ rerun your task.
 					<propertyref name="timeout.app.server.wait" />
 					<propertyref name="upgrade.table.dir" />
 					<propertyref prefix="ivy.pom." />
+					<propertyref prefix="microsoft.translator." />
 					<propertyref prefix="nodejs.npm." />
 					<propertyref prefix="sonatype." />
 					<propertyref regex="^\s*app\.server\.(?:glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*" />
@@ -1434,8 +1433,6 @@ rerun your task.
 					<propertyref name="junit.test.excludes" />
 					<propertyref name="liferay.home" />
 					<propertyref name="lp.version" />
-					<propertyref name="microsoft.translator.client.id" />
-					<propertyref name="microsoft.translator.client.secret" />
 					<propertyref name="sass.compiler.class.name" />
 					<propertyref name="snapshot.check.enabled" />
 					<propertyref name="upgrade.table.dir" />
@@ -1444,6 +1441,7 @@ rerun your task.
 					<propertyref name="-plugin" />
 					<propertyref name="-releaserepo" />
 					<propertyref prefix="ivy.pom." />
+					<propertyref prefix="microsoft.translator." />
 					<propertyref prefix="sonatype." />
 					<propertyref regex="^\s*app\.server\.(?:glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*\.dir" />
 				</propertyset>

@@ -81,15 +81,8 @@ public class BuildLangMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	public void setTranslateClientId(String translateClientId) {
-		_langBuilderArgs.setTranslateClientId(translateClientId);
-	}
-
-	/**
-	 * @parameter
-	 */
-	public void setTranslateClientSecret(String translateClientSecret) {
-		_langBuilderArgs.setTranslateClientSecret(translateClientSecret);
+	public void setTranslateSubscriptionKey(String translateSubscriptionKey) {
+		_langBuilderArgs.setTranslateSubscriptionKey(translateSubscriptionKey);
 	}
 
 	/**

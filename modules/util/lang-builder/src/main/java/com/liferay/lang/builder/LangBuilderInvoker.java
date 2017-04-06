@@ -33,8 +33,7 @@ public class LangBuilderInvoker {
 			langBuilderArgs.getLangFileName(), langBuilderArgs.isPlugin(),
 			langBuilderArgs.getPortalLanguagePropertiesFileName(),
 			langBuilderArgs.isTranslate(),
-			langBuilderArgs.getTranslateClientId(),
-			langBuilderArgs.getTranslateClientSecret());
+			langBuilderArgs.getTranslateSubscriptionKey());
 	}
 
 	private static String _getAbsolutePath(File baseDir, String fileName) {

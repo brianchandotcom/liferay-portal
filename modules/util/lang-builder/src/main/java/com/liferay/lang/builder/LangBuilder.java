@@ -31,8 +31,8 @@ import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
 
-import com.memetix.mst.language.Language;
-import com.memetix.mst.translate.Translate;
+import io.github.firemaples.language.Language;
+import io.github.firemaples.translate.Translate;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -82,9 +82,8 @@ public class LangBuilder {
 			"lang.portal.language.properties.file");
 		boolean translate = GetterUtil.getBoolean(
 			arguments.get("lang.translate"), LangBuilderArgs.TRANSLATE);
-		String translateClientId = arguments.get("lang.translate.client.id");
-		String translateClientSecret = arguments.get(
-			"lang.translate.client.secret");
+		String translateSubscriptionKey = arguments.get(
+			"lang.translate.subscription.key");
 
 		boolean buildCurrentBranch = ArgumentsUtil.getBoolean(
 			arguments, "build.current.branch", false);
@@ -95,8 +94,7 @@ public class LangBuilder {
 
 			_processCurrentBranch(
 				langFileName, plugin, portalLanguagePropertiesFileName,
-				translate, translateClientId, translateClientSecret,
-				gitWorkingBranchName);
+				translate, translateSubscriptionKey, gitWorkingBranchName);
 
 			return;
 		}
@@ -104,8 +102,8 @@ public class LangBuilder {
 		try {
 			new LangBuilder(
 				langDirName, langFileName, plugin,
-				portalLanguagePropertiesFileName, translate, translateClientId,
-				translateClientSecret);
+				portalLanguagePropertiesFileName, translate,
+				translateSubscriptionKey);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -115,15 +113,14 @@ public class LangBuilder {
 	public LangBuilder(
 			String langDirName, String langFileName, boolean plugin,
 			String portalLanguagePropertiesFileName, boolean translate,
-			String translateClientId, String translateClientSecret)
+			String translateSubscriptionKey)
 		throws Exception {
 
 		_langDirName = langDirName;
 		_langFileName = langFileName;
 		_translate = translate;
 
-		Translate.setClientId(translateClientId);
-		Translate.setClientSecret(translateClientSecret);
+		Translate.setSubscriptionKey(translateSubscriptionKey);
 
 		_initKeysWithUpdatedValues();
 
@@ -251,8 +248,7 @@ public class LangBuilder {
 	private static void _processCurrentBranch(
 			String langFileName, boolean plugin,
 			String portalLanguagePropertiesFileName, boolean translate,
-			String translateClientId, String translateClientSecret,
-			String gitWorkingBranchName)
+			String translateSubscriptionKey, String gitWorkingBranchName)
 		throws Exception {
 
 		try {
@@ -274,7 +270,7 @@ public class LangBuilder {
 				new LangBuilder(
 					langDirName, langFileName, plugin,
 					portalLanguagePropertiesFileName, translate,
-					translateClientId, translateClientSecret);
+					translateSubscriptionKey);
 			}
 		}
 		catch (GitException ge) {

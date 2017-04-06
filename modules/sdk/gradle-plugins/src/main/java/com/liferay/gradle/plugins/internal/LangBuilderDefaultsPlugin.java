@@ -61,17 +61,11 @@ public class LangBuilderDefaultsPlugin
 	}
 
 	private void _configureTaskBuildLang(BuildLangTask buildLangTask) {
-		String translateClientId = GradleUtil.getProperty(
-			buildLangTask.getProject(), "microsoft.translator.client.id",
+		String translateSubscriptionKey = GradleUtil.getProperty(
+			buildLangTask.getProject(), "microsoft.translator.subscription.key",
 			(String)null);
 
-		buildLangTask.setTranslateClientId(translateClientId);
-
-		String translateClientSecret = GradleUtil.getProperty(
-			buildLangTask.getProject(), "microsoft.translator.client.secret",
-			(String)null);
-
-		buildLangTask.setTranslateClientSecret(translateClientSecret);
+		buildLangTask.setTranslateSubscriptionKey(translateSubscriptionKey);
 	}
 
 	private void _configureTasksBuildLang(Project project) {

@@ -42,7 +42,7 @@ public class BuildLangTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		setArgs(getCompleteArgs());
+		setArgs(_getCompleteArgs());
 
 		super.exec();
 	}
@@ -65,14 +65,8 @@ public class BuildLangTask extends JavaExec {
 
 	@Input
 	@Optional
-	public String getTranslateClientId() {
-		return GradleUtil.toString(_translateClientId);
-	}
-
-	@Input
-	@Optional
-	public String getTranslateClientSecret() {
-		return GradleUtil.toString(_translateClientSecret);
+	public String getTranslateSubscriptionKey() {
+		return GradleUtil.toString(_translateSubscriptionKey);
 	}
 
 	@Input
@@ -107,15 +101,11 @@ public class BuildLangTask extends JavaExec {
 		_translate = translate;
 	}
 
-	public void setTranslateClientId(Object translateClientId) {
-		_translateClientId = translateClientId;
+	public void setTranslateSubscriptionKey(Object translateSubscriptionKey) {
+		_translateSubscriptionKey = translateSubscriptionKey;
 	}
 
-	public void setTranslateClientSecret(Object translateClientSecret) {
-		_translateClientSecret = translateClientSecret;
-	}
-
-	protected List<String> getCompleteArgs() {
+	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
 		args.add(
@@ -135,12 +125,9 @@ public class BuildLangTask extends JavaExec {
 		boolean translate = isTranslate();
 
 		if (translate) {
-			String translateClientId = getTranslateClientId();
-			String translateClientSecret = getTranslateClientSecret();
+			String translateSubscriptionKey = getTranslateSubscriptionKey();
 
-			if (Validator.isNull(translateClientId) ||
-				Validator.isNull(translateClientSecret)) {
-
+			if (Validator.isNull(translateSubscriptionKey)) {
 				if (_logger.isWarnEnabled()) {
 					_logger.warn(
 						"Translation is disabled because credentials are not " +
@@ -150,9 +137,9 @@ public class BuildLangTask extends JavaExec {
 				translate = false;
 			}
 			else {
-				args.add("lang.translate.client.id=" + translateClientId);
 				args.add(
-					"lang.translate.client.secret=" + translateClientSecret);
+					"lang.translate.subscription.key=" +
+						translateSubscriptionKey);
 			}
 		}
 
@@ -169,7 +156,6 @@ public class BuildLangTask extends JavaExec {
 	private boolean _plugin = LangBuilderArgs.PLUGIN;
 	private Object _portalLanguagePropertiesFile;
 	private boolean _translate = LangBuilderArgs.TRANSLATE;
-	private Object _translateClientId;
-	private Object _translateClientSecret;
+	private Object _translateSubscriptionKey;
 
 }

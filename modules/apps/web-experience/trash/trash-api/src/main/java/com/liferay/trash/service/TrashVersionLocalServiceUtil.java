@@ -79,6 +79,15 @@ public class TrashVersionLocalServiceUtil {
 		return getService().addTrashVersion(trashVersion);
 	}
 
+	public static com.liferay.trash.model.TrashVersion addTrashVersion(
+		long trashEntryId, java.lang.String className, long classPK,
+		int status,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
+		return getService()
+				   .addTrashVersion(trashEntryId, className, classPK, status,
+			typeSettingsProperties);
+	}
+
 	/**
 	* Creates a new trash version with the primary key. Does not add the trash version to the database.
 	*
@@ -101,6 +110,11 @@ public class TrashVersionLocalServiceUtil {
 		return getService().deleteTrashVersion(trashVersion);
 	}
 
+	public static com.liferay.trash.model.TrashVersion deleteTrashVersion(
+		java.lang.String className, long classPK) {
+		return getService().deleteTrashVersion(className, classPK);
+	}
+
 	/**
 	* Deletes the trash version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -117,6 +131,20 @@ public class TrashVersionLocalServiceUtil {
 	public static com.liferay.trash.model.TrashVersion fetchTrashVersion(
 		long versionId) {
 		return getService().fetchTrashVersion(versionId);
+	}
+
+	public static com.liferay.trash.model.TrashVersion fetchVersion(
+		java.lang.String className, long classPK) {
+		return getService().fetchVersion(className, classPK);
+	}
+
+	/**
+	* @deprecated As of 1.0.0, replaced by {@link #fetchVersion(String, long)}
+	*/
+	@Deprecated
+	public static com.liferay.trash.model.TrashVersion fetchVersion(
+		long entryId, java.lang.String className, long classPK) {
+		return getService().fetchVersion(entryId, className, classPK);
 	}
 
 	/**
@@ -225,6 +253,16 @@ public class TrashVersionLocalServiceUtil {
 	public static java.util.List<com.liferay.trash.model.TrashVersion> getTrashVersions(
 		int start, int end) {
 		return getService().getTrashVersions(start, end);
+	}
+
+	public static java.util.List<com.liferay.trash.model.TrashVersion> getVersions(
+		long entryId) {
+		return getService().getVersions(entryId);
+	}
+
+	public static java.util.List<com.liferay.trash.model.TrashVersion> getVersions(
+		long entryId, java.lang.String className) {
+		return getService().getVersions(entryId, className);
 	}
 
 	/**

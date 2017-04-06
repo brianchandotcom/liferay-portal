@@ -31,7 +31,7 @@ portletURL.setParameter("searchContainerId", "commerceProductDefinitions");
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<liferay-portlet:renderURL varImpl="viewProductsURL">
+<liferay-portlet:renderURL varImpl="viewProductDefinitionsURL">
 	<portlet:param name="toolbarItem" value="view-all-product-definitions" />
 	<portlet:param name="jspPage" value="/commerce_product_definitions/view.jsp" />
 </liferay-portlet:renderURL>
@@ -39,7 +39,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item
-			href="<%= viewProductsURL.toString() %>"
+			href="<%= viewProductDefinitionsURL.toString() %>"
 			label="Catalog"
 			selected='<%= toolbarItem.equals("view-all-product-definitions") %>'
 		/>

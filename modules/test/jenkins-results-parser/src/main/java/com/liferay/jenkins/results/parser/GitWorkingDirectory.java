@@ -183,7 +183,9 @@ public class GitWorkingDirectory {
 
 		List<String> localBranchNames = getLocalBranchNames();
 
-		if (!localBranchNames.contains(branchName)) {
+		if (!branchName.contains("/") &&
+			!localBranchNames.contains(branchName)) {
+
 			throw new IllegalArgumentException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to checkout ", branchName,

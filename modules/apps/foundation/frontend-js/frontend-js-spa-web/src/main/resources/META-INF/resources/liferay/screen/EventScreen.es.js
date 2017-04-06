@@ -54,8 +54,6 @@ class EventScreen extends HtmlScreen {
 	deactivate() {
 		super.deactivate();
 
-		Utils.resetAllPortlets();
-
 		Liferay.fire(
 			'screenDeactivate',
 			{
@@ -66,6 +64,8 @@ class EventScreen extends HtmlScreen {
 	}
 
 	beforeScreenFlip() {
+		Utils.resetAllPortlets();
+
 		Liferay.fire(
 			'beforeScreenFlip',
 			{

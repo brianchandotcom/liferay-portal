@@ -240,9 +240,7 @@
 		<property file="${releng.app.dir}/app.properties" />
 
 		<condition property="app.version" value="${app.marketplace.version}">
-			<not>
-				<istrue value="${build.app.from.changelog}" />
-			</not>
+			<istrue value="${build.app.from.changelog}" />
 		</condition>
 
 		<property name="app.version.previous.release" value="${app.marketplace.version}" />

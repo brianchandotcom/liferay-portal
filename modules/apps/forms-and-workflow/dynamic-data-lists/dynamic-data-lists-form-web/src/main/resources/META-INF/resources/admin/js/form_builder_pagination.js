@@ -72,14 +72,6 @@ AUI.add(
 						var instance = this;
 
 						instance._renderItemsUI(instance.get('total'));
-
-						if (event.newVal) {
-							instance._dispatchRequest(
-								{
-									page: instance.get('total') + 1
-								}
-							);
-						}
 					},
 
 					_renderItemsUI: function(total) {

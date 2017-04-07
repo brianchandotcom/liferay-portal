@@ -1,0 +1,49 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-ui:search-container-column-text>
+	<liferay-ui:user-portrait
+		cssClass="user-icon-lg"
+		userId="<%= commerceProductDefinition.getUserId() %>"
+	/>
+</liferay-ui:search-container-column-text>
+
+<liferay-ui:search-container-column-text
+	colspan="<%= 2 %>"
+>
+
+	<%
+	Date createDate = commerceProductDefinition.getModifiedDate();
+
+	String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+	%>
+
+	<h6 class="text-default">
+		<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(commerceProductDefinition.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+	</h6>
+
+	<h5>
+		<%= HtmlUtil.escape(commerceProductDefinition.getTitle(locale)) %>
+	</h5>
+
+	<h6 class="text-default">
+		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commerceProductDefinition.getStatus() %>" />
+	</h6>
+</liferay-ui:search-container-column-text>
+
+<liferay-ui:search-container-column-jsp
+	path="/commerce_product_definition_action.jsp"
+/>

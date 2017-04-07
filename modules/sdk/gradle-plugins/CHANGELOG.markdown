@@ -1409,6 +1409,10 @@ to version 1.0.113.
 ## 3.2.36 - 2017-04-06
 
 ### Changed
+- [LPS-71164]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.114.
+- [LPS-71164]: Update the [Liferay Source Formatter] dependency to version
+1.0.381.
 - [LPS-71591]: Update the [Liferay Gradle Plugins TLDDoc Builder] dependency
 to version 1.3.0.
 

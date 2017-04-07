@@ -92,7 +92,7 @@ the `liferay.workspace.modules.jsp.precompile.enabled` property in
 - [LPS-67573]: Move all properties available in the `gradle.liferayWorkspace`
 extension object into the public API.
 
-## 1.4.0 - 2017-04-05
+## 1.4.0 - *(Unreleased)*
 
 ### Added
 - [LPS-71724]: Add the ability to download and upgrade the Plugins SDK

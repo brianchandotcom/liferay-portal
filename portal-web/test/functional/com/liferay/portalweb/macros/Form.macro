@@ -287,6 +287,12 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="switchPaginationMode">
+		<execute function="Click" locator1="Form#PAGE_CONTROLS_ELLIPSIS_ICON" />
+
+		<execute function="AssertClick" locator1="Form#PAGE_CONTROLS_SWITCH_PAGINATION_MODE" value1="Switch Pagination Mode" />
+	</command>
+
 	<command name="viewFormName">
 		<execute function="AssertTextEquals" locator1="Form#NAME_FIELD" value1="${formName}" />
 	</command>

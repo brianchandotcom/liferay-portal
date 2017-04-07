@@ -90,6 +90,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_CONTROLS_SWITCH_PAGINATION_MODE</td>
+	<td>//li[@class='form-builder-page-manager-switch-mode' and contains(text(),'Switch Pagination Mode')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

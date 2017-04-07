@@ -45,6 +45,13 @@ import org.osgi.service.component.annotations.Modified;
 public class DefaultAssetPublisherCustomizer
 	implements AssetPublisherCustomizer {
 
+	@Activate
+	@Modified
+	public void activate(Map<String, Object> properties) {
+		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
+			AssetPublisherWebConfiguration.class, properties);
+	}
+
 	@Override
 	public Integer getDelta(HttpServletRequest request) {
 		PortletPreferences portletPreferences = getPortletPreferences(request);
@@ -143,13 +150,6 @@ public class DefaultAssetPublisherCustomizer
 			themeDisplay.getLayout());
 
 		assetEntryQuery.setGroupIds(groupIds);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
-			AssetPublisherWebConfiguration.class, properties);
 	}
 
 	protected String getPortletName(HttpServletRequest request) {

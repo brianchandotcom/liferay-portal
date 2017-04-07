@@ -4,8 +4,7 @@ apply plugin: "java"
 task runGradleTest
 
 buildLang {
-	translateClientId = project.properties["microsoft.translator.client.id"]
-	translateClientSecret = project.properties["microsoft.translator.client.secret"]
+	translateSubscriptionKey = project.properties["microsoft.translator.subscription.key"]
 }
 
 repositories {

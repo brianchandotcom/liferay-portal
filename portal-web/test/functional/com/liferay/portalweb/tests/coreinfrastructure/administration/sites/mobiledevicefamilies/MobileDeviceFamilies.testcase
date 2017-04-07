@@ -25,6 +25,8 @@
 	</tear-down>
 
 	<command name="AssertMobileDeviceRuleActionOnSitePage" priority="5">
+		<property name="web.plugins.includes" value="fiftyone-degrees-web" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

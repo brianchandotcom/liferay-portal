@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -386,7 +387,8 @@ public class BlogsEntryStagedModelDataHandler
 			return;
 		}
 
-		TrashHandler trashHandler = existingEntry.getTrashHandler();
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			BlogsEntry.class.getName());
 
 		if (trashHandler.isRestorable(existingEntry.getEntryId())) {
 			trashHandler.restoreTrashEntry(userId, existingEntry.getEntryId());

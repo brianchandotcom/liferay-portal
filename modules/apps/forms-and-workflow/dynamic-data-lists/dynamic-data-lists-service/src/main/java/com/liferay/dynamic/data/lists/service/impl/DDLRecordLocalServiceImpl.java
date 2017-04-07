@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.lists.service.base.DDLRecordLocalServiceBaseImpl
 import com.liferay.dynamic.data.lists.util.DDL;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -1282,91 +1283,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 			Serializable value = entry.getValue();
 
-			List<Serializable> serializableValues = null;
-
-			if (value instanceof Collection) {
-				Collection<Serializable> values =
-					(Collection<Serializable>)value;
-
-				serializableValues = new ArrayList<>(values);
-			}
-			else if (value instanceof Serializable[]) {
-				Serializable[] values = (Serializable[])value;
-
-				serializableValues = ListUtil.toList(values);
-			}
-			else if (value instanceof boolean[]) {
-				boolean[] values = (boolean[])value;
-
-				serializableValues = new ArrayList<>(values.length);
-
-				for (boolean serializableValue : values) {
-					serializableValues.add(serializableValue);
-				}
-			}
-			else if (value instanceof byte[]) {
-				byte[] values = (byte[])value;
-
-				serializableValues = new ArrayList<>(values.length);
-
-				for (byte serializableValue : values) {
-					serializableValues.add(serializableValue);
-				}
-			}
-			else if (value instanceof char[]) {
-				char[] values = (char[])value;
-
-				serializableValues = new ArrayList<>(values.length);
-
-				for (char serializableValue : values) {
-					serializableValues.add(serializableValue);
-				}
-			}
-			else if (value instanceof double[]) {
-				double[] values = (double[])value;
-
-				serializableValues = new ArrayList<>(values.length);
-
-				for (double serializableValue : values) {
-					serializableValues.add(serializableValue);
-				}
-			}
-			else if (value instanceof float[]) {
-				float[] values = (float[])value;
-
-				serializableValues = new ArrayList<>(values.length);
-
-				for (float serializableValue : values) {
-					serializableValues.add(serializableValue);
-				}
-			}
-			else if (value instanceof int[]) {
-				int[] values = (int[])value;
-
-				serializableValues = new ArrayList<>(values.length);
-
-				for (int serializableValue : values) {
-					serializableValues.add(serializableValue);
-				}
-			}
-			else if (value instanceof long[]) {
-				long[] values = (long[])value;
-
-				serializableValues = new ArrayList<>(values.length);
-
-				for (long serializableValue : values) {
-					serializableValues.add(serializableValue);
-				}
-			}
-			else if (value instanceof short[]) {
-				short[] values = (short[])value;
-
-				serializableValues = new ArrayList<>(values.length);
-
-				for (short serializableValue : values) {
-					serializableValues.add(serializableValue);
-				}
-			}
+			List<Serializable> serializableValues = _getSerializableValues(
+				value);
 
 			if (serializableValues != null) {
 				field.addValues(locale, serializableValues);
@@ -1376,11 +1294,10 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				}
 			}
 			else {
-				field.addValue(locale, String.valueOf(entry.getValue()));
+				field.addValue(locale, String.valueOf(value));
 
 				if (!locale.equals(defaultLocale)) {
-					field.addValue(
-						defaultLocale, String.valueOf(entry.getValue()));
+					field.addValue(defaultLocale, String.valueOf(value));
 				}
 			}
 
@@ -1447,6 +1364,9 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@ServiceReference(type = DDMFormValuesToFieldsConverter.class)
 	protected DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter;
 
+	@ServiceReference(type = DDMStructureLocalService.class)
+	protected DDMStructureLocalService ddmStructureLocalService;
+
 	@ServiceReference(type = FieldsToDDMFormValuesConverter.class)
 	protected FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter;
 
@@ -1455,6 +1375,95 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	@ServiceReference(type = StorageEngine.class)
 	protected StorageEngine storageEngine;
+
+	private List<Serializable> _getSerializableValues(Serializable value) {
+		List<Serializable> serializableValues = null;
+
+		if (value instanceof Collection) {
+			Collection<Serializable> values = (Collection<Serializable>)value;
+
+			serializableValues = new ArrayList<>(values);
+		}
+		else if (value instanceof Serializable[]) {
+			Serializable[] values = (Serializable[])value;
+
+			serializableValues = ListUtil.toList(values);
+		}
+		else if (value instanceof boolean[]) {
+			boolean[] values = (boolean[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (boolean serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+		else if (value instanceof byte[]) {
+			byte[] values = (byte[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (byte serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+		else if (value instanceof char[]) {
+			char[] values = (char[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (char serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+		else if (value instanceof double[]) {
+			double[] values = (double[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (double serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+		else if (value instanceof float[]) {
+			float[] values = (float[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (float serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+		else if (value instanceof int[]) {
+			int[] values = (int[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (int serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+		else if (value instanceof long[]) {
+			long[] values = (long[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (long serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+		else if (value instanceof short[]) {
+			short[] values = (short[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (short serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+
+		return serializableValues;
+	}
 
 	private static final String _FIELDS_DISPLAY_NAME = "_fieldsDisplay";
 

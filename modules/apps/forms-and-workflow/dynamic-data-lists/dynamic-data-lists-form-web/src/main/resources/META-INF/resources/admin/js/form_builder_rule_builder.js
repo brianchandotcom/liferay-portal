@@ -313,12 +313,12 @@ AUI.add(
 								data = [
 									badgeTemplate(
 										{
-											content: instance._getFieldLabel(action.target)
+											content: action.expression
 										}
 									),
 									badgeTemplate(
 										{
-											content: action.expression
+											content: instance._getFieldLabel(action.target)
 										}
 									)
 								];

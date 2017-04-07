@@ -18,6 +18,10 @@ AUI.add(
 
 					options: {
 						value: []
+					},
+
+					type: {
+						value: 'calculate'
 					}
 				},
 

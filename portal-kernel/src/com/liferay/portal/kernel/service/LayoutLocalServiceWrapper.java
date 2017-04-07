@@ -1427,6 +1427,14 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			privateLayout);
 	}
 
+	@Override
+	public java.util.Map<java.lang.Long, java.util.List<com.liferay.portal.kernel.model.Layout>> getLayoutChildLayouts(
+		com.liferay.portal.kernel.model.LayoutSet layoutSet,
+		java.util.List<com.liferay.portal.kernel.model.Layout> parentLayouts) {
+		return _layoutLocalService.getLayoutChildLayouts(layoutSet,
+			parentLayouts);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

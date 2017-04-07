@@ -65,19 +65,19 @@ public interface CaptchaConfiguration {
 		deflt = "https://www.google.com/recaptcha/api.js",
 		name = "recaptcha-script-url", required = false
 	)
-	public String reCaptchaScriptUrl();
+	public String reCaptchaScriptURL();
 
 	@Meta.AD(
 		deflt = "https://www.google.com/recaptcha/api/fallback?k=",
 		name = "recaptcha-no-script-url", required = false
 	)
-	public String reCaptchaNoScriptUrl();
+	public String reCaptchaNoScriptURL();
 
 	@Meta.AD(
 		deflt = "https://www.google.com/recaptcha/api/siteverify",
 		name = "recaptcha-verify-url", required = false
 	)
-	public String reCaptchaVerifyUrl();
+	public String reCaptchaVerifyURL();
 
 	@Meta.AD(
 		deflt = "50", description = "simple-captcha-height-help",

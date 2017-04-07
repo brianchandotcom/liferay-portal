@@ -26,15 +26,15 @@ public interface CaptchaSettings {
 
 	public int getMaxChallenges();
 
-	public String getReCaptchaNoScriptUrl();
+	public String getReCaptchaNoScriptURL();
 
 	public String getReCaptchaPrivateKey();
 
 	public String getReCaptchaPublicKey();
 
-	public String getReCaptchaScriptUrl();
+	public String getReCaptchaScriptURL();
 
-	public String getReCaptchaVerifyUrl();
+	public String getReCaptchaVerifyURL();
 
 	public String[] getSimpleCaptchaBackgroundProducers();
 

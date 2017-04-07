@@ -128,7 +128,7 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 
 		Http.Options options = new Http.Options();
 
-		options.setLocation(_captchaConfiguration.reCaptchaVerifyUrl());
+		options.setLocation(_captchaConfiguration.reCaptchaVerifyURL());
 
 		try {
 			options.addPart(

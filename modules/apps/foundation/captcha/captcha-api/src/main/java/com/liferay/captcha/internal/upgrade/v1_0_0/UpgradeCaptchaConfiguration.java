@@ -113,7 +113,7 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 						CAPTCHA_ENGINE_RECAPTCHA_URL_NOSCRIPT))) {
 
 			properties.put(
-				"reCaptchaNoScriptUrl",
+				"reCaptchaNoScriptURL",
 				_prefsProps.getString(
 					LegacyCaptchaPropsKeys.
 						CAPTCHA_ENGINE_RECAPTCHA_URL_NOSCRIPT));
@@ -149,7 +149,7 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 						CAPTCHA_ENGINE_RECAPTCHA_URL_SCRIPT))) {
 
 			properties.put(
-				"reCaptchaScriptUrl",
+				"reCaptchaScriptURL",
 				_prefsProps.getString(
 					LegacyCaptchaPropsKeys.
 						CAPTCHA_ENGINE_RECAPTCHA_URL_SCRIPT));
@@ -161,7 +161,7 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 						CAPTCHA_ENGINE_RECAPTCHA_URL_VERIFY))) {
 
 			properties.put(
-				"reCaptchaVerifyUrl",
+				"reCaptchaVerifyURL",
 				_prefsProps.getString(
 					LegacyCaptchaPropsKeys.
 						CAPTCHA_ENGINE_RECAPTCHA_URL_VERIFY));

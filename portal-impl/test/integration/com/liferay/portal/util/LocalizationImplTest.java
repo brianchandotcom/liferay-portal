@@ -450,6 +450,17 @@ public class LocalizationImplTest {
 			LocalizationUtil.getLocalization(xml, _ENGLISH_LANGUAGE_ID));
 	}
 
+	@Test
+	public void testUpdateLocalizationWithUTF8() {
+		String xml = LocalizationUtil.updateLocalization(
+			StringPool.BLANK, "greeting", _HELLO_SURFER_UTF8,
+			_ENGLISH_LANGUAGE_ID, _ENGLISH_LANGUAGE_ID);
+
+		Assert.assertEquals(
+			_HELLO_SURFER_UTF8,
+			LocalizationUtil.getLocalization(xml, _ENGLISH_LANGUAGE_ID));
+	}
+
 	private static final String _ENGLISH_HELLO = "Hello World";
 
 	private static final String _ENGLISH_LANGUAGE_ID = LocaleUtil.toLanguageId(
@@ -459,6 +470,8 @@ public class LocalizationImplTest {
 
 	private static final String _GERMAN_LANGUAGE_ID = LocaleUtil.toLanguageId(
 		LocaleUtil.GERMANY);
+
+	private static final String _HELLO_SURFER_UTF8 = "Hello \uD83C\uDFC4";
 
 	private static final String _INVALID_ENGLISH_HELLO = "Hello\u0008 World";
 

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.trash.kernel.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
 
@@ -103,10 +102,8 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
-
-		return entry.getTrashEntry();
+	public TrashedModel getTrashedModel(long classPK) {
+		return _bookmarksEntryLocalService.fetchBookmarksEntry(classPK);
 	}
 
 	@Override
@@ -122,20 +119,6 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 		return super.hasTrashPermission(
 			permissionChecker, groupId, classPK, trashActionId);
-	}
-
-	@Override
-	public boolean isInTrash(long classPK) throws PortalException {
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
-
-		return entry.isInTrash();
-	}
-
-	@Override
-	public boolean isInTrashContainer(long classPK) throws PortalException {
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
-
-		return entry.isInTrashContainer();
 	}
 
 	@Override

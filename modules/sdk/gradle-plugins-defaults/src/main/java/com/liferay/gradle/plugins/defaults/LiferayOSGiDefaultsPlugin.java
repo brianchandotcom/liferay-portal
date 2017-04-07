@@ -140,6 +140,7 @@ import org.gradle.api.artifacts.repositories.AuthenticationContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.artifacts.repositories.PasswordCredentials;
 import org.gradle.api.execution.TaskExecutionGraph;
+import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
@@ -398,6 +399,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configureRepositories(project);
 		_configureSourceSetMain(project);
 		_configureTaskDeploy(project, deployDependenciesTask);
+		_configureTaskFindBugsClasses(
+			(FindBugs)GradleUtil.getTask(project, "findbugsMain"),
+			GradleUtil.getSourceSet(project, SourceSet.MAIN_SOURCE_SET_NAME));
 		_configureTaskJar(project, testProject);
 		_configureTaskJavadoc(project, portalRootDir);
 		_configureTaskTest(project);
@@ -2592,6 +2596,23 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		SingleFileReport xmlReport = findBugsReports.getXml();
 
 		xmlReport.setEnabled(false);
+	}
+
+	private void _configureTaskFindBugsClasses(
+		FindBugs findBugs, SourceSet sourceSet) {
+
+		Project project = findBugs.getProject();
+
+		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+		ConfigurableFileTree configurableFileTree = project.fileTree(
+			sourceSetOutput.getClassesDir());
+
+		configurableFileTree.setBuiltBy(Collections.singleton(sourceSetOutput));
+
+		configurableFileTree.setIncludes(Collections.singleton("**/*.class"));
+
+		findBugs.setClasses(configurableFileTree);
 	}
 
 	private void _configureTaskJar(Project project, boolean testProject) {

@@ -4512,4 +4512,59 @@
 			<var name="successPageTitle" value="Success Page Title" />
 		</execute>
 	</command>
+
+	<command name="ViewSuccessPagePagination" priority="2">
+		<description message="This is a use case for LPS-71512." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#editPageTitle">
+			<var name="formPageName" value="Page 1" />
+		</execute>
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#addPage" />
+
+		<execute macro="Form#editPageTitle">
+			<var name="formPageName" value="Page 2" />
+		</execute>
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text2" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#addSuccessPage" />
+
+		<execute macro="Form#editSuccessPage">
+			<var name="successPageDescription" value="Thank you for filling out the Form." />
+			<var name="successPageTitle" value="Success Page Title" />
+		</execute>
+
+		<execute macro="Form#viewSuccessPagePagination" />
+	</command>
 </definition>

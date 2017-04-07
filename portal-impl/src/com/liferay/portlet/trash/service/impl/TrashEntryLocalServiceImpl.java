@@ -57,7 +57,10 @@ import java.util.List;
  * trash entries in the Recycle Bin.
  *
  * @author Zsolt Berentey
+ * @deprecated As of 7.0.0, replaced by {@link
+ *            com.liferay.trash.service.impl.TrashEntryLocalServiceImpl}
  */
+@Deprecated
 public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 	/**

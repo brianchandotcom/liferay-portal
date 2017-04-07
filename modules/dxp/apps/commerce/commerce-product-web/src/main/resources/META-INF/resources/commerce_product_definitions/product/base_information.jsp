@@ -27,7 +27,7 @@ CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition
 <aui:fieldset cssClass="col-md-4">
 	<aui:select label="productTypeName" name="productTypeName">
 		<aui:option label="simple" value="simple" />
-		<aui:option label="vitual" value="virtual" />
+		<aui:option label="virtual" value="virtual" />
 		<aui:option label="bundle" value="bundle" />
 	</aui:select>
 

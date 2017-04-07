@@ -21,6 +21,7 @@ import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
-import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -283,10 +283,8 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
-
-		return category.getTrashEntry();
+	public TrashedModel getTrashedModel(long classPK) {
+		return _mbCategoryLocalService.fetchMBCategory(classPK);
 	}
 
 	@Override
@@ -366,20 +364,6 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	@Override
 	public boolean isContainerModel() {
 		return true;
-	}
-
-	@Override
-	public boolean isInTrash(long classPK) throws PortalException {
-		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
-
-		return category.isInTrash();
-	}
-
-	@Override
-	public boolean isInTrashContainer(long classPK) throws PortalException {
-		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
-
-		return category.isInTrashContainer();
 	}
 
 	@Override

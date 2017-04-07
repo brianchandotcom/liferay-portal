@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.trash;
+package com.liferay.bookmarks.internal.trash;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
@@ -27,10 +27,11 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
-import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.portal.kernel.trash.TrashHandler;
 
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -38,9 +39,11 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Levente Hudák
  * @author Zsolt Berentey
- * @deprecated As of 1.1.0
  */
-@Deprecated
+@Component(
+	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksEntry"},
+	service = TrashHandler.class
+)
 public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 	@Override
@@ -99,10 +102,8 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
-
-		return entry.getTrashEntry();
+	public TrashedModel getTrashedModel(long classPK) {
+		return _bookmarksEntryLocalService.fetchBookmarksEntry(classPK);
 	}
 
 	@Override
@@ -118,20 +119,6 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 		return super.hasTrashPermission(
 			permissionChecker, groupId, classPK, trashActionId);
-	}
-
-	@Override
-	public boolean isInTrash(long classPK) throws PortalException {
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
-
-		return entry.isInTrash();
-	}
-
-	@Override
-	public boolean isInTrashContainer(long classPK) throws PortalException {
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
-
-		return entry.isInTrashContainer();
 	}
 
 	@Override

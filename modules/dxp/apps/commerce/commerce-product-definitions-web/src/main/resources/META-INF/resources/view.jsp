@@ -77,7 +77,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 				<div class="products-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
-						emptyResultsMessage="no-product-was-found"
+						emptyResultsMessage="no-products-were-found"
 						id="commerceProductDefinitions"
 						searchContainer="<%= productDefinitionSearchContainer %>"
 					>

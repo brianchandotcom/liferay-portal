@@ -1398,24 +1398,6 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				serializableValues.add(serializableValue);
 			}
 		}
-		else if (value instanceof byte[]) {
-			byte[] values = (byte[])value;
-
-			serializableValues = new ArrayList<>(values.length);
-
-			for (byte serializableValue : values) {
-				serializableValues.add(serializableValue);
-			}
-		}
-		else if (value instanceof char[]) {
-			char[] values = (char[])value;
-
-			serializableValues = new ArrayList<>(values.length);
-
-			for (char serializableValue : values) {
-				serializableValues.add(serializableValue);
-			}
-		}
 		else if (value instanceof double[]) {
 			double[] values = (double[])value;
 

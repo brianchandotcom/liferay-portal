@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
-import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductPortletKeys;
-import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductWebKeys;
+import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
+import com.liferay.commerce.product.constants.CommerceProductWebKeys;
 import com.liferay.commerce.product.exception.NoSuchProductDefinitionException;
 import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.service.CommerceProductDefinitionLocalService;

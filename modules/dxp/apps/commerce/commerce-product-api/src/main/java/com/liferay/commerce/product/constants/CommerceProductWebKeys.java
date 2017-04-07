@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.constants;
+package com.liferay.commerce.product.constants;
 
 /**
  * @author Alessio Antonio Rendina

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet;
 
-import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductPortletKeys;
+import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CommerceProductDefinitionsDisplayContext;
 import com.liferay.commerce.product.service.CommerceProductDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;

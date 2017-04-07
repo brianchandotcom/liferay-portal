@@ -233,7 +233,9 @@ public interface PortletDataHandler {
 	 */
 	public boolean isRollbackOnException();
 
-	public boolean isSupportsDataStrategyCopyAsNew();
+	public default boolean isSupportsDataStrategyCopyAsNew() {
+		return true;
+	}
 
 	public default boolean isSupportsDataStrategyMirrorWithOverwriting() {
 		return true;

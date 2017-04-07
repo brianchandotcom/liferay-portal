@@ -543,7 +543,9 @@ public class LocalGitSyncUtil {
 			List<RemoteConfig> remoteConfigs)
 		throws GitAPIException {
 
-		if (!localBranchName.equals(gitWorkingDirectory.getCurrentBranch())) {
+		if (!localBranchName.isEmpty() &&
+			!localBranchName.equals(gitWorkingDirectory.getCurrentBranch())) {
+
 			gitWorkingDirectory.checkoutBranch(localBranchName, "-f");
 		}
 

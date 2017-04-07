@@ -20,10 +20,13 @@ import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,6 +76,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Alexander Chow
  * @author Edward Han
  * @author Manuel de la Peña
+ * @deprecated As of 2.0.0, with no direct replacement
  */
 @Component(
 	configurationPid = "com.liferay.portal.store.cmis.configuration.CMISStoreConfiguration",
@@ -80,6 +84,7 @@ import org.osgi.service.component.annotations.Modified;
 	property = "store.type=com.liferay.portal.store.cmis.CMISStore",
 	service = Store.class
 )
+@Deprecated
 public class CMISStore extends BaseStore {
 
 	@Override
@@ -467,6 +472,16 @@ public class CMISStore extends BaseStore {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
+		if (_log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append("Liferay is configured to use CMISStore as store. ");
+			sb.append("CMIS store is a deprecated feature and is not ");
+			sb.append("recommended.");
+
+			_log.warn(sb);
+		}
+
 		_cmisStoreConfiguration = ConfigurableUtil.createConfigurable(
 			CMISStoreConfiguration.class, properties);
 		_operationContext = createOperationContext();
@@ -768,6 +783,8 @@ public class CMISStore extends BaseStore {
 
 		activate(bundleContext, properties);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(CMISStore.class);
 
 	private CMISStoreConfiguration _cmisStoreConfiguration;
 	private OperationContext _operationContext;

@@ -941,18 +941,9 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static Properties toProperties(String url) throws IOException {
-		String response = toString(url);
-
-		StringReader stringReader = new StringReader(response);
-
 		Properties properties = new Properties();
 
-		try {
-			properties.load(stringReader);
-		}
-		catch (IOException ioe) {
-			throw ioe;
-		}
+		properties.load(new StringReader(toString(url)));
 
 		return properties;
 	}

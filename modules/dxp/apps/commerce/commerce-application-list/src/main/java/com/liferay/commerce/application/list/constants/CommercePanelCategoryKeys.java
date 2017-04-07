@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.application.list.constants;
+package com.liferay.commerce.application.list.constants;
 
 /**
  * @author Marco Leo

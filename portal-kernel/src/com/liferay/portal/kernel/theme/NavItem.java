@@ -237,7 +237,7 @@ public class NavItem implements Serializable {
 	 *         request's locale
 	 */
 	public String getTitle() {
-		return _layout.getTitle(_themeDisplay.getLocale());
+		return _layout.getTitle(_themeDisplay.getLanguageId());
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class NavItem implements Serializable {
 	 *         request's locale
 	 */
 	public String getUnescapedName() {
-		return _layout.getName(_themeDisplay.getLocale());
+		return _layout.getName(_themeDisplay.getLanguageId());
 	}
 
 	/**

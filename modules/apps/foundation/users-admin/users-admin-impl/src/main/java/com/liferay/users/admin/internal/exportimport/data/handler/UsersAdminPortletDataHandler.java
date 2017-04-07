@@ -48,6 +48,11 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "users_admin";
 
+	@Override
+	public boolean isSupportsDataStrategyCopyAsNew() {
+		return false;
+	}
+
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTAL);
@@ -57,7 +62,6 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "organizations", true, true, null,
 				Organization.class.getName()));
-		setSupportsDataStrategyCopyAsNew(false);
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.audit.AuditMessageFactoryUtil;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -301,10 +302,15 @@ public class TemplateContextHelper {
 			// Navigation items
 
 			if (layout != null) {
-				List<NavItem> navItems = NavItem.fromLayouts(
-					request, themeDisplay, layouts, contextObjects);
+				try {
+					List<NavItem> navItems = NavItem.fromLayouts(
+						request, themeDisplay, contextObjects);
 
-				contextObjects.put("navItems", navItems);
+					contextObjects.put("navItems", navItems);
+				}
+				catch (PortalException pe) {
+					_log.error(pe, pe);
+				}
 			}
 
 			// Deprecated

@@ -222,8 +222,7 @@ public class NavigationTag extends IncludeTag {
 				rootNavItem = branchNavItems.get(ancestorIndex);
 			}
 			else if (ancestorIndex == branchNavItems.size()) {
-				navItems = NavItem.fromLayouts(
-					request, themeDisplay, themeDisplay.getLayouts(), null);
+				navItems = NavItem.fromLayouts(request, themeDisplay, null);
 			}
 		}
 		else if (_rootLayoutType.equals("select")) {
@@ -239,8 +238,7 @@ public class NavigationTag extends IncludeTag {
 					request, themeDisplay, rootLayout, null);
 			}
 			else {
-				navItems = NavItem.fromLayouts(
-					request, themeDisplay, themeDisplay.getLayouts(), null);
+				navItems = NavItem.fromLayouts(request, themeDisplay, null);
 			}
 		}
 

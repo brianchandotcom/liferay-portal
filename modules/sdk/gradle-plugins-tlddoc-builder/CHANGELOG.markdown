@@ -18,7 +18,7 @@ component of the same application.
 library documentation of the app by using the `appTLDDocBuilder.subprojects`
 property.
 
-## 1.3.0 - 2017-03-31
+## 1.3.0 - 2017-04-06
 
 ### Added
 - [LPS-71591]: Add the ability to set a custom XML parser to be used by

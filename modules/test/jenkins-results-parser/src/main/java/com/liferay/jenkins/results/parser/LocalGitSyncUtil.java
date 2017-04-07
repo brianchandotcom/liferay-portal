@@ -114,14 +114,43 @@ public class LocalGitSyncUtil {
 			upstreamBranchSHA);
 	}
 
+	protected static boolean branchCached(
+		String branchName, GitWorkingDirectory gitWorkingDirectory,
+		List<RemoteConfig> remoteConfigs) {
+
+		for (RemoteConfig remoteConfig : remoteConfigs) {
+			try {
+				if (gitWorkingDirectory.branchExists(
+						branchName, remoteConfig)) {
+
+					continue;
+				}
+			}
+			catch (GitAPIException gapie) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Unable to determine if branch ", branchName,
+						" exists on ",
+						GitWorkingDirectory.getRemoteURL(remoteConfig)));
+
+				gapie.printStackTrace();
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
 	protected static void cacheBranch(
 			GitWorkingDirectory gitWorkingDirectory, String localBranchName,
 			RemoteConfig remoteConfig, long timestamp)
 		throws GitAPIException {
 
-		gitWorkingDirectory.pushToRemote(remoteConfig);
+		gitWorkingDirectory.pushToRemote(true, remoteConfig);
 
 		gitWorkingDirectory.pushToRemote(
+			true,
 			JenkinsResultsParserUtil.combine(
 				localBranchName, "-", Long.toString(timestamp)),
 			remoteConfig);
@@ -156,8 +185,8 @@ public class LocalGitSyncUtil {
 
 							if (upstreamUsername.equals("liferay")) {
 								gitWorkingDirectory.pushToRemote(
-									upstreamBranchName, upstreamBranchName,
-									localGitRemoteConfig);
+									false, upstreamBranchName,
+									upstreamBranchName, localGitRemoteConfig);
 							}
 						}
 						catch (GitAPIException gapie) {
@@ -419,7 +448,7 @@ public class LocalGitSyncUtil {
 		throws GitAPIException {
 
 		if (gitWorkingDirectory.pushToRemote(
-				"", remoteBranchName, remoteConfig)) {
+				true, "", remoteBranchName, remoteConfig)) {
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
@@ -538,7 +567,7 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static Map<RemoteConfig, Boolean> pushToAllRemotes(
-			final GitWorkingDirectory gitWorkingDirectory,
+			final boolean force, final GitWorkingDirectory gitWorkingDirectory,
 			final String localBranchName, final String remoteBranchName,
 			List<RemoteConfig> remoteConfigs)
 		throws GitAPIException {
@@ -568,7 +597,7 @@ public class LocalGitSyncUtil {
 							resultsMap.put(
 								remoteConfig,
 								gitWorkingDirectory.pushToRemote(
-									localBranchName, remoteBranchName,
+									force, localBranchName, remoteBranchName,
 									remoteConfig));
 						}
 						catch (GitAPIException gapie) {
@@ -652,25 +681,22 @@ public class LocalGitSyncUtil {
 				deleteExpiredCacheBranches(
 					gitWorkingDirectory, localGitRemoteConfigs);
 
-				int randomIndex = JenkinsResultsParserUtil.getRandomValue(
-					0, localGitRemoteConfigs.size() - 1);
+				if (branchCached(
+						cacheBranchName, gitWorkingDirectory,
+						localGitRemoteConfigs)) {
 
-				List<String> remoteCacheBranchNames = getRemoteCacheBranchNames(
-					gitWorkingDirectory,
-					localGitRemoteConfigs.get(randomIndex));
-
-				if (remoteCacheBranchNames.contains(cacheBranchName)) {
 					System.out.println(
-						"Cache branch " + cacheBranchName + " already exists.");
+						JenkinsResultsParserUtil.combine(
+							"Cache branch ", cacheBranchName,
+							" already exists."));
 
 					updateCacheBranchTimestamp(
 						cacheBranchName, gitWorkingDirectory,
 						localGitRemoteConfigs);
 
-					List<String> localBranchNames =
-						gitWorkingDirectory.getLocalBranchNames();
+					if (!gitWorkingDirectory.branchExists(
+							upstreamBranchName, null)) {
 
-					if (!localBranchNames.contains(upstreamBranchName)) {
 						updateLocalUpstreamBranch(
 							gitWorkingDirectory, upstreamBranchName,
 							upstreamRemoteConfig);
@@ -738,7 +764,9 @@ public class LocalGitSyncUtil {
 					gitWorkingDirectory.removeRemotes(localGitRemoteConfigs);
 				}
 
-				if (gitWorkingDirectory.localBranchExists(originalBranchName)) {
+				if (gitWorkingDirectory.branchExists(
+						originalBranchName, null)) {
+
 					gitWorkingDirectory.checkoutBranch(originalBranchName);
 				}
 				else {
@@ -787,8 +815,8 @@ public class LocalGitSyncUtil {
 
 					if (updated) {
 						pushToAllRemotes(
-							gitWorkingDirectory, "", remoteCacheBranchName,
-							localGitRemoteConfigs);
+							true, gitWorkingDirectory, "",
+							remoteCacheBranchName, localGitRemoteConfigs);
 
 						continue;
 					}
@@ -837,11 +865,11 @@ public class LocalGitSyncUtil {
 
 					try {
 						pushToAllRemotes(
-							gitWorkingDirectory, newTimestampBranchName,
+							true, gitWorkingDirectory, newTimestampBranchName,
 							newTimestampBranchName, localGitRemoteConfigs);
 						pushToAllRemotes(
-							gitWorkingDirectory, "", remoteCacheBranchName,
-							localGitRemoteConfigs);
+							true, gitWorkingDirectory, "",
+							remoteCacheBranchName, localGitRemoteConfigs);
 
 						updated = true;
 					}

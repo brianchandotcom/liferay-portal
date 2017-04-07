@@ -102,6 +102,25 @@
 					<docrootDirName>src/main/resources</docrootDirName>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.portal.tools.soy.builder</artifactId>
+				<version>@com.liferay.portal.tools.soy.builder.version@</version>
+				<executions>
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>build</goal>
+							<goal>wrap-alloy-template</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<dir>${project.build.directory}/classes/META-INF/resources</dir>
+					<moduleName>${artifactId}-form-field-template</moduleName>
+					<namespace>ddm</namespace>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

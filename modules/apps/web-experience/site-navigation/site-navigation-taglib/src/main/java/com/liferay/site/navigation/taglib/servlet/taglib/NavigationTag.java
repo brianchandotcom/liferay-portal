@@ -33,8 +33,10 @@ import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -157,21 +159,31 @@ public class NavigationTag extends IncludeTag {
 	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
 		throws PortalException {
 
-		List<NavItem> navItems = new ArrayList<>();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
-		NavItem navItem = new NavItem(request, themeDisplay, layout, null);
-
-		navItems.add(navItem);
-
-		for (Layout ancestorLayout : layout.getAncestors()) {
-			navItems.add(
-				0, new NavItem(request, themeDisplay, ancestorLayout, null));
+		if (layout.isRootLayout()) {
+			return Collections.singletonList(
+				new NavItem(request, themeDisplay, layout, null));
 		}
+
+		List<Layout> ancestors = layout.getAncestors();
+
+		List<NavItem> navItems = new ArrayList<>(ancestors.size() + 1);
+
+		ListIterator<Layout> listIterator = ancestors.listIterator(
+			ancestors.size());
+
+		while (listIterator.hasPrevious()) {
+			Layout ancestorLayout = listIterator.previous();
+
+			navItems.add(
+				new NavItem(request, themeDisplay, ancestorLayout, null));
+		}
+
+		navItems.add(new NavItem(request, themeDisplay, layout, null));
 
 		return navItems;
 	}

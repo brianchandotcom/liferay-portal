@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -189,7 +188,7 @@ public class NavItem implements Serializable {
 	 * @throws Exception if an exception occurred
 	 */
 	public String getRegularFullURL() throws Exception {
-		String portalURL = PortalUtil.getPortalURL(_request);
+		String portalURL = _themeDisplay.getPortalURL();
 
 		String regularURL = getRegularURL();
 

@@ -27,7 +27,14 @@ import java.util.regex.Pattern;
 public class FriendlyURLNormalizerUtil {
 
 	public static FriendlyURLNormalizer getFriendlyURLNormalizer() {
-		return _serviceTracker.getService();
+		FriendlyURLNormalizer friendlyURLNormalizer =
+			_serviceTracker.getService();
+
+		if (friendlyURLNormalizer == null) {
+			return _defaultFriendlyURLNormalizer;
+		}
+
+		return friendlyURLNormalizer;
 	}
 
 	public static String normalize(String friendlyURL) {
@@ -60,8 +67,11 @@ public class FriendlyURLNormalizerUtil {
 	@Deprecated
 	public void setFriendlyURLNormalizer(
 		FriendlyURLNormalizer friendlyURLNormalizer) {
+
+		_defaultFriendlyURLNormalizer = friendlyURLNormalizer;
 	}
 
+	private static FriendlyURLNormalizer _defaultFriendlyURLNormalizer;
 	private static final
 		ServiceTracker<FriendlyURLNormalizer, FriendlyURLNormalizer>
 			_serviceTracker;

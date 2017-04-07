@@ -99,6 +99,16 @@ public class PermissionCacheUtil {
 		_sendClearCacheClusterMessage(_clearCacheMethodKey, userIds);
 	}
 
+	public static void clearPrimaryKeyRoleCache() {
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
+
+		_permissionPortalCache.removeAll();
+		_resourceBlockIdsBagCache.removeAll();
+		_userPrimaryKeyRolePortalCache.removeAll();
+	}
+
 	public static void clearResourceBlockCache(
 		long companyId, long groupId, String name) {
 

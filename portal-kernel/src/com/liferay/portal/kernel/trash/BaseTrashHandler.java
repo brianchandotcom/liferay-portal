@@ -299,8 +299,19 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
+	public TrashedModel getTrashedModel(long classPK) {
+		return null;
+	}
+
+	@Override
 	@SuppressWarnings("unused")
 	public TrashEntry getTrashEntry(long classPK) throws PortalException {
+		TrashedModel trashedModel = getTrashedModel(classPK);
+
+		if (trashedModel != null) {
+			return trashedModel.getTrashEntry();
+		}
+
 		return null;
 	}
 
@@ -374,8 +385,25 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
+	public boolean isInTrash(long classPK) throws PortalException {
+		TrashedModel trashedModel = getTrashedModel(classPK);
+
+		if (trashedModel != null) {
+			return trashedModel.isInTrash();
+		}
+
+		return false;
+	}
+
+	@Override
 	@SuppressWarnings("unused")
 	public boolean isInTrashContainer(long classPK) throws PortalException {
+		TrashedModel trashedModel = getTrashedModel(classPK);
+
+		if (trashedModel != null) {
+			return trashedModel.isInTrashContainer();
+		}
+
 		return false;
 	}
 

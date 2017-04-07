@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.kernel.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
 
@@ -72,12 +72,9 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.getExportImportConfiguration(
-				classPK);
-
-		return exportImportConfiguration.getTrashEntry();
+	public TrashedModel getTrashedModel(long classPK) {
+		return _exportImportConfigurationLocalService.
+			fetchExportImportConfiguration(classPK);
 	}
 
 	@Override
@@ -95,15 +92,6 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 			servletContext);
 
 		return exportImportConfigurationTrashRenderer;
-	}
-
-	@Override
-	public boolean isInTrash(long classPK) throws PortalException {
-		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.getExportImportConfiguration(
-				classPK);
-
-		return exportImportConfiguration.isInTrash();
 	}
 
 	@Override

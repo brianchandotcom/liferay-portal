@@ -25,24 +25,20 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
-import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.trash.kernel.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * Represents the trash handler for bookmarks folder entity.
  *
  * @author Eudaldo Alonso
+ * @deprecated As of 1.1.0
  */
-@Component(
-	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksFolder"},
-	service = TrashHandler.class
-)
+@Deprecated
 public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 
 	@Override

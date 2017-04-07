@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 
 import java.util.List;
 
@@ -151,7 +152,8 @@ public class BookmarksEntryStagedModelRepository
 			return;
 		}
 
-		TrashHandler trashHandler = existingBookmarksEntry.getTrashHandler();
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			BookmarksEntry.class.getName());
 
 		try {
 			if (trashHandler.isRestorable(

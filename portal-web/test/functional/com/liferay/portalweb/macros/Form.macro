@@ -323,4 +323,10 @@
 	<command name="viewSidebarTitle">
 		<execute function="AssertTextEquals" locator1="Form#SIDEBAR_HEADER" value1="${fieldLabel}" />
 	</command>
+
+	<command name="viewSuccessPagePagination">
+		<execute macro="Form#switchPaginationMode" />
+
+		<execute function="AssertElementPresent" locator1="Form#PAGINATION_SUCCESS_PAGE" value1="Success Page" />
+	</command>
 </definition>

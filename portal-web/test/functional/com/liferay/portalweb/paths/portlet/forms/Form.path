@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGINATION_SUCCESS_PAGE</td>
+	<td>//div[contains(@class,'form-builder-pagination')]//li[@class='pagination-success-page']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

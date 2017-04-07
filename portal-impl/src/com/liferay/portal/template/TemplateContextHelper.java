@@ -302,7 +302,7 @@ public class TemplateContextHelper {
 
 			if (layout != null) {
 				List<NavItem> navItems = NavItem.fromLayouts(
-					request, layouts, contextObjects);
+					request, themeDisplay, layouts, contextObjects);
 
 				contextObjects.put("navItems", navItems);
 			}

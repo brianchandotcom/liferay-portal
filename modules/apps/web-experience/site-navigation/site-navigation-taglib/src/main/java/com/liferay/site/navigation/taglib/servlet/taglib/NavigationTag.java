@@ -164,12 +164,13 @@ public class NavigationTag extends IncludeTag {
 
 		Layout layout = themeDisplay.getLayout();
 
-		NavItem navItem = new NavItem(request, layout, null);
+		NavItem navItem = new NavItem(request, themeDisplay, layout, null);
 
 		navItems.add(navItem);
 
 		for (Layout ancestorLayout : layout.getAncestors()) {
-			navItems.add(0, new NavItem(request, ancestorLayout, null));
+			navItems.add(
+				0, new NavItem(request, themeDisplay, ancestorLayout, null));
 		}
 
 		return navItems;
@@ -222,7 +223,7 @@ public class NavigationTag extends IncludeTag {
 			}
 			else if (ancestorIndex == branchNavItems.size()) {
 				navItems = NavItem.fromLayouts(
-					request, themeDisplay.getLayouts(), null);
+					request, themeDisplay, themeDisplay.getLayouts(), null);
 			}
 		}
 		else if (_rootLayoutType.equals("select")) {
@@ -234,11 +235,12 @@ public class NavigationTag extends IncludeTag {
 						_rootLayoutUuid, layout.getGroupId(),
 						layout.isPrivateLayout());
 
-				rootNavItem = new NavItem(request, rootLayout, null);
+				rootNavItem = new NavItem(
+					request, themeDisplay, rootLayout, null);
 			}
 			else {
 				navItems = NavItem.fromLayouts(
-					request, themeDisplay.getLayouts(), null);
+					request, themeDisplay, themeDisplay.getLayouts(), null);
 			}
 		}
 

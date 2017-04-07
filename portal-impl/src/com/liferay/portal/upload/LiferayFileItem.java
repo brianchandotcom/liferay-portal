@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.output.DeferredFileOutputStream;
 
 /**
  * @author Brian Wing Shun Chan
@@ -134,6 +135,24 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 	@Override
 	public int getSizeThreshold() {
 		return _sizeThreshold;
+	}
+
+	@Override
+	public File getStoreLocation() {
+		DeferredFileOutputStream dfos = null;
+
+		try {
+			dfos = (DeferredFileOutputStream)getOutputStream();
+		}
+		catch (IOException ioe) {
+			_log.error(ioe, ioe);
+		}
+
+		if (dfos == null) {
+			return null;
+		}
+
+		return dfos.getFile();
 	}
 
 	@Override

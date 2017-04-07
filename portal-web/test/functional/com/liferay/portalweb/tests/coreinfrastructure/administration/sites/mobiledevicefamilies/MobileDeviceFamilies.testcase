@@ -34,7 +34,7 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="pageName" value="Redirect Landing Page" />
+			<var name="pageName" value="Page for CentOS" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -47,26 +47,26 @@
 			<var name="portlet" value="Mobile Device Families" />
 		</execute>
 
-		<execute macro="MobileDevice#addCP">
-			<var name="deviceFamilyName" value="Mobile Device Family Name" />
+		<execute macro="MobileDevice#addDeviceFamilyCP">
+			<var name="deviceFamilyName" value="CentOS Family Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Mobile Device Families" />
 		</execute>
 
-		<execute macro="MobileDevice#addRuleCP">
+		<execute macro="MobileDevice#addClassificationRuleCP">
+			<var name="classificationName" value="Classification Name" />
 			<var name="deviceType" value="Any" />
-			<var name="mobileDeviceFamilyName" value="Mobile Device Family Name" />
-			<var name="operatingSystem" value="CentOS" />
-			<var name="ruleName" value="Rule Name" />
+			<var name="mobileDeviceFamilyName" value="CentOS Family Name" />
+			<var name="ruleOSScope" value="CentOS" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Mobile Device Families" />
 		</execute>
 
-		<execute macro="MobileDevice#addCP">
+		<execute macro="MobileDevice#addDeviceFamilyCP">
 			<var name="deviceFamilyName" value="Windows Device Family Name" />
 		</execute>
 
@@ -74,11 +74,11 @@
 			<var name="portlet" value="Mobile Device Families" />
 		</execute>
 
-		<execute macro="MobileDevice#addRuleCP">
+		<execute macro="MobileDevice#addClassificationRuleCP">
+			<var name="classificationName" value="Classification Name" />
 			<var name="deviceType" value="Any" />
 			<var name="mobileDeviceFamilyName" value="Windows Device Family Name" />
-			<var name="operatingSystem" value="Windows" />
-			<var name="ruleName" value="Rule Name" />
+			<var name="ruleOSScope" value="Windows" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -100,13 +100,13 @@
 		<execute macro="Page#disableMobileDeviceRulesAreInheritedFromPublicPages" />
 
 		<execute macro="Page#selectMobileDeviceFamily">
-			<var name="deviceFamilyName" value="Mobile Device Family Name" />
+			<var name="deviceFamilyName" value="CentOS Family Name" />
 		</execute>
 
 		<execute macro="Page#manageDeviceFamilyActions">
 			<var name="actionName" value="Mobile Device Family Test Action" />
 			<var name="actionType" value="Redirect to Site" />
-			<var name="pageName" value="Redirect Landing Page" />
+			<var name="pageName" value="Page for CentOS" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
@@ -127,7 +127,7 @@
 
 		<execute macro="MobileDevice#assertRedirectActionPG">
 			<var name="pageName" value="Mobile Device Family Test Page" />
-			<var name="redirectPageName" value="Redirect Landing Page" />
+			<var name="redirectPageName" value="Page for CentOS" />
 		</execute>
 	</command>
 </definition>

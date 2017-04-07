@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>ADD_CLASSIFICATION_RULE_OPERATING_SYSTEM</td>
-	<td>//select[contains(@id,'os')]/option[contains(.,'${key_operatingSystem}')]</td>
+	<td>//select[contains(@id,'os')]/option[contains(.,'${key_ruleOSScope}')]</td>
 	<td></td>
 </tr>
 <tr>

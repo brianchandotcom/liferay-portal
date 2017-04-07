@@ -1057,7 +1057,7 @@
 			<var name="portlet" value="Mobile Device Families" />
 		</execute>
 
-		<execute macro="MobileDevice#addCP">
+		<execute macro="MobileDevice#addDeviceFamilyCP">
 			<var name="classificationName" value="Classification Name" />
 			<var name="deviceFamilyName" value="Device Family Name" />
 		</execute>

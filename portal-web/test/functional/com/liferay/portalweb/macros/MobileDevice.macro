@@ -1,19 +1,5 @@
 <definition>
-	<command name="addCP">
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="New Device Family" />
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${deviceFamilyName}" />
-		</execute>
-
-		<execute function="Click" locator1="Button#SAVE" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="addRuleCP">
+	<command name="addClassificationRuleCP">
 		<var name="key_deviceFamilyName" value="${mobileDeviceFamilyName}" />
 
 		<execute function="AssertClick" locator1="MobileDevice#DEVICE_FAMILY_TABLE_NAME_LINK" value1="${mobileDeviceFamilyName}" />
@@ -22,19 +8,33 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="New Classification Rule" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${ruleName}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${classificationName}" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Operating System and Type" />
 		</execute>
 
-		<var name="key_operatingSystem" value="${operatingSystem}" />
+		<var name="key_ruleOSScope" value="${ruleOSScope}" />
 
 		<execute function="Click" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_OPERATING_SYSTEM" />
 
 		<var name="key_deviceType" value="${deviceType}" />
 
 		<execute function="Click" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_DEVICE_TYPE" />
+
+		<execute function="Click" locator1="Button#SAVE" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="addDeviceFamilyCP">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="New Device Family" />
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${deviceFamilyName}" />
+		</execute>
 
 		<execute function="Click" locator1="Button#SAVE" />
 

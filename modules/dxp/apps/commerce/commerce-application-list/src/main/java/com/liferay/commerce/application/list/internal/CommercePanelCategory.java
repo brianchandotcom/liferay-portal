@@ -19,9 +19,10 @@ import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.commerce.application.list.constants.CommercePanelCategoryKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marco Leo

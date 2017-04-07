@@ -23,12 +23,12 @@ import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateMa
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.taglib.internal.portlet.display.template.PortletDisplayTemplateUtil;
+import com.liferay.site.navigation.taglib.internal.servlet.NavItemClassNameIdUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -61,8 +61,8 @@ public class NavigationTag extends IncludeTag {
 		DDMTemplate portletDisplayDDMTemplate =
 			portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
 				getDisplayStyleGroupId(),
-				PortalUtil.getClassNameId(NavItem.class), getDisplayStyle(),
-				true);
+				NavItemClassNameIdUtil.getNavItemClassNameId(),
+				getDisplayStyle(), true);
 
 		if (portletDisplayDDMTemplate == null) {
 			return EVAL_PAGE;

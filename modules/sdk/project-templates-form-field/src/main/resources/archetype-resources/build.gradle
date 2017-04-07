@@ -15,8 +15,6 @@
 apply plugin: "com.liferay.plugin"
 
 #end
-task wrapSoyTemplates
-
 dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.2.0"
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.field.type", version: "2.0.0"
@@ -26,7 +24,6 @@ dependencies {
 
 classes {
 	dependsOn buildSoy
-	dependsOn wrapSoyTemplates
 }
 
 transpileJS {
@@ -34,19 +31,10 @@ transpileJS {
 	srcIncludes = "**/*.es.js"
 }
 
-wrapSoyTemplates {
-	doLast {
-		FileTree soyJsFileTree = fileTree(dir: buildDir, include: "**/*.soy.js")
-
-		String soyJsWrapperHeader = "AUI.add('${artifactId}-form-field-template', function(A) {"
-		String soyJsWrapperFooter = "}, '', {requires: ['soyutils']});";
-
-		soyJsFileTree.each {
-			File soyJsFile ->
-
-			soyJsFile.text = soyJsWrapperHeader + soyJsFile.text.replace("(typeof ddm == 'undefined') { var ddm = {}; }", "(typeof ddm == 'undefined') { window.ddm = {}; }") + soyJsWrapperFooter
-		}
-	}
+wrapSoyAlloyTemplate {
+	enabled = true
+	moduleName = "${artifactId}-form-field-template"
+	namespace = "ddm"
 }
 #if (${projectType} != "workspace")
 

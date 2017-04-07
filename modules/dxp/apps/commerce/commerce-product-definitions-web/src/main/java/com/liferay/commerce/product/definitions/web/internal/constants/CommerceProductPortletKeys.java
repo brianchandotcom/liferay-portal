@@ -20,7 +20,7 @@ package com.liferay.commerce.product.definitions.web.internal.constants;
 public class CommerceProductPortletKeys {
 
 	public static final String COMMERCE_PRODUCT_DEFINITIONS =
-		"com_liferay_commerce_product_web_internal_portlet_" +
+		"com_liferay_commerce_product_definitions_web_internal_portlet_" +
 			"CommerceProductDefinitionsPortlet";
 
 }

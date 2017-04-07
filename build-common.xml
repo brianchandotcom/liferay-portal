@@ -242,6 +242,29 @@ Error-Prone was automatically installed. Please rerun your task.
 		</condition>
 	</fail>
 
+	<fail>
+		<condition>
+			<and>
+				<equals arg1="${microsoft.translator.subscription.key}" arg2="" />
+				<or>
+					<isset property="microsoft.translator.client.id" />
+					<isset property="microsoft.translator.client.secret" />
+				</or>
+			</and>
+		</condition>
+.
+
+Properties "microsoft.translator.client.id" and
+"microsoft.translator.client.secret" are deprecated. Please remove these
+properties, or set "microsoft.translator.subscription.key" instead, then rerun
+your task.
+
+Subscription to the Translator Text Translation API on Microsoft Cognitive
+Services is required. Basic subscriptions, up to 2 million characters a month,
+are free. See http://docs.microsofttranslator.com/text-translate.html for more
+information.
+	</fail>
+
 	<property name="whip.agent" value="-javaagent:${project.dir}/${junit.whip.jar}=${junit.whip.includes};${junit.whip.excludes}" />
 
 	<macrodef name="app-server-properties-reset">

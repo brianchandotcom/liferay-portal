@@ -18,6 +18,6 @@
 
 <liferay-ui:error-header />
 
-<liferay-ui:error exception="<%= NoSuchProductDefinitionException.class %>" message="the-product-definition-could-not-be-found" />
+<liferay-ui:error exception="<%= NoSuchProductDefinitionException.class %>" message="the-product-could-not-be-found" />
 
 <liferay-ui:error-principal />

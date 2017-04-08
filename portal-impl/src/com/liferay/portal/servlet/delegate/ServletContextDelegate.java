@@ -28,10 +28,18 @@ public class ServletContextDelegate {
 
 		return ASMWrapperUtil.createASMWrapper(
 			clazz.getClassLoader(), ServletContext.class,
-			new ServletContextDelegate(
-				servletContext.getContextPath(),
-				servletContext.getServletContextName()),
-			servletContext);
+			new ServletContextDelegate(servletContext), servletContext);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof ServletContext)) {
+			return false;
+		}
+
+		ServletContext servletContext = (ServletContext)obj;
+
+		return servletContext.equals(_servletContext);
 	}
 
 	public String getContextPath() {
@@ -42,14 +50,19 @@ public class ServletContextDelegate {
 		return _servletContextName;
 	}
 
-	private ServletContextDelegate(
-		String contextPath, String servletContextName) {
+	@Override
+	public int hashCode() {
+		return _servletContext.hashCode();
+	}
 
-		_contextPath = contextPath;
-		_servletContextName = servletContextName;
+	private ServletContextDelegate(ServletContext servletContext) {
+		_contextPath = servletContext.getContextPath();
+		_servletContextName = servletContext.getServletContextName();
+		_servletContext = servletContext;
 	}
 
 	private final String _contextPath;
+	private final ServletContext _servletContext;
 	private final String _servletContextName;
 
 }

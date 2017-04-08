@@ -125,13 +125,22 @@ public class ASMWrapperUtilTest {
 		Method[] expectedMethods = _getDeclaredMethods(TestInterface.class);
 		Method[] actualMethods = _getDeclaredMethods(asmWrapperClass);
 
+		// See LPS-71495
+
 		Assert.assertEquals(
 			"Expected: " + Arrays.toString(expectedMethods) + ", actual: " +
 				Arrays.toString(actualMethods),
-			expectedMethods.length, actualMethods.length);
+			expectedMethods.length + 3, actualMethods.length);
 
-		for (int i = 0; i < expectedMethods.length; i++) {
-			_assertEquals(expectedMethods[i], actualMethods[i]);
+		for (int i = 0, j = 0; i < expectedMethods.length; i++, j++) {
+			if (actualMethods[j].getName().equals("equals") ||
+				actualMethods[j].getName().equals("hashCode") ||
+				actualMethods[j].getName().equals("toString")) {
+
+				j++;
+			}
+
+			_assertEquals(expectedMethods[i], actualMethods[j]);
 		}
 	}
 

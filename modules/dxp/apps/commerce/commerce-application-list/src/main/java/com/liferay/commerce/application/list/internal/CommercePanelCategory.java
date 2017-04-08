@@ -21,7 +21,9 @@ import com.liferay.commerce.application.list.constants.CommercePanelCategoryKeys
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -44,8 +46,11 @@ public class CommercePanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale , getClass());
+
 		return LanguageUtil.get(
-			locale, "category.site_administration.commerce");
+			resourceBundle, "category.site_administration.commerce");
 	}
 
 }

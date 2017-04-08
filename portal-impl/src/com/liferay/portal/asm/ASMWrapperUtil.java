@@ -180,6 +180,49 @@ public class ASMWrapperUtil {
 			}
 		}
 
+		try {
+			Method delegateMethod = delegateObjectClass.getMethod(
+				"equals", Object.class);
+
+			_generateMethod(
+				classWriter, delegateMethod, asmWrapperClassBinaryName,
+				"_delegate", delegateObjectClassDescriptor,
+				_getClassBinaryName(delegateObjectClass));
+		}
+		catch (NoSuchMethodException nsme) {
+
+			// Ignore this case
+
+		}
+
+		try {
+			Method delegateMethod = delegateObjectClass.getMethod("hashCode");
+
+			_generateMethod(
+				classWriter, delegateMethod, asmWrapperClassBinaryName,
+				"_delegate", delegateObjectClassDescriptor,
+				_getClassBinaryName(delegateObjectClass));
+		}
+		catch (NoSuchMethodException nsme) {
+
+			// Ignore this case
+
+		}
+
+		try {
+			Method delegateMethod = delegateObjectClass.getMethod("toString");
+
+			_generateMethod(
+				classWriter, delegateMethod, asmWrapperClassBinaryName,
+				"_delegate", delegateObjectClassDescriptor,
+				_getClassBinaryName(delegateObjectClass));
+		}
+		catch (NoSuchMethodException nsme) {
+
+			// Ignore this case
+
+		}
+
 		classWriter.visitEnd();
 
 		return classWriter.toByteArray();

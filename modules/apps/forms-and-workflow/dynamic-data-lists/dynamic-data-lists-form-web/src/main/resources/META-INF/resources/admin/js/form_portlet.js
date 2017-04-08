@@ -68,6 +68,10 @@ AUI.add(
 						value: ''
 					},
 
+					getFunctionsURL: {
+						value: ''
+					},
+
 					getRolesURL: {
 						value: ''
 					},

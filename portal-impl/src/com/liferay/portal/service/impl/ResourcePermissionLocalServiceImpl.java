@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandlerRegistryUtil;
@@ -1269,6 +1270,8 @@ public class ResourcePermissionLocalServiceImpl
 			actionIdsLong = 0;
 		}
 
+		boolean clearPrimaryKeyRoleCache = false;
+
 		for (String actionId : actionIds) {
 			if (actionId == null) {
 				break;
@@ -1281,6 +1284,10 @@ public class ResourcePermissionLocalServiceImpl
 
 			ResourceAction resourceAction =
 				resourceActionLocalService.getResourceAction(name, actionId);
+
+			if (actionId.equals(ActionKeys.MANAGE_SUBGROUPS)) {
+				clearPrimaryKeyRoleCache = true;
+			}
 
 			if ((operator == ResourcePermissionConstants.OPERATOR_ADD) ||
 				(operator == ResourcePermissionConstants.OPERATOR_SET)) {
@@ -1300,6 +1307,10 @@ public class ResourcePermissionLocalServiceImpl
 			resourcePermission.setViewActionId(actionIdsLong % 2 == 1);
 
 			resourcePermissionPersistence.update(resourcePermission);
+		}
+
+		if (clearPrimaryKeyRoleCache) {
+			PermissionCacheUtil.clearPrimaryKeyRoleCache();
 		}
 
 		IndexWriterHelperUtil.updatePermissionFields(name, primKey);

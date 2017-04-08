@@ -21,7 +21,7 @@ List<AssetEntryQueryProcessor> assetEntryQueryProcessors = AssetPublisherUtil.ge
 
 for (AssetEntryQueryProcessor assetEntryQueryProcessor : assetEntryQueryProcessors) {
 	if (assetPublisherCustomizer.isShowAssetEntryQueryProcessor(assetEntryQueryProcessor)) {
-		assetEntryQueryProcessor.include(request, new PipingServletResponse(pageContext));
+		assetEntryQueryProcessor.include(request, PipingServletResponse.createPipingServletResponse(pageContext));
 	}
 }
 %>

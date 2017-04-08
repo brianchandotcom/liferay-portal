@@ -322,9 +322,8 @@ public class IncludeTag extends AttributesTagSupport {
 			TagDynamicIdFactoryRegistry.getTagDynamicIdFactory(tagClassName);
 
 		if (tagDynamicIdFactory != null) {
-			httpServletResponse = new PipingServletResponse(
-				(HttpServletResponse)pageContext.getResponse(),
-				pageContext.getOut());
+			httpServletResponse =
+				PipingServletResponse.createPipingServletResponse(pageContext);
 
 			tagDynamicId = tagDynamicIdFactory.getTagDynamicId(
 				request, httpServletResponse, this);
@@ -347,9 +346,9 @@ public class IncludeTag extends AttributesTagSupport {
 				WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT, _strict);
 		}
 
-		HttpServletResponse response = new PipingServletResponse(pageContext);
-
-		includePage(page, response);
+		includePage(
+			page,
+			PipingServletResponse.createPipingServletResponse(pageContext));
 
 		if (_THEME_JSP_OVERRIDE_ENABLED) {
 			request.removeAttribute(

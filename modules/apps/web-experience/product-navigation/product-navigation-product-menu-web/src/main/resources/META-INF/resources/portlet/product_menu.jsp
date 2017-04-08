@@ -28,7 +28,7 @@
 			<div class="panel">
 				<div class="panel-heading" id="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Heading" role="tab">
 					<div class="panel-title">
-						<c:if test="<%= !childPanelCategory.includeHeader(request, new PipingServletResponse(pageContext)) %>">
+						<c:if test="<%= !childPanelCategory.includeHeader(request, PipingServletResponse.createPipingServletResponse(pageContext)) %>">
 
 							<%
 							Class<?> childPanelCategoryClass = childPanelCategory.getClass();

@@ -156,8 +156,14 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 		throws Exception {
 
 		if (pageContext != null) {
-			response = new PipingServletResponse(
-				response, pageContext.getOut());
+			if (response == pageContext.getResponse()) {
+				response = PipingServletResponse.createPipingServletResponse(
+					pageContext);
+			}
+			else {
+				response = new PipingServletResponse(
+					response, pageContext.getOut());
+			}
 		}
 
 		PortletInstance portletInstance =

@@ -148,7 +148,9 @@ public class IconOptionsTag extends IconTag {
 					_portletConfigurationIcons) {
 
 				boolean include = portletConfigurationIcon.include(
-					request, new PipingServletResponse(pageContext));
+					request,
+					PipingServletResponse.createPipingServletResponse(
+						pageContext));
 
 				if (!include) {
 					IconTag iconTag = new IconTag();

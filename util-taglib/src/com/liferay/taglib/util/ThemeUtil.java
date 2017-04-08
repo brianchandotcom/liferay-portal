@@ -265,6 +265,8 @@ public class ThemeUtil {
 		}
 		else {
 			writer = new UnsyncStringWriter();
+
+			response = new PipingServletResponse(response, writer);
 		}
 
 		TemplateManager templateManager =
@@ -273,8 +275,7 @@ public class ThemeUtil {
 
 		templateManager.addTaglibSupport(template, request, response);
 		templateManager.addTaglibTheme(
-			template, "taglibLiferay", request,
-			new PipingServletResponse(response, writer));
+			template, "taglibLiferay", request, response);
 
 		template.put(TemplateConstants.WRITER, writer);
 
@@ -442,11 +443,12 @@ public class ThemeUtil {
 		}
 		else {
 			writer = new UnsyncStringWriter();
+
+			response = new PipingServletResponse(response, writer);
 		}
 
 		templateManager.addTaglibTheme(
-			template, "taglibLiferay", request,
-			new PipingServletResponse(response, writer));
+			template, "taglibLiferay", request, response);
 
 		template.put(TemplateConstants.WRITER, writer);
 
@@ -458,7 +460,7 @@ public class ThemeUtil {
 			return null;
 		}
 		else {
-			return ((UnsyncStringWriter)writer).toString();
+			return writer.toString();
 		}
 	}
 

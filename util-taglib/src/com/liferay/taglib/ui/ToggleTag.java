@@ -129,7 +129,8 @@ public class ToggleTag extends IncludeTag {
 			doTag(
 				getPage(), _id, _showImage, _hideImage, _showMessage,
 				_hideMessage, _defaultShowContent, _stateVar, servletContext,
-				request, new PipingServletResponse(pageContext));
+				request,
+				PipingServletResponse.createPipingServletResponse(pageContext));
 
 			return EVAL_PAGE;
 		}

@@ -60,9 +60,7 @@ public class AssetAddonEntryDisplayTag extends IncludeTag {
 	}
 
 	protected HttpServletResponse getResponse() {
-		return new PipingServletResponse(
-			(HttpServletResponse)pageContext.getResponse(),
-			pageContext.getOut());
+		return PipingServletResponse.createPipingServletResponse(pageContext);
 	}
 
 	@Override

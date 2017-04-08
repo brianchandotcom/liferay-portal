@@ -18,8 +18,11 @@ import com.liferay.portal.kernel.io.WriterOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletOutputStreamAdapter;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -27,12 +30,44 @@ import java.io.Writer;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.BodyContent;
 
 /**
  * @author Shuyang Zhou
  */
 public class PipingServletResponse extends HttpServletResponseWrapper {
+
+	public static HttpServletResponse createPipingServletResponse(
+		PageContext pageContext) {
+
+		HttpServletResponse httpServletResponse =
+			(HttpServletResponse)pageContext.getResponse();
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		if ((jspWriter instanceof BodyContent) || ServerDetector.isWebLogic()) {
+
+			// Unable to unwrap page context with pushed body
+			// Weblogic relies on the WriterOutputStream bridging logic insde
+			// getOutputStream(), so this shortcut optimization can not applied
+			// to Weblogic.
+
+			return new PipingServletResponse(httpServletResponse, jspWriter);
+		}
+
+		if (!ServerDetector.isTomcat()) {
+			try {
+				jspWriter.flush();
+			}
+			catch (IOException ioe) {
+				ReflectionUtil.throwException(ioe);
+			}
+		}
+
+		return httpServletResponse;
+	}
 
 	public PipingServletResponse(
 		HttpServletResponse response, OutputStream outputStream) {
@@ -80,6 +115,11 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 		_printWriter = UnsyncPrintWriterPool.borrow(writer);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #createPipingServletResponseIfNeeded(PageContext)}
+	 */
+	@Deprecated
 	public PipingServletResponse(PageContext pageContext) {
 		this(
 			(HttpServletResponse)pageContext.getResponse(),

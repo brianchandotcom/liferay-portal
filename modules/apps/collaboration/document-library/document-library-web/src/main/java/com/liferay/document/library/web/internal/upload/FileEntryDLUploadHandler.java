@@ -14,10 +14,10 @@
 
 package com.liferay.document.library.web.internal.upload;
 
-import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,9 +30,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.BaseUploadHandler;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import java.io.InputStream;
@@ -42,6 +40,10 @@ import java.io.InputStream;
  * @author Sergio González
  */
 public class FileEntryDLUploadHandler extends BaseUploadHandler {
+
+	public FileEntryDLUploadHandler(DLValidator dlValidator) {
+		_dlValidator = dlValidator;
+	}
 
 	@Override
 	protected FileEntry addFileEntry(
@@ -127,15 +129,12 @@ public class FileEntryDLUploadHandler extends BaseUploadHandler {
 	protected void validateFile(String fileName, String contentType, long size)
 		throws PortalException {
 
-		long maxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
-
-		if ((maxSize > 0) && (size > maxSize)) {
-			throw new FileSizeException(
-				size + " exceeds its maximum permitted size of " + maxSize);
-		}
+		_dlValidator.validateFileSize(fileName, size);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntryDLUploadHandler.class);
+
+	private final DLValidator _dlValidator;
 
 }

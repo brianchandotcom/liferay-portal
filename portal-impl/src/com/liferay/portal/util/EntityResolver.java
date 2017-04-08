@@ -388,6 +388,9 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 			"-//Liferay//DTD Service Builder 7.0.0//EN",
 			"liferay-service-builder_7_0_0.dtd"),
 		new KeyValuePair(
+			"-//Liferay//DTD Service Builder 7.1.0//EN",
+			"liferay-service-builder_7_1_0.dtd"),
+		new KeyValuePair(
 			"-//Liferay//DTD Social 6.1.0//EN", "liferay-social_6_1_0.dtd"),
 		new KeyValuePair(
 			"-//Liferay//DTD Social 6.2.0//EN", "liferay-social_6_2_0.dtd"),

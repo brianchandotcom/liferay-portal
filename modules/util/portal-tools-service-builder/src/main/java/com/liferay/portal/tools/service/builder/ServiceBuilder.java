@@ -729,6 +729,8 @@ public class ServiceBuilder {
 			}
 
 			if (build) {
+				Collections.sort(_ejbList);
+
 				for (int x = 0; x < _ejbList.size(); x++) {
 					Entity entity = _ejbList.get(x);
 
@@ -5094,6 +5096,7 @@ public class ServiceBuilder {
 		List<EntityColumn> blobList = new ArrayList<>();
 		List<EntityColumn> collectionList = new ArrayList<>();
 		List<EntityColumn> columnList = new ArrayList<>();
+		List<LocalizationColumn> localizationColumns = new ArrayList<>();
 
 		boolean permissionedModel = false;
 
@@ -5116,6 +5119,8 @@ public class ServiceBuilder {
 
 			columnElements.add(0, columnElement);
 		}
+
+		boolean hasLocalizedColumns = false;
 
 		for (Element columnElement : columnElements) {
 			String columnName = columnElement.attributeValue("name");
@@ -5173,6 +5178,10 @@ public class ServiceBuilder {
 			boolean parentContainerModel = GetterUtil.getBoolean(
 				columnElement.attributeValue("parent-container-model"));
 
+			if (localized) {
+				hasLocalizedColumns = true;
+			}
+
 			EntityColumn col = new EntityColumn(
 				columnName, columnDBName, columnType, primary, accessor,
 				filterPrimary, collectionEntity, mappingTable, idType, idParam,
@@ -5205,6 +5214,67 @@ public class ServiceBuilder {
 				if (!_entityMappings.containsKey(mappingTable)) {
 					_entityMappings.put(mappingTable, entityMapping);
 				}
+			}
+		}
+
+		Element localizationElement = entityElement.element("localization");
+
+		String localizationPrimaryEntityName = null;
+
+		boolean localizationMVCCEnabled = true;
+
+		if (localizationElement != null) {
+			localizationPrimaryEntityName = localizationElement.attributeValue(
+				"primary-entity-name");
+
+			localizationMVCCEnabled = GetterUtil.getBoolean(
+				localizationElement.attributeValue("mvcc-enabled"), true);
+
+			LocalizationColumn localizationColumn = new LocalizationColumn(
+				"defaultLanguageId", "defaultLanguageId");
+
+			int index = regularColList.indexOf(localizationColumn);
+
+			if (index < 0) {
+				regularColList.add(localizationColumn);
+				columnList.add(localizationColumn);
+			}
+
+			if (pkList.size() > 1) {
+				throw new IllegalArgumentException(
+					"Cannot use localization table with compound primary key");
+			}
+
+			if (hasLocalizedColumns) {
+				throw new IllegalArgumentException(
+					"Cannot use localization table with localized columns");
+			}
+
+			List<Element> localizedColumnElements =
+				localizationElement.elements("localized-column");
+
+			if (localizedColumnElements.isEmpty()) {
+				throw new IllegalArgumentException(
+					"Cannot use localization table without localized columns");
+			}
+
+			for (Element localizedColumnElement : localizedColumnElements) {
+				String columnName = localizedColumnElement.attributeValue(
+					"name");
+
+				String columnDBName = localizedColumnElement.attributeValue(
+					"db-name");
+
+				if (Validator.isNull(columnDBName)) {
+					columnDBName = columnName;
+
+					if (_badColumnNames.contains(columnDBName)) {
+						columnDBName += StringPool.UNDERLINE;
+					}
+				}
+
+				localizationColumns.add(
+					new LocalizationColumn(columnName, columnDBName));
 			}
 		}
 
@@ -5456,16 +5526,22 @@ public class ServiceBuilder {
 		boolean resourceActionModel = _resourceActionModels.contains(
 			_apiPackagePath + ".model." + ejbName);
 
-		_ejbList.add(
-			new Entity(
-				_packagePath, _apiPackagePath, _portletName, _portletShortName,
-				ejbName, humanName, table, alias, uuid, uuidAccessor,
-				localService, remoteService, persistenceClass, finderClass,
-				dataSource, sessionFactory, txManager, cacheEnabled,
-				dynamicUpdateEnabled, jsonEnabled, mvccEnabled, trashEnabled,
-				deprecated, pkList, regularColList, blobList, collectionList,
-				columnList, order, finderList, referenceList,
-				unresolvedReferenceList, txRequiredList, resourceActionModel));
+		Entity entity = new Entity(
+			_packagePath, _apiPackagePath, _portletName, _portletShortName,
+			ejbName, humanName, table, alias, uuid, uuidAccessor, localService,
+			remoteService, persistenceClass, finderClass, dataSource,
+			sessionFactory, txManager, cacheEnabled, dynamicUpdateEnabled,
+			jsonEnabled, mvccEnabled, trashEnabled, deprecated, pkList,
+			regularColList, blobList, collectionList, columnList,
+			localizationColumns, localizationPrimaryEntityName,
+			localizationMVCCEnabled, order, finderList, referenceList,
+			unresolvedReferenceList, txRequiredList, resourceActionModel);
+
+		_ejbList.add(entity);
+
+		if (entity.hasLocalizationColumns()) {
+			_ejbList.add(entity.toLocalizationEntity());
+		}
 	}
 
 	private String _processTemplate(String name, Map<String, Object> context)

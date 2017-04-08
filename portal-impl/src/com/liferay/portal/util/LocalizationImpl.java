@@ -48,6 +48,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -172,6 +173,33 @@ public class LocalizationImpl implements Localization {
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		return _getRootAttributeValue(xml, _DEFAULT_LOCALE, defaultLanguageId);
+	}
+
+	@Override
+	public String getLocalization(
+		Function<String, String> localizationFunction,
+		String requestedLanguageId, String defaultLanguageId) {
+
+		String result = localizationFunction.apply(requestedLanguageId);
+
+		if (!Validator.isBlank(result)) {
+			return result;
+		}
+
+		requestedLanguageId = LanguageUtil.getLanguageId(
+			LocaleUtil.getDefault());
+
+		result = localizationFunction.apply(requestedLanguageId);
+
+		if (!Validator.isBlank(result)) {
+			return result;
+		}
+
+		if (defaultLanguageId != null) {
+			return localizationFunction.apply(defaultLanguageId);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override

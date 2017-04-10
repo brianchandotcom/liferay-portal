@@ -17,6 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet;
 import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CommerceProductDefinitionsDisplayContext;
 import com.liferay.commerce.product.service.CommerceProductDefinitionLocalService;
+import com.liferay.commerce.product.type.CommerceProductTypeServicesTracker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -76,7 +77,8 @@ public class CommerceProductDefinitionsPortlet extends MVCPortlet {
 				commerceProductDefinitionsDisplayContext =
 					new CommerceProductDefinitionsDisplayContext(
 						httpServletRequest,
-						_commerceProductDefinitionLocalService);
+						_commerceProductDefinitionLocalService,
+						_commerceProductTypeServicesTracker);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -88,6 +90,10 @@ public class CommerceProductDefinitionsPortlet extends MVCPortlet {
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private CommerceProductTypeServicesTracker
+		_commerceProductTypeServicesTracker;
 
 	@Reference
 	private CommerceProductDefinitionLocalService

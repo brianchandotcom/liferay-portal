@@ -20,6 +20,8 @@ import com.liferay.commerce.product.definitions.web.internal.display.context.uti
 import com.liferay.commerce.product.definitions.web.internal.util.CommerceProductDefinitionsPortletUtil;
 import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.service.CommerceProductDefinitionLocalService;
+import com.liferay.commerce.product.type.CommerceProductType;
+import com.liferay.commerce.product.type.CommerceProductTypeServicesTracker;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -50,7 +52,9 @@ public class CommerceProductDefinitionsDisplayContext {
 	public CommerceProductDefinitionsDisplayContext(
 			HttpServletRequest httpServletRequest,
 			CommerceProductDefinitionLocalService
-				commerceProductDefinitionLocalService)
+				commerceProductDefinitionLocalService,
+			CommerceProductTypeServicesTracker
+				commerceProductTypeServicesTracker)
 		throws PortalException {
 
 		_httpServletRequest = httpServletRequest;
@@ -65,6 +69,8 @@ public class CommerceProductDefinitionsDisplayContext {
 
 		_commerceProductDefinitionLocalService =
 			commerceProductDefinitionLocalService;
+		_commerceProductTypeServicesTracker =
+			commerceProductTypeServicesTracker;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_httpServletRequest);
@@ -79,6 +85,10 @@ public class CommerceProductDefinitionsDisplayContext {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
+	}
+
+	public List<CommerceProductType> getCommerceProductTypes(){
+		return _commerceProductTypeServicesTracker.getCommerceProductTypes();
 	}
 
 	public CommerceProductDefinition getCommerceProductDefinition() {
@@ -312,5 +322,7 @@ public class CommerceProductDefinitionsDisplayContext {
 	private final PortalPreferences _portalPreferences;
 	private RowChecker _rowChecker;
 	private SearchContainer<CommerceProductDefinition> _searchContainer;
+	private CommerceProductTypeServicesTracker
+		_commerceProductTypeServicesTracker;
 
 }

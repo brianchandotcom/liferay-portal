@@ -1342,7 +1342,10 @@ OSGi project snapshot with the `install` and `uploadArchives` tasks.
 ### Changed
 - [LPS-71591]: Update the [Liferay Gradle Plugins] dependency to version 3.2.36.
 
-## 3.5.16 - 2017-04-07
+## 3.5.16 - 2017-04-08
+
+### Changed
+- [LPS-64098]: Update the [Liferay Gradle Plugins] dependency to version 3.2.37.
 
 ### Fixed
 - [LPS-71795]: Fix [Gradle issue](https://github.com/gradle/gradle/issues/1094)
@@ -1363,6 +1366,7 @@ files.
 [LPS-61987]: https://issues.liferay.com/browse/LPS-61987
 [LPS-62970]: https://issues.liferay.com/browse/LPS-62970
 [LPS-63943]: https://issues.liferay.com/browse/LPS-63943
+[LPS-64098]: https://issues.liferay.com/browse/LPS-64098
 [LPS-65179]: https://issues.liferay.com/browse/LPS-65179
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66762]: https://issues.liferay.com/browse/LPS-66762

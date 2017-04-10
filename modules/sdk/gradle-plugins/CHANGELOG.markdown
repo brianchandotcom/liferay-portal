@@ -1428,6 +1428,11 @@ to version 1.3.0.
 - [LPS-71375]: The project properties `microsoft.translator.client.id` and
 `microsoft.translator.client.secret` are no longer available.
 
+## 3.2.37 - 2017-04-08
+
+### Changed
+- [LPS-64098]: Update the [Liferay Ant BND] dependency to version 2.0.35.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1462,6 +1467,7 @@ to version 1.3.0.
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
 [LPS-62970]: https://issues.liferay.com/browse/LPS-62970
+[LPS-64098]: https://issues.liferay.com/browse/LPS-64098
 [LPS-66222]: https://issues.liferay.com/browse/LPS-66222
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853

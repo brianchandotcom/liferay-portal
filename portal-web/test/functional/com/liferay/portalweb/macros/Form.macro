@@ -221,6 +221,12 @@
 		<execute function="Click" locator1="Form#FORM_PAGE" />
 	</command>
 
+	<command name="gotoPageAltPagination">
+		<var name="key_page" value="${page}" />
+
+		<execute function="Click" locator1="Form#ALT_PAGINATION_PAGE" />
+	</command>
+
 	<command name="previewForm">
 		<execute macro="Navigator#selectSpecificWindow">
 			<var name="windowTitle" value="Form - Forms" />
@@ -293,6 +299,16 @@
 		<execute function="AssertClick" locator1="Form#PAGE_CONTROLS_SWITCH_PAGINATION_MODE" value1="Switch Pagination Mode" />
 	</command>
 
+	<command name="viewAltPagePagination">
+		<var name="key_page" value="${page}" />
+
+		<execute function="AssertElementPresent" locator1="Form#ALT_PAGINATION_PAGE" />
+	</command>
+
+	<command name="viewAltSuccessPagePagination">
+		<execute function="AssertElementPresent" locator1="Form#ALT_PAGINATION_SUCCESS_PAGE" />
+	</command>
+
 	<command name="viewFormName">
 		<execute function="AssertTextEquals" locator1="Form#NAME_FIELD" value1="${formName}" />
 	</command>
@@ -322,21 +338,5 @@
 
 	<command name="viewSidebarTitle">
 		<execute function="AssertTextEquals" locator1="Form#SIDEBAR_HEADER" value1="${fieldLabel}" />
-	</command>
-
-	<command name="gotoPageAltPagination">
-		<var name="key_page" value="${page}" />
-
-		<execute function="Click" locator1="Form#ALT_PAGINATION_PAGE" />
-	</command>
-
-	<command name="viewAltPagePagination">
-		<var name="key_page" value="${page}" />
-
-		<execute function="AssertElementPresent" locator1="Form#ALT_PAGINATION_PAGE" />
-	</command>
-
-	<command name="viewAltSuccessPagePagination">
-		<execute function="AssertElementPresent" locator1="Form#ALT_PAGINATION_SUCCESS_PAGE" />
 	</command>
 </definition>

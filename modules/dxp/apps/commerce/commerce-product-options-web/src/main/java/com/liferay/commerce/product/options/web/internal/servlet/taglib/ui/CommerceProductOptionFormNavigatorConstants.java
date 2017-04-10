@@ -20,7 +20,7 @@ package com.liferay.commerce.product.options.web.internal.servlet.taglib.ui;
 public class CommerceProductOptionFormNavigatorConstants {
 
 	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_BASE_INFO =
-		"base-information";
+		"product-option-base-information";
 
 	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_VALUE = "value";
 

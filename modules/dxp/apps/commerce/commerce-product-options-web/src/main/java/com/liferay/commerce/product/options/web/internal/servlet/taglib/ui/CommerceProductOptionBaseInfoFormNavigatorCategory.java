@@ -45,7 +45,7 @@ public class CommerceProductOptionBaseInfoFormNavigatorCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "base-information");
+		return LanguageUtil.get(locale, "product-option-base-information");
 	}
 
 }

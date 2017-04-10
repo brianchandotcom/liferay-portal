@@ -20,7 +20,7 @@
 CommerceProductOption commerceProductOption = (CommerceProductOption)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_OPTION);
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="base-information" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="product-option-base-information" />
 
 <aui:model-context bean="<%= commerceProductOption %>" model="<%= CommerceProductOption.class %>" />
 
@@ -28,7 +28,7 @@ CommerceProductOption commerceProductOption = (CommerceProductOption)request.get
 	<aui:input label="name" name="name" />
 	<aui:input label="description" name="description" />
 
-	<aui:select label="ddmFormFieldTypeName" name="ddmFormFieldTypeName">
+	<aui:select label="product-option-field-type" name="ddmFormFieldTypeName">
 		<aui:option label="dummy-text" value="dummy-text" />
 	</aui:select>
 </aui:fieldset>

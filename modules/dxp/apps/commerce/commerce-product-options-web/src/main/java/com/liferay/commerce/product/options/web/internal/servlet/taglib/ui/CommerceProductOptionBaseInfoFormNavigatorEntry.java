@@ -47,12 +47,12 @@ public class CommerceProductOptionBaseInfoFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "base-information";
+		return "product-option-base-information";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return "base-information";
+		return "product-option-base-information";
 	}
 
 	@Override

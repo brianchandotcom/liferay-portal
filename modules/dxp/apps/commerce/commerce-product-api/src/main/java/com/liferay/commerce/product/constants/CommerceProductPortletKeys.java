@@ -23,4 +23,7 @@ public class CommerceProductPortletKeys {
 		"com_liferay_commerce_product_definitions_web_internal_portlet_" +
 			"CommerceProductDefinitionsPortlet";
 
+	public static final String COMMERCE_PRODUCT_OPTIONS =
+		"com_liferay_commerce_product_options_web_internal_portlet_" +
+			"CommerceProductOptionsPortlet";
 }

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsUtil;
 
@@ -139,6 +140,10 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 
 	@Override
 	public File getStoreLocation() {
+		if (!ServerDetector.isWebLogic()) {
+			return super.getStoreLocation();
+		}
+
 		DeferredFileOutputStream dfos = null;
 
 		try {

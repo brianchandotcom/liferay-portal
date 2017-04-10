@@ -64,7 +64,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGINATION_SUCCESS_PAGE</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ALT_PAGINATION-->
+<tr>
+	<td>ALT_PAGINATION_PAGE</td>
+	<td>//div[contains(@class,'form-builder-pagination')]//li[contains(.,'${key_page}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALT_PAGINATION_SUCCESS_PAGE</td>
 	<td>//div[contains(@class,'form-builder-pagination')]//li[@class='pagination-success-page']</td>
 	<td></td>
 </tr>

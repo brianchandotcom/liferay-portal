@@ -4513,8 +4513,8 @@
 		</execute>
 	</command>
 
-	<command name="ViewSuccessPagePagination" priority="2">
-		<description message="This is a use case for LPS-71512." />
+	<command name="ViewAltSuccessPagePagination" priority="2">
+		<description message="This is a use case for LPS-71485 and LPS-71512." />
 
 		<execute macro="Navigator#openURL" />
 
@@ -4565,6 +4565,21 @@
 			<var name="successPageTitle" value="Success Page Title" />
 		</execute>
 
-		<execute macro="Form#viewSuccessPagePagination" />
+		<execute macro="Form#switchPaginationMode" />
+
+		<execute macro="Form#viewAltPagePagination">
+			<var name="page" value="2" />
+		</execute>
+
+		<execute macro="Form#viewAltSuccessPagePagination" />
+
+		<execute macro="Form#gotoPageAltPagination">
+			<var name="page" value="1" />
+		</execute>
+
+		<execute macro="FormFields#viewTextField">
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldName" value="TextField" />
+		</execute>
 	</command>
 </definition>

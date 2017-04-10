@@ -324,9 +324,19 @@
 		<execute function="AssertTextEquals" locator1="Form#SIDEBAR_HEADER" value1="${fieldLabel}" />
 	</command>
 
-	<command name="viewSuccessPagePagination">
-		<execute macro="Form#switchPaginationMode" />
+	<command name="gotoPageAltPagination">
+		<var name="key_page" value="${page}" />
 
-		<execute function="AssertElementPresent" locator1="Form#PAGINATION_SUCCESS_PAGE" value1="Success Page" />
+		<execute function="Click" locator1="Form#ALT_PAGINATION_PAGE" />
+	</command>
+
+	<command name="viewAltPagePagination">
+		<var name="key_page" value="${page}" />
+
+		<execute function="AssertElementPresent" locator1="Form#ALT_PAGINATION_PAGE" />
+	</command>
+
+	<command name="viewAltSuccessPagePagination">
+		<execute function="AssertElementPresent" locator1="Form#ALT_PAGINATION_SUCCESS_PAGE" />
 	</command>
 </definition>

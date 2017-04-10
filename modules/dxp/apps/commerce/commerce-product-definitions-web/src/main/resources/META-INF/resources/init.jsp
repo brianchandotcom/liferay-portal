@@ -52,8 +52,6 @@ page import="java.util.List" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%
 	CommerceProductDefinitionsDisplayContext commerceProductDefinitionsDisplayContext = (CommerceProductDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>

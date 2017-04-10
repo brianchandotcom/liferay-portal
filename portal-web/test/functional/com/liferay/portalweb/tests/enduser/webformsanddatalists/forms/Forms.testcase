@@ -2092,7 +2092,7 @@
 		<description message="This is a use case for LPS-60818." />
 		<property name="osgi.module.configuration.file.names" value="com.liferay.captcha.configuration.CaptchaConfiguration.config" />
 		<property name="osgi.module.configurations" value="maxChallenges=&quot;0&quot;" />
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="Navigator#openURL" />
 

@@ -17,7 +17,6 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.model.CommerceProductOptionValue;
 import com.liferay.commerce.product.service.base.CommerceProductOptionValueLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -64,11 +63,6 @@ public class CommerceProductOptionValueLocalServiceImpl
 		commerceProductOptionValuePersistence.update(
 			commerceProductOptionValue);
 
-		// Resources
-
-		resourceLocalService.addModelResources(
-			commerceProductOptionValue, serviceContext);
-
 		return commerceProductOptionValue;
 	}
 
@@ -82,14 +76,6 @@ public class CommerceProductOptionValueLocalServiceImpl
 
 		commerceProductOptionValuePersistence.remove(
 			commerceProductOptionValue);
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			commerceProductOptionValue.getCompanyId(),
-			CommerceProductOptionValue.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			commerceProductOptionValue.getCommerceProductOptionValueId());
 
 		// Expando
 

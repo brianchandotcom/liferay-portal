@@ -32,6 +32,12 @@ AUI.add(
 				NAME: 'liferay-ddl-form-builder-action-calculate',
 
 				prototype: {
+					initializer: function() {
+						var instance = this;
+
+						instance.on('liferay-ddl-form-builder-calculator:clickedKey', A.bind(instance._handleClickedKey, instance));
+					},
+
 					getValue: function() {
 						var instance = this;
 
@@ -73,6 +79,8 @@ AUI.add(
 							}
 						);
 
+						calculator.addTarget(instance);
+
 						return calculator;
 					},
 
@@ -85,6 +93,8 @@ AUI.add(
 
 						if (action && action.expression) {
 							value = action.expression;
+
+							instance._setCalculateKeyActions(value.split(''));
 						}
 
 						instance._expressionField = new Liferay.DDM.Field.Text(
@@ -128,6 +138,16 @@ AUI.add(
 						return instance._targetField;
 					},
 
+					_getCalculateKeyActions: function() {
+						var instance = this;
+
+						if (!instance._keyActions) {
+							instance._keyActions = [];
+						}
+
+						return instance._keyActions;
+					},
+
 					_getCalculator: function() {
 						var instance = this;
 
@@ -144,6 +164,27 @@ AUI.add(
 						var calculateTemplateRenderer = Liferay.DDM.SoyTemplateUtil.getTemplateRenderer('ddl.calculate.settings');
 
 						return calculateTemplateRenderer();
+					},
+
+					_handleClickedKey: function(event) {
+						var instance = this;
+
+						if (event.key !== undefined) {
+							if (event.key === 'backspace') {
+								instance._getCalculateKeyActions().pop();
+							}
+							else {
+								instance._getCalculateKeyActions().push(event.key);
+							}
+						}
+
+						instance._expressionField.setValue(instance._getCalculateKeyActions().join(''));
+					},
+
+					_setCalculateKeyActions: function(value) {
+						var instance = this;
+
+						instance._keyActions = value;
 					}
 				}
 			}

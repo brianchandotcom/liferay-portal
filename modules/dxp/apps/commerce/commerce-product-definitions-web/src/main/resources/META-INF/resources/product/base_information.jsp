@@ -32,9 +32,10 @@ List<CommerceProductType> commerceProductTypes = commerceProductDefinitionsDispl
 		for (CommerceProductType commerceProductType : commerceProductTypes) {
 		%>
 
-			<aui:option label="<%= commerceProductType.getName() %>"
+			<aui:option
+				label="<%= commerceProductType.getName() %>"
+				selected="<%= (commerceProductDefinition != null) && commerceProductDefinition.getProductTypeName().equals(commerceProductType.getName()) %>"
 				value="<%= commerceProductType.getName() %>"
-				selected="<%= commerceProductDefinition != null && commerceProductDefinition.getProductTypeName().equals(commerceProductType.getName()) %>"
 			/>
 
 		<%

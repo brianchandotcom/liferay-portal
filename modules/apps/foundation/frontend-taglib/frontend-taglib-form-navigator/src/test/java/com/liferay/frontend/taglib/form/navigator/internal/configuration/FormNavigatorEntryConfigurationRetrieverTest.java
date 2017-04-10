@@ -196,7 +196,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
-	public static class WhenNoCategoryOrContextAreSpecifiedInTheConfig
+	public static class WhenNeitherACategoryNorAContextAreSpecifiedInTheConfig
 		extends BaseFormNavigatorEntryConfigurationRetrieverTestCase {
 
 		@Override

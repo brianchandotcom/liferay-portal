@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.type.group.internal;
 
 import com.liferay.commerce.product.type.CommerceProductType;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -28,9 +29,11 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = CommerceProductType.class
 )
-public class GroupCommerceProductType implements  CommerceProductType {
+public class GroupCommerceProductType implements CommerceProductType {
+
 	@Override
 	public String getName() {
 		return "group";
 	}
+
 }

@@ -30,6 +30,7 @@ page import="com.liferay.commerce.product.definitions.web.internal.display.conte
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CommerceProductDefinitionFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchProductDefinitionException" %><%@
 page import="com.liferay.commerce.product.model.CommerceProductDefinition" %><%@
+page import="com.liferay.commerce.product.type.CommerceProductType" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

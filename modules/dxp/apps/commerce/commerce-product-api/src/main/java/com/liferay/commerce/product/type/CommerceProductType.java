@@ -20,4 +20,5 @@ package com.liferay.commerce.product.type;
 public interface CommerceProductType {
 
 	public String getName();
+
 }

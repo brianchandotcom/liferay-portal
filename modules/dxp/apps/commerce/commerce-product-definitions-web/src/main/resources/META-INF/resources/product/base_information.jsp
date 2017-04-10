@@ -1,4 +1,4 @@
-<%@ page import="com.liferay.commerce.product.type.CommerceProductType" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -26,25 +26,23 @@ List<CommerceProductType> commerceProductTypes = commerceProductDefinitionsDispl
 <aui:model-context bean="<%= commerceProductDefinition %>" model="<%= CommerceProductDefinition.class %>" />
 
 <aui:fieldset cssClass="col-md-4">
+	<aui:select label="productTypeName"
+		name="productTypeName">
 
+		<%
+		for (CommerceProductType commerceProductType : commerceProductTypes) {
+		%>
 
-    <aui:select label="productTypeName"
-                name="productTypeName">
+			<aui:option label="<%= commerceProductType.getName() %>"
+				value="<%= commerceProductType.getName() %>"
+				selected="<%= commerceProductDefinition != null && commerceProductDefinition.getProductTypeName().equals(commerceProductType.getName()) %>"
+			/>
 
-        <%
-            for (CommerceProductType commerceProductType : commerceProductTypes) {
-        %>
+		<%
+		}
+		%>
 
-        <aui:option label="<%= commerceProductType.getName() %>"
-                    value="<%= commerceProductType.getName() %>"
-                    selected="<%= commerceProductDefinition != null && commerceProductDefinition.getProductTypeName().equals(commerceProductType.getName()) %>"
-        />
-
-        <%
-            }
-        %>
-
-    </aui:select>
+	</aui:select>
 
 	<aui:input label="SKU" name="baseSKU" />
 </aui:fieldset>

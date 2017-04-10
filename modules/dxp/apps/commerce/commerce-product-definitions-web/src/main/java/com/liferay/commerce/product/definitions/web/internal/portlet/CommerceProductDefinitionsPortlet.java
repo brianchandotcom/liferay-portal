@@ -92,12 +92,12 @@ public class CommerceProductDefinitionsPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private CommerceProductTypeServicesTracker
-		_commerceProductTypeServicesTracker;
-
-	@Reference
 	private CommerceProductDefinitionLocalService
 		_commerceProductDefinitionLocalService;
+
+	@Reference
+	private CommerceProductTypeServicesTracker
+		_commerceProductTypeServicesTracker;
 
 	@Reference
 	private Portal _portal;

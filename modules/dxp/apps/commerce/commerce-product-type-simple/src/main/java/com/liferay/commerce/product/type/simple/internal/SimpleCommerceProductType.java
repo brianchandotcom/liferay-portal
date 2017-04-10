@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.type.simple.internal;
 
 import com.liferay.commerce.product.type.CommerceProductType;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -28,9 +29,11 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = CommerceProductType.class
 )
-public class SimpleCommerceProductType implements  CommerceProductType {
+public class SimpleCommerceProductType implements CommerceProductType {
+
 	@Override
 	public String getName() {
 		return "simple";
 	}
+
 }

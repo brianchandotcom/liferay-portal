@@ -87,10 +87,6 @@ public class CommerceProductDefinitionsDisplayContext {
 		}
 	}
 
-	public List<CommerceProductType> getCommerceProductTypes(){
-		return _commerceProductTypeServicesTracker.getCommerceProductTypes();
-	}
-
 	public CommerceProductDefinition getCommerceProductDefinition() {
 		if (_commerceProductDefinition != null) {
 			return _commerceProductDefinition;
@@ -120,6 +116,10 @@ public class CommerceProductDefinitionsDisplayContext {
 			_commerceProductRequestHelper.getPortletPreferences(),
 			_commerceProductRequestHelper.getRenderRequest(),
 			"commerceProductDefinitionId");
+	}
+
+	public List<CommerceProductType> getCommerceProductTypes() {
+		return _commerceProductTypeServicesTracker.getCommerceProductTypes();
 	}
 
 	public String getDisplayStyle() {
@@ -312,6 +312,8 @@ public class CommerceProductDefinitionsDisplayContext {
 	private final CommerceProductDefinitionLocalService
 		_commerceProductDefinitionLocalService;
 	private final CommerceProductRequestHelper _commerceProductRequestHelper;
+	private final CommerceProductTypeServicesTracker
+		_commerceProductTypeServicesTracker;
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
@@ -322,7 +324,5 @@ public class CommerceProductDefinitionsDisplayContext {
 	private final PortalPreferences _portalPreferences;
 	private RowChecker _rowChecker;
 	private SearchContainer<CommerceProductDefinition> _searchContainer;
-	private CommerceProductTypeServicesTracker
-		_commerceProductTypeServicesTracker;
 
 }

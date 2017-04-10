@@ -21,14 +21,9 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,12 +31,17 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+
 /**
  * @author Marco Leo
  */
 @Component(immediate = true)
 public class CommerceProductTypeServicesTrackerImpl
-	implements CommerceProductTypeServicesTracker{
+	implements CommerceProductTypeServicesTracker {
 
 	@Override
 	public CommerceProductType getCommerceProductType(String name) {
@@ -69,35 +69,33 @@ public class CommerceProductTypeServicesTrackerImpl
 	public List<CommerceProductType> getCommerceProductTypes() {
 		List<CommerceProductType> commerceProductTypes = new ArrayList<>();
 
-		List<ServiceWrapper<CommerceProductType>> commerceProductTypeServiceWrappers =
-			ListUtil.fromCollection(
+		List<ServiceWrapper<CommerceProductType>>
+			commerceProductTypeServiceWrappers = ListUtil.fromCollection(
 				_commerceProductTypeServiceTrackerMap.values());
 
 		Collections.sort(
 			commerceProductTypeServiceWrappers,
 			_commerceProductTypeServiceWrapperDisplayOrderComparator);
 
-		for (ServiceWrapper<CommerceProductType> commerceProductTypeServiceWrapper :
-			commerceProductTypeServiceWrappers) {
+		for (ServiceWrapper<CommerceProductType>
+				commerceProductTypeServiceWrapper :
+					commerceProductTypeServiceWrappers) {
 
-			commerceProductTypes.add(commerceProductTypeServiceWrapper.getService());
+			commerceProductTypes.add(
+				commerceProductTypeServiceWrapper.getService());
 		}
 
 		return Collections.unmodifiableList(commerceProductTypes);
 	}
 
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-
 		_commerceProductTypeServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, CommerceProductType.class,
 				"commerce.product.type.name",
 				ServiceTrackerCustomizerFactory.
 					<CommerceProductType>serviceWrapper(bundleContext));
-
-
 	}
 
 	@Deactivate
@@ -108,10 +106,10 @@ public class CommerceProductTypeServicesTrackerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceProductTypeServicesTrackerImpl.class);
 
-
-	private final Comparator<ServiceWrapper<CommerceProductType>>
-		_commerceProductTypeServiceWrapperDisplayOrderComparator =
-		new CommerceProductTypeServiceWrapperDisplayOrderComparator();
 	private ServiceTrackerMap<String, ServiceWrapper<CommerceProductType>>
 		_commerceProductTypeServiceTrackerMap;
+	private final Comparator<ServiceWrapper<CommerceProductType>>
+		_commerceProductTypeServiceWrapperDisplayOrderComparator =
+			new CommerceProductTypeServiceWrapperDisplayOrderComparator();
+
 }

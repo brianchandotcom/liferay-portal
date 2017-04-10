@@ -12,10 +12,27 @@
  * details.
  */
 
-package com.liferay.commerce.product.internal.constants;
+package com.liferay.commerce.product.type.virtual.iternal;
+
+import com.liferay.commerce.product.type.CommerceProductType;
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Marco Leo
  */
-public class CommerceProductConstants {
+@Component(
+	immediate = true,
+	property = {
+		"commerce.product.type.display.order:Integer=15",
+		"commerce.product.type.name=virtual"
+	},
+	service = CommerceProductType.class
+)
+public class VirtualCommerceProductType implements CommerceProductType {
+
+	@Override
+	public String getName() {
+		return "virtual";
+	}
+
 }

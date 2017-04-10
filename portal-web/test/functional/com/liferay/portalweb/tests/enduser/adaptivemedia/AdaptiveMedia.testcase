@@ -207,6 +207,50 @@
 		<execute macro="Button#clickPublish" />
 	</command>
 
+	<command name="EditAndDeleteDisabledAMI">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Adaptive Media" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#addImageResolution">
+			<var name="imageName" value="Small Image Variant" />
+			<var name="maxHeight" value="100" />
+			<var name="maxWidth" value="100" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
+			<var name="imageName" value="Small Image Variant" />
+			<var name="imageState" value="Enabled" />
+			<var name="maxHeight" value="100" />
+			<var name="maxWidth" value="100" />
+			<var name="percentOptimized" value="0" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#disableImageResolution">
+			<var name="imageName" value="Small Image Variant" />
+			<var name="imageState" value="Disabled" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#editImageResolution">
+			<var name="imageName" value="Small Image Variant" />
+			<var name="imageNameEdit" value="Large Image Variant" />
+			<var name="maxHeightEdit" value="1000" />
+			<var name="maxWidthEdit" value="1000" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
+			<var name="imageName" value="Large Image Variant" />
+			<var name="imageState" value="Disabled" />
+			<var name="maxHeight" value="1000" />
+			<var name="maxWidth" value="1000" />
+			<var name="percentOptimized" value="0" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#deleteImageResolution">
+			<var name="imageName" value="Large Image Variant" />
+		</execute>
+	</command>
+
 	<command name="EditImageResolutionWithOptimizedImages" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Adaptive Media" />
@@ -220,6 +264,7 @@
 
 		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
 			<var name="imageName" value="Small Image Variant" />
+			<var name="imageState" value="Enabled" />
 			<var name="maxHeight" value="100" />
 			<var name="maxWidth" value="100" />
 			<var name="percentOptimized" value="0" />
@@ -246,6 +291,7 @@
 
 		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
 			<var name="imageName" value="Small Image Variant Edited" />
+			<var name="imageState" value="Enabled" />
 			<var name="maxHeight" value="100" />
 			<var name="maxWidth" value="100" />
 		</execute>
@@ -264,6 +310,7 @@
 
 		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
 			<var name="imageName" value="Small Image Variant" />
+			<var name="imageState" value="Enabled" />
 			<var name="maxHeight" value="100" />
 			<var name="maxWidth" value="100" />
 			<var name="percentOptimized" value="0" />
@@ -279,6 +326,7 @@
 
 		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
 			<var name="imageName" value="Large Image Variant" />
+			<var name="imageState" value="Enabled" />
 			<var name="maxHeight" value="1000" />
 			<var name="maxWidth" value="1000" />
 			<var name="percentOptimized" value="0" />

@@ -334,6 +334,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISABLE</td>
+	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'Disable')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISCARD_DRAFT</td>
 	<td>//a[@role='menuitem' and contains(.,'Discard Draft')]</td>
 	<td></td>
@@ -371,6 +376,11 @@
 <tr>
 	<td>DOWNLOAD</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Download')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE</td>
+	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'Enable')]</td>
 	<td></td>
 </tr>
 <tr>

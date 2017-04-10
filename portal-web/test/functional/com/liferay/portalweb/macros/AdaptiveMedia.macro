@@ -20,6 +20,32 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="deleteImageResolution">
+		<var name="key_imageName" value="${imageName}" />
+
+		<execute function="Click" locator1="AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS" />
+
+		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute function="AssertElementNotPresent" locator1="AdaptiveMediaTable#NAME" value1="${imageName}" />
+	</command>
+
+	<command name="disableImageResolution">
+		<var name="key_imageName" value="${imageName}" />
+
+		<execute function="Click" locator1="AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#DISABLE" value1="Disable" />
+
+		<var name="key_imageState" value="${imageState}" />
+
+		<execute function="AssertTextEquals" locator1="AdaptiveMediaTable#STATE" value1="Disabled" />
+	</command>
+
 	<command name="editImageResolution">
 		<var name="key_imageName" value="${imageName}" />
 		<var name="key_percentOptimized" value="${percentOptimized}" />
@@ -113,6 +139,15 @@
 		<var name="key_imageName" value="${imageName}" />
 
 		<execute function="AssertTextEquals" locator1="AdaptiveMediaTable#NAME" value1="${imageName}" />
+
+		<var name="key_imageState" value="${imageState}" />
+
+		<if>
+			<isset var="imageState" />
+			<then>
+				<execute function="AssertTextEquals" locator1="AdaptiveMediaTable#STATE" value1="${imageState}" />
+			</then>
+		</if>
 
 		<var name="key_percentOptimized" value="${percentOptimized}" />
 

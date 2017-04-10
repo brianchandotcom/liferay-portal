@@ -106,6 +106,9 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="CommerceProductDefinitionId" return-type="Collection">
+			<finder-column name="commerceProductDefinitionId" />
+		</finder>
 
 		<!-- References -->
 

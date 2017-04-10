@@ -225,8 +225,8 @@ public class Encryptor {
 			if (ServerDetector.isWebSphere() &&
 				PROVIDER_CLASS.equals(SUN_PROVIDER_CLASS)) {
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
+				if (_log.isInfoEnabled()) {
+					_log.info(
 						"WebSphere does not have " + SUN_PROVIDER_CLASS +
 							", using " + IBM_PROVIDER_CLASS + " instead");
 				}
@@ -236,8 +236,8 @@ public class Encryptor {
 			else if (System.getProperty("java.vm.vendor").equals(
 						"IBM Corporation")) {
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
+				if (_log.isInfoEnabled()) {
+					_log.info(
 						"IBM JVM does not have " + SUN_PROVIDER_CLASS +
 							", using " + IBM_PROVIDER_CLASS + " instead");
 				}

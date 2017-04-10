@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -327,7 +328,8 @@ public class WikiPageStagedModelDataHandler
 			return;
 		}
 
-		TrashHandler trashHandler = existingPage.getTrashHandler();
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			WikiPage.class.getName());
 
 		if (trashHandler.isRestorable(existingPage.getResourcePrimKey())) {
 			trashHandler.restoreTrashEntry(

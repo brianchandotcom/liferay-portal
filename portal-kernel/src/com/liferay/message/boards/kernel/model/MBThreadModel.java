@@ -28,9 +28,6 @@ import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.trash.TrashHandler;
-
-import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.io.Serializable;
 
@@ -480,7 +477,8 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	 * @return the trash entry created when this message boards thread was moved to the Recycle Bin
 	 */
 	@Override
-	public TrashEntry getTrashEntry() throws PortalException;
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws PortalException;
 
 	/**
 	 * Returns the class primary key of the trash entry for this message boards thread.
@@ -494,9 +492,11 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	 * Returns the trash handler for this message boards thread.
 	 *
 	 * @return the trash handler for this message boards thread
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Override
-	public TrashHandler getTrashHandler();
+	@Deprecated
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler();
 
 	/**
 	 * Returns <code>true</code> if this message boards thread is in the Recycle Bin.

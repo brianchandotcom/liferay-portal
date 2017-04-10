@@ -14,9 +14,12 @@
 
 package com.liferay.portal.search.web.internal.search.request;
 
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.util.Optional;
@@ -28,6 +31,21 @@ public class SearchSettingsImpl implements SearchSettings {
 
 	public SearchSettingsImpl(SearchContext searchContext) {
 		_searchContext = searchContext;
+	}
+
+	@Override
+	public void addCondition(BooleanClause<Query> booleanClause) {
+		BooleanClause<Query>[] booleanClauses =
+			_searchContext.getBooleanClauses();
+
+		if (booleanClauses == null) {
+			booleanClauses = new BooleanClause[] {booleanClause};
+		}
+		else {
+			booleanClauses = ArrayUtil.append(booleanClauses, booleanClause);
+		}
+
+		_searchContext.setBooleanClauses(booleanClauses);
 	}
 
 	@Override

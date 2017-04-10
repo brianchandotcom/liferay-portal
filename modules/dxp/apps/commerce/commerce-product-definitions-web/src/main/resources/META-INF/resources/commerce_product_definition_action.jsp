@@ -54,7 +54,6 @@ else {
 	<portlet:actionURL name="editProductDefinition" var="deleteURL">
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(commerceProductDefinition.getGroupId()) %>" />
 		<portlet:param name="commerceProductDefinitionId" value="<%= String.valueOf(commerceProductDefinition.getCommerceProductDefinitionId()) %>" />
 	</portlet:actionURL>
 

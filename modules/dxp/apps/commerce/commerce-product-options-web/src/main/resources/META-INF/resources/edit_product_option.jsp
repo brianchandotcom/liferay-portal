@@ -29,7 +29,7 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 %>
 
-<portlet:actionURL name="/editProductOption" var="editProductOptionActionURL">
+<portlet:actionURL name="editProductOption" var="editProductOptionActionURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 	<portlet:param name="commerceProductOptionId" value="<%= String.valueOf(commerceProductOptionId) %>" />
 </portlet:actionURL>

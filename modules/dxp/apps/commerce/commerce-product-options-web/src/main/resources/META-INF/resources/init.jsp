@@ -19,35 +19,36 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-<%@taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-        taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
-        taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-        taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
-        taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+<%@taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 
 <%@
-        page import="com.liferay.commerce.product.options.web.internal.display.context.CommerceProductOptionsDisplayContext" %><%@
-        page import="com.liferay.portal.kernel.util.WebKeys" %>
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
-<%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
-<%@ page import="com.liferay.commerce.product.model.CommerceProductOption" %>
+		taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+		taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+		taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+		taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+
+<%@
+		page import="com.liferay.commerce.product.options.web.internal.display.context.CommerceProductOptionsDisplayContext" %><%@
+		page import="com.liferay.portal.kernel.util.WebKeys" %>
+<%@ page import="com.liferay.commerce.product.constants.CommerceProductWebKeys" %><%@
+page import="com.liferay.commerce.product.exception.NoSuchProductOptionException" %><%@
+page import="com.liferay.commerce.product.model.CommerceProductOption" %><%@
+page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CommerceProductOptionFormNavigatorConstants" %><%@
+page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
+page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %>
+
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.List" %>
+
 <%@ page import="javax.portlet.PortletURL" %>
-<%@ page import="com.liferay.portal.kernel.util.Constants" %>
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
-<%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %>
-<%@ page import="com.liferay.portal.kernel.util.StringPool" %>
-<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
-<%@ page import="java.util.List" %>
-<%@ page
-        import="com.liferay.commerce.product.constants.CommerceProductWebKeys" %>
-<%@ page import="com.liferay.portal.kernel.util.ListUtil" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
-<%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %>
-<%@ page
-        import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CommerceProductOptionFormNavigatorConstants" %>
-<%@ page
-        import="com.liferay.commerce.product.exception.NoSuchProductOptionException" %>
 
 <liferay-frontend:defineObjects />
 
@@ -57,5 +58,4 @@
 
 <%
 CommerceProductOptionsDisplayContext commerceProductOptionsDisplayContext = (CommerceProductOptionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
 %>

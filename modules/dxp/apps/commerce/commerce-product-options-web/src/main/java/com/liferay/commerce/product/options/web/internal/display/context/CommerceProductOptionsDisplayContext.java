@@ -134,7 +134,8 @@ public class CommerceProductOptionsDisplayContext {
 
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
-			_displayStyle = getDisplayStyle(_httpServletRequest, _portalPreferences);
+			_displayStyle = getDisplayStyle(
+				_httpServletRequest, _portalPreferences);
 		}
 
 		return _displayStyle;
@@ -163,7 +164,8 @@ public class CommerceProductOptionsDisplayContext {
 				"name");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_httpServletRequest, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(
+				_httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
@@ -188,7 +190,8 @@ public class CommerceProductOptionsDisplayContext {
 				"desc");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_httpServletRequest, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(
+				_httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
@@ -203,7 +206,8 @@ public class CommerceProductOptionsDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
-		String displayStyle = ParamUtil.getString(_httpServletRequest, "displayStyle");
+		String displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
 
 		if (Validator.isNotNull(displayStyle)) {
 			portletURL.setParameter("displayStyle", getDisplayStyle());
@@ -229,15 +233,18 @@ public class CommerceProductOptionsDisplayContext {
 
 	public SearchContainer<CommerceProductOption> getSearchContainer()
 		throws PortalException {
+
 		if (_productOptionSearchContainer != null) {
 			return _productOptionSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		SearchContainer<CommerceProductOption> searchContainer = new SearchContainer<>(
-			_liferayPortletRequest, getPortletURL(), null, null);
+		SearchContainer<CommerceProductOption> searchContainer =
+			new SearchContainer<>(
+				_liferayPortletRequest, getPortletURL(), null, null);
 
 		OrderByComparator<CommerceProductOption> orderByComparator =
 			CommerceProductOptionsPortletUtil.
@@ -311,14 +318,15 @@ public class CommerceProductOptionsDisplayContext {
 		_commerceProductOptionLocalService;
 	private final CommerceProductRequestHelper _commerceProductRequestHelper;
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
-	private SearchContainer<CommerceProductOption> _productOptionSearchContainer;
-	private final HttpServletRequest _httpServletRequest;
+	private SearchContainer<CommerceProductOption>
+		_productOptionSearchContainer;
 	private RowChecker _rowChecker;
 
 }

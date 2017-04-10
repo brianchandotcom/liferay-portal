@@ -40,9 +40,7 @@ public class CommerceProductOptionInfoPanelMVCResourceCommand
 			CommerceProductWebKeys.COMMERCE_PRODUCT_OPTIONS,
 			commerceProductOptions);
 
-		include(
-			resourceRequest, resourceResponse,
-                "/info_panel.jsp");
+		include(resourceRequest, resourceResponse, "/info_panel.jsp");
 	}
 
 	@Reference

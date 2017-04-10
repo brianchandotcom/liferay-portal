@@ -15,9 +15,7 @@
 package com.liferay.commerce.product.options.web.internal.util;
 
 import com.liferay.commerce.product.model.CommerceProductOption;
-import com.liferay.commerce.product.model.CommerceProductOptionValue;
 import com.liferay.commerce.product.options.web.internal.util.comparator.CommerceProductOptionNameComparator;
-import com.liferay.commerce.product.options.web.internal.util.comparator.CommerceProductOptionValueTitleComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
@@ -44,4 +42,5 @@ public class CommerceProductOptionsPortletUtil {
 
 		return orderByComparator;
 	}
+
 }

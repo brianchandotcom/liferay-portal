@@ -71,7 +71,6 @@ public class EditCommerceProductOptionMVCRenderCommand
 		return "/edit_product_option.jsp";
 	}
 
-
 	protected void setCommerceProductOptionRequestAttribute(
 			RenderRequest renderRequest)
 		throws PortalException {

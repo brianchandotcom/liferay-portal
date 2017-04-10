@@ -75,8 +75,7 @@ public class EditCommerceProductOptionMVCActionCommand
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				updateCommerceProductOption(
-					actionRequest);
+				updateCommerceProductOption(actionRequest);
 			}
 		}
 		catch (Exception e) {
@@ -85,8 +84,7 @@ public class EditCommerceProductOptionMVCActionCommand
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionResponse.setRenderParameter(
-					"mvcPath", "/error.jsp");
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
 				throw e;

@@ -80,7 +80,6 @@ public class CommerceProductOptionsPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commerceProductOptionsDisplayContext);
-
 		}
 		catch (PortalException pe) {
 			SessionErrors.add(renderRequest, pe.getClass());

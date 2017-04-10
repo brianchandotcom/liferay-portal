@@ -17,12 +17,14 @@ package com.liferay.commerce.product.options.web.internal.portlet.action;
 import com.liferay.commerce.product.model.CommerceProductOption;
 import com.liferay.commerce.product.service.CommerceProductOptionLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
-import javax.portlet.ResourceRequest;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.portlet.ResourceRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -41,7 +43,7 @@ public class ActionHelper {
 
 		for (long commerceProductOptionsId : commerceProductOptionsIds) {
 			CommerceProductOption commerceProductOption =
-				_CommerceProductOptionLocalService.getCommerceProductOption(
+				_commerceProductOptionLocalService.getCommerceProductOption(
 					commerceProductOptionsId);
 
 			commerceProductOptions.add(commerceProductOption);
@@ -52,6 +54,6 @@ public class ActionHelper {
 
 	@Reference
 	private CommerceProductOptionLocalService
-		_CommerceProductOptionLocalService;
+		_commerceProductOptionLocalService;
 
 }

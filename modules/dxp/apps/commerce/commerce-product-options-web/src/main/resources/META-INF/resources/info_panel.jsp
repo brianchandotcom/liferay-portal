@@ -25,7 +25,7 @@ if (ListUtil.isEmpty(commerceProductOptions)) {
 %>
 
 <c:choose>
-	<c:when test="<%=(commerceProductOptions.size() == 1) %>">
+	<c:when test="<%= (commerceProductOptions.size() == 1) %>">
 
 		<%
 		CommerceProductOption commerceProductOption = commerceProductOptions.get(0);

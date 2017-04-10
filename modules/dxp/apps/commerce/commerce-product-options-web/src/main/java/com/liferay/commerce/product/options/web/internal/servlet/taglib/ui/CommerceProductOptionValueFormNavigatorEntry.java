@@ -31,38 +31,42 @@ import org.osgi.service.component.annotations.Component;
 	service = FormNavigatorEntry.class
 )
 public class CommerceProductOptionValueFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<CommerceProductOption>
-	 {
+	extends BaseJSPFormNavigatorEntry<CommerceProductOption> {
 
-		@Override
-		public String getCategoryKey() {
-			return CommerceProductOptionFormNavigatorConstants.
-				CATEGORY_KEY_COMMERCE_PRODUCT_VALUE;
+	@Override
+	public String getCategoryKey() {
+		return CommerceProductOptionFormNavigatorConstants.
+			CATEGORY_KEY_COMMERCE_PRODUCT_VALUE;
+	}
+
+	@Override
+	public String getFormNavigatorId() {
+		return CommerceProductOptionFormNavigatorConstants.
+			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION;
+	}
+
+	@Override
+	public String getKey() {
+		return "value";
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		return "value";
+	}
+
+	@Override
+	public boolean isVisible(User user, CommerceProductOption formModelBean) {
+		if (formModelBean != null) {
+			return true;
 		}
 
-		@Override
-		public String getFormNavigatorId() {
-			return CommerceProductOptionFormNavigatorConstants.
-				FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION;
-		}
+		return false;
+	}
 
-		@Override
-		public String getKey() {
-			return "value";
-		}
+	@Override
+	protected String getJspPath() {
+		return "/product_option/value.jsp";
+	}
 
-		@Override
-		public String getLabel(Locale locale) {
-			return "value";
-		}
-
-		@Override
-		protected String getJspPath() {
-			return "/product_option/value.jsp";
-		}
-
-		 @Override
-		 public boolean isVisible(User user, CommerceProductOption formModelBean) {
-			 return formModelBean != null;
-		 }
-	 }
+}

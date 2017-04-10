@@ -54,7 +54,7 @@ public class EditCommerceProductOptionMVCActionCommand
 	protected void deleteCommerceProductOption(ActionRequest actionRequest)
 		throws Exception {
 
-		Long commerceProductOptionId = ParamUtil.getLong(
+		long commerceProductOptionId = ParamUtil.getLong(
 			actionRequest, "commerceProductOptionId");
 
 		_commerceProductOptionLocalService.deleteCommerceProductOption(
@@ -96,7 +96,7 @@ public class EditCommerceProductOptionMVCActionCommand
 			ActionRequest actionRequest)
 		throws Exception {
 
-		Long commerceProductOptionId = ParamUtil.getLong(
+		long commerceProductOptionId = ParamUtil.getLong(
 			actionRequest, "commerceProductOptionId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(

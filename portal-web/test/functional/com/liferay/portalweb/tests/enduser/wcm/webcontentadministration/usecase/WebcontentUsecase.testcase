@@ -2163,6 +2163,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
 		<execute macro="WebContent#viewCategorizationVocabularyCP">
 			<var name="vocabularyNameList" value="Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3,Vocabulary Name 4,Vocabulary Name 5" />
 		</execute>

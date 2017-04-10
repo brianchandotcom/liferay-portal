@@ -106,14 +106,16 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "categories")) {
 			ActionableDynamicQuery categoryActionableDynamicQuery =
-				getCategoryActionableDynamicQuery(portletDataContext);
+				_assetCategoryLocalService.getExportActionableDynamicQuery(
+					portletDataContext);
 
 			categoryActionableDynamicQuery.performActions();
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "vocabularies")) {
 			ActionableDynamicQuery vocabularyActionableDynamicQuery =
-				getVocabularyActionableDynamicQuery(portletDataContext);
+				_assetVocabularyLocalService.getExportActionableDynamicQuery(
+					portletDataContext);
 
 			vocabularyActionableDynamicQuery.performActions();
 		}
@@ -163,16 +165,22 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery categoryActionableDynamicQuery =
-			getCategoryActionableDynamicQuery(portletDataContext);
+			_assetCategoryLocalService.getExportActionableDynamicQuery(
+				portletDataContext);
 
 		categoryActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery vocabularyActionableDynamicQuery =
-			getVocabularyActionableDynamicQuery(portletDataContext);
+			_assetVocabularyLocalService.getExportActionableDynamicQuery(
+				portletDataContext);
 
 		vocabularyActionableDynamicQuery.performCount();
 	}
 
+	/**
+	 * @deprecated As of 1.0.0
+	 */
+	@Deprecated
 	protected ActionableDynamicQuery getCategoryActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
 
@@ -187,6 +195,10 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 		return actionableDynamicQuery;
 	}
 
+	/**
+	 * @deprecated As of 1.0.0
+	 */
+	@Deprecated
 	protected ActionableDynamicQuery getVocabularyActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
 

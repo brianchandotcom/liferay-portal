@@ -12,6 +12,10 @@ buildPluginDescriptor {
 	useSetterComments = false
 }
 
+configurations {
+	mavenDistribution
+}
+
 dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.48"
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.10"
@@ -19,6 +23,8 @@ dependencies {
 	compileInclude group: "org.apache.commons", name: "commons-compress", version: "1.12"
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.2"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.4"
+
+	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
 	provided group: "org.apache.maven", name: "maven-core", transitive: false, version: "3.2.5"
@@ -30,6 +36,7 @@ dependencies {
 	testCompile group: "com.sun.net.httpserver", name: "http", version: "20070405"
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
 	testCompile group: "org.littleshoot", name: "littleproxy", version: "1.1.1"
+	testCompile project(":test:maven-executor")
 }
 
 formatSource {
@@ -38,6 +45,21 @@ formatSource {
 
 liferayOSGi {
 	expandCompileInclude = true
+}
+
+test {
+	dependsOn install
+
+	doFirst {
+		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
+	}
+
+	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
+	systemProperty "http.proxyPort", System.properties["http.proxyPort"]
+	systemProperty "maven.debug", System.properties["maven.debug"]
+	systemProperty "maven.repo.local", System.properties["maven.repo.local"]
+	systemProperty "repository.url", System.properties["repository.url"]
+	systemProperty "bundle.support.version", jar.version
 }
 
 updateFileVersions {

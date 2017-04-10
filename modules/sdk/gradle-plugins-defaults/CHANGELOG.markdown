@@ -1352,7 +1352,10 @@ OSGi project snapshot with the `install` and `uploadArchives` tasks.
 when executing the `findbugsMain` task on OSGi modules that include resource
 files.
 
-## 3.5.17 - 2017-04-10
+## 3.5.17 - 2017-04-11
+
+### Changed
+- [LPS-71826]: Update the [Liferay Gradle Plugins] dependency to version 3.2.38.
 
 ### Fixed
 - [LPS-71795]: Generalize [Gradle issue](https://github.com/gradle/gradle/issues/1094)
@@ -1495,6 +1498,7 @@ fix for all tasks of type `FindBugs` related to source sets.
 [LPS-71591]: https://issues.liferay.com/browse/LPS-71591
 [LPS-71603]: https://issues.liferay.com/browse/LPS-71603
 [LPS-71795]: https://issues.liferay.com/browse/LPS-71795
+[LPS-71826]: https://issues.liferay.com/browse/LPS-71826
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

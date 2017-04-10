@@ -20,6 +20,8 @@ import com.liferay.commerce.product.model.CommerceProductOption;
 import com.liferay.commerce.product.options.web.internal.display.context.util.CommerceProductRequestHelper;
 import com.liferay.commerce.product.options.web.internal.util.CommerceProductOptionsPortletUtil;
 import com.liferay.commerce.product.service.CommerceProductOptionLocalService;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -52,7 +54,8 @@ public class CommerceProductOptionsDisplayContext {
 	public CommerceProductOptionsDisplayContext(
 			HttpServletRequest httpServletRequest,
 			CommerceProductOptionLocalService
-				commerceProductOptionLocalService)
+				commerceProductOptionLocalService,
+			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker)
 		throws PortalException {
 
 		_httpServletRequest = httpServletRequest;
@@ -66,6 +69,7 @@ public class CommerceProductOptionsDisplayContext {
 			_commerceProductRequestHelper.getLiferayPortletResponse();
 
 		_commerceProductOptionLocalService = commerceProductOptionLocalService;
+		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_httpServletRequest);
@@ -80,6 +84,10 @@ public class CommerceProductOptionsDisplayContext {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
+	}
+
+	public List<DDMFormFieldType> getDDMFormFieldTypes(){
+		return _ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
 	}
 
 	public CommerceProductOption getCommerceProductOption() {
@@ -328,5 +336,5 @@ public class CommerceProductOptionsDisplayContext {
 	private SearchContainer<CommerceProductOption>
 		_productOptionSearchContainer;
 	private RowChecker _rowChecker;
-
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 }

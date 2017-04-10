@@ -17,6 +17,7 @@ package com.liferay.commerce.product.options.web.internal.portlet;
 import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.options.web.internal.display.context.CommerceProductOptionsDisplayContext;
 import com.liferay.commerce.product.service.CommerceProductOptionLocalService;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -75,7 +76,8 @@ public class CommerceProductOptionsPortlet extends MVCPortlet {
 			CommerceProductOptionsDisplayContext
 				commerceProductOptionsDisplayContext =
 					new CommerceProductOptionsDisplayContext(
-						httpServletRequest, _commerceProductOptionLocalService);
+						httpServletRequest, _commerceProductOptionLocalService,
+						_ddmFormFieldTypeServicesTracker);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -91,6 +93,9 @@ public class CommerceProductOptionsPortlet extends MVCPortlet {
 	@Reference
 	private CommerceProductOptionLocalService
 		_commerceProductOptionLocalService;
+
+	@Reference
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 	@Reference
 	private Portal _portal;

@@ -44,6 +44,8 @@ page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %>
+<%@ page
+        import="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %>

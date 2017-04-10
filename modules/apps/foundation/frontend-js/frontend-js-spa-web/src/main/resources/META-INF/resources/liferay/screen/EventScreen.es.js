@@ -64,8 +64,6 @@ class EventScreen extends HtmlScreen {
 	}
 
 	beforeScreenFlip() {
-		Utils.resetAllPortlets();
-
 		Liferay.fire(
 			'beforeScreenFlip',
 			{

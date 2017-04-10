@@ -30,7 +30,7 @@ if (ListUtil.isEmpty(commerceProductOptions)) {
 		<%
 		CommerceProductOption commerceProductOption = commerceProductOptions.get(0);
 
-		request.setAttribute("info_panel.jsp-entry", commerceProductOptions);
+		request.setAttribute("info_panel.jsp-entry", commerceProductOption);
 		%>
 
 		<div class="sidebar-header">

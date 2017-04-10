@@ -141,20 +141,18 @@ public class CommerceProductOptionsDisplayContext {
 	}
 
 	public List<DDMFormFieldType> getDDMFormFieldTypes() {
-
 		Stream<DDMFormFieldType> stream =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes().stream();
 
 		stream = stream.filter(
 			fieldType -> {
-				Map<String,Object> properties =
+				Map<String, Object> properties =
 					_ddmFormFieldTypeServicesTracker.
 						getDDMFormFieldTypeProperties(fieldType.getName());
 
 				return !MapUtil.getBoolean(
 					properties, "ddm.form.field.type.system");
-			}
-		);
+			});
 
 		List<DDMFormFieldType> formFieldTypes = stream.collect(
 			Collectors.toList());

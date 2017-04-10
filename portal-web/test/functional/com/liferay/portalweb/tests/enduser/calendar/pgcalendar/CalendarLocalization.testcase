@@ -93,7 +93,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="ViewShowMoreLocalization" priority="3">
+	<command name="ViewShowMoreLocalization" priority="3">
 		<description message="This is a use case for LPS-54786." />
 
 		<for list="1,2,3,4,5,6" param="eventNumber">

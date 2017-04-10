@@ -29,7 +29,6 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.blogs.util.BlogsEntryAttachmentContentUpdater;
-import com.liferay.blogs.util.BlogsEntryAttachmentFileEntryReference;
 import com.liferay.blogs.util.BlogsEntryAttachmentFileEntryUtil;
 import com.liferay.blogs.util.BlogsEntryImageSelectorHelper;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
@@ -76,6 +75,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;
 

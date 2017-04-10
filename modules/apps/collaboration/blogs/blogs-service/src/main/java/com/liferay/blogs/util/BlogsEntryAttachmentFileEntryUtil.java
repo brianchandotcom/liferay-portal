@@ -15,6 +15,7 @@
 package com.liferay.blogs.util;
 
 import com.liferay.blogs.constants.BlogsConstants;
+import com.liferay.blogs.internal.util.BlogsEntryAttachmentFileEntryReferenceAdapter;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
 
 import java.io.File;
 import java.io.InputStream;
@@ -56,7 +58,7 @@ public class BlogsEntryAttachmentFileEntryUtil {
 					tempFileEntry.getContentStream());
 
 			blogsEntryAttachmentFileEntryReferences.add(
-				new BlogsEntryAttachmentFileEntryReference(
+				new BlogsEntryAttachmentFileEntryReferenceAdapter(
 					tempFileEntry.getFileEntryId(),
 					blogsEntryAttachmentFileEntry));
 		}

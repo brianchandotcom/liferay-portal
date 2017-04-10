@@ -17,7 +17,6 @@ package com.liferay.blogs.attachments.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.blogs.util.BlogsEntryAttachmentFileEntryReference;
 import com.liferay.blogs.util.BlogsEntryAttachmentFileEntryUtil;
 import com.liferay.blogs.util.test.BlogsTestUtil;
 import com.liferay.portal.kernel.editor.EditorConstants;
@@ -43,6 +42,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
 
 import java.io.InputStream;
 

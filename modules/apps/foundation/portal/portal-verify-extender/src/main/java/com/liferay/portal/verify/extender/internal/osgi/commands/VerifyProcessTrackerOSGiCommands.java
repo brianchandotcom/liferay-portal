@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.verify.extender.internal;
+package com.liferay.portal.verify.extender.internal.osgi.commands;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;

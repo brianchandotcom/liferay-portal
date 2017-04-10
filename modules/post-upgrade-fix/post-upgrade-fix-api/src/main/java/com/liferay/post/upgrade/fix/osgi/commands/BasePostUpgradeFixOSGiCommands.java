@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.post.upgrade.fix;
+package com.liferay.post.upgrade.fix.osgi.commands;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;

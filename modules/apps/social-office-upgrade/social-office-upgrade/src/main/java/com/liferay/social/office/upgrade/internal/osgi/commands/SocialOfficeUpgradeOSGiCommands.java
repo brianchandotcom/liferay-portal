@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.office.upgrade.internal;
+package com.liferay.social.office.upgrade.internal.osgi.commands;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

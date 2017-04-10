@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.form.navigator.internal.commands;
+package com.liferay.frontend.taglib.form.navigator.internal.osgi.commands;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;

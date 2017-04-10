@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.internal.commands;
+package com.liferay.knowledge.base.internal.osgi.commands;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.service.permission.AdminPermission;

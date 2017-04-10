@@ -436,6 +436,8 @@ public class GitWorkingDirectory {
 		int retries = 0;
 		long start = 0;
 
+		long start = 0;
+
 		while (true) {
 			try {
 				if (refSpec == null) {
@@ -477,6 +479,11 @@ public class GitWorkingDirectory {
 					throw te;
 				}
 			}
+
+			System.out.println(
+				"Fetch completed in " +
+					JenkinsResultsParserUtil.toDurationString(
+						System.currentTimeMillis() - start));
 		}
 	}
 

@@ -10,7 +10,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="title" type="String" />
+		<field localized="true" name="title" type="String">
+			<validator name="required" />
+		</field>
 		<field localized="true" name="urlTitle" type="String" />
 		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
@@ -85,8 +87,12 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="name" type="String" />
-		<field localized="true" name="description" type="String" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="DDMFormFieldTypeName" type="String" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CommerceProductOptionValue">

@@ -505,11 +505,11 @@
 
 		<execute function="Click" locator1="AP#ASSET_ABSTRACT_BOOKMARK_DETAIL_LINK" />
 
-		<execute function="SelectWindow" locator1="title=Liferay: Put people at the heart of your business" />
+		<execute function="SelectWindow" locator1="title=Liferay: Transform your whole enterprise" />
 
 		<execute function="AssertElementPresent#assertElementPresent" locator1="AP#ASSET_ABSTRACT_BOOKMARK_LIFERAY_LOGO" />
 
-		<execute function="Close" locator1="title=Liferay - Enterprise open source portal and collaboration software | Liferay" />
+		<execute function="Close" locator1="title=Liferay: Transform your whole enterprise" />
 	</command>
 
 	<command name="viewEntry">

@@ -40,7 +40,7 @@ public class CommerceProductOptionValueLocalServiceImpl
 			int priority, ServiceContext serviceContext)
 		throws PortalException {
 
-		//Product option value
+		// Product option value
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();

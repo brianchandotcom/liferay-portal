@@ -2,11 +2,9 @@
 	<var name="assetType" value="Bookmarks Entry" />
 
 	<command name="addBookmarkViaAP">
-		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
-
-		<execute function="AssertClick" locator1="MenuItem#BOOKMARKS_ENTRY" value1="Bookmarks Entry" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute macro="AssetPublisherPortlet#addAsset">
+			<var name="assetType" value="Bookmarks Entry" />
+		</execute>
 
 		<if>
 			<isset var="bookmarkFolderName" />

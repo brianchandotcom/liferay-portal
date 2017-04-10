@@ -446,11 +446,9 @@
 	</command>
 
 	<command name="addPGViaAP">
-		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
-
-		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute macro="AssetPublisherPortlet#addAsset">
+			<var name="assetType" value="Basic Document" />
+		</execute>
 
 		<execute macro="DMDocument#editDocument">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />

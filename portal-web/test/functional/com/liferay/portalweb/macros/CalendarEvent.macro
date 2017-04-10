@@ -383,7 +383,11 @@
 	</command>
 
 	<command name="addPGViaAP">
-		<execute macro="CalendarNavigator#gotoAddEventViaAssetPublisher" />
+		<execute macro="AssetPublisherPortlet#addAsset">
+			<var name="assetType" value="Calendar Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#_viewNewEventIframe" />
 
 		<execute macro="CalendarEvent#editTitle">
 			<var name="eventTitle" value="${eventTitle}" />

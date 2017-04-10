@@ -317,11 +317,9 @@
 	</command>
 
 	<command name="addPGViaAP">
-		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
-
-		<execute function="AssertClick" locator1="MenuItem#KNOWLEDGE_BASE_ARTICLE" value1="Knowledge Base Article" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute macro="AssetPublisherPortlet#addAsset">
+			<var name="assetType" value="Knowledge Base Article" />
+		</execute>
 
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${kbArticleContent}" />

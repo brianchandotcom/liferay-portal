@@ -227,7 +227,8 @@ public class CommerceProductOptionsDisplayContext {
 		return _rowChecker;
 	}
 
-	public SearchContainer getSearchContainer() throws PortalException {
+	public SearchContainer<CommerceProductOption> getSearchContainer()
+		throws PortalException {
 		if (_productOptionSearchContainer != null) {
 			return _productOptionSearchContainer;
 		}
@@ -235,7 +236,7 @@ public class CommerceProductOptionsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SearchContainer searchContainer = new SearchContainer(
+		SearchContainer<CommerceProductOption> searchContainer = new SearchContainer<>(
 			_liferayPortletRequest, getPortletURL(), null, null);
 
 		OrderByComparator<CommerceProductOption> orderByComparator =
@@ -255,9 +256,10 @@ public class CommerceProductOptionsDisplayContext {
 
 		searchContainer.setTotal(total);
 
-		List results =
+		List<CommerceProductOption> results =
 			_commerceProductOptionLocalService.getCommerceProductOptions(
-				themeDisplay.getScopeGroupId(), 0, total, orderByComparator);
+				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 
@@ -315,7 +317,7 @@ public class CommerceProductOptionsDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
-	private SearchContainer _productOptionSearchContainer;
+	private SearchContainer<CommerceProductOption> _productOptionSearchContainer;
 	private final HttpServletRequest _httpServletRequest;
 	private RowChecker _rowChecker;
 

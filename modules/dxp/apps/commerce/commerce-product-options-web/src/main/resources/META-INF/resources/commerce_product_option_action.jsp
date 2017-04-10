@@ -40,7 +40,7 @@ else {
 
 		<portlet:param
 			name="mvcRenderCommandName"
-			value="/commerce_product_options/edit_product_option"
+			value="editProductOption"
 		/>
 
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
@@ -53,7 +53,7 @@ else {
 		url="<%= editURL %>"
 	/>
 
-	<portlet:actionURL name="/editProductOption" var="deleteURL">
+	<portlet:actionURL name="editProductOption" var="deleteURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(commerceProductOption.getGroupId()) %>" />

@@ -43,6 +43,11 @@
 <%@ page import="com.liferay.portal.kernel.util.ListUtil" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
+<%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %>
+<%@ page
+        import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CommerceProductOptionFormNavigatorConstants" %>
+<%@ page
+        import="com.liferay.commerce.product.exception.NoSuchProductOptionException" %>
 
 <liferay-frontend:defineObjects />
 

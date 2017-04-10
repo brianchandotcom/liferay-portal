@@ -27,10 +27,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 /**
@@ -84,6 +88,25 @@ public class LayoutImportBackgroundTaskExecutor
 				TransactionInvokerUtil.invoke(
 					transactionConfig,
 					new LayoutImportCallable(exportImportConfiguration, file));
+			}
+			catch (IOException ioe) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append("Unable to process LAR file ");
+
+				if (!Objects.isNull(attachmentsFileEntry) &&
+					Validator.isNotNull(attachmentsFileEntry.getFileName())) {
+
+					sb.append(attachmentsFileEntry.getFileName());
+				}
+				else {
+					sb.append("(unknown file name)");
+				}
+
+				sb.append(
+					" during executing LayoutImportBackgroundTaskExecutor");
+
+				throw new SystemException(sb.toString(), ioe);
 			}
 			catch (Throwable t) {
 				if (_log.isDebugEnabled()) {

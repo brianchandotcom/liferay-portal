@@ -61,7 +61,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<c:if test="<%= commerceProductOptionsDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL
 				copyCurrentRenderParameters="<%= false %>"
-				id="/commerce_product_options/info_panel"
+				id="infoPanel"
 				var="sidebarPanelURL"
 			/>
 

@@ -37,6 +37,12 @@
 <%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %>
 <%@ page import="com.liferay.portal.kernel.util.StringPool" %>
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
+<%@ page import="java.util.List" %>
+<%@ page
+        import="com.liferay.commerce.product.constants.CommerceProductWebKeys" %>
+<%@ page import="com.liferay.portal.kernel.util.ListUtil" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 
 <liferay-frontend:defineObjects />
 

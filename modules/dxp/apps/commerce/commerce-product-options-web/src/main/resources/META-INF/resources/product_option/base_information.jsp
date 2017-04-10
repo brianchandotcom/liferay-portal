@@ -41,8 +41,8 @@ List<DDMFormFieldType> ddmFormFieldTypes = commerceProductOptionsDisplayContext.
 
 			<aui:option
 				label="<%= ddmFormFieldType.getName() %>"
-				value="<%= ddmFormFieldType.getName() %>"
 				selected="<%= (commerceProductOption != null) && commerceProductOption.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>"
+				value="<%= ddmFormFieldType.getName() %>"
 			/>
 
 		<%

@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.type.virtual.iternal;
 
 import com.liferay.commerce.product.type.CommerceProductType;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

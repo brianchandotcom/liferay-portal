@@ -20,5 +20,3 @@
 	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
 		<fieldset class="input-container" disabled="disabled">
 	</c:if>
-
-	<aui:input name="formDate" type="hidden" value="<%= System.currentTimeMillis() %>" />

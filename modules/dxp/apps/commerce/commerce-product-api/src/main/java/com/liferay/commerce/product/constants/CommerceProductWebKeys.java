@@ -25,4 +25,9 @@ public class CommerceProductWebKeys {
 	public static final String COMMERCE_PRODUCT_DEFINITIONS =
 		"COMMERCE_PRODUCT_DEFINITIONS";
 
+	public static final String COMMERCE_PRODUCT_OPTION =
+		"COMMERCE_PRODUCT_OPTION";
+
+	public static final String COMMERCE_PRODUCT_OPTIONS =
+		"COMMERCE_PRODUCT_OPTIONS";
 }

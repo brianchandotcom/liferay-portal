@@ -29,17 +29,20 @@ List<DDMFormFieldType> ddmFormFieldTypes = commerceProductOptionsDisplayContext.
 	<aui:input label="name" name="name" />
 	<aui:input label="description" name="description" />
 
-	<aui:select label="product-option-field-type"
+	<aui:select
+		label="product-option-field-type"
 		name="ddmFormFieldTypeName"
-		showEmptyOption="<%= true %>">
+		showEmptyOption="<%= true %>"
+	>
 
 		<%
 		for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
 		%>
 
-			<aui:option label="<%= ddmFormFieldType.getName() %>"
+			<aui:option
+				label="<%= ddmFormFieldType.getName() %>"
 				value="<%= ddmFormFieldType.getName() %>"
-				selected="<%= commerceProductOption != null && commerceProductOption.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>"
+				selected="<%= (commerceProductOption != null) && commerceProductOption.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>"
 			/>
 
 		<%

@@ -1,12 +1,4 @@
 <definition>
-	<command name="_gotoAddPGViaAP">
-		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
-
-		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-	</command>
-
 	<command name="_gotoAddPGViaWCD">
 		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
 
@@ -53,7 +45,9 @@
 	</command>
 
 	<command name="addDraftPGViaAP">
-		<execute macro="WebContent#_gotoAddPGViaAP" />
+		<execute macro="AssetPublisherPortlet#addAsset">
+			<var name="assetType" value="Basic Web Content" />
+		</execute>
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />
@@ -228,7 +222,9 @@
 	</command>
 
 	<command name="addPGViaAP">
-		<execute macro="WebContent#_gotoAddPGViaAP" />
+		<execute macro="AssetPublisherPortlet#addAsset">
+			<var name="assetType" value="Basic Web Content" />
+		</execute>
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />

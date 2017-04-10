@@ -75,16 +75,6 @@
 		<execute function="Click" locator1="Calendar#SCHEDULER_VIEW_${viewTypeUppercase}_CURRENT_DAY" />
 	</command>
 
-	<command name="gotoAddEventViaAssetPublisher">
-		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
-
-		<execute function="AssertClick" locator1="MenuItem#CALENDAR_EVENT" value1="Calendar Event" />
-
-		<execute macro="CalendarEvent#selectEventIframe" />
-
-		<execute macro="CalendarEvent#_viewNewEventIframe" />
-	</command>
-
 	<command name="gotoAddMyCalendars">
 		<execute function="Click" locator1="Calendar#MY_CALENDARS_MENULIST_ARROW" />
 

@@ -21,8 +21,24 @@ import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Jar;
 import aQute.bnd.service.AnalyzerPlugin;
 
+import aQute.libg.filters.AndFilter;
+import aQute.libg.filters.LiteralFilter;
+import aQute.libg.filters.NotFilter;
+import aQute.libg.filters.SimpleFilter;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author Carlos Sierra Andrés
+ * @author Gregory Amerson
  */
 public class ResourceBundleLoaderAnalyzerPlugin implements AnalyzerPlugin {
 
@@ -30,28 +46,150 @@ public class ResourceBundleLoaderAnalyzerPlugin implements AnalyzerPlugin {
 	public boolean analyzeJar(Analyzer analyzer) throws Exception {
 		Jar jar = analyzer.getJar();
 
-		if (!jar.exists("content/Language.properties")) {
+		boolean languagePropertiesExists = jar.exists(
+			"content/Language.properties");
+
+		Parameters aggregateResourceBundlesParameters = new SortedParameters(
+			analyzer.getProperty("-aggregateresourcebundles"));
+
+		if ((aggregateResourceBundlesParameters.size() == 0) &&
+			!languagePropertiesExists) {
+
 			return false;
 		}
 
-		Parameters provideCapabilityHeaders = new Parameters(
+		Parameters provideCapabilityHeaders = new SortedParameters(
 			analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
-		Parameters parameters = new Parameters();
+		if (languagePropertiesExists) {
+			Parameters parameters = new SortedParameters();
 
-		Attrs attrs = new Attrs();
+			Attrs attrs = new Attrs();
 
-		attrs.put("bundle.symbolic.name", analyzer.getBsn());
-		attrs.put("resource.bundle.base.name", "content.Language");
+			attrs.put("bundle.symbolic.name", analyzer.getBsn());
+			attrs.put("resource.bundle.base.name", "content.Language");
 
-		parameters.add("liferay.resource.bundle", attrs);
+			parameters.add("liferay.resource.bundle", attrs);
 
-		provideCapabilityHeaders.mergeWith(parameters, false);
+			provideCapabilityHeaders.mergeWith(parameters, false);
+		}
+
+		if (aggregateResourceBundlesParameters.size() != 0) {
+			Parameters requireCapabilityHeaders = new SortedParameters(
+				analyzer.getProperty(Constants.REQUIRE_CAPABILITY));
+
+			List<String> aggregateKeys = new ArrayList<>(
+				aggregateResourceBundlesParameters.keySet());
+
+			Collections.sort(aggregateKeys);
+
+			for (String aggregateResourceBundlesParameter : aggregateKeys) {
+				Attrs requireAttrs = new Attrs();
+
+				requireAttrs.put(
+					"filter:",
+					new SimpleFilter(
+						"bundle.symbolic.name",
+						aggregateResourceBundlesParameter).toString());
+
+				requireCapabilityHeaders.add(
+					"liferay.resource.bundle", requireAttrs);
+			}
+
+			analyzer.setProperty(
+				Constants.REQUIRE_CAPABILITY,
+				requireCapabilityHeaders.toString());
+
+			StringBuilder aggregateValue = new StringBuilder();
+
+			AndFilter aggregateSelfFilter = new AndFilter();
+
+			aggregateSelfFilter.addChild(
+				new SimpleFilter("bundle.symbolic.name", analyzer.getBsn()));
+			aggregateSelfFilter.addChild(
+				new NotFilter(new LiteralFilter("(aggregate=true)")));
+			aggregateSelfFilter.append(aggregateValue);
+
+			for (String aggregateResourceBundlesParameter : aggregateKeys) {
+				aggregateValue.append(",");
+
+				new SimpleFilter(
+					"bundle.symbolic.name",
+					aggregateResourceBundlesParameter).append(aggregateValue);
+			}
+
+			Attrs provideAttrs = new Attrs();
+
+			provideAttrs.put(
+				"resource.bundle.aggregate:String", aggregateValue.toString());
+			provideAttrs.put("bundle.symbolic.name", analyzer.getBsn());
+			provideAttrs.put("resource.bundle.base.name", "content.Language");
+			provideAttrs.put("service.ranking:Long", "1");
+			provideAttrs.put("aggregate", "true");
+
+			String servletContextName = analyzer.getProperty("Web-ContextPath");
+
+			if (servletContextName != null) {
+				try {
+					Path servletContextPath = Paths.get(servletContextName);
+
+					servletContextName = servletContextPath.subpath(
+						0, 1).toString();
+				}
+				catch (Exception e) {
+
+					// ignore
+
+				}
+			}
+
+			if (servletContextName == null) {
+				servletContextName = analyzer.getBsn();
+			}
+
+			provideAttrs.put("servlet.context.name", servletContextName);
+
+			provideCapabilityHeaders.add(
+				"liferay.resource.bundle", provideAttrs);
+		}
 
 		analyzer.setProperty(
 			Constants.PROVIDE_CAPABILITY, provideCapabilityHeaders.toString());
 
 		return true;
+	}
+
+	private static final class SortedParameters extends Parameters {
+		public SortedParameters() {
+		}
+
+		public SortedParameters(String header) {
+			super(header);
+		}
+
+		@Override
+		public Set<java.util.Map.Entry<String, Attrs>> entrySet() {
+			List<Entry<String, Attrs>> entries = new ArrayList<>(
+				super.entrySet());
+
+			Comparator<Entry<String, Attrs>> comparator =
+				new Comparator<Entry<String, Attrs>>() {
+
+					@Override
+					public int compare(
+						java.util.Map.Entry<String, Attrs> o1,
+						java.util.Map.Entry<String, Attrs> o2) {
+
+						return o1.getKey().compareTo(o2.getKey());
+					}
+
+				};
+
+			Collections.sort(entries, comparator);
+
+			return new LinkedHashSet<>(entries);
+		}
+
 	}
 
 }

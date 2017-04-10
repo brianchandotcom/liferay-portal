@@ -51,6 +51,9 @@ import javax.servlet.http.HttpServletRequest;
 public interface Staging {
 
 	public String buildRemoteURL(
+		ExportImportConfiguration exportImportConfiguration);
+
+	public String buildRemoteURL(
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection);
 

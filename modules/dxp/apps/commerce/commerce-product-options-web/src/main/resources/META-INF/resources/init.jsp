@@ -58,4 +58,7 @@ page import="java.util.List" %>
 
 <%
 CommerceProductOptionsDisplayContext commerceProductOptionsDisplayContext = (CommerceProductOptionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+String redirect = ParamUtil.getString(request, "redirect");
+String backURL = ParamUtil.getString(request, "backURL", redirect);
 %>

@@ -30,4 +30,5 @@ public class CommerceProductWebKeys {
 
 	public static final String COMMERCE_PRODUCT_OPTIONS =
 		"COMMERCE_PRODUCT_OPTIONS";
+
 }

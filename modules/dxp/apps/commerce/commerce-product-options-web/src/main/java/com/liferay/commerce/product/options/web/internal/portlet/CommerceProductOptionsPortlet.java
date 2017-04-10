@@ -70,8 +70,8 @@ public class CommerceProductOptionsPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			HttpServletRequest httpServletRequest = _portal.
-				getHttpServletRequest(renderRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
 
 			CommerceProductOptionsDisplayContext
 				commerceProductOptionsDisplayContext =

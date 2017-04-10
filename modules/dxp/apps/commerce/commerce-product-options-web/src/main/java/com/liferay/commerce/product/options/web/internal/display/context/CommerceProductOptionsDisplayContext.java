@@ -86,10 +86,6 @@ public class CommerceProductOptionsDisplayContext {
 		}
 	}
 
-	public List<DDMFormFieldType> getDDMFormFieldTypes(){
-		return _ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
-	}
-
 	public CommerceProductOption getCommerceProductOption() {
 		if (_commerceProductOption != null) {
 			return _commerceProductOption;
@@ -138,6 +134,10 @@ public class CommerceProductOptionsDisplayContext {
 		}
 
 		return commerceProductOptions;
+	}
+
+	public List<DDMFormFieldType> getDDMFormFieldTypes() {
+		return _ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
 	}
 
 	public String getDisplayStyle() {
@@ -325,6 +325,8 @@ public class CommerceProductOptionsDisplayContext {
 	private final CommerceProductOptionLocalService
 		_commerceProductOptionLocalService;
 	private final CommerceProductRequestHelper _commerceProductRequestHelper;
+	private final DDMFormFieldTypeServicesTracker
+		_ddmFormFieldTypeServicesTracker;
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
@@ -336,5 +338,5 @@ public class CommerceProductOptionsDisplayContext {
 	private SearchContainer<CommerceProductOption>
 		_productOptionSearchContainer;
 	private RowChecker _rowChecker;
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
 }

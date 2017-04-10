@@ -138,8 +138,8 @@ public class CommerceProductOptionLocalServiceImpl
 		throws PortalException {
 
 		CommerceProductOption commerceProductOption =
-			commerceProductOptionPersistence.
-				findByPrimaryKey(commerceProductOptionId);
+			commerceProductOptionPersistence.findByPrimaryKey(
+				commerceProductOptionId);
 
 		commerceProductOption.setNameMap(nameMap);
 		commerceProductOption.setDescriptionMap(descriptionMap);

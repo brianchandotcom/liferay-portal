@@ -18,8 +18,7 @@
 
 <%
 CommerceProductOption commerceProductOption = (CommerceProductOption)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_OPTION);
-List<DDMFormFieldType> ddmFormFieldTypes =  commerceProductOptionsDisplayContext.getDDMFormFieldTypes();
-
+List<DDMFormFieldType> ddmFormFieldTypes = commerceProductOptionsDisplayContext.getDDMFormFieldTypes();
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="product-option-base-information" />
@@ -31,19 +30,21 @@ List<DDMFormFieldType> ddmFormFieldTypes =  commerceProductOptionsDisplayContext
 	<aui:input label="description" name="description" />
 
 	<aui:select label="product-option-field-type"
-                name="ddmFormFieldTypeName"
-                showEmptyOption="<%=true %>">
-        <%
-            for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
-        %>
+		name="ddmFormFieldTypeName"
+		showEmptyOption="<%= true %>">
 
-        <aui:option label="<%= ddmFormFieldType.getName() %>"
-                    value="<%= ddmFormFieldType.getName() %>"
-                    selected="<%= commerceProductOption != null &&  commerceProductOption.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName())%>"/>
+		<%
+		for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
+		%>
 
-        <%
-            }
-        %>
+			<aui:option label="<%= ddmFormFieldType.getName() %>"
+				value="<%= ddmFormFieldType.getName() %>"
+				selected="<%= commerceProductOption != null && commerceProductOption.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>"
+			/>
 
-    </aui:select>
+		<%
+		}
+		%>
+
+	</aui:select>
 </aui:fieldset>

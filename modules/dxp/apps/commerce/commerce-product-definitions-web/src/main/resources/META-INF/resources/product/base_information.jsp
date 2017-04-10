@@ -26,8 +26,7 @@ List<CommerceProductType> commerceProductTypes = commerceProductDefinitionsDispl
 <aui:model-context bean="<%= commerceProductDefinition %>" model="<%= CommerceProductDefinition.class %>" />
 
 <aui:fieldset cssClass="col-md-4">
-	<aui:select label="productTypeName"
-		name="productTypeName">
+	<aui:select name="productTypeName">
 
 		<%
 		for (CommerceProductType commerceProductType : commerceProductTypes) {

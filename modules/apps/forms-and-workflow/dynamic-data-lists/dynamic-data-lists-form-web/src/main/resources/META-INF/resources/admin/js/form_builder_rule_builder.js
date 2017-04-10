@@ -31,6 +31,10 @@ AUI.add(
 						value: ''
 					},
 
+					getFunctionsURL: {
+						value: ''
+					},
+
 					portletNamespace: {
 						value: ''
 					},
@@ -214,6 +218,7 @@ AUI.add(
 									functionsMetadata: instance.get('functionsMetadata'),
 									getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
 									getDataProviders: instance._dataProviders,
+									getFunctionsURL: instance.get('getFunctionsURL'),
 									pages: instance.getPages(),
 									portletNamespace: instance.get('portletNamespace')
 								}

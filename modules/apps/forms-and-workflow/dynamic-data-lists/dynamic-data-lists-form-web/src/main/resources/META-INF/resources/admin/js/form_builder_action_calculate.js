@@ -12,6 +12,14 @@ AUI.add(
 						value: ''
 					},
 
+					functions: {
+						value: ''
+					},
+
+					getFunctionsURL: {
+						value: ''
+					},
+
 					index: {
 						value: ''
 					},
@@ -59,7 +67,21 @@ AUI.add(
 
 						calculateContainer.setHTML(instance._getRuleContainerTemplate());
 
-						instance._getCalculator().render(calculateContainer.one('.' + CSS_CALCULATE_CONTAINER_CALCULATOR));
+						A.io.request(
+							instance.get('getFunctionsURL'),
+							{
+								method: 'GET',
+								on: {
+									success: function(event, id, xhr) {
+										var result = JSON.parse(xhr.responseText);
+
+										instance.set('functions', result);
+
+										instance._getCalculator().render(calculateContainer.one('.' + CSS_CALCULATE_CONTAINER_CALCULATOR));
+									}
+								}
+							}
+						);
 
 						var expressionField = instance._createExpressionField();
 
@@ -75,6 +97,7 @@ AUI.add(
 
 						var calculator = new Liferay.DDL.FormBuilderCalculator(
 							{
+								functions: instance.get('functions'),
 								options: instance.get('options')
 							}
 						);

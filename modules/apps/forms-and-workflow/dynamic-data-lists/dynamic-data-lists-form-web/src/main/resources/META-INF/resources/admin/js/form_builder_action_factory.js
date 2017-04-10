@@ -20,6 +20,10 @@ AUI.add(
 						value: []
 					},
 
+					getFunctionsURL: {
+						value: ''
+					},
+
 					pages: {
 						value: []
 					},
@@ -81,6 +85,7 @@ AUI.add(
 								{
 									action: act,
 									boundingBox: container,
+									getFunctionsURL: instance.get('getFunctionsURL'),
 									index: index,
 									options: instance.get('fields'),
 									portletNamespace: instance.get('portletNamespace')

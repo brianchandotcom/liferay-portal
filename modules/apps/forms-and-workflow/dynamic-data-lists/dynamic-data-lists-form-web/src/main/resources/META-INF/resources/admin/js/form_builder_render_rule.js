@@ -20,6 +20,10 @@ AUI.add(
 						value: []
 					},
 
+					getFunctionsURL: {
+						value: ''
+					},
+
 					logicOperator: {
 						setter: function(val) {
 							return val.toUpperCase();
@@ -78,6 +82,7 @@ AUI.add(
 								fields: instance.get('fields'),
 								getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
 								getDataProviders: instance.get('getDataProviders'),
+								getFunctionsURL: instance.get('getFunctionsURL'),
 								pages: instance.get('pages'),
 								portletNamespace: instance.get('portletNamespace')
 							}

@@ -20,9 +20,15 @@ AUI.add(
 							}
 						]
 					},
+
+					functions: {
+						value: []
+					},
+
 					options: {
 						value: []
 					},
+
 					strings: {
 						value: {
 							addField: Liferay.Language.get('add-field')

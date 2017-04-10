@@ -136,7 +136,7 @@ public class GetFunctionsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		jsonObject.put("label", LanguageUtil.get(locale, labelLanguageKey));
 
-		jsonObject.put("name", key);
+		jsonObject.put("value", key);
 
 		String tooltipLanguageKey = key + CharPool.UNDERLINE + "tooltip";
 

@@ -25,8 +25,17 @@
         taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
         taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
+<%@
+        page import="com.liferay.commerce.product.options.web.internal.display.context.CommerceProductOptionsDisplayContext" %><%@
+        page import="com.liferay.portal.kernel.util.WebKeys" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+CommerceProductOptionsDisplayContext commerceProductOptionsDisplayContext = (CommerceProductOptionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+%>

@@ -15,11 +15,25 @@
 package com.liferay.commerce.product.options.web.internal.portlet;
 
 import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
+import com.liferay.commerce.product.options.web.internal.display.context.CommerceProductOptionsDisplayContext;
+import com.liferay.commerce.product.service.CommerceProductOptionLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -49,5 +63,37 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CommerceProductOptionsPortlet extends MVCPortlet {
 
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		try {
+			HttpServletRequest httpServletRequest = _portal.
+				getHttpServletRequest(renderRequest);
+
+			CommerceProductOptionsDisplayContext
+				commerceProductOptionsDisplayContext =
+					new CommerceProductOptionsDisplayContext(
+						httpServletRequest, _commerceProductOptionLocalService);
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				commerceProductOptionsDisplayContext);
+
+		}
+		catch (PortalException pe) {
+			SessionErrors.add(renderRequest, pe.getClass());
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private CommerceProductOptionLocalService
+		_commerceProductOptionLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

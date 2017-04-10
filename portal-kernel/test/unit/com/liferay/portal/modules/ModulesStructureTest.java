@@ -753,14 +753,12 @@ public class ModulesStructureTest {
 				Files.exists(resourcesImporterIgnorePath));
 		}
 
-		if (!dirPath.startsWith("private")) {
-			Path gitIgnorePath = dirPath.resolve(".gitignore");
+		Path gitIgnorePath = dirPath.resolve(".gitignore");
 
-			String gitIgnore = _read(gitIgnorePath);
+		String gitIgnore = _read(gitIgnorePath);
 
-			Assert.assertEquals(
-				"Incorrect " + gitIgnorePath, gitIgnoreTemplate, gitIgnore);
-		}
+		Assert.assertEquals(
+			"Incorrect " + gitIgnorePath, gitIgnoreTemplate, gitIgnore);
 
 		Path npmIgnorePath = dirPath.resolve(".npmignore");
 

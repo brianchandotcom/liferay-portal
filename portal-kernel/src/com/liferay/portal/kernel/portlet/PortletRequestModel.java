@@ -55,7 +55,9 @@ public class PortletRequestModel implements Serializable {
 	public PortletRequestModel(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		_containerNamespace = portletRequest.getContextPath();
+		_portletRequest = portletRequest;
+		_portletResponse = portletResponse;
+
 		_contentType = portletRequest.getResponseContentType();
 		_serverName = portletRequest.getServerName();
 		_serverPort = portletRequest.getServerPort();
@@ -82,104 +84,14 @@ public class PortletRequestModel implements Serializable {
 			_lifecycle = null;
 		}
 
-		String portletNamespace = null;
-		String actionURLString = null;
-		String renderURLString = null;
-		String renderURLExclusiveString = null;
-		String renderURLMaximizedString = null;
-		String renderURLMinimizedString = null;
-		String renderURLNormalString = null;
-		String renderURLPopUp = null;
+		if (_portletResponse instanceof MimeResponse) {
+			MimeResponse mimeResponse = (MimeResponse)_portletResponse;
 
-		if (portletResponse instanceof MimeResponse) {
-			MimeResponse mimeResponse = (MimeResponse)portletResponse;
-
-			portletNamespace = mimeResponse.getNamespace();
-
-			try {
-				PortletURL actionURL = mimeResponse.createActionURL();
-
-				actionURLString = actionURL.toString();
-			}
-			catch (IllegalStateException ise) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(ise.getMessage());
-				}
-			}
-
-			try {
-				PortletURL renderURL = mimeResponse.createRenderURL();
-
-				renderURLString = renderURL.toString();
-
-				try {
-					renderURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-
-					renderURLExclusiveString = renderURL.toString();
-				}
-				catch (WindowStateException wse) {
-				}
-
-				try {
-					renderURL.setWindowState(LiferayWindowState.MAXIMIZED);
-
-					renderURLMaximizedString = renderURL.toString();
-				}
-				catch (WindowStateException wse) {
-				}
-
-				try {
-					renderURL.setWindowState(LiferayWindowState.MINIMIZED);
-
-					renderURLMinimizedString = renderURL.toString();
-				}
-				catch (WindowStateException wse) {
-				}
-
-				try {
-					renderURL.setWindowState(LiferayWindowState.NORMAL);
-
-					renderURLNormalString = renderURL.toString();
-				}
-				catch (WindowStateException wse) {
-				}
-
-				try {
-					renderURL.setWindowState(LiferayWindowState.POP_UP);
-
-					renderURLPopUp = renderURL.toString();
-				}
-				catch (WindowStateException wse) {
-				}
-			}
-			catch (IllegalStateException ise) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(ise.getMessage());
-				}
-			}
-
-			ResourceURL resourceURL = mimeResponse.createResourceURL();
-
-			String resourceURLString = HttpUtil.removeParameter(
-				resourceURL.toString(), portletNamespace + "struts_action");
-
-			resourceURLString = HttpUtil.removeParameter(
-				resourceURLString, portletNamespace + "redirect");
-
-			_resourceURL = resourceURL.toString();
+			_portletNamespace = mimeResponse.getNamespace();
 		}
 		else {
-			_resourceURL = null;
+			_portletNamespace = null;
 		}
-
-		_portletNamespace = portletNamespace;
-		_actionURL = actionURLString;
-		_renderURL = renderURLString;
-		_renderURLExclusive = renderURLExclusiveString;
-		_renderURLMaximized = renderURLMaximizedString;
-		_renderURLMinimized = renderURLMinimizedString;
-		_renderURLNormal = renderURLNormalString;
-		_renderURLPopUp = renderURLPopUp;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -190,46 +102,23 @@ public class PortletRequestModel implements Serializable {
 		else {
 			_themeDisplayModel = null;
 		}
-
-		_parameters = new HashMap<>(portletRequest.getParameterMap());
-
-		_attributes = new HashMap<>();
-
-		Enumeration<String> enumeration = portletRequest.getAttributeNames();
-
-		while (enumeration.hasMoreElements()) {
-			String name = enumeration.nextElement();
-
-			Object value = portletRequest.getAttribute(name);
-
-			_attributes.put(name, value);
-		}
-
-		PortletSession portletSession = portletRequest.getPortletSession();
-
-		try {
-			_portletScopeSessioAttributes = portletSession.getAttributeMap(
-				PortletSession.PORTLET_SCOPE);
-
-			_applicationScopeSessionAttributes = portletSession.getAttributeMap(
-				PortletSession.APPLICATION_SCOPE);
-		}
-		catch (IllegalStateException ise) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(ise.getMessage());
-			}
-		}
 	}
 
 	public String getActionURL() {
+		_initURLs();
+
 		return _actionURL;
 	}
 
 	public Map<String, Object> getApplicationScopeSessionAttributes() {
+		_initPortletSessionAttributes();
+
 		return _applicationScopeSessionAttributes;
 	}
 
 	public Map<String, Object> getAttributes() {
+		_initAttributes();
+
 		return _attributes;
 	}
 
@@ -238,7 +127,7 @@ public class PortletRequestModel implements Serializable {
 	}
 
 	public String getContainerNamespace() {
-		return _containerNamespace;
+		return _contextPath;
 	}
 
 	public String getContentType() {
@@ -258,6 +147,8 @@ public class PortletRequestModel implements Serializable {
 	}
 
 	public Map<String, String[]> getParameters() {
+		_initParameters();
+
 		return _parameters;
 	}
 
@@ -270,6 +161,8 @@ public class PortletRequestModel implements Serializable {
 	}
 
 	public Map<String, Object> getPortletScopeSessioAttributes() {
+		_initPortletSessionAttributes();
+
 		return _portletScopeSessioAttributes;
 	}
 
@@ -282,30 +175,44 @@ public class PortletRequestModel implements Serializable {
 	}
 
 	public String getRenderURL() {
+		_initURLs();
+
 		return _renderURL;
 	}
 
 	public String getRenderURLExclusive() {
+		_initURLs();
+
 		return _renderURLExclusive;
 	}
 
 	public String getRenderURLMaximized() {
+		_initURLs();
+
 		return _renderURLMaximized;
 	}
 
 	public String getRenderURLMinimized() {
+		_initURLs();
+
 		return _renderURLMinimized;
 	}
 
 	public String getRenderURLNormal() {
+		_initURLs();
+
 		return _renderURLNormal;
 	}
 
 	public String getRenderURLPopUp() {
+		_initURLs();
+
 		return _renderURLPopUp;
 	}
 
 	public String getResourceURL() {
+		_initURLs();
+
 		return _resourceURL;
 	}
 
@@ -354,6 +261,8 @@ public class PortletRequestModel implements Serializable {
 
 		if (_portletNamespace != null) {
 			portletRequestModelMap.put("portlet-namespace", _portletNamespace);
+
+			_initURLs();
 
 			if (_actionURL != null) {
 				portletRequestModelMap.put("action-url", "_actionURL");
@@ -467,9 +376,9 @@ public class PortletRequestModel implements Serializable {
 			}
 		}
 
-		portletRequestModelMap.put("parameters", _parameters);
+		portletRequestModelMap.put("parameters", getParameters());
 
-		_attributes = filterInvalidAttributes(_attributes);
+		_attributes = filterInvalidAttributes(getAttributes());
 
 		portletRequestModelMap.put("attributes", _attributes);
 
@@ -478,13 +387,13 @@ public class PortletRequestModel implements Serializable {
 		portletRequestModelMap.put("portlet-session", portletSessionMap);
 
 		_portletScopeSessioAttributes = filterInvalidAttributes(
-			_portletScopeSessioAttributes);
+			getPortletScopeSessioAttributes());
 
 		portletSessionMap.put(
 			"portlet-attributes", _portletScopeSessioAttributes);
 
 		_applicationScopeSessionAttributes = filterInvalidAttributes(
-			_applicationScopeSessionAttributes);
+			getApplicationScopeSessionAttributes());
 
 		portletSessionMap.put(
 			"application-attributes", _applicationScopeSessionAttributes);
@@ -513,6 +422,8 @@ public class PortletRequestModel implements Serializable {
 
 		if (_portletNamespace != null) {
 			requestElement.addElement("portlet-namespace", _portletNamespace);
+
+			_initURLs();
 
 			if (_actionURL != null) {
 				requestElement.addElement("action-url", _actionURL);
@@ -630,7 +541,7 @@ public class PortletRequestModel implements Serializable {
 
 		Element parametersElement = requestElement.addElement("parameters");
 
-		for (Map.Entry<String, String[]> entry : _parameters.entrySet()) {
+		for (Map.Entry<String, String[]> entry : getParameters().entrySet()) {
 			Element parameterElement = parametersElement.addElement(
 				"parameter");
 
@@ -643,7 +554,7 @@ public class PortletRequestModel implements Serializable {
 
 		Element attributesElement = requestElement.addElement("attributes");
 
-		for (Map.Entry<String, Object> entry : _attributes.entrySet()) {
+		for (Map.Entry<String, Object> entry : getAttributes().entrySet()) {
 			String name = entry.getKey();
 
 			if (!_isValidAttributeName(name)) {
@@ -670,7 +581,7 @@ public class PortletRequestModel implements Serializable {
 			"portlet-attributes");
 
 		for (Map.Entry<String, Object> entry :
-				_portletScopeSessioAttributes.entrySet()) {
+				getPortletScopeSessioAttributes().entrySet()) {
 
 			String name = entry.getKey();
 
@@ -695,7 +606,7 @@ public class PortletRequestModel implements Serializable {
 			"application-attributes");
 
 		for (Map.Entry<String, Object> entry :
-				_applicationScopeSessionAttributes.entrySet()) {
+				getApplicationScopeSessionAttributes().entrySet()) {
 
 			String name = entry.getKey();
 
@@ -720,25 +631,17 @@ public class PortletRequestModel implements Serializable {
 	}
 
 	protected PortletRequestModel() {
-		_actionURL = null;
 		_authType = null;
-		_containerNamespace = null;
 		_contentType = null;
 		_contextPath = null;
 		_lifecycle = null;
 		_locale = null;
-		_parameters = null;
 		_portletMode = null;
 		_portletNamespace = null;
+		_portletRequest = null;
+		_portletResponse = null;
 		_portletSessionId = null;
 		_remoteUser = null;
-		_renderURL = null;
-		_renderURLExclusive = null;
-		_renderURLMaximized = null;
-		_renderURLMinimized = null;
-		_renderURLNormal = null;
-		_renderURLPopUp = null;
-		_resourceURL = null;
 		_scheme = null;
 		_secure = false;
 		_serverName = null;
@@ -817,31 +720,159 @@ public class PortletRequestModel implements Serializable {
 		}
 	}
 
+	private void _initAttributes() {
+		if (_attributes != null) {
+			return;
+		}
+
+		_attributes = new HashMap<>();
+
+		Enumeration<String> enumeration = _portletRequest.getAttributeNames();
+
+		while (enumeration.hasMoreElements()) {
+			String name = enumeration.nextElement();
+
+			Object value = _portletRequest.getAttribute(name);
+
+			_attributes.put(name, value);
+		}
+	}
+
+	private void _initParameters() {
+		if (_parameters != null) {
+			return;
+		}
+
+		_parameters = new HashMap<>(_portletRequest.getParameterMap());
+	}
+
+	private void _initPortletSessionAttributes() {
+		if (_portletScopeSessioAttributes != null) {
+			return;
+		}
+
+		PortletSession portletSession = _portletRequest.getPortletSession();
+
+		try {
+			_portletScopeSessioAttributes = portletSession.getAttributeMap(
+				PortletSession.PORTLET_SCOPE);
+
+			_applicationScopeSessionAttributes = portletSession.getAttributeMap(
+				PortletSession.APPLICATION_SCOPE);
+		}
+		catch (IllegalStateException ise) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ise.getMessage());
+			}
+		}
+	}
+
+	private void _initURLs() {
+		if ((_resourceURL == null) &&
+			(_portletResponse instanceof MimeResponse)) {
+
+			MimeResponse mimeResponse = (MimeResponse)_portletResponse;
+
+			try {
+				PortletURL actionURL = mimeResponse.createActionURL();
+
+				_actionURL = actionURL.toString();
+			}
+			catch (IllegalStateException ise) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(ise.getMessage());
+				}
+			}
+
+			try {
+				PortletURL renderURL = mimeResponse.createRenderURL();
+
+				_renderURL = renderURL.toString();
+
+				try {
+					renderURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+					_renderURLExclusive = renderURL.toString();
+				}
+				catch (WindowStateException wse) {
+				}
+
+				try {
+					renderURL.setWindowState(LiferayWindowState.MAXIMIZED);
+
+					_renderURLMaximized = renderURL.toString();
+				}
+				catch (WindowStateException wse) {
+				}
+
+				try {
+					renderURL.setWindowState(LiferayWindowState.MINIMIZED);
+
+					_renderURLMinimized = renderURL.toString();
+				}
+				catch (WindowStateException wse) {
+				}
+
+				try {
+					renderURL.setWindowState(LiferayWindowState.NORMAL);
+
+					_renderURLNormal = renderURL.toString();
+				}
+				catch (WindowStateException wse) {
+				}
+
+				try {
+					renderURL.setWindowState(LiferayWindowState.POP_UP);
+
+					_renderURLPopUp = renderURL.toString();
+				}
+				catch (WindowStateException wse) {
+				}
+			}
+			catch (IllegalStateException ise) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(ise.getMessage());
+				}
+			}
+
+			ResourceURL resourceURL = mimeResponse.createResourceURL();
+
+			String resourceURLString = HttpUtil.removeParameter(
+				resourceURL.toString(), _portletNamespace + "struts_action");
+
+			resourceURLString = HttpUtil.removeParameter(
+				resourceURLString, _portletNamespace + "redirect");
+
+			_resourceURL = resourceURL.toString();
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletRequestModel.class);
 
-	private final String _actionURL;
+	private String _actionURL;
 	private Map<String, Object> _applicationScopeSessionAttributes;
 	private Map<String, Object> _attributes;
 	private final String _authType;
-	private final String _containerNamespace;
 	private final String _contentType;
 	private final String _contextPath;
 	private final String _lifecycle;
 	private final Locale _locale;
-	private final Map<String, String[]> _parameters;
+	private Map<String, String[]> _parameters;
 	private final PortletMode _portletMode;
 	private final String _portletNamespace;
+	private final PortletRequest _portletRequest;
+	private final PortletResponse _portletResponse;
 	private Map<String, Object> _portletScopeSessioAttributes;
 	private final String _portletSessionId;
 	private final String _remoteUser;
-	private final String _renderURL;
-	private final String _renderURLExclusive;
-	private final String _renderURLMaximized;
-	private final String _renderURLMinimized;
-	private final String _renderURLNormal;
-	private final String _renderURLPopUp;
-	private final String _resourceURL;
+	private String _renderURL;
+	private String _renderURLExclusive;
+	private String _renderURLMaximized;
+	private String _renderURLMinimized;
+	private String _renderURLNormal;
+	private String _renderURLPopUp;
+	private String _resourceURL;
 	private final String _scheme;
 	private final boolean _secure;
 	private final String _serverName;

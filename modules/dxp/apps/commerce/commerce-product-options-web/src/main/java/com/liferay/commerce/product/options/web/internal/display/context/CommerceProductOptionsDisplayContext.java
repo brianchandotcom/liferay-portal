@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -39,6 +40,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -137,7 +141,25 @@ public class CommerceProductOptionsDisplayContext {
 	}
 
 	public List<DDMFormFieldType> getDDMFormFieldTypes() {
-		return _ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
+
+		Stream<DDMFormFieldType> stream =
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes().stream();
+
+		stream = stream.filter(
+			fieldType -> {
+				Map<String,Object> properties =
+					_ddmFormFieldTypeServicesTracker.
+						getDDMFormFieldTypeProperties(fieldType.getName());
+
+				return !MapUtil.getBoolean(
+					properties, "ddm.form.field.type.system");
+			}
+		);
+
+		List<DDMFormFieldType> formFieldTypes = stream.collect(
+			Collectors.toList());
+
+		return formFieldTypes;
 	}
 
 	public String getDisplayStyle() {

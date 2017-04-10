@@ -948,21 +948,21 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	@Reference(unbind = "-")
-	public void setDlFileEntryMetadataLocalService(
+	public void setDLFileEntryMetadataLocalService(
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
 
 		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 	}
 
 	@Reference(unbind = "-")
-	public void setDlFileEntryTypeLocalService(
+	public void setDLFileEntryTypeLocalService(
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
 
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 	}
 
 	@Reference(unbind = "-")
-	public void setDlFileVersionLocalService(
+	public void setDLFileVersionLocalService(
 		DLFileVersionLocalService dlFileVersionLocalService) {
 
 		_dlFileVersionLocalService = dlFileVersionLocalService;

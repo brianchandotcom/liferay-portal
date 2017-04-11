@@ -180,10 +180,10 @@ public class LocalizationImpl implements Localization {
 		Function<String, String> localizationFunction,
 		String requestedLanguageId, String defaultLanguageId) {
 
-		String result = localizationFunction.apply(requestedLanguageId);
+		String value = localizationFunction.apply(requestedLanguageId);
 
-		if (!Validator.isBlank(result)) {
-			return result;
+		if (!Validator.isBlank(value)) {
+			return value;
 		}
 
 		if (!Validator.isBlank(defaultLanguageId)) {

@@ -10,7 +10,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="groupId" type="long" />
-		<field name="friendlyURL" type="String" />
+		<field name="friendlyURL" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="languageId" type="String" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

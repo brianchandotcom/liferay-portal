@@ -36,6 +36,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -202,6 +203,8 @@ public class ProjectTemplateFilesTest {
 
 		Assert.assertTrue("Missing " + pomXmlPath, Files.exists(pomXmlPath));
 
+		final AtomicBoolean hasJavaFiles = new AtomicBoolean();
+
 		Files.walkFileTree(
 			archetypeResourcesDirPath,
 			new SimpleFileVisitor<Path>() {
@@ -236,8 +239,14 @@ public class ProjectTemplateFilesTest {
 
 					String extension = FileTestUtil.getExtension(fileName);
 
+					boolean javaFile = extension.equals("java");
+
+					if (javaFile) {
+						hasJavaFiles.set(true);
+					}
+
 					if (!fileName.equals(".gitkeep") &&
-						(_isInJavaSrcDir(path) != extension.equals("java"))) {
+						(_isInJavaSrcDir(path) != javaFile)) {
 
 						Assert.fail("Wrong source directory " + path);
 					}
@@ -250,6 +259,22 @@ public class ProjectTemplateFilesTest {
 				}
 
 			});
+
+		boolean hasArchetypeMetadataAuthorProperty =
+			archetypeMetadataXml.contains("<requiredProperty key=\"author\">");
+
+		if (hasJavaFiles.get()) {
+			Assert.assertTrue(
+				"Missing \"author\" required property in " +
+					archetypeMetadataXmlPath,
+				hasArchetypeMetadataAuthorProperty);
+		}
+		else {
+			Assert.assertFalse(
+				"Forbidden \"author\" required property in " +
+					archetypeMetadataXmlPath,
+				hasArchetypeMetadataAuthorProperty);
+		}
 	}
 
 	private void _testTextFile(Path path, String fileName, String extension)
@@ -286,6 +311,12 @@ public class ProjectTemplateFilesTest {
 			Assert.assertEquals(
 				"Source formatting error in " + path,
 				"#if (" + condition.trim() + ")", matcher.group());
+		}
+
+		if (extension.equals("java")) {
+			Assert.assertTrue(
+				"Missing @author tag in " + path,
+				text.contains("* @author ${author}"));
 		}
 
 		if (extension.equals("xml") &&

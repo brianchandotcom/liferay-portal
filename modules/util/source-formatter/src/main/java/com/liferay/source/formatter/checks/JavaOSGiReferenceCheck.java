@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.parser.JavaConstructor;
+import com.liferay.source.formatter.parser.JavaMethod;
+import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
@@ -58,8 +63,17 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 		_checkMissingReference(fileName, content);
 
+		String className = JavaSourceUtil.getClassName(fileName);
+
+		String moduleSuperClassContent = _getModuleSuperClassContent(
+			content, className, packagePath);
+
 		content = _formatDuplicateReferenceMethods(
-			fileName, content, packagePath);
+			fileName, content, packagePath, moduleSuperClassContent);
+
+		_checkUtilUsage(
+			fileName, content, "com.liferay.portal.kernel.util", "PortalUtil",
+			moduleSuperClassContent);
 
 		Matcher matcher = _referenceMethodPattern.matcher(content);
 
@@ -116,14 +130,46 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		}
 	}
 
-	private String _formatDuplicateReferenceMethods(
-			String fileName, String content, String packagePath)
+	private void _checkUtilUsage(
+			String fileName, String content, String utilPackagePath,
+			String utilClassName, String moduleSuperClassContent)
 		throws Exception {
 
-		String className = JavaSourceUtil.getClassName(fileName);
+		if (!content.contains(
+				utilPackagePath + StringPool.PERIOD + utilClassName) ||
+			(Validator.isNotNull(moduleSuperClassContent) &&
+			 moduleSuperClassContent.contains("@Component"))) {
 
-		String moduleSuperClassContent = _getModuleSuperClassContent(
-			content, className, packagePath);
+			return;
+		}
+
+		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
+
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if (!javaTerm.isStatic() &&
+				(javaTerm instanceof JavaConstructor ||
+				 javaTerm instanceof JavaMethod)) {
+
+				String javaTermContent = javaTerm.getContent();
+
+				if (javaTermContent.contains(
+						utilClassName + StringPool.PERIOD)) {
+
+					addMessage(
+						fileName,
+						"Use portal service reference instead of '" +
+							utilClassName + "' in modules, see LPS-69661");
+
+					return;
+				}
+			}
+		}
+	}
+
+	private String _formatDuplicateReferenceMethods(
+			String fileName, String content, String packagePath,
+			String moduleSuperClassContent)
+		throws Exception {
 
 		if (Validator.isNull(moduleSuperClassContent) ||
 			!moduleSuperClassContent.contains("@Component") ||

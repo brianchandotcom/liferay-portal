@@ -1049,11 +1049,9 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 				}
 			</#list>
 
-			List<${localizationEntity.name}> results = new ArrayList<${localizationEntity.name}>(localizationsMap.size());
+			List<${localizationEntity.name}> ${localizationEntity.varNames} = new ArrayList<${localizationEntity.name}>(localizationsMap.size());
 
-			List<${localizationEntity.name}> ${localizationEntity.varNames} = ${localizationEntity.varName}Persistence.findBy${entity.name}PK(${entity.varName}.getPrimaryKey());
-
-			for (${localizationEntity.name} ${localizationEntity.varName} : ${localizationEntity.varNames}) {
+			for (${localizationEntity.name} ${localizationEntity.varName} : ${localizationEntity.varName}Persistence.findBy${entity.name}PK(${entity.varName}.getPrimaryKey())) {
 				String[] localizations = localizationsMap.remove(${localizationEntity.varName}.getLanguageId());
 
 				if (localizations == null) {
@@ -1064,7 +1062,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 						${localizationEntity.varName}.set${column.methodName}(localizations[${column?index}]);
 					</#list>
 
-					results.add(${localizationEntity.varName}Persistence.update(${localizationEntity.varName}));
+					${localizationEntity.varNames}.add(${localizationEntity.varName}Persistence.update(${localizationEntity.varName}));
 				}
 			}
 
@@ -1087,10 +1085,10 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 					${localizationEntity.varName}.set${column.methodName}(localizations[${column?index}]);
 				</#list>
 
-				results.add(${localizationEntity.varName}Persistence.update(${localizationEntity.varName}));
+				${localizationEntity.varNames}.add(${localizationEntity.varName}Persistence.update(${localizationEntity.varName}));
 			}
 
-			return results;
+			return ${localizationEntity.varNames};
 		}
 	</#if>
 

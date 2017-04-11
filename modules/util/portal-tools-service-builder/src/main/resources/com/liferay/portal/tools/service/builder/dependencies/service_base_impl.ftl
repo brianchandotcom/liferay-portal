@@ -1082,7 +1082,6 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 				</#if>
 
 				${localizationEntity.varName}.set${entity.name}PK(${entity.varName}.getPrimaryKey());
-
 				${localizationEntity.varName}.setLanguageId(languageId);
 
 				<#list localizationColumns as column>

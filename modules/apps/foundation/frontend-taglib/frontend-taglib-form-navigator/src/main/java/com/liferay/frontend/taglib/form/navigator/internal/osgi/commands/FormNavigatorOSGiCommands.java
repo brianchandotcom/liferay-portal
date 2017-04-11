@@ -94,7 +94,7 @@ public class FormNavigatorOSGiCommands {
 
 	private Set<String> _getAllFormNavigatorIds() {
 		Stream<FormNavigatorEntry> formNavigatorEntriesStream =
-			_formNavigatorEntriesList.stream();
+			_formNavigatorEntries.stream();
 
 		Stream<String> formNavigatorIdsStream = formNavigatorEntriesStream.map(
 			FormNavigatorEntry::getFormNavigatorId);
@@ -145,7 +145,7 @@ public class FormNavigatorOSGiCommands {
 		Collectors.joining(StringPool.COMMA);
 
 	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private List<FormNavigatorEntry> _formNavigatorEntriesList;
+	private List<FormNavigatorEntry> _formNavigatorEntries;
 
 	private ServiceTrackerMap<String, List<FormNavigatorEntry>>
 		_formNavigatorEntriesMap;

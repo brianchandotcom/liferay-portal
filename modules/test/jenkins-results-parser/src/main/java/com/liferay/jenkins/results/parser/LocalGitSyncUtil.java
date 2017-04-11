@@ -688,7 +688,7 @@ public class LocalGitSyncUtil {
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
 							"Cache branch ", cacheBranchName,
-							" already exists."));
+							" already exists"));
 
 					updateCacheBranchTimestamp(
 						cacheBranchName, gitWorkingDirectory,

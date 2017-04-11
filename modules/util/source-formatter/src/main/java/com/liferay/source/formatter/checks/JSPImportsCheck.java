@@ -19,6 +19,8 @@ import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.JSPImportsFormatter;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -74,15 +76,28 @@ public class JSPImportsCheck extends BaseFileCheck {
 
 		Matcher matcher = compressedPattern.matcher(content);
 
-		if (!matcher.find()) {
+		List<String> groups = new ArrayList<>();
+
+		while (matcher.find()) {
+			groups.add(matcher.group());
+		}
+
+		if (groups.isEmpty()) {
 			return content;
 		}
 
-		String imports = matcher.group();
+		String imports = StringUtil.merge(groups, "\n");
 
 		String newImports = StringUtil.replace(
 			imports, new String[] {"<%@\r\n", "<%@\n", " %><%@ "},
 			new String[] {"\r\n<%@ ", "\n<%@ ", " %>\n<%@ "});
+
+		for (int i = 1; i < groups.size(); i++) {
+			content = StringUtil.removeSubstring(content, groups.get(i));
+		}
+
+		content = StringUtil.replaceFirst(
+			content, groups.get(0), newImports + "\n");
 
 		content = StringUtil.replaceFirst(content, imports, newImports);
 

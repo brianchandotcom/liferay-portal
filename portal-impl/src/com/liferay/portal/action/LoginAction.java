@@ -14,6 +14,8 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
@@ -30,6 +32,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Map;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -60,68 +64,83 @@ public class LoginAction extends Action {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (PropsValues.AUTH_LOGIN_DISABLED) {
-			response.sendRedirect(
-				themeDisplay.getPathMain() +
-					PropsValues.AUTH_LOGIN_DISABLED_PATH);
+		HttpServletRequest originalServletRequest =
+			PortalUtil.getOriginalServletRequest(request);
 
-			return null;
+		Map<String, String[]> urlParams = HttpUtil.getParameterMap(
+			originalServletRequest.getQueryString());
+
+		if (urlParams.containsKey("password")) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Login request rejected: password parameter found in URL.");
+			}
 		}
+		else {
+			if (PropsValues.AUTH_LOGIN_DISABLED) {
+				response.sendRedirect(
+					themeDisplay.getPathMain() +
+						PropsValues.AUTH_LOGIN_DISABLED_PATH);
 
-		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
-			!request.isSecure()) {
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(PortalUtil.getPortalURL(request, true));
-			sb.append(request.getRequestURI());
-			sb.append(StringPool.QUESTION);
-			sb.append(request.getQueryString());
-
-			response.sendRedirect(sb.toString());
-
-			return null;
-		}
-
-		String login = ParamUtil.getString(request, "login");
-		String password = request.getParameter("password");
-		boolean rememberMe = ParamUtil.getBoolean(request, "rememberMe");
-		String authType = ParamUtil.getString(request, "authType");
-
-		if (Validator.isNotNull(login) && Validator.isNotNull(password)) {
-			AuthenticatedSessionManagerUtil.login(
-				request, response, login, password, rememberMe, authType);
-		}
-
-		HttpSession session = request.getSession();
-
-		if ((session.getAttribute("j_username") != null) &&
-			(session.getAttribute("j_password") != null)) {
-
-			if (PropsValues.PORTAL_JAAS_ENABLE) {
-				return actionMapping.findForward("/portal/touch_protected.jsp");
+				return null;
 			}
 
-			String redirect = ParamUtil.getString(request, "redirect");
+			if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
+				!request.isSecure()) {
 
-			redirect = PortalUtil.escapeRedirect(redirect);
+				StringBundler sb = new StringBundler(4);
 
-			if (Validator.isNull(redirect)) {
-				redirect = themeDisplay.getPathMain();
+				sb.append(PortalUtil.getPortalURL(request, true));
+				sb.append(request.getRequestURI());
+				sb.append(StringPool.QUESTION);
+				sb.append(request.getQueryString());
+
+				response.sendRedirect(sb.toString());
+
+				return null;
 			}
 
-			if (redirect.charAt(0) == CharPool.SLASH) {
-				String portalURL = PortalUtil.getPortalURL(
-					request, request.isSecure());
+			String login = ParamUtil.getString(request, "login");
+			String password = request.getParameter("password");
+			boolean rememberMe = ParamUtil.getBoolean(request, "rememberMe");
+			String authType = ParamUtil.getString(request, "authType");
 
-				if (Validator.isNotNull(portalURL)) {
-					redirect = portalURL.concat(redirect);
+			if (Validator.isNotNull(login) && Validator.isNotNull(password)) {
+				AuthenticatedSessionManagerUtil.login(
+					request, response, login, password, rememberMe, authType);
+			}
+
+			HttpSession session = request.getSession();
+
+			if ((session.getAttribute("j_username") != null) &&
+				(session.getAttribute("j_password") != null)) {
+
+				if (PropsValues.PORTAL_JAAS_ENABLE) {
+					return actionMapping.findForward(
+						"/portal/touch_protected.jsp");
 				}
+
+				String redirect = ParamUtil.getString(request, "redirect");
+
+				redirect = PortalUtil.escapeRedirect(redirect);
+
+				if (Validator.isNull(redirect)) {
+					redirect = themeDisplay.getPathMain();
+				}
+
+				if (redirect.charAt(0) == CharPool.SLASH) {
+					String portalURL = PortalUtil.getPortalURL(
+						request, request.isSecure());
+
+					if (Validator.isNotNull(portalURL)) {
+						redirect = portalURL.concat(redirect);
+					}
+				}
+
+				response.sendRedirect(redirect);
+
+				return null;
 			}
-
-			response.sendRedirect(redirect);
-
-			return null;
 		}
 
 		String redirect = PortalUtil.getSiteLoginURL(themeDisplay);
@@ -192,5 +211,7 @@ public class LoginAction extends Action {
 
 		return windowState;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(LoginAction.class);
 
 }

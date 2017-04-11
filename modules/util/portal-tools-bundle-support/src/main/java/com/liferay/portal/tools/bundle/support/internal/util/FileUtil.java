@@ -59,6 +59,7 @@ import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -224,7 +225,8 @@ public class FileUtil {
 				}
 
 				Header lastModifiedHeader =
-					closeableHttpResponse.getFirstHeader("Last-Modified");
+					closeableHttpResponse.getFirstHeader(
+						HttpHeaders.LAST_MODIFIED);
 
 				if (lastModifiedHeader != null) {
 					String lastModifiedValue = lastModifiedHeader.getValue();

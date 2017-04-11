@@ -37,10 +37,12 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URL;
 
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.utils.DateUtils;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -324,6 +326,12 @@ public class BundleSupportCommandsTest {
 					"dependencies" + contextPath);
 
 				File file = new File(url.getFile());
+
+				Date lastModifiedDate = new Date(file.lastModified());
+
+				headers.add(
+					HttpHeaders.LAST_MODIFIED,
+					DateUtils.formatDate(lastModifiedDate));
 
 				try (BufferedInputStream bufferedInputStream =
 						new BufferedInputStream(new FileInputStream(file))) {

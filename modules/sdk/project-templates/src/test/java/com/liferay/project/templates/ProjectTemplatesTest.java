@@ -317,13 +317,12 @@ public class ProjectTemplatesTest {
 			"src/main/resources/META-INF/resources/foobar_field.js",
 			"var FoobarField");
 
-		String[] gradleTaskPaths = new String[] {
-			_GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING, _GRADLE_TASK_PATH_BUILD
-		};
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"form-field", "foobar", "-DclassName=Foobar", "-Dpackage=foobar");
 
-		_executeGradle(gradleProjectDir, gradleTaskPaths);
-
-		_testExists(gradleProjectDir, "build/libs/foobar-1.0.0.jar");
+		_buildProjects(
+			gradleProjectDir, mavenProjectDir, "build/libs/foobar-1.0.0.jar",
+			"target/foobar-1.0.0.jar");
 	}
 
 	@Test

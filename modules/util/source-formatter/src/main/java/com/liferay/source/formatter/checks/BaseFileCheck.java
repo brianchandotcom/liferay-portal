@@ -15,20 +15,17 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
-import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -147,32 +144,6 @@ public abstract class BaseFileCheck
 		}
 	}
 
-	protected int getLevel(String s) {
-		return SourceUtil.getLevel(s);
-	}
-
-	protected int getLevel(
-		String s, String increaseLevelString, String decreaseLevelString) {
-
-		return SourceUtil.getLevel(s, increaseLevelString, decreaseLevelString);
-	}
-
-	protected int getLevel(
-		String s, String[] increaseLevelStrings,
-		String[] decreaseLevelStrings) {
-
-		return SourceUtil.getLevel(
-			s, increaseLevelStrings, decreaseLevelStrings);
-	}
-
-	protected int getLevel(
-		String s, String[] increaseLevelStrings, String[] decreaseLevelStrings,
-		int startLevel) {
-
-		return SourceUtil.getLevel(
-			s, increaseLevelStrings, decreaseLevelStrings, startLevel);
-	}
-
 	protected String getLine(String content, int lineCount) {
 		int nextLineStartPos = getLineStartPos(content, lineCount);
 
@@ -188,10 +159,6 @@ public abstract class BaseFileCheck
 		}
 
 		return content.substring(nextLineStartPos, nextLineEndPos);
-	}
-
-	protected int getLineCount(String content, int pos) {
-		return StringUtil.count(content, 0, pos, CharPool.NEW_LINE) + 1;
 	}
 
 	protected int getLineLength(String line) {
@@ -237,53 +204,6 @@ public abstract class BaseFileCheck
 
 	protected void putBNDSettings(BNDSettings bndSettings) {
 		_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
-	}
-
-	protected String stripQuotes(String s) {
-		return stripQuotes(s, CharPool.APOSTROPHE, CharPool.QUOTE);
-	}
-
-	protected String stripQuotes(String s, char... delimeters) {
-		List<Character> delimetersList = ListUtil.toList(delimeters);
-
-		char delimeter = CharPool.SPACE;
-		boolean insideQuotes = false;
-
-		StringBundler sb = new StringBundler();
-
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-
-			if (insideQuotes) {
-				if (c == delimeter) {
-					int precedingBackSlashCount = 0;
-
-					for (int j = i - 1; j >= 0; j--) {
-						if (s.charAt(j) == CharPool.BACK_SLASH) {
-							precedingBackSlashCount += 1;
-						}
-						else {
-							break;
-						}
-					}
-
-					if ((precedingBackSlashCount == 0) ||
-						((precedingBackSlashCount % 2) == 0)) {
-
-						insideQuotes = false;
-					}
-				}
-			}
-			else if (delimetersList.contains(c)) {
-				delimeter = c;
-				insideQuotes = true;
-			}
-			else {
-				sb.append(c);
-			}
-		}
-
-		return sb.toString();
 	}
 
 	private final Map<String, BNDSettings> _bndSettingsMap =

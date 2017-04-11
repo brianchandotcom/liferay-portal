@@ -214,7 +214,6 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				_bndFileNames.add(bndFileName)) {
 
 				addMessage(
-
 					bndSettings.getFileLocation() + "bnd.bnd",
 					"Add '-dsannotations-options: inherit'");
 			}

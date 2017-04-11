@@ -180,7 +180,7 @@ public class MergeCentralSubrepositoryUtil {
 			".git");
 
 		centralGitWorkingDirectory.pushToRemote(
-			mergeBranchName, originRemoteURL);
+			false, mergeBranchName, originRemoteURL);
 	}
 
 }

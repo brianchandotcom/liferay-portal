@@ -172,6 +172,21 @@ public class GitWorkingDirectory {
 		return getRemoteConfig(remoteName);
 	}
 
+	public boolean branchExists(String branchName, RemoteConfig remoteConfig)
+		throws GitAPIException {
+
+		List<String> branchNames = null;
+
+		if (remoteConfig == null) {
+			branchNames = getLocalBranchNames();
+		}
+		else {
+			branchNames = getRemoteBranchNames(remoteConfig);
+		}
+
+		return branchNames.contains(branchName);
+	}
+
 	public void checkoutBranch(String branchName) throws GitAPIException {
 		checkoutBranch(branchName, "-f");
 	}
@@ -675,26 +690,22 @@ public class GitWorkingDirectory {
 		return _workingDirectory;
 	}
 
-	public boolean localBranchExists(String branchName) throws GitAPIException {
-		List<String> localBranchNames = getLocalBranchNames();
-
-		return localBranchNames.contains(branchName);
-	}
-
-	public boolean pushToRemote(RemoteConfig remoteConfig)
+	public boolean pushToRemote(boolean force, RemoteConfig remoteConfig)
 		throws GitAPIException {
 
-		return pushToRemote(getCurrentBranch(), remoteConfig);
+		return pushToRemote(force, getCurrentBranch(), remoteConfig);
 	}
 
 	public boolean pushToRemote(
-			String remoteBranchName, RemoteConfig remoteConfig)
+			boolean force, String remoteBranchName, RemoteConfig remoteConfig)
 		throws GitAPIException {
 
-		return pushToRemote(getCurrentBranch(), remoteBranchName, remoteConfig);
+		return pushToRemote(
+			force, getCurrentBranch(), remoteBranchName, remoteConfig);
 	}
 
-	public boolean pushToRemote(String remoteBranchName, String remoteURL)
+	public boolean pushToRemote(
+			boolean force, String remoteBranchName, String remoteURL)
 		throws GitAPIException {
 
 		RemoteConfig remoteConfig = null;
@@ -702,7 +713,7 @@ public class GitWorkingDirectory {
 		try {
 			remoteConfig = addRemote(true, "temp", remoteURL);
 
-			return pushToRemote(remoteBranchName, remoteConfig);
+			return pushToRemote(force, remoteBranchName, remoteConfig);
 		}
 		finally {
 			removeRemote(remoteConfig);
@@ -710,7 +721,7 @@ public class GitWorkingDirectory {
 	}
 
 	public boolean pushToRemote(
-			String localBranchName, String remoteBranchName,
+			boolean force, String localBranchName, String remoteBranchName,
 			RemoteConfig remoteConfig)
 		throws GitAPIException {
 
@@ -734,8 +745,8 @@ public class GitWorkingDirectory {
 				localBranchName, ":", remoteRefName));
 
 		synchronized (pushCommand) {
+			pushCommand.setForce(force);
 			pushCommand.setRefSpecs(refSpec);
-
 			pushCommand.setRemote(remoteURL);
 
 			for (PushResult pushResult : pushCommand.call()) {

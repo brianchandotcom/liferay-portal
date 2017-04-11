@@ -190,6 +190,15 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			return;
 		}
 
+		if (!isValidPortletId(portlet.getPortletId())) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Invalid portlet ID " + portlet.getPortletId());
+			}
+
+			throw new PrincipalException(
+				"Invalid portlet ID " + portlet.getPortletId());
+		}
+
 		if (portlet.isUndeployedPortlet()) {
 			return;
 		}
@@ -312,10 +321,6 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		return tempAttributesServletRequest;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
 	protected boolean isValidPortletId(String portletId) {
 		for (int i = 0; i < portletId.length(); i++) {
 			char c = portletId.charAt(i);

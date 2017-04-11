@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -288,8 +287,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	@Skip
 	public void deployPortlet(Portlet portlet) throws Exception {
-		_checkValidPortletId(portlet.getPortletId());
-
 		PortletApp portletApp = portlet.getPortletApp();
 
 		_portletApps.put(portletApp.getServletContextName(), portletApp);
@@ -329,8 +326,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public Portlet deployRemotePortlet(
 			Portlet portlet, String[] categoryNames, boolean eagerDestroy)
 		throws PortalException {
-
-		_checkValidPortletId(portlet.getPortletId());
 
 		ResourceActionsUtil.check(portlet);
 
@@ -2731,36 +2726,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 
 		return updatePortlet(companyId, portletId, roles, active);
-	}
-
-	private void _checkValidPortletId(String portletId)
-		throws PrincipalException {
-
-		for (int i = 0; i < portletId.length(); i++) {
-			char c = portletId.charAt(i);
-
-			if ((c >= CharPool.LOWER_CASE_A) && (c <= CharPool.LOWER_CASE_Z)) {
-				continue;
-			}
-
-			if ((c >= CharPool.UPPER_CASE_A) && (c <= CharPool.UPPER_CASE_Z)) {
-				continue;
-			}
-
-			if ((c >= CharPool.NUMBER_0) && (c <= CharPool.NUMBER_9)) {
-				continue;
-			}
-
-			if ((c == CharPool.POUND) || (c == CharPool.UNDERLINE)) {
-				continue;
-			}
-
-			if (_log.isWarnEnabled()) {
-				_log.warn("Invalid portlet ID " + portletId);
-			}
-
-			throw new PrincipalException("Invalid portlet ID " + portletId);
-		}
 	}
 
 	private boolean _isCustomPortletMode(String portletModeName) {

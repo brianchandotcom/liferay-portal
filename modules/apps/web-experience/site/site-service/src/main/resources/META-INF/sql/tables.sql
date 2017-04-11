@@ -7,7 +7,7 @@ create table SiteFriendlyURL (
 	createDate DATE null,
 	modifiedDate DATE null,
 	groupId LONG,
-	friendlyURL VARCHAR(75) null,
+	friendlyURL VARCHAR(255) null,
 	languageId VARCHAR(75) null,
 	lastPublishDate DATE null
 );

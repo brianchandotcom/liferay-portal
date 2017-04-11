@@ -22,18 +22,18 @@ import org.junit.Test;
 public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testFormatImportsAndTaglibsWithoutInit() throws Exception {
-		test("FormatImportsAndTaglibsWithoutInit.testjsp");
+	public void testFormatImportsAndTaglibs() throws Exception {
+		test("FormatImportsAndTaglibs.testjsp");
 	}
 
 	@Test
-	public void testFormatTaglibsWithInit() throws Exception {
-		test("FormatTaglibsWithInit.testjsp");
+	public void testFormatTaglibs() throws Exception {
+		test("FormatTaglibs.testjsp");
 	}
 
 	@Test
-	public void testRefuseImportsWithInit() throws Exception {
-		test("RefuseImportsWithInit.testjsp", "Move imports to init.jsp");
+	public void testMisplacedImport() throws Exception {
+		test("MisplacedImport.testjsp", "Move imports to init.jsp");
 	}
 
 }

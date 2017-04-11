@@ -130,11 +130,8 @@ public class ASMWrapperUtilTest {
 		// See LPS-71495
 
 		Assert.assertTrue(asmWrapper.equals(null));
-
 		Assert.assertEquals(0, asmWrapper.hashCode());
-
 		Assert.assertEquals("test", asmWrapper.toString());
-
 		Assert.assertEquals(
 			"Expected: " + Arrays.toString(expectedMethods) + ", actual: " +
 				Arrays.toString(actualMethods),

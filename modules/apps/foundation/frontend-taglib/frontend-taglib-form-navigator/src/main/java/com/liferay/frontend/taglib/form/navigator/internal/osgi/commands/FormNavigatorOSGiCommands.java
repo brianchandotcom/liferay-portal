@@ -93,28 +93,29 @@ public class FormNavigatorOSGiCommands {
 	}
 
 	private Set<String> _getAllFormNavigatorIds() {
-		Stream<FormNavigatorEntry> formNavigatorEntriesStream =
-			_formNavigatorEntriesList.stream();
+		Stream<FormNavigatorEntry> allFormNavigatorEntriesStream =
+			_allFormNavigatorEntriesList.stream();
 
-		Stream<String> formNavigatorIdsStream = formNavigatorEntriesStream.map(
-			FormNavigatorEntry::getFormNavigatorId);
+		Stream<String> allFormNavigatorIdsStream =
+			allFormNavigatorEntriesStream.map(
+				FormNavigatorEntry::getFormNavigatorId);
 
-		return formNavigatorIdsStream.collect(Collectors.toSet());
+		return allFormNavigatorIdsStream.collect(Collectors.toSet());
 	}
 
 	private String _getCategoryLine(
 		String formNavigatorId, String formNavigatorCategoryKey) {
 
-		List<FormNavigatorEntry> formNavigatorEntries =
+		List<FormNavigatorEntry> formNavigatorEntriesList =
 			_formNavigatorEntriesMap.getService(
 				_getKey(formNavigatorId, formNavigatorCategoryKey));
 
-		if (formNavigatorEntries == null) {
+		if (formNavigatorEntriesList == null) {
 			return StringPool.BLANK;
 		}
 
 		Stream<FormNavigatorEntry> formNavigatorEntriesStream =
-			_formNavigatorEntriesList.stream();
+			formNavigatorEntriesList.stream();
 
 		Stream<String> formNavigatorKeysStream = formNavigatorEntriesStream.map(
 			FormNavigatorEntry::getKey);
@@ -141,12 +142,11 @@ public class FormNavigatorOSGiCommands {
 		return formNavigatorId + formNavigatorCategoryId;
 	}
 
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private List<FormNavigatorEntry> _allFormNavigatorEntriesList;
+
 	private final Collector<CharSequence, ?, String> _collectorCSV =
 		Collectors.joining(StringPool.COMMA);
-
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private List<FormNavigatorEntry> _formNavigatorEntriesList;
-
 	private ServiceTrackerMap<String, List<FormNavigatorEntry>>
 		_formNavigatorEntriesMap;
 

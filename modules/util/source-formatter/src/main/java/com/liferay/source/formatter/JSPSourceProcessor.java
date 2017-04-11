@@ -397,6 +397,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				getPluginsInsideModulesDirectoryNames()));
 		_sourceChecks.add(new JSPEmptyLinesCheck());
 		_sourceChecks.add(new JSPIfStatementCheck());
+		_sourceChecks.add(new JSPImportsCheck(portalSource, subrepository));
 		_sourceChecks.add(new JSPLogFileNameCheck(subrepository));
 		_sourceChecks.add(new JSPRedirectBackURLCheck());
 		_sourceChecks.add(new JSPSessionKeysCheck());
@@ -431,8 +432,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
 					getPortalLanguageProperties()));
 		}
-
-		_sourceChecks.add(new JSPImportsCheck(portalSource, subrepository));
 	}
 
 	@Override

@@ -299,7 +299,11 @@ The lazy value is only valid when type is Blob. It specifies whether or not to
 do a lazy fetch for Blob. The default value is true.
 
 The localized value specifies whether or not the value of the column can have
-different values for different locales. The default value is false.
+different values for different locales. Using extra-table as the argument
+specifies that the localized values will be stored in a separate generated
+localization table. Set the value to true to store the values as XML in the
+entity's database table. The true option exists for backwards compatibility.
+The default value is false.
 
 The json-enabled value specifies whether or not the column should be annotated
 for JSON serialization. By default, if the json-enabled value in the entity

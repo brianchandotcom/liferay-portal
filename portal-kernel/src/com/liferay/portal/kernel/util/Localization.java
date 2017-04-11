@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.xml.Document;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Function;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -49,6 +52,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface Localization {
 
 	/**
@@ -96,6 +100,10 @@ public interface Localization {
 	public String getDefaultLanguageId(String xml);
 
 	public String getDefaultLanguageId(String xml, Locale defaultLocale);
+
+	public String getLocalization(
+		Function<String, String> localizationFunction,
+		String requestedLanguageId, String defaultLanguageId);
 
 	/**
 	 * Returns the localized string from the localizations XML in the language.

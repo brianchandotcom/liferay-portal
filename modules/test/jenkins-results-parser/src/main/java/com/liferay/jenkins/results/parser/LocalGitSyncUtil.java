@@ -114,7 +114,7 @@ public class LocalGitSyncUtil {
 			upstreamBranchSHA);
 	}
 
-	protected static boolean branchCached(
+	protected static boolean isBranchCached(
 		String branchName, GitWorkingDirectory gitWorkingDirectory,
 		List<RemoteConfig> remoteConfigs) {
 
@@ -681,7 +681,7 @@ public class LocalGitSyncUtil {
 				deleteExpiredCacheBranches(
 					gitWorkingDirectory, localGitRemoteConfigs);
 
-				if (branchCached(
+				if (isBranchCached(
 						cacheBranchName, gitWorkingDirectory,
 						localGitRemoteConfigs)) {
 

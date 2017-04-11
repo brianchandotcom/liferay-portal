@@ -17,7 +17,7 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -201,7 +201,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return fileNames;
 		}
 
-		_contentsMap = _getContentsMap();
+		excludes = new String[] {"**/null.jsp", "**/tools/**"};
+
+		List<String> allFileNames = getFileNames(
+			sourceFormatterArgs.getBaseDirName(), null, excludes,
+			getIncludes(), true);
+
+		_contentsMap = _getContentsMap(allFileNames);
 
 		if (sourceFormatterArgs.isFormatCurrentBranch() ||
 			sourceFormatterArgs.isFormatLatestAuthor() ||
@@ -453,6 +459,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateSourceChecks() throws Exception {
+		if (_contentsMap == null) {
+			_contentsMap = _getContentsMap(sourceFormatterArgs.getFileNames());
+		}
+
 		_sourceChecks.add(new JSPWhitespaceCheck());
 
 		_sourceChecks.add(
@@ -507,42 +517,41 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_moduleSourceChecks.add(new JSPModuleIllegalImportsCheck());
 	}
 
-	private Map<String, String> _getContentsMap() throws Exception {
-		String[] excludes = new String[] {"**/null.jsp", "**/tools/**"};
-
-		List<String> allFileNames = getFileNames(
-			sourceFormatterArgs.getBaseDirName(), null, excludes,
-			getIncludes(), true);
+	private Map<String, String> _getContentsMap(List<String> fileNames)
+		throws Exception {
 
 		Map<String, String> contentsMap = new HashMap<>();
 
-		try {
-			for (String fileName : allFileNames) {
-				fileName = StringUtil.replace(
-					fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-				File file = new File(fileName);
-
-				String content = FileUtil.read(file);
-
-				Matcher matcher = _includeFilePattern.matcher(content);
-
-				String newContent = content;
-
-				while (matcher.find()) {
-					newContent = StringUtil.replaceFirst(
-						newContent, matcher.group(),
-						"@ include file=\"" + matcher.group(1) + "\"",
-						matcher.start());
-				}
-
-				processFormattedFile(file, fileName, content, newContent);
-
-				contentsMap.put(fileName, newContent);
-			}
+		if (ListUtil.isEmpty(fileNames)) {
+			return contentsMap;
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			File file = new File(fileName);
+
+			String content = FileUtil.read(file);
+
+			if (content == null) {
+				continue;
+			}
+
+			Matcher matcher = _includeFilePattern.matcher(content);
+
+			String newContent = content;
+
+			while (matcher.find()) {
+				newContent = StringUtil.replaceFirst(
+					newContent, matcher.group(),
+					"@ include file=\"" + matcher.group(1) + "\"",
+					matcher.start());
+			}
+
+			processFormattedFile(file, fileName, content, newContent);
+
+			contentsMap.put(fileName, newContent);
 		}
 
 		return contentsMap;

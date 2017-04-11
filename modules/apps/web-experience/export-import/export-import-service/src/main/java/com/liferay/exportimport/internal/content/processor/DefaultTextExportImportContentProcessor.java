@@ -707,7 +707,18 @@ public class DefaultTextExportImportContentProcessor
 						url = url.substring(groupFriendlyURL.length());
 					}
 					else {
-						throw new NoSuchLayoutException();
+						StringBundler exceptionMessage = new StringBundler(5);
+
+						sb.append("Unable to process referenced page url ");
+						sb.append(url);
+						sb.append(" during export. ");
+						sb.append("The page is referenced by ");
+						sb.append(
+							StagedModelDataHandlerUtil.getDisplayName(
+								stagedModel));
+
+						throw new NoSuchLayoutException(
+							exceptionMessage.toString());
 					}
 				}
 
@@ -1152,7 +1163,10 @@ public class DefaultTextExportImportContentProcessor
 			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
 
 			if (fileEntry == null) {
-				throw new NoSuchFileEntryException();
+				throw new NoSuchFileEntryException(
+					"Validation failed for a referenced file entry. Cannot " +
+						"find file entry with the following parameters: " +
+							dlReferenceParameters);
 			}
 
 			endPos = beginPos - 1;
@@ -1336,7 +1350,9 @@ public class DefaultTextExportImportContentProcessor
 					url = url.substring(groupFriendlyURL.length());
 				}
 				else {
-					throw new NoSuchLayoutException();
+					throw new NoSuchLayoutException(
+						"Validation failed for a referenced layout. Cannot " +
+							"find layout with url " + url);
 				}
 			}
 
@@ -1352,7 +1368,9 @@ public class DefaultTextExportImportContentProcessor
 					group.getCompanyId(), url);
 
 				if (group == null) {
-					throw new NoSuchLayoutException();
+					throw new NoSuchLayoutException(
+						"Validation failed for a referenced layout. Cannot " +
+							"find layout group " + groupId);
 				}
 			}
 		}
@@ -1376,7 +1394,17 @@ public class DefaultTextExportImportContentProcessor
 				groupId, privateLayout, layoutId);
 
 			if (layout == null) {
-				throw new NoSuchLayoutException();
+				StringBundler exceptionMessage = new StringBundler(5);
+
+				exceptionMessage.append(
+					"Validation failed for a referenced layout. ");
+				exceptionMessage.append(
+					"Cannot find layout with the following parameters: ");
+				exceptionMessage.append("groupId " + groupId);
+				exceptionMessage.append(", layoutId " + layoutId);
+				exceptionMessage.append(", privateLayout " + privateLayout);
+
+				throw new NoSuchLayoutException(exceptionMessage.toString());
 			}
 		}
 	}

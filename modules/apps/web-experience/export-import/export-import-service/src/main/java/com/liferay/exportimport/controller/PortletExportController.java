@@ -587,7 +587,10 @@ public class PortletExportController implements ExportController {
 			throw pde;
 		}
 		catch (Exception e) {
-			throw new SystemException(e);
+			throw new SystemException(
+				"An unexpected error has occured when invoking portlet data " +
+					"handler to export data for portlet " + portletId,
+				e);
 		}
 		finally {
 			portletDataContext.setGroupId(groupId);
@@ -683,8 +686,14 @@ public class PortletExportController implements ExportController {
 		if (!layout.isTypeControlPanel() && !layout.isTypePanel() &&
 			!layout.isTypePortlet()) {
 
-			throw new LayoutImportException(
-				"Layout type " + layout.getType() + " is not valid");
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("The selected layout ");
+			sb.append(layout.getPlid());
+			sb.append(" has an invalid type for export: ");
+			sb.append(layout.getType());
+
+			throw new LayoutImportException(sb.toString());
 		}
 
 		ServiceContext serviceContext =
@@ -828,7 +837,10 @@ public class PortletExportController implements ExportController {
 				"/manifest.xml", document.formattedString());
 		}
 		catch (IOException ioe) {
-			throw new SystemException(ioe);
+			throw new SystemException(
+				"An error occured when trying to create the LAR manifest " +
+					"file during export",
+				ioe);
 		}
 
 		ZipWriter zipWriter = portletDataContext.getZipWriter();

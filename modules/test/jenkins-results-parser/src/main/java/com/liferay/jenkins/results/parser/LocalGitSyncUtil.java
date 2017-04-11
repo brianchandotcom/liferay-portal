@@ -851,9 +851,6 @@ public class LocalGitSyncUtil {
 					String currentBranch =
 						gitWorkingDirectory.getCurrentBranch();
 
-					gitWorkingDirectory.createLocalBranch(
-						newTimestampBranchName);
-
 					gitWorkingDirectory.fetch(
 						newTimestampBranchName, remoteCacheBranchName,
 						localGitRemoteConfig);

@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.checks.CopyrightCheck;
 import com.liferay.source.formatter.checks.JSPDefineObjectsCheck;
 import com.liferay.source.formatter.checks.JSPEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JSPIfStatementCheck;
+import com.liferay.source.formatter.checks.JSPImportsCheck;
 import com.liferay.source.formatter.checks.JSPLanguageKeysCheck;
 import com.liferay.source.formatter.checks.JSPLogFileNameCheck;
 import com.liferay.source.formatter.checks.JSPModuleIllegalImportsCheck;
@@ -58,7 +58,6 @@ import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,33 +75,6 @@ import org.dom4j.Element;
  * @author Hugo Huijser
  */
 public class JSPSourceProcessor extends BaseSourceProcessor {
-
-	protected String compressImportsOrTaglibs(
-		String fileName, String content, String attributePrefix) {
-
-		if (!fileName.endsWith("init.jsp") && !fileName.endsWith("init.jspf")) {
-			return content;
-		}
-
-		int x = content.indexOf(attributePrefix);
-
-		int y = content.lastIndexOf(attributePrefix);
-
-		y = content.indexOf("%>", y);
-
-		if ((x == -1) || (y == -1) || (x > y)) {
-			return content;
-		}
-
-		String importsOrTaglibs = content.substring(x, y);
-
-		importsOrTaglibs = StringUtil.replace(
-			importsOrTaglibs, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
-			new String[] {"%><%@\r\n", "%><%@\n"});
-
-		return content.substring(0, x) + importsOrTaglibs +
-			content.substring(y);
-	}
 
 	@Override
 	protected String doFormat(
@@ -123,29 +95,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			});
 
 		newContent = fixCompatClassImports(absolutePath, newContent);
-
-		newContent = formatJSPImportsOrTaglibs(
-			fileName, newContent, _compressedJSPImportPattern,
-			_uncompressedJSPImportPattern);
-		newContent = formatJSPImportsOrTaglibs(
-			fileName, newContent, _compressedJSPTaglibPattern,
-			_uncompressedJSPTaglibPattern);
-
-		if ((portalSource || subrepository) &&
-			content.contains("page import=") &&
-			!fileName.contains("init.jsp") &&
-			!fileName.contains("init-ext.jsp") &&
-			!fileName.contains("/taglib/aui/") &&
-			!fileName.endsWith("touch.jsp") &&
-			(fileName.endsWith(".jspf") || content.contains("include file="))) {
-
-			processMessage(fileName, "Move imports to init.jsp");
-		}
-
-		newContent = compressImportsOrTaglibs(
-			fileName, newContent, "<%@ page import=");
-		newContent = compressImportsOrTaglibs(
-			fileName, newContent, "<%@ taglib uri=");
 
 		newContent = formatStringBundler(fileName, newContent, -1);
 
@@ -419,34 +368,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatJSPImportsOrTaglibs(
-			String fileName, String content, Pattern compressedPattern,
-			Pattern uncompressedPattern)
-		throws IOException {
-
-		if (fileName.endsWith("init-ext.jsp")) {
-			return content;
-		}
-
-		Matcher matcher = compressedPattern.matcher(content);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String imports = matcher.group();
-
-		String newImports = StringUtil.replace(
-			imports, new String[] {"<%@\r\n", "<%@\n", " %><%@ "},
-			new String[] {"\r\n<%@ ", "\n<%@ ", " %>\n<%@ "});
-
-		content = StringUtil.replaceFirst(content, imports, newImports);
-
-		ImportsFormatter importsFormatter = new JSPImportsFormatter();
-
-		return importsFormatter.format(content, uncompressedPattern);
-	}
-
 	@Override
 	protected List<SourceCheck> getSourceChecks() {
 		return _sourceChecks;
@@ -510,6 +431,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
 					getPortalLanguageProperties()));
 		}
+
+		_sourceChecks.add(new JSPImportsCheck(portalSource, subrepository));
 	}
 
 	@Override
@@ -683,10 +606,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private static final String _UNUSED_VARIABLES_EXCLUDES =
 		"jsp.unused.variables.excludes";
 
-	private final Pattern _compressedJSPImportPattern = Pattern.compile(
-		"(<.*\n*page import=\".*>\n*)+", Pattern.MULTILINE);
-	private final Pattern _compressedJSPTaglibPattern = Pattern.compile(
-		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 	private Map<String, String> _contentsMap;
 	private final Pattern _includeFilePattern = Pattern.compile(
 		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
@@ -697,9 +616,5 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"/.*\\.(jsp[f]?|svg)");
 	private final List<SourceCheck> _moduleSourceChecks = new ArrayList<>();
 	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
-	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
-		"(<.*page import=\".*>\n*)+", Pattern.MULTILINE);
-	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(
-		"(<.*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 
 }

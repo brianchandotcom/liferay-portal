@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -46,7 +45,6 @@ import com.liferay.portal.service.permission.PortletPermissionImpl;
 import com.liferay.portal.util.DigesterImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.FriendlyURLNormalizerImpl;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.InitUtil;
@@ -98,12 +96,6 @@ public class ToolDependencies {
 		FileUtil fileUtil = new FileUtil();
 
 		fileUtil.setFile(new FileImpl());
-
-		FriendlyURLNormalizerUtil friendlyURLNormalizerUtil =
-			new FriendlyURLNormalizerUtil();
-
-		friendlyURLNormalizerUtil.setFriendlyURLNormalizer(
-			new FriendlyURLNormalizerImpl());
 
 		HtmlUtil htmlUtil = new HtmlUtil();
 

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.sites.kernel.util.SitesFriendlyURLAdapterUtil;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -198,7 +199,11 @@ public class I18nFilter extends BasePortalFilter {
 
 			Group group = layoutSet.getGroup();
 
-			if (groupFriendlyURL.equals(group.getFriendlyURL())) {
+			String siteFriendlyURL =
+				SitesFriendlyURLAdapterUtil.getSiteFriendlyURL(
+					group.getGroupId(), locale);
+
+			if (groupFriendlyURL.equals(siteFriendlyURL)) {
 				redirect =
 					contextPath + i18nPath +
 						requestURI.substring(friendlyURLEnd);

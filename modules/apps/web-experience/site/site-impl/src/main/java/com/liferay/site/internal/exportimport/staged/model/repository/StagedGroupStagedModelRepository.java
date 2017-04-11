@@ -30,11 +30,17 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.site.model.SiteFriendlyURL;
 import com.liferay.site.model.adapter.StagedGroup;
+import com.liferay.site.service.SiteFriendlyURLLocalService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -188,6 +194,18 @@ public class StagedGroupStagedModelRepository
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			stagedGroup);
 
+		List<SiteFriendlyURL> siteFriendlyURLs =
+			_siteFriendlyURLLocalService.getSiteFriendlyURLs(
+				stagedGroup.getCompanyId(), stagedGroup.getGroupId());
+
+		Map<Locale, String> siteFriendlyURLMap = new HashMap<>();
+
+		for (SiteFriendlyURL siteFriendlyURL : siteFriendlyURLs) {
+			siteFriendlyURLMap.put(
+				LocaleUtil.fromLanguageId(siteFriendlyURL.getLanguageId()),
+				siteFriendlyURL.getFriendlyURL());
+		}
+
 		Group group = _groupLocalService.updateGroup(
 			stagedGroup.getGroupId(), stagedGroup.getParentGroupId(),
 			stagedGroup.getNameMap(), stagedGroup.getDescriptionMap(),
@@ -207,5 +225,8 @@ public class StagedGroupStagedModelRepository
 
 	@Reference(unbind = "-")
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference(unbind = "-")
+	private SiteFriendlyURLLocalService _siteFriendlyURLLocalService;
 
 }

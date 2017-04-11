@@ -26,7 +26,14 @@ import java.io.File;
  */
 public class CopyrightCheck extends BaseFileCheck {
 
-	public CopyrightCheck(String copyright) {
+	public CopyrightCheck(String copyright) throws Exception {
+		if (Validator.isNull(copyright)) {
+			Class<?> clazz = getClass();
+
+			copyright = StringUtil.read(
+				clazz.getResourceAsStream("dependencies/copyright.txt"));
+		}
+
 		_copyright = copyright;
 	}
 
@@ -35,9 +42,7 @@ public class CopyrightCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!fileName.endsWith(".tpl") && !fileName.endsWith(".vm") &&
-			Validator.isNotNull(_copyright)) {
-
+		if (!fileName.endsWith(".tpl") && !fileName.endsWith(".vm")) {
 			content = _fixCopyright(fileName, absolutePath, content);
 		}
 

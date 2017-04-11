@@ -49,7 +49,9 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@
 page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.util.PropsUtil" %><%@
-page import="com.liferay.portal.util.PropsValues" %>
+page import="com.liferay.portal.util.PropsValues" %><%@
+page import="com.liferay.taglib.aui.AUIUtil" %><%@
+page import="com.liferay.taglib.util.TagResourceBundleUtil" %>
 
 <%@ page import="java.text.Format" %>
 
@@ -62,11 +64,6 @@ page import="javax.portlet.PortletResponse" %><%@
 page import="javax.portlet.PortletURL" %>
 
 <liferay-theme:defineObjects />
-
-<%@ page import="com.liferay.taglib.aui.AUIUtil" %><%@
-page import="com.liferay.taglib.util.TagResourceBundleUtil" %>
-
-<%@ page import="java.io.IOException" %>
 
 <%
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);

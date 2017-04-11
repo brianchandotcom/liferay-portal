@@ -14,8 +14,8 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
-<%@ page import="com.liferay.portal.util.MaintenanceUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.util.MaintenanceUtil" %>
 
 <%
 boolean invokingSession = false;

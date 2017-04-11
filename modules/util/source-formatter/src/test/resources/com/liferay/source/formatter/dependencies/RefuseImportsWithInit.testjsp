@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.util.StringBundler" %>
+<%@ page import="com.liferay.portal.kernel.util.HTMLUtil" %>
 
 <%@ include file="/init.jsp" %>
 
 <%
-StringBundler sb = new StringBundler();
+HTMLUtil.escape("hello world");
 %>

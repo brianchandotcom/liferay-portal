@@ -69,7 +69,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			content, className, packagePath);
 
 		content = _formatDuplicateReferenceMethods(
-			fileName, content, packagePath, moduleSuperClassContent);
+			fileName, content, moduleSuperClassContent);
 
 		_checkUtilUsage(
 			fileName, content, "com.liferay.portal.kernel.util", "PortalUtil",
@@ -167,8 +167,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	}
 
 	private String _formatDuplicateReferenceMethods(
-			String fileName, String content, String packagePath,
-			String moduleSuperClassContent)
+			String fileName, String content, String moduleSuperClassContent)
 		throws Exception {
 
 		if (Validator.isNull(moduleSuperClassContent) ||

@@ -1031,44 +1031,44 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			</#list>
 			) throws PortalException {
 
-			Map<String, String[]> localizationsMap = new HashMap<String, String[]>();
+			Map<String, String[]> localizedValuesMap = new HashMap<String, String[]>();
 
 			<#list localizationColumns as column>
 				for (Map.Entry<String, String> entry : ${column.name}Map.entrySet()) {
 					String languageId = entry.getKey();
 
-					String[] localizations = localizationsMap.get(languageId);
+					String[] localizedValues = localizedValuesMap.get(languageId);
 
-					if (localizations == null) {
-						localizations = new String[${localizationColumns?size}];
+					if (localizedValues == null) {
+						localizedValues = new String[${localizationColumns?size}];
 
-						localizationsMap.put(languageId, localizations);
+						localizedValuesMap.put(languageId, localizedValues);
 					}
 
-					localizations[${column?index}] = entry.getValue();
+					localizedValues[${column?index}] = entry.getValue();
 				}
 			</#list>
 
-			List<${localizationEntity.name}> ${localizationEntity.varNames} = new ArrayList<${localizationEntity.name}>(localizationsMap.size());
+			List<${localizationEntity.name}> ${localizationEntity.varNames} = new ArrayList<${localizationEntity.name}>(localizedValuesMap.size());
 
 			for (${localizationEntity.name} ${localizationEntity.varName} : ${localizationEntity.varName}Persistence.findBy${entity.name}PK(${entity.varName}.getPrimaryKey())) {
-				String[] localizations = localizationsMap.remove(${localizationEntity.varName}.getLanguageId());
+				String[] localizedValues = localizedValuesMap.remove(${localizationEntity.varName}.getLanguageId());
 
-				if (localizations == null) {
+				if (localizedValues == null) {
 					${localizationEntity.varName}Persistence.remove(${localizationEntity.varName});
 				}
 				else {
 					<#list localizationColumns as column>
-						${localizationEntity.varName}.set${column.methodName}(localizations[${column?index}]);
+						${localizationEntity.varName}.set${column.methodName}(localizedValues[${column?index}]);
 					</#list>
 
 					${localizationEntity.varNames}.add(${localizationEntity.varName}Persistence.update(${localizationEntity.varName}));
 				}
 			}
 
-			for (Map.Entry<String, String[]> entry : localizationsMap.entrySet()) {
+			for (Map.Entry<String, String[]> entry : localizedValuesMap.entrySet()) {
 				String languageId = entry.getKey();
-				String[] localizations = entry.getValue();
+				String[] localizedValues = entry.getValue();
 
 				long ${localizationEntity.PKVarName} = counterLocalService.increment();
 
@@ -1082,7 +1082,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 				${localizationEntity.varName}.setLanguageId(languageId);
 
 				<#list localizationColumns as column>
-					${localizationEntity.varName}.set${column.methodName}(localizations[${column?index}]);
+					${localizationEntity.varName}.set${column.methodName}(localizedValues[${column?index}]);
 				</#list>
 
 				${localizationEntity.varNames}.add(${localizationEntity.varName}Persistence.update(${localizationEntity.varName}));

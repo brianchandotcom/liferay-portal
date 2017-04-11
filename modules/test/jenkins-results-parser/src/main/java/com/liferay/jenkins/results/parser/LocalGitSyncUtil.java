@@ -114,34 +114,6 @@ public class LocalGitSyncUtil {
 			upstreamBranchSHA);
 	}
 
-	protected static boolean isBranchCached(
-		String branchName, GitWorkingDirectory gitWorkingDirectory,
-		List<RemoteConfig> remoteConfigs) {
-
-		for (RemoteConfig remoteConfig : remoteConfigs) {
-			try {
-				if (gitWorkingDirectory.branchExists(
-						branchName, remoteConfig)) {
-
-					continue;
-				}
-			}
-			catch (GitAPIException gapie) {
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Unable to determine if branch ", branchName,
-						" exists on ",
-						GitWorkingDirectory.getRemoteURL(remoteConfig)));
-
-				gapie.printStackTrace();
-			}
-
-			return false;
-		}
-
-		return true;
-	}
-
 	protected static void cacheBranch(
 			GitWorkingDirectory gitWorkingDirectory, String localBranchName,
 			RemoteConfig remoteConfig, long timestamp)
@@ -564,6 +536,34 @@ public class LocalGitSyncUtil {
 		}
 
 		return false;
+	}
+
+	protected static boolean isBranchCached(
+		String branchName, GitWorkingDirectory gitWorkingDirectory,
+		List<RemoteConfig> remoteConfigs) {
+
+		for (RemoteConfig remoteConfig : remoteConfigs) {
+			try {
+				if (gitWorkingDirectory.branchExists(
+						branchName, remoteConfig)) {
+
+					continue;
+				}
+			}
+			catch (GitAPIException gapie) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Unable to determine if branch ", branchName,
+						" exists on ",
+						GitWorkingDirectory.getRemoteURL(remoteConfig)));
+
+				gapie.printStackTrace();
+			}
+
+			return false;
+		}
+
+		return true;
 	}
 
 	protected static Map<RemoteConfig, Boolean> pushToAllRemotes(

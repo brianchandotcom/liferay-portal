@@ -86,6 +86,7 @@ public class DistBundleMojo extends AbstractBundleMojo {
 
 				InitBundleCommand initBundleCommand = new InitBundleCommand();
 
+				initBundleCommand.setCacheDir(cacheDir);
 				initBundleCommand.setConfigsDir(
 					new File(project.getBasedir(), configs));
 				initBundleCommand.setEnvironment(environment);

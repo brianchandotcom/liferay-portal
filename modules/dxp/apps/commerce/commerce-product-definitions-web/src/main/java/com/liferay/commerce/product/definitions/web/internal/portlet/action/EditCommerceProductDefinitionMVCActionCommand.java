@@ -168,7 +168,7 @@ public class EditCommerceProductDefinitionMVCActionCommand
 
 		if (commerceProductDefinitionId <= 0) {
 
-			// Add product definition
+			// Add commerce product definition
 
 			commerceProductDefinition =
 				_commerceProductDefinitionLocalService.
@@ -182,7 +182,7 @@ public class EditCommerceProductDefinitionMVCActionCommand
 		}
 		else {
 
-			// Update product definition
+			// Update commerce product definition
 
 			commerceProductDefinition =
 				_commerceProductDefinitionLocalService.

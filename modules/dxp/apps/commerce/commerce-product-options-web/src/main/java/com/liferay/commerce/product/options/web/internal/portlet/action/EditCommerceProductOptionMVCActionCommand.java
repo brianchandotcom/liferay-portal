@@ -115,14 +115,14 @@ public class EditCommerceProductOptionMVCActionCommand
 
 		if (commerceProductOptionId <= 0) {
 
-			// Add product option
+			// Add commerce product option
 
 			_commerceProductOptionLocalService.addCommerceProductOption(
 				nameMap, descriptionMap, ddmFormFieldTypeName, serviceContext);
 		}
 		else {
 
-			// Update product option
+			// Update commerce product option
 
 			_commerceProductOptionLocalService.updateCommerceProductOption(
 				commerceProductOptionId, nameMap, descriptionMap,

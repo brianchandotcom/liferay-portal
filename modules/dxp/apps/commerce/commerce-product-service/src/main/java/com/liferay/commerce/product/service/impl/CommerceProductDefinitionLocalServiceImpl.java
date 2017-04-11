@@ -69,7 +69,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		// Product definition
+		// Commerce product definition
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
@@ -153,7 +153,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 			CommerceProductDefinition commerceProductDefinition)
 		throws PortalException {
 
-		// Product definition
+		// Commerce product definition
 
 		commerceProductDefinitionPersistence.remove(commerceProductDefinition);
 
@@ -266,7 +266,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		// Product definition
+		// Commerce product definition
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
@@ -338,7 +338,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		// Product definition
+		// Commerce product definition
 
 		User user = userLocalService.getUser(userId);
 		Date now = new Date();

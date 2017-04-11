@@ -464,10 +464,6 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			List<DDMStructure> ddmStructures =
 				finalDLFileEntryModelDLFileEntryType.getDDMStructures();
 
-			if (ListUtil.isEmpty(ddmStructures)) {
-				Assert.fail();
-			}
-
 			for (DDMStructure structure : ddmStructures) {
 				String structureKey = structure.getStructureKey();
 

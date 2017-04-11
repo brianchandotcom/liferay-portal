@@ -1354,7 +1354,7 @@ rerun your task.
 			<delete file="${gradle.properties.file}" />
 
 			<condition else="false" property="jsp.precompile.enabled">
-				<istrue value="${jsp.precompile}" />
+				<istrue value="${jsp.precompile.modules}" />
 			</condition>
 
 			<echoproperties destfile="${gradle.properties.file}" >

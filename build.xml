@@ -363,7 +363,7 @@
 		</if>
 
 		<if>
-			<equals arg1="${jsp.precompile}" arg2="on" />
+			<equals arg1="${jsp.precompile.modules}" arg2="on" />
 			<then>
 				<if>
 					<equals arg1="${jsp.precompile.parallel}" arg2="on" />

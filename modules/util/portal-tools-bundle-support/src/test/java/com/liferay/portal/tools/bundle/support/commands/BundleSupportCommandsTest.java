@@ -38,6 +38,7 @@ import java.net.URI;
 import java.net.URL;
 
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.http.HttpHeaders;
@@ -161,6 +162,20 @@ public class BundleSupportCommandsTest {
 	@Test
 	public void testInitBundleTar() throws Exception {
 		_testInitBundleTar(null, null, null, null, null, null, null);
+	}
+
+	@Test
+	public void testInitBundleTarDifferentLocale() throws Exception {
+		Locale locale = Locale.getDefault();
+
+		try {
+			Locale.setDefault(Locale.ITALY);
+
+			_testInitBundleTar(null, null, null, null, null, null, null);
+		}
+		finally {
+			Locale.setDefault(locale);
+		}
 	}
 
 	@Test

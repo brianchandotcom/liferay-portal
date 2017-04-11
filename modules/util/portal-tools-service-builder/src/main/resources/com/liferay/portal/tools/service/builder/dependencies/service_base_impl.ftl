@@ -1021,7 +1021,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			return ${localizationEntity.varName}Persistence.update(${localizationEntity.varName});
 		}
 
-		protected List<${localizationEntity.name}> update${localizationEntity.name}s(
+		protected List<${localizationEntity.name}> update${localizationEntity.names}(
 			${entity.name} ${entity.varName},
 			<#list localizationColumns as column>
 				Map<String, String> ${column.name}Map

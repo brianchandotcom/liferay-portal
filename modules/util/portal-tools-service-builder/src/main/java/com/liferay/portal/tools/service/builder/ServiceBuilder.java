@@ -5098,6 +5098,7 @@ public class ServiceBuilder {
 		List<EntityColumn> columnList = new ArrayList<>();
 		List<LocalizationColumn> localizationColumns = new ArrayList<>();
 
+		boolean hasLocalizationTable = false;
 		boolean permissionedModel = false;
 
 		List<Element> columnElements = entityElement.elements("column");
@@ -5119,8 +5120,6 @@ public class ServiceBuilder {
 
 			columnElements.add(0, columnElement);
 		}
-
-		boolean hasLocalizationTable = false;
 
 		for (Element columnElement : columnElements) {
 			String columnName = columnElement.attributeValue("name");

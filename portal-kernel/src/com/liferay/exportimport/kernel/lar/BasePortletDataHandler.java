@@ -65,7 +65,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			throw pde;
 		}
 		catch (Exception e) {
-			throw new PortletDataException(e);
+			throw new PortletDataException(
+				"An unexpexted error occured when trying to add default data " +
+					"for " + portletId,
+				e);
 		}
 		finally {
 			if (_log.isInfoEnabled()) {
@@ -100,7 +103,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			throw pde;
 		}
 		catch (Exception e) {
-			throw new PortletDataException(e);
+			throw new PortletDataException(
+				"An unexpected error occured when trying to delete data for " +
+					portletId,
+				e);
 		}
 		finally {
 			if (_log.isInfoEnabled()) {
@@ -147,7 +153,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			throw pde;
 		}
 		catch (Exception e) {
-			throw new PortletDataException(e);
+			throw new PortletDataException(
+				"An unexpected error occured when trying to export portlet " +
+					"data for " + portletId,
+				e);
 		}
 		finally {
 			portletDataContext.setExportDataRootElement(rootElement);
@@ -386,7 +395,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			throw pde;
 		}
 		catch (Exception e) {
-			throw new PortletDataException(e);
+			throw new PortletDataException(
+				"An unexpected error occured when trying to import data for " +
+					portletId,
+				e);
 		}
 		finally {
 			portletDataContext.setImportDataRootElement(rootElement);
@@ -478,7 +490,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			throw pde;
 		}
 		catch (Exception e) {
-			throw new PortletDataException(e);
+			throw new PortletDataException(
+				"An unexpected error occured when trying to prepare manifest " +
+					"summary for " + getPortletId(),
+				e);
 		}
 	}
 
@@ -496,7 +511,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			throw pde;
 		}
 		catch (Exception e) {
-			throw new PortletDataException(e);
+			throw new PortletDataException(
+				"An unexpected error occured when trying to process portlet " +
+					"preferences for " + portletId + " during export",
+				e);
 		}
 	}
 
@@ -514,7 +532,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			throw pde;
 		}
 		catch (Exception e) {
-			throw new PortletDataException(e);
+			throw new PortletDataException(
+				"An unexpected error occured when trying to process portlet " +
+					"preferences for " + portletId + " during import",
+				e);
 		}
 	}
 

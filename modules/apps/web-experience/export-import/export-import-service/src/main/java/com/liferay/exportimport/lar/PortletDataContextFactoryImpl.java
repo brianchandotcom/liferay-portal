@@ -202,7 +202,10 @@ public class PortletDataContextFactoryImpl
 		}
 		catch (Exception e) {
 			if (!CompanyThreadLocal.isDeleteInProcess()) {
-				throw new IllegalStateException(e);
+				throw new IllegalStateException(
+					"Unable to create a portlet data context for company " +
+						companyId + " as it's being deleted",
+					e);
 			}
 		}
 
@@ -221,7 +224,10 @@ public class PortletDataContextFactoryImpl
 		}
 		catch (Exception e) {
 			if (!CompanyThreadLocal.isDeleteInProcess()) {
-				throw new IllegalStateException(e);
+				throw new IllegalStateException(
+					"Unable to create a portlet data context for company " +
+						companyId + " as it's being deleted",
+					e);
 			}
 		}
 
@@ -241,7 +247,10 @@ public class PortletDataContextFactoryImpl
 			rootElement = document.getRootElement();
 		}
 		catch (Exception e) {
-			throw new PortletDataException(e);
+			throw new PortletDataException(
+				"Unable to create portlet data context for import. An error " +
+					"occured when parsing the LAR manifest",
+				e);
 		}
 
 		portletDataContext.setImportDataRootElement(rootElement);

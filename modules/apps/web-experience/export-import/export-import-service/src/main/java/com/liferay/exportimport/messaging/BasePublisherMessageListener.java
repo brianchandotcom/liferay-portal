@@ -69,7 +69,8 @@ public abstract class BasePublisherMessageListener
 
 		if (singleDestinationMessageSenderFactory == null) {
 			throw new IllegalArgumentException(
-				"Single destination message sender factory is null");
+				"Unable to initialize message listener because the single " +
+					"destination message sender factory is null");
 		}
 
 		BundleContext bundleContext = componentContext.getBundleContext();
@@ -114,7 +115,10 @@ public abstract class BasePublisherMessageListener
 			permissionChecker = PermissionCheckerFactoryUtil.create(user);
 		}
 		catch (Exception e) {
-			throw new SystemException(e);
+			throw new SystemException(
+				"Unable to initialize thread locals because an error occured " +
+					"when creating a permission checker for user " + userId,
+				e);
 		}
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);

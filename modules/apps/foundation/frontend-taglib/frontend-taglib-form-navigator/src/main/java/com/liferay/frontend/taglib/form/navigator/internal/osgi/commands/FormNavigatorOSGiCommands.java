@@ -114,7 +114,7 @@ public class FormNavigatorOSGiCommands {
 		}
 
 		Stream<FormNavigatorEntry> formNavigatorEntriesStream =
-			_formNavigatorEntriesList.stream();
+			formNavigatorEntries.stream();
 
 		Stream<String> formNavigatorKeysStream = formNavigatorEntriesStream.map(
 			FormNavigatorEntry::getKey);

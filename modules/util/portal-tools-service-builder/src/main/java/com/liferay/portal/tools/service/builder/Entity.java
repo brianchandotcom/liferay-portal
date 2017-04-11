@@ -972,11 +972,10 @@ public class Entity implements Comparable<Entity> {
 			entityColumnPK.getIdType(), entityColumnPK.getIdParam(),
 			entityColumnPK.isConvertNull(), false, false, false, false, false);
 
-		primaryEntityPKColumn.setFinderPath(true);
-
 		primaryEntityPKColumn.setArrayableOperator(StringPool.BLANK);
 		primaryEntityPKColumn.setCaseSensitive(
 			entityColumnPK.isCaseSensitive());
+		primaryEntityPKColumn.setFinderPath(true);
 		primaryEntityPKColumn.setComparator(StringPool.EQUAL);
 
 		primaryEntityPKColumn.validate();
@@ -989,11 +988,10 @@ public class Entity implements Comparable<Entity> {
 		LocalizationColumn languageIdColumn = new LocalizationColumn(
 			"languageId", "languageId");
 
-		languageIdColumn.setFinderPath(true);
-
 		languageIdColumn.setArrayableOperator(StringPool.BLANK);
 		languageIdColumn.setCaseSensitive(entityColumnPK.isCaseSensitive());
 		languageIdColumn.setComparator(StringPool.EQUAL);
+		languageIdColumn.setFinderPath(true);
 
 		languageIdColumn.validate();
 

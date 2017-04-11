@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
@@ -95,38 +94,6 @@ public class JavaClass {
 
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
-
-			if (javaTerm.isClass()) {
-				_formatMissingLineBreak(javaTerm);
-			}
-
-			_formatBooleanStatements(javaTerm);
-			_formatReturnStatements(javaTerm);
-
-			if (javaTerm.isMethod() || javaTerm.isConstructor()) {
-				checkLineBreak(javaTerm);
-			}
-
-			// LPS-65690
-
-			if (_fileName.endsWith("Comparator.java") && javaTerm.isMethod()) {
-				checkLocalSensitiveComparison(javaTerm);
-			}
-
-			if (_fileName.endsWith("LocalServiceImpl.java") &&
-				javaTerm.hasAnnotation("Indexable") &&
-				!javaTerm.hasReturnType()) {
-
-				_javaSourceProcessor.processMessage(
-					_fileName, "Missing return type for method with @Indexable",
-					javaTerm.getLineCount());
-			}
-
-			// LPS-67111
-
-			if (_name.endsWith("ServiceImpl")) {
-				checkServiceImpl(javaTerm);
-			}
 
 			if (!_javaSourceProcessor.isExcludedPath(
 					checkJavaFieldTypesExcludesProperty, _absolutePath)) {
@@ -285,73 +252,6 @@ public class JavaClass {
 			checkFinalableFieldType(
 				javaTerm, annotationsExclusions, modifierDefinition);
 		}
-	}
-
-	protected void checkLineBreak(JavaTerm javaTerm) {
-		Matcher matcher = _lineBreakPattern.matcher(javaTerm.getContent());
-
-		while (matcher.find()) {
-			if (_javaSourceProcessor.getLevel(matcher.group(2)) >= 0) {
-				continue;
-			}
-
-			int lineCount =
-				javaTerm.getLineCount() +
-					_javaSourceProcessor.getLineCount(
-						javaTerm.getContent(), matcher.end(1));
-
-			_javaSourceProcessor.processMessage(
-				_fileName,
-				"Create a new var for '" + StringUtil.trim(matcher.group(1)) +
-					"' for better readability",
-				lineCount);
-		}
-	}
-
-	protected void checkLocalSensitiveComparison(JavaTerm javaTerm) {
-		String javaTermName = javaTerm.getName();
-
-		if (!javaTermName.equals("compare")) {
-			return;
-		}
-
-		String javaTermContent = javaTerm.getContent();
-
-		if (javaTermContent.contains("_locale") &&
-			javaTermContent.contains(".compareTo") &&
-			!javaTermContent.contains("Collator")) {
-
-			_javaSourceProcessor.processMessage(
-				_fileName,
-				"Use Collator for locale-sensitive String comparison, see " +
-					"LPS-65690");
-		}
-	}
-
-	protected void checkServiceImpl(JavaTerm javaTerm) {
-		String javaTermName = javaTerm.getName();
-
-		if ((!javaTermName.equals("afterPropertiesSet") &&
-			 !javaTermName.equals("destroy")) ||
-			!javaTerm.hasAnnotation("Override")) {
-
-			return;
-		}
-
-		String javaTermContent = javaTerm.getContent();
-
-		String superMethodCall = "super." + javaTermName + "();";
-
-		if (javaTermContent.contains(superMethodCall)) {
-			return;
-		}
-
-		String newJavaTermContent = StringUtil.replaceFirst(
-			javaTermContent, "{\n",
-			"{\n" + javaTerm.getIndent() + "\t" + superMethodCall + "\n\n");
-
-		_classContent = StringUtil.replace(
-			_classContent, javaTermContent, newJavaTermContent);
 	}
 
 	protected void checkStaticableFieldType(String javaTermContent) {
@@ -872,290 +772,6 @@ public class JavaClass {
 		return false;
 	}
 
-	private void _formatBooleanStatement(
-		String javaTermContent, String booleanStatement, String tabs,
-		String variableName, String ifCondition, String trueValue,
-		String falseValue) {
-
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("\n\n");
-		sb.append(tabs);
-		sb.append("boolean ");
-		sb.append(variableName);
-		sb.append(" = ");
-		sb.append(falseValue);
-		sb.append(";\n\n");
-		sb.append(tabs);
-		sb.append("if (");
-		sb.append(ifCondition);
-		sb.append(") {\n\n");
-		sb.append(tabs);
-		sb.append("\t");
-		sb.append(variableName);
-		sb.append(" = ");
-		sb.append(trueValue);
-		sb.append(";\n");
-		sb.append(tabs);
-		sb.append("}\n");
-
-		String newJavaTermContent = StringUtil.replace(
-			javaTermContent, booleanStatement, sb.toString());
-
-		_classContent = StringUtil.replace(
-			_classContent, javaTermContent, newJavaTermContent);
-	}
-
-	private void _formatBooleanStatements(JavaTerm javaTerm) {
-		String javaTermContent = javaTerm.getContent();
-
-		Matcher matcher1 = _booleanPattern.matcher(javaTermContent);
-
-		while (matcher1.find()) {
-			String booleanStatement = matcher1.group();
-
-			if (booleanStatement.contains("\t//") ||
-				booleanStatement.contains(" {\n")) {
-
-				continue;
-			}
-
-			String criteria = matcher1.group(3);
-
-			String[] ternaryOperatorParts = _getTernaryOperatorParts(criteria);
-
-			if (ternaryOperatorParts != null) {
-				String falseValue = ternaryOperatorParts[2];
-				String ifCondition = ternaryOperatorParts[0];
-				String trueValue = ternaryOperatorParts[1];
-
-				_formatBooleanStatement(
-					javaTermContent, booleanStatement, matcher1.group(1),
-					matcher1.group(2), ifCondition, trueValue, falseValue);
-
-				return;
-			}
-
-			String strippedCriteria = _stripQuotesAndMethodParameters(criteria);
-
-			if ((_javaSourceProcessor.getLevel(strippedCriteria) == 0) &&
-				(strippedCriteria.contains("|") ||
-				 strippedCriteria.contains("&") ||
-				 strippedCriteria.contains("^"))) {
-
-				_formatBooleanStatement(
-					javaTermContent, booleanStatement, matcher1.group(1),
-					matcher1.group(2), criteria, "true", "false");
-
-				return;
-			}
-
-			Matcher matcher2 = _relationalOperatorPattern.matcher(
-				strippedCriteria);
-
-			if (matcher2.find()) {
-				_formatBooleanStatement(
-					javaTermContent, booleanStatement, matcher1.group(1),
-					matcher1.group(2), criteria, "true", "false");
-
-				return;
-			}
-		}
-	}
-
-	private void _formatMissingLineBreak(JavaTerm javaTerm) {
-		String javaTermContent = javaTerm.getContent();
-
-		Matcher matcher = _missingEmptyLinePattern.matcher(javaTermContent);
-
-		if (matcher.find()) {
-			String newJavaTermContent = StringUtil.insert(
-				javaTermContent, "\n", matcher.start(1));
-
-			_classContent = StringUtil.replace(
-				_classContent, javaTermContent, newJavaTermContent);
-		}
-	}
-
-	private void _formatReturnStatement(
-		String javaTermContent, String returnStatement, String tabs,
-		String ifCondition, String trueValue, String falseValue) {
-
-		StringBundler sb = new StringBundler(15);
-
-		sb.append("\n");
-		sb.append(tabs);
-		sb.append("if (");
-		sb.append(ifCondition);
-		sb.append(") {\n\n");
-		sb.append(tabs);
-		sb.append("\treturn ");
-		sb.append(trueValue);
-		sb.append(";\n");
-		sb.append(tabs);
-		sb.append("}\n\n");
-		sb.append(tabs);
-		sb.append("return ");
-		sb.append(falseValue);
-		sb.append(";\n");
-
-		String newJavaTermContent = StringUtil.replace(
-			javaTermContent, returnStatement, sb.toString());
-
-		_classContent = StringUtil.replace(
-			_classContent, javaTermContent, newJavaTermContent);
-	}
-
-	private void _formatReturnStatements(JavaTerm javaTerm) {
-		String javaTermContent = javaTerm.getContent();
-		String returnType = javaTerm.getReturnType();
-
-		Matcher matcher1 = _returnPattern.matcher(javaTermContent);
-
-		while (matcher1.find()) {
-			String returnStatement = matcher1.group();
-
-			if (returnStatement.contains("\t//") ||
-				returnStatement.contains(" {\n")) {
-
-				continue;
-			}
-
-			String[] ternaryOperatorParts = _getTernaryOperatorParts(
-				matcher1.group(2));
-
-			if (ternaryOperatorParts != null) {
-				String falseValue = ternaryOperatorParts[2];
-				String ifCondition = ternaryOperatorParts[0];
-				String trueValue = ternaryOperatorParts[1];
-
-				_formatReturnStatement(
-					javaTermContent, returnStatement, matcher1.group(1),
-					ifCondition, trueValue, falseValue);
-
-				return;
-			}
-
-			if (!returnType.equals("boolean")) {
-				continue;
-			}
-
-			String strippedReturnStatement = _javaSourceProcessor.stripQuotes(
-				returnStatement);
-
-			if (strippedReturnStatement.contains("|") ||
-				strippedReturnStatement.contains("&") ||
-				strippedReturnStatement.contains("^")) {
-
-				_formatReturnStatement(
-					javaTermContent, returnStatement, matcher1.group(1),
-					matcher1.group(2), "true", "false");
-
-				return;
-			}
-
-			Matcher matcher2 = _relationalOperatorPattern.matcher(
-				returnStatement);
-
-			if (matcher2.find() &&
-				!ToolsUtil.isInsideQuotes(returnStatement, matcher2.start(1))) {
-
-				_formatReturnStatement(
-					javaTermContent, returnStatement, matcher1.group(1),
-					matcher1.group(2), "true", "false");
-
-				return;
-			}
-		}
-	}
-
-	private String[] _getTernaryOperatorParts(String operator) {
-		int x = -1;
-
-		while (true) {
-			x = operator.indexOf(StringPool.QUESTION, x + 1);
-
-			if (x == -1) {
-				return null;
-			}
-
-			if (!ToolsUtil.isInsideQuotes(operator, x) &&
-				_javaSourceProcessor.getLevel(
-					operator.substring(0, x), "<", ">") == 0) {
-
-				break;
-			}
-		}
-
-		int y = x;
-
-		while (true) {
-			y = operator.indexOf(StringPool.COLON, y + 1);
-
-			if (y == -1) {
-				return null;
-			}
-
-			if (!ToolsUtil.isInsideQuotes(operator, y)) {
-				break;
-			}
-		}
-
-		String falseValue = StringUtil.trim(operator.substring(y + 1));
-		String ifCondition = StringUtil.trim(operator.substring(0, x));
-		String trueValue = StringUtil.trim(operator.substring(x + 1, y));
-
-		if ((_javaSourceProcessor.getLevel(falseValue) == 0) &&
-			(_javaSourceProcessor.getLevel(ifCondition) == 0) &&
-			(_javaSourceProcessor.getLevel(trueValue) == 0)) {
-
-			return new String[] {ifCondition, trueValue, falseValue};
-		}
-
-		return null;
-	}
-
-	private String _stripQuotesAndMethodParameters(String s) {
-		s = _javaSourceProcessor.stripQuotes(s);
-
-		outerLoop:
-		while (true) {
-			int start = -1;
-
-			for (int i = 1; i < s.length(); i++) {
-				char c1 = s.charAt(i);
-
-				if (start == -1) {
-					if (c1 == CharPool.OPEN_PARENTHESIS) {
-						char c2 = s.charAt(i - 1);
-
-						if (Character.isLetterOrDigit(c2)) {
-							start = i;
-						}
-					}
-
-					continue;
-				}
-
-				if (c1 != CharPool.CLOSE_PARENTHESIS) {
-					continue;
-				}
-
-				String part = s.substring(start, i + 1);
-
-				if (_javaSourceProcessor.getLevel(part) == 0) {
-					s = StringUtil.replace(s, part, StringPool.BLANK, start);
-
-					continue outerLoop;
-				}
-			}
-
-			break;
-		}
-
-		return s;
-	}
-
 	private static final String _ACCESS_MODIFIER_PRIVATE = "private";
 
 	private static final String _ACCESS_MODIFIER_PROTECTED = "protected";
@@ -1175,8 +791,6 @@ public class JavaClass {
 			});
 
 	private final String _absolutePath;
-	private final Pattern _booleanPattern = Pattern.compile(
-		"\n(\t+)boolean (\\w+) =(.*?);\n", Pattern.DOTALL);
 	private String _classContent;
 	private final Pattern _classPattern = Pattern.compile(
 		"(private|protected|public) ((abstract|static) )*" +
@@ -1191,17 +805,9 @@ public class JavaClass {
 	private final List<JavaClass> _innerClasses = new ArrayList<>();
 	private final JavaSourceProcessor _javaSourceProcessor;
 	private Set<JavaTerm> _javaTerms;
-	private final Pattern _lineBreakPattern = Pattern.compile(
-		"\n(.*)\\(\n((.+,\n)*.*\\)) \\+\n");
 	private final int _lineCount;
-	private final Pattern _missingEmptyLinePattern = Pattern.compile(
-		"[^\n{](\n)\t*\\}\n*$");
 	private final String _name;
 	private final JavaClass _outerClass;
 	private String _packagePath;
-	private final Pattern _relationalOperatorPattern = Pattern.compile(
-		".* (==|!=|<|>|>=|<=)[ \n].*");
-	private final Pattern _returnPattern = Pattern.compile(
-		"\n(\t+)return (.*?);\n", Pattern.DOTALL);
 
 }

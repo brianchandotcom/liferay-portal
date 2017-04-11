@@ -1261,17 +1261,15 @@ public class ProjectTemplatesTest {
 			}
 		}
 		catch (Throwable t) {
-			String testDebug = System.getProperty("test.debug.bundle.diffs");
-
-			if (Boolean.parseBoolean(testDebug)) {
-				Path buildPath = new File("build").getAbsoluteFile().toPath();
+			if (_TEST_DEBUG_BUNDLE_DIFFS) {
+				Path dirPath = Paths.get("build");
 
 				Files.copy(
 					gradleBundleFile.toPath(),
-					buildPath.resolve(gradleBundleFile.getName()));
+					dirPath.resolve(gradleBundleFileName));
 				Files.copy(
 					mavenBundleFile.toPath(),
-					buildPath.resolve(mavenBundleFile.getName()));
+					dirPath.resolve(mavenBundleFileName));
 			}
 
 			throw t;
@@ -1901,6 +1899,9 @@ public class ProjectTemplatesTest {
 	private static final String _REPOSITORY_CDN_URL =
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
 			"/public";
+
+	private static final boolean _TEST_DEBUG_BUNDLE_DIFFS = Boolean.getBoolean(
+		"test.debug.bundle.diffs");
 
 	private static URI _gradleDistribution;
 	private static Properties _projectTemplateVersions;

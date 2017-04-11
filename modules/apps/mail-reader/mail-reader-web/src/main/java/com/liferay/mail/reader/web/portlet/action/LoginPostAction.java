@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class LoginPostAction extends Action {
 	protected void initiateSynchronization(HttpServletRequest request)
 		throws PortalException {
 
-		long userId = PortalUtil.getUserId(request);
+		long userId = _portal.getUserId(request);
 
 		if (userId <= 0) {
 			return;
@@ -77,5 +77,8 @@ public class LoginPostAction extends Action {
 
 	@Reference
 	private AccountLocalService _accountLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

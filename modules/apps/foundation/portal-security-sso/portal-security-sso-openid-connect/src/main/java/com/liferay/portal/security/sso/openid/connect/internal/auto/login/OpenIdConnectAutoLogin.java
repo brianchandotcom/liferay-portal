@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 
@@ -40,7 +40,7 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		long companyId = PortalUtil.getCompanyId(request);
+		long companyId = _portal.getCompanyId(request);
 
 		if (!_openIdConnect.isEnabled(companyId)) {
 			return null;
@@ -70,6 +70,9 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 
 	@Reference
 	private OpenIdConnect _openIdConnect;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

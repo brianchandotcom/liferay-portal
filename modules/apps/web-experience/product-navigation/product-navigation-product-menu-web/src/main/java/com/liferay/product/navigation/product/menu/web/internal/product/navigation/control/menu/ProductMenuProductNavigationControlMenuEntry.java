@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringPool;
@@ -55,6 +55,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -107,7 +108,7 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 		Map<String, String> values = new HashMap<>();
 
-		String portletNamespace = PortalUtil.getPortletNamespace(
+		String portletNamespace = _portal.getPortletNamespace(
 			ProductNavigationProductMenuPortletKeys.
 				PRODUCT_NAVIGATION_PRODUCT_MENU);
 
@@ -198,7 +199,7 @@ public class ProductMenuProductNavigationControlMenuEntry
 				" hidden-print lfr-product-menu-panel sidenav-fixed " +
 					"sidenav-menu-slider\" id=\"");
 
-			String portletNamespace = PortalUtil.getPortletNamespace(
+			String portletNamespace = _portal.getPortletNamespace(
 				ProductNavigationProductMenuPortletKeys.
 					PRODUCT_NAVIGATION_PRODUCT_MENU);
 
@@ -225,5 +226,8 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		ProductMenuProductNavigationControlMenuEntry.class, "icon.tmpl");
+
+	@Reference
+	private Portal _portal;
 
 }

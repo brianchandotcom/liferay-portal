@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -177,7 +177,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 			}
 			else {
 				userId = _userLocalService.getDefaultUserId(
-					PortalUtil.getCompanyId(request));
+					_portal.getCompanyId(request));
 			}
 
 			authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
@@ -281,6 +281,9 @@ public class SyncAuthVerifier implements AuthVerifier {
 
 	private static JsonTokenParser _jsonTokenParser;
 	private static Signer _signer;
+
+	@Reference
+	private Portal _portal;
 
 	private UserLocalService _userLocalService;
 

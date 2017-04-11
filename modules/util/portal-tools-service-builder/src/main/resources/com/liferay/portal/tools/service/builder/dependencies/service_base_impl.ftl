@@ -1049,9 +1049,9 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 				}
 			</#list>
 
-			List<${localizationEntity.name}> ${localizationEntity.varNames} = ${localizationEntity.varName}Persistence.findBy${entity.name}PK(${entity.varName}.getPrimaryKey());
-
 			List<${localizationEntity.name}> results = new ArrayList<${localizationEntity.name}>(localizationsMap.size());
+
+			List<${localizationEntity.name}> ${localizationEntity.varNames} = ${localizationEntity.varName}Persistence.findBy${entity.name}PK(${entity.varName}.getPrimaryKey());
 
 			for (${localizationEntity.name} ${localizationEntity.varName} : ${localizationEntity.varNames}) {
 				String[] localizations = localizationsMap.remove(${localizationEntity.varName}.getLanguageId());

@@ -972,6 +972,130 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		</#list>
 	</#if>
 
+	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasLocalizationColumns()>
+		<#assign localizationEntity = entity.toLocalizationEntity() />
+
+		@Override
+		public ${localizationEntity.name} fetch${localizationEntity.name}(${entity.PKClassName} ${entity.PKVarName}, String languageId) {
+			return ${localizationEntity.varName}Persistence.fetchBy${localizationEntity.localizationFinderName}(${entity.PKVarName}, languageId);
+		}
+
+		@Override
+		public ${localizationEntity.name} get${localizationEntity.name}(${entity.PKClassName} ${entity.PKVarName}, String languageId) throws PortalException {
+			return ${localizationEntity.varName}Persistence.findBy${localizationEntity.localizationFinderName}(${entity.PKVarName}, languageId);
+		}
+
+		<#assign localizationColumns = entity.localizationColumns />
+
+		protected ${localizationEntity.name} update${localizationEntity.name}(
+			${entity.name} ${entity.varName}, String languageId,
+			<#list localizationColumns as column>
+				String ${column.name}
+
+				<#if column?has_next>
+					,
+				</#if>
+			</#list>
+			) throws PortalException {
+
+			${localizationEntity.name} ${localizationEntity.varName} = ${localizationEntity.varName}Persistence.fetchBy${localizationEntity.localizationFinderName}(${entity.varName}.getPrimaryKey(), languageId);
+
+			if (${localizationEntity.varName} == null) {
+				long ${localizationEntity.varName}Id = counterLocalService.increment();
+
+				${localizationEntity.varName} = ${localizationEntity.varName}Persistence.create(${localizationEntity.varName}Id);
+
+				<#if entity.hasColumn("companyId")>
+					${localizationEntity.varName}.setCompanyId(${entity.varName}.getCompanyId());
+				</#if>
+
+				${localizationEntity.varName}.set${entity.name}PK(${entity.varName}.getPrimaryKey());
+
+				${localizationEntity.varName}.setLanguageId(languageId);
+			}
+
+			<#list localizationColumns as column>
+				${localizationEntity.varName}.set${column.methodName}(${column.name});
+			</#list>
+
+			return ${localizationEntity.varName}Persistence.update(${localizationEntity.varName});
+		}
+
+		protected List<${localizationEntity.name}> update${localizationEntity.name}s(
+			${entity.name} ${entity.varName},
+			<#list localizationColumns as column>
+				Map<String, String> ${column.name}Map
+
+				<#if column?has_next>
+					,
+				</#if>
+			</#list>
+			) throws PortalException {
+
+			Map<String, String[]> localizationsMap = new HashMap<String, String[]>();
+
+			<#list localizationColumns as column>
+				for (Map.Entry<String, String> entry : ${column.name}Map.entrySet()) {
+					String languageId = entry.getKey();
+
+					String[] localizations = localizationsMap.get(languageId);
+
+					if (localizations == null) {
+						localizations = new String[${localizationColumns?size}];
+
+						localizationsMap.put(languageId, localizations);
+					}
+
+					localizations[${column?index}] = entry.getValue();
+				}
+			</#list>
+
+			List<${localizationEntity.name}> ${localizationEntity.varName}s = ${localizationEntity.varName}Persistence.findBy${entity.name}PK(${entity.varName}.getPrimaryKey());
+
+			List<${localizationEntity.name}> results = new ArrayList<${localizationEntity.name}>(localizationsMap.size());
+
+			for (${localizationEntity.name} ${localizationEntity.varName} : ${localizationEntity.varName}s) {
+				String[] localizations = localizationsMap.remove(${localizationEntity.varName}.getLanguageId());
+
+				if (localizations == null) {
+					${localizationEntity.varName}Persistence.remove(${localizationEntity.varName});
+				}
+				else {
+					<#list localizationColumns as column>
+						${localizationEntity.varName}.set${column.methodName}(localizations[${column?index}]);
+					</#list>
+
+					results.add(${localizationEntity.varName}Persistence.update(${localizationEntity.varName}));
+				}
+			}
+
+			for (Map.Entry<String, String[]> entry : localizationsMap.entrySet()) {
+				String languageId = entry.getKey();
+				String[] localizations = entry.getValue();
+
+				long ${localizationEntity.PKVarName} = counterLocalService.increment();
+
+				${localizationEntity.name} ${localizationEntity.varName} = ${localizationEntity.varName}Persistence.create(${localizationEntity.PKVarName});
+
+				<#if localizationEntity.hasColumn("companyId")>
+					${localizationEntity.varName}.setCompanyId(${entity.varName}.getCompanyId());
+				</#if>
+
+				${localizationEntity.varName}.set${entity.name}PK(${entity.varName}.getPrimaryKey());
+
+				${localizationEntity.varName}.setLanguageId(languageId);
+
+				<#list localizationColumns as column>
+					${localizationEntity.varName}.set${column.methodName}(localizations[${column?index}]);
+				</#list>
+
+				results.add(${localizationEntity.varName}Persistence.update(${localizationEntity.varName}));
+			}
+
+			return results;
+		}
+	</#if>
+
 	<#list referenceList as tempEntity>
 		<#if tempEntity.hasLocalService()>
 			/**
@@ -1136,130 +1260,6 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 					currentThread.setContextClassLoader(contextClassLoader);
 				}
 			}
-		}
-	</#if>
-
-	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasLocalizationColumns()>
-		<#assign localizationEntity = entity.toLocalizationEntity() />
-
-		@Override
-		public ${localizationEntity.name} fetch${localizationEntity.name}(${entity.PKClassName} ${entity.PKVarName}, String languageId) {
-			return ${localizationEntity.varName}Persistence.fetchBy${localizationEntity.localizationFinderName}(${entity.PKVarName}, languageId);
-		}
-
-		@Override
-		public ${localizationEntity.name} get${localizationEntity.name}(${entity.PKClassName} ${entity.PKVarName}, String languageId) throws PortalException {
-			return ${localizationEntity.varName}Persistence.findBy${localizationEntity.localizationFinderName}(${entity.PKVarName}, languageId);
-		}
-
-		<#assign localizationColumns = entity.localizationColumns />
-
-		protected ${localizationEntity.name} update${localizationEntity.name}(
-			${entity.name} ${entity.varName}, String languageId,
-			<#list localizationColumns as column>
-				String ${column.name}
-
-				<#if column?has_next>
-					,
-				</#if>
-			</#list>
-			) throws PortalException {
-
-			${localizationEntity.name} ${localizationEntity.varName} = ${localizationEntity.varName}Persistence.fetchBy${localizationEntity.localizationFinderName}(${entity.varName}.getPrimaryKey(), languageId);
-
-			if (${localizationEntity.varName} == null) {
-				long ${localizationEntity.varName}Id = counterLocalService.increment();
-
-				${localizationEntity.varName} = ${localizationEntity.varName}Persistence.create(${localizationEntity.varName}Id);
-
-				<#if entity.hasColumn("companyId")>
-					${localizationEntity.varName}.setCompanyId(${entity.varName}.getCompanyId());
-				</#if>
-
-				${localizationEntity.varName}.set${entity.name}PK(${entity.varName}.getPrimaryKey());
-
-				${localizationEntity.varName}.setLanguageId(languageId);
-			}
-
-			<#list localizationColumns as column>
-				${localizationEntity.varName}.set${column.methodName}(${column.name});
-			</#list>
-
-			return ${localizationEntity.varName}Persistence.update(${localizationEntity.varName});
-		}
-
-		protected List<${localizationEntity.name}> update${localizationEntity.name}s(
-			${entity.name} ${entity.varName},
-			<#list localizationColumns as column>
-				Map<String, String> ${column.name}Map
-
-				<#if column?has_next>
-					,
-				</#if>
-			</#list>
-			) throws PortalException {
-
-			Map<String, String[]> localizationsMap = new HashMap<String, String[]>();
-
-			<#list localizationColumns as column>
-				for (Map.Entry<String, String> entry : ${column.name}Map.entrySet()) {
-					String languageId = entry.getKey();
-
-					String[] localizations = localizationsMap.get(languageId);
-
-					if (localizations == null) {
-						localizations = new String[${localizationColumns?size}];
-
-						localizationsMap.put(languageId, localizations);
-					}
-
-					localizations[${column?index}] = entry.getValue();
-				}
-			</#list>
-
-			List<${localizationEntity.name}> ${localizationEntity.varName}s = ${localizationEntity.varName}Persistence.findBy${entity.name}PK(${entity.varName}.getPrimaryKey());
-
-			List<${localizationEntity.name}> results = new ArrayList<${localizationEntity.name}>(localizationsMap.size());
-
-			for (${localizationEntity.name} ${localizationEntity.varName} : ${localizationEntity.varName}s) {
-				String[] localizations = localizationsMap.remove(${localizationEntity.varName}.getLanguageId());
-
-				if (localizations == null) {
-					${localizationEntity.varName}Persistence.remove(${localizationEntity.varName});
-				}
-				else {
-					<#list localizationColumns as column>
-						${localizationEntity.varName}.set${column.methodName}(localizations[${column?index}]);
-					</#list>
-
-					results.add(${localizationEntity.varName}Persistence.update(${localizationEntity.varName}));
-				}
-			}
-
-			for (Map.Entry<String, String[]> entry : localizationsMap.entrySet()) {
-				String languageId = entry.getKey();
-				String[] localizations = entry.getValue();
-
-				long ${localizationEntity.PKVarName} = counterLocalService.increment();
-
-				${localizationEntity.name} ${localizationEntity.varName} = ${localizationEntity.varName}Persistence.create(${localizationEntity.PKVarName});
-
-				<#if localizationEntity.hasColumn("companyId")>
-					${localizationEntity.varName}.setCompanyId(${entity.varName}.getCompanyId());
-				</#if>
-
-				${localizationEntity.varName}.set${entity.name}PK(${entity.varName}.getPrimaryKey());
-
-				${localizationEntity.varName}.setLanguageId(languageId);
-
-				<#list localizationColumns as column>
-					${localizationEntity.varName}.set${column.methodName}(localizations[${column?index}]);
-				</#list>
-
-				results.add(${localizationEntity.varName}Persistence.update(${localizationEntity.varName}));
-			}
-
-			return results;
 		}
 	</#if>
 

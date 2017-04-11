@@ -17,13 +17,6 @@ package ${packagePath}.model.impl;
 </#if>
 
 import ${apiPackagePath}.model.${entity.name};
-
-<#if entity.hasLocalizationColumns()>
-	<#assign localizationEntity = entity.toLocalizationEntity() />
-
-	import ${apiPackagePath}.model.${localizationEntity.name};
-</#if>
-
 import ${apiPackagePath}.model.${entity.name}Model;
 import ${apiPackagePath}.model.${entity.name}Soap;
 
@@ -32,6 +25,12 @@ import ${apiPackagePath}.model.${entity.name}Soap;
 		import ${apiPackagePath}.model.${entity.name}${column.methodName}BlobModel;
 	</#if>
 </#list>
+
+<#if entity.hasLocalizationColumns()>
+	<#assign localizationEntity = entity.toLocalizationEntity() />
+
+	import ${apiPackagePath}.model.${localizationEntity.name};
+</#if>
 
 import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;
 

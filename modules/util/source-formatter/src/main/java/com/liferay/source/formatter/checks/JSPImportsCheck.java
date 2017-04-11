@@ -97,7 +97,7 @@ public class JSPImportsCheck extends BaseFileCheck {
 		}
 
 		content = StringUtil.replaceFirst(
-			content, groups.get(0), newImports + "\n");
+			content, groups.get(0), newImports + "\n\n");
 
 		content = StringUtil.replaceFirst(content, imports, newImports);
 

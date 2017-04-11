@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.JSPImportsFormatter;
+import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,39 +55,12 @@ public class JSPImportsCheck extends BaseFileCheck {
 			addMessage(fileName, "Move imports to init.jsp");
 		}
 
-		content = _compressImportsOrTaglibs(
+		content = JSPSourceUtil.compressImportsOrTaglibs(
 			fileName, content, "<%@ page import=");
-		content = _compressImportsOrTaglibs(
+		content = JSPSourceUtil.compressImportsOrTaglibs(
 			fileName, content, "<%@ taglib uri=");
 
 		return content;
-	}
-
-	private String _compressImportsOrTaglibs(
-		String fileName, String content, String attributePrefix) {
-
-		if (!fileName.endsWith("init.jsp") && !fileName.endsWith("init.jspf")) {
-			return content;
-		}
-
-		int x = content.indexOf(attributePrefix);
-
-		int y = content.lastIndexOf(attributePrefix);
-
-		y = content.indexOf("%>", y);
-
-		if ((x == -1) || (y == -1) || (x > y)) {
-			return content;
-		}
-
-		String importsOrTaglibs = content.substring(x, y);
-
-		importsOrTaglibs = StringUtil.replace(
-			importsOrTaglibs, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
-			new String[] {"%><%@\r\n", "%><%@\n"});
-
-		return content.substring(0, x) + importsOrTaglibs +
-			content.substring(y);
 	}
 
 	private String _formatJSPImportsOrTaglibs(

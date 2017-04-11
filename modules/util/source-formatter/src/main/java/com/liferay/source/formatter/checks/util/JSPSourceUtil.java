@@ -95,6 +95,33 @@ public class JSPSourceUtil {
 		}
 	}
 
+	public static String compressImportsOrTaglibs(
+		String fileName, String content, String attributePrefix) {
+
+		if (!fileName.endsWith("init.jsp") && !fileName.endsWith("init.jspf")) {
+			return content;
+		}
+
+		int x = content.indexOf(attributePrefix);
+
+		int y = content.lastIndexOf(attributePrefix);
+
+		y = content.indexOf("%>", y);
+
+		if ((x == -1) || (y == -1) || (x > y)) {
+			return content;
+		}
+
+		String importsOrTaglibs = content.substring(x, y);
+
+		importsOrTaglibs = StringUtil.replace(
+			importsOrTaglibs, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
+			new String[] {"%><%@\r\n", "%><%@\n"});
+
+		return content.substring(0, x) + importsOrTaglibs +
+			content.substring(y);
+	}
+
 	public static Set<String> getJSPIncludeFileNames(
 		String fileName, Collection<String> fileNames,
 		Map<String, String> contentsMap) {

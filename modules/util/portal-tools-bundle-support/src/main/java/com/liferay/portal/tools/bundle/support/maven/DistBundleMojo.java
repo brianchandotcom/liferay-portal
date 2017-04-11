@@ -51,7 +51,7 @@ public class DistBundleMojo extends AbstractBundleMojo {
 
 		setLiferayHome(archiveLocation);
 
-		File archive = new File(archiveLocation + "." + format);
+		File archiveFile = new File(archiveLocation + "." + format);
 
 		String packaging = project.getPackaging();
 
@@ -67,12 +67,12 @@ public class DistBundleMojo extends AbstractBundleMojo {
 				Path entryPath = Paths.get(deployDirName, outputFileName);
 
 				if (format.equals("zip")) {
-					FileUtil.appendZip(deployFile, entryPath, archive);
+					FileUtil.appendZip(deployFile, entryPath, archiveFile);
 				}
 				else if (format.equals("gz") || format.equals("tar") ||
 						 format.equals("tar.gz") || format.equals("tgz")) {
 
-					FileUtil.appendTar(deployFile, entryPath, archive);
+					FileUtil.appendTar(deployFile, entryPath, archiveFile);
 				}
 				else {
 					throw new IllegalArgumentException(
@@ -86,7 +86,7 @@ public class DistBundleMojo extends AbstractBundleMojo {
 		}
 		else if (!project.hasParent()) {
 			try {
-				archive.delete();
+				archiveFile.delete();
 
 				File liferayHomeDir = getLiferayHomeDir();
 
@@ -108,7 +108,7 @@ public class DistBundleMojo extends AbstractBundleMojo {
 				distBundleCommand.setFormat(format);
 				distBundleCommand.setIncludeFolder(includeFolder);
 				distBundleCommand.setLiferayHomeDir(getLiferayHomeDir());
-				distBundleCommand.setOutputFile(archive);
+				distBundleCommand.setOutputFile(archiveFile);
 
 				distBundleCommand.execute();
 

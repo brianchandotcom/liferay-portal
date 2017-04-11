@@ -773,6 +773,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return StringPool.BLANK;
 	}
 
+	protected String getCopyright() throws Exception {
+		String copyright = getContent(
+			sourceFormatterArgs.getCopyrightFileName(), PORTAL_MAX_DIR_LEVEL);
+
+		if (Validator.isNotNull(copyright)) {
+			return copyright;
+		}
+
+		Class<?> clazz = getClass();
+
+		return StringUtil.read(
+			clazz.getResourceAsStream("dependencies/copyright.txt"));
+	}
+
 	protected List<String> getExcludes(String property) {
 		List<String> excludes = _exclusionPropertiesMap.get(property);
 

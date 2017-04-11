@@ -98,10 +98,6 @@ public class JSPSourceUtil {
 	public static String compressImportsOrTaglibs(
 		String fileName, String content, String attributePrefix) {
 
-		if (!fileName.endsWith("init.jsp") && !fileName.endsWith("init.jspf")) {
-			return content;
-		}
-
 		int x = content.indexOf(attributePrefix);
 
 		int y = content.lastIndexOf(attributePrefix);

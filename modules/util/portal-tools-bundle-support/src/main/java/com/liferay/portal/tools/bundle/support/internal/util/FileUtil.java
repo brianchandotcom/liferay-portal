@@ -43,9 +43,7 @@ import java.nio.file.attribute.FileTime;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -72,6 +70,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.client.utils.DateUtils;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -229,12 +228,8 @@ public class FileUtil {
 						HttpHeaders.LAST_MODIFIED);
 
 				if (lastModifiedHeader != null) {
-					String lastModifiedValue = lastModifiedHeader.getValue();
-
-					DateFormat dateFormat = new SimpleDateFormat(
-						"EEE, dd MMM yyyy HH:mm:ss zzz");
-
-					lastModifiedDate = dateFormat.parse(lastModifiedValue);
+					lastModifiedDate = DateUtils.parseDate(
+						lastModifiedHeader.getValue());
 				}
 				else {
 					lastModifiedDate = new Date();

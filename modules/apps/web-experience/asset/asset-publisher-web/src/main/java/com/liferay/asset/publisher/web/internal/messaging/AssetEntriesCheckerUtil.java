@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -365,7 +366,12 @@ public class AssetEntriesCheckerUtil {
 	}
 
 	private List<AssetEntry> _getAssetEntries(
-		PortletPreferences portletPreferences, Layout layout) {
+			PortletPreferences portletPreferences, Layout layout)
+		throws PortalException {
+
+		AssetPublisherWebConfiguration assetPublisherWebConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				AssetPublisherWebConfiguration.class, layout.getCompanyId());
 
 		long[] groupIds = _assetPublisherUtil.getGroupIds(
 			portletPreferences, layout.getGroupId(), layout);
@@ -401,7 +407,7 @@ public class AssetEntriesCheckerUtil {
 		assetEntryQuery.setEnablePermissions(enablePermissions);
 
 		assetEntryQuery.setEnd(
-			AssetPublisherWebConfigurationValues.DYNAMIC_SUBSCRIPTION_LIMIT);
+			assetPublisherWebConfiguration.dynamicSubscriptionLimit());
 
 		boolean excludeZeroViewCount = GetterUtil.getBoolean(
 			portletPreferences.getValue("excludeZeroViewCount", null));
@@ -447,8 +453,7 @@ public class AssetEntriesCheckerUtil {
 			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
 				AssetUtil.searchAssetEntries(
 					searchContext, assetEntryQuery, 0,
-					AssetPublisherWebConfigurationValues.
-						DYNAMIC_SUBSCRIPTION_LIMIT);
+					assetPublisherWebConfiguration.dynamicSubscriptionLimit());
 
 			return baseModelSearchResult.getBaseModels();
 		}
@@ -484,5 +489,8 @@ public class AssetEntriesCheckerUtil {
 		};
 
 	private static UserLocalService _userLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

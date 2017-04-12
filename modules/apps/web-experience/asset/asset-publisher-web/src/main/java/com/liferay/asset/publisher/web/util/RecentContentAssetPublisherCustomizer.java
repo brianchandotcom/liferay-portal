@@ -17,7 +17,6 @@ package com.liferay.asset.publisher.web.util;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.util.AssetEntryQueryProcessor;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -57,7 +56,7 @@ public class RecentContentAssetPublisherCustomizer
 
 	@Override
 	public boolean isOrderingByTitleEnabled(HttpServletRequest request) {
-		if (!AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX) {
+		if (!assetPublisherWebConfiguration.searchWithIndex()) {
 			return false;
 		}
 

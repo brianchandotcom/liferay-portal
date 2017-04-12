@@ -17,7 +17,8 @@ package com.liferay.asset.publisher.web.util;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.util.AssetEntryQueryProcessor;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -25,13 +26,17 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Map;
+
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Pavel Savinov
@@ -39,6 +44,13 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = AssetPublisherCustomizer.class)
 public class DefaultAssetPublisherCustomizer
 	implements AssetPublisherCustomizer {
+
+	@Activate
+	@Modified
+	public void activate(Map<String, Object> properties) {
+		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
+			AssetPublisherWebConfiguration.class, properties);
+	}
 
 	@Override
 	public Integer getDelta(HttpServletRequest request) {
@@ -58,13 +70,11 @@ public class DefaultAssetPublisherCustomizer
 
 	@Override
 	public boolean isEnablePermissions(HttpServletRequest request) {
-		if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX) {
+		if (assetPublisherWebConfiguration.searchWithIndex()) {
 			return true;
 		}
 
-		if (!AssetPublisherWebConfigurationValues.
-				PERMISSION_CHECKING_CONFIGURABLE) {
-
+		if (!assetPublisherWebConfiguration.permissionCheckingConfigurable()) {
 			return true;
 		}
 
@@ -83,7 +93,7 @@ public class DefaultAssetPublisherCustomizer
 
 	@Override
 	public boolean isOrderingByTitleEnabled(HttpServletRequest request) {
-		if (!AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX) {
+		if (!assetPublisherWebConfiguration.searchWithIndex()) {
 			return false;
 		}
 
@@ -119,7 +129,7 @@ public class DefaultAssetPublisherCustomizer
 
 	@Override
 	public boolean isShowSubtypeFieldsFilter(HttpServletRequest request) {
-		if (!AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX) {
+		if (!assetPublisherWebConfiguration.searchWithIndex()) {
 			return false;
 		}
 
@@ -165,5 +175,7 @@ public class DefaultAssetPublisherCustomizer
 
 		return null;
 	}
+
+	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
 
 }

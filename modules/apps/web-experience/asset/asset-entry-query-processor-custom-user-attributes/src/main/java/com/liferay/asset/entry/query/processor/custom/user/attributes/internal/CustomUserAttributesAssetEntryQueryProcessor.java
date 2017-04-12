@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -73,8 +74,11 @@ public class CustomUserAttributesAssetEntryQueryProcessor
 		String customUserAttributes = GetterUtil.getString(
 			preferences.getValue("customUserAttributes", StringPool.BLANK));
 
-		AssetPublisherUtil.addUserAttributes(
+		_assetPublisherUtil.addUserAttributes(
 			user, StringUtil.split(customUserAttributes), assetEntryQuery);
 	}
+
+	@Reference
+	private AssetPublisherUtil _assetPublisherUtil;
 
 }

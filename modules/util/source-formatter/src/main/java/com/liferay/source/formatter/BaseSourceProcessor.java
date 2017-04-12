@@ -32,6 +32,7 @@ import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JavaTermCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
+import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -1501,9 +1502,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return content;
 		}
 
-		com.liferay.source.formatter.parser.JavaClass javaClass = null;
-		List<com.liferay.source.formatter.parser.JavaClass> anonymousClasses =
-			null;
+		JavaClass javaClass = null;
+		List<JavaClass> anonymousClasses = null;
 
 		for (SourceCheck sourceCheck : sourceChecks) {
 			String newContent = null;
@@ -1540,9 +1540,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					processMessage(fileName, sourceFormatterMessage);
 				}
 
-				for (com.liferay.source.formatter.parser.JavaClass
-						anonymousClass : anonymousClasses) {
-
+				for (JavaClass anonymousClass : anonymousClasses) {
 					newContent = javaTermCheck.process(
 						fileName, absolutePath, anonymousClass, newContent);
 

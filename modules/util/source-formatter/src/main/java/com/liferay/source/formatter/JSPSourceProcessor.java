@@ -164,24 +164,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		checkGetterUtilGet(fileName, newContent);
 
-		Matcher matcher = _javaClassPattern.matcher(newContent);
-
-		if (matcher.find()) {
-			String javaClassContent = matcher.group();
-
-			javaClassContent = javaClassContent.substring(1);
-
-			String javaClassName = matcher.group(2);
-
-			int javaClassLineCount = getLineCount(
-				newContent, matcher.start() + 1);
-
-			newContent = formatJavaTerms(
-				javaClassName, null, file, fileName, absolutePath, newContent,
-				javaClassContent, javaClassLineCount, StringPool.BLANK, null,
-				null);
-		}
-
 		JSPSourceTabCalculator jspSourceTabCalculator =
 			new JSPSourceTabCalculator();
 
@@ -681,9 +663,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Map<String, String> _contentsMap;
 	private final Pattern _includeFilePattern = Pattern.compile(
 		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
-	private Pattern _javaClassPattern = Pattern.compile(
-		"\n(private|protected|public).* class ([A-Za-z0-9]+) " +
-			"([\\s\\S]*?)\n\\}\n");
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*\\.(jsp[f]?|svg)");
 	private final List<SourceCheck> _moduleSourceChecks = new ArrayList<>();

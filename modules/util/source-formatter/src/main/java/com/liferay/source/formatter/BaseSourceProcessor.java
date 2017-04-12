@@ -580,43 +580,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
-	protected String formatJavaTerms(
-			String javaClassName, String packagePath, File file,
-			String fileName, String absolutePath, String content,
-			String javaClassContent, int javaClassLineCount, String indent,
-			String checkJavaFieldTypesExcludesProperty,
-			String javaTermSortExcludesProperty)
-		throws Exception {
-
-		JavaSourceProcessor javaSourceProcessor = null;
-
-		if (this instanceof JavaSourceProcessor) {
-			javaSourceProcessor = (JavaSourceProcessor)this;
-		}
-		else {
-			javaSourceProcessor = new JavaSourceProcessor();
-
-			javaSourceProcessor.setProperties(_properties);
-			javaSourceProcessor.setSourceFormatterArgs(sourceFormatterArgs);
-		}
-
-		JavaClass javaClass = new JavaClass(
-			javaClassName, packagePath, file, fileName, absolutePath, content,
-			javaClassContent, javaClassLineCount, indent + StringPool.TAB, null,
-			javaSourceProcessor);
-
-		String newJavaClassContent = javaClass.formatJavaTerms(
-			getAnnotationsExclusions(), getImmutableFieldTypes(),
-			checkJavaFieldTypesExcludesProperty, javaTermSortExcludesProperty);
-
-		if (!javaClassContent.equals(newJavaClassContent)) {
-			return StringUtil.replaceFirst(
-				content, javaClassContent, newJavaClassContent);
-		}
-
-		return content;
-	}
-
 	protected String formatStringBundler(
 		String fileName, String content, int maxLineLength) {
 
@@ -831,25 +794,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		return getFileNames(
 			sourceFormatterArgs.getBaseDirName(), excludes, includes);
-	}
-
-	protected Set<String> getImmutableFieldTypes() {
-		if (_immutableFieldTypes != null) {
-			return _immutableFieldTypes;
-		}
-
-		Set<String> immutableFieldTypes = SetUtil.fromArray(
-			new String[] {
-				"boolean", "byte", "char", "double", "float", "int", "long",
-				"short", "Boolean", "Byte", "Character", "Class", "Double",
-				"Float", "Int", "Long", "Number", "Short", "String"
-			});
-
-		immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
-
-		_immutableFieldTypes = immutableFieldTypes;
-
-		return _immutableFieldTypes;
 	}
 
 	protected int getLeadingTabCount(String line) {
@@ -1628,7 +1572,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String[] _excludes;
 	private Map<String, List<String>> _exclusionPropertiesMap = new HashMap<>();
 	private SourceMismatchException _firstSourceMismatchException;
-	private Set<String> _immutableFieldTypes;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private List<String> _pluginsInsideModulesDirectoryNames;

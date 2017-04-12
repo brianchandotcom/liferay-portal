@@ -206,52 +206,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkGetterUtilGet(fileName, newContent);
 		}
 
-		pos = newContent.indexOf("\npublic ");
-
-		if (pos != -1) {
-			String javaClassContent = newContent.substring(pos + 1);
-
-			int javaClassLineCount = getLineCount(newContent, pos + 1);
-
-			newContent = formatJavaTerms(
-				className, packagePath, file, fileName, absolutePath,
-				newContent, javaClassContent, javaClassLineCount,
-				StringPool.BLANK, _CHECK_JAVA_FIELD_TYPES_EXCLUDES,
-				_JAVATERM_SORT_EXCLUDES);
-		}
-
-		matcher = _anonymousClassPattern.matcher(newContent);
-
-		while (matcher.find()) {
-			if (getLevel(matcher.group()) != 0) {
-				continue;
-			}
-
-			int x = matcher.start() + 1;
-			int y = matcher.end();
-
-			while (true) {
-				String javaClassContent = newContent.substring(x, y);
-
-				if (getLevel(javaClassContent, "{", "}") != 0) {
-					y++;
-
-					continue;
-				}
-
-				int javaClassLineCount = getLineCount(
-					newContent, matcher.start() + 1);
-
-				newContent = formatJavaTerms(
-					StringPool.BLANK, StringPool.BLANK, file, fileName,
-					absolutePath, newContent, javaClassContent,
-					javaClassLineCount, matcher.group(1),
-					_CHECK_JAVA_FIELD_TYPES_EXCLUDES, _JAVATERM_SORT_EXCLUDES);
-
-				break;
-			}
-		}
-
 		return formatJava(fileName, absolutePath, newContent);
 	}
 
@@ -852,8 +806,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"upgrade.service.util.excludes";
 
 	private boolean _allowUseServiceUtilInServiceImpl;
-	private final Pattern _anonymousClassPattern = Pattern.compile(
-		"\n(\t+)(\\S.* )?new (.|\\(\n)*\\) \\{\n\n");
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
 	private int _maxLineLength;

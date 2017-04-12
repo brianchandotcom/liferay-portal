@@ -13,6 +13,9 @@ import javax.ws.rs.core.Application;
 
 import org.osgi.service.component.annotations.Component;
 
+/**
+ * @author ${author}
+ */
 @ApplicationPath("/greetings")
 @Component(immediate = true, service = Application.class)
 public class ${className}Application extends Application {

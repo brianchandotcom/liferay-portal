@@ -15,14 +15,16 @@
 package com.liferay.site.my.sites.web.internal.portlet;
 
 import com.liferay.portal.kernel.exception.MembershipRequestCommentsException;
+import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.MembershipRequestService;
+import com.liferay.portal.kernel.service.MembershipRequestLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -79,12 +81,21 @@ public class MySitesPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		_membershipRequestService.addMembershipRequest(
-			groupId, comments, serviceContext);
+		long userId = serviceContext.getUserId();
 
-		SessionMessages.add(actionRequest, "membershipRequestSent");
+		if (_membershipRequestLocalService.hasMembershipRequest(
+				userId, groupId, MembershipRequestConstants.STATUS_PENDING)) {
 
-		addSuccessMessage(actionRequest, actionResponse);
+			SessionErrors.add(actionRequest, "membershipAlreadyRequested");
+		}
+		else {
+			_membershipRequestLocalService.addMembershipRequest(
+				userId, groupId, comments, serviceContext);
+
+			SessionMessages.add(actionRequest, "membershipRequestSent");
+
+			addSuccessMessage(actionRequest, actionResponse);
+		}
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -162,10 +173,10 @@ public class MySitesPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setMembershipRequestService(
-		MembershipRequestService membershipRequestService) {
+	protected void setMembershipRequestLocalService(
+		MembershipRequestLocalService membershipRequestLocalService) {
 
-		_membershipRequestService = membershipRequestService;
+		_membershipRequestLocalService = membershipRequestLocalService;
 	}
 
 	@Reference(
@@ -185,7 +196,7 @@ public class MySitesPortlet extends MVCPortlet {
 		_userService = userService;
 	}
 
-	private MembershipRequestService _membershipRequestService;
+	private MembershipRequestLocalService _membershipRequestLocalService;
 	private UserLocalService _userLocalService;
 	private UserService _userService;
 

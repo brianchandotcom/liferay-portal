@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.bundle.support.commands;
 
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
+import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
 import com.sun.net.httpserver.BasicAuthenticator;
 import com.sun.net.httpserver.Headers;
@@ -37,8 +38,14 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URL;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
+
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.http.HttpHeaders;
@@ -295,16 +302,38 @@ public class BundleSupportCommandsTest {
 		initBundleCommand.execute();
 	}
 
-	private static void _assertExists(File dir, String fileName) {
+	private static File _assertExists(File dir, String fileName) {
 		File file = new File(dir, fileName);
 
 		Assert.assertTrue(file.exists());
+
+		return file;
 	}
 
 	private static void _assertNotExists(File dir, String fileName) {
 		File file = new File(dir, fileName);
 
 		Assert.assertFalse(file.exists());
+	}
+
+	private static void _assertPosixFilePermissions(
+			File dir, String fileName,
+			Set<PosixFilePermission> expectedPosixFilePermissions)
+		throws IOException {
+
+		File file = _assertExists(dir, fileName);
+
+		Path path = file.toPath();
+
+		if (!FileUtil.isPosixSupported(path)) {
+			return;
+		}
+
+		Set<PosixFilePermission> actualPosixFilePermissions =
+			Files.getPosixFilePermissions(path);
+
+		Assert.assertEquals(
+			expectedPosixFilePermissions, actualPosixFilePermissions);
 	}
 
 	private static File _createDirectory(File parentDir, String dirName) {
@@ -538,6 +567,8 @@ public class BundleSupportCommandsTest {
 			}
 
 			_assertExists(liferayHomeDir, "README.markdown");
+			_assertPosixFilePermissions(
+				liferayHomeDir, "bin/hello.sh", _expectedPosixFilePermissions);
 		}
 		finally {
 			BundleSupportUtil.setSystemProperty("http.proxyHost", proxyHost);
@@ -579,6 +610,8 @@ public class BundleSupportCommandsTest {
 		_assertExists(liferayHomeDir, "README.markdown");
 		_assertExists(liferayHomeDir, localPropertiesFile.getName());
 		_assertNotExists(liferayHomeDir, prodPropertiesFile.getName());
+		_assertPosixFilePermissions(
+			liferayHomeDir, "bin/hello.sh", _expectedPosixFilePermissions);
 	}
 
 	private static final int _AUTHENTICATED_HTTP_PROXY_SERVER_PORT = 9999;
@@ -607,6 +640,9 @@ public class BundleSupportCommandsTest {
 		new AtomicBoolean();
 	private static HttpProxyServer _authenticatedHttpProxyServer;
 	private static File _bundleZipFile;
+	private static final Set<PosixFilePermission>
+		_expectedPosixFilePermissions = PosixFilePermissions.fromString(
+			"rwxr-x---");
 	private static final AtomicBoolean _httpProxyHit = new AtomicBoolean();
 	private static HttpProxyServer _httpProxyServer;
 	private static HttpServer _httpServer;

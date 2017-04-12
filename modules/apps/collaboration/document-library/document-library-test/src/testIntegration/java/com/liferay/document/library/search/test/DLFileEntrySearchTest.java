@@ -290,7 +290,8 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			serviceContext, dlFileEntryType.getFileEntryTypeId());
 
 		serviceContext.setAttribute(
-			DDMFormValues.class.getName() + ddmStructure.getStructureId(),
+			DDMFormValues.class.getName() + StringPool.POUND +
+				ddmStructure.getStructureId(),
 			ddmFormValues);
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(

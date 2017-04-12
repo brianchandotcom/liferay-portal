@@ -832,7 +832,7 @@
 
 		<execute macro="AssetPublisherPortlet#configureAssetTypePG">
 			<var name="assetSubtype" value="Any" />
-			<var name="selectedAsset" value="Web Content Article" />order
+			<var name="selectedAsset" value="Web Content Article" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

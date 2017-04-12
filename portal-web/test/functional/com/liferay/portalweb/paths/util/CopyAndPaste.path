@@ -9,19 +9,19 @@
 </thead>
 <tbody>
 <tr>
-    <td>COPY_TEST_LABEL</td>
-    <td>//div[@class='example']/h3</td>
-    <td></td>
+	<td>COPY_TEST_LABEL</td>
+	<td>//div[@class='example']/h3</td>
+	<td></td>
 </tr>
 <tr>
-    <td>EDITOR_IFRAME</td>
-    <td>//iframe[@id='mce_0_ifr']</td>
-    <td></td>
+	<td>EDITOR_IFRAME</td>
+	<td>//iframe[@id='mce_0_ifr']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>PASTE_TEXT_AREA</td>
-    <td>//body[@id='tinymce']</td>
-    <td></td>
+	<td>PASTE_TEXT_AREA</td>
+	<td>//body[@id='tinymce']</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

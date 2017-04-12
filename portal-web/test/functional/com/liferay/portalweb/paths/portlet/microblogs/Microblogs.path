@@ -17,7 +17,7 @@
 	<td>COUNTDOWN_HOLDER</td>
 	<td>//span[contains(@class,'countdown')]/span</td>
 	<td></td>
-</tr>	
+</tr>
 <tr>
 	<td>FOOTER</td>
 	<td>//div[@class='footer']</td>

@@ -38,8 +38,11 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -47,9 +50,15 @@ import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.constants.SiteWebKeys;
+import com.liferay.site.model.SiteFriendlyURL;
+import com.liferay.site.service.SiteFriendlyURLLocalServiceUtil;
 import com.liferay.site.util.GroupSearchProvider;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -103,6 +112,24 @@ public class SiteAdminDisplayContext {
 			SiteAdminPortletKeys.SITE_ADMIN, "display-style", "list");
 
 		return _displayStyle;
+	}
+
+	public String getFriendlyURLsXML(Group group) {
+		List<SiteFriendlyURL> siteFriendlyURLs =
+			SiteFriendlyURLLocalServiceUtil.getSiteFriendlyURLs(
+				group.getCompanyId(), group.getGroupId());
+
+		Map<Locale, String> siteFriendlyURLMap = new HashMap<>();
+
+		for (SiteFriendlyURL siteFriendlyURL : siteFriendlyURLs) {
+			siteFriendlyURLMap.put(
+				LocaleUtil.fromLanguageId(siteFriendlyURL.getLanguageId()),
+				siteFriendlyURL.getFriendlyURL());
+		}
+
+		return LocalizationUtil.updateLocalization(
+			siteFriendlyURLMap, StringPool.BLANK, "FriendlyURL",
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 	}
 
 	public Group getGroup() throws PortalException {
@@ -190,6 +217,23 @@ public class SiteAdminDisplayContext {
 		searchURL.setParameter("displayStyle", getDisplayStyle());
 
 		return searchURL;
+	}
+
+	public String getSiteFriendlyURL(Group group) throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String languageId = LocaleUtil.toLanguageId(themeDisplay.getLocale());
+
+		SiteFriendlyURL siteFriendlyURL =
+			SiteFriendlyURLLocalServiceUtil.fetchSiteFriendlyURL(
+				themeDisplay.getCompanyId(), getGroupId(), languageId);
+
+		if (siteFriendlyURL != null) {
+			return siteFriendlyURL.getFriendlyURL();
+		}
+
+		return group.getFriendlyURL();
 	}
 
 	public int getUserGroupsCount(Group group) {

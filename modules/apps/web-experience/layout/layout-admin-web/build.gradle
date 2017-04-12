@@ -8,7 +8,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.product.navigation.control.menu.api", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.product.navigation.site.administration", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.site.api", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.7.0"
@@ -20,4 +19,5 @@ dependencies {
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:export-import:export-import-service")
 	provided project(":apps:web-experience:journal:journal-api")
+	provided project(":apps:web-experience:site:site-api")
 }

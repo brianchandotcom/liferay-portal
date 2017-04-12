@@ -23,8 +23,13 @@ import com.google.template.soy.data.UnsafeSanitizedContentOrdainer;
 import com.google.template.soy.msgs.SoyMsgBundle;
 import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofu.Renderer;
+import com.google.template.soy.tofu.SoyTofuOptions;
 
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -34,6 +39,7 @@ import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.AbstractMultiResourceTemplate;
 import com.liferay.portal.template.soy.utils.SoyHTMLContextValue;
@@ -47,9 +53,11 @@ import java.security.PrivilegedExceptionAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -72,6 +80,21 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 		_templateContextHelper = templateContextHelper;
 		_privileged = privileged;
+		_soyTofuCacheHandler = new SoyTofuCacheHandler(_portalCache);
+	}
+
+	protected SoyMsgBundleBridge createSoyMsgBundleBridge(
+		SoyFileSet soyFileSet, Locale locale) {
+
+		SoyMsgBundle soyMsgBundle = soyFileSet.extractMsgs();
+
+		ResourceBundle languageResourceBundle = _getLanguageResourceBundle(
+			locale);
+
+		SoyMsgBundleBridge soyMsgBundleBridge = new SoyMsgBundleBridge(
+			soyMsgBundle, locale, languageResourceBundle);
+
+		return soyMsgBundleBridge;
 	}
 
 	protected SoyFileSet getSoyFileSet(List<TemplateResource> templateResources)
@@ -127,6 +150,50 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		return soyMapData;
 	}
 
+	protected Optional<SoyMsgBundle> getSoyMsgBundle(
+		SoyFileSet soyFileSet, SoyTofuCacheBag soyTofuCacheBag) {
+
+		Locale locale = (Locale)get("locale");
+
+		if (locale != null) {
+			SoyMsgBundle soyMsgBundle = soyTofuCacheBag.getMessageBundle(
+				locale);
+
+			if (soyMsgBundle == null) {
+				soyMsgBundle = createSoyMsgBundleBridge(soyFileSet, locale);
+
+				soyTofuCacheBag.putMessageBundle(locale, soyMsgBundle);
+			}
+
+			return Optional.of(soyMsgBundle);
+		}
+
+		return Optional.empty();
+	}
+
+	protected SoyTofuCacheBag getSoyTofuCacheBag(
+			List<TemplateResource> templateResources)
+		throws Exception {
+
+		SoyTofuCacheBag soyTofuCacheBag = _soyTofuCacheHandler.get(
+			templateResources);
+
+		if (soyTofuCacheBag == null) {
+			SoyTofuOptions soyTofuOptions = new SoyTofuOptions();
+
+			soyTofuOptions.setUseCaching(true);
+
+			SoyFileSet soyFileSet = getSoyFileSet(templateResources);
+
+			SoyTofu soyTofu = soyFileSet.compileToTofu(soyTofuOptions);
+
+			soyTofuCacheBag = _soyTofuCacheHandler.add(
+				templateResources, soyFileSet, soyTofu);
+		}
+
+		return soyTofuCacheBag;
+	}
+
 	protected String getTemplateContent(TemplateResource templateResource)
 		throws Exception {
 
@@ -178,26 +245,22 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 				throw new TemplateException("No namespace specified.");
 			}
 
-			SoyFileSet soyFileSet = getSoyFileSet(templateResources);
+			SoyTofuCacheBag soyTofuCacheBag = getSoyTofuCacheBag(
+				templateResources);
 
-			SoyTofu soyTofu = soyFileSet.compileToTofu();
+			SoyTofu soyTofu = soyTofuCacheBag.getSoyTofu();
 
 			Renderer renderer = soyTofu.newRenderer(namespace);
 
 			renderer.setData(getSoyMapData());
 
-			Locale locale = (Locale)get("locale");
+			SoyFileSet soyFileSet = soyTofuCacheBag.getSoyFileSet();
 
-			if (locale != null) {
-				SoyMsgBundle soyMsgBundle = soyFileSet.extractMsgs();
+			Optional<SoyMsgBundle> soyMsgBundle = getSoyMsgBundle(
+				soyFileSet, soyTofuCacheBag);
 
-				ResourceBundle languageResourceBundle =
-					_getLanguageResourceBundle(locale);
-
-				SoyMsgBundleBridge soyMsgBundleBridge = new SoyMsgBundleBridge(
-					soyMsgBundle, locale, languageResourceBundle);
-
-				renderer.setMsgBundle(soyMsgBundleBridge);
+			if (soyMsgBundle.isPresent()) {
+				renderer.setMsgBundle(soyMsgBundle.get());
 			}
 
 			boolean renderStrict = GetterUtil.getBoolean(
@@ -221,16 +284,27 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		List<ResourceBundleLoader> resourceBundleLoaders = new ArrayList<>();
 
 		for (TemplateResource templateResource : templateResources) {
-			Bundle templateResourceBundle =
-				_templateContextHelper.getTemplateBundle(
-					templateResource.getTemplateId());
+			String templateId = templateResource.getTemplateId();
 
-			BundleWiring bundleWiring = templateResourceBundle.adapt(
-				BundleWiring.class);
+			try {
+				Bundle templateResourceBundle =
+					_templateContextHelper.getTemplateBundle(templateId);
 
-			resourceBundleLoaders.add(
-				new ClassResourceBundleLoader(
-					"content.Language", bundleWiring.getClassLoader()));
+				BundleWiring bundleWiring = templateResourceBundle.adapt(
+					BundleWiring.class);
+
+				resourceBundleLoaders.add(
+					new ClassResourceBundleLoader(
+						"content.Language", bundleWiring.getClassLoader()));
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Could not get language resource bundle for template " +
+							StringUtil.quote(templateId),
+						e);
+				}
+			}
 		}
 
 		resourceBundleLoaders.add(LanguageUtil.getPortalResourceBundleLoader());
@@ -243,7 +317,13 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		return aggregateResourceBundleLoader.loadResourceBundle(locale);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(SoyTemplate.class);
+
+	private final PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>
+		_portalCache = SingleVMPoolUtil.getPortalCache(
+			SoyTemplate.class.getName());
 	private final boolean _privileged;
+	private final SoyTofuCacheHandler _soyTofuCacheHandler;
 	private final SoyTemplateContextHelper _templateContextHelper;
 
 	private class TemplatePrivilegedExceptionAction

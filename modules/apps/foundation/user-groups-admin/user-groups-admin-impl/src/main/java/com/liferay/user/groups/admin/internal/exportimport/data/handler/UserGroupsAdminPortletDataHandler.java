@@ -56,6 +56,11 @@ public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 		return SCHEMA_VERSION;
 	}
 
+	@Override
+	public boolean isSupportsDataStrategyCopyAsNew() {
+		return false;
+	}
+
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTAL);
@@ -63,7 +68,6 @@ public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "user-groups", true, true, null,
 				UserGroup.class.getName()));
-		setSupportsDataStrategyCopyAsNew(false);
 	}
 
 	@Override

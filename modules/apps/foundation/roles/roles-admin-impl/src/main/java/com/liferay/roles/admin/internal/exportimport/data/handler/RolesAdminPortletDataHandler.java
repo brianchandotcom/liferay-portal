@@ -68,6 +68,11 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 		return SCHEMA_VERSION;
 	}
 
+	@Override
+	public boolean isSupportsDataStrategyCopyAsNew() {
+		return false;
+	}
+
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTAL);
@@ -80,7 +85,6 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 						NAMESPACE, "system-roles", true, false)
 				},
 				Role.class.getName(), StagedModelType.REFERRER_CLASS_NAME_ALL));
-		setSupportsDataStrategyCopyAsNew(false);
 	}
 
 	@Override

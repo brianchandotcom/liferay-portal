@@ -23,14 +23,18 @@ long commerceProductOptionId = BeanParamUtil.getLong(commerceProductOption, requ
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
+
+	renderResponse.setTitle((commerceProductOption == null) ? LanguageUtil.get(request, "new-product-option") : commerceProductOption.getName(locale));
 %>
 
-<portlet:actionURL name="editProductOption" var="editProductOptionActionURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
-	<portlet:param name="commerceProductOptionId" value="<%= String.valueOf(commerceProductOptionId) %>" />
-</portlet:actionURL>
+<portlet:actionURL name="editProductOption" var="editProductOptionActionURL" />
 
 <aui:form action="<%= editProductOptionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceProductOption == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="commerceProductOptionId" type="hidden" value="<%= String.valueOf(commerceProductOptionId) %>" />
+
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
 			backURL="<%= backURL %>"

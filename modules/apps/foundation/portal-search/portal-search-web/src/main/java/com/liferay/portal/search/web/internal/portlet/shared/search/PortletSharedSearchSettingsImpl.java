@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.web.internal.portlet.shared.search;
 
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -45,6 +47,11 @@ public class PortletSharedSearchSettingsImpl
 		_portletPreferencesOptional = portletPreferencesOptional;
 		_portletSharedRequestHelper = portletSharedRequestHelper;
 		_renderRequest = renderRequest;
+	}
+
+	@Override
+	public void addCondition(BooleanClause<Query> booleanClause) {
+		_searchSettings.addCondition(booleanClause);
 	}
 
 	@Override

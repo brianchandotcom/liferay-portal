@@ -31,6 +31,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Arrays;
+
 /**
  * @author David Truong
  * @author Andrea Di Giorgi
@@ -151,7 +153,15 @@ public class InitBundleCommand extends BaseCommand implements StreamLogger {
 	}
 
 	protected void onProgress(String message) {
-		System.out.print("\r" + message);
+		char[] chars = new char[80];
+
+		System.arraycopy(message.toCharArray(), 0, chars, 0, message.length());
+
+		Arrays.fill(chars, message.length(), chars.length - 2, ' ');
+
+		chars[chars.length - 1] = '\r';
+
+		System.out.print(chars);
 	}
 
 	protected void onStarted(String message) {

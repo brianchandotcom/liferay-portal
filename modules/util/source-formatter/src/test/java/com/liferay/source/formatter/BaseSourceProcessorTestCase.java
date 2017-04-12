@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -117,9 +118,13 @@ public abstract class BaseSourceProcessorTestCase {
 		String fullFileName =
 			_DIR_NAME + StringPool.SLASH + fileName + "." + originalExtension;
 
-		File newFile = new File(_temporaryFolder, fileName + "." + extension);
-
 		URL url = classLoader.getResource(fullFileName);
+
+		if (url == null) {
+			throw new FileNotFoundException(fullFileName);
+		}
+
+		File newFile = new File(_temporaryFolder, fileName + "." + extension);
 
 		try (InputStream inputStream = url.openStream()) {
 			FileUtils.copyInputStreamToFile(inputStream, newFile);
@@ -181,8 +186,14 @@ public abstract class BaseSourceProcessorTestCase {
 			String actualFormattedContent = FileUtil.read(
 				new File(modifiedFileNames.get(0)));
 
-			URL expectedURL = classLoader.getResource(
-				_DIR_NAME + "/expected/" + fileName + "." + originalExtension);
+			String expectedFileName =
+				_DIR_NAME + "/expected/" + fileName + "." + originalExtension;
+
+			URL expectedURL = classLoader.getResource(expectedFileName);
+
+			if (expectedURL == null) {
+				throw new FileNotFoundException(expectedFileName);
+			}
 
 			String expectedFormattedContent = IOUtils.toString(
 				expectedURL, StringPool.UTF8);

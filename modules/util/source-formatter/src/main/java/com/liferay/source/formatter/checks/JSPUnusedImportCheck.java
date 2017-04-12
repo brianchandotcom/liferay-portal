@@ -46,6 +46,9 @@ public class JSPUnusedImportCheck extends JSPUnusedTermCheck {
 
 		if (!_contentsMap.isEmpty()) {
 			content = _removeUnusedImports(fileName, content);
+
+			content = JSPSourceUtil.compressImportsOrTaglibs(
+				fileName, content, "<%@ page import=");
 		}
 
 		return content;

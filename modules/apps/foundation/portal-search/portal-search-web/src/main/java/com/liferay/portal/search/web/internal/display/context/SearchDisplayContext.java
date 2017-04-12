@@ -17,13 +17,17 @@ package com.liferay.portal.search.web.internal.display.context;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
+import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
@@ -474,6 +478,8 @@ public class SearchDisplayContext {
 		queryConfig.setQuerySuggestionsMax(getQuerySuggestionsMax());
 
 		addEnabledSearchFacets(searchSettings);
+
+		filterByThisSite(searchSettings);
 	}
 
 	protected Optional<Facet> createFacet(
@@ -491,6 +497,19 @@ public class SearchDisplayContext {
 		}
 
 		return Optional.ofNullable(searchFacet.getFacet());
+	}
+
+	protected void filterByThisSite(SearchSettings searchSettings) {
+		Optional<Long> groupIdOptional = getThisSiteGroupId();
+
+		groupIdOptional.ifPresent(
+			groupId -> {
+				searchSettings.addCondition(
+					new BooleanClauseImpl(
+						new TermQueryImpl(
+							Field.GROUP_ID, String.valueOf(groupId)),
+						BooleanClauseOccur.MUST));
+			});
 	}
 
 	protected SearchScope getSearchScope() {
@@ -522,6 +541,16 @@ public class SearchDisplayContext {
 
 	protected ThemeDisplay getThemeDisplay() {
 		return _themeDisplaySupplier.getThemeDisplay();
+	}
+
+	protected Optional<Long> getThisSiteGroupId() {
+		long searchScopeGroupId = getSearchScopeGroupId();
+
+		if (searchScopeGroupId == 0) {
+			return Optional.empty();
+		}
+
+		return Optional.of(searchScopeGroupId);
 	}
 
 	private Integer _collatedSpellCheckResultDisplayThreshold;

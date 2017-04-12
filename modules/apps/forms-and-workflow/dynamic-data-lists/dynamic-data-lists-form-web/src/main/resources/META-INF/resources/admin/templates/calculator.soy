@@ -3,7 +3,6 @@
 /**
  * Prints the DDL Calculator Component.
  *
- * @param? advancedOperators
  * @param? calculatorAngleLeft
  * @param? calculatorEllipsis
  * @param strings
@@ -32,10 +31,11 @@
 			<li class="border-bottom-right calculator-button" data-calculator-key=".">.</li>
 		</ul>
 		<ul class="calculator-buttons calculator-buttons-operators">
-			<li class="border-top-left border-top-right button-padding-icons calculator-button">{$calculatorEllipsis|noAutoescape}</li>
-			{if $advancedOperators}
-				{$advancedOperators}
-			{/if}
+			<li class="border-top-left border-top-right button-padding-icons calculator-add-operator-button-area">
+				{$calculatorEllipsis|noAutoescape}
+				<div class="calculator-add-operator-button"></div>
+				<div class="container-list-advanced-operators"></div>
+			</li>
 			<li class="calculator-button" data-calculator-key="+">+</li>
 			<li class="calculator-button" data-calculator-key="-">-</li>
 			<li class="calculator-button" data-calculator-key="*">*</li>

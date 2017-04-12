@@ -51,7 +51,11 @@ AUI.add(
 
 						instance._getCalculator().render(calculateContainer.one('.' + CSS_CALCULATE_CONTAINER_CALCULATOR));
 
-						instance._createExpressionField().render(calculateContainer.one('.' + CSS_CALCULATE_CONTAINER_FIELDS));
+						var expressionField = instance._createExpressionField();
+
+						expressionField.render(calculateContainer.one('.' + CSS_CALCULATE_CONTAINER_FIELDS));
+
+						expressionField.getInputNode().setAttribute('disabled');
 
 						instance._createTargetField().render(calculateContainer.one('.' + CSS_CALCULATE_CONTAINER_FIELDS));
 					},
@@ -83,7 +87,7 @@ AUI.add(
 							{
 								displayStyle: 'multiline',
 								fieldName: instance.get('index') + '-action',
-								label: Liferay.Language.get('expression'),
+								placeholder: Liferay.Language.get('the-expression-will-be-displayed-here'),
 								value: value,
 								visible: true
 							}
@@ -106,12 +110,16 @@ AUI.add(
 						instance._targetField = new Liferay.DDM.Field.Select(
 							{
 								fieldName: instance.get('index') + '-action',
-								label: Liferay.Language.get('field'),
+								label: Liferay.Language.get('choose-a-field-to-show-the-result'),
 								options: instance.get('options'),
 								value: value,
 								visible: true
 							}
 						);
+
+						var container = instance._targetField.get('container');
+
+						container.addClass('calculate-field-target');
 
 						return instance._targetField;
 					},

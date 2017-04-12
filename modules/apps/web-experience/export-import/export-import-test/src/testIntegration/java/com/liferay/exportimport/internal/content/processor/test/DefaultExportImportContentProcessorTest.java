@@ -32,12 +32,14 @@ import com.liferay.exportimport.test.util.TestReaderWriter;
 import com.liferay.exportimport.test.util.TestUserIdStrategy;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -236,6 +238,9 @@ public class DefaultExportImportContentProcessorTest {
 
 		String content = replaceParameters(
 			getContent("dl_references.txt"), _fileEntry);
+
+		_exportImportContentProcessor.validateContentReferences(
+			_stagingGroup.getGroupId(), content);
 
 		List<String> urls = getURLs(content);
 
@@ -688,6 +693,9 @@ public class DefaultExportImportContentProcessorTest {
 	}
 
 	protected String replaceParameters(String content, FileEntry fileEntry) {
+		Company company = CompanyLocalServiceUtil.fetchCompany(
+			fileEntry.getCompanyId());
+
 		content = StringUtil.replace(
 			content,
 			new String[] {
@@ -698,7 +706,8 @@ public class DefaultExportImportContentProcessorTest {
 				"[$PATH_FRIENDLY_URL_PRIVATE_USER$]",
 				"[$PATH_FRIENDLY_URL_PUBLIC$]",
 				"[$PRIVATE_LAYOUT_FRIENDLY_URL$]",
-				"[$PUBLIC_LAYOUT_FRIENDLY_URL$]", "[$TITLE$]", "[$UUID$]"
+				"[$PUBLIC_LAYOUT_FRIENDLY_URL$]", "[$TITLE$]", "[$UUID$]",
+				"[$WEB_ID$]"
 			},
 			new String[] {
 				_stagingGroup.getFriendlyURL(),
@@ -712,7 +721,7 @@ public class DefaultExportImportContentProcessorTest {
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				_stagingPrivateLayout.getFriendlyURL(),
 				_stagingPublicLayout.getFriendlyURL(), fileEntry.getTitle(),
-				fileEntry.getUuid()
+				fileEntry.getUuid(), company.getWebId()
 			});
 
 		if (!content.contains("[$TIMESTAMP")) {

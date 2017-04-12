@@ -15,6 +15,8 @@ AUI.add(
 
 		var CSS_FORM_BUILDER_PAGES_CONTENT = A.getClassName('form', 'builder', 'page', 'manager', 'content');
 
+		var CSS_FORM_BUILDER_PAGES_LEXICON = A.getClassName('form', 'builder', 'pages', 'lexicon');
+
 		var CSS_FORM_BUILDER_PAGINATION = A.getClassName('form', 'builder', 'pagination');
 
 		var CSS_FORM_BUILDER_SUCCESS_PAGE = A.getClassName('form', 'builder', 'success', 'page');
@@ -104,12 +106,15 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						var builder = instance.get('builder');
+
 						instance._eventHandlers = [
 							A.on('windowresize', A.bind('_syncPageInformationHeight', instance)),
-							instance.after('titlesChange', A.bind('_afterTitlesChange', instance))
+							instance.after('titlesChange', A.bind('_afterTitlesChange', instance)),
+							builder.after('successPageVisibility', A.bind(instance._afterSuccessPageVisibility, instance))
 						];
 
-						var boundingBox = instance.get('builder').get('boundingBox');
+						var boundingBox = builder.get('boundingBox');
 
 						var content = boundingBox.one('.form-builder-content');
 
@@ -127,7 +132,7 @@ AUI.add(
 
 						successPage.hide();
 
-						content.append(successPage);
+						content.one('.' + CSS_FORM_BUILDER_PAGES_LEXICON).insert(successPage, 'before');
 					},
 
 					destructor: function() {
@@ -194,6 +199,8 @@ AUI.add(
 
 							instance._syncControlTriggersUI();
 
+							instance._getPagination().set('successPage', true);
+
 							var popoverBoundingBox = instance._getPopover().get('boundingBox');
 
 							popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE).hide();
@@ -256,6 +263,17 @@ AUI.add(
 						switchModeNode.toggle(event.newVal > 1);
 					},
 
+					_afterSuccessPageVisibility: function(event) {
+						var instance = this;
+
+						if (event.visible) {
+							instance._showSuccessPage();
+						}
+						else {
+							instance._showLayout();
+						}
+					},
+
 					_afterTitlesChange: function(event) {
 						var instance = this;
 
@@ -271,17 +289,41 @@ AUI.add(
 
 						var pagesQuantity = wizard.get('items').length;
 
+						var pagination = instance._getPagination();
+
 						if (wizard.get('successPage') && selectedWizard === pagesQuantity) {
 							instance._showSuccessPage();
+
+							pagination.set('page', selectedWizard + 1);
 						}
 						else if (selectedWizard > -1) {
 							instance._showLayout();
-							var pagination = instance._getPagination();
 
 							pagination.set('page', selectedWizard + 1);
 
 							instance.set('activePageNumber', selectedWizard + 1);
 						}
+					},
+
+					_createPagination: function() {
+						var instance = this;
+
+						var pagination = new Liferay.DDL.FormBuilderPagination(
+							{
+								boundingBox: '.' + CSS_FORM_BUILDER_PAGINATION,
+								on: {
+									pageChange: A.bind(instance._onCurrentPageChange, instance)
+								},
+								page: instance.get('activePageNumber'),
+								strings: {
+									next: '&#xBB;',
+									prev: '&#xAB;'
+								},
+								total: instance.get('pagesQuantity')
+							}
+						);
+
+						return pagination;
 					},
 
 					_createPopover: function() {
@@ -449,6 +491,8 @@ AUI.add(
 						instance._resetSuccessPage();
 
 						instance._getPopover().hide();
+
+						instance._getPagination().set('successPage', true);
 					},
 
 					_onClickItemWizard: function(event) {
@@ -600,6 +644,8 @@ AUI.add(
 						instance._syncPopoverContent();
 
 						instance._showLayout();
+
+						instance._getPagination().set('successPage', false);
 					},
 
 					_removeWizardPage: function(index) {
@@ -837,6 +883,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-autosize-deprecated', 'aui-char-counter', 'aui-form-builder-page-manager', 'liferay-ddl-form-builder-wizard']
+		requires: ['aui-autosize-deprecated', 'aui-char-counter', 'aui-form-builder-page-manager', 'liferay-ddl-form-builder-wizard', 'liferay-ddm-form-renderer-pagination']
 	}
 );

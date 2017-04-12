@@ -16,6 +16,8 @@ package com.liferay.portal.search.web.search.request;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -27,6 +29,8 @@ import java.util.Optional;
  */
 @ProviderType
 public interface SearchSettings {
+
+	public void addCondition(BooleanClause<Query> booleanClause);
 
 	public void addFacet(Facet facet);
 

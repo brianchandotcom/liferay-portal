@@ -191,7 +191,14 @@
 							path: 'form_builder_pages_manager.js',
 							requires: [
 								'aui-form-builder-page-manager',
+								'liferay-ddl-form-builder-pagination',
 								'liferay-ddl-form-builder-wizard'
+							]
+						},
+						'liferay-ddl-form-builder-pagination': {
+							path: 'form_builder_pagination.js',
+							requires: [
+								'aui-pagination'
 							]
 						},
 						'liferay-ddl-form-builder-render-rule': {

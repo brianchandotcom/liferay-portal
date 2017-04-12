@@ -14,7 +14,9 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaConstructor;
 import com.liferay.source.formatter.parser.JavaMethod;
@@ -46,6 +48,50 @@ public abstract class BaseJavaTermCheck
 		throws Exception;
 
 	protected abstract String[] getCheckableJavaTermNames();
+
+	protected String[] getTernaryOperatorParts(String operator) {
+		int x = -1;
+
+		while (true) {
+			x = operator.indexOf(StringPool.QUESTION, x + 1);
+
+			if (x == -1) {
+				return null;
+			}
+
+			if (!ToolsUtil.isInsideQuotes(operator, x) &&
+				(getLevel(operator.substring(0, x), "<", ">") == 0)) {
+
+				break;
+			}
+		}
+
+		int y = x;
+
+		while (true) {
+			y = operator.indexOf(StringPool.COLON, y + 1);
+
+			if (y == -1) {
+				return null;
+			}
+
+			if (!ToolsUtil.isInsideQuotes(operator, y)) {
+				break;
+			}
+		}
+
+		String falseValue = StringUtil.trim(operator.substring(y + 1));
+		String ifCondition = StringUtil.trim(operator.substring(0, x));
+		String trueValue = StringUtil.trim(operator.substring(x + 1, y));
+
+		if ((getLevel(falseValue) == 0) && (getLevel(ifCondition) == 0) &&
+			(getLevel(trueValue) == 0)) {
+
+			return new String[] {ifCondition, trueValue, falseValue};
+		}
+
+		return null;
+	}
 
 	protected static final String JAVA_CLASS = JavaClass.class.getName();
 

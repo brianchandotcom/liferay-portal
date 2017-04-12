@@ -17,17 +17,17 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.checks.CopyrightCheck;
 import com.liferay.source.formatter.checks.JSPDefineObjectsCheck;
 import com.liferay.source.formatter.checks.JSPEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JSPIfStatementCheck;
+import com.liferay.source.formatter.checks.JSPImportsCheck;
 import com.liferay.source.formatter.checks.JSPLanguageKeysCheck;
 import com.liferay.source.formatter.checks.JSPLogFileNameCheck;
 import com.liferay.source.formatter.checks.JSPModuleIllegalImportsCheck;
@@ -58,7 +58,6 @@ import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,33 +75,6 @@ import org.dom4j.Element;
  * @author Hugo Huijser
  */
 public class JSPSourceProcessor extends BaseSourceProcessor {
-
-	protected String compressImportsOrTaglibs(
-		String fileName, String content, String attributePrefix) {
-
-		if (!fileName.endsWith("init.jsp") && !fileName.endsWith("init.jspf")) {
-			return content;
-		}
-
-		int x = content.indexOf(attributePrefix);
-
-		int y = content.lastIndexOf(attributePrefix);
-
-		y = content.indexOf("%>", y);
-
-		if ((x == -1) || (y == -1) || (x > y)) {
-			return content;
-		}
-
-		String importsOrTaglibs = content.substring(x, y);
-
-		importsOrTaglibs = StringUtil.replace(
-			importsOrTaglibs, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
-			new String[] {"%><%@\r\n", "%><%@\n"});
-
-		return content.substring(0, x) + importsOrTaglibs +
-			content.substring(y);
-	}
 
 	@Override
 	protected String doFormat(
@@ -123,29 +95,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			});
 
 		newContent = fixCompatClassImports(absolutePath, newContent);
-
-		newContent = formatJSPImportsOrTaglibs(
-			fileName, newContent, _compressedJSPImportPattern,
-			_uncompressedJSPImportPattern);
-		newContent = formatJSPImportsOrTaglibs(
-			fileName, newContent, _compressedJSPTaglibPattern,
-			_uncompressedJSPTaglibPattern);
-
-		if ((portalSource || subrepository) &&
-			content.contains("page import=") &&
-			!fileName.contains("init.jsp") &&
-			!fileName.contains("init-ext.jsp") &&
-			!fileName.contains("/taglib/aui/") &&
-			!fileName.endsWith("touch.jsp") &&
-			(fileName.endsWith(".jspf") || content.contains("include file="))) {
-
-			processMessage(fileName, "Move imports to init.jsp");
-		}
-
-		newContent = compressImportsOrTaglibs(
-			fileName, newContent, "<%@ page import=");
-		newContent = compressImportsOrTaglibs(
-			fileName, newContent, "<%@ taglib uri=");
 
 		newContent = formatStringBundler(fileName, newContent, -1);
 
@@ -201,7 +150,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return fileNames;
 		}
 
-		_contentsMap = _getContentsMap();
+		excludes = new String[] {"**/null.jsp", "**/tools/**"};
+
+		List<String> allFileNames = getFileNames(
+			sourceFormatterArgs.getBaseDirName(), null, excludes,
+			getIncludes(), true);
+
+		_contentsMap = _getContentsMap(allFileNames);
 
 		if (sourceFormatterArgs.isFormatCurrentBranch() ||
 			sourceFormatterArgs.isFormatLatestAuthor() ||
@@ -413,34 +368,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatJSPImportsOrTaglibs(
-			String fileName, String content, Pattern compressedPattern,
-			Pattern uncompressedPattern)
-		throws IOException {
-
-		if (fileName.endsWith("init-ext.jsp")) {
-			return content;
-		}
-
-		Matcher matcher = compressedPattern.matcher(content);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String imports = matcher.group();
-
-		String newImports = StringUtil.replace(
-			imports, new String[] {"<%@\r\n", "<%@\n", " %><%@ "},
-			new String[] {"\r\n<%@ ", "\n<%@ ", " %>\n<%@ "});
-
-		content = StringUtil.replaceFirst(content, imports, newImports);
-
-		ImportsFormatter importsFormatter = new JSPImportsFormatter();
-
-		return importsFormatter.format(content, uncompressedPattern);
-	}
-
 	@Override
 	protected List<SourceCheck> getSourceChecks() {
 		return _sourceChecks;
@@ -453,6 +380,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateSourceChecks() throws Exception {
+		if (_contentsMap == null) {
+			_contentsMap = _getContentsMap(sourceFormatterArgs.getFileNames());
+		}
+
 		_sourceChecks.add(new JSPWhitespaceCheck());
 
 		_sourceChecks.add(
@@ -466,6 +397,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				getPluginsInsideModulesDirectoryNames()));
 		_sourceChecks.add(new JSPEmptyLinesCheck());
 		_sourceChecks.add(new JSPIfStatementCheck());
+		_sourceChecks.add(new JSPImportsCheck(portalSource, subrepository));
 		_sourceChecks.add(new JSPLogFileNameCheck(subrepository));
 		_sourceChecks.add(new JSPRedirectBackURLCheck());
 		_sourceChecks.add(new JSPSessionKeysCheck());
@@ -507,42 +439,41 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_moduleSourceChecks.add(new JSPModuleIllegalImportsCheck());
 	}
 
-	private Map<String, String> _getContentsMap() throws Exception {
-		String[] excludes = new String[] {"**/null.jsp", "**/tools/**"};
-
-		List<String> allFileNames = getFileNames(
-			sourceFormatterArgs.getBaseDirName(), null, excludes,
-			getIncludes(), true);
+	private Map<String, String> _getContentsMap(List<String> fileNames)
+		throws Exception {
 
 		Map<String, String> contentsMap = new HashMap<>();
 
-		try {
-			for (String fileName : allFileNames) {
-				fileName = StringUtil.replace(
-					fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-				File file = new File(fileName);
-
-				String content = FileUtil.read(file);
-
-				Matcher matcher = _includeFilePattern.matcher(content);
-
-				String newContent = content;
-
-				while (matcher.find()) {
-					newContent = StringUtil.replaceFirst(
-						newContent, matcher.group(),
-						"@ include file=\"" + matcher.group(1) + "\"",
-						matcher.start());
-				}
-
-				processFormattedFile(file, fileName, content, newContent);
-
-				contentsMap.put(fileName, newContent);
-			}
+		if (ListUtil.isEmpty(fileNames)) {
+			return contentsMap;
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			File file = new File(fileName);
+
+			String content = FileUtil.read(file);
+
+			if (content == null) {
+				continue;
+			}
+
+			Matcher matcher = _includeFilePattern.matcher(content);
+
+			String newContent = content;
+
+			while (matcher.find()) {
+				newContent = StringUtil.replaceFirst(
+					newContent, matcher.group(),
+					"@ include file=\"" + matcher.group(1) + "\"",
+					matcher.start());
+			}
+
+			processFormattedFile(file, fileName, content, newContent);
+
+			contentsMap.put(fileName, newContent);
 		}
 
 		return contentsMap;
@@ -674,10 +605,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private static final String _UNUSED_VARIABLES_EXCLUDES =
 		"jsp.unused.variables.excludes";
 
-	private final Pattern _compressedJSPImportPattern = Pattern.compile(
-		"(<.*\n*page import=\".*>\n*)+", Pattern.MULTILINE);
-	private final Pattern _compressedJSPTaglibPattern = Pattern.compile(
-		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 	private Map<String, String> _contentsMap;
 	private final Pattern _includeFilePattern = Pattern.compile(
 		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
@@ -688,9 +615,5 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"/.*\\.(jsp[f]?|svg)");
 	private final List<SourceCheck> _moduleSourceChecks = new ArrayList<>();
 	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
-	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
-		"(<.*page import=\".*>\n*)+", Pattern.MULTILINE);
-	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(
-		"(<.*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 
 }

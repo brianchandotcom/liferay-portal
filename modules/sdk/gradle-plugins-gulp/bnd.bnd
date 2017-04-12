@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Gradle Plugins Gulp
 Bundle-SymbolicName: com.liferay.gradle.plugins.gulp
-Bundle-Version: 2.0.13
+Bundle-Version: 2.0.14
 Export-Package: com.liferay.gradle.plugins.gulp

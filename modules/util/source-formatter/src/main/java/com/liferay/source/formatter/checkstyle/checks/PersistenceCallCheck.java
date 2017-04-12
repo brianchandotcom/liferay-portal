@@ -170,7 +170,9 @@ public class PersistenceCallCheck extends AbstractCheck {
 		if (siblingAST.getType() == TokenTypes.IDENT) {
 			String methodName = siblingAST.getText();
 
-			if (methodName.startsWith("create")) {
+			if (methodName.equals("clearCache") ||
+				methodName.startsWith("create")) {
+
 				return;
 			}
 		}

@@ -16,9 +16,9 @@
 
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.kernel.util.StringBundler" %>
-<%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
-<%@ page import="com.liferay.taglib.util.OutputTag" %>
+<%@ page import="com.liferay.portal.kernel.util.StringBundler" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.taglib.util.OutputTag" %>
 
 <%
 StringBundler bodyBottomSB = OutputTag.getData(request, WebKeys.PAGE_BODY_BOTTOM);

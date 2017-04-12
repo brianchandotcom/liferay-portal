@@ -1599,7 +1599,7 @@ app.server.type=@{app.server.type}]]></echo>
 	</target>
 
 	<target name="functional-smoke-tomcat80-oracle121-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="oracle" test.portal.log.assert="true" />
+		<run-functional-test app.server.type="tomcat" database.type="oracle" test.portal.log.assert="false" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-postgresql94-jdk8">

@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Gradle Plugins JS Transpiler
 Bundle-SymbolicName: com.liferay.gradle.plugins.js.transpiler
-Bundle-Version: 2.3.10
+Bundle-Version: 2.3.11
 Export-Package: com.liferay.gradle.plugins.js.transpiler

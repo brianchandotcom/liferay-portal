@@ -1139,47 +1139,47 @@ public class BaseTextExportImportContentProcessor
 			portalURL.concat("/image/image_gallery?")
 		};
 
+		String[] completePatterns = new String[patterns.length];
+
 		long[] companyIds = PortalUtil.getCompanyIds();
-
-		String[] completePatterns =
-			new String[patterns.length * companyIds.length];
-
-		int i = 0;
 
 		for (long companyId : companyIds) {
 			Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
 			String webId = company.getWebId();
 
+			int i = 0;
+
 			for (String pattern : patterns) {
 				completePatterns[i] = webId.concat(pattern);
 
 				i++;
 			}
-		}
 
-		int beginPos = -1;
-		int endPos = content.length();
+			int beginPos = -1;
+			int endPos = content.length();
 
-		while (true) {
-			beginPos = StringUtil.lastIndexOfAny(
-				content, completePatterns, endPos);
+			while (true) {
+				beginPos = StringUtil.lastIndexOfAny(
+					content, completePatterns, endPos);
 
-			if (beginPos == -1) {
-				break;
+				if (beginPos == -1) {
+					break;
+				}
+
+				Map<String, String[]> dlReferenceParameters =
+					getDLReferenceParameters(
+						groupId, content,
+						beginPos + portalURL.length() + webId.length(), endPos);
+
+				FileEntry fileEntry = getFileEntry(dlReferenceParameters);
+
+				if (fileEntry == null) {
+					throw new NoSuchFileEntryException();
+				}
+
+				endPos = beginPos - 1;
 			}
-
-			Map<String, String[]> dlReferenceParameters =
-				getDLReferenceParameters(
-					groupId, content, beginPos + portalURL.length(), endPos);
-
-			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
-
-			if (fileEntry == null) {
-				throw new NoSuchFileEntryException();
-			}
-
-			endPos = beginPos - 1;
 		}
 	}
 

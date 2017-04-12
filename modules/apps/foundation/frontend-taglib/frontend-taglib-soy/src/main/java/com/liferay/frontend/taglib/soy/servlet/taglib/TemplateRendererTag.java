@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.soy.utils.SoyContext;
 import com.liferay.portal.template.soy.utils.SoyJavaScriptRenderer;
 import com.liferay.portal.template.soy.utils.SoyTemplateResourcesCollector;
+import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 import java.io.IOException;
@@ -180,7 +181,9 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		String componentJavaScript = javaScriptComponentRenderer.getJavaScript(
 			context, getComponentId(), SetUtil.fromString(getModule()));
 
-		jspWriter.write(componentJavaScript);
+		ScriptTag.doTag(
+			null, null, null, componentJavaScript, getBodyContent(),
+			pageContext);
 	}
 
 	protected void renderTemplate(

@@ -238,8 +238,12 @@ AUI.add(
 						}
 					},
 
-					_afterVal: function() {
+					_afterVal: function(value) {
 						var instance = this;
+
+						if (value) {
+							instance.setHTML(value);
+						}
 
 						return new Do.AlterReturn(
 							'Return editor content',

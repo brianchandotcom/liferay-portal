@@ -73,12 +73,6 @@ public class FormTag extends BaseFormTag {
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 
-		if (getEscapeXml()) {
-			String action = getAction();
-
-			super.setAction(HtmlUtil.escape(action));
-		}
-
 		request.setAttribute("aui:form:validatorTagsMap", _validatorTagsMap);
 		request.setAttribute(
 			"LIFERAY_SHARED_aui:form:checkboxNames", _checkboxNames);

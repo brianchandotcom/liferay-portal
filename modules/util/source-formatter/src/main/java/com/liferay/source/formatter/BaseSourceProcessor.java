@@ -783,8 +783,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		Class<?> clazz = getClass();
 
+		ClassLoader classLoader = clazz.getClassLoader();
+
 		return StringUtil.read(
-			clazz.getResourceAsStream("dependencies/copyright.txt"));
+			classLoader.getResourceAsStream("dependencies/copyright.txt"));
 	}
 
 	protected List<String> getExcludes(String property) {

@@ -115,7 +115,7 @@ public class ElasticsearchFixture implements IndicesAdminClientSupplier {
 			healthExpectations.activeShards);
 		clusterHealthRequest.waitForNodes(
 			String.valueOf(healthExpectations.numberOfNodes));
-		clusterHealthRequest.waitForRelocatingShards(0);
+		clusterHealthRequest.waitForNoRelocatingShards(true);
 		clusterHealthRequest.waitForStatus(healthExpectations.status);
 
 		ActionFuture<ClusterHealthResponse> health = clusterAdminClient.health(

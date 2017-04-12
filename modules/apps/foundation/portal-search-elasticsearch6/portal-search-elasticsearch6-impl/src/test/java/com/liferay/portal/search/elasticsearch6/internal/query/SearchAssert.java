@@ -28,9 +28,9 @@ import java.util.concurrent.TimeUnit;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.common.document.DocumentField;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHitField;
 import org.elasticsearch.search.SearchHits;
 
 import org.junit.Assert;
@@ -73,10 +73,10 @@ public class SearchAssert {
 
 		List<String> values = new ArrayList<>();
 
-		for (SearchHit searchHit : searchHits.hits()) {
-			SearchHitField searchHitField = searchHit.field(field);
+		for (SearchHit searchHit : searchHits.getHits()) {
+			DocumentField documentField = searchHit.field(field);
 
-			String value = searchHitField.value();
+			String value = documentField.getValue();
 
 			values.add(value);
 		}
@@ -89,7 +89,7 @@ public class SearchAssert {
 
 		SearchRequestBuilder searchRequestBuilder = client.prepareSearch();
 
-		searchRequestBuilder.addField(StringPool.STAR);
+		searchRequestBuilder.addStoredField(StringPool.STAR);
 
 		searchRequestBuilder.setQuery(queryBuilder);
 

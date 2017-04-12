@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.admin.cluster.node.info.NodeInfo;
@@ -94,9 +95,9 @@ public class EmbeddedElasticsearchConnectionHttpTest {
 
 		NodesInfoResponse nodesInfoResponse = nodesInfoRequestBuilder.get();
 
-		NodeInfo[] nodeInfos = nodesInfoResponse.getNodes();
+		List<NodeInfo> nodeInfos = nodesInfoResponse.getNodes();
 
-		NodeInfo nodeInfo = nodeInfos[0];
+		NodeInfo nodeInfo = nodeInfos.get(0);
 
 		HttpInfo httpInfo = nodeInfo.getHttp();
 

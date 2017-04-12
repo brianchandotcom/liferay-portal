@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.transport.TransportAddress;
 
 import org.junit.Assert;
@@ -90,11 +89,9 @@ public class RemoteElasticsearchConnectionTest {
 		Assert.assertEquals(
 			transportAddresses.toString(), 1, transportAddresses.size());
 
-		InetSocketTransportAddress inetSocketTransportAddress =
-			(InetSocketTransportAddress)transportAddresses.get(0);
+		TransportAddress transportAddress = transportAddresses.get(0);
 
-		InetSocketAddress inetSocketAddress =
-			inetSocketTransportAddress.address();
+		InetSocketAddress inetSocketAddress = transportAddress.address();
 
 		Assert.assertEquals(hostString, inetSocketAddress.getHostString());
 		Assert.assertEquals(port, inetSocketAddress.getPort());

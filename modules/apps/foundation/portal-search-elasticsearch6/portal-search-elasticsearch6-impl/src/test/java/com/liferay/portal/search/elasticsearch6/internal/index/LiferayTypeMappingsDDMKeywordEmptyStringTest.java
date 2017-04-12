@@ -94,21 +94,21 @@ public class LiferayTypeMappingsDDMKeywordEmptyStringTest {
 					put(ddmField4, RandomTestUtil.randomString());
 					put(ddmField5, String.valueOf(RandomTestUtil.randomLong()));
 					put(ddmField6, RandomTestUtil.randomString());
-					put(ddmField7, RandomTestUtil.randomString());
+					put(ddmField7, StringPool.FALSE);
 					put(ddmField8, RandomTestUtil.randomString());
 					put(ddmField9, RandomTestUtil.randomString());
 				}
 			});
 
-		assertType(field1, "string");
-		assertType(ddmField2, "string");
-		assertType(ddmField3, "string");
-		assertType(ddmField4, "string");
+		assertType(field1, "keyword");
+		assertType(ddmField2, "keyword");
+		assertType(ddmField3, "keyword");
+		assertType(ddmField4, "keyword");
 		assertType(ddmField5, "long");
-		assertType(ddmField6, "string");
+		assertType(ddmField6, "keyword");
 		assertType(ddmField7, "boolean");
-		assertType(ddmField8, "string");
-		assertType(ddmField9, "string");
+		assertType(ddmField8, "keyword");
+		assertType(ddmField9, "keyword");
 	}
 
 	@Rule

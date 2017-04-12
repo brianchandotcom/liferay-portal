@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -137,6 +139,32 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 			commerceProductDefinitionOptionRel);
 
 		return commerceProductDefinitionOptionRel;
+	}
+
+	@Override
+	public List<CommerceProductDefinitionOptionRel> getCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionId, int start, int end) {
+
+		return commerceProductDefinitionOptionRelPersistence.
+			findByCommerceProductDefinitionId(commerceProductDefinitionId, start, end);
+	}
+
+	@Override
+	public List<CommerceProductDefinitionOptionRel> getCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionId, int start, int end,
+		OrderByComparator<CommerceProductDefinitionOptionRel> orderByComparator) {
+
+		return commerceProductDefinitionOptionRelPersistence.
+			findByCommerceProductDefinitionId(
+				commerceProductDefinitionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceProductDefinitionOptionRelsCount(
+		long commerceProductDefinitionId) {
+
+		return commerceProductDefinitionOptionRelPersistence.
+			countByCommerceProductDefinitionId(commerceProductDefinitionId);
 	}
 
 }

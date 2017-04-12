@@ -69,7 +69,7 @@
 
 		<!-- PK fields -->
 
-		<column name="commerceProductDefinitionOptionRelId" primary="true" type="long" />
+		<column db-name="definitionOptionRelId" name="commerceProductDefinitionOptionRelId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -115,7 +115,7 @@
 
 		<!-- PK fields -->
 
-		<column name="commerceProductDefinitionOptionValueRelId" primary="true" type="long" />
+		<column db-name="definitionOptionValueRelId" name="commerceProductDefinitionOptionValueRelId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -131,7 +131,7 @@
 
 		<!-- Other fields -->
 
-		<column name="commerceProductDefinitionOptionRelId"  type="long" />
+		<column db-name="definitionOptionRelId" name="commerceProductDefinitionOptionRelId"  type="long" />
 		<column localized="true" name="title" type="String" />
 		<column name="priority" type="int" />
 

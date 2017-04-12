@@ -48,7 +48,7 @@ if (minuteInterval < 1) {
 
 int hourOfDayValue = hourValue;
 
-if (amPm && (amPmValue == Calendar.PM)) {
+if (amPmValue == Calendar.PM) {
 	hourOfDayValue += 12;
 }
 

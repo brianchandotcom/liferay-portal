@@ -22,11 +22,7 @@ Calendar cal = CalendarFactoryUtil.getCalendar(timeZone, locale);
 int endAmPm = ParamUtil.get(request, "schedulerEndDateAmPm", cal.get(Calendar.AM_PM));
 int endDay = ParamUtil.get(request, "schedulerEndDateDay", cal.get(Calendar.DATE));
 
-int endHour = ParamUtil.get(request, "schedulerEndDateHour", cal.get(Calendar.HOUR_OF_DAY));
-
-if (DateUtil.isFormatAmPm(locale)) {
-	endHour = ParamUtil.get(request, "schedulerEndDateHour", cal.get(Calendar.HOUR));
-}
+int endHour = ParamUtil.get(request, "schedulerEndDateHour", cal.get(Calendar.HOUR));
 
 int endMinute = ParamUtil.get(request, "schedulerEndDateMinute", cal.get(Calendar.MINUTE));
 int endMonth = ParamUtil.get(request, "schedulerEndDateMonth", cal.get(Calendar.MONTH));
@@ -35,11 +31,7 @@ int endYear = ParamUtil.get(request, "schedulerEndDateYear", cal.get(Calendar.YE
 int startAmPm = ParamUtil.get(request, "schedulerStartDateAmPm", cal.get(Calendar.AM_PM));
 int startDay = ParamUtil.get(request, "schedulerStartDateDay", cal.get(Calendar.DATE));
 
-int startHour = ParamUtil.get(request, "schedulerStartDateHour", cal.get(Calendar.HOUR_OF_DAY));
-
-if (DateUtil.isFormatAmPm(locale)) {
-	startHour = ParamUtil.get(request, "schedulerStartDateHour", cal.get(Calendar.HOUR));
-}
+int startHour = ParamUtil.get(request, "schedulerStartDateHour", cal.get(Calendar.HOUR));
 
 int startMinute = ParamUtil.get(request, "schedulerStartDateMinute", cal.get(Calendar.MINUTE));
 int startMonth = ParamUtil.get(request, "schedulerStartDateMonth", cal.get(Calendar.MONTH));

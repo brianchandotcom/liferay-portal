@@ -14,10 +14,13 @@
 
 package com.liferay.portal.template.soy.internal;
 
+import com.liferay.portal.kernel.template.TemplateResource;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -33,6 +36,14 @@ public class SoyTemplateResourcesTracker {
 		_bundleTracker.close();
 	}
 
+	public static List<TemplateResource> getAllTemplateResources() {
+		return _templateResources;
+	}
+
+	public static Bundle getBundle(long bundleId) {
+		return _bundleMap.get(bundleId);
+	}
+
 	public static Collection<Bundle> getBundles() {
 		return _bundleMap.values();
 	}
@@ -42,7 +53,8 @@ public class SoyTemplateResourcesTracker {
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, stateMask,
-			new SoyCapabilityBundleTrackerCustomizer("soy", _bundleMap));
+			new SoyCapabilityBundleTrackerCustomizer(
+				"soy", _bundleMap, _templateResources));
 
 		_bundleTracker.open();
 	}
@@ -50,5 +62,7 @@ public class SoyTemplateResourcesTracker {
 	private static final Map<Long, Bundle> _bundleMap =
 		new ConcurrentHashMap<>();
 	private static BundleTracker<List<BundleCapability>> _bundleTracker;
+	private static final List<TemplateResource> _templateResources =
+		new CopyOnWriteArrayList<>();
 
 }

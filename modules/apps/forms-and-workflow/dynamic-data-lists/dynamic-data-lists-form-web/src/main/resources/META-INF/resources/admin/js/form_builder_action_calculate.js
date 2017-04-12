@@ -5,6 +5,8 @@ AUI.add(
 
 		var CSS_CALCULATE_CONTAINER_FIELDS = A.getClassName('calculate', 'container', 'fields');
 
+		var OPERATORS_MAP = ['+', '-', '*', '/', '.'];
+
 		var FormBuilderActionCalculate = A.Component.create(
 			{
 				ATTRS: {
@@ -43,6 +45,8 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						instance._regexExpression = new RegExp('\\[([^\\]]+)\\]|sum|(.)', 'g');
+
 						instance.on('liferay-ddl-form-builder-calculator:clickedKey', A.bind(instance._handleClickedKey, instance));
 					},
 
@@ -51,7 +55,7 @@ AUI.add(
 
 						return {
 							action: 'calculate',
-							expression: instance._expressionField.getValue(),
+							expression: instance._getCalculateKeyActions().join().replace(/\,/g, ''),
 							target: instance._targetField.getValue()
 						};
 					},
@@ -115,9 +119,9 @@ AUI.add(
 						var action = instance.get('action');
 
 						if (action && action.expression) {
-							value = action.expression;
+							instance._setCalculateKeyActions(action.expression.match(instance._regexExpression));
 
-							instance._setCalculateKeyActions(value.split(''));
+							value = action.expression.replace(/\[|\]/g, '');
 						}
 
 						instance._expressionField = new Liferay.DDM.Field.Text(
@@ -197,11 +201,31 @@ AUI.add(
 								instance._getCalculateKeyActions().pop();
 							}
 							else {
+								instance._removeRepeatedOperatorKey(event.key);
+
 								instance._getCalculateKeyActions().push(event.key);
 							}
 						}
 
-						instance._expressionField.setValue(instance._getCalculateKeyActions().join(''));
+						instance._expressionField.setValue(instance._processExpressionString());
+					},
+
+					_processExpressionString: function(keyActions) {
+						var instance = this;
+
+						return instance._getCalculateKeyActions().join('').replace(/\[|\]/g, '');
+					},
+
+					_removeRepeatedOperatorKey: function(key) {
+						var instance = this;
+
+						if (OPERATORS_MAP.includes(key) && instance._getCalculateKeyActions().length >= 1) {
+							var lastKey = instance._getCalculateKeyActions()[instance._getCalculateKeyActions().length - 1];
+
+							if (OPERATORS_MAP.includes(lastKey)) {
+								instance._getCalculateKeyActions().pop();
+							}
+						}
 					},
 
 					_setCalculateKeyActions: function(value) {

@@ -12,15 +12,6 @@ AUI.add(
 		var FormBuilderCalculator = A.Component.create(
 			{
 				ATTRS: {
-					advancedOperators: {
-						value: [
-							{
-								label: 'SUM',
-								value: 'sum'
-							}
-						]
-					},
-
 					functions: {
 						value: []
 					},
@@ -67,7 +58,7 @@ AUI.add(
 						instance.fire(
 							'clickedKey',
 							{
-								key: event.newVal.join()
+								key: '[' + event.newVal.join() + ']'
 							}
 						);
 					},
@@ -94,7 +85,7 @@ AUI.add(
 						return select;
 					},
 
-					_createSelectOperator: function() {
+					_createSelectFunction: function() {
 						var instance = this;
 
 						var operatorsListContainer = instance.get('boundingBox').one('.container-list-advanced-operators');
@@ -104,7 +95,7 @@ AUI.add(
 								after: {
 									valueChange: A.bind(instance._afterSelectValueChange, instance)
 								},
-								options: instance.get('advancedOperators'),
+								options: instance.get('functions'),
 								triggers: [instance.get('boundingBox').one('.' + CSS_CALCULATOR_ADD_OPERATOR)]
 							}
 						);
@@ -124,11 +115,11 @@ AUI.add(
 						return instance._select;
 					},
 
-					_getSelectOperators: function() {
+					_getSelectFunctions: function() {
 						var instance = this;
 
 						if (!instance._selectOperators) {
-							instance._selectOperators = instance._createSelectOperator();
+							instance._selectOperators = instance._createSelectFunction();
 						}
 
 						return instance._selectOperators;
@@ -170,7 +161,7 @@ AUI.add(
 					_onAddOperatorClick: function() {
 						var instance = this;
 
-						instance._getSelectOperators().toggleList();
+						instance._getSelectFunctions().toggleList();
 					}
 				}
 			}

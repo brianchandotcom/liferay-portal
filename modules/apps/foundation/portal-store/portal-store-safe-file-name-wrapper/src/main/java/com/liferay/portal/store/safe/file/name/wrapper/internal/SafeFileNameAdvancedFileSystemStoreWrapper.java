@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.store.safe.file.name.wrapper;
+package com.liferay.portal.store.safe.file.name.wrapper.internal;
 
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.store.StoreWrapper;

@@ -305,6 +305,8 @@ public class AssetTagsDisplayContext {
 
 		if (AssetTagsPermission.contains(
 				themeDisplay.getPermissionChecker(),
+				AssetTagsPermission.RESOURCE_NAME,
+				AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN,
 				themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG)) {
 
 			return true;

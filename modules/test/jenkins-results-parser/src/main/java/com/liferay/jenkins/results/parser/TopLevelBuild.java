@@ -553,6 +553,7 @@ public class TopLevelBuild extends BaseBuild {
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
 			new PoshiValidationFailureMessageGenerator(),
+			new RebaseFailureMessageGenerator(),
 			new DownstreamFailureMessageGenerator(),
 
 			new GenericFailureMessageGenerator()

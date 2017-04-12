@@ -14,10 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
-
 import java.util.regex.Pattern;
 
 /**
@@ -27,14 +23,7 @@ import java.util.regex.Pattern;
 public class FriendlyURLNormalizerUtil {
 
 	public static FriendlyURLNormalizer getFriendlyURLNormalizer() {
-		FriendlyURLNormalizer friendlyURLNormalizer =
-			_serviceTracker.getService();
-
-		if (friendlyURLNormalizer == null) {
-			return _friendlyURLNormalizer;
-		}
-
-		return friendlyURLNormalizer;
+		return _friendlyURLNormalizer;
 	}
 
 	public static String normalize(String friendlyURL) {
@@ -67,21 +56,11 @@ public class FriendlyURLNormalizerUtil {
 	@Deprecated
 	public void setFriendlyURLNormalizer(
 		FriendlyURLNormalizer friendlyURLNormalizer) {
-
-		_friendlyURLNormalizer = friendlyURLNormalizer;
 	}
 
-	private static FriendlyURLNormalizer _friendlyURLNormalizer;
-	private static final
-		ServiceTracker<FriendlyURLNormalizer, FriendlyURLNormalizer>
-			_serviceTracker;
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(FriendlyURLNormalizer.class);
-
-		_serviceTracker.open();
-	}
+	private static volatile FriendlyURLNormalizer _friendlyURLNormalizer =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			FriendlyURLNormalizer.class, FriendlyURLNormalizerUtil.class,
+			"_friendlyURLNormalizer", true);
 
 }

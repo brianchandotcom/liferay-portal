@@ -734,16 +734,6 @@ public class LocalGitSyncUtil {
 					throw e;
 				}
 
-				try {
-					deleteCacheBranch(
-						gitWorkingDirectory, receiverUsername, senderBranchName,
-						senderUsername, senderBranchSHA, upstreamBranchName,
-						upstreamBranchSHA);
-				}
-				catch (Exception e2) {
-					e2.printStackTrace();
-				}
-
 				localGitRemoteConfigs = null;
 				senderRemoteConfig = null;
 

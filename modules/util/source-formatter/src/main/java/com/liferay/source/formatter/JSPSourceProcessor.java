@@ -386,11 +386,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		_sourceChecks.add(new JSPWhitespaceCheck());
 
-		_sourceChecks.add(
-			new CopyrightCheck(
-				getContent(
-					sourceFormatterArgs.getCopyrightFileName(),
-					PORTAL_MAX_DIR_LEVEL)));
+		_sourceChecks.add(new CopyrightCheck(getCopyright()));
 		_sourceChecks.add(
 			new JSPDefineObjectsCheck(
 				portalSource, subrepository,

@@ -630,11 +630,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private void _populateFileChecks() throws Exception {
 		_sourceChecks.add(new JavaWhitespaceCheck());
 
-		_sourceChecks.add(
-			new CopyrightCheck(
-				getContent(
-					sourceFormatterArgs.getCopyrightFileName(),
-					PORTAL_MAX_DIR_LEVEL)));
+		_sourceChecks.add(new CopyrightCheck(getCopyright()));
 		_sourceChecks.add(new JavaAnnotationsCheck());
 		_sourceChecks.add(new JavaAssertEqualsCheck());
 		_sourceChecks.add(new JavaBooleanUsageCheck());

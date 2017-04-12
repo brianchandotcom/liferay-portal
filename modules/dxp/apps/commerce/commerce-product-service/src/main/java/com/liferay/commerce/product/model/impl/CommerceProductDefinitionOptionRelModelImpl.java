@@ -125,9 +125,10 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.product.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel"),
 			true);
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long PRIORITY_COLUMN_BITMASK = 4L;
+	public static final long COMMERCEPRODUCTDEFINITIONID_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long PRIORITY_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -465,7 +466,19 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 
 	@Override
 	public void setCommerceProductDefinitionId(long commerceProductDefinitionId) {
+		_columnBitmask |= COMMERCEPRODUCTDEFINITIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCommerceProductDefinitionId) {
+			_setOriginalCommerceProductDefinitionId = true;
+
+			_originalCommerceProductDefinitionId = _commerceProductDefinitionId;
+		}
+
 		_commerceProductDefinitionId = commerceProductDefinitionId;
+	}
+
+	public long getOriginalCommerceProductDefinitionId() {
+		return _originalCommerceProductDefinitionId;
 	}
 
 	@JSON
@@ -919,6 +932,10 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 
 		commerceProductDefinitionOptionRelModelImpl._setModifiedDate = false;
 
+		commerceProductDefinitionOptionRelModelImpl._originalCommerceProductDefinitionId = commerceProductDefinitionOptionRelModelImpl._commerceProductDefinitionId;
+
+		commerceProductDefinitionOptionRelModelImpl._setOriginalCommerceProductDefinitionId = false;
+
 		commerceProductDefinitionOptionRelModelImpl._columnBitmask = 0;
 	}
 
@@ -1114,6 +1131,8 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceProductDefinitionId;
+	private long _originalCommerceProductDefinitionId;
+	private boolean _setOriginalCommerceProductDefinitionId;
 	private long _commerceProductOptionId;
 	private String _name;
 	private String _nameCurrentLanguageId;

@@ -3,6 +3,7 @@ create index IX_431C435D on CommerceProductDefinition (groupId);
 create index IX_91058CA1 on CommerceProductDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_E61AC763 on CommerceProductDefinition (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_FBE6E1CF on CommerceProductDefinitionOptionRel (commerceProductDefinitionId);
 create index IX_2F156E05 on CommerceProductDefinitionOptionRel (companyId);
 create index IX_A8BBB1C7 on CommerceProductDefinitionOptionRel (groupId);
 

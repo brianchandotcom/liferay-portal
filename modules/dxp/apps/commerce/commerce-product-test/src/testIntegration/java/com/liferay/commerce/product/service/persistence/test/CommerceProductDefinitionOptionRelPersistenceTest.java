@@ -203,6 +203,14 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCommerceProductDefinitionId()
+		throws Exception {
+		_persistence.countByCommerceProductDefinitionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCommerceProductDefinitionId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceProductDefinitionOptionRel newCommerceProductDefinitionOptionRel =
 			addCommerceProductDefinitionOptionRel();

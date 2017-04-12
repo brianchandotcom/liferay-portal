@@ -127,11 +127,13 @@ public abstract class CommerceProductDefinitionOptionRelLocalServiceBaseImpl
 	 *
 	 * @param commerceProductDefinitionOptionRel the commerce product definition option rel
 	 * @return the commerce product definition option rel that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceProductDefinitionOptionRel deleteCommerceProductDefinitionOptionRel(
-		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel) {
+		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel)
+		throws PortalException {
 		return commerceProductDefinitionOptionRelPersistence.remove(commerceProductDefinitionOptionRel);
 	}
 

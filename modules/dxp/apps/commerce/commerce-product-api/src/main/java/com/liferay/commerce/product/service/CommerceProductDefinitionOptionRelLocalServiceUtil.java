@@ -54,6 +54,19 @@ public class CommerceProductDefinitionOptionRelLocalServiceUtil {
 				   .addCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRel);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel addCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionId, long commerceProductOptionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String ddmFormFieldTypeName, int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceProductDefinitionOptionRel(commerceProductDefinitionId,
+			commerceProductOptionId, nameMap, descriptionMap,
+			ddmFormFieldTypeName, priority, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce product definition option rel with the primary key. Does not add the commerce product definition option rel to the database.
 	*
@@ -71,9 +84,11 @@ public class CommerceProductDefinitionOptionRelLocalServiceUtil {
 	*
 	* @param commerceProductDefinitionOptionRel the commerce product definition option rel
 	* @return the commerce product definition option rel that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel deleteCommerceProductDefinitionOptionRel(
-		com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel) {
+		com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRel);
 	}
@@ -124,6 +139,20 @@ public class CommerceProductDefinitionOptionRelLocalServiceUtil {
 				   .updateCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRel);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel updateCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionOptionRelId,
+		long commerceProductOptionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String ddmFormFieldTypeName, int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId,
+			commerceProductOptionId, nameMap, descriptionMap,
+			ddmFormFieldTypeName, priority, serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -158,6 +187,12 @@ public class CommerceProductDefinitionOptionRelLocalServiceUtil {
 	*/
 	public static int getCommerceProductDefinitionOptionRelsCount() {
 		return getService().getCommerceProductDefinitionOptionRelsCount();
+	}
+
+	public static int getCommerceProductDefinitionOptionRelsCount(
+		long commerceProductDefinitionId) {
+		return getService()
+				   .getCommerceProductDefinitionOptionRelsCount(commerceProductDefinitionId);
 	}
 
 	/**
@@ -233,6 +268,21 @@ public class CommerceProductDefinitionOptionRelLocalServiceUtil {
 	public static java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel> getCommerceProductDefinitionOptionRels(
 		int start, int end) {
 		return getService().getCommerceProductDefinitionOptionRels(start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel> getCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionId, int start, int end) {
+		return getService()
+				   .getCommerceProductDefinitionOptionRels(commerceProductDefinitionId,
+			start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel> getCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel> orderByComparator) {
+		return getService()
+				   .getCommerceProductDefinitionOptionRels(commerceProductDefinitionId,
+			start, end, orderByComparator);
 	}
 
 	/**

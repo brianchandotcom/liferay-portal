@@ -110,6 +110,36 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 				commerceProductDefinitionOptionRel);
 	}
 
+	@Override
+	public List<CommerceProductDefinitionOptionRel>
+		getCommerceProductDefinitionOptionRels(
+			long commerceProductDefinitionId, int start, int end) {
+
+		return commerceProductDefinitionOptionRelPersistence.
+			findByCommerceProductDefinitionId(
+				commerceProductDefinitionId, start, end);
+	}
+
+	@Override
+	public List<CommerceProductDefinitionOptionRel>
+		getCommerceProductDefinitionOptionRels(
+			long commerceProductDefinitionId, int start, int end,
+			OrderByComparator<CommerceProductDefinitionOptionRel>
+				orderByComparator) {
+
+		return commerceProductDefinitionOptionRelPersistence.
+			findByCommerceProductDefinitionId(
+				commerceProductDefinitionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceProductDefinitionOptionRelsCount(
+		long commerceProductDefinitionId) {
+
+		return commerceProductDefinitionOptionRelPersistence.
+			countByCommerceProductDefinitionId(commerceProductDefinitionId);
+	}
+
 	public CommerceProductDefinitionOptionRel
 			updateCommerceProductDefinitionOptionRel(
 				long commerceProductDefinitionOptionRelId,
@@ -139,32 +169,6 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 			commerceProductDefinitionOptionRel);
 
 		return commerceProductDefinitionOptionRel;
-	}
-
-	@Override
-	public List<CommerceProductDefinitionOptionRel> getCommerceProductDefinitionOptionRels(
-		long commerceProductDefinitionId, int start, int end) {
-
-		return commerceProductDefinitionOptionRelPersistence.
-			findByCommerceProductDefinitionId(commerceProductDefinitionId, start, end);
-	}
-
-	@Override
-	public List<CommerceProductDefinitionOptionRel> getCommerceProductDefinitionOptionRels(
-		long commerceProductDefinitionId, int start, int end,
-		OrderByComparator<CommerceProductDefinitionOptionRel> orderByComparator) {
-
-		return commerceProductDefinitionOptionRelPersistence.
-			findByCommerceProductDefinitionId(
-				commerceProductDefinitionId, start, end, orderByComparator);
-	}
-
-	@Override
-	public int getCommerceProductDefinitionOptionRelsCount(
-		long commerceProductDefinitionId) {
-
-		return commerceProductDefinitionOptionRelPersistence.
-			countByCommerceProductDefinitionId(commerceProductDefinitionId);
 	}
 
 }

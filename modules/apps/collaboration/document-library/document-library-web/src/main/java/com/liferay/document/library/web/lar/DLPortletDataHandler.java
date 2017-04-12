@@ -463,19 +463,25 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 						statusProperty.in(
 							stagedModelDataHandler.getExportableStatuses()));
 
+					Criterion fileVersionModifiedDateCriterion =
+						portletDataContext.getDateRangeCriteria(
+							"dlFileVersion.modifiedDate");
+					Criterion fileVersionStatusDateCriterion =
+						portletDataContext.getDateRangeCriteria(
+							"dlFileVersion.statusDate");
 					Criterion modifiedDateCriterion =
-						portletDataContext.getDateRangeCriteria("modifiedDate");
-					Criterion statusDateCriterion =
-						portletDataContext.getDateRangeCriteria("statusDate");
+						portletDataContext.getDateRangeCriteria(
+							"this.modifiedDate");
 
 					if ((modifiedDateCriterion != null) &&
-						(statusDateCriterion != null)) {
+						(fileVersionStatusDateCriterion != null)) {
 
 						Disjunction disjunction =
 							RestrictionsFactoryUtil.disjunction();
 
+						disjunction.add(fileVersionModifiedDateCriterion);
+						disjunction.add(fileVersionStatusDateCriterion);
 						disjunction.add(modifiedDateCriterion);
-						disjunction.add(statusDateCriterion);
 
 						fileVersionDynamicQuery.add(disjunction);
 					}

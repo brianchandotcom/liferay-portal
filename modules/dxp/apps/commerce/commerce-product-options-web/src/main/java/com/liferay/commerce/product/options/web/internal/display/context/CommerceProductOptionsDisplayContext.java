@@ -17,9 +17,11 @@ package com.liferay.commerce.product.options.web.internal.display.context;
 import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.constants.CommerceProductWebKeys;
 import com.liferay.commerce.product.model.CommerceProductOption;
+import com.liferay.commerce.product.model.CommerceProductOptionValue;
 import com.liferay.commerce.product.options.web.internal.display.context.util.CommerceProductRequestHelper;
 import com.liferay.commerce.product.options.web.internal.util.CommerceProductOptionsPortletUtil;
 import com.liferay.commerce.product.service.CommerceProductOptionLocalService;
+import com.liferay.commerce.product.service.CommerceProductOptionValueLocalService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -59,13 +61,16 @@ public class CommerceProductOptionsDisplayContext {
 			HttpServletRequest httpServletRequest,
 			CommerceProductOptionLocalService
 				commerceProductOptionLocalService,
+			CommerceProductOptionValueLocalService
+				commerceProductOptionValueLocalService,
 			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker)
 		throws PortalException {
 
 		_httpServletRequest = httpServletRequest;
-		_commerceProductOptionLocalService = commerceProductOptionLocalService;
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-
+        _commerceProductOptionLocalService = commerceProductOptionLocalService;
+        _commerceProductOptionValueLocalService =
+            commerceProductOptionValueLocalService;
+        _ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 		_commerceProductRequestHelper = new CommerceProductRequestHelper(
 			_httpServletRequest);
 
@@ -137,6 +142,92 @@ public class CommerceProductOptionsDisplayContext {
 		}
 
 		return commerceProductOptions;
+	}
+
+	public SearchContainer<CommerceProductOption>
+		getCommerceProductOptionSearchContainer() throws PortalException {
+
+		if (_commerceProductOptionSearchContainer != null) {
+			return _commerceProductOptionSearchContainer;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		SearchContainer<CommerceProductOption> searchContainer =
+			new SearchContainer<>(
+				_liferayPortletRequest, getPortletURL(), null, null);
+
+		OrderByComparator<CommerceProductOption> orderByComparator =
+			CommerceProductOptionsPortletUtil.
+				getCommerceProductOptionOrderByComparator(
+					getOrderByCol(), getOrderByType());
+
+		searchContainer.setOrderByCol(getOrderByCol());
+		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByType(getOrderByType());
+
+		searchContainer.setEmptyResultsMessage("no-product-options-were-found");
+		searchContainer.setRowChecker(getRowChecker());
+
+		int total =
+			_commerceProductOptionLocalService.getCommerceProductOptionsCount(
+				themeDisplay.getScopeGroupId());
+
+		searchContainer.setTotal(total);
+
+		List<CommerceProductOption> results =
+			_commerceProductOptionLocalService.getCommerceProductOptions(
+				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
+
+		searchContainer.setResults(results);
+
+		_commerceProductOptionSearchContainer = searchContainer;
+
+		return _commerceProductOptionSearchContainer;
+	}
+
+	public SearchContainer<CommerceProductOptionValue>
+			getCommerceProductOptionValueSearchContainer()
+		throws PortalException {
+
+		if (_commerceProductOptionValueSearchContainer != null) {
+			return _commerceProductOptionValueSearchContainer;
+		}
+
+		SearchContainer<CommerceProductOptionValue> searchContainer =
+			new SearchContainer<>(
+				_liferayPortletRequest, getPortletURL(), null, null);
+
+		OrderByComparator<CommerceProductOptionValue> orderByComparator =
+			CommerceProductOptionsPortletUtil.
+				getCommerceProductOptionValueOrderByComparator(
+					getOrderByCol(), getOrderByType());
+
+		searchContainer.setEmptyResultsMessage(
+			"no-product-option-values-were-found");
+
+		int total =
+			_commerceProductOptionValueLocalService.
+				getCommerceProductOptionValuesCount(
+					_commerceProductOption.getCommerceProductOptionId());
+
+		searchContainer.setTotal(total);
+
+		List<CommerceProductOptionValue> results =
+			_commerceProductOptionValueLocalService.
+				getCommerceProductOptionValues(
+					_commerceProductOption.getCommerceProductOptionId(),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					orderByComparator);
+
+		searchContainer.setResults(results);
+
+		_commerceProductOptionValueSearchContainer = searchContainer;
+
+		return _commerceProductOptionValueSearchContainer;
 	}
 
 	public List<DDMFormFieldType> getDDMFormFieldTypes() {
@@ -258,50 +349,6 @@ public class CommerceProductOptionsDisplayContext {
 		return _rowChecker;
 	}
 
-	public SearchContainer<CommerceProductOption> getSearchContainer()
-		throws PortalException {
-
-		if (_productOptionSearchContainer != null) {
-			return _productOptionSearchContainer;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		SearchContainer<CommerceProductOption> searchContainer =
-			new SearchContainer<>(
-				_liferayPortletRequest, getPortletURL(), null, null);
-
-		OrderByComparator<CommerceProductOption> orderByComparator =
-			CommerceProductOptionsPortletUtil.
-				getCommerceProductOptionOrderByComparator(
-					getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(getOrderByType());
-
-		searchContainer.setRowChecker(getRowChecker());
-
-		int total =
-			_commerceProductOptionLocalService.getCommerceProductOptionsCount(
-				themeDisplay.getScopeGroupId());
-
-		searchContainer.setTotal(total);
-
-		List<CommerceProductOption> results =
-			_commerceProductOptionLocalService.getCommerceProductOptions(
-				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
-
-		searchContainer.setResults(results);
-
-		_productOptionSearchContainer = searchContainer;
-
-		return _productOptionSearchContainer;
-	}
-
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -343,6 +390,12 @@ public class CommerceProductOptionsDisplayContext {
 	private CommerceProductOption _commerceProductOption;
 	private final CommerceProductOptionLocalService
 		_commerceProductOptionLocalService;
+	private SearchContainer<CommerceProductOption>
+		_commerceProductOptionSearchContainer;
+	private final CommerceProductOptionValueLocalService
+		_commerceProductOptionValueLocalService;
+	private SearchContainer<CommerceProductOptionValue>
+		_commerceProductOptionValueSearchContainer;
 	private final CommerceProductRequestHelper _commerceProductRequestHelper;
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
@@ -354,8 +407,6 @@ public class CommerceProductOptionsDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
-	private SearchContainer<CommerceProductOption>
-		_productOptionSearchContainer;
 	private RowChecker _rowChecker;
 
 }

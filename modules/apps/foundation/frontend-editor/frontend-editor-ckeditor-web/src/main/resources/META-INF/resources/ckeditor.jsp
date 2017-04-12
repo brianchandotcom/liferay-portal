@@ -631,7 +631,7 @@ public String marshallParams(Map<String, String> params) {
 		sb.append(StringPool.AMPERSAND);
 		sb.append(configParam.getKey());
 		sb.append(StringPool.EQUAL);
-		sb.append(HttpUtil.encodeURL(configParam.getValue()));
+		sb.append(URLCodec.encodeURL(configParam.getValue()));
 	}
 
 	return sb.toString();

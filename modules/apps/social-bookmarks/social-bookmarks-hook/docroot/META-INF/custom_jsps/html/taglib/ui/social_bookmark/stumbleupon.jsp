@@ -37,4 +37,4 @@ else if (displayStyle.equals("vertical")) {
 	<script data-senna-track="temporary" src="<%= HttpUtil.getProtocol(request) %>://platform.stumbleupon.com/1/widgets.js" type="text/javascript"></script>
 </liferay-util:html-bottom>
 
-<su:badge layout="<%= stumbleUponDisplayStyle %>" location="<%= HttpUtil.encodeURL(url) %>"></su:badge>
+<su:badge layout="<%= stumbleUponDisplayStyle %>" location="<%= URLCodec.encodeURL(url) %>"></su:badge>

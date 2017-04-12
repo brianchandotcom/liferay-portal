@@ -89,6 +89,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -361,8 +362,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 							redirect, oldPath, newPath);
 
 						redirect = StringUtil.replace(
-							redirect, HttpUtil.encodeURL(oldPath),
-							HttpUtil.encodeURL(newPath));
+							redirect, URLCodec.encodeURL(oldPath),
+							URLCodec.encodeURL(newPath));
 					}
 				}
 

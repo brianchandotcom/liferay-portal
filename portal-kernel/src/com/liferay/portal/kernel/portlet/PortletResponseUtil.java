@@ -21,13 +21,13 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -287,7 +287,7 @@ public class PortletResponseUtil {
 
 		try {
 			if (!ascii) {
-				String encodedFileName = HttpUtil.encodeURL(fileName, true);
+				String encodedFileName = URLCodec.encodeURL(fileName, true);
 
 				HttpServletRequest request = PortalUtil.getHttpServletRequest(
 					portletRequest);

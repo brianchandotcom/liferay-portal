@@ -25,13 +25,13 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.rss.util.RSSUtil;
@@ -753,7 +753,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			sb.append(entryURL);
 
 			if (entryURL.endsWith(StringPool.SLASH)) {
-				sb.append(HttpUtil.encodeURL(page.getTitle()));
+				sb.append(URLCodec.encodeURL(page.getTitle()));
 			}
 
 			if (diff) {

@@ -91,6 +91,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -2020,11 +2021,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		String changesURL = serviceContext.getPathMain() + "/blogs/rss";
 
 		sb.append("http://blogsearch.google.com/ping?name=");
-		sb.append(HttpUtil.encodeURL(name));
+		sb.append(URLCodec.encodeURL(name));
 		sb.append("&url=");
-		sb.append(HttpUtil.encodeURL(url));
+		sb.append(URLCodec.encodeURL(url));
 		sb.append("&changesURL=");
-		sb.append(HttpUtil.encodeURL(changesURL));
+		sb.append(URLCodec.encodeURL(changesURL));
 
 		String location = sb.toString();
 

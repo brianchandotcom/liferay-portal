@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
@@ -551,10 +552,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			title = TrashUtil.getOriginalTitle(fileEntry.getTitle());
 		}
 
-		sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(title)));
+		sb.append(URLCodec.encodeURL(HtmlUtil.unescape(title)));
 
 		sb.append(StringPool.SLASH);
-		sb.append(HttpUtil.encodeURL(fileEntry.getUuid()));
+		sb.append(URLCodec.encodeURL(fileEntry.getUuid()));
 
 		if (Validator.isNotNull(queryString)) {
 			sb.append(StringPool.QUESTION);

@@ -18,8 +18,8 @@ import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.url.URLConstructor;
 
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.escape.WikiEscapeUtil;
 
@@ -84,13 +84,13 @@ public class LiferayURLConstructor implements URLConstructor {
 			if (name.indexOf(CharPool.SLASH) == -1) {
 				path =
 					"[$ATTACHMENT_URL_PREFIX$][$WIKI_PAGE_NAME$]/" +
-						HttpUtil.encodeURL(
+						URLCodec.encodeURL(
 							JSPWikiEngine.decodeJSPWikiName(name));
 			}
 			else {
 				path =
 					"[$ATTACHMENT_URL_PREFIX$]" +
-						HttpUtil.encodeURL(
+						URLCodec.encodeURL(
 							JSPWikiEngine.decodeJSPWikiName(name));
 			}
 		}

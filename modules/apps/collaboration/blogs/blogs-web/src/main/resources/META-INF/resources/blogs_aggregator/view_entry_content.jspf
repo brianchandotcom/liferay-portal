@@ -29,7 +29,7 @@
 		sb.append("/blogs/find_entry?p_l_id=");
 		sb.append(themeDisplay.getPlid());
 		sb.append("&noSuchEntryRedirect=");
-		sb.append(HttpUtil.encodeURL(showErrorMessageURL.toString()));
+		sb.append(URLCodec.encodeURL(showErrorMessageURL.toString()));
 		sb.append("&entryId=");
 		sb.append(entry.getEntryId());
 

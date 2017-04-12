@@ -32,11 +32,11 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.xml.Namespace;
@@ -600,7 +600,7 @@ public class WSRPConsumerPortletLocalServiceImpl
 	}
 
 	protected String getProxyURL(String url) {
-		return "/proxy?url=" + HttpUtil.encodeURL(url);
+		return "/proxy?url=" + URLCodec.encodeURL(url);
 	}
 
 	protected com.liferay.portal.kernel.xml.QName getQName(QName qName) {

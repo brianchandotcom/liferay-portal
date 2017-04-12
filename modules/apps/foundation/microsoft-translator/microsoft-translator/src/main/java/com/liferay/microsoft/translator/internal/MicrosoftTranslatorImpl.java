@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -68,7 +69,7 @@ public class MicrosoftTranslatorImpl implements MicrosoftTranslator {
 
 		sb.append("https://api.microsofttranslator.com/v2/http.svc/Translate?");
 		sb.append("text=");
-		sb.append(HttpUtil.encodeURL(fromText));
+		sb.append(URLCodec.encodeURL(fromText));
 		sb.append("&from=");
 		sb.append(fromLanguageId);
 		sb.append("&to=");

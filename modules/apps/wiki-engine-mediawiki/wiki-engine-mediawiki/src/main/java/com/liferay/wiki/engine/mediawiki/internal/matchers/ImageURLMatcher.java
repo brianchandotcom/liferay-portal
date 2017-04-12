@@ -15,10 +15,10 @@
 package com.liferay.wiki.engine.mediawiki.internal.matchers;
 
 import com.liferay.portal.kernel.util.CallbackMatcher;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 
 import java.util.regex.MatchResult;
 
@@ -50,7 +50,7 @@ public class ImageURLMatcher extends CallbackMatcher {
 			String title = StringUtil.replace(
 				matchResult.group(1), "%5F", StringPool.UNDERLINE);
 
-			String url = _attachmentURLPrefix + HttpUtil.encodeURL(title);
+			String url = _attachmentURLPrefix + URLCodec.encodeURL(title);
 
 			StringBundler sb = new StringBundler(5);
 

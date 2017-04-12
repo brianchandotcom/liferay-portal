@@ -344,7 +344,7 @@
 		%>
 
 		Liferay.currentURL = '<%= HtmlUtil.escapeJS(currentURL) %>';
-		Liferay.currentURLEncoded = '<%= HtmlUtil.escapeJS(HttpUtil.encodeURL(currentURL)) %>';
+		Liferay.currentURLEncoded = '<%= HtmlUtil.escapeJS(URLCodec.encodeURL(currentURL)) %>';
 	// ]]>
 </script>
 

@@ -16,10 +16,10 @@ package com.liferay.wiki.engine.mediawiki.internal.matchers;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.CallbackMatcher;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.model.WikiPage;
 
@@ -60,7 +60,7 @@ public class DirectURLMatcher extends CallbackMatcher {
 				title = fileName;
 			}
 
-			String url = _attachmentURLPrefix + HttpUtil.encodeURL(fileName);
+			String url = _attachmentURLPrefix + URLCodec.encodeURL(fileName);
 
 			try {
 				for (FileEntry fileEntry : _page.getAttachmentsFileEntries()) {

@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
@@ -213,7 +213,7 @@ public class OpenSSOFilter extends BaseFilter {
 
 		redirect =
 			openSSOConfiguration.loginURL() +
-				HttpUtil.encodeURL("?redirect=" + HttpUtil.encodeURL(redirect));
+				URLCodec.encodeURL("?redirect=" + URLCodec.encodeURL(redirect));
 
 		response.sendRedirect(redirect);
 	}

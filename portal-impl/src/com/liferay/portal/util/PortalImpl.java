@@ -184,6 +184,7 @@ import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -5278,7 +5279,7 @@ public class PortalImpl implements Portal {
 				sb.append("&themeId=");
 			}
 
-			sb.append(HttpUtil.encodeURL(theme.getThemeId()));
+			sb.append(URLCodec.encodeURL(theme.getThemeId()));
 		}
 
 		if (uri.endsWith(".jsp") &&
@@ -5294,7 +5295,7 @@ public class PortalImpl implements Portal {
 				sb.append("&colorSchemeId=");
 			}
 
-			sb.append(HttpUtil.encodeURL(colorScheme.getColorSchemeId()));
+			sb.append(URLCodec.encodeURL(colorScheme.getColorSchemeId()));
 		}
 
 		// Minifier
@@ -6730,7 +6731,7 @@ public class PortalImpl implements Portal {
 		sb.append(clazz.getName());
 
 		sb.append("&previousURL=");
-		sb.append(HttpUtil.encodeURL(getCurrentURL(actionRequest)));
+		sb.append(URLCodec.encodeURL(getCurrentURL(actionRequest)));
 
 		actionResponse.sendRedirect(sb.toString());
 	}
@@ -7263,8 +7264,8 @@ public class PortalImpl implements Portal {
 
 		if (Validator.isNotNull(redirectParam)) {
 			String newRedirectParam = StringUtil.replace(
-				redirectParam, HttpUtil.encodeURL(oldPath),
-				HttpUtil.encodeURL(newPath));
+				redirectParam, URLCodec.encodeURL(oldPath),
+				URLCodec.encodeURL(newPath));
 
 			queryString = StringUtil.replace(
 				queryString, redirectParam, newRedirectParam);

@@ -20,12 +20,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
@@ -106,7 +106,7 @@ public class UserConstants {
 
 		if (_userFileUploadsSettings.isImageCheckToken()) {
 			sb.append("&img_id_token=");
-			sb.append(HttpUtil.encodeURL(DigesterUtil.digest(userUuid)));
+			sb.append(URLCodec.encodeURL(DigesterUtil.digest(userUuid)));
 		}
 
 		sb.append("&t=");

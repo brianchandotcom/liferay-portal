@@ -432,7 +432,7 @@ if (doAsUserId.isEmpty()) {
 	doAsUserId = null;
 }
 else {
-	doAsUserId = HttpUtil.encodeURL(doAsUserId);
+	doAsUserId = URLCodec.encodeURL(doAsUserId);
 
 	sb.append("&doAsUserId=");
 	sb.append(doAsUserId);
@@ -455,7 +455,7 @@ if (doAsUserId != null) {
 	innerSB.append(doAsUserId);
 }
 
-sb.append(HttpUtil.encodeURL(innerSB.toString()));
+sb.append(URLCodec.encodeURL(innerSB.toString()));
 
 sb.append("&refresh=1");
 
@@ -704,7 +704,7 @@ sb.append(themeDisplay.getSiteGroupId());
 
 if (doAsUserId != null) {
 	sb.append("&doAsUserId=");
-	sb.append(HttpUtil.encodeURL(doAsUserId));
+	sb.append(URLCodec.encodeURL(doAsUserId));
 }
 
 sb.append("&");
@@ -724,7 +724,7 @@ if (doAsUserId != null) {
 	innerSB.append(doAsUserId);
 }
 
-sb.append(HttpUtil.encodeURL(innerSB.toString()));
+sb.append(URLCodec.encodeURL(innerSB.toString()));
 
 sb.append("&refresh=1");
 

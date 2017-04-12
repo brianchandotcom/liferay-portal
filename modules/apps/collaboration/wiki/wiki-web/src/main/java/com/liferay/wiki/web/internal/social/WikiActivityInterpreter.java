@@ -24,11 +24,11 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -106,7 +106,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 				sb.append("&nodeId=");
 				sb.append(pageResource.getNodeId());
 				sb.append("&title=");
-				sb.append(HttpUtil.encodeURL(pageResource.getTitle()));
+				sb.append(URLCodec.encodeURL(pageResource.getTitle()));
 				sb.append("&fileName=");
 				sb.append(fileEntryTitle);
 

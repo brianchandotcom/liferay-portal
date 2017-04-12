@@ -464,12 +464,6 @@ public class PortalImplUnitTest extends PowerMockito {
 		);
 
 		when(
-			HttpUtil.encodeURL(Mockito.anyString())
-		).thenAnswer(
-			new ReturnArgumentCalledAnswer<String>(0)
-		);
-
-		when(
 			HttpUtil.getPath(Mockito.anyString())
 		).thenAnswer(
 			new ReturnArgumentCalledAnswer<String>(0)

@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.wiki.engine.WikiEngine;
@@ -228,7 +228,7 @@ public class WikiEngineRenderer {
 		sb.append("&nodeId=");
 		sb.append(page.getNodeId());
 		sb.append("&title=");
-		sb.append(HttpUtil.encodeURL(page.getTitle()));
+		sb.append(URLCodec.encodeURL(page.getTitle()));
 		sb.append("&fileName=");
 
 		String attachmentURLPrefix = sb.toString();
@@ -295,7 +295,7 @@ public class WikiEngineRenderer {
 			String replacement = null;
 
 			if (matcher.groupCount() >= 1) {
-				String encodedTitle = HttpUtil.encodeURL(
+				String encodedTitle = URLCodec.encodeURL(
 					HtmlUtil.unescape(matcher.group(1)));
 
 				replacement = url.replace("$1", encodedTitle);

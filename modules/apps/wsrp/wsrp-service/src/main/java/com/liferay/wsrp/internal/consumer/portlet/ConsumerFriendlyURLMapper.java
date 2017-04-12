@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.portlet.BaseFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.wsrp.constants.WSRPPortletKeys;
 
 import java.util.Map;
@@ -158,7 +158,7 @@ public class ConsumerFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 	protected void addPathElement(StringBuilder sb, String value) {
 		sb.append(StringPool.SLASH);
-		sb.append(GetterUtil.get(HttpUtil.encodeURL(value), StringPool.DASH));
+		sb.append(GetterUtil.get(URLCodec.encodeURL(value), StringPool.DASH));
 	}
 
 	private static final String _MAPPING = "consumer";

@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
@@ -56,7 +56,7 @@ public class WikiUtil {
 		sb.append("&nodeId=");
 		sb.append(nodeId);
 		sb.append("&title=");
-		sb.append(HttpUtil.encodeURL(title));
+		sb.append(URLCodec.encodeURL(title));
 		sb.append("&fileName=");
 
 		return sb.toString();

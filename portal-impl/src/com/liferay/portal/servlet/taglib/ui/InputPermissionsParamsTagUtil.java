@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -113,7 +113,7 @@ public class InputPermissionsParamsTagUtil {
 						sb.append(StringPool.AMPERSAND);
 						sb.append(renderResponse.getNamespace());
 						sb.append("groupPermissions=");
-						sb.append(HttpUtil.encodeURL(action));
+						sb.append(URLCodec.encodeURL(action));
 					}
 				}
 
@@ -121,7 +121,7 @@ public class InputPermissionsParamsTagUtil {
 					sb.append(StringPool.AMPERSAND);
 					sb.append(renderResponse.getNamespace());
 					sb.append("guestPermissions=");
-					sb.append(HttpUtil.encodeURL(action));
+					sb.append(URLCodec.encodeURL(action));
 				}
 			}
 
@@ -131,7 +131,7 @@ public class InputPermissionsParamsTagUtil {
 			sb.append(StringPool.AMPERSAND);
 			sb.append(renderResponse.getNamespace());
 			sb.append("inputPermissionsViewRole=");
-			sb.append(HttpUtil.encodeURL(inputPermissionsViewRole));
+			sb.append(URLCodec.encodeURL(inputPermissionsViewRole));
 
 			pageContext.getOut().print(sb.toString());
 		}

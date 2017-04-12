@@ -83,10 +83,19 @@ public class HttpUtil {
 		return getHttp().encodePath(path);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link URLCodec#encodeURL(String)}
+	 */
+	@Deprecated
 	public static String encodeURL(String url) {
 		return getHttp().encodeURL(url);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by
+	 *     {@link URLCodec#encodeURL(String, boolean)}
+	 */
+	@Deprecated
 	public static String encodeURL(String url, boolean escapeSpaces) {
 		return getHttp().encodeURL(url, escapeSpaces);
 	}

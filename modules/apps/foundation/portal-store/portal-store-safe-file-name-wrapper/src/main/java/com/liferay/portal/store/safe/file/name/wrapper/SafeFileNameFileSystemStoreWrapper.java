@@ -16,7 +16,6 @@ package com.liferay.portal.store.safe.file.name.wrapper;
 
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.store.StoreWrapper;
-import com.liferay.portal.store.safe.file.name.SafeFileNameStore;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

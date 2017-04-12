@@ -16,7 +16,6 @@ package com.liferay.portal.store.ignore.duplicates.wrapper;
 
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.store.StoreWrapper;
-import com.liferay.portal.store.ignore.duplicates.IgnoreDuplicatesStore;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

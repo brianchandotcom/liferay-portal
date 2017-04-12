@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.store.safe.file.name;
+package com.liferay.portal.store.safe.file.name.wrapper;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.store.Store;

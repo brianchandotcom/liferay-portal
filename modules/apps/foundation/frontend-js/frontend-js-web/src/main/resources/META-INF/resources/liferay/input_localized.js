@@ -240,7 +240,7 @@ AUI.add(
 						instance._fillDefaultLanguage = !defaultLanguageValue;
 
 						if (editor) {
-							editor.setHTML(inputPlaceholder.val());
+							editor.setHTML(inputLanguageValue);
 						}
 
 						if (instance._inputPlaceholderDescription) {

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal;
 
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
@@ -23,8 +25,12 @@ import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -33,8 +39,11 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class SearchEngineInitializer implements Runnable {
 
-	public SearchEngineInitializer(long companyId) {
+	public SearchEngineInitializer(
+		long companyId, PortalExecutorManager portalExecutorManager) {
+
 		_companyId = companyId;
+		_portalExecutorManager = portalExecutorManager;
 		_usedSearchEngineIds = new HashSet<>();
 	}
 
@@ -83,6 +92,10 @@ public class SearchEngineInitializer implements Runnable {
 		catch (InterruptedException ie) {
 		}
 
+		ThreadPoolExecutor threadPoolExecutor =
+			_portalExecutorManager.getPortalExecutor(
+				SearchEngineInitializer.class.getName());
+
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
@@ -94,6 +107,8 @@ public class SearchEngineInitializer implements Runnable {
 
 			Set<String> searchEngineIds = new HashSet<>();
 
+			List<FutureTask<Void>> futureTasks = new ArrayList<>();
+
 			for (Indexer<?> indexer : IndexerRegistryUtil.getIndexers()) {
 				String searchEngineId = indexer.getSearchEngineId();
 
@@ -103,7 +118,25 @@ public class SearchEngineInitializer implements Runnable {
 						true);
 				}
 
-				reindex(indexer);
+				FutureTask<Void> futureTask = new FutureTask<>(
+					new Callable<Void>() {
+
+						@Override
+						public Void call() throws Exception {
+							reindex(indexer);
+
+							return null;
+						}
+
+					});
+
+				threadPoolExecutor.submit(futureTask);
+
+				futureTasks.add(futureTask);
+			}
+
+			for (FutureTask<Void> futureTask : futureTasks) {
+				futureTask.get();
 			}
 
 			if (_log.isInfoEnabled()) {
@@ -148,6 +181,7 @@ public class SearchEngineInitializer implements Runnable {
 
 	private final long _companyId;
 	private boolean _finished;
+	private final PortalExecutorManager _portalExecutorManager;
 	private final Set<String> _usedSearchEngineIds;
 
 }

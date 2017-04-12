@@ -15,6 +15,7 @@
 package com.liferay.portal.search.internal.background.task;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
@@ -27,9 +28,15 @@ import com.liferay.portal.search.internal.SearchEngineInitializer;
 public class ReindexPortalBackgroundTaskExecutor
 	extends ReindexBackgroundTaskExecutor {
 
+	public ReindexPortalBackgroundTaskExecutor(
+		PortalExecutorManager portalExecutorManager) {
+
+		_portalExecutorManager = portalExecutorManager;
+	}
+
 	@Override
 	public BackgroundTaskExecutor clone() {
-		return new ReindexPortalBackgroundTaskExecutor();
+		return new ReindexPortalBackgroundTaskExecutor(_portalExecutorManager);
 	}
 
 	@Override
@@ -43,7 +50,8 @@ public class ReindexPortalBackgroundTaskExecutor
 
 			try {
 				SearchEngineInitializer searchEngineInitializer =
-					new SearchEngineInitializer(companyId);
+					new SearchEngineInitializer(
+						companyId, _portalExecutorManager);
 
 				searchEngineInitializer.reindex();
 			}
@@ -60,5 +68,7 @@ public class ReindexPortalBackgroundTaskExecutor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReindexPortalBackgroundTaskExecutor.class);
+
+	private final PortalExecutorManager _portalExecutorManager;
 
 }

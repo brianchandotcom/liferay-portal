@@ -27,11 +27,17 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 
 import java.util.Arrays;
+import java.util.Set;
 
 /**
  * @author David Truong
@@ -68,6 +74,7 @@ public class InitBundleCommand extends BaseCommand implements StreamLogger {
 		FileUtil.unpack(path, getLiferayHomePath(), _stripComponents);
 
 		_copyConfigs();
+		_fixPosixFilePermissions();
 	}
 
 	public File getCacheDir() {
@@ -197,9 +204,41 @@ public class InitBundleCommand extends BaseCommand implements StreamLogger {
 		}
 	}
 
+	private void _fixPosixFilePermissions() throws IOException {
+		Path dirPath = getLiferayHomePath();
+
+		if (!FileUtil.isPosixSupported(dirPath)) {
+			return;
+		}
+
+		Files.walkFileTree(
+			dirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String fileName = String.valueOf(path.getFileName());
+
+					if (fileName.endsWith(".sh")) {
+						Files.setPosixFilePermissions(
+							path, _shPosixFilePermissions);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
 	private static final int _DEFAULT_STRIP_COMPONENTS = 1;
 
 	private static final URL _DEFAULT_URL;
+
+	private static final Set<PosixFilePermission> _shPosixFilePermissions =
+		PosixFilePermissions.fromString("rwxr-x---");
 
 	static {
 		try {

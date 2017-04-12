@@ -48,6 +48,7 @@ import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
@@ -325,6 +326,15 @@ public class FileUtil {
 		URL url = codeSource.getLocation();
 
 		return new File(url.toURI());
+	}
+
+	public static boolean isPosixSupported(Path path) {
+		FileSystem fileSystem = path.getFileSystem();
+
+		Set<String> supportedFileAttributeViews =
+			fileSystem.supportedFileAttributeViews();
+
+		return supportedFileAttributeViews.contains("posix");
 	}
 
 	public static void tar(Path sourcePath, File tarFile, boolean includeFolder)

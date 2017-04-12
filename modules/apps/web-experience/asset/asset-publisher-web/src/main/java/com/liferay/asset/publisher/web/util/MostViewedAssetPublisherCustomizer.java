@@ -17,7 +17,6 @@ package com.liferay.asset.publisher.web.util;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.util.AssetEntryQueryProcessor;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -42,9 +41,7 @@ public class MostViewedAssetPublisherCustomizer
 
 	@Override
 	public boolean isEnablePermissions(HttpServletRequest request) {
-		if (!AssetPublisherWebConfigurationValues.
-				PERMISSION_CHECKING_CONFIGURABLE) {
-
+		if (!assetPublisherWebConfiguration.permissionCheckingConfigurable()) {
 			return true;
 		}
 
@@ -63,7 +60,7 @@ public class MostViewedAssetPublisherCustomizer
 
 	@Override
 	public boolean isOrderingByTitleEnabled(HttpServletRequest request) {
-		if (!AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX) {
+		if (!assetPublisherWebConfiguration.searchWithIndex()) {
 			return false;
 		}
 
@@ -99,7 +96,7 @@ public class MostViewedAssetPublisherCustomizer
 
 	@Override
 	public boolean isShowSubtypeFieldsFilter(HttpServletRequest request) {
-		if (!AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX) {
+		if (!assetPublisherWebConfiguration.searchWithIndex()) {
 			return false;
 		}
 

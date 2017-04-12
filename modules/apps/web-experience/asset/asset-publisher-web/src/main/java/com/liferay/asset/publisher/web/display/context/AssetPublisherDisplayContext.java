@@ -25,7 +25,8 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
+import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -99,6 +100,9 @@ public class AssetPublisherDisplayContext {
 		PortletPreferences portletPreferences) {
 
 		_assetPublisherCustomizer = assetPublisherCustomizer;
+		_assetPublisherWebConfiguration =
+			(AssetPublisherWebConfiguration)portletRequest.getAttribute(
+				AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION);
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_portletPreferences = portletPreferences;
@@ -363,8 +367,7 @@ public class AssetPublisherDisplayContext {
 			_displayStyle = GetterUtil.getString(
 				_portletPreferences.getValue(
 					"displayStyle",
-					AssetPublisherWebConfigurationValues.
-						DISPLAY_STYLE_DEFAULT));
+					_assetPublisherWebConfiguration.defaultDisplayStyle()));
 		}
 
 		return _displayStyle;
@@ -1029,12 +1032,11 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public Boolean isShowEnablePermissions() {
-		if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX) {
+		if (_assetPublisherWebConfiguration.searchWithIndex()) {
 			return false;
 		}
 
-		return AssetPublisherWebConfigurationValues.
-			PERMISSION_CHECKING_CONFIGURABLE;
+		return _assetPublisherWebConfiguration.permissionCheckingConfigurable();
 	}
 
 	public boolean isShowEnableRelatedAssets() {
@@ -1220,6 +1222,8 @@ public class AssetPublisherDisplayContext {
 	private AssetEntryQuery _assetEntryQuery;
 	private String _assetLinkBehavior;
 	private final AssetPublisherCustomizer _assetPublisherCustomizer;
+	private final AssetPublisherWebConfiguration
+		_assetPublisherWebConfiguration;
 	private Map<String, Serializable> _attributes;
 	private long[] _availableClassNameIds;
 	private long[] _classNameIds;

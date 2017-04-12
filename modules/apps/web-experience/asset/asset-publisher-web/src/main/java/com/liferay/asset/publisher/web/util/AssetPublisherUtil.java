@@ -32,9 +32,10 @@ import com.liferay.asset.kernel.util.AssetEntryQueryProcessor;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
 import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,12 +63,14 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -108,6 +111,7 @@ import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -855,10 +859,13 @@ public class AssetPublisherUtil {
 	public static Map<Locale, String> getEmailAssetEntryAddedBodyMap(
 		PortletPreferences portletPreferences) {
 
+		LocalizedValuesMap emailAssetEntryAddedBodyMap =
+			_assetPublisherWebConfiguration.emailAssetEntryAddedBody();
+
 		return LocalizationUtil.getLocalizationMap(
 			portletPreferences, "emailAssetEntryAddedBody",
-			AssetPublisherWebConfigurationValues.EMAIL_ASSET_ENTRY_ADDED_BODY,
-			AssetPublisherWebConfigurationValues.EMAIL_ASSET_ENTRY_ADDED_BODY,
+			emailAssetEntryAddedBodyMap.get(LocaleUtil.getSiteDefault()),
+			emailAssetEntryAddedBodyMap.get(LocaleUtil.getSiteDefault()),
 			AssetPublisherUtil.class.getClassLoader());
 	}
 
@@ -872,20 +879,21 @@ public class AssetPublisherUtil {
 			return GetterUtil.getBoolean(emailAssetEntryAddedEnabled);
 		}
 		else {
-			return AssetPublisherWebConfigurationValues.
-				EMAIL_ASSET_ENTRY_ADDED_ENABLED;
+			return
+				_assetPublisherWebConfiguration.emailAssetEntryAddedEnabled();
 		}
 	}
 
 	public static Map<Locale, String> getEmailAssetEntryAddedSubjectMap(
 		PortletPreferences portletPreferences) {
 
+		LocalizedValuesMap emailAssetEntryAddedSubjectMap =
+			_assetPublisherWebConfiguration.emailAssetEntryAddedSubject();
+
 		return LocalizationUtil.getLocalizationMap(
 			portletPreferences, "emailAssetEntryAddedSubject",
-			AssetPublisherWebConfigurationValues.
-				EMAIL_ASSET_ENTRY_ADDED_SUBJECT,
-			AssetPublisherWebConfigurationValues.
-				EMAIL_ASSET_ENTRY_ADDED_SUBJECT,
+			emailAssetEntryAddedSubjectMap.get(LocaleUtil.getSiteDefault()),
+			emailAssetEntryAddedSubjectMap.get(LocaleUtil.getSiteDefault()),
 			AssetPublisherUtil.class.getClassLoader());
 	}
 
@@ -959,7 +967,7 @@ public class AssetPublisherUtil {
 
 		return PortalUtil.getEmailFromAddress(
 			portletPreferences, companyId,
-			AssetPublisherWebConfigurationValues.EMAIL_FROM_ADDRESS);
+			_assetPublisherWebConfiguration.emailFromAddress());
 	}
 
 	public static String getEmailFromName(
@@ -967,7 +975,7 @@ public class AssetPublisherUtil {
 
 		return PortalUtil.getEmailFromName(
 			portletPreferences, companyId,
-			AssetPublisherWebConfigurationValues.EMAIL_FROM_NAME);
+			_assetPublisherWebConfiguration.emailFromName());
 	}
 
 	public static long getGroupIdFromScopeId(
@@ -1517,7 +1525,7 @@ public class AssetPublisherUtil {
 	protected static boolean isSearchWithIndex(
 		String portletName, AssetEntryQuery assetEntryQuery) {
 
-		if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX &&
+		if (_assetPublisherWebConfiguration.searchWithIndex() &&
 			(assetEntryQuery.getLinkedAssetEntryId() == 0) &&
 			!portletName.equals(
 				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
@@ -1542,8 +1550,12 @@ public class AssetPublisherUtil {
 	}
 
 	@Activate
-	protected void activate() {
+	@Modified
+	protected void activate(Map<String, Object> properties) {
 		_instance = this;
+
+		_assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
+			AssetPublisherWebConfiguration.class, properties);
 	}
 
 	@Reference(unbind = "-")
@@ -1734,6 +1746,8 @@ public class AssetPublisherUtil {
 	private static AssetCategoryLocalService _assetCategoryLocalService;
 	private static AssetEntryLocalService _assetEntryLocalService;
 	private static AssetEntryService _assetEntryService;
+	private static AssetPublisherWebConfiguration
+		_assetPublisherWebConfiguration;
 	private static AssetTagLocalService _assetTagLocalService;
 	private static DDMIndexer _ddmIndexer;
 	private static GroupLocalService _groupLocalService;

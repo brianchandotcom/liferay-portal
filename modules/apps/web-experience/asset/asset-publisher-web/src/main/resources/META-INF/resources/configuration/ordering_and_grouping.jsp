@@ -33,7 +33,7 @@
 		<aui:option label="expiration-date" value="expirationDate" />
 		<aui:option label="priority" value="priority" />
 
-		<c:if test="<%= !AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX %>">
+		<c:if test="<%= !assetPublisherWebConfiguration.searchWithIndex() %>">
 			<aui:option label="view-count" value="viewCount" />
 			<aui:option label="ratings" value="ratings" />
 		</c:if>
@@ -62,7 +62,7 @@
 		<aui:option label="expiration-date" selected='<%= orderByColumn2.equals("expirationDate") %>' value="expirationDate" />
 		<aui:option label="priority" selected='<%= orderByColumn2.equals("priority") %>' value="priority" />
 
-		<c:if test="<%= !AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX %>">
+		<c:if test="<%= !assetPublisherWebConfiguration.searchWithIndex() %>">
 			<aui:option label="view-count" selected='<%= orderByColumn2.equals("viewCount") %>' value="viewCount" />
 			<aui:option label="ratings" selected='<%= orderByColumn2.equals("ratings") %>' value="ratings" />
 		</c:if>

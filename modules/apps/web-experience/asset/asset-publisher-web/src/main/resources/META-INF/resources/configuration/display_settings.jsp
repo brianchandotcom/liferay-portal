@@ -27,10 +27,10 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 <div class="display-template">
 	<liferay-ddm:template-selector
 		className="<%= AssetEntry.class.getName() %>"
-		defaultDisplayStyle="<%= AssetPublisherWebConfigurationValues.DISPLAY_STYLE_DEFAULT %>"
+		defaultDisplayStyle="<%= assetPublisherWebConfiguration.defaultDisplayStyle() %>"
 		displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
 		displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"
-		displayStyles="<%= Arrays.asList(AssetPublisherWebConfigurationValues.DISPLAY_STYLES) %>"
+		displayStyles="<%= Arrays.asList(assetPublisherWebConfiguration.displayStyles()) %>"
 		label="display-template"
 		refreshURL="<%= configurationRenderURL.toString() %>"
 	/>
@@ -73,7 +73,7 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 
 </aui:select>
 
-<c:if test="<%= !AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX %>">
+<c:if test="<%= !assetPublisherWebConfiguration.searchWithIndex() %>">
 	<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
 		<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isExcludeZeroViewCount() %>" />
 	</c:if>

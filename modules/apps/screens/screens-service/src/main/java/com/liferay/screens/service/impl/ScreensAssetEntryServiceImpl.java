@@ -122,7 +122,7 @@ public class ScreensAssetEntryServiceImpl
 				Layout layout = layouts.get(0);
 
 				List<AssetEntry> assetEntries =
-					AssetPublisherUtil.getAssetEntries(
+					_assetPublisherUtil.getAssetEntries(
 						portletPreferences, layout, groupId, max, false);
 
 				assetEntries = filterAssetEntries(assetEntries);
@@ -139,7 +139,7 @@ public class ScreensAssetEntryServiceImpl
 					PermissionCheckerFactoryUtil.create(getUser());
 
 				List<AssetEntry> assetEntries =
-					AssetPublisherUtil.getAssetEntries(
+					_assetPublisherUtil.getAssetEntries(
 						null, portletPreferences, permissionChecker,
 						new long[] {groupId}, false, false, false);
 
@@ -357,6 +357,9 @@ public class ScreensAssetEntryServiceImpl
 		jsonObject.put("title", assetEntry.getTitle(locale));
 		return jsonObject;
 	}
+
+	@ServiceReference(type = AssetPublisherUtil.class)
+	private AssetPublisherUtil _assetPublisherUtil;
 
 	@ServiceReference(type = BlogsEntryService.class)
 	private BlogsEntryService _blogsEntryService;

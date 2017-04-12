@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -74,6 +77,7 @@ import com.liferay.source.formatter.checks.JavaTermOrderCheck;
 import com.liferay.source.formatter.checks.JavaTermStylingCheck;
 import com.liferay.source.formatter.checks.JavaTestMethodAnnotationsCheck;
 import com.liferay.source.formatter.checks.JavaUpgradeClassCheck;
+import com.liferay.source.formatter.checks.JavaVariableTypeCheck;
 import com.liferay.source.formatter.checks.JavaVerifyUpgradeConnectionCheck;
 import com.liferay.source.formatter.checks.JavaWhitespaceCheck;
 import com.liferay.source.formatter.checks.JavaXMLSecurityCheck;
@@ -460,6 +464,36 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return super.processSourceChecks(fileName, absolutePath, content);
 	}
 
+	private List<String> _getAnnotationsExclusions() {
+		return ListUtil.fromArray(
+			new String[] {
+				"ArquillianResource", "Autowired", "BeanReference", "Captor",
+				"Inject", "Mock", "Parameter", "Reference", "ServiceReference",
+				"SuppressWarnings", "Value"
+			});
+	}
+
+	private Map<String, String> _getDefaultPrimitiveValues() {
+		return MapUtil.fromArray(
+			new String[] {
+				"boolean", "false", "char", "'\\\\0'", "byte", "0", "double",
+				"0\\.0", "float", "0\\.0", "int", "0", "long", "0", "short", "0"
+			});
+	}
+
+	private Set<String> _getImmutableFieldTypes() {
+		Set<String> immutableFieldTypes = SetUtil.fromArray(
+			new String[] {
+				"boolean", "byte", "char", "double", "float", "int", "long",
+				"short", "Boolean", "Byte", "Character", "Class", "Double",
+				"Float", "Int", "Long", "Number", "Short", "String"
+			});
+
+		immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
+
+		return immutableFieldTypes;
+	}
+
 	private Map<String, String> _getModuleFileNamesMap() throws Exception {
 		Map<String, String> moduleFileNamesMap = new HashMap<>();
 
@@ -745,6 +779,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			_sourceChecks.add(
 				new JavaTestMethodAnnotationsCheck(
 					getExcludes(_TEST_ANNOTATIONS_EXCLUDES)));
+			_sourceChecks.add(
+				new JavaVariableTypeCheck(
+					getExcludes(_CHECK_JAVA_FIELD_TYPES_EXCLUDES),
+					_getAnnotationsExclusions(), _getDefaultPrimitiveValues(),
+					_getImmutableFieldTypes()));
 		}
 	}
 

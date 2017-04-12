@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -80,7 +81,62 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 		_templateContextHelper = templateContextHelper;
 		_privileged = privileged;
+		_soyMapData = new SoyMapData();
 		_soyTofuCacheHandler = new SoyTofuCacheHandler(_portalCache);
+	}
+
+	@Override
+	public void clear() {
+		for (String key : _soyMapData.getKeys()) {
+			_soyMapData.remove(key);
+		}
+
+		super.clear();
+	}
+
+	@Override
+	public Object put(String key, Object value) {
+		Set<String> restrictedVariables =
+			_templateContextHelper.getRestrictedVariables();
+
+		Object currentValue = get(key);
+
+		if (!restrictedVariables.contains(key) &&
+			!Objects.equals(value, currentValue)) {
+
+			Object soyMapValue;
+
+			if (value == null) {
+				soyMapValue = null;
+			}
+			else if (value instanceof SoyHTMLContextValue) {
+				SoyHTMLContextValue htmlValue = (SoyHTMLContextValue)value;
+
+				soyMapValue = UnsafeSanitizedContentOrdainer.ordainAsSafe(
+					htmlValue.toString(), SanitizedContent.ContentKind.HTML);
+			}
+			else {
+				soyMapValue = _templateContextHelper.deserializeValue(value);
+			}
+
+			_soyMapData.put(key, soyMapValue);
+		}
+
+		return super.put(key, value);
+	}
+
+	@Override
+	public void putAll(Map<? extends String, ? extends Object> map) {
+		for (String key : map.keySet()) {
+			put(key, map.get(key));
+		}
+	}
+
+	@Override
+	public Object remove(Object key) {
+		_soyMapData.remove((String)key);
+
+		return super.remove(key);
 	}
 
 	protected SoyMsgBundleBridge createSoyMsgBundleBridge(
@@ -122,32 +178,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 	}
 
 	protected SoyMapData getSoyMapData() {
-		SoyMapData soyMapData = new SoyMapData();
-
-		Set<String> restrictedVariables =
-			_templateContextHelper.getRestrictedVariables();
-
-		for (String key : context.keySet()) {
-			if (restrictedVariables.contains(key)) {
-				continue;
-			}
-
-			Object value = get(key);
-
-			if (value instanceof SoyHTMLContextValue) {
-				SoyHTMLContextValue htmlValue = (SoyHTMLContextValue)value;
-
-				value = UnsafeSanitizedContentOrdainer.ordainAsSafe(
-					htmlValue.toString(), SanitizedContent.ContentKind.HTML);
-			}
-			else {
-				value = _templateContextHelper.deserializeValue(value);
-			}
-
-			soyMapData.put(key, value);
-		}
-
-		return soyMapData;
+		return _soyMapData;
 	}
 
 	protected Optional<SoyMsgBundle> getSoyMsgBundle(
@@ -323,6 +354,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		_portalCache = SingleVMPoolUtil.getPortalCache(
 			SoyTemplate.class.getName());
 	private final boolean _privileged;
+	private final SoyMapData _soyMapData;
 	private final SoyTofuCacheHandler _soyTofuCacheHandler;
 	private final SoyTemplateContextHelper _templateContextHelper;
 

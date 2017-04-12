@@ -1,21 +1,3 @@
-apply plugin: "com.liferay.cache"
-
-cache {
-	task(classes) {
-		baseDir = "classes/META-INF"
-		cacheDir = ".task-cache"
-
-		skipTaskDependency configJSModules
-		skipTaskDependency replaceSoyTranslation
-		skipTaskDependency transpileJS
-		skipTaskDependency wrapSoyAlloyTemplate
-
-		testFile "build.gradle"
-		testFile "package.json"
-		testFile fileTree(dir: "src/main/resources/META-INF/resources", exclude: "**/.sass-cache/")
-	}
-}
-
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.frontend.image.editor.api", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

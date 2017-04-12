@@ -440,7 +440,8 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			DDMFormValues expectedDDDMFormValues = getDDMFormValues();
 
 			serviceContext.setAttribute(
-				DDMFormValues.class.getName() + ddmStructure.getStructureId(),
+				DDMFormValues.class.getName() + StringPool.POUND +
+					ddmStructure.getStructureId(),
 				expectedDDDMFormValues);
 
 			fileEntry = DLAppLocalServiceUtil.addFileEntry(
@@ -527,7 +528,8 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			DDMFormValues expectedDDDMFormValues = getDDMFormValues();
 
 			serviceContext.setAttribute(
-				DDMFormValues.class.getName() + ddmStructure.getStructureId(),
+				DDMFormValues.class.getName() + StringPool.POUND +
+					ddmStructure.getStructureId(),
 				expectedDDDMFormValues);
 
 			fileEntry = DLAppLocalServiceUtil.addFileEntry(

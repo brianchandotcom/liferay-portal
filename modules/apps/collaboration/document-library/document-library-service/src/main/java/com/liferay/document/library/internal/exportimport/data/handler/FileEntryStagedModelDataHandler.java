@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
@@ -769,7 +770,8 @@ public class FileEntryStagedModelDataHandler
 				portletDataContext, structureFieldsElement, ddmStructure);
 
 			serviceContext.setAttribute(
-				DDMFormValues.class.getName() + ddmStructure.getStructureId(),
+				DDMFormValues.class.getName() + StringPool.POUND +
+					ddmStructure.getStructureId(),
 				ddmFormValues);
 		}
 	}

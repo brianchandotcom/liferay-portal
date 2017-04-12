@@ -1277,7 +1277,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 						dlFileEntryMetadata.getDDMStorageId());
 
 				serviceContext.setAttribute(
-					DDMFormValues.class.getName() +
+					DDMFormValues.class.getName() + StringPool.POUND +
 						ddmStructure.getStructureId(),
 					ddmFormValues);
 			}

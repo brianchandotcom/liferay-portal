@@ -337,7 +337,8 @@ public class DLFileVersionTest {
 			}
 
 			serviceContext.setAttribute(
-				DDMFormValues.class.getName() + ddmStructure.getStructureId(),
+				DDMFormValues.class.getName() + StringPool.POUND +
+					ddmStructure.getStructureId(),
 				ddmFormValues);
 		}
 
@@ -445,7 +446,7 @@ public class DLFileVersionTest {
 		for (DDMStructure ddmStructure : ddmStructures) {
 			DDMFormValues ddmFormValues =
 				(DDMFormValues)_serviceContext.getAttribute(
-					DDMFormValues.class.getName() +
+					DDMFormValues.class.getName() + StringPool.POUND +
 						ddmStructure.getStructureId());
 
 			for (DDMFormFieldValue ddmFormFieldValue :
@@ -465,7 +466,8 @@ public class DLFileVersionTest {
 			}
 
 			_serviceContext.setAttribute(
-				DDMFormValues.class.getName() + ddmStructure.getStructureId(),
+				DDMFormValues.class.getName() + StringPool.POUND +
+					ddmStructure.getStructureId(),
 				ddmFormValues);
 		}
 	}

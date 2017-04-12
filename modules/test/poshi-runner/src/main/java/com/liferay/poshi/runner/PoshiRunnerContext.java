@@ -50,7 +50,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.tools.ant.DirectoryScanner;
 
 import org.dom4j.Document;
@@ -281,6 +280,38 @@ public class PoshiRunnerContext {
 		}
 
 		_componentClassCommandNames.put(componentName, classCommandNames);
+	}
+
+	private static String[] _combine(String[]... arrays) {
+		int size = 0;
+
+		for (String[] array : arrays) {
+			if (array == null) {
+				continue;
+			}
+
+			size += array.length;
+		}
+
+		if (size == 0) {
+			return new String[0];
+		}
+
+		String[] combinedArray = new String[size];
+
+		int i = 0;
+
+		for (String[] array : arrays) {
+			if (array == null) {
+				continue;
+			}
+
+			for (String string : array) {
+				combinedArray[i++] = string;
+			}
+		}
+
+		return combinedArray;
 	}
 
 	private static int _getAllocatedTestGroupSize(int testCount) {
@@ -970,7 +1001,7 @@ public class PoshiRunnerContext {
 
 		_filePathsList.addAll(testBaseDirFilePaths);
 
-		String[] testIncludeDirNames = ArrayUtils.addAll(
+		String[] testIncludeDirNames = _combine(
 			PropsValues.TEST_INCLUDE_DIR_NAMES, PropsValues.TEST_SUBREPO_DIRS);
 
 		if (Validator.isNotNull(testIncludeDirNames)) {

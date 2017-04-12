@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -1890,6 +1891,11 @@ public class CommerceProductDefinitionOptionValueRelPersistenceImpl
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceProductDefinitionOptionValueRelModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1916,7 +1922,7 @@ public class CommerceProductDefinitionOptionValueRelPersistenceImpl
 	private static final String _SQL_SELECT_COMMERCEPRODUCTDEFINITIONOPTIONVALUEREL =
 		"SELECT commerceProductDefinitionOptionValueRel FROM CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel";
 	private static final String _SQL_SELECT_COMMERCEPRODUCTDEFINITIONOPTIONVALUEREL_WHERE_PKS_IN =
-		"SELECT commerceProductDefinitionOptionValueRel FROM CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel WHERE commerceProductDefinitionOptionValueRelId IN (";
+		"SELECT commerceProductDefinitionOptionValueRel FROM CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel WHERE definitionOptionValueRelId IN (";
 	private static final String _SQL_SELECT_COMMERCEPRODUCTDEFINITIONOPTIONVALUEREL_WHERE =
 		"SELECT commerceProductDefinitionOptionValueRel FROM CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel WHERE ";
 	private static final String _SQL_COUNT_COMMERCEPRODUCTDEFINITIONOPTIONVALUEREL =
@@ -1927,4 +1933,8 @@ public class CommerceProductDefinitionOptionValueRelPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CommerceProductDefinitionOptionValueRel exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CommerceProductDefinitionOptionValueRel exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CommerceProductDefinitionOptionValueRelPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"commerceProductDefinitionOptionValueRelId",
+				"commerceProductDefinitionOptionRelId"
+			});
 }

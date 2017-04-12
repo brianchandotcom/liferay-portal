@@ -77,15 +77,15 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	 */
 	public static final String TABLE_NAME = "CommerceProductDefinitionOptionRel";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "commerceProductDefinitionOptionRelId", Types.BIGINT },
+			{ "definitionOptionRelId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "commerceProductOptionId", Types.BIGINT },
 			{ "commerceProductDefinitionId", Types.BIGINT },
+			{ "commerceProductOptionId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "DDMFormFieldTypeName", Types.VARCHAR },
@@ -94,23 +94,22 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("commerceProductDefinitionOptionRelId",
-			Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("definitionOptionRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("commerceProductOptionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceProductDefinitionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("commerceProductOptionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMFormFieldTypeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinitionOptionRel (commerceProductDefinitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductOptionId LONG,commerceProductDefinitionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinitionOptionRel (definitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductDefinitionId LONG,commerceProductOptionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceProductDefinitionOptionRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceProductDefinitionOptionRel.priority DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceProductDefinitionOptionRel.priority DESC";
@@ -151,8 +150,8 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCommerceProductOptionId(soapModel.getCommerceProductOptionId());
 		model.setCommerceProductDefinitionId(soapModel.getCommerceProductDefinitionId());
+		model.setCommerceProductOptionId(soapModel.getCommerceProductOptionId());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setDDMFormFieldTypeName(soapModel.getDDMFormFieldTypeName());
@@ -230,9 +229,9 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("commerceProductOptionId", getCommerceProductOptionId());
 		attributes.put("commerceProductDefinitionId",
 			getCommerceProductDefinitionId());
+		attributes.put("commerceProductOptionId", getCommerceProductOptionId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
@@ -289,18 +288,18 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 			setModifiedDate(modifiedDate);
 		}
 
-		Long commerceProductOptionId = (Long)attributes.get(
-				"commerceProductOptionId");
-
-		if (commerceProductOptionId != null) {
-			setCommerceProductOptionId(commerceProductOptionId);
-		}
-
 		Long commerceProductDefinitionId = (Long)attributes.get(
 				"commerceProductDefinitionId");
 
 		if (commerceProductDefinitionId != null) {
 			setCommerceProductDefinitionId(commerceProductDefinitionId);
+		}
+
+		Long commerceProductOptionId = (Long)attributes.get(
+				"commerceProductOptionId");
+
+		if (commerceProductOptionId != null) {
+			setCommerceProductOptionId(commerceProductOptionId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -460,17 +459,6 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 
 	@JSON
 	@Override
-	public long getCommerceProductOptionId() {
-		return _commerceProductOptionId;
-	}
-
-	@Override
-	public void setCommerceProductOptionId(long commerceProductOptionId) {
-		_commerceProductOptionId = commerceProductOptionId;
-	}
-
-	@JSON
-	@Override
 	public long getCommerceProductDefinitionId() {
 		return _commerceProductDefinitionId;
 	}
@@ -478,6 +466,17 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	@Override
 	public void setCommerceProductDefinitionId(long commerceProductDefinitionId) {
 		_commerceProductDefinitionId = commerceProductDefinitionId;
+	}
+
+	@JSON
+	@Override
+	public long getCommerceProductOptionId() {
+		return _commerceProductOptionId;
+	}
+
+	@Override
+	public void setCommerceProductOptionId(long commerceProductOptionId) {
+		_commerceProductOptionId = commerceProductOptionId;
 	}
 
 	@JSON
@@ -832,8 +831,8 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		commerceProductDefinitionOptionRelImpl.setUserName(getUserName());
 		commerceProductDefinitionOptionRelImpl.setCreateDate(getCreateDate());
 		commerceProductDefinitionOptionRelImpl.setModifiedDate(getModifiedDate());
-		commerceProductDefinitionOptionRelImpl.setCommerceProductOptionId(getCommerceProductOptionId());
 		commerceProductDefinitionOptionRelImpl.setCommerceProductDefinitionId(getCommerceProductDefinitionId());
+		commerceProductDefinitionOptionRelImpl.setCommerceProductOptionId(getCommerceProductOptionId());
 		commerceProductDefinitionOptionRelImpl.setName(getName());
 		commerceProductDefinitionOptionRelImpl.setDescription(getDescription());
 		commerceProductDefinitionOptionRelImpl.setDDMFormFieldTypeName(getDDMFormFieldTypeName());
@@ -962,9 +961,9 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 			commerceProductDefinitionOptionRelCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		commerceProductDefinitionOptionRelCacheModel.commerceProductOptionId = getCommerceProductOptionId();
-
 		commerceProductDefinitionOptionRelCacheModel.commerceProductDefinitionId = getCommerceProductDefinitionId();
+
+		commerceProductDefinitionOptionRelCacheModel.commerceProductOptionId = getCommerceProductOptionId();
 
 		commerceProductDefinitionOptionRelCacheModel.name = getName();
 
@@ -1014,10 +1013,10 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", commerceProductOptionId=");
-		sb.append(getCommerceProductOptionId());
 		sb.append(", commerceProductDefinitionId=");
 		sb.append(getCommerceProductDefinitionId());
+		sb.append(", commerceProductOptionId=");
+		sb.append(getCommerceProductOptionId());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", description=");
@@ -1069,12 +1068,12 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>commerceProductOptionId</column-name><column-value><![CDATA[");
-		sb.append(getCommerceProductOptionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>commerceProductDefinitionId</column-name><column-value><![CDATA[");
 		sb.append(getCommerceProductDefinitionId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>commerceProductOptionId</column-name><column-value><![CDATA[");
+		sb.append(getCommerceProductOptionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -1114,8 +1113,8 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _commerceProductOptionId;
 	private long _commerceProductDefinitionId;
+	private long _commerceProductOptionId;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _description;

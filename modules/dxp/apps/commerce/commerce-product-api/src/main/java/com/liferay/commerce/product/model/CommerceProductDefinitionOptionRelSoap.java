@@ -42,8 +42,8 @@ public class CommerceProductDefinitionOptionRelSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setCommerceProductOptionId(model.getCommerceProductOptionId());
 		soapModel.setCommerceProductDefinitionId(model.getCommerceProductDefinitionId());
+		soapModel.setCommerceProductOptionId(model.getCommerceProductOptionId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDDMFormFieldTypeName(model.getDDMFormFieldTypeName());
@@ -160,20 +160,20 @@ public class CommerceProductDefinitionOptionRelSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getCommerceProductOptionId() {
-		return _commerceProductOptionId;
-	}
-
-	public void setCommerceProductOptionId(long commerceProductOptionId) {
-		_commerceProductOptionId = commerceProductOptionId;
-	}
-
 	public long getCommerceProductDefinitionId() {
 		return _commerceProductDefinitionId;
 	}
 
 	public void setCommerceProductDefinitionId(long commerceProductDefinitionId) {
 		_commerceProductDefinitionId = commerceProductDefinitionId;
+	}
+
+	public long getCommerceProductOptionId() {
+		return _commerceProductOptionId;
+	}
+
+	public void setCommerceProductOptionId(long commerceProductOptionId) {
+		_commerceProductOptionId = commerceProductOptionId;
 	}
 
 	public String getName() {
@@ -215,8 +215,8 @@ public class CommerceProductDefinitionOptionRelSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _commerceProductOptionId;
 	private long _commerceProductDefinitionId;
+	private long _commerceProductOptionId;
 	private String _name;
 	private String _description;
 	private String _DDMFormFieldTypeName;

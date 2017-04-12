@@ -138,9 +138,9 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 
 		newCommerceProductDefinitionOptionRel.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCommerceProductDefinitionOptionRel.setCommerceProductOptionId(RandomTestUtil.nextLong());
-
 		newCommerceProductDefinitionOptionRel.setCommerceProductDefinitionId(RandomTestUtil.nextLong());
+
+		newCommerceProductDefinitionOptionRel.setCommerceProductOptionId(RandomTestUtil.nextLong());
 
 		newCommerceProductDefinitionOptionRel.setName(RandomTestUtil.randomString());
 
@@ -174,10 +174,10 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 				existingCommerceProductDefinitionOptionRel.getModifiedDate()),
 			Time.getShortTimestamp(
 				newCommerceProductDefinitionOptionRel.getModifiedDate()));
-		Assert.assertEquals(existingCommerceProductDefinitionOptionRel.getCommerceProductOptionId(),
-			newCommerceProductDefinitionOptionRel.getCommerceProductOptionId());
 		Assert.assertEquals(existingCommerceProductDefinitionOptionRel.getCommerceProductDefinitionId(),
 			newCommerceProductDefinitionOptionRel.getCommerceProductDefinitionId());
+		Assert.assertEquals(existingCommerceProductDefinitionOptionRel.getCommerceProductOptionId(),
+			newCommerceProductDefinitionOptionRel.getCommerceProductOptionId());
 		Assert.assertEquals(existingCommerceProductDefinitionOptionRel.getName(),
 			newCommerceProductDefinitionOptionRel.getName());
 		Assert.assertEquals(existingCommerceProductDefinitionOptionRel.getDescription(),
@@ -231,9 +231,9 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceProductDefinitionOptionRel",
 			"commerceProductDefinitionOptionRelId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "commerceProductOptionId", true,
-			"commerceProductDefinitionId", true, "name", true, "description",
-			true, "DDMFormFieldTypeName", true, "priority", true);
+			true, "modifiedDate", true, "commerceProductDefinitionId", true,
+			"commerceProductOptionId", true, "name", true, "description", true,
+			"DDMFormFieldTypeName", true, "priority", true);
 	}
 
 	@Test
@@ -475,9 +475,9 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 
 		commerceProductDefinitionOptionRel.setModifiedDate(RandomTestUtil.nextDate());
 
-		commerceProductDefinitionOptionRel.setCommerceProductOptionId(RandomTestUtil.nextLong());
-
 		commerceProductDefinitionOptionRel.setCommerceProductDefinitionId(RandomTestUtil.nextLong());
+
+		commerceProductDefinitionOptionRel.setCommerceProductOptionId(RandomTestUtil.nextLong());
 
 		commerceProductDefinitionOptionRel.setName(RandomTestUtil.randomString());
 

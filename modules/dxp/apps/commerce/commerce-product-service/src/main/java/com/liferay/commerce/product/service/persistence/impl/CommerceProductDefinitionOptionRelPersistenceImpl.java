@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -1479,8 +1480,8 @@ public class CommerceProductDefinitionOptionRelPersistenceImpl
 		commerceProductDefinitionOptionRelImpl.setUserName(commerceProductDefinitionOptionRel.getUserName());
 		commerceProductDefinitionOptionRelImpl.setCreateDate(commerceProductDefinitionOptionRel.getCreateDate());
 		commerceProductDefinitionOptionRelImpl.setModifiedDate(commerceProductDefinitionOptionRel.getModifiedDate());
-		commerceProductDefinitionOptionRelImpl.setCommerceProductOptionId(commerceProductDefinitionOptionRel.getCommerceProductOptionId());
 		commerceProductDefinitionOptionRelImpl.setCommerceProductDefinitionId(commerceProductDefinitionOptionRel.getCommerceProductDefinitionId());
+		commerceProductDefinitionOptionRelImpl.setCommerceProductOptionId(commerceProductDefinitionOptionRel.getCommerceProductOptionId());
 		commerceProductDefinitionOptionRelImpl.setName(commerceProductDefinitionOptionRel.getName());
 		commerceProductDefinitionOptionRelImpl.setDescription(commerceProductDefinitionOptionRel.getDescription());
 		commerceProductDefinitionOptionRelImpl.setDDMFormFieldTypeName(commerceProductDefinitionOptionRel.getDDMFormFieldTypeName());
@@ -1880,6 +1881,11 @@ public class CommerceProductDefinitionOptionRelPersistenceImpl
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceProductDefinitionOptionRelModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1905,7 +1911,7 @@ public class CommerceProductDefinitionOptionRelPersistenceImpl
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_COMMERCEPRODUCTDEFINITIONOPTIONREL = "SELECT commerceProductDefinitionOptionRel FROM CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel";
 	private static final String _SQL_SELECT_COMMERCEPRODUCTDEFINITIONOPTIONREL_WHERE_PKS_IN =
-		"SELECT commerceProductDefinitionOptionRel FROM CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel WHERE commerceProductDefinitionOptionRelId IN (";
+		"SELECT commerceProductDefinitionOptionRel FROM CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel WHERE definitionOptionRelId IN (";
 	private static final String _SQL_SELECT_COMMERCEPRODUCTDEFINITIONOPTIONREL_WHERE =
 		"SELECT commerceProductDefinitionOptionRel FROM CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel WHERE ";
 	private static final String _SQL_COUNT_COMMERCEPRODUCTDEFINITIONOPTIONREL = "SELECT COUNT(commerceProductDefinitionOptionRel) FROM CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel";
@@ -1915,4 +1921,7 @@ public class CommerceProductDefinitionOptionRelPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CommerceProductDefinitionOptionRel exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CommerceProductDefinitionOptionRel exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CommerceProductDefinitionOptionRelPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"commerceProductDefinitionOptionRelId"
+			});
 }

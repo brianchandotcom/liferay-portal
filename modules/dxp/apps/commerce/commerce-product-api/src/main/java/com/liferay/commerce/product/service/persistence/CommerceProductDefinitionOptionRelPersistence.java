@@ -444,4 +444,7 @@ public interface CommerceProductDefinitionOptionRelPersistence
 	* @return the number of commerce product definition option rels
 	*/
 	public int countAll();
+
+	@Override
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

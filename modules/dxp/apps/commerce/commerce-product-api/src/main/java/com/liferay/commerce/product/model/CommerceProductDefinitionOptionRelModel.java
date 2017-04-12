@@ -198,20 +198,6 @@ public interface CommerceProductDefinitionOptionRelModel extends BaseModel<Comme
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the commerce product option ID of this commerce product definition option rel.
-	 *
-	 * @return the commerce product option ID of this commerce product definition option rel
-	 */
-	public long getCommerceProductOptionId();
-
-	/**
-	 * Sets the commerce product option ID of this commerce product definition option rel.
-	 *
-	 * @param commerceProductOptionId the commerce product option ID of this commerce product definition option rel
-	 */
-	public void setCommerceProductOptionId(long commerceProductOptionId);
-
-	/**
 	 * Returns the commerce product definition ID of this commerce product definition option rel.
 	 *
 	 * @return the commerce product definition ID of this commerce product definition option rel
@@ -224,6 +210,20 @@ public interface CommerceProductDefinitionOptionRelModel extends BaseModel<Comme
 	 * @param commerceProductDefinitionId the commerce product definition ID of this commerce product definition option rel
 	 */
 	public void setCommerceProductDefinitionId(long commerceProductDefinitionId);
+
+	/**
+	 * Returns the commerce product option ID of this commerce product definition option rel.
+	 *
+	 * @return the commerce product option ID of this commerce product definition option rel
+	 */
+	public long getCommerceProductOptionId();
+
+	/**
+	 * Sets the commerce product option ID of this commerce product definition option rel.
+	 *
+	 * @param commerceProductOptionId the commerce product option ID of this commerce product definition option rel
+	 */
+	public void setCommerceProductOptionId(long commerceProductOptionId);
 
 	/**
 	 * Returns the name of this commerce product definition option rel.

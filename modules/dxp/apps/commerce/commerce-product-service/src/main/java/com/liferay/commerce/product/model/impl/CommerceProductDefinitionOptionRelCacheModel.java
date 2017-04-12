@@ -83,10 +83,10 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", commerceProductOptionId=");
-		sb.append(commerceProductOptionId);
 		sb.append(", commerceProductDefinitionId=");
 		sb.append(commerceProductDefinitionId);
+		sb.append(", commerceProductOptionId=");
+		sb.append(commerceProductOptionId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -133,8 +133,8 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 					modifiedDate));
 		}
 
-		commerceProductDefinitionOptionRelImpl.setCommerceProductOptionId(commerceProductOptionId);
 		commerceProductDefinitionOptionRelImpl.setCommerceProductDefinitionId(commerceProductDefinitionId);
+		commerceProductDefinitionOptionRelImpl.setCommerceProductOptionId(commerceProductOptionId);
 
 		if (name == null) {
 			commerceProductDefinitionOptionRelImpl.setName(StringPool.BLANK);
@@ -177,9 +177,9 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		commerceProductOptionId = objectInput.readLong();
-
 		commerceProductDefinitionId = objectInput.readLong();
+
+		commerceProductOptionId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		DDMFormFieldTypeName = objectInput.readUTF();
@@ -208,9 +208,9 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(commerceProductOptionId);
-
 		objectOutput.writeLong(commerceProductDefinitionId);
+
+		objectOutput.writeLong(commerceProductOptionId);
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -243,8 +243,8 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long commerceProductOptionId;
 	public long commerceProductDefinitionId;
+	public long commerceProductOptionId;
 	public String name;
 	public String description;
 	public String DDMFormFieldTypeName;

@@ -68,9 +68,9 @@ public class CommerceProductDefinitionOptionRelWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("commerceProductOptionId", getCommerceProductOptionId());
 		attributes.put("commerceProductDefinitionId",
 			getCommerceProductDefinitionId());
+		attributes.put("commerceProductOptionId", getCommerceProductOptionId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
@@ -124,18 +124,18 @@ public class CommerceProductDefinitionOptionRelWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		Long commerceProductOptionId = (Long)attributes.get(
-				"commerceProductOptionId");
-
-		if (commerceProductOptionId != null) {
-			setCommerceProductOptionId(commerceProductOptionId);
-		}
-
 		Long commerceProductDefinitionId = (Long)attributes.get(
 				"commerceProductDefinitionId");
 
 		if (commerceProductDefinitionId != null) {
 			setCommerceProductDefinitionId(commerceProductDefinitionId);
+		}
+
+		Long commerceProductOptionId = (Long)attributes.get(
+				"commerceProductOptionId");
+
+		if (commerceProductOptionId != null) {
+			setCommerceProductOptionId(commerceProductOptionId);
 		}
 
 		String name = (String)attributes.get("name");

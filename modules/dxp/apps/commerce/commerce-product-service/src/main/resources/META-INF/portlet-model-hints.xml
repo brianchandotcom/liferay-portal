@@ -37,8 +37,8 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="commerceProductOptionId" type="long" />
 		<field name="commerceProductDefinitionId" type="long" />
+		<field name="commerceProductOptionId" type="long" />
 		<field localized="true" name="name" type="String" />
 		<field localized="true" name="description" type="String" />
 		<field name="DDMFormFieldTypeName" type="String" />

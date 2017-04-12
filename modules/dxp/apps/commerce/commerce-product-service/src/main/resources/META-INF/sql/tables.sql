@@ -24,15 +24,15 @@ create table CommerceProductDefinition (
 );
 
 create table CommerceProductDefinitionOptionRel (
-	commerceProductDefinitionOptionRelId LONG not null primary key,
+	definitionOptionRelId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	commerceProductOptionId LONG,
 	commerceProductDefinitionId LONG,
+	commerceProductOptionId LONG,
 	name STRING null,
 	description STRING null,
 	DDMFormFieldTypeName VARCHAR(75) null,
@@ -40,14 +40,14 @@ create table CommerceProductDefinitionOptionRel (
 );
 
 create table CommerceProductDefinitionOptionValueRel (
-	commerceProductDefinitionOptionValueRelId LONG not null primary key,
+	definitionOptionValueRelId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	commerceProductDefinitionOptionRelId LONG,
+	definitionOptionRelId LONG,
 	title STRING null,
 	priority INTEGER
 );

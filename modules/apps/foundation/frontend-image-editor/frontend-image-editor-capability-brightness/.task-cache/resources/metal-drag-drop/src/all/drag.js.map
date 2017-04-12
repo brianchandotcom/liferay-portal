@@ -1,1 +1,0 @@
-{"version":3,"sources":["drag.js"],"names":[],"mappings":";AAAA;;;;;;;;;;;;;;;;;UAKS;UAAM","file":"../../../node_modules/metal-drag-drop/src/all/drag.js","sourcesContent":["'use strict';\n\nimport Drag from '../Drag';\nimport DragDrop from '../DragDrop';\n\nexport { Drag, DragDrop };\n"],"sourceRoot":"/source/"}

@@ -5271,7 +5271,14 @@ public class ServiceBuilder {
 					orderColByAscending = false;
 				}
 
-				EntityColumn col = Entity.getColumn(orderColName, columnList);
+				int index = columnList.indexOf(new EntityColumn(orderColName));
+
+				if (index < 0) {
+					throw new IllegalArgumentException(
+						"Invalid order by column " + orderColName);
+				}
+
+				EntityColumn col = columnList.get(index);
 
 				col.setOrderColumn(true);
 

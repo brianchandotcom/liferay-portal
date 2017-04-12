@@ -60,6 +60,8 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -238,11 +240,11 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		Path overrideDirPath = _deploymentDirPath.resolve("override");
 
-		List<File> jarFiles = _scanFiles(overrideDirPath, ".jar");
+		List<File> jarFiles = _scanFiles(overrideDirPath, ".jar", true);
 
 		_uninstallOrphanOverridingJars(bundleContext, jarFiles);
 
-		List<File> warFiles = _scanFiles(overrideDirPath, ".war");
+		List<File> warFiles = _scanFiles(overrideDirPath, ".war", true);
 
 		_uninstallOrphanOverridingWars(bundleContext, warFiles);
 
@@ -253,7 +255,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		_lpkgBundleTracker.open();
 
-		List<File> lpkgFiles = _scanFiles(_deploymentDirPath, ".lpkg");
+		List<File> lpkgFiles = _scanFiles(_deploymentDirPath, ".lpkg", false);
 
 		_lpkgIndexValidator.setLPKGDeployer(this);
 		_lpkgIndexValidator.setJarFiles(jarFiles);
@@ -485,7 +487,8 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		}
 	}
 
-	private List<File> _scanFiles(Path dirPath, String extension)
+	private List<File> _scanFiles(
+			Path dirPath, String extension, boolean checkVersioning)
 		throws IOException {
 
 		if (Files.notExists(dirPath)) {
@@ -501,9 +504,25 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 				String pathName = StringUtil.toLowerCase(
 					String.valueOf(path.getFileName()));
 
-				if (pathName.endsWith(extension)) {
-					files.add(path.toFile());
+				if (!pathName.endsWith(extension)) {
+					continue;
 				}
+
+				if (checkVersioning) {
+					Matcher matcher = _pattern.matcher(pathName);
+
+					if (matcher.matches()) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Override file " + path +
+									" has invalid name and will be ignored.");
+						}
+
+						continue;
+					}
+				}
+
+				files.add(path.toFile());
 			}
 		}
 
@@ -636,6 +655,9 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultLPKGDeployer.class);
+
+	private static final Pattern _pattern = Pattern.compile(
+		"/?(.*?)(-\\d+\\.\\d+\\.\\d+)(\\..+)?(\\.[jw]ar)");
 
 	private Path _deploymentDirPath;
 	private BundleTracker<List<Bundle>> _lpkgBundleTracker;

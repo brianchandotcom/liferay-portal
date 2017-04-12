@@ -1144,8 +1144,18 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					String fileName = StringUtil.toLowerCase(
 						fileNamePath.toString());
 
-					if (fileName.endsWith(".jar")) {
+					Matcher matcher = _pattern.matcher(fileName);
+
+					if (!matcher.matches()) {
 						jarPaths.add(filePath.toAbsolutePath());
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Override static jar " + fileName +
+								" has invalid name and will be ignored.");
 					}
 
 					return FileVisitResult.CONTINUE;

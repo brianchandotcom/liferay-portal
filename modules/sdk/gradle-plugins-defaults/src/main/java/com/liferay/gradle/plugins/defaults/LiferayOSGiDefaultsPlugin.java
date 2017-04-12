@@ -170,6 +170,7 @@ import org.gradle.api.reporting.SingleFileReport;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.StopActionException;
 import org.gradle.api.tasks.TaskCollection;
@@ -399,9 +400,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configureRepositories(project);
 		_configureSourceSetMain(project);
 		_configureTaskDeploy(project, deployDependenciesTask);
-		_configureTaskFindBugsClasses(
-			(FindBugs)GradleUtil.getTask(project, "findbugsMain"),
-			GradleUtil.getSourceSet(project, SourceSet.MAIN_SOURCE_SET_NAME));
 		_configureTaskJar(project, testProject);
 		_configureTaskJavadoc(project, portalRootDir);
 		_configureTaskTest(project);
@@ -2585,6 +2583,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskFindBugs(FindBugs findBugs) {
+		Project project = findBugs.getProject();
+
 		findBugs.setMaxHeapSize("3g");
 
 		FindBugsReports findBugsReports = findBugs.getReports();
@@ -2596,23 +2596,37 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		SingleFileReport xmlReport = findBugsReports.getXml();
 
 		xmlReport.setEnabled(false);
-	}
 
-	private void _configureTaskFindBugsClasses(
-		FindBugs findBugs, SourceSet sourceSet) {
+		SourceSet sourceSet = null;
 
-		Project project = findBugs.getProject();
+		String name = findBugs.getName();
 
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+		if (name.startsWith("findbugs")) {
+			name = GUtil.toLowerCamelCase(name.substring(8));
 
-		ConfigurableFileTree configurableFileTree = project.fileTree(
-			sourceSetOutput.getClassesDir());
+			JavaPluginConvention javaPluginConvention =
+				GradleUtil.getConvention(project, JavaPluginConvention.class);
 
-		configurableFileTree.setBuiltBy(Collections.singleton(sourceSetOutput));
+			SourceSetContainer sourceSetContainer =
+				javaPluginConvention.getSourceSets();
 
-		configurableFileTree.setIncludes(Collections.singleton("**/*.class"));
+			sourceSet = sourceSetContainer.findByName(name);
+		}
 
-		findBugs.setClasses(configurableFileTree);
+		if (sourceSet != null) {
+			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+			ConfigurableFileTree configurableFileTree = project.fileTree(
+				sourceSetOutput.getClassesDir());
+
+			configurableFileTree.setBuiltBy(
+				Collections.singleton(sourceSetOutput));
+
+			configurableFileTree.setIncludes(
+				Collections.singleton("**/*.class"));
+
+			findBugs.setClasses(configurableFileTree);
+		}
 	}
 
 	private void _configureTaskJar(Project project, boolean testProject) {

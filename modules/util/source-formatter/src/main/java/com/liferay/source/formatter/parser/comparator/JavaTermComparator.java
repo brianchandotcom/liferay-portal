@@ -229,7 +229,7 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 			}
 		}
 
-		if (parameters1.size() == parameters1.size()) {
+		if (parameters1.size() == parameters2.size()) {
 			return 0;
 		}
 

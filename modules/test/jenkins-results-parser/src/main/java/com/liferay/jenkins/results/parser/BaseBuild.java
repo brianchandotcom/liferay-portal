@@ -374,6 +374,24 @@ public abstract class BaseBuild implements Build {
 	public Element getGitHubMessageBuildAnchorElement() {
 		getResult();
 
+		int i = 0;
+
+		while (result == null) {
+			if (i == 20) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to create build anchor element. The process ",
+						"timed out while waiting for build result for ",
+						getBuildURL(), "."));
+			}
+
+			JenkinsResultsParserUtil.sleep(1000 * 30);
+
+			getResult();
+
+			i++;
+		}
+
 		if (result.equals("SUCCESS")) {
 			return Dom4JUtil.getNewAnchorElement(
 				getBuildURL(), getDisplayName());

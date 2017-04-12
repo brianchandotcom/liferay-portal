@@ -57,6 +57,11 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 		return SCHEMA_VERSION;
 	}
 
+	@Override
+	public boolean isSupportsDataStrategyCopyAsNew() {
+		return false;
+	}
+
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTAL);
@@ -66,7 +71,6 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "password-policies", true, true, null,
 				PasswordPolicy.class.getName()));
-		setSupportsDataStrategyCopyAsNew(false);
 	}
 
 	@Override

@@ -207,7 +207,7 @@ AUI.add(
 					},
 
 					removeInputLanguage: function(languageId) {
-						var instance  = this;
+						var instance = this;
 
 						var boundingBox = instance.get('boundingBox');
 
@@ -379,7 +379,6 @@ AUI.add(
 					_getInputLanguageId: function(languageId) {
 						var instance = this;
 
-						var boundingBox = instance.get('boundingBox');
 						var id = instance.get('id');
 						var namespace = instance.get('namespace');
 

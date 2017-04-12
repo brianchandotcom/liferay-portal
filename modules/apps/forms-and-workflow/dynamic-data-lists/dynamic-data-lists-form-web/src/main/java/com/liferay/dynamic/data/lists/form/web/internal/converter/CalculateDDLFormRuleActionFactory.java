@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.lists.form.web.internal.converter.DDMFormRuleToD
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleAction;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.action.CalculateDDLFormRuleAction;
 import com.liferay.dynamic.data.mapping.expression.model.Expression;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 
@@ -37,7 +39,10 @@ public class CalculateDDLFormRuleActionFactory {
 		String expressionString = expression.toString();
 
 		expressionString = expressionString.replaceAll(
-			"(getValue\\(\\'([^\\(]+)\\'\\))", "$2");
+			"(getValue\\(\\'([^\\(]+)\\'\\))", "[$2]");
+
+		expressionString = StringUtil.removeChar(
+			expressionString, CharPool.SPACE);
 
 		return new CalculateDDLFormRuleAction(target, expressionString);
 	}

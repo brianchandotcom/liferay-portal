@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.web.portlet.shared.search;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.search.web.search.request.SearchResponse;
 
@@ -25,7 +27,11 @@ import javax.portlet.RenderRequest;
 /**
  * @author André de Oliveira
  */
+@ProviderType
 public interface PortletSharedSearchResponse extends SearchResponse {
+
+	public Optional<String> getParameter(
+		String name, RenderRequest renderRequest);
 
 	public Optional<String[]> getParameterValues(
 		String name, RenderRequest renderRequest);

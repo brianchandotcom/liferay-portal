@@ -19,10 +19,11 @@ package com.liferay.commerce.product.options.web.internal.servlet.taglib.ui;
  */
 public class CommerceProductOptionFormNavigatorConstants {
 
-	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_BASE_INFO =
-		"product-option-base-information";
+	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_OPTION_DETAILS =
+		"details";
 
-	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_VALUE = "value";
+	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_OPTION_VALUES =
+		"values";
 
 	public static final String FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION =
 		"commerce.product.option.form";

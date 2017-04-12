@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.options.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.product.model.CommerceProductOption;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
@@ -27,16 +26,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {"form.navigator.entry.order:Integer=90"},
+	property = {"form.navigator.entry.order:Integer=100"},
 	service = FormNavigatorEntry.class
 )
-public class CommerceProductOptionValueFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<CommerceProductOption> {
+public class CommerceProductOptionDetailsFormNavigatorEntry
+	extends BaseJSPFormNavigatorEntry<CommerceProductOption>
+	implements FormNavigatorEntry<CommerceProductOption> {
 
 	@Override
 	public String getCategoryKey() {
 		return CommerceProductOptionFormNavigatorConstants.
-			CATEGORY_KEY_COMMERCE_PRODUCT_VALUE;
+			CATEGORY_KEY_COMMERCE_PRODUCT_OPTION_DETAILS;
 	}
 
 	@Override
@@ -47,26 +47,17 @@ public class CommerceProductOptionValueFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "value";
+		return "details";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return "value";
-	}
-
-	@Override
-	public boolean isVisible(User user, CommerceProductOption formModelBean) {
-		if (formModelBean != null) {
-			return true;
-		}
-
-		return false;
+		return "details";
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/product_option/value.jsp";
+		return "/product_option/details.jsp";
 	}
 
 }

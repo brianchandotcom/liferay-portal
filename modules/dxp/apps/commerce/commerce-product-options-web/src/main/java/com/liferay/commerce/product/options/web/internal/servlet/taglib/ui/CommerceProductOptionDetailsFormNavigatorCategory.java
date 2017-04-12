@@ -25,10 +25,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {"form.navigator.category.order:Integer=90"},
+	property = {"form.navigator.category.order:Integer=100"},
 	service = FormNavigatorCategory.class
 )
-public class CommerceProductOptionValueFormNavigatorCategory
+public class CommerceProductOptionDetailsFormNavigatorCategory
 	implements FormNavigatorCategory {
 
 	@Override
@@ -40,12 +40,12 @@ public class CommerceProductOptionValueFormNavigatorCategory
 	@Override
 	public String getKey() {
 		return CommerceProductOptionFormNavigatorConstants.
-			CATEGORY_KEY_COMMERCE_PRODUCT_VALUE;
+			CATEGORY_KEY_COMMERCE_PRODUCT_OPTION_DETAILS;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "value");
+		return LanguageUtil.get(locale, "details");
 	}
 
 }

@@ -19,7 +19,7 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-options");
 
-SearchContainer<CommerceProductOption> productOptionSearchContainer = commerceProductOptionsDisplayContext.getSearchContainer();
+SearchContainer<CommerceProductOption> productOptionSearchContainer = commerceProductOptionsDisplayContext.getCommerceProductOptionSearchContainer();
 
 String displayStyle = commerceProductOptionsDisplayContext.getDisplayStyle();
 
@@ -79,7 +79,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				<div class="product-options-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
-						emptyResultsMessage="no-product-options-were-found"
 						id="commerceProductOptions"
 						searchContainer="<%= productOptionSearchContainer %>"
 					>

@@ -14,7 +14,9 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.util.regex.Pattern;
 
@@ -25,10 +27,14 @@ import java.util.regex.Pattern;
 public class FriendlyURLNormalizerUtil {
 
 	public static FriendlyURLNormalizer getFriendlyURLNormalizer() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			FriendlyURLNormalizerUtil.class);
+		FriendlyURLNormalizer friendlyURLNormalizer =
+			_serviceTracker.getService();
 
-		return _friendlyURLNormalizer;
+		if (friendlyURLNormalizer == null) {
+			return _defaultFriendlyURLNormalizer;
+		}
+
+		return friendlyURLNormalizer;
 	}
 
 	public static String normalize(String friendlyURL) {
@@ -55,14 +61,27 @@ public class FriendlyURLNormalizerUtil {
 			friendlyURL);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setFriendlyURLNormalizer(
 		FriendlyURLNormalizer friendlyURLNormalizer) {
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_friendlyURLNormalizer = friendlyURLNormalizer;
+		_defaultFriendlyURLNormalizer = friendlyURLNormalizer;
 	}
 
-	private static FriendlyURLNormalizer _friendlyURLNormalizer;
+	private static FriendlyURLNormalizer _defaultFriendlyURLNormalizer;
+	private static final
+		ServiceTracker<FriendlyURLNormalizer, FriendlyURLNormalizer>
+			_serviceTracker;
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(FriendlyURLNormalizer.class);
+
+		_serviceTracker.open();
+	}
 
 }

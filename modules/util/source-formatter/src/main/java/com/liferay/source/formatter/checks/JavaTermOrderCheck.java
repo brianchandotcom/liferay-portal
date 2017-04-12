@@ -139,9 +139,9 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 			}
 			else if (!isExcludedPath(
 						_excludes, absolutePath, previousJavaTerm.getName()) &&
-					!isExcludedPath(
-						_excludes, absolutePath, javaTerm.getName()) &&
-					(compare > 0)) {
+					 !isExcludedPath(
+						 _excludes, absolutePath, javaTerm.getName()) &&
+					 (compare > 0)) {
 
 				String classContent = javaClass.getContent();
 

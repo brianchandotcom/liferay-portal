@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ATTACHMENTS</td>
-	<td>//div[@class='article-actions']//span/a[contains(.,'Attachments')]</td>
+	<td>//a[contains(.,'Attachments')]</td>
 	<td></td>
 </tr>
 <tr>

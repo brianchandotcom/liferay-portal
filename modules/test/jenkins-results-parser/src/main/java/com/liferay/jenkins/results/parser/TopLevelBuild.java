@@ -554,6 +554,7 @@ public class TopLevelBuild extends BaseBuild {
 		{
 			new PoshiValidationFailureMessageGenerator(),
 			new RebaseFailureMessageGenerator(),
+
 			new DownstreamFailureMessageGenerator(),
 
 			new GenericFailureMessageGenerator()

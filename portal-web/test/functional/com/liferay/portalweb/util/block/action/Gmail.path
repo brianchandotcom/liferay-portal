@@ -265,22 +265,22 @@
 </tr>
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_LINK</td>
-	<td>//tr[contains(.,'message')]//td//div[@class='msg']//a[contains(.,'messages')]</td>
+	<td>//tr[contains(.,'message')]//td[div[@class='msg']]///a[contains(.,'messages')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_SITE_INVITE_CONFIRMATION_LINK</td>
-	<td>//tr[contains(.,'invitation')]//td//div[@class='msg']//a[contains(.,'View Invitation')]</td>
+	<td>//tr[contains(.,'invitation')]//td[div[@class='msg']]///a[contains(.,'View Invitation')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_SITE_INVITE_CREATE_ACCOUNT_LINK</td>
-	<td>//tr[contains(.,'invitation')]//td//div[@class='msg']//a[contains(.,'Create Account')]</td>
+	<td>//tr[contains(.,'invitation')]//td[div[@class='msg']]///a[contains(.,'Create Account')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY_LINK</td>
-	<td>//tr[contains(.,'${key_gmailAssetType}')]//td//div[@class='msg']/a[contains(.,'${key_pageNameURL}')]</td>
+	<td>//tr[contains(.,'${key_gmailAssetType}')]//td[div[@class='msg']]//a[contains(.,'${key_pageNameURL}')]</td>
 	<td></td>
 </tr>
 <tr>

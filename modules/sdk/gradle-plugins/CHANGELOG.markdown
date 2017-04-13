@@ -1447,7 +1447,7 @@ dependency to version 2.1.12.
 - [LPS-71826]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.3.10.
 
-## 3.2.38 - 2017-04-11
+## 3.2.39 - 2017-04-12
 
 ### Changed
 - [LPS-71164]: Update the [Liferay Gradle Plugins Source Formatter] dependency

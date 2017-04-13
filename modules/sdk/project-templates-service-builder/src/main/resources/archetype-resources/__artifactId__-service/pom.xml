@@ -8,7 +8,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>${artifactId}-service</artifactId>
 	<version>${version}</version>
-	<packaging>jar</packaging>
 	<parent>
 		<groupId>${groupId}</groupId>
 		<artifactId>${artifactId}</artifactId>

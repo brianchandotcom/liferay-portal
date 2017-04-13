@@ -27,7 +27,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
+import com.liferay.source.formatter.checks.CompatClassImportsCheck;
 import com.liferay.source.formatter.checks.CopyrightCheck;
+import com.liferay.source.formatter.checks.EmptyArrayCheck;
+import com.liferay.source.formatter.checks.EmptyCollectionCheck;
+import com.liferay.source.formatter.checks.GetterUtilCheck;
 import com.liferay.source.formatter.checks.JavaAnnotationsCheck;
 import com.liferay.source.formatter.checks.JavaAssertEqualsCheck;
 import com.liferay.source.formatter.checks.JavaBooleanStatementCheck;
@@ -83,9 +87,12 @@ import com.liferay.source.formatter.checks.JavaWhitespaceCheck;
 import com.liferay.source.formatter.checks.JavaXMLSecurityCheck;
 import com.liferay.source.formatter.checks.LanguageKeysCheck;
 import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
+import com.liferay.source.formatter.checks.PrincipalExceptionCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.SessionKeysCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
+import com.liferay.source.formatter.checks.StringBundlerCheck;
+import com.liferay.source.formatter.checks.StringMethodsCheck;
 import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
 import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
@@ -619,6 +626,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JavaWhitespaceCheck());
 
 		_sourceChecks.add(new CopyrightCheck(getCopyright()));
+		_sourceChecks.add(new EmptyArrayCheck());
+		_sourceChecks.add(new EmptyCollectionCheck());
+		_sourceChecks.add(new GetterUtilCheck());
 		_sourceChecks.add(new JavaAnnotationsCheck());
 		_sourceChecks.add(new JavaAssertEqualsCheck());
 		_sourceChecks.add(new JavaBooleanUsageCheck());
@@ -664,7 +674,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JavaSystemExceptionCheck());
 		_sourceChecks.add(
 			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
+		_sourceChecks.add(new PrincipalExceptionCheck());
 		_sourceChecks.add(new SessionKeysCheck());
+		_sourceChecks.add(
+			new StringBundlerCheck(sourceFormatterArgs.getMaxLineLength()));
 		_sourceChecks.add(new StringUtilCheck());
 		_sourceChecks.add(new UnparameterizedClassCheck());
 		_sourceChecks.add(new ValidatorEqualsCheck());
@@ -685,6 +698,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			_sourceChecks.add(
 				new ResourceBundleCheck(
 					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
+			_sourceChecks.add(
+				new StringMethodsCheck(
+					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
+		}
+		else {
+			if (GetterUtil.getBoolean(
+					getProperty("use.portal.compat.import"))) {
+
+				_sourceChecks.add(
+					new CompatClassImportsCheck(getCompatClassNamesMap()));
+			}
 		}
 
 		if (portalSource) {

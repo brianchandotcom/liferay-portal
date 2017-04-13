@@ -6,6 +6,7 @@
 			<pluginExecutionFilter>
 				<goals>
 					<goal>replace-translation</goal>
+					<goal>wrap-alloy-template</goal>
 				</goals>
 			</pluginExecutionFilter>
 			<action>

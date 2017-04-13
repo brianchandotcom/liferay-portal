@@ -1447,6 +1447,18 @@ dependency to version 2.1.12.
 - [LPS-71826]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.3.10.
 
+## 3.2.38 - 2017-04-11
+
+### Changed
+- [LPS-71164]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.116.
+- [LPS-71164]: Update the [Liferay Source Formatter] dependency to version
+1.0.383.
+- [LPS-71722]: Update the [Liferay Gradle Plugins Service Builder] dependency
+to version 1.0.35.
+- [LPS-71722]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.151.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1576,5 +1588,6 @@ version 2.3.10.
 [LPS-71558]: https://issues.liferay.com/browse/LPS-71558
 [LPS-71591]: https://issues.liferay.com/browse/LPS-71591
 [LPS-71603]: https://issues.liferay.com/browse/LPS-71603
+[LPS-71722]: https://issues.liferay.com/browse/LPS-71722
 [LPS-71826]: https://issues.liferay.com/browse/LPS-71826
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

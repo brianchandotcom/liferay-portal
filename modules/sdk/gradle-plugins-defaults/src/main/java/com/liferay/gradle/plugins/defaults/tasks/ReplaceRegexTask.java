@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -117,12 +118,14 @@ public class ReplaceRegexTask extends DefaultTask {
 	public void replaceRegex() throws IOException {
 		Map<String, FileCollection> matches = getMatches();
 
+		Object replacementObj = _getReplacementObj();
+
 		for (Map.Entry<String, FileCollection> entry : matches.entrySet()) {
 			Pattern pattern = Pattern.compile(entry.getKey());
 			FileCollection fileCollection = entry.getValue();
 
 			for (File file : fileCollection) {
-				_replaceRegex(file, pattern);
+				_replaceRegex(file, pattern, replacementObj);
 			}
 		}
 	}
@@ -159,7 +162,20 @@ public class ReplaceRegexTask extends DefaultTask {
 		replaceOnlyIf(replaceOnlyIfClosures);
 	}
 
-	private void _replaceRegex(File file, Pattern pattern) throws IOException {
+	private Object _getReplacementObj() {
+		Object replacementObj = getReplacement();
+
+		if (replacementObj instanceof Callable<?>) {
+			replacementObj = GradleUtil.toString(replacementObj);
+		}
+
+		return replacementObj;
+	}
+
+	private void _replaceRegex(
+			File file, Pattern pattern, Object replacementObj)
+		throws IOException {
+
 		Logger logger = getLogger();
 
 		Path path = file.toPath();
@@ -183,8 +199,6 @@ public class ReplaceRegexTask extends DefaultTask {
 			String group = matcher.group(groupCount);
 
 			String replacement;
-
-			Object replacementObj = getReplacement();
 
 			if (replacementObj instanceof Closure<?>) {
 				Closure<String> replacementClosure =

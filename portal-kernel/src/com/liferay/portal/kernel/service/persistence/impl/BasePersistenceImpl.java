@@ -55,6 +55,7 @@ import java.sql.Types;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -225,6 +226,18 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	public DB getDB() {
 		return _db;
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		Map<String, String> dbColumnMap = new HashMap<>();
+
+		for (String badColumnName : getBadColumnNames()) {
+			dbColumnMap.put(
+				badColumnName, badColumnName.concat(StringPool.UNDERLINE));
+		}
+
+		return dbColumnMap;
 	}
 
 	@Override
@@ -437,15 +450,14 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	protected String getColumnName(
 		String entityAlias, String fieldName, boolean sqlQuery) {
 
-		String columnName = fieldName;
+		Map<String, String> dbColumnMap = getDBColumnMap();
 
-		Set<String> badColumnNames = getBadColumnNames();
+		String columnName = dbColumnMap.get(fieldName);
 
-		if (badColumnNames.contains(fieldName)) {
-			columnName = columnName.concat(StringPool.UNDERLINE);
+		if (columnName == null) {
+			columnName = fieldName;
 		}
-
-		if (sqlQuery) {
+		else if (sqlQuery) {
 			fieldName = columnName;
 		}
 

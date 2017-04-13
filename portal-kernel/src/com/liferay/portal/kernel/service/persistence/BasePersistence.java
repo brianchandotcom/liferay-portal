@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Projection;
@@ -45,6 +47,7 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see    com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl
  */
+@ProviderType
 public interface BasePersistence<T extends BaseModel<T>> {
 
 	/**
@@ -198,6 +201,8 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @see    #setDataSource(DataSource)
 	 */
 	public DataSource getDataSource();
+
+	public Map<String, String> getDBColumnMap();
 
 	/**
 	 * Returns the listeners registered for this model.

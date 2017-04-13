@@ -5,7 +5,7 @@
 		<pluginExecution>
 			<pluginExecutionFilter>
 				<goals>
-					<goal>build-lang</goal>
+					<goal>build</goal>
 				</goals>
 			</pluginExecutionFilter>
 			<action>

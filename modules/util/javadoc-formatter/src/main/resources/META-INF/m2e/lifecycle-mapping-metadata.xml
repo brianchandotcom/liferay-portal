@@ -5,7 +5,7 @@
 		<pluginExecution>
 			<pluginExecutionFilter>
 				<goals>
-					<goal>format-javadoc</goal>
+					<goal>format</goal>
 				</goals>
 			</pluginExecutionFilter>
 			<action>

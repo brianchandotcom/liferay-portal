@@ -7,8 +7,8 @@
 				<goals>
 					<goal>clean</goal>
 					<goal>deploy</goal>
-					<goal>init-bundle</goal>
-					<goal>dist-bundle</goal>
+					<goal>dist</goal>
+					<goal>init</goal>
 				</goals>
 			</pluginExecutionFilter>
 			<action>

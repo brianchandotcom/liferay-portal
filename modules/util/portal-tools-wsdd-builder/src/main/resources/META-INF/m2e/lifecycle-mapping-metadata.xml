@@ -5,7 +5,7 @@
 		<pluginExecution>
 			<pluginExecutionFilter>
 				<goals>
-					<goal>build-wsdd</goal>
+					<goal>build</goal>
 				</goals>
 			</pluginExecutionFilter>
 			<action>

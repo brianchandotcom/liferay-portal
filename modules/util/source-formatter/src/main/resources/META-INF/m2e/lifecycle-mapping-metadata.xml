@@ -5,7 +5,7 @@
 		<pluginExecution>
 			<pluginExecutionFilter>
 				<goals>
-					<goal>format-source</goal>
+					<goal>format</goal>
 				</goals>
 			</pluginExecutionFilter>
 			<action>

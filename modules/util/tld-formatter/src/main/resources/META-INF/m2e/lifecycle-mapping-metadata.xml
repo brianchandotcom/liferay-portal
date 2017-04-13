@@ -5,7 +5,7 @@
 		<pluginExecution>
 			<pluginExecutionFilter>
 				<goals>
-					<goal>format-tld</goal>
+					<goal>format</goal>
 				</goals>
 			</pluginExecutionFilter>
 			<action>

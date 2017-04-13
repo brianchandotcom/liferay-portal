@@ -185,6 +185,21 @@ public class LocalGitSyncUtil {
 				JenkinsResultsParserUtil.toDurationString(duration));
 	}
 
+	protected static void checkoutUpstreamBranch(
+			GitWorkingDirectory gitWorkingDirectory)
+		throws GitAPIException {
+
+		String upstreamBranchName = gitWorkingDirectory.getUpstreamBranchName();
+
+		if (!gitWorkingDirectory.branchExists(upstreamBranchName, null)) {
+			updateLocalUpstreamBranch(
+				gitWorkingDirectory, upstreamBranchName,
+				gitWorkingDirectory.getRemoteConfig("upstream"));
+		}
+
+		gitWorkingDirectory.checkoutBranch(upstreamBranchName);
+	}
+
 	protected static void copyUpstreamRefsToHeads(
 			GitWorkingDirectory gitWorkingDirectory)
 		throws IOException {
@@ -709,9 +724,6 @@ public class LocalGitSyncUtil {
 					gitWorkingDirectory, upstreamBranchName,
 					upstreamRemoteConfig);
 
-				gitWorkingDirectory.createLocalBranch(
-					cacheBranchName, true, null);
-
 				gitWorkingDirectory.fetch(
 					cacheBranchName, senderBranchName, senderRemoteConfig);
 
@@ -760,8 +772,7 @@ public class LocalGitSyncUtil {
 					gitWorkingDirectory.checkoutBranch(originalBranchName);
 				}
 				else {
-					gitWorkingDirectory.checkoutBranch(
-						gitWorkingDirectory.getUpstreamBranchName());
+					checkoutUpstreamBranch(gitWorkingDirectory);
 				}
 
 				gitWorkingDirectory.deleteLocalBranch(cacheBranchName);
@@ -861,7 +872,14 @@ public class LocalGitSyncUtil {
 						updated = true;
 					}
 					finally {
-						gitWorkingDirectory.checkoutBranch(currentBranch);
+						if (gitWorkingDirectory.branchExists(
+								currentBranch, null)) {
+
+							gitWorkingDirectory.checkoutBranch(currentBranch);
+						}
+						else {
+							checkoutUpstreamBranch(gitWorkingDirectory);
+						}
 
 						gitWorkingDirectory.deleteLocalBranch(
 							newTimestampBranchName);

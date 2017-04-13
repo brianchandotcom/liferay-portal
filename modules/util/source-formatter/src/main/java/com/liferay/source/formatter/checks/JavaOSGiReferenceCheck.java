@@ -162,7 +162,8 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
 			if (!javaTerm.isStatic() &&
 				(javaTerm instanceof JavaConstructor ||
-				 javaTerm instanceof JavaMethod)) {
+				 javaTerm instanceof JavaMethod) &&
+				!javaTerm.hasAnnotation("Reference")) {
 
 				String javaTermContent = javaTerm.getContent();
 

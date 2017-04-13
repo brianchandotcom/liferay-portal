@@ -1046,7 +1046,7 @@ public class Entity implements Comparable<Entity> {
 			_name.concat("Localization"), _humanName.concat(" localization"),
 			_table.concat("Localization"), _alias.concat("Localization"),
 			persistenceClass, _dataSource, _sessionFactory, _txManager,
-			_cacheEnabled, _dynamicUpdateEnabled, _mvccEnabled, _deprecated,
+			_cacheEnabled, _dynamicUpdateEnabled, _deprecated,
 			Collections.singletonList(entityLocalizationIDColumn),
 			regularColList, Collections.<EntityColumn>emptyList(),
 			Collections.<EntityColumn>emptyList(), columnList, finderList,

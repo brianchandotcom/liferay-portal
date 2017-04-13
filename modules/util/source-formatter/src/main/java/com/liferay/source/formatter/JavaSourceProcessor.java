@@ -324,36 +324,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		};
 	}
 
-	protected String getPortalCustomSQLContent() throws Exception {
-		if (!portalSource) {
-			return null;
-		}
-
-		if (_portalCustomSQLContent != null) {
-			return _portalCustomSQLContent;
-		}
-
-		File portalCustomSQLFile = getFile(
-			"portal-impl/src/custom-sql/default.xml", PORTAL_MAX_DIR_LEVEL);
-
-		String portalCustomSQLContent = FileUtil.read(portalCustomSQLFile);
-
-		Matcher matcher = _customSQLFilePattern.matcher(portalCustomSQLContent);
-
-		while (matcher.find()) {
-			File customSQLFile = getFile(
-				"portal-impl/src/" + matcher.group(1), PORTAL_MAX_DIR_LEVEL);
-
-			if (customSQLFile != null) {
-				portalCustomSQLContent += FileUtil.read(customSQLFile);
-			}
-		}
-
-		_portalCustomSQLContent = portalCustomSQLContent;
-
-		return _portalCustomSQLContent;
-	}
-
 	@Override
 	protected void populateModuleSourceChecks() throws Exception {
 		_moduleSourceChecks.add(
@@ -381,6 +351,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void postFormat() throws Exception {
+		print();
 		_processCheckStyle();
 	}
 
@@ -482,6 +453,36 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		fileNames.addAll(getFileNames(excludes, includes));
 
 		return fileNames;
+	}
+
+	private String _getPortalCustomSQLContent() throws Exception {
+		if (!portalSource) {
+			return null;
+		}
+
+		if (_portalCustomSQLContent != null) {
+			return _portalCustomSQLContent;
+		}
+
+		File portalCustomSQLFile = getFile(
+			"portal-impl/src/custom-sql/default.xml", PORTAL_MAX_DIR_LEVEL);
+
+		String portalCustomSQLContent = FileUtil.read(portalCustomSQLFile);
+
+		Matcher matcher = _customSQLFilePattern.matcher(portalCustomSQLContent);
+
+		while (matcher.find()) {
+			File customSQLFile = getFile(
+				"portal-impl/src/" + matcher.group(1), PORTAL_MAX_DIR_LEVEL);
+
+			if (customSQLFile != null) {
+				portalCustomSQLContent += FileUtil.read(customSQLFile);
+			}
+		}
+
+		_portalCustomSQLContent = portalCustomSQLContent;
+
+		return _portalCustomSQLContent;
 	}
 
 	private Collection<String> _getPortalJavaFiles(String[] includes)
@@ -707,7 +708,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(
 			new JavaTermOrderCheck(
 				getExcludes(_JAVATERM_SORT_EXCLUDES), portalSource,
-				subrepository, getPortalCustomSQLContent()));
+				subrepository, _getPortalCustomSQLContent()));
 
 		_sourceChecks.add(new JavaTermDividersCheck());
 

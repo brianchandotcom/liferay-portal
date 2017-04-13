@@ -33,7 +33,7 @@ renderResponse.setTitle((commerceProductOption == null) ? LanguageUtil.get(reque
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceProductOption == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-	<aui:input name="commerceProductOptionId" type="hidden" value="<%= String.valueOf(commerceProductOptionId) %>" />
+	<aui:input name="commerceProductOptionId" type="hidden" value="<%= commerceProductOptionId %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator

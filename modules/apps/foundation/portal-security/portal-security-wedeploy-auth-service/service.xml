@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-namespace-tables="true" package-path="com.liferay.portal.security.wedeploy.auth">
+	<namespace>WedeployAuth</namespace>
+	<entity local-service="true" name="WedeployAuthApp" table="WedeployAuthApp" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+        <column name="wedeployAuthId" primary="true" type="long" />
+
+        <!-- Audit fields -->
+
+        <column name="clientId" type="String" />
+        <column name="clientName" type="String" />
+        <column name="secret" type="String" />
+        <column name="companyId" type="long" />
+		
+		<!-- Finder methods -->
+
+		<finder name="clientName" return-type="Collection">
+			<finder-column name="clientName" />
+		</finder>
+
+	</entity>
+	<exceptions>
+		<exception>DuplicateClient</exception>
+	</exceptions>
+</service-builder>

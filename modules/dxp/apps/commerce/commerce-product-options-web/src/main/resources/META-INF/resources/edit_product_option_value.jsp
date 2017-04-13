@@ -26,7 +26,7 @@ long commerceProductOptionId = ParamUtil.getLong(request, "commerceProductOption
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle((commerceProductOptionValue == null) ? LanguageUtil.get(request, "new-product-option-value") : commerceProductOptionValue.getTitle(locale));
+renderResponse.setTitle((commerceProductOptionValue == null) ? LanguageUtil.get(request, "add-product-option-value") : commerceProductOptionValue.getTitle(locale));
 %>
 
 <portlet:actionURL name="editProductOptionValue" var="editProductOptionValueActionURL" />

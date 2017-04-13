@@ -100,12 +100,11 @@ public class EditCommerceProductOptionValueMVCActionCommand
 
 		long commerceProductOptionValueId = ParamUtil.getLong(
 			actionRequest, "commerceProductOptionValueId");
+
 		long commerceProductOptionId = ParamUtil.getLong(
 			actionRequest, "commerceProductOptionId");
-
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
-
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -117,19 +116,21 @@ public class EditCommerceProductOptionValueMVCActionCommand
 
 			// Add commerce product option value
 
-			_commerceProductOptionValueLocalService.
-				addCommerceProductOptionValue(
-					commerceProductOptionId, titleMap, priority,
-					serviceContext);
+			commerceProductOptionValue =
+				_commerceProductOptionValueLocalService.
+					addCommerceProductOptionValue(
+						commerceProductOptionId, titleMap, priority,
+						serviceContext);
 		}
 		else {
 
 			// Update commerce product option value
 
-			_commerceProductOptionValueLocalService.
-				updateCommerceProductOptionValue(
-					commerceProductOptionValueId, titleMap, priority,
-					serviceContext);
+			commerceProductOptionValue =
+				_commerceProductOptionValueLocalService.
+					updateCommerceProductOptionValue(
+						commerceProductOptionValueId, titleMap, priority,
+						serviceContext);
 		}
 
 		return commerceProductOptionValue;

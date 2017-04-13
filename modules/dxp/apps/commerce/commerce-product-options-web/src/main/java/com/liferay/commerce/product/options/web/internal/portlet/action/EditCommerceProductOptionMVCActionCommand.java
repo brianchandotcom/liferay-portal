@@ -101,10 +101,8 @@ public class EditCommerceProductOptionMVCActionCommand
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
-
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-
 		String ddmFormFieldTypeName = ParamUtil.getString(
 			actionRequest, "ddmFormFieldTypeName");
 
@@ -117,16 +115,19 @@ public class EditCommerceProductOptionMVCActionCommand
 
 			// Add commerce product option
 
-			_commerceProductOptionLocalService.addCommerceProductOption(
-				nameMap, descriptionMap, ddmFormFieldTypeName, serviceContext);
+			commerceProductOption =
+				_commerceProductOptionLocalService.addCommerceProductOption(
+					nameMap, descriptionMap, ddmFormFieldTypeName,
+					serviceContext);
 		}
 		else {
 
 			// Update commerce product option
 
-			_commerceProductOptionLocalService.updateCommerceProductOption(
-				commerceProductOptionId, nameMap, descriptionMap,
-				ddmFormFieldTypeName, serviceContext);
+			commerceProductOption =
+				_commerceProductOptionLocalService.updateCommerceProductOption(
+					commerceProductOptionId, nameMap, descriptionMap,
+					ddmFormFieldTypeName, serviceContext);
 		}
 
 		return commerceProductOption;

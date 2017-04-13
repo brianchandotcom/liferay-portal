@@ -81,7 +81,7 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 					commerceProductDefinitionOptionRel)
 		throws PortalException {
 
-		// Product product definition option rel
+		// Commerce product definition option rel
 
 		commerceProductDefinitionOptionRelPersistence.remove(
 			commerceProductDefinitionOptionRel);

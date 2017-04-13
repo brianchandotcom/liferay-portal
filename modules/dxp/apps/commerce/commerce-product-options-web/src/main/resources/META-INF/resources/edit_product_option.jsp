@@ -24,7 +24,7 @@ long commerceProductOptionId = BeanParamUtil.getLong(commerceProductOption, requ
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-	renderResponse.setTitle((commerceProductOption == null) ? LanguageUtil.get(request, "new-product-option") : commerceProductOption.getName(locale));
+renderResponse.setTitle((commerceProductOption == null) ? LanguageUtil.get(request, "add-product-option") : commerceProductOption.getName(locale));
 %>
 
 <portlet:actionURL name="editProductOption" var="editProductOptionActionURL" />

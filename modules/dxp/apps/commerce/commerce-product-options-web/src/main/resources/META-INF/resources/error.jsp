@@ -19,5 +19,6 @@
 <liferay-ui:error-header />
 
 <liferay-ui:error exception="<%= NoSuchProductOptionException.class %>" message="the-product-option-could-not-be-found" />
+<liferay-ui:error exception="<%= NoSuchProductOptionValueException.class %>" message="the-product-option-value-could-not-be-found" />
 
 <liferay-ui:error-principal />

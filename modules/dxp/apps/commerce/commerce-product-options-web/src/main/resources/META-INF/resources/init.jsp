@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.product.constants.CommerceProductWebKeys" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchProductOptionException" %><%@
+page import="com.liferay.commerce.product.exception.NoSuchProductOptionValueException" %><%@
 page import="com.liferay.commerce.product.model.CommerceProductOption" %><%@
 page import="com.liferay.commerce.product.model.CommerceProductOptionValue" %><%@
 page import="com.liferay.commerce.product.options.web.internal.display.context.CommerceProductOptionsDisplayContext" %><%@

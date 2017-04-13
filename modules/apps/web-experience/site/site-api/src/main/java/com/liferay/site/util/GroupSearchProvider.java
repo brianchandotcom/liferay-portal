@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
@@ -256,17 +256,14 @@ public class GroupSearchProvider {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 
 		_classNameIds = new long[] {
-			_portal.getClassNameId(Company.class),
-			_portal.getClassNameId(Group.class),
-			_portal.getClassNameId(Organization.class)
+			PortalUtil.getClassNameId(Company.class),
+			PortalUtil.getClassNameId(Group.class),
+			PortalUtil.getClassNameId(Organization.class)
 		};
 	}
 
 	private long[] _classNameIds;
 	private GroupLocalService _groupLocalService;
 	private GroupService _groupService;
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -65,6 +65,9 @@ portletDisplay.setURLBack(redirect);
 
 			<c:choose>
 				<c:when test="<%= !viewResults && !question.isExpired() && !hasVoted && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
+					<div class="hide" id="<portlet:namespace />fieldRequiredErrorPoll">
+						<span class="alert alert-danger"><liferay-ui:message key="this-field-is-required" /></span>
+					</div>
 
 					<%
 					for (PollsChoice choice : choices) {
@@ -132,4 +135,23 @@ portletDisplay.setURLBack(redirect);
 			</c:choose>
 		</aui:fieldset>
 	</aui:fieldset-group>
+
+	<aui:script use="aui-base,selector-css3">
+		var form = A.one('#<portlet:namespace />fm');
+
+		if (form) {
+			form.on(
+				'submit',
+				function(event) {
+					var hasChecked = A.one('input[name=<portlet:namespace />choiceId]:checked');
+
+					if (!hasChecked) {
+						A.one('#<portlet:namespace />fieldRequiredErrorPoll').show();
+						event.halt();
+						event.stopImmediatePropagation();
+					}
+				}
+			);
+		}
+	</aui:script>
 </aui:form>

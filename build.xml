@@ -14,15 +14,25 @@
 			classname="com.liferay.portal.tools.GitUtil"
 			classpathref="project.classpath"
 			dir="${project.dir}/modules"
-			failonerror="true"
+			failonerror="false"
 			fork="true"
 			newenvironment="true"
 			outputProperty="baseline.current.branch.dirs"
+			resultproperty="baseline.current.branch.result"
 		>
 			<arg value="git.marker.file=bnd.bnd" />
 			<arg value="git.working.branch.name=${git.working.branch.name}" />
 			<arg value="tools.throw.main.exception=true" />
 		</java>
+
+		<if>
+			<not>
+				<equals arg1="${baseline.current.branch.result}" arg2="0" />
+			</not>
+			<then>
+				<fail>${baseline.current.branch.dirs}</fail>
+			</then>
+		</if>
 
 		<for delimiter="${line.separator}" list="${baseline.current.branch.dirs}" param="baseline.current.branch.dir">
 			<sequential>

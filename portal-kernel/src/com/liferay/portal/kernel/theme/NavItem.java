@@ -97,7 +97,7 @@ public class NavItem implements Serializable {
 		List<Layout> parentLayouts = themeDisplay.getLayouts();
 
 		if (parentLayouts == null) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		Map<Long, List<Layout>> layoutChildLayouts =

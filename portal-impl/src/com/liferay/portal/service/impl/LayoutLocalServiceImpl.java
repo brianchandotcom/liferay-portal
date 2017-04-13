@@ -79,7 +79,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1218,10 +1218,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		for (List<Layout> layoutChildLayoutsList :
 				layoutChildLayouts.values()) {
 
-			Collections.sort(
-				layoutChildLayoutsList,
-				(layout1, layout2) ->
-					layout1.getPriority() - layout2.getPriority());
+			layoutChildLayouts.sort(Comparator.comparing(Layout::getPriority));
 		}
 
 		return layoutChildLayouts;
@@ -3191,7 +3188,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			long[] parentLayoutIds)
 		throws PortalException {
 
-		layouts = new ArrayList<>(layouts);
+		boolean copied = false;
 
 		List<UserGroup> userUserGroups =
 			userGroupLocalService.getUserUserGroups(group.getClassPK());
@@ -3204,6 +3201,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				parentLayoutIds);
 
 			for (Layout userGroupLayout : userGroupLayouts) {
+				if (!copied) {
+					layouts = new ArrayList<>(layouts);
+
+					copied = true;
+				}
+
 				layouts.add(new VirtualLayout(userGroupLayout, group));
 			}
 		}

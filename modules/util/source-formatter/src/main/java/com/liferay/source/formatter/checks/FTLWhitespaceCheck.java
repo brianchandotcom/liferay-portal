@@ -29,6 +29,8 @@ public class FTLWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		content = StringUtil.replace(content, " >\n", ">\n");
+
 		content = _formatWhitespace(fileName, content);
 
 		content = StringUtil.replace(content, "\n\n\n", "\n\n");

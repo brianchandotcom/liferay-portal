@@ -26,10 +26,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -118,15 +120,19 @@ public class GetFunctionsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
 		for (Map.Entry<String, DDMExpressionFunction> entry : entries) {
-			jsonArray.put(toJSONObject(entry, locale));
+			jsonArray.put(toJSONObject(entry, resourceBundle));
 		}
 
 		return jsonArray;
 	}
 
 	protected JSONObject toJSONObject(
-		Map.Entry<String, DDMExpressionFunction> entry, Locale locale) {
+		Map.Entry<String, DDMExpressionFunction> entry,
+		ResourceBundle resourceBundle) {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -134,13 +140,15 @@ public class GetFunctionsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String labelLanguageKey = key + CharPool.UNDERLINE + "function";
 
-		jsonObject.put("label", LanguageUtil.get(locale, labelLanguageKey));
+		jsonObject.put(
+			"label", LanguageUtil.get(resourceBundle, labelLanguageKey));
 
 		jsonObject.put("value", key);
 
 		String tooltipLanguageKey = key + CharPool.UNDERLINE + "tooltip";
 
-		jsonObject.put("tooltip", LanguageUtil.get(locale, tooltipLanguageKey));
+		jsonObject.put(
+			"tooltip", LanguageUtil.get(resourceBundle, tooltipLanguageKey));
 
 		return jsonObject;
 	}

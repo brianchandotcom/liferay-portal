@@ -265,7 +265,7 @@ public class GitUtil {
 
 			dir = dir.getParentFile();
 
-			if (baseDir.equals(dir)) {
+			if ((dir == null) || baseDir.equals(dir)) {
 				return null;
 			}
 		}

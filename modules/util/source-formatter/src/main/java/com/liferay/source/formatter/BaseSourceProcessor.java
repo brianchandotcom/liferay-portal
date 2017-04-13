@@ -21,11 +21,9 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
@@ -43,8 +41,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.lang.reflect.Field;
-
 import java.net.URI;
 
 import java.nio.ByteBuffer;
@@ -57,7 +53,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -67,7 +62,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.tools.ant.types.selectors.SelectorUtils;
@@ -258,126 +252,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return level;
 	}
 
-	protected void checkEmptyCollection(
-		String line, String fileName, int lineCount) {
-
-		// LPS-46028
-
-		Matcher matcher = emptyCollectionPattern.matcher(line);
-
-		if (matcher.find()) {
-			String collectionType = TextFormatter.format(
-				matcher.group(1), TextFormatter.J);
-
-			processMessage(
-				fileName, "Use Collections.empty" + collectionType + "()",
-				lineCount);
-		}
-	}
-
-	protected void checkGetterUtilGet(String fileName, String content)
-		throws Exception {
-
-		Matcher matcher = getterUtilGetPattern.matcher(content);
-
-		while (matcher.find()) {
-			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
-				continue;
-			}
-
-			List<String> parametersList = getParameterList(matcher.group());
-
-			if (parametersList.size() != 2) {
-				continue;
-			}
-
-			String defaultVariableName =
-				"DEFAULT_" + StringUtil.toUpperCase(matcher.group(1));
-
-			Field defaultValuefield = GetterUtil.class.getDeclaredField(
-				defaultVariableName);
-
-			String defaultValue = String.valueOf(defaultValuefield.get(null));
-
-			String value = parametersList.get(1);
-
-			if (value.equals("StringPool.BLANK")) {
-				value = StringPool.BLANK;
-			}
-
-			if (Objects.equals(value, defaultValue)) {
-				processMessage(
-					fileName,
-					"No need to pass default value '" + parametersList.get(1) +
-						"'",
-					getLineCount(content, matcher.start()));
-			}
-		}
-	}
-
-	protected void checkInefficientStringMethods(
-		String line, String fileName, int lineCount) {
-
-		String methodName = "toLowerCase";
-
-		int pos = line.indexOf(".toLowerCase()");
-
-		if (pos == -1) {
-			methodName = "toUpperCase";
-
-			pos = line.indexOf(".toUpperCase()");
-		}
-
-		if ((pos == -1) && !line.contains("StringUtil.equalsIgnoreCase(")) {
-			methodName = "equalsIgnoreCase";
-
-			pos = line.indexOf(".equalsIgnoreCase(");
-		}
-
-		if (pos != -1) {
-			processMessage(fileName, "Use StringUtil." + methodName, lineCount);
-		}
-	}
-
-	protected void checkInefficientStringMethods(
-		String line, String fileName, String absolutePath, int lineCount,
-		boolean javaSource) {
-
-		if (isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
-			return;
-		}
-
-		if (javaSource) {
-			checkInefficientStringMethods(line, fileName, lineCount);
-
-			return;
-		}
-
-		Matcher matcher = javaSourceInsideJSPLinePattern.matcher(line);
-
-		while (matcher.find()) {
-			checkInefficientStringMethods(
-				matcher.group(1), fileName, lineCount);
-		}
-	}
-
-	protected String checkPrincipalException(String content) {
-		String newContent = content;
-
-		Matcher matcher = principalExceptionPattern.matcher(content);
-
-		while (matcher.find()) {
-			String match = matcher.group();
-
-			String replacement = StringUtil.replace(
-				match, "class.getName", "getNestedClasses");
-
-			newContent = StringUtil.replace(newContent, match, replacement);
-		}
-
-		return newContent;
-	}
-
 	protected void checkPropertyUtils(String fileName, String content) {
 		if (fileName.endsWith("TypeConvertorUtil.java")) {
 			return;
@@ -433,42 +307,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return filteredIncludes;
-	}
-
-	protected String fixCompatClassImports(String absolutePath, String content)
-		throws Exception {
-
-		if (portalSource || subrepository || !_usePortalCompatImport ||
-			absolutePath.contains("/ext-") ||
-			absolutePath.contains("/portal-compat-shared/")) {
-
-			return content;
-		}
-
-		Map<String, String> compatClassNamesMap = getCompatClassNamesMap();
-
-		String newContent = content;
-
-		for (Map.Entry<String, String> entry : compatClassNamesMap.entrySet()) {
-			String compatClassName = entry.getKey();
-			String extendedClassName = entry.getValue();
-
-			Pattern pattern = Pattern.compile(extendedClassName + "\\W");
-
-			while (true) {
-				Matcher matcher = pattern.matcher(newContent);
-
-				if (!matcher.find()) {
-					break;
-				}
-
-				newContent =
-					newContent.substring(0, matcher.start()) + compatClassName +
-						newContent.substring(matcher.end() - 1);
-			}
-		}
-
-		return newContent;
 	}
 
 	protected String fixIncorrectParameterTypeForLanguageUtil(
@@ -563,82 +401,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		processFormattedFile(file, fileName, content, newContent);
 	}
 
-	protected String formatEmptyArray(String line) {
-		Matcher matcher = emptyArrayPattern.matcher(line);
-
-		while (matcher.find()) {
-			if (ToolsUtil.isInsideQuotes(line, matcher.end(1))) {
-				continue;
-			}
-
-			String replacement = StringUtil.replace(
-				matcher.group(1), "[]", "[0]");
-
-			return StringUtil.replaceFirst(
-				line, matcher.group(), replacement, matcher.start());
-		}
-
-		return line;
-	}
-
-	protected String formatStringBundler(
-		String fileName, String content, int maxLineLength) {
-
-		Matcher matcher = sbAppendPattern.matcher(content);
-
-		matcherIteration:
-		while (matcher.find()) {
-			String appendValue = stripQuotes(matcher.group(2), CharPool.QUOTE);
-
-			appendValue = StringUtil.replace(appendValue, "+\n", "+ ");
-
-			if (!appendValue.contains(" + ")) {
-				continue;
-			}
-
-			String[] appendValueParts = StringUtil.split(appendValue, " + ");
-
-			for (String appendValuePart : appendValueParts) {
-				if ((getLevel(appendValuePart) != 0) ||
-					Validator.isNumber(appendValuePart)) {
-
-					continue matcherIteration;
-				}
-			}
-
-			processMessage(
-				fileName, "Incorrect use of '+' inside StringBundler",
-				getLineCount(content, matcher.start(1)));
-		}
-
-		matcher = sbAppendWithStartingSpacePattern.matcher(content);
-
-		while (matcher.find()) {
-			String firstLine = matcher.group(1);
-
-			if (firstLine.endsWith("\\n\");")) {
-				continue;
-			}
-
-			if ((maxLineLength != -1) &&
-				(getLineLength(firstLine) >= maxLineLength)) {
-
-				processMessage(
-					fileName,
-					"Do not append string starting with space to StringBundler",
-					getLineCount(content, matcher.start(3)));
-			}
-			else {
-				content = StringUtil.replaceFirst(
-					content, "\");\n", " \");\n", matcher.start(2));
-				content = StringUtil.replaceFirst(
-					content, "(\" ", "(\"", matcher.start(3));
-			}
-		}
-
-		return content;
-	}
-
 	protected String getAbsolutePath(String fileName) {
 		Path filePath = Paths.get(fileName);
 
@@ -650,26 +412,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
 	}
 
-	protected Set<String> getAnnotationsExclusions() {
-		if (_annotationsExclusions != null) {
-			return _annotationsExclusions;
-		}
-
-		_annotationsExclusions = SetUtil.fromArray(
-			new String[] {
-				"ArquillianResource", "Autowired", "BeanReference", "Captor",
-				"Inject", "Mock", "Parameter", "Reference", "ServiceReference",
-				"SuppressWarnings", "Value"
-			});
-
-		return _annotationsExclusions;
-	}
-
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
-		if (_compatClassNamesMap != null) {
-			return _compatClassNamesMap;
-		}
-
 		Map<String, String> compatClassNamesMap = new HashMap<>();
 
 		String[] includes = new String[] {
@@ -718,9 +461,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 		}
 
-		_compatClassNamesMap = compatClassNamesMap;
-
-		return _compatClassNamesMap;
+		return compatClassNamesMap;
 	}
 
 	protected String getContent(String fileName, int level) throws IOException {
@@ -1360,25 +1101,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
 
-	protected static Pattern emptyArrayPattern = Pattern.compile(
-		"((\\[\\])+) \\{\\}");
-	protected static Pattern emptyCollectionPattern = Pattern.compile(
-		"Collections\\.EMPTY_(LIST|MAP|SET)");
-	protected static Pattern getterUtilGetPattern = Pattern.compile(
-		"GetterUtil\\.get(Boolean|Double|Float|Integer|Number|Object|Short|" +
-			"String)\\((.*?)\\);\n",
-		Pattern.DOTALL);
 	protected static Pattern javaSourceInsideJSPLinePattern = Pattern.compile(
 		"<%=(.+?)%>");
 	protected static boolean portalSource;
-	protected static Pattern principalExceptionPattern = Pattern.compile(
-		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
-			"PrincipalException\\.class\\.getName\\(\\)");
-	protected static Pattern sbAppendPattern = Pattern.compile(
-		"\\s*\\w*(sb|SB)[0-9]?\\.append\\(\\s*(\\S.*?)\\);\n", Pattern.DOTALL);
-	protected static Pattern sbAppendWithStartingSpacePattern = Pattern.compile(
-		"\n(\t*\\w*(sb|SB)[0-9]?\\.append\\(\".*\"\\);)\n\\s*\\w*(sb|SB)" +
-			"[0-9]?\\.append\\(\" .*\"\\);\n");
 	protected static boolean subrepository;
 
 	protected SourceFormatterArgs sourceFormatterArgs;
@@ -1450,9 +1175,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		_excludes = _getExcludes();
-
-		_usePortalCompatImport = GetterUtil.getBoolean(
-			getProperty("use.portal.compat.import"));
 	}
 
 	private boolean _isMatchPath(String fileName) {
@@ -1580,9 +1302,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
 			"/source-formatter/documentation/";
 
-	private Set<String> _annotationsExclusions;
 	private boolean _browserStarted;
-	private Map<String, String> _compatClassNamesMap;
 	private String[] _excludes;
 	private Map<String, List<String>> _exclusionPropertiesMap = new HashMap<>();
 	private SourceMismatchException _firstSourceMismatchException;
@@ -1594,6 +1314,5 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private SourceFormatterHelper _sourceFormatterHelper;
 	private Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
-	private boolean _usePortalCompatImport;
 
 }

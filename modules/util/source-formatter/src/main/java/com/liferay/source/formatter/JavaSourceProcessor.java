@@ -154,8 +154,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processMessage(fileName, "Java2HTML");
 		}
 
-		newContent = fixCompatClassImports(absolutePath, newContent);
-
 		ImportsFormatter importsFormatter = new JavaImportsFormatter();
 
 		newContent = importsFormatter.format(
@@ -180,8 +178,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"reference via service.xml instead");
 		}
 
-		newContent = formatStringBundler(fileName, newContent, _maxLineLength);
-
 		// LPS-46017
 
 		newContent = StringUtil.replace(
@@ -201,17 +197,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"LPS-47682");
 		}
 
-		// LPS-48156
-
-		newContent = checkPrincipalException(newContent);
-
 		// LPS-62786
 
 		checkPropertyUtils(fileName, newContent);
-
-		if (!fileName.endsWith("GetterUtilTest.java")) {
-			checkGetterUtilGet(fileName, newContent);
-		}
 
 		return formatJava(fileName, absolutePath, newContent);
 	}
@@ -276,16 +264,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
-				String trimmedLine = StringUtil.trimLeading(line);
-
 				line = replacePrimitiveWrapperInstantiation(line);
-
-				checkEmptyCollection(trimmedLine, fileName, lineCount);
-
-				line = formatEmptyArray(line);
-
-				checkInefficientStringMethods(
-					line, fileName, absolutePath, lineCount, true);
 
 				if (lineCount > 1) {
 					sb.append(previousLine);
@@ -407,8 +386,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void preFormat() throws Exception {
-		_maxLineLength = sourceFormatterArgs.getMaxLineLength();
-
 		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
 			getProperty("allow.use.service.util.in.service.impl"));
 	}
@@ -828,7 +805,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _allowUseServiceUtilInServiceImpl;
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
-	private int _maxLineLength;
 	private final List<SourceCheck> _moduleSourceChecks = new ArrayList<>();
 	private final Pattern _packagePattern = Pattern.compile(
 		"(\n|^)\\s*package (.*);\n");

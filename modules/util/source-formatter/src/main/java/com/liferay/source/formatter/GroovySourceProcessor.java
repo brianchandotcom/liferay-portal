@@ -26,12 +26,6 @@ import java.util.List;
 public class GroovySourceProcessor extends JavaSourceProcessor {
 
 	@Override
-	protected void checkInefficientStringMethods(
-		String line, String fileName, String absolutePath, int lineCount,
-		boolean javaSource) {
-	}
-
-	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		if (!portalSource && !subrepository) {
 			return new ArrayList<>();

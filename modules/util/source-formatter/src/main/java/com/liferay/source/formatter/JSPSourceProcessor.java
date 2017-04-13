@@ -102,24 +102,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				"javascript:", ") {\n", ";\n"
 			});
 
-		newContent = fixCompatClassImports(absolutePath, newContent);
-
-		newContent = formatStringBundler(fileName, newContent, -1);
-
 		// LPS-47682
 
 		newContent = fixIncorrectParameterTypeForLanguageUtil(
 			newContent, true, fileName);
 
-		// LPS-48156
-
-		newContent = checkPrincipalException(newContent);
-
 		// LPS-62786
 
 		checkPropertyUtils(fileName, newContent);
-
-		checkGetterUtilGet(fileName, newContent);
 
 		JSPSourceTabCalculator jspSourceTabCalculator =
 			new JSPSourceTabCalculator();
@@ -208,19 +198,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						fileName, "Avoid chaining on 'getClass'", lineCount);
 				}
 
-				checkEmptyCollection(trimmedLine, fileName, lineCount);
-
-				line = formatEmptyArray(line);
-
 				if (trimmedLine.equals("<%") || trimmedLine.equals("<%!")) {
 					javaSource = true;
 				}
 				else if (trimmedLine.equals("%>")) {
 					javaSource = false;
 				}
-
-				checkInefficientStringMethods(
-					line, fileName, absolutePath, lineCount, javaSource);
 
 				// LPS-47179
 

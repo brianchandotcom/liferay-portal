@@ -56,6 +56,10 @@ public class MarketplaceServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.marketplace.service", "2.0.0", "2.0.1",
 			new com.liferay.marketplace.internal.upgrade.v2_0_1.
 				UpgradeCompanyId());
+
+		registry.register(
+			"com.liferay.marketplace.service", "2.0.1", "2.0.2",
+			new com.liferay.marketplace.internal.upgrade.v2_0_2.UpgradeApp());
 	}
 
 	@Reference(unbind = "-")

@@ -30,6 +30,7 @@ import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -42,8 +43,12 @@ import java.util.regex.Pattern;
  */
 public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
-	public JavaOSGiReferenceCheck(Map<String, String> moduleFileNamesMap) {
+	public JavaOSGiReferenceCheck(
+		Map<String, String> moduleFileNamesMap,
+		List<String> serviceReferenceUtilClassNames) {
+
 		_moduleFileNamesMap = moduleFileNamesMap;
+		_serviceReferenceUtilClassNames = serviceReferenceUtilClassNames;
 	}
 
 	@Override
@@ -71,9 +76,13 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		content = _formatDuplicateReferenceMethods(
 			fileName, content, moduleSuperClassContent);
 
-		_checkUtilUsage(
-			fileName, content, "com.liferay.portal.kernel.util", "PortalUtil",
-			moduleSuperClassContent);
+		for (String serviceReferenceUtilClassName :
+				_serviceReferenceUtilClassNames) {
+
+			_checkUtilUsage(
+				fileName, content, serviceReferenceUtilClassName,
+				moduleSuperClassContent);
+		}
 
 		Matcher matcher = _referenceMethodPattern.matcher(content);
 
@@ -131,17 +140,22 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	}
 
 	private void _checkUtilUsage(
-			String fileName, String content, String utilPackagePath,
-			String utilClassName, String moduleSuperClassContent)
+			String fileName, String content,
+			String serviceReferenceUtilClassName,
+			String moduleSuperClassContent)
 		throws Exception {
 
-		if (!content.contains(
-				utilPackagePath + StringPool.PERIOD + utilClassName) ||
+		if (!content.contains(serviceReferenceUtilClassName) ||
 			(Validator.isNotNull(moduleSuperClassContent) &&
 			 moduleSuperClassContent.contains("@Component"))) {
 
 			return;
 		}
+
+		int pos = serviceReferenceUtilClassName.lastIndexOf(StringPool.PERIOD);
+
+		String shortClassName = serviceReferenceUtilClassName.substring(
+			pos + 1);
 
 		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 
@@ -153,12 +167,13 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				String javaTermContent = javaTerm.getContent();
 
 				if (javaTermContent.contains(
-						utilClassName + StringPool.PERIOD)) {
+						shortClassName + StringPool.PERIOD)) {
 
 					addMessage(
 						fileName,
 						"Use portal service reference instead of '" +
-							utilClassName + "' in modules, see LPS-69661");
+							serviceReferenceUtilClassName +
+								"' in modules, see LPS-69661");
 
 					return;
 				}
@@ -462,6 +477,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	private final Pattern _referenceMethodPattern = Pattern.compile(
 		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
+	private final List<String> _serviceReferenceUtilClassNames;
 	private final Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 

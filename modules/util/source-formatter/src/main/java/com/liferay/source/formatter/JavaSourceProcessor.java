@@ -291,11 +291,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return _moduleSourceChecks;
 	}
 
-	@Override
-	protected List<SourceCheck> getSourceChecks() {
-		return _sourceChecks;
-	}
-
 	protected String[] getPluginExcludes(String pluginDirectoryName) {
 		return new String[] {
 			pluginDirectoryName + "**/model/*Clp.java",
@@ -322,6 +317,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			pluginDirectoryName + "**/service/http/*ServiceSoap.java",
 			pluginDirectoryName + "**/tools/templates/**"
 		};
+	}
+
+	@Override
+	protected List<SourceCheck> getSourceChecks() {
+		return _sourceChecks;
 	}
 
 	@Override

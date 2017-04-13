@@ -342,13 +342,18 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
+	protected List<SourceCheck> getModuleSourceChecks() {
+		return _moduleSourceChecks;
+	}
+
+	@Override
 	protected List<SourceCheck> getSourceChecks() {
 		return _sourceChecks;
 	}
 
 	@Override
-	protected List<SourceCheck> getModuleSourceChecks() {
-		return _moduleSourceChecks;
+	protected void populateModuleSourceChecks() throws Exception {
+		_moduleSourceChecks.add(new JSPModuleIllegalImportsCheck());
 	}
 
 	@Override
@@ -417,11 +422,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
 					getPortalLanguageProperties()));
 		}
-	}
-
-	@Override
-	protected void populateModuleSourceChecks() throws Exception {
-		_moduleSourceChecks.add(new JSPModuleIllegalImportsCheck());
 	}
 
 	private Map<String, String> _getContentsMap(List<String> fileNames)

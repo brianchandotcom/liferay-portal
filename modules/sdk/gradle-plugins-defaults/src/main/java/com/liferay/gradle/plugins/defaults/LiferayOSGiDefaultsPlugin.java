@@ -73,6 +73,12 @@ import groovy.time.TimeCategory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
+import java.lang.reflect.Method;
+
+import java.net.URL;
+import java.net.URLConnection;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
@@ -100,6 +106,7 @@ import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -136,6 +143,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
+import org.gradle.api.artifacts.maven.MavenDeployer;
 import org.gradle.api.artifacts.repositories.AuthenticationContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.artifacts.repositories.PasswordCredentials;
@@ -160,6 +168,7 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenPluginConvention;
+import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
 import org.gradle.api.plugins.quality.FindBugs;
 import org.gradle.api.plugins.quality.FindBugsPlugin;
 import org.gradle.api.plugins.quality.FindBugsReports;
@@ -176,6 +185,7 @@ import org.gradle.api.tasks.StopActionException;
 import org.gradle.api.tasks.TaskCollection;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
+import org.gradle.api.tasks.Upload;
 import org.gradle.api.tasks.VerificationTask;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.compile.CompileOptions;
@@ -258,6 +268,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String SYNC_RELEASE_PROPERTY_NAME = "syncRelease";
 
 	public static final String SYNC_VERSIONS_TASK_NAME = "syncVersions";
+
+	public static final String UPDATE_FILE_SNAPSHOT_VERSIONS_TASK_NAME =
+		"updateFileSnapshotVersions";
 
 	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
 		"updateFileVersions";
@@ -410,6 +423,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTasksJavaCompile(project);
 		_configureTasksPmd(project);
 		_configureTasksPublishNodeModule(project);
+
+		_addTaskUpdateFileSnapshotVersions(project);
 
 		if (publishing) {
 			_configureTasksEnabledIfStaleSnapshot(
@@ -1083,6 +1098,44 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					Properties properties = GUtil.loadProperties(bndFile);
 
 					return properties.getProperty(Constants.BUNDLE_VERSION);
+				}
+
+			});
+
+		return replaceRegexTask;
+	}
+
+	private ReplaceRegexTask _addTaskUpdateFileSnapshotVersions(
+		final Project project) {
+
+		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
+			project, UPDATE_FILE_SNAPSHOT_VERSIONS_TASK_NAME,
+			ReplaceRegexTask.class);
+
+		replaceRegexTask.setDescription(
+			"Updates the project version in external files to the latest " +
+				"snapshot.");
+
+		String regex = _getModuleSnapshotDependencyRegex(project);
+
+		Map<String, Object> args = new HashMap<>();
+
+		File rootDir = project.getRootDir();
+
+		args.put("dir", rootDir.getParentFile());
+
+		args.put("include", "**/build.gradle");
+
+		replaceRegexTask.setMatches(
+			Collections.singletonMap(
+				regex, (FileCollection)project.fileTree(args)));
+
+		replaceRegexTask.setReplacement(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return _getNexusLatestSnapshotVersion(project);
 				}
 
 			});
@@ -3368,6 +3421,113 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		sb.append("\", version: \"");
 
 		return Pattern.quote(sb.toString()) + "(\\d.+)\"";
+	}
+
+	private String _getModuleSnapshotDependencyRegex(Project project) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("group: \"");
+		sb.append(project.getGroup());
+		sb.append("\", name: \"");
+		sb.append(GradleUtil.getArchivesBaseName(project));
+		sb.append("\", version: \"");
+
+		return Pattern.quote(sb.toString()) +
+			"(\\d+\\.\\d+\\.\\d+-\\d{8}\\.\\d{6}-\\d+)\"";
+	}
+
+	private String _getNexusLatestSnapshotVersion(Project project)
+		throws Exception {
+
+		Upload upload = (Upload)GradleUtil.getTask(
+			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+
+		RepositoryHandler repositoryHandler = upload.getRepositories();
+
+		MavenDeployer mavenDeployer =
+			(MavenDeployer)repositoryHandler.getByName(
+				MavenRepositoryHandlerConvention.DEFAULT_MAVEN_DEPLOYER_NAME);
+
+		Object remoteRepository = mavenDeployer.getSnapshotRepository();
+
+		Class<?> remoteRepositoryClass = remoteRepository.getClass();
+
+		Method getUrlMethod = remoteRepositoryClass.getMethod("getUrl");
+
+		String repositoryUrl = (String)getUrlMethod.invoke(remoteRepository);
+
+		int start = repositoryUrl.indexOf("/content/repositories/");
+
+		if (start == -1) {
+			throw new GradleException(
+				"Unable to get Nexus repository name from " + repositoryUrl);
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(repositoryUrl, 0, start);
+		sb.append("/service/local/artifact/maven/resolve?g=");
+		sb.append(project.getGroup());
+		sb.append("&a=");
+		sb.append(GradleUtil.getArchivesBaseName(project));
+		sb.append("&v=LATEST&r=");
+
+		start += 22;
+
+		int end = repositoryUrl.indexOf('/', start);
+
+		if (end == -1) {
+			end = repositoryUrl.length();
+		}
+
+		sb.append(repositoryUrl, start, end);
+
+		URL url = new URL(sb.toString());
+
+		URLConnection urlConnection = url.openConnection();
+
+		Method getAuthenticationMethod = remoteRepositoryClass.getMethod(
+			"getAuthentication");
+
+		Object authentication = getAuthenticationMethod.invoke(
+			remoteRepository);
+
+		Class<?> authenticationClass = authentication.getClass();
+
+		Method getUserNameMethod = authenticationClass.getMethod("getUserName");
+
+		String userName = (String)getUserNameMethod.invoke(authentication);
+
+		Method getPasswordMethod = authenticationClass.getMethod("getPassword");
+
+		String password = (String)getPasswordMethod.invoke(authentication);
+
+		String authorization = userName + ":" + password;
+
+		authorization =
+			"Basic " +
+				DatatypeConverter.printBase64Binary(authorization.getBytes());
+
+		urlConnection.setRequestProperty("Authorization", authorization);
+
+		try (InputStream inputStream = urlConnection.getInputStream()) {
+			DocumentBuilderFactory documentBuilderFactory =
+				DocumentBuilderFactory.newInstance();
+
+			DocumentBuilder documentBuilder =
+				documentBuilderFactory.newDocumentBuilder();
+
+			Document document = documentBuilder.parse(inputStream);
+
+			Element artifactResolutionElement = document.getDocumentElement();
+
+			NodeList versionNodeList =
+				artifactResolutionElement.getElementsByTagName("version");
+
+			Element versionElement = (Element)versionNodeList.item(0);
+
+			return versionElement.getTextContent();
+		}
 	}
 
 	private String _getProjectDependency(Project project) {

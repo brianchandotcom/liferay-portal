@@ -6,6 +6,7 @@ import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -27,6 +28,11 @@ public class ${entity.name}FinderBaseImpl
 		@Override
 		public Set<String> getBadColumnNames() {
 			return get${entity.name}Persistence().getBadColumnNames();
+		}
+
+		@Override
+		public Map<String, String> getDBColumnMap() {
+			return get${entity.name}Persistence().getDBColumnMap();
 		}
 	</#if>
 

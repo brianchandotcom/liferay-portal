@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -88,9 +87,9 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		Map<String, String[]> urlParams = HttpUtil.getParameterMap(
 			request.getQueryString());
 
-		String portletId = PortalUtil.getPortletId(actionRequest);
+		String portletId = _portal.getPortletId(actionRequest);
 
-		String portletNamespace = PortalUtil.getPortletNamespace(portletId);
+		String portletNamespace = _portal.getPortletNamespace(portletId);
 
 		String passwordParamName = portletNamespace + "password";
 

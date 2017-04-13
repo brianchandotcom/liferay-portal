@@ -26,7 +26,7 @@ import java.io.File;
  */
 public class CopyrightCheck extends BaseFileCheck {
 
-	public CopyrightCheck(String copyright) throws Exception {
+	public CopyrightCheck(String copyright) {
 		_copyright = copyright;
 	}
 

@@ -14,7 +14,6 @@
 			classname="com.liferay.portal.tools.GitUtil"
 			classpathref="project.classpath"
 			dir="${project.dir}/modules"
-			failonerror="false"
 			fork="true"
 			newenvironment="true"
 			outputProperty="baseline.current.branch.dirs"

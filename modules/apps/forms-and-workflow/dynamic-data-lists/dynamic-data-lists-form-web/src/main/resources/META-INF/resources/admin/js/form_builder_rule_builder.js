@@ -318,7 +318,7 @@ AUI.add(
 								data = [
 									badgeTemplate(
 										{
-											content: action.expression
+											content: action.expression.replace(/\[|\]/g, '')
 										}
 									),
 									badgeTemplate(

@@ -1413,7 +1413,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return excludesList.toArray(new String[excludesList.size()]);
 	}
 
-	private String _getProjectPathPrefix() throws Exception {
+	protected String getProjectPathPrefix() throws Exception {
 		if (!subrepository) {
 			return null;
 		}
@@ -1441,7 +1441,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			portalSource = _isPortalSource();
 			subrepository = _isSubrepository();
 
-			_projectPathPrefix = _getProjectPathPrefix();
+			_projectPathPrefix = getProjectPathPrefix();
 
 			_sourceFormatterMessagesMap = new HashMap<>();
 		}

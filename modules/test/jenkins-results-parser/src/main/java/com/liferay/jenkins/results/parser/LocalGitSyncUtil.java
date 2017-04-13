@@ -690,10 +690,6 @@ public class LocalGitSyncUtil {
 							"Cache branch ", cacheBranchName,
 							" already exists"));
 
-					updateCacheBranchTimestamp(
-						cacheBranchName, gitWorkingDirectory,
-						localGitRemoteConfigs);
-
 					if (!gitWorkingDirectory.branchExists(
 							upstreamBranchName, null)) {
 
@@ -701,6 +697,10 @@ public class LocalGitSyncUtil {
 							gitWorkingDirectory, upstreamBranchName,
 							upstreamRemoteConfig);
 					}
+
+					updateCacheBranchTimestamp(
+						cacheBranchName, gitWorkingDirectory,
+						localGitRemoteConfigs);
 
 					return cacheBranchName;
 				}

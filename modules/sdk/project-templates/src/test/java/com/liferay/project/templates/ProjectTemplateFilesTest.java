@@ -203,6 +203,14 @@ public class ProjectTemplateFilesTest {
 
 		Assert.assertTrue("Missing " + pomXmlPath, Files.exists(pomXmlPath));
 
+		String pomXml = FileUtil.read(pomXmlPath);
+
+		boolean hasPackagingProperty = pomXml.contains(
+			"<packaging>jar</packaging>");
+
+		Assert.assertFalse(
+			"Packaging Jar is implicit in " + pomXml, hasPackagingProperty);
+
 		final AtomicBoolean hasJavaFiles = new AtomicBoolean();
 
 		Files.walkFileTree(

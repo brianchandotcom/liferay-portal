@@ -122,20 +122,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (_hasGeneratedTag(content)) {
-			return content;
+		if (!_hasGeneratedTag(content)) {
+			_ungeneratedFiles.add(file);
 		}
 
-		_ungeneratedFiles.add(file);
-
-		String newContent = content;
-
-		// LPS-47682
-
-		newContent = fixIncorrectParameterTypeForLanguageUtil(
-			newContent, false, fileName);
-
-		return newContent;
+		return content;
 	}
 
 	@Override

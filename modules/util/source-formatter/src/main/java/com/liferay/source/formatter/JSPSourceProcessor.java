@@ -103,11 +103,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				"javascript:", ") {\n", ";\n"
 			});
 
-		// LPS-47682
-
-		newContent = fixIncorrectParameterTypeForLanguageUtil(
-			newContent, true, fileName);
-
 		JSPSourceTabCalculator jspSourceTabCalculator =
 			new JSPSourceTabCalculator();
 

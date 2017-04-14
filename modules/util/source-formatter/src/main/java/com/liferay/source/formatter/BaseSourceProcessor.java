@@ -296,49 +296,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return filteredIncludes;
 	}
 
-	protected String fixIncorrectParameterTypeForLanguageUtil(
-		String content, boolean autoFix, String fileName) {
-
-		if (portalSource || subrepository) {
-			return content;
-		}
-
-		String expectedParameter = getProperty(
-			"languageutil.expected.parameter");
-		String incorrectParameter = getProperty(
-			"languageutil.incorrect.parameter");
-
-		if (!content.contains(
-				"LanguageUtil.format(" + incorrectParameter + ", ") &&
-			!content.contains(
-				"LanguageUtil.get(" + incorrectParameter + ", ")) {
-
-			return content;
-		}
-
-		if (autoFix) {
-			content = StringUtil.replace(
-				content,
-				new String[] {
-					"LanguageUtil.format(" + incorrectParameter + ", ",
-					"LanguageUtil.get(" + incorrectParameter + ", "
-				},
-				new String[] {
-					"LanguageUtil.format(" + expectedParameter + ", ",
-					"LanguageUtil.get(" + expectedParameter + ", "
-				});
-		}
-		else {
-			processMessage(
-				fileName,
-				"(Unicode)LanguageUtil.format/get methods require " +
-					expectedParameter + " parameter instead of " +
-						incorrectParameter);
-		}
-
-		return content;
-	}
-
 	protected final String format(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {

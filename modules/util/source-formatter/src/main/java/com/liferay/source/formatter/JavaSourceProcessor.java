@@ -155,34 +155,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return _moduleSourceChecks;
 	}
 
-	private String[] _getPluginExcludes(String pluginDirectoryName) {
-		return new String[] {
-			pluginDirectoryName + "**/model/*Clp.java",
-			pluginDirectoryName + "**/model/impl/*BaseImpl.java",
-			pluginDirectoryName + "**/model/impl/*Model.java",
-			pluginDirectoryName + "**/model/impl/*ModelImpl.java",
-			pluginDirectoryName + "**/service/**/service/*Service.java",
-			pluginDirectoryName + "**/service/**/service/*ServiceClp.java",
-			pluginDirectoryName + "**/service/**/service/*ServiceFactory.java",
-			pluginDirectoryName + "**/service/**/service/*ServiceUtil.java",
-			pluginDirectoryName + "**/service/**/service/*ServiceWrapper.java",
-			pluginDirectoryName + "**/service/**/service/ClpSerializer.java",
-			pluginDirectoryName +
-				"**/service/**/service/messaging/*ClpMessageListener.java",
-			pluginDirectoryName +
-				"**/service/**/service/persistence/*Finder.java",
-			pluginDirectoryName +
-				"**/service/**/service/persistence/*Util.java",
-			pluginDirectoryName + "**/service/base/*ServiceBaseImpl.java",
-			pluginDirectoryName + "**/service/base/*ServiceClpInvoker.java",
-			pluginDirectoryName + "**/service/http/*JSONSerializer.java",
-			pluginDirectoryName + "**/service/http/*ServiceHttp.java",
-			pluginDirectoryName + "**/service/http/*ServiceJSON.java",
-			pluginDirectoryName + "**/service/http/*ServiceSoap.java",
-			pluginDirectoryName + "**/tools/templates/**"
-		};
-	}
-
 	@Override
 	protected List<SourceCheck> getSourceChecks() {
 		return _sourceChecks;
@@ -300,6 +272,34 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return moduleFileNamesMap;
+	}
+
+	private String[] _getPluginExcludes(String pluginDirectoryName) {
+		return new String[] {
+			pluginDirectoryName + "**/model/*Clp.java",
+			pluginDirectoryName + "**/model/impl/*BaseImpl.java",
+			pluginDirectoryName + "**/model/impl/*Model.java",
+			pluginDirectoryName + "**/model/impl/*ModelImpl.java",
+			pluginDirectoryName + "**/service/**/service/*Service.java",
+			pluginDirectoryName + "**/service/**/service/*ServiceClp.java",
+			pluginDirectoryName + "**/service/**/service/*ServiceFactory.java",
+			pluginDirectoryName + "**/service/**/service/*ServiceUtil.java",
+			pluginDirectoryName + "**/service/**/service/*ServiceWrapper.java",
+			pluginDirectoryName + "**/service/**/service/ClpSerializer.java",
+			pluginDirectoryName +
+				"**/service/**/service/messaging/*ClpMessageListener.java",
+			pluginDirectoryName +
+				"**/service/**/service/persistence/*Finder.java",
+			pluginDirectoryName +
+				"**/service/**/service/persistence/*Util.java",
+			pluginDirectoryName + "**/service/base/*ServiceBaseImpl.java",
+			pluginDirectoryName + "**/service/base/*ServiceClpInvoker.java",
+			pluginDirectoryName + "**/service/http/*JSONSerializer.java",
+			pluginDirectoryName + "**/service/http/*ServiceHttp.java",
+			pluginDirectoryName + "**/service/http/*ServiceJSON.java",
+			pluginDirectoryName + "**/service/http/*ServiceSoap.java",
+			pluginDirectoryName + "**/tools/templates/**"
+		};
 	}
 
 	private Collection<String> _getPluginJavaFiles(String[] includes)

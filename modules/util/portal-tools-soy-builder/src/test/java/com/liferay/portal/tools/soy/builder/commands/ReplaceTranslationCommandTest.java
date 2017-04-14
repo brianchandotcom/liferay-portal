@@ -24,7 +24,7 @@ import org.junit.runners.Parameterized.Parameters;
  * @author Andrea Di Giorgi
  */
 @RunWith(Parameterized.class)
-public class ReplaceTranslationCommandTest extends BaseSoyJsCommandTestCase {
+public class ReplaceTranslationCommandTest extends BaseSoyCommandTestCase {
 
 	@Parameters(name = "{0}")
 	public static String[] getTestDirNames() {
@@ -50,7 +50,7 @@ public class ReplaceTranslationCommandTest extends BaseSoyJsCommandTestCase {
 	}
 
 	@Override
-	protected void testSoyJs(File dir) throws Exception {
+	protected void testSoy(File dir) throws Exception {
 		ReplaceTranslationCommand replaceTranslationCommand =
 			new ReplaceTranslationCommand();
 

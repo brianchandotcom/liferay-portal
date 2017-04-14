@@ -1366,6 +1366,12 @@ public class LayoutLocalServiceUtil {
 		return getService().getScopeGroupLayouts(parentGroupId, privateLayout);
 	}
 
+	public static java.util.Map<java.lang.Long, java.util.List<com.liferay.portal.kernel.model.Layout>> getLayoutChildLayouts(
+		com.liferay.portal.kernel.model.LayoutSet layoutSet,
+		java.util.List<com.liferay.portal.kernel.model.Layout> parentLayouts) {
+		return getService().getLayoutChildLayouts(layoutSet, parentLayouts);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

@@ -648,7 +648,7 @@
 		<finder name="G_P_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
-			<finder-column name="parentLayoutId" />
+			<finder-column arrayable-operator="OR" name="parentLayoutId" />
 		</finder>
 		<finder name="G_P_T" return-type="Collection">
 			<finder-column name="groupId" />

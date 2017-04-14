@@ -43,20 +43,12 @@ public class BuildDeploymentHelperTask extends Task {
 		return _deploymentHelperArgs.getDeploymentFileNames();
 	}
 
-	public String getDeploymentPath() {
-		return _deploymentHelperArgs.getDeploymentPath();
-	}
-
 	public String getOutputFileName() {
 		return _deploymentHelperArgs.getOutputFileName();
 	}
 
 	public void setDeploymentFileNames(String deploymentFileNames) {
 		_deploymentHelperArgs.setDeploymentFileNames(deploymentFileNames);
-	}
-
-	public void setDeploymentPath(String deploymentPath) {
-		_deploymentHelperArgs.setDeploymentPath(deploymentPath);
 	}
 
 	public void setOutputFileName(String outputFileName) {

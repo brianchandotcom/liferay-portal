@@ -47,6 +47,7 @@ import org.zeroturnaround.zip.ZipUtil;
 
 /**
  * @author Andrea Di Giorgi
+ * @author David Truong
  */
 public class DeploymentHelper {
 
@@ -66,11 +67,9 @@ public class DeploymentHelper {
 
 			String deploymentFileNames = commandLine.getOptionValue(
 				"fileNames");
-			String deploymentPath = commandLine.getOptionValue("path", "");
 			String outputFileName = commandLine.getOptionValue("outputFile");
 
-			new DeploymentHelper(
-				deploymentFileNames, deploymentPath, outputFileName);
+			new DeploymentHelper(deploymentFileNames, outputFileName);
 		}
 		catch (ParseException pe) {
 			System.err.println(pe.getMessage());
@@ -84,9 +83,7 @@ public class DeploymentHelper {
 		}
 	}
 
-	public DeploymentHelper(
-			String deploymentFileNames, String deploymentPath,
-			String outputFileName)
+	public DeploymentHelper(String deploymentFileNames, String outputFileName)
 		throws Exception {
 
 		List<ZipEntrySource> zipEntrySources = new ArrayList<>();
@@ -106,8 +103,7 @@ public class DeploymentHelper {
 
 		sb.setLength(sb.length() - 1);
 
-		zipEntrySources.add(
-			getWebXmlZipEntrySource(sb.toString(), deploymentPath));
+		zipEntrySources.add(getWebXmlZipEntrySource(sb.toString()));
 
 		zipEntrySources.add(
 			getClassZipEntrySource(
@@ -177,8 +173,7 @@ public class DeploymentHelper {
 		return new ByteSource("WEB-INF/classes/" + fileName, bytes);
 	}
 
-	protected ZipEntrySource getWebXmlZipEntrySource(
-			String deploymentFileNames, String deploymentPath)
+	protected ZipEntrySource getWebXmlZipEntrySource(String deploymentFileNames)
 		throws Exception {
 
 		byte[] bytes = read(
@@ -187,7 +182,6 @@ public class DeploymentHelper {
 		String content = new String(bytes);
 
 		content = content.replace("${deployment.files}", deploymentFileNames);
-		content = content.replace("${deployment.path}", deploymentPath);
 
 		return new ByteSource(
 			"WEB-INF/web.xml", content.getBytes(StandardCharsets.UTF_8));
@@ -233,13 +227,6 @@ public class DeploymentHelper {
 		outputFileOption.setRequired(true);
 
 		options.addOption(outputFileOption);
-
-		options.addOption(
-			new Option(
-				"p", "path", true,
-				"Set the path the files will be deployed. If this is not " +
-					"set, it will deploy to the value set in the portal " +
-						"property \"auto.deploy.deploy.dir\"."));
 
 		return options;
 	}

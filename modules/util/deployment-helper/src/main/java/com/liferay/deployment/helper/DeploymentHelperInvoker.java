@@ -28,7 +28,6 @@ public class DeploymentHelperInvoker {
 		return new DeploymentHelper(
 			_getAbsolutePaths(
 				baseDir, deploymentHelperArgs.getDeploymentFileNames()),
-			_getAbsolutePath(baseDir, deploymentHelperArgs.getDeploymentPath()),
 			_getAbsolutePath(
 				baseDir, deploymentHelperArgs.getOutputFileName()));
 	}

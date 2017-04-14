@@ -54,7 +54,7 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 
 			analyzer.setBundleSymbolicName("resources.test");
 
-			analyzer.setProperty("-liferay-aggregateresourcebundles", "");
+			analyzer.setProperty("-liferay-aggregate-resource-bundles", "");
 
 			Assert.assertTrue(
 				resourceBundleLoaderAnalyzerPlugin.analyzeJar(analyzer));
@@ -112,7 +112,7 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			analyzer.setBundleSymbolicName("resources.test");
 
 			analyzer.setProperty(
-				"-liferay-aggregateresourcebundles",
+				"-liferay-aggregate-resource-bundles",
 				"resources.lang1,resources.lang2,resources.lang3");
 
 			Assert.assertTrue(
@@ -209,7 +209,7 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			analyzer.setBundleSymbolicName("blade.language.web");
 
 			analyzer.setProperty(
-				"-liferay-aggregateresourcebundles", "blade.language");
+				"-liferay-aggregate-resource-bundles", "blade.language");
 
 			analyzer.setProperty("Web-ContextPath", "/blade-language-web");
 

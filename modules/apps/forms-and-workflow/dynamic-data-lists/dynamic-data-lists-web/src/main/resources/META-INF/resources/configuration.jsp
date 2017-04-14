@@ -27,6 +27,7 @@ boolean formView = PrefsParamUtil.getBoolean(PortletPreferencesFactoryUtil.getPo
 long formDDMTemplateId = PrefsParamUtil.getLong(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "formDDMTemplateId");
 long recordSetId = PrefsParamUtil.getLong(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "recordSetId");
 boolean spreadsheet = PrefsParamUtil.getBoolean(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "spreadsheet");
+long[] templateGroupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 
 DDLRecordSet selRecordSet = DDLRecordSetServiceUtil.fetchRecordSet(recordSetId);
 
@@ -154,13 +155,23 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 									<aui:option label="default" value="<%= 0 %>" />
 
 									<%
-									List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), selRecordSet.getDDMStructureId(), DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+									List<DDMTemplate> templates = new ArrayList<DDMTemplate>();
+
+									for (long templateGroupId : templateGroupIds) {
+										List<DDMTemplate> displayTemplates = DDMTemplateLocalServiceUtil.getTemplates(templateGroupId, PortalUtil.getClassNameId(DDMStructure.class), selRecordSet.getDDMStructureId(), DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+
+										templates.addAll(displayTemplates);
+									}
 
 									for (DDMTemplate template : templates) {
 										boolean selected = false;
 
 										if (displayDDMTemplateId == template.getTemplateId()) {
 											selected = true;
+										}
+
+										if (!DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template.getTemplateId(), PortletKeys.PORTLET_DISPLAY_TEMPLATE, ActionKeys.VIEW)) {
+											continue;
 										}
 									%>
 
@@ -176,13 +187,23 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 									<aui:option label="default" value="<%= 0 %>" />
 
 									<%
-									List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), selRecordSet.getDDMStructureId(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+									List<DDMTemplate> templates = new ArrayList<DDMTemplate>();
+
+									for (long templateGroupId : templateGroupIds) {
+										List<DDMTemplate> formTemplates = DDMTemplateLocalServiceUtil.getTemplates(templateGroupId, PortalUtil.getClassNameId(DDMStructure.class), selRecordSet.getDDMStructureId(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+
+										templates.addAll(formTemplates);
+									}
 
 									for (DDMTemplate template : templates) {
 										boolean selected = false;
 
 										if (formDDMTemplateId == template.getTemplateId()) {
 											selected = true;
+										}
+
+										if (!DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template.getTemplateId(), PortletKeys.PORTLET_DISPLAY_TEMPLATE, ActionKeys.VIEW)) {
+											continue;
 										}
 									%>
 

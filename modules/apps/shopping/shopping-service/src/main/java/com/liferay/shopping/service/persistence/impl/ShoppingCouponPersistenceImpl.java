@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -1565,7 +1564,12 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return _badColumnNames;
+		return _dbColumnMap.keySet();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return _dbColumnMap;
 	}
 
 	@Override
@@ -1601,7 +1605,10 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ShoppingCoupon exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ShoppingCoupon exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(ShoppingCouponPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"code", "active"
-			});
+	private static final Map<String, String> _dbColumnMap = new HashMap<String, String>();
+
+	static {
+		_dbColumnMap.put("code", "code_");
+		_dbColumnMap.put("active", "active_");
+	}
 }

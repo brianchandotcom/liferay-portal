@@ -13657,7 +13657,12 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return _badColumnNames;
+		return _dbColumnMap.keySet();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return _dbColumnMap;
 	}
 
 	@Override
@@ -13709,7 +13714,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFolder exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFolder exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(DLFolderPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid", "hidden"
-			});
+	private static final Map<String, String> _dbColumnMap = new HashMap<String, String>();
+
+	static {
+		_dbColumnMap.put("uuid", "uuid_");
+		_dbColumnMap.put("hidden", "hidden_");
+	}
 }

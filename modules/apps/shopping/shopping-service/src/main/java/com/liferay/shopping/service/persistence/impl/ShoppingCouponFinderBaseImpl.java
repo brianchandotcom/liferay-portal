@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.shopping.model.ShoppingCoupon;
 import com.liferay.shopping.service.persistence.ShoppingCouponPersistence;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class ShoppingCouponFinderBaseImpl extends BasePersistenceImpl<ShoppingCo
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getShoppingCouponPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getShoppingCouponPersistence().getDBColumnMap();
 	}
 
 	/**

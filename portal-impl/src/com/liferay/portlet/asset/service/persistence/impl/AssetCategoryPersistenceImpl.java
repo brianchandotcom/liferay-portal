@@ -12057,7 +12057,12 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return _badColumnNames;
+		return _dbColumnMap.keySet();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return _dbColumnMap;
 	}
 
 	@Override
@@ -12360,7 +12365,9 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetCategory exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetCategory exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(AssetCategoryPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
-			});
+	private static final Map<String, String> _dbColumnMap = new HashMap<String, String>();
+
+	static {
+		_dbColumnMap.put("uuid", "uuid_");
+	}
 }

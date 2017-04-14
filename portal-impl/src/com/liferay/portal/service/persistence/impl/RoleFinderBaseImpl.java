@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -29,6 +30,11 @@ public class RoleFinderBaseImpl extends BasePersistenceImpl<Role> {
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getRolePersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getRolePersistence().getDBColumnMap();
 	}
 
 	/**

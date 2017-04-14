@@ -20,6 +20,7 @@ import com.liferay.blogs.service.persistence.BlogsEntryPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class BlogsEntryFinderBaseImpl extends BasePersistenceImpl<BlogsEntry> {
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getBlogsEntryPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getBlogsEntryPersistence().getDBColumnMap();
 	}
 
 	/**

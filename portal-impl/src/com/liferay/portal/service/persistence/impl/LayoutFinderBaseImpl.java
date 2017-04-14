@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -29,6 +30,11 @@ public class LayoutFinderBaseImpl extends BasePersistenceImpl<Layout> {
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getLayoutPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getLayoutPersistence().getDBColumnMap();
 	}
 
 	/**

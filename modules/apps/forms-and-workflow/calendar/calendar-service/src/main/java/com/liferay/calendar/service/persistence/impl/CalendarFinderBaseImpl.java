@@ -20,6 +20,7 @@ import com.liferay.calendar.service.persistence.CalendarPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class CalendarFinderBaseImpl extends BasePersistenceImpl<Calendar> {
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getCalendarPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getCalendarPersistence().getDBColumnMap();
 	}
 
 	/**

@@ -20,6 +20,7 @@ import com.liferay.message.boards.kernel.service.persistence.MBCategoryPersisten
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class MBCategoryFinderBaseImpl extends BasePersistenceImpl<MBCategory> {
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getMBCategoryPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getMBCategoryPersistence().getDBColumnMap();
 	}
 
 	/**

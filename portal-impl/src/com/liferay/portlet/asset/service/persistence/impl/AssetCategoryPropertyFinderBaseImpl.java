@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyPersist
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class AssetCategoryPropertyFinderBaseImpl extends BasePersistenceImpl<Ass
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getAssetCategoryPropertyPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getAssetCategoryPropertyPersistence().getDBColumnMap();
 	}
 
 	/**

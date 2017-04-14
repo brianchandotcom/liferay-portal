@@ -4227,7 +4227,12 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return _badColumnNames;
+		return _dbColumnMap.keySet();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return _dbColumnMap;
 	}
 
 	@Override
@@ -4279,7 +4284,9 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFileEntryType exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileEntryType exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(DLFileEntryTypePersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
-			});
+	private static final Map<String, String> _dbColumnMap = new HashMap<String, String>();
+
+	static {
+		_dbColumnMap.put("uuid", "uuid_");
+	}
 }

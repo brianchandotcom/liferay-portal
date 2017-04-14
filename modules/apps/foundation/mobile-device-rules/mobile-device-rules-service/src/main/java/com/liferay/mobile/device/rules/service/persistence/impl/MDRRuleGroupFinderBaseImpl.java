@@ -20,6 +20,7 @@ import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupPersisten
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class MDRRuleGroupFinderBaseImpl extends BasePersistenceImpl<MDRRuleGroup
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getMDRRuleGroupPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getMDRRuleGroupPersistence().getDBColumnMap();
 	}
 
 	/**

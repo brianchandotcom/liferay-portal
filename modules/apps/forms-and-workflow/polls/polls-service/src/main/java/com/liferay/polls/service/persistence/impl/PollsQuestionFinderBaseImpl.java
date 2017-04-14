@@ -20,6 +20,7 @@ import com.liferay.polls.service.persistence.PollsQuestionPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class PollsQuestionFinderBaseImpl extends BasePersistenceImpl<PollsQuesti
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getPollsQuestionPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getPollsQuestionPersistence().getDBColumnMap();
 	}
 
 	/**

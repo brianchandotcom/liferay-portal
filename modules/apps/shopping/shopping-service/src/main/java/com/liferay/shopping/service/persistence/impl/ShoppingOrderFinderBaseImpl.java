@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.service.persistence.ShoppingOrderPersistence;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class ShoppingOrderFinderBaseImpl extends BasePersistenceImpl<ShoppingOrd
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getShoppingOrderPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getShoppingOrderPersistence().getDBColumnMap();
 	}
 
 	/**

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -2570,7 +2569,12 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return _badColumnNames;
+		return _dbColumnMap.keySet();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return _dbColumnMap;
 	}
 
 	@Override
@@ -2604,7 +2608,9 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Status exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Status exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(StatusPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"online"
-			});
+	private static final Map<String, String> _dbColumnMap = new HashMap<String, String>();
+
+	static {
+		_dbColumnMap.put("online", "online_");
+	}
 }

@@ -20,6 +20,7 @@ import com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryPe
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class AnnouncementsEntryFinderBaseImpl extends BasePersistenceImpl<Announ
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getAnnouncementsEntryPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getAnnouncementsEntryPersistence().getDBColumnMap();
 	}
 
 	/**

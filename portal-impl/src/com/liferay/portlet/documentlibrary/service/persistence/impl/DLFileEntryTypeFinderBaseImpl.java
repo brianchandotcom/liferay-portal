@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.service.persistence.DLFileEntryTypePe
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class DLFileEntryTypeFinderBaseImpl extends BasePersistenceImpl<DLFileEnt
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getDLFileEntryTypePersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getDLFileEntryTypePersistence().getDBColumnMap();
 	}
 
 	/**

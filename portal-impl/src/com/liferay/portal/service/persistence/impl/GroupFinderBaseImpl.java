@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -29,6 +30,11 @@ public class GroupFinderBaseImpl extends BasePersistenceImpl<Group> {
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getGroupPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getGroupPersistence().getDBColumnMap();
 	}
 
 	/**

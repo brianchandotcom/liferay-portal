@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -29,6 +30,11 @@ public class UserFinderBaseImpl extends BasePersistenceImpl<User> {
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getUserPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getUserPersistence().getDBColumnMap();
 	}
 
 	/**

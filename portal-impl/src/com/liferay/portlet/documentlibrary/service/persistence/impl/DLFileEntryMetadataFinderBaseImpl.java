@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetada
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class DLFileEntryMetadataFinderBaseImpl extends BasePersistenceImpl<DLFil
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getDLFileEntryMetadataPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getDLFileEntryMetadataPersistence().getDBColumnMap();
 	}
 
 	/**

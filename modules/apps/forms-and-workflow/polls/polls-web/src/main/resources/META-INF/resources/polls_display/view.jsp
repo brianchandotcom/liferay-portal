@@ -83,8 +83,8 @@ catch (NoSuchQuestionException nsqe) {
 
 					<c:choose>
 						<c:when test="<%= !question.isExpired() && !hasVoted && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
-							<div class="hide" id="<portlet:namespace />fieldRequiredErrorPoll">
-								<span class="alert alert-danger"><liferay-ui:message key="this-field-is-required" /></span>
+							<div class="hide" id="<portlet:namespace />noChoiceSelectedError">
+								<span class="alert alert-danger"><liferay-ui:message key="please-select-an-option" /></span>
 							</div>
 
 							<%
@@ -128,7 +128,7 @@ catch (NoSuchQuestionException nsqe) {
 						var hasChecked = A.one('input[name=<portlet:namespace />choiceId]:checked');
 
 						if (!hasChecked) {
-							A.one('#<portlet:namespace />fieldRequiredErrorPoll').show();
+							A.one('#<portlet:namespace />noChoiceSelectedError').show();
 							event.halt();
 							event.stopImmediatePropagation();
 						}

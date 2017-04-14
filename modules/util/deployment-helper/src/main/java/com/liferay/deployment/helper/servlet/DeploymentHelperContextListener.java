@@ -14,13 +14,15 @@
 
 package com.liferay.deployment.helper.servlet;
 
-import com.liferay.portal.kernel.deploy.DeployManagerUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.deployment.helper.jmx.JMXBundleDeployer;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -28,11 +30,24 @@ import javax.servlet.ServletContextListener;
 
 /**
  * @author Raymond Augé
+ * @author David Truong
  */
 public class DeploymentHelperContextListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
+		ServletContext servletContext = servletContextEvent.getServletContext();
+
+		JMXBundleDeployer jmxBundleDeployer = new JMXBundleDeployer();
+
+		for (String id : _ids) {
+			try {
+				jmxBundleDeployer.uninstall(id);
+			}
+			catch (Exception e) {
+				servletContext.log("Could not uninstall bundle with id " + id);
+			}
+		}
 	}
 
 	@Override
@@ -49,39 +64,13 @@ public class DeploymentHelperContextListener implements ServletContextListener {
 			return;
 		}
 
-		String deploymentPath = servletContext.getInitParameter(
-			"deployment-path");
+		JMXBundleDeployer jmxBundleDeployer = new JMXBundleDeployer();
 
-		if ((deploymentPath == null) || deploymentPath.equals("")) {
-			deploymentPath = PropsUtil.get("auto.deploy.deploy.dir");
+		File deploymentPath = (File)servletContext.getAttribute(
+			ServletContext.TEMPDIR);
 
-			servletContext.log(
-				"Using deployment path " + deploymentPath +
-					" because it is not specified in web.xml");
-		}
-
-		File deploymentPathFile = new File(deploymentPath);
-
-		if (!deploymentPathFile.exists()) {
-			servletContext.log(
-				"The deployment path " + deploymentPath + " does not exist");
-
-			return;
-		}
-
-		if (!deploymentPathFile.isDirectory()) {
-			servletContext.log(
-				"The deployment path " + deploymentPath +
-					" is not a directory");
-
-			return;
-		}
-
-		if (!deploymentPathFile.canWrite()) {
-			servletContext.log(
-				"The deployment path " + deploymentPath + " is not writable");
-
-			return;
+		if (!deploymentPath.exists()) {
+			deploymentPath.mkdirs();
 		}
 
 		for (String deploymentFileName : deploymentFileNames.split(",")) {
@@ -104,15 +93,15 @@ public class DeploymentHelperContextListener implements ServletContextListener {
 					continue;
 				}
 
-				servletContext.log("Copying " + deploymentFileName);
+				File file = new File(deploymentPath, fileName);
 
-				File file = new File(deploymentPathFile, fileName);
+				if (!file.exists()) {
+					copy(
+						servletContext, inputStream,
+						new FileOutputStream(file));
+				}
 
-				copy(servletContext, inputStream, new FileOutputStream(file));
-
-				servletContext.log(
-					"Successfully copied " + deploymentFileName + " to " +
-						file.getAbsolutePath());
+				_ids.add(jmxBundleDeployer.deploy(file));
 			}
 			catch (Exception e) {
 				servletContext.log(
@@ -120,15 +109,6 @@ public class DeploymentHelperContextListener implements ServletContextListener {
 						e.getMessage(),
 					e);
 			}
-		}
-
-		try {
-			DeployManagerUtil.undeploy(servletContext.getServletContextName());
-		}
-		catch (Exception e) {
-			servletContext.log(
-				"Unable to undeploy " + servletContext.getServletContextName(),
-				e);
 		}
 	}
 
@@ -174,5 +154,7 @@ public class DeploymentHelperContextListener implements ServletContextListener {
 			}
 		}
 	}
+
+	private final Set<String> _ids = new HashSet<>();
 
 }

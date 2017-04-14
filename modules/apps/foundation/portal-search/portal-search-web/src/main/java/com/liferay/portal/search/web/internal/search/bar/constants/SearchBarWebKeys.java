@@ -12,18 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.web.portlet.shared.search;
-
-import aQute.bnd.annotation.ProviderType;
-
-import javax.portlet.RenderRequest;
+package com.liferay.portal.search.web.internal.search.bar.constants;
 
 /**
  * @author André de Oliveira
- */
-@ProviderType
-public interface PortletSharedSearchRequest {
+*/
+public class SearchBarWebKeys {
 
-	public PortletSharedSearchResponse search(RenderRequest renderRequest);
+	public static final String DISPLAY_CONTEXT =
+		"SearchBarPortletDisplayContext";
 
 }

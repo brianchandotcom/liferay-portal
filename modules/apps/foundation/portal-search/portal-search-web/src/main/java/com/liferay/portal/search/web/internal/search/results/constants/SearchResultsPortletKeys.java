@@ -12,18 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.web.portlet.shared.search;
-
-import aQute.bnd.annotation.ProviderType;
-
-import javax.portlet.RenderRequest;
+package com.liferay.portal.search.web.internal.search.results.constants;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface PortletSharedSearchRequest {
+public class SearchResultsPortletKeys {
 
-	public PortletSharedSearchResponse search(RenderRequest renderRequest);
+	public static final String SEARCH_RESULTS =
+		"com_liferay_portal_search_web_search_results_portlet_" +
+			"SearchResultsPortlet";
 
 }

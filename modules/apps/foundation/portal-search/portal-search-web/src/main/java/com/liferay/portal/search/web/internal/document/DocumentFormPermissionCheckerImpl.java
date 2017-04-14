@@ -12,18 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.search.web.portlet.shared.search;
+package com.liferay.portal.search.web.internal.document;
 
-import aQute.bnd.annotation.ProviderType;
-
-import javax.portlet.RenderRequest;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface PortletSharedSearchRequest {
+public class DocumentFormPermissionCheckerImpl
+	implements DocumentFormPermissionChecker {
 
-	public PortletSharedSearchResponse search(RenderRequest renderRequest);
+	public DocumentFormPermissionCheckerImpl(ThemeDisplay themeDisplay) {
+		_themeDisplay = themeDisplay;
+	}
+
+	@Override
+	public boolean hasPermission() {
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isCompanyAdmin()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private final ThemeDisplay _themeDisplay;
 
 }

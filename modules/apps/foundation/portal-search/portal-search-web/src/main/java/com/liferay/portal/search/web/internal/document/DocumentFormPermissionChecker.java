@@ -12,18 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.web.portlet.shared.search;
-
-import aQute.bnd.annotation.ProviderType;
-
-import javax.portlet.RenderRequest;
+package com.liferay.portal.search.web.internal.document;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface PortletSharedSearchRequest {
+public interface DocumentFormPermissionChecker {
 
-	public PortletSharedSearchResponse search(RenderRequest renderRequest);
+	public boolean hasPermission();
 
 }

@@ -41,7 +41,7 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 	@Override
 	public boolean analyzeJar(Analyzer analyzer) throws Exception {
 		Parameters aggregateResourceBundlesParameters = new SortedParameters(
-			analyzer.getProperty("-liferay-aggregateresourcebundles"));
+			analyzer.getProperty("-liferay-aggregate-resource-bundles"));
 
 		if (aggregateResourceBundlesParameters.size() == 0) {
 			return false;

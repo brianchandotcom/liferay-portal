@@ -122,10 +122,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!_hasGeneratedTag(content)) {
-			_ungeneratedFiles.add(file);
-		}
-
 		return content;
 	}
 
@@ -224,14 +220,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected String processSourceChecks(
-			String fileName, String absolutePath, String content)
+			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (_hasGeneratedTag(content)) {
 			return content;
 		}
 
-		return super.processSourceChecks(fileName, absolutePath, content);
+		_ungeneratedFiles.add(file);
+
+		return super.processSourceChecks(file, fileName, absolutePath, content);
 	}
 
 	private List<String> _getAnnotationsExclusions() {

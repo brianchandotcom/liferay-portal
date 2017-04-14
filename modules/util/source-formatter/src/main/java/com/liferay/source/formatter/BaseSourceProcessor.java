@@ -312,7 +312,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		String newContent = processSourceChecks(
-			fileName, absolutePath, content);
+			file, fileName, absolutePath, content);
 
 		newContent = doFormat(file, fileName, absolutePath, newContent);
 
@@ -872,7 +872,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String processSourceChecks(
-			String fileName, String absolutePath, String content)
+			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
 		content = _processSourceChecks(

@@ -1218,7 +1218,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		for (List<Layout> layoutChildLayoutsList :
 				layoutChildLayouts.values()) {
 
-			layoutChildLayouts.sort(Comparator.comparing(Layout::getPriority));
+			layoutChildLayoutsList.sort(
+				Comparator.comparing(Layout::getPriority));
 		}
 
 		return layoutChildLayouts;

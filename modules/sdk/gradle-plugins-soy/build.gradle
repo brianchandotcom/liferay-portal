@@ -9,7 +9,10 @@ copyGradleTestDependencies {
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.26"
-	compile group: "com.liferay", name: "com.liferay.portal.tools.soy.builder", version: "3.0.0"
+
+	compile(group: "com.liferay", name: "com.liferay.portal.tools.soy.builder", version: "3.0.0") {
+		exclude group: "com.google.template", module: "soy"
+	}
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"))
 }

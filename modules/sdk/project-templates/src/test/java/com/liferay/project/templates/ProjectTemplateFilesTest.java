@@ -206,7 +206,7 @@ public class ProjectTemplateFilesTest {
 		String pomXml = FileUtil.read(pomXmlPath);
 
 		Assert.assertFalse(
-			"Packaging Jar is implicit in " + pomXml,
+			"Packaging Jar is implicit in " + pomXmlPath,
 			pomXml.contains("<packaging>jar</packaging>"));
 
 		final AtomicBoolean hasJavaFiles = new AtomicBoolean();

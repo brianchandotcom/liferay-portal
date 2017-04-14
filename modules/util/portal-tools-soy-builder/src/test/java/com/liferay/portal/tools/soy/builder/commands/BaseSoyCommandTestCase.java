@@ -67,12 +67,17 @@ public abstract class BaseSoyCommandTestCase {
 			String expectedContent = FileTestUtil.read(
 				classLoader, dirName + "expected/" + fileName);
 
-			Assert.assertEquals(expectedContent, content);
+			Assert.assertEquals(
+				fixTestContent(expectedContent), fixTestContent(content));
 		}
 	}
 
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+	protected String fixTestContent(String content) {
+		return content.trim();
+	}
 
 	protected abstract String getTestDirName();
 

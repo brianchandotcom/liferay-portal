@@ -12,18 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.search.web.portlet.shared.search;
+package com.liferay.portal.search.web.search.result;
 
 import aQute.bnd.annotation.ProviderType;
-
-import javax.portlet.RenderRequest;
 
 /**
  * @author André de Oliveira
  */
 @ProviderType
-public interface PortletSharedSearchRequest {
+public interface SearchResultImage {
 
-	public PortletSharedSearchResponse search(RenderRequest renderRequest);
+	public String getClassName();
+
+	public long getClassPK();
+
+	public void setIcon(String iconId);
+
+	public void setThumbnail(String thumbnailURLString);
 
 }

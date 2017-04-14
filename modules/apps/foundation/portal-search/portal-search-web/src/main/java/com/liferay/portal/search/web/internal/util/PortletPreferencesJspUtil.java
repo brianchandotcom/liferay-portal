@@ -12,18 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.search.web.portlet.shared.search;
+package com.liferay.portal.search.web.internal.util;
 
-import aQute.bnd.annotation.ProviderType;
-
-import javax.portlet.RenderRequest;
+import com.liferay.portal.kernel.settings.ParameterMapSettings;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface PortletSharedSearchRequest {
+public class PortletPreferencesJspUtil {
 
-	public PortletSharedSearchResponse search(RenderRequest renderRequest);
+	public static String getInputName(String key) {
+		return ParameterMapSettings.PREFERENCES_PREFIX + key +
+			StringPool.DOUBLE_DASH;
+	}
 
 }

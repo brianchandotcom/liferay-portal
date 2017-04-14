@@ -37,7 +37,7 @@ public class WrapAlloyTemplateTaskTest extends WrapAlloyTemplateCommandTest {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		URL url = ReplaceTranslationTaskTest.class.getResource(
+		URL url = WrapAlloyTemplateTaskTest.class.getResource(
 			"dependencies/wrap_alloy_template/build.xml");
 
 		File buildXmlFile = new File(url.toURI());

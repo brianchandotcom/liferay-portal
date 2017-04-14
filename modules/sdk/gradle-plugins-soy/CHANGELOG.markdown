@@ -26,7 +26,8 @@ package to the `com.liferay.gradle.plugins.soy.tasks` package.
 ## 3.0.1 - 2017-01-13
 
 ### Changed
-- [LPS-70036]: Reuse logic from [Liferay Portal Tools Soy Builder].
+- [LPS-70036]: Reuse logic from [Liferay Portal Tools Soy Builder] in
+`ReplaceSoyTranslationTask`.
 
 ## 3.1.0 - 2017-02-13
 

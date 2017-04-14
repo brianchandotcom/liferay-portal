@@ -1482,6 +1482,8 @@ version 1.0.152.
 ## 3.3.0 - 2017-04-17
 
 ### Changed
+- [LPS-69139]: Update the [Liferay Gradle Plugins Soy] dependency to version
+3.1.1.
 - [LPS-70451]: Update the [Liferay Alloy Taglib] dependency to version 1.1.10.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin

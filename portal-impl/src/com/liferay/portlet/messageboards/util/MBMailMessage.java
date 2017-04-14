@@ -113,11 +113,12 @@ public class MBMailMessage {
 		_plainBody = plainBody;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		MBMailMessage.class.getName());
+
 	private final List<ObjectValuePair<String, byte[]>> _bytesOVPs =
 		new ArrayList<>();
 	private String _htmlBody;
-	private final Log _log = LogFactoryUtil.getLog(
-		MBMailMessage.class.getName());
 	private String _plainBody;
 
 }

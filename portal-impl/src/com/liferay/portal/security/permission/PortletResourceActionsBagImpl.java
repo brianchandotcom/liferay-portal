@@ -35,8 +35,8 @@ public class PortletResourceActionsBagImpl
 
 		super(portletResourceActionsBag);
 
-		_portletRootModelResources.putAll(
-			portletResourceActionsBag.getPortletRootModelResources());
+		_portletRootModelResource =
+			portletResourceActionsBag.getPortletRootModelResource();
 		_resourceLayoutManagerActions.addAll(
 			portletResourceActionsBag.getResourceLayoutManagerActions());
 	}
@@ -47,7 +47,20 @@ public class PortletResourceActionsBagImpl
 	}
 
 	@Override
+	public String getPortletRootModelResource() {
+		return _portletRootModelResource;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
+	@Override
 	public Map<String, String> getPortletRootModelResources() {
+		if (_portletRootModelResources == null) {
+			_portletRootModelResources = new HashMap<>();
+		}
+
 		return _portletRootModelResources;
 	}
 
@@ -56,8 +69,13 @@ public class PortletResourceActionsBagImpl
 		return _resourceLayoutManagerActions;
 	}
 
-	private final Map<String, String> _portletRootModelResources =
-		new HashMap<>();
+	@Override
+	public void setPortletRootModelResource(String portletRootModelResource) {
+		_portletRootModelResource = portletRootModelResource;
+	}
+
+	private String _portletRootModelResource;
+	private Map<String, String> _portletRootModelResources;
 	private final Set<String> _resourceLayoutManagerActions = new HashSet<>();
 
 }

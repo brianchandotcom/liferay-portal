@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.security.permission;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.Set;
 
 /**
  * @author László Csontos
  */
+@ProviderType
 public interface ResourceActionsBag {
 
 	public Set<String> getResourceActions();

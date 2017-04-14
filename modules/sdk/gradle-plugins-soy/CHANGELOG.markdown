@@ -26,7 +26,8 @@ package to the `com.liferay.gradle.plugins.soy.tasks` package.
 ## 3.0.1 - 2017-01-13
 
 ### Changed
-- [LPS-70036]: Reuse logic from [Liferay Portal Tools Soy Builder].
+- [LPS-70036]: Reuse logic from [Liferay Portal Tools Soy Builder] in
+`ReplaceSoyTranslationTask`.
 
 ## 3.1.0 - 2017-02-13
 
@@ -38,10 +39,24 @@ JavaScript functions compiled from Closure Templates into AlloyUI modules.
 - [LPS-69139]: Update the [Liferay Portal Tools Soy Builder] dependency to
 version 2.0.0.
 
+## 4.0.0 - 2017-04-14
+
+### Changed
+- [LPS-69139]: Reuse logic from [Liferay Portal Tools Soy Builder] in
+`BuildSoyTask`.
+- [LPS-69139]: Update the [Liferay Portal Tools Soy Builder] dependency to
+version 2.1.0.
+
+### Removed
+- [LPS-69139]: The configuration `soy` does not exist anymore.
+- [LPS-69139]: The property `classpath` of `BuildSoyTask` is no longer
+available.
+
 [Command Line Tools for Metal.js]: https://github.com/metal/metal-cli
 [Liferay Portal Tools Soy Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-soy-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-67766]: https://issues.liferay.com/browse/LPS-67766
+[LPS-69139]: https://issues.liferay.com/browse/LPS-69139
 [LPS-69139]: https://issues.liferay.com/browse/LPS-69139
 [LPS-70036]: https://issues.liferay.com/browse/LPS-70036
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092

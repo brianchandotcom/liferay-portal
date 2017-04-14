@@ -55,7 +55,7 @@ public class WrapAlloyTemplateMojoTest extends WrapAlloyTemplateCommandTest {
 		throws IOException {
 
 		String content = FileTestUtil.read(
-			ReplaceTranslationMojoTest.class.getClassLoader(),
+			WrapAlloyTemplateMojoTest.class.getClassLoader(),
 			"com/liferay/portal/tools/soy/builder/maven/dependencies" +
 				"/pom_xml.tmpl");
 

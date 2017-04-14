@@ -55,7 +55,7 @@ public class ReplaceTranslationTaskTest extends ReplaceTranslationCommandTest {
 	public final BuildFileRule buildFileRule = new BuildFileRule();
 
 	@Override
-	protected void testSoyJs(File dir) throws Exception {
+	protected void testSoy(File dir) throws Exception {
 		Project project = buildFileRule.getProject();
 
 		project.setProperty("replace.translation.dir", dir.getAbsolutePath());

@@ -19,7 +19,7 @@ import java.io.File;
 /**
  * @author Andrea Di Giorgi
  */
-public class WrapAlloyTemplateCommandTest extends BaseSoyJsCommandTestCase {
+public class WrapAlloyTemplateCommandTest extends BaseSoyCommandTestCase {
 
 	@Override
 	protected String getTestDirName() {
@@ -33,7 +33,7 @@ public class WrapAlloyTemplateCommandTest extends BaseSoyJsCommandTestCase {
 	}
 
 	@Override
-	protected void testSoyJs(File dir) throws Exception {
+	protected void testSoy(File dir) throws Exception {
 		wrapAlloyTemplate(
 			dir, "liferay-ddm-form-field-checkbox-template", "ddm");
 	}

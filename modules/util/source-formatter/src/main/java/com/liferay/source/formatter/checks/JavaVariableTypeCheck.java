@@ -36,11 +36,13 @@ import java.util.regex.Pattern;
 public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 
 	public JavaVariableTypeCheck(
-		List<String> excludes, List<String> annotationsExclusions,
+		List<String> excludes, List<String> staticLogExcludes,
+		List<String> annotationsExclusions,
 		Map<String, String> defaultPrimitiveValues,
 		Set<String> immutableFieldTypes) {
 
 		_excludes = excludes;
+		_staticLogExcludes = staticLogExcludes;
 		_annotationsExclusions = annotationsExclusions;
 		_defaultPrimitiveValues = defaultPrimitiveValues;
 		_immutableFieldTypes = immutableFieldTypes;
@@ -62,7 +64,8 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
 			if (childJavaTerm instanceof JavaVariable) {
 				classContent = _checkFieldType(
-					javaClass, classContent, (JavaVariable)childJavaTerm);
+					absolutePath, javaClass, classContent,
+					(JavaVariable)childJavaTerm);
 			}
 		}
 
@@ -74,7 +77,8 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 	}
 
 	private String _checkFieldType(
-		JavaClass javaClass, String classContent, JavaVariable javaVariable) {
+		String absolutePath, JavaClass javaClass, String classContent,
+		JavaVariable javaVariable) {
 
 		String accessModifier = javaVariable.getAccessModifier();
 
@@ -96,7 +100,9 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 
 		if (isFinal) {
 			if (!javaVariable.isStatic() &&
-				_immutableFieldTypes.contains(fieldType)) {
+				(_immutableFieldTypes.contains(fieldType) ||
+				 (fieldType.equals("Log") &&
+				  !isExcludedPath(_staticLogExcludes, absolutePath)))) {
 
 				classContent = _formatStaticableFieldType(
 					classContent, javaVariable.getContent());
@@ -249,7 +255,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		Matcher matcher = pattern.matcher(javaVariable.getContent());
 
 		if (matcher.find()) {
-			return matcher.group(5);
+			return StringUtil.trim(matcher.group(5));
 		}
 
 		return null;
@@ -294,5 +300,6 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 	private final Map<String, String> _defaultPrimitiveValues;
 	private final List<String> _excludes;
 	private final Set<String> _immutableFieldTypes;
+	private final List<String> _staticLogExcludes;
 
 }

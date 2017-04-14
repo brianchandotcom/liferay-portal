@@ -252,19 +252,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return level;
 	}
 
-	protected void checkPropertyUtils(String fileName, String content) {
-		if (fileName.endsWith("TypeConvertorUtil.java")) {
-			return;
-		}
-
-		if (content.contains("org.apache.commons.beanutils.PropertyUtils")) {
-			processMessage(
-				fileName,
-				"Do not use org.apache.commons.beanutils.PropertyUtils, see " +
-					"LPS-62786");
-		}
-	}
-
 	protected void checkUTF8(File file, String fileName) throws Exception {
 		byte[] bytes = FileUtil.getBytes(file);
 
@@ -1015,20 +1002,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
 
 		return saxReader.read(new UnsyncStringReader(content));
-	}
-
-	protected String replacePrimitiveWrapperInstantiation(String line) {
-		return StringUtil.replace(
-			line,
-			new String[] {
-				"new Boolean(", "new Byte(", "new Character(", "new Double(",
-				"new Float(", "new Integer(", "new Long(", "new Short("
-			},
-			new String[] {
-				"Boolean.valueOf(", "Byte.valueOf(", "Character.valueOf(",
-				"Double.valueOf(", "Float.valueOf(", "Integer.valueOf(",
-				"Long.valueOf(", "Short.valueOf("
-			});
 	}
 
 	protected List<String> splitParameters(String parameters) {

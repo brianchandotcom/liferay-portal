@@ -49,6 +49,7 @@ import com.liferay.source.formatter.checks.JSPUnusedVariableCheck;
 import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
 import com.liferay.source.formatter.checks.JSPXSSVulnerabilitiesCheck;
 import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
+import com.liferay.source.formatter.checks.PrimitiveWrapperInstantiationCheck;
 import com.liferay.source.formatter.checks.PrincipalExceptionCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
@@ -106,10 +107,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixIncorrectParameterTypeForLanguageUtil(
 			newContent, true, fileName);
-
-		// LPS-62786
-
-		checkPropertyUtils(fileName, newContent);
 
 		JSPSourceTabCalculator jspSourceTabCalculator =
 			new JSPSourceTabCalculator();
@@ -303,8 +300,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
-				line = replacePrimitiveWrapperInstantiation(line);
-
 				if (lineCount > 1) {
 					sb.append(previousLine);
 					sb.append("\n");
@@ -389,6 +384,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JSPXSSVulnerabilitiesCheck());
 		_sourceChecks.add(
 			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
+		_sourceChecks.add(new PrimitiveWrapperInstantiationCheck());
 		_sourceChecks.add(new PrincipalExceptionCheck());
 		_sourceChecks.add(new StringBundlerCheck(-1));
 		_sourceChecks.add(new StringUtilCheck());

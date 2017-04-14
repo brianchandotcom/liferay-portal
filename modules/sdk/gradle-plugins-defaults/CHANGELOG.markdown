@@ -1366,7 +1366,7 @@ fix for all tasks of type `FindBugs` related to source sets.
 ### Changed
 - [LPS-71722]: Update the [Liferay Gradle Plugins] dependency to version 3.2.39.
 
-## 3.6.0 - 2017-04-13
+## 3.6.0 - 2017-04-14
 
 ### Added
 - [LPS-71901]: Add task `updateFileSnapshotVersions` to update the project

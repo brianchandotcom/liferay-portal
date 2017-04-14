@@ -351,6 +351,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void postFormat() throws Exception {
+		print();
 		_processCheckStyle();
 	}
 

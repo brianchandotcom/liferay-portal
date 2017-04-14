@@ -26,7 +26,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.wsrp.api", version: "1.0.0"
 	provided group: "com.liferay", name: "oasis.names.tc.wsrp", version: "1.0.1"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.26.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	provided group: "commons-beanutils", name: "commons-beanutils", version: "1.8.2"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"

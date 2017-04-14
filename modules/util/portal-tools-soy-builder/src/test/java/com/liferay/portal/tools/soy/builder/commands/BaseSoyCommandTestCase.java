@@ -31,7 +31,7 @@ import org.junit.rules.TemporaryFolder;
 /**
  * @author Andrea Di Giorgi
  */
-public abstract class BaseSoyJsCommandTestCase {
+public abstract class BaseSoyCommandTestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -39,8 +39,7 @@ public abstract class BaseSoyJsCommandTestCase {
 
 		Path dirPath = dir.toPath();
 
-		ClassLoader classLoader =
-			BaseSoyJsCommandTestCase.class.getClassLoader();
+		ClassLoader classLoader = BaseSoyCommandTestCase.class.getClassLoader();
 		String dirName = getTestDirName();
 
 		for (String fileName : getTestFileNames()) {
@@ -53,21 +52,20 @@ public abstract class BaseSoyJsCommandTestCase {
 	}
 
 	@Test
-	public void testSoyJs() throws Exception {
+	public void testSoy() throws Exception {
 		File dir = temporaryFolder.getRoot();
 
-		testSoyJs(dir);
+		testSoy(dir);
 
 		Path dirPath = dir.toPath();
 
-		ClassLoader classLoader =
-			BaseSoyJsCommandTestCase.class.getClassLoader();
+		ClassLoader classLoader = BaseSoyCommandTestCase.class.getClassLoader();
 		String dirName = getTestDirName();
 
-		for (String testFileName : getTestFileNames()) {
-			String content = FileTestUtil.read(dirPath.resolve(testFileName));
+		for (String fileName : getTestExpectedFileNames()) {
+			String content = FileTestUtil.read(dirPath.resolve(fileName));
 			String expectedContent = FileTestUtil.read(
-				classLoader, dirName + "expected/" + testFileName);
+				classLoader, dirName + "expected/" + fileName);
 
 			Assert.assertEquals(expectedContent, content);
 		}
@@ -78,8 +76,12 @@ public abstract class BaseSoyJsCommandTestCase {
 
 	protected abstract String getTestDirName();
 
+	protected String[] getTestExpectedFileNames() {
+		return getTestFileNames();
+	}
+
 	protected abstract String[] getTestFileNames();
 
-	protected abstract void testSoyJs(File dir) throws Exception;
+	protected abstract void testSoy(File dir) throws Exception;
 
 }

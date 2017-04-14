@@ -40,7 +40,7 @@ public class ReplaceTranslationMojoTest extends ReplaceTranslationCommandTest {
 	}
 
 	@Override
-	protected void testSoyJs(File dir) throws Exception {
+	protected void testSoy(File dir) throws Exception {
 		File projectDir = temporaryFolder.newFolder("maven");
 
 		_preparePomXml(projectDir, dir);

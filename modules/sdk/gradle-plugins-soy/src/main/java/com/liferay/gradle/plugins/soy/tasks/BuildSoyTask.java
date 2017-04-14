@@ -14,19 +14,21 @@
 
 package com.liferay.gradle.plugins.soy.tasks;
 
+import com.liferay.portal.tools.soy.builder.commands.BuildSoyCommand;
+
 import java.io.File;
+import java.io.IOException;
+
+import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gradle.api.Action;
-import org.gradle.api.Project;
-import org.gradle.api.file.FileCollection;
-import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.Transformer;
 import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SourceTask;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.process.JavaExecSpec;
+import org.gradle.util.CollectionUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -34,30 +36,19 @@ import org.gradle.process.JavaExecSpec;
 public class BuildSoyTask extends SourceTask {
 
 	@TaskAction
-	public void buildSoy() {
-		Project project = getProject();
-
-		project.javaexec(
-			new Action<JavaExecSpec>() {
+	public void buildSoy() throws IOException {
+		List<Path> paths = CollectionUtils.collect(
+			getSource(),
+			new Transformer<Path, File>() {
 
 				@Override
-				public void execute(JavaExecSpec javaExecSpec) {
-					javaExecSpec.args(
-						"--outputPathFormat",
-						"{INPUT_DIRECTORY}/{INPUT_FILE_NAME}.js");
-					javaExecSpec.args("--srcs", _getSourceFileNames());
-
-					javaExecSpec.setClasspath(getClasspath());
-					javaExecSpec.setMain(
-						"com.google.template.soy.SoyToJsSrcCompiler");
+				public Path transform(File file) {
+					return file.toPath();
 				}
 
 			});
-	}
 
-	@InputFiles
-	public FileCollection getClasspath() {
-		return _classpath;
+		_buildSoyCommand.execute(paths);
 	}
 
 	@OutputFiles
@@ -76,29 +67,6 @@ public class BuildSoyTask extends SourceTask {
 		return outputFiles;
 	}
 
-	public void setClasspath(FileCollection classpath) {
-		_classpath = classpath;
-	}
-
-	private String _getSourceFileNames() {
-		FileCollection sourceFiles = getSource();
-
-		if (sourceFiles.isEmpty()) {
-			return "";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		Project project = getProject();
-
-		for (File sourceFile : sourceFiles) {
-			sb.append(project.relativePath(sourceFile));
-			sb.append(',');
-		}
-
-		return sb.substring(0, sb.length() - 1);
-	}
-
-	private FileCollection _classpath;
+	private final BuildSoyCommand _buildSoyCommand = new BuildSoyCommand();
 
 }

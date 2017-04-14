@@ -34,7 +34,13 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 		Matcher matcher = _importsPattern.matcher(content);
 
 		if (matcher.find()) {
-			return matcher.group();
+			String imports = matcher.group();
+
+			if (imports.endsWith("\n\n")) {
+				imports = imports.substring(0, imports.length() - 1);
+			}
+
+			return imports;
 		}
 
 		return null;
@@ -68,10 +74,6 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 
 		content = content.replaceFirst(
 			"(?m)^[ \t]*(package .*;)\\s*^[ \t]*import", "$1\n\nimport");
-
-		content = content.replaceFirst(
-			"(?m)^[ \t]*((?:package|import) .*;)\\s*^[ \t]*/\\*\\*",
-			"$1\n\n/**");
 
 		return ToolsUtil.stripFullyQualifiedClassNames(
 			content, newImports, packagePath);

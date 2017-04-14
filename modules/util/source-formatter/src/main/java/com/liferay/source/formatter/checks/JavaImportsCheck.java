@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
@@ -33,7 +34,9 @@ public class JavaImportsCheck extends BaseFileCheck {
 		String className = JavaSourceUtil.getClassName(fileName);
 		String packagePath = JavaSourceUtil.getPackagePath(content);
 
-		return importsFormatter.format(content, packagePath, className);
+		content = importsFormatter.format(content, packagePath, className);
+
+		return StringUtil.replace(content, ";\n/**", ";\n\n/**");
 	}
 
 }

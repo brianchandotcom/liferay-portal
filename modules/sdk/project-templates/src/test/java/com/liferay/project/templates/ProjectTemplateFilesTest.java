@@ -205,11 +205,9 @@ public class ProjectTemplateFilesTest {
 
 		String pomXml = FileUtil.read(pomXmlPath);
 
-		boolean hasPackagingProperty = pomXml.contains(
-			"<packaging>jar</packaging>");
-
 		Assert.assertFalse(
-			"Packaging Jar is implicit in " + pomXml, hasPackagingProperty);
+			"Packaging Jar is implicit in " + pomXml,
+			pomXml.contains("<packaging>jar</packaging>"));
 
 		final AtomicBoolean hasJavaFiles = new AtomicBoolean();
 

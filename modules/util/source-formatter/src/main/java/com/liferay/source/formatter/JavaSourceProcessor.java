@@ -155,7 +155,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return _moduleSourceChecks;
 	}
 
-	protected String[] getPluginExcludes(String pluginDirectoryName) {
+	private String[] _getPluginExcludes(String pluginDirectoryName) {
 		return new String[] {
 			pluginDirectoryName + "**/model/*Clp.java",
 			pluginDirectoryName + "**/model/impl/*BaseImpl.java",
@@ -307,7 +307,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		Collection<String> fileNames = new TreeSet<>();
 
-		String[] excludes = getPluginExcludes(StringPool.BLANK);
+		String[] excludes = _getPluginExcludes(StringPool.BLANK);
 
 		fileNames.addAll(getFileNames(excludes, includes));
 
@@ -358,7 +358,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		for (String directoryName : getPluginsInsideModulesDirectoryNames()) {
 			excludes = ArrayUtil.append(
-				excludes, getPluginExcludes("**" + directoryName));
+				excludes, _getPluginExcludes("**" + directoryName));
 		}
 
 		fileNames.addAll(getFileNames(excludes, includes));

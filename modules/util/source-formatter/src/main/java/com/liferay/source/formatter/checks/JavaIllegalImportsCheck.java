@@ -25,9 +25,11 @@ import java.util.List;
 public class JavaIllegalImportsCheck extends BaseFileCheck {
 
 	public JavaIllegalImportsCheck(
-		List<String> proxyExcludes, List<String> runOutsidePortalExcludes,
+		boolean portalSource, List<String> proxyExcludes,
+		List<String> runOutsidePortalExcludes,
 		List<String> secureRandomExcludes) {
 
+		_portalSource = portalSource;
 		_proxyExcludes = proxyExcludes;
 		_runOutsidePortalExcludes = runOutsidePortalExcludes;
 		_secureRandomExcludes = secureRandomExcludes;
@@ -71,18 +73,6 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 			addMessage(fileName, "Illegal import: jodd.util.StringPool");
 		}
 
-		// LPS-45027
-
-		if (content.contains(
-				"com.liferay.portal.kernel.util.UnmodifiableList")) {
-
-			addMessage(
-				fileName,
-				"Use java.util.Collections.unmodifiableList instead of " +
-					"com.liferay.portal.kernel.util.UnmodifiableList, see " +
-						"LPS-45027");
-		}
-
 		// LPS-39508
 
 		if (!isExcludedPath(_runOutsidePortalExcludes, absolutePath) &&
@@ -95,6 +85,29 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 				"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
 					"SecureRandom instead of java.security.SecureRandom, see " +
 						"LPS-39058");
+		}
+
+		// LPS-45027
+
+		if (content.contains(
+				"com.liferay.portal.kernel.util.UnmodifiableList")) {
+
+			addMessage(
+				fileName,
+				"Use java.util.Collections.unmodifiableList instead of " +
+					"com.liferay.portal.kernel.util.UnmodifiableList, see " +
+						"LPS-45027");
+		}
+
+		// LPS-47682
+
+		if (_portalSource && absolutePath.contains("/portal-kernel/") &&
+			content.contains("import javax.servlet.jsp.")) {
+
+			addMessage(
+				fileName,
+				"Never import javax.servlet.jsp.* from portal-kernel, see " +
+					"LPS-47682");
 		}
 
 		// LPS-55690
@@ -115,6 +128,17 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 				fileName,
 				"Use AutoBatchPreparedStatementUtil instead of " +
 					"DatabaseMetaData.supportsBatchUpdates, see LPS-60473");
+		}
+
+		// LPS-62786
+
+		if (!fileName.endsWith("TypeConvertorUtil.java") &&
+			content.contains("org.apache.commons.beanutils.PropertyUtils")) {
+
+			addMessage(
+				fileName,
+				"Do not use org.apache.commons.beanutils.PropertyUtils, see " +
+					"LPS-62786");
 		}
 
 		// LPS-64056
@@ -167,6 +191,7 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private final boolean _portalSource;
 	private final List<String> _proxyExcludes;
 	private final List<String> _runOutsidePortalExcludes;
 	private final List<String> _secureRandomExcludes;

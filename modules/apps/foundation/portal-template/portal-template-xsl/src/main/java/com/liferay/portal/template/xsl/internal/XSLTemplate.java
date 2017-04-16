@@ -78,7 +78,7 @@ public class XSLTemplate implements Template {
 		try {
 			_transformerFactory.setFeature(
 				XMLConstants.FEATURE_SECURE_PROCESSING,
-				xslEngineConfiguration.secureProcesingEnabled());
+				xslEngineConfiguration.secureProcessingEnabled());
 		}
 		catch (TransformerConfigurationException tce) {
 		}

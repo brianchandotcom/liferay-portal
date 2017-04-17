@@ -154,6 +154,8 @@
 
 		<execute function="Select" locator1="AssetPermissions#VIEWABLE_AS_SELECT" value1="${viewableBySelection}" />
 
+		<execute function="SelectFrameTop" />
+
 		<execute macro="PortletEntry#publish" />
 	</command>
 

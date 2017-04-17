@@ -42,10 +42,10 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
-		addTaskBuildTaglibs(project);
+		_addTaskBuildTaglibs(project);
 	}
 
-	protected BuildTaglibsTask addTaskBuildTaglibs(Project project) {
+	private BuildTaglibsTask _addTaskBuildTaglibs(Project project) {
 		final BuildTaglibsTask buildTaglibsTask = GradleUtil.addTask(
 			project, BUILD_TAGLIBS_TASK_NAME, BuildTaglibsTask.class);
 
@@ -65,7 +65,7 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 					}
 
 					return new File(
-						getJavaDir(buildTaglibsTask.getProject()),
+						_getJavaDir(buildTaglibsTask.getProject()),
 						javaPackage.replace('.', '/'));
 				}
 
@@ -76,7 +76,7 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					File resourcesDir = getResourcesDir(
+					File resourcesDir = _getResourcesDir(
 						buildTaglibsTask.getProject());
 
 					return new File(resourcesDir, "META-INF/resources");
@@ -100,7 +100,7 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					File resourcesDir = getResourcesDir(
+					File resourcesDir = _getResourcesDir(
 						buildTaglibsTask.getProject());
 
 					return new File(resourcesDir, "META-INF/resources");
@@ -111,21 +111,21 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 		return buildTaglibsTask;
 	}
 
-	protected File getJavaDir(Project project) {
+	private File _getJavaDir(Project project) {
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		return getSrcDir(sourceSet.getJava());
+		return _getSrcDir(sourceSet.getJava());
 	}
 
-	protected File getResourcesDir(Project project) {
+	private File _getResourcesDir(Project project) {
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		return getSrcDir(sourceSet.getResources());
+		return _getSrcDir(sourceSet.getResources());
 	}
 
-	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
+	private File _getSrcDir(SourceDirectorySet sourceDirectorySet) {
 		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
 
 		Iterator<File> iterator = srcDirs.iterator();

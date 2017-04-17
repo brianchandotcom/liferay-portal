@@ -56,7 +56,7 @@ public class BuildTaglibsTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		setSystemProperties(getCompleteSystemProperties());
+		setSystemProperties(_getCompleteSystemProperties());
 
 		super.exec();
 	}
@@ -161,16 +161,16 @@ public class BuildTaglibsTask extends JavaExec {
 		_tldDir = tldDir;
 	}
 
-	protected Map<String, Object> getCompleteSystemProperties() {
+	private Map<String, Object> _getCompleteSystemProperties() {
 		Map<String, Object> systemProperties = new HashMap<>(
 			getSystemProperties());
 
 		systemProperties.put(
 			"tagbuilder.components.xml",
-			getRelativePaths(getComponentsXmlFiles()));
+			_getRelativePaths(getComponentsXmlFiles()));
 		systemProperties.put("tagbuilder.copyright.year", getCopyrightYear());
 		systemProperties.put(
-			"tagbuilder.java.dir", getRelativePath(getJavaDir()) + "/");
+			"tagbuilder.java.dir", _getRelativePath(getJavaDir()) + "/");
 		systemProperties.put("tagbuilder.java.package", getJavaPackage());
 		systemProperties.put(
 			"tagbuilder.jsp.common.init.path", getJspCommonInitPath());
@@ -185,7 +185,7 @@ public class BuildTaglibsTask extends JavaExec {
 
 		systemProperties.put(
 			"tagbuilder.jsp.parent.dir",
-			getRelativePath(getJspParentDir()) + "/");
+			_getRelativePath(getJspParentDir()) + "/");
 
 		String osgiModuleSymbolicName = getOsgiModuleSymbolicName();
 
@@ -196,12 +196,12 @@ public class BuildTaglibsTask extends JavaExec {
 
 		systemProperties.put("tagbuilder.templates.dir", getTemplatesDirName());
 		systemProperties.put(
-			"tagbuilder.tld.dir", getRelativePath(getTldDir()) + "/");
+			"tagbuilder.tld.dir", _getRelativePath(getTldDir()) + "/");
 
 		return systemProperties;
 	}
 
-	protected String getComponentsXml() {
+	private String _getComponentsXml() {
 		FileCollection fileCollection = getComponentsXmlFiles();
 
 		if (fileCollection.isEmpty()) {
@@ -220,7 +220,7 @@ public class BuildTaglibsTask extends JavaExec {
 		return sb.substring(0, sb.length() - 1);
 	}
 
-	protected String getRelativePath(File file) {
+	private String _getRelativePath(File file) {
 		Project project = getProject();
 
 		String relativePath = project.relativePath(file);
@@ -228,11 +228,11 @@ public class BuildTaglibsTask extends JavaExec {
 		return relativePath.replace('\\', '/');
 	}
 
-	protected String getRelativePaths(Iterable<File> files) {
+	private String _getRelativePaths(Iterable<File> files) {
 		List<String> relativePaths = new ArrayList<>();
 
 		for (File file : files) {
-			relativePaths.add(getRelativePath(file));
+			relativePaths.add(_getRelativePath(file));
 		}
 
 		return StringUtil.merge(

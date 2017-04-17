@@ -110,8 +110,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		excludes = new String[] {"**/null.jsp", "**/tools/**"};
 
 		List<String> allFileNames = getFileNames(
-			sourceFormatterArgs.getBaseDirName(), null, excludes,
-			getIncludes(), true);
+			sourceFormatterArgs.getBaseDirName(), null, excludes, getIncludes(),
+			true);
 
 		_contentsMap = _getContentsMap(allFileNames);
 

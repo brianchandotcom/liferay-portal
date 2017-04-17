@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.trash;
+package com.liferay.wiki.internal.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
@@ -29,9 +29,7 @@ import java.util.List;
 
 /**
  * @author Roberto Díaz
- * @deprecated As of 1.1.0
  */
-@Deprecated
 public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 
 	@Override

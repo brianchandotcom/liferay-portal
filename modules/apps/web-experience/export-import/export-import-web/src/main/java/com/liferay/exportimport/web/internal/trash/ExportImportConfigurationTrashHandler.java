@@ -12,34 +12,42 @@
  * details.
  */
 
-package com.liferay.exportimport.web.trash;
+package com.liferay.exportimport.web.internal.trash;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.exportimport.web.trash.ExportImportConfigurationTrashRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.kernel.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Levente Hudák
- * @deprecated As of 1.0.0
  */
-@Deprecated
+@Component(
+	immediate = true,
+	property = {
+		"model.class.name=com.liferay.exportimport.kernel.model.ExportImportConfiguration"
+	},
+	service = TrashHandler.class
+)
 @ProviderType
 public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 
@@ -65,12 +73,9 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.getExportImportConfiguration(
-				classPK);
-
-		return exportImportConfiguration.getTrashEntry();
+	public TrashedModel getTrashedModel(long classPK) {
+		return _exportImportConfigurationLocalService.
+			fetchExportImportConfiguration(classPK);
 	}
 
 	@Override
@@ -88,15 +93,6 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 			servletContext);
 
 		return exportImportConfigurationTrashRenderer;
-	}
-
-	@Override
-	public boolean isInTrash(long classPK) throws PortalException {
-		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.getExportImportConfiguration(
-				classPK);
-
-		return exportImportConfiguration.isInTrash();
 	}
 
 	@Override

@@ -38,7 +38,16 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 
 		content = _formatDirectivesWhitespace(content);
 
-		content = StringUtil.replace(content, "\n\n\n", "\n\n");
+		content = StringUtil.replace(
+			content,
+			new String[] {
+				"<br/>", "@page import", "\"%>", ")%>", "function (",
+				"javascript: ", "){\n", "\n\n\n"
+			},
+			new String[] {
+				"<br />", "@ page import", "\" %>", ") %>", "function(",
+				"javascript:", ") {\n", "\n\n"
+			});
 
 		return content;
 	}

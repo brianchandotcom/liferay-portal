@@ -178,9 +178,6 @@ public class EditQuestionMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				hideDefaultErrorMessage(actionRequest);
-
-				actionResponse.setRenderParameter(
-					"mvcPath", "/polls/edit_question.jsp");
 			}
 			else if (e instanceof QuestionExpiredException) {
 			}

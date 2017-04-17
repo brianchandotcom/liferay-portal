@@ -285,7 +285,7 @@
 		</pathconvert>
 	</target>
 
-	<target depends="init-build-app" name="get-osgi-static-modules">
+	<target depends="init-build-app" if="osgi.static.dir.available" name="get-osgi-static-modules">
 		<pathconvert property="osgi.static.modules">
 			<fileset dir="${osgi.dir}/static" includes="*.jar" />
 
@@ -428,6 +428,10 @@
 					<available file="${modules.dir}/private/apps/${app.name}" />
 				</not>
 			</and>
+		</condition>
+
+		<condition property="osgi.static.dir.available">
+			<available file="${osgi.dir}/static" />
 		</condition>
 	</target>
 

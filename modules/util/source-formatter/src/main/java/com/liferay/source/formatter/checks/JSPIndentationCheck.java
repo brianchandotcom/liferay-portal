@@ -169,7 +169,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 
 			if (tabs.length() != minimumTabCount) {
 				int diff = minimumTabCount - tabs.length();
-				int end =getLineCount(content, matcher.end(2));
+				int end = getLineCount(content, matcher.end(2));
 				int start = getLineCount(content, matcher.start(3));
 
 				return _fixTabs(content, start, end, diff);

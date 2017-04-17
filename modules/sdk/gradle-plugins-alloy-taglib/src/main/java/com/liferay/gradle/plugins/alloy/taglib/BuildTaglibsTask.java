@@ -201,25 +201,6 @@ public class BuildTaglibsTask extends JavaExec {
 		return systemProperties;
 	}
 
-	private String _getComponentsXml() {
-		FileCollection fileCollection = getComponentsXmlFiles();
-
-		if (fileCollection.isEmpty()) {
-			return "";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		Project project = getProject();
-
-		for (File file : fileCollection) {
-			sb.append(project.relativePath(file));
-			sb.append(',');
-		}
-
-		return sb.substring(0, sb.length() - 1);
-	}
-
 	private String _getRelativePath(File file) {
 		Project project = getProject();
 

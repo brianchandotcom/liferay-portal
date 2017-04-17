@@ -174,6 +174,7 @@
 /lib/portal/htmlparser.jar
 /lib/portal/httpclient.jar
 /lib/portal/httpmime.jar
+/lib/portal/ical4j.jar
 /lib/portal/im4java.jar
 /lib/portal/isoparser.jar
 /lib/portal/jai_codec.jar
@@ -183,6 +184,7 @@
 /lib/portal/jaxb-impl.jar
 /lib/portal/jaxen.jar
 /lib/portal/jaxws-rt.jar
+/lib/portal/jcifs.jar
 /lib/portal/jcl-over-slf4j.jar
 /lib/portal/jcommon.jar
 /lib/portal/jdom.jar
@@ -192,6 +194,7 @@
 /lib/portal/jhighlight.jar
 /lib/portal/jhlabs-filters.jar
 /lib/portal/jna.jar
+/lib/portal/json-java.jar
 /lib/portal/jsr107cache.jar
 /lib/portal/jstl-api.jar
 /lib/portal/jstl-impl.jar
@@ -256,6 +259,7 @@
 /lib/portal/tika-parsers.jar
 /lib/portal/tomcat-jdbc.jar
 /lib/portal/tomcat-juli.jar
+/lib/portal/unoil.jar
 /lib/portal/urlrewritefilter.jar
 /lib/portal/vorbis-java-core.jar
 /lib/portal/vorbis-java-tika.jar

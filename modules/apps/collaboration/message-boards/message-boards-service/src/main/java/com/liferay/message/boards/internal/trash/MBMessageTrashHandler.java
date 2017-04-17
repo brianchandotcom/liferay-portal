@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil;
-import com.liferay.trash.kernel.model.TrashEntry;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -77,29 +76,13 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		MBMessage message = _mbMessageLocalService.getMessage(classPK);
-
-		return message.getTrashEntry();
+	public TrashedModel getTrashedModel(long classPK) {
+		return _mbMessageLocalService.fetchMBMessage(classPK);
 	}
 
 	@Override
 	public boolean isDeletable() {
 		return false;
-	}
-
-	@Override
-	public boolean isInTrash(long classPK) throws PortalException {
-		MBMessage message = _mbMessageLocalService.getMessage(classPK);
-
-		return message.isInTrash();
-	}
-
-	@Override
-	public boolean isInTrashContainer(long classPK) throws PortalException {
-		MBMessage message = _mbMessageLocalService.getMessage(classPK);
-
-		return message.isInTrashContainer();
 	}
 
 	@Override

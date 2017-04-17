@@ -439,7 +439,9 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* Returns the trash handler for this wiki page.
 	*
 	* @return the trash handler for this wiki page
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
 		return _wikiPage.getTrashHandler();

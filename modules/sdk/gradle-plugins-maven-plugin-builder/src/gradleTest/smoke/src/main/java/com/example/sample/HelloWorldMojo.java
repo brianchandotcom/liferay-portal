@@ -62,8 +62,7 @@ public class HelloWorldMojo extends AbstractMojo {
 	 */
 	protected File baseDir;
 
-	private static final Log _log = getLog();
-
+	private final Log _log = getLog();
 	private String _message = "Hello, World!";
 	private boolean _upperCase;
 

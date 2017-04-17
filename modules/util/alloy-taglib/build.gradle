@@ -1,3 +1,0 @@
-updateFileVersions {
-	match(/com\.liferay\.alloy\.taglib=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
-}

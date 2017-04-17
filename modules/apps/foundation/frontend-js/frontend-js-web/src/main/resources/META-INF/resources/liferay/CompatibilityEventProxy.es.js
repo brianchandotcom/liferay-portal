@@ -99,7 +99,7 @@ class CompatibilityEventProxy extends State {
 					eventFacade.type = compatibleEvent;
 					this.host.emit(compatibleEvent, event, eventFacade);
 				}
-				else if (this.eventTargets_.length > 0 && event.key) {
+				else if (this.eventTargets_.length > 0) {
 					this.emitCompatibleEvents_(compatibleEvent, event);
 				}
 			}

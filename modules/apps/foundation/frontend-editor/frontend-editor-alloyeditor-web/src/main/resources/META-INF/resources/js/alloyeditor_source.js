@@ -58,7 +58,8 @@ AUI.add(
 							instance._editorSwitch.on('click', instance._switchMode, instance),
 							instance._editorSwitch.on('focus', instance._onSwitchFocus, instance),
 							instance._editorSwitchTheme.on('click', instance._switchTheme, instance),
-							instance.doAfter('getHTML', instance._getHTML, instance)
+							instance.doAfter('getHTML', instance._getHTML, instance),
+							instance.doAfter('setHTML', instance._setHTML, instance)
 						];
 					},
 
@@ -252,6 +253,16 @@ AUI.add(
 					_refreshTooltip: function() {
 						if (Liferay.Data.LFR_PORTAL_TOOLTIP) {
 							Liferay.Data.LFR_PORTAL_TOOLTIP.getTooltip().renderUI();
+						}
+					},
+
+					_setHTML: function(value) {
+						var instance = this;
+
+						var editor = instance._sourceEditor;
+
+						if (editor) {
+							editor.set(STR_VALUE, value);
 						}
 					},
 

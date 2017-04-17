@@ -477,8 +477,7 @@ public class CMISStore extends BaseStore {
 
 			sb.append("Liferay is configured via the portal property ");
 			sb.append("\"dl.store.impl\" to use CMIS to persist documents. ");
-			sb.append("CMIS is deprecated and will not be suported in a ");
-			sb.append("future release.");
+			sb.append("CMIS is deprecated and is not supported.");
 
 			_log.warn(sb);
 		}

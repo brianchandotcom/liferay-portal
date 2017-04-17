@@ -144,20 +144,17 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 			return super.getStoreLocation();
 		}
 
-		DeferredFileOutputStream dfos = null;
-
 		try {
-			dfos = (DeferredFileOutputStream)getOutputStream();
+			DeferredFileOutputStream dfos =
+				(DeferredFileOutputStream)getOutputStream();
+
+			return dfos.getFile();
 		}
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
-		}
 
-		if (dfos == null) {
 			return null;
 		}
-
-		return dfos.getFile();
 	}
 
 	@Override

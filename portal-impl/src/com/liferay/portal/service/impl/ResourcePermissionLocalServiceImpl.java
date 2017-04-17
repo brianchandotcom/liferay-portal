@@ -1305,9 +1305,9 @@ public class ResourcePermissionLocalServiceImpl
 			if (ArrayUtil.contains(actionIds, ActionKeys.MANAGE_SUBGROUPS)) {
 				PermissionCacheUtil.clearPrimaryKeyRoleCache();
 			}
-		}
 
-		IndexWriterHelperUtil.updatePermissionFields(name, primKey);
+			IndexWriterHelperUtil.updatePermissionFields(name, primKey);
+		}
 	}
 
 	protected boolean isGuestRoleId(long companyId, long roleId)

@@ -53,7 +53,9 @@ public class LanguageKeysCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
+		if (!fileName.endsWith("JSPLanguageUtilCheck.java")) {
+			_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
+		}
 
 		return content;
 	}

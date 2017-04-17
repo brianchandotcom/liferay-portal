@@ -33,6 +33,7 @@ import com.liferay.source.formatter.checks.JSPDefineObjectsCheck;
 import com.liferay.source.formatter.checks.JSPEmptyLinesCheck;
 import com.liferay.source.formatter.checks.JSPIfStatementCheck;
 import com.liferay.source.formatter.checks.JSPImportsCheck;
+import com.liferay.source.formatter.checks.JSPIndentationCheck;
 import com.liferay.source.formatter.checks.JSPLanguageKeysCheck;
 import com.liferay.source.formatter.checks.JSPLogFileNameCheck;
 import com.liferay.source.formatter.checks.JSPModuleIllegalImportsCheck;
@@ -102,12 +103,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				"<br />", "@ page import", "\" %>", ") %>", "function(",
 				"javascript:", ") {\n", ";\n"
 			});
-
-		JSPSourceTabCalculator jspSourceTabCalculator =
-			new JSPSourceTabCalculator();
-
-		newContent = jspSourceTabCalculator.calculateTabs(
-			fileName, newContent, (JSPSourceProcessor)this);
 
 		return newContent;
 	}
@@ -365,6 +360,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JSPEmptyLinesCheck());
 		_sourceChecks.add(new JSPIfStatementCheck());
 		_sourceChecks.add(new JSPImportsCheck(portalSource, subrepository));
+		_sourceChecks.add(new JSPIndentationCheck());
 		_sourceChecks.add(new JSPLogFileNameCheck(subrepository));
 		_sourceChecks.add(new JSPRedirectBackURLCheck());
 		_sourceChecks.add(new JSPSessionKeysCheck());

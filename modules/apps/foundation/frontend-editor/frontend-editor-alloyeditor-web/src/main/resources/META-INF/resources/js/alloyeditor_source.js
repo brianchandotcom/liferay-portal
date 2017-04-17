@@ -259,10 +259,10 @@ AUI.add(
 					_setHTML: function(value) {
 						var instance = this;
 
-						var editor = instance._sourceEditor;
+						var sourceEditor = instance._sourceEditor;
 
-						if (editor) {
-							editor.set(STR_VALUE, value);
+						if (sourceEditor && instance._isVisible) {
+							sourceEditor.set(STR_VALUE, value);
 						}
 					},
 

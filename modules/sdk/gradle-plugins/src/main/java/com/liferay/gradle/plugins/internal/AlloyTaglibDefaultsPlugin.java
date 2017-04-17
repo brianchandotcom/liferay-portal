@@ -101,6 +101,11 @@ public class AlloyTaglibDefaultsPlugin
 	}
 
 	@Override
+	protected String getPortalToolGroup() {
+		return _PORTAL_TOOL_GROUP;
+	}
+
+	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
 	}
@@ -132,6 +137,9 @@ public class AlloyTaglibDefaultsPlugin
 
 	private static final String _PORTAL_TOOL_CONFIGURATION_NAME = "alloyTaglib";
 
-	private static final String _PORTAL_TOOL_NAME = "com.liferay.alloy.taglib";
+	private static final String _PORTAL_TOOL_GROUP =
+		"com.liferay.alloy-taglibs";
+
+	private static final String _PORTAL_TOOL_NAME = "alloy-taglib";
 
 }

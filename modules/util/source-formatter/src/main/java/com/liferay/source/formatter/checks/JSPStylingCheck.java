@@ -29,6 +29,10 @@ public class JSPStylingCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		_checkChaining(fileName, content);
+
+		_checkLineBreak(fileName, content);
+
 		content = _fixEmptyJavaSourceTag(content);
 
 		content = _fixIncorrectClosingTag(content);
@@ -37,16 +41,54 @@ public class JSPStylingCheck extends BaseFileCheck {
 			content,
 			new String[] {
 				"alert('<%= LanguageUtil.", "alert(\"<%= LanguageUtil.",
-				"confirm('<%= LanguageUtil.", "confirm(\"<%= LanguageUtil."
+				"confirm('<%= LanguageUtil.", "confirm(\"<%= LanguageUtil.",
+				";;\n"
 			},
 			new String[] {
 				"alert('<%= UnicodeLanguageUtil.",
 				"alert(\"<%= UnicodeLanguageUtil.",
 				"confirm('<%= UnicodeLanguageUtil.",
-				"confirm(\"<%= UnicodeLanguageUtil."
+				"confirm(\"<%= UnicodeLanguageUtil.", ";\n"
 			});
 
+		int pos = content.indexOf("debugger.");
+
+		if (pos != -1) {
+			addMessage(
+				fileName, "Do not use debugger", getLineCount(content, pos));
+		}
+
+		if (!fileName.endsWith("test.jsp")) {
+			pos = content.indexOf("System.out.print");
+
+			if (pos != -1) {
+				addMessage(
+					fileName, "Do not call 'System.out.print'",
+					getLineCount(content, pos));
+			}
+		}
+
 		return content;
+	}
+
+	private void _checkChaining(String fileName, String content) {
+		Matcher matcher = _chainingPattern.matcher(content);
+
+		if (matcher.find()) {
+			addMessage(
+				fileName, "Avoid chaining on 'getClass'",
+				getLineCount(content, matcher.start()));
+		}
+	}
+
+	private void _checkLineBreak(String fileName, String content) {
+		Matcher matcher = _incorrectLineBreakPattern.matcher(content);
+
+		if (matcher.find()) {
+			addMessage(
+				fileName, "There should be a line break after '}'",
+				getLineCount(content, matcher.start(1)));
+		}
 	}
 
 	private String _fixEmptyJavaSourceTag(String content) {
@@ -72,9 +114,13 @@ public class JSPStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private final Pattern _chainingPattern = Pattern.compile(
+		"\\WgetClass\\(\\)\\.");
 	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\n+\t*%>\n");
 	private final Pattern _incorrectClosingTagPattern = Pattern.compile(
 		"\n(\t*)\t((?!<\\w).)* />\n");
+	private final Pattern _incorrectLineBreakPattern = Pattern.compile(
+		"[\n\t]\\} ?(catch|else|finally) ");
 
 }

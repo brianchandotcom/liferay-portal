@@ -165,7 +165,9 @@ public class ReplaceRegexTask extends DefaultTask {
 	private Object _getReplacementObj() {
 		Object replacementObj = getReplacement();
 
-		if (replacementObj instanceof Callable<?>) {
+		if ((replacementObj instanceof Callable<?>) &&
+			!(replacementObj instanceof Closure<?>)) {
+
 			replacementObj = GradleUtil.toString(replacementObj);
 		}
 

@@ -446,13 +446,13 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 					fileVersionDynamicQuery.add(
 						RestrictionsFactoryUtil.eqProperty(
-							"dlFileVersion.fileEntryId", "fileEntryId"));
+							"dlFileVersion.fileEntryId", "this.fileEntryId"));
 					fileVersionDynamicQuery.add(
 						RestrictionsFactoryUtil.eqProperty(
-							"dlFileVersion.version", "version"));
+							"dlFileVersion.version", "this.version"));
 
-					Property statusProperty = PropertyFactoryUtil.forName(
-						"status");
+					Property fileVersionStatusProperty =
+						PropertyFactoryUtil.forName("dlFileVersion.status");
 
 					StagedModelDataHandler<?> stagedModelDataHandler =
 						StagedModelDataHandlerRegistryUtil.
@@ -460,22 +460,28 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 								DLFileEntry.class.getName());
 
 					fileVersionDynamicQuery.add(
-						statusProperty.in(
+						fileVersionStatusProperty.in(
 							stagedModelDataHandler.getExportableStatuses()));
 
+					Criterion fileVersionModifiedDateCriterion =
+						portletDataContext.getDateRangeCriteria(
+							"dlFileVersion.modifiedDate");
+					Criterion fileVersionStatusDateCriterion =
+						portletDataContext.getDateRangeCriteria(
+							"dlFileVersion.statusDate");
 					Criterion modifiedDateCriterion =
-						portletDataContext.getDateRangeCriteria("modifiedDate");
-					Criterion statusDateCriterion =
-						portletDataContext.getDateRangeCriteria("statusDate");
+						portletDataContext.getDateRangeCriteria(
+							"this.modifiedDate");
 
 					if ((modifiedDateCriterion != null) &&
-						(statusDateCriterion != null)) {
+						(fileVersionStatusDateCriterion != null)) {
 
 						Disjunction disjunction =
 							RestrictionsFactoryUtil.disjunction();
 
+						disjunction.add(fileVersionModifiedDateCriterion);
+						disjunction.add(fileVersionStatusDateCriterion);
 						disjunction.add(modifiedDateCriterion);
-						disjunction.add(statusDateCriterion);
 
 						fileVersionDynamicQuery.add(disjunction);
 					}

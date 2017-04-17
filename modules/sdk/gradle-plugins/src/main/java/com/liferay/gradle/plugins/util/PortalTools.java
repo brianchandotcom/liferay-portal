@@ -64,14 +64,16 @@ public class PortalTools {
 		return _versions.getProperty(name);
 	}
 
+	protected static final String PORTAL_TOOLS_FILE_NAME =
+		"com/liferay/gradle/plugins/dependencies/portal-tools.properties";
+
 	private static final Properties _versions = new Properties();
 
 	static {
 		ClassLoader classLoader = PortalTools.class.getClassLoader();
 
 		try (InputStream inputStream = classLoader.getResourceAsStream(
-				"com/liferay/gradle/plugins/dependencies" +
-					"/portal-tools.properties")) {
+				PORTAL_TOOLS_FILE_NAME)) {
 
 			_versions.load(inputStream);
 		}

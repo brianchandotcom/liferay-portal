@@ -36,6 +36,8 @@ public class AlloyTaglibDefaultsPlugin
 	public static final Plugin<Project> INSTANCE =
 		new AlloyTaglibDefaultsPlugin();
 
+	public static final String PORTAL_TOOL_NAME = "alloy-taglib";
+
 	protected Configuration addPortalToolConfiguration(final Project project) {
 		final Configuration configuration = GradleUtil.addConfiguration(
 			project, getPortalToolConfigurationName());
@@ -107,7 +109,7 @@ public class AlloyTaglibDefaultsPlugin
 
 	@Override
 	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
+		return PORTAL_TOOL_NAME;
 	}
 
 	private AlloyTaglibDefaultsPlugin() {
@@ -139,7 +141,5 @@ public class AlloyTaglibDefaultsPlugin
 
 	private static final String _PORTAL_TOOL_GROUP =
 		"com.liferay.alloy-taglibs";
-
-	private static final String _PORTAL_TOOL_NAME = "alloy-taglib";
 
 }

@@ -1,4 +1,3 @@
-task jar(type: Jar, overwrite: true)
 task deployJar(type: Copy)
 
 configurations {

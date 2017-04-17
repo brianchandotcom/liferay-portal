@@ -1382,6 +1382,9 @@ version in external files to the latest snapshot.
 
 ## 3.6.2 - 2017-04-18
 
+### Changed
+- [LPS-70451]: Update the [Liferay Gradle Plugins] dependency to version 3.3.0.
+
 ### Fixed
 - [LPS-71901]: Fix wrong caching logic in `ReplaceRegexTask`.
 

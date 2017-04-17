@@ -108,8 +108,7 @@
 		}
 
 		.calculate-container-fields {
-			padding-right: 45px;
-			padding-top: 8px;
+			padding: 8px 25px 25px 25px;
 
 			textarea {
 				background-color: #F5F5F5;
@@ -132,13 +131,22 @@
 		}
 
 		.calculate-container-calculator-component {
+			min-width: 238px;
 			padding-bottom: 30px;
-			padding-left: 55px;
 			padding-top: 30px;
+
+			.liferay-ddl-form-builder-calculator {
+				align-content: center;
+				align-items: center;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
 
 			.calculator-add-field-button-container {
 				margin: 0 auto;
 				padding: 0;
+				display: inline-block;
 
 				.calculator-add-field-button {
 					height: 49px;
@@ -160,6 +168,7 @@
 			.calculator-button-area {
 				margin: 0 auto;
 				padding: 0;
+				display: inline-block;
 
 				& ul {
 					list-style-type: none;

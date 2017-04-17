@@ -81,6 +81,15 @@ public class KBNavigationDisplayContext {
 			long groupId, long parentResourcePrimKey, int level)
 		throws PortalException {
 
+		if ((parentResourcePrimKey == getResourcePrimKey()) && (level == 0) &&
+			!isFolderResource()) {
+
+			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(
+				getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
+
+			return Collections.singletonList(kbArticle);
+		}
+
 		boolean maxNestingLevelReached = isMaxNestingLevelReached(level);
 
 		List<KBArticle> childKBArticles;
@@ -157,17 +166,15 @@ public class KBNavigationDisplayContext {
 
 	public long getRootResourcePrimKey() throws PortalException {
 		if (_rootResourcePrimKey == null) {
-			_rootResourcePrimKey = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-			if (_kbArticle != null) {
+			if (!isFolderResource()) {
+				_rootResourcePrimKey = getResourcePrimKey();
+			}
+			else if (_kbArticle != null) {
 				_rootResourcePrimKey = KnowledgeBaseUtil.getKBFolderId(
 					_kbArticle.getParentResourceClassNameId(),
 					_kbArticle.getParentResourcePrimKey());
 			}
-
-			if (_rootResourcePrimKey ==
-					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
+			else {
 				_rootResourcePrimKey = KBUtil.getRootResourcePrimKey(
 					_portletRequest,
 					PortalUtil.getScopeGroupId(_portletRequest),
@@ -213,8 +220,7 @@ public class KBNavigationDisplayContext {
 		List<Long> ancestorResourcePrimaryKeys =
 			getAncestorResourcePrimaryKeys();
 
-		if ((parentResourcePrimKey != _kbArticle.getResourcePrimKey()) &&
-			!isMaxNestingLevelReached(level) &&
+		if (!isMaxNestingLevelReached(level) &&
 			ancestorResourcePrimaryKeys.contains(
 				childKBArticle.getResourcePrimKey())) {
 
@@ -316,6 +322,10 @@ public class KBNavigationDisplayContext {
 		int kbArticlesCount = KBArticleLocalServiceUtil.getKBArticlesCount(
 			scopeGroupId, rootResourcePrimKey,
 			WorkflowConstants.STATUS_APPROVED);
+
+		if (!isFolderResource()) {
+			kbArticlesCount++;
+		}
 
 		if (kbArticlesCount == 0) {
 			showNavigation = false;

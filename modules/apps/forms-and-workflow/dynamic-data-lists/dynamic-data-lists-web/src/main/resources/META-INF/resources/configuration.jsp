@@ -164,14 +164,14 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 									}
 
 									for (DDMTemplate template : templates) {
+										if (!DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template.getTemplateId(), PortletKeys.PORTLET_DISPLAY_TEMPLATE, ActionKeys.VIEW)) {
+											continue;
+										}
+
 										boolean selected = false;
 
 										if (displayDDMTemplateId == template.getTemplateId()) {
 											selected = true;
-										}
-
-										if (!DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template.getTemplateId(), PortletKeys.PORTLET_DISPLAY_TEMPLATE, ActionKeys.VIEW)) {
-											continue;
 										}
 									%>
 
@@ -196,14 +196,14 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 									}
 
 									for (DDMTemplate template : templates) {
+										if (!DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template.getTemplateId(), PortletKeys.PORTLET_DISPLAY_TEMPLATE, ActionKeys.VIEW)) {
+											continue;
+										}
+
 										boolean selected = false;
 
 										if (formDDMTemplateId == template.getTemplateId()) {
 											selected = true;
-										}
-
-										if (!DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template.getTemplateId(), PortletKeys.PORTLET_DISPLAY_TEMPLATE, ActionKeys.VIEW)) {
-											continue;
 										}
 									%>
 

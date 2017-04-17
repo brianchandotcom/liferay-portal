@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.util;
 
+import java.util.Random;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -41,6 +43,12 @@ public class MathUtil {
 		}
 
 		return quotient(value1, value2);
+	}
+
+	public static int randomNumber(Integer maxValue) {
+		Random rand = new Random(System.nanoTime());
+
+		return rand.nextInt(maxValue) + 1;
 	}
 
 	public static int sum(Integer value1, Integer value2) {

@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -29,15 +27,20 @@ import com.liferay.source.formatter.checks.CopyrightCheck;
 import com.liferay.source.formatter.checks.EmptyArrayCheck;
 import com.liferay.source.formatter.checks.EmptyCollectionCheck;
 import com.liferay.source.formatter.checks.GetterUtilCheck;
+import com.liferay.source.formatter.checks.JSPButtonTagCheck;
 import com.liferay.source.formatter.checks.JSPDefineObjectsCheck;
 import com.liferay.source.formatter.checks.JSPEmptyLinesCheck;
+import com.liferay.source.formatter.checks.JSPExceptionOrderCheck;
 import com.liferay.source.formatter.checks.JSPIfStatementCheck;
 import com.liferay.source.formatter.checks.JSPImportsCheck;
+import com.liferay.source.formatter.checks.JSPIncludeCheck;
 import com.liferay.source.formatter.checks.JSPIndentationCheck;
 import com.liferay.source.formatter.checks.JSPLanguageKeysCheck;
+import com.liferay.source.formatter.checks.JSPLanguageUtilCheck;
 import com.liferay.source.formatter.checks.JSPLogFileNameCheck;
 import com.liferay.source.formatter.checks.JSPModuleIllegalImportsCheck;
 import com.liferay.source.formatter.checks.JSPRedirectBackURLCheck;
+import com.liferay.source.formatter.checks.JSPSendRedirectCheck;
 import com.liferay.source.formatter.checks.JSPSessionKeysCheck;
 import com.liferay.source.formatter.checks.JSPStringMethodsCheck;
 import com.liferay.source.formatter.checks.JSPStylingCheck;
@@ -91,20 +94,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		String newContent = formatJSP(fileName, absolutePath, content);
-
-		newContent = StringUtil.replace(
-			newContent,
-			new String[] {
-				"<br/>", "@page import", "\"%>", ")%>", "function (",
-				"javascript: ", "){\n", ";;\n"
-			},
-			new String[] {
-				"<br />", "@ page import", "\" %>", ") %>", "function(",
-				"javascript:", ") {\n", ";\n"
-			});
-
-		return newContent;
+		return content;
 	}
 
 	@Override
@@ -141,191 +131,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	protected String formatJSP(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		StringBundler sb = new StringBundler();
-
-		String currentException = null;
-		String previousException = null;
-
-		boolean hasUnsortedExceptions = false;
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
-
-			int lineCount = 0;
-
-			String line = null;
-
-			String previousLine = StringPool.BLANK;
-
-			boolean javaSource = false;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
-
-				if (line.contains("<aui:button ") &&
-					line.contains("type=\"button\"")) {
-
-					processMessage(
-						fileName, "No need to set 'type=button' for aui:button",
-						lineCount);
-				}
-
-				if (line.contains("debugger.")) {
-					processMessage(fileName, "Do not use debugger", lineCount);
-				}
-
-				String trimmedLine = StringUtil.trimLeading(line);
-
-				if (line.matches(".*\\WgetClass\\(\\)\\..+")) {
-					processMessage(
-						fileName, "Avoid chaining on 'getClass'", lineCount);
-				}
-
-				if (trimmedLine.equals("<%") || trimmedLine.equals("<%!")) {
-					javaSource = true;
-				}
-				else if (trimmedLine.equals("%>")) {
-					javaSource = false;
-				}
-
-				// LPS-47179
-
-				if (line.contains(".sendRedirect(") &&
-					!fileName.endsWith("_jsp.jsp")) {
-
-					processMessage(
-						fileName,
-						"Do not use sendRedirect in jsp, see LPS-47179",
-						lineCount);
-				}
-
-				// LPS-55341
-
-				if (javaSource) {
-					line = StringUtil.replace(
-						line, "LanguageUtil.get(locale,",
-						"LanguageUtil.get(request,");
-				}
-				else {
-					Matcher matcher = javaSourceInsideJSPLinePattern.matcher(
-						line);
-
-					while (matcher.find()) {
-						String match = matcher.group(1);
-
-						String replacement = StringUtil.replace(
-							match, "LanguageUtil.get(locale,",
-							"LanguageUtil.get(request,");
-
-						line = StringUtil.replace(line, match, replacement);
-					}
-				}
-
-				if (!fileName.endsWith("test.jsp") &&
-					line.contains("System.out.print")) {
-
-					processMessage(
-						fileName, "Do not call 'System.out.print'", lineCount);
-				}
-
-				if (trimmedLine.matches("^\\} ?(catch|else|finally) .*")) {
-					processMessage(
-						fileName, "There should be a line break after '}'",
-						lineCount);
-				}
-
-				if (!hasUnsortedExceptions) {
-					int x = line.indexOf("<liferay-ui:error exception=\"<%=");
-
-					if (x != -1) {
-						int y = line.indexOf(".class %>", x);
-
-						if (y != -1) {
-							currentException = line.substring(x, y);
-
-							if (Validator.isNotNull(previousException) &&
-								(previousException.compareToIgnoreCase(
-									currentException) > 0)) {
-
-								currentException = line;
-								previousException = previousLine;
-
-								hasUnsortedExceptions = true;
-							}
-						}
-					}
-
-					if (!hasUnsortedExceptions) {
-						previousException = currentException;
-						currentException = null;
-					}
-				}
-
-				if (!fileName.endsWith("/touch.jsp")) {
-					int x = line.indexOf("<%@ include file");
-
-					if (x != -1) {
-						x = line.indexOf(CharPool.QUOTE, x);
-
-						int y = line.indexOf(CharPool.QUOTE, x + 1);
-
-						if (y != -1) {
-							String includeFileName = line.substring(x + 1, y);
-
-							Matcher matcher = _jspIncludeFilePattern.matcher(
-								includeFileName);
-
-							if (!matcher.find()) {
-								processMessage(
-									fileName,
-									"Incorrect include '" + includeFileName +
-										"'",
-									lineCount);
-							}
-						}
-					}
-				}
-
-				if (lineCount > 1) {
-					sb.append(previousLine);
-					sb.append("\n");
-				}
-
-				previousLine = line;
-			}
-
-			sb.append(previousLine);
-		}
-
-		content = sb.toString();
-
-		if (content.endsWith("\n")) {
-			content = content.substring(0, content.length() - 1);
-		}
-
-		if (hasUnsortedExceptions) {
-			if ((StringUtil.count(content, currentException) > 1) ||
-				(StringUtil.count(content, previousException) > 1)) {
-
-				processMessage(
-					fileName, "Unsorted exception '" + currentException + "'");
-			}
-			else {
-				content = StringUtil.replaceFirst(
-					content, previousException, currentException);
-
-				content = StringUtil.replaceLast(
-					content, currentException, previousException);
-			}
-		}
-
-		return content;
-	}
-
 	@Override
 	protected List<SourceCheck> getModuleSourceChecks() {
 		return _moduleSourceChecks;
@@ -353,16 +158,21 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new EmptyArrayCheck());
 		_sourceChecks.add(new EmptyCollectionCheck());
 		_sourceChecks.add(new GetterUtilCheck());
+		_sourceChecks.add(new JSPButtonTagCheck());
 		_sourceChecks.add(
 			new JSPDefineObjectsCheck(
 				portalSource, subrepository,
 				getPluginsInsideModulesDirectoryNames()));
 		_sourceChecks.add(new JSPEmptyLinesCheck());
+		_sourceChecks.add(new JSPExceptionOrderCheck());
 		_sourceChecks.add(new JSPIfStatementCheck());
 		_sourceChecks.add(new JSPImportsCheck(portalSource, subrepository));
+		_sourceChecks.add(new JSPIncludeCheck());
 		_sourceChecks.add(new JSPIndentationCheck());
+		_sourceChecks.add(new JSPLanguageUtilCheck());
 		_sourceChecks.add(new JSPLogFileNameCheck(subrepository));
 		_sourceChecks.add(new JSPRedirectBackURLCheck());
+		_sourceChecks.add(new JSPSendRedirectCheck());
 		_sourceChecks.add(new JSPSessionKeysCheck());
 		_sourceChecks.add(new JSPStylingCheck());
 		_sourceChecks.add(new JSPSubnameCheck());
@@ -580,8 +390,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Map<String, String> _contentsMap;
 	private final Pattern _includeFilePattern = Pattern.compile(
 		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
-	private final Pattern _jspIncludeFilePattern = Pattern.compile(
-		"/.*\\.(jsp[f]?|svg)");
 	private final List<SourceCheck> _moduleSourceChecks = new ArrayList<>();
 	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 

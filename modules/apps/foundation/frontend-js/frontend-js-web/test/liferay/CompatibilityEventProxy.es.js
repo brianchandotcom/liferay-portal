@@ -232,4 +232,23 @@ describe('CompatibilityEventProxy', () => {
 		done();
 	});
 
+	it('should emit events when no event has no key', (done) => {
+		let eventObjectToEmit = {};
+
+		let mockedTarget = createMockedTarget(eventNameToEmit);
+
+		let spy = sinon.spy(mockedTarget, 'fire');
+
+		let component = new CompatibilityEventProxy({
+			host: host
+		});
+
+		component.addTarget(mockedTarget);
+
+		host.emit(eventNameToEmit, eventObjectToEmit, eventFacadeObjectToEmit);
+
+		assert.strictEqual(true, spy.calledWith(eventNameToEmit, eventObjectToEmit));
+
+		done();
+	});
 });

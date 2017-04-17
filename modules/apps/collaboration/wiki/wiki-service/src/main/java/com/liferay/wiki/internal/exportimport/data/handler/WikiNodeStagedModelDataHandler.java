@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
@@ -200,7 +201,8 @@ public class WikiNodeStagedModelDataHandler
 			return;
 		}
 
-		TrashHandler trashHandler = existingNode.getTrashHandler();
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			WikiNode.class.getName());
 
 		if (trashHandler.isRestorable(existingNode.getNodeId())) {
 			trashHandler.restoreTrashEntry(userId, existingNode.getNodeId());

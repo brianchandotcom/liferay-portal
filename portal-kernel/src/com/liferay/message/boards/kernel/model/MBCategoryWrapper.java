@@ -366,7 +366,9 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* Returns the trash handler for this message boards category.
 	*
 	* @return the trash handler for this message boards category
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
 		return _mbCategory.getTrashHandler();

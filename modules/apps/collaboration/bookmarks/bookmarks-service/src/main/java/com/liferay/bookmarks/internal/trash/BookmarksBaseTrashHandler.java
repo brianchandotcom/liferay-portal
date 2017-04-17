@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.trash;
+package com.liferay.bookmarks.internal.trash;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
@@ -34,9 +34,7 @@ import java.util.List;
  * Represents the trash handler for bookmarks folder entity.
  *
  * @author Eudaldo Alonso
- * @deprecated As of 1.1.0
  */
-@Deprecated
 public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 
 	@Override

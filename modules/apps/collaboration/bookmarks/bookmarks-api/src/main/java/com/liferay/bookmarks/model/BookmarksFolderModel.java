@@ -28,9 +28,6 @@ import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.trash.TrashHandler;
-
-import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.io.Serializable;
 
@@ -393,7 +390,8 @@ public interface BookmarksFolderModel extends BaseModel<BookmarksFolder>,
 	 * @return the trash entry created when this bookmarks folder was moved to the Recycle Bin
 	 */
 	@Override
-	public TrashEntry getTrashEntry() throws PortalException;
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws PortalException;
 
 	/**
 	 * Returns the class primary key of the trash entry for this bookmarks folder.
@@ -407,9 +405,11 @@ public interface BookmarksFolderModel extends BaseModel<BookmarksFolder>,
 	 * Returns the trash handler for this bookmarks folder.
 	 *
 	 * @return the trash handler for this bookmarks folder
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Override
-	public TrashHandler getTrashHandler();
+	@Deprecated
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler();
 
 	/**
 	 * Returns <code>true</code> if this bookmarks folder is in the Recycle Bin.

@@ -369,7 +369,9 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* Returns the trash handler for this bookmarks entry.
 	*
 	* @return the trash handler for this bookmarks entry
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
 		return _bookmarksEntry.getTrashHandler();

@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.wiki.trash;
+package com.liferay.wiki.internal.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -43,6 +44,7 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -50,9 +52,11 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Eudaldo Alonso
  * @author Roberto Díaz
- * @deprecated As of 1.1.0
  */
-@Deprecated
+@Component(
+	property = {"model.class.name=com.liferay.wiki.model.WikiNode"},
+	service = TrashHandler.class
+)
 public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 
 	@Override
@@ -173,10 +177,8 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		WikiNode node = _wikiNodeLocalService.getNode(classPK);
-
-		return node.getTrashEntry();
+	public TrashedModel getTrashedModel(long classPK) {
+		return _wikiNodeLocalService.fetchWikiNode(classPK);
 	}
 
 	@Override
@@ -217,13 +219,6 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 	@Override
 	public boolean isContainerModel() {
 		return true;
-	}
-
-	@Override
-	public boolean isInTrash(long classPK) throws PortalException {
-		WikiNode node = _wikiNodeLocalService.getNode(classPK);
-
-		return node.isInTrash();
 	}
 
 	@Override

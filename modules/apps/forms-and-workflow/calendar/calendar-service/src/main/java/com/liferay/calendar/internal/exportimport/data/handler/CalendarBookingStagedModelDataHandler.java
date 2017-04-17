@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -298,7 +299,8 @@ public class CalendarBookingStagedModelDataHandler
 			return;
 		}
 
-		TrashHandler trashHandler = existingBooking.getTrashHandler();
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			CalendarBooking.class.getName());
 
 		if (trashHandler.isRestorable(existingBooking.getCalendarBookingId())) {
 			trashHandler.restoreTrashEntry(

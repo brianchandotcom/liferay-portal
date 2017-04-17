@@ -468,7 +468,19 @@ public interface TrashHandler {
 			long classPK, int start, int end)
 		throws PortalException;
 
-	public TrashEntry getTrashEntry(long classPK) throws PortalException;
+	public TrashedModel getTrashedModel(long classPK);
+
+	public default TrashEntry getTrashEntry(long classPK)
+		throws PortalException {
+
+		TrashedModel trashedModel = getTrashedModel(classPK);
+
+		if (trashedModel != null) {
+			return trashedModel.getTrashEntry();
+		}
+
+		return null;
+	}
 
 	public int getTrashModelsCount(long classPK) throws PortalException;
 
@@ -532,7 +544,15 @@ public interface TrashHandler {
 	 * @return <code>true</code> if the model entity is in the Recycle Bin;
 	 *         <code>false</code> otherwise
 	 */
-	public boolean isInTrash(long classPK) throws PortalException;
+	public default boolean isInTrash(long classPK) throws PortalException {
+		TrashedModel trashedModel = getTrashedModel(classPK);
+
+		if (trashedModel != null) {
+			return trashedModel.isInTrash();
+		}
+
+		return false;
+	}
 
 	/**
 	 * Returns <code>true</code> if the model entity with the primary key is in
@@ -543,7 +563,17 @@ public interface TrashHandler {
 	 *         a container that is in the Recycle Bin; <code>false</code>
 	 *         otherwise
 	 */
-	public boolean isInTrashContainer(long classPK) throws PortalException;
+	public default boolean isInTrashContainer(long classPK)
+		throws PortalException {
+
+		TrashedModel trashedModel = getTrashedModel(classPK);
+
+		if (trashedModel != null) {
+			return trashedModel.isInTrashContainer();
+		}
+
+		return false;
+	}
 
 	/**
 	 * Returns <code>true</code> if the entity can be moved from one container

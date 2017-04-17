@@ -162,19 +162,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/ical4j.jar</file-name>
-				<version>1.0</version>
-				<project-name>iCal4j</project-name>
-				<project-url>http://ical4j.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-						<copyright-notice>Copyright (c) 2007, Ben Fortuna. All rights reserved.</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jabsorb.jar</file-name>
 				<version>1.3.1</version>
 				<project-name>jabsorb</project-name>
@@ -230,18 +217,6 @@
 				<version>0.5</version>
 				<project-name>Jazzy</project-name>
 				<project-url>http://jazzy.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jcifs.jar</file-name>
-				<version>1.3.14</version>
-				<project-name>jCIFS</project-name>
-				<project-url>http://jcifs.samba.org</project-url>
 				<licenses>
 					<license>
 						<license-name>LGPL 2.1</license-name>
@@ -309,21 +284,6 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-1.1</license-url>
 					</license>
 				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/json-java.jar</file-name>
-				<version>c7d2d9161321e9</version>
-				<project-name>JSON in Java</project-name>
-				<project-url>https://github.com/douglascrockford/JSON-java</project-url>
-				<licenses>
-					<license>
-						<license-name>JSON License</license-name>
-						<license-url>https://github.com/douglascrockford/JSON-java/blob/master/README</license-url>
-					</license>
-				</licenses>
-				<comments>
-					See the Ant target "build-json-java-jar" in portal-impl/build.xml.
-				</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/json-schema-validator.jar</file-name>
@@ -409,18 +369,6 @@
 					<license>
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/unoil.jar</file-name>
-				<version>2.3.0</version>
-				<project-name>OpenOffice.org Java Uno</project-name>
-				<project-url>http://udk.openoffice.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
 					</license>
 				</licenses>
 			</library>

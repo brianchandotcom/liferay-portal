@@ -68,7 +68,7 @@ portletDisplay.setURLBack(redirect);
 %>
 
 <liferay-portlet:actionURL name="/polls/edit_question" refererPlid="<%= themeDisplay.getRefererPlid() %>" var="editQuestionURL">
-	<portlet:param name="mvcActionCommand" value="/polls/edit_question" />
+	<portlet:param name="mvcPath" value="/polls/edit_question.jsp" />
 </liferay-portlet:actionURL>
 
 <aui:form action="<%= editQuestionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveQuestion();" %>'>

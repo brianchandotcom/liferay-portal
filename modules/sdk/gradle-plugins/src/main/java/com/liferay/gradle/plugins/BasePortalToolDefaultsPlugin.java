@@ -41,8 +41,8 @@ public abstract class BasePortalToolDefaultsPlugin
 
 		if (Validator.isNotNull(portalToolVersion)) {
 			GradleUtil.addDependency(
-				project, configurationName, PortalTools.GROUP, portalToolName,
-				portalToolVersion);
+				project, configurationName, getPortalToolGroup(),
+				portalToolName, portalToolVersion);
 		}
 	}
 
@@ -52,6 +52,10 @@ public abstract class BasePortalToolDefaultsPlugin
 	}
 
 	protected abstract String getPortalToolConfigurationName();
+
+	protected String getPortalToolGroup() {
+		return PortalTools.GROUP;
+	}
 
 	protected abstract String getPortalToolName();
 

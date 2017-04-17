@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
+import java.io.File;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +82,20 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected void clearSourceFormatterMessages(String fileName) {
 		_sourceFormatterMessagesMap.remove(fileName);
+	}
+
+	protected File getFile(String baseDir, String fileName, int level) {
+		for (int i = 0; i < level; i++) {
+			File file = new File(baseDir + fileName);
+
+			if (file.exists()) {
+				return file;
+			}
+
+			fileName = "../" + fileName;
+		}
+
+		return null;
 	}
 
 	protected int getLeadingTabCount(String line) {

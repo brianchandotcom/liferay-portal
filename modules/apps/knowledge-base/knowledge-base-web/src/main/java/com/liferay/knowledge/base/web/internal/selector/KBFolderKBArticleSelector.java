@@ -110,8 +110,12 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 			}
 		}
 
-		KBArticle kbArticle = _kbArticleService.fetchKBArticleByUrlTitle(
-			groupId, kbFolder.getKbFolderId(), urlTitle);
+		KBArticle kbArticle = null;
+
+		if (kbFolder != null) {
+			kbArticle = _kbArticleService.fetchKBArticleByUrlTitle(
+				groupId, kbFolder.getKbFolderId(), urlTitle);
+		}
 
 		if ((kbArticle == null) || !isDescendant(kbArticle, ancestorKBFolder)) {
 			return findClosestMatchingKBArticle(

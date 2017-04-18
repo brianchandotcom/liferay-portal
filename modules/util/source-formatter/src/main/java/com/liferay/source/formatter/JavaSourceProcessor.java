@@ -118,14 +118,6 @@ import java.util.regex.Pattern;
 public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		return content;
-	}
-
-	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		String[] includes = getIncludes();
 

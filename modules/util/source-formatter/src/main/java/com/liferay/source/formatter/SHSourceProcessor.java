@@ -16,8 +16,6 @@ package com.liferay.source.formatter;
 
 import com.liferay.source.formatter.checks.SourceCheck;
 
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +23,6 @@ import java.util.List;
  * @author Hugo Huijser
  */
 public class SHSourceProcessor extends BaseSourceProcessor {
-
-	@Override
-	protected String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		return content;
-	}
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {

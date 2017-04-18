@@ -19,8 +19,6 @@ import com.liferay.source.formatter.checks.JSONPropertyOrderCheck;
 import com.liferay.source.formatter.checks.JSONWhitespaceCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
 
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,14 +26,6 @@ import java.util.List;
  * @author Hugo Huijser
  */
 public class JSONSourceProcessor extends BaseSourceProcessor {
-
-	@Override
-	protected String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		return content;
-	}
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {

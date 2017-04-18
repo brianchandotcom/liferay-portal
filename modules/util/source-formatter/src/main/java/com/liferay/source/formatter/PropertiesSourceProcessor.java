@@ -41,14 +41,6 @@ import org.apache.commons.io.IOUtils;
 public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		return content;
-	}
-
-	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(new String[0], getIncludes());
 	}

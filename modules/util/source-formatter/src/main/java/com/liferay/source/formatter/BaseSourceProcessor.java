@@ -256,10 +256,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return level;
 	}
 
-	protected abstract String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception;
-
 	protected abstract List<String> doGetFileNames() throws Exception;
 
 	protected abstract String[] doGetIncludes();
@@ -295,8 +291,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String newContent = processSourceChecks(
 			file, fileName, absolutePath, content);
-
-		newContent = doFormat(file, fileName, absolutePath, newContent);
 
 		if (content.equals(newContent)) {
 			return content;

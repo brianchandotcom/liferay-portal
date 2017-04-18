@@ -802,6 +802,12 @@ public class GitWorkingDirectory {
 
 				throw new RuntimeException("Unable to rebase");
 			}
+
+			if (process != null) {
+				System.out.println(
+					JenkinsResultsParserUtil.readInputStream(
+						process.getInputStream()));
+			}
 		}
 		catch (Exception e) {
 			RepositoryState repositoryState = _repository.getRepositoryState();

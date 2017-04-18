@@ -508,6 +508,43 @@ public class GitWorkingDirectory {
 		fetch(refSpec, remoteConfig);
 	}
 
+	public List<String> getBranchesContainingSHA(String sha) {
+		String command = "git branch --contains " + sha;
+
+		try {
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
+				true, getWorkingDirectory(), command);
+
+			String output = JenkinsResultsParserUtil.readInputStream(
+				process.getInputStream());
+
+			if (output.contains("no such commit")) {
+				return Collections.emptyList();
+			}
+
+			System.out.println(output);
+
+			String[] outputLines = output.split("\n");
+
+			List<String> branchNamesList = new ArrayList<>(
+				outputLines.length - 1);
+
+			for (String outputLine : outputLines) {
+				if (branchNamesList.size() == outputLines.length -1) {
+					break;
+				}
+
+				branchNamesList.add(outputLine.trim());
+			}
+
+			return branchNamesList;
+		}
+		catch (IOException | InterruptedException e) {
+			throw new RuntimeException(
+				"Unable to find branches with SHA " + sha, e);
+		}
+	}
+
 	public List<Ref> getBranchRefs() throws GitAPIException {
 		ListBranchCommand listBranchCommand = _git.branchList();
 

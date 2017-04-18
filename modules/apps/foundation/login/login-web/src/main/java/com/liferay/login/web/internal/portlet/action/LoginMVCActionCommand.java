@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
@@ -98,7 +99,9 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Login request rejected: password parameter found in URL.");
+					"Login request rejected: password parameter found in " +
+						"URL. Referrer: " +
+							request.getHeader(HttpHeaders.REFERER));
 			}
 
 			return;

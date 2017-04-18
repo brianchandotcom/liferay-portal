@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -73,7 +74,9 @@ public class LoginAction extends Action {
 		if (urlParams.containsKey("password")) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Login request rejected: password parameter found in URL.");
+					"Login request rejected: password parameter found in " +
+						"URL. Referrer: " +
+							request.getHeader(HttpHeaders.REFERER));
 			}
 		}
 		else {

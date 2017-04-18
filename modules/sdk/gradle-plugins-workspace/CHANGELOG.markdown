@@ -97,10 +97,10 @@ extension object into the public API.
 ### Added
 - [LPS-71724]: Add the ability to download and upgrade the Plugins SDK
 directories by executing the `upgradePluginsSDK` task in the root project.
-- [LPS-71724]: Add the [Liferay CDN](https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public)
-as default repository in the root project. This behavior can be disabled by
-setting the `liferay.workspace.default.repository.enabled` property in
-`gradle.properties` to `false`.
+- [LPS-71724]: Add [Liferay CDN](https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public)
+as the default repository in the root project. This behavior can be disabled by
+setting the `liferay.workspace.default.repository.enabled` property to `false`
+in `gradle.properties`.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

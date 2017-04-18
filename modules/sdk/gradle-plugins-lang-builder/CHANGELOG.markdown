@@ -3,14 +3,8 @@
 ## 2.0.0 - 2017-04-06
 
 ### Added
-- [LPS-71375]: Add property `translateSubscriptionKey` in `BuildLangTask` in
-order to support the Translator Text Translation API on Microsoft Cognitive
-Services.
-
-### Added
-- [LPS-71375]: Add property `translateSubscriptionKey` in `BuildLangTask` in
-order to support the Translator Text Translation API on Microsoft Cognitive
-Services.
+- [LPS-71375]: Add the property `translateSubscriptionKey` in `BuildLangTask` to
+support the Translator Text Translation API on Microsoft Cognitive Services.
 
 ### Changed
 - [LPS-67573]: Make most methods private in order to reduce API surface.

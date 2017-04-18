@@ -341,13 +341,7 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 				portletRequest, "please-enter-a-file-with-a-valid-file-name");
 		}
 		else if (key instanceof FileSizeException) {
-			long fileMaxSize = PrefsPropsUtil.getLong(
-				PropsKeys.DL_FILE_MAX_SIZE);
-
-			if (fileMaxSize == 0) {
-				fileMaxSize = PrefsPropsUtil.getLong(
-					PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-			}
+			long fileMaxSize = _dlValidator.getMaxAllowableSize();
 
 			fileMaxSize /= 1024;
 

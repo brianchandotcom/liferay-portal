@@ -21,10 +21,10 @@ property.
 ## 1.3.0 - 2017-04-06
 
 ### Added
-- [LPS-71591]: Add the ability to set a custom XML parser to be used by
+- [LPS-71591]: Add the ability to set a custom XML parser usable by
 `ValidateSchemaTask` tasks.
 - [LPS-71591]: Automatically configure the `validateTLD` task to use the version
-0.12.5 of [XML Resolver].
+0.12.5 of the [XML Resolver].
 
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-68666]: https://issues.liferay.com/browse/LPS-68666

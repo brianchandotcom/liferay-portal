@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.soy.tasks;
 
-import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.plugins.soy.internal.util.GradleUtil;
 import com.liferay.portal.tools.soy.builder.commands.WrapSoyAlloyTemplateCommand;
 
 import java.io.File;

@@ -15,7 +15,7 @@
 package com.liferay.portal.tools.soy.builder.maven;
 
 import com.liferay.maven.executor.MavenExecutor;
-import com.liferay.portal.tools.soy.builder.commands.ReplaceTranslationCommandTest;
+import com.liferay.portal.tools.soy.builder.commands.ReplaceSoyTranslationCommandTest;
 import com.liferay.portal.tools.soy.builder.util.FileTestUtil;
 
 import java.io.File;
@@ -30,12 +30,13 @@ import org.junit.ClassRule;
 /**
  * @author Andrea Di Giorgi
  */
-public class ReplaceTranslationMojoTest extends ReplaceTranslationCommandTest {
+public class ReplaceSoyTranslationMojoTest
+	extends ReplaceSoyTranslationCommandTest {
 
 	@ClassRule
 	public static final MavenExecutor mavenExecutor = new MavenExecutor();
 
-	public ReplaceTranslationMojoTest(String testDirName) {
+	public ReplaceSoyTranslationMojoTest(String testDirName) {
 		super(testDirName);
 	}
 
@@ -55,7 +56,7 @@ public class ReplaceTranslationMojoTest extends ReplaceTranslationCommandTest {
 		throws IOException {
 
 		String content = FileTestUtil.read(
-			ReplaceTranslationMojoTest.class.getClassLoader(),
+			ReplaceSoyTranslationMojoTest.class.getClassLoader(),
 			"com/liferay/portal/tools/soy/builder/maven/dependencies" +
 				"/pom_xml.tmpl");
 

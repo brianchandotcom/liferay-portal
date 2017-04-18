@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.soy.builder.maven;
 
-import com.liferay.portal.tools.soy.builder.commands.ReplaceTranslationCommand;
+import com.liferay.portal.tools.soy.builder.commands.ReplaceSoyTranslationCommand;
 
 /**
  * Replace 'goog.getMsg' definitions.
@@ -22,12 +22,12 @@ import com.liferay.portal.tools.soy.builder.commands.ReplaceTranslationCommand;
  * @author Andrea Di Giorgi
  * @goal replace-translation
  */
-public class ReplaceTranslationMojo
-	extends BaseSoyJsMojo<ReplaceTranslationCommand> {
+public class ReplaceSoyTranslationMojo
+	extends BaseSoyJsMojo<ReplaceSoyTranslationCommand> {
 
 	@Override
-	protected ReplaceTranslationCommand createCommand() {
-		return new ReplaceTranslationCommand();
+	protected ReplaceSoyTranslationCommand createCommand() {
+		return new ReplaceSoyTranslationCommand();
 	}
 
 }

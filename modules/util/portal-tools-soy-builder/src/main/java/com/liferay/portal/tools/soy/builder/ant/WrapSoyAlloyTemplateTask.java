@@ -14,14 +14,14 @@
 
 package com.liferay.portal.tools.soy.builder.ant;
 
-import com.liferay.portal.tools.soy.builder.commands.WrapAlloyTemplateCommand;
+import com.liferay.portal.tools.soy.builder.commands.WrapSoyAlloyTemplateCommand;
 
 import org.apache.tools.ant.BuildException;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class WrapAlloyTemplateTask extends WrapAlloyTemplateCommand {
+public class WrapSoyAlloyTemplateTask extends WrapSoyAlloyTemplateCommand {
 
 	@Override
 	public void execute() {

@@ -4,9 +4,9 @@
 <project>
 	<taskdef resource="com/liferay/portal/tools/soy/builder/ant/taskdefs.properties" />
 
-	<target name="replace-translation">
-		<replace-translation
-			dir="${replace.translation.dir}"
+	<target name="replace-soy-translation">
+		<replace-soy-translation
+			dir="${replace.soy.translation.dir}"
 		/>
 	</target>
 </project>

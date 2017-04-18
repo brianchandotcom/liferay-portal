@@ -19,12 +19,12 @@ import java.io.File;
 /**
  * @author Andrea Di Giorgi
  */
-public class WrapAlloyTemplateCommandTest extends BaseSoyCommandTestCase {
+public class WrapSoyAlloyTemplateCommandTest extends BaseSoyCommandTestCase {
 
 	@Override
 	protected String getTestDirName() {
 		return "com/liferay/portal/tools/soy/builder/commands/dependencies" +
-			"/wrap_alloy_template/";
+			"/wrap_soy_alloy_template/";
 	}
 
 	@Override
@@ -42,14 +42,14 @@ public class WrapAlloyTemplateCommandTest extends BaseSoyCommandTestCase {
 			File dir, String moduleName, String namespace)
 		throws Exception {
 
-		WrapAlloyTemplateCommand wrapAlloyTemplateCommand =
-			new WrapAlloyTemplateCommand();
+		WrapSoyAlloyTemplateCommand wrapSoyAlloyTemplateCommand =
+			new WrapSoyAlloyTemplateCommand();
 
-		wrapAlloyTemplateCommand.setDir(dir);
-		wrapAlloyTemplateCommand.setModuleName(moduleName);
-		wrapAlloyTemplateCommand.setNamespace(namespace);
+		wrapSoyAlloyTemplateCommand.setDir(dir);
+		wrapSoyAlloyTemplateCommand.setModuleName(moduleName);
+		wrapSoyAlloyTemplateCommand.setNamespace(namespace);
 
-		wrapAlloyTemplateCommand.execute();
+		wrapSoyAlloyTemplateCommand.execute();
 	}
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.portal.tools.soy.builder.maven;
 
 import com.liferay.maven.executor.MavenExecutor;
-import com.liferay.portal.tools.soy.builder.commands.WrapAlloyTemplateCommandTest;
+import com.liferay.portal.tools.soy.builder.commands.WrapSoyAlloyTemplateCommandTest;
 import com.liferay.portal.tools.soy.builder.util.FileTestUtil;
 
 import java.io.File;
@@ -30,7 +30,8 @@ import org.junit.ClassRule;
 /**
  * @author Andrea Di Giorgi
  */
-public class WrapAlloyTemplateMojoTest extends WrapAlloyTemplateCommandTest {
+public class WrapSoyAlloyTemplateMojoTest
+	extends WrapSoyAlloyTemplateCommandTest {
 
 	@ClassRule
 	public static final MavenExecutor mavenExecutor = new MavenExecutor();
@@ -55,7 +56,7 @@ public class WrapAlloyTemplateMojoTest extends WrapAlloyTemplateCommandTest {
 		throws IOException {
 
 		String content = FileTestUtil.read(
-			WrapAlloyTemplateMojoTest.class.getClassLoader(),
+			WrapSoyAlloyTemplateMojoTest.class.getClassLoader(),
 			"com/liferay/portal/tools/soy/builder/maven/dependencies" +
 				"/pom_xml.tmpl");
 

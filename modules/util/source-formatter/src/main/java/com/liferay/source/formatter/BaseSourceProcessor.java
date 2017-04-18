@@ -98,6 +98,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		preFormat();
 
+		_populateGenericSourceChecks();
+
 		populateSourceChecks();
 
 		if ((portalSource || subrepository) && _containsModuleFile(fileNames)) {
@@ -876,6 +878,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		throws Exception {
 
 		content = _processSourceChecks(
+			fileName, absolutePath, content, _genericSourceChecks);
+
+		content = _processSourceChecks(
 			fileName, absolutePath, content, getSourceChecks());
 
 		if (isModulesFile(absolutePath)) {
@@ -1161,6 +1166,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return pattern;
 	}
 
+	private void _populateGenericSourceChecks() throws Exception {
+	}
+
 	private String _processSourceChecks(
 			String fileName, String absolutePath, String content,
 			List<SourceCheck> sourceChecks)
@@ -1236,6 +1244,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String[] _excludes;
 	private Map<String, List<String>> _exclusionPropertiesMap = new HashMap<>();
 	private SourceMismatchException _firstSourceMismatchException;
+	private final List<SourceCheck> _genericSourceChecks = new ArrayList<>();
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private List<String> _pluginsInsideModulesDirectoryNames;

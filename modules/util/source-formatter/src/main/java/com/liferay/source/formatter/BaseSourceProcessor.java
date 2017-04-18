@@ -221,54 +221,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return filteredIncludes;
 	}
 
-	private final String _format(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		_sourceFormatterMessagesMap.remove(fileName);
-
-		_checkUTF8(file, fileName);
-
-		String newContent = processSourceChecks(
-			file, fileName, absolutePath, content);
-
-		if (content.equals(newContent)) {
-			return content;
-		}
-
-		return _format(file, fileName, absolutePath, newContent);
-	}
-
-	private final void _format(String fileName) throws Exception {
-		if (!_isMatchPath(fileName)) {
-			return;
-		}
-
-		fileName = StringUtil.replace(
-			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-		String absolutePath = _getAbsolutePath(fileName);
-
-		File file = new File(absolutePath);
-
-		String content = FileUtil.read(file);
-
-		String newContent = _format(file, fileName, absolutePath, content);
-
-		processFormattedFile(file, fileName, content, newContent);
-	}
-
-	private String _getAbsolutePath(String fileName) {
-		Path filePath = Paths.get(fileName);
-
-		filePath = filePath.toAbsolutePath();
-
-		filePath = filePath.normalize();
-
-		return StringUtil.replace(
-			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
-	}
-
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
 		Map<String, String> compatClassNamesMap = new HashMap<>();
 
@@ -501,36 +453,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected abstract List<SourceCheck> getSourceChecks();
 
-	private boolean _isModulesFile(String absolutePath) {
-		return _isModulesFile(absolutePath, false);
-	}
-
-	private boolean _isModulesFile(
-		String absolutePath, boolean includePlugins) {
-
-		if (subrepository) {
-			return true;
-		}
-
-		if (includePlugins) {
-			return absolutePath.contains("/modules/");
-		}
-
-		try {
-			for (String directoryName :
-					getPluginsInsideModulesDirectoryNames()) {
-
-				if (absolutePath.contains(directoryName)) {
-					return false;
-				}
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return absolutePath.contains("/modules/");
-	}
-
 	protected abstract void populateSourceChecks()
 		throws Exception;
 
@@ -688,6 +610,54 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
+	private final String _format(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		_sourceFormatterMessagesMap.remove(fileName);
+
+		_checkUTF8(file, fileName);
+
+		String newContent = processSourceChecks(
+			file, fileName, absolutePath, content);
+
+		if (content.equals(newContent)) {
+			return content;
+		}
+
+		return _format(file, fileName, absolutePath, newContent);
+	}
+
+	private final void _format(String fileName) throws Exception {
+		if (!_isMatchPath(fileName)) {
+			return;
+		}
+
+		fileName = StringUtil.replace(
+			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+		String absolutePath = _getAbsolutePath(fileName);
+
+		File file = new File(absolutePath);
+
+		String content = FileUtil.read(file);
+
+		String newContent = _format(file, fileName, absolutePath, content);
+
+		processFormattedFile(file, fileName, content, newContent);
+	}
+
+	private String _getAbsolutePath(String fileName) {
+		Path filePath = Paths.get(fileName);
+
+		filePath = filePath.toAbsolutePath();
+
+		filePath = filePath.normalize();
+
+		return StringUtil.replace(
+			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
+	}
+
 	private String[] _getExcludes() {
 		if (sourceFormatterArgs.getFileNames() != null) {
 			return new String[0];
@@ -729,6 +699,36 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return false;
+	}
+
+	private boolean _isModulesFile(String absolutePath) {
+		return _isModulesFile(absolutePath, false);
+	}
+
+	private boolean _isModulesFile(
+		String absolutePath, boolean includePlugins) {
+
+		if (subrepository) {
+			return true;
+		}
+
+		if (includePlugins) {
+			return absolutePath.contains("/modules/");
+		}
+
+		try {
+			for (String directoryName :
+					getPluginsInsideModulesDirectoryNames()) {
+
+				if (absolutePath.contains(directoryName)) {
+					return false;
+				}
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return absolutePath.contains("/modules/");
 	}
 
 	private boolean _isPortalSource() {

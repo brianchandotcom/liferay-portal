@@ -523,6 +523,30 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Long getLatestStartTimestamp() {
+		Long latestStartTimestamp = getStartTimestamp();
+
+		if (latestStartTimestamp == null) {
+			return null;
+		}
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			Long downstreamBuildLatestStartTimestamp =
+				downstreamBuild.getLatestStartTimestamp();
+
+			if (downstreamBuildLatestStartTimestamp == null) {
+				return null;
+			}
+
+			latestStartTimestamp = Math.max(
+				latestStartTimestamp,
+				downstreamBuild.getLatestStartTimestamp());
+		}
+
+		return latestStartTimestamp;
+	}
+
+	@Override
 	public String getMaster() {
 		return master;
 	}
@@ -570,6 +594,23 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public Map<String, String> getStartPropertiesTempMap() {
 		return getTempMap("start.properties");
+	}
+
+	@Override
+	public Long getStartTimestamp() {
+		JSONObject buildJSONObject = getBuildJSONObject("timestamp");
+
+		if (buildJSONObject == null) {
+			return null;
+		}
+
+		long timestamp = buildJSONObject.getLong("timestamp");
+
+		if (timestamp == 0) {
+			return null;
+		}
+
+		return timestamp;
 	}
 
 	@Override

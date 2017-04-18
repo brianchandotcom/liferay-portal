@@ -29,20 +29,23 @@ import org.osgi.service.component.annotations.Component;
 public class UniqueFileNameProviderImpl implements UniqueFileNameProvider {
 
 	@Override
-	public String provide(String fileName, Predicate<String> exists)
+	public String provide(String fileName, Predicate<String> predicate)
 		throws PortalException {
 
 		String curFileName = fileName;
-		int suffix = 1;
 
-		while (exists.test(curFileName)) {
-			if (suffix++ >= _UNIQUE_FILE_NAME_TRIES) {
+		int tries = 1;
+
+		while (predicate.test(curFileName)) {
+			if (tries >= _UNIQUE_FILE_NAME_TRIES) {
 				throw new PortalException(
 					"Unable to get a unique file name for " + fileName);
 			}
 
+			tries++;
+
 			curFileName = FileUtil.appendParentheticalSuffix(
-				fileName, String.valueOf(suffix));
+				fileName, String.valueOf(tries));
 		}
 
 		return curFileName;

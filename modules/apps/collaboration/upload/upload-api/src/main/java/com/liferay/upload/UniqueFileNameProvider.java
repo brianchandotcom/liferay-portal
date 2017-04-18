@@ -23,7 +23,7 @@ import java.util.function.Predicate;
  */
 public interface UniqueFileNameProvider {
 
-	public String provide(String fileName, Predicate<String> exists)
+	public String provide(String fileName, Predicate<String> predicate)
 		throws PortalException;
 
 }

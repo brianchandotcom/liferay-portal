@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.service.persistence.TeamPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -29,6 +30,11 @@ public class TeamFinderBaseImpl extends BasePersistenceImpl<Team> {
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getTeamPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getTeamPersistence().getDBColumnMap();
 	}
 
 	/**

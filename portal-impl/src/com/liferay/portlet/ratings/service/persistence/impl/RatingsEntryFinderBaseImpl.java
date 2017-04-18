@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class RatingsEntryFinderBaseImpl extends BasePersistenceImpl<RatingsEntry
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getRatingsEntryPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getRatingsEntryPersistence().getDBColumnMap();
 	}
 
 	/**

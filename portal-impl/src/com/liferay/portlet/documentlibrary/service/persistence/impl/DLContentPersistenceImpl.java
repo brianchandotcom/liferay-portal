@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2974,7 +2973,12 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return _badColumnNames;
+		return _dbColumnMap.keySet();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return _dbColumnMap;
 	}
 
 	@Override
@@ -3008,7 +3012,11 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLContent exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLContent exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(DLContentPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"path", "data", "size"
-			});
+	private static final Map<String, String> _dbColumnMap = new HashMap<String, String>();
+
+	static {
+		_dbColumnMap.put("path", "path_");
+		_dbColumnMap.put("data", "data_");
+		_dbColumnMap.put("size", "size_");
+	}
 }

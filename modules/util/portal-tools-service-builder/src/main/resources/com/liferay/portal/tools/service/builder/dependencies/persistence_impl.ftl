@@ -1458,7 +1458,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	<#if entity.badNamedColumnsList?size != 0>
 		@Override
 		public Set<String> getBadColumnNames() {
-			return _badColumnNames;
+			return _dbColumnMap.keySet();
+		}
+
+		@Override
+		public Map<String, String> getDBColumnMap() {
+			return _dbColumnMap;
 		}
 	</#if>
 
@@ -1818,16 +1823,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	private static final Log _log = LogFactoryUtil.getLog(${entity.name}PersistenceImpl.class);
 
 	<#if entity.badNamedColumnsList?size != 0>
-		private static final Set<String> _badColumnNames = SetUtil.fromArray(
-			new String[] {
-				<#list entity.badNamedColumnsList as column>
-					"${column.name}"
+		private static final Map<String, String> _dbColumnMap = new HashMap<String, String>();
 
-					<#if column_has_next>
-						,
-					</#if>
-				</#list>
-			});
+		static {
+			<#list entity.badNamedColumnsList as column>
+				_dbColumnMap.put("${column.name}", "${column.DBName}");
+			</#list>
+		}
 	</#if>
 
 }

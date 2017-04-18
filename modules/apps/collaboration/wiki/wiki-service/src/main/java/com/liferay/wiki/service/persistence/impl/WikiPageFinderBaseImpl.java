@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.persistence.WikiPagePersistence;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class WikiPageFinderBaseImpl extends BasePersistenceImpl<WikiPage> {
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getWikiPagePersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getWikiPagePersistence().getDBColumnMap();
 	}
 
 	/**

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.social.kernel.model.SocialActivitySet;
 import com.liferay.social.kernel.service.persistence.SocialActivitySetPersistence;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class SocialActivitySetFinderBaseImpl extends BasePersistenceImpl<SocialA
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getSocialActivitySetPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getSocialActivitySetPersistence().getDBColumnMap();
 	}
 
 	/**

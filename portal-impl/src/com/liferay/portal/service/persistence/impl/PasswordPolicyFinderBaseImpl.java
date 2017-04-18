@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.service.persistence.PasswordPolicyPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -29,6 +30,11 @@ public class PasswordPolicyFinderBaseImpl extends BasePersistenceImpl<PasswordPo
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getPasswordPolicyPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getPasswordPolicyPersistence().getDBColumnMap();
 	}
 
 	/**

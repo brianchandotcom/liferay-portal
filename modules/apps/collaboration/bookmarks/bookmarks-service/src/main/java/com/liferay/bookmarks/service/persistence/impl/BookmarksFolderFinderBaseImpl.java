@@ -20,6 +20,7 @@ import com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class BookmarksFolderFinderBaseImpl extends BasePersistenceImpl<Bookmarks
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getBookmarksFolderPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getBookmarksFolderPersistence().getDBColumnMap();
 	}
 
 	/**

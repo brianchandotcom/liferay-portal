@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -29,6 +30,11 @@ public class OrganizationFinderBaseImpl extends BasePersistenceImpl<Organization
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getOrganizationPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getOrganizationPersistence().getDBColumnMap();
 	}
 
 	/**

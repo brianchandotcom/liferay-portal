@@ -20,6 +20,7 @@ import com.liferay.knowledge.base.service.persistence.KBArticlePersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class KBArticleFinderBaseImpl extends BasePersistenceImpl<KBArticle> {
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getKBArticlePersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getKBArticlePersistence().getDBColumnMap();
 	}
 
 	/**

@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class DDLRecordFinderBaseImpl extends BasePersistenceImpl<DDLRecord> {
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getDDLRecordPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getDDLRecordPersistence().getDBColumnMap();
 	}
 
 	/**

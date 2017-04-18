@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.service.persistence.DLFileRankPersist
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class DLFileRankFinderBaseImpl extends BasePersistenceImpl<DLFileRank> {
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getDLFileRankPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getDLFileRankPersistence().getDBColumnMap();
 	}
 
 	/**

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.service.persistence.SyncDLObjectPersistence;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class SyncDLObjectFinderBaseImpl extends BasePersistenceImpl<SyncDLObject
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getSyncDLObjectPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getSyncDLObjectPersistence().getDBColumnMap();
 	}
 
 	/**

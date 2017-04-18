@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -29,6 +30,11 @@ public class ServiceComponentFinderBaseImpl extends BasePersistenceImpl<ServiceC
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getServiceComponentPersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getServiceComponentPersistence().getDBColumnMap();
 	}
 
 	/**

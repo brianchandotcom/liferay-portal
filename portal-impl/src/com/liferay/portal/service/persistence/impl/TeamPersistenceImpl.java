@@ -3991,7 +3991,12 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return _badColumnNames;
+		return _dbColumnMap.keySet();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return _dbColumnMap;
 	}
 
 	@Override
@@ -4049,7 +4054,9 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Team exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Team exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(TeamPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
-			});
+	private static final Map<String, String> _dbColumnMap = new HashMap<String, String>();
+
+	static {
+		_dbColumnMap.put("uuid", "uuid_");
+	}
 }

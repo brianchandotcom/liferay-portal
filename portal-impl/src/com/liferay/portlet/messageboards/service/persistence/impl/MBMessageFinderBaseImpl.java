@@ -20,6 +20,7 @@ import com.liferay.message.boards.kernel.service.persistence.MBMessagePersistenc
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +31,11 @@ public class MBMessageFinderBaseImpl extends BasePersistenceImpl<MBMessage> {
 	@Override
 	public Set<String> getBadColumnNames() {
 		return getMBMessagePersistence().getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getMBMessagePersistence().getDBColumnMap();
 	}
 
 	/**

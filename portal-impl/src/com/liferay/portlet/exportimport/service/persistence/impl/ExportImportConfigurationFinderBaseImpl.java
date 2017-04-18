@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigura
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -31,6 +32,11 @@ public class ExportImportConfigurationFinderBaseImpl extends BasePersistenceImpl
 	public Set<String> getBadColumnNames() {
 		return getExportImportConfigurationPersistence()
 				   .getBadColumnNames();
+	}
+
+	@Override
+	public Map<String, String> getDBColumnMap() {
+		return getExportImportConfigurationPersistence().getDBColumnMap();
 	}
 
 	/**

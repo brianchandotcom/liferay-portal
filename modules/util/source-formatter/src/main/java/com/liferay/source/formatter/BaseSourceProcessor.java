@@ -170,8 +170,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public Set<SourceFormatterMessage> getSourceFormatterMessages() {
-		Set<SourceFormatterMessage> sourceFormatterMessages =
-			new TreeSet<>();
+		Set<SourceFormatterMessage> sourceFormatterMessages = new TreeSet<>();
 
 		for (Map.Entry<String, Set<SourceFormatterMessage>> entry :
 				_sourceFormatterMessagesMap.entrySet()) {
@@ -385,7 +384,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		for (String pluginBuildFileName : pluginBuildFileNames) {
 			pluginBuildFileName = StringUtil.replace(
-				pluginBuildFileName, StringPool.BACK_SLASH, StringPool.SLASH);
+				pluginBuildFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			String absolutePath = _getAbsolutePath(pluginBuildFileName);
 
@@ -453,11 +452,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected abstract List<SourceCheck> getSourceChecks();
 
-	protected abstract void populateSourceChecks()
-		throws Exception;
-
 	protected void populateModuleSourceChecks() throws Exception {
 	}
+
+	protected abstract void populateSourceChecks() throws Exception;
 
 	protected void postFormat() throws Exception {
 	}
@@ -466,24 +464,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (sourceFormatterArgs.isPrintErrors()) {
 			_sourceFormatterHelper.printError(fileName, message);
 		}
-	}
-
-	protected String processSourceChecks(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		content = _processSourceChecks(
-			fileName, absolutePath, content, _genericSourceChecks);
-
-		content = _processSourceChecks(
-			fileName, absolutePath, content, getSourceChecks());
-
-		if (_isModulesFile(absolutePath)) {
-			content = _processSourceChecks(
-				fileName, absolutePath, content, getModuleSourceChecks());
-		}
-
-		return content;
 	}
 
 	protected void processFormattedFile(
@@ -553,6 +533,24 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		sourceFormatterMessages.add(sourceFormatterMessage);
 
 		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
+	}
+
+	protected String processSourceChecks(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		content = _processSourceChecks(
+			fileName, absolutePath, content, _genericSourceChecks);
+
+		content = _processSourceChecks(
+			fileName, absolutePath, content, getSourceChecks());
+
+		if (_isModulesFile(absolutePath)) {
+			content = _processSourceChecks(
+				fileName, absolutePath, content, getModuleSourceChecks());
+		}
+
+		return content;
 	}
 
 	protected Document readXML(String content) throws DocumentException {
@@ -853,7 +851,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	private boolean _browserStarted;
 	private String[] _excludes;
-	private Map<String, List<String>> _exclusionPropertiesMap = new HashMap<>();
+	private final Map<String, List<String>> _exclusionPropertiesMap =
+		new HashMap<>();
 	private SourceMismatchException _firstSourceMismatchException;
 	private final List<SourceCheck> _genericSourceChecks = new ArrayList<>();
 	private final List<String> _modifiedFileNames =

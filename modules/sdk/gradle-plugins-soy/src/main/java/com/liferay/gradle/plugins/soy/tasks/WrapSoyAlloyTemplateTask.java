@@ -15,7 +15,7 @@
 package com.liferay.gradle.plugins.soy.tasks;
 
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.portal.tools.soy.builder.commands.WrapAlloyTemplateCommand;
+import com.liferay.portal.tools.soy.builder.commands.WrapSoyAlloyTemplateCommand;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,17 +49,17 @@ public class WrapSoyAlloyTemplateTask extends SourceTask {
 
 	@TaskAction
 	public void wrapAlloyTemplate() throws IOException {
-		_wrapAlloyTemplateCommand.setModuleName(getModuleName());
-		_wrapAlloyTemplateCommand.setNamespace(getNamespace());
+		_wrapSoyAlloyTemplateCommand.setModuleName(getModuleName());
+		_wrapSoyAlloyTemplateCommand.setNamespace(getNamespace());
 
 		for (File file : getSource()) {
-			_wrapAlloyTemplateCommand.execute(file.toPath());
+			_wrapSoyAlloyTemplateCommand.execute(file.toPath());
 		}
 	}
 
 	private Object _moduleName;
 	private Object _namespace;
-	private final WrapAlloyTemplateCommand _wrapAlloyTemplateCommand =
-		new WrapAlloyTemplateCommand();
+	private final WrapSoyAlloyTemplateCommand _wrapSoyAlloyTemplateCommand =
+		new WrapSoyAlloyTemplateCommand();
 
 }

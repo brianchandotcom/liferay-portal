@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -26,8 +27,7 @@ public class ReturnCharacterCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		return StringUtil.replace(
-			content, StringPool.RETURN, StringPool.BLANK);
+		return StringUtil.replace(content, CharPool.RETURN, StringPool.BLANK);
 	}
 
 }

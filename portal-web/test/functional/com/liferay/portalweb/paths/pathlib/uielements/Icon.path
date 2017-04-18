@@ -150,7 +150,7 @@
 </tr>
 <tr>
 	<td>FLAG</td>
-	<td>//div[contains(@class,'asset-actions')]/div[@title='Flag']/span/a</td>
+	<td>//div[@title='Flag']//i[@class='icon-flag']</td>
 	<td></td>
 </tr>
 <tr>

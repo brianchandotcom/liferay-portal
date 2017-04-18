@@ -48,30 +48,22 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 			return false;
 		}
 
-		Parameters provideCapabilityHeaders = new SortedParameters(
-			analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
-
-		Parameters requireCapabilityHeaders = new SortedParameters(
-			analyzer.getProperty(Constants.REQUIRE_CAPABILITY));
-
 		List<String> aggregateKeys = new ArrayList<>(
 			aggregateResourceBundlesParameters.keySet());
 
 		Collections.sort(aggregateKeys);
 
-		for (String aggregateResourceBundlesParameter : aggregateKeys) {
-			Attrs attrs = new Attrs();
+		addProvideCapabilities(analyzer, aggregateKeys);
+		addRequireCapabilities(analyzer, aggregateKeys);
 
-			Filter filter = new SimpleFilter(
-				"bundle.symbolic.name", aggregateResourceBundlesParameter);
+		return true;
+	}
 
-			attrs.put("filter:", filter.toString());
+	protected void addProvideCapabilities(
+		Analyzer analyzer, Iterable<String> aggregateKeys) {
 
-			requireCapabilityHeaders.add("liferay.resource.bundle", attrs);
-		}
-
-		analyzer.setProperty(
-			Constants.REQUIRE_CAPABILITY, requireCapabilityHeaders.toString());
+		Parameters provideCapabilityHeaders = new SortedParameters(
+			analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
 		StringBuilder aggregateValue = new StringBuilder();
 
@@ -127,8 +119,27 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 
 		analyzer.setProperty(
 			Constants.PROVIDE_CAPABILITY, provideCapabilityHeaders.toString());
+	}
 
-		return true;
+	protected void addRequireCapabilities(
+		Analyzer analyzer, Iterable<String> aggregateKeys) {
+
+		Parameters requireCapabilityHeaders = new SortedParameters(
+			analyzer.getProperty(Constants.REQUIRE_CAPABILITY));
+
+		for (String aggregateResourceBundlesParameter : aggregateKeys) {
+			Attrs attrs = new Attrs();
+
+			Filter filter = new SimpleFilter(
+				"bundle.symbolic.name", aggregateResourceBundlesParameter);
+
+			attrs.put("filter:", filter.toString());
+
+			requireCapabilityHeaders.add("liferay.resource.bundle", attrs);
+		}
+
+		analyzer.setProperty(
+			Constants.REQUIRE_CAPABILITY, requireCapabilityHeaders.toString());
 	}
 
 }

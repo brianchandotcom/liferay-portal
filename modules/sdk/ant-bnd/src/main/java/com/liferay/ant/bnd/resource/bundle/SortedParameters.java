@@ -40,24 +40,24 @@ public final class SortedParameters extends Parameters {
 	public Set<Entry<String, Attrs>> entrySet() {
 		List<Entry<String, Attrs>> entries = new ArrayList<>(super.entrySet());
 
-		Comparator<Entry<String, Attrs>> comparator =
-			new Comparator<Entry<String, Attrs>>() {
-
-				@Override
-				public int compare(
-					Entry<String, Attrs> entry1, Entry<String, Attrs> entry2) {
-
-					String key1 = entry1.getKey();
-					String key2 = entry2.getKey();
-
-					return key1.compareTo(key2);
-				}
-
-			};
-
-		Collections.sort(entries, comparator);
+		Collections.sort(entries, _COMPARATOR);
 
 		return new LinkedHashSet<>(entries);
 	}
+
+	private static final Comparator<Entry<String, Attrs>> _COMPARATOR =
+		new Comparator<Entry<String, Attrs>>() {
+
+			@Override
+			public int compare(
+				Entry<String, Attrs> entry1, Entry<String, Attrs> entry2) {
+
+				String key1 = entry1.getKey();
+				String key2 = entry2.getKey();
+
+				return key1.compareTo(key2);
+			}
+
+		};
 
 }

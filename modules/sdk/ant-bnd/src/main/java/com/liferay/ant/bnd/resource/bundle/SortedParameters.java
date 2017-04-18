@@ -28,6 +28,7 @@ import java.util.Set;
  * @author Gregory Amerson
  */
 public final class SortedParameters extends Parameters {
+
 	public SortedParameters() {
 	}
 
@@ -44,9 +45,9 @@ public final class SortedParameters extends Parameters {
 
 				@Override
 				public int compare(
-					Entry<String, Attrs> o1, Entry<String, Attrs> o2) {
+					Entry<String, Attrs> entry1, Entry<String, Attrs> entry2) {
 
-					return o1.getKey().compareTo(o2.getKey());
+					return entry1.getKey().compareTo(entry2.getKey());
 				}
 
 			};

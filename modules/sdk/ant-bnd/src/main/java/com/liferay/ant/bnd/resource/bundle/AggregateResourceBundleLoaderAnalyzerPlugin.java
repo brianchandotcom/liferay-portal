@@ -43,7 +43,7 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 		Parameters aggregateResourceBundlesParameters = new SortedParameters(
 			analyzer.getProperty("-liferay-aggregate-resource-bundles"));
 
-		if (aggregateResourceBundlesParameters.size() == 0) {
+		if (aggregateResourceBundlesParameters.isEmpty()) {
 			return false;
 		}
 
@@ -59,16 +59,15 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 		Collections.sort(aggregateKeys);
 
 		for (String aggregateResourceBundlesParameter : aggregateKeys) {
-			Attrs requireAttrs = new Attrs();
+			Attrs attrs = new Attrs();
 
-			requireAttrs.put(
+			attrs.put(
 				"filter:",
 				new SimpleFilter(
 					"bundle.symbolic.name",
 					aggregateResourceBundlesParameter).toString());
 
-			requireCapabilityHeaders.add(
-				"liferay.resource.bundle", requireAttrs);
+			requireCapabilityHeaders.add("liferay.resource.bundle", attrs);
 		}
 
 		analyzer.setProperty(
@@ -76,13 +75,13 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 
 		StringBuilder aggregateValue = new StringBuilder();
 
-		AndFilter aggregateSelfFilter = new AndFilter();
+		AndFilter andFilter = new AndFilter();
 
-		aggregateSelfFilter.addChild(
+		andFilter.addChild(
 			new SimpleFilter("bundle.symbolic.name", analyzer.getBsn()));
-		aggregateSelfFilter.addChild(
+		andFilter.addChild(
 			new NotFilter(new LiteralFilter("(aggregate=true)")));
-		aggregateSelfFilter.append(aggregateValue);
+		andFilter.append(aggregateValue);
 
 		for (String aggregateResourceBundlesParameter : aggregateKeys) {
 			aggregateValue.append(",");

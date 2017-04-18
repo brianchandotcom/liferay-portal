@@ -117,7 +117,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					@Override
 					public Void call() throws Exception {
 						try {
-							format(fileName);
+							_format(fileName);
 
 							return null;
 						}
@@ -221,7 +221,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return filteredIncludes;
 	}
 
-	protected final String format(
+	private final String _format(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
@@ -236,10 +236,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return content;
 		}
 
-		return format(file, fileName, absolutePath, newContent);
+		return _format(file, fileName, absolutePath, newContent);
 	}
 
-	protected final void format(String fileName) throws Exception {
+	private final void _format(String fileName) throws Exception {
 		if (!_isMatchPath(fileName)) {
 			return;
 		}
@@ -247,18 +247,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		fileName = StringUtil.replace(
 			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-		String absolutePath = getAbsolutePath(fileName);
+		String absolutePath = _getAbsolutePath(fileName);
 
 		File file = new File(absolutePath);
 
 		String content = FileUtil.read(file);
 
-		String newContent = format(file, fileName, absolutePath, content);
+		String newContent = _format(file, fileName, absolutePath, content);
 
 		processFormattedFile(file, fileName, content, newContent);
 	}
 
-	protected String getAbsolutePath(String fileName) {
+	private String _getAbsolutePath(String fileName) {
 		Path filePath = Paths.get(fileName);
 
 		filePath = filePath.toAbsolutePath();
@@ -435,7 +435,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			pluginBuildFileName = StringUtil.replace(
 				pluginBuildFileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			String absolutePath = getAbsolutePath(pluginBuildFileName);
+			String absolutePath = _getAbsolutePath(pluginBuildFileName);
 
 			int x = absolutePath.indexOf("/modules/apps/");
 
@@ -501,11 +501,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected abstract List<SourceCheck> getSourceChecks();
 
-	protected boolean isModulesFile(String absolutePath) {
-		return isModulesFile(absolutePath, false);
+	private boolean _isModulesFile(String absolutePath) {
+		return _isModulesFile(absolutePath, false);
 	}
 
-	protected boolean isModulesFile(
+	private boolean _isModulesFile(
 		String absolutePath, boolean includePlugins) {
 
 		if (subrepository) {
@@ -556,7 +556,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		content = _processSourceChecks(
 			fileName, absolutePath, content, getSourceChecks());
 
-		if (isModulesFile(absolutePath)) {
+		if (_isModulesFile(absolutePath)) {
 			content = _processSourceChecks(
 				fileName, absolutePath, content, getModuleSourceChecks());
 		}
@@ -678,9 +678,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				continue;
 			}
 
-			String absolutePath = getAbsolutePath(fileName);
+			String absolutePath = _getAbsolutePath(fileName);
 
-			if (isModulesFile(absolutePath, true)) {
+			if (_isModulesFile(absolutePath, true)) {
 				return true;
 			}
 		}
@@ -740,7 +740,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private boolean _isSubrepository() {
-		String baseDirAbsolutePath = getAbsolutePath(
+		String baseDirAbsolutePath = _getAbsolutePath(
 			sourceFormatterArgs.getBaseDirName());
 
 		int x = baseDirAbsolutePath.length();

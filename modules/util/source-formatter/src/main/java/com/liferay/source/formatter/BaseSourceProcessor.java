@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.IncorrectFileLocationCheck;
 import com.liferay.source.formatter.checks.JavaTermCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -290,13 +291,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_sourceFormatterMessagesMap.remove(fileName);
 
 		_checkUTF8(file, fileName);
-
-		if (!(this instanceof JavaSourceProcessor) &&
-			absolutePath.matches(".*\\/modules\\/.*\\/src\\/.*\\/java\\/.*")) {
-
-			processMessage(
-				fileName, "Only *.java files are allowed in /src/*/java/");
-		}
 
 		String newContent = processSourceChecks(
 			file, fileName, absolutePath, content);
@@ -1169,6 +1163,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private void _populateGenericSourceChecks() throws Exception {
+		_genericSourceChecks.add(new IncorrectFileLocationCheck());
 	}
 
 	private String _processSourceChecks(

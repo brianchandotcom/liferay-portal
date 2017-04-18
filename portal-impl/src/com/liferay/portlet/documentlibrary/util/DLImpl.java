@@ -82,6 +82,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
+import com.liferay.sites.kernel.util.SitesFriendlyURLAdapterUtil;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.io.Serializable;
@@ -907,7 +908,9 @@ public class DLImpl implements DL {
 			group = themeDisplay.getScopeGroup();
 		}
 
-		webDavURL.append(group.getFriendlyURL());
+		webDavURL.append(
+			SitesFriendlyURLAdapterUtil.getSiteFriendlyURL(
+				group.getGroupId(), themeDisplay.getLocale()));
 		webDavURL.append("/document_library");
 
 		StringBuilder sb = new StringBuilder();

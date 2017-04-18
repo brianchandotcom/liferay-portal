@@ -162,6 +162,16 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	}
 
 	@Override
+	public List<FileEntry> getFileEntries(
+			long folderId, String[] mimeTypes, int status, int start, int end,
+			OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		return _repository.getFileEntries(
+			folderId, mimeTypes, status, start, end, obc);
+	}
+
+	@Override
 	public List<RepositoryEntry> getFileEntriesAndFileShortcuts(
 			long folderId, int status, int start, int end)
 		throws PortalException {
@@ -188,6 +198,14 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		throws PortalException {
 
 		return _repository.getFileEntriesCount(folderId, status);
+	}
+
+	@Override
+	public int getFileEntriesCount(
+			long folderId, String[] mimeTypes, int status)
+		throws PortalException {
+
+		return _repository.getFileEntriesCount(folderId, mimeTypes, status);
 	}
 
 	@Override

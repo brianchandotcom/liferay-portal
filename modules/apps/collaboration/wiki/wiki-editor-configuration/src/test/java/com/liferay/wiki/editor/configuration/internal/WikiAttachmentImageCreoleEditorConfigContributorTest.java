@@ -44,9 +44,9 @@ import org.powermock.api.mockito.PowerMockito;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
-public class WikiAttachmentHTMLEditorConfigContributorTest
+public class WikiAttachmentImageCreoleEditorConfigContributorTest
 	extends PowerMockito {
 
 	@Before
@@ -87,14 +87,13 @@ public class WikiAttachmentHTMLEditorConfigContributorTest
 		when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
-			"itemSelectorPortletURLWithImageUrlSelectionViews"
+			"itemSelectorPortletURLWithUrlSelectionViews"
 		);
 
 		when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
-				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class),
-				Mockito.any(ItemSelectorCriterion.class))
+				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
 		).thenReturn(
 			itemSelectorPortletURL
 		);
@@ -105,24 +104,26 @@ public class WikiAttachmentHTMLEditorConfigContributorTest
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
 
-		WikiAttachmentHTMLEditorConfigContributor
-			wikiAttachmentEditorConfigContributor =
-				new WikiAttachmentHTMLEditorConfigContributor();
+		WikiAttachmentImageCreoleEditorConfigContributor
+			wikiAttachmentImageCreoleEditorConfigContributor =
+				new WikiAttachmentImageCreoleEditorConfigContributor();
 
-		wikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
+		wikiAttachmentImageCreoleEditorConfigContributor.setItemSelector(
+			_itemSelector);
 
-		wikiAttachmentEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
-			_requestBackedPortletURLFactory);
+		wikiAttachmentImageCreoleEditorConfigContributor.
+			populateConfigJSONObject(
+				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
 		expectedJSONObject.put(
 			"filebrowserImageBrowseLinkUrl",
-			"itemSelectorPortletURLWithImageUrlSelectionViews");
+			"itemSelectorPortletURLWithUrlSelectionViews");
 		expectedJSONObject.put(
 			"filebrowserImageBrowseUrl",
-			"itemSelectorPortletURLWithImageUrlSelectionViews");
+			"itemSelectorPortletURLWithUrlSelectionViews");
 		expectedJSONObject.put("removePlugins", "plugin1,ae_addimages");
 
 		JSONAssert.assertEquals(
@@ -141,14 +142,13 @@ public class WikiAttachmentHTMLEditorConfigContributorTest
 		when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
-			"itemSelectorPortletURLWithWikiImageUrlAndUploadSelectionViews"
+			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
 		);
 
 		when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class),
-				Mockito.any(ItemSelectorCriterion.class),
 				Mockito.any(ItemSelectorCriterion.class),
 				Mockito.any(ItemSelectorCriterion.class))
 		).thenReturn(
@@ -157,24 +157,26 @@ public class WikiAttachmentHTMLEditorConfigContributorTest
 
 		JSONObject jsonObject = getJSONObjectWithDefaultItemSelectorURL();
 
-		WikiAttachmentHTMLEditorConfigContributor
-			wikiAttachmentEditorConfigContributor =
-				new WikiAttachmentHTMLEditorConfigContributor();
+		WikiAttachmentImageCreoleEditorConfigContributor
+			wikiAttachmentImageCreoleEditorConfigContributor =
+				new WikiAttachmentImageCreoleEditorConfigContributor();
 
-		wikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
+		wikiAttachmentImageCreoleEditorConfigContributor.setItemSelector(
+			_itemSelector);
 
-		wikiAttachmentEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
-			_requestBackedPortletURLFactory);
+		wikiAttachmentImageCreoleEditorConfigContributor.
+			populateConfigJSONObject(
+				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
 		expectedJSONObject.put(
 			"filebrowserImageBrowseLinkUrl",
-			"itemSelectorPortletURLWithWikiImageUrlAndUploadSelectionViews");
+			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews");
 		expectedJSONObject.put(
 			"filebrowserImageBrowseUrl",
-			"itemSelectorPortletURLWithWikiImageUrlAndUploadSelectionViews");
+			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews");
 		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(
@@ -194,15 +196,17 @@ public class WikiAttachmentHTMLEditorConfigContributorTest
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
 
-		WikiAttachmentHTMLEditorConfigContributor
-			wikiAttachmentEditorConfigContributor =
-				new WikiAttachmentHTMLEditorConfigContributor();
+		WikiAttachmentImageCreoleEditorConfigContributor
+			wikiAttachmentImageCreoleEditorConfigContributor =
+				new WikiAttachmentImageCreoleEditorConfigContributor();
 
-		wikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
+		wikiAttachmentImageCreoleEditorConfigContributor.setItemSelector(
+			_itemSelector);
 
-		wikiAttachmentEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
-			_requestBackedPortletURLFactory);
+		wikiAttachmentImageCreoleEditorConfigContributor.
+			populateConfigJSONObject(
+				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
@@ -226,15 +230,17 @@ public class WikiAttachmentHTMLEditorConfigContributorTest
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
 
-		WikiAttachmentHTMLEditorConfigContributor
-			wikiAttachmentEditorConfigContributor =
-				new WikiAttachmentHTMLEditorConfigContributor();
+		WikiAttachmentImageCreoleEditorConfigContributor
+			wikiAttachmentImageCreoleEditorConfigContributor =
+				new WikiAttachmentImageCreoleEditorConfigContributor();
 
-		wikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
+		wikiAttachmentImageCreoleEditorConfigContributor.setItemSelector(
+			_itemSelector);
 
-		wikiAttachmentEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
-			_requestBackedPortletURLFactory);
+		wikiAttachmentImageCreoleEditorConfigContributor.
+			populateConfigJSONObject(
+				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());

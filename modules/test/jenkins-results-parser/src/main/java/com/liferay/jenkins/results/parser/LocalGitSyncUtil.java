@@ -157,7 +157,7 @@ public class LocalGitSyncUtil {
 
 							if (upstreamUsername.equals("liferay")) {
 								gitWorkingDirectory.pushToRemote(
-									false, upstreamBranchName,
+									true, upstreamBranchName,
 									upstreamBranchName, localGitRemoteConfig);
 							}
 						}
@@ -731,6 +731,8 @@ public class LocalGitSyncUtil {
 					cacheBranchName, true, senderBranchSHA);
 
 				if (pullRequest) {
+					gitWorkingDirectory.checkoutBranch(cacheBranchName);
+
 					gitWorkingDirectory.rebase(
 						true, upstreamBranchSHA, cacheBranchName);
 				}

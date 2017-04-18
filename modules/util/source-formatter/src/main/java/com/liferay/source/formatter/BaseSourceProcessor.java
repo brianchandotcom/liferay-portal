@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -97,8 +96,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (fileNames.isEmpty()) {
 			return;
 		}
-
-		preFormat();
 
 		_populateGenericSourceChecks();
 
@@ -197,35 +194,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		this.sourceFormatterArgs = sourceFormatterArgs;
 
 		_init();
-	}
-
-	protected int adjustLevel(int level, String text, String s, int diff) {
-		String[] lines = StringUtil.splitLines(text);
-
-		forLoop:
-		for (String line : lines) {
-			line = StringUtil.trim(line);
-
-			if (line.startsWith("//")) {
-				continue;
-			}
-
-			int x = -1;
-
-			while (true) {
-				x = line.indexOf(s, x + 1);
-
-				if (x == -1) {
-					continue forLoop;
-				}
-
-				if (!ToolsUtil.isInsideQuotes(line, x)) {
-					level += diff;
-				}
-			}
-		}
-
-		return level;
 	}
 
 	protected abstract List<String> doGetFileNames() throws Exception;
@@ -443,144 +411,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			sourceFormatterArgs.getBaseDirName(), excludes, includes);
 	}
 
-	protected int getLeadingTabCount(String line) {
-		int leadingTabCount = 0;
-
-		while (line.startsWith(StringPool.TAB)) {
-			line = line.substring(1);
-
-			leadingTabCount++;
-		}
-
-		return leadingTabCount;
-	}
-
-	protected int getLevel(String s) {
-		return getLevel(
-			s, new String[] {StringPool.OPEN_PARENTHESIS},
-			new String[] {StringPool.CLOSE_PARENTHESIS}, 0);
-	}
-
-	protected int getLevel(
-		String s, String increaseLevelString, String decreaseLevelString) {
-
-		return getLevel(
-			s, new String[] {increaseLevelString},
-			new String[] {decreaseLevelString}, 0);
-	}
-
-	protected int getLevel(
-		String s, String[] increaseLevelStrings,
-		String[] decreaseLevelStrings) {
-
-		return getLevel(s, increaseLevelStrings, decreaseLevelStrings, 0);
-	}
-
-	protected int getLevel(
-		String s, String[] increaseLevelStrings, String[] decreaseLevelStrings,
-		int startLevel) {
-
-		int level = startLevel;
-
-		for (String increaseLevelString : increaseLevelStrings) {
-			level = adjustLevel(level, s, increaseLevelString, 1);
-		}
-
-		for (String decreaseLevelString : decreaseLevelStrings) {
-			level = adjustLevel(level, s, decreaseLevelString, -1);
-		}
-
-		return level;
-	}
-
-	protected String getLine(String content, int lineCount) {
-		int nextLineStartPos = getLineStartPos(content, lineCount);
-
-		if (nextLineStartPos == -1) {
-			return null;
-		}
-
-		int nextLineEndPos = content.indexOf(
-			CharPool.NEW_LINE, nextLineStartPos);
-
-		if (nextLineEndPos == -1) {
-			return content.substring(nextLineStartPos);
-		}
-
-		return content.substring(nextLineStartPos, nextLineEndPos);
-	}
-
-	protected int getLineCount(String content, int pos) {
-		return StringUtil.count(content, 0, pos, CharPool.NEW_LINE) + 1;
-	}
-
-	protected int getLineLength(String line) {
-		int lineLength = 0;
-
-		int tabLength = 4;
-
-		for (char c : line.toCharArray()) {
-			if (c == CharPool.TAB) {
-				for (int i = 0; i < tabLength; i++) {
-					lineLength++;
-				}
-
-				tabLength = 4;
-			}
-			else {
-				lineLength++;
-
-				tabLength--;
-
-				if (tabLength <= 0) {
-					tabLength = 4;
-				}
-			}
-		}
-
-		return lineLength;
-	}
-
-	protected int getLineStartPos(String content, int lineCount) {
-		int x = 0;
-
-		for (int i = 1; i < lineCount; i++) {
-			x = content.indexOf(CharPool.NEW_LINE, x + 1);
-
-			if (x == -1) {
-				return x;
-			}
-		}
-
-		return x + 1;
-	}
-
 	protected List<SourceCheck> getModuleSourceChecks() {
 		return null;
-	}
-
-	protected List<String> getParameterList(String methodCall) {
-		String parameters = null;
-
-		int x = -1;
-
-		while (true) {
-			x = methodCall.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
-
-			parameters = methodCall.substring(0, x + 1);
-
-			if ((getLevel(parameters, "(", ")") == 0) &&
-				(getLevel(parameters, "{", "}") == 0)) {
-
-				break;
-			}
-		}
-
-		x = parameters.indexOf(StringPool.OPEN_PARENTHESIS);
-
-		parameters = parameters.substring(x + 1, parameters.length() - 1);
-
-		return splitParameters(parameters);
 	}
 
 	protected List<String> getPluginsInsideModulesDirectoryNames()
@@ -669,105 +501,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected abstract List<SourceCheck> getSourceChecks();
 
-	protected boolean isExcludedPath(String property, String path) {
-		return isExcludedPath(property, path, -1);
-	}
-
-	protected boolean isExcludedPath(
-		String property, String path, int lineCount) {
-
-		return isExcludedPath(property, path, lineCount, null);
-	}
-
-	protected boolean isExcludedPath(
-		String property, String path, int lineCount, String parameter) {
-
-		if (property == null) {
-			return false;
-		}
-
-		List<String> excludes = _exclusionPropertiesMap.get(property);
-
-		if (excludes == null) {
-			excludes = getPropertyList(property);
-
-			_exclusionPropertiesMap.put(property, excludes);
-		}
-
-		if (ListUtil.isEmpty(excludes)) {
-			return false;
-		}
-
-		String pathWithParameter = null;
-
-		if (Validator.isNotNull(parameter)) {
-			pathWithParameter = path + StringPool.AT + parameter;
-		}
-
-		String pathWithLineCount = null;
-
-		if (lineCount > 0) {
-			pathWithLineCount = path + StringPool.AT + lineCount;
-		}
-
-		for (String exclude : excludes) {
-			if (Validator.isNull(exclude)) {
-				continue;
-			}
-
-			if (exclude.startsWith("**")) {
-				exclude = exclude.substring(2);
-			}
-
-			if (exclude.endsWith("**")) {
-				exclude = exclude.substring(0, exclude.length() - 2);
-
-				if (path.contains(exclude)) {
-					return true;
-				}
-
-				continue;
-			}
-
-			if (path.endsWith(exclude) ||
-				((pathWithParameter != null) &&
-				 pathWithParameter.endsWith(exclude)) ||
-				((pathWithLineCount != null) &&
-				 pathWithLineCount.endsWith(exclude))) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	protected boolean isExcludedPath(
-		String property, String path, String parameter) {
-
-		return isExcludedPath(property, path, -1, parameter);
-	}
-
-	protected boolean isModulesApp(String absolutePath, boolean privateOnly) {
-		if (absolutePath.contains("/modules/private/apps/") ||
-			(!privateOnly && absolutePath.contains("/modules/apps/"))) {
-
-			return true;
-		}
-
-		if (_projectPathPrefix == null) {
-			return false;
-		}
-
-		if (_projectPathPrefix.startsWith(":private:apps") ||
-			(!privateOnly && _projectPathPrefix.startsWith(":apps:"))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	protected boolean isModulesFile(String absolutePath) {
 		return isModulesFile(absolutePath, false);
 	}
@@ -805,9 +538,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected void postFormat() throws Exception {
-	}
-
-	protected void preFormat() throws Exception {
 	}
 
 	protected void printError(String fileName, String message) {
@@ -909,85 +639,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return saxReader.read(new UnsyncStringReader(content));
 	}
 
-	protected List<String> splitParameters(String parameters) {
-		List<String> parametersList = new ArrayList<>();
-
-		int x = -1;
-
-		while (true) {
-			x = parameters.indexOf(StringPool.COMMA, x + 1);
-
-			if (x == -1) {
-				parametersList.add(StringUtil.trim(parameters));
-
-				return parametersList;
-			}
-
-			if (ToolsUtil.isInsideQuotes(parameters, x)) {
-				continue;
-			}
-
-			String linePart = parameters.substring(0, x);
-
-			if ((getLevel(linePart, "(", ")") == 0) &&
-				(getLevel(linePart, "{", "}") == 0)) {
-
-				parametersList.add(StringUtil.trim(linePart));
-
-				parameters = parameters.substring(x + 1);
-
-				x = -1;
-			}
-		}
-	}
-
-	protected String stripQuotes(String s) {
-		return stripQuotes(s, CharPool.APOSTROPHE, CharPool.QUOTE);
-	}
-
-	protected String stripQuotes(String s, char... delimeters) {
-		List<Character> delimetersList = ListUtil.toList(delimeters);
-
-		char delimeter = CharPool.SPACE;
-		boolean insideQuotes = false;
-
-		StringBundler sb = new StringBundler();
-
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-
-			if (insideQuotes) {
-				if (c == delimeter) {
-					int precedingBackSlashCount = 0;
-
-					for (int j = (i - 1); j >= 0; j--) {
-						if (s.charAt(j) == CharPool.BACK_SLASH) {
-							precedingBackSlashCount += 1;
-						}
-						else {
-							break;
-						}
-					}
-
-					if ((precedingBackSlashCount == 0) ||
-						((precedingBackSlashCount % 2) == 0)) {
-
-						insideQuotes = false;
-					}
-				}
-			}
-			else if (delimetersList.contains(c)) {
-				delimeter = c;
-				insideQuotes = true;
-			}
-			else {
-				sb.append(c);
-			}
-		}
-
-		return sb.toString();
-	}
-
 	protected static final String LANGUAGE_KEYS_CHECK_EXCLUDES =
 		"language.keys.check.excludes";
 
@@ -1060,8 +711,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			portalSource = _isPortalSource();
 			subrepository = _isSubrepository();
-
-			_projectPathPrefix = getProjectPathPrefix();
 
 			_sourceFormatterMessagesMap = new HashMap<>();
 		}
@@ -1210,7 +859,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private List<String> _pluginsInsideModulesDirectoryNames;
-	private String _projectPathPrefix;
 	private Properties _properties;
 	private SourceFormatterHelper _sourceFormatterHelper;
 	private Map<String, Set<SourceFormatterMessage>>

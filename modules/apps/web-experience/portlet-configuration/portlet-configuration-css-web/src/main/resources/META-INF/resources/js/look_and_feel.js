@@ -1277,6 +1277,11 @@ AUI.add(
 									instance._objData.portletData = objectData.portletData;
 								}
 
+								var portletDecoratorId = objectData.portletData.portletDecoratorId;
+								var selectedPortletDecoratorId = instance._portletDecorator.one('option:selected').val();
+
+								instance._portletDecorator.defaultPortletDecoratorId = portletDecoratorId !== '' ? portletDecoratorId : selectedPortletDecoratorId;
+
 								onLookAndFeelComplete();
 							}
 						}
@@ -1510,7 +1515,7 @@ AUI.add(
 				// Portlet config
 
 				instance._setCheckbox(instance._customTitleCheckbox, portletData.useCustomTitle);
-				instance._setSelect(instance._portletDecorator, portletData.portletDecoratorId);
+				instance._setSelect(instance._portletDecorator, instance._portletDecorator.defaultPortletDecoratorId);
 				instance._setSelect(instance._portletLanguage, instance._currentLanguage);
 				instance._setSelect(instance._portletLinksTarget, portletData.portletLinksTarget);
 

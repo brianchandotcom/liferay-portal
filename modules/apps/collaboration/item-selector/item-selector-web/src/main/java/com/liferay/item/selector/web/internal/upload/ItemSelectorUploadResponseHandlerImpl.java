@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.upload.DefaultUploadResponseHandler;
+import com.liferay.upload.UploadResponseHandler;
 
 import javax.portlet.PortletRequest;
 
@@ -89,8 +89,8 @@ public class ItemSelectorUploadResponseHandlerImpl
 		return jsonObject;
 	}
 
-	@Reference
-	private DefaultUploadResponseHandler _defaultUploadResponseHandler;
+	@Reference(target = "(upload.handler.system.default=true)")
+	private UploadResponseHandler _defaultUploadResponseHandler;
 
 	@Reference
 	private ItemSelectorReturnTypeResolverHandler

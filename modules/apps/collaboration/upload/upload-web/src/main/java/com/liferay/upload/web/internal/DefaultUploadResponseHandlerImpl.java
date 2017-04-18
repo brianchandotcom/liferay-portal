@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.upload.DefaultUploadResponseHandler;
+import com.liferay.upload.UploadResponseHandler;
 
 import javax.portlet.PortletRequest;
 
@@ -38,9 +38,8 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component
-public class DefaultUploadResponseHandlerImpl
-	implements DefaultUploadResponseHandler {
+@Component(property = {"upload.handler.system.default=true"})
+public class DefaultUploadResponseHandlerImpl implements UploadResponseHandler {
 
 	@Override
 	public JSONObject onFailure(

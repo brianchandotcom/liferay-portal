@@ -1,2 +1,3 @@
 Bundle-SymbolicName: de.l3s.boilerpipe
 Bundle-Version: 1.1.0.LIFERAY-PATCHED-1
+-includeresource: @boilerpipe-[0-9]*.jar!/de/l3s/boilerpipe/*

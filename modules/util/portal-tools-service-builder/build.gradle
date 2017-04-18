@@ -60,8 +60,8 @@ processResources {
 
 		portalModelHintsXml = portalModelHintsXml.replace("<model-hints>", '''\
 <!--
-This file DOES NOT represent the complete Liferay's portal-model-hints.xml. It
-is a fragment which contains only the hint collection and model definitions
+This file DOES NOT represent Liferay's complete portal-model-hints.xml file. It
+is a fragment that contains only the hint collection and model definitions
 needed by Service Builder to generate model services.
 -->
 

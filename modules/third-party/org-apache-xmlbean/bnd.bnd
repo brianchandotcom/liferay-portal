@@ -1,0 +1,7 @@
+Bundle-SymbolicName: org.apache.xmlbeans
+Bundle-Version: 2.5.0.LIFERAY-PATCHED-1
+-includeresource:\
+	@xmlbeans-[0-9]*.jar!/org/apache/*,\
+	@xmlbeans-[0-9]*.jar!/repackage/*,\
+	@xmlbeans-[0-9]*.jar!/schemaorg_apache_xmlbeans/*,\
+	@xmlbeans-[0-9]*.jar!/*.txt,\

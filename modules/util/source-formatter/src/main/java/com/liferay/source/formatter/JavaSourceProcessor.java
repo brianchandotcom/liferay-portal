@@ -615,9 +615,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				sourceFormatterMessages) {
 
 			processMessage(
-				sourceFormatterMessage.getFileName(),
-				sourceFormatterMessage.getMessage(),
-				sourceFormatterMessage.getLineCount());
+				sourceFormatterMessage.getFileName(), sourceFormatterMessage);
 
 			printError(
 				sourceFormatterMessage.getFileName(),

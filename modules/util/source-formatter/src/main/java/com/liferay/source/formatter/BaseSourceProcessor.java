@@ -186,34 +186,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public void processMessage(String fileName, String message) {
-		processMessage(fileName, message, -1);
-	}
-
-	@Override
-	public void processMessage(String fileName, String message, int lineCount) {
-		processMessage(fileName, message, null, lineCount);
-	}
-
-	@Override
-	public void processMessage(
-		String fileName, String message, String markdownFileName) {
-
-		processMessage(fileName, message, markdownFileName, -1);
-	}
-
-	@Override
-	public void processMessage(
-		String fileName, String message, String markdownFileName,
-		int lineCount) {
-
-		processMessage(
-			fileName,
-			new SourceFormatterMessage(
-				fileName, message, markdownFileName, lineCount));
-	}
-
-	@Override
 	public void setProperties(Properties properties) {
 		_properties = properties;
 	}

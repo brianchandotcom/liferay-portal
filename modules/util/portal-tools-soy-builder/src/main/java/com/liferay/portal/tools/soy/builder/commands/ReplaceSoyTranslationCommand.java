@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 	commandDescription = "Replace 'goog.getMsg' definitions.",
 	commandNames = "replace-translation"
 )
-public class ReplaceTranslationCommand extends BaseSoyJsCommand {
+public class ReplaceSoyTranslationCommand extends BaseSoyJsCommand {
 
 	@Override
 	public void execute(Path path) throws IOException {

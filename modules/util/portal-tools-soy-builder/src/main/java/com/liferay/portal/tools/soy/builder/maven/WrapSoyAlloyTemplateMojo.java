@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.soy.builder.maven;
 
-import com.liferay.portal.tools.soy.builder.commands.WrapAlloyTemplateCommand;
+import com.liferay.portal.tools.soy.builder.commands.WrapSoyAlloyTemplateCommand;
 
 /**
  * Wrap Soy templates into AlloyUI modules.
@@ -22,8 +22,8 @@ import com.liferay.portal.tools.soy.builder.commands.WrapAlloyTemplateCommand;
  * @author Andrea Di Giorgi
  * @goal wrap-alloy-template
  */
-public class WrapAlloyTemplateMojo
-	extends BaseSoyJsMojo<WrapAlloyTemplateCommand> {
+public class WrapSoyAlloyTemplateMojo
+	extends BaseSoyJsMojo<WrapSoyAlloyTemplateCommand> {
 
 	/**
 	 * The AlloyUI module name.
@@ -46,8 +46,8 @@ public class WrapAlloyTemplateMojo
 	}
 
 	@Override
-	protected WrapAlloyTemplateCommand createCommand() {
-		return new WrapAlloyTemplateCommand();
+	protected WrapSoyAlloyTemplateCommand createCommand() {
+		return new WrapSoyAlloyTemplateCommand();
 	}
 
 }

@@ -30,7 +30,7 @@ import java.nio.file.Path;
 	commandDescription = "Wrap Soy templates into AlloyUI modules.",
 	commandNames = "wrap-alloy-template"
 )
-public class WrapAlloyTemplateCommand extends BaseSoyJsCommand {
+public class WrapSoyAlloyTemplateCommand extends BaseSoyJsCommand {
 
 	@Override
 	public void execute(Path path) throws IOException {

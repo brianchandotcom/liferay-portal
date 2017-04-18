@@ -24,17 +24,17 @@ import org.junit.runners.Parameterized.Parameters;
  * @author Andrea Di Giorgi
  */
 @RunWith(Parameterized.class)
-public class ReplaceTranslationCommandTest extends BaseSoyCommandTestCase {
+public class ReplaceSoyTranslationCommandTest extends BaseSoyCommandTestCase {
 
 	@Parameters(name = "{0}")
 	public static String[] getTestDirNames() {
 		return new String[] {"metal_cli", "metal_cli_2"};
 	}
 
-	public ReplaceTranslationCommandTest(String testDirName) {
+	public ReplaceSoyTranslationCommandTest(String testDirName) {
 		_testDirName =
 			"com/liferay/portal/tools/soy/builder/commands/dependencies" +
-				"/replace_translation/" + testDirName + "/";
+				"/replace_soy_translation/" + testDirName + "/";
 	}
 
 	@Override
@@ -51,12 +51,12 @@ public class ReplaceTranslationCommandTest extends BaseSoyCommandTestCase {
 
 	@Override
 	protected void testSoy(File dir) throws Exception {
-		ReplaceTranslationCommand replaceTranslationCommand =
-			new ReplaceTranslationCommand();
+		ReplaceSoyTranslationCommand replaceSoyTranslationCommand =
+			new ReplaceSoyTranslationCommand();
 
-		replaceTranslationCommand.setDir(dir);
+		replaceSoyTranslationCommand.setDir(dir);
 
-		replaceTranslationCommand.execute();
+		replaceSoyTranslationCommand.execute();
 	}
 
 	private final String _testDirName;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.soy.builder.ant;
 
-import com.liferay.portal.tools.soy.builder.commands.WrapAlloyTemplateCommandTest;
+import com.liferay.portal.tools.soy.builder.commands.ReplaceSoyTranslationCommandTest;
 
 import java.io.File;
 
@@ -30,15 +30,20 @@ import org.junit.Rule;
 /**
  * @author Andrea Di Giorgi
  */
-public class WrapAlloyTemplateTaskTest extends WrapAlloyTemplateCommandTest {
+public class ReplaceSoyTranslationTaskTest
+	extends ReplaceSoyTranslationCommandTest {
+
+	public ReplaceSoyTranslationTaskTest(String testDirName) {
+		super(testDirName);
+	}
 
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
-		URL url = WrapAlloyTemplateTaskTest.class.getResource(
-			"dependencies/wrap_alloy_template/build.xml");
+		URL url = ReplaceSoyTranslationTaskTest.class.getResource(
+			"dependencies/replace_soy_translation/build.xml");
 
 		File buildXmlFile = new File(url.toURI());
 
@@ -51,17 +56,13 @@ public class WrapAlloyTemplateTaskTest extends WrapAlloyTemplateCommandTest {
 	public final BuildFileRule buildFileRule = new BuildFileRule();
 
 	@Override
-	protected void wrapAlloyTemplate(
-			File dir, String moduleName, String namespace)
-		throws Exception {
-
+	protected void testSoy(File dir) throws Exception {
 		Project project = buildFileRule.getProject();
 
-		project.setProperty("wrap.alloy.template.dir", dir.getAbsolutePath());
-		project.setProperty("wrap.alloy.module.name", moduleName);
-		project.setProperty("wrap.alloy.namespace", namespace);
+		project.setProperty(
+			"replace.soy.translation.dir", dir.getAbsolutePath());
 
-		project.executeTarget("wrap-alloy-template");
+		project.executeTarget("replace-soy-translation");
 	}
 
 }

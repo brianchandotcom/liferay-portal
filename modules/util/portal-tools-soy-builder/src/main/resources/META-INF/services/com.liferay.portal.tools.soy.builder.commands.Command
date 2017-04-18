@@ -1,3 +1,3 @@
 com.liferay.portal.tools.soy.builder.commands.BuildSoyCommand
-com.liferay.portal.tools.soy.builder.commands.ReplaceTranslationCommand
-com.liferay.portal.tools.soy.builder.commands.WrapAlloyTemplateCommand
+com.liferay.portal.tools.soy.builder.commands.ReplaceSoyTranslationCommand
+com.liferay.portal.tools.soy.builder.commands.WrapSoyAlloyTemplateCommand

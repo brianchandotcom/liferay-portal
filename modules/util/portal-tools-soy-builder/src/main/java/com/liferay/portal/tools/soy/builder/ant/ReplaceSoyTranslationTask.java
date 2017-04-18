@@ -14,14 +14,14 @@
 
 package com.liferay.portal.tools.soy.builder.ant;
 
-import com.liferay.portal.tools.soy.builder.commands.ReplaceTranslationCommand;
+import com.liferay.portal.tools.soy.builder.commands.ReplaceSoyTranslationCommand;
 
 import org.apache.tools.ant.BuildException;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class ReplaceTranslationTask extends ReplaceTranslationCommand {
+public class ReplaceSoyTranslationTask extends ReplaceSoyTranslationCommand {
 
 	@Override
 	public void execute() {

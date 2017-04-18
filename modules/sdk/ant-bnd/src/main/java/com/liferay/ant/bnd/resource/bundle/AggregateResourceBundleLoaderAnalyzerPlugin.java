@@ -21,6 +21,7 @@ import aQute.bnd.osgi.Constants;
 import aQute.bnd.service.AnalyzerPlugin;
 
 import aQute.libg.filters.AndFilter;
+import aQute.libg.filters.Filter;
 import aQute.libg.filters.LiteralFilter;
 import aQute.libg.filters.NotFilter;
 import aQute.libg.filters.SimpleFilter;
@@ -61,11 +62,10 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 		for (String aggregateResourceBundlesParameter : aggregateKeys) {
 			Attrs attrs = new Attrs();
 
-			attrs.put(
-				"filter:",
-				new SimpleFilter(
-					"bundle.symbolic.name",
-					aggregateResourceBundlesParameter).toString());
+			Filter filter = new SimpleFilter(
+				"bundle.symbolic.name", aggregateResourceBundlesParameter);
+
+			attrs.put("filter:", filter.toString());
 
 			requireCapabilityHeaders.add("liferay.resource.bundle", attrs);
 		}
@@ -86,9 +86,10 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 		for (String aggregateResourceBundlesParameter : aggregateKeys) {
 			aggregateValue.append(",");
 
-			new SimpleFilter(
-				"bundle.symbolic.name",
-				aggregateResourceBundlesParameter).append(aggregateValue);
+			Filter filter = new SimpleFilter(
+				"bundle.symbolic.name", aggregateResourceBundlesParameter);
+
+			filter.append(aggregateValue);
 		}
 
 		Attrs provideAttrs = new Attrs();
@@ -106,8 +107,8 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 			try {
 				Path servletContextPath = Paths.get(servletContextName);
 
-				servletContextName = servletContextPath.subpath(
-					0, 1).toString();
+				servletContextName = String.valueOf(
+					servletContextPath.subpath(0, 1));
 			}
 			catch (Exception e) {
 

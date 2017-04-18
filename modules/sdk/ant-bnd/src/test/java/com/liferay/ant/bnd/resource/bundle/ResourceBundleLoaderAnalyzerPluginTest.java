@@ -44,7 +44,8 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			new ResourceBundleLoaderAnalyzerPlugin();
 
 		InputStream inputStream =
-			getClass().getResourceAsStream("dependencies/resources.test-1.jar");
+			ResourceBundleLoaderAnalyzerPluginTest.class.getResourceAsStream(
+				"dependencies/resources.test-1.jar");
 
 		try (Jar jar = new Jar("dot", inputStream);
 			Analyzer analyzer = new Analyzer()) {
@@ -98,7 +99,8 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			new ResourceBundleLoaderAnalyzerPlugin();
 
 		InputStream inputStream =
-			getClass().getResourceAsStream("dependencies/resources.test-1.jar");
+			ResourceBundleLoaderAnalyzerPluginTest.class.getResourceAsStream(
+				"dependencies/resources.test-1.jar");
 
 		try (Jar jar = new Jar("dot", inputStream);
 			Analyzer analyzer = new Analyzer()) {
@@ -191,8 +193,9 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 		ResourceBundleLoaderAnalyzerPlugin resourceBundleLoaderAnalyzerPlugin =
 			new ResourceBundleLoaderAnalyzerPlugin();
 
-		InputStream inputStream = getClass().getResourceAsStream(
-			"dependencies/blade.language.web.jar");
+		InputStream inputStream =
+			ResourceBundleLoaderAnalyzerPluginTest.class.getResourceAsStream(
+				"dependencies/blade.language.web.jar");
 
 		try (Jar jar = new Jar("dot", inputStream);
 			Analyzer analyzer = new Analyzer()) {
@@ -233,7 +236,8 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			new ResourceBundleLoaderAnalyzerPlugin();
 
 		InputStream inputStream =
-			getClass().getResourceAsStream("dependencies/resources.test-1.jar");
+			ResourceBundleLoaderAnalyzerPluginTest.class.getResourceAsStream(
+				"dependencies/resources.test-1.jar");
 
 		try (Jar jar = new Jar("dot", inputStream);
 			Analyzer analyzer = new Analyzer()) {
@@ -265,7 +269,8 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			new ResourceBundleLoaderAnalyzerPlugin();
 
 		InputStream inputStream =
-			getClass().getResourceAsStream("dependencies/resources.test-2.jar");
+			ResourceBundleLoaderAnalyzerPluginTest.class.getResourceAsStream(
+				"dependencies/resources.test-2.jar");
 
 		try (Jar jar = new Jar("dot", inputStream);
 			Analyzer analyzer = new Analyzer()) {

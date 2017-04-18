@@ -29,11 +29,11 @@ class ToggleDisableInputs extends Component {
 
 		const inputs = document.querySelectorAll(inputSelector);
 
-		inputs.forEach(
-			input => {
-				input.disabled = disableOnChecked ? checked : !checked;
-			}
-		);
+		for (let i=0; i < inputs.length; i++) {
+			let input = inputs[i];
+
+			input.disabled = disableOnChecked ? checked : !checked;
+		}
 	}
 }
 

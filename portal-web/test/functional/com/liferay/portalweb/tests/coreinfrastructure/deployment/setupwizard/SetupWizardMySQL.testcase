@@ -114,6 +114,8 @@
 	</command>
 
 	<command name="MySQLtoMySQLSampleDataDisabled" priority="4">
+		<property name="test.name.skip.portal.instance" value="SetupWizardMySQL#MySQLtoMySQLSampleDataDisabled" />
+
 		<execute macro="SetupWizard#configureDefaultPG">
 			<var name="addSampleData" value="false" />
 		</execute>

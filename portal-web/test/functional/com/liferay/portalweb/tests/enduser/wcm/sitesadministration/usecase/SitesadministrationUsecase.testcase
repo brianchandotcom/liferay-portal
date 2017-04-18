@@ -1007,6 +1007,7 @@
 	</command>
 
 	<command name="SitesDemoSiteManagement" priority="4">
+		<property name="test.name.skip.portal.instance" value="SitesadministrationUsecase#SitesDemoSiteManagement" />
 		<property name="testray.component.names" value="Site Administration,Site Pages Administration" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />

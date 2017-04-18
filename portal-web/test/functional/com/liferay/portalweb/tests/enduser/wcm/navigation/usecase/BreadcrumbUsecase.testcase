@@ -27,6 +27,8 @@
 	</tear-down>
 
 	<command name="BreadcrumbConfiguration" priority="3">
+		<property name="test.name.skip.portal.instance" value="BreadcrumbUsecase#BreadcrumbConfiguration" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -157,6 +159,8 @@
 	</command>
 
 	<command name="BreadcrumbLinkPointsToLocalhost" priority="4">
+		<property name="test.name.skip.portal.instance" value="BreadcrumbUsecase#BreadcrumbLinkPointsToLocalhost" />
+
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

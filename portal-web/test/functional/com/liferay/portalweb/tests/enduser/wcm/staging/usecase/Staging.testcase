@@ -1160,6 +1160,7 @@
 
 	<command name="StagingRemoteDocumentSubtypeViaAP" priority="3">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
+		<property name="test.name.skip.portal.instance" value="Staging#StagingRemoteDocumentSubtypeViaAP" />
 
 		<execute macro="Staging#remoteStagingSetUp">
 			<var name="siteName" value="Site Name" />
@@ -1235,6 +1236,7 @@
 
 	<command name="StagingRemoteLiveWebContent" priority="4">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
+		<property name="test.name.skip.portal.instance" value="Staging#StagingRemoteLiveWebContent" />
 
 		<execute macro="Staging#remoteStagingSetUp">
 			<var name="siteName" value="Site Name" />

@@ -149,6 +149,8 @@
 	</command>
 
 	<command name="RejectMessageBoardsThreadPG" priority="4">
+		<property name="test.name.skip.portal.instance" value="WorkflowadminPGMessageboards#RejectMessageBoardsThreadPG" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>

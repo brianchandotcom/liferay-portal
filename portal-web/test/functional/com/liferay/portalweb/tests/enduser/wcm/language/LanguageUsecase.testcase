@@ -41,6 +41,7 @@
 	</tear-down>
 
 	<command name="AddWCWithMultipleTranslations" priority="4">
+		<property name="test.name.skip.portal.instance" value="LanguageUsecase#AddWCWithMultipleTranslations" />
 		<property name="testray.component.names" value="Localization,Web Content Administration" />
 
 		<execute macro="ProductMenu#gotoSite">
@@ -245,6 +246,7 @@
 	</command>
 
 	<command name="MoveCurrentLanguagesToAvailable" priority="4">
+		<property name="test.name.skip.portal.instance" value="LanguageUsecase#MoveCurrentLanguagesToAvailable" />
 		<property name="testray.component.names" value="Localization" />
 
 		<execute macro="Navigator#gotoSitePage">
@@ -286,6 +288,7 @@
 	</command>
 
 	<command name="ViewChangedDefaultPortalLanguageViaWebContent" priority="4">
+		<property name="test.name.skip.portal.instance" value="LanguageUsecase#ViewChangedDefaultPortalLanguageViaWebContent" />
 		<property name="testray.component.names" value="Localization" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -312,6 +315,7 @@
 	</command>
 
 	<command name="ViewDisplayOptionsViaLanguagePortlet" priority="4">
+		<property name="test.name.skip.portal.instance" value="LanguageUsecase#ViewDisplayOptionsViaLanguagePortlet" />
 		<property name="testray.component.names" value="Localization" />
 
 		<execute macro="Navigator#gotoSitePage">
@@ -403,6 +407,7 @@
 	</command>
 
 	<command name="ViewRemovedCurrentPortalLanguagesViaLanguagePortlet" priority="4">
+		<property name="test.name.skip.portal.instance" value="LanguageUsecase#ViewRemovedCurrentPortalLanguagesViaLanguagePortlet" />
 		<property name="testray.component.names" value="Localization" />
 
 		<execute macro="Navigator#gotoSitePage">
@@ -445,6 +450,7 @@
 	</command>
 
 	<command name="ViewRemovedCurrentSiteLanguagesViaLanguagePortlet" priority="4">
+		<property name="test.name.skip.portal.instance" value="LanguageUsecase#ViewRemovedCurrentSiteLanguageViaLanguagePortlet" />
 		<property name="testray.component.names" value="Localization" />
 
 		<execute macro="Navigator#gotoSitePage">

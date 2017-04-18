@@ -26,6 +26,8 @@
 	</tear-down>
 
 	<command name="ViewIndependentModulesIsNotNestedWithinItself" priority="4">
+		<property name="test.name.skip.portal.instance" value="AppManagerUsecase#ViewIndependentModulesIsNotNestedWithinItself" />
+
 		<execute macro="ProductMenu#gotoControlPanelApps">
 			<var name="portlet" value="App Manager" />
 		</execute>

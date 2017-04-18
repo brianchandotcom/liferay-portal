@@ -796,6 +796,7 @@
 
 	<command name="PublishWCWithPagesVariationViaRemoteStaging" priority="3">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
+		<property name="test.name.skip.portal.instance" value="PGStaging#PublishWCWithPagesVariationViaRemoteStaging" />
 
 		<execute macro="Staging#remoteStagingSetUp">
 			<var name="pageVersioningEnabled" value="true" />

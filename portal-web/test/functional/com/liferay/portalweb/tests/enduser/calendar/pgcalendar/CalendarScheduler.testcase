@@ -135,6 +135,8 @@
 	<command name="ViewDisplayedSiteCalendarEventsAsGuest" priority="3">
 		<description message="This is a use case for LPS-59251." />
 
+		<property name="test.name.skip.portal.instance" value="CalendarScheduler#ViewDisplayedSiteCalendarEventsAsGuest" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />

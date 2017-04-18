@@ -1440,6 +1440,8 @@
 	</command>
 
 	<command name="ViewKBArticleFriendlyURL" priority="4">
+		<property name="test.name.skip.portal.instance" value="KnowledgebaseUsecase#ViewKBArticleFriendlyURL" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display" />
 		</execute>

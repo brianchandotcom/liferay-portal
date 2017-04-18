@@ -42,6 +42,7 @@
 	</tear-down>
 
 	<command name="AddPageAndChildPageTranslations" priority="3">
+		<property name="test.name.skip.portal.instance" value="SitesUsecase#AddPageAndChildPageTranslations" />
 		<property name="testray.component.names" value="Localization,Site Administration,Site Localization,Site Pages Administration" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />

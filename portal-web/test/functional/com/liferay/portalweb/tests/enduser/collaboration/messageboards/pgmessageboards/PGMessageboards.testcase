@@ -674,6 +674,8 @@
 	</command>
 
 	<command name="EditMBThreadSubjectAndBody" priority="5">
+		<property name="test.name.skip.portal.instance" value="PGMessageboards#EditMBThreadSubjectAndBody" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>

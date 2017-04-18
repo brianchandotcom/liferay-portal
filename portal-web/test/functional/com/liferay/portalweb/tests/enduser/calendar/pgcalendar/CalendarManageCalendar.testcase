@@ -644,6 +644,8 @@
 	</command>
 
 	<command name="ViewAvailableCalendars" priority="4">
+		<property name="test.name.skip.portal.instance" value="CalendarManageCalendar#ViewAvailableCalendars" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

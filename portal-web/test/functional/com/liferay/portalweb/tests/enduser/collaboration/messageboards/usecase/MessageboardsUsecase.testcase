@@ -1032,6 +1032,7 @@
 
 	<command name="ViewMBThreadAndReplyThreadInGmail" priority="4">
 		<property name="custom.properties" value="message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.auth=true${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.transport.protocol=smtp" />
+		<property name="test.name.skip.portal.instance" value="MessageboardsUsecase#ViewMBThreadAndReplyThreadInGmail" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 

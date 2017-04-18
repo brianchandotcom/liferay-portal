@@ -173,6 +173,8 @@
 	</command>
 
 	<command name="AddFormWithSpanishAsDefaultPortalLanguage" priority="5">
+		<property name="test.name.skip.portal.instance" value="Forms#AddFormWithSpanishAsDefaultPortalLanguage" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>

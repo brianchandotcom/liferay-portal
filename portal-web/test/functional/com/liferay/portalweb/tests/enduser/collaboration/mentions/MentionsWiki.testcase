@@ -97,6 +97,8 @@
 	</tear-down>
 
 	<command name="ViewWikiCommentMentionedUser" priority="5">
+		<property name="test.name.skip.portal.instance" value="MentionsWiki#ViewWikiCommentMentionedUser" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

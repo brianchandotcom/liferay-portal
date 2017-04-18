@@ -33,6 +33,8 @@
 	</command>
 
 	<command name="ViewRecaptchaEnabled" priority="4">
+		<property name="test.name.skip.portal.instance" value="Captcha#ViewRecaptchaEnabled" />
+
 		<var name="recaptchaPrivateKey" property-value="recaptcha.private.key" />
 		<var name="recaptchaPublicKey" property-value="recaptcha.public.key" />
 

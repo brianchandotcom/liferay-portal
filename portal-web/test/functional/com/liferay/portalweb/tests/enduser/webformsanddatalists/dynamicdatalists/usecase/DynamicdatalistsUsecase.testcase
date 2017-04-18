@@ -2152,6 +2152,8 @@
 	<command name="EditDefaultLanguageAndPublishRecord" priority="3">
 		<description message="This is a use case for LPS-59154 and LPS-62523." />
 
+		<property name="test.name.skip.portal.instance" value="DynamicdatalistUsecase#EditDefaultLanguageAndPublishRecord" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

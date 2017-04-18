@@ -64,6 +64,7 @@
 
 	<command name="AddAndEditAssetsViaVirtualHostOrganizations" priority="4">
 		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com" />
+		<property name="test.name.skip.portal.instance" value="WebcontentpublicationUsecase#AddAndEditAssetsViaVirtualHostOrganizations" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -1092,6 +1093,8 @@
 	</command>
 
 	<command name="AssetPublisherHasOpenOfficeFileTypeLinks" priority="3">
+		<property name="test.name.skip.portal.instance" value="WebcontentpublicationUsecase#AssetPublisherHasOpenOfficeFileTypeLinks" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
 		</execute>

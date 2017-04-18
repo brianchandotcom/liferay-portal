@@ -30,6 +30,7 @@
 
 		<property name="apacheds.blank.user.password.enabled" value="true" />
 		<property name="apacheds.enabled" value="true" />
+		<property name="test.name.skip.portal.instance" value="AuthenticationUsecase#ImportLDAPUserWithBlankPassword" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />

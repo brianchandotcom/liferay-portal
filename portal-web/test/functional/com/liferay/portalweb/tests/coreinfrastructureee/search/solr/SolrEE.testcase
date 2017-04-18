@@ -208,6 +208,7 @@
 		<description message="This smoke test is to ensure that Liferay is successfully running on a remote SolrCloud with 2 nodes by asserting console logging for ZooKeeper and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
 
 		<property name="solr.solrcloud.enabled" value="true" />
+		<property name="test.name.skip.portal.instance" value="SolrEE#SolrWithSolrCloudSmokeTest" />
 
 		<execute macro="Solr#viewSolrwithSolrCloudEnabledInConsole" />
 
@@ -287,6 +288,7 @@
 		<description message="This smoke test is to ensure that Liferay is successfully running on a remote Solr with SSL Authentication by asserting console logging for KeyStoreLoaderImpl and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
 
 		<property name="solr.ssl.authentication.enabled" value="true" />
+		<property name="test.name.skip.portal.instance" value="SolrEE#SolrWithSSLAuthenticationSmokeTest" />
 
 		<execute macro="Solr#viewSolrwithSSLAuthenticationEnabledInConsole" />
 
@@ -361,6 +363,7 @@
 	<command name="ViewReindexAllSearchIndexesLoggingInSolrAdmin" priority="4">
 		<property name="index.on.startup" value="false" />
 		<property name="solr.logging.info.level" value="true" />
+		<property name="test.name.skip.portal.instance" value="SolrEE#ViewReindexAllSearchIndexesLoggingInSolrAdmin" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />

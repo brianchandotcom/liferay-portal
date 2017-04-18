@@ -472,6 +472,8 @@
 	</command>
 
 	<command name="AddMBThreadWithInvalidAttachmentSize" priority="4">
+		<property name="test.name.skip.portal.instance" value="PGMessageboards#AddMBThreadWithInvalidAttachmentSize" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>

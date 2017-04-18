@@ -440,6 +440,7 @@
 	</command>
 
 	<command name="ViewSecureContentAndPageAsGuest" priority="3">
+		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsGuest" />
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration" />
 
 		<execute macro="TestCase#getSiteName">
@@ -655,6 +656,7 @@
 	</command>
 
 	<command name="ViewSecureContentAndPageAsSiteMember" priority="3">
+		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsSiteMember" />
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration" />
 
 		<execute macro="TestCase#getSiteName">
@@ -908,6 +910,7 @@
 	</command>
 
 	<command name="ViewSecureContentAndPageAsUser" priority="3">
+		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsUser" />
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration" />
 
 		<execute macro="TestCase#getSiteName">

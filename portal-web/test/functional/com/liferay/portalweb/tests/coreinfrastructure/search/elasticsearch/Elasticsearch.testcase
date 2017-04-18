@@ -80,6 +80,8 @@ discoveryZenPingUnicastHostsPort=&quot;9300-9400&quot;" />
 	</command>
 
 	<command name="AssertSystemSettingsPropogateToModule" priority="4">
+		<property name="test.name.skip.portal.instance" value="Elasticsearch#AssertSystemSettingsPropogateToModule" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="System Settings" />
 		</execute>

@@ -38,6 +38,8 @@
 	</tear-down>
 
 	<command name="EditDefaultUserAssociationsOrganizationSites" priority="5">
+		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EditDefaultUserAssociationsOrganizationSites" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -99,6 +101,8 @@
 	</command>
 
 	<command name="EditDefaultUserAssociationsRoles" priority="4">
+		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EditDefaultUserAssociationsRoles" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Roles" />
 		</execute>
@@ -148,6 +152,8 @@
 	</command>
 
 	<command name="EditDefaultUserAssociationsSites" priority="4">
+		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EditDefaultUserAssociationsSites" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -197,6 +203,8 @@
 	</command>
 
 	<command name="EditDefaultUserAssociationsUserGroups" priority="4">
+		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EditDefaultUserAssociationsUserGroups" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="User Groups" />
 		</execute>
@@ -247,6 +255,7 @@
 
 	<command name="EnterReservedEmailAddress" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EnterReservedEmailAddress" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
@@ -270,6 +279,7 @@
 
 	<command name="EnterReservedScreenName" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EnterReservedScreenName" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
@@ -292,6 +302,8 @@
 	</command>
 
 	<command name="ViewContentSharingDisabledAcrossSitesViaAP" priority="4">
+		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewContentSharingDisabledAcrossSitesViaAP" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>
@@ -442,6 +454,8 @@
 	</command>
 
 	<command name="ViewContentSharingEnabledAcrossSitesViaAP" priority="4">
+		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewContentSharingEnabledAcrossSitesViaAP" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -551,6 +565,8 @@
 	</command>
 
 	<command name="ViewDefaultUserAssociations" priority="3">
+		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewDefaultUserAssociations" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>
@@ -559,6 +575,8 @@
 	</command>
 
 	<command name="ViewEmailNotificationsAccountCreatedNotification" priority="3">
+		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewEmailNotificationsAccountCreatedNotification" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>
@@ -567,6 +585,8 @@
 	</command>
 
 	<command name="ViewEmailNotificationsPasswordChangedNotification" priority="3">
+		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewEmailNotificationsPasswordChangedNotification" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>
@@ -575,6 +595,8 @@
 	</command>
 
 	<command name="ViewEmailNotificationsSender" priority="3">
+		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewEmailNotificationsSender" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>
@@ -583,6 +605,8 @@
 	</command>
 
 	<command name="ViewReservedCredentialsScreenNames" priority="3">
+		<property name="test.name.skip.portal.instance" value="CPPortalSettings#ViewReservedCredentialsScreenNames" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>

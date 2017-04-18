@@ -33,6 +33,8 @@
 	</command>
 
 	<command name="ViewEntry" priority="5">
+		<property name="test.name.skip.portal.instance" value="OSGiTwitterportlet#ViewEntry" />
+
 		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="Portlet#addPG">

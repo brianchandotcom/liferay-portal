@@ -849,6 +849,8 @@
 	</command>
 
 	<command name="ViewKBArticleWithEditedStarRatings" priority="3">
+		<property name="test.name.skip.portal.instance" value="PGKnowledgebasedisplay#ViewKBArticleWithEditedStarRatings" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1009,6 +1011,8 @@
 	</command>
 
 	<command name="ViewKBArticleWithStarRatings" priority="4">
+		<property name="test.name.skip.portal.instance" value="PGKnowledgebasedisplay#ViewKBArticleWithStarRatings" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

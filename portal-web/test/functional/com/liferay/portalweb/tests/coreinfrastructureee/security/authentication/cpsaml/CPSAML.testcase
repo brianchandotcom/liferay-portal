@@ -112,6 +112,8 @@
 	<command name="ViewSingleLogoutHTTPPostBindingInConsole" priority="4">
 		<description message="LPS-49666 - SAML Single Logout should support HTTP-POST binding." />
 
+		<property name="test.name.skip.portal.instance" value="CPSAML#ViewSingleLogoutHTTPPostBindingInConsole" />
+
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="User#loginPG">

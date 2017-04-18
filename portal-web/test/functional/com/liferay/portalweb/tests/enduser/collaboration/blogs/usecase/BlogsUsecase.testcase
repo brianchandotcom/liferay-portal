@@ -423,6 +423,7 @@
 
 	<command name="DemoTrackbackURL" priority="4">
 		<property name="custom.properties" value="blogs.trackback.enabled=true" />
+		<property name="test.name.skip.portal.instance" value="BlogsUsecase#DemoTrackbackURL" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
@@ -1140,6 +1141,8 @@
 	</command>
 
 	<command name="ViewBlogsEntriesWithSpecialCharactersOnPublicAndPrivateVirtualHostPages" priority="3">
+		<property name="test.name.skip.portal.instance" value="BlogsUsecase#ViewBlogsEntriesWithSpecialCharactersOnPublicAndPrivateVirtualHostPages" />
+
 		<var name="entryTitleSpecialCharacter" value="true" />
 		<var name="privatePageVirtualHostURL" value="www.baker.com" />
 

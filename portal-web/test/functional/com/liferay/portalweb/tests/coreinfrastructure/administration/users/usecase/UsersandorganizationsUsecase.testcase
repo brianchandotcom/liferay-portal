@@ -325,6 +325,8 @@
 	</command>
 
 	<command name="MultipleUsersandOrganizations" priority="4">
+		<property name="test.name.skip.portal.instance" value="UsersandorganizationsUsecase#MultipleUsersandOrganizations" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -861,6 +863,8 @@
 	</command>
 
 	<command name="OrganizationSiteDefaultUserAssociations" priority="3">
+		<property name="test.name.skip.portal.instance" value="UsersandorganizationsUsecase#OrganizationSiteDefaultUserAssociations" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

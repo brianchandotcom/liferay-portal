@@ -527,6 +527,7 @@
 
 	<command name="StagingDemoDocumentsAndMedia" priority="3">
 		<property name="custom.properties" value="default.layout.template.id=1_column" />
+		<property name="test.name.skip.portal.instance" value="Staging#StagingDemoDocumentsAndMedia" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />

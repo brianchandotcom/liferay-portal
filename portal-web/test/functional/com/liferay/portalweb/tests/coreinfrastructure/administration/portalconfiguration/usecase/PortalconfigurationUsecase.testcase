@@ -26,6 +26,8 @@
 	</tear-down>
 
 	<command name="AddPortalInstance" priority="5">
+		<property name="test.name.skip.portal.instance" value="PortalconfigurationUsecase#AddPortalInstance" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Virtual Instances" />
 		</execute>
@@ -42,6 +44,8 @@
 	</command>
 
 	<command name="DefaultPortalLandingPage" priority="5">
+		<property name="test.name.skip.portal.instance" value="PortalconfigurationUsecase#DefaultPortalLandingPage" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>
@@ -77,6 +81,8 @@
 	</command>
 
 	<command name="DeletePortalInstance" priority="5">
+		<property name="test.name.skip.portal.instance" value="PortalconfigurationUsecase#DeletePortalInstance" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Virtual Instances" />
 		</execute>
@@ -93,6 +99,8 @@
 	</command>
 
 	<command name="PermissionCheckPortalInstances" priority="4">
+		<property name="test.name.skip.portal.instance" value="PortalconfigurationUsecase#PermissionCheckPortalInstances" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Virtual Instances" />
 		</execute>
@@ -157,6 +165,8 @@
 	</command>
 
 	<command name="ViewDeactivatedPortalInstance" priority="5">
+		<property name="test.name.skip.portal.instance" value="PortalconfigurationUsecase#ViewDeactivatedPortalInstance" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="System Settings" />
 		</execute>
@@ -292,6 +302,7 @@
 
 	<command name="ViewVirtualHostPrivateSitePage" priority="4">
 		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com,www.charlie.com" />
+		<property name="test.name.skip.portal.instance" value="PortalconfigurationUsecase#ViewVirtualHostPrivateSitePage" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
@@ -367,6 +378,8 @@
 	</command>
 
 	<command name="ViewVirtualInstanceInheritsSystemSettings" priority="4">
+		<property name="test.name.skip.portal.instance" value="PortalconfigurationUsecase#ViewVirtualInstanceInheritsSystemSettings" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="System Settings" />
 		</execute>

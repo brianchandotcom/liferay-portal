@@ -4,6 +4,7 @@
 	<property name="testray.main.component.name" value="Security" />
 
 	<command name="CASSmoke" priority="4">
+		<property name="test.name.skip.portal.instance" value="Login#CASSmoke" />
 		<property name="web.plugins.includes" value="cas-web" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />

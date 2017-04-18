@@ -258,6 +258,8 @@
 	</command>
 
 	<command name="Demo" priority="1">
+		<property name="test.name.skip.portal.instance" value="KnowledgebaseUsecase#Demo" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -1365,6 +1367,8 @@
 	</command>
 
 	<command name="ViewImportedKBArticleWithSourceURLMetadata" priority="4">
+		<property name="test.name.skip.portal.instance" value="KnowledgebaseUsecase#ViewImportedKBArticleWithSourceURLMetadata" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -1500,6 +1504,8 @@
 	</command>
 
 	<command name="ViewKBArticleGitHubSourceURL" priority="3">
+		<property name="test.name.skip.portal.instance" value="KnowledgebaseUsecase#ViewKBArticleGitHubSourceURL" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

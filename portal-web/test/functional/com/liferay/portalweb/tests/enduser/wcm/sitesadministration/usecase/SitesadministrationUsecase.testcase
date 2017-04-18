@@ -34,6 +34,7 @@
 	</tear-down>
 
 	<command name="AddOrganizationSitesAndDeactivate" priority="4">
+		<property name="test.name.skip.portal.instance" value="SitesadministrationUsecase#AddOrganizationSitesAndDeactivate" />
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -606,6 +607,7 @@
 
 	<command name="ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" priority="3">
 		<property name="custom.properties" value="layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true" />
+		<property name="test.name.skip.portal.instance" value="SiteadministrationUsecase#ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" />
 		<property name="testray.component.names" value="Site Administration" />
 
 		<execute macro="TestCase#getSiteName">
@@ -869,6 +871,7 @@
 	</command>
 
 	<command name="SitesDeactivated" priority="3">
+		<property name="test.name.skip.portal.instance" value="SitesadministrationUsecase#SitesDeactivated" />
 		<property name="testray.component.names" value="Site Administration" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

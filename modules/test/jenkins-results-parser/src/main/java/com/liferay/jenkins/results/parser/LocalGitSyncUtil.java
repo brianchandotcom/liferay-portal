@@ -192,9 +192,15 @@ public class LocalGitSyncUtil {
 		String upstreamBranchName = gitWorkingDirectory.getUpstreamBranchName();
 
 		if (!gitWorkingDirectory.branchExists(upstreamBranchName, null)) {
+			RemoteConfig upstreamRemoteConfig =
+				gitWorkingDirectory.getRemoteConfig("upstream");
+
 			updateLocalUpstreamBranch(
 				gitWorkingDirectory, upstreamBranchName,
-				gitWorkingDirectory.getRemoteConfig("upstream"));
+				gitWorkingDirectory.getBranchSHA(
+					gitWorkingDirectory.getUpstreamBranchName(),
+					upstreamRemoteConfig),
+				upstreamRemoteConfig);
 		}
 
 		gitWorkingDirectory.checkoutBranch(upstreamBranchName);
@@ -710,7 +716,7 @@ public class LocalGitSyncUtil {
 
 						updateLocalUpstreamBranch(
 							gitWorkingDirectory, upstreamBranchName,
-							upstreamRemoteConfig);
+							upstreamBranchSHA, upstreamRemoteConfig);
 					}
 
 					updateCacheBranchTimestamp(
@@ -721,7 +727,7 @@ public class LocalGitSyncUtil {
 				}
 
 				updateLocalUpstreamBranch(
-					gitWorkingDirectory, upstreamBranchName,
+					gitWorkingDirectory, upstreamBranchName, upstreamBranchSHA,
 					upstreamRemoteConfig);
 
 				gitWorkingDirectory.fetch(
@@ -734,7 +740,7 @@ public class LocalGitSyncUtil {
 					gitWorkingDirectory.checkoutBranch(cacheBranchName);
 
 					gitWorkingDirectory.rebase(
-						true, upstreamBranchSHA, cacheBranchName);
+						true, upstreamBranchName, cacheBranchName);
 				}
 
 				cacheBranches(
@@ -860,7 +866,7 @@ public class LocalGitSyncUtil {
 
 					gitWorkingDirectory.createLocalBranch(
 						newTimestampBranchName, true,
-						gitWorkingDirectory.getRemoteBranchSHA(
+						gitWorkingDirectory.getBranchSHA(
 							remoteCacheBranchName, localGitRemoteConfig));
 
 					try {
@@ -901,11 +907,8 @@ public class LocalGitSyncUtil {
 
 	protected static void updateLocalUpstreamBranch(
 			GitWorkingDirectory gitWorkingDirectory, String upstreamBranchName,
-			RemoteConfig upstreamRemoteConfig)
+			String upstreamBranchSHA, RemoteConfig upstreamRemoteConfig)
 		throws GitAPIException {
-
-		String upstreamBranchSHA = gitWorkingDirectory.getRemoteBranchSHA(
-			upstreamBranchName, upstreamRemoteConfig);
 
 		gitWorkingDirectory.rebaseAbort();
 

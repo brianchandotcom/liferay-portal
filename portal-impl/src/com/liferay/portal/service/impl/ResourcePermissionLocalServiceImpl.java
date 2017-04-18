@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandlerRegistryUtil;
@@ -1300,9 +1301,13 @@ public class ResourcePermissionLocalServiceImpl
 			resourcePermission.setViewActionId(actionIdsLong % 2 == 1);
 
 			resourcePermissionPersistence.update(resourcePermission);
-		}
 
-		IndexWriterHelperUtil.updatePermissionFields(name, primKey);
+			if (ArrayUtil.contains(actionIds, ActionKeys.MANAGE_SUBGROUPS)) {
+				PermissionCacheUtil.clearPrimaryKeyRoleCache();
+			}
+
+			IndexWriterHelperUtil.updatePermissionFields(name, primKey);
+		}
 	}
 
 	protected boolean isGuestRoleId(long companyId, long roleId)

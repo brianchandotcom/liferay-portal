@@ -233,6 +233,22 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 			// Update role
 
+			if (name.equals(RoleConstants.SITE_ADMINISTRATOR)) {
+				boolean manageSubsites = ParamUtil.getBoolean(
+					actionRequest, "manageSubsites");
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				Role role = _roleLocalService.getRole(roleId);
+
+				updateAction(
+					role, themeDisplay.getScopeGroupId(), Group.class.getName(),
+					ActionKeys.MANAGE_SUBGROUPS, manageSubsites,
+					ResourceConstants.SCOPE_GROUP_TEMPLATE, new String[0]);
+			}
+
 			return _roleService.updateRole(
 				roleId, name, titleMap, descriptionMap, subtype,
 				serviceContext);

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -621,6 +622,37 @@ public class PermissionCheckerTest {
 	}
 
 	@Test
+	public void testIsGroupAdminForSubsiteWithManageSubgroupsPermission()
+		throws Exception {
+
+		Group parentSite = GroupTestUtil.addGroup();
+
+		Group subsite = GroupTestUtil.addGroup(parentSite.getGroupId());
+
+		_groups.add(subsite);
+
+		_groups.add(parentSite);
+
+		_role = RoleTestUtil.addRole(
+			RandomTestUtil.randomString(), RoleConstants.TYPE_SITE);
+
+		_user = UserTestUtil.addGroupUser(parentSite, _role.getName());
+
+		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+
+		Assert.assertFalse(
+			permissionChecker.isGroupAdmin(subsite.getGroupId()));
+
+		ResourcePermissionLocalServiceUtil.addResourcePermission(
+			_user.getCompanyId(), Group.class.getName(),
+			ResourceConstants.SCOPE_GROUP,
+			String.valueOf(parentSite.getGroupId()), _role.getRoleId(),
+			ActionKeys.MANAGE_SUBGROUPS);
+
+		Assert.assertTrue(permissionChecker.isGroupAdmin(subsite.getGroupId()));
+	}
+
+	@Test
 	public void testIsGroupAdminWithCompanyAdmin() throws Exception {
 		PermissionChecker permissionChecker = _getPermissionChecker(
 			TestPropsValues.getUser());
@@ -952,6 +984,9 @@ public class PermissionCheckerTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private final List<Group> _groups = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private Organization _organization;

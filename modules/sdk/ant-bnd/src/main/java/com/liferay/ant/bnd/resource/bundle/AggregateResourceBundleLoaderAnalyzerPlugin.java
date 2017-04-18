@@ -18,7 +18,6 @@ import aQute.bnd.header.Attrs;
 import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Constants;
-import aQute.bnd.osgi.Jar;
 import aQute.bnd.service.AnalyzerPlugin;
 
 import aQute.libg.filters.AndFilter;
@@ -41,8 +40,6 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 
 	@Override
 	public boolean analyzeJar(Analyzer analyzer) throws Exception {
-		Jar jar = analyzer.getJar();
-
 		Parameters aggregateResourceBundlesParameters = new SortedParameters(
 			analyzer.getProperty("-aggregateresourcebundles"));
 

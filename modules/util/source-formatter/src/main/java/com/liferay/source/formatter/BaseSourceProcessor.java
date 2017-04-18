@@ -30,6 +30,7 @@ import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.IncorrectFileLocationCheck;
 import com.liferay.source.formatter.checks.JavaTermCheck;
+import com.liferay.source.formatter.checks.ReturnCharacterCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
@@ -296,9 +297,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			file, fileName, absolutePath, content);
 
 		newContent = doFormat(file, fileName, absolutePath, newContent);
-
-		newContent = StringUtil.replace(
-			newContent, StringPool.RETURN, StringPool.BLANK);
 
 		if (content.equals(newContent)) {
 			return content;
@@ -1164,6 +1162,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	private void _populateGenericSourceChecks() throws Exception {
 		_genericSourceChecks.add(new IncorrectFileLocationCheck());
+		_genericSourceChecks.add(new ReturnCharacterCheck());
 	}
 
 	private String _processSourceChecks(

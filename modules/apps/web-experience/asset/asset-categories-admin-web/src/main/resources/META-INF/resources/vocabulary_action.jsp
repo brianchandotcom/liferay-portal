@@ -23,7 +23,7 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.UPDATE) %>">
+	<c:if test="<%= assetCategoriesDisplayContext.hasPermission(vocabulary, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editVocabularyURL">
 			<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
@@ -35,7 +35,7 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= AssetCategoriesPermission.contains(permissionChecker, vocabulary.getGroupId(), ActionKeys.ADD_CATEGORY) %>">
+	<c:if test="<%= assetCategoriesDisplayContext.isShowCategoriesAddButton() %>">
 		<portlet:renderURL var="addCategoryURL">
 			<portlet:param name="mvcPath" value="/edit_category.jsp" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
@@ -47,7 +47,7 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= assetCategoriesDisplayContext.hasPermission(vocabulary, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= AssetVocabulary.class.getName() %>"
 			modelResourceDescription="<%= vocabulary.getTitle(locale) %>"
@@ -64,7 +64,7 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.DELETE) %>">
+	<c:if test="<%= assetCategoriesDisplayContext.hasPermission(vocabulary, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteVocabulary" var="deleteVocabularyURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />

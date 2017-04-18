@@ -23,7 +23,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.UPDATE) %>">
+	<c:if test="<%= assetCategoriesDisplayContext.hasPermission(category, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editCategoryURL">
 			<portlet:param name="mvcPath" value="/edit_category.jsp" />
 			<portlet:param name="categoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
@@ -36,7 +36,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.ADD_CATEGORY) %>">
+	<c:if test="<%= assetCategoriesDisplayContext.hasPermission(category, ActionKeys.ADD_CATEGORY) %>">
 		<portlet:renderURL var="addSubcategoryCategoryURL">
 			<portlet:param name="mvcPath" value="/edit_category.jsp" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(category.getVocabularyId()) %>" />
@@ -49,7 +49,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.UPDATE) %>">
+	<c:if test="<%= assetCategoriesDisplayContext.hasPermission(category, ActionKeys.UPDATE) %>">
 		<liferay-ui:icon
 			id='<%= row.getRowId() + "moveCategory" %>'
 			message="move"
@@ -57,7 +57,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= assetCategoriesDisplayContext.hasPermission(category, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= AssetCategory.class.getName() %>"
 			modelResourceDescription="<%= category.getTitle(locale) %>"
@@ -74,7 +74,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.DELETE) %>">
+	<c:if test="<%= assetCategoriesDisplayContext.hasPermission(category, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteCategory" var="deleteCategoryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="categoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
@@ -86,7 +86,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 	</c:if>
 </liferay-ui:icon-menu>
 
-<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.UPDATE) %>">
+<c:if test="<%= assetCategoriesDisplayContext.hasPermission(category, ActionKeys.UPDATE) %>">
 	<aui:script use="liferay-item-selector-dialog">
 		$('#<portlet:namespace /><%= row.getRowId() %>moveCategory').on(
 			'click',

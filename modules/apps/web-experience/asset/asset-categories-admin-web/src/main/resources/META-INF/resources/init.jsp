@@ -66,9 +66,6 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl" %><%@
-page import="com.liferay.portlet.asset.service.permission.AssetCategoriesPermission" %><%@
-page import="com.liferay.portlet.asset.service.permission.AssetCategoryPermission" %><%@
-page import="com.liferay.portlet.asset.service.permission.AssetVocabularyPermission" %><%@
 page import="com.liferay.portlet.asset.util.AssetVocabularySettingsHelper" %>
 
 <%@ page import="java.util.ArrayList" %><%@

@@ -47,7 +47,10 @@ public final class SortedParameters extends Parameters {
 				public int compare(
 					Entry<String, Attrs> entry1, Entry<String, Attrs> entry2) {
 
-					return entry1.getKey().compareTo(entry2.getKey());
+					String key1 = entry1.getKey();
+					String key2 = entry2.getKey();
+
+					return key1.compareTo(key2);
 				}
 
 			};

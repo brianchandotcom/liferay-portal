@@ -41,15 +41,14 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 
 	@Override
 	public boolean analyzeJar(Analyzer analyzer) throws Exception {
-		Parameters aggregateResourceBundlesParameters = new SortedParameters(
+		Parameters parameters = new SortedParameters(
 			analyzer.getProperty("-liferay-aggregate-resource-bundles"));
 
-		if (aggregateResourceBundlesParameters.isEmpty()) {
+		if (parameters.isEmpty()) {
 			return false;
 		}
 
-		List<String> aggregateKeys = new ArrayList<>(
-			aggregateResourceBundlesParameters.keySet());
+		List<String> aggregateKeys = new ArrayList<>(parameters.keySet());
 
 		Collections.sort(aggregateKeys);
 

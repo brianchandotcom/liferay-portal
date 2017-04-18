@@ -14,32 +14,46 @@
 
 package com.liferay.ant.bnd.resource.bundle;
 
+import aQute.bnd.header.Attrs;
+import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Analyzer;
+import aQute.bnd.osgi.Constants;
+import aQute.bnd.osgi.Jar;
 import aQute.bnd.service.AnalyzerPlugin;
 
 /**
  * @author Carlos Sierra Andrés
  * @author Gregory Amerson
  */
-public class ResourceBundleLoaderAnalyzerPlugin implements AnalyzerPlugin {
+public class ProvidesResourceBundleLoaderAnalyzerPlugin
+	implements AnalyzerPlugin {
 
 	@Override
 	public boolean analyzeJar(Analyzer analyzer) throws Exception {
-		boolean modified = false;
+		Jar jar = analyzer.getJar();
 
-		for (AnalyzerPlugin analyzerPlugin : _delegateAnalyzerPlugins) {
-			if (analyzerPlugin.analyzeJar(analyzer)) {
-				modified = true;
-			}
+		if (!jar.exists("content/Language.properties")) {
+			return false;
 		}
 
-		return modified;
-	}
+		Parameters provideCapabilityHeaders = new SortedParameters(
+			analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
-	private final AnalyzerPlugin[] _delegateAnalyzerPlugins =
-		new AnalyzerPlugin[] {
-			new ProvidesResourceBundleLoaderAnalyzerPlugin(),
-			new AggregateResourceBundleLoaderAnalyzerPlugin()
-		};
+		Parameters parameters = new SortedParameters();
+
+		Attrs attrs = new Attrs();
+
+		attrs.put("bundle.symbolic.name", analyzer.getBsn());
+		attrs.put("resource.bundle.base.name", "content.Language");
+
+		parameters.add("liferay.resource.bundle", attrs);
+
+		provideCapabilityHeaders.mergeWith(parameters, false);
+
+		analyzer.setProperty(
+			Constants.PROVIDE_CAPABILITY, provideCapabilityHeaders.toString());
+
+		return true;
+	}
 
 }

@@ -35,15 +35,19 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -77,6 +81,31 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		HttpServletRequest request = _portal.getOriginalServletRequest(
+			_portal.getHttpServletRequest(actionRequest));
+
+		Map<String, String[]> urlParams = HttpUtil.getParameterMap(
+			request.getQueryString());
+
+		String portletId = _portal.getPortletId(actionRequest);
+
+		String portletNamespace = _portal.getPortletNamespace(portletId);
+
+		String passwordParamName = portletNamespace + "password";
+
+		if (urlParams.containsKey(passwordParamName)) {
+			postProcessAuthFailure(actionRequest, actionResponse);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Login request rejected: password parameter found in " +
+						"URL. Referrer: " +
+							request.getHeader(HttpHeaders.REFERER));
+			}
+
+			return;
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

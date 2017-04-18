@@ -232,7 +232,7 @@ describe('CompatibilityEventProxy', () => {
 		done();
 	});
 
-	it('should emit events when no event has no key', (done) => {
+	it('should emit events even if the event does not have a key property', (done) => {
 		let eventObjectToEmit = {};
 
 		let mockedTarget = createMockedTarget(eventNameToEmit);

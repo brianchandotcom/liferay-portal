@@ -49,10 +49,6 @@ public class GroovySourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new WhitespaceCheck());
 	}
 
-	@Override
-	protected void postFormat() throws Exception {
-	}
-
 	private static final String[] _INCLUDES = new String[] {"**/*.groovy"};
 
 	private final List<SourceCheck> _sourceChecks = new ArrayList<>();

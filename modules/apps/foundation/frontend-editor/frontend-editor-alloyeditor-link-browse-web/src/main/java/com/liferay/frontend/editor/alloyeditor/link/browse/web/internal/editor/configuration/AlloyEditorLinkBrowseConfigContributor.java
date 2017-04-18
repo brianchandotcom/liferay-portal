@@ -150,6 +150,31 @@ public class AlloyEditorLinkBrowseConfigContributor
 		_itemSelector = itemSelector;
 	}
 
+	protected JSONObject updateButtonCfgJSONObject(JSONObject buttonCfg) {
+		Iterator<String> buttonNames = buttonCfg.keys();
+
+		JSONObject newButtonCfgJSONObject = JSONFactoryUtil.createJSONObject();
+
+		while (buttonNames.hasNext()) {
+			String buttonName = buttonNames.next();
+
+			if (buttonName.equals("link")) {
+				newButtonCfgJSONObject.put(
+					"linkBrowse", buttonCfg.getJSONObject(buttonName));
+			}
+			else if (buttonName.equals("linkEdit")) {
+				newButtonCfgJSONObject.put(
+					"linkEditBrowse", buttonCfg.getJSONObject(buttonName));
+			}
+			else {
+				newButtonCfgJSONObject.put(
+					buttonName, buttonCfg.getJSONObject(buttonName));
+			}
+		}
+
+		return newButtonCfgJSONObject;
+	}
+
 	protected void updateButtonJSONObject(
 		JSONArray buttonsJSONArray, JSONObject buttonJSONObject,
 		String buttonName) {
@@ -206,31 +231,6 @@ public class AlloyEditorLinkBrowseConfigContributor
 		}
 
 		return newButtonsJSONArray;
-	}
-
-	private JSONObject updateButtonCfgJSONObject(JSONObject buttonCfg) {
-		Iterator<String> buttonNames = buttonCfg.keys();
-
-		JSONObject newButtonCfgJSONObject = JSONFactoryUtil.createJSONObject();
-
-		while (buttonNames.hasNext()) {
-			String buttonName = buttonNames.next();
-
-			if (buttonName.equals("link")) {
-				newButtonCfgJSONObject.put(
-					"linkBrowse", buttonCfg.getJSONObject(buttonName));
-			}
-			else if (buttonName.equals("linkEdit")) {
-				newButtonCfgJSONObject.put(
-					"linkEditBrowse", buttonCfg.getJSONObject(buttonName));
-			}
-			else {
-				newButtonCfgJSONObject.put(
-					buttonName, buttonCfg.getJSONObject(buttonName));
-			}
-		}
-
-		return newButtonCfgJSONObject;
 	}
 
 	private ItemSelector _itemSelector;

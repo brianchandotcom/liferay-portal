@@ -79,13 +79,7 @@ to = sb.toString() + to;
 				</label>
 
 				<%
-				long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
-
-				if (fileMaxSize == 0) {
-					fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-				}
-
-				fileMaxSize /= 1024;
+				long fileMaxSize = DLValidatorUtil.getMaxAllowableSize() / 1024;
 				%>
 
 				<aui:field-wrapper>

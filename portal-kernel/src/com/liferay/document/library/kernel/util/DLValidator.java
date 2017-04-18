@@ -34,6 +34,8 @@ public interface DLValidator {
 
 	public String fixName(String name);
 
+	public long getMaxAllowableSize();
+
 	public boolean isValidName(String name);
 
 	public void validateDirectoryName(String directoryName)

@@ -61,6 +61,18 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	@Override
+	public long getMaxAllowableSize() {
+		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+
+		if (fileMaxSize == 0) {
+			fileMaxSize = PrefsPropsUtil.getLong(
+				PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+		}
+
+		return fileMaxSize;
+	}
+
+	@Override
 	public boolean isValidName(String name) {
 		if (Validator.isNull(name)) {
 			return false;

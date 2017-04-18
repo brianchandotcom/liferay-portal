@@ -97,6 +97,10 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 	public void testAggregateResourceBundlesInstructionMultiple()
 		throws Exception {
 
+		AggregateResourceBundleLoaderAnalyzerPlugin
+			aggregateResourceBundleLoaderAnalyzerPlugin =
+				new AggregateResourceBundleLoaderAnalyzerPlugin();
+
 		ResourceBundleLoaderAnalyzerPlugin resourceBundleLoaderAnalyzerPlugin =
 			new ResourceBundleLoaderAnalyzerPlugin();
 
@@ -117,6 +121,10 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 
 			Assert.assertTrue(
 				resourceBundleLoaderAnalyzerPlugin.analyzeJar(analyzer));
+
+			Assert.assertTrue(
+				aggregateResourceBundleLoaderAnalyzerPlugin.analyzeJar(
+					analyzer));
 
 			Parameters requireCapabilityHeaders = new Parameters(
 				analyzer.getProperty(Constants.REQUIRE_CAPABILITY));
@@ -194,6 +202,10 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 	public void testAggregateResourceBundlesInstructionWebContextPath()
 		throws Exception {
 
+		AggregateResourceBundleLoaderAnalyzerPlugin
+			aggregateResourceBundleLoaderAnalyzerPlugin =
+				new AggregateResourceBundleLoaderAnalyzerPlugin();
+
 		ResourceBundleLoaderAnalyzerPlugin resourceBundleLoaderAnalyzerPlugin =
 			new ResourceBundleLoaderAnalyzerPlugin();
 
@@ -214,6 +226,10 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 
 			Assert.assertTrue(
 				resourceBundleLoaderAnalyzerPlugin.analyzeJar(analyzer));
+
+			Assert.assertTrue(
+				aggregateResourceBundleLoaderAnalyzerPlugin.analyzeJar(
+					analyzer));
 
 			Parameters provideCapabilityHeaders = new Parameters(
 				analyzer.getProperty(Constants.PROVIDE_CAPABILITY));

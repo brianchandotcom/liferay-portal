@@ -254,21 +254,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return level;
 	}
 
-	protected void checkUTF8(File file, String fileName) throws Exception {
-		byte[] bytes = FileUtil.getBytes(file);
-
-		try {
-			CharsetDecoder charsetDecoder =
-				CharsetDecoderUtil.getCharsetDecoder(
-					StringPool.UTF8, CodingErrorAction.REPORT);
-
-			charsetDecoder.decode(ByteBuffer.wrap(bytes));
-		}
-		catch (Exception e) {
-			processMessage(fileName, "UTF-8");
-		}
-	}
-
 	protected abstract String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception;
@@ -304,7 +289,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		_sourceFormatterMessagesMap.remove(fileName);
 
-		checkUTF8(file, fileName);
+		_checkUTF8(file, fileName);
 
 		if (!(this instanceof JavaSourceProcessor) &&
 			absolutePath.matches(".*\\/modules\\/.*\\/src\\/.*\\/java\\/.*")) {
@@ -1060,6 +1045,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static boolean subrepository;
 
 	protected SourceFormatterArgs sourceFormatterArgs;
+
+	private void _checkUTF8(File file, String fileName) throws Exception {
+		byte[] bytes = FileUtil.getBytes(file);
+
+		try {
+			CharsetDecoder charsetDecoder =
+				CharsetDecoderUtil.getCharsetDecoder(
+					StringPool.UTF8, CodingErrorAction.REPORT);
+
+			charsetDecoder.decode(ByteBuffer.wrap(bytes));
+		}
+		catch (Exception e) {
+			processMessage(
+				fileName,
+				new SourceFormatterMessage(fileName, "UTF-8", null, -1));
+		}
+	}
 
 	private boolean _containsModuleFile(List<String> fileNames) {
 		for (String fileName : fileNames) {

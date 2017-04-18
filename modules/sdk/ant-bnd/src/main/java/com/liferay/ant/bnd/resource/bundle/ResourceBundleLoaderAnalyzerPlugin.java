@@ -27,7 +27,7 @@ public class ResourceBundleLoaderAnalyzerPlugin implements AnalyzerPlugin {
 	public boolean analyzeJar(Analyzer analyzer) throws Exception {
 		boolean modified = false;
 
-		for (AnalyzerPlugin analyzerPlugin : _delegateAnalyzerPlugins) {
+		for (AnalyzerPlugin analyzerPlugin : _analyzerPlugins) {
 			if (analyzerPlugin.analyzeJar(analyzer)) {
 				modified = true;
 			}
@@ -36,10 +36,9 @@ public class ResourceBundleLoaderAnalyzerPlugin implements AnalyzerPlugin {
 		return modified;
 	}
 
-	private final AnalyzerPlugin[] _delegateAnalyzerPlugins =
-		new AnalyzerPlugin[] {
-			new ProvidesResourceBundleLoaderAnalyzerPlugin(),
-			new AggregateResourceBundleLoaderAnalyzerPlugin()
-		};
+	private final AnalyzerPlugin[] _analyzerPlugins = new AnalyzerPlugin[] {
+		new ProvidesResourceBundleLoaderAnalyzerPlugin(),
+		new AggregateResourceBundleLoaderAnalyzerPlugin()
+	};
 
 }

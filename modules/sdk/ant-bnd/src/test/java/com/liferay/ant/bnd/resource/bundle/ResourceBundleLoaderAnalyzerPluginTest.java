@@ -43,17 +43,14 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 		ResourceBundleLoaderAnalyzerPlugin resourceBundleLoaderAnalyzerPlugin =
 			new ResourceBundleLoaderAnalyzerPlugin();
 
-		InputStream resource =
+		InputStream inputStream =
 			getClass().getResourceAsStream("dependencies/resources.test-1.jar");
 
-		try (Jar jar = new Jar("dot", resource);
-
+		try (Jar jar = new Jar("dot", inputStream);
 			Analyzer analyzer = new Analyzer()) {
 
-			analyzer.setJar(jar);
-
 			analyzer.setBundleSymbolicName("resources.test");
-
+			analyzer.setJar(jar);
 			analyzer.setProperty("-liferay-aggregate-resource-bundles", "");
 
 			Assert.assertTrue(
@@ -64,7 +61,7 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 
 			Collection<Attrs> requires = requireCapabilityHeaders.values();
 
-			Assert.assertEquals(requires.toString(), 0, requires.size());
+			Assert.assertTrue(requires.toString(), requires.isEmpty());
 
 			Parameters provideCapabilityHeaders = new Parameters(
 				analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
@@ -100,17 +97,14 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 		ResourceBundleLoaderAnalyzerPlugin resourceBundleLoaderAnalyzerPlugin =
 			new ResourceBundleLoaderAnalyzerPlugin();
 
-		InputStream resource =
+		InputStream inputStream =
 			getClass().getResourceAsStream("dependencies/resources.test-1.jar");
 
-		try (Jar jar = new Jar("dot", resource);
-
+		try (Jar jar = new Jar("dot", inputStream);
 			Analyzer analyzer = new Analyzer()) {
 
-			analyzer.setJar(jar);
-
 			analyzer.setBundleSymbolicName("resources.test");
-
+			analyzer.setJar(jar);
 			analyzer.setProperty(
 				"-liferay-aggregate-resource-bundles",
 				"resources.lang1,resources.lang2,resources.lang3");
@@ -159,16 +153,16 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 
 			Assert.assertEquals(6, aggregateEntryAttrs.size());
 
-			StringBuilder stringBuilder = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 
-			stringBuilder.append(
+			sb.append(
 				"(&(bundle.symbolic.name=resources.test)(!(aggregate=true))),");
-			stringBuilder.append("(bundle.symbolic.name=resources.lang1),");
-			stringBuilder.append("(bundle.symbolic.name=resources.lang2),");
-			stringBuilder.append("(bundle.symbolic.name=resources.lang3)");
+			sb.append("(bundle.symbolic.name=resources.lang1),");
+			sb.append("(bundle.symbolic.name=resources.lang2),");
+			sb.append("(bundle.symbolic.name=resources.lang3)");
 
 			Assert.assertEquals(
-				stringBuilder.toString(),
+				sb.toString(),
 				aggregateEntryAttrs.get("resource.bundle.aggregate"));
 
 			Assert.assertEquals(
@@ -197,20 +191,16 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 		ResourceBundleLoaderAnalyzerPlugin resourceBundleLoaderAnalyzerPlugin =
 			new ResourceBundleLoaderAnalyzerPlugin();
 
-		InputStream resource = getClass().getResourceAsStream(
+		InputStream inputStream = getClass().getResourceAsStream(
 			"dependencies/blade.language.web.jar");
 
-		try (Jar jar = new Jar("dot", resource);
-
+		try (Jar jar = new Jar("dot", inputStream);
 			Analyzer analyzer = new Analyzer()) {
 
-			analyzer.setJar(jar);
-
 			analyzer.setBundleSymbolicName("blade.language.web");
-
+			analyzer.setJar(jar);
 			analyzer.setProperty(
 				"-liferay-aggregate-resource-bundles", "blade.language");
-
 			analyzer.setProperty("Web-ContextPath", "/blade-language-web");
 
 			Assert.assertTrue(
@@ -242,11 +232,10 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 		ResourceBundleLoaderAnalyzerPlugin resourceBundleLoaderAnalyzerPlugin =
 			new ResourceBundleLoaderAnalyzerPlugin();
 
-		InputStream resource =
+		InputStream inputStream =
 			getClass().getResourceAsStream("dependencies/resources.test-1.jar");
 
-		try (Jar jar = new Jar("dot", resource);
-
+		try (Jar jar = new Jar("dot", inputStream);
 			Analyzer analyzer = new Analyzer()) {
 
 			analyzer.setJar(jar);
@@ -275,11 +264,10 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 		ResourceBundleLoaderAnalyzerPlugin resourceBundleLoaderAnalyzerPlugin =
 			new ResourceBundleLoaderAnalyzerPlugin();
 
-		InputStream resource =
+		InputStream inputStream =
 			getClass().getResourceAsStream("dependencies/resources.test-2.jar");
 
-		try (Jar jar = new Jar("dot", resource);
-
+		try (Jar jar = new Jar("dot", inputStream);
 			Analyzer analyzer = new Analyzer()) {
 
 			analyzer.setJar(jar);

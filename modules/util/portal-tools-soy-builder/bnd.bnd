@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Tools Soy Builder
 Bundle-SymbolicName: com.liferay.portal.tools.soy.builder
-Bundle-Version: 0.0.1
+Bundle-Version: 3.0.1
 Export-Package:\
 	com.liferay.portal.tools.soy.builder,\
 	com.liferay.portal.tools.soy.builder.ant,\

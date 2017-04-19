@@ -226,8 +226,8 @@
 	</command>
 
 	<command name="gotoViewTemplate">
-		<var name="key_ddlTemplateName" value="${templateName}" />
-
-		<execute function="AssertClick" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK" value1="${templateName}" />
+		<execute function="AssertClick" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK" value1="${templateName}">
+			<var name="key_ddlTemplateName" value="${templateName}" />
+		</execute>
 	</command>
 </definition>

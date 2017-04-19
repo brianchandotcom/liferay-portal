@@ -101,6 +101,9 @@ public interface PortletFileRepository {
 	public void deletePortletRepository(long groupId, String portletId)
 		throws PortalException;
 
+	public FileEntry fetchPortletFileEntry(
+		long groupId, long folderId, String fileName);
+
 	public Repository fetchPortletRepository(long groupId, String portletId);
 
 	public String getDownloadPortletFileEntryURL(

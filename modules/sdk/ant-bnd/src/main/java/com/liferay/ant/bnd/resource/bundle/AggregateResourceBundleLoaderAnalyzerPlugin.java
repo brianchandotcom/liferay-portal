@@ -26,9 +26,6 @@ import aQute.libg.filters.LiteralFilter;
 import aQute.libg.filters.NotFilter;
 import aQute.libg.filters.SimpleFilter;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import java.util.Set;
 
 /**
@@ -94,20 +91,9 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 		String servletContextName = analyzer.getProperty("Web-ContextPath");
 
 		if (servletContextName != null) {
-			try {
-				Path servletContextPath = Paths.get(servletContextName);
-
-				servletContextName = String.valueOf(
-					servletContextPath.subpath(0, 1));
-			}
-			catch (Exception e) {
-
-				// ignore
-
-			}
+			servletContextName = servletContextName.substring(1);
 		}
-
-		if (servletContextName == null) {
+		else {
 			servletContextName = analyzer.getBsn();
 		}
 

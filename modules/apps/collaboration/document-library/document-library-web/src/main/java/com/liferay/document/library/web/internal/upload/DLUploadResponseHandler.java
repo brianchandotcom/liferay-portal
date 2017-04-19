@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadResponseHandler;
@@ -47,23 +48,25 @@ public class DLUploadResponseHandler implements UploadResponseHandler {
 
 	@Override
 	public JSONObject onSuccess(
-			PortletRequest portletRequest, FileEntry fileEntry)
+			UploadPortletRequest uploadPortletRequest, FileEntry fileEntry)
 		throws PortalException {
 
 		JSONObject jsonObject = _itemSelectorUploadResponseHandler.onSuccess(
-			portletRequest, fileEntry);
+			uploadPortletRequest, fileEntry);
 
 		JSONObject fileJSONObject = jsonObject.getJSONObject("file");
 
-		fileJSONObject.put("url", _getURL(portletRequest, fileEntry));
+		fileJSONObject.put("url", _getURL(uploadPortletRequest, fileEntry));
 
 		return jsonObject;
 	}
 
-	private String _getURL(PortletRequest portletRequest, FileEntry fileEntry) {
+	private String _getURL(
+		UploadPortletRequest uploadPortletRequest, FileEntry fileEntry) {
+
 		try {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
+				(ThemeDisplay)uploadPortletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
 			return DLUtil.getPreviewURL(

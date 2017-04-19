@@ -17,6 +17,7 @@ package com.liferay.upload;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 
 import javax.portlet.PortletRequest;
 
@@ -30,7 +31,7 @@ public interface UploadResponseHandler {
 		throws PortalException;
 
 	public JSONObject onSuccess(
-			PortletRequest portletRequest, FileEntry fileEntry)
+			UploadPortletRequest uploadPortletRequest, FileEntry fileEntry)
 		throws PortalException;
 
 }

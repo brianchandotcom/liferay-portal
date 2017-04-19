@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadResponseHandler;
@@ -47,21 +48,22 @@ public class ItemSelectorUploadResponseHandlerImpl
 
 	@Override
 	public JSONObject onSuccess(
-			PortletRequest portletRequest, FileEntry fileEntry)
+			UploadPortletRequest uploadPortletRequest, FileEntry fileEntry)
 		throws PortalException {
 
 		JSONObject jsonObject = _defaultUploadResponseHandler.onSuccess(
-			portletRequest, fileEntry);
+			uploadPortletRequest, fileEntry);
 
-		return _resolveValue(portletRequest, fileEntry, jsonObject);
+		return _resolveValue(uploadPortletRequest, fileEntry, jsonObject);
 	}
 
 	private JSONObject _resolveValue(
-			PortletRequest portletRequest, FileEntry fileEntry,
+			UploadPortletRequest uploadPortletRequest, FileEntry fileEntry,
 			JSONObject jsonObject)
 		throws PortalException {
 
-		String returnType = ParamUtil.getString(portletRequest, "returnType");
+		String returnType = ParamUtil.getString(
+			uploadPortletRequest, "returnType");
 
 		ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver =
 			_itemSelectorReturnTypeResolverHandler.
@@ -71,7 +73,7 @@ public class ItemSelectorUploadResponseHandlerImpl
 		if (itemSelectorReturnTypeResolver != null) {
 			try {
 				ThemeDisplay themeDisplay =
-					(ThemeDisplay)portletRequest.getAttribute(
+					(ThemeDisplay)uploadPortletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
 				String resolvedValue = itemSelectorReturnTypeResolver.getValue(

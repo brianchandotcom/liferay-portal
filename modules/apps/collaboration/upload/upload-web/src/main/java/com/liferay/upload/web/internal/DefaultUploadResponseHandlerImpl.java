@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -93,16 +94,17 @@ public class DefaultUploadResponseHandlerImpl implements UploadResponseHandler {
 
 	@Override
 	public JSONObject onSuccess(
-			PortletRequest portletRequest, FileEntry fileEntry)
+			UploadPortletRequest uploadPortletRequest, FileEntry fileEntry)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
 
-		String randomId = ParamUtil.getString(portletRequest, "randomId");
+		String randomId = ParamUtil.getString(uploadPortletRequest, "randomId");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)uploadPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String url = PortletFileRepositoryUtil.getPortletFileEntryURL(
 			themeDisplay, fileEntry, StringPool.BLANK);

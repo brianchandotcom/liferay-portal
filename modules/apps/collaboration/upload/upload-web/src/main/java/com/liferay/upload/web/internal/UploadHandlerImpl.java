@@ -78,7 +78,8 @@ public class UploadHandlerImpl implements UploadHandler {
 			FileEntry fileEntry = uploadFileEntryHandler.upload(
 				uploadPortletRequest);
 
-			return uploadResponseHandler.onSuccess(portletRequest, fileEntry);
+			return uploadResponseHandler.onSuccess(
+				uploadPortletRequest, fileEntry);
 		}
 		catch (PortalException pe) {
 			return uploadResponseHandler.onFailure(portletRequest, pe);

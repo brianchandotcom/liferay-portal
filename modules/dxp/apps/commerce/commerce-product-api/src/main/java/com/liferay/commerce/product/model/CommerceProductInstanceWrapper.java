@@ -354,7 +354,9 @@ public class CommerceProductInstanceWrapper implements CommerceProductInstance,
 	* Returns the trash handler for this commerce product instance.
 	*
 	* @return the trash handler for this commerce product instance
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
 		return _commerceProductInstance.getTrashHandler();

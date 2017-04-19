@@ -182,6 +182,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
+	public void setAllFileNames(List<String> allFileNames) {
+		_allFileNames = allFileNames;
+	}
+
+	@Override
 	public void setProperties(Properties properties) {
 		_properties = properties;
 	}
@@ -849,6 +854,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
 			"/source-formatter/documentation/";
 
+	private List<String> _allFileNames;
 	private boolean _browserStarted;
 	private String[] _excludes;
 	private final Map<String, List<String>> _exclusionPropertiesMap =

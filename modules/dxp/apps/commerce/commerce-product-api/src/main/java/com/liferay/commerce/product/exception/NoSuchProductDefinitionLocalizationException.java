@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Marco Leo
  */
 @ProviderType
-public class NoSuchProductDefinitionLocalizationException extends NoSuchModelException {
+public class NoSuchProductDefinitionLocalizationException
+	extends NoSuchModelException {
 
 	public NoSuchProductDefinitionLocalizationException() {
 	}
@@ -30,7 +31,9 @@ public class NoSuchProductDefinitionLocalizationException extends NoSuchModelExc
 		super(msg);
 	}
 
-	public NoSuchProductDefinitionLocalizationException(String msg, Throwable cause) {
+	public NoSuchProductDefinitionLocalizationException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

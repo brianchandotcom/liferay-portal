@@ -145,7 +145,8 @@ public class CommerceProductOptionsDisplayContext {
 	}
 
 	public SearchContainer<CommerceProductOption>
-		getCommerceProductOptionSearchContainer() throws PortalException {
+			getCommerceProductOptionSearchContainer()
+		throws PortalException {
 
 		if (_commerceProductOptionSearchContainer != null) {
 			return _commerceProductOptionSearchContainer;

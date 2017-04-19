@@ -51,30 +51,33 @@ String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventNa
 </div>
 
 <aui:script use="product-option-item-selector">
+	var commerceProductOptionSelectorWrapper = A.one("#<portlet:namespace />commerceProductOptionSelectorWrapper");
 
-	A.one("#<portlet:namespace />commerceProductOptionSelectorWrapper")
-		.delegate('click',
-			function(event) {
+	commerceProductOptionSelectorWrapper.delegate(
+		'click',
+		function(event) {
+			var currentTarget = event.currentTarget;
 
-				var por = event.currentTarget;
+			A.all('.commerce-product-option-row').removeClass('active');
 
-				A.all('.commerce-product-option-row').removeClass('active');
+			currentTarget.addClass('active');
 
-				por.addClass('active');
+			var commerceProductOptionName = currentTarget.one('.commerce-product-option-name');
 
-				var pon = event.currentTarget.one('.commerce-product-option-name');
-				var id = pon.attr('data-id');
+			var commerceProductOptionId = pon.attr('data-id');
 
-				var data =
-					{
-						data:{
-							returnType: "COMMERCE-PRODUCT-OPTION",
-							value: {id: id}
+			var data =
+				{
+					data: {
+						returnType: 'COMMERCE-PRODUCT-OPTION',
+						value: {
+							id: commerceProductOptionId
 						}
-					};
+					}
+				};
 
-				Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', data);
-			},
-			'.commerce-product-option-row');
-
+			Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', data);
+		},
+		'.commerce-product-option-row'
+	);
 </aui:script>

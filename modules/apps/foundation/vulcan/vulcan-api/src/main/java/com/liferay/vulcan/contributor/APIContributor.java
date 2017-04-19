@@ -15,8 +15,9 @@
 package com.liferay.vulcan.contributor;
 
 /**
- * @author Carlos Sierra Andrés
  * @author Alejandro Hernández
+ * @author Carlos Sierra Andrés
+ * @author Jorge Ferrer
  */
 public interface APIContributor {
 

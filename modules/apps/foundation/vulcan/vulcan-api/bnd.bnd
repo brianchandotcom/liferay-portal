@@ -3,5 +3,8 @@ Bundle-SymbolicName: com.liferay.vulcan.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.vulcan.contributor,\
+	com.liferay.vulcan.endpoint,\
+	com.liferay.vulcan.pagination,\
 	com.liferay.vulcan.representor,\
-	com.liferay.vulcan.representor.builder
+	com.liferay.vulcan.representor.builder,\
+	com.liferay.vulcan.resource

@@ -12,31 +12,12 @@
  * details.
  */
 
-package com.liferay.vulcan.representor.builder;
-
-import java.util.Optional;
-import java.util.function.Function;
+package com.liferay.vulcan.resource;
 
 /**
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-public interface RepresentorBuilder<T> {
-
-	public FirstStep<T> addIdentifier(Function<T, String> identifierFunction);
-
-	public interface FirstStep<T> {
-
-		public <S> FirstStep<T> addEmbedded(
-			String key, Class<S> clazz,
-			Function<T, Optional<S>> objectFunction);
-
-		public FirstStep<T> addField(
-			String key, Function<T, Object> valueFunction);
-
-		public FirstStep<T> addType(String type);
-
-	}
-
+public interface Resource<T> {
 }

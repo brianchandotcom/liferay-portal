@@ -17,8 +17,9 @@ package com.liferay.vulcan.representor;
 import com.liferay.vulcan.representor.builder.RepresentorBuilder;
 
 /**
- * @author Carlos Sierra Andrés
  * @author Alejandro Hernández
+ * @author Carlos Sierra Andrés
+ * @author Jorge Ferrer
  */
 public interface ModelRepresentorMapper<T> {
 

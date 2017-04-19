@@ -12,31 +12,21 @@
  * details.
  */
 
-package com.liferay.vulcan.representor.builder;
+package com.liferay.vulcan.endpoint;
 
-import java.util.Optional;
-import java.util.function.Function;
+import com.liferay.vulcan.resource.Resource;
+
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 /**
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-public interface RepresentorBuilder<T> {
+public interface RootEndpoint {
 
-	public FirstStep<T> addIdentifier(Function<T, String> identifierFunction);
-
-	public interface FirstStep<T> {
-
-		public <S> FirstStep<T> addEmbedded(
-			String key, Class<S> clazz,
-			Function<T, Optional<S>> objectFunction);
-
-		public FirstStep<T> addField(
-			String key, Function<T, Object> valueFunction);
-
-		public FirstStep<T> addType(String type);
-
-	}
+	@Path("/{path}")
+	public Resource getApiContributors(@PathParam("path") String path);
 
 }

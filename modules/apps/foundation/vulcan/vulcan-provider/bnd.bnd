@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Vulcan Provider
+Bundle-SymbolicName: com.liferay.vulcan.provider
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.vulcan.provider.pagination

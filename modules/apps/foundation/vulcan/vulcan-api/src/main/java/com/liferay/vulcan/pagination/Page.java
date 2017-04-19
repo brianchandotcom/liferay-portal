@@ -12,31 +12,32 @@
  * details.
  */
 
-package com.liferay.vulcan.representor.builder;
+package com.liferay.vulcan.pagination;
 
-import java.util.Optional;
-import java.util.function.Function;
+import aQute.bnd.annotation.ProviderType;
+
+import java.util.Collection;
 
 /**
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-public interface RepresentorBuilder<T> {
+@ProviderType
+public interface Page<T> {
 
-	public FirstStep<T> addIdentifier(Function<T, String> identifierFunction);
+	public Collection<T> getItems();
 
-	public interface FirstStep<T> {
+	public int getItemsPerPage();
 
-		public <S> FirstStep<T> addEmbedded(
-			String key, Class<S> clazz,
-			Function<T, Optional<S>> objectFunction);
+	public int getLastPageNumber();
 
-		public FirstStep<T> addField(
-			String key, Function<T, Object> valueFunction);
+	public int getPageNumber();
 
-		public FirstStep<T> addType(String type);
+	public int getTotalCount();
 
-	}
+	public boolean hasNext();
+
+	public boolean hasPrevious();
 
 }

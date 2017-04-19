@@ -24,7 +24,7 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="MenuItem#BASIC_WEB_CONTENT" />
@@ -69,7 +69,7 @@
 	</command>
 
 	<command name="gotoAddWithStructureCP">
-		<var name="key_structureName" value="${structureName}" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -116,11 +116,10 @@
 	</command>
 
 	<command name="gotoEditTemplate">
-		<var name="key_rowEntry" value="${templateName}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${templateName}" />
+		</execute>
 	</command>
 
 	<command name="gotoFeeds">

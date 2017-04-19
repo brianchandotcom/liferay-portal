@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.commerce.product.exception.CommerceProductDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CommerceProductDefinitionExpirationDateException;
 import com.liferay.commerce.product.model.CommerceProductDefinition;
+import com.liferay.commerce.product.model.CommerceProductDefinitionLocalization;
 import com.liferay.commerce.product.service.base.CommerceProductDefinitionLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -43,11 +45,14 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Marco Leo
@@ -103,8 +108,6 @@ public class CommerceProductDefinitionLocalServiceImpl
 		commerceProductDefinition.setCompanyId(user.getCompanyId());
 		commerceProductDefinition.setUserId(user.getUserId());
 		commerceProductDefinition.setUserName(user.getFullName());
-		commerceProductDefinition.setTitleMap(titleMap);
-		commerceProductDefinition.setDescriptionMap(descriptionMap);
 		commerceProductDefinition.setBaseSKU(baseSKU);
 		commerceProductDefinition.setProductTypeName(productTypeName);
 		commerceProductDefinition.setDDMStructureKey(ddmStructureKey);
@@ -125,6 +128,12 @@ public class CommerceProductDefinitionLocalServiceImpl
 		commerceProductDefinition.setExpandoBridgeAttributes(serviceContext);
 
 		commerceProductDefinitionPersistence.update(commerceProductDefinition);
+
+		// Commerce product definition localization
+
+		_addCommerceProductDefinitionLocalizedFields(
+			user.getCompanyId(), commerceProductDefinitionId, titleMap,
+			descriptionMap);
 
 		// Resources
 
@@ -156,6 +165,12 @@ public class CommerceProductDefinitionLocalServiceImpl
 		// Commerce product definition
 
 		commerceProductDefinitionPersistence.remove(commerceProductDefinition);
+
+		// Commerce product definition localization
+
+		commerceProductDefinitionLocalizationPersistence.
+			removeByCommerceProductDefinitionPK(
+				commerceProductDefinition.getCommerceProductDefinitionId());
 
 		// Resources
 
@@ -207,6 +222,33 @@ public class CommerceProductDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public Map<Locale, String> getCommerceProductDefinitionDescriptionMap(
+		long commerceProductDefinitionId) {
+
+		Map<Locale, String>
+			commerceProductDefinitionLocalizationDescriptionMap =
+				new HashMap<>();
+
+		List<CommerceProductDefinitionLocalization>
+			commerceProductDefinitionLocalizationList =
+				commerceProductDefinitionLocalizationPersistence.
+					findByCommerceProductDefinitionPK(
+						commerceProductDefinitionId);
+
+		for (CommerceProductDefinitionLocalization
+				commerceProductDefinitionLocalization :
+					commerceProductDefinitionLocalizationList) {
+
+			commerceProductDefinitionLocalizationDescriptionMap.put(
+				LocaleUtil.fromLanguageId(
+					commerceProductDefinitionLocalization.getLanguageId()),
+				commerceProductDefinitionLocalization.getDescription());
+		}
+
+		return commerceProductDefinitionLocalizationDescriptionMap;
+	}
+
+	@Override
 	public List<CommerceProductDefinition> getCommerceProductDefinitions(
 		long groupId, int start, int end) {
 
@@ -229,6 +271,32 @@ public class CommerceProductDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public Map<Locale, String> getCommerceProductDefinitionTitleMap(
+		long commerceProductDefinitionId) {
+
+		Map<Locale, String> commerceProductDefinitionLocalizationTitleMap =
+			new HashMap<>();
+
+		List<CommerceProductDefinitionLocalization>
+			commerceProductDefinitionLocalizationList =
+				commerceProductDefinitionLocalizationPersistence.
+					findByCommerceProductDefinitionPK(
+						commerceProductDefinitionId);
+
+		for (CommerceProductDefinitionLocalization
+				commerceProductDefinitionLocalization :
+					commerceProductDefinitionLocalizationList) {
+
+			commerceProductDefinitionLocalizationTitleMap.put(
+				LocaleUtil.fromLanguageId(
+					commerceProductDefinitionLocalization.getLanguageId()),
+				commerceProductDefinitionLocalization.getTitle());
+		}
+
+		return commerceProductDefinitionLocalizationTitleMap;
+	}
+
+	@Override
 	public void updateAsset(
 			long userId, CommerceProductDefinition commerceProductDefinition,
 			long[] assetCategoryIds, String[] assetTagNames,
@@ -244,9 +312,10 @@ public class CommerceProductDefinitionLocalServiceImpl
 			commerceProductDefinition.getUuid(), 0, assetCategoryIds,
 			assetTagNames, true, true, null, null,
 			commerceProductDefinition.getCreateDate(), null,
-			ContentTypes.TEXT_PLAIN, commerceProductDefinition.getTitle(),
-			commerceProductDefinition.getDescription(), null,
-			commerceProductDefinition.getUrlTitle(), null, 0, 0, priority);
+			ContentTypes.TEXT_PLAIN,
+			commerceProductDefinition.getTitleMapAsXML(),
+			commerceProductDefinition.getDescriptionMapAsXML(), null, null,
+			null, 0, 0, priority);
 
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,
@@ -292,8 +361,6 @@ public class CommerceProductDefinitionLocalServiceImpl
 
 		validateReferences(groupId, ddmStructureKey);
 
-		commerceProductDefinition.setTitleMap(titleMap);
-		commerceProductDefinition.setDescriptionMap(descriptionMap);
 		commerceProductDefinition.setBaseSKU(baseSKU);
 		commerceProductDefinition.setProductTypeName(productTypeName);
 		commerceProductDefinition.setDDMStructureKey(ddmStructureKey);
@@ -314,6 +381,13 @@ public class CommerceProductDefinitionLocalServiceImpl
 		commerceProductDefinition.setExpandoBridgeAttributes(serviceContext);
 
 		commerceProductDefinitionPersistence.update(commerceProductDefinition);
+
+		// Commerce product definition localization
+
+		_updateCommerceProductDefinitionLocalizedFields(
+			commerceProductDefinition.getCompanyId(),
+			commerceProductDefinition.getCommerceProductDefinitionId(),
+			titleMap, descriptionMap);
 
 		// Asset
 
@@ -424,5 +498,140 @@ public class CommerceProductDefinitionLocalServiceImpl
 
 	@ServiceReference(type = DDMStructureLocalService.class)
 	protected DDMStructureLocalService ddmStructureLocalService;
+
+	private List<CommerceProductDefinitionLocalization>
+			_addCommerceProductDefinitionLocalizedFields(
+				long companyId, long commerceProductDefinitionId,
+				Map<Locale, String> titleMap,
+				Map<Locale, String> descriptionMap)
+		throws PortalException {
+
+		Set<Locale> localeSet = new HashSet<>();
+
+		localeSet.addAll(titleMap.keySet());
+
+		if (descriptionMap != null) {
+			localeSet.addAll(descriptionMap.keySet());
+		}
+
+		List<CommerceProductDefinitionLocalization>
+			commerceProductDefinitionLocalizations = new ArrayList<>();
+
+		for (Locale locale : localeSet) {
+			String title = titleMap.get(locale);
+			String description = null;
+
+			if (descriptionMap != null) {
+				description = descriptionMap.get(locale);
+			}
+
+			if (Validator.isNull(title) && Validator.isNull(description)) {
+				continue;
+			}
+
+			CommerceProductDefinitionLocalization
+				commerceProductDefinitionLocalization =
+					_addCommerceProductDefinitionLocalizedFields(
+						companyId, commerceProductDefinitionId, title,
+						description, LocaleUtil.toLanguageId(locale));
+
+			commerceProductDefinitionLocalizations.add(
+				commerceProductDefinitionLocalization);
+		}
+
+		return commerceProductDefinitionLocalizations;
+	}
+
+	private CommerceProductDefinitionLocalization
+			_addCommerceProductDefinitionLocalizedFields(
+				long companyId, long commerceProductDefinitionId, String title,
+				String description, String languageId)
+		throws PortalException {
+
+		CommerceProductDefinitionLocalization
+			commerceProductDefinitionLocalization =
+				commerceProductDefinitionLocalizationPersistence.findByCPD_L(
+					commerceProductDefinitionId, languageId);
+
+		if (commerceProductDefinitionLocalization == null) {
+			long commerceProductDefinitionLocalizationId =
+				counterLocalService.increment();
+
+			commerceProductDefinitionLocalization =
+				commerceProductDefinitionLocalizationPersistence.create(
+					commerceProductDefinitionLocalizationId);
+
+			commerceProductDefinitionLocalization.setCompanyId(companyId);
+			commerceProductDefinitionLocalization.
+				setCommerceProductDefinitionPK(commerceProductDefinitionId);
+			commerceProductDefinitionLocalization.setTitle(title);
+			commerceProductDefinitionLocalization.setDescription(description);
+			commerceProductDefinitionLocalization.setLanguageId(languageId);
+		}
+		else {
+			commerceProductDefinitionLocalization.setTitle(title);
+			commerceProductDefinitionLocalization.setDescription(description);
+		}
+
+		return commerceProductDefinitionLocalizationPersistence.update(
+			commerceProductDefinitionLocalization);
+	}
+
+	private List<CommerceProductDefinitionLocalization>
+			_updateCommerceProductDefinitionLocalizedFields(
+				long companyId, long commerceProductDefinitionId,
+				Map<Locale, String> titleMap,
+				Map<Locale, String> descriptionMap)
+		throws PortalException {
+
+		List<CommerceProductDefinitionLocalization>
+			oldCommerceProductDefinitionLocalizations = new ArrayList<>(
+				commerceProductDefinitionLocalizationPersistence.
+					findByCommerceProductDefinitionPK(
+						commerceProductDefinitionId));
+
+		List<CommerceProductDefinitionLocalization>
+			newCommerceProductDefinitionLocalizations =
+				_addCommerceProductDefinitionLocalizedFields(
+					companyId, commerceProductDefinitionId, titleMap,
+					descriptionMap);
+
+		oldCommerceProductDefinitionLocalizations.removeAll(
+			newCommerceProductDefinitionLocalizations);
+
+		for (CommerceProductDefinitionLocalization
+				oldCommerceProductDefinitionLocalization :
+					oldCommerceProductDefinitionLocalizations) {
+
+			commerceProductDefinitionLocalizationPersistence.remove(
+				oldCommerceProductDefinitionLocalization);
+		}
+
+		return newCommerceProductDefinitionLocalizations;
+	}
+
+	private CommerceProductDefinitionLocalization
+			_updateCommerceProductDefinitionLocalizedFields(
+				long companyId, long commerceProductDefinitionId, String title,
+				String description, String languageId)
+		throws PortalException {
+
+		CommerceProductDefinitionLocalization
+			commerceProductDefinitionLocalization =
+				commerceProductDefinitionLocalizationPersistence.findByCPD_L(
+					commerceProductDefinitionId, languageId);
+
+		if (commerceProductDefinitionLocalization == null) {
+			return _addCommerceProductDefinitionLocalizedFields(
+				companyId, commerceProductDefinitionId, title, description,
+				languageId);
+		}
+
+		commerceProductDefinitionLocalization.setTitle(title);
+		commerceProductDefinitionLocalization.setDescription(description);
+
+		return commerceProductDefinitionLocalizationPersistence.update(
+			commerceProductDefinitionLocalization);
+	}
 
 }

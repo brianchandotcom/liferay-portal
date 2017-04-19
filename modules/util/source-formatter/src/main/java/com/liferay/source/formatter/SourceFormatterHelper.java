@@ -102,21 +102,7 @@ public class SourceFormatterHelper {
 		return fileNames;
 	}
 
-	public File getFile(String baseDir, String fileName, int level) {
-		for (int i = 0; i < level; i++) {
-			File file = new File(baseDir + fileName);
-
-			if (file.exists()) {
-				return file;
-			}
-
-			fileName = "../" + fileName;
-		}
-
-		return null;
-	}
-
-	public List<String> getFileNames(
+	public List<String> filterRecentChangesFileNames(
 			String baseDir, List<String> recentChangesFileNames,
 			String[] excludes, String[] includes,
 			boolean includeSubrepositories)
@@ -154,15 +140,23 @@ public class SourceFormatterHelper {
 				fileSystem.getPathMatcher("glob:" + include));
 		}
 
-		if (recentChangesFileNames == null) {
-			return scanForFiles(
-				baseDir, excludeDirPathMatchers, excludeFilePathMatchers,
-				includeFilePathMatchers, includeSubrepositories);
-		}
-
-		return getFileNames(
+		return _filterRecentChangesFileNames(
 			baseDir, recentChangesFileNames, excludeDirPathMatchers,
 			excludeFilePathMatchers, includeFilePathMatchers);
+	}
+
+	public File getFile(String baseDir, String fileName, int level) {
+		for (int i = 0; i < level; i++) {
+			File file = new File(baseDir + fileName);
+
+			if (file.exists()) {
+				return file;
+			}
+
+			fileName = "../" + fileName;
+		}
+
+		return null;
 	}
 
 	public void init() throws IOException {
@@ -204,20 +198,89 @@ public class SourceFormatterHelper {
 		System.out.println(message);
 	}
 
-	protected Path getCanonicalPath(Path path) {
-		try {
-			File file = path.toFile();
+	public List<String> scanForFiles(
+			String baseDir, String[] excludes, String[] includes,
+			boolean includeSubrepositories)
+		throws Exception {
 
-			File canonicalFile = file.getCanonicalFile();
+		if (ArrayUtil.isEmpty(includes)) {
+			return new ArrayList<>();
+		}
 
-			return canonicalFile.toPath();
+		List<PathMatcher> excludeDirPathMatchers = new ArrayList<>();
+		List<PathMatcher> excludeFilePathMatchers = new ArrayList<>();
+		List<PathMatcher> includeFilePathMatchers = new ArrayList<>();
+
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		for (String exclude : excludes) {
+			if (!exclude.startsWith("**/")) {
+				exclude = "**/" + exclude;
+			}
+
+			if (exclude.endsWith("/**")) {
+				exclude = exclude.substring(0, exclude.length() - 3);
+
+				excludeDirPathMatchers.add(
+					fileSystem.getPathMatcher("glob:" + exclude));
+			}
+			else {
+				excludeFilePathMatchers.add(
+					fileSystem.getPathMatcher("glob:" + exclude));
+			}
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+
+		for (String include : includes) {
+			includeFilePathMatchers.add(
+				fileSystem.getPathMatcher("glob:" + include));
 		}
+
+		return _scanForFiles(
+			baseDir, excludeDirPathMatchers, excludeFilePathMatchers,
+			includeFilePathMatchers, includeSubrepositories);
 	}
 
-	protected List<String> getFileNames(
+	private String _createRegex(String s) {
+		if (!s.startsWith("**/")) {
+			s = "**/" + s;
+		}
+
+		s = StringUtil.replace(s, CharPool.PERIOD, "\\.");
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < s.length(); i++) {
+			char c1 = s.charAt(i);
+
+			if (c1 != CharPool.STAR) {
+				sb.append(c1);
+
+				continue;
+			}
+
+			if (i == (s.length() - 1)) {
+				sb.append("[^/]*");
+
+				continue;
+			}
+
+			char c2 = s.charAt(i + 1);
+
+			if (c2 == CharPool.STAR) {
+				sb.append(".*");
+
+				i++;
+
+				continue;
+			}
+
+			sb.append("[^/]*");
+		}
+
+		return sb.toString();
+	}
+
+	private List<String> _filterRecentChangesFileNames(
 			String baseDir, List<String> recentChangesFileNames,
 			List<PathMatcher> excludeDirPathMatchers,
 			List<PathMatcher> excludeFilePathMatchers,
@@ -281,7 +344,20 @@ public class SourceFormatterHelper {
 		return fileNames;
 	}
 
-	protected List<String> scanForFiles(
+	private Path _getCanonicalPath(Path path) {
+		try {
+			File file = path.toFile();
+
+			File canonicalFile = file.getCanonicalFile();
+
+			return canonicalFile.toPath();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private List<String> _scanForFiles(
 			String baseDir, final List<PathMatcher> excludeDirPathMatchers,
 			final List<PathMatcher> excludeFilePathMatchers,
 			final List<PathMatcher> includeFilePathMatchers,
@@ -321,7 +397,7 @@ public class SourceFormatterHelper {
 						}
 					}
 
-					dirPath = getCanonicalPath(dirPath);
+					dirPath = _getCanonicalPath(dirPath);
 
 					for (PathMatcher pathMatcher : excludeDirPathMatchers) {
 						if (pathMatcher.matches(dirPath)) {
@@ -336,7 +412,7 @@ public class SourceFormatterHelper {
 				public FileVisitResult visitFile(
 					Path filePath, BasicFileAttributes basicFileAttributes) {
 
-					Path canonicalPath = getCanonicalPath(filePath);
+					Path canonicalPath = _getCanonicalPath(filePath);
 
 					for (PathMatcher pathMatcher : excludeFilePathMatchers) {
 						if (pathMatcher.matches(canonicalPath)) {
@@ -382,46 +458,6 @@ public class SourceFormatterHelper {
 			});
 
 		return fileNames;
-	}
-
-	private String _createRegex(String s) {
-		if (!s.startsWith("**/")) {
-			s = "**/" + s;
-		}
-
-		s = StringUtil.replace(s, CharPool.PERIOD, "\\.");
-
-		StringBundler sb = new StringBundler();
-
-		for (int i = 0; i < s.length(); i++) {
-			char c1 = s.charAt(i);
-
-			if (c1 != CharPool.STAR) {
-				sb.append(c1);
-
-				continue;
-			}
-
-			if (i == (s.length() - 1)) {
-				sb.append("[^/]*");
-
-				continue;
-			}
-
-			char c2 = s.charAt(i + 1);
-
-			if (c2 == CharPool.STAR) {
-				sb.append(".*");
-
-				i++;
-
-				continue;
-			}
-
-			sb.append("[^/]*");
-		}
-
-		return sb.toString();
 	}
 
 	private final Properties _properties = new Properties();

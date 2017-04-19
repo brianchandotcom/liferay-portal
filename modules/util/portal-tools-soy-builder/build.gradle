@@ -16,6 +16,8 @@ configurations {
 }
 
 dependencies {
+	compile group: "com.google.template", name: "soy", version: "2015-04-10"
+
 	compileInclude group: "com.beust", name: "jcommander", version: "1.48"
 
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"

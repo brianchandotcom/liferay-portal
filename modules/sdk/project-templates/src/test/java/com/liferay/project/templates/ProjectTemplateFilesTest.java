@@ -91,45 +91,10 @@ public class ProjectTemplateFilesTest {
 		return false;
 	}
 
-	private void _testLanguageProperties(Path path) throws IOException {
-		try (BufferedReader bufferedReader = Files.newBufferedReader(
-				path, StandardCharsets.UTF_8)) {
-
-			String line = null;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				Assert.assertFalse(
-					"Forbidden empty line in " + path, line.isEmpty());
-				Assert.assertFalse(
-					"Forbidden comments in " + path, line.startsWith("##"));
-			}
-		}
-	}
-
-	private void _testProjectTemplateFiles(
-			Path projectTemplateDirPath, String gitIgnoreTemplate)
+	private void _testArchetypeMetadataXml(
+			Path projectTemplateDirPath, String projectTemplateDirName,
+			boolean hasJavaFiles)
 		throws IOException {
-
-		Path bndBndPath = projectTemplateDirPath.resolve("bnd.bnd");
-
-		Properties properties = FileUtil.readProperties(bndBndPath);
-
-		String bundleDescription = properties.getProperty("Bundle-Description");
-
-		Assert.assertTrue(
-			"Missing 'Bundle-Description' header in " + bndBndPath,
-			Validator.isNotNull(bundleDescription));
-
-		Matcher matcher = _bundleDescriptionPattern.matcher(bundleDescription);
-
-		Assert.assertTrue(
-			"Header 'Bundle-Description' in " + bndBndPath +
-				" must match pattern '" + _bundleDescriptionPattern.pattern() +
-					"'",
-			matcher.matches());
-
-		String projectTemplateDirName = String.valueOf(
-			projectTemplateDirPath.getFileName());
 
 		Path archetypeMetadataXmlPath = projectTemplateDirPath.resolve(
 			"src/main/resources/META-INF/maven/archetype-metadata.xml");
@@ -158,18 +123,55 @@ public class ProjectTemplateFilesTest {
 				"<?xml version=\"1.0\"?>\n\n<archetype-descriptor name=\"" +
 					archetypeDescriptorName + "\">"));
 
-		Path archetypeResourcesDirPath = projectTemplateDirPath.resolve(
-			"src/main/resources/archetype-resources");
+		boolean hasArchetypeMetadataAuthorProperty =
+			archetypeMetadataXml.contains("<requiredProperty key=\"author\">");
+
+		if (hasJavaFiles) {
+			Assert.assertTrue(
+				"Missing \"author\" required property in " +
+					archetypeMetadataXmlPath,
+				hasArchetypeMetadataAuthorProperty);
+		}
+		else {
+			Assert.assertFalse(
+				"Forbidden \"author\" required property in " +
+					archetypeMetadataXmlPath,
+				hasArchetypeMetadataAuthorProperty);
+		}
+	}
+
+	private void _testBndBnd(Path projectTemplateDirPath) throws IOException {
+		Path bndBndPath = projectTemplateDirPath.resolve("bnd.bnd");
+
+		Properties properties = FileUtil.readProperties(bndBndPath);
+
+		String bundleDescription = properties.getProperty("Bundle-Description");
 
 		Assert.assertTrue(
-			"Missing " + archetypeResourcesDirPath,
-			Files.isDirectory(archetypeResourcesDirPath));
+			"Missing 'Bundle-Description' header in " + bndBndPath,
+			Validator.isNotNull(bundleDescription));
 
+		Matcher matcher = _bundleDescriptionPattern.matcher(bundleDescription);
+
+		Assert.assertTrue(
+			"Header 'Bundle-Description' in " + bndBndPath +
+				" must match pattern '" + _bundleDescriptionPattern.pattern() +
+					"'",
+			matcher.matches());
+	}
+
+	private void _testBuildGradle(Path archetypeResourcesDirPath) {
 		Path buildGradlePath = archetypeResourcesDirPath.resolve(
 			"build.gradle");
 
 		Assert.assertTrue(
 			"Missing " + buildGradlePath, Files.exists(buildGradlePath));
+	}
+
+	private void _testGitIgnore(
+			String projectTemplateDirName, Path archetypeResourcesDirPath,
+			String gitIgnoreTemplate)
+		throws IOException {
 
 		Path dotGitIgnorePath = archetypeResourcesDirPath.resolve(".gitignore");
 		Path gitIgnorePath = archetypeResourcesDirPath.resolve("gitignore");
@@ -190,14 +192,37 @@ public class ProjectTemplateFilesTest {
 				"Incorrect " + gitIgnorePath, gitIgnoreTemplate,
 				FileUtil.read(gitIgnorePath));
 		}
+	}
 
+	private void _testGradleWrapper(Path archetypeResourcesDirPath) {
 		Assert.assertFalse(
 			"Forbidden Gradle Wrapper in " + archetypeResourcesDirPath,
 			Files.exists(archetypeResourcesDirPath.resolve("gradlew")));
+	}
 
+	private void _testLanguageProperties(Path path) throws IOException {
+		try (BufferedReader bufferedReader = Files.newBufferedReader(
+				path, StandardCharsets.UTF_8)) {
+
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				Assert.assertFalse(
+					"Forbidden empty line in " + path, line.isEmpty());
+				Assert.assertFalse(
+					"Forbidden comments in " + path, line.startsWith("##"));
+			}
+		}
+	}
+
+	private void _testMavenWrapper(Path archetypeResourcesDirPath) {
 		Assert.assertFalse(
 			"Forbidden Maven Wrapper in " + archetypeResourcesDirPath,
 			Files.exists(archetypeResourcesDirPath.resolve("mvnw")));
+	}
+
+	private void _testPomXml(Path archetypeResourcesDirPath)
+		throws IOException {
 
 		Path pomXmlPath = archetypeResourcesDirPath.resolve("pom.xml");
 
@@ -208,6 +233,30 @@ public class ProjectTemplateFilesTest {
 		Assert.assertFalse(
 			"Packaging \"jar\" is implicit in " + pomXmlPath,
 			pomXml.contains("<packaging>jar</packaging>"));
+	}
+
+	private void _testProjectTemplateFiles(
+			Path projectTemplateDirPath, String gitIgnoreTemplate)
+		throws IOException {
+
+		Path archetypeResourcesDirPath = projectTemplateDirPath.resolve(
+			"src/main/resources/archetype-resources");
+
+		Assert.assertTrue(
+			"Missing " + archetypeResourcesDirPath,
+			Files.isDirectory(archetypeResourcesDirPath));
+
+		String projectTemplateDirName = String.valueOf(
+			projectTemplateDirPath.getFileName());
+
+		_testBndBnd(projectTemplateDirPath);
+		_testBuildGradle(archetypeResourcesDirPath);
+		_testGitIgnore(
+			projectTemplateDirName, archetypeResourcesDirPath,
+			gitIgnoreTemplate);
+		_testGradleWrapper(archetypeResourcesDirPath);
+		_testMavenWrapper(archetypeResourcesDirPath);
+		_testPomXml(archetypeResourcesDirPath);
 
 		final AtomicBoolean hasJavaFiles = new AtomicBoolean();
 
@@ -266,21 +315,8 @@ public class ProjectTemplateFilesTest {
 
 			});
 
-		boolean hasArchetypeMetadataAuthorProperty =
-			archetypeMetadataXml.contains("<requiredProperty key=\"author\">");
-
-		if (hasJavaFiles.get()) {
-			Assert.assertTrue(
-				"Missing \"author\" required property in " +
-					archetypeMetadataXmlPath,
-				hasArchetypeMetadataAuthorProperty);
-		}
-		else {
-			Assert.assertFalse(
-				"Forbidden \"author\" required property in " +
-					archetypeMetadataXmlPath,
-				hasArchetypeMetadataAuthorProperty);
-		}
+		_testArchetypeMetadataXml(
+			projectTemplateDirPath, projectTemplateDirName, hasJavaFiles.get());
 	}
 
 	private void _testTextFile(Path path, String fileName, String extension)

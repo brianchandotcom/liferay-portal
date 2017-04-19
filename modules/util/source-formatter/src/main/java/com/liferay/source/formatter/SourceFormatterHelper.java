@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -60,6 +61,45 @@ public class SourceFormatterHelper {
 		if (!_propertiesContent.equals(newPropertiesContent)) {
 			FileUtil.write(_propertiesFile, newPropertiesContent);
 		}
+	}
+
+	public List<String> filterFileNames(
+		List<String> allFileNames, String[] excludes, String[] includes) {
+
+		List<String> excludesRegex = new ArrayList<>();
+		List<String> includesRegex = new ArrayList<>();
+
+		for (String exclude : excludes) {
+			excludesRegex.add(_createRegex(exclude));
+		}
+
+		for (String include : includes) {
+			includesRegex.add(_createRegex(include));
+		}
+
+		List<String> fileNames = new ArrayList<>();
+
+		outerLoop:
+		for (String fileName : allFileNames) {
+			String encodedFileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			for (String includeRegex : includesRegex) {
+				if (encodedFileName.matches(includeRegex)) {
+					for (String excludeRegex : excludesRegex) {
+						if (encodedFileName.matches(excludeRegex)) {
+							continue outerLoop;
+						}
+					}
+
+					fileNames.add(fileName);
+
+					continue outerLoop;
+				}
+			}
+		}
+
+		return fileNames;
 	}
 
 	public File getFile(String baseDir, String fileName, int level) {
@@ -342,6 +382,46 @@ public class SourceFormatterHelper {
 			});
 
 		return fileNames;
+	}
+
+	private String _createRegex(String s) {
+		if (!s.startsWith("**/")) {
+			s = "**/" + s;
+		}
+
+		s = StringUtil.replace(s, CharPool.PERIOD, "\\.");
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < s.length(); i++) {
+			char c1 = s.charAt(i);
+
+			if (c1 != CharPool.STAR) {
+				sb.append(c1);
+
+				continue;
+			}
+
+			if (i == (s.length() - 1)) {
+				sb.append("[^/]*");
+
+				continue;
+			}
+
+			char c2 = s.charAt(i + 1);
+
+			if (c2 == CharPool.STAR) {
+				sb.append(".*");
+
+				i++;
+
+				continue;
+			}
+
+			sb.append("[^/]*");
+		}
+
+		return sb.toString();
 	}
 
 	private final Properties _properties = new Properties();

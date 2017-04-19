@@ -407,7 +407,9 @@ public interface TrashHandler {
 	 * @return the range of trash renderers of model entities (excluding
 	 *         container models) that are children of the parent container model
 	 *         identified by the primary key
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
 			long classPK, int start, int end)
 		throws PortalException;
@@ -464,7 +466,9 @@ public interface TrashHandler {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching trash renderers of model entities
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
 			long classPK, int start, int end)
 		throws PortalException;
@@ -492,6 +496,11 @@ public interface TrashHandler {
 		return Collections.emptyList();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getTrashModelTrashedModels(long, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	public List<TrashRenderer> getTrashModelTrashRenderers(
 			long classPK, int start, int end, OrderByComparator<?> obc)
 		throws PortalException;

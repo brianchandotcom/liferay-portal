@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.jasper.jspc</artifactId>
-  <version>1.0.9</version>
+  <version>1.0.10</version>
   <description>Liferay Jasper JSPC</description>
   <licenses>
     <license>

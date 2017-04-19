@@ -512,10 +512,9 @@ public interface TrashHandler {
 		List<TrashRenderer> trashRenderers = new ArrayList<>();
 
 		for (TrashedModel trashedModel : trashedModels) {
-			Class<?> clazz = trashedModel.getClass();
-
 			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(clazz.getName());
+				TrashHandlerRegistryUtil.getTrashHandler(
+					trashedModel.getModelClassName());
 
 			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
 				trashedModel.getTrashEntryClassPK());

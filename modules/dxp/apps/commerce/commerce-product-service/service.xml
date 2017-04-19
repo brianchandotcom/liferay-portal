@@ -312,5 +312,7 @@
 	<exceptions>
 		<exception>CommerceProductDefinitionDisplayDate</exception>
 		<exception>CommerceProductDefinitionExpirationDate</exception>
+		<exception>CommerceProductInstanceDisplayDate</exception>
+		<exception>CommerceProductInstanceExpirationDate</exception>
 	</exceptions>
 </service-builder>

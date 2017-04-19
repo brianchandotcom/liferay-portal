@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.trash.kernel.model.TrashEntry;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -483,6 +484,13 @@ public interface TrashHandler {
 	}
 
 	public int getTrashModelsCount(long classPK) throws PortalException;
+
+	public default List<TrashedModel> getTrashModelTrashedModels(
+			long classPK, int start, int end, OrderByComparator<?> obc)
+		throws PortalException {
+
+		return Collections.emptyList();
+	}
 
 	public List<TrashRenderer> getTrashModelTrashRenderers(
 			long classPK, int start, int end, OrderByComparator<?> obc)

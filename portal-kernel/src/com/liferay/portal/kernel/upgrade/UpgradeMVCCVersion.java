@@ -50,19 +50,8 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 
 		tableName = normalizeName(tableName, databaseMetaData);
 
-		DB db = DBManagerUtil.getDB();
-
-		String schema = null;
-
-		if (db.getDBType() == DBType.POSTGRESQL) {
-			schema = _getPostgreSQLSchema();
-		}
-		else {
-			schema = connection.getSchema();
-		}
-
 		try (ResultSet tableResultSet = databaseMetaData.getTables(
-				connection.getCatalog(), schema, tableName, null)) {
+				connection.getCatalog(), _schema, tableName, null)) {
 
 			if (!tableResultSet.next()) {
 				_log.error("Table " + tableName + " does not exist");
@@ -71,7 +60,7 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 			}
 
 			try (ResultSet columnResultSet = databaseMetaData.getColumns(
-					connection.getCatalog(), schema, tableName,
+					connection.getCatalog(), _schema, tableName,
 					normalizeName("mvccVersion", databaseMetaData))) {
 
 				if (columnResultSet.next()) {
@@ -92,6 +81,8 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_setSchema();
+
 		upgradeClassElementMVCCVersions();
 		upgradeModuleTableMVCCVersions();
 	}
@@ -169,7 +160,20 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 		}
 	}
 
+	private void _setSchema() throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() == DBType.POSTGRESQL) {
+			_schema = _getPostgreSQLSchema();
+		}
+		else {
+			_schema = connection.getSchema();
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeMVCCVersion.class);
+
+	private static String _schema;
 
 }

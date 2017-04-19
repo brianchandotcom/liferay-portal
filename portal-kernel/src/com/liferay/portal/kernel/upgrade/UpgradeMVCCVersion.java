@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import java.io.InputStream;
 
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.List;
@@ -51,10 +52,13 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 
 		DB db = DBManagerUtil.getDB();
 
-		String schema = connection.getSchema();
+		String schema = null;
 
 		if (db.getDBType() == DBType.POSTGRESQL) {
-			schema = null;
+			schema = _getPostgreSQLSchema();
+		}
+		else {
+			schema = connection.getSchema();
 		}
 
 		try (ResultSet tableResultSet = databaseMetaData.getTables(
@@ -150,6 +154,19 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 		String tableName = classElement.attributeValue("table");
 
 		upgradeMVCCVersion(databaseMetaData, tableName);
+	}
+
+	private String _getPostgreSQLSchema() throws Exception {
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select current_schema();");
+			ResultSet rs = ps.executeQuery()) {
+
+			if (rs.next()) {
+				return (String)rs.getObject("current_schema");
+			}
+
+			return null;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

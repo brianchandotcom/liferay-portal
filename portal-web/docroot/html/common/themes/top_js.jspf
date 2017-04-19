@@ -43,53 +43,58 @@
 			getVersion: function() {
 				return '<%= version %>';
 			},
+
+			<%
+			BrowserType browserType = BrowserSnifferUtil.getBrowserType(request);
+			%>
+
 			isAir: function() {
-				return <%= BrowserSnifferUtil.isAir(request) %>;
+				return <%= browserType.isAir() %>;
 			},
 			isChrome: function() {
-				return <%= BrowserSnifferUtil.isChrome(request) %>;
+				return <%= browserType.isChrome() %>;
 			},
 			isFirefox: function() {
-				return <%= BrowserSnifferUtil.isFirefox(request) %>;
+				return <%= browserType.isFirefox() %>;
 			},
 			isGecko: function() {
-				return <%= BrowserSnifferUtil.isGecko(request) %>;
+				return <%= browserType.isGecko() %>;
 			},
 			isIe: function() {
-				return <%= BrowserSnifferUtil.isIe(request) %>;
+				return <%= browserType.isIe() %>;
 			},
 			isIphone: function() {
-				return <%= BrowserSnifferUtil.isIphone(request) %>;
+				return <%= browserType.isIphone() %>;
 			},
 			isLinux: function() {
-				return <%= BrowserSnifferUtil.isLinux(request) %>;
+				return <%= browserType.isLinux() %>;
 			},
 			isMac: function() {
-				return <%= BrowserSnifferUtil.isMac(request) %>;
+				return <%= browserType.isMac() %>;
 			},
 			isMobile: function() {
-				return <%= BrowserSnifferUtil.isMobile(request) %>;
+				return <%= browserType.isMobile() %>;
 			},
 			isMozilla: function() {
-				return <%= BrowserSnifferUtil.isMozilla(request) %>;
+				return <%= browserType.isMozilla() %>;
 			},
 			isOpera: function() {
-				return <%= BrowserSnifferUtil.isOpera(request) %>;
+				return <%= browserType.isOpera() %>;
 			},
 			isRtf: function() {
-				return <%= BrowserSnifferUtil.isRtf(request) %>;
+				return <%= browserType.isRtf(version) %>;
 			},
 			isSafari: function() {
-				return <%= BrowserSnifferUtil.isSafari(request) %>;
+				return <%= browserType.isSafari() %>;
 			},
 			isSun: function() {
-				return <%= BrowserSnifferUtil.isSun(request) %>;
+				return <%= browserType.isSun() %>;
 			},
 			isWebKit: function() {
-				return <%= BrowserSnifferUtil.isWebKit(request) %>;
+				return <%= browserType.isWebKit() %>;
 			},
 			isWindows: function() {
-				return <%= BrowserSnifferUtil.isWindows(request) %>;
+				return <%= browserType.isWindows() %>;
 			}
 		};
 

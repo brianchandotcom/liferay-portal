@@ -4,7 +4,7 @@
 		"metal-soy": "^2.4.5"
 	},
 	"devDependencies": {
-		"liferay-module-config-generator": "^1.1.10",
+		"liferay-module-config-generator": "^1.2.1",
 		"metal-cli": "^2.1.2"
 	},
 	"name": "${artifactId}",

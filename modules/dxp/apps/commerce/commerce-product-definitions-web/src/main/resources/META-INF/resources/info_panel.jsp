@@ -43,7 +43,7 @@ if (ListUtil.isEmpty(commerceProductDefinitions)) {
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape(commerceProductDefinition.getTitle(locale)) %></h4>
+			<h4><%= HtmlUtil.escape(commerceProductDefinition.getTitle(themeDisplay.getLanguageId())) %></h4>
 		</div>
 
 		<aui:nav-bar markupView="lexicon">

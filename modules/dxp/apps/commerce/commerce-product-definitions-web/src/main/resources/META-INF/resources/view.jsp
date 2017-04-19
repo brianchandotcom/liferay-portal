@@ -104,7 +104,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 											icon="web-content"
 											resultRow="<%= row %>"
 											rowChecker="<%= commerceProductDefinitionsDisplayContext.getRowChecker() %>"
-											title="<%= HtmlUtil.escape(commerceProductDefinition.getTitle(locale)) %>"
+											title="<%= HtmlUtil.escape(commerceProductDefinition.getTitle(themeDisplay.getLanguageId())) %>"
 										>
 											<%@ include file="/commerce_product_definition_vertical_card.jspf" %>
 										</liferay-frontend:icon-vertical-card>

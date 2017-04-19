@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Tools Service Builder
 Bundle-SymbolicName: com.liferay.portal.tools.service.builder
-Bundle-Version: 0.0.1
+Bundle-Version: 1.0.154
 Import-Package:\
 	!javax.portlet.*,\
 	\

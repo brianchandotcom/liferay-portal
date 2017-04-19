@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -67,27 +66,23 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Parameters provideCapabilityHeaders = new Parameters(
 				analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
-			Set<Entry<String, Attrs>> provides =
-				provideCapabilityHeaders.entrySet();
+			List<Entry<String, Attrs>> provides = new ArrayList<>(
+				provideCapabilityHeaders.entrySet());
 
 			Assert.assertEquals(provides.toString(), 1, provides.size());
 
-			List<Entry<String, Attrs>> provideEntries = new ArrayList<>(
-				provides);
+			Entry<String, Attrs> entry = provides.get(0);
 
-			Entry<String, Attrs> firstEntry = provideEntries.get(0);
+			Assert.assertEquals("liferay.resource.bundle", entry.getKey());
 
-			Assert.assertEquals("liferay.resource.bundle", firstEntry.getKey());
+			Attrs attrs = entry.getValue();
 
-			Attrs firstEntryAttrs = firstEntry.getValue();
-
-			Assert.assertEquals(2, firstEntryAttrs.size());
+			Assert.assertEquals(2, attrs.size());
 
 			Assert.assertEquals(
-				"resources.test", firstEntryAttrs.get("bundle.symbolic.name"));
+				"resources.test", attrs.get("bundle.symbolic.name"));
 			Assert.assertEquals(
-				"content.Language",
-				firstEntryAttrs.get("resource.bundle.base.name"));
+				"content.Language", attrs.get("resource.bundle.base.name"));
 		}
 	}
 
@@ -124,29 +119,29 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Parameters provideCapabilityHeaders = new Parameters(
 				analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
-			Set<Entry<String, Attrs>> provides =
-				provideCapabilityHeaders.entrySet();
+			List<Entry<String, Attrs>> provides = new ArrayList<>(
+				provideCapabilityHeaders.entrySet());
 
 			Assert.assertEquals(provides.toString(), 2, provides.size());
 
-			List<Entry<String, Attrs>> provideEntries = new ArrayList<>(
-				provides);
-
-			Entry<String, Attrs> firstEntry = provideEntries.get(0);
-
-			Assert.assertEquals("liferay.resource.bundle", firstEntry.getKey());
-
-			Attrs firstEntryAttrs = firstEntry.getValue();
-
-			Assert.assertEquals(2, firstEntryAttrs.size());
+			Entry<String, Attrs> liferayResourceBundleEntry = provides.get(0);
 
 			Assert.assertEquals(
-				"resources.test", firstEntryAttrs.get("bundle.symbolic.name"));
+				"liferay.resource.bundle", liferayResourceBundleEntry.getKey());
+
+			Attrs liferayResourceBundleAttrs =
+				liferayResourceBundleEntry.getValue();
+
+			Assert.assertEquals(2, liferayResourceBundleAttrs.size());
+
+			Assert.assertEquals(
+				"resources.test",
+				liferayResourceBundleAttrs.get("bundle.symbolic.name"));
 			Assert.assertEquals(
 				"content.Language",
-				firstEntryAttrs.get("resource.bundle.base.name"));
+				liferayResourceBundleAttrs.get("resource.bundle.base.name"));
 
-			Entry<String, Attrs> aggregateEntry = provideEntries.get(1);
+			Entry<String, Attrs> aggregateEntry = provides.get(1);
 
 			Assert.assertEquals(
 				"liferay.resource.bundle~", aggregateEntry.getKey());
@@ -154,6 +149,8 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Attrs aggregateEntryAttrs = aggregateEntry.getValue();
 
 			Assert.assertEquals(6, aggregateEntryAttrs.size());
+
+			Assert.assertEquals("true", aggregateEntryAttrs.get("aggregate"));
 
 			StringBuilder sb = new StringBuilder();
 
@@ -170,19 +167,14 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Assert.assertEquals(
 				"resources.test",
 				aggregateEntryAttrs.get("bundle.symbolic.name"));
-
 			Assert.assertEquals(
 				"content.Language",
 				aggregateEntryAttrs.get("resource.bundle.base.name"));
-
-			Assert.assertEquals(
-				"1", aggregateEntryAttrs.get("service.ranking"));
-
-			Assert.assertEquals("true", aggregateEntryAttrs.get("aggregate"));
-
 			Assert.assertEquals(
 				"resources.test",
 				aggregateEntryAttrs.get("servlet.context.name"));
+			Assert.assertEquals(
+				"1", aggregateEntryAttrs.get("service.ranking"));
 		}
 	}
 
@@ -212,19 +204,15 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Parameters provideCapabilityHeaders = new Parameters(
 				analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
-			Set<Entry<String, Attrs>> provides =
-				provideCapabilityHeaders.entrySet();
+			List<Entry<String, Attrs>> provides = new ArrayList<>(
+				provideCapabilityHeaders.entrySet());
 
-			List<Entry<String, Attrs>> provideEntries = new ArrayList<>(
-				provides);
+			Entry<String, Attrs> entry = provides.get(1);
 
-			Entry<String, Attrs> aggregateEntry = provideEntries.get(1);
-
-			Attrs aggregateEntryAttrs = aggregateEntry.getValue();
+			Attrs attrs = entry.getValue();
 
 			Assert.assertEquals(
-				"blade-language-web",
-				aggregateEntryAttrs.get("servlet.context.name"));
+				"blade-language-web", attrs.get("servlet.context.name"));
 		}
 	}
 
@@ -256,7 +244,6 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Assert.assertNotNull(attrs);
 
 			Assert.assertTrue(attrs.containsKey("bundle.symbolic.name"));
-
 			Assert.assertTrue(attrs.containsKey("resource.bundle.base.name"));
 		}
 	}

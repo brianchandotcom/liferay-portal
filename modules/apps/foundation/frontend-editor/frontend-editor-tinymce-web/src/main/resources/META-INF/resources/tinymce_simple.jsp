@@ -90,7 +90,7 @@ name = HtmlUtil.escapeJS(name);
 			data = <%= HtmlUtil.escapeJS(namespace + initMethod) %>();
 		}
 		else {
-			data = '<%= (contents != null) ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
+			data = '<%= (contents != null) ? HtmlUtil.escapeJS(HtmlUtil.escape(contents)) : StringPool.BLANK %>';
 		}
 
 		return data;

@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -70,9 +70,8 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 
 		String contentURL = (String)serviceContext.getAttribute("contentURL");
 
-		String messageUserEmailAddress = PortalUtil.getUserEmailAddress(userId);
-		String messageUserName = PortalUtil.getUserName(
-			userId, StringPool.BLANK);
+		String messageUserEmailAddress = _portal.getUserEmailAddress(userId);
+		String messageUserName = _portal.getUserName(userId, StringPool.BLANK);
 
 		String fromName = PrefsPropsUtil.getString(
 			user.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
@@ -191,6 +190,10 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 
 	private MentionsMatcherRegistry _mentionsMatcherRegistry;
 	private MentionsUserFinder _mentionsUserFinder;
+
+	@Reference
+	private Portal _portal;
+
 	private UserLocalService _userLocalService;
 
 }

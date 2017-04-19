@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -306,6 +308,9 @@ public class DefaultExportImportContentProcessorTest {
 
 		portalUtil.setPortal(portalImpl);
 
+		Portal originalPortal = ReflectionTestUtil.getAndSetFieldValue(
+			_exportImportContentProcessor, "_portal", portalImpl);
+
 		_oldLayoutFriendlyURLPrivateUserServletMapping =
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
 
@@ -351,6 +356,9 @@ public class DefaultExportImportContentProcessorTest {
 				StringPool.SLASH);
 
 		portalUtil.setPortal(new PortalImpl());
+
+		ReflectionTestUtil.setFieldValue(
+			_exportImportContentProcessor, "_portal", originalPortal);
 	}
 
 	@Test

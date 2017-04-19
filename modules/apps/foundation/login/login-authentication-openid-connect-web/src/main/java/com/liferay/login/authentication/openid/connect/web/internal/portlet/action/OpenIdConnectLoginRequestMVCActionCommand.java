@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
@@ -82,7 +82,7 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 			else {
 				_log.error("Unable to process the OpenID login", e);
 
-				PortalUtil.sendError(e, actionRequest, actionResponse);
+				_portal.sendError(e, actionRequest, actionResponse);
 			}
 		}
 	}
@@ -95,5 +95,8 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 
 	@Reference
 	private OpenIdConnectServiceHandler _openIdConnectServiceHandler;
+
+	@Reference
+	private Portal _portal;
 
 }

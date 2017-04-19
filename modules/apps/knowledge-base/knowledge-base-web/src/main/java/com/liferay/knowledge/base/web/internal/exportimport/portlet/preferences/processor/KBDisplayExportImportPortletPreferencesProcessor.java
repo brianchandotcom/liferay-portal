@@ -30,7 +30,7 @@ import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -89,7 +89,7 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 			resourceClassName = KBFolderConstants.getClassName();
 		}
 		else {
-			resourceClassName = PortalUtil.getClassName(resourceClassNameId);
+			resourceClassName = _portal.getClassName(resourceClassNameId);
 		}
 
 		try {
@@ -165,7 +165,7 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 		try {
 			portletPreferences.setValue(
 				"resourceClassNameId",
-				String.valueOf(PortalUtil.getClassNameId(resourceClassName)));
+				String.valueOf(_portal.getClassNameId(resourceClassName)));
 		}
 		catch (ReadOnlyException roe) {
 			StringBundler sb = new StringBundler(7);
@@ -174,7 +174,7 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 			sb.append("\"resourceClassNameId\" from ");
 			sb.append(resourceClassName);
 			sb.append(" to ");
-			sb.append(PortalUtil.getClassNameId(resourceClassName));
+			sb.append(_portal.getClassNameId(resourceClassName));
 			sb.append(" while importing KB Display portlet ");
 			sb.append(portletDataContext.getPortletId());
 
@@ -244,6 +244,10 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 
 	private KBArticleLocalService _kbArticleLocalService;
 	private KBFolderLocalService _kbFolderLocalService;
+
+	@Reference
+	private Portal _portal;
+
 	private ReferencedStagedModelImporterCapability
 		_referencedStagedModelImporterCapability;
 

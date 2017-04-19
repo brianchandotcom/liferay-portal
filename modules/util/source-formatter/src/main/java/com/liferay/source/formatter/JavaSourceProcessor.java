@@ -168,7 +168,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_moduleSourceChecks.add(new JavaModuleServiceProxyFactoryCheck());
 		_moduleSourceChecks.add(new JavaModuleTestCheck());
 		_moduleSourceChecks.add(
-			new JavaOSGiReferenceCheck(_getModuleFileNamesMap()));
+			new JavaOSGiReferenceCheck(
+				_getModuleFileNamesMap(),
+				getPropertyList("service.reference.util.class.names")));
 	}
 
 	@Override

@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -314,7 +313,7 @@ public class DefaultTextExportImportContentProcessor
 
 		StringBuilder sb = new StringBuilder(content);
 
-		String contextPath = PortalUtil.getPathContext();
+		String contextPath = _portal.getPathContext();
 
 		String[] patterns = {
 			contextPath.concat("/c/document_library/get_file?"),
@@ -402,7 +401,7 @@ public class DefaultTextExportImportContentProcessor
 
 		boolean secure = HttpUtil.isSecure(url);
 
-		int serverPort = PortalUtil.getPortalServerPort(secure);
+		int serverPort = _portal.getPortalServerPort(secure);
 
 		if (serverPort == -1) {
 			return url;
@@ -418,7 +417,7 @@ public class DefaultTextExportImportContentProcessor
 		String portalUrl = StringPool.BLANK;
 
 		if (Validator.isNotNull(publicLayoutSetVirtualHostname)) {
-			portalUrl = PortalUtil.getPortalURL(
+			portalUrl = _portal.getPortalURL(
 				publicLayoutSetVirtualHostname, serverPort, secure);
 
 			if (url.startsWith(portalUrl)) {
@@ -439,7 +438,7 @@ public class DefaultTextExportImportContentProcessor
 			privateLayoutSet.getVirtualHostname();
 
 		if (Validator.isNotNull(privateLayoutSetVirtualHostname)) {
-			portalUrl = PortalUtil.getPortalURL(
+			portalUrl = _portal.getPortalURL(
 				privateLayoutSetVirtualHostname, serverPort, secure);
 
 			if (url.startsWith(portalUrl)) {
@@ -459,7 +458,7 @@ public class DefaultTextExportImportContentProcessor
 		String companyVirtualHostname = company.getVirtualHostname();
 
 		if (Validator.isNotNull(companyVirtualHostname)) {
-			portalUrl = PortalUtil.getPortalURL(
+			portalUrl = _portal.getPortalURL(
 				companyVirtualHostname, serverPort, secure);
 
 			if (url.startsWith(portalUrl)) {
@@ -474,7 +473,7 @@ public class DefaultTextExportImportContentProcessor
 			}
 		}
 
-		portalUrl = PortalUtil.getPortalURL("localhost", serverPort, secure);
+		portalUrl = _portal.getPortalURL("localhost", serverPort, secure);
 
 		if (url.startsWith(portalUrl)) {
 			return url.substring(portalUrl.length());
@@ -547,7 +546,7 @@ public class DefaultTextExportImportContentProcessor
 					continue;
 				}
 
-				String pathContext = PortalUtil.getPathContext();
+				String pathContext = _portal.getPathContext();
 
 				if (pathContext.length() > 1) {
 					if (!url.startsWith(pathContext)) {
@@ -938,26 +937,26 @@ public class DefaultTextExportImportContentProcessor
 		LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
 		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
 
-		int serverPort = PortalUtil.getPortalServerPort(false);
+		int serverPort = _portal.getPortalServerPort(false);
 
 		if (serverPort != -1) {
 			if (Validator.isNotNull(company.getVirtualHostname())) {
-				companyPortalURL = PortalUtil.getPortalURL(
+				companyPortalURL = _portal.getPortalURL(
 					company.getVirtualHostname(), serverPort, false);
 			}
 
 			if (Validator.isNotNull(privateLayoutSet.getVirtualHostname())) {
-				privateLayoutSetPortalURL = PortalUtil.getPortalURL(
+				privateLayoutSetPortalURL = _portal.getPortalURL(
 					privateLayoutSet.getVirtualHostname(), serverPort, false);
 			}
 
 			if (Validator.isNotNull(publicLayoutSet.getVirtualHostname())) {
-				publicLayoutSetPortalURL = PortalUtil.getPortalURL(
+				publicLayoutSetPortalURL = _portal.getPortalURL(
 					publicLayoutSet.getVirtualHostname(), serverPort, false);
 			}
 		}
 
-		int secureSecurePort = PortalUtil.getPortalServerPort(true);
+		int secureSecurePort = _portal.getPortalServerPort(true);
 
 		String companySecurePortalURL = StringPool.BLANK;
 		String privateLayoutSetSecurePortalURL = StringPool.BLANK;
@@ -965,18 +964,18 @@ public class DefaultTextExportImportContentProcessor
 
 		if (secureSecurePort != -1) {
 			if (Validator.isNotNull(company.getVirtualHostname())) {
-				companySecurePortalURL = PortalUtil.getPortalURL(
+				companySecurePortalURL = _portal.getPortalURL(
 					company.getVirtualHostname(), secureSecurePort, true);
 			}
 
 			if (Validator.isNotNull(privateLayoutSet.getVirtualHostname())) {
-				privateLayoutSetSecurePortalURL = PortalUtil.getPortalURL(
+				privateLayoutSetSecurePortalURL = _portal.getPortalURL(
 					privateLayoutSet.getVirtualHostname(), secureSecurePort,
 					true);
 			}
 
 			if (Validator.isNotNull(publicLayoutSet.getVirtualHostname())) {
-				publicLayoutSetSecurePortalURL = PortalUtil.getPortalURL(
+				publicLayoutSetSecurePortalURL = _portal.getPortalURL(
 					publicLayoutSet.getVirtualHostname(), secureSecurePort,
 					true);
 			}
@@ -989,7 +988,7 @@ public class DefaultTextExportImportContentProcessor
 		content = StringUtil.replace(
 			content, _DATA_HANDLER_GROUP_FRIENDLY_URL, group.getFriendlyURL());
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_PATH_CONTEXT, PortalUtil.getPathContext());
+			content, _DATA_HANDLER_PATH_CONTEXT, _portal.getPathContext());
 		content = StringUtil.replace(
 			content, _DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING,
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING);
@@ -1094,7 +1093,7 @@ public class DefaultTextExportImportContentProcessor
 	protected void validateDLReferences(long groupId, String content)
 		throws PortalException {
 
-		String portalURL = PortalUtil.getPathContext();
+		String portalURL = _portal.getPathContext();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -1105,8 +1104,7 @@ public class DefaultTextExportImportContentProcessor
 			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 			portalURL =
-				PortalUtil.getPortalURL(themeDisplay) +
-					PortalUtil.getPathContext();
+				_portal.getPortalURL(themeDisplay) + _portal.getPathContext();
 		}
 
 		String[] patterns = {
@@ -1117,7 +1115,7 @@ public class DefaultTextExportImportContentProcessor
 
 		String[] completePatterns = new String[patterns.length];
 
-		long[] companyIds = PortalUtil.getCompanyIds();
+		long[] companyIds = _portal.getCompanyIds();
 
 		for (long companyId : companyIds) {
 			Company company = _companyLocalService.getCompany(companyId);
@@ -1222,7 +1220,7 @@ public class DefaultTextExportImportContentProcessor
 				continue;
 			}
 
-			String pathContext = PortalUtil.getPathContext();
+			String pathContext = _portal.getPathContext();
 
 			if (pathContext.length() > 1) {
 				if (!url.startsWith(pathContext)) {
@@ -1472,5 +1470,8 @@ public class DefaultTextExportImportContentProcessor
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

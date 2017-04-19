@@ -20,6 +20,7 @@ import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -131,35 +132,6 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException {
-
-		List<TrashRenderer> trashRenderers = new ArrayList<>();
-
-		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
-			classPK);
-
-		List<BookmarksEntry> foldersAndEntries =
-			BookmarksEntryLocalServiceUtil.getEntries(
-				folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
-				start, end);
-
-		for (BookmarksEntry folderOrEntry : foldersAndEntries) {
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					BookmarksEntry.class.getName());
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				folderOrEntry.getEntryId());
-
-			trashRenderers.add(trashRenderer);
-		}
-
-		return trashRenderers;
-	}
-
-	@Override
 	public String getTrashContainerModelName() {
 		return "folders";
 	}
@@ -173,35 +145,6 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 
 		return BookmarksFolderLocalServiceUtil.getFoldersCount(
 			folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH);
-	}
-
-	@Override
-	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException {
-
-		List<TrashRenderer> trashRenderers = new ArrayList<>();
-
-		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
-			classPK);
-
-		List<BookmarksFolder> folders =
-			BookmarksFolderLocalServiceUtil.getFolders(
-				folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
-				start, end);
-
-		for (BookmarksFolder curFolder : folders) {
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					BookmarksFolder.class.getName());
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				curFolder.getPrimaryKey());
-
-			trashRenderers.add(trashRenderer);
-		}
-
-		return trashRenderers;
 	}
 
 	@Override

@@ -1,7 +1,9 @@
 <definition>
 	<command name="_openDescriptiveMenulistCP">
 		<if>
-			<isset var="webContentTitleEscapeCharacter" />
+			<not>
+				<contains string="${webContentTitleEscapeCharacter}" substring="{webContentTitleEscapeCharacter}" />
+			</not>
 			<then>
 				<var name="key_webContentTitle" value="${webContentTitleEscapeCharacter}" />
 			</then>

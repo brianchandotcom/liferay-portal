@@ -1388,6 +1388,11 @@ version in external files to the latest snapshot.
 ### Fixed
 - [LPS-71901]: Fix wrong caching logic in `ReplaceRegexTask`.
 
+## 3.6.3 - 2017-04-19
+
+### Changed
+- [LPS-72039]: Update the [Liferay Gradle Plugins] dependency to version 3.3.1.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -1529,6 +1534,7 @@ version in external files to the latest snapshot.
 [LPS-71795]: https://issues.liferay.com/browse/LPS-71795
 [LPS-71826]: https://issues.liferay.com/browse/LPS-71826
 [LPS-71901]: https://issues.liferay.com/browse/LPS-71901
+[LPS-72039]: https://issues.liferay.com/browse/LPS-72039
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

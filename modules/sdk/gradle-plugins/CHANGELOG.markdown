@@ -1496,6 +1496,11 @@ to version 1.0.37.
 - [LPS-71925]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.153.
 
+## 3.3.1 - 2017-04-19
+
+### Changed
+- [LPS-72039]: Update the [Liferay Jasper JSPC] dependency to version 1.0.10.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -1631,4 +1636,5 @@ version 1.0.153.
 [LPS-71722]: https://issues.liferay.com/browse/LPS-71722
 [LPS-71826]: https://issues.liferay.com/browse/LPS-71826
 [LPS-71925]: https://issues.liferay.com/browse/LPS-71925
+[LPS-72039]: https://issues.liferay.com/browse/LPS-72039
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

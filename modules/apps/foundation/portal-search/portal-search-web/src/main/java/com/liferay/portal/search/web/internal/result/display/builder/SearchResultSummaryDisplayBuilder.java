@@ -73,7 +73,7 @@ public class SearchResultSummaryDisplayBuilder {
 
 	public SearchResultSummaryDisplayContext build() throws Exception {
 		String className = _document.get(Field.ENTRY_CLASS_NAME);
-		long classPK = GetterUtil.getLong(_document.get(Field.ENTRY_CLASS_PK));
+		long classPK = getEntryClassPK();
 
 		AssetRendererFactory<?> assetRendererFactory =
 			getAssetRendererFactoryByClassName(className);
@@ -227,7 +227,8 @@ public class SearchResultSummaryDisplayBuilder {
 		buildImage(searchResultSummaryDisplayContext, className, classPK);
 		buildLocaleReminder(searchResultSummaryDisplayContext, summary);
 		buildModelResource(searchResultSummaryDisplayContext, className);
-		buildUserPortrait(searchResultSummaryDisplayContext, assetEntry);
+		buildUserPortrait(
+			searchResultSummaryDisplayContext, assetEntry, className);
 		buildViewURL(className, classPK, searchResultSummaryDisplayContext);
 
 		return searchResultSummaryDisplayContext;
@@ -427,7 +428,16 @@ public class SearchResultSummaryDisplayBuilder {
 
 	protected void buildUserPortrait(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
-		AssetEntry assetEntry) {
+		AssetEntry assetEntry, String className) {
+
+		long entryClassPK = getEntryClassPK();
+
+		AssetEntry childAssetEntry = _assetEntryLocalService.fetchEntry(
+			className, entryClassPK);
+
+		if (childAssetEntry != null) {
+			assetEntry = childAssetEntry;
+		}
 
 		if (assetEntry != null) {
 			searchResultSummaryDisplayContext.setAssetEntryUserId(
@@ -478,6 +488,10 @@ public class SearchResultSummaryDisplayBuilder {
 
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassName(className);
+	}
+
+	protected long getEntryClassPK() {
+		return GetterUtil.getLong(_document.get(Field.ENTRY_CLASS_PK));
 	}
 
 	protected Indexer<Object> getIndexer(String className) {

@@ -24,9 +24,9 @@
 
 		<!-- Other fields -->
 
-		<column localized="true" name="title" type="String"  />
-		<column localized="true" name="urlTitle" type="String"  />
-		<column localized="true" name="description" type="String" />
+		<column localized="extra-table" name="title" type="String"  />
+		<column localized="extra-table" name="urlTitle" type="String"  />
+		<column localized="extra-table" name="description" type="String" />
 		<column name="productTypeName" type="String" />
 		<column name="availableIndividually" type="boolean" />
 		<column name="DDMStructureKey" type="String" />

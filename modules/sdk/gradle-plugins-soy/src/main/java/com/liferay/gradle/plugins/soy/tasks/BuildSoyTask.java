@@ -14,19 +14,24 @@
 
 package com.liferay.gradle.plugins.soy.tasks;
 
+import com.liferay.gradle.plugins.soy.internal.util.GradleUtil;
+import com.liferay.portal.tools.soy.builder.commands.BuildSoyCommand;
+
 import java.io.File;
+
+import java.lang.reflect.Method;
+
+import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
-import org.gradle.api.Action;
-import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SourceTask;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.process.JavaExecSpec;
 
 /**
  * @author Andrea Di Giorgi
@@ -34,22 +39,35 @@ import org.gradle.process.JavaExecSpec;
 public class BuildSoyTask extends SourceTask {
 
 	@TaskAction
-	public void buildSoy() {
-		Project project = getProject();
+	public void buildSoy() throws Exception {
+		final List<Path> paths = new ArrayList<>();
 
-		project.javaexec(
-			new Action<JavaExecSpec>() {
+		for (File file : getSource()) {
+			paths.add(file.toPath());
+		}
+
+		GradleUtil.withClasspath(
+			getClasspath(),
+			new Callable<Void>() {
 
 				@Override
-				public void execute(JavaExecSpec javaExecSpec) {
-					javaExecSpec.args(
-						"--outputPathFormat",
-						"{INPUT_DIRECTORY}/{INPUT_FILE_NAME}.js");
-					javaExecSpec.args("--srcs", _getSourceFileNames());
+				public Void call() throws Exception {
+					Thread currentThread = Thread.currentThread();
 
-					javaExecSpec.setClasspath(getClasspath());
-					javaExecSpec.setMain(
-						"com.google.template.soy.SoyToJsSrcCompiler");
+					ClassLoader contextClassLoader =
+						currentThread.getContextClassLoader();
+
+					Class<?> clazz = (Class<?>)contextClassLoader.loadClass(
+						BuildSoyCommand.class.getName());
+
+					Method executeMethod = clazz.getMethod(
+						"execute", List.class);
+
+					Object buildSoyCommand = clazz.newInstance();
+
+					executeMethod.invoke(buildSoyCommand, paths);
+
+					return null;
 				}
 
 			});
@@ -78,25 +96,6 @@ public class BuildSoyTask extends SourceTask {
 
 	public void setClasspath(FileCollection classpath) {
 		_classpath = classpath;
-	}
-
-	private String _getSourceFileNames() {
-		FileCollection sourceFiles = getSource();
-
-		if (sourceFiles.isEmpty()) {
-			return "";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		Project project = getProject();
-
-		for (File sourceFile : sourceFiles) {
-			sb.append(project.relativePath(sourceFile));
-			sb.append(',');
-		}
-
-		return sb.substring(0, sb.length() - 1);
 	}
 
 	private FileCollection _classpath;

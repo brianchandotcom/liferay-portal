@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.soy.tasks;
 
-import com.liferay.portal.tools.soy.builder.commands.ReplaceTranslationCommand;
+import com.liferay.portal.tools.soy.builder.commands.ReplaceSoyTranslationCommand;
 
 import groovy.lang.Closure;
 
@@ -40,7 +40,7 @@ public class ReplaceSoyTranslationTask extends SourceTask {
 	@TaskAction
 	public void replaceSoyTranslation() throws IOException {
 		for (File file : getSource()) {
-			_replaceTranslationCommand.execute(file.toPath());
+			_replaceSoyTranslationCommand.execute(file.toPath());
 		}
 	}
 
@@ -50,8 +50,8 @@ public class ReplaceSoyTranslationTask extends SourceTask {
 
 	private Closure<String> _replacementClosure;
 
-	private final ReplaceTranslationCommand _replaceTranslationCommand =
-		new ReplaceTranslationCommand() {
+	private final ReplaceSoyTranslationCommand _replaceSoyTranslationCommand =
+		new ReplaceSoyTranslationCommand() {
 
 			@Override
 			protected String getReplacement(

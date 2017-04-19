@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface BrowserSniffer {
 
 	public static final String BROWSER_ID_FIREFOX = "firefox";
@@ -32,6 +35,8 @@ public interface BrowserSniffer {
 	public boolean acceptsGzip(HttpServletRequest request);
 
 	public String getBrowserId(HttpServletRequest request);
+
+	public BrowserType getBrowserType(HttpServletRequest request);
 
 	public float getMajorVersion(HttpServletRequest request);
 

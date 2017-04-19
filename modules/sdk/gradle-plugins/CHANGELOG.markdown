@@ -1479,7 +1479,7 @@ to version 1.0.36.
 - [LPS-71686]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.152.
 
-## 3.3.0 - 2017-04-17
+## 3.3.0 - 2017-04-18
 
 ### Changed
 - [LPS-67573]: Update the [Liferay Gradle Plugins Alloy Taglib] dependency to

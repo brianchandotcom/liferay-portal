@@ -114,7 +114,9 @@ public class JspC extends org.apache.jasper.JspC {
 				page = page.replace(File.separatorChar, '/');
 			}
 
-			if (page.contains("/docroot/META-INF/custom_jsps/")) {
+			if (page.contains("/docroot/META-INF/custom_jsps/") ||
+				page.contains("/META-INF/resources/custom_jsps/")) {
+
 				iterator.remove();
 			}
 		}

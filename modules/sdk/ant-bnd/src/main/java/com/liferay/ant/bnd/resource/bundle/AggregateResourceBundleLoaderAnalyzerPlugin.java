@@ -60,6 +60,11 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 		Parameters provideCapabilityHeaders = new SortedParameters(
 			analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
+		Attrs attrs = new Attrs();
+
+		attrs.put("aggregate", "true");
+		attrs.put("bundle.symbolic.name", analyzer.getBsn());
+
 		StringBuilder resourceBundleAggregate = new StringBuilder();
 
 		AndFilter andFilter = new AndFilter();
@@ -80,16 +85,11 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 			filter.append(resourceBundleAggregate);
 		}
 
-		Attrs attrs = new Attrs();
-
 		attrs.put(
 			"resource.bundle.aggregate:String",
 			resourceBundleAggregate.toString());
 
-		attrs.put("bundle.symbolic.name", analyzer.getBsn());
 		attrs.put("resource.bundle.base.name", "content.Language");
-		attrs.put("service.ranking:Long", "1");
-		attrs.put("aggregate", "true");
 
 		String servletContextName = analyzer.getProperty("Web-ContextPath");
 
@@ -112,6 +112,8 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 		}
 
 		attrs.put("servlet.context.name", servletContextName);
+
+		attrs.put("service.ranking:Long", "1");
 
 		provideCapabilityHeaders.add("liferay.resource.bundle", attrs);
 

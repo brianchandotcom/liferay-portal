@@ -14,8 +14,12 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicy;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -85,10 +89,18 @@ public abstract class BaseOrganizationMembershipPolicyTestCase
 	public void tearDown() throws Exception {
 		super.tearDown();
 
+		deleteOrganizations(_forbiddenOrganizationIds);
+
 		_forbiddenOrganizationIds = new long[2];
 		_forbiddenRoleIds = new long[2];
+
+		deleteOrganizations(_requiredOrganizationIds);
+
 		_requiredOrganizationIds = new long[2];
 		_requiredRoleIds = new long[2];
+
+		deleteOrganizations(_standardOrganizationIds);
+
 		_standardOrganizationIds = new long[2];
 		_standardRoleIds = new long[2];
 	}
@@ -162,6 +174,27 @@ public abstract class BaseOrganizationMembershipPolicyTestCase
 			group.getGroupId());
 
 		return _standardRoleIds;
+	}
+
+	protected void deleteOrganizations(long[] organizationIds)
+		throws PortalException {
+
+		for (long organizationId : organizationIds) {
+			Organization organization =
+				OrganizationLocalServiceUtil.fetchOrganization(organizationId);
+
+			if (organization == null) {
+				continue;
+			}
+
+			for (User user : UserLocalServiceUtil.getOrganizationUsers(
+					organizationId)) {
+
+				UserLocalServiceUtil.deleteUser(user);
+			}
+
+			OrganizationLocalServiceUtil.deleteOrganization(organization);
+		}
 	}
 
 	@DeleteAfterTestRun

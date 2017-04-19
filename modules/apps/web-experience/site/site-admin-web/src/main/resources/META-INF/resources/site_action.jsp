@@ -46,18 +46,17 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcPath" value="/edit_site.jsp" />
-		<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-	</portlet:renderURL>
-
-	<liferay-ui:icon
-		label="<%= true %>"
-		message="edit"
-		url="<%= editURL %>"
-	/>
-
 	<c:if test="<%= hasUpdatePermission %>">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcPath" value="/edit_site.jsp" />
+			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			label="<%= true %>"
+			message="edit"
+			url="<%= editURL %>"
+		/>
 
 		<%
 		int childSitesCount = siteAdminDisplayContext.getChildSitesCount(group);

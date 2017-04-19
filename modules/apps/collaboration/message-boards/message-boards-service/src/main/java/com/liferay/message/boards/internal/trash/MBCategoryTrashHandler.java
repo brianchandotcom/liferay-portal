@@ -214,33 +214,6 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException {
-
-		List<TrashRenderer> trashRenderers = new ArrayList<>();
-
-		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
-
-		List<MBThread> threads = _mbThreadLocalService.getThreads(
-			category.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
-			start, end);
-
-		for (MBThread thread : threads) {
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					MBThread.class.getName());
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				thread.getPrimaryKey());
-
-			trashRenderers.add(trashRenderer);
-		}
-
-		return trashRenderers;
-	}
-
-	@Override
 	public String getTrashContainerModelName() {
 		return "categories";
 	}

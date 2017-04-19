@@ -285,9 +285,9 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 					</aui:fieldset>
 
 					<liferay-staging:deletions cmd="<%= Constants.IMPORT %>" />
-
-					<liferay-staging:permissions action="<%= Constants.IMPORT %>" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 				</c:if>
+
+				<liferay-staging:permissions action="<%= Constants.IMPORT %>" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="update-data">
 					<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(request, "mirror") %>' helpMessage="import-data-strategy-mirror-help" id="mirror" label="mirror" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR %>" />

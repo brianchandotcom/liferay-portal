@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.trash.kernel.model.TrashEntry;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -501,9 +502,29 @@ public interface TrashHandler {
 	 *             #getTrashModelTrashedModels(long, int, int, OrderByComparator)}
 	 */
 	@Deprecated
-	public List<TrashRenderer> getTrashModelTrashRenderers(
+	public default List<TrashRenderer> getTrashModelTrashRenderers(
 			long classPK, int start, int end, OrderByComparator<?> obc)
-		throws PortalException;
+		throws PortalException {
+
+		List<TrashedModel> trashedModels = getTrashModelTrashedModels(
+			classPK, start, end, obc);
+
+		List<TrashRenderer> trashRenderers = new ArrayList<>();
+
+		for (TrashedModel trashedModel : trashedModels) {
+			Class<?> clazz = trashedModel.getClass();
+
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(clazz.getName());
+
+			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
+				trashedModel.getTrashEntryClassPK());
+
+			trashRenderers.add(trashRenderer);
+		}
+
+		return trashRenderers;
+	}
 
 	/**
 	 * Returns the trash renderer associated to the model entity with the

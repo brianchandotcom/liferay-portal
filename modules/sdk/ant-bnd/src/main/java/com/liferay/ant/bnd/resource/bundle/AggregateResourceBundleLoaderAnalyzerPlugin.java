@@ -29,9 +29,7 @@ import aQute.libg.filters.SimpleFilter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Gregory Amerson
@@ -48,18 +46,16 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 			return false;
 		}
 
-		List<String> aggregateKeys = new ArrayList<>(parameters.keySet());
+		Set<String> aggregateResourceBundles = parameters.keySet();
 
-		Collections.sort(aggregateKeys);
-
-		addProvideCapabilities(analyzer, aggregateKeys);
-		addRequireCapabilities(analyzer, aggregateKeys);
+		addProvideCapabilities(analyzer, aggregateResourceBundles);
+		addRequireCapabilities(analyzer, aggregateResourceBundles);
 
 		return true;
 	}
 
 	protected void addProvideCapabilities(
-		Analyzer analyzer, Iterable<String> aggregateKeys) {
+		Analyzer analyzer, Set<String> aggregateResourceBundles) {
 
 		Parameters provideCapabilityHeaders = new SortedParameters(
 			analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
@@ -74,11 +70,11 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 			new NotFilter(new LiteralFilter("(aggregate=true)")));
 		andFilter.append(aggregateValue);
 
-		for (String aggregateResourceBundlesParameter : aggregateKeys) {
+		for (String aggregateResourceBundle : aggregateResourceBundles) {
 			aggregateValue.append(",");
 
 			Filter filter = new SimpleFilter(
-				"bundle.symbolic.name", aggregateResourceBundlesParameter);
+				"bundle.symbolic.name", aggregateResourceBundle);
 
 			filter.append(aggregateValue);
 		}
@@ -121,16 +117,16 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 	}
 
 	protected void addRequireCapabilities(
-		Analyzer analyzer, Iterable<String> aggregateKeys) {
+		Analyzer analyzer, Set<String> aggregateResourceBundles) {
 
 		Parameters requireCapabilityHeaders = new SortedParameters(
 			analyzer.getProperty(Constants.REQUIRE_CAPABILITY));
 
-		for (String aggregateResourceBundlesParameter : aggregateKeys) {
+		for (String aggregateResourceBundle : aggregateResourceBundles) {
 			Attrs attrs = new Attrs();
 
 			Filter filter = new SimpleFilter(
-				"bundle.symbolic.name", aggregateResourceBundlesParameter);
+				"bundle.symbolic.name", aggregateResourceBundle);
 
 			attrs.put("filter:", filter.toString());
 

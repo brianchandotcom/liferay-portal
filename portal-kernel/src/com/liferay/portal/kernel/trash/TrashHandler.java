@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.trash;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.TrashedModel;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.trash.kernel.model.TrashEntry;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -501,9 +503,30 @@ public interface TrashHandler {
 	 *             #getTrashModelTrashedModels(long, int, int, OrderByComparator)}
 	 */
 	@Deprecated
-	public List<TrashRenderer> getTrashModelTrashRenderers(
+	public default List<TrashRenderer> getTrashModelTrashRenderers(
 			long classPK, int start, int end, OrderByComparator<?> obc)
-		throws PortalException;
+		throws PortalException {
+
+		List<TrashedModel> trashedModels = getTrashModelTrashedModels(
+			classPK, start, end, obc);
+
+		List<TrashRenderer> trashRenderers = new ArrayList<>();
+
+		for (TrashedModel trashedModel : trashedModels) {
+			String modelClassName =
+				((ClassedModel)trashedModel).getModelClassName();
+
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(modelClassName);
+
+			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
+				trashedModel.getTrashEntryClassPK());
+
+			trashRenderers.add(trashRenderer);
+		}
+
+		return trashRenderers;
+	}
 
 	/**
 	 * Returns the trash renderer associated to the model entity with the

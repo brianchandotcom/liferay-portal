@@ -55,4 +55,12 @@ public interface CommerceProductDefinition
 				return CommerceProductDefinition.class;
 			}
 		};
+
+	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap();
+
+	public java.lang.String getDescriptionMapAsXML();
+
+	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap();
+
+	public java.lang.String getTitleMapAsXML();
 }

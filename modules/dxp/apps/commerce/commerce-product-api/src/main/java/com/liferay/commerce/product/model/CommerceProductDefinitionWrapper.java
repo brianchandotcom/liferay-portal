@@ -471,6 +471,11 @@ public class CommerceProductDefinitionWrapper
 		return _commerceProductDefinition.getDescription(languageId, useDefault);
 	}
 
+	@Override
+	public java.lang.String getDescriptionMapAsXML() {
+		return _commerceProductDefinition.getDescriptionMapAsXML();
+	}
+
 	/**
 	* Returns the product type name of this commerce product definition.
 	*
@@ -510,6 +515,11 @@ public class CommerceProductDefinitionWrapper
 	public java.lang.String getTitle(java.lang.String languageId,
 		boolean useDefault) {
 		return _commerceProductDefinition.getTitle(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getTitleMapAsXML() {
+		return _commerceProductDefinition.getTitleMapAsXML();
 	}
 
 	@Override
@@ -621,6 +631,16 @@ public class CommerceProductDefinitionWrapper
 	@Override
 	public Date getStatusDate() {
 		return _commerceProductDefinition.getStatusDate();
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _commerceProductDefinition.getDescriptionMap();
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _commerceProductDefinition.getTitleMap();
 	}
 
 	/**

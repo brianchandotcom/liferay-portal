@@ -384,6 +384,18 @@ public class CommerceProductDefinitionLocalServiceUtil {
 			companyId, start, end, orderByComparator);
 	}
 
+	public static java.util.Map<java.util.Locale, java.lang.String> getCommerceProductDefinitionDescriptionMap(
+		long commerceProductDefinitionId) {
+		return getService()
+				   .getCommerceProductDefinitionDescriptionMap(commerceProductDefinitionId);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getCommerceProductDefinitionTitleMap(
+		long commerceProductDefinitionId) {
+		return getService()
+				   .getCommerceProductDefinitionTitleMap(commerceProductDefinitionId);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

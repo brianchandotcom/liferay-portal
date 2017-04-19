@@ -395,6 +395,18 @@ public class CommerceProductDefinitionLocalServiceWrapper
 			companyId, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getCommerceProductDefinitionDescriptionMap(
+		long commerceProductDefinitionId) {
+		return _commerceProductDefinitionLocalService.getCommerceProductDefinitionDescriptionMap(commerceProductDefinitionId);
+	}
+
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getCommerceProductDefinitionTitleMap(
+		long commerceProductDefinitionId) {
+		return _commerceProductDefinitionLocalService.getCommerceProductDefinitionTitleMap(commerceProductDefinitionId);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

@@ -17,9 +17,10 @@ package com.liferay.trash.web.internal.dao.search;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
+import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -50,11 +51,13 @@ public class TrashResultRowSplitter implements ResultRowSplitter {
 		String containedModelName = null;
 
 		for (ResultRow resultRow : resultRows) {
-			TrashRenderer trashRenderer = (TrashRenderer)resultRow.getObject();
+			TrashedModel trashedModel = (TrashedModel)resultRow.getObject();
+
+			String modelClassName =
+				((ClassedModel)trashedModel).getModelClassName();
 
 			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					trashRenderer.getClassName());
+				TrashHandlerRegistryUtil.getTrashHandler(modelClassName);
 
 			if (Validator.isNull(containerModelName) &&
 				Validator.isNull(containedModelName)) {

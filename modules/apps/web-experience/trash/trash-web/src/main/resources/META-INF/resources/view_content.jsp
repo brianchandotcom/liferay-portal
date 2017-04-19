@@ -86,16 +86,20 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 				total="<%= trashHandler.getTrashModelsCount(classPK) %>"
 			>
 				<liferay-ui:search-container-results
-					results="<%= trashHandler.getTrashModelTrashRenderers(classPK, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+					results="<%= trashHandler.getTrashModelTrashedModels(classPK, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 				/>
 
 				<liferay-ui:search-container-row
-					className="com.liferay.portal.kernel.trash.TrashRenderer"
-					modelVar="curTrashRenderer"
+					className="com.liferay.portal.kernel.model.TrashedModel"
+					modelVar="curTrashedModel"
 				>
 
 					<%
-					TrashHandler curTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(curTrashRenderer.getClassName());
+					String modelClassName = ((ClassedModel)curTrashedModel).getModelClassName();
+
+					TrashHandler curTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(modelClassName);
+
+					TrashRenderer curTrashRenderer = curTrashHandler.getTrashRenderer(curTrashedModel.getTrashEntryClassPK());
 
 					PortletURL rowURL = renderResponse.createRenderURL();
 

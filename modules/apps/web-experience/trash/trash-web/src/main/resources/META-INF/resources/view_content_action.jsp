@@ -25,16 +25,21 @@ if (Validator.isNull(redirect)) {
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-TrashRenderer trashRenderer = null;
+String className = null;
+long classPK = 0;
 
-if ((row != null) && (row.getObject() instanceof TrashRenderer)) {
-	trashRenderer = (TrashRenderer)row.getObject();
+if ((row != null) && (row.getObject() instanceof TrashedModel)) {
+	TrashedModel trashedModel = (TrashedModel)row.getObject();
+
+	className = ((ClassedModel)trashedModel).getModelClassName();
+	classPK = trashedModel.getTrashEntryClassPK();
 }
 else {
-	trashRenderer = (TrashRenderer)request.getAttribute(TrashWebKeys.TRASH_RENDERER);
+	className = (String)request.getAttribute("view.jsp-className");
+	classPK = GetterUtil.getLong(request.getAttribute("view.jsp-classPK"));
 }
 
-TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRenderer.getClassName());
+TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
@@ -42,9 +47,9 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRender
 		<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/view_container_model.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(trashRenderer.getClassName())) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
-			<portlet:param name="containerModelClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(trashHandler.getContainerModelClassName(trashRenderer.getClassPK()))) %>" />
+			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(className)) %>" />
+			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+			<portlet:param name="containerModelClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(trashHandler.getContainerModelClassName(classPK))) %>" />
 		</portlet:renderURL>
 
 		<%
@@ -61,8 +66,8 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRender
 	<c:if test="<%= trashHandler.isDeletable() %>">
 		<portlet:actionURL name="deleteEntries" var="deleteEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
+			<portlet:param name="className" value="<%= className %>" />
+			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

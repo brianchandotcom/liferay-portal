@@ -1400,6 +1400,11 @@ version in external files to the latest snapshot.
 
 ## 3.6.5 - 2017-04-21
 
+### Added
+- [LPS-72045]: When on Jenkins, fail the `testIntegration` task if any of the
+dependent projects defined in the `testIntegrationCompile` configuration does
+not have the `.lfrbuild-portal` marker file.
+
 ### Changed
 - [LPS-72102]: Update the [Liferay Gradle Plugins] dependency to version 3.3.3.
 
@@ -1546,6 +1551,7 @@ version in external files to the latest snapshot.
 [LPS-71901]: https://issues.liferay.com/browse/LPS-71901
 [LPS-72030]: https://issues.liferay.com/browse/LPS-72030
 [LPS-72039]: https://issues.liferay.com/browse/LPS-72039
+[LPS-72045]: https://issues.liferay.com/browse/LPS-72045
 [LPS-72102]: https://issues.liferay.com/browse/LPS-72102
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

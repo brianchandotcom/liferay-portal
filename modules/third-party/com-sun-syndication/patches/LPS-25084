@@ -1,0 +1,166 @@
+diff --git a/com/sun/syndication/io/WireFeedInput.java b/com/sun/syndication/io/WireFeedInput.java
+index 896605e..73e808a 100644
+--- a/com/sun/syndication/io/WireFeedInput.java
++++ b/com/sun/syndication/io/WireFeedInput.java
+@@ -59,10 +59,10 @@ public class WireFeedInput {
+     private static FeedParsers getFeedParsers() {
+         synchronized(WireFeedInput.class) {
+             FeedParsers parsers = (FeedParsers)
+-                clMap.get(Thread.currentThread().getContextClassLoader());
++                clMap.get(clMap.getClass().getClassLoader());
+             if (parsers == null) {
+                 parsers = new FeedParsers();
+-                clMap.put(Thread.currentThread().getContextClassLoader(), parsers);
++                clMap.put(clMap.getClass().getClassLoader(), parsers);
+             }
+             return parsers;
+         }
+@@ -190,7 +190,7 @@ public class WireFeedInput {
+         try {
+             if (_xmlHealerOn) {
+                 reader = new XmlFixerReader(reader);
+-            }            
++            }
+             Document document = saxBuilder.build(reader);
+             return build(document);
+         }
+@@ -245,7 +245,7 @@ public class WireFeedInput {
+      *
+      */
+     public WireFeed build(org.w3c.dom.Document document) throws IllegalArgumentException,FeedException {
+-        DOMBuilder domBuilder = new DOMBuilder();        
++        DOMBuilder domBuilder = new DOMBuilder();
+         try {
+             Document jdomDoc = domBuilder.build(document);
+             return build(jdomDoc);
+@@ -279,25 +279,25 @@ public class WireFeedInput {
+ 
+     /**
+      * Creates and sets up a org.jdom.input.SAXBuilder for parsing.
+-     * 
++     *
+      * @return a new org.jdom.input.SAXBuilder object
+      */
+     protected SAXBuilder createSAXBuilder() {
+-        SAXBuilder saxBuilder = new SAXBuilder(_validate);        
++        SAXBuilder saxBuilder = new SAXBuilder(_validate);
+         saxBuilder.setEntityResolver(RESOLVER);
+ 
+         //
+         // This code is needed to fix the security problem outlined in http://www.securityfocus.com/archive/1/297714
+         //
+         // Unfortunately there isn't an easy way to check if an XML parser supports a particular feature, so
+-        // we need to set it and catch the exception if it fails. We also need to subclass the JDom SAXBuilder 
++        // we need to set it and catch the exception if it fails. We also need to subclass the JDom SAXBuilder
+         // class in order to get access to the underlying SAX parser - otherwise the features don't get set until
+         // we are already building the document, by which time it's too late to fix the problem.
+         //
+         // Crimson is one parser which is known not to support these features.
+ 		try {
+ 			XMLReader parser = saxBuilder.createParser();
+-			try {				
++			try {
+ 				parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
+ 				saxBuilder.setFeature("http://xml.org/sax/features/external-general-entities", false);
+ 			} catch (SAXNotRecognizedException e) {
+@@ -305,7 +305,7 @@ public class WireFeedInput {
+ 			} catch (SAXNotSupportedException e) {
+ 				// ignore
+ 			}
+-			
++
+ 			try {
+ 				parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+ 				saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -323,12 +323,13 @@ public class WireFeedInput {
+ 			} catch (SAXNotSupportedException e) {
+ 				// ignore
+ 			}
+-			
++
+ 		} catch (JDOMException e) {
+ 			throw new IllegalStateException("JDOM could not create a SAX parser");
+ 		}
+ 
+-		saxBuilder.setExpandEntities(false);    
++		saxBuilder.setExpandEntities(false);
+         return saxBuilder;
+     }
+ }
++ /* @generated */
+\ No newline at end of file
+diff --git a/com/sun/syndication/io/WireFeedOutput.java b/com/sun/syndication/io/WireFeedOutput.java
+index 690efae..98de3de 100644
+--- a/com/sun/syndication/io/WireFeedOutput.java
++++ b/com/sun/syndication/io/WireFeedOutput.java
+@@ -48,10 +48,10 @@ public class WireFeedOutput {
+     private static FeedGenerators getFeedGenerators() {
+         synchronized(WireFeedOutput.class) {
+             FeedGenerators generators = (FeedGenerators)
+-                clMap.get(Thread.currentThread().getContextClassLoader());
++                clMap.get(clMap.getClass().getClassLoader());
+             if (generators == null) {
+                 generators = new FeedGenerators();
+-                clMap.put(Thread.currentThread().getContextClassLoader(), generators);
++                clMap.put(clMap.getClass().getClassLoader(), generators);
+             }
+             return generators;
+         }
+@@ -272,3 +272,4 @@ public class WireFeedOutput {
+     }
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/com/sun/syndication/io/impl/PluginManager.java b/com/sun/syndication/io/impl/PluginManager.java
+index 0200f2a..f908dad 100644
+--- a/com/sun/syndication/io/impl/PluginManager.java
++++ b/com/sun/syndication/io/impl/PluginManager.java
+@@ -121,7 +121,7 @@ public abstract class PluginManager {
+     /**
+      * Loads and returns the classes defined in the properties files. If the system property "rome.pluginmanager.useloadclass" is
+      * set to true then classLoader.loadClass will be used to load classes (instead of Class.forName). This is designed to improve
+-     * OSGi compatibility. Further information can be found in https://rome.dev.java.net/issues/show_bug.cgi?id=118 
++     * OSGi compatibility. Further information can be found in https://rome.dev.java.net/issues/show_bug.cgi?id=118
+      * <p>
+      * @return array containing the classes defined in the properties files.
+      * @throws java.lang.ClassNotFoundException thrown if one of the classes defined in the properties file cannot be loaded
+@@ -129,7 +129,7 @@ public abstract class PluginManager {
+      *
+      */
+     private Class[] getClasses() throws ClassNotFoundException {
+-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
++        ClassLoader classLoader = this.getClass().getClassLoader();
+         List classes = new ArrayList();
+         boolean useLoadClass = Boolean.valueOf(System.getProperty("rome.pluginmanager.useloadclass", "false")).booleanValue();
+         for (int i = 0; i <_propertyValues.length; i++) {
+@@ -142,3 +142,4 @@ public abstract class PluginManager {
+     }
+ 
+ }
++ /* @generated */
+\ No newline at end of file
+diff --git a/com/sun/syndication/io/impl/PropertiesLoader.java b/com/sun/syndication/io/impl/PropertiesLoader.java
+index f4cd1fc..723929e 100644
+--- a/com/sun/syndication/io/impl/PropertiesLoader.java
++++ b/com/sun/syndication/io/impl/PropertiesLoader.java
+@@ -40,11 +40,11 @@ public class PropertiesLoader {
+     public static PropertiesLoader getPropertiesLoader() {
+         synchronized(PropertiesLoader.class) {
+             PropertiesLoader loader = (PropertiesLoader)
+-                clMap.get(Thread.currentThread().getContextClassLoader());
++                clMap.get(clMap.getClass().getClassLoader());
+             if (loader == null) {
+                 try {
+                     loader = new PropertiesLoader(MASTER_PLUGIN_FILE, EXTRA_PLUGIN_FILE);
+-                    clMap.put(Thread.currentThread().getContextClassLoader(), loader);
++                    clMap.put(clMap.getClass().getClassLoader(), loader);
+                 }
+                 catch (IOException ex) {
+                     throw new RuntimeException(ex);
+@@ -153,3 +153,4 @@ public class PropertiesLoader {
+     }
+ 
+ }
++ /* @generated */
+\ No newline at end of file

@@ -28,6 +28,8 @@ import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.kernel.util.VideoProcessorUtil;
+import com.liferay.message.boards.kernel.constants.MBConstants;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
@@ -66,6 +68,7 @@ import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -1268,6 +1271,26 @@ public class WebServerServlet extends HttpServlet {
 				request, response, fileEntry.getCompanyId())) {
 
 			return;
+		}
+
+		com.liferay.portal.kernel.model.Repository repository =
+			RepositoryLocalServiceUtil.getRepository(
+				fileEntry.getRepositoryId());
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		Folder folder = fileEntry.getFolder();
+
+		String repositoryName = repository.getName();
+
+		if (repositoryName.equals(MBConstants.SERVICE_NAME)) {
+			if (!permissionChecker.hasPermission(
+					fileEntry.getGroupId(), MBMessage.class.getName(),
+					folder.getName(), ActionKeys.VIEW)) {
+
+				throw new PrincipalException();
+			}
 		}
 
 		String fileName = HttpUtil.decodeURL(HtmlUtil.escape(pathArray[2]));

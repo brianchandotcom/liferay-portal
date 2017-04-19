@@ -28,11 +28,13 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class CommerceProductDefinitionLocalizationImpl
 	extends CommerceProductDefinitionLocalizationBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a commerce product definition localization model instance should use the {@link com.liferay.commerce.product.model.CommerceProductDefinitionLocalization} interface instead.
 	 */
 	public CommerceProductDefinitionLocalizationImpl() {
 	}
+
 }

@@ -9,7 +9,6 @@
 	<groupId>${groupId}</groupId>
 	<artifactId>${artifactId}</artifactId>
 	<version>${version}</version>
-	<packaging>jar</packaging>
 	<properties>
 		<node.executable>${project.build.directory}/node/node</node.executable>
 		<node.modules>${project.basedir}/node_modules</node.modules>

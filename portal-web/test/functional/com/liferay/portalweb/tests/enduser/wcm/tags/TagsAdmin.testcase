@@ -256,13 +256,13 @@
 			<var name="searchTerm"><![CDATA["tag"]]></var>
 		</execute>
 
-		<execute macro="Tag#viewCP">
-			<var name="tagName" value="tag" />
-		</execute>
-
-		<for list="tagname, tag name 1" param="tagName">
-			<execute function="AssertTextNotPresent" value1="${tagName}" />
+		<for list="tag,tag name 1" param="tagName">
+			<execute macro="Tag#viewCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
 		</for>
+
+		<execute function="AssertTextNotPresent" value1="tagname1" />
 
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="string" />

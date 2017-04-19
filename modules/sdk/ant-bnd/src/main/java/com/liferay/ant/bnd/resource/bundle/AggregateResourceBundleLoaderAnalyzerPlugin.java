@@ -60,7 +60,7 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 		Parameters provideCapabilityHeaders = new SortedParameters(
 			analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
-		StringBuilder aggregateValue = new StringBuilder();
+		StringBuilder resourceBundleAggregate = new StringBuilder();
 
 		AndFilter andFilter = new AndFilter();
 
@@ -68,25 +68,28 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 			new SimpleFilter("bundle.symbolic.name", analyzer.getBsn()));
 		andFilter.addChild(
 			new NotFilter(new LiteralFilter("(aggregate=true)")));
-		andFilter.append(aggregateValue);
+
+		andFilter.append(resourceBundleAggregate);
 
 		for (String aggregateResourceBundle : aggregateResourceBundles) {
-			aggregateValue.append(",");
+			resourceBundleAggregate.append(',');
 
 			Filter filter = new SimpleFilter(
 				"bundle.symbolic.name", aggregateResourceBundle);
 
-			filter.append(aggregateValue);
+			filter.append(resourceBundleAggregate);
 		}
 
-		Attrs provideAttrs = new Attrs();
+		Attrs attrs = new Attrs();
 
-		provideAttrs.put(
-			"resource.bundle.aggregate:String", aggregateValue.toString());
-		provideAttrs.put("bundle.symbolic.name", analyzer.getBsn());
-		provideAttrs.put("resource.bundle.base.name", "content.Language");
-		provideAttrs.put("service.ranking:Long", "1");
-		provideAttrs.put("aggregate", "true");
+		attrs.put(
+			"resource.bundle.aggregate:String",
+			resourceBundleAggregate.toString());
+
+		attrs.put("bundle.symbolic.name", analyzer.getBsn());
+		attrs.put("resource.bundle.base.name", "content.Language");
+		attrs.put("service.ranking:Long", "1");
+		attrs.put("aggregate", "true");
 
 		String servletContextName = analyzer.getProperty("Web-ContextPath");
 
@@ -108,9 +111,9 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 			servletContextName = analyzer.getBsn();
 		}
 
-		provideAttrs.put("servlet.context.name", servletContextName);
+		attrs.put("servlet.context.name", servletContextName);
 
-		provideCapabilityHeaders.add("liferay.resource.bundle", provideAttrs);
+		provideCapabilityHeaders.add("liferay.resource.bundle", attrs);
 
 		analyzer.setProperty(
 			Constants.PROVIDE_CAPABILITY, provideCapabilityHeaders.toString());

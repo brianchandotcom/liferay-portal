@@ -230,8 +230,8 @@ AUI.add(
 
 						var returnType = link.attr('data-returnType');
 
-						if (returnType === 'com.liferay.item.selector.criteria.URLItemSelectorReturnType') {
-							link.setData('value', imageURL);
+						if (imageData.file.resolvedValue) {
+							link.setData('value', imageData.file.resolvedValue);
 						}
 						else {
 							var imageValue = {

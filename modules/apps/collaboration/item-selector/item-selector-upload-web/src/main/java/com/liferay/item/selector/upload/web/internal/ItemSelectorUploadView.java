@@ -15,6 +15,7 @@
 package com.liferay.item.selector.upload.web.internal;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
@@ -43,7 +44,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ambrín Chaudhary
  */
-@Component(service = ItemSelectorView.class)
+@Component(
+	property = {"item.selector.view.key=upload"},
+	service = ItemSelectorView.class
+)
 public class ItemSelectorUploadView
 	implements ItemSelectorView<UploadItemSelectorCriterion> {
 
@@ -94,7 +98,8 @@ public class ItemSelectorUploadView
 		ItemSelectorUploadViewDisplayContext
 			itemSelectorUploadViewDisplayContext =
 				new ItemSelectorUploadViewDisplayContext(
-					uploadItemSelectorCriterion, this, itemSelectedEventName);
+					uploadItemSelectorCriterion, this, itemSelectedEventName,
+					_itemSelectorReturnTypeResolverHandler);
 
 		request.setAttribute(
 			ITEM_SELECTOR_UPLOAD_VIEW_DISPLAY_CONTEXT,
@@ -117,6 +122,10 @@ public class ItemSelectorUploadView
 				new ItemSelectorReturnType[] {
 					new FileEntryItemSelectorReturnType()
 				}));
+
+	@Reference
+	private ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 
 	private ServletContext _servletContext;
 

@@ -156,7 +156,7 @@ public class BlogsContentEditorConfigContributor
 
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				uploadURL.toString(),
+				PortletKeys.BLOGS, uploadURL.toString(),
 				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"),
 				PropsValues.BLOGS_IMAGE_MAX_SIZE, extensions);
 

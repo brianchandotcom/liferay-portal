@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -154,7 +153,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 	}
 
 	@Override
-	public List<TrashRenderer> getTrashModelTrashRenderers(
+	public List<TrashedModel> getTrashModelTrashedModels(
 			long classPK, int start, int end, OrderByComparator<?> obc)
 		throws PortalException {
 
@@ -162,17 +161,13 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 			classPK, true, WorkflowConstants.STATUS_IN_TRASH, start, end,
 			(OrderByComparator<WikiPage>)obc);
 
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			WikiPage.class.getName());
-
-		List<TrashRenderer> trashRenderers = new ArrayList<>(pages.size());
+		List<TrashedModel> trashedModels = new ArrayList<>(pages.size());
 
 		for (WikiPage page : pages) {
-			trashRenderers.add(
-				trashHandler.getTrashRenderer(page.getResourcePrimKey()));
+			trashedModels.add(page);
 		}
 
-		return trashRenderers;
+		return trashedModels;
 	}
 
 	@Override

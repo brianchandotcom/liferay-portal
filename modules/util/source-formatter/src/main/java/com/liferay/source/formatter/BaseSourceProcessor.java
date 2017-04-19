@@ -380,11 +380,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<String> pluginsInsideModulesDirectoryNames = new ArrayList<>();
 
 		List<String> pluginBuildFileNames = getFileNames(
-			sourceFormatterArgs.getBaseDirName(), null, new String[0],
+			new String[0],
 			new String[] {
 				"**/modules/apps/**/build.xml",
 				"**/modules/private/apps/**/build.xml"
-			});
+			},
+			true);
 
 		for (String pluginBuildFileName : pluginBuildFileNames) {
 			pluginBuildFileName = StringUtil.replace(

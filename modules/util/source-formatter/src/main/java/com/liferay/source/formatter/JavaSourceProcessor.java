@@ -241,7 +241,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileNames = getFileNames(
 					sourceFormatterArgs.getBaseDirName() +
 						moduleRootDirLocation,
-					null, new String[0], getIncludes());
+					new String[0], getIncludes());
 
 				break;
 			}
@@ -426,8 +426,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// Find suppressions files in any child directory
 
 		List<String> moduleSuppressionsFileNames = getFileNames(
-			sourceFormatterArgs.getBaseDirName(), null, new String[0],
-			new String[] {"**/modules/**/" + fileName});
+			new String[0], new String[] {"**/modules/**/" + fileName}, true);
 
 		for (String moduleSuppressionsFileName : moduleSuppressionsFileNames) {
 			moduleSuppressionsFileName = StringUtil.replace(

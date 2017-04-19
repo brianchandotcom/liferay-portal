@@ -101,9 +101,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		excludes = new String[] {"**/null.jsp", "**/tools/**"};
 
-		List<String> allFileNames = getFileNames(
-			sourceFormatterArgs.getBaseDirName(), null, excludes, getIncludes(),
-			true);
+		List<String> allFileNames = getFileNames(excludes, getIncludes(), true);
 
 		_contentsMap = _getContentsMap(allFileNames);
 
@@ -262,7 +260,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		Map<String, JavaClass> tagJavaClassesMap = new HashMap<>();
 
 		List<String> tldFileNames = getFileNames(
-			sourceFormatterArgs.getBaseDirName(), null,
 			new String[] {"**/dependencies/**", "**/util-taglib/**"},
 			new String[] {"**/*.tld"}, true);
 

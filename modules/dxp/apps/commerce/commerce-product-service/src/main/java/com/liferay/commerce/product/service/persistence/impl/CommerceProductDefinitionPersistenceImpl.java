@@ -3385,9 +3385,6 @@ public class CommerceProductDefinitionPersistenceImpl
 		commerceProductDefinitionImpl.setUserName(commerceProductDefinition.getUserName());
 		commerceProductDefinitionImpl.setCreateDate(commerceProductDefinition.getCreateDate());
 		commerceProductDefinitionImpl.setModifiedDate(commerceProductDefinition.getModifiedDate());
-		commerceProductDefinitionImpl.setTitle(commerceProductDefinition.getTitle());
-		commerceProductDefinitionImpl.setUrlTitle(commerceProductDefinition.getUrlTitle());
-		commerceProductDefinitionImpl.setDescription(commerceProductDefinition.getDescription());
 		commerceProductDefinitionImpl.setProductTypeName(commerceProductDefinition.getProductTypeName());
 		commerceProductDefinitionImpl.setAvailableIndividually(commerceProductDefinition.isAvailableIndividually());
 		commerceProductDefinitionImpl.setDDMStructureKey(commerceProductDefinition.getDDMStructureKey());
@@ -3399,6 +3396,7 @@ public class CommerceProductDefinitionPersistenceImpl
 		commerceProductDefinitionImpl.setStatusByUserId(commerceProductDefinition.getStatusByUserId());
 		commerceProductDefinitionImpl.setStatusByUserName(commerceProductDefinition.getStatusByUserName());
 		commerceProductDefinitionImpl.setStatusDate(commerceProductDefinition.getStatusDate());
+		commerceProductDefinitionImpl.setDefaultLanguageId(commerceProductDefinition.getDefaultLanguageId());
 
 		return commerceProductDefinitionImpl;
 	}

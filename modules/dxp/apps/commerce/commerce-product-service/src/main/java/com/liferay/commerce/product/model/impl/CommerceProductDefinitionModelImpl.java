@@ -17,8 +17,10 @@ package com.liferay.commerce.product.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CommerceProductDefinition;
+import com.liferay.commerce.product.model.CommerceProductDefinitionLocalization;
 import com.liferay.commerce.product.model.CommerceProductDefinitionModel;
 import com.liferay.commerce.product.model.CommerceProductDefinitionSoap;
+import com.liferay.commerce.product.service.CommerceProductDefinitionLocalServiceUtil;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
@@ -26,7 +28,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -56,10 +56,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the CommerceProductDefinition service. Represents a row in the &quot;CommerceProductDefinition&quot; database table, with each column mapped to a property of this class.
@@ -93,9 +91,6 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "title", Types.VARCHAR },
-			{ "urlTitle", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
 			{ "productTypeName", Types.VARCHAR },
 			{ "availableIndividually", Types.BOOLEAN },
 			{ "DDMStructureKey", Types.VARCHAR },
@@ -106,7 +101,8 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP },
+			{ "defaultLanguageId", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -119,9 +115,6 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productTypeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("availableIndividually", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("DDMStructureKey", Types.VARCHAR);
@@ -133,9 +126,10 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinition (uuid_ VARCHAR(75) null,commerceProductDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,urlTitle STRING null,description STRING null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,DDMStructureKey VARCHAR(75) null,baseSKU VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinition (uuid_ VARCHAR(75) null,commerceProductDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,DDMStructureKey VARCHAR(75) null,baseSKU VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceProductDefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceProductDefinition.displayDate DESC, commerceProductDefinition.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceProductDefinition.displayDate DESC, CommerceProductDefinition.createDate DESC";
@@ -179,9 +173,6 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setTitle(soapModel.getTitle());
-		model.setUrlTitle(soapModel.getUrlTitle());
-		model.setDescription(soapModel.getDescription());
 		model.setProductTypeName(soapModel.getProductTypeName());
 		model.setAvailableIndividually(soapModel.getAvailableIndividually());
 		model.setDDMStructureKey(soapModel.getDDMStructureKey());
@@ -193,6 +184,7 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setDefaultLanguageId(soapModel.getDefaultLanguageId());
 
 		return model;
 	}
@@ -267,9 +259,6 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("title", getTitle());
-		attributes.put("urlTitle", getUrlTitle());
-		attributes.put("description", getDescription());
 		attributes.put("productTypeName", getProductTypeName());
 		attributes.put("availableIndividually", getAvailableIndividually());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
@@ -281,6 +270,7 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("defaultLanguageId", getDefaultLanguageId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -337,24 +327,6 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String urlTitle = (String)attributes.get("urlTitle");
-
-		if (urlTitle != null) {
-			setUrlTitle(urlTitle);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
 		}
 
 		String productTypeName = (String)attributes.get("productTypeName");
@@ -423,6 +395,99 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+
+		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
+
+		if (defaultLanguageId != null) {
+			setDefaultLanguageId(defaultLanguageId);
+		}
+	}
+
+	public String getTitle(String languageId) {
+		return getTitle(languageId, true);
+	}
+
+	public String getTitle(String languageId, boolean useDefault) {
+		if (useDefault) {
+			return LocalizationUtil.getLocalization(new Function<String, String>() {
+					@Override
+					public String apply(String languageId) {
+						return _getTitle(languageId);
+					}
+				}, languageId, getDefaultLanguageId());
+		}
+
+		return _getTitle(languageId);
+	}
+
+	private String _getTitle(String languageId) {
+		CommerceProductDefinitionLocalization commerceProductDefinitionLocalization =
+			CommerceProductDefinitionLocalServiceUtil.fetchCommerceProductDefinitionLocalization(getPrimaryKey(),
+				languageId);
+
+		if (commerceProductDefinitionLocalization == null) {
+			return StringPool.BLANK;
+		}
+
+		return commerceProductDefinitionLocalization.getTitle();
+	}
+
+	public String getUrlTitle(String languageId) {
+		return getUrlTitle(languageId, true);
+	}
+
+	public String getUrlTitle(String languageId, boolean useDefault) {
+		if (useDefault) {
+			return LocalizationUtil.getLocalization(new Function<String, String>() {
+					@Override
+					public String apply(String languageId) {
+						return _getUrlTitle(languageId);
+					}
+				}, languageId, getDefaultLanguageId());
+		}
+
+		return _getUrlTitle(languageId);
+	}
+
+	private String _getUrlTitle(String languageId) {
+		CommerceProductDefinitionLocalization commerceProductDefinitionLocalization =
+			CommerceProductDefinitionLocalServiceUtil.fetchCommerceProductDefinitionLocalization(getPrimaryKey(),
+				languageId);
+
+		if (commerceProductDefinitionLocalization == null) {
+			return StringPool.BLANK;
+		}
+
+		return commerceProductDefinitionLocalization.getUrlTitle();
+	}
+
+	public String getDescription(String languageId) {
+		return getDescription(languageId, true);
+	}
+
+	public String getDescription(String languageId, boolean useDefault) {
+		if (useDefault) {
+			return LocalizationUtil.getLocalization(new Function<String, String>() {
+					@Override
+					public String apply(String languageId) {
+						return _getDescription(languageId);
+					}
+				}, languageId, getDefaultLanguageId());
+		}
+
+		return _getDescription(languageId);
+	}
+
+	private String _getDescription(String languageId) {
+		CommerceProductDefinitionLocalization commerceProductDefinitionLocalization =
+			CommerceProductDefinitionLocalServiceUtil.fetchCommerceProductDefinitionLocalization(getPrimaryKey(),
+				languageId);
+
+		if (commerceProductDefinitionLocalization == null) {
+			return StringPool.BLANK;
+		}
+
+		return commerceProductDefinitionLocalization.getDescription();
 	}
 
 	@JSON
@@ -577,309 +642,6 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
-	}
-
-	@JSON
-	@Override
-	public String getTitle() {
-		if (_title == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _title;
-		}
-	}
-
-	@Override
-	public String getTitle(Locale locale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getTitle(languageId);
-	}
-
-	@Override
-	public String getTitle(Locale locale, boolean useDefault) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getTitle(languageId, useDefault);
-	}
-
-	@Override
-	public String getTitle(String languageId) {
-		return LocalizationUtil.getLocalization(getTitle(), languageId);
-	}
-
-	@Override
-	public String getTitle(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(getTitle(), languageId,
-			useDefault);
-	}
-
-	@Override
-	public String getTitleCurrentLanguageId() {
-		return _titleCurrentLanguageId;
-	}
-
-	@JSON
-	@Override
-	public String getTitleCurrentValue() {
-		Locale locale = getLocale(_titleCurrentLanguageId);
-
-		return getTitle(locale);
-	}
-
-	@Override
-	public Map<Locale, String> getTitleMap() {
-		return LocalizationUtil.getLocalizationMap(getTitle());
-	}
-
-	@Override
-	public void setTitle(String title) {
-		_title = title;
-	}
-
-	@Override
-	public void setTitle(String title, Locale locale) {
-		setTitle(title, locale, LocaleUtil.getSiteDefault());
-	}
-
-	@Override
-	public void setTitle(String title, Locale locale, Locale defaultLocale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-		if (Validator.isNotNull(title)) {
-			setTitle(LocalizationUtil.updateLocalization(getTitle(), "Title",
-					title, languageId, defaultLanguageId));
-		}
-		else {
-			setTitle(LocalizationUtil.removeLocalization(getTitle(), "Title",
-					languageId));
-		}
-	}
-
-	@Override
-	public void setTitleCurrentLanguageId(String languageId) {
-		_titleCurrentLanguageId = languageId;
-	}
-
-	@Override
-	public void setTitleMap(Map<Locale, String> titleMap) {
-		setTitleMap(titleMap, LocaleUtil.getSiteDefault());
-	}
-
-	@Override
-	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale) {
-		if (titleMap == null) {
-			return;
-		}
-
-		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
-				"Title", LocaleUtil.toLanguageId(defaultLocale)));
-	}
-
-	@JSON
-	@Override
-	public String getUrlTitle() {
-		if (_urlTitle == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _urlTitle;
-		}
-	}
-
-	@Override
-	public String getUrlTitle(Locale locale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getUrlTitle(languageId);
-	}
-
-	@Override
-	public String getUrlTitle(Locale locale, boolean useDefault) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getUrlTitle(languageId, useDefault);
-	}
-
-	@Override
-	public String getUrlTitle(String languageId) {
-		return LocalizationUtil.getLocalization(getUrlTitle(), languageId);
-	}
-
-	@Override
-	public String getUrlTitle(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(getUrlTitle(), languageId,
-			useDefault);
-	}
-
-	@Override
-	public String getUrlTitleCurrentLanguageId() {
-		return _urlTitleCurrentLanguageId;
-	}
-
-	@JSON
-	@Override
-	public String getUrlTitleCurrentValue() {
-		Locale locale = getLocale(_urlTitleCurrentLanguageId);
-
-		return getUrlTitle(locale);
-	}
-
-	@Override
-	public Map<Locale, String> getUrlTitleMap() {
-		return LocalizationUtil.getLocalizationMap(getUrlTitle());
-	}
-
-	@Override
-	public void setUrlTitle(String urlTitle) {
-		_urlTitle = urlTitle;
-	}
-
-	@Override
-	public void setUrlTitle(String urlTitle, Locale locale) {
-		setUrlTitle(urlTitle, locale, LocaleUtil.getSiteDefault());
-	}
-
-	@Override
-	public void setUrlTitle(String urlTitle, Locale locale, Locale defaultLocale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-		if (Validator.isNotNull(urlTitle)) {
-			setUrlTitle(LocalizationUtil.updateLocalization(getUrlTitle(),
-					"UrlTitle", urlTitle, languageId, defaultLanguageId));
-		}
-		else {
-			setUrlTitle(LocalizationUtil.removeLocalization(getUrlTitle(),
-					"UrlTitle", languageId));
-		}
-	}
-
-	@Override
-	public void setUrlTitleCurrentLanguageId(String languageId) {
-		_urlTitleCurrentLanguageId = languageId;
-	}
-
-	@Override
-	public void setUrlTitleMap(Map<Locale, String> urlTitleMap) {
-		setUrlTitleMap(urlTitleMap, LocaleUtil.getSiteDefault());
-	}
-
-	@Override
-	public void setUrlTitleMap(Map<Locale, String> urlTitleMap,
-		Locale defaultLocale) {
-		if (urlTitleMap == null) {
-			return;
-		}
-
-		setUrlTitle(LocalizationUtil.updateLocalization(urlTitleMap,
-				getUrlTitle(), "UrlTitle",
-				LocaleUtil.toLanguageId(defaultLocale)));
-	}
-
-	@JSON
-	@Override
-	public String getDescription() {
-		if (_description == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _description;
-		}
-	}
-
-	@Override
-	public String getDescription(Locale locale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getDescription(languageId);
-	}
-
-	@Override
-	public String getDescription(Locale locale, boolean useDefault) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getDescription(languageId, useDefault);
-	}
-
-	@Override
-	public String getDescription(String languageId) {
-		return LocalizationUtil.getLocalization(getDescription(), languageId);
-	}
-
-	@Override
-	public String getDescription(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(getDescription(), languageId,
-			useDefault);
-	}
-
-	@Override
-	public String getDescriptionCurrentLanguageId() {
-		return _descriptionCurrentLanguageId;
-	}
-
-	@JSON
-	@Override
-	public String getDescriptionCurrentValue() {
-		Locale locale = getLocale(_descriptionCurrentLanguageId);
-
-		return getDescription(locale);
-	}
-
-	@Override
-	public Map<Locale, String> getDescriptionMap() {
-		return LocalizationUtil.getLocalizationMap(getDescription());
-	}
-
-	@Override
-	public void setDescription(String description) {
-		_description = description;
-	}
-
-	@Override
-	public void setDescription(String description, Locale locale) {
-		setDescription(description, locale, LocaleUtil.getSiteDefault());
-	}
-
-	@Override
-	public void setDescription(String description, Locale locale,
-		Locale defaultLocale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-		if (Validator.isNotNull(description)) {
-			setDescription(LocalizationUtil.updateLocalization(
-					getDescription(), "Description", description, languageId,
-					defaultLanguageId));
-		}
-		else {
-			setDescription(LocalizationUtil.removeLocalization(
-					getDescription(), "Description", languageId));
-		}
-	}
-
-	@Override
-	public void setDescriptionCurrentLanguageId(String languageId) {
-		_descriptionCurrentLanguageId = languageId;
-	}
-
-	@Override
-	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
-		setDescriptionMap(descriptionMap, LocaleUtil.getSiteDefault());
-	}
-
-	@Override
-	public void setDescriptionMap(Map<Locale, String> descriptionMap,
-		Locale defaultLocale) {
-		if (descriptionMap == null) {
-			return;
-		}
-
-		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
-				getDescription(), "Description",
-				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -1045,6 +807,22 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
+	}
+
+	@JSON(include = false)
+	@Override
+	public String getDefaultLanguageId() {
+		if (_defaultLanguageId == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _defaultLanguageId;
+		}
+	}
+
+	@Override
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
 	}
 
 	@Override
@@ -1282,108 +1060,6 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 	}
 
 	@Override
-	public String[] getAvailableLanguageIds() {
-		Set<String> availableLanguageIds = new TreeSet<String>();
-
-		Map<Locale, String> titleMap = getTitleMap();
-
-		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
-			Locale locale = entry.getKey();
-			String value = entry.getValue();
-
-			if (Validator.isNotNull(value)) {
-				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
-			}
-		}
-
-		Map<Locale, String> urlTitleMap = getUrlTitleMap();
-
-		for (Map.Entry<Locale, String> entry : urlTitleMap.entrySet()) {
-			Locale locale = entry.getKey();
-			String value = entry.getValue();
-
-			if (Validator.isNotNull(value)) {
-				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
-			}
-		}
-
-		Map<Locale, String> descriptionMap = getDescriptionMap();
-
-		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
-			Locale locale = entry.getKey();
-			String value = entry.getValue();
-
-			if (Validator.isNotNull(value)) {
-				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
-			}
-		}
-
-		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
-	}
-
-	@Override
-	public String getDefaultLanguageId() {
-		String xml = getTitle();
-
-		if (xml == null) {
-			return StringPool.BLANK;
-		}
-
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
-	}
-
-	@Override
-	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
-
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
-
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(CommerceProductDefinition.class.getName(),
-				getPrimaryKey(), defaultLocale, availableLocales);
-
-		prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	@SuppressWarnings("unused")
-	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
-		throws LocaleException {
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-		String modelDefaultLanguageId = getDefaultLanguageId();
-
-		String title = getTitle(defaultLocale);
-
-		if (Validator.isNull(title)) {
-			setTitle(getTitle(modelDefaultLanguageId), defaultLocale);
-		}
-		else {
-			setTitle(getTitle(defaultLocale), defaultLocale, defaultLocale);
-		}
-
-		String urlTitle = getUrlTitle(defaultLocale);
-
-		if (Validator.isNull(urlTitle)) {
-			setUrlTitle(getUrlTitle(modelDefaultLanguageId), defaultLocale);
-		}
-		else {
-			setUrlTitle(getUrlTitle(defaultLocale), defaultLocale, defaultLocale);
-		}
-
-		String description = getDescription(defaultLocale);
-
-		if (Validator.isNull(description)) {
-			setDescription(getDescription(modelDefaultLanguageId), defaultLocale);
-		}
-		else {
-			setDescription(getDescription(defaultLocale), defaultLocale,
-				defaultLocale);
-		}
-	}
-
-	@Override
 	public CommerceProductDefinition toEscapedModel() {
 		if (_escapedModel == null) {
 			_escapedModel = (CommerceProductDefinition)ProxyUtil.newProxyInstance(_classLoader,
@@ -1405,9 +1081,6 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		commerceProductDefinitionImpl.setUserName(getUserName());
 		commerceProductDefinitionImpl.setCreateDate(getCreateDate());
 		commerceProductDefinitionImpl.setModifiedDate(getModifiedDate());
-		commerceProductDefinitionImpl.setTitle(getTitle());
-		commerceProductDefinitionImpl.setUrlTitle(getUrlTitle());
-		commerceProductDefinitionImpl.setDescription(getDescription());
 		commerceProductDefinitionImpl.setProductTypeName(getProductTypeName());
 		commerceProductDefinitionImpl.setAvailableIndividually(getAvailableIndividually());
 		commerceProductDefinitionImpl.setDDMStructureKey(getDDMStructureKey());
@@ -1419,6 +1092,7 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		commerceProductDefinitionImpl.setStatusByUserId(getStatusByUserId());
 		commerceProductDefinitionImpl.setStatusByUserName(getStatusByUserName());
 		commerceProductDefinitionImpl.setStatusDate(getStatusDate());
+		commerceProductDefinitionImpl.setDefaultLanguageId(getDefaultLanguageId());
 
 		commerceProductDefinitionImpl.resetOriginalValues();
 
@@ -1552,30 +1226,6 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 			commerceProductDefinitionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		commerceProductDefinitionCacheModel.title = getTitle();
-
-		String title = commerceProductDefinitionCacheModel.title;
-
-		if ((title != null) && (title.length() == 0)) {
-			commerceProductDefinitionCacheModel.title = null;
-		}
-
-		commerceProductDefinitionCacheModel.urlTitle = getUrlTitle();
-
-		String urlTitle = commerceProductDefinitionCacheModel.urlTitle;
-
-		if ((urlTitle != null) && (urlTitle.length() == 0)) {
-			commerceProductDefinitionCacheModel.urlTitle = null;
-		}
-
-		commerceProductDefinitionCacheModel.description = getDescription();
-
-		String description = commerceProductDefinitionCacheModel.description;
-
-		if ((description != null) && (description.length() == 0)) {
-			commerceProductDefinitionCacheModel.description = null;
-		}
-
 		commerceProductDefinitionCacheModel.productTypeName = getProductTypeName();
 
 		String productTypeName = commerceProductDefinitionCacheModel.productTypeName;
@@ -1650,12 +1300,20 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 			commerceProductDefinitionCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		commerceProductDefinitionCacheModel.defaultLanguageId = getDefaultLanguageId();
+
+		String defaultLanguageId = commerceProductDefinitionCacheModel.defaultLanguageId;
+
+		if ((defaultLanguageId != null) && (defaultLanguageId.length() == 0)) {
+			commerceProductDefinitionCacheModel.defaultLanguageId = null;
+		}
+
 		return commerceProductDefinitionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1673,12 +1331,6 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", urlTitle=");
-		sb.append(getUrlTitle());
-		sb.append(", description=");
-		sb.append(getDescription());
 		sb.append(", productTypeName=");
 		sb.append(getProductTypeName());
 		sb.append(", availableIndividually=");
@@ -1701,6 +1353,8 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
+		sb.append(", defaultLanguageId=");
+		sb.append(getDefaultLanguageId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1708,7 +1362,7 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(70);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -1746,18 +1400,6 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>urlTitle</column-name><column-value><![CDATA[");
-		sb.append(getUrlTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>productTypeName</column-name><column-value><![CDATA[");
@@ -1803,6 +1445,10 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>defaultLanguageId</column-name><column-value><![CDATA[");
+		sb.append(getDefaultLanguageId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1827,12 +1473,6 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _title;
-	private String _titleCurrentLanguageId;
-	private String _urlTitle;
-	private String _urlTitleCurrentLanguageId;
-	private String _description;
-	private String _descriptionCurrentLanguageId;
 	private String _productTypeName;
 	private boolean _availableIndividually;
 	private String _DDMStructureKey;
@@ -1844,6 +1484,7 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private String _defaultLanguageId;
 	private long _columnBitmask;
 	private CommerceProductDefinition _escapedModel;
 }

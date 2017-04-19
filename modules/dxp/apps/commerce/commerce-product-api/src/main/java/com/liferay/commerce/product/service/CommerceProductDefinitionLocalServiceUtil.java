@@ -204,6 +204,21 @@ public class CommerceProductDefinitionLocalServiceUtil {
 			serviceContext, workflowContext);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionLocalization fetchCommerceProductDefinitionLocalization(
+		long commerceProductDefinitionId, java.lang.String languageId) {
+		return getService()
+				   .fetchCommerceProductDefinitionLocalization(commerceProductDefinitionId,
+			languageId);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionLocalization getCommerceProductDefinitionLocalization(
+		long commerceProductDefinitionId, java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceProductDefinitionLocalization(commerceProductDefinitionId,
+			languageId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

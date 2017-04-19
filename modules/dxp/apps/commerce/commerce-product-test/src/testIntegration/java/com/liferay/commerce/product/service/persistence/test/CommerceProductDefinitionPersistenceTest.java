@@ -139,12 +139,6 @@ public class CommerceProductDefinitionPersistenceTest {
 
 		newCommerceProductDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCommerceProductDefinition.setTitle(RandomTestUtil.randomString());
-
-		newCommerceProductDefinition.setUrlTitle(RandomTestUtil.randomString());
-
-		newCommerceProductDefinition.setDescription(RandomTestUtil.randomString());
-
 		newCommerceProductDefinition.setProductTypeName(RandomTestUtil.randomString());
 
 		newCommerceProductDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
@@ -166,6 +160,8 @@ public class CommerceProductDefinitionPersistenceTest {
 		newCommerceProductDefinition.setStatusByUserName(RandomTestUtil.randomString());
 
 		newCommerceProductDefinition.setStatusDate(RandomTestUtil.nextDate());
+
+		newCommerceProductDefinition.setDefaultLanguageId(RandomTestUtil.randomString());
 
 		_commerceProductDefinitions.add(_persistence.update(
 				newCommerceProductDefinition));
@@ -191,12 +187,6 @@ public class CommerceProductDefinitionPersistenceTest {
 				existingCommerceProductDefinition.getModifiedDate()),
 			Time.getShortTimestamp(
 				newCommerceProductDefinition.getModifiedDate()));
-		Assert.assertEquals(existingCommerceProductDefinition.getTitle(),
-			newCommerceProductDefinition.getTitle());
-		Assert.assertEquals(existingCommerceProductDefinition.getUrlTitle(),
-			newCommerceProductDefinition.getUrlTitle());
-		Assert.assertEquals(existingCommerceProductDefinition.getDescription(),
-			newCommerceProductDefinition.getDescription());
 		Assert.assertEquals(existingCommerceProductDefinition.getProductTypeName(),
 			newCommerceProductDefinition.getProductTypeName());
 		Assert.assertEquals(existingCommerceProductDefinition.getAvailableIndividually(),
@@ -226,6 +216,8 @@ public class CommerceProductDefinitionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCommerceProductDefinition.getStatusDate()),
 			Time.getShortTimestamp(newCommerceProductDefinition.getStatusDate()));
+		Assert.assertEquals(existingCommerceProductDefinition.getDefaultLanguageId(),
+			newCommerceProductDefinition.getDefaultLanguageId());
 	}
 
 	@Test
@@ -302,12 +294,12 @@ public class CommerceProductDefinitionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceProductDefinition",
 			"uuid", true, "commerceProductDefinitionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "title", true, "urlTitle", true,
-			"description", true, "productTypeName", true,
+			true, "modifiedDate", true, "productTypeName", true,
 			"availableIndividually", true, "DDMStructureKey", true, "baseSKU",
 			true, "displayDate", true, "expirationDate", true,
 			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"statusByUserName", true, "statusDate", true, "defaultLanguageId",
+			true);
 	}
 
 	@Test
@@ -553,12 +545,6 @@ public class CommerceProductDefinitionPersistenceTest {
 
 		commerceProductDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
-		commerceProductDefinition.setTitle(RandomTestUtil.randomString());
-
-		commerceProductDefinition.setUrlTitle(RandomTestUtil.randomString());
-
-		commerceProductDefinition.setDescription(RandomTestUtil.randomString());
-
 		commerceProductDefinition.setProductTypeName(RandomTestUtil.randomString());
 
 		commerceProductDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
@@ -580,6 +566,8 @@ public class CommerceProductDefinitionPersistenceTest {
 		commerceProductDefinition.setStatusByUserName(RandomTestUtil.randomString());
 
 		commerceProductDefinition.setStatusDate(RandomTestUtil.nextDate());
+
+		commerceProductDefinition.setDefaultLanguageId(RandomTestUtil.randomString());
 
 		_commerceProductDefinitions.add(_persistence.update(
 				commerceProductDefinition));

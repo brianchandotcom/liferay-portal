@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CommerceProductInstance;
 import com.liferay.commerce.product.service.CommerceProductInstanceLocalService;
+import com.liferay.commerce.product.service.persistence.CommerceProductDefinitionLocalizationPersistence;
 import com.liferay.commerce.product.service.persistence.CommerceProductDefinitionOptionRelPersistence;
 import com.liferay.commerce.product.service.persistence.CommerceProductDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CommerceProductDefinitionPersistence;
@@ -546,6 +547,25 @@ public abstract class CommerceProductInstanceLocalServiceBaseImpl
 	public void setCommerceProductDefinitionPersistence(
 		CommerceProductDefinitionPersistence commerceProductDefinitionPersistence) {
 		this.commerceProductDefinitionPersistence = commerceProductDefinitionPersistence;
+	}
+
+	/**
+	 * Returns the commerce product definition localization persistence.
+	 *
+	 * @return the commerce product definition localization persistence
+	 */
+	public CommerceProductDefinitionLocalizationPersistence getCommerceProductDefinitionLocalizationPersistence() {
+		return commerceProductDefinitionLocalizationPersistence;
+	}
+
+	/**
+	 * Sets the commerce product definition localization persistence.
+	 *
+	 * @param commerceProductDefinitionLocalizationPersistence the commerce product definition localization persistence
+	 */
+	public void setCommerceProductDefinitionLocalizationPersistence(
+		CommerceProductDefinitionLocalizationPersistence commerceProductDefinitionLocalizationPersistence) {
+		this.commerceProductDefinitionLocalizationPersistence = commerceProductDefinitionLocalizationPersistence;
 	}
 
 	/**
@@ -1095,6 +1115,8 @@ public abstract class CommerceProductInstanceLocalServiceBaseImpl
 	protected com.liferay.commerce.product.service.CommerceProductDefinitionLocalService commerceProductDefinitionLocalService;
 	@BeanReference(type = CommerceProductDefinitionPersistence.class)
 	protected CommerceProductDefinitionPersistence commerceProductDefinitionPersistence;
+	@BeanReference(type = CommerceProductDefinitionLocalizationPersistence.class)
+	protected CommerceProductDefinitionLocalizationPersistence commerceProductDefinitionLocalizationPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelLocalService.class)
 	protected com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelLocalService commerceProductDefinitionOptionRelLocalService;
 	@BeanReference(type = CommerceProductDefinitionOptionRelPersistence.class)

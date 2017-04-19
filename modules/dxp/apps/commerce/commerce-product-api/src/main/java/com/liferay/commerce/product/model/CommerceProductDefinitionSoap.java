@@ -43,9 +43,6 @@ public class CommerceProductDefinitionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setTitle(model.getTitle());
-		soapModel.setUrlTitle(model.getUrlTitle());
-		soapModel.setDescription(model.getDescription());
 		soapModel.setProductTypeName(model.getProductTypeName());
 		soapModel.setAvailableIndividually(model.getAvailableIndividually());
 		soapModel.setDDMStructureKey(model.getDDMStructureKey());
@@ -57,6 +54,7 @@ public class CommerceProductDefinitionSoap implements Serializable {
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
 		soapModel.setStatusDate(model.getStatusDate());
+		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 
 		return soapModel;
 	}
@@ -176,30 +174,6 @@ public class CommerceProductDefinitionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getTitle() {
-		return _title;
-	}
-
-	public void setTitle(String title) {
-		_title = title;
-	}
-
-	public String getUrlTitle() {
-		return _urlTitle;
-	}
-
-	public void setUrlTitle(String urlTitle) {
-		_urlTitle = urlTitle;
-	}
-
-	public String getDescription() {
-		return _description;
-	}
-
-	public void setDescription(String description) {
-		_description = description;
-	}
-
 	public String getProductTypeName() {
 		return _productTypeName;
 	}
@@ -292,6 +266,14 @@ public class CommerceProductDefinitionSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	public String getDefaultLanguageId() {
+		return _defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
+	}
+
 	private String _uuid;
 	private long _commerceProductDefinitionId;
 	private long _groupId;
@@ -300,9 +282,6 @@ public class CommerceProductDefinitionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _title;
-	private String _urlTitle;
-	private String _description;
 	private String _productTypeName;
 	private boolean _availableIndividually;
 	private String _DDMStructureKey;
@@ -314,4 +293,5 @@ public class CommerceProductDefinitionSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private String _defaultLanguageId;
 }

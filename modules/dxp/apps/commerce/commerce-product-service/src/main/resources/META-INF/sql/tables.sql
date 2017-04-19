@@ -7,9 +7,6 @@ create table CommerceProductDefinition (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	title STRING null,
-	urlTitle STRING null,
-	description STRING null,
 	productTypeName VARCHAR(75) null,
 	availableIndividually BOOLEAN,
 	DDMStructureKey VARCHAR(75) null,
@@ -20,7 +17,19 @@ create table CommerceProductDefinition (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	defaultLanguageId VARCHAR(75) null
+);
+
+create table CommerceProductDefinitionLocalization (
+	mvccVersion LONG default 0 not null,
+	commerceProductDefinitionLocalizationId LONG not null primary key,
+	companyId LONG,
+	commerceProductDefinitionPK LONG,
+	languageId VARCHAR(75) null,
+	title VARCHAR(75) null,
+	urlTitle VARCHAR(75) null,
+	description VARCHAR(75) null
 );
 
 create table CommerceProductDefinitionOptionRel (

@@ -66,7 +66,7 @@ public class CommerceProductDefinitionCacheModel implements CacheModel<CommerceP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,12 +84,6 @@ public class CommerceProductDefinitionCacheModel implements CacheModel<CommerceP
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", title=");
-		sb.append(title);
-		sb.append(", urlTitle=");
-		sb.append(urlTitle);
-		sb.append(", description=");
-		sb.append(description);
 		sb.append(", productTypeName=");
 		sb.append(productTypeName);
 		sb.append(", availableIndividually=");
@@ -112,6 +106,8 @@ public class CommerceProductDefinitionCacheModel implements CacheModel<CommerceP
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", defaultLanguageId=");
+		sb.append(defaultLanguageId);
 		sb.append("}");
 
 		return sb.toString();
@@ -152,27 +148,6 @@ public class CommerceProductDefinitionCacheModel implements CacheModel<CommerceP
 		}
 		else {
 			commerceProductDefinitionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (title == null) {
-			commerceProductDefinitionImpl.setTitle(StringPool.BLANK);
-		}
-		else {
-			commerceProductDefinitionImpl.setTitle(title);
-		}
-
-		if (urlTitle == null) {
-			commerceProductDefinitionImpl.setUrlTitle(StringPool.BLANK);
-		}
-		else {
-			commerceProductDefinitionImpl.setUrlTitle(urlTitle);
-		}
-
-		if (description == null) {
-			commerceProductDefinitionImpl.setDescription(StringPool.BLANK);
-		}
-		else {
-			commerceProductDefinitionImpl.setDescription(description);
 		}
 
 		if (productTypeName == null) {
@@ -238,6 +213,13 @@ public class CommerceProductDefinitionCacheModel implements CacheModel<CommerceP
 			commerceProductDefinitionImpl.setStatusDate(new Date(statusDate));
 		}
 
+		if (defaultLanguageId == null) {
+			commerceProductDefinitionImpl.setDefaultLanguageId(StringPool.BLANK);
+		}
+		else {
+			commerceProductDefinitionImpl.setDefaultLanguageId(defaultLanguageId);
+		}
+
 		commerceProductDefinitionImpl.resetOriginalValues();
 
 		return commerceProductDefinitionImpl;
@@ -257,9 +239,6 @@ public class CommerceProductDefinitionCacheModel implements CacheModel<CommerceP
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		title = objectInput.readUTF();
-		urlTitle = objectInput.readUTF();
-		description = objectInput.readUTF();
 		productTypeName = objectInput.readUTF();
 
 		availableIndividually = objectInput.readBoolean();
@@ -274,6 +253,7 @@ public class CommerceProductDefinitionCacheModel implements CacheModel<CommerceP
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		defaultLanguageId = objectInput.readUTF();
 	}
 
 	@Override
@@ -303,27 +283,6 @@ public class CommerceProductDefinitionCacheModel implements CacheModel<CommerceP
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-
-		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(title);
-		}
-
-		if (urlTitle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(urlTitle);
-		}
-
-		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(description);
-		}
 
 		if (productTypeName == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -364,6 +323,13 @@ public class CommerceProductDefinitionCacheModel implements CacheModel<CommerceP
 		}
 
 		objectOutput.writeLong(statusDate);
+
+		if (defaultLanguageId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(defaultLanguageId);
+		}
 	}
 
 	public String uuid;
@@ -374,9 +340,6 @@ public class CommerceProductDefinitionCacheModel implements CacheModel<CommerceP
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String title;
-	public String urlTitle;
-	public String description;
 	public String productTypeName;
 	public boolean availableIndividually;
 	public String DDMStructureKey;
@@ -388,4 +351,5 @@ public class CommerceProductDefinitionCacheModel implements CacheModel<CommerceP
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public String defaultLanguageId;
 }

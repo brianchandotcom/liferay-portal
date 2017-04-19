@@ -71,9 +71,6 @@ public class CommerceProductDefinitionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("title", getTitle());
-		attributes.put("urlTitle", getUrlTitle());
-		attributes.put("description", getDescription());
 		attributes.put("productTypeName", getProductTypeName());
 		attributes.put("availableIndividually", getAvailableIndividually());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
@@ -85,6 +82,7 @@ public class CommerceProductDefinitionWrapper
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("defaultLanguageId", getDefaultLanguageId());
 
 		return attributes;
 	}
@@ -138,24 +136,6 @@ public class CommerceProductDefinitionWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String urlTitle = (String)attributes.get("urlTitle");
-
-		if (urlTitle != null) {
-			setUrlTitle(urlTitle);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
 		}
 
 		String productTypeName = (String)attributes.get("productTypeName");
@@ -223,6 +203,12 @@ public class CommerceProductDefinitionWrapper
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
+
+		if (defaultLanguageId != null) {
+			setDefaultLanguageId(defaultLanguageId);
 		}
 	}
 
@@ -464,77 +450,25 @@ public class CommerceProductDefinitionWrapper
 		return _commerceProductDefinition.getDDMStructureKey();
 	}
 
+	/**
+	* Returns the default language ID of this commerce product definition.
+	*
+	* @return the default language ID of this commerce product definition
+	*/
 	@Override
 	public java.lang.String getDefaultLanguageId() {
 		return _commerceProductDefinition.getDefaultLanguageId();
 	}
 
-	/**
-	* Returns the description of this commerce product definition.
-	*
-	* @return the description of this commerce product definition
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _commerceProductDefinition.getDescription();
-	}
-
-	/**
-	* Returns the localized description of this commerce product definition in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized description of this commerce product definition
-	*/
 	@Override
 	public java.lang.String getDescription(java.lang.String languageId) {
 		return _commerceProductDefinition.getDescription(languageId);
 	}
 
-	/**
-	* Returns the localized description of this commerce product definition in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this commerce product definition
-	*/
 	@Override
 	public java.lang.String getDescription(java.lang.String languageId,
 		boolean useDefault) {
 		return _commerceProductDefinition.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this commerce product definition in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized description of this commerce product definition
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
-		return _commerceProductDefinition.getDescription(locale);
-	}
-
-	/**
-	* Returns the localized description of this commerce product definition in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this commerce product definition. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
-		return _commerceProductDefinition.getDescription(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
-		return _commerceProductDefinition.getDescriptionCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getDescriptionCurrentValue() {
-		return _commerceProductDefinition.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -567,139 +501,26 @@ public class CommerceProductDefinitionWrapper
 		return _commerceProductDefinition.getStatusByUserUuid();
 	}
 
-	/**
-	* Returns the title of this commerce product definition.
-	*
-	* @return the title of this commerce product definition
-	*/
-	@Override
-	public java.lang.String getTitle() {
-		return _commerceProductDefinition.getTitle();
-	}
-
-	/**
-	* Returns the localized title of this commerce product definition in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized title of this commerce product definition
-	*/
 	@Override
 	public java.lang.String getTitle(java.lang.String languageId) {
 		return _commerceProductDefinition.getTitle(languageId);
 	}
 
-	/**
-	* Returns the localized title of this commerce product definition in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this commerce product definition
-	*/
 	@Override
 	public java.lang.String getTitle(java.lang.String languageId,
 		boolean useDefault) {
 		return _commerceProductDefinition.getTitle(languageId, useDefault);
 	}
 
-	/**
-	* Returns the localized title of this commerce product definition in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this commerce product definition
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _commerceProductDefinition.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this commerce product definition in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this commerce product definition. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _commerceProductDefinition.getTitle(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
-		return _commerceProductDefinition.getTitleCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentValue() {
-		return _commerceProductDefinition.getTitleCurrentValue();
-	}
-
-	/**
-	* Returns the url title of this commerce product definition.
-	*
-	* @return the url title of this commerce product definition
-	*/
-	@Override
-	public java.lang.String getUrlTitle() {
-		return _commerceProductDefinition.getUrlTitle();
-	}
-
-	/**
-	* Returns the localized url title of this commerce product definition in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized url title of this commerce product definition
-	*/
 	@Override
 	public java.lang.String getUrlTitle(java.lang.String languageId) {
 		return _commerceProductDefinition.getUrlTitle(languageId);
 	}
 
-	/**
-	* Returns the localized url title of this commerce product definition in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized url title of this commerce product definition
-	*/
 	@Override
 	public java.lang.String getUrlTitle(java.lang.String languageId,
 		boolean useDefault) {
 		return _commerceProductDefinition.getUrlTitle(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized url title of this commerce product definition in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized url title of this commerce product definition
-	*/
-	@Override
-	public java.lang.String getUrlTitle(java.util.Locale locale) {
-		return _commerceProductDefinition.getUrlTitle(locale);
-	}
-
-	/**
-	* Returns the localized url title of this commerce product definition in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized url title of this commerce product definition. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getUrlTitle(java.util.Locale locale,
-		boolean useDefault) {
-		return _commerceProductDefinition.getUrlTitle(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getUrlTitleCurrentLanguageId() {
-		return _commerceProductDefinition.getUrlTitleCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getUrlTitleCurrentValue() {
-		return _commerceProductDefinition.getUrlTitleCurrentValue();
 	}
 
 	/**
@@ -740,11 +561,6 @@ public class CommerceProductDefinitionWrapper
 	@Override
 	public java.lang.String toXmlString() {
 		return _commerceProductDefinition.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _commerceProductDefinition.getAvailableLanguageIds();
 	}
 
 	/**
@@ -805,36 +621,6 @@ public class CommerceProductDefinitionWrapper
 	@Override
 	public Date getStatusDate() {
 		return _commerceProductDefinition.getStatusDate();
-	}
-
-	/**
-	* Returns a map of the locales and localized descriptions of this commerce product definition.
-	*
-	* @return the locales and localized descriptions of this commerce product definition
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _commerceProductDefinition.getDescriptionMap();
-	}
-
-	/**
-	* Returns a map of the locales and localized titles of this commerce product definition.
-	*
-	* @return the locales and localized titles of this commerce product definition
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _commerceProductDefinition.getTitleMap();
-	}
-
-	/**
-	* Returns a map of the locales and localized url titles of this commerce product definition.
-	*
-	* @return the locales and localized url titles of this commerce product definition
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getUrlTitleMap() {
-		return _commerceProductDefinition.getUrlTitleMap();
 	}
 
 	/**
@@ -912,19 +698,6 @@ public class CommerceProductDefinitionWrapper
 		_commerceProductDefinition.persist();
 	}
 
-	@Override
-	public void prepareLocalizedFieldsForImport()
-		throws com.liferay.portal.kernel.exception.LocaleException {
-		_commerceProductDefinition.prepareLocalizedFieldsForImport();
-	}
-
-	@Override
-	public void prepareLocalizedFieldsForImport(
-		java.util.Locale defaultImportLocale)
-		throws com.liferay.portal.kernel.exception.LocaleException {
-		_commerceProductDefinition.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
 	/**
 	* Sets whether this commerce product definition is available individually.
 	*
@@ -991,69 +764,13 @@ public class CommerceProductDefinitionWrapper
 	}
 
 	/**
-	* Sets the description of this commerce product definition.
+	* Sets the default language ID of this commerce product definition.
 	*
-	* @param description the description of this commerce product definition
+	* @param defaultLanguageId the default language ID of this commerce product definition
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
-		_commerceProductDefinition.setDescription(description);
-	}
-
-	/**
-	* Sets the localized description of this commerce product definition in the language.
-	*
-	* @param description the localized description of this commerce product definition
-	* @param locale the locale of the language
-	*/
-	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
-		_commerceProductDefinition.setDescription(description, locale);
-	}
-
-	/**
-	* Sets the localized description of this commerce product definition in the language, and sets the default locale.
-	*
-	* @param description the localized description of this commerce product definition
-	* @param locale the locale of the language
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
-		_commerceProductDefinition.setDescription(description, locale,
-			defaultLocale);
-	}
-
-	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
-		_commerceProductDefinition.setDescriptionCurrentLanguageId(languageId);
-	}
-
-	/**
-	* Sets the localized descriptions of this commerce product definition from the map of locales and localized descriptions.
-	*
-	* @param descriptionMap the locales and localized descriptions of this commerce product definition
-	*/
-	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
-		_commerceProductDefinition.setDescriptionMap(descriptionMap);
-	}
-
-	/**
-	* Sets the localized descriptions of this commerce product definition from the map of locales and localized descriptions, and sets the default locale.
-	*
-	* @param descriptionMap the locales and localized descriptions of this commerce product definition
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Locale defaultLocale) {
-		_commerceProductDefinition.setDescriptionMap(descriptionMap,
-			defaultLocale);
+	public void setDefaultLanguageId(java.lang.String defaultLanguageId) {
+		_commerceProductDefinition.setDefaultLanguageId(defaultLanguageId);
 	}
 
 	/**
@@ -1200,130 +917,6 @@ public class CommerceProductDefinitionWrapper
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_commerceProductDefinition.setStatusDate(statusDate);
-	}
-
-	/**
-	* Sets the title of this commerce product definition.
-	*
-	* @param title the title of this commerce product definition
-	*/
-	@Override
-	public void setTitle(java.lang.String title) {
-		_commerceProductDefinition.setTitle(title);
-	}
-
-	/**
-	* Sets the localized title of this commerce product definition in the language.
-	*
-	* @param title the localized title of this commerce product definition
-	* @param locale the locale of the language
-	*/
-	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
-		_commerceProductDefinition.setTitle(title, locale);
-	}
-
-	/**
-	* Sets the localized title of this commerce product definition in the language, and sets the default locale.
-	*
-	* @param title the localized title of this commerce product definition
-	* @param locale the locale of the language
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
-		java.util.Locale defaultLocale) {
-		_commerceProductDefinition.setTitle(title, locale, defaultLocale);
-	}
-
-	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
-		_commerceProductDefinition.setTitleCurrentLanguageId(languageId);
-	}
-
-	/**
-	* Sets the localized titles of this commerce product definition from the map of locales and localized titles.
-	*
-	* @param titleMap the locales and localized titles of this commerce product definition
-	*/
-	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
-		_commerceProductDefinition.setTitleMap(titleMap);
-	}
-
-	/**
-	* Sets the localized titles of this commerce product definition from the map of locales and localized titles, and sets the default locale.
-	*
-	* @param titleMap the locales and localized titles of this commerce product definition
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Locale defaultLocale) {
-		_commerceProductDefinition.setTitleMap(titleMap, defaultLocale);
-	}
-
-	/**
-	* Sets the url title of this commerce product definition.
-	*
-	* @param urlTitle the url title of this commerce product definition
-	*/
-	@Override
-	public void setUrlTitle(java.lang.String urlTitle) {
-		_commerceProductDefinition.setUrlTitle(urlTitle);
-	}
-
-	/**
-	* Sets the localized url title of this commerce product definition in the language.
-	*
-	* @param urlTitle the localized url title of this commerce product definition
-	* @param locale the locale of the language
-	*/
-	@Override
-	public void setUrlTitle(java.lang.String urlTitle, java.util.Locale locale) {
-		_commerceProductDefinition.setUrlTitle(urlTitle, locale);
-	}
-
-	/**
-	* Sets the localized url title of this commerce product definition in the language, and sets the default locale.
-	*
-	* @param urlTitle the localized url title of this commerce product definition
-	* @param locale the locale of the language
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setUrlTitle(java.lang.String urlTitle, java.util.Locale locale,
-		java.util.Locale defaultLocale) {
-		_commerceProductDefinition.setUrlTitle(urlTitle, locale, defaultLocale);
-	}
-
-	@Override
-	public void setUrlTitleCurrentLanguageId(java.lang.String languageId) {
-		_commerceProductDefinition.setUrlTitleCurrentLanguageId(languageId);
-	}
-
-	/**
-	* Sets the localized url titles of this commerce product definition from the map of locales and localized url titles.
-	*
-	* @param urlTitleMap the locales and localized url titles of this commerce product definition
-	*/
-	@Override
-	public void setUrlTitleMap(
-		Map<java.util.Locale, java.lang.String> urlTitleMap) {
-		_commerceProductDefinition.setUrlTitleMap(urlTitleMap);
-	}
-
-	/**
-	* Sets the localized url titles of this commerce product definition from the map of locales and localized url titles, and sets the default locale.
-	*
-	* @param urlTitleMap the locales and localized url titles of this commerce product definition
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setUrlTitleMap(
-		Map<java.util.Locale, java.lang.String> urlTitleMap,
-		java.util.Locale defaultLocale) {
-		_commerceProductDefinition.setUrlTitleMap(urlTitleMap, defaultLocale);
 	}
 
 	/**

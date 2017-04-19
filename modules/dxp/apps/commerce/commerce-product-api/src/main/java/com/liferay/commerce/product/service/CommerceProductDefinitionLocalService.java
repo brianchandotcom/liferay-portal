@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CommerceProductDefinition;
+import com.liferay.commerce.product.model.CommerceProductDefinitionLocalization;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
@@ -188,6 +189,15 @@ public interface CommerceProductDefinitionLocalService extends BaseLocalService,
 		long commerceProductDefinitionId, int status,
 		ServiceContext serviceContext,
 		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceProductDefinitionLocalization fetchCommerceProductDefinitionLocalization(
+		long commerceProductDefinitionId, java.lang.String languageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceProductDefinitionLocalization getCommerceProductDefinitionLocalization(
+		long commerceProductDefinitionId, java.lang.String languageId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

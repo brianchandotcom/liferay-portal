@@ -327,44 +327,43 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected List<String> getFileNames(
-			String basedir, List<String> recentChangesFileNames,
-			String[] excludes, String[] includes)
-		throws Exception {
-
-		return getFileNames(
-			basedir, recentChangesFileNames, excludes, includes,
-			sourceFormatterArgs.isIncludeSubrepositories());
-	}
-
-	protected List<String> getFileNames(
-			String basedir, List<String> recentChangesFileNames,
-			String[] excludes, String[] includes,
-			boolean includeSubrepositories)
+			String basedir, String[] excludes, String[] includes)
 		throws Exception {
 
 		if (_excludes != null) {
 			excludes = ArrayUtil.append(excludes, _excludes);
 		}
 
-		return _sourceFormatterHelper.getFileNames(
-			basedir, recentChangesFileNames, excludes, includes,
-			includeSubrepositories);
-	}
-
-	protected List<String> getFileNames(
-			String basedir, String[] excludes, String[] includes)
-		throws Exception {
-
-		return getFileNames(
-			basedir, sourceFormatterArgs.getRecentChangesFileNames(), excludes,
-			includes);
+		return _sourceFormatterHelper.scanForFiles(
+			basedir, excludes, includes,
+			sourceFormatterArgs.isIncludeSubrepositories());
 	}
 
 	protected List<String> getFileNames(String[] excludes, String[] includes)
 		throws Exception {
 
-		return getFileNames(
-			sourceFormatterArgs.getBaseDirName(), excludes, includes);
+		return getFileNames(excludes, includes, false);
+	}
+
+	protected List<String> getFileNames(
+			String[] excludes, String[] includes, boolean forceIncludeAllFiles)
+		throws Exception {
+
+		if (_excludes != null) {
+			excludes = ArrayUtil.append(excludes, _excludes);
+		}
+
+		if (!forceIncludeAllFiles &&
+			(sourceFormatterArgs.getRecentChangesFileNames() != null)) {
+
+			return _sourceFormatterHelper.filterRecentChangesFileNames(
+				sourceFormatterArgs.getBaseDirName(),
+				sourceFormatterArgs.getRecentChangesFileNames(), excludes,
+				includes, sourceFormatterArgs.isIncludeSubrepositories());
+		}
+
+		return _sourceFormatterHelper.filterFileNames(
+			_allFileNames, excludes, includes);
 	}
 
 	protected List<SourceCheck> getModuleSourceChecks() {

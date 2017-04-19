@@ -502,7 +502,8 @@ public class GitWorkingDirectory {
 
 		RefSpec refSpec = new RefSpec(
 			JenkinsResultsParserUtil.combine(
-				"refs/heads/", remoteBranchName, ":", localBranchName));
+				"refs/heads/", remoteBranchName, ":", "refs/heads/",
+				localBranchName));
 
 		fetch(refSpec, remoteConfig);
 	}

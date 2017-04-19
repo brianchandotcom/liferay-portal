@@ -42,8 +42,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.junit.Assert;
 import org.junit.Test;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Andrea Di Giorgi
@@ -51,14 +59,37 @@ import org.junit.Test;
 public class ProjectTemplateFilesTest {
 
 	@Test
-	public void testProjectTemplateFiles() throws IOException {
+	public void testProjectTemplateFiles() throws Exception {
+		DocumentBuilderFactory documentBuilderFactory =
+			DocumentBuilderFactory.newInstance();
+
+		DocumentBuilder documentBuilder =
+			documentBuilderFactory.newDocumentBuilder();
+
 		try (DirectoryStream<Path> directoryStream =
 				FileTestUtil.getProjectTemplatesDirectoryStream()) {
 
 			for (Path path : directoryStream) {
-				_testProjectTemplateFiles(path);
+				_testProjectTemplateFiles(path, documentBuilder);
 			}
 		}
+	}
+
+	private Element _getChildElement(Element parentElement, String name) {
+		Node node = parentElement.getFirstChild();
+
+		do {
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				Element element = (Element)node;
+
+				if (name.equals(element.getTagName())) {
+					return element;
+				}
+			}
+		}
+		while ((node = node.getNextSibling()) != null);
+
+		return null;
 	}
 
 	private boolean _isInJavaSrcDir(Path path) throws IOException {
@@ -226,22 +257,61 @@ public class ProjectTemplateFilesTest {
 			Files.exists(archetypeResourcesDirPath.resolve("mvnw")));
 	}
 
-	private void _testPomXml(Path archetypeResourcesDirPath)
-		throws IOException {
+	private void _testPomXml(
+			Path archetypeResourcesDirPath, DocumentBuilder documentBuilder)
+		throws Exception {
 
 		Path pomXmlPath = archetypeResourcesDirPath.resolve("pom.xml");
 
 		Assert.assertTrue("Missing " + pomXmlPath, Files.exists(pomXmlPath));
 
-		String pomXml = FileUtil.read(pomXmlPath);
+		Document document = documentBuilder.parse(pomXmlPath.toFile());
 
-		Assert.assertFalse(
-			"Packaging \"jar\" is implicit in " + pomXmlPath,
-			pomXml.contains("<packaging>jar</packaging>"));
+		Element projectElement = document.getDocumentElement();
+
+		Element packagingElement = _getChildElement(
+			projectElement, "packaging");
+
+		if (packagingElement != null) {
+			Assert.assertNotEquals(
+				"Incorrect packaging in " + pomXmlPath, "jar",
+				packagingElement.getTextContent());
+		}
+
+		_testPomXmlVersions(pomXmlPath, projectElement, "dependency");
+		_testPomXmlVersions(pomXmlPath, projectElement, "plugin");
 	}
 
-	private void _testProjectTemplateFiles(Path projectTemplateDirPath)
-		throws IOException {
+	private void _testPomXmlVersions(
+		Path pomXmlPath, Element projectElement, String name) {
+
+		Properties systemProperties = System.getProperties();
+
+		NodeList nodeList = projectElement.getElementsByTagName(name);
+
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Element element = (Element)nodeList.item(i);
+
+			Element artifactIdElement = _getChildElement(element, "artifactId");
+
+			String artifactId = artifactIdElement.getTextContent();
+
+			String key = artifactId + ".version";
+
+			if (systemProperties.containsKey(key)) {
+				Element versionElement = _getChildElement(element, "version");
+
+				Assert.assertEquals(
+					"Incorrect version of " + name + " \"" + artifactId +
+						"\" in " + pomXmlPath,
+					"@" + key + "@", versionElement.getTextContent());
+			}
+		}
+	}
+
+	private void _testProjectTemplateFiles(
+			Path projectTemplateDirPath, DocumentBuilder documentBuilder)
+		throws Exception {
 
 		Path archetypeResourcesDirPath = projectTemplateDirPath.resolve(
 			"src/main/resources/archetype-resources");
@@ -258,7 +328,7 @@ public class ProjectTemplateFilesTest {
 		_testGitIgnore(projectTemplateDirName, archetypeResourcesDirPath);
 		_testGradleWrapper(archetypeResourcesDirPath);
 		_testMavenWrapper(archetypeResourcesDirPath);
-		_testPomXml(archetypeResourcesDirPath);
+		_testPomXml(archetypeResourcesDirPath, documentBuilder);
 
 		final AtomicBoolean hasJavaFiles = new AtomicBoolean();
 

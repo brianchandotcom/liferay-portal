@@ -174,19 +174,6 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement.<p>This method was
-	 *             originally defined to always display user portlets in the
-	 *             Control Panel. In this version, this method should always
-	 *             return <code>false</code> and remains only to
-	 *             preserve binary compatibility. This method will be
-	 *             permanently removed in a future version.</p><p>In lieu of
-	 *             this method, the ACCESS_IN_CONTROL_PANEL permission is used
-	 *             to determine if a portlet should be displayed in the Control
-	 *             Panel and is included in the User role by default for the
-	 *             portlets listed under the My Account category.</p>
-	 */
-	@Deprecated
 	protected boolean hasPermissionImplicitlyGranted(
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {

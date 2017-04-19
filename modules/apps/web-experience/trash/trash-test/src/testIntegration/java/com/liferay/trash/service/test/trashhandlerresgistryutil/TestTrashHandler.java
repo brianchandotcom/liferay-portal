@@ -210,6 +210,10 @@ public class TestTrashHandler implements TrashHandler {
 		return 0;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
 		long classPK, int start, int end) {
@@ -227,6 +231,10 @@ public class TestTrashHandler implements TrashHandler {
 		return 0;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
 		long classPK, int start, int end) {
@@ -249,6 +257,10 @@ public class TestTrashHandler implements TrashHandler {
 		return 0;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public List<TrashRenderer> getTrashModelTrashRenderers(
 		long classPK, int start, int end, OrderByComparator<?> obc) {

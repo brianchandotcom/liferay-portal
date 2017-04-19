@@ -229,7 +229,7 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 	}
 
 	@Test
-	public void testProvideLiferayResourceBundleCapabilitiyAdded()
+	public void testProvideLiferayResourceBundleCapabilityAdded()
 		throws Exception {
 
 		ResourceBundleLoaderAnalyzerPlugin resourceBundleLoaderAnalyzerPlugin =
@@ -262,7 +262,7 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 	}
 
 	@Test
-	public void testProvideLiferayResourceBundleCapabilitiyNotAdded()
+	public void testProvideLiferayResourceBundleCapabilityNotAdded()
 		throws Exception {
 
 		ResourceBundleLoaderAnalyzerPlugin resourceBundleLoaderAnalyzerPlugin =

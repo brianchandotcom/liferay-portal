@@ -42,7 +42,13 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 			return false;
 		}
 
-		return hasAccessPermissionExplicitlyGranted(
+		if (hasAccessPermissionExplicitlyGranted(
+				permissionChecker, group, portlet)) {
+
+			return true;
+		}
+
+		return hasPermissionImplicitlyGranted(
 			permissionChecker, group, portlet);
 	}
 

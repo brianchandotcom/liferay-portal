@@ -240,33 +240,6 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	}
 
 	@Override
-	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException {
-
-		List<TrashRenderer> trashRenderers = new ArrayList<>();
-
-		WikiPage page = _wikiPageLocalService.getPage(classPK);
-
-		List<WikiPage> pages = _wikiPageLocalService.getChildren(
-			page.getNodeId(), true, page.getTitle(),
-			WorkflowConstants.STATUS_IN_TRASH);
-
-		for (WikiPage curPage : pages) {
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					WikiPage.class.getName());
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				curPage.getResourcePrimKey());
-
-			trashRenderers.add(trashRenderer);
-		}
-
-		return trashRenderers;
-	}
-
-	@Override
 	public TrashedModel getTrashedModel(long classPK) {
 		return _wikiPageLocalService.fetchLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);

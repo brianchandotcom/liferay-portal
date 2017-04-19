@@ -145,51 +145,6 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException {
-
-		List<TrashRenderer> trashRenderers = new ArrayList<>();
-
-		DocumentRepository documentRepository = getDocumentRepository(classPK);
-
-		List<RepositoryEntry> repositoryEntries =
-			documentRepository.getFileEntriesAndFileShortcuts(
-				classPK, WorkflowConstants.STATUS_IN_TRASH, start, end);
-
-		for (RepositoryEntry repositoryEntry : repositoryEntries) {
-			String curClassName = StringPool.BLANK;
-			long curClassPK = 0;
-
-			if (repositoryEntry instanceof FileShortcut) {
-				FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
-
-				curClassName = DLFileShortcutConstants.getClassName();
-				curClassPK = fileShortcut.getPrimaryKey();
-			}
-			else if (repositoryEntry instanceof FileEntry) {
-				FileEntry fileEntry = (FileEntry)repositoryEntry;
-
-				curClassName = DLFileEntry.class.getName();
-				curClassPK = fileEntry.getPrimaryKey();
-			}
-			else {
-				continue;
-			}
-
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(curClassName);
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				curClassPK);
-
-			trashRenderers.add(trashRenderer);
-		}
-
-		return trashRenderers;
-	}
-
-	@Override
 	public String getTrashContainerModelName() {
 		return "folders";
 	}
@@ -202,33 +157,6 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 
 		return documentRepository.getFoldersCount(
 			classPK, WorkflowConstants.STATUS_IN_TRASH, false);
-	}
-
-	@Override
-	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException {
-
-		List<TrashRenderer> trashRenderers = new ArrayList<>();
-
-		DocumentRepository documentRepository = getDocumentRepository(classPK);
-
-		List<Folder> folders = documentRepository.getFolders(
-			classPK, WorkflowConstants.STATUS_IN_TRASH, false, start, end,
-			null);
-
-		for (Folder folder : folders) {
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					DLFolder.class.getName());
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				folder.getPrimaryKey());
-
-			trashRenderers.add(trashRenderer);
-		}
-
-		return trashRenderers;
 	}
 
 	@Override

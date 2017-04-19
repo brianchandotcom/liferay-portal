@@ -143,40 +143,6 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 	}
 
 	@Override
-	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException {
-
-		List<TrashRenderer> trashRenderers = new ArrayList<>();
-
-		List<WikiPage> pages = _wikiPageLocalService.getPages(
-			classPK, true, WorkflowConstants.STATUS_IN_TRASH, start, end);
-
-		for (WikiPage page : pages) {
-			if (page.isInTrashExplicitly()) {
-				continue;
-			}
-
-			WikiPage redirectPage = page.getRedirectPage();
-
-			if ((redirectPage != null) && redirectPage.isInTrash()) {
-				continue;
-			}
-
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					WikiPage.class.getName());
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				page.getResourcePrimKey());
-
-			trashRenderers.add(trashRenderer);
-		}
-
-		return trashRenderers;
-	}
-
-	@Override
 	public TrashedModel getTrashedModel(long classPK) {
 		return _wikiNodeLocalService.fetchWikiNode(classPK);
 	}

@@ -18,6 +18,7 @@ import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.internal.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
+import com.liferay.project.templates.util.StringTestUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -36,6 +37,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,15 +52,11 @@ public class ProjectTemplateFilesTest {
 
 	@Test
 	public void testProjectTemplateFiles() throws IOException {
-		String gitIgnoreTemplate = FileTestUtil.read(
-			"com/liferay/project/templates/dependencies" +
-				"/archetype_resources_gitignore.tmpl");
-
 		try (DirectoryStream<Path> directoryStream =
 				FileTestUtil.getProjectTemplatesDirectoryStream()) {
 
 			for (Path path : directoryStream) {
-				_testProjectTemplateFiles(path, gitIgnoreTemplate);
+				_testProjectTemplateFiles(path);
 			}
 		}
 	}
@@ -169,8 +167,7 @@ public class ProjectTemplateFilesTest {
 	}
 
 	private void _testGitIgnore(
-			String projectTemplateDirName, Path archetypeResourcesDirPath,
-			String gitIgnoreTemplate)
+			String projectTemplateDirName, Path archetypeResourcesDirPath)
 		throws IOException {
 
 		Path dotGitIgnorePath = archetypeResourcesDirPath.resolve(".gitignore");
@@ -188,8 +185,16 @@ public class ProjectTemplateFilesTest {
 				FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX +
 					WorkspaceUtil.WORKSPACE)) {
 
+			String gitIgnore = _GIT_IGNORE;
+
+			if (Files.exists(
+					archetypeResourcesDirPath.resolve("package.json"))) {
+
+				gitIgnore = _GIT_IGNORE_WITH_PACKAGE_JSON;
+			}
+
 			Assert.assertEquals(
-				"Incorrect " + gitIgnorePath, gitIgnoreTemplate,
+				"Incorrect " + gitIgnorePath, gitIgnore,
 				FileUtil.read(gitIgnorePath));
 		}
 	}
@@ -235,8 +240,7 @@ public class ProjectTemplateFilesTest {
 			pomXml.contains("<packaging>jar</packaging>"));
 	}
 
-	private void _testProjectTemplateFiles(
-			Path projectTemplateDirPath, String gitIgnoreTemplate)
+	private void _testProjectTemplateFiles(Path projectTemplateDirPath)
 		throws IOException {
 
 		Path archetypeResourcesDirPath = projectTemplateDirPath.resolve(
@@ -251,9 +255,7 @@ public class ProjectTemplateFilesTest {
 
 		_testBndBnd(projectTemplateDirPath);
 		_testBuildGradle(archetypeResourcesDirPath);
-		_testGitIgnore(
-			projectTemplateDirName, archetypeResourcesDirPath,
-			gitIgnoreTemplate);
+		_testGitIgnore(projectTemplateDirName, archetypeResourcesDirPath);
 		_testGradleWrapper(archetypeResourcesDirPath);
 		_testMavenWrapper(archetypeResourcesDirPath);
 		_testPomXml(archetypeResourcesDirPath);
@@ -377,6 +379,10 @@ public class ProjectTemplateFilesTest {
 		}
 	}
 
+	private static final String _GIT_IGNORE;
+
+	private static final String _GIT_IGNORE_WITH_PACKAGE_JSON;
+
 	private static final String _SERVICE_XML_DECLARATION;
 
 	private static final String[] _SOURCESET_NAMES = {
@@ -395,6 +401,19 @@ public class ProjectTemplateFilesTest {
 		"#if\\s*\\(\\s*(.+)\\s*\\)");
 
 	static {
+		Set<String> gitIgnoreLines = new TreeSet<>();
+
+		gitIgnoreLines.add(".gradle/");
+		gitIgnoreLines.add("build/");
+		gitIgnoreLines.add("target/");
+
+		_GIT_IGNORE = StringTestUtil.merge(gitIgnoreLines, '\n');
+
+		gitIgnoreLines.add("node_modules/");
+
+		_GIT_IGNORE_WITH_PACKAGE_JSON = StringTestUtil.merge(
+			gitIgnoreLines, '\n');
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<?xml version=\"1.0\"?>");

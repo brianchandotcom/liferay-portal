@@ -19,15 +19,19 @@ package com.liferay.project.templates.util;
  */
 public class StringTestUtil {
 
-	public static String merge(String... strings) {
+	public static String merge(Iterable<String> strings, char separator) {
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < strings.length; i++) {
-			if (i > 0) {
-				sb.append(',');
+		boolean first = true;
+
+		for (String s : strings) {
+			if (!first) {
+				sb.append(separator);
 			}
 
-			sb.append(strings[i]);
+			first = false;
+
+			sb.append(s);
 		}
 
 		return sb.toString();

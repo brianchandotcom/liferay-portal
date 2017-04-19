@@ -14,13 +14,10 @@
 
 package com.liferay.project.templates.util;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Writer;
 
-import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.Files;
@@ -72,30 +69,6 @@ public class FileTestUtil {
 				}
 
 			});
-	}
-
-	public static String read(String name) throws IOException {
-		StringBuilder sb = new StringBuilder();
-
-		ClassLoader classLoader = FileTestUtil.class.getClassLoader();
-
-		try (InputStream inputStream = classLoader.getResourceAsStream(name);
-			InputStreamReader inputStreamReader = new InputStreamReader(
-				inputStream, StandardCharsets.UTF_8);
-			BufferedReader bufferedReader = new BufferedReader(
-				inputStreamReader)) {
-
-			String line = null;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				sb.append(line);
-				sb.append('\n');
-			}
-		}
-
-		String content = sb.toString();
-
-		return content.trim();
 	}
 
 	public static Properties readProperties(String name) throws IOException {

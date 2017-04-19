@@ -43,6 +43,7 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -1867,9 +1868,11 @@ public class ProjectTemplatesTest {
 	}
 
 	private static final String _BUNDLES_DIFF_IGNORES = StringTestUtil.merge(
-		"*.js.map", "*pom.properties", "*pom.xml", "Archiver-Version",
-		"Build-Jdk", "Built-By", "Javac-Debug", "Javac-Deprecation",
-		"Javac-Encoding");
+		Arrays.asList(
+			"*.js.map", "*pom.properties", "*pom.xml", "Archiver-Version",
+			"Build-Jdk", "Built-By", "Javac-Debug", "Javac-Deprecation",
+			"Javac-Encoding"),
+		',');
 
 	private static final String _GRADLE_TASK_PATH_BUILD = ":build";
 

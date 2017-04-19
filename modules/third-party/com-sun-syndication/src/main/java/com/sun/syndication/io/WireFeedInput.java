@@ -59,10 +59,10 @@ public class WireFeedInput {
     private static FeedParsers getFeedParsers() {
         synchronized(WireFeedInput.class) {
             FeedParsers parsers = (FeedParsers)
-                clMap.get(Thread.currentThread().getContextClassLoader());
+                clMap.get(clMap.getClass().getClassLoader());
             if (parsers == null) {
                 parsers = new FeedParsers();
-                clMap.put(Thread.currentThread().getContextClassLoader(), parsers);
+                clMap.put(clMap.getClass().getClassLoader(), parsers);
             }
             return parsers;
         }
@@ -190,7 +190,7 @@ public class WireFeedInput {
         try {
             if (_xmlHealerOn) {
                 reader = new XmlFixerReader(reader);
-            }            
+            }
             Document document = saxBuilder.build(reader);
             return build(document);
         }
@@ -245,7 +245,7 @@ public class WireFeedInput {
      *
      */
     public WireFeed build(org.w3c.dom.Document document) throws IllegalArgumentException,FeedException {
-        DOMBuilder domBuilder = new DOMBuilder();        
+        DOMBuilder domBuilder = new DOMBuilder();
         try {
             Document jdomDoc = domBuilder.build(document);
             return build(jdomDoc);
@@ -279,25 +279,25 @@ public class WireFeedInput {
 
     /**
      * Creates and sets up a org.jdom.input.SAXBuilder for parsing.
-     * 
+     *
      * @return a new org.jdom.input.SAXBuilder object
      */
     protected SAXBuilder createSAXBuilder() {
-        SAXBuilder saxBuilder = new SAXBuilder(_validate);        
+        SAXBuilder saxBuilder = new SAXBuilder(_validate);
         saxBuilder.setEntityResolver(RESOLVER);
 
         //
         // This code is needed to fix the security problem outlined in http://www.securityfocus.com/archive/1/297714
         //
         // Unfortunately there isn't an easy way to check if an XML parser supports a particular feature, so
-        // we need to set it and catch the exception if it fails. We also need to subclass the JDom SAXBuilder 
+        // we need to set it and catch the exception if it fails. We also need to subclass the JDom SAXBuilder
         // class in order to get access to the underlying SAX parser - otherwise the features don't get set until
         // we are already building the document, by which time it's too late to fix the problem.
         //
         // Crimson is one parser which is known not to support these features.
 		try {
 			XMLReader parser = saxBuilder.createParser();
-			try {				
+			try {
 				parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
 				saxBuilder.setFeature("http://xml.org/sax/features/external-general-entities", false);
 			} catch (SAXNotRecognizedException e) {
@@ -305,7 +305,7 @@ public class WireFeedInput {
 			} catch (SAXNotSupportedException e) {
 				// ignore
 			}
-			
+
 			try {
 				parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 				saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
@@ -323,12 +323,13 @@ public class WireFeedInput {
 			} catch (SAXNotSupportedException e) {
 				// ignore
 			}
-			
+
 		} catch (JDOMException e) {
 			throw new IllegalStateException("JDOM could not create a SAX parser");
 		}
 
-		saxBuilder.setExpandEntities(false);    
+		saxBuilder.setExpandEntities(false);
         return saxBuilder;
     }
 }
+ /* @generated */

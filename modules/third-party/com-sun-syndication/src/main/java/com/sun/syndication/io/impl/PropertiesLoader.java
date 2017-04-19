@@ -40,11 +40,11 @@ public class PropertiesLoader {
     public static PropertiesLoader getPropertiesLoader() {
         synchronized(PropertiesLoader.class) {
             PropertiesLoader loader = (PropertiesLoader)
-                clMap.get(Thread.currentThread().getContextClassLoader());
+                clMap.get(clMap.getClass().getClassLoader());
             if (loader == null) {
                 try {
                     loader = new PropertiesLoader(MASTER_PLUGIN_FILE, EXTRA_PLUGIN_FILE);
-                    clMap.put(Thread.currentThread().getContextClassLoader(), loader);
+                    clMap.put(clMap.getClass().getClassLoader(), loader);
                 }
                 catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -153,3 +153,4 @@ public class PropertiesLoader {
     }
 
 }
+ /* @generated */

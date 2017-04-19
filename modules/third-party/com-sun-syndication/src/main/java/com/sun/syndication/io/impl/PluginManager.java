@@ -121,7 +121,7 @@ public abstract class PluginManager {
     /**
      * Loads and returns the classes defined in the properties files. If the system property "rome.pluginmanager.useloadclass" is
      * set to true then classLoader.loadClass will be used to load classes (instead of Class.forName). This is designed to improve
-     * OSGi compatibility. Further information can be found in https://rome.dev.java.net/issues/show_bug.cgi?id=118 
+     * OSGi compatibility. Further information can be found in https://rome.dev.java.net/issues/show_bug.cgi?id=118
      * <p>
      * @return array containing the classes defined in the properties files.
      * @throws java.lang.ClassNotFoundException thrown if one of the classes defined in the properties file cannot be loaded
@@ -129,7 +129,7 @@ public abstract class PluginManager {
      *
      */
     private Class[] getClasses() throws ClassNotFoundException {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        ClassLoader classLoader = this.getClass().getClassLoader();
         List classes = new ArrayList();
         boolean useLoadClass = Boolean.valueOf(System.getProperty("rome.pluginmanager.useloadclass", "false")).booleanValue();
         for (int i = 0; i <_propertyValues.length; i++) {
@@ -142,3 +142,4 @@ public abstract class PluginManager {
     }
 
 }
+ /* @generated */

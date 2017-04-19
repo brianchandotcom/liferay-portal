@@ -68,6 +68,10 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 				_wikiAttachmentItemSelectorView, FileEntry.class);
 	}
 
+	public String[] getMimeTypes() {
+		return _wikiAttachmentItemSelectorCriterion.getMimeTypes();
+	}
+
 	public PortletURL getPortletURL(
 			HttpServletRequest request,
 			LiferayPortletResponse liferayPortletResponse)

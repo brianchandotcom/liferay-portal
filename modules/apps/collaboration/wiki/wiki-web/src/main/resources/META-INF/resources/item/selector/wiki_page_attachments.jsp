@@ -32,9 +32,15 @@ WikiPage wikiPage = wikiAttachmentItemSelectorViewDisplayContext.getWikiPage();
 List portletFileEntries = null;
 int portletFileEntriesCount = 0;
 
+String[] mimeTypes = wikiAttachmentItemSelectorViewDisplayContext.getMimeTypes();
+
 if (wikiPage.getAttachmentsFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	if (wikiAttachmentItemSelectorViewDisplayContext.isSearch()) {
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+		if (ArrayUtil.isNotEmpty(mimeTypes)) {
+			searchContext.setAttribute("mimeTypes", mimeTypes);
+		}
 
 		searchContext.setEnd(end);
 		searchContext.setFolderIds(new long[] {wikiPage.getAttachmentsFolderId()});
@@ -75,8 +81,14 @@ if (wikiPage.getAttachmentsFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER
 
 		OrderByComparator<FileEntry> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
 
-		portletFileEntries = wikiPage.getAttachmentsFileEntries(start, end, orderByComparator);
-		portletFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
+		if (ArrayUtil.isNotEmpty(mimeTypes)) {
+			portletFileEntries = wikiPage.getAttachmentsFileEntries(mimeTypes, start, end, orderByComparator);
+			portletFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount(mimeTypes);
+		}
+		else {
+			portletFileEntries = wikiPage.getAttachmentsFileEntries(start, end, orderByComparator);
+			portletFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
+		}
 	}
 }
 %>

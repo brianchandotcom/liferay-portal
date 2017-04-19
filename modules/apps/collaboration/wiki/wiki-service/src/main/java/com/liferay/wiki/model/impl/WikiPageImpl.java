@@ -135,7 +135,39 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	}
 
 	@Override
+	public List<FileEntry> getAttachmentsFileEntries(
+			String[] mimeTypes, int start, int end,
+			OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		long attachmentsFolderId = getAttachmentsFolderId();
+
+		if (attachmentsFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return Collections.emptyList();
+		}
+
+		return PortletFileRepositoryUtil.getPortletFileEntries(
+			getGroupId(), attachmentsFolderId, mimeTypes,
+			WorkflowConstants.STATUS_APPROVED, start, end, obc);
+	}
+
+	@Override
 	public int getAttachmentsFileEntriesCount() throws PortalException {
+		long attachmentsFolderId = getAttachmentsFolderId();
+
+		if (attachmentsFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return 0;
+		}
+
+		return PortletFileRepositoryUtil.getPortletFileEntriesCount(
+			getGroupId(), attachmentsFolderId,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public int getAttachmentsFileEntriesCount(String[] mimeTypes)
+		throws PortalException {
+
 		int attachmentsFileEntriesCount = 0;
 
 		long attachmentsFolderId = getAttachmentsFolderId();
@@ -143,7 +175,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		if (attachmentsFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			attachmentsFileEntriesCount =
 				PortletFileRepositoryUtil.getPortletFileEntriesCount(
-					getGroupId(), attachmentsFolderId,
+					getGroupId(), attachmentsFolderId, mimeTypes,
 					WorkflowConstants.STATUS_APPROVED);
 		}
 

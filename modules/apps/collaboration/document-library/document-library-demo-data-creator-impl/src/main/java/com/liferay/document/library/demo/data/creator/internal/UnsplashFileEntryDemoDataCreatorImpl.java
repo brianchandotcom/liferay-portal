@@ -149,8 +149,8 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 	private static final List<String> _categories = Arrays.asList(
 		"buildings", "food", "nature", "people", "technology", "objects");
 
+	private volatile int _categoryIndex = -1;
 
-	private int _categoryIndex = -1;
 	private DLAppLocalService _dlAppLocalService;
 	private final List<Long> _fileEntryIds = new CopyOnWriteArrayList<>();
 

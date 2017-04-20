@@ -131,12 +131,11 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 	}
 
 	private static List<String> _read(String fileName) {
-		return Arrays.asList(
-			StringUtil.split(
-				StringUtil.read(
-					MultipleCommentDemoDataCreatorImpl.class,
-					"dependencies/" + fileName + ".txt"),
-				CharPool.NEW_LINE));
+		String content = StringUtil.read(
+			CommentDemoDataCreatorImpl.class,
+			"dependencies/" + fileName + ".txt");
+
+		return Arrays.asList(StringUtil.split(content, CharPool.NEW_LINE));
 	}
 
 	private Comment _getComment(long commentId) {

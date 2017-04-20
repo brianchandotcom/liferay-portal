@@ -81,29 +81,29 @@
 						</goals>
 						<configuration>
 							<target>
-								<exec executable="${node.executable}" dir="${project.build.outputDirectory}/META-INF/resources" failonerror="true">
-									<arg value="${node.modules}/metal-cli/index.js"/>
-									<arg value="build"/>
-									<arg value="--bundleFileName"/>
-									<arg value=""/>
-									<arg value="--dest"/>
-									<arg value="${project.build.outputDirectory}/META-INF/resources"/>
-									<arg value="--format"/>
-									<arg value="amd"/>
-									<arg value="--globalName"/>
-									<arg value=""/>
-									<arg value="--moduleName"/>
-									<arg value=""/>
-									<arg value="--soyDeps"/>
-									<arg value="${node.modules}/lexicon*/src/**/*.soy"/>
-									<arg value="${node.modules}/metal*/src/**/*.soy"/>
-									<arg value="--soyDest"/>
-									<arg value="${project.build.outputDirectory}/META-INF/resources"/>
-									<arg value="--soySrc"/>
-									<arg value="**/*.soy"/>
-									<arg value="--src"/>
-									<arg value="**/*.es.js"/>
-									<arg value="**/*.soy.js"/>
+								<exec dir="${project.build.outputDirectory}/META-INF/resources" executable="${node.executable}" failonerror="true">
+									<arg value="${node.modules}/metal-cli/index.js" />
+									<arg value="build" />
+									<arg value="--bundleFileName" />
+									<arg value="" />
+									<arg value="--dest" />
+									<arg value="${project.build.outputDirectory}/META-INF/resources" />
+									<arg value="--format" />
+									<arg value="amd" />
+									<arg value="--globalName" />
+									<arg value="" />
+									<arg value="--moduleName" />
+									<arg value="" />
+									<arg value="--soyDeps" />
+									<arg value="${node.modules}/lexicon*/src/**/*.soy" />
+									<arg value="${node.modules}/metal*/src/**/*.soy" />
+									<arg value="--soyDest" />
+									<arg value="${project.build.outputDirectory}/META-INF/resources" />
+									<arg value="--soySrc" />
+									<arg value="**/*.soy" />
+									<arg value="--src" />
+									<arg value="**/*.es.js" />
+									<arg value="**/*.soy.js" />
 								</exec>
 							</target>
 						</configuration>

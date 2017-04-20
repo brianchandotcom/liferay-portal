@@ -152,6 +152,9 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="CommerceProductDefinitionOptionRelId" return-type="Collection">
+			<finder-column name="CommerceProductDefinitionOptionRelId"></finder-column>
+		</finder>
 
 		<!-- References -->
 

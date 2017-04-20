@@ -1884,14 +1884,6 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-spa-configuration" >
-		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.frontend.js.spa.web.configuration.SPAConfiguration.cfg">
-				userNotificationTimeout=0
-			</echo>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-test-bundles">
 		<attribute name="unit" />
 		<sequential>
@@ -2078,8 +2070,6 @@ tell application "Safari" to quit
 							<setup-testable-tomcat />
 
 							<prepare-elasticsearch-configuration />
-
-							<prepare-spa-configuration />
 						</else>
 					</if>
 				</else>

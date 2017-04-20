@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.template.soy.internal.SoyTemplateResourcesTracker;
 
 import java.net.URL;
 
@@ -42,15 +41,6 @@ public class SoyTemplateResourcesCollector {
 	public SoyTemplateResourcesCollector(Bundle bundle, String templatePath) {
 		_bundle = bundle;
 		_templatePath = templatePath;
-	}
-
-	public List<TemplateResource> getAllTemplateResources()
-		throws TemplateException {
-
-		List<TemplateResource> templateResources =
-			SoyTemplateResourcesTracker.getAllTemplateResources();
-
-		return Collections.unmodifiableList(templateResources);
 	}
 
 	public List<TemplateResource> getTemplateResources()

@@ -40,7 +40,7 @@ public class MultipleCommentDemoDataCreatorImpl
 
 	@Override
 	public void create(ClassedModel classedModel) throws PortalException {
-		int commentsCount = RandomUtil.nextInt(_MAX_COMMENTS);
+		int maxComments = RandomUtil.nextInt(_MAX_COMMENTS);
 
 		int usersCount = _userLocalService.getUsersCount();
 
@@ -51,7 +51,7 @@ public class MultipleCommentDemoDataCreatorImpl
 		List<Long> userIds = users.stream().filter(this::_isRegularUser).map(
 			UserModel::getUserId).collect(Collectors.toList());
 
-		_addComments(userIds, classedModel, _ROOT_COMMENT, commentsCount, 1);
+		_addComments(userIds, classedModel, _ROOT_COMMENT, maxComments, 1);
 	}
 
 	@Override
@@ -73,34 +73,36 @@ public class MultipleCommentDemoDataCreatorImpl
 
 	private int _addComments(
 			List<Long> userIds, ClassedModel classedModel, long commentId,
-			int commentsCount, int level)
+			int maxComments, int level)
 		throws PortalException {
 
 		int commentsCreated = 0;
 
-		int repliesCount = RandomUtil.nextInt(_MAX_REPLIES / level);
+		int maxReplies = RandomUtil.nextInt(_MAX_REPLIES / level);
 
-		while ((commentsCount > commentsCreated) && (repliesCount != 0)) {
+		int repliesCreated = 0;
+
+		while ((commentsCreated < maxComments) &&
+			   (repliesCreated < maxReplies)) {
+
 			long userId = _getRandomElement(userIds);
 
-			Comment comment = null;
+			final Comment comment;
 
 			if (commentId == _ROOT_COMMENT) {
 				comment = _commentDemoDataCreator.create(userId, classedModel);
 			}
 			else {
 				comment = _commentDemoDataCreator.create(userId, commentId);
-				repliesCount--;
+				repliesCreated++;
 			}
 
 			commentsCreated++;
 
 			if (level < _MAX_LEVEL) {
-				int maxComments = commentsCount - commentsCreated;
-
 				commentsCreated += _addComments(
-					userIds, classedModel, comment.getCommentId(), maxComments,
-					level + 1);
+					userIds, classedModel, comment.getCommentId(),
+					maxComments - commentsCreated, level + 1);
 			}
 		}
 

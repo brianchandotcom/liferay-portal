@@ -16,14 +16,23 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CommerceProductOption;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for CommerceProductOption. Methods of this
@@ -49,6 +58,26 @@ public interface CommerceProductOptionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceProductOptionServiceUtil} to access the commerce product option remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CommerceProductOptionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceProductOption addCommerceProductOption(
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String ddmFormFieldTypeName, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceProductOption deleteCommerceProductOption(
+		CommerceProductOption commerceProductOption) throws PortalException;
+
+	public CommerceProductOption deleteCommerceProductOption(
+		long commerceProductOptionId) throws PortalException;
+
+	public CommerceProductOption updateCommerceProductOption(
+		long commerceProductOptionId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String ddmFormFieldTypeName, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceProductOptionsCount(long groupId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +85,13 @@ public interface CommerceProductOptionService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductOption> getCommerceProductOptions(long groupId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductOption> getCommerceProductOptions(long groupId,
+		int start, int end,
+		OrderByComparator<CommerceProductOption> orderByComparator);
 }

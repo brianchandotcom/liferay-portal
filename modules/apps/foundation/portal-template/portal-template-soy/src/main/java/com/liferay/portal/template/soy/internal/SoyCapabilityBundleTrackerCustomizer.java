@@ -136,10 +136,15 @@ public class SoyCapabilityBundleTrackerCustomizer
 		int pos = templateId.indexOf(TemplateConstants.BUNDLE_SEPARATOR);
 
 		if (pos == -1) {
-			throw new IllegalArgumentException(
-				String.format(
+			if (_log.isDebugEnabled()) {
+				String message = String.format(
 					"The templateId \"%s\" does not map to a Soy template",
-					templateId));
+					templateId);
+
+				_log.debug(message);
+			}
+
+			return -1;
 		}
 
 		return Long.valueOf(templateId.substring(0, pos));

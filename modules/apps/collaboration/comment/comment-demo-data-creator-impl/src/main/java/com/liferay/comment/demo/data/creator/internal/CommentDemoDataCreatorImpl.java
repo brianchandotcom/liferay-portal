@@ -108,28 +108,6 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCommentManager(CommentManager commentManager) {
-		_commentManager = commentManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static List<String> _read(String fileName) {
 		String content = StringUtil.read(
 			CommentDemoDataCreatorImpl.class,
@@ -153,10 +131,18 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 
 	private static final List<String> _commentBodies = _read("CommentBodies");
 
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
 	private final List<Long> _commentIds = new CopyOnWriteArrayList<>();
+
+	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

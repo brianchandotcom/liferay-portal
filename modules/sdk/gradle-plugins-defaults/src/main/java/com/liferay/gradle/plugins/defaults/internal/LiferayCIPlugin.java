@@ -20,6 +20,8 @@ import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
+import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
+import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -33,6 +35,10 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.artifacts.ProjectDependency;
+import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -48,6 +54,19 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		_configureTasksExecuteNode(project);
 		_configureTasksExecuteNpm(project);
 		_configureTasksNpmInstall(project);
+
+		GradleUtil.withPlugin(
+			project, TestIntegrationPlugin.class,
+			new Action<TestIntegrationPlugin>() {
+
+				@Override
+				public void execute(
+					TestIntegrationPlugin testIntegrationPlugin) {
+
+					_configureTaskTestIntegration(project);
+				}
+
+			});
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -217,6 +236,45 @@ public class LiferayCIPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _configureTaskTestIntegration(Project project) {
+		Task testIntegrationTask = GradleUtil.getTask(
+			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
+
+		Action<Task> action = new Action<Task>() {
+
+			@Override
+			public void execute(Task task) {
+				Project project = task.getProject();
+
+				SourceSet sourceSet = GradleUtil.getSourceSet(
+					project,
+					TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
+
+				Configuration configuration = GradleUtil.getConfiguration(
+					project, sourceSet.getCompileConfigurationName());
+
+				DependencySet dependencySet = configuration.getDependencies();
+
+				for (ProjectDependency projectDependency :
+						dependencySet.withType(ProjectDependency.class)) {
+
+					Project dependencyProject =
+						projectDependency.getDependencyProject();
+
+					File file = dependencyProject.file(".lfrbuild-portal");
+
+					if (!file.exists()) {
+						throw new GradleException(
+							"Please create marker file " + file);
+					}
+				}
+			}
+
+		};
+
+		testIntegrationTask.doFirst(action);
 	}
 
 	private static final File _NODE_MODULES_CACHE_DIR = new File(

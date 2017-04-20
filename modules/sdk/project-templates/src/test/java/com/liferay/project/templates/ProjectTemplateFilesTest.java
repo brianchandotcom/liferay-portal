@@ -183,9 +183,9 @@ public class ProjectTemplateFilesTest {
 		Matcher matcher = _bundleDescriptionPattern.matcher(bundleDescription);
 
 		Assert.assertTrue(
-			"Header 'Bundle-Description' in " + bndBndPath +
-				" must match pattern '" + _bundleDescriptionPattern.pattern() +
-					"'",
+			"Header \"Bundle-Description\" in " + bndBndPath +
+				" must match pattern \"" + _bundleDescriptionPattern.pattern() +
+					"\"",
 			matcher.matches());
 	}
 

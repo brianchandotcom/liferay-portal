@@ -39,6 +39,7 @@ import org.gradle.api.reporting.ReportingExtension;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.compile.JavaCompile;
 
 /**
@@ -340,7 +341,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		writeFindBugsProjectTask.dependsOn(
 			_UNZIP_JAR_TASK_NAME, compileJSPTask);
 
-		SourceSet sourceSet = GradleUtil.getSourceSet(
+		final SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
 		FileCollection auxClasspath = project.files(
@@ -349,7 +350,17 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		writeFindBugsProjectTask.setAuxClasspath(auxClasspath);
 
 		FileCollection classpath = project.files(
-			compileJSPTask.getDestinationDir(), "classes");
+			compileJSPTask.getDestinationDir(),
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+					return sourceSetOutput.getClassesDir();
+				}
+
+			});
 
 		writeFindBugsProjectTask.setClasspath(classpath);
 

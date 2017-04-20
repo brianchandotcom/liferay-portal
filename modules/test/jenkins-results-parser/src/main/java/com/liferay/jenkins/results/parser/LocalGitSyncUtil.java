@@ -799,9 +799,9 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static void updateCacheBranchTimestamp(
-			final String cacheBranchName,
-			final GitWorkingDirectory gitWorkingDirectory,
-			List<RemoteConfig> localGitRemoteConfigs) {
+		final String cacheBranchName,
+		final GitWorkingDirectory gitWorkingDirectory,
+		List<RemoteConfig> localGitRemoteConfigs) {
 
 		long start = System.currentTimeMillis();
 

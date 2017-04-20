@@ -332,11 +332,11 @@ public class LocalGitSyncUtil {
 				gitWorkingDirectory.getRemoteBranchNames(remoteConfig);
 		}
 		catch (GitAPIException gapie) {
-			gapie.printStackTrace();
-
 			System.out.println(
 				"Unable to get remote repository branch names from " +
 					GitWorkingDirectory.getRemoteURL(remoteConfig));
+
+			gapie.printStackTrace();
 
 			return;
 		}
@@ -628,6 +628,7 @@ public class LocalGitSyncUtil {
 									GitWorkingDirectory.getRemoteURL(
 										remoteConfig),
 									":", remoteBranchName));
+
 							gapie.printStackTrace();
 						}
 					}
@@ -757,10 +758,10 @@ public class LocalGitSyncUtil {
 				localGitRemoteConfigs = null;
 				senderRemoteConfig = null;
 
-				e.printStackTrace();
-
 				System.out.println(
 					"Synchronization with local-git failed. Retrying.");
+
+				e.printStackTrace();
 
 				gitWorkingDirectory.checkoutBranch(originalBranchName);
 
@@ -895,6 +896,11 @@ public class LocalGitSyncUtil {
 			}
 		}
 		catch (GitAPIException gapie) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Unable to update cache branch timestamp on ", "branch ",
+					cacheBranchName));
+
 			gapie.printStackTrace();
 		}
 

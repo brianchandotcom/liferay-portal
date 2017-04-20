@@ -19,12 +19,20 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
-public class KBFolderPermission {
+@Component(
+	property = {"model.class.name=com.liferay.knowledge.base.model.KBFolder"},
+	service = BaseModelPermissionChecker.class
+)
+public class KBFolderPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, KBFolder kbFolder,
@@ -85,6 +93,15 @@ public class KBFolderPermission {
 		KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(kbFolderId);
 
 		return contains(permissionChecker, kbFolder, actionId);
+	}
+
+	@Override
+	public void checkBaseModel(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException {
+
+		check(permissionChecker, groupId, primaryKey, actionId);
 	}
 
 }

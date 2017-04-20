@@ -100,7 +100,7 @@ public class WriteFindBugsProjectTask extends DefaultTask {
 
 		Set<File> files = _classpath.getFiles();
 
-		return !_containsClassOrJAR(files.toArray(new File[0]));
+		return !_containsClassOrJAR(files.toArray(new File[files.size()]));
 	}
 
 	public void setAuxClasspath(FileCollection auxClasspath) {

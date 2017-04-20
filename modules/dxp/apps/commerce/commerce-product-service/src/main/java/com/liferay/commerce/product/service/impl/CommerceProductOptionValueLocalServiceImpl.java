@@ -130,6 +130,8 @@ public class CommerceProductOptionValueLocalServiceImpl
 			int priority, ServiceContext serviceContext)
 		throws PortalException {
 
+		// Commerce product option value
+
 		CommerceProductOptionValue commerceProductOptionValue =
 			commerceProductOptionValuePersistence.findByPrimaryKey(
 				commerceProductOptionValueId);

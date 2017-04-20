@@ -41,6 +41,8 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 				ServiceContext serviceContext)
 		throws PortalException {
 
+		// Commerce product definition option rel
+
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -147,6 +149,8 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 				Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
 				int priority, ServiceContext serviceContext)
 		throws PortalException {
+
+		// Commerce product definition option rel
 
 		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel =
 			commerceProductDefinitionOptionRelPersistence.findByPrimaryKey(

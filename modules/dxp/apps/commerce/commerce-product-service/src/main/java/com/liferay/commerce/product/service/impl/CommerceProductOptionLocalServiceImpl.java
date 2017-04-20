@@ -137,6 +137,8 @@ public class CommerceProductOptionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		// Commerce product option
+
 		CommerceProductOption commerceProductOption =
 			commerceProductOptionPersistence.findByPrimaryKey(
 				commerceProductOptionId);

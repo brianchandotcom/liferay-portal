@@ -29,8 +29,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
+import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -109,6 +113,24 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();
+			}
+		}
+
+		String className = dlFileEntry.getClassName();
+		long classPK = dlFileEntry.getClassPK();
+
+		if (Validator.isNotNull(className) && (classPK > 0)) {
+			boolean hasResourcePermission = GetterUtil.getBoolean(
+				ResourcePermissionCheckerUtil.containsResourcePermission(
+					permissionChecker, className, classPK, actionId));
+
+			boolean hasBaseModelPermission = GetterUtil.getBoolean(
+				BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+					permissionChecker, dlFileEntry.getGroupId(), className,
+					classPK, actionId));
+
+			if (!hasBaseModelPermission && !hasResourcePermission) {
+				return false;
 			}
 		}
 

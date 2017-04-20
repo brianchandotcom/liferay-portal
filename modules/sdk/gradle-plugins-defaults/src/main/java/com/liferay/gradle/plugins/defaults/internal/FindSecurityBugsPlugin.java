@@ -244,11 +244,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 		javaExec.dependsOn(writeFindBugsProjectTask);
 
-		javaExec.setClasspath(classpath);
-		javaExec.setDescription("Runs FindSecurityBugs on this project.");
-		javaExec.setMain("edu.umd.cs.findbugs.FindBugs2");
-
-		javaExec.setOnlyIf(
+		javaExec.onlyIf(
 			new Spec<Task>() {
 
 				@Override
@@ -257,6 +253,10 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		javaExec.setClasspath(classpath);
+		javaExec.setDescription("Runs FindSecurityBugs on this project.");
+		javaExec.setMain("edu.umd.cs.findbugs.FindBugs2");
 
 		javaExec.systemProperty(
 			"findsecbugs.injection.customconfigfile.SqlInjectionDetector",

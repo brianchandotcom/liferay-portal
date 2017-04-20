@@ -100,7 +100,7 @@ public class WriteFindBugsProjectTask extends DefaultTask {
 
 		Set<File> files = _classpath.getFiles();
 
-		return !_containsClassOrJAR(files.toArray(new File[files.size()]));
+		return !_containsClassOrJar(files.toArray(new File[files.size()]));
 	}
 
 	public void setAuxClasspath(FileCollection auxClasspath) {
@@ -164,7 +164,7 @@ public class WriteFindBugsProjectTask extends DefaultTask {
 		}
 	}
 
-	private boolean _containsClassOrJAR(File[] files) {
+	private boolean _containsClassOrJar(File[] files) {
 		for (File file : files) {
 			if (!file.exists()) {
 				continue;
@@ -180,7 +180,7 @@ public class WriteFindBugsProjectTask extends DefaultTask {
 				return false;
 			}
 
-			if (_containsClassOrJAR(file.listFiles())) {
+			if (_containsClassOrJar(file.listFiles())) {
 				return true;
 			}
 		}

@@ -11,7 +11,7 @@
 	<version>${version}</version>
 	<properties>
 		<node.executable>${project.build.directory}/node/node</node.executable>
-		<node.modules>${project.basedir}/node_modules</node.modules>
+		<node.modules.dir>${project.basedir}/node_modules</node.modules.dir>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
@@ -82,7 +82,7 @@
 						<configuration>
 							<target>
 								<exec dir="${project.build.outputDirectory}/META-INF/resources" executable="${node.executable}" failonerror="true">
-									<arg value="${node.modules}/metal-cli/index.js" />
+									<arg value="${node.modules.dir}/metal-cli/index.js" />
 									<arg value="build" />
 									<arg value="--bundleFileName" />
 									<arg value="" />
@@ -95,8 +95,8 @@
 									<arg value="--moduleName" />
 									<arg value="" />
 									<arg value="--soyDeps" />
-									<arg value="${node.modules}/lexicon*/src/**/*.soy" />
-									<arg value="${node.modules}/metal*/src/**/*.soy" />
+									<arg value="${node.modules.dir}/lexicon*/src/**/*.soy" />
+									<arg value="${node.modules.dir}/metal*/src/**/*.soy" />
 									<arg value="--soyDest" />
 									<arg value="${project.build.outputDirectory}/META-INF/resources" />
 									<arg value="--soySrc" />
@@ -117,7 +117,7 @@
 						<configuration>
 							<target>
 								<exec dir="${project.basedir}" executable="${node.executable}" failonerror="true">
-									<arg value="${node.modules}/liferay-module-config-generator/bin/index.js" />
+									<arg value="${node.modules.dir}/liferay-module-config-generator/bin/index.js" />
 									<arg value="--config=" />
 									<arg value="--extension=" />
 									<arg value="--filePattern" />

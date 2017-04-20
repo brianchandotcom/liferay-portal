@@ -1421,6 +1421,14 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-captcha-configuration" >
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">createAccountCaptchaEnabled=&quot;false&quot;
+maxChallenges=&quot;-1&quot;
+sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-chrome-driver">
 		<sequential>
 			<if>
@@ -6045,9 +6053,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 				<contains string="${osgi.module.configurations}" substring="maxChallenges" />
 			</not>
 			<then>
-				<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">createAccountCaptchaEnabled=&quot;false&quot;
-maxChallenges=&quot;-1&quot;
-sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
+				<prepare-captcha-configuration />
 			</then>
 		</if>
 

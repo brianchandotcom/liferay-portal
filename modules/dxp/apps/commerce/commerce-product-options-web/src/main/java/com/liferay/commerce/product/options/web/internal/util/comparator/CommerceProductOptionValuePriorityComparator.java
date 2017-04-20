@@ -44,18 +44,10 @@ public class CommerceProductOptionValuePriorityComparator
 		CommerceProductOptionValue productOptionValue1,
 		CommerceProductOptionValue productOptionValue2) {
 
-		int value = 0;
+		int priority1 = productOptionValue1.getPriority();
+		int priority2 = productOptionValue2.getPriority();
 
-		if (productOptionValue1.getPriority() <
-				productOptionValue2.getPriority()) {
-
-			value = -1;
-		}
-		else if (productOptionValue1.getPriority() >
-					productOptionValue2.getPriority()) {
-
-			value = 1;
-		}
+		int value = Integer.compare(priority1, priority2);
 
 		if (_ascending) {
 			return value;

@@ -211,7 +211,7 @@
 					<execution>
 						<phase>generate-sources</phase>
 						<goals>
-							<goal>build-css</goal>
+							<goal>build</goal>
 						</goals>
 					</execution>
 				</executions>

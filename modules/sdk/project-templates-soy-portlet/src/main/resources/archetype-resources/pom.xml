@@ -51,7 +51,7 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>install node and npm</id>
+						<id>install-node-and-npm</id>
 						<phase>initialize</phase>
 						<goals>
 							<goal>install-node-and-npm</goal>
@@ -61,7 +61,7 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>npm install</id>
+						<id>npm-install</id>
 						<phase>initialize</phase>
 						<goals>
 							<goal>npm</goal>

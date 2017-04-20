@@ -65,7 +65,7 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
-	<entity local-service="true" name="CommerceProductDefinitionOptionRel" remote-service="true">
+	<entity local-service="true" name="CommerceProductDefinitionOptionRel" remote-service="true"  uuid="true">
 
 		<!-- PK fields -->
 
@@ -114,7 +114,7 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CommerceProductDefinitionOptionValueRel" remote-service="true">
+	<entity local-service="true" name="CommerceProductDefinitionOptionValueRel" remote-service="true"  uuid="true">
 
 		<!-- PK fields -->
 
@@ -222,7 +222,7 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
-	<entity local-service="true" name="CommerceProductOption" remote-service="true">
+	<entity local-service="true" name="CommerceProductOption" remote-service="true"  uuid="true">
 
 		<!-- PK fields -->
 
@@ -265,7 +265,7 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CommerceProductOptionValue" remote-service="true">
+	<entity local-service="true" name="CommerceProductOptionValue" remote-service="true"  uuid="true">
 
 		<!-- PK fields -->
 

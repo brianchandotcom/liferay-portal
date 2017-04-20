@@ -81,7 +81,7 @@
 						</goals>
 						<configuration>
 							<target>
-								<exec executable="${node.executable}" dir="${project.build.outputDirectory}/META-INF/resources">
+								<exec executable="${node.executable}" dir="${project.build.outputDirectory}/META-INF/resources" failonerror="true">
 									<arg value="${node.modules}/metal-cli/index.js"/>
 									<arg value="build"/>
 									<arg value="--bundleFileName"/>
@@ -116,7 +116,7 @@
 						</goals>
 						<configuration>
 							<target>
-								<exec executable="${node.executable}" dir="${project.basedir}">
+								<exec dir="${project.basedir}" executable="${node.executable}" failonerror="true">
 									<arg value="${node.modules}/liferay-module-config-generator/bin/index.js" />
 									<arg value="--config" />
 									<arg value="" />

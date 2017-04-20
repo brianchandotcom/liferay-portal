@@ -252,6 +252,33 @@ public class ModulesStructureTest {
 			});
 	}
 
+	@Test
+	public void testScanMarkerFiles() throws IOException {
+		Files.walkFileTree(
+			_modulesDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String fileName = String.valueOf(path.getFileName());
+
+					if (StringUtil.startsWith(fileName, ".lfrbuild-") ||
+						StringUtil.startsWith(fileName, ".lfrrelease-")) {
+
+						Assert.assertEquals(
+							"Marker file " + path + " must be empty", 0,
+							basicFileAttributes.size());
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
 	private void _addGradlePluginNames(
 			Set<String> pluginNames, String pluginNamePrefix,
 			Path buildGradlePath, String pluginIdPrefix,

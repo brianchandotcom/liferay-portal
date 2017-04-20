@@ -26,6 +26,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.util.Set;
+
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
@@ -91,6 +93,16 @@ public class WriteFindBugsProjectTask extends DefaultTask {
 		return _srcDirs;
 	}
 
+	public boolean isClasspathEmpty() {
+		if (_classpath == null) {
+			return true;
+		}
+
+		Set<File> files = _classpath.getFiles();
+
+		return !_containsClassOrJAR(files.toArray(new File[0]));
+	}
+
 	public void setAuxClasspath(FileCollection auxClasspath) {
 		_auxClasspath = auxClasspath;
 	}
@@ -152,11 +164,39 @@ public class WriteFindBugsProjectTask extends DefaultTask {
 		}
 	}
 
+	private boolean _containsClassOrJAR(File[] files) {
+		for (File file : files) {
+			if (!file.exists()) {
+				continue;
+			}
+
+			if (file.isFile()) {
+				String fileName = file.getName();
+
+				if (fileName.endsWith(".class") || fileName.endsWith(".jar")) {
+					return true;
+				}
+
+				return false;
+			}
+
+			if (_containsClassOrJAR(file.listFiles())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _writeFileElements(
 			Writer writer, String name, FileCollection fileCollection)
 		throws IOException {
 
 		for (File file : fileCollection) {
+			if (!file.exists()) {
+				continue;
+			}
+
 			writer.write("\t<");
 			writer.write(name);
 			writer.write('>');

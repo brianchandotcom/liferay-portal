@@ -35,6 +35,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.reporting.ReportingExtension;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.compile.JavaCompile;
@@ -237,6 +238,16 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 							"Find Security Bugs report saved to {}.",
 							outputFile.getAbsolutePath());
 					}
+				}
+
+			});
+
+		javaExec.setOnlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return !writeFindBugsProjectTask.isClasspathEmpty();
 				}
 
 			});

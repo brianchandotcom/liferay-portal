@@ -130,6 +130,8 @@
 									<arg value="true" />
 									<arg value="--moduleConfig" />
 									<arg value="${project.basedir}/package.json" />
+									<arg value="--namespace" />
+									<arg value="Liferay.Loader" />
 									<arg value="--output" />
 									<arg value="${project.build.outputDirectory}/META-INF/config.json" />
 									<arg value="--moduleRoot" />

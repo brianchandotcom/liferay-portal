@@ -304,7 +304,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		writeFindBugsProjectTask.setAuxClasspath(auxClasspath);
 
 		FileCollection classpath = project.files(
-			compileJSPTask.getDestinationDir(), _getUnzippedJarDir(project));
+			compileJSPTask.getDestinationDir(), "classes");
 
 		writeFindBugsProjectTask.setClasspath(classpath);
 
@@ -334,13 +334,6 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		writeFindBugsProjectTask.setSrcDirs(srcDirs);
 
 		return writeFindBugsProjectTask;
-	}
-
-	/**
-	 * Copied from <code>com.liferay.gradle.plugins.internal.JspCDefaultsPlugin</code>.
-	 */
-	private File _getUnzippedJarDir(Project project) {
-		return new File(project.getBuildDir(), "unzipped-jar");
 	}
 
 	private static final String _FIND_SECURITY_BUGS_EXCLUDE_FILE_NAME =

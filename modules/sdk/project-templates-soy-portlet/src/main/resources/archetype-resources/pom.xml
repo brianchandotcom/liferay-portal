@@ -150,7 +150,6 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>default-build-soy</id>
 						<phase>process-classes</phase>
 						<goals>
 							<goal>replace-translation</goal>
@@ -186,7 +185,6 @@
 				<version>3.3.0</version>
 				<executions>
 					<execution>
-						<id>default-bnd-process</id>
 						<goals>
 							<goal>bnd-process</goal>
 						</goals>
@@ -211,7 +209,6 @@
 				<version>@com.liferay.css.builder.version@</version>
 				<executions>
 					<execution>
-						<id>default-build-css</id>
 						<phase>generate-sources</phase>
 						<goals>
 							<goal>build-css</goal>

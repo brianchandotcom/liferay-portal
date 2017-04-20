@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -102,8 +101,5 @@ public class EditCommerceProductDefinitionMVCRenderCommand
 
 	private CommerceProductDefinitionLocalService
 		_commerceProductDefinitionLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

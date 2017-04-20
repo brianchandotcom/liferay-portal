@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -125,12 +125,8 @@ public class MultipleCommentDemoDataCreatorImpl
 
 	private static final int _ROOT_COMMENT = 0;
 
-	private static final List<String> _excludedUsers = new ArrayList<>();
-
-	static {
-		_excludedUsers.add("test@liferay.com");
-		_excludedUsers.add("default@liferay.com");
-	}
+	private static final List<String> _excludedUsers = Arrays.asList(
+		"test@liferay.com", "default@liferay.com");
 
 	private CommentDemoDataCreator _commentDemoDataCreator;
 	private UserLocalService _userLocalService;

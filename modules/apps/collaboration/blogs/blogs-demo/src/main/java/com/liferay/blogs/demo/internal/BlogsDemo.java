@@ -80,13 +80,13 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 		}
 
 		for (int i = 0; i < 10; i++) {
-			long userId = _getRandomElement(users).getUserId();
-
 			BlogsEntryDemoDataCreator blogsEntryDemoDataCreator =
 				_getRandomElement(_blogsEntryDemoDataCreators);
 
+			User user = _getRandomElement(users);
+
 			BlogsEntry blogsEntry = blogsEntryDemoDataCreator.create(
-				userId, groupId);
+				user.getUserId(), groupId);
 
 			_multipleCommentDemoDataCreator.create(blogsEntry);
 		}

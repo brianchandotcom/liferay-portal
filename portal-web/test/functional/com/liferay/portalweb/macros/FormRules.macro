@@ -14,6 +14,26 @@
 		<execute macro="FormRules#viewInactiveSaveButton" />
 	</command>
 
+	<command name="chooseCalculateAdvancedOperator">
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_CALCULATE_ELLIPSIS" />
+
+		<var name="key_calculateAdvancedOperator" value="${calculateAdvancedOperator}" />
+		
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_CALCULATE_ADVANCED_OPERATOR" value1="${calculateAdvancedOperator}" />
+	</command>
+
+	<command name="chooseCalculateNumericValue">
+		<var name="key_calculateNumericValue" value="${calculateNumericValue}" />
+
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_CALCULATE_NUMERIC_VALUE" value1="${calculateNumericValue}" />
+	</command>
+
+	<command name="chooseCalculateOperator">
+		<var name="key_calculateOperator" value="${calculateOperator}" />
+
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_CALCULATE_OPERATOR" value1="${calculateOperator}" />
+	</command>
+
 	<command name="configureActionOptions">
 		<execute macro="FormRules#selectAction">
 			<var name="action" value="${action}" />
@@ -118,6 +138,22 @@
 		<execute function="Click" locator1="FormRules#RULE_BUILDER_AUTOFILL_OUTPUT_FIELD" />
 
 		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_AUTOFILL_SELECT_OUTPUT_FIELD" value1="${dataProviderOutput}" />
+	</command>
+
+	<command name="selectCalculateField">
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_BUTTON" value1="Add Field" />
+
+		<var name="key_calculateFieldOption" value="${calculateFieldOption}" />
+
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_LIST" value1="${calculateFieldOption}" />
+	</command>
+
+	<command name="selectCalculateResultField">
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_CALCULATE_RESULT_FIELD" />
+
+		<var name="key_calculateResultField" value="${calculateResultField}" />
+
+		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_CALCULATE_RESULT_FIELD_LIST" value1="${calculateResultField}" />
 	</command>
 
 	<command name="selectConditionField">

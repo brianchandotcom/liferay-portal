@@ -2066,8 +2066,6 @@ tell application "Safari" to quit
 							<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-tomcat" />
 
 							<setup-testable-tomcat />
-
-							<prepare-elasticsearch-configuration />
 						</else>
 					</if>
 				</else>
@@ -6052,6 +6050,8 @@ maxChallenges=&quot;-1&quot;
 sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 			</then>
 		</if>
+
+		<prepare-elasticsearch-configuration />
 	</target>
 
 	<target name="prepare-portal-ext-properties">

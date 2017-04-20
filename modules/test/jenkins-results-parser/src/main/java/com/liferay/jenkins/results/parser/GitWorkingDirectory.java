@@ -582,7 +582,33 @@ public class GitWorkingDirectory {
 	public String getBranchSHA(String branchName, RemoteConfig remoteConfig)
 		throws GitAPIException {
 
-		return getBranchSHA(remoteConfig.getName() + "/" + branchName);
+		if (remoteConfig == null) {
+			return getBranchSHA(branchName);
+		}
+
+		String remoteURL = getRemoteURL(remoteConfig);
+
+		if (remoteURL.contains("git@github.com")) {
+			return getGitHubBranchSHA(branchName, remoteConfig);
+		}
+
+		LsRemoteCommand lsRemoteCommand = Git.lsRemoteRepository();
+
+		lsRemoteCommand.setHeads(true);
+		lsRemoteCommand.setRemote(remoteURL);
+		lsRemoteCommand.setTags(false);
+
+		Collection<Ref> remoteRefs = lsRemoteCommand.call();
+
+		for (Ref remoteRef : remoteRefs) {
+			String completeBranchName = "refs/heads/" + branchName;
+
+			if (completeBranchName.equals(remoteRef.getName())) {
+				return remoteRef.getObjectId().getName();
+			}
+		}
+
+		return null;
 	}
 
 	public String getCurrentBranch() {

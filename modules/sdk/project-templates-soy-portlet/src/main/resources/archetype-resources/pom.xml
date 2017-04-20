@@ -147,7 +147,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.portal.tools.soy.builder</artifactId>
-				<version>1.0.0</version>
+				<version>@com.liferay.portal.tools.soy.builder.version@</version>
 				<configuration>
 					<dir>${project.build.outputDirectory}</dir>
 				</configuration>
@@ -204,14 +204,14 @@
 					<dependency>
 						<groupId>com.liferay</groupId>
 						<artifactId>com.liferay.ant.bnd</artifactId>
-						<version>2.0.28</version>
+						<version>@com.liferay.ant.bnd.version@</version>
 					</dependency>
 				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.css.builder</artifactId>
-				<version>1.0.23</version>
+				<version>@com.liferay.css.builder.version@</version>
 				<executions>
 					<execution>
 						<id>default-build-css</id>

@@ -70,11 +70,15 @@ public class SourceFormatterHelper {
 		List<String> includesRegex = new ArrayList<>();
 
 		for (String exclude : excludes) {
-			excludesRegex.add(_createRegex(exclude));
+			if (!exclude.contains(StringPool.DOLLAR)) {
+				excludesRegex.add(_createRegex(exclude));
+			}
 		}
 
 		for (String include : includes) {
-			includesRegex.add(_createRegex(include));
+			if (!include.contains(StringPool.DOLLAR)) {
+				includesRegex.add(_createRegex(include));
+			}
 		}
 
 		List<String> fileNames = new ArrayList<>();

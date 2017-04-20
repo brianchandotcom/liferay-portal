@@ -79,8 +79,6 @@ public class EditCommerceProductOptionValueMVCActionCommand
 			}
 		}
 		catch (Exception e) {
-			e.printStackTrace();
-
 			if (e instanceof NoSuchProductOptionValueException ||
 				e instanceof PrincipalException) {
 

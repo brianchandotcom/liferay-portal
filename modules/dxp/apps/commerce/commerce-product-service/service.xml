@@ -179,7 +179,6 @@
 
 		<column name="commerceProductDefinitionId" type="long" />
 		<column name="sku" type="String" />
-		<column name="LSIN" type="String" />
 		<column name="DDMContent" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />

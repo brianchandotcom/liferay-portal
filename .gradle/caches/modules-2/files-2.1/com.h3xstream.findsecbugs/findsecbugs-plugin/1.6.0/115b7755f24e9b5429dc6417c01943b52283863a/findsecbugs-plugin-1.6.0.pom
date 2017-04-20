@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.h3xstream.findsecbugs</groupId>
         <artifactId>findsecbugs-root-pom</artifactId>
-        <version>1.5.0</version>
+        <version>1.6.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -76,7 +76,7 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-jspc-maven-plugin</artifactId>
-                <version>9.0.7.v20131107</version> <!-- Higher version than 9.0.7 doesn't support smap file -->
+                <version>9.4.2.v20170220</version>
                 <executions>
                     <execution>
                         <id>jspc</id>
@@ -86,10 +86,14 @@
                             <goal>jspc</goal>
                         </goals>
                         <configuration>
+                            <jspc>
+                                <smapSuppressed>false</smapSuppressed>
+                                <smapDumped>true</smapDumped>
+                            </jspc>
+                            <keepSources>true</keepSources>
                             <!-- Use the test folders to avoid polluting the resulting jar -->
                             <generatedClasses>${project.build.directory}/test-classes</generatedClasses>
                             <webAppSourceDirectory>${basedir}/src/test/webapp</webAppSourceDirectory>
-                            <suppressSmap>false</suppressSmap>
                             <useProvidedScope>true</useProvidedScope>
                         </configuration>
                     </execution>
@@ -115,9 +119,35 @@
             <plugin>
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
-                <version>4.2.0</version>
+                <version>4.3.0</version>
             </plugin>
-            
+
+            <!--
+              Verify that the sources of this module are API compatible
+              with the Java version officially used by FindBugs.
+              The test sources are not checked by this plugin
+              (see https://github.com/mojohaus/animal-sniffer/issues/5),
+              so more recent Java APIs can be used in the tests.
+            -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>animal-sniffer-maven-plugin</artifactId>
+                <version>1.15</version>
+                <configuration>
+                    <signature>
+                        <groupId>org.codehaus.mojo.signature</groupId>
+                        <artifactId>java17</artifactId>
+                        <version>1.0</version>
+                    </signature>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
         </plugins>
     </build>
@@ -162,7 +192,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.commons</groupId>
+            <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <scope>test</scope>
         </dependency>

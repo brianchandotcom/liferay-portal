@@ -610,28 +610,4 @@ public class CommerceProductDefinitionLocalServiceImpl
 		return newCommerceProductDefinitionLocalizations;
 	}
 
-	private CommerceProductDefinitionLocalization
-			_updateCommerceProductDefinitionLocalizedFields(
-				long companyId, long commerceProductDefinitionId, String title,
-				String description, String languageId)
-		throws PortalException {
-
-		CommerceProductDefinitionLocalization
-			commerceProductDefinitionLocalization =
-				commerceProductDefinitionLocalizationPersistence.findByCPD_L(
-					commerceProductDefinitionId, languageId);
-
-		if (commerceProductDefinitionLocalization == null) {
-			return _addCommerceProductDefinitionLocalizedFields(
-				companyId, commerceProductDefinitionId, title, description,
-				languageId);
-		}
-
-		commerceProductDefinitionLocalization.setTitle(title);
-		commerceProductDefinitionLocalization.setDescription(description);
-
-		return commerceProductDefinitionLocalizationPersistence.update(
-			commerceProductDefinitionLocalization);
-	}
-
 }

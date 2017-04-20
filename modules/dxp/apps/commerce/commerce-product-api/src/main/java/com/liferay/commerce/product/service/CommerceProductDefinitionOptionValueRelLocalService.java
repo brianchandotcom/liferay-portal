@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -37,6 +40,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CommerceProductDefinitionOptionValueRel. Methods of this
@@ -71,6 +76,11 @@ public interface CommerceProductDefinitionOptionValueRelLocalService
 	public CommerceProductDefinitionOptionValueRel addCommerceProductDefinitionOptionValueRel(
 		CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel);
 
+	public CommerceProductDefinitionOptionValueRel addCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionRelId,
+		Map<Locale, java.lang.String> titleMap, int priority,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new commerce product definition option value rel with the primary key. Does not add the commerce product definition option value rel to the database.
 	*
@@ -85,10 +95,13 @@ public interface CommerceProductDefinitionOptionValueRelLocalService
 	*
 	* @param commerceProductDefinitionOptionValueRel the commerce product definition option value rel
 	* @return the commerce product definition option value rel that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceProductDefinitionOptionValueRel deleteCommerceProductDefinitionOptionValueRel(
-		CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel);
+		CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel)
+		throws PortalException;
 
 	/**
 	* Deletes the commerce product definition option value rel with the primary key from the database. Also notifies the appropriate model listeners.
@@ -128,6 +141,11 @@ public interface CommerceProductDefinitionOptionValueRelLocalService
 	public CommerceProductDefinitionOptionValueRel updateCommerceProductDefinitionOptionValueRel(
 		CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel);
 
+	public CommerceProductDefinitionOptionValueRel updateCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionValueRelId,
+		Map<Locale, java.lang.String> titleMap, int priority,
+		ServiceContext serviceContext) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -155,6 +173,10 @@ public interface CommerceProductDefinitionOptionValueRelLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceProductDefinitionOptionValueRelsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceProductDefinitionOptionValueRelsCount(
+		long commerceProductDefinitionOptionRelId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -216,6 +238,15 @@ public interface CommerceProductDefinitionOptionValueRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceProductDefinitionOptionValueRel> getCommerceProductDefinitionOptionValueRels(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductDefinitionOptionValueRel> getCommerceProductDefinitionOptionValueRels(
+		long commerceProductDefinitionOptionRelId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductDefinitionOptionValueRel> getCommerceProductDefinitionOptionValueRels(
+		long commerceProductDefinitionOptionRelId, int start, int end,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

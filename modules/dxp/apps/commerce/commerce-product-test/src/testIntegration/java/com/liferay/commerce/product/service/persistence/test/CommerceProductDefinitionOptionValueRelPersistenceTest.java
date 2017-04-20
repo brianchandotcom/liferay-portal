@@ -178,6 +178,14 @@ public class CommerceProductDefinitionOptionValueRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCommerceProductDefinitionOptionRelId()
+		throws Exception {
+		_persistence.countByCommerceProductDefinitionOptionRelId(RandomTestUtil.nextLong());
+
+		_persistence.countByCommerceProductDefinitionOptionRelId(0L);
+	}
+
+	@Test
 	public void testCountByGroupId() throws Exception {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
@@ -189,14 +197,6 @@ public class CommerceProductDefinitionOptionValueRelPersistenceTest {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
-	public void testCountByCommerceProductDefinitionOptionRelId()
-		throws Exception {
-		_persistence.countByCommerceProductDefinitionOptionRelId(RandomTestUtil.nextLong());
-
-		_persistence.countByCommerceProductDefinitionOptionRelId(0L);
 	}
 
 	@Test

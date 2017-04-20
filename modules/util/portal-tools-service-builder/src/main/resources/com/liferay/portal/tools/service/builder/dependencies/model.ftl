@@ -362,9 +362,15 @@ public interface ${entity.name}Model extends
 	</#list>
 
 	<#list entity.localizationColumns as column>
+		public String get${column.methodName}();
+
 		public String get${column.methodName}(String languageId);
 
 		public String get${column.methodName}(String languageId, boolean useDefault);
+
+		public Map<String, String> getLanguageIdTo${column.methodName}Map();
+
+		public String get${column.methodName}MapAsXML();
 	</#list>
 
 	<#if entity.isTrashEnabled()>

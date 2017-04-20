@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.soy.utils.SoyContext;
 import com.liferay.portal.template.soy.utils.SoyJavaScriptRenderer;
-import com.liferay.portal.template.soy.utils.SoyTemplateResourcesCollector;
+import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
@@ -38,9 +38,6 @@ import java.util.Map;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Bruno Basto
@@ -216,22 +213,8 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			TemplateConstants.LANG_TYPE_SOY, _templateResources, false);
 	}
 
-	private static final List<TemplateResource> _templateResources;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(TemplateRendererTag.class);
-
-		SoyTemplateResourcesCollector soyTemplateResourcesCollector =
-			new SoyTemplateResourcesCollector(bundle, StringPool.SLASH);
-
-		try {
-			_templateResources =
-				soyTemplateResourcesCollector.getAllTemplateResources();
-		}
-		catch (TemplateException te) {
-			throw new ExceptionInInitializerError(te);
-		}
-	}
+	private static final List<TemplateResource> _templateResources =
+		SoyTemplateResourcesProvider.getAllTemplateResources();
 
 	private String _componentId;
 	private Map<String, Object> _context;

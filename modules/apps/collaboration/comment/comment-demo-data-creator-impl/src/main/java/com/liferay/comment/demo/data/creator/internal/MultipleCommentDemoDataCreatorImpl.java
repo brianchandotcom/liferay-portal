@@ -19,6 +19,7 @@ import com.liferay.comment.demo.data.creator.MultipleCommentDemoDataCreator;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -41,12 +42,14 @@ public class MultipleCommentDemoDataCreatorImpl
 	public void create(ClassedModel classedModel) throws PortalException {
 		int commentsCount = RandomUtil.nextInt(_MAX_COMMENTS);
 
-		int totalUsers = _userLocalService.getUsersCount();
+		int usersCount = _userLocalService.getUsersCount();
 
-		List<Long> userIds =
-			_userLocalService.getUsers(0, totalUsers).stream().filter(
-				user -> !_excludedUsers.contains(user.getEmailAddress())).map(
-				UserModel::getUserId).collect(Collectors.toList());
+		int maxUsers = Math.min(usersCount, _MAX_USERS);
+
+		List<User> users = _userLocalService.getUsers(0, maxUsers);
+
+		List<Long> userIds = users.stream().filter(this::_isRegularUser).map(
+			UserModel::getUserId).collect(Collectors.toList());
 
 		_addComments(userIds, classedModel, _ROOT_COMMENT, commentsCount, 1);
 	}
@@ -108,11 +111,17 @@ public class MultipleCommentDemoDataCreatorImpl
 		return list.get(RandomUtil.nextInt(list.size()));
 	}
 
+	private boolean _isRegularUser(User user) {
+		return !_excludedUsers.contains(user.getEmailAddress());
+	}
+
 	private static final int _MAX_COMMENTS = 100;
 
 	private static final int _MAX_LEVEL = 3;
 
 	private static final int _MAX_REPLIES = 10;
+
+	private static final int _MAX_USERS = 100;
 
 	private static final int _ROOT_COMMENT = 0;
 

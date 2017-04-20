@@ -801,8 +801,7 @@ public class LocalGitSyncUtil {
 	protected static void updateCacheBranchTimestamp(
 			final String cacheBranchName,
 			final GitWorkingDirectory gitWorkingDirectory,
-			List<RemoteConfig> localGitRemoteConfigs)
-		throws GitAPIException {
+			List<RemoteConfig> localGitRemoteConfigs) {
 
 		long start = System.currentTimeMillis();
 
@@ -896,7 +895,7 @@ public class LocalGitSyncUtil {
 			}
 		}
 		catch (GitAPIException gapie) {
-			throw new RuntimeException(gapie);
+			gapie.printStackTrace();
 		}
 
 		System.out.println(

@@ -18,7 +18,7 @@
 		<execute function="Click" locator1="FormRules#RULE_BUILDER_CALCULATE_ELLIPSIS" />
 
 		<var name="key_calculateAdvancedOperator" value="${calculateAdvancedOperator}" />
-		
+
 		<execute function="AssertClick" locator1="FormRules#RULE_BUILDER_CALCULATE_ADVANCED_OPERATOR" value1="${calculateAdvancedOperator}" />
 	</command>
 

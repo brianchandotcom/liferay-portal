@@ -76,7 +76,7 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 
 		long bundleId = Long.valueOf(templateId.substring(0, pos));
 
-		Bundle bundle = SoyTemplateResourcesTracker.getBundle(bundleId);
+		Bundle bundle = _soyTemplateResourcesTracker.getBundle(bundleId);
 
 		if (bundle == null) {
 			throw new IllegalStateException(
@@ -123,6 +123,9 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 
 		_templateContextContributors.remove(templateContextContributor);
 	}
+
+	@Reference
+	private SoyTemplateResourcesTracker _soyTemplateResourcesTracker;
 
 	private final List<TemplateContextContributor>
 		_templateContextContributors = new CopyOnWriteArrayList<>();

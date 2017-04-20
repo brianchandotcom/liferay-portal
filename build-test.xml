@@ -7732,6 +7732,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
+		<property name="default.timeout.explicit.wait" value="${timeout.explicit.wait}" />
+
 		<get-testcase-property property.name="timeout.explicit.wait" />
 
 		<if>
@@ -7741,6 +7743,11 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 					timeout.explicit.wait=${timeout.explicit.wait}
 				</echo>
 			</then>
+			<else>
+				<echo append="true" file="${test.ext.properties.file}">
+					timeout.explicit.wait=${default.timeout.explicit.wait}
+				</echo>
+			</else>
 		</if>
 	</target>
 

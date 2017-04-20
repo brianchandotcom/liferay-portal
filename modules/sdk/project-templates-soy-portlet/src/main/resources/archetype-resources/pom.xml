@@ -118,10 +118,8 @@
 							<target>
 								<exec dir="${project.basedir}" executable="${node.executable}" failonerror="true">
 									<arg value="${node.modules}/liferay-module-config-generator/bin/index.js" />
-									<arg value="--config" />
-									<arg value="" />
-									<arg value="--extension" />
-									<arg value="" />
+									<arg value="--config=" />
+									<arg value="--extension=" />
 									<arg value="--filePattern" />
 									<arg value="**/resources/*.js" />
 									<arg value="--format" />

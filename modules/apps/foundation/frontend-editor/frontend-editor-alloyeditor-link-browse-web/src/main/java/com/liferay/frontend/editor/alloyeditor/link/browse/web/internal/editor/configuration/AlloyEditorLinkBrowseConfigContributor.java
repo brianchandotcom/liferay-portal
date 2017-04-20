@@ -59,6 +59,13 @@ public class AlloyEditorLinkBrowseConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
+		JSONObject buttonCfgJSONObject = jsonObject.getJSONObject("buttonCfg");
+
+		if (buttonCfgJSONObject != null) {
+			jsonObject.put(
+				"buttonCfg", updateButtonCfgJSONObject(buttonCfgJSONObject));
+		}
+
 		JSONObject toolbarsJSONObject = jsonObject.getJSONObject("toolbars");
 
 		if (toolbarsJSONObject == null) {
@@ -97,12 +104,6 @@ public class AlloyEditorLinkBrowseConfigContributor
 		toolbarsJSONObject.put("styles", stylesJSONObject);
 
 		jsonObject.put("toolbars", toolbarsJSONObject);
-
-		JSONObject buttonCfg = jsonObject.getJSONObject("buttonCfg");
-
-		if (buttonCfg != null) {
-			jsonObject.put("buttonCfg", updateButtonCfgJSONObject(buttonCfg));
-		}
 
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
@@ -150,8 +151,10 @@ public class AlloyEditorLinkBrowseConfigContributor
 		_itemSelector = itemSelector;
 	}
 
-	protected JSONObject updateButtonCfgJSONObject(JSONObject buttonCfg) {
-		Iterator<String> buttonNames = buttonCfg.keys();
+	protected JSONObject updateButtonCfgJSONObject(
+		JSONObject oldButtonCfgJSONObject) {
+
+		Iterator<String> buttonNames = oldButtonCfgJSONObject.keys();
 
 		JSONObject newButtonCfgJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -160,15 +163,18 @@ public class AlloyEditorLinkBrowseConfigContributor
 
 			if (buttonName.equals("link")) {
 				newButtonCfgJSONObject.put(
-					"linkBrowse", buttonCfg.getJSONObject(buttonName));
+					"linkBrowse",
+					oldButtonCfgJSONObject.getJSONObject(buttonName));
 			}
 			else if (buttonName.equals("linkEdit")) {
 				newButtonCfgJSONObject.put(
-					"linkEditBrowse", buttonCfg.getJSONObject(buttonName));
+					"linkEditBrowse",
+					oldButtonCfgJSONObject.getJSONObject(buttonName));
 			}
 			else {
 				newButtonCfgJSONObject.put(
-					buttonName, buttonCfg.getJSONObject(buttonName));
+					buttonName,
+					oldButtonCfgJSONObject.getJSONObject(buttonName));
 			}
 		}
 

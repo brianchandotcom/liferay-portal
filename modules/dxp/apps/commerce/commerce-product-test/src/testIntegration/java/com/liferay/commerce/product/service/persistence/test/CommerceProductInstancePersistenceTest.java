@@ -143,8 +143,6 @@ public class CommerceProductInstancePersistenceTest {
 
 		newCommerceProductInstance.setSku(RandomTestUtil.randomString());
 
-		newCommerceProductInstance.setLSIN(RandomTestUtil.randomString());
-
 		newCommerceProductInstance.setDDMContent(RandomTestUtil.randomString());
 
 		newCommerceProductInstance.setDisplayDate(RandomTestUtil.nextDate());
@@ -188,8 +186,6 @@ public class CommerceProductInstancePersistenceTest {
 			newCommerceProductInstance.getCommerceProductDefinitionId());
 		Assert.assertEquals(existingCommerceProductInstance.getSku(),
 			newCommerceProductInstance.getSku());
-		Assert.assertEquals(existingCommerceProductInstance.getLSIN(),
-			newCommerceProductInstance.getLSIN());
 		Assert.assertEquals(existingCommerceProductInstance.getDDMContent(),
 			newCommerceProductInstance.getDDMContent());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -300,9 +296,9 @@ public class CommerceProductInstancePersistenceTest {
 			"uuid", true, "commerceProductInstanceId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "commerceProductDefinitionId", true,
-			"sku", true, "LSIN", true, "displayDate", true, "expirationDate",
-			true, "lastPublishDate", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true);
+			"sku", true, "displayDate", true, "expirationDate", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -560,8 +556,6 @@ public class CommerceProductInstancePersistenceTest {
 		commerceProductInstance.setCommerceProductDefinitionId(RandomTestUtil.nextLong());
 
 		commerceProductInstance.setSku(RandomTestUtil.randomString());
-
-		commerceProductInstance.setLSIN(RandomTestUtil.randomString());
 
 		commerceProductInstance.setDDMContent(RandomTestUtil.randomString());
 

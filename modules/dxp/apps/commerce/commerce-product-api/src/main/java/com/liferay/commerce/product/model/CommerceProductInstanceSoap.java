@@ -45,7 +45,6 @@ public class CommerceProductInstanceSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCommerceProductDefinitionId(model.getCommerceProductDefinitionId());
 		soapModel.setSku(model.getSku());
-		soapModel.setLSIN(model.getLSIN());
 		soapModel.setDDMContent(model.getDDMContent());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
@@ -189,14 +188,6 @@ public class CommerceProductInstanceSoap implements Serializable {
 		_sku = sku;
 	}
 
-	public String getLSIN() {
-		return _LSIN;
-	}
-
-	public void setLSIN(String LSIN) {
-		_LSIN = LSIN;
-	}
-
 	public String getDDMContent() {
 		return _DDMContent;
 	}
@@ -271,7 +262,6 @@ public class CommerceProductInstanceSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _commerceProductDefinitionId;
 	private String _sku;
-	private String _LSIN;
 	private String _DDMContent;
 	private Date _displayDate;
 	private Date _expirationDate;

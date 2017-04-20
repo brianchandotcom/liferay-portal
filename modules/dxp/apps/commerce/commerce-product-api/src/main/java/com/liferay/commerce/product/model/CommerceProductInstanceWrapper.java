@@ -73,7 +73,6 @@ public class CommerceProductInstanceWrapper implements CommerceProductInstance,
 		attributes.put("commerceProductDefinitionId",
 			getCommerceProductDefinitionId());
 		attributes.put("sku", getSku());
-		attributes.put("LSIN", getLSIN());
 		attributes.put("DDMContent", getDDMContent());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -148,12 +147,6 @@ public class CommerceProductInstanceWrapper implements CommerceProductInstance,
 
 		if (sku != null) {
 			setSku(sku);
-		}
-
-		String LSIN = (String)attributes.get("LSIN");
-
-		if (LSIN != null) {
-			setLSIN(LSIN);
 		}
 
 		String DDMContent = (String)attributes.get("DDMContent");
@@ -411,16 +404,6 @@ public class CommerceProductInstanceWrapper implements CommerceProductInstance,
 	@Override
 	public java.lang.String getDDMContent() {
 		return _commerceProductInstance.getDDMContent();
-	}
-
-	/**
-	* Returns the lsin of this commerce product instance.
-	*
-	* @return the lsin of this commerce product instance
-	*/
-	@Override
-	public java.lang.String getLSIN() {
-		return _commerceProductInstance.getLSIN();
 	}
 
 	/**
@@ -737,16 +720,6 @@ public class CommerceProductInstanceWrapper implements CommerceProductInstance,
 	@Override
 	public void setGroupId(long groupId) {
 		_commerceProductInstance.setGroupId(groupId);
-	}
-
-	/**
-	* Sets the lsin of this commerce product instance.
-	*
-	* @param LSIN the lsin of this commerce product instance
-	*/
-	@Override
-	public void setLSIN(java.lang.String LSIN) {
-		_commerceProductInstance.setLSIN(LSIN);
 	}
 
 	/**

@@ -89,7 +89,6 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceProductDefinitionId", Types.BIGINT },
 			{ "sku", Types.VARCHAR },
-			{ "LSIN", Types.VARCHAR },
 			{ "DDMContent", Types.CLOB },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
@@ -112,7 +111,6 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceProductDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("LSIN", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMContent", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
@@ -123,7 +121,7 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceProductInstance (uuid_ VARCHAR(75) null,commerceProductInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductDefinitionId LONG,sku VARCHAR(75) null,LSIN VARCHAR(75) null,DDMContent TEXT null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceProductInstance (uuid_ VARCHAR(75) null,commerceProductInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductDefinitionId LONG,sku VARCHAR(75) null,DDMContent TEXT null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceProductInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceProductInstance.displayDate DESC, commerceProductInstance.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceProductInstance.displayDate DESC, CommerceProductInstance.createDate DESC";
@@ -171,7 +169,6 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCommerceProductDefinitionId(soapModel.getCommerceProductDefinitionId());
 		model.setSku(soapModel.getSku());
-		model.setLSIN(soapModel.getLSIN());
 		model.setDDMContent(soapModel.getDDMContent());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
@@ -257,7 +254,6 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		attributes.put("commerceProductDefinitionId",
 			getCommerceProductDefinitionId());
 		attributes.put("sku", getSku());
-		attributes.put("LSIN", getLSIN());
 		attributes.put("DDMContent", getDDMContent());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -335,12 +331,6 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 
 		if (sku != null) {
 			setSku(sku);
-		}
-
-		String LSIN = (String)attributes.get("LSIN");
-
-		if (LSIN != null) {
-			setLSIN(LSIN);
 		}
 
 		String DDMContent = (String)attributes.get("DDMContent");
@@ -593,22 +583,6 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 
 	public String getOriginalSku() {
 		return GetterUtil.getString(_originalSku);
-	}
-
-	@JSON
-	@Override
-	public String getLSIN() {
-		if (_LSIN == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _LSIN;
-		}
-	}
-
-	@Override
-	public void setLSIN(String LSIN) {
-		_LSIN = LSIN;
 	}
 
 	@JSON
@@ -985,7 +959,6 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		commerceProductInstanceImpl.setModifiedDate(getModifiedDate());
 		commerceProductInstanceImpl.setCommerceProductDefinitionId(getCommerceProductDefinitionId());
 		commerceProductInstanceImpl.setSku(getSku());
-		commerceProductInstanceImpl.setLSIN(getLSIN());
 		commerceProductInstanceImpl.setDDMContent(getDDMContent());
 		commerceProductInstanceImpl.setDisplayDate(getDisplayDate());
 		commerceProductInstanceImpl.setExpirationDate(getExpirationDate());
@@ -1143,14 +1116,6 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 			commerceProductInstanceCacheModel.sku = null;
 		}
 
-		commerceProductInstanceCacheModel.LSIN = getLSIN();
-
-		String LSIN = commerceProductInstanceCacheModel.LSIN;
-
-		if ((LSIN != null) && (LSIN.length() == 0)) {
-			commerceProductInstanceCacheModel.LSIN = null;
-		}
-
 		commerceProductInstanceCacheModel.DDMContent = getDDMContent();
 
 		String DDMContent = commerceProductInstanceCacheModel.DDMContent;
@@ -1212,7 +1177,7 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1234,8 +1199,6 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		sb.append(getCommerceProductDefinitionId());
 		sb.append(", sku=");
 		sb.append(getSku());
-		sb.append(", LSIN=");
-		sb.append(getLSIN());
 		sb.append(", DDMContent=");
 		sb.append(getDDMContent());
 		sb.append(", displayDate=");
@@ -1259,7 +1222,7 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CommerceProductInstance");
@@ -1304,10 +1267,6 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 		sb.append(
 			"<column><column-name>sku</column-name><column-value><![CDATA[");
 		sb.append(getSku());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>LSIN</column-name><column-value><![CDATA[");
-		sb.append(getLSIN());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>DDMContent</column-name><column-value><![CDATA[");
@@ -1370,7 +1329,6 @@ public class CommerceProductInstanceModelImpl extends BaseModelImpl<CommerceProd
 	private boolean _setOriginalCommerceProductDefinitionId;
 	private String _sku;
 	private String _originalSku;
-	private String _LSIN;
 	private String _DDMContent;
 	private Date _displayDate;
 	private Date _expirationDate;

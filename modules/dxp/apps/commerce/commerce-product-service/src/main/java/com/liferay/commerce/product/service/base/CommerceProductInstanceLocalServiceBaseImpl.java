@@ -148,11 +148,13 @@ public abstract class CommerceProductInstanceLocalServiceBaseImpl
 	 *
 	 * @param commerceProductInstance the commerce product instance
 	 * @return the commerce product instance that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceProductInstance deleteCommerceProductInstance(
-		CommerceProductInstance commerceProductInstance) {
+		CommerceProductInstance commerceProductInstance)
+		throws PortalException {
 		return commerceProductInstancePersistence.remove(commerceProductInstance);
 	}
 

@@ -28,10 +28,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -40,6 +43,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CommerceProductInstance. Methods of this
@@ -74,6 +78,15 @@ public interface CommerceProductInstanceLocalService extends BaseLocalService,
 	public CommerceProductInstance addCommerceProductInstance(
 		CommerceProductInstance commerceProductInstance);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceProductInstance addCommerceProductInstance(
+		long commerceProductDefinitionId, java.lang.String sku,
+		java.lang.String ddmContent, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new commerce product instance with the primary key. Does not add the commerce product instance to the database.
 	*
@@ -88,10 +101,13 @@ public interface CommerceProductInstanceLocalService extends BaseLocalService,
 	*
 	* @param commerceProductInstance the commerce product instance
 	* @return the commerce product instance that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceProductInstance deleteCommerceProductInstance(
-		CommerceProductInstance commerceProductInstance);
+		CommerceProductInstance commerceProductInstance)
+		throws PortalException;
 
 	/**
 	* Deletes the commerce product instance with the primary key from the database. Also notifies the appropriate model listeners.
@@ -152,6 +168,22 @@ public interface CommerceProductInstanceLocalService extends BaseLocalService,
 	public CommerceProductInstance updateCommerceProductInstance(
 		CommerceProductInstance commerceProductInstance);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceProductInstance updateCommerceProductInstance(
+		long commerceProductInstanceId, java.lang.String sku,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceProductInstance updateStatus(long userId,
+		long commerceProductInstanceId, int status,
+		ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -183,6 +215,10 @@ public interface CommerceProductInstanceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceProductInstancesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceProductInstancesCount(
+		long commerceProductDefinitionId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -244,6 +280,15 @@ public interface CommerceProductInstanceLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceProductInstance> getCommerceProductInstances(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductInstance> getCommerceProductInstances(
+		long commerceProductDefinitionId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductInstance> getCommerceProductInstances(
+		long commerceProductDefinitionId, int start, int end,
+		OrderByComparator<CommerceProductInstance> orderByComparator);
 
 	/**
 	* Returns all the commerce product instances matching the UUID and company.

@@ -53,6 +53,22 @@ public class CommerceProductInstanceLocalServiceUtil {
 		return getService().addCommerceProductInstance(commerceProductInstance);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductInstance addCommerceProductInstance(
+		long commerceProductDefinitionId, java.lang.String sku,
+		java.lang.String ddmContent, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceProductInstance(commerceProductDefinitionId,
+			sku, ddmContent, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce product instance with the primary key. Does not add the commerce product instance to the database.
 	*
@@ -70,9 +86,11 @@ public class CommerceProductInstanceLocalServiceUtil {
 	*
 	* @param commerceProductInstance the commerce product instance
 	* @return the commerce product instance that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.product.model.CommerceProductInstance deleteCommerceProductInstance(
-		com.liferay.commerce.product.model.CommerceProductInstance commerceProductInstance) {
+		com.liferay.commerce.product.model.CommerceProductInstance commerceProductInstance)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteCommerceProductInstance(commerceProductInstance);
 	}
@@ -150,6 +168,32 @@ public class CommerceProductInstanceLocalServiceUtil {
 				   .updateCommerceProductInstance(commerceProductInstance);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductInstance updateCommerceProductInstance(
+		long commerceProductInstanceId, java.lang.String sku,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceProductInstance(commerceProductInstanceId,
+			sku, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductInstance updateStatus(
+		long userId, long commerceProductInstanceId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateStatus(userId, commerceProductInstanceId, status,
+			serviceContext, workflowContext);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -189,6 +233,12 @@ public class CommerceProductInstanceLocalServiceUtil {
 	*/
 	public static int getCommerceProductInstancesCount() {
 		return getService().getCommerceProductInstancesCount();
+	}
+
+	public static int getCommerceProductInstancesCount(
+		long commerceProductDefinitionId) {
+		return getService()
+				   .getCommerceProductInstancesCount(commerceProductDefinitionId);
 	}
 
 	/**
@@ -264,6 +314,21 @@ public class CommerceProductInstanceLocalServiceUtil {
 	public static java.util.List<com.liferay.commerce.product.model.CommerceProductInstance> getCommerceProductInstances(
 		int start, int end) {
 		return getService().getCommerceProductInstances(start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductInstance> getCommerceProductInstances(
+		long commerceProductDefinitionId, int start, int end) {
+		return getService()
+				   .getCommerceProductInstances(commerceProductDefinitionId,
+			start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductInstance> getCommerceProductInstances(
+		long commerceProductDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductInstance> orderByComparator) {
+		return getService()
+				   .getCommerceProductInstances(commerceProductDefinitionId,
+			start, end, orderByComparator);
 	}
 
 	/**

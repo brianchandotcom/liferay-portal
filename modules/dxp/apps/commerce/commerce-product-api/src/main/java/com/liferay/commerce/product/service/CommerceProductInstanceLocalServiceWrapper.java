@@ -46,6 +46,22 @@ public class CommerceProductInstanceLocalServiceWrapper
 		return _commerceProductInstanceLocalService.addCommerceProductInstance(commerceProductInstance);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductInstance addCommerceProductInstance(
+		long commerceProductDefinitionId, java.lang.String sku,
+		java.lang.String ddmContent, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductInstanceLocalService.addCommerceProductInstance(commerceProductDefinitionId,
+			sku, ddmContent, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce product instance with the primary key. Does not add the commerce product instance to the database.
 	*
@@ -63,10 +79,12 @@ public class CommerceProductInstanceLocalServiceWrapper
 	*
 	* @param commerceProductInstance the commerce product instance
 	* @return the commerce product instance that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CommerceProductInstance deleteCommerceProductInstance(
-		com.liferay.commerce.product.model.CommerceProductInstance commerceProductInstance) {
+		com.liferay.commerce.product.model.CommerceProductInstance commerceProductInstance)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceProductInstanceLocalService.deleteCommerceProductInstance(commerceProductInstance);
 	}
 
@@ -147,6 +165,32 @@ public class CommerceProductInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CommerceProductInstance updateCommerceProductInstance(
+		long commerceProductInstanceId, java.lang.String sku,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductInstanceLocalService.updateCommerceProductInstance(commerceProductInstanceId,
+			sku, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductInstance updateStatus(
+		long userId, long commerceProductInstanceId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductInstanceLocalService.updateStatus(userId,
+			commerceProductInstanceId, status, serviceContext, workflowContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _commerceProductInstanceLocalService.getActionableDynamicQuery();
 	}
@@ -192,6 +236,12 @@ public class CommerceProductInstanceLocalServiceWrapper
 	@Override
 	public int getCommerceProductInstancesCount() {
 		return _commerceProductInstanceLocalService.getCommerceProductInstancesCount();
+	}
+
+	@Override
+	public int getCommerceProductInstancesCount(
+		long commerceProductDefinitionId) {
+		return _commerceProductInstanceLocalService.getCommerceProductInstancesCount(commerceProductDefinitionId);
 	}
 
 	/**
@@ -274,6 +324,21 @@ public class CommerceProductInstanceLocalServiceWrapper
 		int start, int end) {
 		return _commerceProductInstanceLocalService.getCommerceProductInstances(start,
 			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceProductInstance> getCommerceProductInstances(
+		long commerceProductDefinitionId, int start, int end) {
+		return _commerceProductInstanceLocalService.getCommerceProductInstances(commerceProductDefinitionId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceProductInstance> getCommerceProductInstances(
+		long commerceProductDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductInstance> orderByComparator) {
+		return _commerceProductInstanceLocalService.getCommerceProductInstances(commerceProductDefinitionId,
+			start, end, orderByComparator);
 	}
 
 	/**

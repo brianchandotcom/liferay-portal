@@ -242,21 +242,6 @@ public interface CommerceProductInstanceModel extends BaseModel<CommerceProductI
 	public void setSku(String sku);
 
 	/**
-	 * Returns the lsin of this commerce product instance.
-	 *
-	 * @return the lsin of this commerce product instance
-	 */
-	@AutoEscape
-	public String getLSIN();
-
-	/**
-	 * Sets the lsin of this commerce product instance.
-	 *
-	 * @param LSIN the lsin of this commerce product instance
-	 */
-	public void setLSIN(String LSIN);
-
-	/**
 	 * Returns the ddm content of this commerce product instance.
 	 *
 	 * @return the ddm content of this commerce product instance

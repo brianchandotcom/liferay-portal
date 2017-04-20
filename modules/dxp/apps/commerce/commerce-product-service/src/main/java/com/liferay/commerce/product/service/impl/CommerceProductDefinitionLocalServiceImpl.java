@@ -340,7 +340,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 		CommerceProductDefinition commerceProductDefinition =
-			commerceProductDefinitionPersistence.create(
+			commerceProductDefinitionPersistence.findByPrimaryKey(
 				commerceProductDefinitionId);
 
 		Date displayDate = null;

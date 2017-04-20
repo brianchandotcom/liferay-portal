@@ -71,7 +71,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceProductDefinitionId" type="long" />
 		<field name="sku" type="String" />
-		<field name="LSIN" type="String" />
 		<field name="DDMContent" type="String">
 			<hint-collection name="CLOB" />
 		</field>

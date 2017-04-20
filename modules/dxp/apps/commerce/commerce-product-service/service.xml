@@ -146,14 +146,14 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CommerceProductDefinitionOptionRelId" return-type="Collection">
+			<finder-column name="commerceProductDefinitionOptionRelId" />
+		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
-		</finder>
-		<finder name="CommerceProductDefinitionOptionRelId" return-type="Collection">
-			<finder-column name="CommerceProductDefinitionOptionRelId"></finder-column>
 		</finder>
 
 		<!-- References -->

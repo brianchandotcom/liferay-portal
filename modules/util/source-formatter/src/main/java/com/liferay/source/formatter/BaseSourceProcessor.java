@@ -97,6 +97,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
+		_pluginsInsideModulesDirectoryNames =
+			getPluginsInsideModulesDirectoryNames();
+
 		_populateGenericSourceChecks();
 
 		populateSourceChecks();
@@ -405,10 +408,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				absolutePath.substring(x, y + 1));
 		}
 
-		_pluginsInsideModulesDirectoryNames =
-			pluginsInsideModulesDirectoryNames;
-
-		return _pluginsInsideModulesDirectoryNames;
+		return pluginsInsideModulesDirectoryNames;
 	}
 
 	protected Properties getPortalLanguageProperties() throws Exception {

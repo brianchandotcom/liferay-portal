@@ -75,11 +75,7 @@ public abstract class BaseFolderDemoDataCreatorImpl
 		return folder;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDlAppLocalService(DLAppLocalService dlAppLocalService) {
-		this.dlAppLocalService = dlAppLocalService;
-	}
-
+	@Reference
 	protected DLAppLocalService dlAppLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -92,11 +92,6 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDlAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
 	private byte[] _getBytes() throws IOException, PortalException {
 		URL url = _getNextUrl();
 
@@ -151,7 +146,9 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 
 	private volatile int _categoryIndex = -1;
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
 	private final List<Long> _fileEntryIds = new CopyOnWriteArrayList<>();
 
 }

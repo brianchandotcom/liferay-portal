@@ -277,11 +277,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 								return true;
 							}
-
-							return false;
 						}
-
-						if (_containsClassOrJar(file.listFiles())) {
+						else if (_containsClassOrJar(file.listFiles())) {
 							return true;
 						}
 					}

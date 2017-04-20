@@ -278,6 +278,27 @@ public class ProjectTemplateFilesTest {
 				packagingElement.getTextContent());
 		}
 
+		NodeList executionNodeList = projectElement.getElementsByTagName(
+			"execution");
+
+		for (int i = 0; i < executionNodeList.getLength(); i++) {
+			Element executionElement = (Element)executionNodeList.item(i);
+
+			Element idElement = _getChildElement(executionElement, "id");
+
+			if (idElement != null) {
+				String id = idElement.getTextContent();
+
+				Matcher matcher = _pomXmlExecutionIdPattern.matcher(id);
+
+				Assert.assertTrue(
+					"Execution ID \"" + id + "\" in " + pomXmlPath +
+						" must match pattern \"" +
+							_pomXmlExecutionIdPattern.pattern() + "\"",
+					matcher.matches());
+			}
+		}
+
 		_testPomXmlVersions(pomXmlPath, projectElement, "dependency");
 		_testPomXmlVersions(pomXmlPath, projectElement, "plugin");
 	}
@@ -464,6 +485,8 @@ public class ProjectTemplateFilesTest {
 
 	private static final Pattern _bundleDescriptionPattern = Pattern.compile(
 		"Creates a .+\\.");
+	private static final Pattern _pomXmlExecutionIdPattern = Pattern.compile(
+		"[a-z]+(?:-[a-z]+)*");
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
 			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));

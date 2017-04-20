@@ -148,9 +148,6 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 				int priority, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
-
 		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel =
 			commerceProductDefinitionOptionRelPersistence.findByPrimaryKey(
 				commerceProductDefinitionOptionRelId);

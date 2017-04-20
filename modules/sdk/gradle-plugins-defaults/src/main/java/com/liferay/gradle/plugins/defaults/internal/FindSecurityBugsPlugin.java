@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 
 import java.io.File;
 
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -249,7 +250,43 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					return !writeFindBugsProjectTask.isClasspathEmpty();
+					FileCollection fileCollection =
+						writeFindBugsProjectTask.getClasspath();
+
+					if (fileCollection == null) {
+						return true;
+					}
+
+					Set<File> files = fileCollection.getFiles();
+
+					return _containsClassOrJar(
+						files.toArray(new File[files.size()]));
+				}
+
+				private boolean _containsClassOrJar(File[] files) {
+					for (File file : files) {
+						if (!file.exists()) {
+							continue;
+						}
+
+						if (file.isFile()) {
+							String fileName = file.getName();
+
+							if (fileName.endsWith(".class") ||
+								fileName.endsWith(".jar")) {
+
+								return true;
+							}
+
+							return false;
+						}
+
+						if (_containsClassOrJar(file.listFiles())) {
+							return true;
+						}
+					}
+
+					return false;
 				}
 
 			});

@@ -23,6 +23,8 @@ import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -77,6 +80,7 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	 */
 	public static final String TABLE_NAME = "CommerceProductDefinitionOptionRel";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "definitionOptionRelId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -94,6 +98,7 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("definitionOptionRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -109,7 +114,7 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinitionOptionRel (definitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductDefinitionId LONG,commerceProductOptionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinitionOptionRel (uuid_ VARCHAR(75) null,definitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductDefinitionId LONG,commerceProductOptionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceProductDefinitionOptionRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceProductDefinitionOptionRel.priority DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceProductDefinitionOptionRel.priority DESC";
@@ -128,7 +133,8 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	public static final long COMMERCEPRODUCTDEFINITIONID_COLUMN_BITMASK = 1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long PRIORITY_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long PRIORITY_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -144,6 +150,7 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 
 		CommerceProductDefinitionOptionRel model = new CommerceProductDefinitionOptionRelImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setCommerceProductDefinitionOptionRelId(soapModel.getCommerceProductDefinitionOptionRelId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -222,6 +229,7 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("commerceProductDefinitionOptionRelId",
 			getCommerceProductDefinitionOptionRelId());
 		attributes.put("groupId", getGroupId());
@@ -246,6 +254,12 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long commerceProductDefinitionOptionRelId = (Long)attributes.get(
 				"commerceProductDefinitionOptionRelId");
 
@@ -327,6 +341,30 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		if (priority != null) {
 			setPriority(priority);
 		}
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -723,6 +761,12 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		_priority = priority;
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				CommerceProductDefinitionOptionRel.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -837,6 +881,7 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		CommerceProductDefinitionOptionRelImpl commerceProductDefinitionOptionRelImpl =
 			new CommerceProductDefinitionOptionRelImpl();
 
+		commerceProductDefinitionOptionRelImpl.setUuid(getUuid());
 		commerceProductDefinitionOptionRelImpl.setCommerceProductDefinitionOptionRelId(getCommerceProductDefinitionOptionRelId());
 		commerceProductDefinitionOptionRelImpl.setGroupId(getGroupId());
 		commerceProductDefinitionOptionRelImpl.setCompanyId(getCompanyId());
@@ -922,6 +967,8 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		CommerceProductDefinitionOptionRelModelImpl commerceProductDefinitionOptionRelModelImpl =
 			this;
 
+		commerceProductDefinitionOptionRelModelImpl._originalUuid = commerceProductDefinitionOptionRelModelImpl._uuid;
+
 		commerceProductDefinitionOptionRelModelImpl._originalGroupId = commerceProductDefinitionOptionRelModelImpl._groupId;
 
 		commerceProductDefinitionOptionRelModelImpl._setOriginalGroupId = false;
@@ -943,6 +990,14 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	public CacheModel<CommerceProductDefinitionOptionRel> toCacheModel() {
 		CommerceProductDefinitionOptionRelCacheModel commerceProductDefinitionOptionRelCacheModel =
 			new CommerceProductDefinitionOptionRelCacheModel();
+
+		commerceProductDefinitionOptionRelCacheModel.uuid = getUuid();
+
+		String uuid = commerceProductDefinitionOptionRelCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			commerceProductDefinitionOptionRelCacheModel.uuid = null;
+		}
 
 		commerceProductDefinitionOptionRelCacheModel.commerceProductDefinitionOptionRelId = getCommerceProductDefinitionOptionRelId();
 
@@ -1014,9 +1069,11 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
-		sb.append("{commerceProductDefinitionOptionRelId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", commerceProductDefinitionOptionRelId=");
 		sb.append(getCommerceProductDefinitionOptionRelId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -1049,13 +1106,17 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append(
 			"com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>commerceProductDefinitionOptionRelId</column-name><column-value><![CDATA[");
 		sb.append(getCommerceProductDefinitionOptionRelId());
@@ -1118,6 +1179,8 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			CommerceProductDefinitionOptionRel.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _commerceProductDefinitionOptionRelId;
 	private long _groupId;
 	private long _originalGroupId;

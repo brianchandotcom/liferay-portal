@@ -68,9 +68,11 @@ public class CommerceProductDefinitionOptionValueRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{commerceProductDefinitionOptionValueRelId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", commerceProductDefinitionOptionValueRelId=");
 		sb.append(commerceProductDefinitionOptionValueRelId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -99,6 +101,13 @@ public class CommerceProductDefinitionOptionValueRelCacheModel
 	public CommerceProductDefinitionOptionValueRel toEntityModel() {
 		CommerceProductDefinitionOptionValueRelImpl commerceProductDefinitionOptionValueRelImpl =
 			new CommerceProductDefinitionOptionValueRelImpl();
+
+		if (uuid == null) {
+			commerceProductDefinitionOptionValueRelImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			commerceProductDefinitionOptionValueRelImpl.setUuid(uuid);
+		}
 
 		commerceProductDefinitionOptionValueRelImpl.setCommerceProductDefinitionOptionValueRelId(commerceProductDefinitionOptionValueRelId);
 		commerceProductDefinitionOptionValueRelImpl.setGroupId(groupId);
@@ -146,6 +155,8 @@ public class CommerceProductDefinitionOptionValueRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		commerceProductDefinitionOptionValueRelId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -166,6 +177,13 @@ public class CommerceProductDefinitionOptionValueRelCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(commerceProductDefinitionOptionValueRelId);
 
 		objectOutput.writeLong(groupId);
@@ -196,6 +214,7 @@ public class CommerceProductDefinitionOptionValueRelCacheModel
 		objectOutput.writeInt(priority);
 	}
 
+	public String uuid;
 	public long commerceProductDefinitionOptionValueRelId;
 	public long groupId;
 	public long companyId;

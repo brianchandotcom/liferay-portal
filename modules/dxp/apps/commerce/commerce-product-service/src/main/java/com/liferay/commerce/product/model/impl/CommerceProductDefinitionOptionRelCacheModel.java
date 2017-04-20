@@ -67,9 +67,11 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
-		sb.append("{commerceProductDefinitionOptionRelId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", commerceProductDefinitionOptionRelId=");
 		sb.append(commerceProductDefinitionOptionRelId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -104,6 +106,13 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 	public CommerceProductDefinitionOptionRel toEntityModel() {
 		CommerceProductDefinitionOptionRelImpl commerceProductDefinitionOptionRelImpl =
 			new CommerceProductDefinitionOptionRelImpl();
+
+		if (uuid == null) {
+			commerceProductDefinitionOptionRelImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			commerceProductDefinitionOptionRelImpl.setUuid(uuid);
+		}
 
 		commerceProductDefinitionOptionRelImpl.setCommerceProductDefinitionOptionRelId(commerceProductDefinitionOptionRelId);
 		commerceProductDefinitionOptionRelImpl.setGroupId(groupId);
@@ -166,6 +175,8 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		commerceProductDefinitionOptionRelId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -190,6 +201,13 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(commerceProductDefinitionOptionRelId);
 
 		objectOutput.writeLong(groupId);
@@ -236,6 +254,7 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 		objectOutput.writeInt(priority);
 	}
 
+	public String uuid;
 	public long commerceProductDefinitionOptionRelId;
 	public long groupId;
 	public long companyId;

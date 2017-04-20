@@ -23,6 +23,8 @@ import com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRe
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -78,6 +81,7 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 	 */
 	public static final String TABLE_NAME = "CommerceProductDefinitionOptionValueRel";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "definitionOptionValueRelId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -92,6 +96,7 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("definitionOptionValueRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -104,7 +109,7 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinitionOptionValueRel (definitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,definitionOptionRelId LONG,title STRING null,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinitionOptionValueRel (uuid_ VARCHAR(75) null,definitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,definitionOptionRelId LONG,title STRING null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceProductDefinitionOptionValueRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceProductDefinitionOptionValueRel.priority DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceProductDefinitionOptionValueRel.priority DESC";
@@ -124,7 +129,8 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 		1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long PRIORITY_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long PRIORITY_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -140,6 +146,7 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 
 		CommerceProductDefinitionOptionValueRel model = new CommerceProductDefinitionOptionValueRelImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setCommerceProductDefinitionOptionValueRelId(soapModel.getCommerceProductDefinitionOptionValueRelId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -215,6 +222,7 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("commerceProductDefinitionOptionValueRelId",
 			getCommerceProductDefinitionOptionValueRelId());
 		attributes.put("groupId", getGroupId());
@@ -236,6 +244,12 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long commerceProductDefinitionOptionValueRelId = (Long)attributes.get(
 				"commerceProductDefinitionOptionValueRelId");
 
@@ -297,6 +311,30 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 		if (priority != null) {
 			setPriority(priority);
 		}
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -564,6 +602,12 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 		_priority = priority;
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				CommerceProductDefinitionOptionValueRel.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -658,6 +702,7 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 		CommerceProductDefinitionOptionValueRelImpl commerceProductDefinitionOptionValueRelImpl =
 			new CommerceProductDefinitionOptionValueRelImpl();
 
+		commerceProductDefinitionOptionValueRelImpl.setUuid(getUuid());
 		commerceProductDefinitionOptionValueRelImpl.setCommerceProductDefinitionOptionValueRelId(getCommerceProductDefinitionOptionValueRelId());
 		commerceProductDefinitionOptionValueRelImpl.setGroupId(getGroupId());
 		commerceProductDefinitionOptionValueRelImpl.setCompanyId(getCompanyId());
@@ -741,6 +786,8 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 		CommerceProductDefinitionOptionValueRelModelImpl commerceProductDefinitionOptionValueRelModelImpl =
 			this;
 
+		commerceProductDefinitionOptionValueRelModelImpl._originalUuid = commerceProductDefinitionOptionValueRelModelImpl._uuid;
+
 		commerceProductDefinitionOptionValueRelModelImpl._originalGroupId = commerceProductDefinitionOptionValueRelModelImpl._groupId;
 
 		commerceProductDefinitionOptionValueRelModelImpl._setOriginalGroupId = false;
@@ -762,6 +809,14 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 	public CacheModel<CommerceProductDefinitionOptionValueRel> toCacheModel() {
 		CommerceProductDefinitionOptionValueRelCacheModel commerceProductDefinitionOptionValueRelCacheModel =
 			new CommerceProductDefinitionOptionValueRelCacheModel();
+
+		commerceProductDefinitionOptionValueRelCacheModel.uuid = getUuid();
+
+		String uuid = commerceProductDefinitionOptionValueRelCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			commerceProductDefinitionOptionValueRelCacheModel.uuid = null;
+		}
 
 		commerceProductDefinitionOptionValueRelCacheModel.commerceProductDefinitionOptionValueRelId = getCommerceProductDefinitionOptionValueRelId();
 
@@ -814,9 +869,11 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{commerceProductDefinitionOptionValueRelId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", commerceProductDefinitionOptionValueRelId=");
 		sb.append(getCommerceProductDefinitionOptionValueRelId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -843,13 +900,17 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append(
 			"com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>commerceProductDefinitionOptionValueRelId</column-name><column-value><![CDATA[");
 		sb.append(getCommerceProductDefinitionOptionValueRelId());
@@ -900,6 +961,8 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			CommerceProductDefinitionOptionValueRel.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _commerceProductDefinitionOptionValueRelId;
 	private long _groupId;
 	private long _originalGroupId;

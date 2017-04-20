@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -60,6 +62,7 @@ public class CommerceProductDefinitionOptionValueRelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("commerceProductDefinitionOptionValueRelId",
 			getCommerceProductDefinitionOptionValueRelId());
 		attributes.put("groupId", getGroupId());
@@ -78,6 +81,12 @@ public class CommerceProductDefinitionOptionValueRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long commerceProductDefinitionOptionValueRelId = (Long)attributes.get(
 				"commerceProductDefinitionOptionValueRelId");
 
@@ -299,6 +308,16 @@ public class CommerceProductDefinitionOptionValueRelWrapper
 	@Override
 	public java.lang.String getUserUuid() {
 		return _commerceProductDefinitionOptionValueRel.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this commerce product definition option value rel.
+	*
+	* @return the uuid of this commerce product definition option value rel
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _commerceProductDefinitionOptionValueRel.getUuid();
 	}
 
 	@Override
@@ -630,6 +649,16 @@ public class CommerceProductDefinitionOptionValueRelWrapper
 		_commerceProductDefinitionOptionValueRel.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this commerce product definition option value rel.
+	*
+	* @param uuid the uuid of this commerce product definition option value rel
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_commerceProductDefinitionOptionValueRel.setUuid(uuid);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -649,6 +678,11 @@ public class CommerceProductDefinitionOptionValueRelWrapper
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _commerceProductDefinitionOptionValueRel.getStagedModelType();
 	}
 
 	@Override

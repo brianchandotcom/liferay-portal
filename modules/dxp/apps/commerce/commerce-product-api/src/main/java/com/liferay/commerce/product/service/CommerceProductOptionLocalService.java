@@ -18,8 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CommerceProductOption;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -119,6 +122,17 @@ public interface CommerceProductOptionLocalService extends BaseLocalService,
 		long commerceProductOptionId);
 
 	/**
+	* Returns the commerce product option matching the UUID and group.
+	*
+	* @param uuid the commerce product option's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce product option, or <code>null</code> if a matching commerce product option could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceProductOption fetchCommerceProductOptionByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
 	* Returns the commerce product option with the primary key.
 	*
 	* @param commerceProductOptionId the primary key of the commerce product option
@@ -128,6 +142,18 @@ public interface CommerceProductOptionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceProductOption getCommerceProductOption(
 		long commerceProductOptionId) throws PortalException;
+
+	/**
+	* Returns the commerce product option matching the UUID and group.
+	*
+	* @param uuid the commerce product option's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce product option
+	* @throws PortalException if a matching commerce product option could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceProductOption getCommerceProductOptionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Updates the commerce product option in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -149,6 +175,10 @@ public interface CommerceProductOptionLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -244,6 +274,32 @@ public interface CommerceProductOptionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceProductOption> getCommerceProductOptions(long groupId,
 		int start, int end,
+		OrderByComparator<CommerceProductOption> orderByComparator);
+
+	/**
+	* Returns all the commerce product options matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce product options
+	* @param companyId the primary key of the company
+	* @return the matching commerce product options, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductOption> getCommerceProductOptionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of commerce product options matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce product options
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of commerce product options
+	* @param end the upper bound of the range of commerce product options (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching commerce product options, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductOption> getCommerceProductOptionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CommerceProductOption> orderByComparator);
 
 	/**

@@ -33,6 +33,7 @@ create table CommerceProductDefinitionLocalization (
 );
 
 create table CommerceProductDefinitionOptionRel (
+	uuid_ VARCHAR(75) null,
 	definitionOptionRelId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -49,6 +50,7 @@ create table CommerceProductDefinitionOptionRel (
 );
 
 create table CommerceProductDefinitionOptionValueRel (
+	uuid_ VARCHAR(75) null,
 	definitionOptionValueRelId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -83,6 +85,7 @@ create table CommerceProductInstance (
 );
 
 create table CommerceProductOption (
+	uuid_ VARCHAR(75) null,
 	commerceProductOptionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -96,6 +99,7 @@ create table CommerceProductOption (
 );
 
 create table CommerceProductOptionValue (
+	uuid_ VARCHAR(75) null,
 	commerceProductOptionValueId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

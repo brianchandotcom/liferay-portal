@@ -23,6 +23,8 @@ import com.liferay.commerce.product.model.CommerceProductOptionValueSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -77,6 +80,7 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 	 */
 	public static final String TABLE_NAME = "CommerceProductOptionValue";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "commerceProductOptionValueId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -91,6 +95,7 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceProductOptionValueId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -103,7 +108,7 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceProductOptionValue (commerceProductOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductOptionId LONG,title STRING null,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceProductOptionValue (uuid_ VARCHAR(75) null,commerceProductOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductOptionId LONG,title STRING null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceProductOptionValue";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceProductOptionValue.title DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceProductOptionValue.title DESC";
@@ -122,7 +127,8 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 	public static final long COMMERCEPRODUCTOPTIONID_COLUMN_BITMASK = 1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long TITLE_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long TITLE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -138,6 +144,7 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 
 		CommerceProductOptionValue model = new CommerceProductOptionValueImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setCommerceProductOptionValueId(soapModel.getCommerceProductOptionValueId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -213,6 +220,7 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("commerceProductOptionValueId",
 			getCommerceProductOptionValueId());
 		attributes.put("groupId", getGroupId());
@@ -233,6 +241,12 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long commerceProductOptionValueId = (Long)attributes.get(
 				"commerceProductOptionValueId");
 
@@ -294,6 +308,30 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 		if (priority != null) {
 			setPriority(priority);
 		}
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -560,6 +598,12 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 		_priority = priority;
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				CommerceProductOptionValue.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -652,6 +696,7 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 	public Object clone() {
 		CommerceProductOptionValueImpl commerceProductOptionValueImpl = new CommerceProductOptionValueImpl();
 
+		commerceProductOptionValueImpl.setUuid(getUuid());
 		commerceProductOptionValueImpl.setCommerceProductOptionValueId(getCommerceProductOptionValueId());
 		commerceProductOptionValueImpl.setGroupId(getGroupId());
 		commerceProductOptionValueImpl.setCompanyId(getCompanyId());
@@ -724,6 +769,8 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 	public void resetOriginalValues() {
 		CommerceProductOptionValueModelImpl commerceProductOptionValueModelImpl = this;
 
+		commerceProductOptionValueModelImpl._originalUuid = commerceProductOptionValueModelImpl._uuid;
+
 		commerceProductOptionValueModelImpl._originalGroupId = commerceProductOptionValueModelImpl._groupId;
 
 		commerceProductOptionValueModelImpl._setOriginalGroupId = false;
@@ -745,6 +792,14 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 	public CacheModel<CommerceProductOptionValue> toCacheModel() {
 		CommerceProductOptionValueCacheModel commerceProductOptionValueCacheModel =
 			new CommerceProductOptionValueCacheModel();
+
+		commerceProductOptionValueCacheModel.uuid = getUuid();
+
+		String uuid = commerceProductOptionValueCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			commerceProductOptionValueCacheModel.uuid = null;
+		}
 
 		commerceProductOptionValueCacheModel.commerceProductOptionValueId = getCommerceProductOptionValueId();
 
@@ -797,9 +852,11 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{commerceProductOptionValueId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", commerceProductOptionValueId=");
 		sb.append(getCommerceProductOptionValueId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -826,13 +883,17 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append(
 			"com.liferay.commerce.product.model.CommerceProductOptionValue");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>commerceProductOptionValueId</column-name><column-value><![CDATA[");
 		sb.append(getCommerceProductOptionValueId());
@@ -883,6 +944,8 @@ public class CommerceProductOptionValueModelImpl extends BaseModelImpl<CommerceP
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			CommerceProductOptionValue.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _commerceProductOptionValueId;
 	private long _groupId;
 	private long _originalGroupId;

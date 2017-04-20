@@ -35,6 +35,7 @@ public class CommerceProductDefinitionOptionRelSoap implements Serializable {
 		CommerceProductDefinitionOptionRel model) {
 		CommerceProductDefinitionOptionRelSoap soapModel = new CommerceProductDefinitionOptionRelSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceProductDefinitionOptionRelId(model.getCommerceProductDefinitionOptionRelId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -101,6 +102,14 @@ public class CommerceProductDefinitionOptionRelSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceProductDefinitionOptionRelId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getCommerceProductDefinitionOptionRelId() {
@@ -208,6 +217,7 @@ public class CommerceProductDefinitionOptionRelSoap implements Serializable {
 		_priority = priority;
 	}
 
+	private String _uuid;
 	private long _commerceProductDefinitionOptionRelId;
 	private long _groupId;
 	private long _companyId;

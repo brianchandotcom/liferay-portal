@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -60,6 +62,7 @@ public class CommerceProductOptionValueWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("commerceProductOptionValueId",
 			getCommerceProductOptionValueId());
 		attributes.put("groupId", getGroupId());
@@ -77,6 +80,12 @@ public class CommerceProductOptionValueWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long commerceProductOptionValueId = (Long)attributes.get(
 				"commerceProductOptionValueId");
 
@@ -295,6 +304,16 @@ public class CommerceProductOptionValueWrapper
 	@Override
 	public java.lang.String getUserUuid() {
 		return _commerceProductOptionValue.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this commerce product option value.
+	*
+	* @return the uuid of this commerce product option value
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _commerceProductOptionValue.getUuid();
 	}
 
 	@Override
@@ -623,6 +642,16 @@ public class CommerceProductOptionValueWrapper
 		_commerceProductOptionValue.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this commerce product option value.
+	*
+	* @param uuid the uuid of this commerce product option value
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_commerceProductOptionValue.setUuid(uuid);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -641,6 +670,11 @@ public class CommerceProductOptionValueWrapper
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _commerceProductOptionValue.getStagedModelType();
 	}
 
 	@Override

@@ -43,6 +43,345 @@ public interface CommerceProductDefinitionOptionValueRelPersistence
 	 */
 
 	/**
+	* Returns all the commerce product definition option value rels where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the matching commerce product definition option value rels
+	*/
+	public java.util.List<CommerceProductDefinitionOptionValueRel> findByUuid(
+		java.lang.String uuid);
+
+	/**
+	* Returns a range of all the commerce product definition option value rels where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of commerce product definition option value rels
+	* @param end the upper bound of the range of commerce product definition option value rels (not inclusive)
+	* @return the range of matching commerce product definition option value rels
+	*/
+	public java.util.List<CommerceProductDefinitionOptionValueRel> findByUuid(
+		java.lang.String uuid, int start, int end);
+
+	/**
+	* Returns an ordered range of all the commerce product definition option value rels where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of commerce product definition option value rels
+	* @param end the upper bound of the range of commerce product definition option value rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce product definition option value rels
+	*/
+	public java.util.List<CommerceProductDefinitionOptionValueRel> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the commerce product definition option value rels where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of commerce product definition option value rels
+	* @param end the upper bound of the range of commerce product definition option value rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce product definition option value rels
+	*/
+	public java.util.List<CommerceProductDefinitionOptionValueRel> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first commerce product definition option value rel in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce product definition option value rel
+	* @throws NoSuchProductDefinitionOptionValueRelException if a matching commerce product definition option value rel could not be found
+	*/
+	public CommerceProductDefinitionOptionValueRel findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws NoSuchProductDefinitionOptionValueRelException;
+
+	/**
+	* Returns the first commerce product definition option value rel in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce product definition option value rel, or <code>null</code> if a matching commerce product definition option value rel could not be found
+	*/
+	public CommerceProductDefinitionOptionValueRel fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator);
+
+	/**
+	* Returns the last commerce product definition option value rel in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce product definition option value rel
+	* @throws NoSuchProductDefinitionOptionValueRelException if a matching commerce product definition option value rel could not be found
+	*/
+	public CommerceProductDefinitionOptionValueRel findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws NoSuchProductDefinitionOptionValueRelException;
+
+	/**
+	* Returns the last commerce product definition option value rel in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce product definition option value rel, or <code>null</code> if a matching commerce product definition option value rel could not be found
+	*/
+	public CommerceProductDefinitionOptionValueRel fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator);
+
+	/**
+	* Returns the commerce product definition option value rels before and after the current commerce product definition option value rel in the ordered set where uuid = &#63;.
+	*
+	* @param commerceProductDefinitionOptionValueRelId the primary key of the current commerce product definition option value rel
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce product definition option value rel
+	* @throws NoSuchProductDefinitionOptionValueRelException if a commerce product definition option value rel with the primary key could not be found
+	*/
+	public CommerceProductDefinitionOptionValueRel[] findByUuid_PrevAndNext(
+		long commerceProductDefinitionOptionValueRelId, java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws NoSuchProductDefinitionOptionValueRelException;
+
+	/**
+	* Removes all the commerce product definition option value rels where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	*/
+	public void removeByUuid(java.lang.String uuid);
+
+	/**
+	* Returns the number of commerce product definition option value rels where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching commerce product definition option value rels
+	*/
+	public int countByUuid(java.lang.String uuid);
+
+	/**
+	* Returns the commerce product definition option value rel where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchProductDefinitionOptionValueRelException} if it could not be found.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching commerce product definition option value rel
+	* @throws NoSuchProductDefinitionOptionValueRelException if a matching commerce product definition option value rel could not be found
+	*/
+	public CommerceProductDefinitionOptionValueRel findByUUID_G(
+		java.lang.String uuid, long groupId)
+		throws NoSuchProductDefinitionOptionValueRelException;
+
+	/**
+	* Returns the commerce product definition option value rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching commerce product definition option value rel, or <code>null</code> if a matching commerce product definition option value rel could not be found
+	*/
+	public CommerceProductDefinitionOptionValueRel fetchByUUID_G(
+		java.lang.String uuid, long groupId);
+
+	/**
+	* Returns the commerce product definition option value rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce product definition option value rel, or <code>null</code> if a matching commerce product definition option value rel could not be found
+	*/
+	public CommerceProductDefinitionOptionValueRel fetchByUUID_G(
+		java.lang.String uuid, long groupId, boolean retrieveFromCache);
+
+	/**
+	* Removes the commerce product definition option value rel where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the commerce product definition option value rel that was removed
+	*/
+	public CommerceProductDefinitionOptionValueRel removeByUUID_G(
+		java.lang.String uuid, long groupId)
+		throws NoSuchProductDefinitionOptionValueRelException;
+
+	/**
+	* Returns the number of commerce product definition option value rels where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching commerce product definition option value rels
+	*/
+	public int countByUUID_G(java.lang.String uuid, long groupId);
+
+	/**
+	* Returns all the commerce product definition option value rels where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the matching commerce product definition option value rels
+	*/
+	public java.util.List<CommerceProductDefinitionOptionValueRel> findByUuid_C(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of all the commerce product definition option value rels where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of commerce product definition option value rels
+	* @param end the upper bound of the range of commerce product definition option value rels (not inclusive)
+	* @return the range of matching commerce product definition option value rels
+	*/
+	public java.util.List<CommerceProductDefinitionOptionValueRel> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the commerce product definition option value rels where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of commerce product definition option value rels
+	* @param end the upper bound of the range of commerce product definition option value rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce product definition option value rels
+	*/
+	public java.util.List<CommerceProductDefinitionOptionValueRel> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the commerce product definition option value rels where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of commerce product definition option value rels
+	* @param end the upper bound of the range of commerce product definition option value rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce product definition option value rels
+	*/
+	public java.util.List<CommerceProductDefinitionOptionValueRel> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first commerce product definition option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce product definition option value rel
+	* @throws NoSuchProductDefinitionOptionValueRelException if a matching commerce product definition option value rel could not be found
+	*/
+	public CommerceProductDefinitionOptionValueRel findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws NoSuchProductDefinitionOptionValueRelException;
+
+	/**
+	* Returns the first commerce product definition option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce product definition option value rel, or <code>null</code> if a matching commerce product definition option value rel could not be found
+	*/
+	public CommerceProductDefinitionOptionValueRel fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator);
+
+	/**
+	* Returns the last commerce product definition option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce product definition option value rel
+	* @throws NoSuchProductDefinitionOptionValueRelException if a matching commerce product definition option value rel could not be found
+	*/
+	public CommerceProductDefinitionOptionValueRel findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws NoSuchProductDefinitionOptionValueRelException;
+
+	/**
+	* Returns the last commerce product definition option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce product definition option value rel, or <code>null</code> if a matching commerce product definition option value rel could not be found
+	*/
+	public CommerceProductDefinitionOptionValueRel fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator);
+
+	/**
+	* Returns the commerce product definition option value rels before and after the current commerce product definition option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param commerceProductDefinitionOptionValueRelId the primary key of the current commerce product definition option value rel
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce product definition option value rel
+	* @throws NoSuchProductDefinitionOptionValueRelException if a commerce product definition option value rel with the primary key could not be found
+	*/
+	public CommerceProductDefinitionOptionValueRel[] findByUuid_C_PrevAndNext(
+		long commerceProductDefinitionOptionValueRelId, java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws NoSuchProductDefinitionOptionValueRelException;
+
+	/**
+	* Removes all the commerce product definition option value rels where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	*/
+	public void removeByUuid_C(java.lang.String uuid, long companyId);
+
+	/**
+	* Returns the number of commerce product definition option value rels where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching commerce product definition option value rels
+	*/
+	public int countByUuid_C(java.lang.String uuid, long companyId);
+
+	/**
 	* Returns all the commerce product definition option value rels where commerceProductDefinitionOptionRelId = &#63;.
 	*
 	* @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID

@@ -112,6 +112,20 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceUtil {
 	}
 
 	/**
+	* Returns the commerce product definition option value rel matching the UUID and group.
+	*
+	* @param uuid the commerce product definition option value rel's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce product definition option value rel, or <code>null</code> if a matching commerce product definition option value rel could not be found
+	*/
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel fetchCommerceProductDefinitionOptionValueRelByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService()
+				   .fetchCommerceProductDefinitionOptionValueRelByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the commerce product definition option value rel with the primary key.
 	*
 	* @param commerceProductDefinitionOptionValueRelId the primary key of the commerce product definition option value rel
@@ -123,6 +137,22 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCommerceProductDefinitionOptionValueRel(commerceProductDefinitionOptionValueRelId);
+	}
+
+	/**
+	* Returns the commerce product definition option value rel matching the UUID and group.
+	*
+	* @param uuid the commerce product definition option value rel's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce product definition option value rel
+	* @throws PortalException if a matching commerce product definition option value rel could not be found
+	*/
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel getCommerceProductDefinitionOptionValueRelByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceProductDefinitionOptionValueRelByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	/**
@@ -154,6 +184,11 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -279,6 +314,38 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceUtil {
 		return getService()
 				   .getCommerceProductDefinitionOptionValueRels(commerceProductDefinitionOptionRelId,
 			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns all the commerce product definition option value rels matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce product definition option value rels
+	* @param companyId the primary key of the company
+	* @return the matching commerce product definition option value rels, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel> getCommerceProductDefinitionOptionValueRelsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .getCommerceProductDefinitionOptionValueRelsByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of commerce product definition option value rels matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce product definition option value rels
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of commerce product definition option value rels
+	* @param end the upper bound of the range of commerce product definition option value rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching commerce product definition option value rels, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel> getCommerceProductDefinitionOptionValueRelsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel> orderByComparator) {
+		return getService()
+				   .getCommerceProductDefinitionOptionValueRelsByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**

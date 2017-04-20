@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -59,6 +61,7 @@ public class CommerceProductOptionWrapper implements CommerceProductOption,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("commerceProductOptionId", getCommerceProductOptionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -75,6 +78,12 @@ public class CommerceProductOptionWrapper implements CommerceProductOption,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long commerceProductOptionId = (Long)attributes.get(
 				"commerceProductOptionId");
 
@@ -361,6 +370,16 @@ public class CommerceProductOptionWrapper implements CommerceProductOption,
 	@Override
 	public java.lang.String getUserUuid() {
 		return _commerceProductOption.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this commerce product option.
+	*
+	* @return the uuid of this commerce product option
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _commerceProductOption.getUuid();
 	}
 
 	@Override
@@ -742,6 +761,16 @@ public class CommerceProductOptionWrapper implements CommerceProductOption,
 		_commerceProductOption.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this commerce product option.
+	*
+	* @param uuid the uuid of this commerce product option
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_commerceProductOption.setUuid(uuid);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -760,6 +789,11 @@ public class CommerceProductOptionWrapper implements CommerceProductOption,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _commerceProductOption.getStagedModelType();
 	}
 
 	@Override

@@ -28,12 +28,14 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -55,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -122,6 +125,8 @@ public class CommerceProductOptionPersistenceTest {
 
 		CommerceProductOption newCommerceProductOption = _persistence.create(pk);
 
+		newCommerceProductOption.setUuid(RandomTestUtil.randomString());
+
 		newCommerceProductOption.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceProductOption.setCompanyId(RandomTestUtil.nextLong());
@@ -145,6 +150,8 @@ public class CommerceProductOptionPersistenceTest {
 
 		CommerceProductOption existingCommerceProductOption = _persistence.findByPrimaryKey(newCommerceProductOption.getPrimaryKey());
 
+		Assert.assertEquals(existingCommerceProductOption.getUuid(),
+			newCommerceProductOption.getUuid());
 		Assert.assertEquals(existingCommerceProductOption.getCommerceProductOptionId(),
 			newCommerceProductOption.getCommerceProductOptionId());
 		Assert.assertEquals(existingCommerceProductOption.getGroupId(),
@@ -167,6 +174,33 @@ public class CommerceProductOptionPersistenceTest {
 			newCommerceProductOption.getDescription());
 		Assert.assertEquals(existingCommerceProductOption.getDDMFormFieldTypeName(),
 			newCommerceProductOption.getDDMFormFieldTypeName());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid(StringPool.BLANK);
+
+		_persistence.countByUuid(StringPool.NULL);
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G(StringPool.NULL, 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -214,9 +248,9 @@ public class CommerceProductOptionPersistenceTest {
 
 	protected OrderByComparator<CommerceProductOption> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CommerceProductOption",
-			"commerceProductOptionId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true,
+			"uuid", true, "commerceProductOptionId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true, "description", true,
 			"DDMFormFieldTypeName", true);
 	}
 
@@ -420,11 +454,31 @@ public class CommerceProductOptionPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		CommerceProductOption newCommerceProductOption = addCommerceProductOption();
+
+		_persistence.clearCache();
+
+		CommerceProductOption existingCommerceProductOption = _persistence.findByPrimaryKey(newCommerceProductOption.getPrimaryKey());
+
+		Assert.assertTrue(Objects.equals(
+				existingCommerceProductOption.getUuid(),
+				ReflectionTestUtil.invoke(existingCommerceProductOption,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingCommerceProductOption.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCommerceProductOption,
+				"getOriginalGroupId", new Class<?>[0]));
+	}
+
 	protected CommerceProductOption addCommerceProductOption()
 		throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceProductOption commerceProductOption = _persistence.create(pk);
+
+		commerceProductOption.setUuid(RandomTestUtil.randomString());
 
 		commerceProductOption.setGroupId(RandomTestUtil.nextLong());
 

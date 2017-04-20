@@ -35,6 +35,7 @@ public class CommerceProductOptionSoap implements Serializable {
 		CommerceProductOption model) {
 		CommerceProductOptionSoap soapModel = new CommerceProductOptionSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceProductOptionId(model.getCommerceProductOptionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -98,6 +99,14 @@ public class CommerceProductOptionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceProductOptionId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getCommerceProductOptionId() {
@@ -180,6 +189,7 @@ public class CommerceProductOptionSoap implements Serializable {
 		_DDMFormFieldTypeName = DDMFormFieldTypeName;
 	}
 
+	private String _uuid;
 	private long _commerceProductOptionId;
 	private long _groupId;
 	private long _companyId;

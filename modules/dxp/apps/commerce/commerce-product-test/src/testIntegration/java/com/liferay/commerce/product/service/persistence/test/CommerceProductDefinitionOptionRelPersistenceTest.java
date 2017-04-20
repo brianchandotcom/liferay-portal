@@ -28,12 +28,14 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -55,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -126,6 +129,8 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 		CommerceProductDefinitionOptionRel newCommerceProductDefinitionOptionRel =
 			_persistence.create(pk);
 
+		newCommerceProductDefinitionOptionRel.setUuid(RandomTestUtil.randomString());
+
 		newCommerceProductDefinitionOptionRel.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceProductDefinitionOptionRel.setCompanyId(RandomTestUtil.nextLong());
@@ -156,6 +161,8 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 		CommerceProductDefinitionOptionRel existingCommerceProductDefinitionOptionRel =
 			_persistence.findByPrimaryKey(newCommerceProductDefinitionOptionRel.getPrimaryKey());
 
+		Assert.assertEquals(existingCommerceProductDefinitionOptionRel.getUuid(),
+			newCommerceProductDefinitionOptionRel.getUuid());
 		Assert.assertEquals(existingCommerceProductDefinitionOptionRel.getCommerceProductDefinitionOptionRelId(),
 			newCommerceProductDefinitionOptionRel.getCommerceProductDefinitionOptionRelId());
 		Assert.assertEquals(existingCommerceProductDefinitionOptionRel.getGroupId(),
@@ -186,6 +193,33 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 			newCommerceProductDefinitionOptionRel.getDDMFormFieldTypeName());
 		Assert.assertEquals(existingCommerceProductDefinitionOptionRel.getPriority(),
 			newCommerceProductDefinitionOptionRel.getPriority());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid(StringPool.BLANK);
+
+		_persistence.countByUuid(StringPool.NULL);
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G(StringPool.NULL, 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -237,11 +271,12 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 
 	protected OrderByComparator<CommerceProductDefinitionOptionRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CommerceProductDefinitionOptionRel",
-			"commerceProductDefinitionOptionRelId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "commerceProductDefinitionId", true,
-			"commerceProductOptionId", true, "name", true, "description", true,
-			"DDMFormFieldTypeName", true, "priority", true);
+			"uuid", true, "commerceProductDefinitionOptionRelId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true,
+			"commerceProductDefinitionId", true, "commerceProductOptionId",
+			true, "name", true, "description", true, "DDMFormFieldTypeName",
+			true, "priority", true);
 	}
 
 	@Test
@@ -465,11 +500,35 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		CommerceProductDefinitionOptionRel newCommerceProductDefinitionOptionRel =
+			addCommerceProductDefinitionOptionRel();
+
+		_persistence.clearCache();
+
+		CommerceProductDefinitionOptionRel existingCommerceProductDefinitionOptionRel =
+			_persistence.findByPrimaryKey(newCommerceProductDefinitionOptionRel.getPrimaryKey());
+
+		Assert.assertTrue(Objects.equals(
+				existingCommerceProductDefinitionOptionRel.getUuid(),
+				ReflectionTestUtil.invoke(
+					existingCommerceProductDefinitionOptionRel,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingCommerceProductDefinitionOptionRel.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingCommerceProductDefinitionOptionRel,
+				"getOriginalGroupId", new Class<?>[0]));
+	}
+
 	protected CommerceProductDefinitionOptionRel addCommerceProductDefinitionOptionRel()
 		throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = _persistence.create(pk);
+
+		commerceProductDefinitionOptionRel.setUuid(RandomTestUtil.randomString());
 
 		commerceProductDefinitionOptionRel.setGroupId(RandomTestUtil.nextLong());
 

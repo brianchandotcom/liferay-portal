@@ -66,9 +66,11 @@ public class CommerceProductOptionCacheModel implements CacheModel<CommerceProdu
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{commerceProductOptionId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", commerceProductOptionId=");
 		sb.append(commerceProductOptionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -96,6 +98,13 @@ public class CommerceProductOptionCacheModel implements CacheModel<CommerceProdu
 	@Override
 	public CommerceProductOption toEntityModel() {
 		CommerceProductOptionImpl commerceProductOptionImpl = new CommerceProductOptionImpl();
+
+		if (uuid == null) {
+			commerceProductOptionImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			commerceProductOptionImpl.setUuid(uuid);
+		}
 
 		commerceProductOptionImpl.setCommerceProductOptionId(commerceProductOptionId);
 		commerceProductOptionImpl.setGroupId(groupId);
@@ -151,6 +160,8 @@ public class CommerceProductOptionCacheModel implements CacheModel<CommerceProdu
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		commerceProductOptionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -169,6 +180,13 @@ public class CommerceProductOptionCacheModel implements CacheModel<CommerceProdu
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(commerceProductOptionId);
 
 		objectOutput.writeLong(groupId);
@@ -209,6 +227,7 @@ public class CommerceProductOptionCacheModel implements CacheModel<CommerceProdu
 		}
 	}
 
+	public String uuid;
 	public long commerceProductOptionId;
 	public long groupId;
 	public long companyId;

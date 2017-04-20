@@ -28,6 +28,12 @@ import com.liferay.commerce.product.service.persistence.CommerceProductOptionVal
 
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -37,6 +43,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -226,6 +233,19 @@ public abstract class CommerceProductOptionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce product option matching the UUID and group.
+	 *
+	 * @param uuid the commerce product option's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching commerce product option, or <code>null</code> if a matching commerce product option could not be found
+	 */
+	@Override
+	public CommerceProductOption fetchCommerceProductOptionByUuidAndGroupId(
+		String uuid, long groupId) {
+		return commerceProductOptionPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the commerce product option with the primary key.
 	 *
 	 * @param commerceProductOptionId the primary key of the commerce product option
@@ -276,6 +296,58 @@ public abstract class CommerceProductOptionLocalServiceBaseImpl
 			"commerceProductOptionId");
 	}
 
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
+
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
+
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
+				}
+			});
+
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CommerceProductOption>() {
+				@Override
+				public void performAction(
+					CommerceProductOption commerceProductOption)
+					throws PortalException {
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						commerceProductOption);
+				}
+			});
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+				PortalUtil.getClassNameId(CommerceProductOption.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -289,6 +361,51 @@ public abstract class CommerceProductOptionLocalServiceBaseImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return commerceProductOptionPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns all the commerce product options matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the commerce product options
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce product options, or an empty list if no matches were found
+	 */
+	@Override
+	public List<CommerceProductOption> getCommerceProductOptionsByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return commerceProductOptionPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of commerce product options matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the commerce product options
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of commerce product options
+	 * @param end the upper bound of the range of commerce product options (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching commerce product options, or an empty list if no matches were found
+	 */
+	@Override
+	public List<CommerceProductOption> getCommerceProductOptionsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceProductOption> orderByComparator) {
+		return commerceProductOptionPersistence.findByUuid_C(uuid, companyId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce product option matching the UUID and group.
+	 *
+	 * @param uuid the commerce product option's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching commerce product option
+	 * @throws PortalException if a matching commerce product option could not be found
+	 */
+	@Override
+	public CommerceProductOption getCommerceProductOptionByUuidAndGroupId(
+		String uuid, long groupId) throws PortalException {
+		return commerceProductOptionPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

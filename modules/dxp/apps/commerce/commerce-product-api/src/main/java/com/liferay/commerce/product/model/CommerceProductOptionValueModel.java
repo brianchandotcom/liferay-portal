@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -48,7 +49,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface CommerceProductOptionValueModel extends BaseModel<CommerceProductOptionValue>,
-	GroupedModel, LocalizedModel, ShardedModel {
+	GroupedModel, LocalizedModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -68,6 +69,23 @@ public interface CommerceProductOptionValueModel extends BaseModel<CommerceProdu
 	 * @param primaryKey the primary key of this commerce product option value
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this commerce product option value.
+	 *
+	 * @return the uuid of this commerce product option value
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this commerce product option value.
+	 *
+	 * @param uuid the uuid of this commerce product option value
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the commerce product option value ID of this commerce product option value.

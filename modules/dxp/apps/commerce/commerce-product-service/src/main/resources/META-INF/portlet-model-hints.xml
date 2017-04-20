@@ -34,6 +34,7 @@
 		<field name="description" type="String" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel">
+		<field name="uuid" type="String" />
 		<field name="commerceProductDefinitionOptionRelId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -49,6 +50,7 @@
 		<field name="priority" type="int" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel">
+		<field name="uuid" type="String" />
 		<field name="commerceProductDefinitionOptionValueRelId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -83,6 +85,7 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CommerceProductOption">
+		<field name="uuid" type="String" />
 		<field name="commerceProductOptionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -99,6 +102,7 @@
 		<field name="DDMFormFieldTypeName" type="String" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CommerceProductOptionValue">
+		<field name="uuid" type="String" />
 		<field name="commerceProductOptionValueId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

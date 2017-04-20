@@ -52,7 +52,7 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 	public Comment create(long userId, ClassedModel classedModel)
 		throws PortalException {
 
-		String body = _getRandomBody();
+		User user = _userLocalService.fetchUser(userId);
 
 		String className = classedModel.getModelClassName();
 		Long classPK = (long)classedModel.getPrimaryKeyObj();
@@ -66,8 +66,9 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 			new IdentityServiceContextFunction(new ServiceContext());
 
 		long commentId = _commentManager.addComment(
-			userId, group.getGroupId(), className, classPK, body,
-			StringPool.BLANK, body, serviceContextFunction);
+			user.getUserId(), group.getGroupId(), className, classPK,
+			user.getFullName(), StringPool.BLANK, _getRandomCommentBody(),
+			serviceContextFunction);
 
 		return _getComment(commentId);
 	}
@@ -75,8 +76,6 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 	@Override
 	public Comment create(long userId, long parentCommentId)
 		throws PortalException {
-
-		String body = _getRandomBody();
 
 		User user = _userLocalService.fetchUser(userId);
 
@@ -87,8 +86,8 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 
 		long commentId = _commentManager.addComment(
 			userId, parentComment.getClassName(), parentComment.getClassPK(),
-			user.getFullName(), parentCommentId, StringPool.BLANK, body,
-			serviceContextFunction);
+			user.getFullName(), parentCommentId, StringPool.BLANK,
+			_getRandomCommentBody(), serviceContextFunction);
 
 		return _getComment(commentId);
 	}
@@ -146,12 +145,8 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 		return _commentManager.fetchComment(commentId);
 	}
 
-	private String _getRandomBody() {
-		return _getRandomElement(_commentBodies);
-	}
-
-	private <T> T _getRandomElement(List<T> list) {
-		return list.get(RandomUtil.nextInt(list.size()));
+	private String _getRandomCommentBody() {
+		return _commentBodies.get(RandomUtil.nextInt(_commentBodies.size()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

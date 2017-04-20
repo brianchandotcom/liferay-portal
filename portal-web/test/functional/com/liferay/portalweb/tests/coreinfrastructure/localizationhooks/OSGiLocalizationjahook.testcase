@@ -1,7 +1,8 @@
 <definition component-name="portal-plugins-osgi">
-	<property name="portal.release" value="true" />
+	<property name="portal.release" value="false" />
 	<property name="portal.upstream" value="true" />
 	<property name="plugins.deployment.type" value="osgi" />
+	<property name="test.run.environment" value="CE" />
 	<property name="testray.main.component.name" value="Localization Hooks" />
 
 	<set-up>

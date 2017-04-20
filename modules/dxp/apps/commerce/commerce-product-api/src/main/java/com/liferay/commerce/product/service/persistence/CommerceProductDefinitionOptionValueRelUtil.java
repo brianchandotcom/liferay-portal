@@ -449,6 +449,187 @@ public class CommerceProductDefinitionOptionValueRelUtil {
 	}
 
 	/**
+	* Returns all the commerce product definition option value rels where commerceProductDefinitionOptionRelId = &#63;.
+	*
+	* @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	* @return the matching commerce product definition option value rels
+	*/
+	public static List<CommerceProductDefinitionOptionValueRel> findByCommerceProductDefinitionOptionRelId(
+		long commerceProductDefinitionOptionRelId) {
+		return getPersistence()
+				   .findByCommerceProductDefinitionOptionRelId(commerceProductDefinitionOptionRelId);
+	}
+
+	/**
+	* Returns a range of all the commerce product definition option value rels where commerceProductDefinitionOptionRelId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	* @param start the lower bound of the range of commerce product definition option value rels
+	* @param end the upper bound of the range of commerce product definition option value rels (not inclusive)
+	* @return the range of matching commerce product definition option value rels
+	*/
+	public static List<CommerceProductDefinitionOptionValueRel> findByCommerceProductDefinitionOptionRelId(
+		long commerceProductDefinitionOptionRelId, int start, int end) {
+		return getPersistence()
+				   .findByCommerceProductDefinitionOptionRelId(commerceProductDefinitionOptionRelId,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce product definition option value rels where commerceProductDefinitionOptionRelId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	* @param start the lower bound of the range of commerce product definition option value rels
+	* @param end the upper bound of the range of commerce product definition option value rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce product definition option value rels
+	*/
+	public static List<CommerceProductDefinitionOptionValueRel> findByCommerceProductDefinitionOptionRelId(
+		long commerceProductDefinitionOptionRelId, int start, int end,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator) {
+		return getPersistence()
+				   .findByCommerceProductDefinitionOptionRelId(commerceProductDefinitionOptionRelId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce product definition option value rels where commerceProductDefinitionOptionRelId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	* @param start the lower bound of the range of commerce product definition option value rels
+	* @param end the upper bound of the range of commerce product definition option value rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce product definition option value rels
+	*/
+	public static List<CommerceProductDefinitionOptionValueRel> findByCommerceProductDefinitionOptionRelId(
+		long commerceProductDefinitionOptionRelId, int start, int end,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCommerceProductDefinitionOptionRelId(commerceProductDefinitionOptionRelId,
+			start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce product definition option value rel in the ordered set where commerceProductDefinitionOptionRelId = &#63;.
+	*
+	* @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce product definition option value rel
+	* @throws NoSuchProductDefinitionOptionValueRelException if a matching commerce product definition option value rel could not be found
+	*/
+	public static CommerceProductDefinitionOptionValueRel findByCommerceProductDefinitionOptionRelId_First(
+		long commerceProductDefinitionOptionRelId,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchProductDefinitionOptionValueRelException {
+		return getPersistence()
+				   .findByCommerceProductDefinitionOptionRelId_First(commerceProductDefinitionOptionRelId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce product definition option value rel in the ordered set where commerceProductDefinitionOptionRelId = &#63;.
+	*
+	* @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce product definition option value rel, or <code>null</code> if a matching commerce product definition option value rel could not be found
+	*/
+	public static CommerceProductDefinitionOptionValueRel fetchByCommerceProductDefinitionOptionRelId_First(
+		long commerceProductDefinitionOptionRelId,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator) {
+		return getPersistence()
+				   .fetchByCommerceProductDefinitionOptionRelId_First(commerceProductDefinitionOptionRelId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce product definition option value rel in the ordered set where commerceProductDefinitionOptionRelId = &#63;.
+	*
+	* @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce product definition option value rel
+	* @throws NoSuchProductDefinitionOptionValueRelException if a matching commerce product definition option value rel could not be found
+	*/
+	public static CommerceProductDefinitionOptionValueRel findByCommerceProductDefinitionOptionRelId_Last(
+		long commerceProductDefinitionOptionRelId,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchProductDefinitionOptionValueRelException {
+		return getPersistence()
+				   .findByCommerceProductDefinitionOptionRelId_Last(commerceProductDefinitionOptionRelId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce product definition option value rel in the ordered set where commerceProductDefinitionOptionRelId = &#63;.
+	*
+	* @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce product definition option value rel, or <code>null</code> if a matching commerce product definition option value rel could not be found
+	*/
+	public static CommerceProductDefinitionOptionValueRel fetchByCommerceProductDefinitionOptionRelId_Last(
+		long commerceProductDefinitionOptionRelId,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator) {
+		return getPersistence()
+				   .fetchByCommerceProductDefinitionOptionRelId_Last(commerceProductDefinitionOptionRelId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the commerce product definition option value rels before and after the current commerce product definition option value rel in the ordered set where commerceProductDefinitionOptionRelId = &#63;.
+	*
+	* @param commerceProductDefinitionOptionValueRelId the primary key of the current commerce product definition option value rel
+	* @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce product definition option value rel
+	* @throws NoSuchProductDefinitionOptionValueRelException if a commerce product definition option value rel with the primary key could not be found
+	*/
+	public static CommerceProductDefinitionOptionValueRel[] findByCommerceProductDefinitionOptionRelId_PrevAndNext(
+		long commerceProductDefinitionOptionValueRelId,
+		long commerceProductDefinitionOptionRelId,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchProductDefinitionOptionValueRelException {
+		return getPersistence()
+				   .findByCommerceProductDefinitionOptionRelId_PrevAndNext(commerceProductDefinitionOptionValueRelId,
+			commerceProductDefinitionOptionRelId, orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce product definition option value rels where commerceProductDefinitionOptionRelId = &#63; from the database.
+	*
+	* @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	*/
+	public static void removeByCommerceProductDefinitionOptionRelId(
+		long commerceProductDefinitionOptionRelId) {
+		getPersistence()
+			.removeByCommerceProductDefinitionOptionRelId(commerceProductDefinitionOptionRelId);
+	}
+
+	/**
+	* Returns the number of commerce product definition option value rels where commerceProductDefinitionOptionRelId = &#63;.
+	*
+	* @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	* @return the number of matching commerce product definition option value rels
+	*/
+	public static int countByCommerceProductDefinitionOptionRelId(
+		long commerceProductDefinitionOptionRelId) {
+		return getPersistence()
+				   .countByCommerceProductDefinitionOptionRelId(commerceProductDefinitionOptionRelId);
+	}
+
+	/**
 	* Caches the commerce product definition option value rel in the entity cache if it is enabled.
 	*
 	* @param commerceProductDefinitionOptionValueRel the commerce product definition option value rel

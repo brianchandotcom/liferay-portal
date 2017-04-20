@@ -1138,6 +1138,548 @@ public class CommerceProductDefinitionOptionValueRelPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "commerceProductDefinitionOptionValueRel.companyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMMERCEPRODUCTDEFINITIONOPTIONRELID =
+		new FinderPath(CommerceProductDefinitionOptionValueRelModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceProductDefinitionOptionValueRelModelImpl.FINDER_CACHE_ENABLED,
+			CommerceProductDefinitionOptionValueRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCommerceProductDefinitionOptionRelId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEPRODUCTDEFINITIONOPTIONRELID =
+		new FinderPath(CommerceProductDefinitionOptionValueRelModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceProductDefinitionOptionValueRelModelImpl.FINDER_CACHE_ENABLED,
+			CommerceProductDefinitionOptionValueRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCommerceProductDefinitionOptionRelId",
+			new String[] { Long.class.getName() },
+			CommerceProductDefinitionOptionValueRelModelImpl.COMMERCEPRODUCTDEFINITIONOPTIONRELID_COLUMN_BITMASK |
+			CommerceProductDefinitionOptionValueRelModelImpl.PRIORITY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCEPRODUCTDEFINITIONOPTIONRELID =
+		new FinderPath(CommerceProductDefinitionOptionValueRelModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceProductDefinitionOptionValueRelModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCommerceProductDefinitionOptionRelId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the commerce product definition option value rels where commerceProductDefinitionOptionRelId = &#63;.
+	 *
+	 * @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	 * @return the matching commerce product definition option value rels
+	 */
+	@Override
+	public List<CommerceProductDefinitionOptionValueRel> findByCommerceProductDefinitionOptionRelId(
+		long commerceProductDefinitionOptionRelId) {
+		return findByCommerceProductDefinitionOptionRelId(commerceProductDefinitionOptionRelId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce product definition option value rels where commerceProductDefinitionOptionRelId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	 * @param start the lower bound of the range of commerce product definition option value rels
+	 * @param end the upper bound of the range of commerce product definition option value rels (not inclusive)
+	 * @return the range of matching commerce product definition option value rels
+	 */
+	@Override
+	public List<CommerceProductDefinitionOptionValueRel> findByCommerceProductDefinitionOptionRelId(
+		long commerceProductDefinitionOptionRelId, int start, int end) {
+		return findByCommerceProductDefinitionOptionRelId(commerceProductDefinitionOptionRelId,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce product definition option value rels where commerceProductDefinitionOptionRelId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	 * @param start the lower bound of the range of commerce product definition option value rels
+	 * @param end the upper bound of the range of commerce product definition option value rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce product definition option value rels
+	 */
+	@Override
+	public List<CommerceProductDefinitionOptionValueRel> findByCommerceProductDefinitionOptionRelId(
+		long commerceProductDefinitionOptionRelId, int start, int end,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator) {
+		return findByCommerceProductDefinitionOptionRelId(commerceProductDefinitionOptionRelId,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce product definition option value rels where commerceProductDefinitionOptionRelId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	 * @param start the lower bound of the range of commerce product definition option value rels
+	 * @param end the upper bound of the range of commerce product definition option value rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce product definition option value rels
+	 */
+	@Override
+	public List<CommerceProductDefinitionOptionValueRel> findByCommerceProductDefinitionOptionRelId(
+		long commerceProductDefinitionOptionRelId, int start, int end,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEPRODUCTDEFINITIONOPTIONRELID;
+			finderArgs = new Object[] { commerceProductDefinitionOptionRelId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMMERCEPRODUCTDEFINITIONOPTIONRELID;
+			finderArgs = new Object[] {
+					commerceProductDefinitionOptionRelId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommerceProductDefinitionOptionValueRel> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceProductDefinitionOptionValueRel>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel : list) {
+					if ((commerceProductDefinitionOptionRelId != commerceProductDefinitionOptionValueRel.getCommerceProductDefinitionOptionRelId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_COMMERCEPRODUCTDEFINITIONOPTIONVALUEREL_WHERE);
+
+			query.append(_FINDER_COLUMN_COMMERCEPRODUCTDEFINITIONOPTIONRELID_COMMERCEPRODUCTDEFINITIONOPTIONRELID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceProductDefinitionOptionValueRelModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceProductDefinitionOptionRelId);
+
+				if (!pagination) {
+					list = (List<CommerceProductDefinitionOptionValueRel>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceProductDefinitionOptionValueRel>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce product definition option value rel in the ordered set where commerceProductDefinitionOptionRelId = &#63;.
+	 *
+	 * @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce product definition option value rel
+	 * @throws NoSuchProductDefinitionOptionValueRelException if a matching commerce product definition option value rel could not be found
+	 */
+	@Override
+	public CommerceProductDefinitionOptionValueRel findByCommerceProductDefinitionOptionRelId_First(
+		long commerceProductDefinitionOptionRelId,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws NoSuchProductDefinitionOptionValueRelException {
+		CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel =
+			fetchByCommerceProductDefinitionOptionRelId_First(commerceProductDefinitionOptionRelId,
+				orderByComparator);
+
+		if (commerceProductDefinitionOptionValueRel != null) {
+			return commerceProductDefinitionOptionValueRel;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commerceProductDefinitionOptionRelId=");
+		msg.append(commerceProductDefinitionOptionRelId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchProductDefinitionOptionValueRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce product definition option value rel in the ordered set where commerceProductDefinitionOptionRelId = &#63;.
+	 *
+	 * @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce product definition option value rel, or <code>null</code> if a matching commerce product definition option value rel could not be found
+	 */
+	@Override
+	public CommerceProductDefinitionOptionValueRel fetchByCommerceProductDefinitionOptionRelId_First(
+		long commerceProductDefinitionOptionRelId,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator) {
+		List<CommerceProductDefinitionOptionValueRel> list = findByCommerceProductDefinitionOptionRelId(commerceProductDefinitionOptionRelId,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce product definition option value rel in the ordered set where commerceProductDefinitionOptionRelId = &#63;.
+	 *
+	 * @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce product definition option value rel
+	 * @throws NoSuchProductDefinitionOptionValueRelException if a matching commerce product definition option value rel could not be found
+	 */
+	@Override
+	public CommerceProductDefinitionOptionValueRel findByCommerceProductDefinitionOptionRelId_Last(
+		long commerceProductDefinitionOptionRelId,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws NoSuchProductDefinitionOptionValueRelException {
+		CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel =
+			fetchByCommerceProductDefinitionOptionRelId_Last(commerceProductDefinitionOptionRelId,
+				orderByComparator);
+
+		if (commerceProductDefinitionOptionValueRel != null) {
+			return commerceProductDefinitionOptionValueRel;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commerceProductDefinitionOptionRelId=");
+		msg.append(commerceProductDefinitionOptionRelId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchProductDefinitionOptionValueRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce product definition option value rel in the ordered set where commerceProductDefinitionOptionRelId = &#63;.
+	 *
+	 * @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce product definition option value rel, or <code>null</code> if a matching commerce product definition option value rel could not be found
+	 */
+	@Override
+	public CommerceProductDefinitionOptionValueRel fetchByCommerceProductDefinitionOptionRelId_Last(
+		long commerceProductDefinitionOptionRelId,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator) {
+		int count = countByCommerceProductDefinitionOptionRelId(commerceProductDefinitionOptionRelId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceProductDefinitionOptionValueRel> list = findByCommerceProductDefinitionOptionRelId(commerceProductDefinitionOptionRelId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce product definition option value rels before and after the current commerce product definition option value rel in the ordered set where commerceProductDefinitionOptionRelId = &#63;.
+	 *
+	 * @param commerceProductDefinitionOptionValueRelId the primary key of the current commerce product definition option value rel
+	 * @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce product definition option value rel
+	 * @throws NoSuchProductDefinitionOptionValueRelException if a commerce product definition option value rel with the primary key could not be found
+	 */
+	@Override
+	public CommerceProductDefinitionOptionValueRel[] findByCommerceProductDefinitionOptionRelId_PrevAndNext(
+		long commerceProductDefinitionOptionValueRelId,
+		long commerceProductDefinitionOptionRelId,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws NoSuchProductDefinitionOptionValueRelException {
+		CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel =
+			findByPrimaryKey(commerceProductDefinitionOptionValueRelId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceProductDefinitionOptionValueRel[] array = new CommerceProductDefinitionOptionValueRelImpl[3];
+
+			array[0] = getByCommerceProductDefinitionOptionRelId_PrevAndNext(session,
+					commerceProductDefinitionOptionValueRel,
+					commerceProductDefinitionOptionRelId, orderByComparator,
+					true);
+
+			array[1] = commerceProductDefinitionOptionValueRel;
+
+			array[2] = getByCommerceProductDefinitionOptionRelId_PrevAndNext(session,
+					commerceProductDefinitionOptionValueRel,
+					commerceProductDefinitionOptionRelId, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceProductDefinitionOptionValueRel getByCommerceProductDefinitionOptionRelId_PrevAndNext(
+		Session session,
+		CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel,
+		long commerceProductDefinitionOptionRelId,
+		OrderByComparator<CommerceProductDefinitionOptionValueRel> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_COMMERCEPRODUCTDEFINITIONOPTIONVALUEREL_WHERE);
+
+		query.append(_FINDER_COLUMN_COMMERCEPRODUCTDEFINITIONOPTIONRELID_COMMERCEPRODUCTDEFINITIONOPTIONRELID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceProductDefinitionOptionValueRelModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(commerceProductDefinitionOptionRelId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceProductDefinitionOptionValueRel);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceProductDefinitionOptionValueRel> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce product definition option value rels where commerceProductDefinitionOptionRelId = &#63; from the database.
+	 *
+	 * @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	 */
+	@Override
+	public void removeByCommerceProductDefinitionOptionRelId(
+		long commerceProductDefinitionOptionRelId) {
+		for (CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel : findByCommerceProductDefinitionOptionRelId(
+				commerceProductDefinitionOptionRelId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(commerceProductDefinitionOptionValueRel);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce product definition option value rels where commerceProductDefinitionOptionRelId = &#63;.
+	 *
+	 * @param commerceProductDefinitionOptionRelId the commerce product definition option rel ID
+	 * @return the number of matching commerce product definition option value rels
+	 */
+	@Override
+	public int countByCommerceProductDefinitionOptionRelId(
+		long commerceProductDefinitionOptionRelId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMMERCEPRODUCTDEFINITIONOPTIONRELID;
+
+		Object[] finderArgs = new Object[] { commerceProductDefinitionOptionRelId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_COMMERCEPRODUCTDEFINITIONOPTIONVALUEREL_WHERE);
+
+			query.append(_FINDER_COLUMN_COMMERCEPRODUCTDEFINITIONOPTIONRELID_COMMERCEPRODUCTDEFINITIONOPTIONRELID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceProductDefinitionOptionRelId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_COMMERCEPRODUCTDEFINITIONOPTIONRELID_COMMERCEPRODUCTDEFINITIONOPTIONRELID_2 =
+		"commerceProductDefinitionOptionValueRel.commerceProductDefinitionOptionRelId = ?";
 
 	public CommerceProductDefinitionOptionValueRelPersistenceImpl() {
 		setModelClass(CommerceProductDefinitionOptionValueRel.class);
@@ -1434,6 +1976,15 @@ public class CommerceProductDefinitionOptionValueRelPersistenceImpl
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 				args);
 
+			args = new Object[] {
+					commerceProductDefinitionOptionValueRelModelImpl.getCommerceProductDefinitionOptionRelId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCEPRODUCTDEFINITIONOPTIONRELID,
+				args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEPRODUCTDEFINITIONOPTIONRELID,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -1475,6 +2026,27 @@ public class CommerceProductDefinitionOptionValueRelPersistenceImpl
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+			}
+
+			if ((commerceProductDefinitionOptionValueRelModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEPRODUCTDEFINITIONOPTIONRELID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceProductDefinitionOptionValueRelModelImpl.getOriginalCommerceProductDefinitionOptionRelId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCEPRODUCTDEFINITIONOPTIONRELID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEPRODUCTDEFINITIONOPTIONRELID,
+					args);
+
+				args = new Object[] {
+						commerceProductDefinitionOptionValueRelModelImpl.getCommerceProductDefinitionOptionRelId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCEPRODUCTDEFINITIONOPTIONRELID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEPRODUCTDEFINITIONOPTIONRELID,
 					args);
 			}
 		}

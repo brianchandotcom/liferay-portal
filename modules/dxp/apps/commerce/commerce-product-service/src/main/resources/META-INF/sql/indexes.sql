@@ -10,6 +10,7 @@ create index IX_2F156E05 on CommerceProductDefinitionOptionRel (companyId);
 create index IX_A8BBB1C7 on CommerceProductDefinitionOptionRel (groupId);
 
 create index IX_DD7A005E on CommerceProductDefinitionOptionValueRel (companyId);
+create index IX_972FABB2 on CommerceProductDefinitionOptionValueRel (definitionOptionRelId);
 create index IX_73A30660 on CommerceProductDefinitionOptionValueRel (groupId);
 
 create unique index IX_3FFDEE0A on CommerceProductInstance (commerceProductDefinitionId, sku[$COLUMN_LENGTH:75$]);

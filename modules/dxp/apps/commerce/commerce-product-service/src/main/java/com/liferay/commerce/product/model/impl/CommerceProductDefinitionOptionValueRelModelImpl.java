@@ -120,9 +120,11 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.product.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel"),
 			true);
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long PRIORITY_COLUMN_BITMASK = 4L;
+	public static final long COMMERCEPRODUCTDEFINITIONOPTIONRELID_COLUMN_BITMASK =
+		1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long PRIORITY_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -435,7 +437,19 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 	@Override
 	public void setCommerceProductDefinitionOptionRelId(
 		long commerceProductDefinitionOptionRelId) {
+		_columnBitmask |= COMMERCEPRODUCTDEFINITIONOPTIONRELID_COLUMN_BITMASK;
+
+		if (!_setOriginalCommerceProductDefinitionOptionRelId) {
+			_setOriginalCommerceProductDefinitionOptionRelId = true;
+
+			_originalCommerceProductDefinitionOptionRelId = _commerceProductDefinitionOptionRelId;
+		}
+
 		_commerceProductDefinitionOptionRelId = commerceProductDefinitionOptionRelId;
+	}
+
+	public long getOriginalCommerceProductDefinitionOptionRelId() {
+		return _originalCommerceProductDefinitionOptionRelId;
 	}
 
 	@JSON
@@ -737,6 +751,10 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 
 		commerceProductDefinitionOptionValueRelModelImpl._setModifiedDate = false;
 
+		commerceProductDefinitionOptionValueRelModelImpl._originalCommerceProductDefinitionOptionRelId = commerceProductDefinitionOptionValueRelModelImpl._commerceProductDefinitionOptionRelId;
+
+		commerceProductDefinitionOptionValueRelModelImpl._setOriginalCommerceProductDefinitionOptionRelId = false;
+
 		commerceProductDefinitionOptionValueRelModelImpl._columnBitmask = 0;
 	}
 
@@ -895,6 +913,8 @@ public class CommerceProductDefinitionOptionValueRelModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceProductDefinitionOptionRelId;
+	private long _originalCommerceProductDefinitionOptionRelId;
+	private boolean _setOriginalCommerceProductDefinitionOptionRelId;
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private int _priority;

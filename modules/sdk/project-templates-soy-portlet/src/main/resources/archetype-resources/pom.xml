@@ -10,7 +10,6 @@
 	<artifactId>${artifactId}</artifactId>
 	<version>${version}</version>
 	<properties>
-		<node.executable>${project.build.directory}/node/node</node.executable>
 		<node.modules.dir>${project.basedir}/node_modules</node.modules.dir>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -70,73 +69,71 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.6</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.5.0</version>
 				<executions>
 					<execution>
 						<id>transpile-js</id>
 						<phase>process-classes</phase>
 						<goals>
-							<goal>run</goal>
+							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<target>
-								<exec dir="${project.build.outputDirectory}/META-INF/resources" executable="${node.executable}" failonerror="true">
-									<arg value="${node.modules.dir}/metal-cli/index.js" />
-									<arg value="build" />
-									<arg value="--bundleFileName" />
-									<arg value="" />
-									<arg value="--dest" />
-									<arg value="${project.build.outputDirectory}/META-INF/resources" />
-									<arg value="--format" />
-									<arg value="amd" />
-									<arg value="--globalName" />
-									<arg value="" />
-									<arg value="--moduleName" />
-									<arg value="" />
-									<arg value="--soyDeps" />
-									<arg value="${node.modules.dir}/lexicon*/src/**/*.soy" />
-									<arg value="${node.modules.dir}/metal*/src/**/*.soy" />
-									<arg value="--soyDest" />
-									<arg value="${project.build.outputDirectory}/META-INF/resources" />
-									<arg value="--soySrc" />
-									<arg value="**/*.soy" />
-									<arg value="--src" />
-									<arg value="**/*.es.js" />
-									<arg value="**/*.soy.js" />
-								</exec>
-							</target>
+							<executable>${project.build.directory}/node/node</executable>
+							<workingDirectory>${project.build.outputDirectory}/META-INF/resources</workingDirectory>
+							<arguments>
+								<argument>${node.modules.dir}/metal-cli/index.js</argument>
+								<argument>build</argument>
+								<argument>--bundleFileName=</argument>
+								<argument>--dest</argument>
+								<argument>${project.build.outputDirectory}/META-INF/resources</argument>
+								<argument>--format</argument>
+								<argument>amd</argument>
+								<argument>--globalName=</argument>
+								<argument>--moduleName=</argument>
+								<argument>--soyDeps</argument>
+								<argument>${node.modules.dir}/lexicon*/src/**/*.soy</argument>
+								<argument>${node.modules.dir}/metal*/src/**/*.soy</argument>
+								<argument>--soyDest</argument>
+								<argument>${project.build.outputDirectory}/META-INF/resources</argument>
+								<argument>--soySrc</argument>
+								<argument>**/*.soy</argument>
+								<argument>--src</argument>
+								<argument>**/*.es.js</argument>
+								<argument>**/*.soy.js</argument>
+							</arguments>
 						</configuration>
 					</execution>
 					<execution>
 						<id>config-js-modules</id>
 						<phase>process-classes</phase>
 						<goals>
-							<goal>run</goal>
+							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<target>
-								<exec dir="${project.basedir}" executable="${node.executable}" failonerror="true">
-									<arg value="${node.modules.dir}/liferay-module-config-generator/bin/index.js" />
-									<arg value="--config=" />
-									<arg value="--extension=" />
-									<arg value="--filePattern" />
-									<arg value="**/resources/*.js" />
-									<arg value="--format" />
-									<arg value="/_/g,-" />
-									<arg value="--ignorePath" />
-									<arg value="true" />
-									<arg value="--moduleConfig" />
-									<arg value="${project.basedir}/package.json" />
-									<arg value="--namespace" />
-									<arg value="Liferay.Loader" />
-									<arg value="--output" />
-									<arg value="${project.build.outputDirectory}/META-INF/config.json" />
-									<arg value="--moduleRoot" />
-									<arg value="${project.build.outputDirectory}/META-INF/resources" />
-									<arg value="${project.build.outputDirectory}/META-INF" />
-								</exec>
-							</target>
+							<executable>${project.build.directory}/node/node</executable>
+							<workingDirectory>${project.build.outputDirectory}/META-INF/resources</workingDirectory>
+							<arguments>
+								<argument>${node.modules.dir}/liferay-module-config-generator/bin/index.js</argument>
+								<argument>--config=</argument>
+								<argument>--extension=</argument>
+								<argument>--filePattern</argument>
+								<argument>**/resources/*.js</argument>
+								<argument>--format</argument>
+								<argument>/_/g,-</argument>
+								<argument>--ignorePath</argument>
+								<argument>true</argument>
+								<argument>--moduleConfig</argument>
+								<argument>${project.basedir}/package.json</argument>
+								<argument>--namespace</argument>
+								<argument>Liferay.Loader</argument>
+								<argument>--output</argument>
+								<argument>${project.build.outputDirectory}/META-INF/config.json</argument>
+								<argument>--moduleRoot</argument>
+								<argument>${project.build.outputDirectory}/META-INF/resources</argument>
+								<argument>${project.build.outputDirectory}/META-INF</argument>
+							</arguments>
 						</configuration>
 					</execution>
 				</executions>

@@ -334,7 +334,8 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		int lineTabCount, int previousLineTabCount) {
 
 		if (Validator.isNull(line) || Validator.isNull(previousLine) ||
-			isExcludedPath(_excludes, absolutePath, lineCount)) {
+			isExcludedPath(
+				_FIT_ON_SINGLE_LINE_EXCLUDES, absolutePath, lineCount)) {
 
 			return null;
 		}
@@ -857,6 +858,9 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 
 		return null;
 	}
+
+	private static final String _FIT_ON_SINGLE_LINE_EXCLUDES =
+		"fit.on.single.line.excludes";
 
 	private final Pattern _combinedLinesPattern1 = Pattern.compile(
 		"\n(\t*).+(=|\\]) (\\{)\n");

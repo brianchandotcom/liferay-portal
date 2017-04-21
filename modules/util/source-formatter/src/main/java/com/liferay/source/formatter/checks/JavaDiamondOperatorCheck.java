@@ -33,7 +33,7 @@ public class JavaDiamondOperatorCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!isExcludedPath(_excludes, absolutePath)) {
+		if (!isExcludedPath(_DIAMOND_OPERATOR_EXCLUDES, absolutePath)) {
 			content = _applyDiamondOperator(content);
 		}
 
@@ -73,6 +73,9 @@ public class JavaDiamondOperatorCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _DIAMOND_OPERATOR_EXCLUDES =
+		"diamond.operator.excludes";
 
 	private final Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<([^>][^;]*?)>" +

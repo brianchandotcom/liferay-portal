@@ -31,7 +31,7 @@ public class ResourceBundleCheck extends BaseFileCheck {
 
 		if (fileName.endsWith("ResourceBundleCheck.java") ||
 			fileName.endsWith("ResourceBundleUtil.java") ||
-			isExcludedPath(_excludes, absolutePath)) {
+			isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
 
 			return content;
 		}

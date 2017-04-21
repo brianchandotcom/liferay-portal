@@ -56,8 +56,8 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 				"com.liferay.portal.kernel.util.LocalizationUtil"
 			});
 
-		if (!isExcludedPath(_runOutsidePortalExcludes, absolutePath) &&
-			!isExcludedPath(_proxyExcludes, absolutePath) &&
+		if (!isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) &&
+			!isExcludedPath(_PROXY_EXCLUDES, absolutePath) &&
 			content.contains("import java.lang.reflect.Proxy;")) {
 
 			addMessage(
@@ -75,8 +75,8 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 
 		// LPS-39508
 
-		if (!isExcludedPath(_runOutsidePortalExcludes, absolutePath) &&
-			!isExcludedPath(_secureRandomExcludes, absolutePath) &&
+		if (!isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) &&
+			!isExcludedPath(_SECURE_RANDOM_EXCLUDES, absolutePath) &&
 			content.contains("java.security.SecureRandom") &&
 			!content.contains("javax.crypto.KeyGenerator")) {
 
@@ -190,6 +190,11 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _PROXY_EXCLUDES = "proxy.excludes";
+
+	private static final String _SECURE_RANDOM_EXCLUDES =
+		"secure.random.excludes";
 
 	private final boolean _portalSource;
 	private final List<String> _proxyExcludes;

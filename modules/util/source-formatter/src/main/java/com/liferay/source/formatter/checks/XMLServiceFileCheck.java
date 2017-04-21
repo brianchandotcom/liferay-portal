@@ -86,7 +86,10 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 				serviceFinderColumnElementComparator =
 					new ServiceFinderColumnElementComparator(columnNames);
 
-			if (!isExcludedPath(_excludes, absolutePath, entityName)) {
+			if (!isExcludedPath(
+					_SERVICE_FINDER_COLUMN_SORT_EXCLUDES, absolutePath,
+					entityName)) {
+
 				for (Element finderElement :
 						(List<Element>)entityElement.elements("finder")) {
 
@@ -189,6 +192,9 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 		return tablesContent;
 	}
+
+	private static final String _SERVICE_FINDER_COLUMN_SORT_EXCLUDES =
+		"service.finder.column.sort.excludes";
 
 	private final List<String> _excludes;
 	private final List<String> _pluginsInsideModulesDirectoryNames;

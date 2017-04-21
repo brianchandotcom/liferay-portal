@@ -105,6 +105,9 @@ public abstract class BaseJavaTermCheck
 
 	protected static final String JAVA_VARIABLE = JavaVariable.class.getName();
 
+	protected static final String JAVATERM_SORT_EXCLUDES =
+		"javaterm.sort.excludes";
+
 	private boolean _isCheckableJavaTerm(JavaTerm javaTerm) {
 		Class<?> clazz = javaTerm.getClass();
 

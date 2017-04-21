@@ -53,7 +53,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		if (isExcludedPath(_excludes, absolutePath)) {
+		if (isExcludedPath(_CHECK_JAVA_FIELD_TYPES_EXCLUDES, absolutePath)) {
 			return javaTerm.getContent();
 		}
 
@@ -102,7 +102,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 			if (!javaVariable.isStatic() &&
 				(_immutableFieldTypes.contains(fieldType) ||
 				 (fieldType.equals("Log") &&
-				  !isExcludedPath(_staticLogExcludes, absolutePath)))) {
+				  !isExcludedPath(_STATIC_LOG_EXCLUDES, absolutePath)))) {
 
 				classContent = _formatStaticableFieldType(
 					classContent, javaVariable.getContent());
@@ -295,6 +295,11 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 
 		return true;
 	}
+
+	private static final String _CHECK_JAVA_FIELD_TYPES_EXCLUDES =
+		"check.java.field.types.excludes";
+
+	private static final String _STATIC_LOG_EXCLUDES = "static.log.excludes";
 
 	private final List<String> _annotationsExclusions;
 	private final Map<String, String> _defaultPrimitiveValues;

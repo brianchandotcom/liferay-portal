@@ -43,7 +43,7 @@ public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 
 		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
 
-		if (!isExcludedPath(_excludes, absolutePath)) {
+		if (!isExcludedPath(JAVATERM_SORT_EXCLUDES, absolutePath)) {
 			classContent = _sortStaticBlocks(classContent, childJavaTerms);
 		}
 

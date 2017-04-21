@@ -206,6 +206,15 @@ public abstract class BaseFileCheck
 		_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
 	}
 
+	protected static final String LANGUAGE_KEYS_CHECK_EXCLUDES =
+		"language.keys.check.excludes";
+
+	protected static final String METHOD_CALL_SORT_EXCLUDES =
+		"method.call.sort.excludes";
+
+	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
+		"run.outside.portal.excludes";
+
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
 

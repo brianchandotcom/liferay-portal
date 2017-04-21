@@ -34,7 +34,7 @@ public class JavaXMLSecurityCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (isExcludedPath(_secureXMLExcludes, absolutePath) ||
+		if (isExcludedPath(_SECURE_XML_EXCLUDES, absolutePath) ||
 			fileName.contains("/test/") ||
 			fileName.contains("/testIntegration/")) {
 
@@ -61,7 +61,7 @@ public class JavaXMLSecurityCheck extends BaseFileCheck {
 		};
 
 		boolean runOutsidePortalExclusion = isExcludedPath(
-			_runOutsidePortalExcludes, absolutePath);
+			RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath);
 
 		for (String xmlVulnerabitily : xmlVulnerabitilies) {
 			if (!content.contains(xmlVulnerabitily)) {
@@ -84,6 +84,8 @@ public class JavaXMLSecurityCheck extends BaseFileCheck {
 			addMessage(fileName, sb.toString());
 		}
 	}
+
+	private static final String _SECURE_XML_EXCLUDES = "secure.xml.excludes";
 
 	private final List<String> _runOutsidePortalExcludes;
 	private final List<String> _secureXMLExcludes;

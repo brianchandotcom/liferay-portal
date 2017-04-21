@@ -45,9 +45,7 @@
 
 			<execute function="AssertTextEquals" locator1="NavBar#SHARING" value1="Sharing" />
 
-			<execute function="SelectFrame" value1="relative=top" />
-
-			<execute function="Click" locator1="Icon#CLOSE" />
+			<execute macro="IFrame#closeFrame" />
 		</task>
 
 		<execute macro="Navigator#gotoPage">
@@ -64,7 +62,7 @@
 
 			<execute function="AssertTextEquals" locator1="NavTab#LOOK_AND_FEEL_GENERAL" value1="General" />
 
-			<execute function="Click" locator1="Icon#CLOSE" />
+			<execute macro="IFrame#closeFrame" />
 		</task>
 
 		<execute macro="Portlet#dragAndDropPortletToColumnPG">

@@ -15,8 +15,8 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.servlet.BrowserMetadata;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
-import com.liferay.portal.kernel.servlet.BrowserType;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -50,12 +50,12 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 
 	@Override
 	public String getBrowserId(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		if (browserType.isIe()) {
+		if (browserMetadata.isIe()) {
 			return BROWSER_ID_IE;
 		}
-		else if (browserType.isFirefox()) {
+		else if (browserMetadata.isFirefox()) {
 			return BROWSER_ID_FIREFOX;
 		}
 		else {
@@ -64,8 +64,8 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	}
 
 	@Override
-	public BrowserType getBrowserType(HttpServletRequest request) {
-		return new BrowserType(getUserAgent(request));
+	public BrowserMetadata getBrowserMetadata(HttpServletRequest request) {
+		return new BrowserMetadata(getUserAgent(request));
 	}
 
 	@Override
@@ -115,135 +115,135 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 
 	@Override
 	public boolean isAir(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isAir();
+		return browserMetadata.isAir();
 	}
 
 	@Override
 	public boolean isAndroid(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isAndroid();
+		return browserMetadata.isAndroid();
 	}
 
 	@Override
 	public boolean isChrome(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isChrome();
+		return browserMetadata.isChrome();
 	}
 
 	@Override
 	public boolean isFirefox(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isFirefox();
+		return browserMetadata.isFirefox();
 	}
 
 	@Override
 	public boolean isGecko(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isGecko();
+		return browserMetadata.isGecko();
 	}
 
 	@Override
 	public boolean isIe(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isIe();
+		return browserMetadata.isIe();
 	}
 
 	@Override
 	public boolean isIeOnWin32(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isIeOnWin32();
+		return browserMetadata.isIeOnWin32();
 	}
 
 	@Override
 	public boolean isIeOnWin64(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isIeOnWin64();
+		return browserMetadata.isIeOnWin64();
 	}
 
 	@Override
 	public boolean isIphone(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isIphone();
+		return browserMetadata.isIphone();
 	}
 
 	@Override
 	public boolean isLinux(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isLinux();
+		return browserMetadata.isLinux();
 	}
 
 	@Override
 	public boolean isMac(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isMac();
+		return browserMetadata.isMac();
 	}
 
 	@Override
 	public boolean isMobile(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isMobile();
+		return browserMetadata.isMobile();
 	}
 
 	@Override
 	public boolean isMozilla(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isMozilla();
+		return browserMetadata.isMozilla();
 	}
 
 	@Override
 	public boolean isOpera(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isOpera();
+		return browserMetadata.isOpera();
 	}
 
 	@Override
 	public boolean isRtf(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isRtf(getVersion(request));
+		return browserMetadata.isRtf(getVersion(request));
 	}
 
 	@Override
 	public boolean isSafari(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isSafari();
+		return browserMetadata.isSafari();
 	}
 
 	@Override
 	public boolean isSun(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isSun();
+		return browserMetadata.isSun();
 	}
 
 	@Override
 	public boolean isWebKit(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isWebKit();
+		return browserMetadata.isWebKit();
 	}
 
 	@Override
 	public boolean isWindows(HttpServletRequest request) {
-		BrowserType browserType = getBrowserType(request);
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 
-		return browserType.isWindows();
+		return browserMetadata.isWindows();
 	}
 
 	protected static String parseVersion(
@@ -372,13 +372,13 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link BrowserType#isIe()}
+	 * @deprecated As of 7.0.0, replaced by {@link BrowserMetadata#isIe()}
 	 */
 	@Deprecated
 	protected boolean isIe(String userAgent) {
-		BrowserType browserType = new BrowserType(userAgent);
+		BrowserMetadata browserMetadata = new BrowserMetadata(userAgent);
 
-		return browserType.isIe();
+		return browserMetadata.isIe();
 	}
 
 	protected static String[] revisionLeadings = {"rv", "it", "ra", "ie"};

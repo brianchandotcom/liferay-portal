@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 /**
  * @author Preston Crary
  */
-public class BrowserType {
+public class BrowserMetadata {
 
-	public BrowserType(String userAgent) {
+	public BrowserMetadata(String userAgent) {
 		_userAgent = userAgent;
 	}
 

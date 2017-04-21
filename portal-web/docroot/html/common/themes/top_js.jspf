@@ -45,56 +45,56 @@
 			},
 
 			<%
-			BrowserType browserType = BrowserSnifferUtil.getBrowserType(request);
+			BrowserMetadata browserMetadata = BrowserSnifferUtil.getBrowserMetadata(request);
 			%>
 
 			isAir: function() {
-				return <%= browserType.isAir() %>;
+				return <%= browserMetadata.isAir() %>;
 			},
 			isChrome: function() {
-				return <%= browserType.isChrome() %>;
+				return <%= browserMetadata.isChrome() %>;
 			},
 			isFirefox: function() {
-				return <%= browserType.isFirefox() %>;
+				return <%= browserMetadata.isFirefox() %>;
 			},
 			isGecko: function() {
-				return <%= browserType.isGecko() %>;
+				return <%= browserMetadata.isGecko() %>;
 			},
 			isIe: function() {
-				return <%= browserType.isIe() %>;
+				return <%= browserMetadata.isIe() %>;
 			},
 			isIphone: function() {
-				return <%= browserType.isIphone() %>;
+				return <%= browserMetadata.isIphone() %>;
 			},
 			isLinux: function() {
-				return <%= browserType.isLinux() %>;
+				return <%= browserMetadata.isLinux() %>;
 			},
 			isMac: function() {
-				return <%= browserType.isMac() %>;
+				return <%= browserMetadata.isMac() %>;
 			},
 			isMobile: function() {
-				return <%= browserType.isMobile() %>;
+				return <%= browserMetadata.isMobile() %>;
 			},
 			isMozilla: function() {
-				return <%= browserType.isMozilla() %>;
+				return <%= browserMetadata.isMozilla() %>;
 			},
 			isOpera: function() {
-				return <%= browserType.isOpera() %>;
+				return <%= browserMetadata.isOpera() %>;
 			},
 			isRtf: function() {
-				return <%= browserType.isRtf(version) %>;
+				return <%= browserMetadata.isRtf(version) %>;
 			},
 			isSafari: function() {
-				return <%= browserType.isSafari() %>;
+				return <%= browserMetadata.isSafari() %>;
 			},
 			isSun: function() {
-				return <%= browserType.isSun() %>;
+				return <%= browserMetadata.isSun() %>;
 			},
 			isWebKit: function() {
-				return <%= browserType.isWebKit() %>;
+				return <%= browserMetadata.isWebKit() %>;
 			},
 			isWindows: function() {
-				return <%= browserType.isWindows() %>;
+				return <%= browserMetadata.isWindows() %>;
 			}
 		};
 

@@ -18,7 +18,7 @@
 
 <%@ page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.portlet.JavaScriptPortletResourcePredicateFilter" %><%@
-page import="com.liferay.portal.kernel.servlet.BrowserType" %><%@
+page import="com.liferay.portal.kernel.servlet.BrowserMetadata" %><%@
 page import="com.liferay.portal.kernel.util.PredicateFilter" %><%@
 page import="com.liferay.portal.servlet.ComboServletStaticURLGenerator" %><%@
 page import="com.liferay.portlet.PortletResourceAccessor" %><%@

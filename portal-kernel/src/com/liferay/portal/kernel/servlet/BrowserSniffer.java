@@ -36,7 +36,7 @@ public interface BrowserSniffer {
 
 	public String getBrowserId(HttpServletRequest request);
 
-	public BrowserType getBrowserType(HttpServletRequest request);
+	public BrowserMetadata getBrowserMetadata(HttpServletRequest request);
 
 	public float getMajorVersion(HttpServletRequest request);
 

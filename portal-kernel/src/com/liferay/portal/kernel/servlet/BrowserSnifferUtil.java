@@ -34,14 +34,16 @@ public class BrowserSnifferUtil {
 		return getBrowserSniffer().getBrowserId(request);
 	}
 
+	public static BrowserMetadata getBrowserMetadata(
+		HttpServletRequest request) {
+
+		return getBrowserSniffer().getBrowserMetadata(request);
+	}
+
 	public static BrowserSniffer getBrowserSniffer() {
 		PortalRuntimePermission.checkGetBeanProperty(BrowserSnifferUtil.class);
 
 		return _browserSniffer;
-	}
-
-	public static BrowserType getBrowserType(HttpServletRequest request) {
-		return getBrowserSniffer().getBrowserType(request);
 	}
 
 	public static float getMajorVersion(HttpServletRequest request) {

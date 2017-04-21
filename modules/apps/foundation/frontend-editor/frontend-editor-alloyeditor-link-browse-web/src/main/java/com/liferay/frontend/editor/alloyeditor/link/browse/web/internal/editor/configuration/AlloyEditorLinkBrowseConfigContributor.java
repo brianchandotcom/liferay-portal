@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrín Chaudhary
+ * @author Roberto Díaz
  */
 @Component(
 	property = {
@@ -96,6 +98,12 @@ public class AlloyEditorLinkBrowseConfigContributor
 
 		jsonObject.put("toolbars", toolbarsJSONObject);
 
+		JSONObject buttonCfg = jsonObject.getJSONObject("buttonCfg");
+
+		if (buttonCfg != null) {
+			jsonObject.put("buttonCfg", updateButtonCfgJSONObject(buttonCfg));
+		}
+
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:namespace"));
@@ -142,6 +150,48 @@ public class AlloyEditorLinkBrowseConfigContributor
 		_itemSelector = itemSelector;
 	}
 
+	protected JSONObject updateButtonCfgJSONObject(JSONObject buttonCfg) {
+		Iterator<String> buttonNames = buttonCfg.keys();
+
+		JSONObject newButtonCfgJSONObject = JSONFactoryUtil.createJSONObject();
+
+		while (buttonNames.hasNext()) {
+			String buttonName = buttonNames.next();
+
+			if (buttonName.equals("link")) {
+				newButtonCfgJSONObject.put(
+					"linkBrowse", buttonCfg.getJSONObject(buttonName));
+			}
+			else if (buttonName.equals("linkEdit")) {
+				newButtonCfgJSONObject.put(
+					"linkEditBrowse", buttonCfg.getJSONObject(buttonName));
+			}
+			else {
+				newButtonCfgJSONObject.put(
+					buttonName, buttonCfg.getJSONObject(buttonName));
+			}
+		}
+
+		return newButtonCfgJSONObject;
+	}
+
+	protected void updateButtonJSONObject(
+		JSONArray buttonsJSONArray, JSONObject buttonJSONObject,
+		String buttonName) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONObject cfgJSONObject = buttonJSONObject.getJSONObject("cfg");
+
+		if (cfgJSONObject != null) {
+			jsonObject.put("cfg", cfgJSONObject);
+		}
+
+		jsonObject.put("name", buttonName);
+
+		buttonsJSONArray.put(jsonObject);
+	}
+
 	protected JSONArray updateButtonsJSONArray(JSONArray oldButtonsJSONArray) {
 		JSONArray newButtonsJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -163,7 +213,20 @@ public class AlloyEditorLinkBrowseConfigContributor
 				}
 			}
 			else {
-				newButtonsJSONArray.put(oldButtonJSONObject);
+				String buttonName = oldButtonJSONObject.getString("name");
+
+				if (buttonName.equals("link")) {
+					updateButtonJSONObject(
+						newButtonsJSONArray, oldButtonJSONObject, "linkBrowse");
+				}
+				else if (buttonName.equals("linkEdit")) {
+					updateButtonJSONObject(
+						newButtonsJSONArray, oldButtonJSONObject,
+						"linkEditBrowse");
+				}
+				else {
+					newButtonsJSONArray.put(oldButtonJSONObject);
+				}
 			}
 		}
 

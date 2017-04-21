@@ -20,15 +20,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,10 +63,14 @@ public class UploadServletRequestImpl
 
 	public static File getTempDir() {
 		if (_tempDir == null) {
-			_tempDir = new File(
-				PrefsPropsUtil.getString(
-					PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_TEMP_DIR,
-					SystemProperties.get(SystemProperties.TMP_DIR)));
+			String tempDir =
+				UploadServletRequestConfigurationHelperUtil.getTempDir();
+
+			if (Validator.isNull(tempDir)) {
+				tempDir = SystemProperties.get(SystemProperties.TMP_DIR);
+			}
+
+			_tempDir = new File(tempDir);
 		}
 
 		return _tempDir;
@@ -100,8 +103,8 @@ public class UploadServletRequestImpl
 
 			liferayServletRequest.setFinishedReadingOriginalStream(true);
 
-			long uploadServletRequestImplMaxSize = PrefsPropsUtil.getLong(
-				PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+			long uploadServletRequestImplMaxSize =
+				UploadServletRequestConfigurationHelperUtil.getMaxSize();
 			long uploadServletRequestImplSize = 0;
 
 			int contentLength = request.getContentLength();

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -211,6 +212,75 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		List<String> excludes, String path, String parameter) {
 
 		return isExcludedPath(excludes, path, -1, parameter);
+	}
+
+	protected boolean isExcludedPath(String key, String path) {
+		return isExcludedPath(key, path, -1);
+	}
+
+	protected boolean isExcludedPath(String key, String path, int lineCount) {
+		return isExcludedPath(key, path, lineCount, null);
+	}
+
+	protected boolean isExcludedPath(
+		String key, String path, int lineCount, String parameter) {
+
+		List<String> excludes = ListUtil.fromString(
+			GetterUtil.getString(_properties.getProperty(key)),
+			StringPool.COMMA);
+
+		if (ListUtil.isEmpty(excludes)) {
+			return false;
+		}
+
+		String pathWithParameter = null;
+
+		if (Validator.isNotNull(parameter)) {
+			pathWithParameter = path + StringPool.AT + parameter;
+		}
+
+		String pathWithLineCount = null;
+
+		if (lineCount > 0) {
+			pathWithLineCount = path + StringPool.AT + lineCount;
+		}
+
+		for (String exclude : excludes) {
+			if (Validator.isNull(exclude)) {
+				continue;
+			}
+
+			if (exclude.startsWith("**")) {
+				exclude = exclude.substring(2);
+			}
+
+			if (exclude.endsWith("**")) {
+				exclude = exclude.substring(0, exclude.length() - 2);
+
+				if (path.contains(exclude)) {
+					return true;
+				}
+
+				continue;
+			}
+
+			if (path.endsWith(exclude) ||
+				((pathWithParameter != null) &&
+				 pathWithParameter.endsWith(exclude)) ||
+				((pathWithLineCount != null) &&
+				 pathWithLineCount.endsWith(exclude))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean isExcludedPath(
+		String key, String path, String parameter) {
+
+		return isExcludedPath(key, path, -1, parameter);
 	}
 
 	protected boolean isModulesApp(

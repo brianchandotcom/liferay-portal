@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.search;
+package com.liferay.asset.search.test;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;

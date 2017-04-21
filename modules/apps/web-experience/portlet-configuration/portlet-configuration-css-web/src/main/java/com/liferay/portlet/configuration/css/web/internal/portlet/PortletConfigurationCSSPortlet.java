@@ -166,27 +166,32 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 	protected JSONObject getAdvancedDataJSONObject(
 		ActionRequest actionRequest) {
 
+		JSONObject advancedDataJSONObject = JSONFactoryUtil.createJSONObject();
+
 		String customCSS = ParamUtil.getString(actionRequest, "customCSS");
+
+		advancedDataJSONObject.put("customCSS", customCSS);
+
 		String customCSSClassName = ParamUtil.getString(
 			actionRequest, "customCSSClassName");
 
-		JSONObject advancedDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		advancedDataJSONObject.put("customCSS", customCSS);
 		advancedDataJSONObject.put("customCSSClassName", customCSSClassName);
 
 		return advancedDataJSONObject;
 	}
 
 	protected JSONObject getBgDataJSONObject(ActionRequest actionRequest) {
+		JSONObject bgDataJSONObject = JSONFactoryUtil.createJSONObject();
+
 		String backgroundColor = ParamUtil.getString(
 			actionRequest, "backgroundColor");
 
-		JSONObject backgroundPositionTopJSONObject =
-			JSONFactoryUtil.createJSONObject();
+		bgDataJSONObject.put("backgroundColor", backgroundColor);
 
-		backgroundPositionTopJSONObject.put("unit", StringPool.BLANK);
-		backgroundPositionTopJSONObject.put("value", StringPool.BLANK);
+		bgDataJSONObject.put("backgroundImage", StringPool.BLANK);
+
+		JSONObject backgroundPositionJSONObject =
+			JSONFactoryUtil.createJSONObject();
 
 		JSONObject backgroundPositionLeftJSONObject =
 			JSONFactoryUtil.createJSONObject();
@@ -194,20 +199,21 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 		backgroundPositionLeftJSONObject.put("unit", StringPool.BLANK);
 		backgroundPositionLeftJSONObject.put("value", StringPool.BLANK);
 
-		JSONObject backgroundPositionJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
 		backgroundPositionJSONObject.put(
 			"left", backgroundPositionLeftJSONObject);
+
+		JSONObject backgroundPositionTopJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		backgroundPositionTopJSONObject.put("unit", StringPool.BLANK);
+		backgroundPositionTopJSONObject.put("value", StringPool.BLANK);
+
 		backgroundPositionJSONObject.put(
 			"top", backgroundPositionTopJSONObject);
 
-		JSONObject bgDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		bgDataJSONObject.put("backgroundColor", backgroundColor);
-		bgDataJSONObject.put("backgroundImage", StringPool.BLANK);
 		bgDataJSONObject.put(
 			"backgroundPosition", backgroundPositionJSONObject);
+
 		bgDataJSONObject.put("backgroundRepeat", StringPool.BLANK);
 		bgDataJSONObject.put("useBgImage", false);
 

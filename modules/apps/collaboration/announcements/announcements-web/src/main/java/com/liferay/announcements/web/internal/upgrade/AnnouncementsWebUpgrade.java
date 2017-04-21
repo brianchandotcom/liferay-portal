@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
 
+import java.sql.SQLException;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -52,10 +54,12 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 			};
 
 		try {
-			upgradeWebModuleRelease.upgrade();
+			if (!upgradeWebModuleRelease.hasRelease()) {
+				upgradeWebModuleRelease.upgrade();
+			}
 		}
-		catch (UpgradeException ue) {
-			throw new RuntimeException(ue);
+		catch (UpgradeException | SQLException e) {
+			throw new RuntimeException(e);
 		}
 
 		registry.register(

@@ -21,6 +21,8 @@ import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
 import com.liferay.recent.documents.web.internal.constants.RecentDocumentsPortletKeys;
 import com.liferay.recent.documents.web.internal.upgrade.v1_0_0.UpgradePortletId;
 
+import java.sql.SQLException;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -49,10 +51,12 @@ public class RecentDocumentsWebUpgrade implements UpgradeStepRegistrator {
 			};
 
 		try {
-			baseUpgradeWebModuleRelease.upgrade();
+			if (!baseUpgradeWebModuleRelease.hasRelease()) {
+				baseUpgradeWebModuleRelease.upgrade();
+			}
 		}
-		catch (UpgradeException ue) {
-			throw new RuntimeException(ue);
+		catch (UpgradeException | SQLException e) {
+			throw new RuntimeException(e);
 		}
 
 		registry.register(

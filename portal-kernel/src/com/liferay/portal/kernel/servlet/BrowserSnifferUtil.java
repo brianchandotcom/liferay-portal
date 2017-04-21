@@ -40,6 +40,10 @@ public class BrowserSnifferUtil {
 		return _browserSniffer;
 	}
 
+	public static BrowserType getBrowserType(HttpServletRequest request) {
+		return getBrowserSniffer().getBrowserType(request);
+	}
+
 	public static float getMajorVersion(HttpServletRequest request) {
 		return getBrowserSniffer().getMajorVersion(request);
 	}

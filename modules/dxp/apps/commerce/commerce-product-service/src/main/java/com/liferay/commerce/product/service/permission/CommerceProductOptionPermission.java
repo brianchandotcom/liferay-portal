@@ -71,11 +71,7 @@ public class CommerceProductOptionPermission
 		long commerceProductOptionId =
 			commerceProductOptionValue.getCommerceProductOptionId();
 
-		if (!contains(permissionChecker, commerceProductOptionId, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, CommerceProductOption.class.getName(),
-				commerceProductOptionId, actionId);
-		}
+		check(permissionChecker, commerceProductOptionId, actionId);
 	}
 
 	public static void checkCommerceProductOptionValue(

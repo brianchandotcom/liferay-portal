@@ -1,0 +1,88 @@
+<definition component-name="portal-business-productivity-ee">
+	<property name="portal.release" value="false" />
+	<property name="portal.upstream" value="true" />
+	<property name="test.run.environment" value="EE" />
+	<property name="testray.main.component.name" value="Rules" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="ViewWebContentInSampleDrools" priority="4">
+		<property name="osgi.modules.includes" value="portal-rules-engine-sample-web" />
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#gotoEditCP">
+			<var name="userScreenName" value="test" />
+		</execute>
+
+		<execute macro="Organization#gotoIdentificationCP" />
+
+		<execute macro="Organization#addAddressCP">
+			<var name="orgAddressCity" value="Diamond Bar" />
+			<var name="orgAddressCountry" value="United States" />
+			<var name="orgAddressPostal" value="91765" />
+			<var name="orgAddressRegion" value="California" />
+			<var name="orgAddressStreet" value="1400 Montefino Ave" />
+			<var name="orgAddressType" value="Personal" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="americas" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithTagCP">
+			<var name="tagNameList" value="americas" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Drools Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Drools Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Sample Drools" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+	</command>
+</definition>

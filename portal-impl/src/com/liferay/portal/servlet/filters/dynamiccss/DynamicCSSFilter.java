@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
@@ -80,17 +81,16 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		cacheKeyGenerator.append(StringPool.UNDERLINE);
 		cacheKeyGenerator.append(request.getRequestURI());
 
-		String requestURL = String.valueOf(request.getRequestURL());
+		StringBundler sb = new StringBundler();
 
-		if (requestURL != null) {
-			requestURL = HttpUtil.removeParameter(requestURL, "zx");
+		sb.append(StringPool.QUESTION);
+		sb.append(request.getQueryString());
 
-			String queryString = HttpUtil.getQueryString(requestURL);
+		String queryString = HttpUtil.removeParameter(sb.toString(), "zx");
 
-			if (queryString != null) {
-				cacheKeyGenerator.append(sterilizeQueryString(queryString));
-			}
-		}
+		queryString = HttpUtil.getQueryString(queryString);
+
+		cacheKeyGenerator.append(sterilizeQueryString(queryString));
 
 		if (PortalUtil.isRightToLeft(request)) {
 			cacheKeyGenerator.append("_rtl");

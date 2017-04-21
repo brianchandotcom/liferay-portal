@@ -323,17 +323,16 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		cacheKeyGenerator.append(StringPool.UNDERLINE);
 		cacheKeyGenerator.append(request.getRequestURI());
 
-		String requestURL = String.valueOf(request.getRequestURL());
+		StringBundler sb = new StringBundler();
 
-		if (requestURL != null) {
-			requestURL = HttpUtil.removeParameter(requestURL, "zx");
+		sb.append(StringPool.QUESTION);
+		sb.append(request.getQueryString());
 
-			String queryString = HttpUtil.getQueryString(requestURL);
+		String queryString = HttpUtil.removeParameter(sb.toString(), "zx");
 
-			if (queryString != null) {
-				cacheKeyGenerator.append(sterilizeQueryString(queryString));
-			}
-		}
+		queryString = HttpUtil.getQueryString(queryString);
+
+		cacheKeyGenerator.append(sterilizeQueryString(queryString));
 
 		return String.valueOf(cacheKeyGenerator.finish());
 	}

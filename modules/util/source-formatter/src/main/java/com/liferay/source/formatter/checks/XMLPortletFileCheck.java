@@ -30,10 +30,7 @@ import org.dom4j.Element;
  */
 public class XMLPortletFileCheck extends BaseFileCheck {
 
-	public XMLPortletFileCheck(
-		List<String> excludes, boolean portalSource, boolean subrepository) {
-
-		_excludes = excludes;
+	public XMLPortletFileCheck(boolean portalSource, boolean subrepository) {
 		_portalSource = portalSource;
 		_subrepository = subrepository;
 	}
@@ -106,7 +103,6 @@ public class XMLPortletFileCheck extends BaseFileCheck {
 	private static final String _NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES =
 		"numerical.portlet.name.element.excludes";
 
-	private final List<String> _excludes;
 	private final boolean _portalSource;
 	private final boolean _subrepository;
 

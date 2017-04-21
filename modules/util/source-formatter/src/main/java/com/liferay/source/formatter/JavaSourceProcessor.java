@@ -464,29 +464,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JavaAssertEqualsCheck());
 		_sourceChecks.add(new JavaBooleanUsageCheck());
 		_sourceChecks.add(
-			new JavaCombineLinesCheck(
-				getExcludes(_FIT_ON_SINGLE_LINE_EXCLUDES),
-				sourceFormatterArgs.getMaxLineLength()));
+			new JavaCombineLinesCheck(sourceFormatterArgs.getMaxLineLength()));
 		_sourceChecks.add(new JavaDataAccessConnectionCheck());
-		_sourceChecks.add(
-			new JavaDiamondOperatorCheck(
-				getExcludes(_DIAMOND_OPERATOR_EXCLUDES)));
-		_sourceChecks.add(
-			new JavaDeserializationSecurityCheck(
-				getExcludes(_SECURE_DESERIALIZATION_EXCLUDES),
-				getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
+		_sourceChecks.add(new JavaDiamondOperatorCheck());
+		_sourceChecks.add(new JavaDeserializationSecurityCheck());
 		_sourceChecks.add(new JavaEmptyLinesCheck());
 		_sourceChecks.add(new JavaExceptionCheck());
-		_sourceChecks.add(
-			new JavaHibernateSQLCheck(
-				getExcludes(_HIBERNATE_SQL_QUERY_EXCLUDES)));
+		_sourceChecks.add(new JavaHibernateSQLCheck());
 		_sourceChecks.add(
 			new JavaIfStatementCheck(sourceFormatterArgs.getMaxLineLength()));
-		_sourceChecks.add(
-			new JavaIllegalImportsCheck(
-				portalSource, getExcludes(_PROXY_EXCLUDES),
-				getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES),
-				getExcludes(_SECURE_RANDOM_EXCLUDES)));
+		_sourceChecks.add(new JavaIllegalImportsCheck(portalSource));
 		_sourceChecks.add(new JavaImportsCheck());
 		_sourceChecks.add(new JavaInterfaceCheck());
 		_sourceChecks.add(new JavaIOExceptionCheck());
@@ -495,9 +482,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JavaLogClassNameCheck());
 		_sourceChecks.add(new JavaLogLevelCheck());
 		_sourceChecks.add(
-			new JavaLongLinesCheck(
-				getExcludes(_LINE_LENGTH_EXCLUDES),
-				sourceFormatterArgs.getMaxLineLength()));
+			new JavaLongLinesCheck(sourceFormatterArgs.getMaxLineLength()));
 		_sourceChecks.add(new JavaPackagePathCheck());
 		_sourceChecks.add(new JavaProcessCallableCheck());
 		_sourceChecks.add(new JavaResultSetCheck());
@@ -505,8 +490,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JavaStopWatchCheck());
 		_sourceChecks.add(new JavaStylingCheck());
 		_sourceChecks.add(new JavaSystemExceptionCheck());
-		_sourceChecks.add(
-			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
+		_sourceChecks.add(new MethodCallsOrderCheck());
 		_sourceChecks.add(new PrimitiveWrapperInstantiationCheck());
 		_sourceChecks.add(new PrincipalExceptionCheck());
 		_sourceChecks.add(new SessionKeysCheck());
@@ -519,22 +503,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (portalSource || subrepository) {
 			_sourceChecks.add(new JavaFinderCacheCheck());
 			_sourceChecks.add(new JavaSystemEventAnnotationCheck());
-			_sourceChecks.add(
-				new JavaVerifyUpgradeConnectionCheck(
-					getExcludes(_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES)));
-			_sourceChecks.add(
-				new JavaUpgradeClassCheck(
-					getExcludes(_UPGRADE_SERVICE_UTIL_EXCLUDES)));
-			_sourceChecks.add(
-				new JavaXMLSecurityCheck(
-					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES),
-					getExcludes(_SECURE_XML_EXCLUDES)));
-			_sourceChecks.add(
-				new ResourceBundleCheck(
-					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
-			_sourceChecks.add(
-				new StringMethodsCheck(
-					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
+			_sourceChecks.add(new JavaVerifyUpgradeConnectionCheck());
+			_sourceChecks.add(new JavaUpgradeClassCheck());
+			_sourceChecks.add(new JavaXMLSecurityCheck());
+			_sourceChecks.add(new ResourceBundleCheck());
+			_sourceChecks.add(new StringMethodsCheck());
 
 			if (!GetterUtil.getBoolean(
 					getProperty("allow.use.service.util.in.service.impl"))) {
@@ -553,9 +526,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource) {
 			_sourceChecks.add(
-				new LanguageKeysCheck(
-					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
-					getPortalLanguageProperties()));
+				new LanguageKeysCheck(getPortalLanguageProperties()));
 		}
 
 		if (GetterUtil.getBoolean(
@@ -569,13 +540,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private void _populateJavaTermChecks() throws Exception {
 		_sourceChecks.add(
 			new JavaTermOrderCheck(
-				getExcludes(_JAVATERM_SORT_EXCLUDES), portalSource,
-				subrepository, _getPortalCustomSQLContent()));
+				portalSource, subrepository, _getPortalCustomSQLContent()));
 
 		_sourceChecks.add(new JavaTermDividersCheck());
 
-		_sourceChecks.add(
-			new JavaStaticBlockCheck(getExcludes(_JAVATERM_SORT_EXCLUDES)));
+		_sourceChecks.add(new JavaStaticBlockCheck());
 
 		_sourceChecks.add(new JavaBooleanStatementCheck());
 		_sourceChecks.add(new JavaConstructorParameterOrder());
@@ -590,13 +559,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource || subrepository) {
 			_sourceChecks.add(new JavaCleanUpMethodVariablesCheck());
-			_sourceChecks.add(
-				new JavaTestMethodAnnotationsCheck(
-					getExcludes(_TEST_ANNOTATIONS_EXCLUDES)));
+			_sourceChecks.add(new JavaTestMethodAnnotationsCheck());
 			_sourceChecks.add(
 				new JavaVariableTypeCheck(
-					getExcludes(_CHECK_JAVA_FIELD_TYPES_EXCLUDES),
-					getExcludes(_STATIC_LOG_EXCLUDES),
 					_getAnnotationsExclusions(), _getDefaultPrimitiveValues(),
 					_getImmutableFieldTypes()));
 		}
@@ -624,45 +589,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	private static final String _CHECK_JAVA_FIELD_TYPES_EXCLUDES =
-		"check.java.field.types.excludes";
-
-	private static final String _DIAMOND_OPERATOR_EXCLUDES =
-		"diamond.operator.excludes";
-
-	private static final String _FIT_ON_SINGLE_LINE_EXCLUDES =
-		"fit.on.single.line.excludes";
-
-	private static final String _HIBERNATE_SQL_QUERY_EXCLUDES =
-		"hibernate.sql.query.excludes";
-
 	private static final String[] _INCLUDES = new String[] {"**/*.java"};
-
-	private static final String _JAVATERM_SORT_EXCLUDES =
-		"javaterm.sort.excludes";
-
-	private static final String _LINE_LENGTH_EXCLUDES = "line.length.excludes";
-
-	private static final String _PROXY_EXCLUDES = "proxy.excludes";
-
-	private static final String _SECURE_DESERIALIZATION_EXCLUDES =
-		"secure.deserialization.excludes";
-
-	private static final String _SECURE_RANDOM_EXCLUDES =
-		"secure.random.excludes";
-
-	private static final String _SECURE_XML_EXCLUDES = "secure.xml.excludes";
-
-	private static final String _STATIC_LOG_EXCLUDES = "static.log.excludes";
-
-	private static final String _TEST_ANNOTATIONS_EXCLUDES =
-		"test.annotations.excludes";
-
-	private static final String _UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES =
-		"upgrade.data.access.connection.excludes";
-
-	private static final String _UPGRADE_SERVICE_UTIL_EXCLUDES =
-		"upgrade.service.util.excludes";
 
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");

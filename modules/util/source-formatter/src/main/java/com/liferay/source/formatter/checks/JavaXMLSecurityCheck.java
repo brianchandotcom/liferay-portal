@@ -16,19 +16,10 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.util.List;
-
 /**
  * @author Hugo Huijser
  */
 public class JavaXMLSecurityCheck extends BaseFileCheck {
-
-	public JavaXMLSecurityCheck(
-		List<String> runOutsidePortalExcludes, List<String> secureXMLExcludes) {
-
-		_runOutsidePortalExcludes = runOutsidePortalExcludes;
-		_secureXMLExcludes = secureXMLExcludes;
-	}
 
 	@Override
 	protected String doProcess(
@@ -86,8 +77,5 @@ public class JavaXMLSecurityCheck extends BaseFileCheck {
 	}
 
 	private static final String _SECURE_XML_EXCLUDES = "secure.xml.excludes";
-
-	private final List<String> _runOutsidePortalExcludes;
-	private final List<String> _secureXMLExcludes;
 
 }

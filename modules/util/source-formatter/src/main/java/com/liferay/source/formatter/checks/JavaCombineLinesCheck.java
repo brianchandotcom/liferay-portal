@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,8 +31,7 @@ import java.util.regex.Pattern;
  */
 public class JavaCombineLinesCheck extends BaseFileCheck {
 
-	public JavaCombineLinesCheck(List<String> excludes, int maxLineLength) {
-		_excludes = excludes;
+	public JavaCombineLinesCheck(int maxLineLength) {
 		_maxLineLength = maxLineLength;
 	}
 
@@ -870,7 +868,6 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		"(\n\t*(private|protected|public) void)\n\t+(\\w+\\(\\)( \\{)?\n)");
 	private final Pattern _combinedLinesPattern4 = Pattern.compile(
 		"(\n\t*(extends|implements))\n\t+([\\w.]+ \\{\n)");
-	private final List<String> _excludes;
 	private final int _maxLineLength;
 
 }

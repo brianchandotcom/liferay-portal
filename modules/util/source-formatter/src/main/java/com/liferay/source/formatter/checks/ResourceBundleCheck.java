@@ -14,16 +14,10 @@
 
 package com.liferay.source.formatter.checks;
 
-import java.util.List;
-
 /**
  * @author Hugo Huijser
  */
 public class ResourceBundleCheck extends BaseFileCheck {
-
-	public ResourceBundleCheck(List<String> excludes) {
-		_excludes = excludes;
-	}
 
 	@Override
 	protected String doProcess(
@@ -58,7 +52,5 @@ public class ResourceBundleCheck extends BaseFileCheck {
 
 		return content;
 	}
-
-	private final List<String> _excludes;
 
 }

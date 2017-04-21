@@ -56,9 +56,7 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource) {
 			_sourceChecks.add(
-				new LanguageKeysCheck(
-					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
-					getPortalLanguageProperties()));
+				new LanguageKeysCheck(getPortalLanguageProperties()));
 		}
 	}
 

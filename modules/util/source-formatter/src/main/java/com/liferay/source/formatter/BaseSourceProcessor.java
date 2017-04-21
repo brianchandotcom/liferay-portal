@@ -564,15 +564,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return saxReader.read(new UnsyncStringReader(content));
 	}
 
-	protected static final String LANGUAGE_KEYS_CHECK_EXCLUDES =
-		"language.keys.check.excludes";
-
-	protected static final String METHOD_CALL_SORT_EXCLUDES =
-		"method.call.sort.excludes";
-
-	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
-		"run.outside.portal.excludes";
-
 	protected static Pattern javaSourceInsideJSPLinePattern = Pattern.compile(
 		"<%=(.+?)%>");
 	protected static boolean portalSource;

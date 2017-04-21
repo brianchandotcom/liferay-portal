@@ -16,16 +16,10 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
-import java.util.List;
-
 /**
  * @author Hugo Huijser
  */
 public class JavaVerifyUpgradeConnectionCheck extends BaseFileCheck {
-
-	public JavaVerifyUpgradeConnectionCheck(List<String> excludes) {
-		_excludes = excludes;
-	}
 
 	@Override
 	protected String doProcess(
@@ -68,7 +62,5 @@ public class JavaVerifyUpgradeConnectionCheck extends BaseFileCheck {
 
 	private static final String _UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES =
 		"upgrade.data.access.connection.excludes";
-
-	private final List<String> _excludes;
 
 }

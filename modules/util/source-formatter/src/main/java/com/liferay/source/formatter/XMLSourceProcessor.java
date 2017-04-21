@@ -82,17 +82,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new XMLLog4jFileCheck());
 		_sourceChecks.add(new XMLLookAndFeelFileCheck());
 		_sourceChecks.add(new XMLModelHintsFileCheck());
-		_sourceChecks.add(
-			new XMLPortletFileCheck(
-				getExcludes(_NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES),
-				portalSource, subrepository));
+		_sourceChecks.add(new XMLPortletFileCheck(portalSource, subrepository));
 		_sourceChecks.add(new XMLPortletPreferencesFileCheck());
 		_sourceChecks.add(new XMLPoshiFileCheck());
 		_sourceChecks.add(new XMLResourceActionsFileCheck());
 		_sourceChecks.add(
 			new XMLServiceFileCheck(
-				getExcludes(_SERVICE_FINDER_COLUMN_SORT_EXCLUDES), portalSource,
-				subrepository,
+				portalSource, subrepository,
 				getContent("sql/portal-tables.sql", PORTAL_MAX_DIR_LEVEL),
 				getPluginsInsideModulesDirectoryNames()));
 		_sourceChecks.add(new XMLSolrSchemaFileCheck());
@@ -122,12 +118,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"**/*.action", "**/*.function", "**/*.jrxml", "**/*.macro",
 		"**/*.testcase", "**/*.toggle", "**/*.xml"
 	};
-
-	private static final String _NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES =
-		"numerical.portlet.name.element.excludes";
-
-	private static final String _SERVICE_FINDER_COLUMN_SORT_EXCLUDES =
-		"service.finder.column.sort.excludes";
 
 	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 

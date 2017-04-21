@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,10 +21,6 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class StringMethodsCheck extends BaseFileCheck {
-
-	public StringMethodsCheck(List<String> excludes) {
-		_excludes = excludes;
-	}
 
 	@Override
 	protected String doProcess(
@@ -65,7 +60,5 @@ public class StringMethodsCheck extends BaseFileCheck {
 			}
 		}
 	}
-
-	private final List<String> _excludes;
 
 }

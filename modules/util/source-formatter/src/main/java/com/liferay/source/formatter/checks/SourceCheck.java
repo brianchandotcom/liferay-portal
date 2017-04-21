@@ -27,6 +27,14 @@ public interface SourceCheck {
 	public Set<SourceFormatterMessage> getSourceFormatterMessages(
 		String fileName);
 
+	public void setBaseDirName(String baseDirName);
+
+	public void setMaxLineLength(int maxLineLength);
+
+	public void setPortalSource(boolean portalSource);
+
 	public void setProperties(Properties properties);
+
+	public void setSubrepository(boolean subrepository);
 
 }

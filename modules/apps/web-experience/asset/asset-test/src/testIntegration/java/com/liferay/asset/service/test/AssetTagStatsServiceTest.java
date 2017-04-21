@@ -14,6 +14,7 @@
 
 package com.liferay.asset.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagStats;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
@@ -40,10 +41,12 @@ import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Matthew Kong
  */
+@RunWith(Arquillian.class)
 public class AssetTagStatsServiceTest {
 
 	@ClassRule

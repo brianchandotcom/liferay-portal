@@ -14,6 +14,7 @@
 
 package com.liferay.asset.util.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -39,10 +40,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eduardo Garcia
  */
+@RunWith(Arquillian.class)
 public class AssetVocabularyUtilTest {
 
 	@ClassRule

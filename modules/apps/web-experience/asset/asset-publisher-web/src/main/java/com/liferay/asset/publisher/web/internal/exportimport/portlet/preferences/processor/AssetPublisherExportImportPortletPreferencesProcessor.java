@@ -456,6 +456,25 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				_ddmStructureLocalService.fetchDDMStructureByUuidAndGroupId(
 					uuid, groupId);
 
+			if (ddmStructure == null) {
+
+				// If structure cannot be found, we need to assume this is a
+				// preloaded ddm structure and need to check again based on
+				// the uuid mapping
+
+				Map<String, String> structureUuids =
+					(Map<String, String>)
+						portletDataContext.getNewPrimaryKeysMap(
+							DDMStructure.class + ".ddmStructureUuid");
+
+				String defaultStructureUuid = MapUtil.getString(
+					structureUuids, uuid, uuid);
+
+				ddmStructure =
+					_ddmStructureLocalService.fetchDDMStructureByUuidAndGroupId(
+						defaultStructureUuid, groupId);
+			}
+
 			if (ddmStructure != null) {
 				return ddmStructure.getStructureId();
 			}

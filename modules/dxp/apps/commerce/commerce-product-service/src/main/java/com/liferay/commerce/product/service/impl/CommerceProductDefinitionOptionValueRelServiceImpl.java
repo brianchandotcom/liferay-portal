@@ -32,6 +32,7 @@ import java.util.Map;
 public class CommerceProductDefinitionOptionValueRelServiceImpl
 	extends CommerceProductDefinitionOptionValueRelServiceBaseImpl {
 
+	@Override
 	public CommerceProductDefinitionOptionValueRel
 			addCommerceProductDefinitionOptionValueRel(
 				long commerceProductDefinitionOptionRelId,
@@ -133,6 +134,7 @@ public class CommerceProductDefinitionOptionValueRelServiceImpl
 				commerceProductDefinitionOptionRelId);
 	}
 
+	@Override
 	public CommerceProductDefinitionOptionValueRel
 			updateCommerceProductDefinitionOptionValueRel(
 				long commerceProductDefinitionOptionValueRelId,

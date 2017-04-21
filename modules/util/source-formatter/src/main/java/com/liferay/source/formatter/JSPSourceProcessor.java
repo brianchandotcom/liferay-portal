@@ -173,7 +173,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new MethodCallsOrderCheck());
 		_sourceChecks.add(new PrimitiveWrapperInstantiationCheck());
 		_sourceChecks.add(new PrincipalExceptionCheck());
-		_sourceChecks.add(new StringBundlerCheck(-1));
+		_sourceChecks.add(new StringBundlerCheck());
 		_sourceChecks.add(new StringUtilCheck());
 		_sourceChecks.add(new UnparameterizedClassCheck());
 		_sourceChecks.add(new ValidatorEqualsCheck());

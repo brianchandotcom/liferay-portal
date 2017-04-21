@@ -31,10 +31,6 @@ import java.util.regex.Pattern;
  */
 public class JavaLineBreakCheck extends BaseFileCheck {
 
-	public JavaLineBreakCheck(int maxLineLength) {
-		_maxLineLength = maxLineLength;
-	}
-
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
@@ -81,7 +77,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				if (!line.startsWith("import ") &&
 					!line.startsWith("package ") &&
 					!line.matches("\\s*\\*.*") &&
-					(lineLength <= _maxLineLength)) {
+					(lineLength <= getMaxLineLength())) {
 
 					_checkLineBreaks(line, previousLine, fileName, lineCount);
 				}
@@ -136,7 +132,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			int x = trimmedLine.indexOf(CharPool.OPEN_PARENTHESIS);
 
 			if ((x != -1) &&
-				((getLineLength(previousLine) + x) < _maxLineLength) &&
+				((getLineLength(previousLine) + x) < getMaxLineLength()) &&
 				(trimmedLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
 				 (trimmedLine.charAt(x + 1) != CharPool.CLOSE_PARENTHESIS))) {
 
@@ -353,7 +349,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				matcher.group(3) + matcher.group(2) + matcher.group(4) +
 					matcher.group(5);
 
-			if (getLineLength(newLine) <= _maxLineLength) {
+			if (getLineLength(newLine) <= getMaxLineLength()) {
 				return StringUtil.replace(
 					content, matcher.group(),
 					matcher.group(1) + "\n" + newLine + "\n");
@@ -452,7 +448,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 						StringUtil.trimLeading(matcher.group(2)) +
 							matcher.group(3);
 
-				if (getLineLength(singleLine) <= _maxLineLength) {
+				if (getLineLength(singleLine) <= getMaxLineLength()) {
 					content = StringUtil.replace(
 						content, matcher.group(), "\n" + singleLine);
 
@@ -559,7 +555,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 		outerWhile:
 		while (true) {
-			if (getLineLength(classSingleLine) <= _maxLineLength) {
+			if (getLineLength(classSingleLine) <= getMaxLineLength()) {
 				lines.add(classSingleLine);
 
 				break;
@@ -587,7 +583,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				String linePart = newLine.substring(0, x);
 
 				if ((getLevel(linePart, "<", ">") == 0) &&
-					(getLineLength(linePart) <= _maxLineLength)) {
+					(getLineLength(linePart) <= getMaxLineLength())) {
 
 					if (lines.isEmpty()) {
 						newIndent = newIndent + StringPool.TAB;
@@ -597,7 +593,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 					newLine = newIndent + newLine.substring(x + 1);
 
-					if (getLineLength(newLine) <= _maxLineLength) {
+					if (getLineLength(newLine) <= getMaxLineLength()) {
 						lines.add(newLine);
 
 						break outerWhile;
@@ -623,7 +619,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				String linePart = newLine.substring(0, x + 1);
 
 				if ((getLevel(linePart, "<", ">") == 0) &&
-					(getLineLength(linePart) <= _maxLineLength)) {
+					(getLineLength(linePart) <= getMaxLineLength())) {
 
 					lines.add(linePart);
 
@@ -636,7 +632,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 					newLine = newIndent + newLine.substring(x + 2);
 
-					if (getLineLength(newLine) <= _maxLineLength) {
+					if (getLineLength(newLine) <= getMaxLineLength()) {
 						lines.add(newLine);
 
 						break outerWhile;
@@ -682,7 +678,6 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		"(\n\t*/\\*)\n\t*(.*?)\n\t*(\\*/\n)", Pattern.DOTALL);
 	private final Pattern _lineStartingWithOpenParenthesisPattern =
 		Pattern.compile("(.)\n+(\t+)\\)[^.].*\n");
-	private final int _maxLineLength;
 	private final Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
 
 }

@@ -78,9 +78,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(
 			new PropertiesLiferayPluginPackageFileCheck(
 				getProjectPathPrefix()));
-		_sourceChecks.add(
-			new PropertiesLongLinesCheck(
-				sourceFormatterArgs.getMaxLineLength()));
+		_sourceChecks.add(new PropertiesLongLinesCheck());
 		_sourceChecks.add(
 			new PropertiesPortalFileCheck(_getPortalPortalPropertiesContent()));
 		_sourceChecks.add(new PropertiesPortletFileCheck());

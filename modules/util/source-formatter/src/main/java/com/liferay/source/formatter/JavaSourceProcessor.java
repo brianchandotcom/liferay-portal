@@ -463,26 +463,22 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JavaAnnotationsCheck());
 		_sourceChecks.add(new JavaAssertEqualsCheck());
 		_sourceChecks.add(new JavaBooleanUsageCheck());
-		_sourceChecks.add(
-			new JavaCombineLinesCheck(sourceFormatterArgs.getMaxLineLength()));
+		_sourceChecks.add(new JavaCombineLinesCheck());
 		_sourceChecks.add(new JavaDataAccessConnectionCheck());
 		_sourceChecks.add(new JavaDiamondOperatorCheck());
 		_sourceChecks.add(new JavaDeserializationSecurityCheck());
 		_sourceChecks.add(new JavaEmptyLinesCheck());
 		_sourceChecks.add(new JavaExceptionCheck());
 		_sourceChecks.add(new JavaHibernateSQLCheck());
-		_sourceChecks.add(
-			new JavaIfStatementCheck(sourceFormatterArgs.getMaxLineLength()));
+		_sourceChecks.add(new JavaIfStatementCheck());
 		_sourceChecks.add(new JavaIllegalImportsCheck());
 		_sourceChecks.add(new JavaImportsCheck());
 		_sourceChecks.add(new JavaInterfaceCheck());
 		_sourceChecks.add(new JavaIOExceptionCheck());
-		_sourceChecks.add(
-			new JavaLineBreakCheck(sourceFormatterArgs.getMaxLineLength()));
+		_sourceChecks.add(new JavaLineBreakCheck());
 		_sourceChecks.add(new JavaLogClassNameCheck());
 		_sourceChecks.add(new JavaLogLevelCheck());
-		_sourceChecks.add(
-			new JavaLongLinesCheck(sourceFormatterArgs.getMaxLineLength()));
+		_sourceChecks.add(new JavaLongLinesCheck());
 		_sourceChecks.add(new JavaPackagePathCheck());
 		_sourceChecks.add(new JavaProcessCallableCheck());
 		_sourceChecks.add(new JavaResultSetCheck());
@@ -494,8 +490,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new PrimitiveWrapperInstantiationCheck());
 		_sourceChecks.add(new PrincipalExceptionCheck());
 		_sourceChecks.add(new SessionKeysCheck());
-		_sourceChecks.add(
-			new StringBundlerCheck(sourceFormatterArgs.getMaxLineLength()));
+		_sourceChecks.add(new StringBundlerCheck());
 		_sourceChecks.add(new StringUtilCheck());
 		_sourceChecks.add(new UnparameterizedClassCheck());
 		_sourceChecks.add(new ValidatorEqualsCheck());

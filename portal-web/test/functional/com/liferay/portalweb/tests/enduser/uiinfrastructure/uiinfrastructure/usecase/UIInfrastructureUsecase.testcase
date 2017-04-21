@@ -41,7 +41,7 @@
 				<var name="portletOption" value="Configuration" />
 			</execute>
 
-			<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+			<execute macro="IFrame#selectConfigurationFrame" />
 
 			<execute function="AssertTextEquals" locator1="NavBar#SHARING" value1="Sharing" />
 
@@ -55,6 +55,8 @@
 				<var name="portletName" value="Hello World" />
 				<var name="portletOption" value="Look and Feel Configuration" />
 			</execute>
+
+			<execute macro="IFrame#selectConfigurationFrame" />
 
 			<execute function="AssertTextEquals" locator1="NavTab#LOOK_AND_FEEL_GENERAL" value1="General" />
 

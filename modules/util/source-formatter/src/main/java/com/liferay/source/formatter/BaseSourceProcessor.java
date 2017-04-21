@@ -787,7 +787,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<JavaClass> anonymousClasses = null;
 
 		for (SourceCheck sourceCheck : sourceChecks) {
+			sourceCheck.setBaseDirName(sourceFormatterArgs.getBaseDirName());
+			sourceCheck.setMaxLineLength(
+				sourceFormatterArgs.getMaxLineLength());
+			sourceCheck.setPortalSource(portalSource);
 			sourceCheck.setProperties(_properties);
+			sourceCheck.setSubrepository(subrepository);
 
 			String newContent = null;
 

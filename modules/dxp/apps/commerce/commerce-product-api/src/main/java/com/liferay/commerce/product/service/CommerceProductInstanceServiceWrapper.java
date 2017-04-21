@@ -34,6 +34,69 @@ public class CommerceProductInstanceServiceWrapper
 		_commerceProductInstanceService = commerceProductInstanceService;
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductInstance addCommerceProductInstance(
+		long commerceProductDefinitionId, java.lang.String sku,
+		java.lang.String ddmContent, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductInstanceService.addCommerceProductInstance(commerceProductDefinitionId,
+			sku, ddmContent, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductInstance deleteCommerceProductInstance(
+		com.liferay.commerce.product.model.CommerceProductInstance commerceProductInstance)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductInstanceService.deleteCommerceProductInstance(commerceProductInstance);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductInstance deleteCommerceProductInstance(
+		long commerceProductInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductInstanceService.deleteCommerceProductInstance(commerceProductInstanceId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductInstance updateCommerceProductInstance(
+		long commerceProductInstanceId, java.lang.String sku,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductInstanceService.updateCommerceProductInstance(commerceProductInstanceId,
+			sku, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductInstance updateStatus(
+		long userId, long commerceProductInstanceId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductInstanceService.updateStatus(userId,
+			commerceProductInstanceId, status, serviceContext, workflowContext);
+	}
+
+	@Override
+	public int getCommerceProductInstancesCount(
+		long commerceProductDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductInstanceService.getCommerceProductInstancesCount(commerceProductDefinitionId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,6 +105,23 @@ public class CommerceProductInstanceServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commerceProductInstanceService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceProductInstance> getCommerceProductInstances(
+		long commerceProductDefinitionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductInstanceService.getCommerceProductInstances(commerceProductDefinitionId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceProductInstance> getCommerceProductInstances(
+		long commerceProductDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductInstance> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductInstanceService.getCommerceProductInstances(commerceProductDefinitionId,
+			start, end, orderByComparator);
 	}
 
 	@Override

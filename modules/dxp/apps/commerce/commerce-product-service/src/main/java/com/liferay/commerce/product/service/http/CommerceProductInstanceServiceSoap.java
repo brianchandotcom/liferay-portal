@@ -16,9 +16,16 @@ package com.liferay.commerce.product.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.service.CommerceProductInstanceServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.product.service.CommerceProductInstanceServiceUtil} service utility. The
+ * {@link CommerceProductInstanceServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,142 @@ import aQute.bnd.annotation.ProviderType;
  * @author Marco Leo
  * @see CommerceProductInstanceServiceHttp
  * @see com.liferay.commerce.product.model.CommerceProductInstanceSoap
- * @see com.liferay.commerce.product.service.CommerceProductInstanceServiceUtil
+ * @see CommerceProductInstanceServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceProductInstanceServiceSoap {
+	public static com.liferay.commerce.product.model.CommerceProductInstanceSoap addCommerceProductInstance(
+		long commerceProductDefinitionId, java.lang.String sku,
+		java.lang.String ddmContent, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductInstance returnValue =
+				CommerceProductInstanceServiceUtil.addCommerceProductInstance(commerceProductDefinitionId,
+					sku, ddmContent, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					serviceContext);
+
+			return com.liferay.commerce.product.model.CommerceProductInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductInstanceSoap deleteCommerceProductInstance(
+		com.liferay.commerce.product.model.CommerceProductInstanceSoap commerceProductInstance)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductInstance returnValue =
+				CommerceProductInstanceServiceUtil.deleteCommerceProductInstance(com.liferay.commerce.product.model.impl.CommerceProductInstanceModelImpl.toModel(
+						commerceProductInstance));
+
+			return com.liferay.commerce.product.model.CommerceProductInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductInstanceSoap deleteCommerceProductInstance(
+		long commerceProductInstanceId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductInstance returnValue =
+				CommerceProductInstanceServiceUtil.deleteCommerceProductInstance(commerceProductInstanceId);
+
+			return com.liferay.commerce.product.model.CommerceProductInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductInstanceSoap[] getCommerceProductInstances(
+		long commerceProductDefinitionId, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CommerceProductInstance> returnValue =
+				CommerceProductInstanceServiceUtil.getCommerceProductInstances(commerceProductDefinitionId,
+					start, end);
+
+			return com.liferay.commerce.product.model.CommerceProductInstanceSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductInstanceSoap[] getCommerceProductInstances(
+		long commerceProductDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductInstance> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CommerceProductInstance> returnValue =
+				CommerceProductInstanceServiceUtil.getCommerceProductInstances(commerceProductDefinitionId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.product.model.CommerceProductInstanceSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceProductInstancesCount(
+		long commerceProductDefinitionId) throws RemoteException {
+		try {
+			int returnValue = CommerceProductInstanceServiceUtil.getCommerceProductInstancesCount(commerceProductDefinitionId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductInstanceSoap updateCommerceProductInstance(
+		long commerceProductInstanceId, java.lang.String sku,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductInstance returnValue =
+				CommerceProductInstanceServiceUtil.updateCommerceProductInstance(commerceProductInstanceId,
+					sku, displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
+
+			return com.liferay.commerce.product.model.CommerceProductInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceProductInstanceServiceSoap.class);
 }

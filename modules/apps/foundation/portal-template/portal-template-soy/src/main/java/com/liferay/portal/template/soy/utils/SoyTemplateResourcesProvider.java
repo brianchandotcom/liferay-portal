@@ -34,7 +34,13 @@ public class SoyTemplateResourcesProvider {
 			_soyTemplateResourcesTracker.getAllTemplateResources());
 	}
 
-	@Reference
+	@Reference(unbind = "-")
+	protected void setSoyTemplateResourcesTracker(
+		SoyTemplateResourcesTracker soyTemplateResourcesTracker) {
+
+		_soyTemplateResourcesTracker = soyTemplateResourcesTracker;
+	}
+
 	private static SoyTemplateResourcesTracker _soyTemplateResourcesTracker;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.util;
+package com.liferay.asset.util.test;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;

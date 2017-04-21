@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.asset.lar;
+package com.liferay.asset.lar.test;
 
-import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
@@ -34,10 +33,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 
 /**
- * @author Mate Thurzo
+ * @author Daniel Kocsis
  */
 @Sync
-public class AssetVocabularyStagedModelDataHandlerTest
+public class AssetTagStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
@@ -53,14 +52,14 @@ public class AssetVocabularyStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		return AssetTestUtil.addVocabulary(group.getGroupId());
+		return AssetTestUtil.addTag(group.getGroupId());
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
-			return AssetVocabularyLocalServiceUtil.
-				getAssetVocabularyByUuidAndGroupId(uuid, group.getGroupId());
+			return AssetTagLocalServiceUtil.getAssetTagByUuidAndGroupId(
+				uuid, group.getGroupId());
 		}
 		catch (Exception e) {
 			return null;
@@ -69,7 +68,7 @@ public class AssetVocabularyStagedModelDataHandlerTest
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return AssetVocabulary.class;
+		return AssetTag.class;
 	}
 
 	@Override
@@ -79,19 +78,10 @@ public class AssetVocabularyStagedModelDataHandlerTest
 
 		super.validateImportedStagedModel(stagedModel, importedStagedModel);
 
-		AssetVocabulary vocabulary = (AssetVocabulary)stagedModel;
-		AssetVocabulary importedVocabulary =
-			(AssetVocabulary)importedStagedModel;
+		AssetTag tag = (AssetTag)stagedModel;
+		AssetTag importedTag = (AssetTag)importedStagedModel;
 
-		Assert.assertEquals(vocabulary.getName(), importedVocabulary.getName());
-		Assert.assertEquals(
-			vocabulary.getTitle(LocaleUtil.getDefault()),
-			importedVocabulary.getTitle(LocaleUtil.getDefault()));
-		Assert.assertEquals(
-			vocabulary.getDescription(LocaleUtil.getDefault()),
-			importedVocabulary.getDescription(LocaleUtil.getDefault()));
-		Assert.assertEquals(
-			vocabulary.getSettings(), importedVocabulary.getSettings());
+		Assert.assertEquals(tag.getName(), importedTag.getName());
 	}
 
 }

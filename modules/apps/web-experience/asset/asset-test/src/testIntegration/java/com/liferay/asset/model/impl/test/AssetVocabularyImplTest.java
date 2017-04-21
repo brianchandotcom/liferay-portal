@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.model.impl;
+package com.liferay.asset.model.impl.test;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;

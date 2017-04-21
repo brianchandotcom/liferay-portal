@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.lar;
+package com.liferay.asset.lar.test;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;

@@ -16,8 +16,12 @@ package com.liferay.commerce.product.service.permission;
 
 import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.model.CommerceProductDefinition;
+import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
+import com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CommerceProductInstance;
 import com.liferay.commerce.product.service.CommerceProductDefinitionLocalService;
+import com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CommerceProductInstanceLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,6 +70,62 @@ public class CommerceProductDefinitionPermission
 		}
 	}
 
+	public static void checkCommerceProductDefinitionOptionRel(
+			PermissionChecker permissionChecker,
+			CommerceProductDefinitionOptionRel
+				commerceProductDefinitionOptionRel, String actionId)
+		throws PortalException {
+
+		long commerceProductDefinitionId =
+			commerceProductDefinitionOptionRel.getCommerceProductDefinitionId();
+
+		check(permissionChecker, commerceProductDefinitionId, actionId);
+	}
+
+	public static void checkCommerceProductDefinitionOptionRel(
+			PermissionChecker permissionChecker,
+			long commerceProductDefinitionOptionRelId, String actionId)
+		throws PortalException {
+
+		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel =
+			_commerceProductDefinitionOptionRelLocalService.
+				getCommerceProductDefinitionOptionRel(
+					commerceProductDefinitionOptionRelId);
+
+		checkCommerceProductDefinitionOptionRel(
+			permissionChecker, commerceProductDefinitionOptionRel, actionId);
+	}
+
+	public static void checkCommerceProductDefinitionOptionValueRel(
+			PermissionChecker permissionChecker,
+			CommerceProductDefinitionOptionValueRel
+				commerceProductDefinitionOptionValueRel, String actionId)
+		throws PortalException {
+
+		long commerceProductDefinitionOptionRelId =
+			commerceProductDefinitionOptionValueRel.
+				getCommerceProductDefinitionOptionRelId();
+
+		checkCommerceProductDefinitionOptionRel(
+			permissionChecker, commerceProductDefinitionOptionRelId, actionId);
+	}
+
+	public static void checkCommerceProductDefinitionOptionValueRel(
+			PermissionChecker permissionChecker,
+			long commerceProductDefinitionOptionValueRelId, String actionId)
+		throws PortalException {
+
+		CommerceProductDefinitionOptionValueRel
+			commerceProductDefinitionOptionValueRel =
+				_commerceProductDefinitionOptionValueRelLocalService.
+					getCommerceProductDefinitionOptionValueRel(
+						commerceProductDefinitionOptionValueRelId);
+
+		checkCommerceProductDefinitionOptionValueRel(
+			permissionChecker, commerceProductDefinitionOptionValueRel,
+			actionId);
+	}
+
 	public static void checkCommerceProductInstance(
 			PermissionChecker permissionChecker,
 			CommerceProductInstance commerceProductInstance, String actionId)
@@ -74,13 +134,7 @@ public class CommerceProductDefinitionPermission
 		long commerceProductDefinitionId =
 			commerceProductInstance.getCommerceProductDefinitionId();
 
-		if (!contains(
-				permissionChecker, commerceProductDefinitionId, actionId)) {
-
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, CommerceProductDefinition.class.getName(),
-				commerceProductDefinitionId, actionId);
-		}
+		check(permissionChecker, commerceProductDefinitionId, actionId);
 	}
 
 	public static void checkCommerceProductInstance(
@@ -152,6 +206,14 @@ public class CommerceProductDefinitionPermission
 	@Reference
 	private static CommerceProductDefinitionLocalService
 		_commerceProductDefinitionLocalService;
+
+	@Reference
+	private static CommerceProductDefinitionOptionRelLocalService
+		_commerceProductDefinitionOptionRelLocalService;
+
+	@Reference
+	private static CommerceProductDefinitionOptionValueRelLocalService
+		_commerceProductDefinitionOptionValueRelLocalService;
 
 	@Reference
 	private static CommerceProductInstanceLocalService

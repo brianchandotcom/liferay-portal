@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portlet.bridge.soy.internal.SoyPortletHelper;
-import com.liferay.portal.template.soy.utils.SoyTemplateResourcesCollector;
+import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -68,7 +68,9 @@ public class SoyPortlet extends MVCPortlet {
 
 		try {
 			_soyPortletHelper = new SoyPortletHelper(_bundle);
-			_templateResources = _getTemplateResources();
+			_templateResources =
+				SoyTemplateResourcesProvider.getBundleTemplateResources(
+					_bundle, templatePath);
 		}
 		catch (Exception e) {
 			throw new PortletException(e);
@@ -212,17 +214,16 @@ public class SoyPortlet extends MVCPortlet {
 	protected Template template;
 
 	private Template _createTemplate() throws TemplateException {
+		List<TemplateResource> templateResources = _getTemplateResources();
+
 		return TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_SOY, _templateResources, false);
+			TemplateConstants.LANG_TYPE_SOY, templateResources, false);
 	}
 
 	private List<TemplateResource> _getTemplateResources()
 		throws TemplateException {
 
-		SoyTemplateResourcesCollector soyTemplateResourcesCollector =
-			new SoyTemplateResourcesCollector(_bundle, templatePath);
-
-		return soyTemplateResourcesCollector.getTemplateResources();
+		return _templateResources;
 	}
 
 	private void _writePortletJavaScript(
@@ -248,7 +249,7 @@ public class SoyPortlet extends MVCPortlet {
 	}
 
 	private Bundle _bundle;
-	private SoyPortletHelper _soyPortletHelper;
 	private List<TemplateResource> _templateResources;
+	private SoyPortletHelper _soyPortletHelper;
 
 }

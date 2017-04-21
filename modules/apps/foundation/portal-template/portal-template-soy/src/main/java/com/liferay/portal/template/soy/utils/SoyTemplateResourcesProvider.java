@@ -14,7 +14,11 @@
 
 package com.liferay.portal.template.soy.utils;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.template.soy.internal.SoyTemplateResourcesCollector;
 import com.liferay.portal.template.soy.internal.SoyTemplateResourcesTracker;
 
 import java.util.Collections;
@@ -35,6 +39,27 @@ public class SoyTemplateResourcesProvider {
 			_soyTemplateResourcesTracker.getAllTemplateResources());
 	}
 
+	public static List<TemplateResource> getBundleTemplateResources(
+		Bundle bundle, String templatePath) {
+
+		try {
+			SoyTemplateResourcesCollector soyTemplateResourcesCollector =
+				new SoyTemplateResourcesCollector(bundle, templatePath);
+
+			return soyTemplateResourcesCollector.getTemplateResources();
+		}
+		catch (TemplateException te) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get template resources for bundle " +
+						bundle.getBundleId(),
+					te);
+			}
+		}
+
+		return Collections.emptyList();
+	}
+
 	public static Bundle getTemplateResourceBundle(
 		TemplateResource templateResource) {
 
@@ -48,6 +73,9 @@ public class SoyTemplateResourcesProvider {
 
 		_soyTemplateResourcesTracker = soyTemplateResourcesTracker;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SoyTemplateResourcesProvider.class);
 
 	private static SoyTemplateResourcesTracker _soyTemplateResourcesTracker;
 

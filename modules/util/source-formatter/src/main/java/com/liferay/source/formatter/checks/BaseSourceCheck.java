@@ -115,9 +115,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _baseDirName;
 	}
 
-	protected File getFile(String baseDir, String fileName, int level) {
+	protected File getFile(String fileName, int level) {
 		for (int i = 0; i < level; i++) {
-			File file = new File(baseDir + fileName);
+			File file = new File(_baseDirName + fileName);
 
 			if (file.exists()) {
 				return file;

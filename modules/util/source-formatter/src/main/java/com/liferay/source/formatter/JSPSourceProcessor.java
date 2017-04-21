@@ -42,6 +42,7 @@ import com.liferay.source.formatter.checks.JSPModuleIllegalImportsCheck;
 import com.liferay.source.formatter.checks.JSPRedirectBackURLCheck;
 import com.liferay.source.formatter.checks.JSPSendRedirectCheck;
 import com.liferay.source.formatter.checks.JSPSessionKeysCheck;
+import com.liferay.source.formatter.checks.JSPStringBundlerCheck;
 import com.liferay.source.formatter.checks.JSPStringMethodsCheck;
 import com.liferay.source.formatter.checks.JSPStylingCheck;
 import com.liferay.source.formatter.checks.JSPSubnameCheck;
@@ -57,7 +58,6 @@ import com.liferay.source.formatter.checks.PrimitiveWrapperInstantiationCheck;
 import com.liferay.source.formatter.checks.PrincipalExceptionCheck;
 import com.liferay.source.formatter.checks.ResourceBundleCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
-import com.liferay.source.formatter.checks.StringBundlerCheck;
 import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
 import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
@@ -162,6 +162,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JSPRedirectBackURLCheck());
 		_sourceChecks.add(new JSPSendRedirectCheck());
 		_sourceChecks.add(new JSPSessionKeysCheck());
+		_sourceChecks.add(new JSPStringBundlerCheck());
 		_sourceChecks.add(new JSPStylingCheck());
 		_sourceChecks.add(new JSPSubnameCheck());
 		_sourceChecks.add(
@@ -173,7 +174,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new MethodCallsOrderCheck());
 		_sourceChecks.add(new PrimitiveWrapperInstantiationCheck());
 		_sourceChecks.add(new PrincipalExceptionCheck());
-		_sourceChecks.add(new StringBundlerCheck());
 		_sourceChecks.add(new StringUtilCheck());
 		_sourceChecks.add(new UnparameterizedClassCheck());
 		_sourceChecks.add(new ValidatorEqualsCheck());

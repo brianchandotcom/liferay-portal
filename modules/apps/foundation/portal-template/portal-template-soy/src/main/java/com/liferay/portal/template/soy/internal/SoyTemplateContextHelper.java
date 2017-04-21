@@ -30,7 +30,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -62,28 +61,6 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 	@Override
 	public Set<String> getRestrictedVariables() {
 		return SetUtil.fromArray(new String[] {TemplateConstants.NAMESPACE});
-	}
-
-	public Bundle getTemplateBundle(String templateId) {
-		int pos = templateId.indexOf(TemplateConstants.BUNDLE_SEPARATOR);
-
-		if (pos == -1) {
-			throw new IllegalArgumentException(
-				String.format(
-					"The templateId \"%s\" does not map to a Soy template",
-					templateId));
-		}
-
-		long bundleId = Long.valueOf(templateId.substring(0, pos));
-
-		Bundle bundle = _soyTemplateResourcesTracker.getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new IllegalStateException(
-				"There are no bundles providing " + bundleId);
-		}
-
-		return bundle;
 	}
 
 	@Override
@@ -123,9 +100,6 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 
 		_templateContextContributors.remove(templateContextContributor);
 	}
-
-	@Reference
-	private SoyTemplateResourcesTracker _soyTemplateResourcesTracker;
 
 	private final List<TemplateContextContributor>
 		_templateContextContributors = new CopyOnWriteArrayList<>();

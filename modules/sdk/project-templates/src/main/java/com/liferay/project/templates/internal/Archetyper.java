@@ -47,6 +47,7 @@ import org.apache.maven.archetype.DefaultArchetypeManager;
 import org.apache.maven.archetype.common.ArchetypeArtifactManager;
 import org.apache.maven.archetype.common.DefaultArchetypeArtifactManager;
 import org.apache.maven.archetype.common.DefaultArchetypeFilesResolver;
+import org.apache.maven.archetype.common.DefaultPomManager;
 import org.apache.maven.archetype.exception.UnknownArchetype;
 import org.apache.maven.archetype.generator.ArchetypeGenerator;
 import org.apache.maven.archetype.generator.DefaultArchetypeGenerator;
@@ -212,6 +213,9 @@ public class Archetyper {
 		ReflectionUtil.setFieldValue(
 			DefaultFilesetArchetypeGenerator.class, "archetypeFilesResolver",
 			filesetArchetypeGenerator, new DefaultArchetypeFilesResolver());
+		ReflectionUtil.setFieldValue(
+			DefaultFilesetArchetypeGenerator.class, "pomManager",
+			filesetArchetypeGenerator, new DefaultPomManager());
 		ReflectionUtil.setFieldValue(
 			DefaultFilesetArchetypeGenerator.class, "velocity",
 			filesetArchetypeGenerator, _createVelocityComponent());

@@ -167,6 +167,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return StringUtil.count(content, 0, pos, CharPool.NEW_LINE) + 1;
 	}
 
+	protected int getMaxLineLength() {
+		return _maxLineLength;
+	}
+
 	protected boolean isExcludedPath(String key, String path) {
 		return isExcludedPath(key, path, -1);
 	}
@@ -287,6 +291,14 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return absolutePath.contains("/modules/");
+	}
+
+	protected boolean isPortalSource() {
+		return _portalSource;
+	}
+
+	protected boolean isSubrepository() {
+		return _subrepository;
 	}
 
 	protected String stripQuotes(String s) {

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.query.QueryVisitor;
 import com.liferay.portal.kernel.util.StringBundler;
 
 /**
@@ -25,6 +26,11 @@ public class StringQuery extends BaseQueryImpl implements Query {
 
 	public StringQuery(String query) {
 		_query = query;
+	}
+
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visitQuery(this);
 	}
 
 	public String getQuery() {

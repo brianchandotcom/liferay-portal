@@ -16,12 +16,21 @@ package com.liferay.commerce.product.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelServiceUtil} service utility. The
+ * {@link CommerceProductDefinitionOptionValueRelServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.kernel.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -40,10 +49,282 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Marco Leo
  * @see CommerceProductDefinitionOptionValueRelServiceSoap
- * @see com.liferay.portal.kernel.security.auth.HttpPrincipal
- * @see com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelServiceUtil
+ * @see HttpPrincipal
+ * @see CommerceProductDefinitionOptionValueRelServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceProductDefinitionOptionValueRelServiceHttp {
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel addCommerceProductDefinitionOptionValueRel(
+		HttpPrincipal httpPrincipal, long commerceProductDefinitionOptionRelId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionValueRelServiceUtil.class,
+					"addCommerceProductDefinitionOptionValueRel",
+					_addCommerceProductDefinitionOptionValueRelParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceProductDefinitionOptionRelId, titleMap, priority,
+					serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel deleteCommerceProductDefinitionOptionValueRel(
+		HttpPrincipal httpPrincipal,
+		com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionValueRelServiceUtil.class,
+					"deleteCommerceProductDefinitionOptionValueRel",
+					_deleteCommerceProductDefinitionOptionValueRelParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceProductDefinitionOptionValueRel);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel deleteCommerceProductDefinitionOptionValueRel(
+		HttpPrincipal httpPrincipal,
+		long commerceProductDefinitionOptionValueRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionValueRelServiceUtil.class,
+					"deleteCommerceProductDefinitionOptionValueRel",
+					_deleteCommerceProductDefinitionOptionValueRelParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceProductDefinitionOptionValueRelId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel> getCommerceProductDefinitionOptionValueRels(
+		HttpPrincipal httpPrincipal, long commerceProductDefinitionOptionRelId,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionValueRelServiceUtil.class,
+					"getCommerceProductDefinitionOptionValueRels",
+					_getCommerceProductDefinitionOptionValueRelsParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceProductDefinitionOptionRelId, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel> getCommerceProductDefinitionOptionValueRels(
+		HttpPrincipal httpPrincipal, long commerceProductDefinitionOptionRelId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionValueRelServiceUtil.class,
+					"getCommerceProductDefinitionOptionValueRels",
+					_getCommerceProductDefinitionOptionValueRelsParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceProductDefinitionOptionRelId, start, end,
+					orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getCommerceProductDefinitionOptionValueRelsCount(
+		HttpPrincipal httpPrincipal, long commerceProductDefinitionOptionRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionValueRelServiceUtil.class,
+					"getCommerceProductDefinitionOptionValueRelsCount",
+					_getCommerceProductDefinitionOptionValueRelsCountParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceProductDefinitionOptionRelId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel updateCommerceProductDefinitionOptionValueRel(
+		HttpPrincipal httpPrincipal,
+		long commerceProductDefinitionOptionValueRelId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionValueRelServiceUtil.class,
+					"updateCommerceProductDefinitionOptionValueRel",
+					_updateCommerceProductDefinitionOptionValueRelParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceProductDefinitionOptionValueRelId, titleMap,
+					priority, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceProductDefinitionOptionValueRelServiceHttp.class);
+	private static final Class<?>[] _addCommerceProductDefinitionOptionValueRelParameterTypes0 =
+		new Class[] {
+			long.class, java.util.Map.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteCommerceProductDefinitionOptionValueRelParameterTypes1 =
+		new Class[] {
+			com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel.class
+		};
+	private static final Class<?>[] _deleteCommerceProductDefinitionOptionValueRelParameterTypes2 =
+		new Class[] { long.class };
+	private static final Class<?>[] _getCommerceProductDefinitionOptionValueRelsParameterTypes3 =
+		new Class[] { long.class, int.class, int.class };
+	private static final Class<?>[] _getCommerceProductDefinitionOptionValueRelsParameterTypes4 =
+		new Class[] {
+			long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getCommerceProductDefinitionOptionValueRelsCountParameterTypes5 =
+		new Class[] { long.class };
+	private static final Class<?>[] _updateCommerceProductDefinitionOptionValueRelParameterTypes6 =
+		new Class[] {
+			long.class, java.util.Map.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
 }

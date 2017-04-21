@@ -16,9 +16,20 @@ package com.liferay.commerce.product.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+
+import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelServiceUtil} service utility. The
+ * {@link CommerceProductDefinitionOptionValueRelServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +64,138 @@ import aQute.bnd.annotation.ProviderType;
  * @author Marco Leo
  * @see CommerceProductDefinitionOptionValueRelServiceHttp
  * @see com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap
- * @see com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelServiceUtil
+ * @see CommerceProductDefinitionOptionValueRelServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceProductDefinitionOptionValueRelServiceSoap {
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap addCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionRelId,
+		java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues, int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+
+			com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel returnValue =
+				CommerceProductDefinitionOptionValueRelServiceUtil.addCommerceProductDefinitionOptionValueRel(commerceProductDefinitionOptionRelId,
+					titleMap, priority, serviceContext);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap deleteCommerceProductDefinitionOptionValueRel(
+		com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap commerceProductDefinitionOptionValueRel)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel returnValue =
+				CommerceProductDefinitionOptionValueRelServiceUtil.deleteCommerceProductDefinitionOptionValueRel(com.liferay.commerce.product.model.impl.CommerceProductDefinitionOptionValueRelModelImpl.toModel(
+						commerceProductDefinitionOptionValueRel));
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap deleteCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionValueRelId)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel returnValue =
+				CommerceProductDefinitionOptionValueRelServiceUtil.deleteCommerceProductDefinitionOptionValueRel(commerceProductDefinitionOptionValueRelId);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap[] getCommerceProductDefinitionOptionValueRels(
+		long commerceProductDefinitionOptionRelId, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel> returnValue =
+				CommerceProductDefinitionOptionValueRelServiceUtil.getCommerceProductDefinitionOptionValueRels(commerceProductDefinitionOptionRelId,
+					start, end);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap[] getCommerceProductDefinitionOptionValueRels(
+		long commerceProductDefinitionOptionRelId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel> returnValue =
+				CommerceProductDefinitionOptionValueRelServiceUtil.getCommerceProductDefinitionOptionValueRels(commerceProductDefinitionOptionRelId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceProductDefinitionOptionValueRelsCount(
+		long commerceProductDefinitionOptionRelId) throws RemoteException {
+		try {
+			int returnValue = CommerceProductDefinitionOptionValueRelServiceUtil.getCommerceProductDefinitionOptionValueRelsCount(commerceProductDefinitionOptionRelId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap updateCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionValueRelId,
+		java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues, int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+
+			com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel returnValue =
+				CommerceProductDefinitionOptionValueRelServiceUtil.updateCommerceProductDefinitionOptionValueRel(commerceProductDefinitionOptionValueRelId,
+					titleMap, priority, serviceContext);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceProductDefinitionOptionValueRelServiceSoap.class);
 }

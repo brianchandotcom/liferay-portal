@@ -41,6 +41,48 @@ public class CommerceProductDefinitionOptionValueRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CommerceProductDefinitionOptionValueRelServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel addCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionRelId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceProductDefinitionOptionValueRel(commerceProductDefinitionOptionRelId,
+			titleMap, priority, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel deleteCommerceProductDefinitionOptionValueRel(
+		com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteCommerceProductDefinitionOptionValueRel(commerceProductDefinitionOptionValueRel);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel deleteCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionValueRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteCommerceProductDefinitionOptionValueRel(commerceProductDefinitionOptionValueRelId);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel updateCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionValueRelId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceProductDefinitionOptionValueRel(commerceProductDefinitionOptionValueRelId,
+			titleMap, priority, serviceContext);
+	}
+
+	public static int getCommerceProductDefinitionOptionValueRelsCount(
+		long commerceProductDefinitionOptionRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceProductDefinitionOptionValueRelsCount(commerceProductDefinitionOptionRelId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +91,23 @@ public class CommerceProductDefinitionOptionValueRelServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel> getCommerceProductDefinitionOptionValueRels(
+		long commerceProductDefinitionOptionRelId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceProductDefinitionOptionValueRels(commerceProductDefinitionOptionRelId,
+			start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel> getCommerceProductDefinitionOptionValueRels(
+		long commerceProductDefinitionOptionRelId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceProductDefinitionOptionValueRels(commerceProductDefinitionOptionRelId,
+			start, end, orderByComparator);
 	}
 
 	public static CommerceProductDefinitionOptionValueRelService getService() {

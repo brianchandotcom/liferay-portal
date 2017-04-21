@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 String elasticsearchVersion = "2.2.0"
 
 configurations {

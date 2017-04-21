@@ -191,7 +191,9 @@ public class SoyTemplateResourcesTracker {
 
 				templateResources.stream().forEach(
 					templateResource -> {
-						if (!_templateResources.contains(templateResource)) {
+						if ((templateResource != null) &&
+							!_templateResources.contains(templateResource)) {
+
 							_templateResources.add(templateResource);
 						}
 					});

@@ -63,6 +63,37 @@ public class SoyTemplateResourcesTracker {
 		return _bundleMap.values();
 	}
 
+	public Bundle getTemplateBundle(String templateId) {
+		long bundleId = getBundleId(templateId);
+
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new IllegalStateException(
+				"There are no bundles providing " + bundleId);
+		}
+
+		return bundle;
+	}
+
+	protected static long getBundleId(String templateId) {
+		int pos = templateId.indexOf(TemplateConstants.BUNDLE_SEPARATOR);
+
+		if (pos == -1) {
+			if (_log.isDebugEnabled()) {
+				String message = String.format(
+					"The templateId \"%s\" does not map to a Soy template",
+					templateId);
+
+				_log.debug(message);
+			}
+
+			return -1;
+		}
+
+		return Long.valueOf(templateId.substring(0, pos));
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED;
@@ -78,6 +109,9 @@ public class SoyTemplateResourcesTracker {
 	protected void deactivate() {
 		_bundleTracker.close();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SoyTemplateResourcesTracker.class);
 
 	private static final Map<Long, Bundle> _bundleMap =
 		new ConcurrentHashMap<>();
@@ -172,24 +206,6 @@ public class SoyTemplateResourcesTracker {
 			}
 		}
 
-		private long _getBundleId(String templateId) {
-			int pos = templateId.indexOf(TemplateConstants.BUNDLE_SEPARATOR);
-
-			if (pos == -1) {
-				if (_log.isDebugEnabled()) {
-					String message = String.format(
-						"The templateId \"%s\" does not map to a Soy template",
-						templateId);
-
-					_log.debug(message);
-				}
-
-				return -1;
-			}
-
-			return Long.valueOf(templateId.substring(0, pos));
-		}
-
 		private List<TemplateResource> _removeBundleTemplateResourcesFromList(
 			Bundle bundle) {
 
@@ -200,7 +216,8 @@ public class SoyTemplateResourcesTracker {
 			while (iterator.hasNext()) {
 				TemplateResource templateResource = iterator.next();
 
-				long bundleId = _getBundleId(templateResource.getTemplateId());
+				long bundleId = SoyTemplateResourcesTracker.getBundleId(
+					templateResource.getTemplateId());
 
 				if (bundle.getBundleId() == bundleId) {
 					removedTemplateResources.add(templateResource);

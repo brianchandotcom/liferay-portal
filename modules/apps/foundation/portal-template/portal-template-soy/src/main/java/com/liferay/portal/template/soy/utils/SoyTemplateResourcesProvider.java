@@ -20,6 +20,7 @@ import com.liferay.portal.template.soy.internal.SoyTemplateResourcesTracker;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -32,6 +33,13 @@ public class SoyTemplateResourcesProvider {
 	public static List<TemplateResource> getAllTemplateResources() {
 		return Collections.unmodifiableList(
 			_soyTemplateResourcesTracker.getAllTemplateResources());
+	}
+
+	public static Bundle getTemplateResourceBundle(
+		TemplateResource templateResource) {
+
+		return _soyTemplateResourcesTracker.getTemplateBundle(
+			templateResource.getTemplateId());
 	}
 
 	@Reference(unbind = "-")

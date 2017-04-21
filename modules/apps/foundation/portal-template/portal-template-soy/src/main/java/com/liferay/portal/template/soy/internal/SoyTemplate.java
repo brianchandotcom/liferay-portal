@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.AbstractMultiResourceTemplate;
 import com.liferay.portal.template.soy.utils.SoyHTMLContextValue;
+import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 
 import java.io.Reader;
 import java.io.Writer;
@@ -316,11 +317,10 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		List<ResourceBundleLoader> resourceBundleLoaders = new ArrayList<>();
 
 		for (TemplateResource templateResource : templateResources) {
-			String templateId = templateResource.getTemplateId();
-
 			try {
 				Bundle templateResourceBundle =
-					_templateContextHelper.getTemplateBundle(templateId);
+					SoyTemplateResourcesProvider.getTemplateResourceBundle(
+						templateResource);
 
 				BundleWiring bundleWiring = templateResourceBundle.adapt(
 					BundleWiring.class);
@@ -331,6 +331,8 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled()) {
+					String templateId = templateResource.getTemplateId();
+
 					_log.debug(
 						"Could not get language resource bundle for template " +
 							StringUtil.quote(templateId),

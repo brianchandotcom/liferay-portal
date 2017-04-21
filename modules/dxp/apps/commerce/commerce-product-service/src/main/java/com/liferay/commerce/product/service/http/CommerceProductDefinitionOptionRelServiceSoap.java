@@ -16,9 +16,20 @@ package com.liferay.commerce.product.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+
+import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelServiceUtil} service utility. The
+ * {@link CommerceProductDefinitionOptionRelServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +64,149 @@ import aQute.bnd.annotation.ProviderType;
  * @author Marco Leo
  * @see CommerceProductDefinitionOptionRelServiceHttp
  * @see com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap
- * @see com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelServiceUtil
+ * @see CommerceProductDefinitionOptionRelServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceProductDefinitionOptionRelServiceSoap {
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap addCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionId, long commerceProductOptionId,
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues,
+		java.lang.String ddmFormFieldTypeName, int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel returnValue =
+				CommerceProductDefinitionOptionRelServiceUtil.addCommerceProductDefinitionOptionRel(commerceProductDefinitionId,
+					commerceProductOptionId, nameMap, descriptionMap,
+					ddmFormFieldTypeName, priority, serviceContext);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap deleteCommerceProductDefinitionOptionRel(
+		com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap commerceProductDefinitionOptionRel)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel returnValue =
+				CommerceProductDefinitionOptionRelServiceUtil.deleteCommerceProductDefinitionOptionRel(com.liferay.commerce.product.model.impl.CommerceProductDefinitionOptionRelModelImpl.toModel(
+						commerceProductDefinitionOptionRel));
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap deleteCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionOptionRelId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel returnValue =
+				CommerceProductDefinitionOptionRelServiceUtil.deleteCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap[] getCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionId, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel> returnValue =
+				CommerceProductDefinitionOptionRelServiceUtil.getCommerceProductDefinitionOptionRels(commerceProductDefinitionId,
+					start, end);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap[] getCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel> returnValue =
+				CommerceProductDefinitionOptionRelServiceUtil.getCommerceProductDefinitionOptionRels(commerceProductDefinitionId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceProductDefinitionOptionRelsCount(
+		long commerceProductDefinitionId) throws RemoteException {
+		try {
+			int returnValue = CommerceProductDefinitionOptionRelServiceUtil.getCommerceProductDefinitionOptionRelsCount(commerceProductDefinitionId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap updateCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionOptionRelId,
+		long commerceProductOptionId, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues,
+		java.lang.String ddmFormFieldTypeName, int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel returnValue =
+				CommerceProductDefinitionOptionRelServiceUtil.updateCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId,
+					commerceProductOptionId, nameMap, descriptionMap,
+					ddmFormFieldTypeName, priority, serviceContext);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceProductDefinitionOptionRelServiceSoap.class);
 }

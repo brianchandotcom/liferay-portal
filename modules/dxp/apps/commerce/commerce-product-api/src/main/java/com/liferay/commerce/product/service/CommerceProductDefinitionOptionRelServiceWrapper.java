@@ -34,6 +34,54 @@ public class CommerceProductDefinitionOptionRelServiceWrapper
 		_commerceProductDefinitionOptionRelService = commerceProductDefinitionOptionRelService;
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel addCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionId, long commerceProductOptionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String ddmFormFieldTypeName, int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionOptionRelService.addCommerceProductDefinitionOptionRel(commerceProductDefinitionId,
+			commerceProductOptionId, nameMap, descriptionMap,
+			ddmFormFieldTypeName, priority, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel deleteCommerceProductDefinitionOptionRel(
+		com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionOptionRelService.deleteCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRel);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel deleteCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionOptionRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionOptionRelService.deleteCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel updateCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionOptionRelId,
+		long commerceProductOptionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String ddmFormFieldTypeName, int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionOptionRelService.updateCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId,
+			commerceProductOptionId, nameMap, descriptionMap,
+			ddmFormFieldTypeName, priority, serviceContext);
+	}
+
+	@Override
+	public int getCommerceProductDefinitionOptionRelsCount(
+		long commerceProductDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionOptionRelService.getCommerceProductDefinitionOptionRelsCount(commerceProductDefinitionId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,6 +90,23 @@ public class CommerceProductDefinitionOptionRelServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commerceProductDefinitionOptionRelService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel> getCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionOptionRelService.getCommerceProductDefinitionOptionRels(commerceProductDefinitionId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel> getCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionOptionRelService.getCommerceProductDefinitionOptionRels(commerceProductDefinitionId,
+			start, end, orderByComparator);
 	}
 
 	@Override

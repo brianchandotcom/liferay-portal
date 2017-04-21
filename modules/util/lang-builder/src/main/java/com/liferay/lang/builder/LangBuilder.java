@@ -384,10 +384,7 @@ public class LangBuilder {
 					}
 
 					if (translatedText != null) {
-						if (translatedText.contains("Babel Fish") ||
-							translatedText.contains("Yahoo! - 999") ||
-							translatedText.endsWith(AUTOMATIC_COPY)) {
-
+						if (translatedText.endsWith(AUTOMATIC_COPY)) {
 							translatedText = "";
 						}
 					}
@@ -458,14 +455,6 @@ public class LangBuilder {
 					}
 
 					if (Validator.isNotNull(translatedText)) {
-						if (translatedText.contains("Babel Fish") ||
-							translatedText.contains("Yahoo! - 999")) {
-
-							throw new IOException(
-								"IP was blocked because of over usage. " +
-									"Please use another IP.");
-						}
-
 						translatedText = _fixTranslation(translatedText);
 
 						if (firstLine) {

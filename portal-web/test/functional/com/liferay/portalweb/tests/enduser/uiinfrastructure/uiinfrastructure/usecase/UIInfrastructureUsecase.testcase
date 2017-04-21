@@ -50,6 +50,10 @@
 			<execute function="Click" locator1="Icon#CLOSE" />
 		</task>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
 		<task summary="Assert the 'Look and Feel' modal of the Hello World portlet">
 			<execute macro="Portlet#gotoPortletOptions">
 				<var name="portletName" value="Hello World" />

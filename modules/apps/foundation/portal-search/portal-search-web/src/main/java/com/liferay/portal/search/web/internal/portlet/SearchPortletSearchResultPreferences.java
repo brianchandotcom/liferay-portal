@@ -56,6 +56,18 @@ public class SearchPortletSearchResultPreferences
 	}
 
 	@Override
+	public boolean isHighlightEnabled() {
+		if (_highlightEnabled != null) {
+			return _highlightEnabled;
+		}
+
+		_highlightEnabled = GetterUtil.getBoolean(
+			_portletPreferences.getValue("highlightEnabled", null), true);
+
+		return _highlightEnabled;
+	}
+
+	@Override
 	public boolean isViewInContext() {
 		if (_viewInContext != null) {
 			return _viewInContext;
@@ -69,6 +81,7 @@ public class SearchPortletSearchResultPreferences
 
 	private Boolean _displayResultsInDocumentForm;
 	private final DocumentFormPermissionChecker _documentFormPermissionChecker;
+	private Boolean _highlightEnabled;
 	private final PortletPreferences _portletPreferences;
 	private Boolean _viewInContext;
 

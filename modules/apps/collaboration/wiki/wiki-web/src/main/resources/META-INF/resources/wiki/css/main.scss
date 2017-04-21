@@ -38,12 +38,8 @@
 		}
 	}
 
-	.wiki-page-editor {
-		> .alloy-editor-container {
-			> .alloy-editor-wrapper {
-				padding: 28px 24px 28px;
-			}
-		}
+	.wiki-page-editor .alloy-editor-container .alloy-editor-wrapper {
+		padding: 28px 24px 28px;
 	}
 
 	a.createpage {

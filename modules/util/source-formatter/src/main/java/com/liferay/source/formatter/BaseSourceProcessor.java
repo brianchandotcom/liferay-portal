@@ -796,6 +796,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<JavaClass> anonymousClasses = null;
 
 		for (SourceCheck sourceCheck : sourceChecks) {
+			sourceCheck.setProperties(_properties);
+
 			String newContent = null;
 
 			if (sourceCheck instanceof FileCheck) {

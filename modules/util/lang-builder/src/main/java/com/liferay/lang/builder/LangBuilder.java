@@ -385,12 +385,10 @@ public class LangBuilder {
 
 					if (translatedText != null) {
 						if (translatedText.contains("Babel Fish") ||
-							translatedText.contains("Yahoo! - 999")) {
+							translatedText.contains("Yahoo! - 999") ||
+							translatedText.endsWith(AUTOMATIC_COPY)) {
 
 							translatedText = "";
-						}
-						else if (translatedText.endsWith(AUTOMATIC_COPY)) {
-							translatedText = value + AUTOMATIC_COPY;
 						}
 					}
 

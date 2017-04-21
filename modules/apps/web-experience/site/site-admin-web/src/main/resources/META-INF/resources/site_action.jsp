@@ -119,29 +119,27 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 		/>
 	</c:if>
 
-	<c:if test="<%= !group.isCompany() && !group.isGuest() && hasUpdatePermission %>">
-		<c:choose>
-			<c:when test="<%= group.isActive() %>">
-				<portlet:actionURL name="deactivate" var="activateURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-				</portlet:actionURL>
+	<c:choose>
+		<c:when test="<%= group.isActive() && !group.isCompany() && !group.isGuest() && hasUpdatePermission %>">
+			<portlet:actionURL name="deactivate" var="activateURL">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+			</portlet:actionURL>
 
-				<liferay-ui:icon-deactivate url="<%= activateURL %>" />
-			</c:when>
-			<c:otherwise>
-				<portlet:actionURL name="activate" var="activateURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-				</portlet:actionURL>
+			<liferay-ui:icon-deactivate url="<%= activateURL %>" />
+		</c:when>
+		<c:when test="<%= !group.isActive() && !group.isCompany() && hasUpdatePermission %>">
+			<portlet:actionURL name="activate" var="activateURL">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+			</portlet:actionURL>
 
-				<liferay-ui:icon
-					message="activate"
-					url="<%= activateURL %>"
-				/>
-			</c:otherwise>
-		</c:choose>
-	</c:if>
+			<liferay-ui:icon
+				message="activate"
+				url="<%= activateURL %>"
+			/>
+		</c:when>
+	</c:choose>
 
 	<c:if test="<%= siteAdminDisplayContext.hasDeleteGroupPermission(group) %>">
 		<portlet:actionURL name="deleteGroups" var="deleteURL">

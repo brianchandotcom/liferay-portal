@@ -157,6 +157,10 @@ public class WriteFindBugsProjectTask extends DefaultTask {
 		throws IOException {
 
 		for (File file : fileCollection) {
+			if (!file.exists()) {
+				continue;
+			}
+
 			writer.write("\t<");
 			writer.write(name);
 			writer.write('>');

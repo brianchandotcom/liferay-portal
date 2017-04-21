@@ -1742,6 +1742,16 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-integration-test database.type="sybase" />
 	</target>
 
+	<target name="javadoc-jdk8">
+		<run-batch-test>
+			<test-action>
+				<antcall target="compile" />
+
+				<antcall target="doc" />
+			</test-action>
+		</run-batch-test>
+	</target>
+
 	<target name="legacy-functional-bundle-tomcat-db2105-jdk7">
 		<run-legacy-database-dump database.type="db2" />
 	</target>

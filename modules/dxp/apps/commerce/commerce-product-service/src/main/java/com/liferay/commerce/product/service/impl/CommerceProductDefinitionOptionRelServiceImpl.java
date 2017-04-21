@@ -85,6 +85,22 @@ public class CommerceProductDefinitionOptionRelServiceImpl
 	}
 
 	@Override
+	public CommerceProductDefinitionOptionRel
+			getCommerceProductDefinitionOptionRel(
+				long commerceProductDefinitionOptionRelId)
+		throws PortalException {
+
+		CommerceProductDefinitionPermission.
+			checkCommerceProductDefinitionOptionRel(
+				getPermissionChecker(), commerceProductDefinitionOptionRelId,
+				ActionKeys.VIEW);
+
+		return commerceProductDefinitionOptionRelLocalService.
+			getCommerceProductDefinitionOptionRel(
+				commerceProductDefinitionOptionRelId);
+	}
+
+	@Override
 	public List<CommerceProductDefinitionOptionRel>
 			getCommerceProductDefinitionOptionRels(
 				long commerceProductDefinitionId, int start, int end)

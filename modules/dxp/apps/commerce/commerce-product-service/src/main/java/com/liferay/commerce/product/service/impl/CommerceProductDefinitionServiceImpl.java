@@ -92,6 +92,19 @@ public class CommerceProductDefinitionServiceImpl
 	}
 
 	@Override
+	public CommerceProductDefinition getCommerceProductDefinition(
+			long commerceProductDefinitionId)
+		throws PortalException {
+
+		CommerceProductDefinitionPermission.check(
+			getPermissionChecker(), commerceProductDefinitionId,
+			ActionKeys.UPDATE);
+
+		commerceProductDefinitionLocalService.getCommerceProductDefinition(
+			commerceProductDefinitionId);
+	}
+
+	@Override
 	public List<CommerceProductDefinition> getCommerceProductDefinitions(
 		long groupId, int start, int end) {
 

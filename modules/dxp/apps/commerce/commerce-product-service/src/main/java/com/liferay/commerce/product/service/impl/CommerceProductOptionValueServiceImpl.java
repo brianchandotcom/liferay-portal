@@ -76,6 +76,19 @@ public class CommerceProductOptionValueServiceImpl
 	}
 
 	@Override
+	public CommerceProductOptionValue getCommerceProductOptionValue(
+			long commerceProductOptionValueId)
+		throws PortalException {
+
+		CommerceProductOptionPermission.checkCommerceProductOptionValue(
+			getPermissionChecker(), commerceProductOptionValueId,
+			ActionKeys.VIEW);
+
+		return commerceProductOptionValueLocalService.
+			getCommerceProductOptionValue(commerceProductOptionValueId);
+	}
+
+	@Override
 	public List<CommerceProductOptionValue> getCommerceProductOptionValues(
 			long commerceProductOptionId, int start, int end)
 		throws PortalException {

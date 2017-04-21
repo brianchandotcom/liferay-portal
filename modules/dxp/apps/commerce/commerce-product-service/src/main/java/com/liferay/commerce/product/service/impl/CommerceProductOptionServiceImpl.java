@@ -73,6 +73,18 @@ public class CommerceProductOptionServiceImpl
 	}
 
 	@Override
+	public CommerceProductOption getCommerceProductOption(
+			long commerceProductOptionId)
+		throws PortalException {
+
+		CommerceProductOptionPermission.check(
+			getPermissionChecker(), commerceProductOptionId, ActionKeys.VIEW);
+
+		return commerceProductOptionLocalService.getCommerceProductOption(
+			commerceProductOptionId);
+	}
+
+	@Override
 	public List<CommerceProductOption> getCommerceProductOptions(
 		long groupId, int start, int end) {
 

@@ -86,6 +86,18 @@ public class CommerceProductInstanceServiceImpl
 	}
 
 	@Override
+	public CommerceProductInstance getCommerceProductInstance(
+			long commerceProductInstanceId)
+		throws PortalException {
+
+		CommerceProductDefinitionPermission.checkCommerceProductInstance(
+			getPermissionChecker(), commerceProductInstanceId, ActionKeys.VIEW);
+
+		return commerceProductInstanceLocalService.getCommerceProductInstance(
+			commerceProductInstanceId);
+	}
+
+	@Override
 	public List<CommerceProductInstance> getCommerceProductInstances(
 			long commerceProductDefinitionId, int start, int end)
 		throws PortalException {

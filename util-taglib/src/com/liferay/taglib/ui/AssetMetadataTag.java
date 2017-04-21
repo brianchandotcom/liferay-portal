@@ -22,15 +22,37 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Eudaldo Alonso
  */
 public class AssetMetadataTag extends IncludeTag {
+
+	@Override
+	public int doEndTag() throws JspException {
+		if (_hasMetadata) {
+			return super.doEndTag();
+		}
+
+		return EVAL_PAGE;
+	}
+
+	@Override
+	public int doStartTag() throws JspException {
+		if (ArrayUtil.isEmpty(_metadataFields)) {
+			return SKIP_BODY;
+		}
+
+		_hasMetadata = true;
+
+		return super.doStartTag();
+	}
 
 	public String getClassName() {
 		return _className;
@@ -69,6 +91,7 @@ public class AssetMetadataTag extends IncludeTag {
 		_className = StringPool.BLANK;
 		_classPK = 0;
 		_filterByMetadata = false;
+		_hasMetadata = false;
 		_metadataFields = null;
 	}
 
@@ -117,6 +140,7 @@ public class AssetMetadataTag extends IncludeTag {
 	private String _className = StringPool.BLANK;
 	private long _classPK;
 	private boolean _filterByMetadata;
+	private boolean _hasMetadata;
 	private String[] _metadataFields;
 
 }

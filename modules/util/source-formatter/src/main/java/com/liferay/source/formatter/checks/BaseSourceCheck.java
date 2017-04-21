@@ -28,6 +28,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -46,6 +47,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return Collections.emptySet();
+	}
+
+	@Override
+	public void setProperties(Properties properties) {
+		_properties = properties;
 	}
 
 	protected void addMessage(String fileName, String message) {
@@ -307,6 +313,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return sb.toString();
 	}
 
+	private Properties _properties;
 	private final Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 

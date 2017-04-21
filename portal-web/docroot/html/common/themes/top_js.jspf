@@ -497,6 +497,11 @@ for (String analyticsType : analyticsTypes) {
 
 					ga('create', '<%= HtmlUtil.escapeJS(googleAnalyticsId) %>', 'auto');
 					ga('send', 'pageview');
+
+					Liferay.on('endNavigate', function(event) {
+						ga('set', 'page', event.path);
+						ga('send', 'pageview');
+					});
 				</script>
 			</c:if>
 		</c:when>

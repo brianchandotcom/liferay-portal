@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
 
+import java.sql.SQLException;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,10 +57,12 @@ public class NotificationsWebUpgrade implements UpgradeStepRegistrator {
 			};
 
 		try {
-			baseUpgradeWebModuleRelease.upgrade();
+			if (!baseUpgradeWebModuleRelease.hasRelease()) {
+				baseUpgradeWebModuleRelease.upgrade();
+			}
 		}
-		catch (UpgradeException ue) {
-			throw new RuntimeException(ue);
+		catch (UpgradeException | SQLException e) {
+			throw new RuntimeException(e);
 		}
 
 		registry.register(

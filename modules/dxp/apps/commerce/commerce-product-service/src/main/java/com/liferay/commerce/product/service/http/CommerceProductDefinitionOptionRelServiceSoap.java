@@ -130,6 +130,21 @@ public class CommerceProductDefinitionOptionRelServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap getCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionOptionRelId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel returnValue =
+				CommerceProductDefinitionOptionRelServiceUtil.getCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap[] getCommerceProductDefinitionOptionRels(
 		long commerceProductDefinitionId, int start, int end)
 		throws RemoteException {

@@ -69,6 +69,13 @@ public class CommerceProductDefinitionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CommerceProductDefinition getCommerceProductDefinition(
+		long commerceProductDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionService.getCommerceProductDefinition(commerceProductDefinitionId);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CommerceProductDefinition updateCommerceProductDefinition(
 		long commerceProductDefinitionId, java.lang.String baseSKU,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

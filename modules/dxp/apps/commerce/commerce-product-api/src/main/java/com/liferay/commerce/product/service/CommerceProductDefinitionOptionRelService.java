@@ -72,6 +72,10 @@ public interface CommerceProductDefinitionOptionRelService extends BaseService {
 	public CommerceProductDefinitionOptionRel deleteCommerceProductDefinitionOptionRel(
 		long commerceProductDefinitionOptionRelId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceProductDefinitionOptionRel getCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionOptionRelId) throws PortalException;
+
 	public CommerceProductDefinitionOptionRel updateCommerceProductDefinitionOptionRel(
 		long commerceProductDefinitionOptionRelId,
 		long commerceProductOptionId, Map<Locale, java.lang.String> nameMap,

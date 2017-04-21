@@ -69,6 +69,10 @@ public interface CommerceProductOptionValueService extends BaseService {
 	public CommerceProductOptionValue deleteCommerceProductOptionValue(
 		long commerceProductOptionValueId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceProductOptionValue getCommerceProductOptionValue(
+		long commerceProductOptionValueId) throws PortalException;
+
 	public CommerceProductOptionValue updateCommerceProductOptionValue(
 		long commerceProductOptionValueId,
 		Map<Locale, java.lang.String> titleMap, int priority,

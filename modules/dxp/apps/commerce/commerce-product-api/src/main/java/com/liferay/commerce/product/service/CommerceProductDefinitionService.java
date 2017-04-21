@@ -77,6 +77,10 @@ public interface CommerceProductDefinitionService extends BaseService {
 	public CommerceProductDefinition deleteCommerceProductDefinition(
 		long commerceProductDefinitionId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceProductDefinition getCommerceProductDefinition(
+		long commerceProductDefinitionId) throws PortalException;
+
 	public CommerceProductDefinition updateCommerceProductDefinition(
 		long commerceProductDefinitionId, java.lang.String baseSKU,
 		Map<Locale, java.lang.String> titleMap,

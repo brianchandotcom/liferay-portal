@@ -65,6 +65,13 @@ public class CommerceProductInstanceServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CommerceProductInstance getCommerceProductInstance(
+		long commerceProductInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductInstanceService.getCommerceProductInstance(commerceProductInstanceId);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CommerceProductInstance updateCommerceProductInstance(
 		long commerceProductInstanceId, java.lang.String sku,
 		int displayDateMonth, int displayDateDay, int displayDateYear,

@@ -68,6 +68,13 @@ public class CommerceProductDefinitionOptionRelServiceUtil {
 				   .deleteCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel getCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionOptionRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId);
+	}
+
 	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel updateCommerceProductDefinitionOptionRel(
 		long commerceProductDefinitionOptionRelId,
 		long commerceProductOptionId,

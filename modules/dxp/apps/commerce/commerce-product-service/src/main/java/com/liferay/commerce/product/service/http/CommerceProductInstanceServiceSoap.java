@@ -123,6 +123,21 @@ public class CommerceProductInstanceServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductInstanceSoap getCommerceProductInstance(
+		long commerceProductInstanceId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductInstance returnValue =
+				CommerceProductInstanceServiceUtil.getCommerceProductInstance(commerceProductInstanceId);
+
+			return com.liferay.commerce.product.model.CommerceProductInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CommerceProductInstanceSoap[] getCommerceProductInstances(
 		long commerceProductDefinitionId, int start, int end)
 		throws RemoteException {

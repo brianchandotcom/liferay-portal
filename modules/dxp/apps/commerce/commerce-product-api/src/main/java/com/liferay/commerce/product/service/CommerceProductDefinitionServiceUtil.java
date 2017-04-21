@@ -75,6 +75,13 @@ public class CommerceProductDefinitionServiceUtil {
 				   .deleteCommerceProductDefinition(commerceProductDefinitionId);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductDefinition getCommerceProductDefinition(
+		long commerceProductDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceProductDefinition(commerceProductDefinitionId);
+	}
+
 	public static com.liferay.commerce.product.model.CommerceProductDefinition updateCommerceProductDefinition(
 		long commerceProductDefinitionId, java.lang.String baseSKU,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

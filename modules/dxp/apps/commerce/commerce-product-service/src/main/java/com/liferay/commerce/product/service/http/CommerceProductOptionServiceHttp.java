@@ -159,12 +159,45 @@ public class CommerceProductOptionServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductOption getCommerceProductOption(
+		HttpPrincipal httpPrincipal, long commerceProductOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceProductOptionServiceUtil.class,
+					"getCommerceProductOption",
+					_getCommerceProductOptionParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceProductOptionId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CommerceProductOption)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.commerce.product.model.CommerceProductOption> getCommerceProductOptions(
 		HttpPrincipal httpPrincipal, long groupId, int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductOptionServiceUtil.class,
 					"getCommerceProductOptions",
-					_getCommerceProductOptionsParameterTypes3);
+					_getCommerceProductOptionsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end);
@@ -193,7 +226,7 @@ public class CommerceProductOptionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductOptionServiceUtil.class,
 					"getCommerceProductOptions",
-					_getCommerceProductOptionsParameterTypes4);
+					_getCommerceProductOptionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end, orderByComparator);
@@ -221,7 +254,7 @@ public class CommerceProductOptionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductOptionServiceUtil.class,
 					"getCommerceProductOptionsCount",
-					_getCommerceProductOptionsCountParameterTypes5);
+					_getCommerceProductOptionsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -253,7 +286,7 @@ public class CommerceProductOptionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductOptionServiceUtil.class,
 					"updateCommerceProductOption",
-					_updateCommerceProductOptionParameterTypes6);
+					_updateCommerceProductOptionParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceProductOptionId, nameMap, descriptionMap,
@@ -292,16 +325,19 @@ public class CommerceProductOptionServiceHttp {
 	private static final Class<?>[] _deleteCommerceProductOptionParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommerceProductOptionsParameterTypes3 = new Class[] {
-			long.class, int.class, int.class
+	private static final Class<?>[] _getCommerceProductOptionParameterTypes3 = new Class[] {
+			long.class
 		};
 	private static final Class<?>[] _getCommerceProductOptionsParameterTypes4 = new Class[] {
+			long.class, int.class, int.class
+		};
+	private static final Class<?>[] _getCommerceProductOptionsParameterTypes5 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceProductOptionsCountParameterTypes5 =
+	private static final Class<?>[] _getCommerceProductOptionsCountParameterTypes6 =
 		new Class[] { long.class };
-	private static final Class<?>[] _updateCommerceProductOptionParameterTypes6 = new Class[] {
+	private static final Class<?>[] _updateCommerceProductOptionParameterTypes7 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

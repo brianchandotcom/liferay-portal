@@ -72,6 +72,11 @@ public interface CommerceProductDefinitionOptionValueRelService
 		long commerceProductDefinitionOptionValueRelId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceProductDefinitionOptionValueRel getCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionValueRelId)
+		throws PortalException;
+
 	public CommerceProductDefinitionOptionValueRel updateCommerceProductDefinitionOptionValueRel(
 		long commerceProductDefinitionOptionValueRelId,
 		Map<Locale, java.lang.String> titleMap, int priority,

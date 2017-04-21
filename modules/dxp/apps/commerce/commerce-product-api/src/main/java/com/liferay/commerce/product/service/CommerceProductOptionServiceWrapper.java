@@ -60,6 +60,13 @@ public class CommerceProductOptionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CommerceProductOption getCommerceProductOption(
+		long commerceProductOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductOptionService.getCommerceProductOption(commerceProductOptionId);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CommerceProductOption updateCommerceProductOption(
 		long commerceProductOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

@@ -71,6 +71,12 @@ public class CommerceProductInstanceServiceUtil {
 				   .deleteCommerceProductInstance(commerceProductInstanceId);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductInstance getCommerceProductInstance(
+		long commerceProductInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceProductInstance(commerceProductInstanceId);
+	}
+
 	public static com.liferay.commerce.product.model.CommerceProductInstance updateCommerceProductInstance(
 		long commerceProductInstanceId, java.lang.String sku,
 		int displayDateMonth, int displayDateDay, int displayDateYear,

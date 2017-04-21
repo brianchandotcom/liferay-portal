@@ -66,6 +66,13 @@ public class CommerceProductOptionValueServiceUtil {
 				   .deleteCommerceProductOptionValue(commerceProductOptionValueId);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductOptionValue getCommerceProductOptionValue(
+		long commerceProductOptionValueId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceProductOptionValue(commerceProductOptionValueId);
+	}
+
 	public static com.liferay.commerce.product.model.CommerceProductOptionValue updateCommerceProductOptionValue(
 		long commerceProductOptionValueId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

@@ -70,6 +70,10 @@ public interface CommerceProductOptionService extends BaseService {
 	public CommerceProductOption deleteCommerceProductOption(
 		long commerceProductOptionId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceProductOption getCommerceProductOption(
+		long commerceProductOptionId) throws PortalException;
+
 	public CommerceProductOption updateCommerceProductOption(
 		long commerceProductOptionId, Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap,

@@ -162,6 +162,39 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel getCommerceProductDefinitionOptionRel(
+		HttpPrincipal httpPrincipal, long commerceProductDefinitionOptionRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionRelServiceUtil.class,
+					"getCommerceProductDefinitionOptionRel",
+					_getCommerceProductDefinitionOptionRelParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceProductDefinitionOptionRelId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel> getCommerceProductDefinitionOptionRels(
 		HttpPrincipal httpPrincipal, long commerceProductDefinitionId,
 		int start, int end)
@@ -169,7 +202,7 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionRelServiceUtil.class,
 					"getCommerceProductDefinitionOptionRels",
-					_getCommerceProductDefinitionOptionRelsParameterTypes3);
+					_getCommerceProductDefinitionOptionRelsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceProductDefinitionId, start, end);
@@ -204,7 +237,7 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionRelServiceUtil.class,
 					"getCommerceProductDefinitionOptionRels",
-					_getCommerceProductDefinitionOptionRelsParameterTypes4);
+					_getCommerceProductDefinitionOptionRelsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceProductDefinitionId, start, end, orderByComparator);
@@ -237,7 +270,7 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionRelServiceUtil.class,
 					"getCommerceProductDefinitionOptionRelsCount",
-					_getCommerceProductDefinitionOptionRelsCountParameterTypes5);
+					_getCommerceProductDefinitionOptionRelsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceProductDefinitionId);
@@ -275,7 +308,7 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionRelServiceUtil.class,
 					"updateCommerceProductDefinitionOptionRel",
-					_updateCommerceProductDefinitionOptionRelParameterTypes6);
+					_updateCommerceProductDefinitionOptionRelParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceProductDefinitionOptionRelId,
@@ -317,16 +350,18 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 		};
 	private static final Class<?>[] _deleteCommerceProductDefinitionOptionRelParameterTypes2 =
 		new Class[] { long.class };
-	private static final Class<?>[] _getCommerceProductDefinitionOptionRelsParameterTypes3 =
-		new Class[] { long.class, int.class, int.class };
+	private static final Class<?>[] _getCommerceProductDefinitionOptionRelParameterTypes3 =
+		new Class[] { long.class };
 	private static final Class<?>[] _getCommerceProductDefinitionOptionRelsParameterTypes4 =
+		new Class[] { long.class, int.class, int.class };
+	private static final Class<?>[] _getCommerceProductDefinitionOptionRelsParameterTypes5 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceProductDefinitionOptionRelsCountParameterTypes5 =
+	private static final Class<?>[] _getCommerceProductDefinitionOptionRelsCountParameterTypes6 =
 		new Class[] { long.class };
-	private static final Class<?>[] _updateCommerceProductDefinitionOptionRelParameterTypes6 =
+	private static final Class<?>[] _updateCommerceProductDefinitionOptionRelParameterTypes7 =
 		new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class, int.class,

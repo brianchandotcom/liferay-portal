@@ -128,6 +128,21 @@ public class CommerceProductOptionServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductOptionSoap getCommerceProductOption(
+		long commerceProductOptionId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductOption returnValue =
+				CommerceProductOptionServiceUtil.getCommerceProductOption(commerceProductOptionId);
+
+			return com.liferay.commerce.product.model.CommerceProductOptionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CommerceProductOptionSoap[] getCommerceProductOptions(
 		long groupId, int start, int end) throws RemoteException {
 		try {

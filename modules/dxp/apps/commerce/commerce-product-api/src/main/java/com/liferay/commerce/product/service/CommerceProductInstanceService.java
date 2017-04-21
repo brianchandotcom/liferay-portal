@@ -74,6 +74,10 @@ public interface CommerceProductInstanceService extends BaseService {
 	public CommerceProductInstance deleteCommerceProductInstance(
 		long commerceProductInstanceId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceProductInstance getCommerceProductInstance(
+		long commerceProductInstanceId) throws PortalException;
+
 	public CommerceProductInstance updateCommerceProductInstance(
 		long commerceProductInstanceId, java.lang.String sku,
 		int displayDateMonth, int displayDateDay, int displayDateYear,

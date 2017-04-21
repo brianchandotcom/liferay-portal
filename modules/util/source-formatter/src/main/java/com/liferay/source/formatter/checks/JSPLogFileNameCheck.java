@@ -30,7 +30,7 @@ public class JSPLogFileNameCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!isModulesFile(absolutePath, isSubrepository()) &&
+		if (!isModulesFile(absolutePath) &&
 			!absolutePath.contains("/portal-web/")) {
 
 			content = _formatLogFileName(absolutePath, content);

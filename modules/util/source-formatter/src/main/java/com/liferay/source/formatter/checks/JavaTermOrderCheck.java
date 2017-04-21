@@ -67,9 +67,7 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 	private String _getCustomSQLContent(String fileName, String absolutePath)
 		throws Exception {
 
-		if (isPortalSource() &&
-			!isModulesFile(absolutePath, isSubrepository())) {
-
+		if (isPortalSource() && !isModulesFile(absolutePath)) {
 			return _portalCustomSQLContent;
 		}
 

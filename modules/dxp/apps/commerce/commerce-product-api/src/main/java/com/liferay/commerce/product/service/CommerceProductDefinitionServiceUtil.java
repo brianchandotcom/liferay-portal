@@ -41,6 +41,73 @@ public class CommerceProductDefinitionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CommerceProductDefinitionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.product.model.CommerceProductDefinition addCommerceProductDefinition(
+		java.lang.String baseSKU,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceProductDefinition(baseSKU, titleMap,
+			descriptionMap, productTypeName, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinition deleteCommerceProductDefinition(
+		com.liferay.commerce.product.model.CommerceProductDefinition commerceProductDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteCommerceProductDefinition(commerceProductDefinition);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinition deleteCommerceProductDefinition(
+		long commerceProductDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteCommerceProductDefinition(commerceProductDefinitionId);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinition updateCommerceProductDefinition(
+		long commerceProductDefinitionId, java.lang.String baseSKU,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceProductDefinition(commerceProductDefinitionId,
+			baseSKU, titleMap, descriptionMap, productTypeName,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinition updateStatus(
+		long userId, long commerceProductDefinitionId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateStatus(userId, commerceProductDefinitionId, status,
+			serviceContext, workflowContext);
+	}
+
+	public static int getCommerceProductDefinitionsCount(long groupId) {
+		return getService().getCommerceProductDefinitionsCount(groupId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +116,19 @@ public class CommerceProductDefinitionServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductDefinition> getCommerceProductDefinitions(
+		long groupId, int start, int end) {
+		return getService().getCommerceProductDefinitions(groupId, start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductDefinition> getCommerceProductDefinitions(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductDefinition> orderByComparator) {
+		return getService()
+				   .getCommerceProductDefinitions(groupId, start, end,
+			orderByComparator);
 	}
 
 	public static CommerceProductDefinitionService getService() {

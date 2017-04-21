@@ -16,14 +16,25 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CommerceProductDefinition;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for CommerceProductDefinition. Methods of this
@@ -49,6 +60,42 @@ public interface CommerceProductDefinitionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceProductDefinitionServiceUtil} to access the commerce product definition remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CommerceProductDefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceProductDefinition addCommerceProductDefinition(
+		java.lang.String baseSKU, Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CommerceProductDefinition deleteCommerceProductDefinition(
+		CommerceProductDefinition commerceProductDefinition)
+		throws PortalException;
+
+	public CommerceProductDefinition deleteCommerceProductDefinition(
+		long commerceProductDefinitionId) throws PortalException;
+
+	public CommerceProductDefinition updateCommerceProductDefinition(
+		long commerceProductDefinitionId, java.lang.String baseSKU,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CommerceProductDefinition updateStatus(long userId,
+		long commerceProductDefinitionId, int status,
+		ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceProductDefinitionsCount(long groupId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +103,13 @@ public interface CommerceProductDefinitionService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductDefinition> getCommerceProductDefinitions(
+		long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductDefinition> getCommerceProductDefinitions(
+		long groupId, int start, int end,
+		OrderByComparator<CommerceProductDefinition> orderByComparator);
 }

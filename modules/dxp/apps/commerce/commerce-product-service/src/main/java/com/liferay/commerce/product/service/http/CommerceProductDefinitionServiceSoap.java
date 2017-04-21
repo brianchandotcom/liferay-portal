@@ -16,9 +16,20 @@ package com.liferay.commerce.product.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.service.CommerceProductDefinitionServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+
+import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.product.service.CommerceProductDefinitionServiceUtil} service utility. The
+ * {@link CommerceProductDefinitionServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +64,162 @@ import aQute.bnd.annotation.ProviderType;
  * @author Marco Leo
  * @see CommerceProductDefinitionServiceHttp
  * @see com.liferay.commerce.product.model.CommerceProductDefinitionSoap
- * @see com.liferay.commerce.product.service.CommerceProductDefinitionServiceUtil
+ * @see CommerceProductDefinitionServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceProductDefinitionServiceSoap {
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionSoap addCommerceProductDefinition(
+		java.lang.String baseSKU, java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues,
+		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.commerce.product.model.CommerceProductDefinition returnValue =
+				CommerceProductDefinitionServiceUtil.addCommerceProductDefinition(baseSKU,
+					titleMap, descriptionMap, productTypeName, ddmStructureKey,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionSoap deleteCommerceProductDefinition(
+		com.liferay.commerce.product.model.CommerceProductDefinitionSoap commerceProductDefinition)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductDefinition returnValue =
+				CommerceProductDefinitionServiceUtil.deleteCommerceProductDefinition(com.liferay.commerce.product.model.impl.CommerceProductDefinitionModelImpl.toModel(
+						commerceProductDefinition));
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionSoap deleteCommerceProductDefinition(
+		long commerceProductDefinitionId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductDefinition returnValue =
+				CommerceProductDefinitionServiceUtil.deleteCommerceProductDefinition(commerceProductDefinitionId);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionSoap[] getCommerceProductDefinitions(
+		long groupId, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CommerceProductDefinition> returnValue =
+				CommerceProductDefinitionServiceUtil.getCommerceProductDefinitions(groupId,
+					start, end);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionSoap[] getCommerceProductDefinitions(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductDefinition> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CommerceProductDefinition> returnValue =
+				CommerceProductDefinitionServiceUtil.getCommerceProductDefinitions(groupId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceProductDefinitionsCount(long groupId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceProductDefinitionServiceUtil.getCommerceProductDefinitionsCount(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionSoap updateCommerceProductDefinition(
+		long commerceProductDefinitionId, java.lang.String baseSKU,
+		java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues,
+		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.commerce.product.model.CommerceProductDefinition returnValue =
+				CommerceProductDefinitionServiceUtil.updateCommerceProductDefinition(commerceProductDefinitionId,
+					baseSKU, titleMap, descriptionMap, productTypeName,
+					ddmStructureKey, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					serviceContext);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceProductDefinitionServiceSoap.class);
 }

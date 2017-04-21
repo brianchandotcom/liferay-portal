@@ -16,7 +16,9 @@ package com.liferay.commerce.product.service.permission;
 
 import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.model.CommerceProductDefinition;
+import com.liferay.commerce.product.model.CommerceProductInstance;
 import com.liferay.commerce.product.service.CommerceProductDefinitionLocalService;
+import com.liferay.commerce.product.service.CommerceProductInstanceLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -62,6 +64,36 @@ public class CommerceProductDefinitionPermission
 				permissionChecker, CommerceProductDefinition.class.getName(),
 				commerceProductDefinitionId, actionId);
 		}
+	}
+
+	public static void checkCommerceProductInstance(
+			PermissionChecker permissionChecker,
+			CommerceProductInstance commerceProductInstance, String actionId)
+		throws PortalException {
+
+		long commerceProductDefinitionId =
+			commerceProductInstance.getCommerceProductDefinitionId();
+
+		if (!contains(
+				permissionChecker, commerceProductDefinitionId, actionId)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, CommerceProductDefinition.class.getName(),
+				commerceProductDefinitionId, actionId);
+		}
+	}
+
+	public static void checkCommerceProductInstance(
+			PermissionChecker permissionChecker, long commerceProductInstanceId,
+			String actionId)
+		throws PortalException {
+
+		CommerceProductInstance commerceProductInstance =
+			_commerceProductInstanceLocalService.getCommerceProductInstance(
+				commerceProductInstanceId);
+
+		checkCommerceProductInstance(
+			permissionChecker, commerceProductInstance, actionId);
 	}
 
 	public static boolean contains(
@@ -120,5 +152,9 @@ public class CommerceProductDefinitionPermission
 	@Reference
 	private static CommerceProductDefinitionLocalService
 		_commerceProductDefinitionLocalService;
+
+	@Reference
+	private static CommerceProductInstanceLocalService
+		_commerceProductInstanceLocalService;
 
 }

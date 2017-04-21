@@ -43,7 +43,7 @@ public class CleanMojo extends AbstractLiferayMojo {
 			cleanCommand.execute();
 		}
 		catch (Exception e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+			throw new MojoExecutionException("Unable to clean " + fileName, e);
 		}
 	}
 

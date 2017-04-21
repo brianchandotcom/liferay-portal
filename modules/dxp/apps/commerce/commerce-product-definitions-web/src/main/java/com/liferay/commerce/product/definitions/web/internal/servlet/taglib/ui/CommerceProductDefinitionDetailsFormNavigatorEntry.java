@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.product.model.CommerceProductDefinition;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
@@ -53,7 +54,7 @@ public class CommerceProductDefinitionDetailsFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return "details";
+		return LanguageUtil.get(locale, "details");
 	}
 
 	@Override

@@ -25,27 +25,27 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {"form.navigator.category.order:Integer=60"},
+	property = {"form.navigator.category.order:Integer=100"},
 	service = FormNavigatorCategory.class
 )
-public class CommerceProductDefinitionMappingsFormNavigatorCategory
+public class CommerceProductInstanceDetailsFormNavigatorCategory
 	implements FormNavigatorCategory {
 
 	@Override
 	public String getFormNavigatorId() {
-		return CommerceProductDefinitionFormNavigatorConstants.
-			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
+		return CommerceProductInstanceFormNavigatorConstants.
+			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_INSTANCE;
 	}
 
 	@Override
 	public String getKey() {
-		return CommerceProductDefinitionFormNavigatorConstants.
-			CATEGORY_KEY_COMMERCE_PRODUCT_MAPPINGS;
+		return CommerceProductInstanceFormNavigatorConstants.
+			CATEGORY_KEY_COMMERCE_PRODUCT_INSTANCE_DETAILS;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "mappings");
+		return LanguageUtil.get(locale, "details");
 	}
 
 }

@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.product.model.CommerceProductDefinition;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
@@ -27,49 +27,38 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {"form.navigator.entry.order:Integer=100"},
+	property = {"form.navigator.entry.order:Integer=90"},
 	service = FormNavigatorEntry.class
 )
-public class CommerceProductDefinitionOptionsFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<CommerceProductDefinition>
-	implements FormNavigatorEntry<CommerceProductDefinition> {
+public class CommerceProductDefinitionOptionRelDetailsBaseInfoFormNavigatorEntry
+	extends BaseJSPFormNavigatorEntry<CommerceProductDefinitionOptionRel>
+	implements FormNavigatorEntry<CommerceProductDefinitionOptionRel> {
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceProductDefinitionFormNavigatorConstants.
-			CATEGORY_KEY_COMMERCE_PRODUCT_OPTIONS;
+		return CommerceProductDefinitionOptionRelFormNavigatorConstants.
+			CATEGORY_KEY_COMMERCE_PRODUCT_DEFINITION_OPTION_REL_DETAILS;
 	}
 
 	@Override
 	public String getFormNavigatorId() {
-		return CommerceProductDefinitionFormNavigatorConstants.
-			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
+		return CommerceProductDefinitionOptionRelFormNavigatorConstants.
+			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_OPTION_REL;
 	}
 
 	@Override
 	public String getKey() {
-		return "options";
+		return "base-information";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return "options";
-	}
-
-	@Override
-	public boolean isVisible(
-		User user, CommerceProductDefinition formModelBean) {
-
-		if (formModelBean != null) {
-			return true;
-		}
-
-		return false;
+		return LanguageUtil.get(locale, "base-information");
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/product/options.jsp";
+		return "/product_definition_option_rel/base_information.jsp";
 	}
 
 }

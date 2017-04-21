@@ -17,12 +17,13 @@ package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceProductDefinitionFormNavigatorConstants {
+public class CommerceProductDefinitionOptionRelFormNavigatorConstants {
 
-	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_DETAILS =
-		"details";
+	public static final String
+		CATEGORY_KEY_COMMERCE_PRODUCT_DEFINITION_OPTION_REL_DETAILS = "details";
 
-	public static final String FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION =
-		"commerce.product.definition.form";
+	public static final String
+		FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_OPTION_REL =
+			"commerce.product.definition.option.rel.form";
 
 }

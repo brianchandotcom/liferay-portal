@@ -14,22 +14,32 @@
 
 package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {"form.navigator.category.order:Integer=80"},
-	service = FormNavigatorCategory.class
+	property = {"form.navigator.entry.order:Integer=90"},
+	service = FormNavigatorEntry.class
 )
-public class CommerceProductDefinitionOptionsFormNavigatorCategory
-	implements FormNavigatorCategory {
+public class CommerceProductDefinitionDetailsBaseInfoFormNavigatorEntry
+	extends BaseJSPFormNavigatorEntry<CommerceProductDefinition>
+	implements FormNavigatorEntry<CommerceProductDefinition> {
+
+	@Override
+	public String getCategoryKey() {
+		return CommerceProductDefinitionFormNavigatorConstants.
+			CATEGORY_KEY_COMMERCE_PRODUCT_DETAILS;
+	}
 
 	@Override
 	public String getFormNavigatorId() {
@@ -39,13 +49,17 @@ public class CommerceProductDefinitionOptionsFormNavigatorCategory
 
 	@Override
 	public String getKey() {
-		return CommerceProductDefinitionFormNavigatorConstants.
-			CATEGORY_KEY_COMMERCE_PRODUCT_OPTIONS;
+		return "base-information";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "options");
+		return LanguageUtil.get(locale, "base-information");
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/product/base_information.jsp";
 	}
 
 }

@@ -14,39 +14,51 @@
 
 package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.product.model.CommerceProductInstance;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {"form.navigator.category.order:Integer=90"},
-	service = FormNavigatorCategory.class
+	property = {"form.navigator.entry.order:Integer=80"},
+	service = FormNavigatorEntry.class
 )
-public class CommerceProductDefinitionImagesFormNavigatorCategory
-	implements FormNavigatorCategory {
+public class CommerceProductInstanceDetailsStatusFormNavigatorEntry
+	extends BaseJSPFormNavigatorEntry<CommerceProductInstance>
+	implements FormNavigatorEntry<CommerceProductInstance> {
+
+	@Override
+	public String getCategoryKey() {
+		return CommerceProductInstanceFormNavigatorConstants.
+			CATEGORY_KEY_COMMERCE_PRODUCT_INSTANCE_DETAILS;
+	}
 
 	@Override
 	public String getFormNavigatorId() {
-		return CommerceProductDefinitionFormNavigatorConstants.
-			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
+		return CommerceProductInstanceFormNavigatorConstants.
+			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_INSTANCE;
 	}
 
 	@Override
 	public String getKey() {
-		return CommerceProductDefinitionFormNavigatorConstants.
-			CATEGORY_KEY_COMMERCE_PRODUCT_IMAGES;
+		return "status";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "images");
+		return LanguageUtil.get(locale, "status");
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/product_instance/status.jsp";
 	}
 
 }

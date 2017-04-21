@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.product.model.CommerceProductDefinition;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
@@ -26,17 +27,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {"form.navigator.entry.order:Integer=100"},
+	property = {"form.navigator.entry.order:Integer=20"},
 	service = FormNavigatorEntry.class
 )
-public class CommerceProductDefinitionSkusFormNavigatorEntry
+public class CommerceProductDefinitionDetailsCategorizationsFormNavigatorEntry
 	extends BaseJSPFormNavigatorEntry<CommerceProductDefinition>
 	implements FormNavigatorEntry<CommerceProductDefinition> {
 
 	@Override
 	public String getCategoryKey() {
 		return CommerceProductDefinitionFormNavigatorConstants.
-			CATEGORY_KEY_COMMERCE_PRODUCT_SKUS;
+			CATEGORY_KEY_COMMERCE_PRODUCT_DETAILS;
 	}
 
 	@Override
@@ -47,17 +48,17 @@ public class CommerceProductDefinitionSkusFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "skus";
+		return "categorizations";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return "skus";
+		return LanguageUtil.get(locale, "categorizations");
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/product/skus.jsp";
+		return "/product/categorizations.jsp";
 	}
 
 }

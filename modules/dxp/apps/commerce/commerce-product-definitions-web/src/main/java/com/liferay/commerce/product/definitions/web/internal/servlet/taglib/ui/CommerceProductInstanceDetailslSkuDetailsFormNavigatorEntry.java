@@ -14,7 +14,8 @@
 
 package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.product.model.CommerceProductDefinition;
+import com.liferay.commerce.product.model.CommerceProductInstance;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
@@ -23,42 +24,41 @@ import java.util.Locale;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {"form.navigator.entry.order:Integer=10"},
+	property = {"form.navigator.entry.order:Integer=100"},
 	service = FormNavigatorEntry.class
 )
-public class CommerceProductDefinitionStatusFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<CommerceProductDefinition>
-	implements FormNavigatorEntry<CommerceProductDefinition> {
+public class CommerceProductInstanceDetailslSkuDetailsFormNavigatorEntry
+	extends BaseJSPFormNavigatorEntry<CommerceProductInstance>
+	implements FormNavigatorEntry<CommerceProductInstance> {
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceProductDefinitionFormNavigatorConstants.
-			CATEGORY_KEY_COMMERCE_PRODUCT_DETAILS;
+		return CommerceProductInstanceFormNavigatorConstants.
+			CATEGORY_KEY_COMMERCE_PRODUCT_INSTANCE_DETAILS;
 	}
 
 	@Override
 	public String getFormNavigatorId() {
-		return CommerceProductDefinitionFormNavigatorConstants.
-			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION;
+		return CommerceProductInstanceFormNavigatorConstants.
+			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_INSTANCE;
 	}
 
 	@Override
 	public String getKey() {
-		return "status";
+		return "sku-details";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return "status";
+		return LanguageUtil.get(locale, "sku-details");
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/product/status.jsp";
+		return "/product_instance/sku_details.jsp";
 	}
 
 }

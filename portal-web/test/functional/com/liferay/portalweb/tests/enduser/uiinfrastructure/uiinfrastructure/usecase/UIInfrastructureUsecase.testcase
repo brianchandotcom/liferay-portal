@@ -52,7 +52,7 @@
 			<var name="pageName" value="Test Page" />
 		</execute>
 
-		<task summary="Assert the 'Look and Feel' modal of the Hello World portlet">
+		<task summary="Assert the 'Look and Feel' iframe of the Hello World portlet">
 			<execute macro="Portlet#gotoPortletOptions">
 				<var name="portletName" value="Hello World" />
 				<var name="portletOption" value="Look and Feel Configuration" />

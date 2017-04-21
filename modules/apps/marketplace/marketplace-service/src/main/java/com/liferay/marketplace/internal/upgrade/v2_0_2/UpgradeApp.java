@@ -16,45 +16,16 @@ package com.liferay.marketplace.internal.upgrade.v2_0_2;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-import java.io.IOException;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 /**
  * @author Adam Brandizzi
+ * @author Ryan Park
  */
 public class UpgradeApp extends UpgradeProcess {
 
-	protected void deleteApp(String contextName)
-		throws IOException, SQLException {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select appId from Marketplace_Module where contextName = ?")) {
-
-			ps.setString(1, contextName);
-
-			ResultSet rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long appId = rs.getLong("appId");
-
-				runSQL("delete from Marketplace_Module where appId = " + appId);
-				runSQL("delete from Marketplace_App where appId = " + appId);
-			}
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (String contextName : _CONTEXT_NAMES) {
-			deleteApp(contextName);
-		}
+		runSQL("delete from Marketplace_App where appId is not null");
+		runSQL("delete from Marketplace_Module where moduleId is not null");
 	}
-
-	private static final String[] _CONTEXT_NAMES = {
-		"jasperreports-web", "reports-portlet", "drools-web"
-	};
 
 }

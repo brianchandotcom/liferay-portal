@@ -55,8 +55,8 @@ public class DistBundleMojo extends AbstractBundleMojo {
 
 		String packaging = project.getPackaging();
 
-		if (packaging.equals("jar") || packaging.equals("war")) {
-			try {
+		try {
+			if (packaging.equals("jar") || packaging.equals("war")) {
 				String deployDirName = BundleSupportUtil.getDeployDirName(
 					deployFile.getName());
 
@@ -79,13 +79,7 @@ public class DistBundleMojo extends AbstractBundleMojo {
 						"Please specify either zip or tar.gz or tgz");
 				}
 			}
-			catch (Exception e) {
-				throw new MojoExecutionException(
-					"Unable to create distributable bundle", e);
-			}
-		}
-		else if (!project.hasParent()) {
-			try {
+			else if (!project.hasParent()) {
 				archiveFile.delete();
 
 				File liferayHomeDir = getLiferayHomeDir();
@@ -114,10 +108,10 @@ public class DistBundleMojo extends AbstractBundleMojo {
 
 				FileUtil.deleteDirectory(liferayHomeDir.toPath());
 			}
-			catch (Exception e) {
-				throw new MojoExecutionException(
-					"Unable to create distributable bundle", e);
-			}
+		}
+		catch (Exception e) {
+			throw new MojoExecutionException(
+				"Unable to create distributable bundle", e);
 		}
 	}
 

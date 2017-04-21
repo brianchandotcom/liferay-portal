@@ -150,17 +150,15 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new GetterUtilCheck());
 		_sourceChecks.add(new JSPButtonTagCheck());
 		_sourceChecks.add(
-			new JSPDefineObjectsCheck(
-				portalSource, subrepository,
-				getPluginsInsideModulesDirectoryNames()));
+			new JSPDefineObjectsCheck(getPluginsInsideModulesDirectoryNames()));
 		_sourceChecks.add(new JSPEmptyLinesCheck());
 		_sourceChecks.add(new JSPExceptionOrderCheck());
 		_sourceChecks.add(new JSPIfStatementCheck());
-		_sourceChecks.add(new JSPImportsCheck(portalSource, subrepository));
+		_sourceChecks.add(new JSPImportsCheck());
 		_sourceChecks.add(new JSPIncludeCheck());
 		_sourceChecks.add(new JSPIndentationCheck());
 		_sourceChecks.add(new JSPLanguageUtilCheck());
-		_sourceChecks.add(new JSPLogFileNameCheck(subrepository));
+		_sourceChecks.add(new JSPLogFileNameCheck());
 		_sourceChecks.add(new JSPRedirectBackURLCheck());
 		_sourceChecks.add(new JSPSendRedirectCheck());
 		_sourceChecks.add(new JSPSessionKeysCheck());
@@ -168,7 +166,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JSPSubnameCheck());
 		_sourceChecks.add(
 			new JSPTagAttributesCheck(
-				portalSource, subrepository,
 				_getPrimitiveTagAttributeDataTypes(), _getTagJavaClassesMap()));
 		_sourceChecks.add(new JSPTaglibVariableCheck());
 		_sourceChecks.add(new JSPUnusedImportCheck(_contentsMap));

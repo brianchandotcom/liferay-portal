@@ -31,13 +31,6 @@ import org.apache.maven.artifact.versioning.ComparableVersion;
  */
 public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 
-	public JavaDeprecatedJavadocCheck(
-		boolean portalSource, boolean subrepository) {
-
-		_portalSource = portalSource;
-		_subrepository = subrepository;
-	}
-
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
@@ -113,7 +106,9 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 
 		boolean usePortalReleaseVersion = false;
 
-		if (_portalSource && !isModulesFile(absolutePath, _subrepository)) {
+		if (isPortalSource() &&
+			!isModulesFile(absolutePath, isSubrepository())) {
+
 			usePortalReleaseVersion = true;
 		}
 
@@ -160,7 +155,5 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		"(\n\\s*\\* @deprecated)( As of ([0-9\\.]+)(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
 	private ComparableVersion _mainReleaseComparableVersion;
-	private final boolean _portalSource;
-	private final boolean _subrepository;
 
 }

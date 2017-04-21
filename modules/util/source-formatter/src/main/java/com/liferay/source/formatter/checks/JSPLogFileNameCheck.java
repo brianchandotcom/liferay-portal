@@ -26,15 +26,11 @@ import java.util.regex.Pattern;
  */
 public class JSPLogFileNameCheck extends BaseFileCheck {
 
-	public JSPLogFileNameCheck(boolean subrepository) {
-		_subrepository = subrepository;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!isModulesFile(absolutePath, _subrepository) &&
+		if (!isModulesFile(absolutePath, isSubrepository()) &&
 			!absolutePath.contains("/portal-web/")) {
 
 			content = _formatLogFileName(absolutePath, content);
@@ -100,6 +96,5 @@ public class JSPLogFileNameCheck extends BaseFileCheck {
 
 	private final Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
-	private final boolean _subrepository;
 
 }

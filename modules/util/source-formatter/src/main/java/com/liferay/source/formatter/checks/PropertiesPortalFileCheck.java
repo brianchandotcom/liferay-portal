@@ -25,12 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class PropertiesPortalFileCheck extends BaseFileCheck {
 
-	public PropertiesPortalFileCheck(
-		boolean portalSource, boolean subrepository,
-		String portalPortalPropertiesContent) {
-
-		_portalSource = portalSource;
-		_subrepository = subrepository;
+	public PropertiesPortalFileCheck(String portalPortalPropertiesContent) {
 		_portalPortalPropertiesContent = portalPortalPropertiesContent;
 	}
 
@@ -39,9 +34,9 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (((_portalSource || _subrepository) &&
+		if (((isPortalSource() || isSubrepository()) &&
 			 fileName.matches(".*portal-legacy-.*\\.properties")) ||
-			(!_portalSource && !_subrepository &&
+			(!isPortalSource() && !isSubrepository() &&
 			 fileName.endsWith("portal.properties"))) {
 
 			_checkPortalProperties(fileName, content);
@@ -93,7 +88,5 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 	}
 
 	private final String _portalPortalPropertiesContent;
-	private final boolean _portalSource;
-	private final boolean _subrepository;
 
 }

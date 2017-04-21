@@ -34,10 +34,9 @@ import java.util.Properties;
 public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
 	public PropertiesSourceFormatterFileCheck(
-		boolean portalSource, String baseDirName, String projectPathPrefix,
+		String baseDirName, String projectPathPrefix,
 		boolean hasPrivateAppsDir) {
 
-		_portalSource = portalSource;
 		_baseDirName = baseDirName;
 		_projectPathPrefix = projectPathPrefix;
 		_hasPrivateAppsDir = hasPrivateAppsDir;
@@ -60,7 +59,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
 		int level = ToolsUtil.PLUGINS_MAX_DIR_LEVEL;
 
-		if (_portalSource) {
+		if (isPortalSource()) {
 			level = ToolsUtil.PORTAL_MAX_DIR_LEVEL;
 		}
 
@@ -92,7 +91,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 			for (String propertyFileName : propertyFileNames) {
 				if (propertyFileName.contains(StringPool.STAR) ||
 					propertyFileName.endsWith("-ext.properties") ||
-					(_portalSource && !_hasPrivateAppsDir &&
+					(isPortalSource() && !_hasPrivateAppsDir &&
 					 isModulesApp(
 						 propertyFileName, _projectPathPrefix, true))) {
 
@@ -119,7 +118,6 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
 	private final String _baseDirName;
 	private final boolean _hasPrivateAppsDir;
-	private final boolean _portalSource;
 	private final String _projectPathPrefix;
 
 }

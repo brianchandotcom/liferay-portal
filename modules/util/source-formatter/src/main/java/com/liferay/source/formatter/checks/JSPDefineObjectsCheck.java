@@ -27,11 +27,8 @@ import java.util.regex.Pattern;
 public class JSPDefineObjectsCheck extends BaseFileCheck {
 
 	public JSPDefineObjectsCheck(
-		boolean portalSource, boolean subrepository,
 		List<String> pluginsInsideModulesDirectoryNames) {
 
-		_portalSource = portalSource;
-		_subrepository = subrepository;
 		_pluginsInsideModulesDirectoryNames =
 			pluginsInsideModulesDirectoryNames;
 	}
@@ -62,7 +59,7 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 				defineObject[2], "portlet");
 		}
 
-		if (!_portalSource && !_subrepository) {
+		if (!isPortalSource() && !isSubrepository()) {
 			return;
 		}
 
@@ -282,7 +279,5 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
 	private final List<String> _pluginsInsideModulesDirectoryNames;
-	private final boolean _portalSource;
-	private final boolean _subrepository;
 
 }

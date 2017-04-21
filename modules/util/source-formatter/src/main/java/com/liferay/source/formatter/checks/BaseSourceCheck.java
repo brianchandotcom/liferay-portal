@@ -352,8 +352,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private int _maxLineLength;
 	private boolean _portalSource;
 	private Properties _properties;
-	private boolean _subrepository;
 	private final Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
+	private boolean _subrepository;
 
 }

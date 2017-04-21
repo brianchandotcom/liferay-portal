@@ -473,7 +473,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JavaHibernateSQLCheck());
 		_sourceChecks.add(
 			new JavaIfStatementCheck(sourceFormatterArgs.getMaxLineLength()));
-		_sourceChecks.add(new JavaIllegalImportsCheck(portalSource));
+		_sourceChecks.add(new JavaIllegalImportsCheck());
 		_sourceChecks.add(new JavaImportsCheck());
 		_sourceChecks.add(new JavaInterfaceCheck());
 		_sourceChecks.add(new JavaIOExceptionCheck());
@@ -532,15 +532,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (GetterUtil.getBoolean(
 				getProperty("add.missing.deprecation.release.version"))) {
 
-			_sourceChecks.add(
-				new JavaDeprecatedJavadocCheck(portalSource, subrepository));
+			_sourceChecks.add(new JavaDeprecatedJavadocCheck());
 		}
 	}
 
 	private void _populateJavaTermChecks() throws Exception {
-		_sourceChecks.add(
-			new JavaTermOrderCheck(
-				portalSource, subrepository, _getPortalCustomSQLContent()));
+		_sourceChecks.add(new JavaTermOrderCheck(_getPortalCustomSQLContent()));
 
 		_sourceChecks.add(new JavaTermDividersCheck());
 

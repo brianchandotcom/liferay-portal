@@ -82,15 +82,12 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			new PropertiesLongLinesCheck(
 				sourceFormatterArgs.getMaxLineLength()));
 		_sourceChecks.add(
-			new PropertiesPortalFileCheck(
-				portalSource, subrepository,
-				_getPortalPortalPropertiesContent()));
-		_sourceChecks.add(
-			new PropertiesPortletFileCheck(portalSource, subrepository));
+			new PropertiesPortalFileCheck(_getPortalPortalPropertiesContent()));
+		_sourceChecks.add(new PropertiesPortletFileCheck());
 		_sourceChecks.add(
 			new PropertiesSourceFormatterFileCheck(
-				portalSource, sourceFormatterArgs.getBaseDirName(),
-				getProjectPathPrefix(), _hasPrivateAppsDir()));
+				sourceFormatterArgs.getBaseDirName(), getProjectPathPrefix(),
+				_hasPrivateAppsDir()));
 	}
 
 	private String _getPortalPortalPropertiesContent() throws Exception {

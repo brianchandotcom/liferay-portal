@@ -39,11 +39,9 @@ import org.dom4j.Element;
 public class XMLServiceFileCheck extends BaseFileCheck {
 
 	public XMLServiceFileCheck(
-		boolean portalSource, boolean subrepository, String portalTablesContent,
+		String portalTablesContent,
 		List<String> pluginsInsideModulesDirectoryNames) {
 
-		_portalSource = portalSource;
-		_subrepository = subrepository;
 		_portalTablesContent = portalTablesContent;
 		_pluginsInsideModulesDirectoryNames =
 			pluginsInsideModulesDirectoryNames;
@@ -160,9 +158,9 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 	private String _getTablesContent(String fileName, String absolutePath)
 		throws Exception {
 
-		if (_portalSource &&
+		if (isPortalSource() &&
 			!isModulesFile(
-				absolutePath, _subrepository,
+				absolutePath, isSubrepository(),
 				_pluginsInsideModulesDirectoryNames)) {
 
 			return _portalTablesContent;
@@ -195,9 +193,7 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 		"service.finder.column.sort.excludes";
 
 	private final List<String> _pluginsInsideModulesDirectoryNames;
-	private final boolean _portalSource;
 	private final String _portalTablesContent;
-	private final boolean _subrepository;
 
 	private class ServiceExceptionElementComparator extends ElementComparator {
 

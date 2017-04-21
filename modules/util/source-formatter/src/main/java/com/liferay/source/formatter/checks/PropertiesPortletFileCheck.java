@@ -26,13 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class PropertiesPortletFileCheck extends BaseFileCheck {
 
-	public PropertiesPortletFileCheck(
-		boolean portalSource, boolean subrepository) {
-
-		_portalSource = portalSource;
-		_subrepository = subrepository;
-	}
-
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
@@ -53,7 +46,7 @@ public class PropertiesPortletFileCheck extends BaseFileCheck {
 				"include-and-override=portlet-ext.properties\n\n" + content;
 		}
 
-		if (!_portalSource && !_subrepository) {
+		if (!isPortalSource() && !isSubrepository()) {
 			return content;
 		}
 
@@ -108,8 +101,5 @@ public class PropertiesPortletFileCheck extends BaseFileCheck {
 
 		return content;
 	}
-
-	private final boolean _portalSource;
-	private final boolean _subrepository;
 
 }

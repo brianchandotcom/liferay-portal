@@ -82,13 +82,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new XMLLog4jFileCheck());
 		_sourceChecks.add(new XMLLookAndFeelFileCheck());
 		_sourceChecks.add(new XMLModelHintsFileCheck());
-		_sourceChecks.add(new XMLPortletFileCheck(portalSource, subrepository));
+		_sourceChecks.add(new XMLPortletFileCheck());
 		_sourceChecks.add(new XMLPortletPreferencesFileCheck());
 		_sourceChecks.add(new XMLPoshiFileCheck());
 		_sourceChecks.add(new XMLResourceActionsFileCheck());
 		_sourceChecks.add(
 			new XMLServiceFileCheck(
-				portalSource, subrepository,
 				getContent("sql/portal-tables.sql", PORTAL_MAX_DIR_LEVEL),
 				getPluginsInsideModulesDirectoryNames()));
 		_sourceChecks.add(new XMLSolrSchemaFileCheck());

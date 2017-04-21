@@ -29,11 +29,6 @@ import java.util.regex.Pattern;
  */
 public class JSPImportsCheck extends BaseFileCheck {
 
-	public JSPImportsCheck(boolean portalSource, boolean subrepository) {
-		_portalSource = portalSource;
-		_subrepository = subrepository;
-	}
-
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
@@ -46,7 +41,7 @@ public class JSPImportsCheck extends BaseFileCheck {
 			fileName, content, _compressedJSPTaglibPattern,
 			_uncompressedJSPTaglibPattern);
 
-		if ((_portalSource || _subrepository) &&
+		if ((isPortalSource() || isSubrepository()) &&
 			content.contains("page import=") &&
 			!fileName.contains("init.jsp") &&
 			!fileName.contains("init-ext.jsp") &&
@@ -110,8 +105,6 @@ public class JSPImportsCheck extends BaseFileCheck {
 		"(<.*\n*page import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _compressedJSPTaglibPattern = Pattern.compile(
 		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
-	private final boolean _portalSource;
-	private final boolean _subrepository;
 	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
 		"(<.*page import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(

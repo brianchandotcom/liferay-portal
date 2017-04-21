@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.servlet.PortletResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -90,7 +92,11 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 		queryString = HttpUtil.getQueryString(queryString);
 
-		cacheKeyGenerator.append(sterilizeQueryString(queryString));
+		String queryStringDigest = DigesterUtil.digestHex(
+			Digester.SHA_256, queryString);
+
+		cacheKeyGenerator.append(StringPool.UNDERLINE);
+		cacheKeyGenerator.append(queryStringDigest);
 
 		if (PortalUtil.isRightToLeft(request)) {
 			cacheKeyGenerator.append("_rtl");

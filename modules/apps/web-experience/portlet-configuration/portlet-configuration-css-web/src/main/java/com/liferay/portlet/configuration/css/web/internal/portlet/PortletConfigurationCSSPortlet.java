@@ -221,97 +221,133 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 	}
 
 	protected JSONObject getBorderDataJSONObject(ActionRequest actionRequest) {
-		String borderColorBottom = ParamUtil.getString(
-			actionRequest, "borderColorBottom");
-		String borderColorLeft = ParamUtil.getString(
-			actionRequest, "borderColorLeft");
-		String borderColorRight = ParamUtil.getString(
-			actionRequest, "borderColorRight");
-		String borderColorTop = ParamUtil.getString(
-			actionRequest, "borderColorTop");
-		String borderStyleBottom = ParamUtil.getString(
-			actionRequest, "borderStyleBottom");
-		String borderStyleLeft = ParamUtil.getString(
-			actionRequest, "borderStyleLeft");
-		String borderStyleRight = ParamUtil.getString(
-			actionRequest, "borderStyleRight");
-		String borderStyleTop = ParamUtil.getString(
-			actionRequest, "borderStyleTop");
-		String borderWidthBottom = ParamUtil.getString(
-			actionRequest, "borderWidthBottom");
-		String borderWidthBottomUnit = ParamUtil.getString(
-			actionRequest, "borderWidthBottomUnit");
-		String borderWidthLeft = ParamUtil.getString(
-			actionRequest, "borderWidthLeft");
-		String borderWidthLeftUnit = ParamUtil.getString(
-			actionRequest, "borderWidthLeftUnit");
-		String borderWidthRight = ParamUtil.getString(
-			actionRequest, "borderWidthRight");
-		String borderWidthRightUnit = ParamUtil.getString(
-			actionRequest, "borderWidthRightUnit");
-		String borderWidthTop = ParamUtil.getString(
-			actionRequest, "borderWidthTop");
-		String borderWidthTopUnit = ParamUtil.getString(
-			actionRequest, "borderWidthTopUnit");
-		boolean useForAllColor = ParamUtil.getBoolean(
-			actionRequest, "useForAllColor");
-		boolean useForAllStyle = ParamUtil.getBoolean(
-			actionRequest, "useForAllStyle");
-		boolean useForAllWidth = ParamUtil.getBoolean(
-			actionRequest, "useForAllWidth");
+		JSONObject borderDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 		JSONObject borderColorJSONObject = JSONFactoryUtil.createJSONObject();
 
+		String borderColorBottom = ParamUtil.getString(
+			actionRequest, "borderColorBottom");
+
 		borderColorJSONObject.put("bottom", borderColorBottom);
+
+		String borderColorLeft = ParamUtil.getString(
+			actionRequest, "borderColorLeft");
+
 		borderColorJSONObject.put("left", borderColorLeft);
+
+		String borderColorRight = ParamUtil.getString(
+			actionRequest, "borderColorRight");
+
 		borderColorJSONObject.put("right", borderColorRight);
+
+		boolean useForAllColor = ParamUtil.getBoolean(
+			actionRequest, "useForAllColor");
+
 		borderColorJSONObject.put("sameForAll", useForAllColor);
+
+		String borderColorTop = ParamUtil.getString(
+			actionRequest, "borderColorTop");
+
 		borderColorJSONObject.put("top", borderColorTop);
+
+		borderDataJSONObject.put("borderColor", borderColorJSONObject);
 
 		JSONObject borderStyleJSONObject = JSONFactoryUtil.createJSONObject();
 
+		String borderStyleBottom = ParamUtil.getString(
+			actionRequest, "borderStyleBottom");
+
 		borderStyleJSONObject.put("bottom", borderStyleBottom);
+
+		String borderStyleLeft = ParamUtil.getString(
+			actionRequest, "borderStyleLeft");
+
 		borderStyleJSONObject.put("left", borderStyleLeft);
+
+		String borderStyleRight = ParamUtil.getString(
+			actionRequest, "borderStyleRight");
+
 		borderStyleJSONObject.put("right", borderStyleRight);
+
+		boolean useForAllStyle = ParamUtil.getBoolean(
+			actionRequest, "useForAllStyle");
+
 		borderStyleJSONObject.put("sameForAll", useForAllStyle);
+
+		String borderStyleTop = ParamUtil.getString(
+			actionRequest, "borderStyleTop");
+
 		borderStyleJSONObject.put("top", borderStyleTop);
+
+		borderDataJSONObject.put("borderStyle", borderStyleJSONObject);
+
+		JSONObject borderWidthJSONObject = JSONFactoryUtil.createJSONObject();
 
 		JSONObject borderWidthBottomJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
+		String borderWidthBottomUnit = ParamUtil.getString(
+			actionRequest, "borderWidthBottomUnit");
+
 		borderWidthBottomJSONObject.put("unit", borderWidthBottomUnit);
+
+		String borderWidthBottom = ParamUtil.getString(
+			actionRequest, "borderWidthBottom");
+
 		borderWidthBottomJSONObject.put("value", borderWidthBottom);
+
+		borderWidthJSONObject.put("bottom", borderWidthBottomJSONObject);
 
 		JSONObject borderWidthLeftJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
+		String borderWidthLeftUnit = ParamUtil.getString(
+			actionRequest, "borderWidthLeftUnit");
+
 		borderWidthLeftJSONObject.put("unit", borderWidthLeftUnit);
+
+		String borderWidthLeft = ParamUtil.getString(
+			actionRequest, "borderWidthLeft");
+
 		borderWidthLeftJSONObject.put("value", borderWidthLeft);
+
+		borderWidthJSONObject.put("left", borderWidthLeftJSONObject);
 
 		JSONObject borderWidthRightJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
+		String borderWidthRightUnit = ParamUtil.getString(
+			actionRequest, "borderWidthRightUnit");
+
 		borderWidthRightJSONObject.put("unit", borderWidthRightUnit);
+
+		String borderWidthRight = ParamUtil.getString(
+			actionRequest, "borderWidthRight");
+
 		borderWidthRightJSONObject.put("value", borderWidthRight);
+
+		borderWidthJSONObject.put("right", borderWidthRightJSONObject);
+
+		boolean useForAllWidth = ParamUtil.getBoolean(
+			actionRequest, "useForAllWidth");
+
+		borderWidthJSONObject.put("sameForAll", useForAllWidth);
 
 		JSONObject borderWidthTopJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
+		String borderWidthTopUnit = ParamUtil.getString(
+			actionRequest, "borderWidthTopUnit");
+
 		borderWidthTopJSONObject.put("unit", borderWidthTopUnit);
+
+		String borderWidthTop = ParamUtil.getString(
+			actionRequest, "borderWidthTop");
+
 		borderWidthTopJSONObject.put("value", borderWidthTop);
 
-		JSONObject borderWidthJSONObject = JSONFactoryUtil.createJSONObject();
-
-		borderWidthJSONObject.put("bottom", borderWidthBottomJSONObject);
-		borderWidthJSONObject.put("left", borderWidthLeftJSONObject);
-		borderWidthJSONObject.put("right", borderWidthRightJSONObject);
-		borderWidthJSONObject.put("sameForAll", useForAllWidth);
 		borderWidthJSONObject.put("top", borderWidthTopJSONObject);
 
-		JSONObject borderDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		borderDataJSONObject.put("borderColor", borderColorJSONObject);
-		borderDataJSONObject.put("borderStyle", borderStyleJSONObject);
 		borderDataJSONObject.put("borderWidth", borderWidthJSONObject);
 
 		return borderDataJSONObject;
@@ -322,139 +358,193 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 
 		cssJSONObject.put(
 			"advancedData", getAdvancedDataJSONObject(actionRequest));
+
 		cssJSONObject.put("bgData", getBgDataJSONObject(actionRequest));
 		cssJSONObject.put("borderData", getBorderDataJSONObject(actionRequest));
 		cssJSONObject.put(
 			"spacingData", getSpacingDataJSONObject(actionRequest));
+
 		cssJSONObject.put("textData", getTextDataJSONObject(actionRequest));
 
 		return cssJSONObject.toString();
 	}
 
 	protected JSONObject getSpacingDataJSONObject(ActionRequest actionRequest) {
-		String marginBottom = ParamUtil.getString(
-			actionRequest, "marginBottom");
-		String marginBottomUnit = ParamUtil.getString(
-			actionRequest, "marginBottomUnit");
-		String marginLeft = ParamUtil.getString(actionRequest, "marginLeft");
-		String marginLeftUnit = ParamUtil.getString(
-			actionRequest, "marginLeftUnit");
-		String marginRight = ParamUtil.getString(actionRequest, "marginRight");
-		String marginRightUnit = ParamUtil.getString(
-			actionRequest, "marginRightUnit");
-		String marginTop = ParamUtil.getString(actionRequest, "marginTop");
-		String marginTopUnit = ParamUtil.getString(
-			actionRequest, "marginTopUnit");
-		String paddingBottom = ParamUtil.getString(
-			actionRequest, "paddingBottom");
-		String paddingBottomUnit = ParamUtil.getString(
-			actionRequest, "paddingBottomUnit");
-		String paddingLeft = ParamUtil.getString(actionRequest, "paddingLeft");
-		String paddingLeftUnit = ParamUtil.getString(
-			actionRequest, "paddingLeftUnit");
-		String paddingRight = ParamUtil.getString(
-			actionRequest, "paddingRight");
-		String paddingRightUnit = ParamUtil.getString(
-			actionRequest, "paddingRightUnit");
-		String paddingTop = ParamUtil.getString(actionRequest, "paddingTop");
-		String paddingTopUnit = ParamUtil.getString(
-			actionRequest, "paddingTopUnit");
-		boolean useForAllPadding = ParamUtil.getBoolean(
-			actionRequest, "useForAllPadding");
-		boolean useForAllMargin = ParamUtil.getBoolean(
-			actionRequest, "useForAllMargin");
-
-		JSONObject marginBottomJSONObject = JSONFactoryUtil.createJSONObject();
-
-		marginBottomJSONObject.put("unit", marginBottomUnit);
-		marginBottomJSONObject.put("value", marginBottom);
-
-		JSONObject marginLeftJSONObject = JSONFactoryUtil.createJSONObject();
-
-		marginLeftJSONObject.put("unit", marginLeftUnit);
-		marginLeftJSONObject.put("value", marginLeft);
-
-		JSONObject marginRightJSONObject = JSONFactoryUtil.createJSONObject();
-
-		marginRightJSONObject.put("unit", marginRightUnit);
-		marginRightJSONObject.put("value", marginRight);
-
-		JSONObject marginTopJSONObject = JSONFactoryUtil.createJSONObject();
-
-		marginTopJSONObject.put("unit", marginTopUnit);
-		marginTopJSONObject.put("value", marginTop);
+		JSONObject spacingDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 		JSONObject marginJSONObject = JSONFactoryUtil.createJSONObject();
 
+		JSONObject marginBottomJSONObject = JSONFactoryUtil.createJSONObject();
+
+		String marginBottomUnit = ParamUtil.getString(
+			actionRequest, "marginBottomUnit");
+
+		marginBottomJSONObject.put("unit", marginBottomUnit);
+
+		String marginBottom = ParamUtil.getString(
+			actionRequest, "marginBottom");
+
+		marginBottomJSONObject.put("value", marginBottom);
+
 		marginJSONObject.put("bottom", marginBottomJSONObject);
+
+		JSONObject marginLeftJSONObject = JSONFactoryUtil.createJSONObject();
+
+		String marginLeftUnit = ParamUtil.getString(
+			actionRequest, "marginLeftUnit");
+
+		marginLeftJSONObject.put("unit", marginLeftUnit);
+
+		String marginLeft = ParamUtil.getString(actionRequest, "marginLeft");
+
+		marginLeftJSONObject.put("value", marginLeft);
+
 		marginJSONObject.put("left", marginLeftJSONObject);
+
+		JSONObject marginRightJSONObject = JSONFactoryUtil.createJSONObject();
+
+		String marginRightUnit = ParamUtil.getString(
+			actionRequest, "marginRightUnit");
+
+		marginRightJSONObject.put("unit", marginRightUnit);
+
+		String marginRight = ParamUtil.getString(actionRequest, "marginRight");
+
+		marginRightJSONObject.put("value", marginRight);
+
 		marginJSONObject.put("right", marginRightJSONObject);
+
+		boolean useForAllMargin = ParamUtil.getBoolean(
+			actionRequest, "useForAllMargin");
+
 		marginJSONObject.put("sameForAll", useForAllMargin);
+
+		JSONObject marginTopJSONObject = JSONFactoryUtil.createJSONObject();
+
+		String marginTopUnit = ParamUtil.getString(
+			actionRequest, "marginTopUnit");
+
+		marginTopJSONObject.put("unit", marginTopUnit);
+
+		String marginTop = ParamUtil.getString(actionRequest, "marginTop");
+
+		marginTopJSONObject.put("value", marginTop);
+
 		marginJSONObject.put("top", marginTopJSONObject);
 
-		JSONObject paddingBottomJSONObject = JSONFactoryUtil.createJSONObject();
-
-		paddingBottomJSONObject.put("unit", paddingBottomUnit);
-		paddingBottomJSONObject.put("value", paddingBottom);
-
-		JSONObject paddingLeftJSONObject = JSONFactoryUtil.createJSONObject();
-
-		paddingLeftJSONObject.put("unit", paddingLeftUnit);
-		paddingLeftJSONObject.put("value", paddingLeft);
-
-		JSONObject paddingRightJSONObject = JSONFactoryUtil.createJSONObject();
-
-		paddingRightJSONObject.put("unit", paddingRightUnit);
-		paddingRightJSONObject.put("value", paddingRight);
-
-		JSONObject paddingTopJSONObject = JSONFactoryUtil.createJSONObject();
-
-		paddingTopJSONObject.put("unit", paddingTopUnit);
-		paddingTopJSONObject.put("value", paddingTop);
+		spacingDataJSONObject.put("margin", marginJSONObject);
 
 		JSONObject paddingJSONObject = JSONFactoryUtil.createJSONObject();
 
+		JSONObject paddingBottomJSONObject = JSONFactoryUtil.createJSONObject();
+
+		String paddingBottomUnit = ParamUtil.getString(
+			actionRequest, "paddingBottomUnit");
+
+		paddingBottomJSONObject.put("unit", paddingBottomUnit);
+
+		String paddingBottom = ParamUtil.getString(
+			actionRequest, "paddingBottom");
+
+		paddingBottomJSONObject.put("value", paddingBottom);
+
 		paddingJSONObject.put("bottom", paddingBottomJSONObject);
+
+		JSONObject paddingLeftJSONObject = JSONFactoryUtil.createJSONObject();
+
+		String paddingLeftUnit = ParamUtil.getString(
+			actionRequest, "paddingLeftUnit");
+
+		paddingLeftJSONObject.put("unit", paddingLeftUnit);
+
+		String paddingLeft = ParamUtil.getString(actionRequest, "paddingLeft");
+
+		paddingLeftJSONObject.put("value", paddingLeft);
+
 		paddingJSONObject.put("left", paddingLeftJSONObject);
+
+		JSONObject paddingRightJSONObject = JSONFactoryUtil.createJSONObject();
+
+		String paddingRightUnit = ParamUtil.getString(
+			actionRequest, "paddingRightUnit");
+
+		paddingRightJSONObject.put("unit", paddingRightUnit);
+
+		String paddingRight = ParamUtil.getString(
+			actionRequest, "paddingRight");
+
+		paddingRightJSONObject.put("value", paddingRight);
+
 		paddingJSONObject.put("right", paddingRightJSONObject);
+
+		boolean useForAllPadding = ParamUtil.getBoolean(
+			actionRequest, "useForAllPadding");
+
 		paddingJSONObject.put("sameForAll", useForAllPadding);
+
+		JSONObject paddingTopJSONObject = JSONFactoryUtil.createJSONObject();
+
+		String paddingTopUnit = ParamUtil.getString(
+			actionRequest, "paddingTopUnit");
+
+		paddingTopJSONObject.put("unit", paddingTopUnit);
+
+		String paddingTop = ParamUtil.getString(actionRequest, "paddingTop");
+
+		paddingTopJSONObject.put("value", paddingTop);
+
 		paddingJSONObject.put("top", paddingTopJSONObject);
 
-		JSONObject spacingDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		spacingDataJSONObject.put("margin", marginJSONObject);
 		spacingDataJSONObject.put("padding", paddingJSONObject);
 
 		return spacingDataJSONObject;
 	}
 
 	protected JSONObject getTextDataJSONObject(ActionRequest actionRequest) {
-		boolean fontBold = ParamUtil.getBoolean(actionRequest, "fontBold");
-		String fontColor = ParamUtil.getString(actionRequest, "fontColor");
-		String fontFamily = ParamUtil.getString(actionRequest, "fontFamily");
-		boolean fontItalic = ParamUtil.getBoolean(actionRequest, "fontItalic");
-		String fontSize = ParamUtil.getString(actionRequest, "fontSize");
-		String letterSpacing = ParamUtil.getString(
-			actionRequest, "letterSpacing");
-		String lineHeight = ParamUtil.getString(actionRequest, "lineHeight");
-		String textAlign = ParamUtil.getString(actionRequest, "textAlign");
-		String textDecoration = ParamUtil.getString(
-			actionRequest, "textDecoration");
-		String wordSpacing = ParamUtil.getString(actionRequest, "wordSpacing");
-
 		JSONObject textDataJSONObject = JSONFactoryUtil.createJSONObject();
 
+		String fontColor = ParamUtil.getString(actionRequest, "fontColor");
+
 		textDataJSONObject.put("color", fontColor);
+
+		String fontFamily = ParamUtil.getString(actionRequest, "fontFamily");
+
 		textDataJSONObject.put("fontFamily", fontFamily);
+
+		String fontSize = ParamUtil.getString(actionRequest, "fontSize");
+
 		textDataJSONObject.put("fontSize", fontSize);
+
+		boolean fontItalic = ParamUtil.getBoolean(actionRequest, "fontItalic");
+
 		textDataJSONObject.put(
 			"fontStyle", fontItalic ? "italic" : StringPool.BLANK);
+
+		boolean fontBold = ParamUtil.getBoolean(actionRequest, "fontBold");
+
 		textDataJSONObject.put(
 			"fontWeight", fontBold ? "bold" : StringPool.BLANK);
+
+		String letterSpacing = ParamUtil.getString(
+			actionRequest, "letterSpacing");
+
 		textDataJSONObject.put("letterSpacing", letterSpacing);
+
+		String lineHeight = ParamUtil.getString(actionRequest, "lineHeight");
+
 		textDataJSONObject.put("lineHeight", lineHeight);
+
+		String textAlign = ParamUtil.getString(actionRequest, "textAlign");
+
 		textDataJSONObject.put("textAlign", textAlign);
+
+		String textDecoration = ParamUtil.getString(
+			actionRequest, "textDecoration");
+
 		textDataJSONObject.put("textDecoration", textDecoration);
+
+		String wordSpacing = ParamUtil.getString(actionRequest, "wordSpacing");
+
 		textDataJSONObject.put("wordSpacing", wordSpacing);
 
 		return textDataJSONObject;

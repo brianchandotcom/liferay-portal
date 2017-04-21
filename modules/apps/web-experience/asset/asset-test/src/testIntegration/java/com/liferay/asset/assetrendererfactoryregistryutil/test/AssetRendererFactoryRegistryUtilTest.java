@@ -14,6 +14,7 @@
 
 package com.liferay.asset.assetrendererfactoryregistryutil.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -27,10 +28,12 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Peter Fellwock
  */
+@RunWith(Arquillian.class)
 public class AssetRendererFactoryRegistryUtilTest {
 
 	@ClassRule

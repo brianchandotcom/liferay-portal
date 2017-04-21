@@ -14,6 +14,7 @@
 
 package com.liferay.asset.search.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
@@ -32,11 +33,13 @@ import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Istvan Andras Dezsi
  * @author Tibor Lipusz
  */
+@RunWith(Arquillian.class)
 @Sync
 public class AssetVocabularySearchTest extends BaseSearchTestCase {
 

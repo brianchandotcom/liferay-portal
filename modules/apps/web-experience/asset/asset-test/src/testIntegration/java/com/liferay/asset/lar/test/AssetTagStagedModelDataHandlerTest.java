@@ -14,6 +14,7 @@
 
 package com.liferay.asset.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -31,10 +32,12 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Daniel Kocsis
  */
+@RunWith(Arquillian.class)
 @Sync
 public class AssetTagStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {

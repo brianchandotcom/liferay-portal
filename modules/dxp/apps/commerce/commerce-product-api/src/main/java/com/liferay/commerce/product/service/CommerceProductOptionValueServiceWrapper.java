@@ -34,6 +34,48 @@ public class CommerceProductOptionValueServiceWrapper
 		_commerceProductOptionValueService = commerceProductOptionValueService;
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductOptionValue addCommerceProductOptionValue(
+		long commerceProductOptionId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductOptionValueService.addCommerceProductOptionValue(commerceProductOptionId,
+			titleMap, priority, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductOptionValue deleteCommerceProductOptionValue(
+		com.liferay.commerce.product.model.CommerceProductOptionValue commerceProductOptionValue)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductOptionValueService.deleteCommerceProductOptionValue(commerceProductOptionValue);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductOptionValue deleteCommerceProductOptionValue(
+		long commerceProductOptionValueId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductOptionValueService.deleteCommerceProductOptionValue(commerceProductOptionValueId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductOptionValue updateCommerceProductOptionValue(
+		long commerceProductOptionValueId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductOptionValueService.updateCommerceProductOptionValue(commerceProductOptionValueId,
+			titleMap, priority, serviceContext);
+	}
+
+	@Override
+	public int getCommerceProductOptionValuesCount(long commerceProductOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductOptionValueService.getCommerceProductOptionValuesCount(commerceProductOptionId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,6 +84,23 @@ public class CommerceProductOptionValueServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commerceProductOptionValueService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceProductOptionValue> getCommerceProductOptionValues(
+		long commerceProductOptionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductOptionValueService.getCommerceProductOptionValues(commerceProductOptionId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceProductOptionValue> getCommerceProductOptionValues(
+		long commerceProductOptionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductOptionValue> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductOptionValueService.getCommerceProductOptionValues(commerceProductOptionId,
+			start, end, orderByComparator);
 	}
 
 	@Override

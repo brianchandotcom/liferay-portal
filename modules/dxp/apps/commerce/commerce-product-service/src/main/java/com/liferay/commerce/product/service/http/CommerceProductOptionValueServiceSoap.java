@@ -16,9 +16,20 @@ package com.liferay.commerce.product.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.service.CommerceProductOptionValueServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+
+import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.product.service.CommerceProductOptionValueServiceUtil} service utility. The
+ * {@link CommerceProductOptionValueServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +64,136 @@ import aQute.bnd.annotation.ProviderType;
  * @author Marco Leo
  * @see CommerceProductOptionValueServiceHttp
  * @see com.liferay.commerce.product.model.CommerceProductOptionValueSoap
- * @see com.liferay.commerce.product.service.CommerceProductOptionValueServiceUtil
+ * @see CommerceProductOptionValueServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceProductOptionValueServiceSoap {
+	public static com.liferay.commerce.product.model.CommerceProductOptionValueSoap addCommerceProductOptionValue(
+		long commerceProductOptionId, java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues, int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+
+			com.liferay.commerce.product.model.CommerceProductOptionValue returnValue =
+				CommerceProductOptionValueServiceUtil.addCommerceProductOptionValue(commerceProductOptionId,
+					titleMap, priority, serviceContext);
+
+			return com.liferay.commerce.product.model.CommerceProductOptionValueSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductOptionValueSoap deleteCommerceProductOptionValue(
+		com.liferay.commerce.product.model.CommerceProductOptionValueSoap commerceProductOptionValue)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductOptionValue returnValue =
+				CommerceProductOptionValueServiceUtil.deleteCommerceProductOptionValue(com.liferay.commerce.product.model.impl.CommerceProductOptionValueModelImpl.toModel(
+						commerceProductOptionValue));
+
+			return com.liferay.commerce.product.model.CommerceProductOptionValueSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductOptionValueSoap deleteCommerceProductOptionValue(
+		long commerceProductOptionValueId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductOptionValue returnValue =
+				CommerceProductOptionValueServiceUtil.deleteCommerceProductOptionValue(commerceProductOptionValueId);
+
+			return com.liferay.commerce.product.model.CommerceProductOptionValueSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductOptionValueSoap[] getCommerceProductOptionValues(
+		long commerceProductOptionId, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CommerceProductOptionValue> returnValue =
+				CommerceProductOptionValueServiceUtil.getCommerceProductOptionValues(commerceProductOptionId,
+					start, end);
+
+			return com.liferay.commerce.product.model.CommerceProductOptionValueSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductOptionValueSoap[] getCommerceProductOptionValues(
+		long commerceProductOptionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductOptionValue> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CommerceProductOptionValue> returnValue =
+				CommerceProductOptionValueServiceUtil.getCommerceProductOptionValues(commerceProductOptionId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.product.model.CommerceProductOptionValueSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceProductOptionValuesCount(
+		long commerceProductOptionId) throws RemoteException {
+		try {
+			int returnValue = CommerceProductOptionValueServiceUtil.getCommerceProductOptionValuesCount(commerceProductOptionId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductOptionValueSoap updateCommerceProductOptionValue(
+		long commerceProductOptionValueId,
+		java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues, int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+
+			com.liferay.commerce.product.model.CommerceProductOptionValue returnValue =
+				CommerceProductOptionValueServiceUtil.updateCommerceProductOptionValue(commerceProductOptionValueId,
+					titleMap, priority, serviceContext);
+
+			return com.liferay.commerce.product.model.CommerceProductOptionValueSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceProductOptionValueServiceSoap.class);
 }

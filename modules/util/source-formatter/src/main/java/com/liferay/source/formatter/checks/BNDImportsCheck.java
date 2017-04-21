@@ -42,6 +42,7 @@ public class BNDImportsCheck extends BaseFileCheck {
 		content = importsFormatter.format(content, _exportContentsPattern);
 		content = importsFormatter.format(content, _exportsPattern);
 		content = importsFormatter.format(content, _importsPattern);
+		content = importsFormatter.format(content, _privatePackagesPattern);
 
 		return content;
 	}
@@ -92,6 +93,9 @@ public class BNDImportsCheck extends BaseFileCheck {
 		Pattern.DOTALL | Pattern.MULTILINE);
 	private final Pattern _importsPattern = Pattern.compile(
 		"\nImport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
+		Pattern.DOTALL | Pattern.MULTILINE);
+	private final Pattern _privatePackagesPattern = Pattern.compile(
+		"\nPrivate-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
 	private final Pattern _wilcardImportPattern = Pattern.compile(
 		"(\\S+\\*)(,\\\\\n|\n|\\Z)");

@@ -16,7 +16,9 @@ package com.liferay.commerce.product.service.permission;
 
 import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.model.CommerceProductOption;
+import com.liferay.commerce.product.model.CommerceProductOptionValue;
 import com.liferay.commerce.product.service.CommerceProductOptionLocalService;
+import com.liferay.commerce.product.service.CommerceProductOptionValueLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -58,6 +60,35 @@ public class CommerceProductOptionPermission
 				permissionChecker, CommerceProductOption.class.getName(),
 				commerceProductOptionId, actionId);
 		}
+	}
+
+	public static void checkCommerceProductOptionValue(
+			PermissionChecker permissionChecker,
+			CommerceProductOptionValue commerceProductOptionValue,
+			String actionId)
+		throws PortalException {
+
+		long commerceProductOptionId =
+			commerceProductOptionValue.getCommerceProductOptionId();
+
+		if (!contains(permissionChecker, commerceProductOptionId, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, CommerceProductOption.class.getName(),
+				commerceProductOptionId, actionId);
+		}
+	}
+
+	public static void checkCommerceProductOptionValue(
+			PermissionChecker permissionChecker,
+			long commerceProductOptionValueId, String actionId)
+		throws PortalException {
+
+		CommerceProductOptionValue commerceProductOptionValue =
+			_commerceProductOptionValueLocalService.
+				getCommerceProductOptionValue(commerceProductOptionValueId);
+
+		checkCommerceProductOptionValue(
+			permissionChecker, commerceProductOptionValue, actionId);
 	}
 
 	public static boolean contains(
@@ -114,5 +145,9 @@ public class CommerceProductOptionPermission
 	@Reference
 	private static CommerceProductOptionLocalService
 		_commerceProductOptionLocalService;
+
+	@Reference
+	private static CommerceProductOptionValueLocalService
+		_commerceProductOptionValueLocalService;
 
 }

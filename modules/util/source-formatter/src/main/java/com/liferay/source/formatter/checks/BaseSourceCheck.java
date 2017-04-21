@@ -39,7 +39,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class BaseSourceCheck implements SourceCheck {
 
 	@Override
-	public Set<SourceFormatterMessage> getSourceFormatterMessage(
+	public Set<SourceFormatterMessage> getSourceFormatterMessages(
 		String fileName) {
 
 		if (_sourceFormatterMessagesMap.containsKey(fileName)) {

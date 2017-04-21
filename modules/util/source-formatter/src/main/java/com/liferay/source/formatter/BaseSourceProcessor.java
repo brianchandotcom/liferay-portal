@@ -806,7 +806,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				newContent = fileCheck.process(fileName, absolutePath, content);
 
 				for (SourceFormatterMessage sourceFormatterMessage :
-						sourceCheck.getSourceFormatterMessage(fileName)) {
+						sourceCheck.getSourceFormatterMessages(fileName)) {
 
 					processMessage(fileName, sourceFormatterMessage);
 				}
@@ -827,7 +827,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					fileName, absolutePath, javaClass, content);
 
 				for (SourceFormatterMessage sourceFormatterMessage :
-						sourceCheck.getSourceFormatterMessage(fileName)) {
+						sourceCheck.getSourceFormatterMessages(fileName)) {
 
 					processMessage(fileName, sourceFormatterMessage);
 				}
@@ -837,7 +837,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						fileName, absolutePath, anonymousClass, newContent);
 
 					for (SourceFormatterMessage sourceFormatterMessage :
-							sourceCheck.getSourceFormatterMessage(fileName)) {
+							sourceCheck.getSourceFormatterMessages(fileName)) {
 
 						processMessage(fileName, sourceFormatterMessage);
 					}

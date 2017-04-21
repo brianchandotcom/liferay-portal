@@ -33,10 +33,6 @@ import java.util.TreeSet;
  */
 public class XMLWebFileCheck extends BaseFileCheck {
 
-	public XMLWebFileCheck(String baseDirName) {
-		_baseDirName = baseDirName;
-	}
-
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
@@ -53,7 +49,7 @@ public class XMLWebFileCheck extends BaseFileCheck {
 		Properties properties = new Properties();
 
 		File propertiesFile = new File(
-			_baseDirName, "portal-impl/src/portal.properties");
+			getBaseDirName(), "portal-impl/src/portal.properties");
 
 		String propertiesContent = FileUtil.read(propertiesFile);
 
@@ -127,7 +123,5 @@ public class XMLWebFileCheck extends BaseFileCheck {
 
 		return newContent;
 	}
-
-	private final String _baseDirName;
 
 }

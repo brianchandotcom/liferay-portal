@@ -73,8 +73,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateSourceChecks() throws Exception {
-		_sourceChecks.add(
-			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));
+		_sourceChecks.add(new XMLBuildFileCheck());
 		_sourceChecks.add(new XMLCustomSQLFileCheck());
 		_sourceChecks.add(new XMLDDLStructuresFileCheck());
 		_sourceChecks.add(new XMLFriendlyURLRoutesFileCheck());
@@ -98,18 +97,15 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			_sourceChecks.add(new XMLStrutsConfigFileCheck());
 			_sourceChecks.add(new XMLTestIgnorableErrorLinesFileCheck());
 			_sourceChecks.add(new XMLTilesDefsFileCheck());
-			_sourceChecks.add(
-				new XMLWebFileCheck(sourceFormatterArgs.getBaseDirName()));
+			_sourceChecks.add(new XMLWebFileCheck());
 		}
 
-		_sourceChecks.add(
-			new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName()));
+		_sourceChecks.add(new XMLWhitespaceCheck());
 
 		_sourceChecks.add(new XMLTagAttributesCheck());
 
 		if (portalSource || subrepository) {
-			_sourceChecks.add(
-				new XMLEmptyLinesCheck(sourceFormatterArgs.getBaseDirName()));
+			_sourceChecks.add(new XMLEmptyLinesCheck());
 		}
 	}
 

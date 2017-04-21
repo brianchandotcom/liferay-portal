@@ -24,16 +24,12 @@ import java.util.regex.Pattern;
  */
 public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 
-	public XMLEmptyLinesCheck(String baseDirName) {
-		_baseDirName = baseDirName;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
 		if (fileName.matches(".*\\.(action|function|macro|testcase)") ||
-			fileName.startsWith(_baseDirName + "build") ||
+			fileName.startsWith(getBaseDirName() + "build") ||
 			fileName.matches(".*/(build|tools/).*") ||
 			fileName.endsWith("/content.xml")) {
 
@@ -89,7 +85,6 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
-	private final String _baseDirName;
 	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
 		"\n(\t*)<[\\w/].*[^-]>(\n\n)(\t*)<(\\w)");
 	private final Pattern _missingEmptyLineAfterCommentPattern =

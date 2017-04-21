@@ -34,10 +34,8 @@ import java.util.Properties;
 public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
 	public PropertiesSourceFormatterFileCheck(
-		String baseDirName, String projectPathPrefix,
-		boolean hasPrivateAppsDir) {
+		String projectPathPrefix, boolean hasPrivateAppsDir) {
 
-		_baseDirName = baseDirName;
 		_projectPathPrefix = projectPathPrefix;
 		_hasPrivateAppsDir = hasPrivateAppsDir;
 	}
@@ -104,7 +102,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 					propertyFileName = propertyFileName.substring(0, pos);
 				}
 
-				File file = getFile(_baseDirName, propertyFileName, level);
+				File file = getFile(getBaseDirName(), propertyFileName, level);
 
 				if (file == null) {
 					addMessage(
@@ -116,7 +114,6 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		}
 	}
 
-	private final String _baseDirName;
 	private final boolean _hasPrivateAppsDir;
 	private final String _projectPathPrefix;
 

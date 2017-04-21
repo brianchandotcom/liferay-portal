@@ -68,6 +68,7 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			renderURL.setParameter("portletResource", portletDisplay.getId());
+
 			renderURL.setWindowState(LiferayWindowState.POP_UP);
 
 			return renderURL.toString();

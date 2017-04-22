@@ -267,6 +267,10 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return 0;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	@SuppressWarnings("unused")
 	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
@@ -289,6 +293,10 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return 0;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	@SuppressWarnings("unused")
 	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
@@ -309,6 +317,11 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return 0;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getTrashModelTrashedModels(long, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	@Override
 	@SuppressWarnings("unused")
 	public List<TrashRenderer> getTrashModelTrashRenderers(

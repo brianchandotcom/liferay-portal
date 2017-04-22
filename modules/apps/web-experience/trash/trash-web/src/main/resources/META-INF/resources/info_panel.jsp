@@ -51,7 +51,8 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 								<c:otherwise>
 
 									<%
-									request.setAttribute(TrashWebKeys.TRASH_RENDERER, trashRenderer);
+									request.setAttribute("view.jsp-className", trashRenderer.getClassName());
+									request.setAttribute("view.jsp-classPK", String.valueOf(trashRenderer.getClassPK()));
 									%>
 
 									<liferay-util:include page="/view_content_action.jsp" servletContext="<%= application %>" />

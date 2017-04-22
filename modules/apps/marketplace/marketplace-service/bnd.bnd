@@ -7,5 +7,5 @@ Export-Package:\
 	com.liferay.marketplace.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
-Liferay-Require-SchemaVersion: 2.0.1
+Liferay-Require-SchemaVersion: 2.0.2
 Liferay-Service: true

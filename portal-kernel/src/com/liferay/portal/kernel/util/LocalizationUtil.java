@@ -321,6 +321,12 @@ public class LocalizationUtil {
 		return getLocalization().getXml(localizedValuesMap, key);
 	}
 
+	public static String getXml(
+		Map<String, String> map, String defaultLanguageId, String key) {
+
+		return getLocalization().getXml(map, defaultLanguageId, key);
+	}
+
 	public static String removeLocalization(
 		String xml, String key, String requestedLanguageId) {
 

@@ -985,6 +985,11 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			return ${localizationEntity.varName}Persistence.findBy${localizationEntity.localizationFinderName}(${entity.PKVarName}, languageId);
 		}
 
+		@Override
+		public List<${localizationEntity.name}> get${localizationEntity.names}(${entity.PKClassName} ${entity.PKVarName}) {
+			return ${localizationEntity.varName}Persistence.findBy${entity.name}PK(${entity.PKVarName});
+		}
+
 		<#assign localizationColumns = entity.localizationColumns />
 
 		protected ${localizationEntity.name} update${localizationEntity.name}(

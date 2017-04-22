@@ -453,10 +453,17 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		<#assign localizationEntity = entity.toLocalizationEntity() />
 
 		<#list entity.localizationColumns as column>
+			@Override
+			public String get${column.methodName}() {
+				return get${column.methodName}(getDefaultLanguageId(), false);
+			}
+
+			@Override
 			public String get${column.methodName}(String languageId) {
 				return get${column.methodName}(languageId, true);
 			}
 
+			@Override
 			public String get${column.methodName}(String languageId, boolean useDefault) {
 				if (useDefault) {
 					return LocalizationUtil.getLocalization(
@@ -472,6 +479,24 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				}
 
 				return _get${column.methodName}(languageId);
+			}
+
+			@Override
+			public Map<String, String> getLanguageIdTo${column.methodName}Map() {
+				Map<String, String> languageIdTo${column.methodName}Map = new HashMap<String, String>();
+
+				List<${localizationEntity.name}> ${localizationEntity.varNames} = ${entity.name}LocalServiceUtil.get${localizationEntity.names}(getPrimaryKey());
+
+				for (${localizationEntity.name} ${localizationEntity.varName} : ${localizationEntity.varNames}) {
+					languageIdTo${column.methodName}Map.put(${localizationEntity.varName}.getLanguageId(), ${localizationEntity.varName}.get${column.methodName}());
+				}
+
+				return languageIdTo${column.methodName}Map;
+			}
+
+			@Override
+			public String get${column.methodName}MapAsXML() {
+				return LocalizationUtil.getXml(getLanguageIdTo${column.methodName}Map(), getDefaultLanguageId(), "${column.methodName}");
 			}
 
 			private String _get${column.methodName}(String languageId) {

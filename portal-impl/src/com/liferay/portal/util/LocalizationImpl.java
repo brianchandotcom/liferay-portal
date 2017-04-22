@@ -834,6 +834,62 @@ public class LocalizationImpl implements Localization {
 	}
 
 	@Override
+	public String getXml(
+		Map<String, String> map, String defaultLanguageId, String key) {
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newInstance();
+
+		XMLStreamWriter xmlStreamWriter = null;
+
+		try {
+			xmlStreamWriter = xmlOutputFactory.createXMLStreamWriter(
+				unsyncStringWriter);
+
+			xmlStreamWriter.writeStartDocument();
+			xmlStreamWriter.writeStartElement(_ROOT);
+
+			xmlStreamWriter.writeAttribute(
+				_AVAILABLE_LOCALES, StringUtil.merge(map.keySet()));
+			xmlStreamWriter.writeAttribute(_DEFAULT_LOCALE, defaultLanguageId);
+
+			for (Map.Entry<String, String> entry : map.entrySet()) {
+				String languageId = entry.getKey();
+				String value = entry.getValue();
+
+				xmlStreamWriter.writeStartElement(key);
+
+				xmlStreamWriter.writeAttribute(_LANGUAGE_ID, languageId);
+				xmlStreamWriter.writeCharacters(
+					XMLUtil.stripInvalidChars(value));
+
+				xmlStreamWriter.writeEndElement();
+			}
+
+			xmlStreamWriter.writeEndElement();
+			xmlStreamWriter.writeEndDocument();
+
+			return unsyncStringWriter.toString();
+		}
+		catch (Exception ioe) {
+			_log.error(ioe, ioe);
+		}
+		finally {
+			if (xmlStreamWriter != null) {
+				try {
+					xmlStreamWriter.close();
+				}
+				catch (XMLStreamException xmlse) {
+					_log.error(xmlse, xmlse);
+				}
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public String removeLocalization(
 		String xml, String key, String requestedLanguageId) {
 

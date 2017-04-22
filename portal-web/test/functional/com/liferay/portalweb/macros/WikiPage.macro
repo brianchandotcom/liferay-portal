@@ -33,6 +33,8 @@
 	<command name="_editEmptyFrontPage">
 		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
 
+		<execute function="AssertElementPresent" locator1="AlloyEditor#CONTENT_FIELD" />
+
 		<execute macro="AlloyEditor#addContent">
 			<var name="content" value="${wikiPageContent}" />
 		</execute>

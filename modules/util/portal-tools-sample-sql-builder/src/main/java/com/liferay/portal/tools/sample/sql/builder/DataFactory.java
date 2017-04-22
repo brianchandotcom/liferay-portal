@@ -938,13 +938,6 @@ public class DataFactory {
 			}
 		}
 
-		_assetPublisherQueryName = GetterUtil.getString(
-			properties.getProperty("sample.sql.asset.publisher.query.name"));
-
-		if (!_assetPublisherQueryName.equals("assetCategories")) {
-			_assetPublisherQueryName = "assetTags";
-		}
-
 		_maxAssetCategoryCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.asset.category.count"));
 		_maxAssetEntryToAssetCategoryCount = GetterUtil.getInteger(
@@ -2270,6 +2263,12 @@ public class DataFactory {
 				plid, portletId, PortletConstants.DEFAULT_PREFERENCES);
 		}
 
+		String assetPublisherQueryName = "assetCategories";
+
+		if ((currentIndex % 2) == 0) {
+			assetPublisherQueryName = "assetTags";
+		}
+
 		ObjectValuePair<String[], Integer> objectValuePair = null;
 
 		Integer startIndex = _assetPublisherQueryStartIndexes.get(groupId);
@@ -2278,7 +2277,7 @@ public class DataFactory {
 			startIndex = 0;
 		}
 
-		if (_assetPublisherQueryName.equals("assetCategories")) {
+		if (assetPublisherQueryName.equals("assetCategories")) {
 			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
 				_assetCategoryModelsMaps[(int)groupId - 1];
 
@@ -2321,7 +2320,7 @@ public class DataFactory {
 
 		jxPortletPreferences.setValue("queryAndOperator0", "false");
 		jxPortletPreferences.setValue("queryContains0", "true");
-		jxPortletPreferences.setValue("queryName0", _assetPublisherQueryName);
+		jxPortletPreferences.setValue("queryName0", assetPublisherQueryName);
 		jxPortletPreferences.setValues(
 			"queryValues0",
 			new String[] {
@@ -2330,7 +2329,7 @@ public class DataFactory {
 			});
 		jxPortletPreferences.setValue("queryAndOperator1", "false");
 		jxPortletPreferences.setValue("queryContains1", "false");
-		jxPortletPreferences.setValue("queryName1", _assetPublisherQueryName);
+		jxPortletPreferences.setValue("queryName1", assetPublisherQueryName);
 		jxPortletPreferences.setValue(
 			"queryValues1", assetPublisherQueryValues[3]);
 
@@ -3710,7 +3709,6 @@ public class DataFactory {
 	private final long[] _assetClassNameIds;
 	private final Map<Long, Integer> _assetClassNameIdsIndexes =
 		new HashMap<>();
-	private String _assetPublisherQueryName;
 	private final Map<Long, Integer> _assetPublisherQueryStartIndexes =
 		new HashMap<>();
 	private Map<Long, SimpleCounter>[] _assetTagCounters;

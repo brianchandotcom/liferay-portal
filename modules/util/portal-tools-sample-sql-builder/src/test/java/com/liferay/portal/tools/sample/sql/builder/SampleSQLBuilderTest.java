@@ -96,8 +96,6 @@ public class SampleSQLBuilderTest {
 	}
 
 	private void _initProperties(Properties properties, String outputDir) {
-		properties.put(
-			"sample.sql.asset.publisher.query.name", "assetCategories");
 		properties.put("sample.sql.db.type", "hypersonic");
 		properties.put("sample.sql.max.asset.category.count", "1");
 		properties.put(

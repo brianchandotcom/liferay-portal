@@ -155,6 +155,8 @@
 	</command>
 
 	<command name="configureCustomStylesViaLookandfeelPG">
+		<execute macro="IFrame#selectConfigurationFrame" />
+
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="Text Styles" />
 		</execute>

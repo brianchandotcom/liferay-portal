@@ -207,7 +207,8 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 						actionPath = "/entry_action.jsp";
 					}
 					else {
-						request.setAttribute(TrashWebKeys.TRASH_RENDERER, trashRenderer);
+						request.setAttribute("view.jsp-className", trashRenderer.getClassName());
+						request.setAttribute("view.jsp-classPK", String.valueOf(trashRenderer.getClassPK()));
 					}
 					%>
 

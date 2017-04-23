@@ -26,6 +26,8 @@ import com.liferay.trash.kernel.model.TrashEntry;
 @ProviderType
 public interface TrashedModel {
 
+	public String getModelClassName();
+
 	public int getStatus();
 
 	public TrashEntry getTrashEntry() throws PortalException;

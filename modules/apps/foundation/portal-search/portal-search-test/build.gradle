@@ -6,4 +6,5 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.search", version: "3.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-test-util")
 }

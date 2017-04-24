@@ -16,8 +16,6 @@ package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,7 +36,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * @author Igor Spasic
@@ -47,20 +44,7 @@ import java.util.Properties;
  */
 public class SourceFormatterHelper {
 
-	public SourceFormatterHelper(boolean useProperties) {
-		_useProperties = useProperties;
-	}
-
 	public void close() throws IOException {
-		if (!_useProperties) {
-			return;
-		}
-
-		String newPropertiesContent = PropertiesUtil.toString(_properties);
-
-		if (!_propertiesContent.equals(newPropertiesContent)) {
-			FileUtil.write(_propertiesFile, newPropertiesContent);
-		}
 	}
 
 	public List<String> filterFileNames(
@@ -164,27 +148,6 @@ public class SourceFormatterHelper {
 	}
 
 	public void init() throws IOException {
-		if (!_useProperties) {
-			return;
-		}
-
-		File basedirFile = new File("./");
-
-		String basedirAbsolutePath = StringUtil.replace(
-			basedirFile.getAbsolutePath(), new char[] {'.', ':', '/', '\\'},
-			new char[] {'_', '_', '_', '_'});
-
-		String propertiesFileName =
-			System.getProperty("java.io.tmpdir") + "/SourceFormatter." +
-				basedirAbsolutePath;
-
-		_propertiesFile = new File(propertiesFileName);
-
-		if (_propertiesFile.exists()) {
-			_propertiesContent = FileUtil.read(_propertiesFile);
-
-			PropertiesUtil.load(_properties, _propertiesContent);
-		}
 	}
 
 	public void printError(String fileName, File file) {
@@ -192,13 +155,6 @@ public class SourceFormatterHelper {
 	}
 
 	public void printError(String fileName, String message) {
-		if (_useProperties) {
-			String encodedFileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			_properties.remove(encodedFileName);
-		}
-
 		System.out.println(message);
 	}
 
@@ -429,29 +385,7 @@ public class SourceFormatterHelper {
 							continue;
 						}
 
-						String fileName = filePath.toString();
-
-						if (!_useProperties) {
-							fileNames.add(fileName);
-
-							return FileVisitResult.CONTINUE;
-						}
-
-						File file = new File(fileName);
-
-						String encodedFileName = StringUtil.replace(
-							fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-						long timestamp = GetterUtil.getLong(
-							_properties.getProperty(encodedFileName));
-
-						if (timestamp < file.lastModified()) {
-							_properties.setProperty(
-								encodedFileName,
-								String.valueOf(file.lastModified()));
-
-							fileNames.add(fileName);
-						}
+						fileNames.add(filePath.toString());
 
 						return FileVisitResult.CONTINUE;
 					}
@@ -463,10 +397,5 @@ public class SourceFormatterHelper {
 
 		return fileNames;
 	}
-
-	private final Properties _properties = new Properties();
-	private String _propertiesContent = StringPool.BLANK;
-	private File _propertiesFile;
-	private final boolean _useProperties;
 
 }

@@ -668,8 +668,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	private void _init() {
 		try {
-			_sourceFormatterHelper = new SourceFormatterHelper(
-				sourceFormatterArgs.isUseProperties());
+			_sourceFormatterHelper = new SourceFormatterHelper();
 
 			_sourceFormatterHelper.init();
 

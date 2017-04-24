@@ -124,10 +124,6 @@ public class FormatSourceTask extends Task {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}
 
-	public void setUseProperties(boolean useProperties) {
-		_sourceFormatterArgs.setUseProperties(useProperties);
-	}
-
 	private void _collectFromFileSets() {
 		List<String> fileNames = new ArrayList<>();
 

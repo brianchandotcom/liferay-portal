@@ -170,12 +170,6 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setThrowException(throwException);
 
-			boolean useProperties = ArgumentsUtil.getBoolean(
-				arguments, "source.use.properties",
-				SourceFormatterArgs.USE_PROPERTIES);
-
-			sourceFormatterArgs.setUseProperties(useProperties);
-
 			SourceFormatter sourceFormatter = new SourceFormatter(
 				sourceFormatterArgs);
 
@@ -196,8 +190,7 @@ public class SourceFormatter {
 	}
 
 	public void format() throws Exception {
-		_sourceFormatterHelper = new SourceFormatterHelper(
-			_sourceFormatterArgs.isUseProperties());
+		_sourceFormatterHelper = new SourceFormatterHelper();
 
 		if (_isPortalSource()) {
 			_populatePortalImplProperties();

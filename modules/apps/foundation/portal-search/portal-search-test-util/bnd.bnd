@@ -1,6 +1,10 @@
 Bundle-Name: Liferay Portal Search Test Utilities
 Bundle-SymbolicName: com.liferay.portal.search.test.util
-Bundle-Version: 1.0.4
-Import-Package: !*
+Bundle-Version: 1.1.0
+Export-Package: com.liferay.portal.search.test.util
+Import-Package:\
+	com.liferay.portal.kernel.search.*,\
+	\
+	org.junit
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Search

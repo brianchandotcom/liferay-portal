@@ -164,7 +164,19 @@ public interface LiferaySelenium {
 
 	public String getCurrentMonth();
 
+	public String getCurrentMonthName();
+
 	public String getCurrentYear();
+
+	public String getDay(String days);
+
+	public String getDayName(String days);
+
+	public String getMonth(String days);
+
+	public String getMonthName(String days);
+
+	public String getYear(String days);
 
 	public int getElementHeight(String locator);
 

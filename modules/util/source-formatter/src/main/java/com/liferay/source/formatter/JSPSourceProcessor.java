@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.CompatClassImportsCheck;
 import com.liferay.source.formatter.checks.CopyrightCheck;
 import com.liferay.source.formatter.checks.EmptyArrayCheck;
@@ -247,12 +248,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Map<String, JavaClass> _getTagJavaClassesMap() throws Exception {
 		Map<String, JavaClass> tagJavaClassesMap = new HashMap<>();
 
-		List<String> tldFileNames = getFileNames(
-			new String[] {"**/dependencies/**", "**/util-taglib/**"},
-			new String[] {"**/*.tld"}, true);
-
 		outerLoop:
-		for (String tldFileName : tldFileNames) {
+		for (String tldFileName : _getTLDFileNames()) {
 			tldFileName = StringUtil.replace(
 				tldFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
@@ -339,6 +336,38 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return tagJavaClassesMap;
+	}
+
+	private List<String> _getTLDFileNames() throws Exception {
+		List<String> tldFileNames = getFileNames(
+			new String[] {
+				"**/dependencies/**", "**/util-taglib/**", "**/portal-web/**"
+			},
+			new String[] {"**/*.tld"}, true);
+
+		if (!portalSource) {
+			return tldFileNames;
+		}
+
+		String tldDirLocation = "portal-web/docroot/WEB-INF/tld/";
+
+		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL - 1; i++) {
+			File file = new File(
+				sourceFormatterArgs.getBaseDirName() + tldDirLocation);
+
+			if (file.exists()) {
+				tldFileNames.addAll(
+					getFileNames(
+						sourceFormatterArgs.getBaseDirName() + tldDirLocation,
+						new String[0], new String[] {"**/*.tld"}));
+
+				break;
+			}
+
+			tldDirLocation = "../" + tldDirLocation;
+		}
+
+		return tldFileNames;
 	}
 
 	private String _getUtilTaglibSrcDirName() {

@@ -86,7 +86,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new PropertiesPortletFileCheck());
 		_sourceChecks.add(
 			new PropertiesSourceFormatterFileCheck(
-				getProjectPathPrefix(), _hasPrivateAppsDir()));
+				sourceFormatterArgs.getBaseDirName(), getProjectPathPrefix(),
+				_hasPrivateAppsDir()));
 	}
 
 	private String _getPortalPortalPropertiesContent() throws Exception {

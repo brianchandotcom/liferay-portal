@@ -35,12 +35,16 @@ import org.dom4j.Element;
  */
 public class XMLBuildFileCheck extends BaseFileCheck {
 
+	public XMLBuildFileCheck(String baseDirName) {
+		_baseDirName = baseDirName;
+	}
+
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (fileName.startsWith(getBaseDirName() + "build") ||
+		if (fileName.startsWith(_baseDirName + "build") ||
 			(fileName.contains("/build") && !fileName.contains("/tools/"))) {
 
 			_checkBuildXML(fileName, absolutePath, content);
@@ -283,6 +287,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 		return targetNames;
 	}
 
+	private final String _baseDirName;
 	private final Pattern _importFilePattern = Pattern.compile(
 		"<import file=\"(.*)\"");
 	private final Pattern _projectNamePattern = Pattern.compile(

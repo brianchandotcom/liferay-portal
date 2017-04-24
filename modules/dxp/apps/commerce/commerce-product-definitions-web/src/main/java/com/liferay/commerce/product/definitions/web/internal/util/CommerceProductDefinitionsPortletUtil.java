@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class CommerceProductDefinitionsPortletUtil {
 
 	public static OrderByComparator<CommerceProductDefinitionOptionRel>
-	getCommerceProductDefinitionOptionRelOrderByComparator(
-		String orderByCol, String orderByType) {
+		getCommerceProductDefinitionOptionRelOrderByComparator(
+			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
 
@@ -59,8 +59,8 @@ public class CommerceProductDefinitionsPortletUtil {
 	}
 
 	public static OrderByComparator<CommerceProductDefinition>
-	getCommerceProductDefinitionOrderByComparator(
-		String orderByCol, String orderByType) {
+		getCommerceProductDefinitionOrderByComparator(
+			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
 
@@ -83,8 +83,8 @@ public class CommerceProductDefinitionsPortletUtil {
 	}
 
 	public static OrderByComparator<CommerceProductInstance>
-	getCommerceProductInstanceOrderByComparator(
-		String orderByCol, String orderByType) {
+		getCommerceProductInstanceOrderByComparator(
+			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
 

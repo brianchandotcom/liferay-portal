@@ -100,8 +100,8 @@ public class CommerceProductDefinitionServiceImpl
 			getPermissionChecker(), commerceProductDefinitionId,
 			ActionKeys.UPDATE);
 
-		return commerceProductDefinitionLocalService.getCommerceProductDefinition(
-			commerceProductDefinitionId);
+		return commerceProductDefinitionLocalService.
+			getCommerceProductDefinition(commerceProductDefinitionId);
 	}
 
 	@Override

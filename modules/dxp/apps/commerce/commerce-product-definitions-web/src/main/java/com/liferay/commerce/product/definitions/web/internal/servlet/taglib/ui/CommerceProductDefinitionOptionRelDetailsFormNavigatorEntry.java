@@ -53,7 +53,6 @@ public class CommerceProductDefinitionOptionRelDetailsFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-
 		return LanguageUtil.get(locale, "details");
 	}
 

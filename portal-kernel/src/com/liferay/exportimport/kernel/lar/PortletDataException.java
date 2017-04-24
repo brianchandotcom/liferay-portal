@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Raymond Augé
@@ -27,15 +28,23 @@ public class PortletDataException extends PortalException {
 
 	public static final int DEFAULT = 1;
 
+	public static final int DELETE_PORTLET_DATA = 10;
+
 	public static final int END_DATE_IS_MISSING_START_DATE = 1;
+
+	public static final int EXPORT_PORTLET_DATA = 11;
 
 	public static final int FUTURE_END_DATE = 2;
 
 	public static final int FUTURE_START_DATE = 3;
 
+	public static final int IMPORT_PORTLET_DATA = 12;
+
 	public static final int INVALID_GROUP = 4;
 
 	public static final int MISSING_DEPENDENCY = 5;
+
+	public static final int PREPARE_MANIFEST_SUMMARY = 13;
 
 	public static final int START_DATE_AFTER_END_DATE = 6;
 
@@ -52,6 +61,12 @@ public class PortletDataException extends PortalException {
 		_type = type;
 	}
 
+	public PortletDataException(int type, Throwable cause) {
+		super(cause);
+
+		_type = type;
+	}
+
 	public PortletDataException(String msg) {
 		super(msg);
 	}
@@ -64,12 +79,20 @@ public class PortletDataException extends PortalException {
 		super(cause);
 	}
 
+	public String getPortletId() {
+		return _portletId;
+	}
+
 	public StagedModel getStagedModel() {
 		return _stagedModel;
 	}
 
 	public int getType() {
 		return _type;
+	}
+
+	public void setPortletId(String portletId) {
+		_portletId = portletId;
 	}
 
 	public void setStagedModel(StagedModel stagedModel) {
@@ -80,6 +103,7 @@ public class PortletDataException extends PortalException {
 		_type = type;
 	}
 
+	private String _portletId = StringPool.BLANK;
 	private StagedModel _stagedModel;
 	private int _type = DEFAULT;
 

@@ -12,17 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.asset.service;
+package com.liferay.asset.service.test;
 
-import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.model.AssetTagStats;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetTagStatsLocalServiceUtil;
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -30,21 +24,20 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
- * @author Matthew Kong
+ * @author Mate Thurzo
  */
-public class AssetTagStatsServiceTest {
+@RunWith(Arquillian.class)
+public class AssetTagServiceTest {
 
 	@ClassRule
 	@Rule
@@ -56,36 +49,30 @@ public class AssetTagStatsServiceTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@Ignore
 	@Test
-	public void testGetTagStats() throws Exception {
+	public void testDeleteGroupTags() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		serviceContext.setAssetTagNames(new String[] {"basketball"});
+		int initialTagsCount = AssetTagLocalServiceUtil.getGroupTagsCount(
+			_group.getGroupId());
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
+		AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
-			serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
+		AssetTagLocalServiceUtil.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
 
-		AssetTag tag = AssetTagLocalServiceUtil.getTag(
-			_group.getGroupId(), "basketball");
+		Assert.assertEquals(
+			initialTagsCount + 2,
+			AssetTagLocalServiceUtil.getGroupTagsCount(_group.getGroupId()));
 
-		long classNameId = PortalUtil.getClassNameId(DLFileEntry.class);
+		AssetTagLocalServiceUtil.deleteGroupTags(_group.getGroupId());
 
-		AssetTagStats tagStats = AssetTagStatsLocalServiceUtil.getTagStats(
-			tag.getTagId(), classNameId);
-
-		Assert.assertEquals(1, tagStats.getAssetCount());
-
-		DLAppHelperLocalServiceUtil.deleteFileEntry(fileEntry);
-
-		tagStats = AssetTagStatsLocalServiceUtil.getTagStats(
-			tag.getTagId(), classNameId);
-
-		Assert.assertEquals(0, tagStats.getAssetCount());
+		Assert.assertEquals(
+			initialTagsCount,
+			AssetTagLocalServiceUtil.getGroupTagsCount(_group.getGroupId()));
 	}
 
 	@DeleteAfterTestRun

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.bundle.assetrendererfactoryregistryutil;
+package com.liferay.asset.assetrendererfactoryregistryutil.test;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
@@ -95,7 +95,7 @@ public class TestAssetRendererFactory
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 1.0.0
 	 */
 	@Deprecated
 	@Override

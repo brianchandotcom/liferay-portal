@@ -92,10 +92,13 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 		queryString = HttpUtil.getQueryString(queryString);
 
-		String queryStringDigest = DigesterUtil.digestHex(
+		String queryStringDigest = DigesterUtil.digestBase64(
 			Digester.SHA_256, queryString);
 
-		cacheKeyGenerator.append(StringPool.UNDERLINE);
+		queryStringDigest = queryStringDigest.replaceAll("\\+", "-");
+		queryStringDigest = queryStringDigest.replaceAll("/", "@");
+		queryStringDigest = queryStringDigest.replaceAll("=", "_");
+
 		cacheKeyGenerator.append(queryStringDigest);
 
 		if (PortalUtil.isRightToLeft(request)) {

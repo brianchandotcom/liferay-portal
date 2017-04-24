@@ -24,7 +24,7 @@ import java.util.Set;
  */
 public interface SourceCheck {
 
-	public Set<SourceFormatterMessage> getSourceFormatterMessages(
+	public Set<SourceFormatterMessage> getSourceFormatterMessage(
 		String fileName);
 
 	public void setProperties(Properties properties);

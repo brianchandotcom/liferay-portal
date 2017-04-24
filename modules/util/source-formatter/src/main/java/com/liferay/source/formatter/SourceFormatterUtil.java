@@ -42,7 +42,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
  */
-public class SourceFormatterHelper {
+public class SourceFormatterUtil {
 
 	public static List<String> filterFileNames(
 		List<String> allFileNames, String[] excludes, String[] includes) {

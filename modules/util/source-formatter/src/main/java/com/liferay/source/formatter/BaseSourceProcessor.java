@@ -323,7 +323,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected File getFile(String fileName, int level) {
-		return SourceFormatterHelper.getFile(
+		return SourceFormatterUtil.getFile(
 			sourceFormatterArgs.getBaseDirName(), fileName, level);
 	}
 
@@ -335,7 +335,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			excludes = ArrayUtil.append(excludes, _excludes);
 		}
 
-		return SourceFormatterHelper.scanForFiles(
+		return SourceFormatterUtil.scanForFiles(
 			basedir, excludes, includes,
 			sourceFormatterArgs.isIncludeSubrepositories());
 	}
@@ -357,13 +357,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (!forceIncludeAllFiles &&
 			(sourceFormatterArgs.getRecentChangesFileNames() != null)) {
 
-			return SourceFormatterHelper.filterRecentChangesFileNames(
+			return SourceFormatterUtil.filterRecentChangesFileNames(
 				sourceFormatterArgs.getBaseDirName(),
 				sourceFormatterArgs.getRecentChangesFileNames(), excludes,
 				includes, sourceFormatterArgs.isIncludeSubrepositories());
 		}
 
-		return SourceFormatterHelper.filterFileNames(
+		return SourceFormatterUtil.filterFileNames(
 			_allFileNames, excludes, includes);
 	}
 
@@ -465,7 +465,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected void printError(String fileName, String message) {
 		if (sourceFormatterArgs.isPrintErrors()) {
-			SourceFormatterHelper.printError(fileName, message);
+			SourceFormatterUtil.printError(fileName, message);
 		}
 	}
 
@@ -475,7 +475,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		if (!content.equals(newContent)) {
 			if (sourceFormatterArgs.isPrintErrors()) {
-				SourceFormatterHelper.printError(fileName, file);
+				SourceFormatterUtil.printError(fileName, file);
 			}
 
 			if (sourceFormatterArgs.isAutoFix()) {
@@ -495,7 +495,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				for (SourceFormatterMessage sourceFormatterMessage :
 						sourceFormatterMessages) {
 
-					SourceFormatterHelper.printError(
+					SourceFormatterUtil.printError(
 						fileName, sourceFormatterMessage.toString());
 
 					if (_browserStarted ||

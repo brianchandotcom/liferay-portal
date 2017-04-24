@@ -111,10 +111,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		_sourceFormatterMessagesMap.remove(fileName);
 	}
 
-	protected String getBaseDirName() {
-		return _baseDirName;
-	}
-
 	protected File getFile(String baseDir, String fileName, int level) {
 		for (int i = 0; i < level; i++) {
 			File file = new File(baseDir + fileName);

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
@@ -347,12 +348,14 @@ public abstract class UpgradeProcess
 			String tableName = (String)tableNameField.get(null);
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
+			DBInspector dbInspector = new DBInspector(connection);
 
 			try (ResultSet rs1 = databaseMetaData.getPrimaryKeys(
-					null, null, tableName);
+					dbInspector.getCatalog(), dbInspector.getSchema(),
+					tableName);
 				ResultSet rs2 = databaseMetaData.getIndexInfo(
-					null, null, normalizeName(tableName, databaseMetaData),
-					false, false)) {
+					dbInspector.getCatalog(), dbInspector.getSchema(),
+					normalizeName(tableName, databaseMetaData), false, false)) {
 
 				Set<String> primaryKeyNames = new HashSet<>();
 

@@ -51,28 +51,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
-	public void setBaseDirName(String baseDirName) {
-		_baseDirName = baseDirName;
-	}
-
-	@Override
-	public void setMaxLineLength(int maxLineLength) {
-		_maxLineLength = maxLineLength;
-	}
-
-	@Override
-	public void setPortalSource(boolean portalSource) {
-		_portalSource = portalSource;
-	}
-
-	@Override
 	public void setProperties(Properties properties) {
 		_properties = properties;
-	}
-
-	@Override
-	public void setSubrepository(boolean subrepository) {
-		_subrepository = subrepository;
 	}
 
 	protected void addMessage(String fileName, String message) {
@@ -336,11 +316,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return sb.toString();
 	}
 
-	private String _baseDirName;
-	private int _maxLineLength;
-	private boolean _portalSource;
 	private Properties _properties;
-	private boolean _subrepository;
 	private final Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 

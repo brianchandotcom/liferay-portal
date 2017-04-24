@@ -30,6 +30,10 @@ import java.util.regex.Pattern;
  */
 public class JavaIfStatementCheck extends IfStatementCheck {
 
+	public JavaIfStatementCheck(int maxLineLength) {
+		_maxLineLength = maxLineLength;
+	}
+
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
@@ -169,7 +173,7 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 
 					if ((linePartLevel <= 0) &&
 						((previousLineLength + linePart.length()) <
-							getMaxLineLength())) {
+							_maxLineLength)) {
 
 						if (linePart.equals(trimmedLine)) {
 							return StringUtil.replace(
@@ -339,5 +343,6 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 		".*?( [|&^]+( |\\Z)|\\) \\{\\Z)");
 	private final Pattern _ifStatementPattern = Pattern.compile(
 		"\t+(catch|(else )?if|while) \\(.*?(\\) \\{|;)\n", Pattern.DOTALL);
+	private final int _maxLineLength;
 
 }

@@ -24,6 +24,10 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class PropertiesLongLinesCheck extends BaseFileCheck {
 
+	public PropertiesLongLinesCheck(int maxLineLength) {
+		_maxLineLength = maxLineLength;
+	}
+
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
@@ -57,26 +61,28 @@ public class PropertiesLongLinesCheck extends BaseFileCheck {
 
 		int lineLength = getLineLength(line);
 
-		if (lineLength <= getMaxLineLength()) {
+		if (lineLength <= _maxLineLength) {
 			return;
 		}
 
 		int x = line.indexOf("# ");
-		int y = line.lastIndexOf(StringPool.SPACE, getMaxLineLength());
+		int y = line.lastIndexOf(StringPool.SPACE, _maxLineLength);
 
 		if ((x + 1) == y) {
 			return;
 		}
 
-		int z = line.indexOf(StringPool.SPACE, getMaxLineLength() + 1);
+		int z = line.indexOf(StringPool.SPACE, _maxLineLength + 1);
 
 		if (z == -1) {
 			z = lineLength;
 		}
 
-		if ((z - y + x + 2) <= getMaxLineLength()) {
-			addMessage(fileName, "> " + getMaxLineLength(), lineCount);
+		if ((z - y + x + 2) <= _maxLineLength) {
+			addMessage(fileName, "> " + _maxLineLength, lineCount);
 		}
 	}
+
+	private final int _maxLineLength;
 
 }

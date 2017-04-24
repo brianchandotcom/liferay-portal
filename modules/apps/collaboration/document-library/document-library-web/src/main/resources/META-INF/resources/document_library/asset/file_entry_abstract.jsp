@@ -67,11 +67,11 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 				</p>
 
 				<%
+				String taglibFileEntryTitle = "<span class='hide-accessible'>" + fileEntry.getTitle() + "</span>";
+
 				Map<String, Object> data = new HashMap<String, Object>();
 
 				data.put("senna-off", "true");
-
-				String taglibFileEntryTitle = "<span class='hide-accessible'>" + fileEntry.getTitle() + "</span>";
 				%>
 
 				<liferay-ui:icon

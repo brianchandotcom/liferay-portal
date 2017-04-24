@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp">
+		<field name="weDeployAuthAppId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="clientId" type="String" />
+		<field name="clientSecret" type="String" />
+	</model>
+</model-hints>

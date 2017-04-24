@@ -76,7 +76,8 @@ public class DBInspector {
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
 		try (ResultSet rs = databaseMetaData.getColumns(
-				null, null, tableName, columnName)) {
+				_connection.getCatalog(), _connection.getSchema(), tableName,
+				columnName)) {
 
 			if (!rs.next()) {
 				return false;
@@ -207,7 +208,9 @@ public class DBInspector {
 		try {
 			DatabaseMetaData metadata = _connection.getMetaData();
 
-			rs = metadata.getTables(null, null, tableName, null);
+			rs = metadata.getTables(
+				_connection.getCatalog(), _connection.getSchema(), tableName,
+				null);
 
 			while (rs.next()) {
 				return true;

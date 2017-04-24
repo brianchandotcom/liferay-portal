@@ -30,7 +30,12 @@ import java.util.List;
  */
 public class JavaTermOrderCheck extends BaseJavaTermCheck {
 
-	public JavaTermOrderCheck(String portalCustomSQLContent) {
+	public JavaTermOrderCheck(
+		boolean portalSource, boolean subrepository,
+		String portalCustomSQLContent) {
+
+		_portalSource = portalSource;
+		_subrepository = subrepository;
 		_portalCustomSQLContent = portalCustomSQLContent;
 	}
 
@@ -67,9 +72,7 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 	private String _getCustomSQLContent(String fileName, String absolutePath)
 		throws Exception {
 
-		if (isPortalSource() &&
-			!isModulesFile(absolutePath, isSubrepository())) {
-
+		if (_portalSource && !isModulesFile(absolutePath, _subrepository)) {
 			return _portalCustomSQLContent;
 		}
 
@@ -161,5 +164,7 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 	}
 
 	private final String _portalCustomSQLContent;
+	private final boolean _portalSource;
+	private final boolean _subrepository;
 
 }

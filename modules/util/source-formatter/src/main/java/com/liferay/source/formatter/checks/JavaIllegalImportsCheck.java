@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class JavaIllegalImportsCheck extends BaseFileCheck {
 
+	public JavaIllegalImportsCheck(boolean portalSource) {
+		_portalSource = portalSource;
+	}
+
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
@@ -88,7 +92,7 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 
 		// LPS-47682
 
-		if (isPortalSource() && absolutePath.contains("/portal-kernel/") &&
+		if (_portalSource && absolutePath.contains("/portal-kernel/") &&
 			content.contains("import javax.servlet.jsp.")) {
 
 			addMessage(
@@ -182,5 +186,7 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 
 	private static final String _SECURE_RANDOM_EXCLUDES =
 		"secure.random.excludes";
+
+	private final boolean _portalSource;
 
 }

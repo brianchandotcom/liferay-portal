@@ -41,9 +41,12 @@ import java.util.regex.Pattern;
 public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 	public JSPTagAttributesCheck(
+		boolean portalSource, boolean subrepository,
 		Set<String> primitiveTagAttributeDataTypes,
 		Map<String, JavaClass> tagJavaClassesMap) {
 
+		_portalSource = portalSource;
+		_subrepository = subrepository;
 		_primitiveTagAttributeDataTypes = primitiveTagAttributeDataTypes;
 		_tagJavaClassesMap = tagJavaClassesMap;
 	}
@@ -79,7 +82,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 				line, attributeAndValue, newAttributeAndValue);
 		}
 
-		if (!isPortalSource() && !isSubrepository()) {
+		if (!_portalSource && !_subrepository) {
 			return line;
 		}
 
@@ -305,7 +308,9 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		"<[-\\w]+:[-\\w]+ .");
 	private final Pattern _multilineTagPattern = Pattern.compile(
 		"(\\s+)<[-\\w]+:[-\\w]+\n.*?(/?>)(\n|$)", Pattern.DOTALL);
+	private final boolean _portalSource;
 	private final Set<String> _primitiveTagAttributeDataTypes;
+	private final boolean _subrepository;
 	private final Map<String, JavaClass> _tagJavaClassesMap;
 
 }

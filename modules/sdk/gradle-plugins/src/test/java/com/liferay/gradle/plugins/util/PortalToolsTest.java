@@ -21,8 +21,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.URL;
-
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -65,7 +63,7 @@ public class PortalToolsTest {
 
 			Assert.assertEquals(
 				"Please update \"" + portalToolName + "\" version to " +
-					dependencyVersion + " in " + _file,
+					dependencyVersion + " in " + _file.getAbsolutePath(),
 				dependencyVersion, _versions.get(portalToolName));
 		}
 	}
@@ -99,11 +97,8 @@ public class PortalToolsTest {
 	}
 
 	private static void _initVersions() throws Exception {
-		ClassLoader classLoader = PortalToolsTest.class.getClassLoader();
-
-		URL url = classLoader.getResource(PortalTools.PORTAL_TOOLS_FILE_NAME);
-
-		_file = new File(url.toURI());
+		_file = new File(
+			"src/main/resources/" + PortalTools.PORTAL_TOOLS_FILE_NAME);
 
 		try (InputStream inputStream = new FileInputStream(_file)) {
 			_versions.load(inputStream);

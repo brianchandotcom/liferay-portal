@@ -18,8 +18,16 @@
 
 <%
 String displayStyle = portalPreferences.getValue(SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN, "display-style", "icon");
+String navigation = ParamUtil.getString(request, "navigation", "all");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+long roleId = ParamUtil.getLong(request, "roleId");
+
+Role role = null;
+
+if (roleId > 0) {
+	role = RoleLocalServiceUtil.fetchRole(roleId);
+}
 
 PortletURL viewUsersURL = renderResponse.createRenderURL();
 
@@ -27,6 +35,10 @@ viewUsersURL.setParameter("mvcPath", "/view.jsp");
 viewUsersURL.setParameter("tabs1", "users");
 viewUsersURL.setParameter("redirect", currentURL);
 viewUsersURL.setParameter("groupId", String.valueOf(siteMembershipsDisplayContext.getGroupId()));
+
+if (role != null) {
+	viewUsersURL.setParameter("roleId", String.valueOf(roleId));
+}
 
 UserSearch userSearch = new UserSearch(renderRequest, PortletURLUtil.clone(viewUsersURL, renderResponse));
 
@@ -47,6 +59,10 @@ LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 userParams.put("inherit", Boolean.TRUE);
 userParams.put("usersGroups", Long.valueOf(siteMembershipsDisplayContext.getGroupId()));
 
+if (role != null) {
+	userParams.put("userGroupRole", new Long[] {Long.valueOf(siteMembershipsDisplayContext.getGroupId()), Long.valueOf(roleId)});
+}
+
 int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
 
 userSearch.setTotal(usersCount);
@@ -61,7 +77,7 @@ userSearch.setResults(users);
 </liferay-util:include>
 
 <liferay-frontend:management-bar
-	disabled="<%= usersCount <= 0 %>"
+	disabled='<%= (usersCount <= 0) && Objects.equals(navigation, "all") %>'
 	includeCheckBox="<%= true %>"
 	searchContainerId="users"
 >
@@ -83,10 +99,30 @@ userSearch.setResults(users);
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
+
+		<%
+		String label = null;
+
+		if (Objects.equals(navigation, "roles") && (role != null)) {
+			label = LanguageUtil.get(request, "roles") + StringPool.COLON + StringPool.SPACE + HtmlUtil.escape(role.getTitle(themeDisplay.getLocale()));
+		}
+		%>
+
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(viewUsersURL, renderResponse) %>"
-		/>
+			label="<%= label %>"
+		>
+
+			<%
+			PortletURL viewAllURL = PortletURLUtil.clone(viewUsersURL, renderResponse);
+
+			viewAllURL.setParameter("navigation", "all");
+			viewAllURL.setParameter("roleId", "0");
+			%>
+
+			<liferay-frontend:management-bar-filter-item active='<%= Objects.equals(navigation, "all") %>' label="all" url="<%= viewAllURL.toString() %>" />
+
+			<liferay-frontend:management-bar-filter-item active='<%= Objects.equals(navigation, "roles") %>' id="roles" label="roles" url="javascript:;" />
+		</liferay-frontend:management-bar-navigation>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= orderByCol %>"
@@ -252,6 +288,41 @@ userSearch.setResults(users);
 			);
 
 			itemSelectorDialog.open();
+		}
+	);
+
+	<portlet:renderURL var="viewRoleURL">
+		<portlet:param name="mvcPath" value="/view.jsp" />
+		<portlet:param name="tabs1" value="users" />
+		<portlet:param name="navigation" value="roles" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
+	</portlet:renderURL>
+
+	$('#<portlet:namespace />roles').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						destroyOnHide: true,
+						modal: true
+					},
+					eventName: '<portlet:namespace />selectSiteRole',
+					title: '<liferay-ui:message key="select-site-role" />',
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_site_role.jsp" /></portlet:renderURL>'
+				},
+				function(event) {
+					var uri = '<%= viewRoleURL %>';
+
+					uri = Liferay.Util.addParams('<portlet:namespace />roleId=' + event.id, uri);
+
+					location.href = uri;
+				}
+			);
 		}
 	);
 </aui:script>

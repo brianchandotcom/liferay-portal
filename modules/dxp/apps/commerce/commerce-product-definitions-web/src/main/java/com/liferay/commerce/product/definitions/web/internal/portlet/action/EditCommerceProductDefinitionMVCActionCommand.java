@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchProductDefinitionException;
 import com.liferay.commerce.product.model.CommerceProductDefinition;
-import com.liferay.commerce.product.service.CommerceProductDefinitionLocalService;
+import com.liferay.commerce.product.service.CommerceProductDefinitionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -60,7 +60,7 @@ public class EditCommerceProductDefinitionMVCActionCommand
 		long commerceProductDefinitionId = ParamUtil.getLong(
 			actionRequest, "commerceProductDefinitionId");
 
-		_commerceProductDefinitionLocalService.deleteCommerceProductDefinition(
+		_commerceProductDefinitionService.deleteCommerceProductDefinition(
 			commerceProductDefinitionId);
 	}
 
@@ -98,15 +98,6 @@ public class EditCommerceProductDefinitionMVCActionCommand
 				throw e;
 			}
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setCommerceProductDefinitionLocalService(
-		CommerceProductDefinitionLocalService
-			commerceProductDefinitionLocalService) {
-
-		_commerceProductDefinitionLocalService =
-			commerceProductDefinitionLocalService;
 	}
 
 	protected CommerceProductDefinition updateCommerceProductDefinition(
@@ -171,21 +162,19 @@ public class EditCommerceProductDefinitionMVCActionCommand
 			// Add commerce product definition
 
 			commerceProductDefinition =
-				_commerceProductDefinitionLocalService.
-					addCommerceProductDefinition(
-						baseSKU, titleMap, descriptionMap, productTypeName,
-						null, displayDateMonth, displayDateDay, displayDateYear,
-						displayDateHour, displayDateMinute, expirationDateMonth,
-						expirationDateDay, expirationDateYear,
-						expirationDateHour, expirationDateMinute, neverExpire,
-						serviceContext);
+				_commerceProductDefinitionService.addCommerceProductDefinition(
+					baseSKU, titleMap, descriptionMap, productTypeName, null,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 		}
 		else {
 
 			// Update commerce product definition
 
 			commerceProductDefinition =
-				_commerceProductDefinitionLocalService.
+				_commerceProductDefinitionService.
 					updateCommerceProductDefinition(
 						commerceProductDefinitionId, baseSKU, titleMap,
 						descriptionMap, productTypeName, null, displayDateMonth,
@@ -199,7 +188,7 @@ public class EditCommerceProductDefinitionMVCActionCommand
 		return commerceProductDefinition;
 	}
 
-	private CommerceProductDefinitionLocalService
-		_commerceProductDefinitionLocalService;
+	@Reference
+	private CommerceProductDefinitionService _commerceProductDefinitionService;
 
 }

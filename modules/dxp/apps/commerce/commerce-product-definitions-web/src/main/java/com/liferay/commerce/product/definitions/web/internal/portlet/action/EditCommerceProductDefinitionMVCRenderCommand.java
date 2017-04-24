@@ -18,12 +18,10 @@ import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.constants.CommerceProductWebKeys;
 import com.liferay.commerce.product.exception.NoSuchProductDefinitionException;
 import com.liferay.commerce.product.model.CommerceProductDefinition;
-import com.liferay.commerce.product.service.CommerceProductDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -70,36 +68,21 @@ public class EditCommerceProductDefinitionMVCRenderCommand
 		return "/edit_product_definition.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setCommerceProductDefinitionLocalService(
-		CommerceProductDefinitionLocalService
-			commerceProductDefinitionLocalService) {
-
-		_commerceProductDefinitionLocalService =
-			commerceProductDefinitionLocalService;
-	}
-
 	protected void setCommerceProductDefinitionRequestAttribute(
 			RenderRequest renderRequest)
 		throws PortalException {
 
-		long commerceProductDefinitionId = ParamUtil.getLong(
-			renderRequest, "commerceProductDefinitionId");
-
 		CommerceProductDefinition commerceProductDefinition = null;
 
-		if (commerceProductDefinitionId > 0) {
-			commerceProductDefinition =
-				_commerceProductDefinitionLocalService.
-					getCommerceProductDefinition(commerceProductDefinitionId);
-		}
+		commerceProductDefinition = _actionHelper.getCommerceProductDefinition(
+			renderRequest);
 
 		renderRequest.setAttribute(
 			CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION,
 			commerceProductDefinition);
 	}
 
-	private CommerceProductDefinitionLocalService
-		_commerceProductDefinitionLocalService;
+	@Reference
+	private ActionHelper _actionHelper;
 
 }

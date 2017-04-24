@@ -102,7 +102,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 					propertyFileName = propertyFileName.substring(0, pos);
 				}
 
-				File file = getFile(propertyFileName, level);
+				File file = getFile(getBaseDirName(), propertyFileName, level);
 
 				if (file == null) {
 					addMessage(

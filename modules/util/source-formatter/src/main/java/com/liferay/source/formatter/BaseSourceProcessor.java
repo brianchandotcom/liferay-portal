@@ -34,6 +34,7 @@ import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.awt.Desktop;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.test.util;
+package com.liferay.portal.search.test.internal.util;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;

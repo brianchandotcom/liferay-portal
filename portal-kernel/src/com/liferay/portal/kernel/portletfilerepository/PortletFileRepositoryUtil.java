@@ -159,6 +159,13 @@ public class PortletFileRepositoryUtil {
 		getPortletFileRepository().deletePortletRepository(groupId, portletId);
 	}
 
+	public static FileEntry fetchPortletFileEntry(
+		long groupId, long folderId, String fileName) {
+
+		return getPortletFileRepository().fetchPortletFileEntry(
+			groupId, folderId, fileName);
+	}
+
 	public static Repository fetchPortletRepository(
 		long groupId, String portletId) {
 
@@ -347,13 +354,6 @@ public class PortletFileRepositoryUtil {
 
 		return getPortletFileRepository().searchPortletFileEntries(
 			repositoryId, searchContext);
-	}
-
-	public FileEntry fetchPortletFileEntry(
-		long groupId, long folderId, String fileName) {
-
-		return getPortletFileRepository().fetchPortletFileEntry(
-			groupId, folderId, fileName);
 	}
 
 	public void setPortletFileRepository(

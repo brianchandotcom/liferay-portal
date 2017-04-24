@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppLocalServiceImpl" id="com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalService" />
+	<bean class="com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppServiceImpl" id="com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppService" />
+	<bean class="com.liferay.portal.security.wedeploy.auth.service.persistence.impl.WeDeployAuthAppPersistenceImpl" id="com.liferay.portal.security.wedeploy.auth.service.persistence.WeDeployAuthAppPersistence" parent="basePersistence" />
+</beans>

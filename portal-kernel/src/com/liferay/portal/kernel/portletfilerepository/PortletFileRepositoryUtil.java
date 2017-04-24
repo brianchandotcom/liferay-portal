@@ -349,7 +349,7 @@ public class PortletFileRepositoryUtil {
 			repositoryId, searchContext);
 	}
 
-	public FileEntry fetchPortletFileEntry(
+	public static FileEntry fetchPortletFileEntry(
 		long groupId, long folderId, String fileName) {
 
 		return getPortletFileRepository().fetchPortletFileEntry(

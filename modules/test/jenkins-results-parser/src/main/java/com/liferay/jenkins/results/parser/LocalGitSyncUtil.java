@@ -41,8 +41,7 @@ public class LocalGitSyncUtil {
 	public static void deleteCacheBranch(
 			GitWorkingDirectory gitWorkingDirectory, String receiverUsername,
 			String senderBranchName, String senderUsername,
-			String senderBranchSHA, String upstreamBranchName,
-			String upstreamBranchSHA)
+			String senderBranchSHA, String upstreamBranchSHA)
 		throws GitAPIException {
 
 		List<RemoteConfig> localGitRemoteConfigs = null;
@@ -104,14 +103,12 @@ public class LocalGitSyncUtil {
 	public static String synchronizeToLocalGit(
 			GitWorkingDirectory gitWorkingDirectory, String receiverUsername,
 			String senderBranchName, String senderUsername,
-			String senderBranchSHA, String upstreamBranchName,
-			String upstreamBranchSHA)
+			String senderBranchSHA, String upstreamBranchSHA)
 		throws GitAPIException, IOException {
 
 		return synchronizeToLocalGit(
 			gitWorkingDirectory, receiverUsername, 0, senderBranchName,
-			senderUsername, senderBranchSHA, upstreamBranchName,
-			upstreamBranchSHA);
+			senderUsername, senderBranchSHA, upstreamBranchSHA);
 	}
 
 	protected static void cacheBranch(
@@ -659,8 +656,7 @@ public class LocalGitSyncUtil {
 	protected static String synchronizeToLocalGit(
 			GitWorkingDirectory gitWorkingDirectory, String receiverUsername,
 			int retryCount, String senderBranchName, String senderUsername,
-			String senderBranchSHA, String upstreamBranchName,
-			String upstreamBranchSHA)
+			String senderBranchSHA, String upstreamBranchSHA)
 		throws GitAPIException, IOException {
 
 		long start = System.currentTimeMillis();
@@ -691,6 +687,9 @@ public class LocalGitSyncUtil {
 			String cacheBranchName = getCacheBranchName(
 				receiverUsername, senderUsername, senderBranchSHA,
 				upstreamBranchSHA);
+
+			String upstreamBranchName =
+				gitWorkingDirectory.getUpstreamBranchName();
 
 			if (!pullRequest) {
 				upstreamBranchSHA = gitWorkingDirectory.getBranchSHA(
@@ -773,7 +772,7 @@ public class LocalGitSyncUtil {
 				return synchronizeToLocalGit(
 					gitWorkingDirectory, receiverUsername, retryCount + 1,
 					senderBranchName, senderUsername, senderBranchSHA,
-					upstreamBranchName, upstreamBranchSHA);
+					upstreamBranchSHA);
 			}
 			finally {
 				if (localGitRemoteConfigs != null) {

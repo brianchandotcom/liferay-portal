@@ -249,7 +249,7 @@ public class SoyPortlet extends MVCPortlet {
 	}
 
 	private Bundle _bundle;
-	private List<TemplateResource> _templateResources;
 	private SoyPortletHelper _soyPortletHelper;
+	private List<TemplateResource> _templateResources;
 
 }

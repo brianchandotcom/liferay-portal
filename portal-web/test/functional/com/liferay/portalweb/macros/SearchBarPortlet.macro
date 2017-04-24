@@ -1,0 +1,34 @@
+<definition>
+	<command name="configureParameterNamesPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Search Bar" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<if>
+			<isset var="keywordsParameterName" />
+			<then>
+				<execute function="Type" locator1="SearchBar#KEYWORDS_PARAMETER_NAME" value1="${keywordsParameterName}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="scopeParameterName" />
+			<then>
+				<execute function="Type" locator1="SearchBar#SCOPE_PARAMETER_NAME" value1="${scopeParameterName}" />
+			</then>
+		</if>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
+	<command name="searchPG">
+		<execute function="Type" locator1="SearchBar#SEARCH_FIELD" value1="${searchTerm}" />
+
+		<execute function="KeyPress" locator1="SearchBar#SEARCH_FIELD" value1="\RETURN" />
+	</command>
+</definition>

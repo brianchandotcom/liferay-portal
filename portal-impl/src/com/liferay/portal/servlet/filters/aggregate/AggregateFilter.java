@@ -14,8 +14,6 @@
 
 package com.liferay.portal.servlet.filters.aggregate;
 
-import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
-import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,10 +26,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.Digester;
-import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -44,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.minifier.MinifierUtil;
 import com.liferay.portal.servlet.filters.IgnoreModuleRequestFilter;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
+import com.liferay.portal.servlet.filters.util.CacheFileNameGenerator;
 import com.liferay.portal.util.AggregateUtil;
 import com.liferay.portal.util.JavaScriptBundleUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -317,31 +313,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 	}
 
 	protected String getCacheFileName(HttpServletRequest request) {
-		CacheKeyGenerator cacheKeyGenerator =
-			CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				AggregateFilter.class.getName());
-
-		cacheKeyGenerator.append(HttpUtil.getProtocol(request.isSecure()));
-		cacheKeyGenerator.append(StringPool.UNDERLINE);
-		cacheKeyGenerator.append(request.getRequestURI());
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringPool.QUESTION);
-		sb.append(request.getQueryString());
-
-		String queryString = HttpUtil.removeParameter(sb.toString(), "zx");
-
-		String queryStringDigest = DigesterUtil.digestBase64(
-			Digester.SHA_256, queryString);
-
-		queryStringDigest = queryStringDigest.replaceAll("\\+", "-");
-		queryStringDigest = queryStringDigest.replaceAll("/", "@");
-		queryStringDigest = queryStringDigest.replaceAll("=", "_");
-
-		cacheKeyGenerator.append(queryStringDigest);
-
-		return String.valueOf(cacheKeyGenerator.finish());
+		return _cacheFileNameGenerator.getCacheFileName(
+			AggregateFilter.class, request, _PARAMS_TO_REMOVE, null);
 	}
 
 	protected Object getContent(
@@ -595,12 +568,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		}
 	}
 
-	protected String sterilizeQueryString(String queryString) {
-		return StringUtil.replace(
-			queryString, new char[] {CharPool.SLASH, CharPool.BACK_SLASH},
-			new char[] {CharPool.UNDERLINE, CharPool.UNDERLINE});
-	}
-
 	private static final String _BASE_URL = "@base_url@";
 
 	private static final String _CSS_COMMENT_BEGIN = "/*";
@@ -619,6 +586,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 	private static final String _JSP_EXTENSION = ".jsp";
 
+	private static final String[] _PARAMS_TO_REMOVE = {"zx"};
+
 	private static final String _TEMP_DIR = "aggregate";
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -627,6 +596,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 	private static final Pattern _pattern = Pattern.compile(
 		"^(\\.ie|\\.js\\.ie)([^}]*)}", Pattern.MULTILINE);
 
+	private final CacheFileNameGenerator _cacheFileNameGenerator =
+		new CacheFileNameGenerator();
 	private ServletContext _servletContext;
 	private File _tempDir;
 

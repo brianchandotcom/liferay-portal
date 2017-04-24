@@ -14,8 +14,6 @@
 
 package com.liferay.portal.servlet.filters.dynamiccss;
 
-import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
-import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
@@ -24,21 +22,17 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.PortletResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.Digester;
-import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.servlet.filters.IgnoreModuleRequestFilter;
+import com.liferay.portal.servlet.filters.util.CacheFileNameGenerator;
 import com.liferay.portal.util.PropsUtil;
 
 import java.io.File;
@@ -75,37 +69,14 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 	}
 
 	protected String getCacheFileName(HttpServletRequest request) {
-		CacheKeyGenerator cacheKeyGenerator =
-			CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				DynamicCSSFilter.class.getName());
-
-		cacheKeyGenerator.append(HttpUtil.getProtocol(request.isSecure()));
-		cacheKeyGenerator.append(StringPool.UNDERLINE);
-		cacheKeyGenerator.append(request.getRequestURI());
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringPool.QUESTION);
-		sb.append(request.getQueryString());
-
-		String queryString = HttpUtil.removeParameter(sb.toString(), "zx");
-
-		queryString = HttpUtil.getQueryString(queryString);
-
-		String queryStringDigest = DigesterUtil.digestBase64(
-			Digester.SHA_256, queryString);
-
-		queryStringDigest = queryStringDigest.replaceAll("\\+", "-");
-		queryStringDigest = queryStringDigest.replaceAll("/", "@");
-		queryStringDigest = queryStringDigest.replaceAll("=", "_");
-
-		cacheKeyGenerator.append(queryStringDigest);
+		String[] cacheKeyItems = null;
 
 		if (PortalUtil.isRightToLeft(request)) {
-			cacheKeyGenerator.append("_rtl");
+			cacheKeyItems = _CACHE_KEY_ITEM;
 		}
 
-		return String.valueOf(cacheKeyGenerator.finish());
+		return _cacheFileNameGenerator.getCacheFileName(
+			DynamicCSSFilter.class, request, _PARAMS_TO_REMOVE, cacheKeyItems);
 	}
 
 	protected Object getDynamicContent(
@@ -312,21 +283,21 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		}
 	}
 
-	protected String sterilizeQueryString(String queryString) {
-		return StringUtil.replace(
-			queryString, new char[] {CharPool.SLASH, CharPool.BACK_SLASH},
-			new char[] {CharPool.UNDERLINE, CharPool.UNDERLINE});
-	}
+	private static final String[] _CACHE_KEY_ITEM = {"_rtl"};
 
 	private static final String _CSS_EXTENSION = ".css";
 
 	private static final String _JSP_EXTENSION = ".jsp";
+
+	private static final String[] _PARAMS_TO_REMOVE = {"zx"};
 
 	private static final String _TEMP_DIR = "css";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicCSSFilter.class);
 
+	private final CacheFileNameGenerator _cacheFileNameGenerator =
+		new CacheFileNameGenerator();
 	private ServletContext _servletContext;
 	private File _tempDir;
 

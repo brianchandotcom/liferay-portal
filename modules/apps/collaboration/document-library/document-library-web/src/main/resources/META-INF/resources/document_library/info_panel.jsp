@@ -136,7 +136,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();
 
-					data.put("senna-off", Boolean.TRUE.toString());
+					data.put("senna-off", "true");
 
 					FileVersion fileVersion = null;
 

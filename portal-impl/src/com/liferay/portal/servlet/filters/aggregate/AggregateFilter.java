@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -330,9 +332,14 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 		String queryString = HttpUtil.removeParameter(sb.toString(), "zx");
 
-		queryString = HttpUtil.getQueryString(queryString);
+		String queryStringDigest = DigesterUtil.digestBase64(
+			Digester.SHA_256, queryString);
 
-		cacheKeyGenerator.append(sterilizeQueryString(queryString));
+		queryStringDigest = queryStringDigest.replaceAll("\\+", "-");
+		queryStringDigest = queryStringDigest.replaceAll("/", "@");
+		queryStringDigest = queryStringDigest.replaceAll("=", "_");
+
+		cacheKeyGenerator.append(queryStringDigest);
 
 		return String.valueOf(cacheKeyGenerator.finish());
 	}
@@ -388,7 +395,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		String cacheCommonFileName = getCacheFileName(request);
 
 		File cacheContentTypeFile = new File(
-			_tempDir, cacheCommonFileName + "_E_CONTENT_TYPE");
+			_tempDir, cacheCommonFileName + "_E_CTYPE");
 		File cacheDataFile = new File(
 			_tempDir, cacheCommonFileName + "_E_DATA");
 

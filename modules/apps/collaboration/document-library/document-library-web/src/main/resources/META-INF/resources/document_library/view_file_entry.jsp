@@ -216,6 +216,7 @@ if (portletTitleBasedNavigation) {
 									iconCssClass="icon-download"
 									label="<%= true %>"
 									message='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+									method="get"
 									url="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 								/>
 							</span>

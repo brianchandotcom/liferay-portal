@@ -266,14 +266,17 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return false;
 	}
 
-	protected boolean isModulesFile(String absolutePath) {
-		return isModulesFile(absolutePath, null);
+	protected boolean isModulesFile(
+		String absolutePath, boolean subrepository) {
+
+		return isModulesFile(absolutePath, subrepository, null);
 	}
 
 	protected boolean isModulesFile(
-		String absolutePath, List<String> pluginsInsideModulesDirectoryNames) {
+		String absolutePath, boolean subrepository,
+		List<String> pluginsInsideModulesDirectoryNames) {
 
-		if (_subrepository) {
+		if (subrepository) {
 			return true;
 		}
 

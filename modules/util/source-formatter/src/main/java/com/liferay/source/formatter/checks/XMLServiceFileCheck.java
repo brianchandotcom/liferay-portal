@@ -159,7 +159,9 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 		throws Exception {
 
 		if (isPortalSource() &&
-			!isModulesFile(absolutePath, _pluginsInsideModulesDirectoryNames)) {
+			!isModulesFile(
+				absolutePath, isSubrepository(),
+				_pluginsInsideModulesDirectoryNames)) {
 
 			return _portalTablesContent;
 		}

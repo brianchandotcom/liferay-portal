@@ -106,7 +106,9 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 
 		boolean usePortalReleaseVersion = false;
 
-		if (isPortalSource() && !isModulesFile(absolutePath)) {
+		if (isPortalSource() &&
+			!isModulesFile(absolutePath, isSubrepository())) {
+
 			usePortalReleaseVersion = true;
 		}
 

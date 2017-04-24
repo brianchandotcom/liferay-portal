@@ -44,9 +44,6 @@ import java.util.List;
  */
 public class SourceFormatterHelper {
 
-	public static void close() throws IOException {
-	}
-
 	public static List<String> filterFileNames(
 		List<String> allFileNames, String[] excludes, String[] includes) {
 
@@ -145,9 +142,6 @@ public class SourceFormatterHelper {
 		}
 
 		return null;
-	}
-
-	public static void init() throws IOException {
 	}
 
 	public static void printError(String fileName, File file) {

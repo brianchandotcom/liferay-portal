@@ -135,7 +135,7 @@ public class WikiSocialActivityHelper {
 
 			String url = getDownloadURL(fileEntryId);
 
-			String titleLink = getLink(title, type, url);
+			String titleLink = getLink(title, url);
 
 			return LanguageUtil.format(
 				resourceBundle, label, new Object[] {userName, titleLink},
@@ -177,7 +177,7 @@ public class WikiSocialActivityHelper {
 					false);
 			}
 			else if (type == SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
-				String titleLink = getLink(page.getTitle(), type, pageURL);
+				String titleLink = getLink(page.getTitle(), pageURL);
 
 				return LanguageUtil.format(
 					resourceBundle, "activity-wiki-page-restore-from-trash",
@@ -185,8 +185,7 @@ public class WikiSocialActivityHelper {
 					false);
 			}
 			else if (type == WikiActivityKeys.ADD_PAGE) {
-				String titleLink = getLink(
-					page.getTitle(), type, pageURL.toString());
+				String titleLink = getLink(page.getTitle(), pageURL.toString());
 
 				return LanguageUtil.format(
 					resourceBundle, "x-added-the-page-x",
@@ -204,7 +203,7 @@ public class WikiSocialActivityHelper {
 						LanguageUtil.get(resourceBundle, "minor-edit"));
 				}
 
-				String titleURL = getLink(title, type, url);
+				String titleURL = getLink(title, url);
 
 				return LanguageUtil.format(
 					resourceBundle, "x-updated-the-page-to-version-x",
@@ -284,24 +283,14 @@ public class WikiSocialActivityHelper {
 		return StringPool.BLANK;
 	}
 
-	protected String getLink(String title, int type, String url) {
+	protected String getLink(String title, String url) {
 		if (Validator.isNull(url)) {
 			return title;
 		}
 
 		StringBundler sb = new StringBundler(5);
 
-		if ((type == SocialActivityConstants.TYPE_ADD_ATTACHMENT) ||
-			(type == SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) ||
-			(type ==
-				SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH)) {
-
-			sb.append("<a data-senna-off=\"true\" href='");
-		}
-		else {
-			sb.append("<a href='");
-		}
-
+		sb.append("<a href='");
 		sb.append(url);
 		sb.append("'>");
 		sb.append(title);

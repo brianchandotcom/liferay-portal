@@ -139,7 +139,16 @@ userSearch.setResults(users);
 		/>
 
 		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ASSIGN_USER_ROLES) %>">
-			<liferay-frontend:management-bar-button href="javascript:;" icon="users" id="selectSiteRole" label="assign-site-roles" />
+			<liferay-frontend:management-bar-button href="javascript:;" icon="add-role" id="selectSiteRole" label="assign-site-roles" />
+
+			<c:if test="<%= role != null %>">
+
+				<%
+				String label = LanguageUtil.format(request, "remove-site-role-x", role.getTitle(themeDisplay.getLocale()), false);
+				%>
+
+				<liferay-frontend:management-bar-button href="javascript:;" icon="remove-role" id="removeUserSiteRole" label="<%= label %>" />
+			</c:if>
 		</c:if>
 
 		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedUsers" label="remove-membership" />
@@ -165,7 +174,9 @@ userSearch.setResults(users);
 
 		<aui:form action="<%= deleteGroupUsersURL %>" cssClass="portlet-site-memberships-users" method="post" name="fm">
 			<aui:input name="tabs1" type="hidden" value="users" />
+			<aui:input name="navigation" type="hidden" value="<%= navigation %>" />
 			<aui:input name="addUserIds" type="hidden" />
+			<aui:input name="roleId" type="hidden" value="<%= roleId %>" />
 
 			<liferay-ui:membership-policy-error />
 
@@ -227,6 +238,17 @@ userSearch.setResults(users);
 	);
 
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ASSIGN_USER_ROLES) %>">
+		<c:if test="<%= role != null %>">
+			$('#<portlet:namespace />removeUserSiteRole').on(
+				'click',
+				function() {
+					if (confirm('<liferay-ui:message arguments="<%= role.getTitle(themeDisplay.getLocale()) %>" key="are-you-sure-you-want-to-remove-x-role-to-selected-users" translateArguments="<%= false %>" />')) {
+						submitForm(form, '<portlet:actionURL name="removeUserSiteRole" />');
+					}
+				}
+			);
+		</c:if>
+
 		<portlet:renderURL var="selectSiteRoleURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/site_roles.jsp" />
 			<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />

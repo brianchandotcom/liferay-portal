@@ -142,7 +142,7 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 
 		// LPS-34911
 
-		if (!isExcludedPath(_UPGRADE_SERVICE_UTIL_EXCLUDES, absolutePath) &&
+		if (!isExcludedPath(_excludes, absolutePath) &&
 			fileName.contains("/portal/upgrade/") &&
 			!fileName.contains("/test/") &&
 			!fileName.contains("/testIntegration/")) {
@@ -171,9 +171,6 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 				getLineCount(content, pos));
 		}
 	}
-
-	private static final String _UPGRADE_SERVICE_UTIL_EXCLUDES =
-		"upgrade.service.util.excludes";
 
 	private final Pattern _componentAnnotationPattern = Pattern.compile(
 		"@Component(\n|\\([\\s\\S]*?\\)\n)");

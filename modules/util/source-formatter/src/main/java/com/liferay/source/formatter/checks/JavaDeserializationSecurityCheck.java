@@ -39,7 +39,7 @@ public class JavaDeserializationSecurityCheck extends BaseFileCheck {
 
 		if (fileName.contains("/test/") ||
 			fileName.contains("/testIntegration/") ||
-			isExcludedPath(_SECURE_DESERIALIZATION_EXCLUDES, absolutePath)) {
+			isExcludedPath(_secureDeserializationExcludes, absolutePath)) {
 
 			return content;
 		}
@@ -63,7 +63,7 @@ public class JavaDeserializationSecurityCheck extends BaseFileCheck {
 
 			StringBundler sb = new StringBundler(3);
 
-			if (isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
+			if (isExcludedPath(_runOutsidePortalExcludes, absolutePath)) {
 				sb.append("Possible Java Serialization Remote Code Execution ");
 				sb.append("vulnerability using ");
 			}
@@ -76,9 +76,6 @@ public class JavaDeserializationSecurityCheck extends BaseFileCheck {
 			addMessage(fileName, sb.toString());
 		}
 	}
-
-	private static final String _SECURE_DESERIALIZATION_EXCLUDES =
-		"secure.deserialization.excludes";
 
 	private final Pattern[] _javaSerializationVulnerabilityPatterns =
 		new Pattern[] {

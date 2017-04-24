@@ -80,8 +80,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
-				if (isExcludedPath(
-						_LINE_LENGTH_EXCLUDES, absolutePath, lineCount) ||
+				if (isExcludedPath(_excludes, absolutePath, lineCount) ||
 					_isAnnotationParameter(content, trimmedLine)) {
 
 					continue;
@@ -401,8 +400,6 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 		return false;
 	}
-
-	private static final String _LINE_LENGTH_EXCLUDES = "line.length.excludes";
 
 	private final Pattern _annotationPattern = Pattern.compile(
 		"\n\t*@(.+)\\(\n");

@@ -138,11 +138,9 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 				addMessage(fileName, "Duplicate " + javaTerm.getName());
 			}
 			else if (!isExcludedPath(
-						JAVATERM_SORT_EXCLUDES, absolutePath,
-						previousJavaTerm.getName()) &&
+						_excludes, absolutePath, previousJavaTerm.getName()) &&
 					 !isExcludedPath(
-						 JAVATERM_SORT_EXCLUDES, absolutePath,
-						 javaTerm.getName()) &&
+						 _excludes, absolutePath, javaTerm.getName()) &&
 					 (compare > 0)) {
 
 				String classContent = javaClass.getContent();

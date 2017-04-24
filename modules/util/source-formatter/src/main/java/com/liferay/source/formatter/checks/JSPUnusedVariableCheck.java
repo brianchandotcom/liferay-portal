@@ -74,8 +74,7 @@ public class JSPUnusedVariableCheck extends JSPUnusedTermCheck {
 				}
 
 				if (!javaSource ||
-					isExcludedPath(
-						_UNUSED_VARIABLES_EXCLUDES, absolutePath, lineCount) ||
+					isExcludedPath(_excludes, absolutePath, lineCount) ||
 					!_hasUnusedVariable(
 						fileName, trimmedLine, checkedFileNames,
 						includeFileNames)) {
@@ -157,9 +156,6 @@ public class JSPUnusedVariableCheck extends JSPUnusedTermCheck {
 			fileName, sb.toString(), "variable", checkedFileNames,
 			includeFileNames, _contentsMap);
 	}
-
-	private static final String _UNUSED_VARIABLES_EXCLUDES =
-		"jsp.unused.variables.excludes";
 
 	private final Map<String, String> _contentsMap;
 	private final List<String> _excludes;

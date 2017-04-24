@@ -64,7 +64,7 @@ public class XMLPortletFileCheck extends BaseFileCheck {
 		Element rootElement = document.getRootElement();
 
 		boolean checkNumericalPortletNameElement = !isExcludedPath(
-			_NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES, absolutePath);
+			_excludes, absolutePath);
 
 		List<Element> portletElements = rootElement.elements("portlet");
 
@@ -102,9 +102,6 @@ public class XMLPortletFileCheck extends BaseFileCheck {
 		return StringUtil.replace(
 			Dom4jUtil.toString(document), "\"/>\n", "\" />\n");
 	}
-
-	private static final String _NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES =
-		"numerical.portlet.name.element.excludes";
 
 	private final List<String> _excludes;
 	private final boolean _portalSource;

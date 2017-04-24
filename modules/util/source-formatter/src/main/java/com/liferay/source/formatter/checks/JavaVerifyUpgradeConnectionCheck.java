@@ -31,8 +31,7 @@ public class JavaVerifyUpgradeConnectionCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (isExcludedPath(
-				_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES, absolutePath) ||
+		if (isExcludedPath(_excludes, absolutePath) ||
 			fileName.endsWith("Test.java") ||
 			fileName.endsWith("UpgradeTableListener.java") ||
 			content.contains("ThrowableAwareRunnable")) {
@@ -65,9 +64,6 @@ public class JavaVerifyUpgradeConnectionCheck extends BaseFileCheck {
 
 		return content;
 	}
-
-	private static final String _UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES =
-		"upgrade.data.access.connection.excludes";
 
 	private final List<String> _excludes;
 

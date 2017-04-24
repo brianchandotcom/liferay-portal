@@ -140,7 +140,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 	}
 
 	private String _sortMethodCalls(String absolutePath, String content) {
-		if (isExcludedPath(METHOD_CALL_SORT_EXCLUDES, absolutePath)) {
+		if (isExcludedPath(_excludes, absolutePath)) {
 			return content;
 		}
 

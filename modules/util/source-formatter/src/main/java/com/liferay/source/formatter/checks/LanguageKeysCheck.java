@@ -73,7 +73,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		throws Exception {
 
 		if (fileName.endsWith(".vm") ||
-			isExcludedPath(LANGUAGE_KEYS_CHECK_EXCLUDES, absolutePath)) {
+			isExcludedPath(_excludes, absolutePath)) {
 
 			return;
 		}

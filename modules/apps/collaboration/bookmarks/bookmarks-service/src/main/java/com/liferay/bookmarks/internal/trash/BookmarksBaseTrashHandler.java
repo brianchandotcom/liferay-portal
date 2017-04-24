@@ -20,10 +20,8 @@ import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -131,35 +129,6 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException {
-
-		List<TrashRenderer> trashRenderers = new ArrayList<>();
-
-		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
-			classPK);
-
-		List<BookmarksEntry> foldersAndEntries =
-			BookmarksEntryLocalServiceUtil.getEntries(
-				folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
-				start, end);
-
-		for (BookmarksEntry folderOrEntry : foldersAndEntries) {
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					BookmarksEntry.class.getName());
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				folderOrEntry.getEntryId());
-
-			trashRenderers.add(trashRenderer);
-		}
-
-		return trashRenderers;
-	}
-
-	@Override
 	public String getTrashContainerModelName() {
 		return "folders";
 	}
@@ -176,35 +145,6 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException {
-
-		List<TrashRenderer> trashRenderers = new ArrayList<>();
-
-		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
-			classPK);
-
-		List<BookmarksFolder> folders =
-			BookmarksFolderLocalServiceUtil.getFolders(
-				folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
-				start, end);
-
-		for (BookmarksFolder curFolder : folders) {
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					BookmarksFolder.class.getName());
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				curFolder.getPrimaryKey());
-
-			trashRenderers.add(trashRenderer);
-		}
-
-		return trashRenderers;
-	}
-
-	@Override
 	public int getTrashModelsCount(long classPK) throws PortalException {
 		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
 			classPK);
@@ -214,11 +154,11 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public List<TrashRenderer> getTrashModelTrashRenderers(
+	public List<TrashedModel> getTrashModelTrashedModels(
 			long classPK, int start, int end, OrderByComparator obc)
 		throws PortalException {
 
-		List<TrashRenderer> trashRenderers = new ArrayList<>();
+		List<TrashedModel> trashedModels = new ArrayList<>();
 
 		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
 			classPK);
@@ -229,33 +169,19 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 				start, end, obc);
 
 		for (Object folderOrEntry : foldersAndEntries) {
-			TrashRenderer trashRenderer = null;
-
 			if (folderOrEntry instanceof BookmarksFolder) {
 				BookmarksFolder curFolder = (BookmarksFolder)folderOrEntry;
 
-				TrashHandler trashHandler =
-					TrashHandlerRegistryUtil.getTrashHandler(
-						BookmarksFolder.class.getName());
-
-				trashRenderer = trashHandler.getTrashRenderer(
-					curFolder.getPrimaryKey());
+				trashedModels.add(curFolder);
 			}
 			else {
 				BookmarksEntry entry = (BookmarksEntry)folderOrEntry;
 
-				TrashHandler trashHandler =
-					TrashHandlerRegistryUtil.getTrashHandler(
-						BookmarksEntry.class.getName());
-
-				trashRenderer = trashHandler.getTrashRenderer(
-					entry.getEntryId());
+				trashedModels.add(entry);
 			}
-
-			trashRenderers.add(trashRenderer);
 		}
 
-		return trashRenderers;
+		return trashedModels;
 	}
 
 	@Override

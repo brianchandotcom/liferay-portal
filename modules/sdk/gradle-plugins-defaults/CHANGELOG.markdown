@@ -1414,6 +1414,11 @@ not contain any class or JAR file.
 1.6.0.LIFERAY-PATCHED-1.
 - [LPS-72102]: Update the [Liferay Gradle Plugins] dependency to version 3.3.3.
 
+## 3.6.6 - 2017-04-21
+
+### Changed
+- [LPS-71722]: Update the [Liferay Gradle Plugins] dependency to version 3.3.4.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

@@ -1518,6 +1518,14 @@ to version 1.0.121.
 ### Changed
 - [LPS-72102]: Update the [Liferay Lang Builder] dependency to version 1.0.13.
 
+## 3.3.4 - 2017-04-21
+
+### Changed
+- [LPS-71722]: Update the [Liferay Gradle Plugins Service Builder] dependency
+to version 1.0.38.
+- [LPS-71722]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.154.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

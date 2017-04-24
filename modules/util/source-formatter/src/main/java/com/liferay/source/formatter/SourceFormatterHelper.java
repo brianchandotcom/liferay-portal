@@ -44,10 +44,10 @@ import java.util.List;
  */
 public class SourceFormatterHelper {
 
-	public void close() throws IOException {
+	public static void close() throws IOException {
 	}
 
-	public List<String> filterFileNames(
+	public static List<String> filterFileNames(
 		List<String> allFileNames, String[] excludes, String[] includes) {
 
 		List<String> excludesRegex = new ArrayList<>();
@@ -90,7 +90,7 @@ public class SourceFormatterHelper {
 		return fileNames;
 	}
 
-	public List<String> filterRecentChangesFileNames(
+	public static List<String> filterRecentChangesFileNames(
 			String baseDir, List<String> recentChangesFileNames,
 			String[] excludes, String[] includes,
 			boolean includeSubrepositories)
@@ -133,7 +133,7 @@ public class SourceFormatterHelper {
 			excludeFilePathMatchers, includeFilePathMatchers);
 	}
 
-	public File getFile(String baseDir, String fileName, int level) {
+	public static File getFile(String baseDir, String fileName, int level) {
 		for (int i = 0; i < level; i++) {
 			File file = new File(baseDir + fileName);
 
@@ -147,18 +147,18 @@ public class SourceFormatterHelper {
 		return null;
 	}
 
-	public void init() throws IOException {
+	public static void init() throws IOException {
 	}
 
-	public void printError(String fileName, File file) {
+	public static void printError(String fileName, File file) {
 		printError(fileName, file.toString());
 	}
 
-	public void printError(String fileName, String message) {
+	public static void printError(String fileName, String message) {
 		System.out.println(message);
 	}
 
-	public List<String> scanForFiles(
+	public static List<String> scanForFiles(
 			String baseDir, String[] excludes, String[] includes,
 			boolean includeSubrepositories)
 		throws Exception {
@@ -200,7 +200,7 @@ public class SourceFormatterHelper {
 			includeFilePathMatchers, includeSubrepositories);
 	}
 
-	private String _createRegex(String s) {
+	private static String _createRegex(String s) {
 		if (!s.startsWith("**/")) {
 			s = "**/" + s;
 		}
@@ -240,7 +240,7 @@ public class SourceFormatterHelper {
 		return sb.toString();
 	}
 
-	private List<String> _filterRecentChangesFileNames(
+	private static List<String> _filterRecentChangesFileNames(
 			String baseDir, List<String> recentChangesFileNames,
 			List<PathMatcher> excludeDirPathMatchers,
 			List<PathMatcher> excludeFilePathMatchers,
@@ -304,7 +304,7 @@ public class SourceFormatterHelper {
 		return fileNames;
 	}
 
-	private Path _getCanonicalPath(Path path) {
+	private static Path _getCanonicalPath(Path path) {
 		try {
 			File file = path.toFile();
 
@@ -317,7 +317,7 @@ public class SourceFormatterHelper {
 		}
 	}
 
-	private List<String> _scanForFiles(
+	private static List<String> _scanForFiles(
 			String baseDir, final List<PathMatcher> excludeDirPathMatchers,
 			final List<PathMatcher> excludeFilePathMatchers,
 			final List<PathMatcher> includeFilePathMatchers,

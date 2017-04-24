@@ -108,7 +108,7 @@
 				<version>@com.liferay.portal.tools.soy.builder.version@</version>
 				<executions>
 					<execution>
-						<phase>process-resources</phase>
+						<phase>compile</phase>
 						<goals>
 							<goal>build</goal>
 							<goal>wrap-alloy-template</goal>

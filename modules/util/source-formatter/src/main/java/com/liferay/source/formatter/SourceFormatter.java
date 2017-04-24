@@ -190,8 +190,6 @@ public class SourceFormatter {
 	}
 
 	public void format() throws Exception {
-		_sourceFormatterHelper = new SourceFormatterHelper();
-
 		if (_isPortalSource()) {
 			_populatePortalImplProperties();
 
@@ -328,7 +326,7 @@ public class SourceFormatter {
 	}
 
 	private boolean _isPortalSource() {
-		File portalImplDir = _sourceFormatterHelper.getFile(
+		File portalImplDir = SourceFormatterHelper.getFile(
 			_sourceFormatterArgs.getBaseDirName(), "portal-impl",
 			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
@@ -346,7 +344,7 @@ public class SourceFormatter {
 		List<String> excludesList = ListUtil.fromString(
 			GetterUtil.getString(excludesValue), StringPool.COMMA);
 
-		_allFileNames = _sourceFormatterHelper.scanForFiles(
+		_allFileNames = SourceFormatterHelper.scanForFiles(
 			_sourceFormatterArgs.getBaseDirName(),
 			excludesList.toArray(new String[excludesList.size()]),
 			new String[] {"**/*.*"},
@@ -388,7 +386,7 @@ public class SourceFormatter {
 			GetterUtil.getString(excludesValue), StringPool.COMMA);
 
 		List<String> modulePropertiesFileNames =
-			_sourceFormatterHelper.filterFileNames(
+			SourceFormatterHelper.filterFileNames(
 				_allFileNames,
 				excludesList.toArray(new String[excludesList.size()]),
 				new String[] {"**/modules/**/" + _PROPERTIES_FILE_NAME});
@@ -440,7 +438,7 @@ public class SourceFormatter {
 	}
 
 	private void _populatePortalImplProperties() throws Exception {
-		File propertiesFile = _sourceFormatterHelper.getFile(
+		File propertiesFile = SourceFormatterHelper.getFile(
 			_sourceFormatterArgs.getBaseDirName(),
 			"portal-impl/src/" + _PROPERTIES_FILE_NAME,
 			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
@@ -505,7 +503,6 @@ public class SourceFormatter {
 		new CopyOnWriteArrayList<>();
 	private Properties _properties = new Properties();
 	private final SourceFormatterArgs _sourceFormatterArgs;
-	private SourceFormatterHelper _sourceFormatterHelper;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new ConcurrentSkipListSet<>();
 

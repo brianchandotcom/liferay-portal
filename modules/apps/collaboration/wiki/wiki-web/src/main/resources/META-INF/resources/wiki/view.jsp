@@ -356,13 +356,13 @@ if (portletTitleBasedNavigation) {
 										<div class="row">
 
 											<%
-											Map<String, Object> data = new HashMap<String, Object>();
-
-											data.put("senna-off", "true");
+											List<FileEntry> attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
 
 											DLMimeTypeDisplayContext dlMimeTypeDisplayContext = (DLMimeTypeDisplayContext)request.getAttribute(WikiWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT);
 
-											List<FileEntry> attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
+											Map<String, Object> data = new HashMap<String, Object>();
+
+											data.put("senna-off", "true");
 
 											for (FileEntry fileEntry : attachmentsFileEntries) {
 												String rowURL = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED);

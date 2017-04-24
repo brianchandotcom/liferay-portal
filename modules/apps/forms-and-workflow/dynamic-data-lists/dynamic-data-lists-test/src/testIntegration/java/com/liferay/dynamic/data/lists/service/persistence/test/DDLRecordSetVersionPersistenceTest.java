@@ -125,6 +125,8 @@ public class DDLRecordSetVersionPersistenceTest {
 
 		DDLRecordSetVersion newDDLRecordSetVersion = _persistence.create(pk);
 
+		newDDLRecordSetVersion.setUuid(RandomTestUtil.randomString());
+
 		newDDLRecordSetVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newDDLRecordSetVersion.setCompanyId(RandomTestUtil.nextLong());
@@ -134,6 +136,8 @@ public class DDLRecordSetVersionPersistenceTest {
 		newDDLRecordSetVersion.setUserName(RandomTestUtil.randomString());
 
 		newDDLRecordSetVersion.setCreateDate(RandomTestUtil.nextDate());
+
+		newDDLRecordSetVersion.setModifiedDate(RandomTestUtil.nextDate());
 
 		newDDLRecordSetVersion.setRecordSetId(RandomTestUtil.nextLong());
 
@@ -155,10 +159,14 @@ public class DDLRecordSetVersionPersistenceTest {
 
 		newDDLRecordSetVersion.setStatusDate(RandomTestUtil.nextDate());
 
+		newDDLRecordSetVersion.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_ddlRecordSetVersions.add(_persistence.update(newDDLRecordSetVersion));
 
 		DDLRecordSetVersion existingDDLRecordSetVersion = _persistence.findByPrimaryKey(newDDLRecordSetVersion.getPrimaryKey());
 
+		Assert.assertEquals(existingDDLRecordSetVersion.getUuid(),
+			newDDLRecordSetVersion.getUuid());
 		Assert.assertEquals(existingDDLRecordSetVersion.getRecordSetVersionId(),
 			newDDLRecordSetVersion.getRecordSetVersionId());
 		Assert.assertEquals(existingDDLRecordSetVersion.getGroupId(),
@@ -172,6 +180,9 @@ public class DDLRecordSetVersionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDLRecordSetVersion.getCreateDate()),
 			Time.getShortTimestamp(newDDLRecordSetVersion.getCreateDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDDLRecordSetVersion.getModifiedDate()),
+			Time.getShortTimestamp(newDDLRecordSetVersion.getModifiedDate()));
 		Assert.assertEquals(existingDDLRecordSetVersion.getRecordSetId(),
 			newDDLRecordSetVersion.getRecordSetId());
 		Assert.assertEquals(existingDDLRecordSetVersion.getDDMStructureVersionId(),
@@ -193,6 +204,36 @@ public class DDLRecordSetVersionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDLRecordSetVersion.getStatusDate()),
 			Time.getShortTimestamp(newDDLRecordSetVersion.getStatusDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDDLRecordSetVersion.getLastPublishDate()),
+			Time.getShortTimestamp(newDDLRecordSetVersion.getLastPublishDate()));
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid(StringPool.BLANK);
+
+		_persistence.countByUuid(StringPool.NULL);
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G(StringPool.NULL, 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -243,11 +284,13 @@ public class DDLRecordSetVersionPersistenceTest {
 
 	protected OrderByComparator<DDLRecordSetVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDLRecordSetVersion",
-			"recordSetVersionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"recordSetId", true, "DDMStructureVersionId", true, "name", true,
-			"description", true, "version", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"uuid", true, "recordSetVersionId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "recordSetId", true,
+			"DDMStructureVersionId", true, "name", true, "description", true,
+			"version", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true, "lastPublishDate",
+			true);
 	}
 
 	@Test
@@ -453,6 +496,15 @@ public class DDLRecordSetVersionPersistenceTest {
 
 		DDLRecordSetVersion existingDDLRecordSetVersion = _persistence.findByPrimaryKey(newDDLRecordSetVersion.getPrimaryKey());
 
+		Assert.assertTrue(Objects.equals(
+				existingDDLRecordSetVersion.getUuid(),
+				ReflectionTestUtil.invoke(existingDDLRecordSetVersion,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingDDLRecordSetVersion.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDDLRecordSetVersion,
+				"getOriginalGroupId", new Class<?>[0]));
+
 		Assert.assertEquals(Long.valueOf(
 				existingDDLRecordSetVersion.getRecordSetId()),
 			ReflectionTestUtil.<Long>invoke(existingDDLRecordSetVersion,
@@ -469,6 +521,8 @@ public class DDLRecordSetVersionPersistenceTest {
 
 		DDLRecordSetVersion ddlRecordSetVersion = _persistence.create(pk);
 
+		ddlRecordSetVersion.setUuid(RandomTestUtil.randomString());
+
 		ddlRecordSetVersion.setGroupId(RandomTestUtil.nextLong());
 
 		ddlRecordSetVersion.setCompanyId(RandomTestUtil.nextLong());
@@ -478,6 +532,8 @@ public class DDLRecordSetVersionPersistenceTest {
 		ddlRecordSetVersion.setUserName(RandomTestUtil.randomString());
 
 		ddlRecordSetVersion.setCreateDate(RandomTestUtil.nextDate());
+
+		ddlRecordSetVersion.setModifiedDate(RandomTestUtil.nextDate());
 
 		ddlRecordSetVersion.setRecordSetId(RandomTestUtil.nextLong());
 
@@ -498,6 +554,8 @@ public class DDLRecordSetVersionPersistenceTest {
 		ddlRecordSetVersion.setStatusByUserName(RandomTestUtil.randomString());
 
 		ddlRecordSetVersion.setStatusDate(RandomTestUtil.nextDate());
+
+		ddlRecordSetVersion.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_ddlRecordSetVersions.add(_persistence.update(ddlRecordSetVersion));
 

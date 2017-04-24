@@ -94,6 +94,18 @@ public class DDLRecordVersionLocalServiceUtil {
 	}
 
 	/**
+	* Returns the ddl record version matching the UUID and group.
+	*
+	* @param uuid the ddl record version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
+	*/
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchDDLRecordVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchDDLRecordVersionByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns the ddl record version with the primary key.
 	*
 	* @param recordVersionId the primary key of the ddl record version
@@ -104,6 +116,20 @@ public class DDLRecordVersionLocalServiceUtil {
 		long recordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDLRecordVersion(recordVersionId);
+	}
+
+	/**
+	* Returns the ddl record version matching the UUID and group.
+	*
+	* @param uuid the ddl record version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching ddl record version
+	* @throws PortalException if a matching ddl record version could not be found
+	*/
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getDDLRecordVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDDLRecordVersionByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -163,6 +189,11 @@ public class DDLRecordVersionLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -276,6 +307,37 @@ public class DDLRecordVersionLocalServiceUtil {
 	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getDDLRecordVersions(
 		int start, int end) {
 		return getService().getDDLRecordVersions(start, end);
+	}
+
+	/**
+	* Returns all the ddl record versions matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddl record versions
+	* @param companyId the primary key of the company
+	* @return the matching ddl record versions, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getDDLRecordVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .getDDLRecordVersionsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of ddl record versions matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddl record versions
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of ddl record versions
+	* @param end the upper bound of the range of ddl record versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching ddl record versions, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getDDLRecordVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator) {
+		return getService()
+				   .getDDLRecordVersionsByUuidAndCompanyId(uuid, companyId,
+			start, end, orderByComparator);
 	}
 
 	/**

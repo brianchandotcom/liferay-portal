@@ -18,8 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -105,6 +108,17 @@ public interface DDLRecordSetVersionLocalService extends BaseLocalService,
 	public DDLRecordSetVersion fetchDDLRecordSetVersion(long recordSetVersionId);
 
 	/**
+	* Returns the ddl record set version matching the UUID and group.
+	*
+	* @param uuid the ddl record set version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching ddl record set version, or <code>null</code> if a matching ddl record set version could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordSetVersion fetchDDLRecordSetVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
 	* Returns the ddl record set version with the primary key.
 	*
 	* @param recordSetVersionId the primary key of the ddl record set version
@@ -114,6 +128,18 @@ public interface DDLRecordSetVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordSetVersion getDDLRecordSetVersion(long recordSetVersionId)
 		throws PortalException;
+
+	/**
+	* Returns the ddl record set version matching the UUID and group.
+	*
+	* @param uuid the ddl record set version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching ddl record set version
+	* @throws PortalException if a matching ddl record set version could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordSetVersion getDDLRecordSetVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordSetVersion getLatestRecordSetVersion(long recordSetId)
@@ -141,6 +167,10 @@ public interface DDLRecordSetVersionLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -227,6 +257,32 @@ public interface DDLRecordSetVersionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecordSetVersion> getDDLRecordSetVersions(int start, int end);
+
+	/**
+	* Returns all the ddl record set versions matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddl record set versions
+	* @param companyId the primary key of the company
+	* @return the matching ddl record set versions, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecordSetVersion> getDDLRecordSetVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of ddl record set versions matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddl record set versions
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of ddl record set versions
+	* @param end the upper bound of the range of ddl record set versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching ddl record set versions, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecordSetVersion> getDDLRecordSetVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<DDLRecordSetVersion> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecordSetVersion> getRecordSetVersions(long recordSetId);

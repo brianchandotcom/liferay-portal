@@ -109,7 +109,7 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="WorkflowDefinitionLink" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="DDLRecordSetVersion" remote-service="true">
+	<entity local-service="true" name="DDLRecordSetVersion" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -125,6 +125,7 @@
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
@@ -138,6 +139,7 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -153,7 +155,7 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="DDLRecordVersion" remote-service="true">
+	<entity local-service="true" name="DDLRecordVersion" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -169,6 +171,7 @@
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
@@ -182,6 +185,7 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 

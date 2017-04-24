@@ -91,6 +91,20 @@ public class DDLRecordSetVersionLocalServiceWrapper
 	}
 
 	/**
+	* Returns the ddl record set version matching the UUID and group.
+	*
+	* @param uuid the ddl record set version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching ddl record set version, or <code>null</code> if a matching ddl record set version could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSetVersion fetchDDLRecordSetVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _ddlRecordSetVersionLocalService.fetchDDLRecordSetVersionByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the ddl record set version with the primary key.
 	*
 	* @param recordSetVersionId the primary key of the ddl record set version
@@ -102,6 +116,22 @@ public class DDLRecordSetVersionLocalServiceWrapper
 		long recordSetVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetVersionLocalService.getDDLRecordSetVersion(recordSetVersionId);
+	}
+
+	/**
+	* Returns the ddl record set version matching the UUID and group.
+	*
+	* @param uuid the ddl record set version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching ddl record set version
+	* @throws PortalException if a matching ddl record set version could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSetVersion getDDLRecordSetVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetVersionLocalService.getDDLRecordSetVersionByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	@Override
@@ -146,6 +176,12 @@ public class DDLRecordSetVersionLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _ddlRecordSetVersionLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _ddlRecordSetVersionLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
@@ -265,6 +301,38 @@ public class DDLRecordSetVersionLocalServiceWrapper
 		int start, int end) {
 		return _ddlRecordSetVersionLocalService.getDDLRecordSetVersions(start,
 			end);
+	}
+
+	/**
+	* Returns all the ddl record set versions matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddl record set versions
+	* @param companyId the primary key of the company
+	* @return the matching ddl record set versions, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSetVersion> getDDLRecordSetVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _ddlRecordSetVersionLocalService.getDDLRecordSetVersionsByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of ddl record set versions matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddl record set versions
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of ddl record set versions
+	* @param end the upper bound of the range of ddl record set versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching ddl record set versions, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSetVersion> getDDLRecordSetVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSetVersion> orderByComparator) {
+		return _ddlRecordSetVersionLocalService.getDDLRecordSetVersionsByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	@Override

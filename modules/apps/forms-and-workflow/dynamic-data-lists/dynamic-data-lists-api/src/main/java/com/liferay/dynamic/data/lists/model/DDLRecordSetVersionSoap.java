@@ -34,12 +34,14 @@ public class DDLRecordSetVersionSoap implements Serializable {
 	public static DDLRecordSetVersionSoap toSoapModel(DDLRecordSetVersion model) {
 		DDLRecordSetVersionSoap soapModel = new DDLRecordSetVersionSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setRecordSetVersionId(model.getRecordSetVersionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setRecordSetId(model.getRecordSetId());
 		soapModel.setDDMStructureVersionId(model.getDDMStructureVersionId());
 		soapModel.setName(model.getName());
@@ -50,6 +52,7 @@ public class DDLRecordSetVersionSoap implements Serializable {
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
 		soapModel.setStatusDate(model.getStatusDate());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -105,6 +108,14 @@ public class DDLRecordSetVersionSoap implements Serializable {
 		setRecordSetVersionId(pk);
 	}
 
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
+	}
+
 	public long getRecordSetVersionId() {
 		return _recordSetVersionId;
 	}
@@ -151,6 +162,14 @@ public class DDLRecordSetVersionSoap implements Serializable {
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	public long getRecordSetId() {
@@ -233,12 +252,22 @@ public class DDLRecordSetVersionSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	private String _uuid;
 	private long _recordSetVersionId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
+	private Date _modifiedDate;
 	private long _recordSetId;
 	private long _DDMStructureVersionId;
 	private String _name;
@@ -249,4 +278,5 @@ public class DDLRecordSetVersionSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private Date _lastPublishDate;
 }

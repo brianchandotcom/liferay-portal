@@ -887,7 +887,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			String version = recordVersion.getVersion();
 
 			updateRecordVersion(
-				user, recordVersion, version, displayIndex,
+				user, record, recordVersion, version, displayIndex,
 				recordVersion.getStatus(), serviceContext);
 		}
 
@@ -1107,6 +1107,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		recordVersion.setUserId(user.getUserId());
 		recordVersion.setUserName(user.getFullName());
 		recordVersion.setCreateDate(record.getModifiedDate());
+		recordVersion.setModifiedDate(record.getModifiedDate());
 		recordVersion.setDDMStorageId(ddmStorageId);
 		recordVersion.setRecordSetId(record.getRecordSetId());
 		recordVersion.setRecordSetVersion(record.getRecordSetVersion());
@@ -1334,11 +1335,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	protected void updateRecordVersion(
-		User user, DDLRecordVersion recordVersion, String version,
-		int displayIndex, int status, ServiceContext serviceContext) {
+		User user, DDLRecord record, DDLRecordVersion recordVersion,
+		String version, int displayIndex, int status,
+		ServiceContext serviceContext) {
 
 		recordVersion.setUserId(user.getUserId());
 		recordVersion.setUserName(user.getFullName());
+		recordVersion.setModifiedDate(record.getModifiedDate());
 		recordVersion.setVersion(version);
 		recordVersion.setDisplayIndex(displayIndex);
 		recordVersion.setStatus(status);

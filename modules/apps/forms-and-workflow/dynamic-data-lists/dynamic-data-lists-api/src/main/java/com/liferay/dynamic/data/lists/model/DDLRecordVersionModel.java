@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -44,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
-	ShardedModel, WorkflowedModel {
+	ShardedModel, StagedGroupedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -66,6 +67,23 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this ddl record version.
+	 *
+	 * @return the uuid of this ddl record version
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this ddl record version.
+	 *
+	 * @param uuid the uuid of this ddl record version
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the record version ID of this ddl record version.
 	 *
 	 * @return the record version ID of this ddl record version
@@ -84,6 +102,7 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 *
 	 * @return the group ID of this ddl record version
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -91,6 +110,7 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 *
 	 * @param groupId the group ID of this ddl record version
 	 */
+	@Override
 	public void setGroupId(long groupId);
 
 	/**
@@ -114,6 +134,7 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 *
 	 * @return the user ID of this ddl record version
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -121,6 +142,7 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 *
 	 * @param userId the user ID of this ddl record version
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
@@ -128,6 +150,7 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 *
 	 * @return the user uuid of this ddl record version
 	 */
+	@Override
 	public String getUserUuid();
 
 	/**
@@ -135,6 +158,7 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 *
 	 * @param userUuid the user uuid of this ddl record version
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -143,6 +167,7 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 * @return the user name of this ddl record version
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -150,6 +175,7 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 *
 	 * @param userName the user name of this ddl record version
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -157,6 +183,7 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 *
 	 * @return the create date of this ddl record version
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -164,7 +191,24 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 *
 	 * @param createDate the create date of this ddl record version
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this ddl record version.
+	 *
+	 * @return the modified date of this ddl record version
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this ddl record version.
+	 *
+	 * @param modifiedDate the modified date of this ddl record version
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the ddm storage ID of this ddl record version.
@@ -332,6 +376,22 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the last publish date of this ddl record version.
+	 *
+	 * @return the last publish date of this ddl record version
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this ddl record version.
+	 *
+	 * @param lastPublishDate the last publish date of this ddl record version
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	/**
 	 * Returns <code>true</code> if this ddl record version is approved.

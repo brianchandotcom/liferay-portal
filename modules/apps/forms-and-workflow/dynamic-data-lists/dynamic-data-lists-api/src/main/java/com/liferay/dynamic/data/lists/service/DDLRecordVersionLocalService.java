@@ -18,8 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -104,6 +107,17 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	public DDLRecordVersion fetchDDLRecordVersion(long recordVersionId);
 
 	/**
+	* Returns the ddl record version matching the UUID and group.
+	*
+	* @param uuid the ddl record version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordVersion fetchDDLRecordVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
 	* Returns the ddl record version with the primary key.
 	*
 	* @param recordVersionId the primary key of the ddl record version
@@ -113,6 +127,18 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordVersion getDDLRecordVersion(long recordVersionId)
 		throws PortalException;
+
+	/**
+	* Returns the ddl record version matching the UUID and group.
+	*
+	* @param uuid the ddl record version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching ddl record version
+	* @throws PortalException if a matching ddl record version could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordVersion getDDLRecordVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns the record's latest record version.
@@ -162,6 +188,10 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -254,6 +284,32 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecordVersion> getDDLRecordVersions(int start, int end);
+
+	/**
+	* Returns all the ddl record versions matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddl record versions
+	* @param companyId the primary key of the company
+	* @return the matching ddl record versions, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecordVersion> getDDLRecordVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of ddl record versions matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddl record versions
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of ddl record versions
+	* @param end the upper bound of the range of ddl record versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching ddl record versions, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecordVersion> getDDLRecordVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<DDLRecordVersion> orderByComparator);
 
 	/**
 	* Returns an ordered range of record versions matching the record's ID.

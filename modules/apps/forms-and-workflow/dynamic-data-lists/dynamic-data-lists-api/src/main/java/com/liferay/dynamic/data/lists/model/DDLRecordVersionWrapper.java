@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -58,12 +60,14 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("recordVersionId", getRecordVersionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("DDMStorageId", getDDMStorageId());
 		attributes.put("recordSetId", getRecordSetId());
 		attributes.put("recordSetVersion", getRecordSetVersion());
@@ -74,12 +78,19 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long recordVersionId = (Long)attributes.get("recordVersionId");
 
 		if (recordVersionId != null) {
@@ -114,6 +125,12 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long DDMStorageId = (Long)attributes.get("DDMStorageId");
@@ -174,6 +191,12 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -401,6 +424,16 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
+	* Returns the uuid of this ddl record version.
+	*
+	* @return the uuid of this ddl record version
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _ddlRecordVersion.getUuid();
+	}
+
+	/**
 	* Returns the version of this ddl record version.
 	*
 	* @return the version of this ddl record version
@@ -428,6 +461,26 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	@Override
 	public Date getCreateDate() {
 		return _ddlRecordVersion.getCreateDate();
+	}
+
+	/**
+	* Returns the last publish date of this ddl record version.
+	*
+	* @return the last publish date of this ddl record version
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _ddlRecordVersion.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this ddl record version.
+	*
+	* @return the modified date of this ddl record version
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _ddlRecordVersion.getModifiedDate();
 	}
 
 	/**
@@ -606,6 +659,26 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 		_ddlRecordVersion.setGroupId(groupId);
 	}
 
+	/**
+	* Sets the last publish date of this ddl record version.
+	*
+	* @param lastPublishDate the last publish date of this ddl record version
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_ddlRecordVersion.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
+	* Sets the modified date of this ddl record version.
+	*
+	* @param modifiedDate the modified date of this ddl record version
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_ddlRecordVersion.setModifiedDate(modifiedDate);
+	}
+
 	@Override
 	public void setNew(boolean n) {
 		_ddlRecordVersion.setNew(n);
@@ -747,6 +820,16 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
+	* Sets the uuid of this ddl record version.
+	*
+	* @param uuid the uuid of this ddl record version
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_ddlRecordVersion.setUuid(uuid);
+	}
+
+	/**
 	* Sets the version of this ddl record version.
 	*
 	* @param version the version of this ddl record version
@@ -774,6 +857,11 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _ddlRecordVersion.getStagedModelType();
 	}
 
 	@Override

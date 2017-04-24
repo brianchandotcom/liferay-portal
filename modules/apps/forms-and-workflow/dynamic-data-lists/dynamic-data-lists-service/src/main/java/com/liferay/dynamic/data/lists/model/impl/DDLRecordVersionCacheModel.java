@@ -66,9 +66,11 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(39);
 
-		sb.append("{recordVersionId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", recordVersionId=");
 		sb.append(recordVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -80,6 +82,8 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", DDMStorageId=");
 		sb.append(DDMStorageId);
 		sb.append(", recordSetId=");
@@ -100,6 +104,8 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -108,6 +114,13 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 	@Override
 	public DDLRecordVersion toEntityModel() {
 		DDLRecordVersionImpl ddlRecordVersionImpl = new DDLRecordVersionImpl();
+
+		if (uuid == null) {
+			ddlRecordVersionImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			ddlRecordVersionImpl.setUuid(uuid);
+		}
 
 		ddlRecordVersionImpl.setRecordVersionId(recordVersionId);
 		ddlRecordVersionImpl.setGroupId(groupId);
@@ -126,6 +139,13 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		}
 		else {
 			ddlRecordVersionImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			ddlRecordVersionImpl.setModifiedDate(null);
+		}
+		else {
+			ddlRecordVersionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
 		ddlRecordVersionImpl.setDDMStorageId(DDMStorageId);
@@ -165,6 +185,13 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 			ddlRecordVersionImpl.setStatusDate(new Date(statusDate));
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			ddlRecordVersionImpl.setLastPublishDate(null);
+		}
+		else {
+			ddlRecordVersionImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		ddlRecordVersionImpl.resetOriginalValues();
 
 		return ddlRecordVersionImpl;
@@ -172,6 +199,8 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		recordVersionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -181,6 +210,7 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 
 		DDMStorageId = objectInput.readLong();
 
@@ -197,11 +227,19 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(recordVersionId);
 
 		objectOutput.writeLong(groupId);
@@ -218,6 +256,7 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		}
 
 		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(DDMStorageId);
 
@@ -253,14 +292,17 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public String uuid;
 	public long recordVersionId;
 	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
+	public long modifiedDate;
 	public long DDMStorageId;
 	public long recordSetId;
 	public String recordSetVersion;
@@ -271,4 +313,5 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long lastPublishDate;
 }

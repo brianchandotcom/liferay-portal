@@ -699,6 +699,7 @@ public class DDLRecordSetLocalServiceImpl
 		recordSetVersion.setUserId(recordSet.getUserId());
 		recordSetVersion.setUserName(recordSet.getUserName());
 		recordSetVersion.setCreateDate(recordSet.getModifiedDate());
+		recordSetVersion.setModifiedDate(recordSet.getModifiedDate());
 		recordSetVersion.setRecordSetId(recordSet.getRecordSetId());
 		recordSetVersion.setDDMStructureVersionId(ddmStructureVersionId);
 		recordSetVersion.setVersion(version);
@@ -855,6 +856,7 @@ public class DDLRecordSetLocalServiceImpl
 
 		recordSetVersion.setUserId(recordSet.getUserId());
 		recordSetVersion.setUserName(recordSet.getUserName());
+		recordSetVersion.setModifiedDate(recordSet.getModifiedDate());
 		recordSetVersion.setDDMStructureVersionId(ddmStructureVersionId);
 		recordSetVersion.setName(recordSet.getName());
 		recordSetVersion.setDescription(recordSet.getDescription());

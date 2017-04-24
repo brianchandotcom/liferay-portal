@@ -40,12 +40,14 @@ create table DDLRecordSet (
 );
 
 create table DDLRecordSetVersion (
+	uuid_ VARCHAR(75) null,
 	recordSetVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
+	modifiedDate DATE null,
 	recordSetId LONG,
 	DDMStructureVersionId LONG,
 	name STRING null,
@@ -55,16 +57,19 @@ create table DDLRecordSetVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	lastPublishDate DATE null
 );
 
 create table DDLRecordVersion (
+	uuid_ VARCHAR(75) null,
 	recordVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
+	modifiedDate DATE null,
 	DDMStorageId LONG,
 	recordSetId LONG,
 	recordSetVersion VARCHAR(75) null,
@@ -74,5 +79,6 @@ create table DDLRecordVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	lastPublishDate DATE null
 );

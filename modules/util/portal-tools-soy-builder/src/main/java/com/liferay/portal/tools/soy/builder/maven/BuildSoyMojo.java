@@ -14,12 +14,17 @@
 
 package com.liferay.portal.tools.soy.builder.maven;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.tools.soy.builder.commands.BuildSoyCommand;
 
 import java.io.File;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+
+import org.codehaus.plexus.util.Scanner;
+
+import org.sonatype.plexus.build.incremental.BuildContext;
 
 /**
  * Compile Closure Templates into JavaScript functions.
@@ -32,7 +37,24 @@ public class BuildSoyMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
-			_buildSoyCommand.execute();
+			if (_buildContext.isIncremental()) {
+				Scanner scanner = _buildContext.newScanner(_baseDir);
+
+				String[] includes = {"", "**/*.soy"};
+
+				scanner.setIncludes(includes);
+
+				scanner.scan();
+
+				String[] includedFiles = scanner.getIncludedFiles();
+
+				if (ArrayUtil.isNotEmpty(includedFiles)) {
+					_buildSoyCommand.execute();
+				}
+			}
+			else {
+				_buildSoyCommand.execute();
+			}
 		}
 		catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
@@ -48,6 +70,17 @@ public class BuildSoyMojo extends AbstractMojo {
 	public void setDir(File dir) {
 		_buildSoyCommand.setDir(dir);
 	}
+
+	/**
+	 * @parameter default-value="${project.basedir}"
+	 * @readonly
+	 */
+	private File _baseDir;
+
+	/**
+	 * @component
+	 */
+	private BuildContext _buildContext;
 
 	private final BuildSoyCommand _buildSoyCommand = new BuildSoyCommand();
 

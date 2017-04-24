@@ -14,12 +14,17 @@
 
 package com.liferay.portal.tools.soy.builder.maven;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.tools.soy.builder.commands.BaseSoyJsCommand;
 
 import java.io.File;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+
+import org.codehaus.plexus.util.Scanner;
+
+import org.sonatype.plexus.build.incremental.BuildContext;
 
 /**
  * @author Andrea Di Giorgi
@@ -34,7 +39,24 @@ public abstract class BaseSoyJsMojo<T extends BaseSoyJsCommand>
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
-			command.execute();
+			if (_buildContext.isIncremental()) {
+				Scanner scanner = _buildContext.newScanner(_baseDir);
+
+				String[] includes = {"", "**/*.soy"};
+
+				scanner.setIncludes(includes);
+
+				scanner.scan();
+
+				String[] includedFiles = scanner.getIncludedFiles();
+
+				if (ArrayUtil.isNotEmpty(includedFiles)) {
+					command.execute();
+				}
+			}
+			else {
+				command.execute();
+			}
 		}
 		catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
@@ -54,5 +76,16 @@ public abstract class BaseSoyJsMojo<T extends BaseSoyJsCommand>
 	protected abstract T createCommand();
 
 	protected final T command;
+
+	/**
+	 * @parameter default-value="${project.basedir}"
+	 * @readonly
+	 */
+	private File _baseDir;
+
+	/**
+	 * @component
+	 */
+	private BuildContext _buildContext;
 
 }

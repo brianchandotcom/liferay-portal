@@ -17,12 +17,17 @@ configurations {
 
 dependencies {
 	compile group: "com.google.template", name: "soy", version: "2015-04-10"
+	compile group: "org.codehaus.plexus", name: "plexus-utils", transitive: false, version: "3.0.15"
+	compile group: "org.sonatype.plexus", name: "plexus-build-api", transitive: false, version: "0.0.7"
 
 	compileInclude group: "com.beust", name: "jcommander", version: "1.48"
 
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
+	provided group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
+	provided group: "org.apache.maven", name: "maven-core", version: "3.2.5"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"

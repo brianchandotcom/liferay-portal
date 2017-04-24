@@ -702,15 +702,11 @@ public class GitWorkingDirectory {
 	public RemoteConfig getRemoteConfig(String remoteName)
 		throws GitAPIException {
 
-		List<RemoteConfig> remoteConfigs = getRemoteConfigs();
-
-		for (RemoteConfig remoteConfig : remoteConfigs) {
-			if (remoteName.equals(remoteConfig.getName())) {
-				return remoteConfig;
-			}
+		if (remoteName.equals("upstream")) {
+			return _getUpstreamRemoteConfig();
 		}
 
-		return null;
+		return _getRemoteConfig(remoteName);
 	}
 
 	public List<RemoteConfig> getRemoteConfigs() throws GitAPIException {
@@ -1066,36 +1062,16 @@ public class GitWorkingDirectory {
 	}
 
 	protected String loadRepositoryName() throws GitAPIException {
-		String remoteURL = getRemoteURL(getRemoteConfig("upstream"));
+		String remoteURL = getRemoteURL(_getRemoteConfig("upstream"));
 
 		int x = remoteURL.lastIndexOf("/") + 1;
 		int y = remoteURL.indexOf(".git");
 
-		String repositoryName = remoteURL.substring(x, y);
-
-		if (repositoryName.equals("liferay-jenkins-tools-private")) {
-			return repositoryName;
-		}
-
-		if ((repositoryName.equals("liferay-plugins-ee") ||
-			 repositoryName.equals("liferay-portal-ee")) &&
-			!_upstreamBranchName.contains("ee-") &&
-			!_upstreamBranchName.contains("-private")) {
-
-			repositoryName = repositoryName.replace("-ee", "");
-		}
-
-		if (repositoryName.contains("-private") &&
-			!_upstreamBranchName.contains("-private")) {
-
-			repositoryName = repositoryName.replace("-private", "");
-		}
-
-		return repositoryName;
+		return remoteURL.substring(x, y);
 	}
 
 	protected String loadRepositoryUsername() throws GitAPIException {
-		String remoteURL = getRemoteURL(getRemoteConfig("upstream"));
+		String remoteURL = getRemoteURL(_getRemoteConfig("upstream"));
 
 		int x = remoteURL.indexOf(":") + 1;
 		int y = remoteURL.indexOf("/");
@@ -1149,6 +1125,66 @@ public class GitWorkingDirectory {
 				file.delete();
 			}
 		}
+	}
+
+	private RemoteConfig _getPublicUpstreamRemoteConfig()
+		throws GitAPIException {
+
+		RemoteConfig publicUpstreamRemoteConfig = _getRemoteConfig(
+			"upstream-public");
+
+		if (publicUpstreamRemoteConfig != null) {
+			return publicUpstreamRemoteConfig;
+		}
+
+		String upstreamRemoteURL = getRemoteURL(_getRemoteConfig("upstream"));
+
+		upstreamRemoteURL = upstreamRemoteURL.replace("-ee", "");
+		upstreamRemoteURL = upstreamRemoteURL.replace("-private", "");
+
+		return addRemote(true, "upstream-public", upstreamRemoteURL);
+	}
+
+	private RemoteConfig _getRemoteConfig(String remoteName)
+		throws GitAPIException {
+
+		List<RemoteConfig> remoteConfigs = getRemoteConfigs();
+
+		for (RemoteConfig remoteConfig : remoteConfigs) {
+			if (remoteName.equals(remoteConfig.getName())) {
+				return remoteConfig;
+			}
+		}
+
+		return null;
+	}
+
+	private RemoteConfig _getUpstreamRemoteConfig() throws GitAPIException {
+		if (!_repositoryName.contains("-private") &&
+			!_repositoryName.contains("-ee")) {
+
+			return _getRemoteConfig("upstream");
+		}
+
+		if (_repositoryName.equals("liferay-jenkins-tools-private")) {
+			return _getRemoteConfig("upstream");
+		}
+
+		if ((_repositoryName.equals("liferay-plugins-ee") ||
+			 _repositoryName.equals("liferay-portal-ee")) &&
+			!_upstreamBranchName.contains("ee-") &&
+			!_upstreamBranchName.contains("-private")) {
+
+			return _getPublicUpstreamRemoteConfig();
+		}
+
+		if (_repositoryName.contains("-private") &&
+			!_upstreamBranchName.contains("-private")) {
+
+			return _getPublicUpstreamRemoteConfig();
+		}
+
+		return _getRemoteConfig("upstream");
 	}
 
 	private static final List<RepositoryState> _rebaseRepositoryStates =

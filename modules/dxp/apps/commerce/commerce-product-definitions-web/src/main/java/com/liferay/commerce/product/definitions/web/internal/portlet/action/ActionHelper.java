@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.model.CommerceProductDefinition;
-import com.liferay.commerce.product.service.CommerceProductDefinitionLocalService;
+import com.liferay.commerce.product.service.CommerceProductDefinitionService;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class ActionHelper {
 
 		for (long commerceProductDefinitionId : commerceProductDefinitionIds) {
 			CommerceProductDefinition commerceProductDefinition =
-				_commerceProductDefinitionLocalService.
+				_commerceProductDefinitionService.
 					getCommerceProductDefinition(commerceProductDefinitionId);
 
 			commerceProductDefinitions.add(commerceProductDefinition);
@@ -54,7 +54,7 @@ public class ActionHelper {
 	}
 
 	@Reference
-	private CommerceProductDefinitionLocalService
-		_commerceProductDefinitionLocalService;
+	private CommerceProductDefinitionService
+		_commerceProductDefinitionService;
 
 }

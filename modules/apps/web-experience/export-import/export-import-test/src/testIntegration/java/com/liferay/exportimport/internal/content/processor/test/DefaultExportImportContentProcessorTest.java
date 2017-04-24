@@ -32,6 +32,7 @@ import com.liferay.exportimport.test.util.TestReaderWriter;
 import com.liferay.exportimport.test.util.TestUserIdStrategy;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -583,6 +584,52 @@ public class DefaultExportImportContentProcessorTest {
 				_portletDataContextImport, _referrerStagedModel, content);
 
 		Assert.assertEquals(expectedContent, importedContent);
+	}
+
+	@Test
+	public void testInvalidLayoutReferencesCauseNoSuchLayoutException()
+		throws Exception {
+
+		PortalImpl portalImpl = new PortalImpl() {
+
+			@Override
+			public String getPathContext() {
+				return "/de";
+			}
+
+		};
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(portalImpl);
+
+		String content = replaceParameters(
+			getContent("invalid_layout_references.txt"), _fileEntry);
+
+		String[] layoutReferences = StringUtil.split(
+			content, StringPool.NEW_LINE);
+
+		for (String layoutReference : layoutReferences) {
+			if (!layoutReference.contains(PortalUtil.getPathContext())) {
+				continue;
+			}
+
+			boolean noSuchLayoutExceptionThrown = false;
+
+			try {
+				_exportImportContentProcessor.validateContentReferences(
+					_stagingGroup.getGroupId(), layoutReference);
+			}
+			catch (NoSuchLayoutException nsle) {
+				noSuchLayoutExceptionThrown = true;
+			}
+
+			Assert.assertTrue(
+				"Validator failed to flag " + layoutReference + " as invalid",
+				noSuchLayoutExceptionThrown);
+		}
+
+		portalUtil.setPortal(new PortalImpl());
 	}
 
 	protected void assertLinksToLayouts(

@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Security Wedeploy Auth Service
+Bundle-SymbolicName: com.liferay.portal.security.wedeploy.auth.service
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

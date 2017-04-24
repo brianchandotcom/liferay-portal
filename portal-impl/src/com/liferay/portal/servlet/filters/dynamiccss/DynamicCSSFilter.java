@@ -169,7 +169,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		String cacheCommonFileName = getCacheFileName(request);
 
 		File cacheContentTypeFile = new File(
-			_tempDir, cacheCommonFileName + "_E_CONTENT_TYPE");
+			_tempDir, cacheCommonFileName + "_E_CTYPE");
 		File cacheDataFile = new File(
 			_tempDir, cacheCommonFileName + "_E_DATA");
 

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.trash;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.TrashedModel;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.trash.kernel.model.TrashEntry;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -406,7 +409,9 @@ public interface TrashHandler {
 	 * @return the range of trash renderers of model entities (excluding
 	 *         container models) that are children of the parent container model
 	 *         identified by the primary key
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
 			long classPK, int start, int end)
 		throws PortalException;
@@ -463,7 +468,9 @@ public interface TrashHandler {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching trash renderers of model entities
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
 			long classPK, int start, int end)
 		throws PortalException;
@@ -484,9 +491,42 @@ public interface TrashHandler {
 
 	public int getTrashModelsCount(long classPK) throws PortalException;
 
-	public List<TrashRenderer> getTrashModelTrashRenderers(
+	public default List<TrashedModel> getTrashModelTrashedModels(
 			long classPK, int start, int end, OrderByComparator<?> obc)
-		throws PortalException;
+		throws PortalException {
+
+		return Collections.emptyList();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getTrashModelTrashedModels(long, int, int, OrderByComparator)}
+	 */
+	@Deprecated
+	public default List<TrashRenderer> getTrashModelTrashRenderers(
+			long classPK, int start, int end, OrderByComparator<?> obc)
+		throws PortalException {
+
+		List<TrashedModel> trashedModels = getTrashModelTrashedModels(
+			classPK, start, end, obc);
+
+		List<TrashRenderer> trashRenderers = new ArrayList<>();
+
+		for (TrashedModel trashedModel : trashedModels) {
+			String modelClassName =
+				((ClassedModel)trashedModel).getModelClassName();
+
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(modelClassName);
+
+			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
+				trashedModel.getTrashEntryClassPK());
+
+			trashRenderers.add(trashRenderer);
+		}
+
+		return trashRenderers;
+	}
 
 	/**
 	 * Returns the trash renderer associated to the model entity with the

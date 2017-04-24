@@ -214,33 +214,6 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException {
-
-		List<TrashRenderer> trashRenderers = new ArrayList<>();
-
-		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
-
-		List<MBThread> threads = _mbThreadLocalService.getThreads(
-			category.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
-			start, end);
-
-		for (MBThread thread : threads) {
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					MBThread.class.getName());
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				thread.getPrimaryKey());
-
-			trashRenderers.add(trashRenderer);
-		}
-
-		return trashRenderers;
-	}
-
-	@Override
 	public String getTrashContainerModelName() {
 		return "categories";
 	}
@@ -296,7 +269,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public List<TrashRenderer> getTrashModelTrashRenderers(
+	public List<TrashedModel> getTrashModelTrashedModels(
 			long classPK, int start, int end, OrderByComparator<?> obc)
 		throws PortalException {
 
@@ -307,29 +280,19 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 				category.getGroupId(), classPK,
 				WorkflowConstants.STATUS_IN_TRASH, start, end);
 
-		List<TrashRenderer> trashRenderers = new ArrayList<>(
+		List<TrashedModel> trashedModels = new ArrayList<>(
 			categoriesAndThreads.size());
 
 		for (Object categoryOrThread : categoriesAndThreads) {
 			if (categoryOrThread instanceof MBThread) {
-				TrashHandler trashHandler =
-					TrashHandlerRegistryUtil.getTrashHandler(
-						MBThread.class.getName());
-
 				MBThread mbThread = (MBThread)categoryOrThread;
 
-				trashRenderers.add(
-					trashHandler.getTrashRenderer(mbThread.getThreadId()));
+				trashedModels.add(mbThread);
 			}
 			else if (categoryOrThread instanceof MBCategory) {
-				TrashHandler trashHandler =
-					TrashHandlerRegistryUtil.getTrashHandler(
-						MBCategory.class.getName());
-
 				MBCategory mbCategory = (MBCategory)categoryOrThread;
 
-				trashRenderers.add(
-					trashHandler.getTrashRenderer(mbCategory.getCategoryId()));
+				trashedModels.add(mbCategory);
 			}
 			else {
 				throw new IllegalStateException(
@@ -338,7 +301,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			}
 		}
 
-		return trashRenderers;
+		return trashedModels;
 	}
 
 	@Override

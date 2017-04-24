@@ -9,13 +9,6 @@
 	<target depends="clean" name="build-client">
 		<remake-dir dir="src" />
 
-		<!--
-		<axis-wsdl2java
-			output="src"
-			url="${client.url}/Portal_LayoutService?wsdl"
-		/>
-		-->
-
 		<java
 			classname="com.liferay.portal.tools.PortalClientBuilder"
 			classpathref="project.classpath"

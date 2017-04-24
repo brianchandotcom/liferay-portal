@@ -349,10 +349,10 @@ public abstract class UpgradeProcess
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 			try (ResultSet rs1 = databaseMetaData.getPrimaryKeys(
-					null, null, tableName);
+					connection.getCatalog(), connection.getSchema(), tableName);
 				ResultSet rs2 = databaseMetaData.getIndexInfo(
-					null, null, normalizeName(tableName, databaseMetaData),
-					false, false)) {
+					connection.getCatalog(), connection.getSchema(),
+					normalizeName(tableName, databaseMetaData), false, false)) {
 
 				Set<String> primaryKeyNames = new HashSet<>();
 

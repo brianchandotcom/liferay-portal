@@ -31,7 +31,8 @@ public class UpgradeGroup extends UpgradeProcess {
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 		try (ResultSet rs = databaseMetaData.getColumns(
-				null, null, normalizeName("Group_", databaseMetaData),
+				connection.getCatalog(), connection.getSchema(),
+				normalizeName("Group_", databaseMetaData),
 				normalizeName("groupKey", databaseMetaData))) {
 
 			if (rs.next()) {

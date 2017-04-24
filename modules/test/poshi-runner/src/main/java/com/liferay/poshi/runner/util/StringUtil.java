@@ -14,8 +14,8 @@
 
 package com.liferay.poshi.runner.util;
 
+import java.util.Random;
 import org.apache.commons.lang3.StringUtils;
-
 /**
  * The String utility class.
  *
@@ -371,6 +371,20 @@ public class StringUtil {
 		return quote.concat(s).concat(quote);
 	}
 
+	public static String randomString(String length) {
+		Random random = new Random();
+
+		char[] chars = new char[Integer.valueOf(length)];
+
+		for (int i = 0; i < Integer.valueOf(length); i++) {
+			int index = random.nextInt(_RANDOM_STRING_CHAR_TABLE.length);
+
+			chars[i] = _RANDOM_STRING_CHAR_TABLE[index];
+		}
+
+		return new String(chars);
+	}
+
 	public static String replace(String s, String oldSub, String newSub) {
 		if (s == null) {
 			return null;
@@ -699,4 +713,11 @@ public class StringUtil {
 		return String.valueOf(obj);
 	}
 
+	private static final char[] _RANDOM_STRING_CHAR_TABLE = {
+		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
+		'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+		'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
+		'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+		'u', 'v', 'w', 'x', 'y', 'z'
+	};
 }

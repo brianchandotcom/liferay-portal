@@ -41,7 +41,10 @@ import java.util.regex.Pattern;
  */
 public class LanguageKeysCheck extends BaseFileCheck {
 
-	public LanguageKeysCheck(Properties portalLanguageProperties) {
+	public LanguageKeysCheck(
+		List<String> excludes, Properties portalLanguageProperties) {
+
+		_excludes = excludes;
 		_portalLanguageProperties = portalLanguageProperties;
 	}
 
@@ -388,6 +391,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	private final Pattern _applyLangMergerPluginPattern = Pattern.compile(
 		"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",
 		Pattern.MULTILINE);
+	private final List<String> _excludes;
 	private final Pattern _mergeLangPattern = Pattern.compile(
 		"mergeLang \\{\\s*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);
 	private final Map<String, Properties> _moduleLangLanguagePropertiesMap =

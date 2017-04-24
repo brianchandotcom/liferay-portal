@@ -17,13 +17,22 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
 public class JavaIllegalImportsCheck extends BaseFileCheck {
 
-	public JavaIllegalImportsCheck(boolean portalSource) {
+	public JavaIllegalImportsCheck(
+		boolean portalSource, List<String> proxyExcludes,
+		List<String> runOutsidePortalExcludes,
+		List<String> secureRandomExcludes) {
+
 		_portalSource = portalSource;
+		_proxyExcludes = proxyExcludes;
+		_runOutsidePortalExcludes = runOutsidePortalExcludes;
+		_secureRandomExcludes = secureRandomExcludes;
 	}
 
 	@Override
@@ -188,5 +197,8 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 		"secure.random.excludes";
 
 	private final boolean _portalSource;
+	private final List<String> _proxyExcludes;
+	private final List<String> _runOutsidePortalExcludes;
+	private final List<String> _secureRandomExcludes;
 
 }

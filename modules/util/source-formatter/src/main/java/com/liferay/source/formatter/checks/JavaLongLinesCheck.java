@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,7 +32,8 @@ import java.util.regex.Pattern;
  */
 public class JavaLongLinesCheck extends BaseFileCheck {
 
-	public JavaLongLinesCheck(int maxLineLength) {
+	public JavaLongLinesCheck(List<String> excludes, int maxLineLength) {
+		_excludes = excludes;
 		_maxLineLength = maxLineLength;
 	}
 
@@ -404,6 +406,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 	private final Pattern _annotationPattern = Pattern.compile(
 		"\n\t*@(.+)\\(\n");
+	private final List<String> _excludes;
 	private final int _maxLineLength;
 
 }

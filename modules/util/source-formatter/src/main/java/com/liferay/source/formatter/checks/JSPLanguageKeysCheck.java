@@ -24,8 +24,10 @@ import java.util.regex.Pattern;
  */
 public class JSPLanguageKeysCheck extends LanguageKeysCheck {
 
-	public JSPLanguageKeysCheck(Properties portalLanguageProperties) {
-		super(portalLanguageProperties);
+	public JSPLanguageKeysCheck(
+		List<String> excludes, Properties portalLanguageProperties) {
+
+		super(excludes, portalLanguageProperties);
 	}
 
 	@Override

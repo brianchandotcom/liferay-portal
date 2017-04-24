@@ -31,9 +31,10 @@ import java.util.List;
 public class JavaTermOrderCheck extends BaseJavaTermCheck {
 
 	public JavaTermOrderCheck(
-		boolean portalSource, boolean subrepository,
+		List<String> excludes, boolean portalSource, boolean subrepository,
 		String portalCustomSQLContent) {
 
+		_excludes = excludes;
 		_portalSource = portalSource;
 		_subrepository = subrepository;
 		_portalCustomSQLContent = portalCustomSQLContent;
@@ -163,6 +164,7 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 		return javaClass.getContent();
 	}
 
+	private final List<String> _excludes;
 	private final String _portalCustomSQLContent;
 	private final boolean _portalSource;
 	private final boolean _subrepository;

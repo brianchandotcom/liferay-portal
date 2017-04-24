@@ -173,7 +173,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new JSPTaglibVariableCheck());
 		_sourceChecks.add(new JSPUnusedImportCheck(_contentsMap));
 		_sourceChecks.add(new JSPXSSVulnerabilitiesCheck());
-		_sourceChecks.add(new MethodCallsOrderCheck());
+		_sourceChecks.add(
+			new MethodCallsOrderCheck(getExcludes(METHOD_CALL_SORT_EXCLUDES)));
 		_sourceChecks.add(new PrimitiveWrapperInstantiationCheck());
 		_sourceChecks.add(new PrincipalExceptionCheck());
 		_sourceChecks.add(new StringBundlerCheck(-1));
@@ -182,10 +183,16 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new ValidatorEqualsCheck());
 
 		if (portalSource || subrepository) {
-			_sourceChecks.add(new JSPStringMethodsCheck());
+			_sourceChecks.add(
+				new JSPStringMethodsCheck(
+					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
 			_sourceChecks.add(new JSPUnusedTaglibCheck(_contentsMap));
-			_sourceChecks.add(new JSPUnusedVariableCheck(_contentsMap));
-			_sourceChecks.add(new ResourceBundleCheck());
+			_sourceChecks.add(
+				new JSPUnusedVariableCheck(
+					getExcludes(_UNUSED_VARIABLES_EXCLUDES), _contentsMap));
+			_sourceChecks.add(
+				new ResourceBundleCheck(
+					getExcludes(RUN_OUTSIDE_PORTAL_EXCLUDES)));
 		}
 		else {
 			if (GetterUtil.getBoolean(
@@ -198,7 +205,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource) {
 			_sourceChecks.add(
-				new JSPLanguageKeysCheck(getPortalLanguageProperties()));
+				new JSPLanguageKeysCheck(
+					getExcludes(LANGUAGE_KEYS_CHECK_EXCLUDES),
+					getPortalLanguageProperties()));
 		}
 	}
 
@@ -363,6 +372,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES =
 		new String[] {"**/*.jsp", "**/*.jspf", "**/*.tpl", "**/*.vm"};
+
+	private static final String _UNUSED_VARIABLES_EXCLUDES =
+		"jsp.unused.variables.excludes";
 
 	private Map<String, String> _contentsMap;
 	private final Pattern _includeFilePattern = Pattern.compile(

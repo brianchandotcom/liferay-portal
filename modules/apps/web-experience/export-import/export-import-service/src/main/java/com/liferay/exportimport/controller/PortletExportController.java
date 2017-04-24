@@ -38,7 +38,6 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
@@ -582,12 +581,10 @@ public class PortletExportController implements ExportController {
 		try {
 			data = portletDataHandler.exportData(
 				portletDataContext, portletId, jxPortletPreferences);
-		}
-		catch (PortletDataException pde) {
-			throw pde;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
+
+			// Any exception should happen the BasePortletDataHandler populates
+			// it with the proper values
+
 		}
 		finally {
 			portletDataContext.setGroupId(groupId);

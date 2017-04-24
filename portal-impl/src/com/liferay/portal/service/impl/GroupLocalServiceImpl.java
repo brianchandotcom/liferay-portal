@@ -3533,7 +3533,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 							group.getGroupId());
 
 				if (portletDataHandler.isRollbackOnException()) {
-					throw new SystemException(e);
+					throw e;
 				}
 			}
 		}

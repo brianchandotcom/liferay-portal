@@ -12,29 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.asset.service;
-
-import com.liferay.portlet.usersadmin.util.OrganizationIndexer;
-
-import org.junit.Assert;
+package com.liferay.asset.assetrendererfactoryregistryutil.test;
 
 /**
- * @author Michael C. Han
+ * @author Mate Thurzo
  */
-public class TestAssetIndexer extends OrganizationIndexer {
-
-	@Override
-	public void reindex(String className, long classPK) {
-		Assert.assertEquals(_className, className);
-		Assert.assertEquals(_classPK, classPK);
-	}
-
-	public void setExpectedValues(String className, long classPK) {
-		_className = className;
-		_classPK = classPK;
-	}
-
-	private String _className;
-	private long _classPK;
-
+public class TestAssetRendererModel {
 }

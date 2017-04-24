@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.asset.service;
+package com.liferay.asset.service.test;
 
-import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.model.AssetTagStats;
-import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetTagStatsLocalServiceUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
@@ -33,22 +34,26 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Michael C. Han
- * @author Manuel de la Peña
  */
+@RunWith(Arquillian.class)
 @Sync
-public class AssetTagLocalServiceTest {
+public class AssetCategoryLocalServiceTest {
 
 	@ClassRule
 	@Rule
@@ -71,16 +76,28 @@ public class AssetTagLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteTag() throws Exception {
+	public void testDeleteCategory() throws Exception {
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		titleMap.put(LocaleUtil.US, RandomTestUtil.randomString());
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Tag",
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), titleMap, null, null,
+				serviceContext);
+
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			serviceContext);
 
-		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
+		serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory.getCategoryId()});
 
 		_organization = OrganizationLocalServiceUtil.addOrganization(
 			TestPropsValues.getUserId(),
@@ -102,17 +119,7 @@ public class AssetTagLocalServiceTest {
 
 		IndexerRegistryUtil.register(testAssetIndexer);
 
-		AssetTagLocalServiceUtil.deleteTag(assetTag);
-
-		Assert.assertNull(
-			AssetTagLocalServiceUtil.fetchAssetTag(assetTag.getTagId()));
-
-		long classNameId = PortalUtil.getClassNameId(Organization.class);
-
-		AssetTagStats assetTagStats = AssetTagStatsLocalServiceUtil.getTagStats(
-			assetTag.getTagId(), classNameId);
-
-		Assert.assertEquals(0, assetTagStats.getAssetCount());
+		AssetCategoryLocalServiceUtil.deleteCategory(assetCategory, true);
 	}
 
 	@DeleteAfterTestRun

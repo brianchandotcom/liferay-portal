@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.bundle.assetrendererfactoryregistryutil;
+package com.liferay.asset.assetrendererfactoryregistryutil.test;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;

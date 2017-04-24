@@ -12,34 +12,35 @@
  * details.
  */
 
-package com.liferay.portlet.asset;
+package com.liferay.asset.assetrendererfactoryregistryutil.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portal.util.PortalImpl;
-import com.liferay.portlet.asset.bundle.assetrendererfactoryregistryutil.TestAssetRendererFactory;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Peter Fellwock
  */
+@RunWith(Arquillian.class)
 public class AssetRendererFactoryRegistryUtilTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.assetrendererfactoryregistryutil"));
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testGetAssetRendererFactories() {
@@ -48,19 +49,15 @@ public class AssetRendererFactoryRegistryUtilTest {
 		List<AssetRendererFactory<?>> assetRendererFactories =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(1);
 
-		for (AssetRendererFactory<?> assetRendererFactory :
-				assetRendererFactories) {
+		Stream<AssetRendererFactory<?>> assetRendererFactoryStream =
+			assetRendererFactories.stream().filter(
+				assetRendererFactory -> {
+					Class<?> clazz = assetRendererFactory.getClass();
 
-			Class<?> clazz = assetRendererFactory.getClass();
+					return className.equals(clazz.getName());
+				});
 
-			if (className.equals(clazz.getName())) {
-				Assert.assertTrue(true);
-
-				return;
-			}
-		}
-
-		Assert.fail();
+		Assert.assertEquals(1, assetRendererFactoryStream.count());
 	}
 
 	@Test
@@ -110,15 +107,9 @@ public class AssetRendererFactoryRegistryUtilTest {
 		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
 			1);
 
-		for (long classNameId : classNameIds) {
-			if (classNameId == 1234567890) {
-				Assert.assertTrue(true);
+		List<Long> classNameIdsList = ListUtil.toList(classNameIds);
 
-				return;
-			}
-		}
-
-		Assert.fail();
+		Assert.assertTrue(classNameIdsList.contains(Long.valueOf(1234567890)));
 	}
 
 	@Test
@@ -126,15 +117,9 @@ public class AssetRendererFactoryRegistryUtilTest {
 		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
 			1, true);
 
-		for (long classNameId : classNameIds) {
-			if (classNameId == 1234567890) {
-				Assert.assertTrue(true);
+		List<Long> classNameIdsList = ListUtil.toList(classNameIds);
 
-				return;
-			}
-		}
-
-		Assert.fail();
+		Assert.assertTrue(classNameIdsList.contains(Long.valueOf(1234567890)));
 	}
 
 	@Test
@@ -142,15 +127,9 @@ public class AssetRendererFactoryRegistryUtilTest {
 		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
 			1, false);
 
-		for (long classNameId : classNameIds) {
-			if (classNameId == 1234567890) {
-				Assert.assertTrue(true);
+		List<Long> classNameIdsList = ListUtil.toList(classNameIds);
 
-				return;
-			}
-		}
-
-		Assert.fail();
+		Assert.assertTrue(classNameIdsList.contains(Long.valueOf(1234567890)));
 	}
 
 }

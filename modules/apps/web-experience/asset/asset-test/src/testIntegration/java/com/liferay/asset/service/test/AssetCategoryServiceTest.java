@@ -20,12 +20,19 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -46,7 +53,20 @@ public class AssetCategoryServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpPermissionThreadLocal();
+		setUpPrincipalThreadLocal();
+
 		_group = GroupTestUtil.addGroup();
+
+		_permissionChecker = PermissionCheckerFactoryUtil.create(
+			TestPropsValues.getUser());
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
+
+		PrincipalThreadLocal.setName(_name);
 	}
 
 	@Test
@@ -125,7 +145,36 @@ public class AssetCategoryServiceTest {
 		Assert.assertEquals(expectedLeft + 1, category.getRightCategoryId());
 	}
 
+	protected void setUpPermissionThreadLocal() throws Exception {
+		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+				{
+					init(TestPropsValues.getUser());
+				}
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+			});
+	}
+
+	protected void setUpPrincipalThreadLocal() throws Exception {
+		_name = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private String _name;
+	private PermissionChecker _permissionChecker;
 
 }

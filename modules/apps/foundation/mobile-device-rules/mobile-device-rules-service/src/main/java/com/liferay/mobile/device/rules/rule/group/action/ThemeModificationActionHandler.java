@@ -16,7 +16,6 @@ package com.liferay.mobile.device.rules.rule.group.action;
 
 import com.liferay.mobile.device.rules.action.ActionHandler;
 import com.liferay.mobile.device.rules.model.MDRAction;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.ThemeLocalService;
@@ -107,7 +106,7 @@ public class ThemeModificationActionHandler implements ActionHandler {
 	@Reference
 	private Portal _portal;
 
-	@BeanReference(type = ThemeLocalService.class)
+	@Reference
 	private ThemeLocalService _themeLocalService;
 
 }

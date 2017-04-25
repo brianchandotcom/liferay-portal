@@ -45,7 +45,6 @@ import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashVersion;
-import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.ArrayList;
@@ -448,43 +447,44 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			long classPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
+			TrashEntry entry = fetchEntry(entryClassName, classPK);
+
+			if (entry != null) {
+				entries.add(entry);
+
+				continue;
+			}
+
 			try {
-				TrashEntry entry = TrashEntryLocalServiceUtil.fetchEntry(
-					entryClassName, classPK);
+				String userName = GetterUtil.getString(
+					document.get(Field.REMOVED_BY_USER_NAME));
 
-				if (entry == null) {
-					String userName = GetterUtil.getString(
-						document.get(Field.REMOVED_BY_USER_NAME));
+				Date removedDate = document.getDate(Field.REMOVED_DATE);
 
-					Date removedDate = document.getDate(Field.REMOVED_DATE);
+				entry = new TrashEntryImpl();
 
-					entry = new TrashEntryImpl();
+				entry.setUserName(userName);
+				entry.setCreateDate(removedDate);
 
-					entry.setUserName(userName);
-					entry.setCreateDate(removedDate);
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(entryClassName);
 
-					TrashHandler trashHandler =
-						TrashHandlerRegistryUtil.getTrashHandler(
-							entryClassName);
+				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
+					classPK);
 
-					TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-						classPK);
+				entry.setClassName(trashRenderer.getClassName());
+				entry.setClassPK(trashRenderer.getClassPK());
 
-					entry.setClassName(trashRenderer.getClassName());
-					entry.setClassPK(trashRenderer.getClassPK());
+				String rootEntryClassName = GetterUtil.getString(
+					document.get(Field.ROOT_ENTRY_CLASS_NAME));
+				long rootEntryClassPK = GetterUtil.getLong(
+					document.get(Field.ROOT_ENTRY_CLASS_PK));
 
-					String rootEntryClassName = GetterUtil.getString(
-						document.get(Field.ROOT_ENTRY_CLASS_NAME));
-					long rootEntryClassPK = GetterUtil.getLong(
-						document.get(Field.ROOT_ENTRY_CLASS_PK));
+				TrashEntry rootTrashEntry = fetchEntry(
+					rootEntryClassName, rootEntryClassPK);
 
-					TrashEntry rootTrashEntry =
-						TrashEntryLocalServiceUtil.fetchEntry(
-							rootEntryClassName, rootEntryClassPK);
-
-					if (rootTrashEntry != null) {
-						entry.setRootEntry(rootTrashEntry);
-					}
+				if (rootTrashEntry != null) {
+					entry.setRootEntry(rootTrashEntry);
 				}
 
 				entries.add(entry);

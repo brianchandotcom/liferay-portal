@@ -26,6 +26,10 @@ import java.util.regex.Pattern;
  */
 public class StringBundlerCheck extends BaseFileCheck {
 
+	public StringBundlerCheck(int maxLineLength) {
+		_maxLineLength = maxLineLength;
+	}
+
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
@@ -70,8 +74,8 @@ public class StringBundlerCheck extends BaseFileCheck {
 				continue;
 			}
 
-			if ((getMaxLineLength() != -1) &&
-				(getLineLength(firstLine) >= getMaxLineLength())) {
+			if ((_maxLineLength != -1) &&
+				(getLineLength(firstLine) >= _maxLineLength)) {
 
 				addMessage(
 					fileName,
@@ -89,6 +93,7 @@ public class StringBundlerCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private final int _maxLineLength;
 	private final Pattern _sbAppendPattern = Pattern.compile(
 		"\\s*\\w*(sb|SB)[0-9]?\\.append\\(\\s*(\\S.*?)\\);\n", Pattern.DOTALL);
 	private final Pattern _sbAppendWithStartingSpacePattern = Pattern.compile(

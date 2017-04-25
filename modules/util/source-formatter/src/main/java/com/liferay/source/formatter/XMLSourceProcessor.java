@@ -73,7 +73,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void populateSourceChecks() throws Exception {
-		_sourceChecks.add(new XMLBuildFileCheck());
+		_sourceChecks.add(
+			new XMLBuildFileCheck(sourceFormatterArgs.getBaseDirName()));
 		_sourceChecks.add(new XMLCustomSQLFileCheck());
 		_sourceChecks.add(new XMLDDLStructuresFileCheck());
 		_sourceChecks.add(new XMLFriendlyURLRoutesFileCheck());
@@ -81,12 +82,17 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		_sourceChecks.add(new XMLLog4jFileCheck());
 		_sourceChecks.add(new XMLLookAndFeelFileCheck());
 		_sourceChecks.add(new XMLModelHintsFileCheck());
-		_sourceChecks.add(new XMLPortletFileCheck());
+		_sourceChecks.add(
+			new XMLPortletFileCheck(
+				getExcludes(_NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES),
+				portalSource, subrepository));
 		_sourceChecks.add(new XMLPortletPreferencesFileCheck());
 		_sourceChecks.add(new XMLPoshiFileCheck());
 		_sourceChecks.add(new XMLResourceActionsFileCheck());
 		_sourceChecks.add(
 			new XMLServiceFileCheck(
+				getExcludes(_SERVICE_FINDER_COLUMN_SORT_EXCLUDES), portalSource,
+				subrepository,
 				getContent("sql/portal-tables.sql", PORTAL_MAX_DIR_LEVEL),
 				getPluginsInsideModulesDirectoryNames()));
 		_sourceChecks.add(new XMLSolrSchemaFileCheck());
@@ -97,15 +103,18 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			_sourceChecks.add(new XMLStrutsConfigFileCheck());
 			_sourceChecks.add(new XMLTestIgnorableErrorLinesFileCheck());
 			_sourceChecks.add(new XMLTilesDefsFileCheck());
-			_sourceChecks.add(new XMLWebFileCheck());
+			_sourceChecks.add(
+				new XMLWebFileCheck(sourceFormatterArgs.getBaseDirName()));
 		}
 
-		_sourceChecks.add(new XMLWhitespaceCheck());
+		_sourceChecks.add(
+			new XMLWhitespaceCheck(sourceFormatterArgs.getBaseDirName()));
 
 		_sourceChecks.add(new XMLTagAttributesCheck());
 
 		if (portalSource || subrepository) {
-			_sourceChecks.add(new XMLEmptyLinesCheck());
+			_sourceChecks.add(
+				new XMLEmptyLinesCheck(sourceFormatterArgs.getBaseDirName()));
 		}
 	}
 
@@ -113,6 +122,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"**/*.action", "**/*.function", "**/*.jrxml", "**/*.macro",
 		"**/*.testcase", "**/*.toggle", "**/*.xml"
 	};
+
+	private static final String _NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES =
+		"numerical.portlet.name.element.excludes";
+
+	private static final String _SERVICE_FINDER_COLUMN_SORT_EXCLUDES =
+		"service.finder.column.sort.excludes";
 
 	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 

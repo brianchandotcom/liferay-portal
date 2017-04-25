@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,7 +31,10 @@ import java.util.Set;
  */
 public class JSPUnusedVariableCheck extends JSPUnusedTermCheck {
 
-	public JSPUnusedVariableCheck(Map<String, String> contentsMap) {
+	public JSPUnusedVariableCheck(
+		List<String> excludes, Map<String, String> contentsMap) {
+
+		_excludes = excludes;
 		_contentsMap = contentsMap;
 	}
 
@@ -70,8 +74,7 @@ public class JSPUnusedVariableCheck extends JSPUnusedTermCheck {
 				}
 
 				if (!javaSource ||
-					isExcludedPath(
-						_UNUSED_VARIABLES_EXCLUDES, absolutePath, lineCount) ||
+					isExcludedPath(_excludes, absolutePath, lineCount) ||
 					!_hasUnusedVariable(
 						fileName, trimmedLine, checkedFileNames,
 						includeFileNames)) {
@@ -154,9 +157,7 @@ public class JSPUnusedVariableCheck extends JSPUnusedTermCheck {
 			includeFileNames, _contentsMap);
 	}
 
-	private static final String _UNUSED_VARIABLES_EXCLUDES =
-		"jsp.unused.variables.excludes";
-
 	private final Map<String, String> _contentsMap;
+	private final List<String> _excludes;
 
 }

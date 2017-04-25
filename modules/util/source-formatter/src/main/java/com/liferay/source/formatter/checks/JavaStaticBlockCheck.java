@@ -28,6 +28,10 @@ import java.util.List;
  */
 public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 
+	public JavaStaticBlockCheck(List<String> excludes) {
+		_excludes = excludes;
+	}
+
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, JavaTerm javaTerm,
@@ -39,7 +43,7 @@ public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 
 		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
 
-		if (!isExcludedPath(JAVATERM_SORT_EXCLUDES, absolutePath)) {
+		if (!isExcludedPath(_excludes, absolutePath)) {
 			classContent = _sortStaticBlocks(classContent, childJavaTerms);
 		}
 
@@ -189,5 +193,7 @@ public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 
 		return classContent;
 	}
+
+	private final List<String> _excludes;
 
 }

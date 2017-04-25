@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -29,7 +28,6 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -40,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class BaseSourceCheck implements SourceCheck {
 
 	@Override
-	public Set<SourceFormatterMessage> getSourceFormatterMessages(
+	public Set<SourceFormatterMessage> getSourceFormatterMessage(
 		String fileName) {
 
 		if (_sourceFormatterMessagesMap.containsKey(fileName)) {
@@ -48,31 +46,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return Collections.emptySet();
-	}
-
-	@Override
-	public void setBaseDirName(String baseDirName) {
-		_baseDirName = baseDirName;
-	}
-
-	@Override
-	public void setMaxLineLength(int maxLineLength) {
-		_maxLineLength = maxLineLength;
-	}
-
-	@Override
-	public void setPortalSource(boolean portalSource) {
-		_portalSource = portalSource;
-	}
-
-	@Override
-	public void setProperties(Properties properties) {
-		_properties = properties;
-	}
-
-	@Override
-	public void setSubrepository(boolean subrepository) {
-		_subrepository = subrepository;
 	}
 
 	protected void addMessage(String fileName, String message) {
@@ -111,13 +84,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		_sourceFormatterMessagesMap.remove(fileName);
 	}
 
-	protected String getBaseDirName() {
-		return _baseDirName;
-	}
-
-	protected File getFile(String fileName, int level) {
+	protected File getFile(String baseDir, String fileName, int level) {
 		for (int i = 0; i < level; i++) {
-			File file = new File(_baseDirName + fileName);
+			File file = new File(baseDir + fileName);
 
 			if (file.exists()) {
 				return file;
@@ -171,24 +140,18 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return StringUtil.count(content, 0, pos, CharPool.NEW_LINE) + 1;
 	}
 
-	protected int getMaxLineLength() {
-		return _maxLineLength;
-	}
-
-	protected boolean isExcludedPath(String key, String path) {
-		return isExcludedPath(key, path, -1);
-	}
-
-	protected boolean isExcludedPath(String key, String path, int lineCount) {
-		return isExcludedPath(key, path, lineCount, null);
+	protected boolean isExcludedPath(List<String> excludes, String path) {
+		return isExcludedPath(excludes, path, -1);
 	}
 
 	protected boolean isExcludedPath(
-		String key, String path, int lineCount, String parameter) {
+		List<String> excludes, String path, int lineCount) {
 
-		List<String> excludes = ListUtil.fromString(
-			GetterUtil.getString(_properties.getProperty(key)),
-			StringPool.COMMA);
+		return isExcludedPath(excludes, path, lineCount, null);
+	}
+
+	protected boolean isExcludedPath(
+		List<String> excludes, String path, int lineCount, String parameter) {
 
 		if (ListUtil.isEmpty(excludes)) {
 			return false;
@@ -239,9 +202,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected boolean isExcludedPath(
-		String key, String path, String parameter) {
+		List<String> excludes, String path, String parameter) {
 
-		return isExcludedPath(key, path, -1, parameter);
+		return isExcludedPath(excludes, path, -1, parameter);
 	}
 
 	protected boolean isModulesApp(
@@ -266,14 +229,17 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return false;
 	}
 
-	protected boolean isModulesFile(String absolutePath) {
-		return isModulesFile(absolutePath, null);
+	protected boolean isModulesFile(
+		String absolutePath, boolean subrepository) {
+
+		return isModulesFile(absolutePath, subrepository, null);
 	}
 
 	protected boolean isModulesFile(
-		String absolutePath, List<String> pluginsInsideModulesDirectoryNames) {
+		String absolutePath, boolean subrepository,
+		List<String> pluginsInsideModulesDirectoryNames) {
 
-		if (_subrepository) {
+		if (subrepository) {
 			return true;
 		}
 
@@ -292,14 +258,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return absolutePath.contains("/modules/");
-	}
-
-	protected boolean isPortalSource() {
-		return _portalSource;
-	}
-
-	protected boolean isSubrepository() {
-		return _subrepository;
 	}
 
 	protected String stripQuotes(String s) {
@@ -349,12 +307,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return sb.toString();
 	}
 
-	private String _baseDirName;
-	private int _maxLineLength;
-	private boolean _portalSource;
-	private Properties _properties;
 	private final Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
-	private boolean _subrepository;
 
 }

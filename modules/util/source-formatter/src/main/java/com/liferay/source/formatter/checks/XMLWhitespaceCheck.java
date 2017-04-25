@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class XMLWhitespaceCheck extends WhitespaceCheck {
 
+	public XMLWhitespaceCheck(String baseDirName) {
+		_baseDirName = baseDirName;
+	}
+
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
@@ -33,7 +37,7 @@ public class XMLWhitespaceCheck extends WhitespaceCheck {
 
 	@Override
 	protected boolean isAllowLeadingSpaces(String fileName) {
-		if (fileName.startsWith(getBaseDirName() + "build") ||
+		if (fileName.startsWith(_baseDirName + "build") ||
 			fileName.contains("/build")) {
 
 			return true;
@@ -41,5 +45,7 @@ public class XMLWhitespaceCheck extends WhitespaceCheck {
 
 		return false;
 	}
+
+	private final String _baseDirName;
 
 }

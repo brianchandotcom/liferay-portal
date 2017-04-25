@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +31,11 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JavaCombineLinesCheck extends BaseFileCheck {
+
+	public JavaCombineLinesCheck(List<String> excludes, int maxLineLength) {
+		_excludes = excludes;
+		_maxLineLength = maxLineLength;
+	}
 
 	@Override
 	protected String doProcess(
@@ -57,7 +63,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 
 				int lineLength = getLineLength(line);
 
-				if (lineLength > getMaxLineLength()) {
+				if (lineLength > _maxLineLength) {
 					previousLine = line;
 
 					continue;
@@ -228,7 +234,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 				replacement, new String[] {",\n", "\n"},
 				new String[] {StringPool.COMMA_AND_SPACE, StringPool.BLANK});
 
-			if (getLineLength(replacement) <= getMaxLineLength()) {
+			if (getLineLength(replacement) <= _maxLineLength) {
 				return _getCombinedLinesContent(
 					StringUtil.replace(content, match, replacement), pattern);
 			}
@@ -293,7 +299,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 				line, linePart, StringPool.BLANK);
 		}
 		else {
-			if (((linePart.length() + lineLength) <= getMaxLineLength()) &&
+			if (((linePart.length() + lineLength) <= _maxLineLength) &&
 				(line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
 				 line.endsWith(StringPool.SEMICOLON))) {
 
@@ -328,8 +334,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		int lineTabCount, int previousLineTabCount) {
 
 		if (Validator.isNull(line) || Validator.isNull(previousLine) ||
-			isExcludedPath(
-				_FIT_ON_SINGLE_LINE_EXCLUDES, absolutePath, lineCount)) {
+			isExcludedPath(_excludes, absolutePath, lineCount)) {
 
 			return null;
 		}
@@ -390,7 +395,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 
 		int previousLineLength = getLineLength(previousLine);
 
-		if ((trimmedLine.length() + previousLineLength) < getMaxLineLength()) {
+		if ((trimmedLine.length() + previousLineLength) < _maxLineLength) {
 			if (trimmedPreviousLine.startsWith("for ") &&
 				previousLine.endsWith(StringPool.COLON) &&
 				line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
@@ -512,7 +517,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 			}
 		}
 
-		if ((trimmedLine.length() + previousLineLength) <= getMaxLineLength()) {
+		if ((trimmedLine.length() + previousLineLength) <= _maxLineLength) {
 			if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
 				line.endsWith(") {") && (getLevel(line) < 0)) {
 
@@ -591,7 +596,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 					if ((previousChar != CharPool.CLOSE_PARENTHESIS) &&
 						(previousChar != CharPool.OPEN_PARENTHESIS) &&
 						(previousChar != CharPool.SPACE) &&
-						(previousLineLength + 1 + x) < getMaxLineLength()) {
+						(previousLineLength + 1 + x) < _maxLineLength) {
 
 						String linePart = trimmedLine.substring(0, x + 1);
 
@@ -622,7 +627,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 				x = trimmedLine.indexOf(" +", x + 1);
 
 				if ((x == -1) ||
-					(previousLineLength + 3 + x) > getMaxLineLength()) {
+					(previousLineLength + 3 + x) > _maxLineLength) {
 
 					break;
 				}
@@ -682,7 +687,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 				}
 
 				if (x != -1) {
-					while ((previousLineLength + 1 + x) < getMaxLineLength()) {
+					while ((previousLineLength + 1 + x) < _maxLineLength) {
 						String linePart = trimmedLine.substring(0, x + 1);
 
 						if (!ToolsUtil.isInsideQuotes(trimmedLine, x) &&
@@ -714,7 +719,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 					}
 				}
 				else if ((trimmedLine.length() + previousLineLength) <
-							getMaxLineLength()) {
+							_maxLineLength) {
 
 					if (!trimmedLine.startsWith("new ") ||
 						!line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
@@ -740,7 +745,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 			int x = trimmedLine.indexOf(" = ");
 
 			if ((x != -1) && !ToolsUtil.isInsideQuotes(trimmedLine, x) &&
-				((previousLineLength + 2 + x) < getMaxLineLength())) {
+				((previousLineLength + 2 + x) < _maxLineLength)) {
 
 				String linePart = trimmedLine.substring(0, x + 3);
 
@@ -750,7 +755,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 			}
 			else if (trimmedLine.endsWith(" =") &&
 					 ((trimmedLine.length() + previousLineLength) <
-						 getMaxLineLength())) {
+						 _maxLineLength)) {
 
 				for (int i = 0;; i++) {
 					String nextLine = getLine(content, lineCount + i + 1);
@@ -790,7 +795,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 			if (linePart2.matches("[!=<>\\+\\-\\*]+ .*")) {
 				int y = trimmedLine.indexOf(StringPool.SPACE, x + 2);
 
-				if ((previousLineLength + y) <= getMaxLineLength()) {
+				if ((previousLineLength + y) <= _maxLineLength) {
 					return _getCombinedLinesContent(
 						content, line, trimmedLine, lineLength, lineCount,
 						previousLine, trimmedLine.substring(0, y), true, true,
@@ -822,7 +827,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 			}
 		}
 
-		if ((trimmedLine.length() + previousLineLength) > getMaxLineLength()) {
+		if ((trimmedLine.length() + previousLineLength) > _maxLineLength) {
 			return null;
 		}
 
@@ -853,9 +858,6 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		return null;
 	}
 
-	private static final String _FIT_ON_SINGLE_LINE_EXCLUDES =
-		"fit.on.single.line.excludes";
-
 	private final Pattern _combinedLinesPattern1 = Pattern.compile(
 		"\n(\t*).+(=|\\]) (\\{)\n");
 	private final Pattern _combinedLinesPattern2 = Pattern.compile(
@@ -864,5 +866,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		"(\n\t*(private|protected|public) void)\n\t+(\\w+\\(\\)( \\{)?\n)");
 	private final Pattern _combinedLinesPattern4 = Pattern.compile(
 		"(\n\t*(extends|implements))\n\t+([\\w.]+ \\{\n)");
+	private final List<String> _excludes;
+	private final int _maxLineLength;
 
 }

@@ -17,10 +17,23 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
 public class JavaIllegalImportsCheck extends BaseFileCheck {
+
+	public JavaIllegalImportsCheck(
+		boolean portalSource, List<String> proxyExcludes,
+		List<String> runOutsidePortalExcludes,
+		List<String> secureRandomExcludes) {
+
+		_portalSource = portalSource;
+		_proxyExcludes = proxyExcludes;
+		_runOutsidePortalExcludes = runOutsidePortalExcludes;
+		_secureRandomExcludes = secureRandomExcludes;
+	}
 
 	@Override
 	protected String doProcess(
@@ -43,8 +56,8 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 				"com.liferay.portal.kernel.util.LocalizationUtil"
 			});
 
-		if (!isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) &&
-			!isExcludedPath(_PROXY_EXCLUDES, absolutePath) &&
+		if (!isExcludedPath(_runOutsidePortalExcludes, absolutePath) &&
+			!isExcludedPath(_proxyExcludes, absolutePath) &&
 			content.contains("import java.lang.reflect.Proxy;")) {
 
 			addMessage(
@@ -62,8 +75,8 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 
 		// LPS-39508
 
-		if (!isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) &&
-			!isExcludedPath(_SECURE_RANDOM_EXCLUDES, absolutePath) &&
+		if (!isExcludedPath(_runOutsidePortalExcludes, absolutePath) &&
+			!isExcludedPath(_secureRandomExcludes, absolutePath) &&
 			content.contains("java.security.SecureRandom") &&
 			!content.contains("javax.crypto.KeyGenerator")) {
 
@@ -88,7 +101,7 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 
 		// LPS-47682
 
-		if (isPortalSource() && absolutePath.contains("/portal-kernel/") &&
+		if (_portalSource && absolutePath.contains("/portal-kernel/") &&
 			content.contains("import javax.servlet.jsp.")) {
 
 			addMessage(
@@ -178,9 +191,9 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String _PROXY_EXCLUDES = "proxy.excludes";
-
-	private static final String _SECURE_RANDOM_EXCLUDES =
-		"secure.random.excludes";
+	private final boolean _portalSource;
+	private final List<String> _proxyExcludes;
+	private final List<String> _runOutsidePortalExcludes;
+	private final List<String> _secureRandomExcludes;
 
 }

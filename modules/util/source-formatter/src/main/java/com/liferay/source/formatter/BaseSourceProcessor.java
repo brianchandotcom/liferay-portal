@@ -564,6 +564,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return saxReader.read(new UnsyncStringReader(content));
 	}
 
+	protected static final String LANGUAGE_KEYS_CHECK_EXCLUDES =
+		"language.keys.check.excludes";
+
+	protected static final String METHOD_CALL_SORT_EXCLUDES =
+		"method.call.sort.excludes";
+
+	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
+		"run.outside.portal.excludes";
+
 	protected static Pattern javaSourceInsideJSPLinePattern = Pattern.compile(
 		"<%=(.+?)%>");
 	protected static boolean portalSource;
@@ -787,13 +796,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<JavaClass> anonymousClasses = null;
 
 		for (SourceCheck sourceCheck : sourceChecks) {
-			sourceCheck.setBaseDirName(sourceFormatterArgs.getBaseDirName());
-			sourceCheck.setMaxLineLength(
-				sourceFormatterArgs.getMaxLineLength());
-			sourceCheck.setPortalSource(portalSource);
-			sourceCheck.setProperties(_properties);
-			sourceCheck.setSubrepository(subrepository);
-
 			String newContent = null;
 
 			if (sourceCheck instanceof FileCheck) {
@@ -802,7 +804,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				newContent = fileCheck.process(fileName, absolutePath, content);
 
 				for (SourceFormatterMessage sourceFormatterMessage :
-						sourceCheck.getSourceFormatterMessages(fileName)) {
+						sourceCheck.getSourceFormatterMessage(fileName)) {
 
 					processMessage(fileName, sourceFormatterMessage);
 				}
@@ -823,7 +825,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					fileName, absolutePath, javaClass, content);
 
 				for (SourceFormatterMessage sourceFormatterMessage :
-						sourceCheck.getSourceFormatterMessages(fileName)) {
+						sourceCheck.getSourceFormatterMessage(fileName)) {
 
 					processMessage(fileName, sourceFormatterMessage);
 				}
@@ -833,7 +835,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						fileName, absolutePath, anonymousClass, newContent);
 
 					for (SourceFormatterMessage sourceFormatterMessage :
-							sourceCheck.getSourceFormatterMessages(fileName)) {
+							sourceCheck.getSourceFormatterMessage(fileName)) {
 
 						processMessage(fileName, sourceFormatterMessage);
 					}

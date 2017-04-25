@@ -16,10 +16,16 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
 public class JSPStringMethodsCheck extends StringMethodsCheck {
+
+	public JSPStringMethodsCheck(List<String> excludes) {
+		super(excludes);
+	}
 
 	@Override
 	protected boolean isJavaSource(String content, int pos) {

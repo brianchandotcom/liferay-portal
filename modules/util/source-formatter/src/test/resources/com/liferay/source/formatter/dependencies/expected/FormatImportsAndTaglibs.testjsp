@@ -51,6 +51,6 @@ for (Entry<String, String> entry : map.entrySet()) {
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<aui:form useNamespace="false">
+<aui:form useNamespace="<%= false %>">
 	<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" type="more" />
 </aui:form>

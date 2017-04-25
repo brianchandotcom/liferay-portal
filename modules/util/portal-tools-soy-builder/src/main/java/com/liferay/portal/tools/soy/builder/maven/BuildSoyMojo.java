@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.soy.builder.maven;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.tools.soy.builder.commands.BuildSoyCommand;
 
 import java.io.File;
@@ -48,7 +47,7 @@ public class BuildSoyMojo extends AbstractMojo {
 
 				String[] includedFiles = scanner.getIncludedFiles();
 
-				if (ArrayUtil.isNotEmpty(includedFiles)) {
+				if (includedFiles.length > 0) {
 					_buildSoyCommand.execute();
 				}
 			}

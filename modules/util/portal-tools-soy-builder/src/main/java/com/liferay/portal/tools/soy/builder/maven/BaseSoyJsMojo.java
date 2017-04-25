@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.soy.builder.maven;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.tools.soy.builder.commands.BaseSoyJsCommand;
 
 import java.io.File;
@@ -50,7 +49,7 @@ public abstract class BaseSoyJsMojo<T extends BaseSoyJsCommand>
 
 				String[] includedFiles = scanner.getIncludedFiles();
 
-				if (ArrayUtil.isNotEmpty(includedFiles)) {
+				if (includedFiles.length > 0) {
 					command.execute();
 				}
 			}

@@ -24,7 +24,6 @@ dependencies {
 
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
 	provided group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
 	provided group: "org.apache.maven", name: "maven-core", version: "3.2.5"

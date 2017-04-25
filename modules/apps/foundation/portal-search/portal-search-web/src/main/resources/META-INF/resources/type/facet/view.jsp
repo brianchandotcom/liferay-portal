@@ -67,7 +67,7 @@ AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = (A
 											data-term-id="<%= assetEntriesSearchFacetTermDisplayContext.getAssetType() %>"
 											id="<portlet:namespace />term_<%= i %>"
 											name="<portlet:namespace />term_<%= i %>"
-											onChange='<portlet:namespace />changeSelection(event);'
+											onChange='Liferay.Search.FacetUtil.changeSelection(event);'
 											type="checkbox"
 											<%= assetEntriesSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
 										/>
@@ -92,7 +92,7 @@ AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = (A
 					</aui:fieldset>
 
 					<c:if test="<%= !assetEntriesSearchFacetDisplayContext.isNothingSelected() %>">
-						<a class="text-default" href="javascript:;" onClick="<portlet:namespace />clearSelections(event);"><small><liferay-ui:message key="clear" /></small></a>
+						<a class="text-default" href="javascript:;" onClick="Liferay.Search.FacetUtil.clearSelections(event);"><small><liferay-ui:message key="clear" /></small></a>
 					</c:if>
 				</aui:form>
 			</liferay-ui:panel>
@@ -100,94 +100,4 @@ AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = (A
 	</c:otherwise>
 </c:choose>
 
-<aui:script>
-	function <portlet:namespace />addURLParameter(key, value, parameterArray) {
-		key = encodeURI(key);
-		value = encodeURI(value);
-
-		parameterArray[parameterArray.length] = [key, value].join('=');
-
-		return parameterArray;
-	}
-
-	function <portlet:namespace />removeURLParameters(key, parameterArray) {
-		key = encodeURI(key);
-
-		var newParameters = [];
-
-		AUI.$.each(
-			parameterArray,
-			function(index, item) {
-				var itemSplit = item.split('=');
-
-				if (itemSplit) {
-					if (itemSplit[0] != key) {
-						newParameters.push(item);
-					}
-				}
-			}
-		);
-
-		return newParameters;
-	}
-
-	function <portlet:namespace />setURLParameters(form, selections) {
-		var formParameterName = $('#' + form.id + ' input.facet-parameter-name');
-
-		var key = formParameterName[0].value;
-
-		var parameterArray = document.location.search.substr(1).split('&');
-
-		var newParameters = <portlet:namespace />removeURLParameters(key, parameterArray);
-
-		for (var i = 0; i < selections.length; i++) {
-			newParameters = <portlet:namespace />addURLParameter(key, selections[i], newParameters);
-		}
-
-		document.location.search = newParameters.join('&');
-	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />changeSelection',
-		function(event) {
-			var form = event.currentTarget.form;
-
-			if (!form) {
-				return;
-			}
-
-			var selections = [];
-
-			var formCheckboxes = $('#' + form.id + ' input.facet-term');
-
-			formCheckboxes.each(
-				function(index, value) {
-					if (value.checked) {
-						selections.push(value.getAttribute('data-term-id'));
-					}
-				}
-			);
-
-			<portlet:namespace />setURLParameters(form, selections);
-		},
-		['aui-base']
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />clearSelections',
-		function(event) {
-			var form = $(event.currentTarget).closest('form')[0];
-
-			if (!form) {
-				return;
-			}
-
-			var selections = [];
-
-			<portlet:namespace />setURLParameters(form, selections);
-		},
-		['aui-base']
-	);
-</aui:script>
+<aui:script use="liferay-search-facet-util"></aui:script>

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.gradle.plugins.soy</artifactId>
-  <version>3.1.1</version>
+  <version>3.1.2</version>
   <description>Liferay Gradle Plugins Soy</description>
   <licenses>
     <license>
@@ -34,9 +34,17 @@
     <dependency>
       <groupId>com.liferay</groupId>
       <artifactId>com.liferay.portal.tools.soy.builder</artifactId>
-      <version>3.0.0</version>
+      <version>3.0.1</version>
       <scope>compile</scope>
       <exclusions>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>org.sonatype.plexus</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>org.codehaus.plexus</groupId>
+        </exclusion>
         <exclusion>
           <artifactId>soy</artifactId>
           <groupId>com.google.template</groupId>

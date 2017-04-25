@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<taglibs osgi-module="true" short-name="hello-world" tlib-version="1.0" uri="http://example.com/tld/hello-world">
+	<authors>
+		<author>Andrea Di Giorgi</author>
+	</authors>
+	<component bodyContent="false" name="GreetingWriter" writeJSP="true">
+		<attributes>
+			<attribute>
+				<name>firstName</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>lastName</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>false</required>
+				<defaultValue><![CDATA[com.liferay.portal.kernel.util.StringPool.BLANK]]></defaultValue>
+			</attribute>
+		</attributes>
+	</component>
+</taglibs>

@@ -15,7 +15,9 @@
 package com.liferay.poshi.runner.util;
 
 import java.util.Random;
+
 import org.apache.commons.lang3.StringUtils;
+
 /**
  * The String utility class.
  *
@@ -720,4 +722,5 @@ public class StringUtil {
 		'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
 		'u', 'v', 'w', 'x', 'y', 'z'
 	};
+
 }

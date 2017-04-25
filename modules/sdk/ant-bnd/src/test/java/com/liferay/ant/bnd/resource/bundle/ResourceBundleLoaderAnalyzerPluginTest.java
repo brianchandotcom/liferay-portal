@@ -21,6 +21,7 @@ import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Jar;
 
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -161,7 +162,8 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Entry<String, Attrs> liferayResourceBundleEntry = provides.get(1);
 
 			Assert.assertEquals(
-				"liferay.resource.bundle~", liferayResourceBundleEntry.getKey());
+				"liferay.resource.bundle~",
+				liferayResourceBundleEntry.getKey());
 
 			Attrs liferayResourceBundleAttrs =
 				liferayResourceBundleEntry.getValue();

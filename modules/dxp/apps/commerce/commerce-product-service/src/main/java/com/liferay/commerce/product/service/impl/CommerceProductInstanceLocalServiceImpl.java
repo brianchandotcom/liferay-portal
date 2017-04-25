@@ -20,6 +20,7 @@ import com.liferay.commerce.product.exception.CommerceProductInstanceDisplayDate
 import com.liferay.commerce.product.exception.CommerceProductInstanceExpirationDateException;
 import com.liferay.commerce.product.model.CommerceProductInstance;
 import com.liferay.commerce.product.service.base.CommerceProductInstanceLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -154,6 +155,24 @@ public class CommerceProductInstanceLocalServiceImpl
 
 		return commerceProductInstanceLocalService.
 			deleteCommerceProductInstance(commerceProductInstance);
+	}
+
+	@Override
+	public void deleteCommerceProductInstances(
+		long commerceProductDefinitionId)
+		throws PortalException {
+
+		List<CommerceProductInstance> commerceProductInstances =
+			commerceProductInstanceLocalService.getCommerceProductInstances(
+				commerceProductDefinitionId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (CommerceProductInstance commerceProductInstance
+				: commerceProductInstances){
+			commerceProductInstanceLocalService.deleteCommerceProductInstance(
+				commerceProductInstance);
+		}
+
 	}
 
 	@Override

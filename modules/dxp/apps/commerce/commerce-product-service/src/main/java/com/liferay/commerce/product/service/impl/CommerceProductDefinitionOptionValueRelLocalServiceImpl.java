@@ -14,8 +14,12 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
 import com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CommerceProductOption;
+import com.liferay.commerce.product.model.CommerceProductOptionValue;
 import com.liferay.commerce.product.service.base.CommerceProductDefinitionOptionValueRelLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -34,6 +38,20 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceImpl
 	extends CommerceProductDefinitionOptionValueRelLocalServiceBaseImpl {
 
 	public CommerceProductDefinitionOptionValueRel
+				addCommerceProductDefinitionOptionValueRel(
+					long commerceProductDefinitionOptionRelId,
+					CommerceProductOptionValue commerceProductOptionValue,
+					ServiceContext serviceContext)
+		throws PortalException {
+
+		return commerceProductDefinitionOptionValueRelLocalService.
+			addCommerceProductDefinitionOptionValueRel(
+				commerceProductDefinitionOptionRelId,
+				commerceProductOptionValue.getTitleMap(),
+				commerceProductOptionValue.getPriority(), serviceContext);
+	}
+
+		public CommerceProductDefinitionOptionValueRel
 			addCommerceProductDefinitionOptionValueRel(
 				long commerceProductDefinitionOptionRelId,
 				Map<Locale, String> titleMap, int priority,
@@ -111,6 +129,28 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceImpl
 	}
 
 	@Override
+	public void
+			deleteCommerceProductDefinitionOptionValueRels(
+				long commerceProductDefinitionOptionRelId)
+		throws PortalException {
+
+		List<CommerceProductDefinitionOptionValueRel>
+			commerceProductDefinitionOptionValueRels =
+				commerceProductDefinitionOptionValueRelLocalService.
+					getCommerceProductDefinitionOptionValueRels(
+						commerceProductDefinitionOptionRelId, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS);
+
+		for(CommerceProductDefinitionOptionValueRel
+				commerceProductDefinitionOptionValueRel :
+					commerceProductDefinitionOptionValueRels){
+			commerceProductDefinitionOptionValueRelLocalService.
+				deleteCommerceProductDefinitionOptionValueRel(
+					commerceProductDefinitionOptionValueRel);
+		}
+	}
+
+	@Override
 	public List<CommerceProductDefinitionOptionValueRel>
 		getCommerceProductDefinitionOptionValueRels(
 			long commerceProductDefinitionOptionRelId, int start, int end) {
@@ -140,6 +180,39 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceImpl
 		return commerceProductDefinitionOptionValueRelPersistence.
 			countByCommerceProductDefinitionOptionRelId(
 				commerceProductDefinitionOptionRelId);
+	}
+
+	public void importCommerceProductDefinitionOptionRels(
+			long commerceProductDefinitionOptionRelId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel =
+		commerceProductDefinitionOptionRelLocalService.
+			getCommerceProductDefinitionOptionRel(
+				commerceProductDefinitionOptionRelId);
+
+		CommerceProductOption commerceProductOption =
+			commerceProductOptionLocalService.fetchCommerceProductOption(
+				commerceProductDefinitionOptionRel.
+					getCommerceProductOptionId());
+
+		if (commerceProductOption == null) return;
+
+		List<CommerceProductOptionValue> commerceProductOptionValues =
+			commerceProductOptionValueLocalService.
+				getCommerceProductOptionValues(
+					commerceProductOption.getCommerceProductOptionId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (CommerceProductOptionValue commerceProductOptionValue :
+				commerceProductOptionValues) {
+
+			commerceProductDefinitionOptionValueRelLocalService.
+				addCommerceProductDefinitionOptionValueRel(
+					commerceProductDefinitionOptionRelId,
+					commerceProductOptionValue, serviceContext);
+		}
 	}
 
 	public CommerceProductDefinitionOptionValueRel

@@ -172,6 +172,19 @@ public class CommerceProductDefinitionLocalServiceImpl
 			removeByCommerceProductDefinitionPK(
 				commerceProductDefinition.getCommerceProductDefinitionId());
 
+		// Commerce product definition option rels
+
+		commerceProductDefinitionOptionRelLocalService.
+			deleteCommerceProductDefinitionOptionRels(
+				commerceProductDefinition.
+					getCommerceProductDefinitionId());
+
+		// Commerce product instances
+
+		commerceProductInstanceLocalService.deleteCommerceProductInstances(
+			commerceProductDefinition.
+				getCommerceProductDefinitionId());
+
 		// Resources
 
 		resourceLocalService.deleteResource(
@@ -522,7 +535,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 
 		CommerceProductDefinitionLocalization
 			commerceProductDefinitionLocalization =
-				commerceProductDefinitionLocalizationPersistence.findByCPD_L(
+				commerceProductDefinitionLocalizationPersistence.fetchByCPD_L(
 					commerceProductDefinitionId, languageId);
 
 		if (commerceProductDefinitionLocalization == null) {

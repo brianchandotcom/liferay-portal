@@ -15,7 +15,9 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
+import com.liferay.commerce.product.model.CommerceProductOption;
 import com.liferay.commerce.product.service.base.CommerceProductDefinitionOptionRelLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -72,7 +74,30 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 		commerceProductDefinitionOptionRelPersistence.update(
 			commerceProductDefinitionOptionRel);
 
+		commerceProductDefinitionOptionValueRelLocalService.
+			importCommerceProductDefinitionOptionRels(
+				commerceProductDefinitionOptionRelId, serviceContext);
+
 		return commerceProductDefinitionOptionRel;
+	}
+
+	public CommerceProductDefinitionOptionRel
+		addCommerceProductDefinitionOptionRel(
+			long commerceProductDefinitionId, long commerceProductOptionId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceProductOption commerceProductOption =
+			commerceProductOptionLocalService.getCommerceProductOption(
+				commerceProductOptionId);
+
+		return commerceProductDefinitionOptionRelLocalService.
+			addCommerceProductDefinitionOptionRel(
+				commerceProductDefinitionId, commerceProductOptionId,
+				commerceProductOption.getNameMap(),
+				commerceProductOption.getDescriptionMap(),
+				commerceProductOption.getDDMFormFieldTypeName(), 0,
+				serviceContext);
 	}
 
 	@Override
@@ -87,6 +112,13 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 
 		commerceProductDefinitionOptionRelPersistence.remove(
 			commerceProductDefinitionOptionRel);
+
+		// Commerce product definition option value rels
+
+		commerceProductDefinitionOptionValueRelLocalService.
+			deleteCommerceProductDefinitionOptionValueRels(
+				commerceProductDefinitionOptionRel.
+					getCommerceProductDefinitionOptionRelId());
 
 		// Expando
 
@@ -110,6 +142,30 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 		return commerceProductDefinitionOptionRelLocalService.
 			deleteCommerceProductDefinitionOptionRel(
 				commerceProductDefinitionOptionRel);
+	}
+
+	@Override
+	public void deleteCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionId)
+	throws PortalException {
+
+		List<CommerceProductDefinitionOptionRel>
+			commerceProductDefinitionOptionRels =
+				commerceProductDefinitionOptionRelLocalService.
+					getCommerceProductDefinitionOptionRels(
+						commerceProductDefinitionId, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS);
+
+		for(CommerceProductDefinitionOptionRel
+				commerceProductDefinitionOptionRel
+				:commerceProductDefinitionOptionRels){
+
+			commerceProductDefinitionOptionRelLocalService.
+				deleteCommerceProductDefinitionOptionRel(
+					commerceProductDefinitionOptionRel);
+
+		}
+
 	}
 
 	@Override

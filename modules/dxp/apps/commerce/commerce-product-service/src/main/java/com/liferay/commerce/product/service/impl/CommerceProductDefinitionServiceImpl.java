@@ -92,6 +92,24 @@ public class CommerceProductDefinitionServiceImpl
 	}
 
 	@Override
+	public CommerceProductDefinition fetchCommerceProductDefinition(
+			long commerceProductDefinitionId)
+		throws PortalException {
+
+		CommerceProductDefinition commerceProductDefinition =
+			commerceProductDefinitionLocalService.
+				fetchCommerceProductDefinition(commerceProductDefinitionId);
+
+		if (commerceProductDefinition != null) {
+			CommerceProductDefinitionPermission.check(
+				getPermissionChecker(), commerceProductDefinition,
+				ActionKeys.VIEW);
+		}
+
+		return commerceProductDefinition;
+	}
+
+	@Override
 	public CommerceProductDefinition getCommerceProductDefinition(
 			long commerceProductDefinitionId)
 		throws PortalException {

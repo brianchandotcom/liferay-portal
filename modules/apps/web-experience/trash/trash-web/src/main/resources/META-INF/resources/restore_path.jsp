@@ -77,7 +77,7 @@ if (Validator.isNull(redirect)) {
 	<liferay-ui:alert
 		icon="check"
 		message="<%= alertMessage %>"
-		timeout="0"
+		timeout="<%= 0 %>"
 		type="success"
 	/>
 </c:if>

@@ -40,7 +40,7 @@ if (bodyContent != null) {
 					icon="exclamation-full"
 					message="<%= bodyContentString %>"
 					targetNode="<%= targetNode %>"
-					timeout="0"
+					timeout="<%= 0 %>"
 					type="danger"
 				/>
 
@@ -64,7 +64,7 @@ if (bodyContent != null) {
 			icon="exclamation-full"
 			message="<%= alertMessage %>"
 			targetNode="<%= targetNode %>"
-			timeout="0"
+			timeout="<%= 0 %>"
 			type="warning"
 		/>
 
@@ -75,7 +75,7 @@ if (bodyContent != null) {
 			icon="exclamation-full"
 			message='<%= LanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>'
 			targetNode="<%= targetNode %>"
-			timeout="0"
+			timeout="<%= 0 %>"
 			type="danger"
 		/>
 
@@ -87,7 +87,7 @@ if (bodyContent != null) {
 				icon="exclamation-full"
 				message="<%= translateMessage ? LanguageUtil.get(resourceBundle, message) : message %>"
 				targetNode="<%= targetNode %>"
-				timeout="0"
+				timeout="<%= 0 %>"
 				type="danger"
 			/>
 

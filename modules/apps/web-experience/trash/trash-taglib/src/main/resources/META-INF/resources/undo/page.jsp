@@ -134,6 +134,6 @@ for (String key : keys) {
 <liferay-ui:alert
 	icon="check"
 	message="<%= alertMessage %>"
-	timeout="0"
+	timeout="<%= 0 %>"
 	type="success"
 />

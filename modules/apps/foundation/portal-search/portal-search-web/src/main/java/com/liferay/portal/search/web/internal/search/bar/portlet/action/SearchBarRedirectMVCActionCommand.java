@@ -20,13 +20,13 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.web.internal.display.context.PortletRequestThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.display.context.ThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.search.bar.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferences;
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferencesImpl;
+import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 
 import java.util.Optional;
 
@@ -49,14 +49,24 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SearchBarRedirectMVCActionCommand extends BaseMVCActionCommand {
 
+	protected String addParameter(
+		String url, PortletRequest portletRequest, String parameterName) {
+
+		Optional<String> parameterValueOptional = SearchStringUtil.maybe(
+			portletRequest.getParameter(parameterName));
+
+		Optional<String> urlOptional = parameterValueOptional.map(
+			parameterValue ->
+				HttpUtil.addParameter(url, parameterName, parameterValue));
+
+		return urlOptional.orElse(url);
+	}
+
 	protected String addParameters(
 		String url, PortletRequest portletRequest, String... parameterNames) {
 
 		for (String parameterName : parameterNames) {
-			String parameterValue = ParamUtil.getString(
-				portletRequest, parameterName);
-
-			url = HttpUtil.addParameter(url, parameterName, parameterValue);
+			url = addParameter(url, portletRequest, parameterName);
 		}
 
 		return url;

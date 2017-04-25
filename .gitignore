@@ -128,6 +128,7 @@
 /lib/portal/axis-ant.jar
 /lib/portal/bcmail.jar
 /lib/portal/bcprov.jar
+/lib/portal/boilerpipe.jar
 /lib/portal/bsf.jar
 /lib/portal/c3p0.jar
 /lib/portal/ccpp.jar
@@ -167,6 +168,7 @@
 /lib/portal/eclipse-core-runtime.jar
 /lib/portal/ecs.jar
 /lib/portal/fontbox.jar
+/lib/portal/freshcookies-security.jar
 /lib/portal/gif89.jar
 /lib/portal/hessian.jar
 /lib/portal/hibernate-commons-annotations.jar
@@ -179,15 +181,18 @@
 /lib/portal/ical4j.jar
 /lib/portal/im4java.jar
 /lib/portal/isoparser.jar
+/lib/portal/jabsorb.jar
 /lib/portal/jai_codec.jar
 /lib/portal/jai_core.jar
 /lib/portal/jakarta-regexp.jar
+/lib/portal/java-diff.jar
 /lib/portal/java-libpst.jar
 /lib/portal/javassist.jar
 /lib/portal/jaxb-impl.jar
 /lib/portal/jaxen.jar
 /lib/portal/jaxrpc.jar
 /lib/portal/jaxws-rt.jar
+/lib/portal/jazzy.jar
 /lib/portal/jcifs.jar
 /lib/portal/jcl-over-slf4j.jar
 /lib/portal/jcommon.jar
@@ -267,6 +272,7 @@
 /lib/portal/tika-parsers.jar
 /lib/portal/tomcat-jdbc.jar
 /lib/portal/tomcat-juli.jar
+/lib/portal/truezip.jar
 /lib/portal/unoil.jar
 /lib/portal/urlrewritefilter.jar
 /lib/portal/vorbis-java-core.jar
@@ -275,6 +281,7 @@
 /lib/portal/wstx.jar
 /lib/portal/xalan.jar
 /lib/portal/xbean-spring.jar
+/lib/portal/xbean.jar
 /lib/portal/xercesImpl.jar
 /lib/portal/xml-apis.jar
 /lib/portal/xmlsec.jar

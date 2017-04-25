@@ -480,7 +480,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							updateVersionTask);
 					}
 
-					_configureTaskCompileJSP(project, liferayExtension);
+					_configureTaskCompileJSP(
+						project, jarJSPsTask, liferayExtension);
 
 					// setProjectSnapshotVersion must be called before
 					// configureTaskUploadArchives, because the latter one needs
@@ -882,7 +883,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private Copy _addTaskDownloadCompiledJSP(
-		JavaCompile compileJSPTask, Properties artifactProperties) {
+		JavaCompile compileJSPTask, final Jar jarJSPsTask,
+		Properties artifactProperties) {
 
 		final String artifactJspcURL = artifactProperties.getProperty(
 			"artifact.jspc.url");
@@ -903,7 +905,54 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public FileTree call() throws Exception {
-					File file = FileUtil.get(project, artifactJspcURL);
+					File file;
+
+					try {
+						file = FileUtil.get(project, artifactJspcURL);
+					}
+					catch (Exception e) {
+						String message = e.getMessage();
+
+						if (!message.equals("HTTP Authorization failure")) {
+							throw e;
+						}
+
+						int start = artifactJspcURL.lastIndexOf('/');
+
+						start = artifactJspcURL.indexOf('-', start) + 1;
+
+						String classifier = jarJSPsTask.getClassifier();
+						String extension = jarJSPsTask.getExtension();
+
+						int end =
+							artifactJspcURL.length() - classifier.length() -
+								extension.length() - 2;
+
+						String version = artifactJspcURL.substring(start, end);
+
+						DependencyHandler dependencyHandler =
+							project.getDependencies();
+
+						Map<String, Object> args = new HashMap<>();
+
+						args.put("classifier", classifier);
+						args.put("ext", extension);
+						args.put("group", project.getGroup());
+						args.put(
+							"name", GradleUtil.getArchivesBaseName(project));
+						args.put("version", version);
+
+						Dependency dependency = dependencyHandler.create(args);
+
+						ConfigurationContainer configurationContainer =
+							project.getConfigurations();
+
+						Configuration configuration =
+							configurationContainer.detachedConfiguration(
+								dependency);
+
+						file = configuration.getSingleFile();
+					}
 
 					return project.zipTree(file);
 				}
@@ -2560,7 +2609,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskCompileJSP(
-		Project project, LiferayExtension liferayExtension) {
+		Project project, Jar jarJSPsTask, LiferayExtension liferayExtension) {
 
 		boolean jspPrecompileEnabled = GradleUtil.getProperty(
 			project, "jsp.precompile.enabled", false);
@@ -2617,7 +2666,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		if (!jspPrecompileFromSource && (artifactProperties != null)) {
 			Copy copy = _addTaskDownloadCompiledJSP(
-				javaCompile, artifactProperties);
+				javaCompile, jarJSPsTask, artifactProperties);
 
 			if (copy != null) {
 				javaCompile.deleteAllActions();

@@ -1401,9 +1401,9 @@ version in external files to the latest snapshot.
 ## 3.6.5 - 2017-04-21
 
 ### Added
-- [LPS-72045]: When on Jenkins, fail the `testIntegration` task if any of the
-dependent projects defined in the `testIntegrationCompile` configuration does
-not have the `.lfrbuild-portal` marker file.
+- [LPS-72045]: When on Jenkins, fail the `testIntegration` task if any dependent
+projects defined in the `testIntegrationCompile` configuration do not have the
+`.lfrbuild-portal` marker file.
 
 ### Changed
 - [LPS-72067]: Avoid including `compileInclude` dependencies in the classpath of

@@ -10,7 +10,7 @@ copyGradleTestDependencies {
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.26"
 
-	compile(group: "com.liferay", name: "com.liferay.portal.tools.soy.builder", version: "3.0.0") {
+	compile(group: "com.liferay", name: "com.liferay.portal.tools.soy.builder", version: "3.0.1") {
 		exclude group: "com.google.template", module: "soy"
 		exclude group: "org.codehaus.plexus"
 		exclude group: "org.sonatype.plexus"

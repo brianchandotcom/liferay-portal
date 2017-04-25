@@ -72,10 +72,6 @@ public class HighlightUtil {
 			return s;
 		}
 
-		if (queryTerms.length == 0) {
-			return StringPool.BLANK;
-		}
-
 		StringBundler sb = new StringBundler(2 * queryTerms.length - 1);
 
 		for (int i = 0; i < queryTerms.length; i++) {

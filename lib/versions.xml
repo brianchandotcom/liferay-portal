@@ -127,7 +127,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/freshcookies-security.jar</file-name>
-				<version>0.54</version>
+				<version>0.60</version>
 				<project-name>Freshcookies</project-name>
 				<project-url>http://freshcookies.org/freshcookies-security</project-url>
 				<licenses>
@@ -154,7 +154,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/java-diff.jar</file-name>
-				<version>1.0.5</version>
+				<version>1.1</version>
 				<project-name>Java Diff</project-name>
 				<project-url>http://repo1.maven.org/maven2/org/incava/java-diff/1.1</project-url>
 				<licenses>
@@ -166,7 +166,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jazzy.jar</file-name>
-				<version>0.5</version>
+				<version>0.5.2</version>
 				<project-name>Jazzy</project-name>
 				<project-url>http://jazzy.sourceforge.net</project-url>
 				<licenses>

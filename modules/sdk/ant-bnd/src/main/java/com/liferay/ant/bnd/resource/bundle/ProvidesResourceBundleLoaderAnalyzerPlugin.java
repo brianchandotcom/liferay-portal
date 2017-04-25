@@ -39,16 +39,12 @@ public class ProvidesResourceBundleLoaderAnalyzerPlugin
 		Parameters provideCapabilityHeaders = new SortedParameters(
 			analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
-		Parameters parameters = new SortedParameters();
-
 		Attrs attrs = new Attrs();
 
 		attrs.put("bundle.symbolic.name", analyzer.getBsn());
 		attrs.put("resource.bundle.base.name", "content.Language");
 
-		parameters.add("liferay.resource.bundle", attrs);
-
-		provideCapabilityHeaders.mergeWith(parameters, false);
+		provideCapabilityHeaders.add("liferay.resource.bundle", attrs);
 
 		analyzer.setProperty(
 			Constants.PROVIDE_CAPABILITY, provideCapabilityHeaders.toString());

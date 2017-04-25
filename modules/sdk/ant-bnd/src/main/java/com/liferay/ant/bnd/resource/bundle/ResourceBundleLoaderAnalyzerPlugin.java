@@ -37,8 +37,8 @@ public class ResourceBundleLoaderAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	private final AnalyzerPlugin[] _analyzerPlugins = new AnalyzerPlugin[] {
-		new ProvidesResourceBundleLoaderAnalyzerPlugin(),
-		new AggregateResourceBundleLoaderAnalyzerPlugin()
+		new AggregateResourceBundleLoaderAnalyzerPlugin(),
+		new ProvidesResourceBundleLoaderAnalyzerPlugin()
 	};
 
 }

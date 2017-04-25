@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletSetupUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -102,8 +101,7 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 			}
 
 			PortletPreferences portletSetup =
-				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-					layout, portletId);
+				themeDisplay.getStrictLayoutPortletSetup(layout, portletId);
 
 			JSONObject portletSetupJSONObject =
 				PortletSetupUtil.cssToJSONObject(portletSetup);
@@ -173,8 +171,7 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 		}
 
 		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-				layout, portletId);
+			themeDisplay.getStrictLayoutPortletSetup(layout, portletId);
 
 		String css = ParamUtil.getString(actionRequest, "css");
 

@@ -140,8 +140,7 @@ public abstract class BaseItemSelectorViewDisplayContext
 		}
 
 		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-				layout, portletResource);
+			themeDisplay.getStrictLayoutPortletSetup(layout, portletResource);
 
 		return AssetPublisherUtil.getGroupIds(
 			portletPreferences, themeDisplay.getScopeGroupId(),

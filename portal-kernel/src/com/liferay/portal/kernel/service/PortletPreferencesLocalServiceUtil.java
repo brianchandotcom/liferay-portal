@@ -296,6 +296,12 @@ public class PortletPreferencesLocalServiceUtil {
 		return getService().getPortletPreferenceses(start, end);
 	}
 
+	public static java.util.Map<java.lang.String, javax.portlet.PortletPreferences> getStrictPreferences(
+		com.liferay.portal.kernel.model.Layout layout,
+		java.util.List<com.liferay.portal.kernel.model.Portlet> portlets) {
+		return getService().getStrictPreferences(layout, portlets);
+	}
+
 	public static javax.portlet.PortletPreferences fetchPreferences(
 		com.liferay.portal.kernel.model.PortletPreferencesIds portletPreferencesIds) {
 		return getService().fetchPreferences(portletPreferencesIds);

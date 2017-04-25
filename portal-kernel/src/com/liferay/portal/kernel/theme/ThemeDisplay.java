@@ -39,12 +39,14 @@ import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Mergeable;
@@ -64,6 +66,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -888,6 +891,32 @@ public class ThemeDisplay
 		}
 
 		return _siteGroup.getDescriptiveName();
+	}
+
+	public PortletPreferences getStrictLayoutPortletSetup(
+		Layout layout, String portletId) {
+
+		PortletPreferences portletPreferences = null;
+
+		if ((_layout.getPlid() == layout.getPlid()) &&
+			(_layout.getMvccVersion() == layout.getMvccVersion()) &&
+			(_layoutTypePortlet != null)) {
+
+			if (_layoutPortletPreferences == null) {
+				_layoutPortletPreferences =
+					PortletPreferencesLocalServiceUtil.getStrictPreferences(
+						_layout, _layoutTypePortlet.getAllPortlets());
+			}
+
+			portletPreferences = _layoutPortletPreferences.get(portletId);
+		}
+
+		if (portletPreferences == null) {
+			return PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+				layout, portletId);
+		}
+
+		return portletPreferences;
 	}
 
 	public Theme getTheme() {
@@ -1930,7 +1959,8 @@ public class ThemeDisplay
 	private boolean _isolated;
 	private String _languageId;
 	private Layout _layout;
-	private Map<Long, String> _layoutFriendlyURLs;
+	private transient Map<Long, String> _layoutFriendlyURLs;
+	private transient Map<String, PortletPreferences> _layoutPortletPreferences;
 	private List<Layout> _layouts;
 	private LayoutSet _layoutSet;
 	private String _layoutSetLogo = StringPool.BLANK;

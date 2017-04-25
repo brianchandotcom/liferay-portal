@@ -320,6 +320,14 @@ public class PortletPreferencesLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.Map<java.lang.String, javax.portlet.PortletPreferences> getStrictPreferences(
+		com.liferay.portal.kernel.model.Layout layout,
+		java.util.List<com.liferay.portal.kernel.model.Portlet> portlets) {
+		return _portletPreferencesLocalService.getStrictPreferences(layout,
+			portlets);
+	}
+
+	@Override
 	public javax.portlet.PortletPreferences fetchPreferences(
 		com.liferay.portal.kernel.model.PortletPreferencesIds portletPreferencesIds) {
 		return _portletPreferencesLocalService.fetchPreferences(portletPreferencesIds);

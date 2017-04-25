@@ -64,7 +64,7 @@ String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventNa
 
 			var commerceProductOptionName = currentTarget.one('.commerce-product-option-name');
 
-			var commerceProductOptionId = pon.attr('data-id');
+			var commerceProductOptionId = commerceProductOptionName.attr('data-id');
 
 			var data =
 				{

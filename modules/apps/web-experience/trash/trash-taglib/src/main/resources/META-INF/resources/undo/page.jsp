@@ -54,7 +54,7 @@ int trashedEntriesCount = restoreTrashEntryIds.size();
 				<c:when test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
 
 					<%
-					PortletURL trashURL = TrashUtil.getViewURL(request);
+					PortletURL trashURL = PortletProviderUtil.getPortletURL(request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
 					%>
 
 					<aui:a cssClass="alert-link" href="<%= trashURL.toString() %>" label="the-recycle-bin" />

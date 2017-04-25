@@ -41,24 +41,28 @@
 				<var name="portletOption" value="Configuration" />
 			</execute>
 
-			<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+			<execute macro="IFrame#selectConfigurationFrame" />
 
 			<execute function="AssertTextEquals" locator1="NavBar#SHARING" value1="Sharing" />
 
-			<execute function="SelectFrame" value1="relative=top" />
-
-			<execute function="Click" locator1="Icon#CLOSE" />
+			<execute macro="IFrame#closeFrame" />
 		</task>
 
-		<task summary="Assert the 'Look and Feel' modal of the Hello World portlet">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<task summary="Assert the 'Look and Feel' iframe of the Hello World portlet">
 			<execute macro="Portlet#gotoPortletOptions">
 				<var name="portletName" value="Hello World" />
 				<var name="portletOption" value="Look and Feel Configuration" />
 			</execute>
 
+			<execute macro="IFrame#selectConfigurationFrame" />
+
 			<execute function="AssertTextEquals" locator1="NavTab#LOOK_AND_FEEL_GENERAL" value1="General" />
 
-			<execute function="Click" locator1="Icon#CLOSE" />
+			<execute macro="IFrame#closeFrame" />
 		</task>
 
 		<execute macro="Portlet#dragAndDropPortletToColumnPG">

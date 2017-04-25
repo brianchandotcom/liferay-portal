@@ -279,11 +279,11 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	private boolean _isValidTagAttributeValue(String value, String dataType) {
-		if (dataType.equals("boolean")) {
+		if (dataType.endsWith("Boolean") || dataType.equals("boolean")) {
 			return Validator.isBoolean(value);
 		}
 
-		if (dataType.equals("double")) {
+		if (dataType.endsWith("Double") || dataType.equals("double")) {
 			try {
 				Double.parseDouble(value);
 			}
@@ -294,7 +294,9 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			return true;
 		}
 
-		if (dataType.equals("int") || dataType.equals("long")) {
+		if (dataType.endsWith("Integer") || dataType.equals("int") ||
+			dataType.endsWith("Long") || dataType.equals("long")) {
+
 			return Validator.isNumber(value);
 		}
 

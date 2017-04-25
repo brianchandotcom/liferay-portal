@@ -242,7 +242,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	private Set<String> _getPrimitiveTagAttributeDataTypes() {
 		return SetUtil.fromArray(
-			new String[] {"boolean", "double", "int", "long"});
+			new String[] {
+				"java.lang.Boolean", "Boolean", "boolean", "java.lang.Double",
+				"Double", "double", "java.lang.Integer", "Integer", "int",
+				"java.lang.Long", "Long", "long"
+			});
 	}
 
 	private Map<String, JavaClass> _getTagJavaClassesMap() throws Exception {

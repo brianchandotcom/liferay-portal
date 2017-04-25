@@ -59,7 +59,6 @@ import com.liferay.trash.kernel.model.TrashVersion;
 import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.kernel.service.TrashVersionLocalServiceUtil;
 import com.liferay.trash.kernel.util.Trash;
-import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.trash.kernel.util.comparator.EntryCreateDateComparator;
 import com.liferay.trash.kernel.util.comparator.EntryTypeComparator;
 import com.liferay.trash.kernel.util.comparator.EntryUserNameComparator;
@@ -216,7 +215,7 @@ public class TrashImpl implements Trash {
 		String[] attachmentFileNames) {
 
 		for (String attachmentFileName : attachmentFileNames) {
-			String trashTime = TrashUtil.getTrashTime(
+			String trashTime = getTrashTime(
 				attachmentFileName, TRASH_TIME_SEPARATOR);
 
 			long timestamp = GetterUtil.getLong(trashTime);
@@ -597,7 +596,7 @@ public class TrashImpl implements Trash {
 			if (containerModelTrashHandler.isInTrash(
 					containerModel.getContainerModelId())) {
 
-				name = TrashUtil.getOriginalTitle(name);
+				name = getOriginalTitle(name);
 			}
 
 			PortalUtil.addPortletBreadcrumbEntry(

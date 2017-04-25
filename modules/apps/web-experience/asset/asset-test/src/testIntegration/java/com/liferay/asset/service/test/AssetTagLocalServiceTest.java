@@ -105,13 +105,11 @@ public class AssetTagLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		String tagName = "tag name";
-
 		AssetTag tag = AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), tagName,
+			TestPropsValues.getUserId(), _group.getGroupId(), "tag name",
 			serviceContext);
 
-		Assert.assertEquals(tagName, tag.getName());
+		Assert.assertEquals("tag name", tag.getName());
 	}
 
 	@Test
@@ -122,11 +120,9 @@ public class AssetTagLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		String permittedCharactersString = "-_^()!$";
-
 		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			permittedCharactersString, serviceContext);
+			TestPropsValues.getUserId(), _group.getGroupId(), "-_^()!$",
+			serviceContext);
 	}
 
 	@Test
@@ -152,13 +148,11 @@ public class AssetTagLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		String utf8FormattedString = "標籤名稱";
-
 		AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			utf8FormattedString, serviceContext);
+			TestPropsValues.getUserId(), _group.getGroupId(), "標籤名稱",
+			serviceContext);
 
-		Assert.assertEquals(utf8FormattedString, assetTag.getName());
+		Assert.assertEquals("標籤名稱", assetTag.getName());
 	}
 
 	@Test(expected = DuplicateTagException.class)
@@ -167,14 +161,12 @@ public class AssetTagLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		String tagName = "tag";
-
 		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), tagName,
+			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
 			serviceContext);
 
 		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), tagName,
+			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
 			serviceContext);
 	}
 
@@ -231,13 +223,11 @@ public class AssetTagLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		String tagName = "tag";
-
 		AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), tagName,
+			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
 			serviceContext);
 
-		Assert.assertEquals(tagName, assetTag.getName());
+		Assert.assertEquals("tag", assetTag.getName());
 	}
 
 	@Test

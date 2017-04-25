@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -34,14 +36,19 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashVersion;
+import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.kernel.util.TrashUtil;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -385,7 +392,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 			Hits hits = indexer.search(searchContext);
 
-			List<TrashEntry> trashEntries = TrashUtil.getEntries(hits);
+			List<TrashEntry> trashEntries = _getEntries(hits);
 
 			return new BaseModelSearchResult<>(trashEntries, hits.getLength());
 		}
@@ -430,6 +437,68 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		calendar.add(Calendar.MINUTE, -maxAge);
 
 		return calendar.getTime();
+	}
+
+	private List<TrashEntry> _getEntries(Hits hits) {
+		List<TrashEntry> entries = new ArrayList<>();
+
+		for (Document document : hits.getDocs()) {
+			String entryClassName = GetterUtil.getString(
+				document.get(Field.ENTRY_CLASS_NAME));
+			long classPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			try {
+				TrashEntry entry = TrashEntryLocalServiceUtil.fetchEntry(
+					entryClassName, classPK);
+
+				if (entry == null) {
+					String userName = GetterUtil.getString(
+						document.get(Field.REMOVED_BY_USER_NAME));
+
+					Date removedDate = document.getDate(Field.REMOVED_DATE);
+
+					entry = new TrashEntryImpl();
+
+					entry.setUserName(userName);
+					entry.setCreateDate(removedDate);
+
+					TrashHandler trashHandler =
+						TrashHandlerRegistryUtil.getTrashHandler(
+							entryClassName);
+
+					TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
+						classPK);
+
+					entry.setClassName(trashRenderer.getClassName());
+					entry.setClassPK(trashRenderer.getClassPK());
+
+					String rootEntryClassName = GetterUtil.getString(
+						document.get(Field.ROOT_ENTRY_CLASS_NAME));
+					long rootEntryClassPK = GetterUtil.getLong(
+						document.get(Field.ROOT_ENTRY_CLASS_PK));
+
+					TrashEntry rootTrashEntry =
+						TrashEntryLocalServiceUtil.fetchEntry(
+							rootEntryClassName, rootEntryClassPK);
+
+					if (rootTrashEntry != null) {
+						entry.setRootEntry(rootTrashEntry);
+					}
+				}
+
+				entries.add(entry);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to find trash entry for " + entryClassName +
+							" with primary key " + classPK);
+				}
+			}
+		}
+
+		return entries;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

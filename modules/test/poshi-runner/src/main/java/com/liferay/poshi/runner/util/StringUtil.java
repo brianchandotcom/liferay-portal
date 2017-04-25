@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.util;
 
+import java.util.UUID;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -369,6 +371,22 @@ public class StringUtil {
 		}
 
 		return quote.concat(s).concat(quote);
+	}
+
+	public static String randomString(String length) {
+		int lengthInteger = Integer.parseInt(length);
+
+		StringBuilder sb = new StringBuilder();
+
+		while (sb.length() < lengthInteger) {
+			UUID randomUUID = UUID.randomUUID();
+
+			String uuidString = randomUUID.toString();
+
+			sb.append(uuidString.replace("-", ""));
+		}
+
+		return sb.substring(0, lengthInteger);
 	}
 
 	public static String replace(String s, String oldSub, String newSub) {

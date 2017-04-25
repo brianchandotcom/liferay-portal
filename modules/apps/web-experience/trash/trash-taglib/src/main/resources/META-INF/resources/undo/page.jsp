@@ -32,7 +32,7 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 				<c:when test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
 
 					<%
-					PortletURL trashURL = TrashUtil.getViewURL(request);
+					PortletURL trashURL = PortletProviderUtil.getPortletURL(request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
 					%>
 
 					<aui:a cssClass="alert-link" href="<%= trashURL.toString() %>" label="the-recycle-bin" />

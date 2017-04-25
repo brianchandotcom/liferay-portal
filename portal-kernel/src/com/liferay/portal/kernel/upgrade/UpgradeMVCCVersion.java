@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
@@ -48,12 +49,14 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 			}
 		}
 
-		String schema = _getSchema();
+		DBInspector dbInspector = new DBInspector(connection);
+
+		String schema = dbInspector.getSchema();
 
 		tableName = normalizeName(tableName, databaseMetaData);
 
 		try (ResultSet tableResultSet = databaseMetaData.getTables(
-				connection.getCatalog(), schema, tableName, null)) {
+				dbInspector.getCatalog(), schema, tableName, null)) {
 
 			if (!tableResultSet.next()) {
 				_log.error("Table " + tableName + " does not exist");
@@ -62,7 +65,7 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 			}
 
 			try (ResultSet columnResultSet = databaseMetaData.getColumns(
-					connection.getCatalog(), schema, tableName,
+					dbInspector.getCatalog(), schema, tableName,
 					normalizeName("mvccVersion", databaseMetaData))) {
 
 				if (columnResultSet.next()) {
@@ -145,25 +148,6 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 		String tableName = classElement.attributeValue("table");
 
 		upgradeMVCCVersion(databaseMetaData, tableName);
-	}
-
-	private String _getSchema() throws Exception {
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.POSTGRESQL) {
-			try (PreparedStatement ps = connection.prepareStatement(
-					"select current_schema()");
-				ResultSet rs = ps.executeQuery()) {
-
-				if (rs.next()) {
-					return rs.getString("current_schema");
-				}
-
-				return null;
-			}
-		}
-
-		return connection.getSchema();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

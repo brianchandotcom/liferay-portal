@@ -56,6 +56,16 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceUtil {
 
 	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel addCommerceProductDefinitionOptionValueRel(
 		long commerceProductDefinitionOptionRelId,
+		com.liferay.commerce.product.model.CommerceProductOptionValue commerceProductOptionValue,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceProductDefinitionOptionValueRel(commerceProductDefinitionOptionRelId,
+			commerceProductOptionValue, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel addCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionRelId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -370,6 +380,22 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteCommerceProductDefinitionOptionValueRels(
+		long commerceProductDefinitionOptionRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.deleteCommerceProductDefinitionOptionValueRels(commerceProductDefinitionOptionRelId);
+	}
+
+	public static void importCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionOptionRelId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.importCommerceProductDefinitionOptionRels(commerceProductDefinitionOptionRelId,
+			serviceContext);
 	}
 
 	public static CommerceProductDefinitionOptionValueRelLocalService getService() {

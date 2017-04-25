@@ -333,4 +333,7 @@ public interface CommerceProductInstanceLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteCommerceProductInstances(long commerceProductDefinitionId)
+		throws PortalException;
 }

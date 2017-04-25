@@ -387,6 +387,12 @@ public class CommerceProductInstanceLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void deleteCommerceProductInstances(
+		long commerceProductDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceProductInstances(commerceProductDefinitionId);
+	}
+
 	public static CommerceProductInstanceLocalService getService() {
 		return _serviceTracker.getService();
 	}

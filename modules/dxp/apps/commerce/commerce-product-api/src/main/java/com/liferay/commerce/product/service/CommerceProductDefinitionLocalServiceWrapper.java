@@ -330,6 +330,18 @@ public class CommerceProductDefinitionLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<java.lang.String> getCommerceProductDefinitionLocalizationLanguageIds(
+		long commerceProductDefinitionId) {
+		return _commerceProductDefinitionLocalService.getCommerceProductDefinitionLocalizationLanguageIds(commerceProductDefinitionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionLocalization> getCommerceProductDefinitionLocalizations(
+		long commerceProductDefinitionId) {
+		return _commerceProductDefinitionLocalService.getCommerceProductDefinitionLocalizations(commerceProductDefinitionId);
+	}
+
 	/**
 	* Returns a range of all the commerce product definitions.
 	*
@@ -393,18 +405,6 @@ public class CommerceProductDefinitionLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CommerceProductDefinition> orderByComparator) {
 		return _commerceProductDefinitionLocalService.getCommerceProductDefinitionsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getCommerceProductDefinitionDescriptionMap(
-		long commerceProductDefinitionId) {
-		return _commerceProductDefinitionLocalService.getCommerceProductDefinitionDescriptionMap(commerceProductDefinitionId);
-	}
-
-	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getCommerceProductDefinitionTitleMap(
-		long commerceProductDefinitionId) {
-		return _commerceProductDefinitionLocalService.getCommerceProductDefinitionTitleMap(commerceProductDefinitionId);
 	}
 
 	/**

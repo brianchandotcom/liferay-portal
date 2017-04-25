@@ -403,10 +403,17 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		}
 	}
 
+	@Override
+	public String getTitle() {
+		return getTitle(getDefaultLanguageId(), false);
+	}
+
+	@Override
 	public String getTitle(String languageId) {
 		return getTitle(languageId, true);
 	}
 
+	@Override
 	public String getTitle(String languageId, boolean useDefault) {
 		if (useDefault) {
 			return LocalizationUtil.getLocalization(new Function<String, String>() {
@@ -418,6 +425,27 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		}
 
 		return _getTitle(languageId);
+	}
+
+	@Override
+	public String getTitleMapAsXML() {
+		return LocalizationUtil.getXml(getLanguageIdToTitleMap(),
+			getDefaultLanguageId(), "Title");
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToTitleMap() {
+		Map<String, String> languageIdToTitleMap = new HashMap<String, String>();
+
+		List<CommerceProductDefinitionLocalization> commerceProductDefinitionLocalizations =
+			CommerceProductDefinitionLocalServiceUtil.getCommerceProductDefinitionLocalizations(getPrimaryKey());
+
+		for (CommerceProductDefinitionLocalization commerceProductDefinitionLocalization : commerceProductDefinitionLocalizations) {
+			languageIdToTitleMap.put(commerceProductDefinitionLocalization.getLanguageId(),
+				commerceProductDefinitionLocalization.getTitle());
+		}
+
+		return languageIdToTitleMap;
 	}
 
 	private String _getTitle(String languageId) {
@@ -432,10 +460,17 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		return commerceProductDefinitionLocalization.getTitle();
 	}
 
+	@Override
+	public String getUrlTitle() {
+		return getUrlTitle(getDefaultLanguageId(), false);
+	}
+
+	@Override
 	public String getUrlTitle(String languageId) {
 		return getUrlTitle(languageId, true);
 	}
 
+	@Override
 	public String getUrlTitle(String languageId, boolean useDefault) {
 		if (useDefault) {
 			return LocalizationUtil.getLocalization(new Function<String, String>() {
@@ -447,6 +482,27 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		}
 
 		return _getUrlTitle(languageId);
+	}
+
+	@Override
+	public String getUrlTitleMapAsXML() {
+		return LocalizationUtil.getXml(getLanguageIdToUrlTitleMap(),
+			getDefaultLanguageId(), "UrlTitle");
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToUrlTitleMap() {
+		Map<String, String> languageIdToUrlTitleMap = new HashMap<String, String>();
+
+		List<CommerceProductDefinitionLocalization> commerceProductDefinitionLocalizations =
+			CommerceProductDefinitionLocalServiceUtil.getCommerceProductDefinitionLocalizations(getPrimaryKey());
+
+		for (CommerceProductDefinitionLocalization commerceProductDefinitionLocalization : commerceProductDefinitionLocalizations) {
+			languageIdToUrlTitleMap.put(commerceProductDefinitionLocalization.getLanguageId(),
+				commerceProductDefinitionLocalization.getUrlTitle());
+		}
+
+		return languageIdToUrlTitleMap;
 	}
 
 	private String _getUrlTitle(String languageId) {
@@ -461,10 +517,17 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		return commerceProductDefinitionLocalization.getUrlTitle();
 	}
 
+	@Override
+	public String getDescription() {
+		return getDescription(getDefaultLanguageId(), false);
+	}
+
+	@Override
 	public String getDescription(String languageId) {
 		return getDescription(languageId, true);
 	}
 
+	@Override
 	public String getDescription(String languageId, boolean useDefault) {
 		if (useDefault) {
 			return LocalizationUtil.getLocalization(new Function<String, String>() {
@@ -476,6 +539,27 @@ public class CommerceProductDefinitionModelImpl extends BaseModelImpl<CommercePr
 		}
 
 		return _getDescription(languageId);
+	}
+
+	@Override
+	public String getDescriptionMapAsXML() {
+		return LocalizationUtil.getXml(getLanguageIdToDescriptionMap(),
+			getDefaultLanguageId(), "Description");
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToDescriptionMap() {
+		Map<String, String> languageIdToDescriptionMap = new HashMap<String, String>();
+
+		List<CommerceProductDefinitionLocalization> commerceProductDefinitionLocalizations =
+			CommerceProductDefinitionLocalServiceUtil.getCommerceProductDefinitionLocalizations(getPrimaryKey());
+
+		for (CommerceProductDefinitionLocalization commerceProductDefinitionLocalization : commerceProductDefinitionLocalizations) {
+			languageIdToDescriptionMap.put(commerceProductDefinitionLocalization.getLanguageId(),
+				commerceProductDefinitionLocalization.getDescription());
+		}
+
+		return languageIdToDescriptionMap;
 	}
 
 	private String _getDescription(String languageId) {

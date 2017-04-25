@@ -60,6 +60,10 @@ public interface CommerceProductDefinitionOptionRelService extends BaseService {
 	 */
 	public CommerceProductDefinitionOptionRel addCommerceProductDefinitionOptionRel(
 		long commerceProductDefinitionId, long commerceProductOptionId,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CommerceProductDefinitionOptionRel addCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionId, long commerceProductOptionId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, int priority,
@@ -70,6 +74,10 @@ public interface CommerceProductDefinitionOptionRelService extends BaseService {
 		throws PortalException;
 
 	public CommerceProductDefinitionOptionRel deleteCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionOptionRelId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceProductDefinitionOptionRel fetchCommerceProductDefinitionOptionRel(
 		long commerceProductDefinitionOptionRelId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

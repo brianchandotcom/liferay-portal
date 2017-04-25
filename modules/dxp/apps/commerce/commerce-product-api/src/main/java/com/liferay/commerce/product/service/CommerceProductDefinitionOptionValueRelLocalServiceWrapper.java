@@ -49,6 +49,16 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel addCommerceProductDefinitionOptionValueRel(
 		long commerceProductDefinitionOptionRelId,
+		com.liferay.commerce.product.model.CommerceProductOptionValue commerceProductOptionValue,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionOptionValueRelLocalService.addCommerceProductDefinitionOptionValueRel(commerceProductDefinitionOptionRelId,
+			commerceProductOptionValue, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel addCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionRelId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -378,6 +388,22 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _commerceProductDefinitionOptionValueRelLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void deleteCommerceProductDefinitionOptionValueRels(
+		long commerceProductDefinitionOptionRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceProductDefinitionOptionValueRelLocalService.deleteCommerceProductDefinitionOptionValueRels(commerceProductDefinitionOptionRelId);
+	}
+
+	@Override
+	public void importCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionOptionRelId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceProductDefinitionOptionValueRelLocalService.importCommerceProductDefinitionOptionRels(commerceProductDefinitionOptionRelId,
+			serviceContext);
 	}
 
 	@Override

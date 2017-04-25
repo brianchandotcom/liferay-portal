@@ -167,13 +167,46 @@ public class CommerceProductDefinitionServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductDefinition fetchCommerceProductDefinition(
+		HttpPrincipal httpPrincipal, long commerceProductDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceProductDefinitionServiceUtil.class,
+					"fetchCommerceProductDefinition",
+					_fetchCommerceProductDefinitionParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceProductDefinitionId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CommerceProductDefinition)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CommerceProductDefinition getCommerceProductDefinition(
 		HttpPrincipal httpPrincipal, long commerceProductDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductDefinitionServiceUtil.class,
 					"getCommerceProductDefinition",
-					_getCommerceProductDefinitionParameterTypes3);
+					_getCommerceProductDefinitionParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceProductDefinitionId);
@@ -205,7 +238,7 @@ public class CommerceProductDefinitionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductDefinitionServiceUtil.class,
 					"getCommerceProductDefinitions",
-					_getCommerceProductDefinitionsParameterTypes4);
+					_getCommerceProductDefinitionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end);
@@ -234,7 +267,7 @@ public class CommerceProductDefinitionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductDefinitionServiceUtil.class,
 					"getCommerceProductDefinitions",
-					_getCommerceProductDefinitionsParameterTypes5);
+					_getCommerceProductDefinitionsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end, orderByComparator);
@@ -262,7 +295,7 @@ public class CommerceProductDefinitionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductDefinitionServiceUtil.class,
 					"getCommerceProductDefinitionsCount",
-					_getCommerceProductDefinitionsCountParameterTypes6);
+					_getCommerceProductDefinitionsCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -299,7 +332,7 @@ public class CommerceProductDefinitionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductDefinitionServiceUtil.class,
 					"updateCommerceProductDefinition",
-					_updateCommerceProductDefinitionParameterTypes7);
+					_updateCommerceProductDefinitionParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceProductDefinitionId, baseSKU, titleMap,
@@ -339,7 +372,7 @@ public class CommerceProductDefinitionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductDefinitionServiceUtil.class,
-					"updateStatus", _updateStatusParameterTypes8);
+					"updateStatus", _updateStatusParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					commerceProductDefinitionId, status, serviceContext,
@@ -382,18 +415,20 @@ public class CommerceProductDefinitionServiceHttp {
 		};
 	private static final Class<?>[] _deleteCommerceProductDefinitionParameterTypes2 =
 		new Class[] { long.class };
-	private static final Class<?>[] _getCommerceProductDefinitionParameterTypes3 =
+	private static final Class<?>[] _fetchCommerceProductDefinitionParameterTypes3 =
 		new Class[] { long.class };
-	private static final Class<?>[] _getCommerceProductDefinitionsParameterTypes4 =
-		new Class[] { long.class, int.class, int.class };
+	private static final Class<?>[] _getCommerceProductDefinitionParameterTypes4 =
+		new Class[] { long.class };
 	private static final Class<?>[] _getCommerceProductDefinitionsParameterTypes5 =
+		new Class[] { long.class, int.class, int.class };
+	private static final Class<?>[] _getCommerceProductDefinitionsParameterTypes6 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceProductDefinitionsCountParameterTypes6 =
+	private static final Class<?>[] _getCommerceProductDefinitionsCountParameterTypes7 =
 		new Class[] { long.class };
-	private static final Class<?>[] _updateCommerceProductDefinitionParameterTypes7 =
+	private static final Class<?>[] _updateCommerceProductDefinitionParameterTypes8 =
 		new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class, java.lang.String.class,
@@ -401,7 +436,7 @@ public class CommerceProductDefinitionServiceHttp {
 			int.class, int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateStatusParameterTypes8 = new Class[] {
+	private static final Class<?>[] _updateStatusParameterTypes9 = new Class[] {
 			long.class, long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class,
 			java.util.Map.class

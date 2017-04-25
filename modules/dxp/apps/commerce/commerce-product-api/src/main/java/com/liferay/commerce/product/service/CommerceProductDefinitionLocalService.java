@@ -281,6 +281,14 @@ public interface CommerceProductDefinitionLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.String> getCommerceProductDefinitionLocalizationLanguageIds(
+		long commerceProductDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductDefinitionLocalization> getCommerceProductDefinitionLocalizations(
+		long commerceProductDefinitionId);
+
 	/**
 	* Returns a range of all the commerce product definitions.
 	*
@@ -330,14 +338,6 @@ public interface CommerceProductDefinitionLocalService extends BaseLocalService,
 	public List<CommerceProductDefinition> getCommerceProductDefinitionsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CommerceProductDefinition> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getCommerceProductDefinitionDescriptionMap(
-		long commerceProductDefinitionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getCommerceProductDefinitionTitleMap(
-		long commerceProductDefinitionId);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

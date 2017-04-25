@@ -78,6 +78,10 @@ public interface CommerceProductDefinitionService extends BaseService {
 		long commerceProductDefinitionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceProductDefinition fetchCommerceProductDefinition(
+		long commerceProductDefinitionId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceProductDefinition getCommerceProductDefinition(
 		long commerceProductDefinitionId) throws PortalException;
 

@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CommerceProductOptionValue;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
@@ -78,6 +79,11 @@ public interface CommerceProductDefinitionOptionValueRelLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceProductDefinitionOptionValueRel addCommerceProductDefinitionOptionValueRel(
 		CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel);
+
+	public CommerceProductDefinitionOptionValueRel addCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionRelId,
+		CommerceProductOptionValue commerceProductOptionValue,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CommerceProductDefinitionOptionValueRel addCommerceProductDefinitionOptionValueRel(
 		long commerceProductDefinitionOptionRelId,
@@ -321,4 +327,11 @@ public interface CommerceProductDefinitionOptionValueRelLocalService
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteCommerceProductDefinitionOptionValueRels(
+		long commerceProductDefinitionOptionRelId) throws PortalException;
+
+	public void importCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionOptionRelId, ServiceContext serviceContext)
+		throws PortalException;
 }

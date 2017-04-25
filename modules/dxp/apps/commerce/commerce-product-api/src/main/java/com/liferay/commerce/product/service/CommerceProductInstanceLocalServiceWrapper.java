@@ -401,6 +401,12 @@ public class CommerceProductInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteCommerceProductInstances(long commerceProductDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceProductInstanceLocalService.deleteCommerceProductInstances(commerceProductDefinitionId);
+	}
+
+	@Override
 	public CommerceProductInstanceLocalService getWrappedService() {
 		return _commerceProductInstanceLocalService;
 	}

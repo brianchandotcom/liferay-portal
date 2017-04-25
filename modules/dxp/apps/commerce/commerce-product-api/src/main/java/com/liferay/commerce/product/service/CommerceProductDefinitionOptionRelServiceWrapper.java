@@ -37,6 +37,15 @@ public class CommerceProductDefinitionOptionRelServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel addCommerceProductDefinitionOptionRel(
 		long commerceProductDefinitionId, long commerceProductOptionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionOptionRelService.addCommerceProductDefinitionOptionRel(commerceProductDefinitionId,
+			commerceProductOptionId, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel addCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionId, long commerceProductOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, int priority,
@@ -59,6 +68,13 @@ public class CommerceProductDefinitionOptionRelServiceWrapper
 		long commerceProductDefinitionOptionRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceProductDefinitionOptionRelService.deleteCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel fetchCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionOptionRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionOptionRelService.fetchCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId);
 	}
 
 	@Override

@@ -75,6 +75,13 @@ public class CommerceProductDefinitionServiceUtil {
 				   .deleteCommerceProductDefinition(commerceProductDefinitionId);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductDefinition fetchCommerceProductDefinition(
+		long commerceProductDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchCommerceProductDefinition(commerceProductDefinitionId);
+	}
+
 	public static com.liferay.commerce.product.model.CommerceProductDefinition getCommerceProductDefinition(
 		long commerceProductDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

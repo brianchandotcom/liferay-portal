@@ -49,6 +49,15 @@ public class CommerceProductDefinitionOptionRelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel addCommerceProductDefinitionOptionRel(
 		long commerceProductDefinitionId, long commerceProductOptionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionOptionRelLocalService.addCommerceProductDefinitionOptionRel(commerceProductDefinitionId,
+			commerceProductOptionId, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel addCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionId, long commerceProductOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, int priority,
@@ -383,6 +392,13 @@ public class CommerceProductDefinitionOptionRelLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _commerceProductDefinitionOptionRelLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void deleteCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceProductDefinitionOptionRelLocalService.deleteCommerceProductDefinitionOptionRels(commerceProductDefinitionId);
 	}
 
 	@Override

@@ -535,6 +535,12 @@ public abstract class CommerceProductDefinitionLocalServiceBaseImpl
 			languageId);
 	}
 
+	@Override
+	public List<CommerceProductDefinitionLocalization> getCommerceProductDefinitionLocalizations(
+		long commerceProductDefinitionId) {
+		return commerceProductDefinitionLocalizationPersistence.findByCommerceProductDefinitionPK(commerceProductDefinitionId);
+	}
+
 	protected CommerceProductDefinitionLocalization updateCommerceProductDefinitionLocalization(
 		CommerceProductDefinition commerceProductDefinition, String languageId,
 		String title, String urlTitle, String description)

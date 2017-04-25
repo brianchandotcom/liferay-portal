@@ -81,6 +81,10 @@ public interface CommerceProductDefinitionOptionRelLocalService
 
 	public CommerceProductDefinitionOptionRel addCommerceProductDefinitionOptionRel(
 		long commerceProductDefinitionId, long commerceProductOptionId,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CommerceProductDefinitionOptionRel addCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionId, long commerceProductOptionId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, int priority,
@@ -323,4 +327,7 @@ public interface CommerceProductDefinitionOptionRelLocalService
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionId) throws PortalException;
 }

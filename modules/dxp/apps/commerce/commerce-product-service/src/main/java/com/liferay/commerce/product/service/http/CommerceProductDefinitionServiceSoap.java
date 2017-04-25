@@ -136,6 +136,21 @@ public class CommerceProductDefinitionServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionSoap fetchCommerceProductDefinition(
+		long commerceProductDefinitionId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductDefinition returnValue =
+				CommerceProductDefinitionServiceUtil.fetchCommerceProductDefinition(commerceProductDefinitionId);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CommerceProductDefinitionSoap getCommerceProductDefinition(
 		long commerceProductDefinitionId) throws RemoteException {
 		try {

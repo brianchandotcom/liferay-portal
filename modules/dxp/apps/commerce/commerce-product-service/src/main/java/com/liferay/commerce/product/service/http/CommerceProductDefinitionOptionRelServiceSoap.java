@@ -98,6 +98,39 @@ public class CommerceProductDefinitionOptionRelServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap fetchCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionOptionRelId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel returnValue =
+				CommerceProductDefinitionOptionRelServiceUtil.fetchCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap addCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionId, long commerceProductOptionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel returnValue =
+				CommerceProductDefinitionOptionRelServiceUtil.addCommerceProductDefinitionOptionRel(commerceProductDefinitionId,
+					commerceProductOptionId, serviceContext);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap deleteCommerceProductDefinitionOptionRel(
 		com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap commerceProductDefinitionOptionRel)
 		throws RemoteException {

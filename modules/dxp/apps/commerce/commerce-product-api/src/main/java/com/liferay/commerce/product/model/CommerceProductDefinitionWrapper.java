@@ -461,6 +461,11 @@ public class CommerceProductDefinitionWrapper
 	}
 
 	@Override
+	public java.lang.String getDescription() {
+		return _commerceProductDefinition.getDescription();
+	}
+
+	@Override
 	public java.lang.String getDescription(java.lang.String languageId) {
 		return _commerceProductDefinition.getDescription(languageId);
 	}
@@ -507,6 +512,11 @@ public class CommerceProductDefinitionWrapper
 	}
 
 	@Override
+	public java.lang.String getTitle() {
+		return _commerceProductDefinition.getTitle();
+	}
+
+	@Override
 	public java.lang.String getTitle(java.lang.String languageId) {
 		return _commerceProductDefinition.getTitle(languageId);
 	}
@@ -523,6 +533,11 @@ public class CommerceProductDefinitionWrapper
 	}
 
 	@Override
+	public java.lang.String getUrlTitle() {
+		return _commerceProductDefinition.getUrlTitle();
+	}
+
+	@Override
 	public java.lang.String getUrlTitle(java.lang.String languageId) {
 		return _commerceProductDefinition.getUrlTitle(languageId);
 	}
@@ -531,6 +546,11 @@ public class CommerceProductDefinitionWrapper
 	public java.lang.String getUrlTitle(java.lang.String languageId,
 		boolean useDefault) {
 		return _commerceProductDefinition.getUrlTitle(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getUrlTitleMapAsXML() {
+		return _commerceProductDefinition.getUrlTitleMapAsXML();
 	}
 
 	/**
@@ -571,6 +591,11 @@ public class CommerceProductDefinitionWrapper
 	@Override
 	public java.lang.String toXmlString() {
 		return _commerceProductDefinition.toXmlString();
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _commerceProductDefinition.getAvailableLanguageIds();
 	}
 
 	/**
@@ -634,13 +659,18 @@ public class CommerceProductDefinitionWrapper
 	}
 
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _commerceProductDefinition.getDescriptionMap();
+	public Map<java.lang.String, java.lang.String> getLanguageIdToDescriptionMap() {
+		return _commerceProductDefinition.getLanguageIdToDescriptionMap();
 	}
 
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _commerceProductDefinition.getTitleMap();
+	public Map<java.lang.String, java.lang.String> getLanguageIdToTitleMap() {
+		return _commerceProductDefinition.getLanguageIdToTitleMap();
+	}
+
+	@Override
+	public Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap() {
+		return _commerceProductDefinition.getLanguageIdToUrlTitleMap();
 	}
 
 	/**

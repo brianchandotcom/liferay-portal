@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * The base model interface for the CommerceProductDefinition service. Represents a row in the &quot;CommerceProductDefinition&quot; database table, with each column mapped to a property of this class.
@@ -418,17 +419,35 @@ public interface CommerceProductDefinitionModel extends BaseModel<CommerceProduc
 	 */
 	public void setDefaultLanguageId(String defaultLanguageId);
 
+	public String getTitle();
+
 	public String getTitle(String languageId);
 
 	public String getTitle(String languageId, boolean useDefault);
+
+	public String getTitleMapAsXML();
+
+	public Map<String, String> getLanguageIdToTitleMap();
+
+	public String getUrlTitle();
 
 	public String getUrlTitle(String languageId);
 
 	public String getUrlTitle(String languageId, boolean useDefault);
 
+	public String getUrlTitleMapAsXML();
+
+	public Map<String, String> getLanguageIdToUrlTitleMap();
+
+	public String getDescription();
+
 	public String getDescription(String languageId);
 
 	public String getDescription(String languageId, boolean useDefault);
+
+	public String getDescriptionMapAsXML();
+
+	public Map<String, String> getLanguageIdToDescriptionMap();
 
 	/**
 	 * Returns the trash entry created when this commerce product definition was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this commerce product definition.

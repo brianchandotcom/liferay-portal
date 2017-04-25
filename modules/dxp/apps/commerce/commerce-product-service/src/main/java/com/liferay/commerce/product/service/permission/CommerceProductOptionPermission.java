@@ -138,11 +138,23 @@ public class CommerceProductOptionPermission
 		check(permissionChecker, primaryKey, actionId);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
+	protected void setCommerceProductOptionLocalService(
+		CommerceProductOptionLocalService commerceProductOptionLocalService) {
+
+		_commerceProductOptionLocalService = commerceProductOptionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCommerceProductOptionValueLocalService(
+		CommerceProductOptionValueLocalService commerceProductOptionValueLocalService) {
+
+		_commerceProductOptionValueLocalService =
+			commerceProductOptionValueLocalService;
+	}
+
 	private static CommerceProductOptionLocalService
 		_commerceProductOptionLocalService;
-
-	@Reference
 	private static CommerceProductOptionValueLocalService
 		_commerceProductOptionValueLocalService;
 

@@ -203,19 +203,44 @@ public class CommerceProductDefinitionPermission
 		check(permissionChecker, primaryKey, actionId);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
+	protected void setCommerceProductDefinitionLocalService(
+		CommerceProductDefinitionLocalService commerceProductDefinitionLocalService) {
+
+		_commerceProductDefinitionLocalService =
+			commerceProductDefinitionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCommerceProductDefinitionOptionRelLocalService(
+		CommerceProductDefinitionOptionRelLocalService commerceProductDefinitionOptionRelLocalService) {
+
+		_commerceProductDefinitionOptionRelLocalService =
+			commerceProductDefinitionOptionRelLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCommerceProductDefinitionOptionValueRelLocalService(
+		CommerceProductDefinitionOptionValueRelLocalService commerceProductDefinitionOptionValueRelLocalService) {
+
+		_commerceProductDefinitionOptionValueRelLocalService =
+			commerceProductDefinitionOptionValueRelLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCommerceProductInstanceLocalService(
+		CommerceProductInstanceLocalService commerceProductInstanceLocalService) {
+
+		_commerceProductInstanceLocalService =
+			commerceProductInstanceLocalService;
+	}
+
 	private static CommerceProductDefinitionLocalService
 		_commerceProductDefinitionLocalService;
-
-	@Reference
 	private static CommerceProductDefinitionOptionRelLocalService
 		_commerceProductDefinitionOptionRelLocalService;
-
-	@Reference
 	private static CommerceProductDefinitionOptionValueRelLocalService
 		_commerceProductDefinitionOptionValueRelLocalService;
-
-	@Reference
 	private static CommerceProductInstanceLocalService
 		_commerceProductInstanceLocalService;
 

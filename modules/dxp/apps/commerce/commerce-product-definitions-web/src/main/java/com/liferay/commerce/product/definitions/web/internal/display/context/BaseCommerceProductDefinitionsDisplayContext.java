@@ -26,9 +26,16 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
@@ -38,7 +45,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alessio Antonio Rendina
  * @author Marco Leo
  */
-public abstract class BaseCommerceProductDefinitionsDisplayContext {
+public abstract class BaseCommerceProductDefinitionsDisplayContext<T> {
 
 	public BaseCommerceProductDefinitionsDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
@@ -64,6 +71,25 @@ public abstract class BaseCommerceProductDefinitionsDisplayContext {
 		_defaultOrderByType = "asc";
 	}
 
+	public List<Locale> getAvailableLocales() throws PortalException {
+		CommerceProductDefinition commerceProductDefinition =
+			getCommerceProductDefinition();
+
+		if (commerceProductDefinition == null) {
+			return Collections.emptyList();
+		}
+
+		List<Locale> availableLocales = new ArrayList<>();
+
+		for (String languageId :
+				commerceProductDefinition.getAvailableLanguageIds()) {
+
+			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
+		}
+
+		return availableLocales;
+	}
+
 	public CommerceProductDefinition getCommerceProductDefinition()
 		throws PortalException {
 
@@ -81,7 +107,7 @@ public abstract class BaseCommerceProductDefinitionsDisplayContext {
 		CommerceProductDefinition commerceProductDefinition =
 			getCommerceProductDefinition();
 
-		if (commerceProductDefinition != null) {
+		if (commerceProductDefinition == null) {
 			return 0;
 		}
 
@@ -156,14 +182,51 @@ public abstract class BaseCommerceProductDefinitionsDisplayContext {
 		return _orderByType;
 	}
 
-	public PortletURL getPortletURL() {
+	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		String displayStyle = ParamUtil.getString(
-			httpServletRequest, "displayStyle");
+		String delta = ParamUtil.getString(httpServletRequest, "delta");
+
+		if (Validator.isNotNull(delta)) {
+			portletURL.setParameter("delta", delta);
+		}
+
+		String deltaEntry = ParamUtil.getString(httpServletRequest, "deltaEntry");
+
+		if (Validator.isNotNull(deltaEntry)) {
+			portletURL.setParameter("deltaEntry", deltaEntry);
+		}
+
+		String displayStyle = ParamUtil.getString(httpServletRequest, "displayStyle");
 
 		if (Validator.isNotNull(displayStyle)) {
 			portletURL.setParameter("displayStyle", getDisplayStyle());
+		}
+
+		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
+		CommerceProductDefinition commerceProductDefinition =
+			getCommerceProductDefinition();
+
+		if(commerceProductDefinition != null){
+			portletURL.setParameter("commerceProductDefinitionId",
+				String.valueOf(getCommerceProductDefinitionId()));
 		}
 
 		return portletURL;
@@ -192,7 +255,7 @@ public abstract class BaseCommerceProductDefinitionsDisplayContext {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	public abstract SearchContainer getSearchContainer() throws PortalException;
+	public abstract SearchContainer<T> getSearchContainer() throws PortalException;
 
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
@@ -214,7 +277,7 @@ public abstract class BaseCommerceProductDefinitionsDisplayContext {
 		_defaultOrderByCol = defaultOrderByCol;
 	}
 
-	public void setDefaultorderbytype(String defaultOrderByType) {
+	public void setDefaultOrderByType(String defaultOrderByType) {
 		_defaultOrderByType = defaultOrderByType;
 	}
 
@@ -244,7 +307,7 @@ public abstract class BaseCommerceProductDefinitionsDisplayContext {
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final PortalPreferences portalPreferences;
-	protected SearchContainer searchContainer;
+	protected SearchContainer<T> searchContainer;
 
 	private CommerceProductDefinition _commerceProductDefinition;
 	private String _defaultOrderByCol;

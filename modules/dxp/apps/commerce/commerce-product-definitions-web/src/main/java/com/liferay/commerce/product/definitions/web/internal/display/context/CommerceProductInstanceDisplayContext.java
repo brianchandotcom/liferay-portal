@@ -16,14 +16,12 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.product.definitions.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.internal.util.CommerceProductDefinitionsPortletUtil;
-import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
 import com.liferay.commerce.product.model.CommerceProductInstance;
 import com.liferay.commerce.product.service.CommerceProductInstanceService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,13 +46,6 @@ public class CommerceProductInstanceDisplayContext
 		setDefaultOrderByCol("sku");
 
 		_commerceProductInstanceService = commerceProductInstanceService;
-	}
-
-	public List<CommerceProductDefinitionOptionRel>
-			getCommerceProductDefinitionOptionRels()
-		throws PortalException {
-
-		return new ArrayList<>();
 	}
 
 	public SearchContainer

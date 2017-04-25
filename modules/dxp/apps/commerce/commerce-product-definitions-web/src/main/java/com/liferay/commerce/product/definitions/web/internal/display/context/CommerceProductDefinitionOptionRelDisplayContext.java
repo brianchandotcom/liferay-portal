@@ -16,19 +16,29 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.product.definitions.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.internal.util.CommerceProductDefinitionsPortletUtil;
+import com.liferay.commerce.product.item.selector.criterion.CommerceProductOptionItemSelectorCriterion;
+import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
 import com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,7 +53,8 @@ public class CommerceProductDefinitionOptionRelDisplayContext
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 			CommerceProductDefinitionOptionRelService
 				commerceProductDefinitionOptionRelService,
-			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker)
+			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+			ItemSelector itemSelector)
 		throws PortalException {
 
 		super(
@@ -51,12 +62,53 @@ public class CommerceProductDefinitionOptionRelDisplayContext
 			"rowIdsCommerceProductDefinitionOptionRel",
 			"CommerceProductDefinitionOptionRel");
 
-		setDefaultorderbytype("desc");
+		setDefaultOrderByType("desc");
 
 		_commerceProductDefinitionOptionRelService =
 			commerceProductDefinitionOptionRelService;
 
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+
+		_itemSelector = itemSelector;
+	}
+
+	public CommerceProductDefinitionOptionRel
+			getCommerceProductDefinitionOptionRel()
+		throws PortalException {
+
+		if (_commerceProductDefinitionOptionRel != null) {
+			return _commerceProductDefinitionOptionRel;
+		}
+
+		_commerceProductDefinitionOptionRel =
+			actionHelper.getCommerceProductDefinitionOptionRel(
+				commerceProductRequestHelper.getRenderRequest());
+
+		return _commerceProductDefinitionOptionRel;
+	}
+
+	public long getCommerceProductDefinitionOptionRelId()
+		throws PortalException {
+
+		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel =
+			getCommerceProductDefinitionOptionRel();
+
+		if (commerceProductDefinitionOptionRel == null) {
+			return 0;
+		}
+
+		return commerceProductDefinitionOptionRel.
+			getCommerceProductDefinitionOptionRelId();
+	}
+
+	@Override
+	public PortletURL getPortletURL() throws PortalException {
+		PortletURL portletURL = super.getPortletURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName","viewProductDefinitionOptionRels");
+
+		return portletURL;
 	}
 
 	public List<DDMFormFieldType> getDDMFormFieldTypes() {
@@ -79,6 +131,31 @@ public class CommerceProductDefinitionOptionRelDisplayContext
 		return formFieldTypes;
 	}
 
+	public String getItemSelectorUrl() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				commerceProductRequestHelper.getRenderRequest());
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
+
+		CommerceProductOptionItemSelectorCriterion
+			commerceProductOptionItemSelectorCriterion =
+			new CommerceProductOptionItemSelectorCriterion();
+
+		commerceProductOptionItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, "productOptionsSelectItem",
+			commerceProductOptionItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
+	}
+
+	@Override
 	public SearchContainer
 		getSearchContainer() throws PortalException {
 
@@ -127,5 +204,9 @@ public class CommerceProductDefinitionOptionRelDisplayContext
 		_commerceProductDefinitionOptionRelService;
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
+	private final ItemSelector _itemSelector;
+
+	private CommerceProductDefinitionOptionRel
+		_commerceProductDefinitionOptionRel;
 
 }

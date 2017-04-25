@@ -56,6 +56,7 @@ public class CommerceProductDefinitionsDisplayContext
 		return _commerceProductTypeServicesTracker.getCommerceProductTypes();
 	}
 
+	@Override
 	public SearchContainer getSearchContainer() throws PortalException {
 		if (searchContainer != null) {
 			return searchContainer;

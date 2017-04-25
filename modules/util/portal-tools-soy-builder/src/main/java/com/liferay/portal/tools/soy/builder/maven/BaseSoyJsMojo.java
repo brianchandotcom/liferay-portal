@@ -27,6 +27,7 @@ import org.sonatype.plexus.build.incremental.BuildContext;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Gregory Amerson
  */
 public abstract class BaseSoyJsMojo<T extends BaseSoyJsCommand>
 	extends AbstractMojo {

@@ -29,6 +29,7 @@ import org.sonatype.plexus.build.incremental.BuildContext;
  * Compile Closure Templates into JavaScript functions.
  *
  * @author Andrea Di Giorgi
+ * @author Gregory Amerson
  * @goal build
  */
 public class BuildSoyMojo extends AbstractMojo {

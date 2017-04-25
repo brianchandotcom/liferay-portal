@@ -1,0 +1,35 @@
+<project xmlns              = "http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi          = "http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation = "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.freshcookies</groupId>
+  <artifactId>freshcookies-security</artifactId>
+  <packaging>jar</packaging>
+  <name>freshcookies-security</name>
+  <version>0.60</version>
+  <description>Freshcookies security utilities</description>
+  <url>http://www.freshcookies.org</url>
+  
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  
+  <scm><!-- dummy urls, www.freshcookies.org is no longer active -->
+    <url>http://sisyphus.ru/en/srpm/Sisyphus/freshcookies-security/get</url>
+    <connection>http://sisyphus.ru/en/srpm/Sisyphus/freshcookies-security/get</connection>
+  </scm>
+  
+  <developers>
+    <developer>
+      <id>ajaquith</id>
+      <name>Andrew Jaquith</name>
+      <!-- <email></email> -->
+    </developer>
+  </developers>
+  
+</project>

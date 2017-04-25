@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2010, incava.org
+  All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without modification,
+  are permitted provided that the following conditions are met:
+
+      * Redistributions of source code must retain the above copyright notice,
+      * this list of conditions and the following disclaimer.
+
+      * Redistributions in binary form must reproduce the above copyright notice,
+      * this list of conditions and the following disclaimer in the documentation
+      * and/or other materials provided with the distribution.
+
+      * Neither the name of incava.org nor the names of its contributors may be
+      * used to endorse or promote products derived from this software without
+      * specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+  ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.incava</groupId>
+	<artifactId>java-diff</artifactId>
+	<version>1.1</version>
+	<packaging>jar</packaging>
+
+	<name>Java Diff</name>
+	<description>An implementation of the longest common subsequences algorithm for Java</description>
+	<url>http://incava.org/projects/java/java-diff/</url>
+
+	<licenses>
+		<license>
+			<name>BSD</name>
+			<url>http://www.opensource.org/licenses/bsd-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>jpace</id>
+			<name>Jeff Pace</name>
+			<email>jpace at incava dot org</email>
+			<url>http://incava.org</url>
+			<roles>
+				<role>Developer</role>
+		  </roles>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>Michael Osipov</name>
+			<email>michael-o at users dot sourceforge dot net</email>
+			<roles>
+				<role>Maven manager</role>
+			</roles>
+			<timezone>+1</timezone>
+		</contributor>
+		<contributor>
+			<name>Ryan Holliday</name>
+			<url>http://mountaininterval.org/</url>
+			<roles>
+				<role>Hosting manager</role>
+			</roles>
+			<timezone>-8</timezone>
+		</contributor>
+	</contributors>
+
+	<scm>
+		<connection>scm:svn:https://jamwiki.svn.sourceforge.net/svnroot/jamwiki/java-diff/tags/1.1</connection>
+		<developerConnection>scm:svn:https://jamwiki.svn.sourceforge.net/svnroot/jamwiki/java-diff/tags/1.1</developerConnection>
+		<url>http://jamwiki.svn.sourceforge.net/viewvc/jamwiki/java-diff/tags/1.1</url>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<defaultGoal>package</defaultGoal>
+		<resources>
+		<resource>
+			<directory>${basedir}</directory>
+			<targetPath>META-INF</targetPath>
+			<includes>
+				<include>LICENSE.txt</include>
+				<include>NOTICE.txt</include>
+			</includes>
+		</resource>
+	</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+			<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+						<manifestEntries>
+							<Implementation-URL>${project.url}</Implementation-URL>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

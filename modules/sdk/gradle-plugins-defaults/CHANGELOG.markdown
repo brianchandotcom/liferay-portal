@@ -1407,9 +1407,9 @@ not have the `.lfrbuild-portal` marker file.
 
 ### Changed
 - [LPS-72067]: Avoid including `compileInclude` dependencies in the classpath of
-Find Security Bugs.
-- [LPD-72067]: Avoid running the `findSecurityBugs` task if the classpath does
-not contain any class or JAR file.
+[Find Security Bugs].
+- [LPS-72067]: Avoid running the `findSecurityBugs` task if the classpath does
+not contain a class or JAR file.
 - [LPS-72067]: Update the [Find Security Bugs] dependency to version
 1.6.0.LIFERAY-PATCHED-1.
 - [LPS-72102]: Update the [Liferay Gradle Plugins] dependency to version 3.3.3.

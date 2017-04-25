@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -73,7 +72,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -396,21 +394,6 @@ public class TrashImpl implements Trash {
 			HttpServletRequest request, String className, long classPK)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String portletId = PortletProviderUtil.getPortletId(
-			TrashEntry.class.getName(), PortletProvider.Action.VIEW);
-
-		if (!themeDisplay.isSignedIn() ||
-			!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
-			!PortletPermissionUtil.hasControlPanelAccessPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), portletId)) {
-
-			return null;
-		}
-
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			className);
 
@@ -429,8 +412,11 @@ public class TrashImpl implements Trash {
 			return null;
 		}
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, portletId, PortletRequest.RENDER_PHASE);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
 
 		portletURL.setParameter("mvcPath", "/view_content.jsp");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
@@ -456,27 +442,8 @@ public class TrashImpl implements Trash {
 	public PortletURL getViewURL(HttpServletRequest request)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String portletId = PortletProviderUtil.getPortletId(
-			TrashEntry.class.getName(), PortletProvider.Action.VIEW);
-
-		if (!themeDisplay.isSignedIn() ||
-			!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
-			!PortletPermissionUtil.hasControlPanelAccessPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), portletId)) {
-
-			return null;
-		}
-
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, portletId, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		return portletURL;
+		return PortletProviderUtil.getPortletURL(
+			request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
 	}
 
 	@Override

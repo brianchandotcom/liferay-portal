@@ -22,6 +22,11 @@ import org.junit.Test;
 public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testFormatBooleanScriptlet() throws Exception {
+		test("FormatBooleanScriptlet.testjsp");
+	}
+
+	@Test
 	public void testFormatImportsAndTaglibs() throws Exception {
 		test("FormatImportsAndTaglibs.testjsp");
 	}

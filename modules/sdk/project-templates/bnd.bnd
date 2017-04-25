@@ -19,10 +19,12 @@ Private-Package:\
 	org.apache.maven.archetype.old,\
 	org.apache.maven.archetype.source,\
 	org.apache.velocity.*,\
+	\
 	org.codehaus.plexus.logging,\
 	org.codehaus.plexus.personality.plexus.lifecycle.phase,\
 	org.codehaus.plexus.util,\
 	org.codehaus.plexus.util.xml,\
 	org.codehaus.plexus.util.xml.pull,\
 	org.codehaus.plexus.velocity,\
+	\
 	org.dom4j

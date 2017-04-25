@@ -52,6 +52,5 @@ version 3.0.0.
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-67766]: https://issues.liferay.com/browse/LPS-67766
 [LPS-69139]: https://issues.liferay.com/browse/LPS-69139
-[LPS-69139]: https://issues.liferay.com/browse/LPS-69139
 [LPS-70036]: https://issues.liferay.com/browse/LPS-70036
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092

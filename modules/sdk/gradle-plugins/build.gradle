@@ -1,5 +1,5 @@
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.35"
+	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.36"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.db.support", version: "1.0.2"

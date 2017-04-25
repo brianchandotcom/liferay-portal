@@ -22,7 +22,7 @@ KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_K
 
 <div class="float-container kb-entity-header">
 	<div class="kb-title">
-		<%= kbArticle.getTitle() %>
+		<%= HtmlUtil.escape(kbArticle.getTitle()) %>
 	</div>
 
 	<div class="kb-tools">

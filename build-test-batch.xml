@@ -2390,9 +2390,19 @@ information. Make sure to commit in all build services results.
 			<try>
 				<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
 
-				<gradle-execute dir="${module.base.dir}" task="compileJava" />
+				<local name="tasks.output" />
 
-				<gradle-execute dir="${module.base.dir}" task="jar" />
+				<gradle-execute dir="${module.base.dir}" outputproperty="tasks.output" task="tasks" />
+
+				<if>
+					<contains string="${tasks.output}" substring="assemble" />
+					<then>
+						<gradle-execute dir="${module.base.dir}" task="assemble" />
+					</then>
+					<else>
+						<gradle-execute dir="${module.base.dir}" task="jar" />
+					</else>
+				</if>
 			</try>
 			<catch>
 				<fail message="${failure.property}" />

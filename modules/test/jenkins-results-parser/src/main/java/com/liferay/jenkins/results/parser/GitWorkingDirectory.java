@@ -1180,31 +1180,15 @@ public class GitWorkingDirectory {
 	}
 
 	private RemoteConfig _getUpstreamRemoteConfig() throws GitAPIException {
-		if (!_repositoryName.contains("-private") &&
-			!_repositoryName.contains("-ee")) {
+		RemoteConfig upstreamRemoteConfig = _getRemoteConfig("upstream");
 
-			return _getRemoteConfig("upstream");
+		String upstreamRemoteURL = getRemoteURL(upstreamRemoteConfig);
+
+		if (upstreamRemoteURL.contains(_repositoryName + ".git")) {
+			return upstreamRemoteConfig;
 		}
 
-		if (_repositoryName.equals("liferay-jenkins-tools-private")) {
-			return _getRemoteConfig("upstream");
-		}
-
-		if ((_repositoryName.equals("liferay-plugins-ee") ||
-			 _repositoryName.equals("liferay-portal-ee")) &&
-			!_upstreamBranchName.contains("ee-") &&
-			!_upstreamBranchName.contains("-private")) {
-
-			return _getUpstreamPublicRemoteConfig();
-		}
-
-		if (_repositoryName.contains("-private") &&
-			!_upstreamBranchName.contains("-private")) {
-
-			return _getUpstreamPublicRemoteConfig();
-		}
-
-		return _getRemoteConfig("upstream");
+		return _getUpstreamPublicRemoteConfig();
 	}
 
 	private static final List<RepositoryState> _rebaseRepositoryStates =

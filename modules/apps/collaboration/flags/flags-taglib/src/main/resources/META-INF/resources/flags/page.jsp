@@ -28,22 +28,24 @@ long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-f
 
 String cssClass = randomNamespace;
 
-if (!TrashUtil.isInTrash(className, classPK)) {
+boolean isInTrash = TrashUtil.isInTrash(className, classPK);
+
+if (!isInTrash) {
 	cssClass = randomNamespace + " flag-enable";
 }
 %>
 
-<div class="taglib-flags" title="<liferay-ui:message key='<%= !TrashUtil.isInTrash(className, classPK) ? message : "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" %>' />">
+<div class="taglib-flags" title="<liferay-ui:message key='<%= !isInTrash ? message : "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" %>' />">
 	<liferay-ui:icon
 		cssClass="<%= cssClass %>"
 		iconCssClass="icon-flag"
 		label="<%= label %>"
 		message="<%= message %>"
-		url='<%= !TrashUtil.isInTrash(className, classPK) ? "javascript:;" : null %>'
+		url='<%= !isInTrash ? "javascript:;" : null %>'
 	/>
 </div>
 
-<c:if test="<%= !TrashUtil.isInTrash(className, classPK) %>">
+<c:if test="<%= !isInTrash %>">
 	<c:choose>
 		<c:when test="<%= flagsGroupServiceConfiguration.guestUsersEnabled() || themeDisplay.isSignedIn() %>">
 			<aui:script use="aui-io-plugin-deprecated,aui-modal">

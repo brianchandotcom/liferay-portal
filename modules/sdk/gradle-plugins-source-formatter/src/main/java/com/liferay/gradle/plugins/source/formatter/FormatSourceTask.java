@@ -125,6 +125,14 @@ public class FormatSourceTask extends JavaExec {
 		return _sourceFormatterArgs.isThrowException();
 	}
 
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
+	public boolean isUseProperties() {
+		return false;
+	}
+
 	public void setAutoFix(boolean autoFix) {
 		_sourceFormatterArgs.setAutoFix(autoFix);
 	}
@@ -184,6 +192,13 @@ public class FormatSourceTask extends JavaExec {
 
 	public void setThrowException(boolean throwException) {
 		_sourceFormatterArgs.setThrowException(throwException);
+	}
+
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
+	public void setUseProperties(boolean useProperties) {
 	}
 
 	protected List<String> getCompleteArgs() {

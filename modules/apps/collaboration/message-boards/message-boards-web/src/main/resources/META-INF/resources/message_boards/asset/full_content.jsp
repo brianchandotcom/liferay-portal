@@ -30,9 +30,3 @@ request.setAttribute("edit_message.jsp-thread", message.getThread());
 %>
 
 <liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
-
-<c:if test="<%= assetRenderer != null %>">
-	<div class="asset-more">
-		<aui:a href="<%= assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) %>"><liferay-ui:message key="view-in-context" /> &raquo;</aui:a>
-	</div>
-</c:if>

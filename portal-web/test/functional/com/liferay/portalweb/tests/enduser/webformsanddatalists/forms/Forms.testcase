@@ -3436,7 +3436,9 @@
 			<var name="fieldValue" value="Approved" />
 		</execute>
 
-		<execute macro="FormsAdminNavigator#gotoView" />
+		<execute macro="FormsAdminNavigator#gotoView">
+			<var name="rowIndexNumber" value="2" />
+		</execute>
 
 		<execute macro="FormsAdmin#viewParagraphEntry">
 			<var name="fieldName" value="paragraph" />

@@ -212,9 +212,8 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 
 			Attrs attrs = entry.getValue();
 
-			String servletContextName = attrs.get("servlet.context.name");
-
-			Assert.assertEquals("blade-language-web", servletContextName);
+			Assert.assertEquals(
+				"blade-language-web", attrs.get("servlet.context.name"));
 		}
 	}
 

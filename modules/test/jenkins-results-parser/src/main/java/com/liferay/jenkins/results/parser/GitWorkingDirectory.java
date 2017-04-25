@@ -1067,7 +1067,27 @@ public class GitWorkingDirectory {
 		int x = remoteURL.lastIndexOf("/") + 1;
 		int y = remoteURL.indexOf(".git");
 
-		return remoteURL.substring(x, y);
+		String repositoryName = remoteURL.substring(x, y);
+
+		if (repositoryName.equals("liferay-jenkins-tools-private")) {
+			return repositoryName;
+		}
+
+		if ((repositoryName.equals("liferay-plugins-ee") ||
+			 repositoryName.equals("liferay-portal-ee")) &&
+			!_upstreamBranchName.contains("ee-") &&
+			!_upstreamBranchName.contains("-private")) {
+
+			repositoryName = repositoryName.replace("-ee", "");
+		}
+
+		if (repositoryName.contains("-private") &&
+			!_upstreamBranchName.contains("-private")) {
+
+			repositoryName = repositoryName.replace("-private", "");
+		}
+
+		return repositoryName;
 	}
 
 	protected String loadRepositoryUsername() throws GitAPIException {

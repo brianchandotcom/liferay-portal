@@ -222,30 +222,26 @@ public class CommerceProductDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public Map<Locale, String> getCommerceProductDefinitionDescriptionMap(
+	public List<String> getCommerceProductDefinitionLocalizationLanguageIds(
 		long commerceProductDefinitionId) {
 
-		Map<Locale, String>
-			commerceProductDefinitionLocalizationDescriptionMap =
-				new HashMap<>();
+			List<CommerceProductDefinitionLocalization>
+				commerceProductDefinitionLocalizationList =
+					commerceProductDefinitionLocalizationPersistence.
+						findByCommerceProductDefinitionPK (
+							commerceProductDefinitionId);
 
-		List<CommerceProductDefinitionLocalization>
-			commerceProductDefinitionLocalizationList =
-				commerceProductDefinitionLocalizationPersistence.
-					findByCommerceProductDefinitionPK(
-						commerceProductDefinitionId);
+		List<String> availableLanguageIds = new ArrayList<>();
 
 		for (CommerceProductDefinitionLocalization
 				commerceProductDefinitionLocalization :
 					commerceProductDefinitionLocalizationList) {
 
-			commerceProductDefinitionLocalizationDescriptionMap.put(
-				LocaleUtil.fromLanguageId(
-					commerceProductDefinitionLocalization.getLanguageId()),
-				commerceProductDefinitionLocalization.getDescription());
+			availableLanguageIds.add(
+				commerceProductDefinitionLocalization.getLanguageId());
 		}
 
-		return commerceProductDefinitionLocalizationDescriptionMap;
+		return availableLanguageIds;
 	}
 
 	@Override
@@ -270,31 +266,7 @@ public class CommerceProductDefinitionLocalServiceImpl
 		return commerceProductDefinitionPersistence.countByGroupId(groupId);
 	}
 
-	@Override
-	public Map<Locale, String> getCommerceProductDefinitionTitleMap(
-		long commerceProductDefinitionId) {
 
-		Map<Locale, String> commerceProductDefinitionLocalizationTitleMap =
-			new HashMap<>();
-
-		List<CommerceProductDefinitionLocalization>
-			commerceProductDefinitionLocalizationList =
-				commerceProductDefinitionLocalizationPersistence.
-					findByCommerceProductDefinitionPK(
-						commerceProductDefinitionId);
-
-		for (CommerceProductDefinitionLocalization
-				commerceProductDefinitionLocalization :
-					commerceProductDefinitionLocalizationList) {
-
-			commerceProductDefinitionLocalizationTitleMap.put(
-				LocaleUtil.fromLanguageId(
-					commerceProductDefinitionLocalization.getLanguageId()),
-				commerceProductDefinitionLocalization.getTitle());
-		}
-
-		return commerceProductDefinitionLocalizationTitleMap;
-	}
 
 	@Override
 	public void updateAsset(

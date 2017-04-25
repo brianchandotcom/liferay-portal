@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Marco Leo
@@ -34,47 +36,17 @@ public class CommerceProductDefinitionImpl
 	}
 
 	@Override
-	public Map<Locale, String> getDescriptionMap() {
-		if (_descriptionMap != null) {
-			return _descriptionMap;
-		}
+	public String[] getAvailableLanguageIds() {
+		Set<String> availableLanguageIds = new TreeSet<>();
 
-		_descriptionMap =
+		availableLanguageIds.addAll(
 			CommerceProductDefinitionLocalServiceUtil.
-				getCommerceProductDefinitionDescriptionMap(
-					getCommerceProductDefinitionId());
+				getCommerceProductDefinitionLocalizationLanguageIds(
+					getCommerceProductDefinitionId()));
 
-		return _descriptionMap;
+		return availableLanguageIds.toArray(
+			new String[availableLanguageIds.size()]);
 	}
 
-	@Override
-	public String getDescriptionMapAsXML() {
-		return LocalizationUtil.updateLocalization(
-			getDescriptionMap(), StringPool.BLANK, "Description",
-			getDefaultLanguageId());
-	}
-
-	@Override
-	public Map<Locale, String> getTitleMap() {
-		if (_titleMap != null) {
-			return _titleMap;
-		}
-
-		_titleMap =
-			CommerceProductDefinitionLocalServiceUtil.
-				getCommerceProductDefinitionTitleMap(
-					getCommerceProductDefinitionId());
-
-		return _titleMap;
-	}
-
-	@Override
-	public String getTitleMapAsXML() {
-		return LocalizationUtil.updateLocalization(
-			getTitleMap(), StringPool.BLANK, "Title", getDefaultLanguageId());
-	}
-
-	private Map<Locale, String> _descriptionMap;
-	private Map<Locale, String> _titleMap;
 
 }

@@ -1529,6 +1529,8 @@ version 1.0.154.
 ## 3.3.5 - 2017-04-25
 
 ### Changed
+- [LPS-69139]: Update the [Liferay Gradle Plugins Soy] dependency to version
+3.1.2.
 - [LPS-71164]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 1.0.122.
 - [LPS-71164]: Update the [Liferay Source Formatter] dependency to version

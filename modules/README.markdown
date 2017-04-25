@@ -77,6 +77,13 @@ File Name | Description
 `.lfrbuild-static` | Deploys the module to `${liferay home}/osgi/static`.
 `.lfrbuild-tool` | Deploys the module to `${liferay.home}/tools/${module.dir.name}`.
 
+### Faro
+
+File Name | Description
+--------- | -----------
+`.lfrbuild-faro-connector` | Deploys the module to the Faro client portal directory.
+`.lfrbuild-faro-site` | Deploys the module to the Faro site portal directory.
+
 ### Release
 
 File Name | Description

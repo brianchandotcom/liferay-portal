@@ -153,13 +153,6 @@ public class FormatSourceMojo extends AbstractMojo {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}
 
-	/**
-	 * @parameter
-	 */
-	public void setUseProperties(boolean useProperties) {
-		_sourceFormatterArgs.setUseProperties(useProperties);
-	}
-
 	private final SourceFormatterArgs _sourceFormatterArgs =
 		new SourceFormatterArgs();
 

@@ -36,7 +36,6 @@ public class SourceFormatterTest {
 		sourceFormatterArgs.setAutoFix(false);
 		sourceFormatterArgs.setPrintErrors(false);
 		sourceFormatterArgs.setThrowException(false);
-		sourceFormatterArgs.setUseProperties(false);
 
 		String fileName =
 			"src/test/resources/com/liferay/source/formatter/dependencies" +

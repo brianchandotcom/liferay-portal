@@ -89,7 +89,6 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		formatSourceTask.setGroup(LifecycleBasePlugin.VERIFICATION_GROUP);
 		formatSourceTask.setPrintErrors(true);
 		formatSourceTask.setThrowException(true);
-		formatSourceTask.setUseProperties(false);
 
 		return formatSourceTask;
 	}

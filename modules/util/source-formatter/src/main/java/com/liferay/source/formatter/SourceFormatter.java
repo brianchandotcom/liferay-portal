@@ -25,6 +25,7 @@ import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -170,12 +171,6 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setThrowException(throwException);
 
-			boolean useProperties = ArgumentsUtil.getBoolean(
-				arguments, "source.use.properties",
-				SourceFormatterArgs.USE_PROPERTIES);
-
-			sourceFormatterArgs.setUseProperties(useProperties);
-
 			SourceFormatter sourceFormatter = new SourceFormatter(
 				sourceFormatterArgs);
 
@@ -196,9 +191,6 @@ public class SourceFormatter {
 	}
 
 	public void format() throws Exception {
-		_sourceFormatterHelper = new SourceFormatterHelper(
-			_sourceFormatterArgs.isUseProperties());
-
 		if (_isPortalSource()) {
 			_populatePortalImplProperties();
 
@@ -335,7 +327,7 @@ public class SourceFormatter {
 	}
 
 	private boolean _isPortalSource() {
-		File portalImplDir = _sourceFormatterHelper.getFile(
+		File portalImplDir = SourceFormatterUtil.getFile(
 			_sourceFormatterArgs.getBaseDirName(), "portal-impl",
 			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
@@ -353,7 +345,7 @@ public class SourceFormatter {
 		List<String> excludesList = ListUtil.fromString(
 			GetterUtil.getString(excludesValue), StringPool.COMMA);
 
-		_allFileNames = _sourceFormatterHelper.scanForFiles(
+		_allFileNames = SourceFormatterUtil.scanForFiles(
 			_sourceFormatterArgs.getBaseDirName(),
 			excludesList.toArray(new String[excludesList.size()]),
 			new String[] {"**/*.*"},
@@ -395,7 +387,7 @@ public class SourceFormatter {
 			GetterUtil.getString(excludesValue), StringPool.COMMA);
 
 		List<String> modulePropertiesFileNames =
-			_sourceFormatterHelper.filterFileNames(
+			SourceFormatterUtil.filterFileNames(
 				_allFileNames,
 				excludesList.toArray(new String[excludesList.size()]),
 				new String[] {"**/modules/**/" + _PROPERTIES_FILE_NAME});
@@ -447,7 +439,7 @@ public class SourceFormatter {
 	}
 
 	private void _populatePortalImplProperties() throws Exception {
-		File propertiesFile = _sourceFormatterHelper.getFile(
+		File propertiesFile = SourceFormatterUtil.getFile(
 			_sourceFormatterArgs.getBaseDirName(),
 			"portal-impl/src/" + _PROPERTIES_FILE_NAME,
 			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
@@ -512,7 +504,6 @@ public class SourceFormatter {
 		new CopyOnWriteArrayList<>();
 	private Properties _properties = new Properties();
 	private final SourceFormatterArgs _sourceFormatterArgs;
-	private SourceFormatterHelper _sourceFormatterHelper;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new ConcurrentSkipListSet<>();
 

@@ -51,8 +51,6 @@ public class SourceFormatterArgs {
 
 	public static final boolean THROW_EXCEPTION = false;
 
-	public static final boolean USE_PROPERTIES = false;
-
 	public String getBaseDirName() {
 		return _baseDirName;
 	}
@@ -115,10 +113,6 @@ public class SourceFormatterArgs {
 
 	public boolean isThrowException() {
 		return _throwException;
-	}
-
-	public boolean isUseProperties() {
-		return _useProperties;
 	}
 
 	public void setAutoFix(boolean autoFix) {
@@ -202,10 +196,6 @@ public class SourceFormatterArgs {
 		_throwException = throwException;
 	}
 
-	public void setUseProperties(boolean useProperties) {
-		_useProperties = useProperties;
-	}
-
 	private boolean _autoFix = AUTO_FIX;
 	private String _baseDirName = BASE_DIR_NAME;
 	private String _copyrightFileName = COPYRIGHT_FILE_NAME;
@@ -222,6 +212,5 @@ public class SourceFormatterArgs {
 	private List<String> _recentChangesFileNames;
 	private boolean _showDocumentation = SHOW_DOCUMENTATION;
 	private boolean _throwException = THROW_EXCEPTION;
-	private boolean _useProperties = USE_PROPERTIES;
 
 }

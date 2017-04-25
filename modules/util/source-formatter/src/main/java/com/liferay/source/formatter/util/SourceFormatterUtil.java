@@ -12,16 +12,13 @@
  * details.
  */
 
-package com.liferay.source.formatter;
+package com.liferay.source.formatter.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,32 +35,15 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * @author Igor Spasic
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
  */
-public class SourceFormatterHelper {
+public class SourceFormatterUtil {
 
-	public SourceFormatterHelper(boolean useProperties) {
-		_useProperties = useProperties;
-	}
-
-	public void close() throws IOException {
-		if (!_useProperties) {
-			return;
-		}
-
-		String newPropertiesContent = PropertiesUtil.toString(_properties);
-
-		if (!_propertiesContent.equals(newPropertiesContent)) {
-			FileUtil.write(_propertiesFile, newPropertiesContent);
-		}
-	}
-
-	public List<String> filterFileNames(
+	public static List<String> filterFileNames(
 		List<String> allFileNames, String[] excludes, String[] includes) {
 
 		List<String> excludesRegex = new ArrayList<>();
@@ -106,7 +86,7 @@ public class SourceFormatterHelper {
 		return fileNames;
 	}
 
-	public List<String> filterRecentChangesFileNames(
+	public static List<String> filterRecentChangesFileNames(
 			String baseDir, List<String> recentChangesFileNames,
 			String[] excludes, String[] includes,
 			boolean includeSubrepositories)
@@ -149,7 +129,7 @@ public class SourceFormatterHelper {
 			excludeFilePathMatchers, includeFilePathMatchers);
 	}
 
-	public File getFile(String baseDir, String fileName, int level) {
+	public static File getFile(String baseDir, String fileName, int level) {
 		for (int i = 0; i < level; i++) {
 			File file = new File(baseDir + fileName);
 
@@ -163,46 +143,15 @@ public class SourceFormatterHelper {
 		return null;
 	}
 
-	public void init() throws IOException {
-		if (!_useProperties) {
-			return;
-		}
-
-		File basedirFile = new File("./");
-
-		String basedirAbsolutePath = StringUtil.replace(
-			basedirFile.getAbsolutePath(), new char[] {'.', ':', '/', '\\'},
-			new char[] {'_', '_', '_', '_'});
-
-		String propertiesFileName =
-			System.getProperty("java.io.tmpdir") + "/SourceFormatter." +
-				basedirAbsolutePath;
-
-		_propertiesFile = new File(propertiesFileName);
-
-		if (_propertiesFile.exists()) {
-			_propertiesContent = FileUtil.read(_propertiesFile);
-
-			PropertiesUtil.load(_properties, _propertiesContent);
-		}
-	}
-
-	public void printError(String fileName, File file) {
+	public static void printError(String fileName, File file) {
 		printError(fileName, file.toString());
 	}
 
-	public void printError(String fileName, String message) {
-		if (_useProperties) {
-			String encodedFileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			_properties.remove(encodedFileName);
-		}
-
+	public static void printError(String fileName, String message) {
 		System.out.println(message);
 	}
 
-	public List<String> scanForFiles(
+	public static List<String> scanForFiles(
 			String baseDir, String[] excludes, String[] includes,
 			boolean includeSubrepositories)
 		throws Exception {
@@ -244,7 +193,7 @@ public class SourceFormatterHelper {
 			includeFilePathMatchers, includeSubrepositories);
 	}
 
-	private String _createRegex(String s) {
+	private static String _createRegex(String s) {
 		if (!s.startsWith("**/")) {
 			s = "**/" + s;
 		}
@@ -284,7 +233,7 @@ public class SourceFormatterHelper {
 		return sb.toString();
 	}
 
-	private List<String> _filterRecentChangesFileNames(
+	private static List<String> _filterRecentChangesFileNames(
 			String baseDir, List<String> recentChangesFileNames,
 			List<PathMatcher> excludeDirPathMatchers,
 			List<PathMatcher> excludeFilePathMatchers,
@@ -348,7 +297,7 @@ public class SourceFormatterHelper {
 		return fileNames;
 	}
 
-	private Path _getCanonicalPath(Path path) {
+	private static Path _getCanonicalPath(Path path) {
 		try {
 			File file = path.toFile();
 
@@ -361,7 +310,7 @@ public class SourceFormatterHelper {
 		}
 	}
 
-	private List<String> _scanForFiles(
+	private static List<String> _scanForFiles(
 			String baseDir, final List<PathMatcher> excludeDirPathMatchers,
 			final List<PathMatcher> excludeFilePathMatchers,
 			final List<PathMatcher> includeFilePathMatchers,
@@ -429,29 +378,7 @@ public class SourceFormatterHelper {
 							continue;
 						}
 
-						String fileName = filePath.toString();
-
-						if (!_useProperties) {
-							fileNames.add(fileName);
-
-							return FileVisitResult.CONTINUE;
-						}
-
-						File file = new File(fileName);
-
-						String encodedFileName = StringUtil.replace(
-							fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-						long timestamp = GetterUtil.getLong(
-							_properties.getProperty(encodedFileName));
-
-						if (timestamp < file.lastModified()) {
-							_properties.setProperty(
-								encodedFileName,
-								String.valueOf(file.lastModified()));
-
-							fileNames.add(fileName);
-						}
+						fileNames.add(filePath.toString());
 
 						return FileVisitResult.CONTINUE;
 					}
@@ -463,10 +390,5 @@ public class SourceFormatterHelper {
 
 		return fileNames;
 	}
-
-	private final Properties _properties = new Properties();
-	private String _propertiesContent = StringPool.BLANK;
-	private File _propertiesFile;
-	private final boolean _useProperties;
 
 }

@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.exception.CommerceProductInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CommerceProductInstanceExpirationDateException;
+import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
+import com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CommerceProductInstance;
 import com.liferay.commerce.product.service.base.CommerceProductInstanceLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -46,6 +48,33 @@ import java.util.Map;
 @ProviderType
 public class CommerceProductInstanceLocalServiceImpl
 	extends CommerceProductInstanceLocalServiceBaseImpl {
+
+	public void autoGeneratePommerceProductInstances(
+			long commerceProductDefinitionId)
+		throws PortalException{
+
+		List<CommerceProductDefinitionOptionRel>
+			commerceProductDefinitionOptionRels =
+				commerceProductDefinitionOptionRelLocalService.
+					getSkuContributorCommerceProductDefinitionOptionRels(
+						commerceProductDefinitionId);
+
+		for(CommerceProductDefinitionOptionRel
+				commerceProductDefinitionOptionRel :
+					commerceProductDefinitionOptionRels){
+
+			List<CommerceProductDefinitionOptionValueRel>
+				commerceProductDefinitionOptionValueRels =
+					commerceProductDefinitionOptionValueRelLocalService.
+						getCommerceProductDefinitionOptionValueRels(
+							commerceProductDefinitionOptionRel.
+								getCommerceProductDefinitionOptionRelId(),
+							QueryUtil.ALL_POS,QueryUtil.ALL_POS);
+
+
+
+		}
+	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override

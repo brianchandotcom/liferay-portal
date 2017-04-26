@@ -56,4 +56,6 @@ public interface CommerceProductDefinitionOptionRel
 				return CommerceProductDefinitionOptionRel.class;
 			}
 		};
+
+	public java.util.List<CommerceProductDefinitionOptionValueRel> getCommerceProductDefinitionOptionValueRels();
 }

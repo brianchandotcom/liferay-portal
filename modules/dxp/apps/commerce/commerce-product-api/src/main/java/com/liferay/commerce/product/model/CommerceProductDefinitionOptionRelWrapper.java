@@ -511,6 +511,11 @@ public class CommerceProductDefinitionOptionRelWrapper
 		return _commerceProductDefinitionOptionRel.getModifiedDate();
 	}
 
+	@Override
+	public java.util.List<CommerceProductDefinitionOptionValueRel> getCommerceProductDefinitionOptionValueRels() {
+		return _commerceProductDefinitionOptionRel.getCommerceProductDefinitionOptionValueRels();
+	}
+
 	/**
 	* Returns a map of the locales and localized descriptions of this commerce product definition option rel.
 	*

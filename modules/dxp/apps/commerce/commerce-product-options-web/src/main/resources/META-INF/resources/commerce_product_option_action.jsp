@@ -31,8 +31,8 @@ else {
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 		<portlet:param name="mvcRenderCommandName" value="editProductOption" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="commerceProductOptionId" value="<%= String.valueOf(commerceProductOption.getCommerceProductOptionId()) %>" />
 	</portlet:renderURL>

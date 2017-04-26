@@ -229,50 +229,6 @@
 		</for>
 	</command>
 
-	<command name="SearchTags" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<for list="tag,tag name 1" param="tagName">
-			<execute macro="Tag#addCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-
-			<execute macro="Tag#viewCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="tag" />
-		</execute>
-
-		<for list="tag,tagname1,tag name 1" param="tagName">
-			<execute macro="Tag#viewCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm"><![CDATA["tag"]]></var>
-		</execute>
-
-		<for list="tag,tag name 1" param="tagName">
-			<execute macro="Tag#viewCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute function="AssertTextNotPresent" value1="tagname1" />
-
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="string" />
-		</execute>
-
-		<execute macro="Portlet#viewEmptyMessage">
-			<var name="message" value="There are no tags." />
-		</execute>
-	</command>
-
 	<command name="ToggleDisplayStyles" priority="4">
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="icon" />

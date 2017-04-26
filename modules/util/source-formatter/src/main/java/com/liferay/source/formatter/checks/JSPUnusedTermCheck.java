@@ -14,11 +14,18 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -29,14 +36,76 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public abstract class JSPUnusedTermCheck extends BaseFileCheck {
+public class JSPUnusedTermCheck extends BaseFileCheck {
+
+	@Override
+	public void init() throws Exception {
+		_contentsMap = _getContentsMap();
+	}
 
 	@Override
 	public void setAllFileNames(List<String> allFileNames) {
 		_allFileNames = allFileNames;
 	}
 
-	protected Map<String, String> getContentsMap() throws Exception {
+	@Override
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		// When running tests, the contentsMap is empty, because the file
+		// extension of the test files is *.testjsp
+
+		if (_contentsMap.isEmpty()) {
+			_contentsMap.put(fileName, content);
+		}
+
+		content = _removeUnusedImports(fileName, content);
+
+		content = JSPSourceUtil.compressImportsOrTaglibs(
+			fileName, content, "<%@ page import=");
+
+		if (isPortalSource() || isSubrepository()) {
+			content = _removeUnusedTaglibs(fileName, content);
+			content = _removeUnusedVariables(fileName, absolutePath, content);
+		}
+
+		return content;
+	}
+
+	private void _addJSPUnusedImports(
+		String fileName, List<String> importLines,
+		List<String> unneededImports) {
+
+		Set<String> checkedFileNames = new HashSet<>();
+		Set<String> includeFileNames = new HashSet<>();
+
+		for (String importLine : importLines) {
+			int x = importLine.indexOf(CharPool.QUOTE);
+
+			int y = importLine.indexOf(CharPool.QUOTE, x + 1);
+
+			if ((x == -1) || (y == -1)) {
+				continue;
+			}
+
+			String className = importLine.substring(x + 1, y);
+
+			className = className.substring(
+				className.lastIndexOf(CharPool.PERIOD) + 1);
+
+			String regex = "[^A-Za-z0-9_\"]" + className + "[^A-Za-z0-9_\"]";
+
+			if (_hasUnusedJSPTerm(
+					fileName, regex, "class", checkedFileNames,
+					includeFileNames, _contentsMap)) {
+
+				unneededImports.add(importLine);
+			}
+		}
+	}
+
+	private Map<String, String> _getContentsMap() throws Exception {
 		String[] excludes = new String[] {"**/null.jsp", "**/tools/**"};
 
 		if (getExcludes() != null) {
@@ -49,7 +118,66 @@ public abstract class JSPUnusedTermCheck extends BaseFileCheck {
 		return JSPSourceUtil.getContentsMap(allJSPFileNames);
 	}
 
-	protected boolean hasUnusedJSPTerm(
+	private List<String> _getJSPDuplicateImports(
+		String fileName, String content, List<String> importLines) {
+
+		List<String> duplicateImports = new ArrayList<>();
+
+		for (String importLine : importLines) {
+			int x = content.indexOf("<%@ include file=");
+
+			if (x == -1) {
+				continue;
+			}
+
+			int y = content.indexOf("<%@ page import=");
+
+			if (y == -1) {
+				continue;
+			}
+
+			if ((x < y) && _isJSPDuplicateImport(fileName, importLine, false)) {
+				duplicateImports.add(importLine);
+			}
+		}
+
+		return duplicateImports;
+	}
+
+	private String _getVariableName(String line) {
+		if (!line.endsWith(";") || line.startsWith("//")) {
+			return null;
+		}
+
+		String variableName = null;
+
+		int x = line.indexOf(" = ");
+
+		if (x == -1) {
+			int y = line.lastIndexOf(CharPool.SPACE);
+
+			if (y != -1) {
+				variableName = line.substring(y + 1, line.length() - 1);
+			}
+		}
+		else {
+			line = line.substring(0, x);
+
+			int y = line.lastIndexOf(CharPool.SPACE);
+
+			if (y != -1) {
+				variableName = line.substring(y + 1);
+			}
+		}
+
+		if (Validator.isVariableName(variableName)) {
+			return variableName;
+		}
+
+		return null;
+	}
+
+	private boolean _hasUnusedJSPTerm(
 		String fileName, String regex, String type,
 		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames,
 		Map<String, String> contentsMap) {
@@ -58,12 +186,87 @@ public abstract class JSPUnusedTermCheck extends BaseFileCheck {
 
 		Set<String> checkedForUnusedJSPTerm = new HashSet<>();
 
-		return !isJSPTermRequired(
+		return !_isJSPTermRequired(
 			fileName, regex, type, checkedForUnusedJSPTerm,
 			checkedForIncludesFileNames, includeFileNames, contentsMap);
 	}
 
-	protected boolean isJSPTermRequired(
+	private boolean _hasUnusedVariable(
+		String fileName, String line, Set<String> checkedFileNames,
+		Set<String> includeFileNames) {
+
+		if (line.contains(": ")) {
+			return false;
+		}
+
+		String variableName = _getVariableName(line);
+
+		if (Validator.isNull(variableName) || variableName.equals("false") ||
+			variableName.equals("true")) {
+
+			return false;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("((/)|(\\*)|(\\+(\\+)?)|(-(-)?)|\\(|=)?( )?");
+		sb.append(variableName);
+		sb.append("( )?(\\.");
+		sb.append("|(((\\+)|(-)|(\\*)|(/)|(%)|(\\|)|(&)|(\\^))?(=))");
+		sb.append("|(\\+(\\+)?)|(-(-)?)");
+		sb.append("|(\\)))?");
+
+		return _hasUnusedJSPTerm(
+			fileName, sb.toString(), "variable", checkedFileNames,
+			includeFileNames, _contentsMap);
+	}
+
+	private boolean _isJSPDuplicateImport(
+		String fileName, String importLine, boolean checkFile) {
+
+		String content = _contentsMap.get(fileName);
+
+		if (Validator.isNull(content)) {
+			return false;
+		}
+
+		int x = importLine.indexOf("page");
+
+		if (x == -1) {
+			return false;
+		}
+
+		if (checkFile && content.contains(importLine.substring(x))) {
+			return true;
+		}
+
+		int y = content.indexOf("<%@ include file=");
+
+		if (y == -1) {
+			return false;
+		}
+
+		y = content.indexOf(CharPool.QUOTE, y);
+
+		if (y == -1) {
+			return false;
+		}
+
+		int z = content.indexOf(CharPool.QUOTE, y + 1);
+
+		if (z == -1) {
+			return false;
+		}
+
+		String includeFileName = content.substring(y + 1, z);
+
+		includeFileName = JSPSourceUtil.buildFullPathIncludeFileName(
+			fileName, includeFileName, _contentsMap);
+
+		return _isJSPDuplicateImport(includeFileName, importLine, true);
+	}
+
+	private boolean _isJSPTermRequired(
 		String fileName, String regex, String type,
 		Set<String> checkedForUnusedJSPTerm,
 		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames,
@@ -108,7 +311,7 @@ public abstract class JSPUnusedTermCheck extends BaseFileCheck {
 
 		for (String includeFileName : includeFileNamesArray) {
 			if (!checkedForUnusedJSPTerm.contains(includeFileName) &&
-				isJSPTermRequired(
+				_isJSPTermRequired(
 					includeFileName, regex, type, checkedForUnusedJSPTerm,
 					checkedForIncludesFileNames, includeFileNames,
 					contentsMap)) {
@@ -120,6 +323,140 @@ public abstract class JSPUnusedTermCheck extends BaseFileCheck {
 		return false;
 	}
 
+	private String _removeUnusedImports(String fileName, String content)
+		throws Exception {
+
+		if (fileName.endsWith("init-ext.jsp")) {
+			return content;
+		}
+
+		Matcher matcher = _compressedJSPImportPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String imports = matcher.group();
+
+		String newImports = StringUtil.replace(
+			imports, new String[] {"<%@\r\n", "<%@\n", " %><%@ "},
+			new String[] {"\r\n<%@ ", "\n<%@ ", " %>\n<%@ "});
+
+		List<String> importLines = new ArrayList<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(newImports));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.contains("import=")) {
+				importLines.add(line);
+			}
+		}
+
+		List<String> unneededImports = _getJSPDuplicateImports(
+			fileName, content, importLines);
+
+		_addJSPUnusedImports(fileName, importLines, unneededImports);
+
+		for (String unneededImport : unneededImports) {
+			newImports = StringUtil.replace(
+				newImports, unneededImport, StringPool.BLANK);
+		}
+
+		return StringUtil.replaceFirst(content, imports, newImports);
+	}
+
+	private String _removeUnusedTaglibs(String fileName, String content) {
+		Set<String> checkedFileNames = new HashSet<>();
+		Set<String> includeFileNames = new HashSet<>();
+
+		return _removeUnusedTaglibs(
+			fileName, content, checkedFileNames, includeFileNames);
+	}
+
+	private String _removeUnusedTaglibs(
+		String fileName, String content, Set<String> checkedFileNames,
+		Set<String> includeFileNames) {
+
+		Matcher matcher = _taglibURIPattern.matcher(content);
+
+		while (matcher.find()) {
+			String regex =
+				StringPool.LESS_THAN + matcher.group(1) + StringPool.COLON;
+
+			if (_hasUnusedJSPTerm(
+					fileName, regex, "taglib", checkedFileNames,
+					includeFileNames, _contentsMap)) {
+
+				return StringUtil.removeSubstring(content, matcher.group());
+			}
+		}
+
+		return content;
+	}
+
+	private String _removeUnusedVariables(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		Set<String> checkedFileNames = new HashSet<>();
+		Set<String> includeFileNames = new HashSet<>();
+
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			int lineCount = 0;
+
+			String line = null;
+
+			boolean javaSource = false;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineCount++;
+
+				String trimmedLine = StringUtil.trimLeading(line);
+
+				if (trimmedLine.equals("<%") || trimmedLine.equals("<%!")) {
+					javaSource = true;
+				}
+				else if (trimmedLine.equals("%>")) {
+					javaSource = false;
+				}
+
+				if (!javaSource ||
+					isExcludedPath(
+						_UNUSED_VARIABLES_EXCLUDES, absolutePath, lineCount) ||
+					!_hasUnusedVariable(
+						fileName, trimmedLine, checkedFileNames,
+						includeFileNames)) {
+
+					sb.append(line);
+					sb.append("\n");
+				}
+			}
+		}
+
+		content = sb.toString();
+
+		if (content.endsWith("\n")) {
+			content = content.substring(0, content.length() - 1);
+		}
+
+		return content;
+	}
+
+	private static final String _UNUSED_VARIABLES_EXCLUDES =
+		"jsp.unused.variables.excludes";
+
 	private List<String> _allFileNames;
+	private final Pattern _compressedJSPImportPattern = Pattern.compile(
+		"(<.*\n*page import=\".*>\n*)+", Pattern.MULTILINE);
+	private Map<String, String> _contentsMap;
+	private final Pattern _taglibURIPattern = Pattern.compile(
+		"<%@\\s+taglib uri=.* prefix=\"(.*?)\" %>");
 
 }

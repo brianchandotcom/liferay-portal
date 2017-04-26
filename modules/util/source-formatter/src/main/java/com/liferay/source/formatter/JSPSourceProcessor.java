@@ -41,9 +41,7 @@ import com.liferay.source.formatter.checks.JSPStylingCheck;
 import com.liferay.source.formatter.checks.JSPSubnameCheck;
 import com.liferay.source.formatter.checks.JSPTagAttributesCheck;
 import com.liferay.source.formatter.checks.JSPTaglibVariableCheck;
-import com.liferay.source.formatter.checks.JSPUnusedImportCheck;
-import com.liferay.source.formatter.checks.JSPUnusedTaglibCheck;
-import com.liferay.source.formatter.checks.JSPUnusedVariableCheck;
+import com.liferay.source.formatter.checks.JSPUnusedTermCheck;
 import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
 import com.liferay.source.formatter.checks.JSPXSSVulnerabilitiesCheck;
 import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
@@ -136,7 +134,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		sourceChecks.add(new JSPSubnameCheck());
 		sourceChecks.add(new JSPTagAttributesCheck());
 		sourceChecks.add(new JSPTaglibVariableCheck());
-		sourceChecks.add(new JSPUnusedImportCheck());
+		sourceChecks.add(new JSPUnusedTermCheck());
 		sourceChecks.add(new JSPXSSVulnerabilitiesCheck());
 		sourceChecks.add(new MethodCallsOrderCheck());
 		sourceChecks.add(new PrimitiveWrapperInstantiationCheck());
@@ -147,8 +145,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource || subrepository) {
 			sourceChecks.add(new JSPStringMethodsCheck());
-			sourceChecks.add(new JSPUnusedTaglibCheck());
-			sourceChecks.add(new JSPUnusedVariableCheck());
 			sourceChecks.add(new ResourceBundleCheck());
 		}
 		else {

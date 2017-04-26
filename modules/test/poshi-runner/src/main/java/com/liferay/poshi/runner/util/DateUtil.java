@@ -14,107 +14,84 @@
 
 package com.liferay.poshi.runner.util;
 
+import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
-import java.util.Locale;
+import java.util.Date;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class DateUtil {
 
-	@Override
-	public String getCurrentDate() {
-		Calendar calendar = Calendar.getInstance();
-
-		return StringUtil.valueOf(calendar.get(Calendar.DATE));
+	public static String getCurrentDate() {
+		return getFormattedCurrentDate("d");
 	}
 
-	@Override
-	public String getCurrentDayOfWeek() {
-		Calendar calendar = Calendar.getInstance();
-
-		return StringUtil.valueOf(
-			calendar.getDisplayName(
-				Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US));
+	public static String getCurrentDayOfWeek() {
+		return getFormattedCurrentDate("EEEE");
 	}
 
-	@Override
-	public String getCurrentHour() {
-		Calendar calendar = Calendar.getInstance();
-
-		return StringUtil.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
+	public static String getCurrentHour() {
+		return getFormattedCurrentDate("K");
 	}
 
-	@Override
-	public String getCurrentMonth() {
-		Calendar calendar = Calendar.getInstance();
-
-		return StringUtil.valueOf(calendar.get(Calendar.MONTH) + 1);
+	public static String getCurrentMonth() {
+		return getFormattedCurrentDate("M");
 	}
 
-	@Override
-	public String getCurrentMonthName() {
-		Calendar calendar = Calendar.getInstance();
-
-		return String.valueOf(
-			calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US));
+	public static String getCurrentMonthName() {
+		return getFormattedCurrentDate("MMMM");
 	}
 
-	@Override
-	public String getCurrentYear() {
-		Calendar calendar = Calendar.getInstance();
-
-		return StringUtil.valueOf(calendar.get(Calendar.YEAR));
+	public static String getCurrentYear() {
+		return getFormattedCurrentDate("yyyy");
 	}
 
-	@Override
-	public String getDate(String days) {
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.add(Calendar.DATE, Integer.valueOf(days));
-
-		return StringUtil.valueOf(calendar.get(Calendar.DATE));
+	public static String getDate(String daysOffset) {
+		return getFormattedDate(daysOffset, "d");
 	}
 
-	@Override
-	public String getDayOfWeek(String days) {
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.add(Calendar.DATE, Integer.valueOf(days));
-
-		return StringUtil.valueOf(
-			calendar.getDisplayName(
-				Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US));
+	public static String getDayOfWeek(String daysOffset) {
+		return getFormattedDate(daysOffset, "EEEE");
 	}
 
-	@Override
-	public String getMonth(String days) {
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.add(Calendar.DATE, Integer.valueOf(days));
-
-		return StringUtil.valueOf(calendar.get(Calendar.MONTH) + 1);
+	public static String getFormattedCurrentDate(String pattern) {
+		return _format(new Date(), pattern);
 	}
 
-	@Override
-	public String getMonthName(String days) {
-		Calendar calendar = Calendar.getInstance();
+	public static String getFormattedDate(String daysOffset, String pattern) {
+		return _format(_getOffsetDate(Integer.valueOf(daysOffset)), pattern);
+	}
 
-		calendar.add(Calendar.DATE, Integer.valueOf(days));
+	public static String getMonth(String daysOffset) {
+		return getFormattedDate(daysOffset, "M");
+	}
 
-		return String.valueOf(
-			calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US));
+	public static String getMonthName(String daysOffset) {
+		return getFormattedDate(daysOffset, "MMMM");
 	}
 
 	public static String getNanoseconds() {
 		return String.valueOf(System.nanoTime());
 	}
 
-	@Override
-	public String getYear(String days) {
+	public static String getYear(String daysOffset) {
+		return getFormattedDate(daysOffset, "yyyy");
+	}
+
+	private static String _format(Date date, String pattern) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+		return simpleDateFormat.format(date);
+	}
+
+	private static Date _getOffsetDate(int daysOffset) {
 		Calendar calendar = Calendar.getInstance();
 
-		calendar.add(Calendar.DATE, Integer.valueOf(days));
+		calendar.add(Calendar.DATE, daysOffset);
 
-		return StringUtil.valueOf(calendar.get(Calendar.YEAR));
+		return calendar.getTime();
+	}
+
 }

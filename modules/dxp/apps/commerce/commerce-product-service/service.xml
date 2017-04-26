@@ -111,6 +111,10 @@
 		<finder name="CommerceProductDefinitionId" return-type="Collection">
 			<finder-column name="commerceProductDefinitionId" />
 		</finder>
+		<finder name="C_SC" return-type="Collection">
+			<finder-column name="commerceProductDefinitionId" />
+			<finder-column name="skuContributor" />
+		</finder>
 
 		<!-- References -->
 

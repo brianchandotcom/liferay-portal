@@ -29,9 +29,8 @@ public class SKUCombinationsIterator
 	implements Iterator<CommerceProductDefinitionOptionValueRel[]> {
 
 	public SKUCombinationsIterator(
-		Map<
-			CommerceProductDefinitionOptionRel,
-		CommerceProductDefinitionOptionValueRel[]> map) {
+		Map<CommerceProductDefinitionOptionRel, CommerceProductDefinitionOptionValueRel[]>
+			map) {
 
 		_combinationLength = map.size();
 

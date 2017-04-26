@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,13 +24,6 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JSPDefineObjectsCheck extends BaseFileCheck {
-
-	public JSPDefineObjectsCheck(
-		List<String> pluginsInsideModulesDirectoryNames) {
-
-		_pluginsInsideModulesDirectoryNames =
-			pluginsInsideModulesDirectoryNames;
-	}
 
 	@Override
 	protected String doProcess(
@@ -63,7 +55,7 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 			return;
 		}
 
-		for (String directoryName : _pluginsInsideModulesDirectoryNames) {
+		for (String directoryName : getPluginsInsideModulesDirectoryNames()) {
 			if (absolutePath.contains(directoryName)) {
 				return;
 			}
@@ -278,6 +270,5 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 		"\n\t*(<.*:defineObjects />)(\n|$)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
-	private final List<String> _pluginsInsideModulesDirectoryNames;
 
 }

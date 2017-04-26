@@ -33,11 +33,12 @@ import java.util.Properties;
  */
 public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
-	public PropertiesSourceFormatterFileCheck(
-		String projectPathPrefix, boolean hasPrivateAppsDir) {
+	public PropertiesSourceFormatterFileCheck(boolean hasPrivateAppsDir)
+		throws Exception {
 
-		_projectPathPrefix = projectPathPrefix;
 		_hasPrivateAppsDir = hasPrivateAppsDir;
+
+		_projectPathPrefix = getProjectPathPrefix();
 	}
 
 	@Override

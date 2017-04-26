@@ -41,8 +41,8 @@ import java.util.regex.Pattern;
  */
 public class LanguageKeysCheck extends BaseFileCheck {
 
-	public LanguageKeysCheck(Properties portalLanguageProperties) {
-		_portalLanguageProperties = portalLanguageProperties;
+	public LanguageKeysCheck() throws Exception {
+		_portalLanguageProperties = getPortalLanguageProperties();
 	}
 
 	@Override

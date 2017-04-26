@@ -25,8 +25,8 @@ import java.util.regex.Pattern;
  */
 public class PropertiesLiferayPluginPackageFileCheck extends BaseFileCheck {
 
-	public PropertiesLiferayPluginPackageFileCheck(String projectPathPrefix) {
-		_projectPathPrefix = projectPathPrefix;
+	public PropertiesLiferayPluginPackageFileCheck() throws Exception {
+		_projectPathPrefix = getProjectPathPrefix();
 	}
 
 	@Override

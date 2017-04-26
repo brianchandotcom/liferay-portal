@@ -146,8 +146,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		sourceChecks.add(new EmptyCollectionCheck());
 		sourceChecks.add(new GetterUtilCheck());
 		sourceChecks.add(new JSPButtonTagCheck());
-		sourceChecks.add(
-			new JSPDefineObjectsCheck(getPluginsInsideModulesDirectoryNames()));
+		sourceChecks.add(new JSPDefineObjectsCheck());
 		sourceChecks.add(new JSPEmptyLinesCheck());
 		sourceChecks.add(new JSPExceptionOrderCheck());
 		sourceChecks.add(new JSPIfStatementCheck());
@@ -185,14 +184,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			if (GetterUtil.getBoolean(
 					getProperty("use.portal.compat.import"))) {
 
-				sourceChecks.add(
-					new CompatClassImportsCheck(getCompatClassNamesMap()));
+				sourceChecks.add(new CompatClassImportsCheck());
 			}
 		}
 
 		if (portalSource) {
-			sourceChecks.add(
-				new JSPLanguageKeysCheck(getPortalLanguageProperties()));
+			sourceChecks.add(new JSPLanguageKeysCheck());
 		}
 
 		return sourceChecks;

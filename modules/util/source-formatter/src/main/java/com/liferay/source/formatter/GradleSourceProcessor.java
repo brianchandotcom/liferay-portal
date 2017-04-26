@@ -44,7 +44,7 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 
 		sourceChecks.add(new WhitespaceCheck());
 
-		sourceChecks.add(new GradleDependenciesCheck(getProjectPathPrefix()));
+		sourceChecks.add(new GradleDependenciesCheck());
 		sourceChecks.add(new GradleVersionCheck());
 
 		return sourceChecks;

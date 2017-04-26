@@ -31,8 +31,8 @@ import java.util.regex.Pattern;
  */
 public class GradleDependenciesCheck extends BaseFileCheck {
 
-	public GradleDependenciesCheck(String projectPathPrefix) {
-		_projectPathPrefix = projectPathPrefix;
+	public GradleDependenciesCheck() throws Exception {
+		_projectPathPrefix = getProjectPathPrefix();
 	}
 
 	@Override

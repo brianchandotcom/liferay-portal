@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checks;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 import java.util.regex.Pattern;
 
 /**
@@ -24,8 +23,7 @@ import java.util.regex.Pattern;
  */
 public class JSPLanguageKeysCheck extends LanguageKeysCheck {
 
-	public JSPLanguageKeysCheck(Properties portalLanguageProperties) {
-		super(portalLanguageProperties);
+	public JSPLanguageKeysCheck() throws Exception {
 	}
 
 	@Override

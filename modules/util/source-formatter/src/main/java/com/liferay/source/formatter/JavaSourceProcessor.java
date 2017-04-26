@@ -276,14 +276,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (GetterUtil.getBoolean(
 					getProperty("use.portal.compat.import"))) {
 
-				fileChecks.add(
-					new CompatClassImportsCheck(getCompatClassNamesMap()));
+				fileChecks.add(new CompatClassImportsCheck());
 			}
 		}
 
 		if (portalSource) {
-			fileChecks.add(
-				new LanguageKeysCheck(getPortalLanguageProperties()));
+			fileChecks.add(new LanguageKeysCheck());
 		}
 
 		if (GetterUtil.getBoolean(

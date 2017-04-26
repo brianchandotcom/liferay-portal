@@ -23,9 +23,6 @@ import java.util.regex.Pattern;
  */
 public class JSPLanguageKeysCheck extends LanguageKeysCheck {
 
-	public JSPLanguageKeysCheck() throws Exception {
-	}
-
 	@Override
 	protected List<Pattern> getPatterns() {
 		return Arrays.asList(

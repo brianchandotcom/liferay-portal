@@ -572,7 +572,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_excludes = _getExcludes();
 	}
 
-	private void _initGenericSourceChecks() {
+	private void _initGenericSourceChecks() throws Exception {
 		_genericSourceChecks.add(new IncorrectFileLocationCheck());
 		_genericSourceChecks.add(new ReturnCharacterCheck());
 
@@ -589,7 +589,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	private void _initSourceCheck(SourceCheck sourceCheck) {
+	private void _initSourceCheck(SourceCheck sourceCheck) throws Exception {
 		sourceCheck.setAllFileNames(_allFileNames);
 		sourceCheck.setBaseDirName(sourceFormatterArgs.getBaseDirName());
 		sourceCheck.setExcludes(_excludes);

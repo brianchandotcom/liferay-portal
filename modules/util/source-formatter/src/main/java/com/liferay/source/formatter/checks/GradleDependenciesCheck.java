@@ -31,7 +31,8 @@ import java.util.regex.Pattern;
  */
 public class GradleDependenciesCheck extends BaseFileCheck {
 
-	public GradleDependenciesCheck() throws Exception {
+	@Override
+	public void init() throws Exception {
 		_projectPathPrefix = getProjectPathPrefix();
 	}
 
@@ -118,6 +119,6 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		"^dependencies \\{(.+?\n)\\}", Pattern.DOTALL | Pattern.MULTILINE);
 	private final Pattern _incorrectWhitespacePattern = Pattern.compile(
 		":[^ \n]");
-	private final String _projectPathPrefix;
+	private String _projectPathPrefix;
 
 }

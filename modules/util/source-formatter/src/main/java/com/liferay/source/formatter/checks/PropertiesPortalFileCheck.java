@@ -34,7 +34,8 @@ import org.apache.commons.io.IOUtils;
  */
 public class PropertiesPortalFileCheck extends BaseFileCheck {
 
-	public PropertiesPortalFileCheck() throws Exception {
+	@Override
+	public void init() throws Exception {
 		_portalPortalPropertiesContent = _getPortalPortalPropertiesContent();
 	}
 
@@ -122,6 +123,6 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		return portalPortalPropertiesContent;
 	}
 
-	private final String _portalPortalPropertiesContent;
+	private String _portalPortalPropertiesContent;
 
 }

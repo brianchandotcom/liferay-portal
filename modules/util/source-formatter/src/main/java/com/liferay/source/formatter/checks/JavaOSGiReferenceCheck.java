@@ -45,7 +45,8 @@ import java.util.regex.Pattern;
  */
 public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
-	public JavaOSGiReferenceCheck() throws Exception {
+	@Override
+	public void init() throws Exception {
 		_moduleFileNamesMap = _getModuleFileNamesMap();
 		_serviceReferenceUtilClassNames = getPropertyList(
 			"service.reference.util.class.names");
@@ -510,13 +511,13 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	private final Set<String> _bndFileNames = new CopyOnWriteArraySet<>();
 	private final Map<String, String> _moduleFileContentsMap =
 		new ConcurrentHashMap<>();
-	private final Map<String, String> _moduleFileNamesMap;
+	private Map<String, String> _moduleFileNamesMap;
 	private final Pattern _referenceMethodContentPattern = Pattern.compile(
 		"^(\\w+) =\\s+\\w+;$");
 	private final Pattern _referenceMethodPattern = Pattern.compile(
 		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
-	private final List<String> _serviceReferenceUtilClassNames;
+	private List<String> _serviceReferenceUtilClassNames;
 	private final Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 

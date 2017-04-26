@@ -41,7 +41,8 @@ import java.util.regex.Pattern;
  */
 public class LanguageKeysCheck extends BaseFileCheck {
 
-	public LanguageKeysCheck() throws Exception {
+	@Override
+	public void init() throws Exception {
 		_portalLanguageProperties = getPortalLanguageProperties();
 	}
 
@@ -394,6 +395,6 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		new HashMap<>();
 	private final Map<String, Properties> _moduleLanguagePropertiesMap =
 		new HashMap<>();
-	private final Properties _portalLanguageProperties;
+	private Properties _portalLanguageProperties;
 
 }

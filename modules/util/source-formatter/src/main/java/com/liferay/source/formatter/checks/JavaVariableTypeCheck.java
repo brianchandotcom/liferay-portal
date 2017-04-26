@@ -38,7 +38,8 @@ import java.util.regex.Pattern;
  */
 public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 
-	public JavaVariableTypeCheck() {
+	@Override
+	public void init() {
 		_annotationsExclusions = _getAnnotationsExclusions();
 		_defaultPrimitiveValues = _getDefaultPrimitiveValues();
 		_immutableFieldTypes = _getImmutableFieldTypes();
@@ -327,8 +328,8 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 
 	private static final String _STATIC_LOG_EXCLUDES = "static.log.excludes";
 
-	private final List<String> _annotationsExclusions;
-	private final Map<String, String> _defaultPrimitiveValues;
-	private final Set<String> _immutableFieldTypes;
+	private List<String> _annotationsExclusions;
+	private Map<String, String> _defaultPrimitiveValues;
+	private Set<String> _immutableFieldTypes;
 
 }

@@ -54,7 +54,8 @@ import org.dom4j.Element;
  */
 public class JSPTagAttributesCheck extends TagAttributesCheck {
 
-	public JSPTagAttributesCheck() throws Exception {
+	@Override
+	public void init() throws Exception {
 		_primitiveTagAttributeDataTypes = _getPrimitiveTagAttributeDataTypes();
 		_tagJavaClassesMap = _getTagJavaClassesMap();
 	}
@@ -475,7 +476,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		"<[-\\w]+:[-\\w]+ .");
 	private final Pattern _multilineTagPattern = Pattern.compile(
 		"(\\s+)<[-\\w]+:[-\\w]+\n.*?(/?>)(\n|$)", Pattern.DOTALL);
-	private final Set<String> _primitiveTagAttributeDataTypes;
-	private final Map<String, JavaClass> _tagJavaClassesMap;
+	private Set<String> _primitiveTagAttributeDataTypes;
+	private Map<String, JavaClass> _tagJavaClassesMap;
 
 }

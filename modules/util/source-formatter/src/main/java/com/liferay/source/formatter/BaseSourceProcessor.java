@@ -39,9 +39,7 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 import java.awt.Desktop;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.URI;
 
@@ -228,58 +226,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return filteredIncludes;
 	}
 
-	protected Map<String, String> getCompatClassNamesMap() throws Exception {
-		Map<String, String> compatClassNamesMap = new HashMap<>();
-
-		String[] includes = new String[] {
-			"**/portal-compat-shared/src/com/liferay/compat/**/*.java"
-		};
-
-		String basedir = sourceFormatterArgs.getBaseDirName();
-
-		List<String> fileNames = new ArrayList<>();
-
-		for (int i = 0; i < PLUGINS_MAX_DIR_LEVEL; i++) {
-			File sharedDir = new File(basedir + "shared");
-
-			if (sharedDir.exists()) {
-				fileNames = getFileNames(basedir, new String[0], includes);
-
-				break;
-			}
-
-			basedir = basedir + "../";
-		}
-
-		for (String fileName : fileNames) {
-			File file = new File(fileName);
-
-			String content = FileUtil.read(file);
-
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			fileName = StringUtil.replace(
-				fileName, CharPool.SLASH, CharPool.PERIOD);
-
-			int pos = fileName.indexOf("com.");
-
-			String compatClassName = fileName.substring(pos);
-
-			compatClassName = compatClassName.substring(
-				0, compatClassName.length() - 5);
-
-			String extendedClassName = StringUtil.replace(
-				compatClassName, "compat.", StringPool.BLANK);
-
-			if (content.contains("extends " + extendedClassName)) {
-				compatClassNamesMap.put(compatClassName, extendedClassName);
-			}
-		}
-
-		return compatClassNamesMap;
-	}
-
 	protected String getContent(String fileName, int level) throws IOException {
 		File file = getFile(fileName, level);
 
@@ -308,20 +254,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		return StringUtil.read(
 			classLoader.getResourceAsStream("dependencies/copyright.txt"));
-	}
-
-	protected List<String> getExcludes(String property) {
-		List<String> excludes = _exclusionPropertiesMap.get(property);
-
-		if (excludes != null) {
-			return excludes;
-		}
-
-		excludes = getPropertyList(property);
-
-		_exclusionPropertiesMap.put(property, excludes);
-
-		return excludes;
 	}
 
 	protected File getFile(String fileName, int level) {
@@ -409,41 +341,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return pluginsInsideModulesDirectoryNames;
-	}
-
-	protected Properties getPortalLanguageProperties() throws Exception {
-		Properties portalLanguageProperties = new Properties();
-
-		File portalLanguagePropertiesFile = getFile(
-			"portal-impl/src/content/Language.properties",
-			PORTAL_MAX_DIR_LEVEL);
-
-		if (portalLanguagePropertiesFile != null) {
-			InputStream inputStream = new FileInputStream(
-				portalLanguagePropertiesFile);
-
-			portalLanguageProperties.load(inputStream);
-		}
-
-		return portalLanguageProperties;
-	}
-
-	protected String getProjectPathPrefix() throws Exception {
-		if (!subrepository) {
-			return null;
-		}
-
-		File file = getFile("gradle.properties", PORTAL_MAX_DIR_LEVEL);
-
-		if (!file.exists()) {
-			return null;
-		}
-
-		Properties properties = new Properties();
-
-		properties.load(new FileInputStream(file));
-
-		return properties.getProperty("project.path.prefix");
 	}
 
 	protected String getProperty(String key) {
@@ -870,8 +767,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private List<String> _allFileNames;
 	private boolean _browserStarted;
 	private String[] _excludes;
-	private final Map<String, List<String>> _exclusionPropertiesMap =
-		new HashMap<>();
 	private SourceMismatchException _firstSourceMismatchException;
 	private final List<SourceCheck> _genericSourceChecks = new ArrayList<>();
 	private final List<String> _modifiedFileNames =

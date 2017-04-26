@@ -76,7 +76,7 @@ renderResponse.setTitle(commerceProductDefinition.getTitle(languageId));
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= commerceProductDefinitionOptionRelDisplayContext.getOrderByCol() %>"
 			orderByType="<%= commerceProductDefinitionOptionRelDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date", "name"} %>'
+			orderColumns='<%= new String[] {"priority", "create-date", "name"} %>'
 			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -131,6 +131,12 @@ renderResponse.setTitle(commerceProductDefinition.getTitle(languageId));
 				>
 					<%= commerceProductDefinitionOptionRel.getName(locale) %>
 				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="priority"
+						property="priority"
+				/>
 
 				<liferay-ui:search-container-column-date
 					cssClass="table-cell-content"

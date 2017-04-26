@@ -61,7 +61,7 @@ public class CommerceProductDefinitionOptionRelDisplayContext
 			"rowIdsCommerceProductDefinitionOptionRel",
 			"CommerceProductDefinitionOptionRel");
 
-		setDefaultOrderByType("desc");
+		setDefaultOrderByCol("priority");
 
 		_commerceProductDefinitionOptionRelService =
 			commerceProductDefinitionOptionRelService;

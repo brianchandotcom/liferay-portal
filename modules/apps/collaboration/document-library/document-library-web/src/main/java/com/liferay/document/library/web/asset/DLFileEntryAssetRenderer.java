@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.asset.DLFileEntryDDMFormValuesReader;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.util.Date;
 import java.util.Locale;
@@ -79,13 +79,26 @@ public class DLFileEntryAssetRenderer
 		this(fileEntry, fileVersion, DLFileEntryLocalServiceUtil.getService());
 	}
 
+	/**
+	 * @deprecated As of 2.0.0
+	 */
+	@Deprecated
 	public DLFileEntryAssetRenderer(
 		FileEntry fileEntry, FileVersion fileVersion,
 		DLFileEntryLocalService dlFileEntryLocalService) {
 
+		this(fileEntry, fileVersion, dlFileEntryLocalService, null);
+	}
+
+	public DLFileEntryAssetRenderer(
+		FileEntry fileEntry, FileVersion fileVersion,
+		DLFileEntryLocalService dlFileEntryLocalService,
+		TrashHelper trashHelper) {
+
 		_fileEntry = fileEntry;
 		_fileVersion = fileVersion;
 		_dlFileEntryLocalService = dlFileEntryLocalService;
+		_trashHelper = trashHelper;
 	}
 
 	@Override
@@ -232,7 +245,11 @@ public class DLFileEntryAssetRenderer
 			title = _fileEntry.getTitle();
 		}
 
-		return TrashUtil.getOriginalTitle(title);
+		if (_trashHelper == null) {
+			return title;
+		}
+
+		return _trashHelper.getOriginalTitle(title);
 	}
 
 	@Override
@@ -427,5 +444,6 @@ public class DLFileEntryAssetRenderer
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final FileEntry _fileEntry;
 	private FileVersion _fileVersion;
+	private final TrashHelper _trashHelper;
 
 }

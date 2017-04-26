@@ -71,7 +71,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 </liferay-util:buffer>
 
 <liferay-portlet:actionURL name="/wiki/edit_page_attachment" var="deleteURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(wikiRequestHelper.getScopeGroupId()) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(wikiRequestHelper.getScopeGroupId()) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 	<portlet:param name="redirect" value="<%= wikiRequestHelper.getCurrentURL() %>" />
 	<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 	<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
@@ -113,7 +113,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 
 				rowColumns.push(event.name);
 				rowColumns.push(uploader.formatStorage(event.size));
-				rowColumns.push('<a href="' + deleteURL + '"><%= TrashUtil.isTrashEnabled(scopeGroupId) ? UnicodeLanguageUtil.get(resourceBundle, "move-to-the-recycle-bin") : UnicodeFormatter.toString(removeAttachmentIcon) %></a>');
+				rowColumns.push('<a href="' + deleteURL + '"><%= trashHelper.isTrashEnabled(scopeGroupId) ? UnicodeLanguageUtil.get(resourceBundle, "move-to-the-recycle-bin") : UnicodeFormatter.toString(removeAttachmentIcon) %></a>');
 
 				searchContainer.addRow(rowColumns, event.id);
 

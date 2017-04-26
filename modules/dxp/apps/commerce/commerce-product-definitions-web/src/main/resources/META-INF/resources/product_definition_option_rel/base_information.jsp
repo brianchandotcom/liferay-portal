@@ -51,9 +51,7 @@ List<DDMFormFieldType> ddmFormFieldTypes = commerceProductDefinitionOptionRelDis
 
 	</aui:select>
 
-	<aui:input name="published" type="checkbox" />
-	<aui:input name="facetable" type="checkbox" />
-	<aui:input name="SKUContributor" type="checkbox" />
-
+	<aui:input name="facetable" />
+	<aui:input name="skuContributor" />
 	<aui:input label="priority" name="priority" />
 </aui:fieldset>

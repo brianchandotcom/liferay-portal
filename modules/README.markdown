@@ -140,11 +140,14 @@ closure arguments.
 
 ### `gradle.properties`
 
+The following settings are available to you in the `gradle.properties` file of a
+Liferay subrepository (e.g., [com-liferay-journal](https://github.com/liferay/com-liferay-journal/blob/master/gradle.properties)).
+
 Property Name | Mandatory | Description
 ------------- | --------- | -----------
 `com.liferay.source.formatter.version` | No | The version of Source Formatter to use in the subrepository. If the property is not set, the latest version is used.
-`project.group` | No | The group ID of the artifacts the are published from the subrepository. If this property is not set, the default value `com.liferay` is used.
-`project.path.prefix` | Yes | The project path of the Gradle prefix. It must start with a `':'` character and be equal to the relative path of the subrepository directory inside the main Liferay repository, with path components separated by `':'` character instead of slashes.
-`systemProp.repository.private.password` | No | The password used to access the private Maven repository. If set, this property must be equal to the value of the property `build.repository.private.password` in `build.properties`.
-`systemProp.repository.private.url` | No | The URL of the private Maven repository. If set, this property must be equal to the value of the property `build.repository.private.url` in `build.properties`.
-`systemProp.repository.private.username` | No | The user name used to access the private private Maven repository. If set, this property must be equal to the value of the property `build.repository.private.username` in `build.properties`.
+`project.group` | No | The group ID of the artifacts that are published from the subrepository. If this property is not set, the default value `com.liferay` is used.
+`project.path.prefix` | Yes | The project path of the Gradle prefix. It must start with a `':'` character and be equal to the relative path of the subrepository directory inside the main Liferay repository, with path components separated by `':'` characters instead of slashes.
+`systemProp.repository.private.password` | No | The password used to access the private Maven repository. If set, this property must be equal to the `build.repository.private.password` property value in `build.properties`.
+`systemProp.repository.private.url` | No | The URL of the private Maven repository. If set, this property must be equal to the `build.repository.private.url` property value in `build.properties`.
+`systemProp.repository.private.username` | No | The username used to access the private Maven repository. If set, this property must be equal to the `build.repository.private.username` property value in `build.properties`.

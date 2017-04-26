@@ -57,7 +57,6 @@ import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Hugo Huijser
@@ -70,7 +69,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		List<String> fileNames = getFileNames(excludes, getIncludes());
 
-		if (fileNames.isEmpty()) {
+		if (fileNames.isEmpty() ||
+			(!sourceFormatterArgs.isFormatCurrentBranch() &&
+			 !sourceFormatterArgs.isFormatLatestAuthor() &&
+			 !sourceFormatterArgs.isFormatLocalChanges())) {
+
 			return fileNames;
 		}
 
@@ -79,17 +82,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		List<String> allJSPFileNames = getFileNames(
 			excludes, getIncludes(), true);
 
-		_contentsMap = JSPSourceUtil.getContentsMap(allJSPFileNames);
-
-		if (sourceFormatterArgs.isFormatCurrentBranch() ||
-			sourceFormatterArgs.isFormatLatestAuthor() ||
-			sourceFormatterArgs.isFormatLocalChanges()) {
-
-			return JSPSourceUtil.addIncludedAndReferencedFileNames(
-				fileNames, new HashSet<String>(), _contentsMap);
-		}
-
-		return fileNames;
+		return JSPSourceUtil.addIncludedAndReferencedFileNames(
+			fileNames, new HashSet<String>(),
+			JSPSourceUtil.getContentsMap(allJSPFileNames));
 	}
 
 	@Override
@@ -164,7 +159,5 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES =
 		new String[] {"**/*.jsp", "**/*.jspf", "**/*.tpl", "**/*.vm"};
-
-	private Map<String, String> _contentsMap;
 
 }

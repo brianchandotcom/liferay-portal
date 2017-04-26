@@ -58,7 +58,7 @@ renderResponse.setTitle(oldName);
 				</c:otherwise>
 			</c:choose>
 
-			<aui:input label='<%= overridable ? StringPool.BLANK : "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" %>' name="newName" value="<%= TrashUtil.getNewName(themeDisplay, entry.getClassName(), entry.getClassPK(), oldName) %>" />
+			<aui:input label='<%= overridable ? StringPool.BLANK : "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" %>' name="newName" value="<%= com.liferay.trash.kernel.util.TrashUtil.getNewName(themeDisplay, entry.getClassName(), entry.getClassPK(), oldName) %>" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

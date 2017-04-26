@@ -728,11 +728,32 @@ public class ModulesStructureTest {
 				repositoryPrivateUsername = value;
 			}
 			else {
-				Assert.assertTrue(
-					"Incorrect key \"" + key + "\" in " +
-						gradlePropertiesPath,
-					_gitRepoGradlePropertiesKeys.contains(key) ||
-						key.startsWith(gradlePropertiesPrefix));
+				if (!_gitRepoGradlePropertiesKeys.contains(key) &&
+					!key.startsWith(gradlePropertiesPrefix)) {
+
+					StringBundler sb = new StringBundler(
+						_gitRepoGradlePropertiesKeys.size() * 3 + 8);
+
+					sb.append("Incorrect key \"");
+					sb.append(key);
+					sb.append("\" in ");
+					sb.append(gradlePropertiesPath);
+					sb.append(". Allowed keys are: ");
+
+					for (String gitRepoGradlePropertiesKey :
+							_gitRepoGradlePropertiesKeys) {
+
+						sb.append(CharPool.QUOTE);
+						sb.append(gitRepoGradlePropertiesKey);
+						sb.append("\", ");
+					}
+
+					sb.append("keys starting with \"");
+					sb.append(gradlePropertiesPrefix);
+					sb.append("\".");
+
+					Assert.fail(sb.toString());
+				}
 			}
 
 			previousKey = key;

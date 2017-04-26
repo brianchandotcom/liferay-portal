@@ -167,7 +167,7 @@ name = HtmlUtil.escapeJS(name);
 			data = <%= HtmlUtil.escapeJS(namespace + initMethod) %>();
 		}
 		else {
-			data = '<%= contents != null ? HtmlUtil.escapeJS(HtmlUtil.escape(contents)) : StringPool.BLANK %>';
+			data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
 		}
 
 		return data;
@@ -409,7 +409,7 @@ name = HtmlUtil.escapeJS(name);
 				if (!ckEditorContent) {
 					<c:choose>
 						<c:when test="<%= contents != null %>">
-							ckEditorContent = '<%= HtmlUtil.escapeJS(HtmlUtil.escape(contents)) %>';
+							ckEditorContent = '<%= HtmlUtil.escapeJS(contents) %>';
 						</c:when>
 						<c:otherwise>
 							ckEditorContent = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();

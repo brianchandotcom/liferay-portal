@@ -43,14 +43,8 @@ portletURL.setParameter("searchContainerId", "commerceProductInstances");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
-PortletURL backUrl = liferayPortletResponse.createRenderURL();
-
-backUrl.setParameter("mvcPath", "/view.jsp");
-
-String backURLString = backUrl.toString();
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURLString);
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(request, "add-product-definition") : commerceProductDefinition.getTitle(languageId));
 %>
@@ -162,7 +156,15 @@ renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(r
 	</div>
 </aui:form>
 
+<liferay-portlet:actionURL name="editProductInstance" var="addProductDefinitionURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_MULTIPLE %>" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
+	<portlet:param name="commerceProductDefinitionId" value="<%= String.valueOf(commerceProductDefinitionId) %>" />
+	<portlet:param name="toolbarItem" value="view-product-instances" />
+</liferay-portlet:actionURL>
+
 <liferay-frontend:add-menu>
 	<liferay-frontend:add-menu-item id="addSkuButton" title='<%= LanguageUtil.get(request, "add-sku") %>' url="javascript:;" />
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "generate-all-skus") %>' url="" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "generate-all-skus") %>' url="<%= addProductDefinitionURL.toString() %>" />
 </liferay-frontend:add-menu>

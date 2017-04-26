@@ -197,6 +197,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return compatClassNamesMap;
 	}
 
+	protected String[] getExcludes() {
+		return _excludes;
+	}
+
 	protected File getFile(String fileName, int level) {
 		for (int i = 0; i < level; i++) {
 			File file = new File(_baseDirName + fileName);
@@ -220,7 +224,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return SourceFormatterUtil.scanForFiles(
-			basedir, excludes, includes, false);
+			basedir, excludes, includes, true);
 	}
 
 	protected int getLeadingTabCount(String line) {
@@ -309,6 +313,12 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return properties.getProperty("project.path.prefix");
 	}
 
+	protected List<String> getPropertyList(String key) {
+		return ListUtil.fromString(
+			GetterUtil.getString(
+				_properties.getProperty(key)), StringPool.COMMA);
+	}
+
 	protected boolean isExcludedPath(String key, String path) {
 		return isExcludedPath(key, path, -1);
 	}
@@ -320,9 +330,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected boolean isExcludedPath(
 		String key, String path, int lineCount, String parameter) {
 
-		List<String> excludes = ListUtil.fromString(
-			GetterUtil.getString(_properties.getProperty(key)),
-			StringPool.COMMA);
+		List<String> excludes = getPropertyList(key);
 
 		if (ListUtil.isEmpty(excludes)) {
 			return false;

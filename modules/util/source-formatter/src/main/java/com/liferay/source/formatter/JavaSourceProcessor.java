@@ -97,20 +97,16 @@ import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
 import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
-import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -159,10 +155,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		moduleSourceChecks.add(new JavaModuleInternalImportsCheck());
 		moduleSourceChecks.add(new JavaModuleServiceProxyFactoryCheck());
 		moduleSourceChecks.add(new JavaModuleTestCheck());
-		moduleSourceChecks.add(
-			new JavaOSGiReferenceCheck(
-				_getModuleFileNamesMap(),
-				getPropertyList("service.reference.util.class.names")));
+		moduleSourceChecks.add(new JavaOSGiReferenceCheck());
 
 		return moduleSourceChecks;
 	}
@@ -193,23 +186,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_ungeneratedFiles.add(file);
 
 		return super.processSourceChecks(file, fileName, absolutePath, content);
-	}
-
-	private List<String> _getAnnotationsExclusions() {
-		return ListUtil.fromArray(
-			new String[] {
-				"ArquillianResource", "Autowired", "BeanReference", "Captor",
-				"Inject", "Mock", "Parameter", "Reference", "ServiceReference",
-				"SuppressWarnings", "Value"
-			});
-	}
-
-	private Map<String, String> _getDefaultPrimitiveValues() {
-		return MapUtil.fromArray(
-			new String[] {
-				"boolean", "false", "char", "'\\\\0'", "byte", "0", "double",
-				"0\\.0", "float", "0\\.0", "int", "0", "long", "0", "short", "0"
-			});
 	}
 
 	private List<SourceCheck> _getFileChecks() throws Exception {
@@ -293,24 +269,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return fileChecks;
 	}
 
-	private Set<String> _getImmutableFieldTypes() {
-		Set<String> immutableFieldTypes = SetUtil.fromArray(
-			new String[] {
-				"boolean", "byte", "char", "double", "float", "int", "long",
-				"short", "Boolean", "Byte", "Character", "Class", "Double",
-				"Float", "Int", "Long", "Number", "Short", "String"
-			});
-
-		immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
-
-		return immutableFieldTypes;
-	}
-
 	private List<SourceCheck> _getJavaTermChecks() throws Exception {
 		List<SourceCheck> javaTermChecks = new ArrayList<>();
 
-		javaTermChecks.add(
-			new JavaTermOrderCheck(_getPortalCustomSQLContent()));
+		javaTermChecks.add(new JavaTermOrderCheck());
 
 		javaTermChecks.add(new JavaTermDividersCheck());
 
@@ -330,53 +292,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (portalSource || subrepository) {
 			javaTermChecks.add(new JavaCleanUpMethodVariablesCheck());
 			javaTermChecks.add(new JavaTestMethodAnnotationsCheck());
-			javaTermChecks.add(
-				new JavaVariableTypeCheck(
-					_getAnnotationsExclusions(), _getDefaultPrimitiveValues(),
-					_getImmutableFieldTypes()));
+			javaTermChecks.add(new JavaVariableTypeCheck());
 		}
 
 		return javaTermChecks;
-	}
-
-	private Map<String, String> _getModuleFileNamesMap() throws Exception {
-		Map<String, String> moduleFileNamesMap = new HashMap<>();
-
-		List<String> fileNames = new ArrayList<>();
-
-		String moduleRootDirLocation = "modules/";
-
-		for (int i = 0; i < 6; i++) {
-			File file = new File(
-				sourceFormatterArgs.getBaseDirName() + moduleRootDirLocation);
-
-			if (file.exists()) {
-				fileNames = getFileNames(
-					sourceFormatterArgs.getBaseDirName() +
-						moduleRootDirLocation,
-					new String[0], getIncludes());
-
-				break;
-			}
-
-			moduleRootDirLocation = "../" + moduleRootDirLocation;
-		}
-
-		for (String fileName : fileNames) {
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			String className = StringUtil.replace(
-				fileName, CharPool.SLASH, CharPool.PERIOD);
-
-			int pos = className.lastIndexOf(".com.liferay.");
-
-			className = className.substring(pos + 1, fileName.length() - 5);
-
-			moduleFileNamesMap.put(className, fileName);
-		}
-
-		return moduleFileNamesMap;
 	}
 
 	private String[] _getPluginExcludes(String pluginDirectoryName) {
@@ -417,36 +336,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		fileNames.addAll(getFileNames(excludes, includes));
 
 		return fileNames;
-	}
-
-	private String _getPortalCustomSQLContent() throws Exception {
-		if (!portalSource) {
-			return null;
-		}
-
-		if (_portalCustomSQLContent != null) {
-			return _portalCustomSQLContent;
-		}
-
-		File portalCustomSQLFile = getFile(
-			"portal-impl/src/custom-sql/default.xml", PORTAL_MAX_DIR_LEVEL);
-
-		String portalCustomSQLContent = FileUtil.read(portalCustomSQLFile);
-
-		Matcher matcher = _customSQLFilePattern.matcher(portalCustomSQLContent);
-
-		while (matcher.find()) {
-			File customSQLFile = getFile(
-				"portal-impl/src/" + matcher.group(1), PORTAL_MAX_DIR_LEVEL);
-
-			if (customSQLFile != null) {
-				portalCustomSQLContent += FileUtil.read(customSQLFile);
-			}
-		}
-
-		_portalCustomSQLContent = portalCustomSQLContent;
-
-		return _portalCustomSQLContent;
 	}
 
 	private Collection<String> _getPortalJavaFiles(String[] includes)
@@ -587,9 +476,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {"**/*.java"};
 
-	private final Pattern _customSQLFilePattern = Pattern.compile(
-		"<sql file=\"(.*)\" \\/>");
-	private String _portalCustomSQLContent;
 	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();
 
 }

@@ -16,36 +16,47 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
-
+import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
+import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
+import com.thoughtworks.qdox.JavaDocBuilder;
+import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.Type;
+import com.thoughtworks.qdox.parser.ParseException;
 
+import java.io.File;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.dom4j.Document;
+import org.dom4j.Element;
+
 /**
  * @author Hugo Huijser
  */
 public class JSPTagAttributesCheck extends TagAttributesCheck {
 
-	public JSPTagAttributesCheck(
-		Set<String> primitiveTagAttributeDataTypes,
-		Map<String, JavaClass> tagJavaClassesMap) {
-
-		_primitiveTagAttributeDataTypes = primitiveTagAttributeDataTypes;
-		_tagJavaClassesMap = tagJavaClassesMap;
+	public JSPTagAttributesCheck() throws Exception {
+		_primitiveTagAttributeDataTypes = _getPrimitiveTagAttributeDataTypes();
+		_tagJavaClassesMap = _getTagJavaClassesMap();
 	}
 
 	@Override
@@ -276,6 +287,163 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		}
 
 		return content;
+	}
+
+	private Set<String> _getPrimitiveTagAttributeDataTypes() {
+		return SetUtil.fromArray(
+			new String[] {
+				"java.lang.Boolean", "Boolean", "boolean", "java.lang.Double",
+				"Double", "double", "java.lang.Integer", "Integer", "int",
+				"java.lang.Long", "Long", "long"
+			});
+	}
+
+	private Map<String, JavaClass> _getTagJavaClassesMap() throws Exception {
+		Map<String, JavaClass> tagJavaClassesMap = new HashMap<>();
+
+		outerLoop:
+		for (String tldFileName : _getTLDFileNames()) {
+			tldFileName = StringUtil.replace(
+				tldFileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			File tldFile = new File(tldFileName);
+
+			String content = FileUtil.read(tldFile);
+
+			Document document = SourceUtil.readXML(content);
+
+			Element rootElement = document.getRootElement();
+
+			Element shortNameElement = rootElement.element("short-name");
+
+			String shortName = shortNameElement.getStringValue();
+
+			List<Element> tagElements = rootElement.elements("tag");
+
+			String srcDir = null;
+
+			for (Element tagElement : tagElements) {
+				Element tagClassElement = tagElement.element("tag-class");
+
+				String tagClassName = tagClassElement.getStringValue();
+
+				if (!tagClassName.startsWith("com.liferay")) {
+					continue;
+				}
+
+				if (srcDir == null) {
+					if (tldFileName.contains("/src/")) {
+						srcDir = tldFile.getAbsolutePath();
+
+						srcDir = StringUtil.replace(
+							srcDir, CharPool.BACK_SLASH, CharPool.SLASH);
+
+						srcDir =
+							srcDir.substring(0, srcDir.lastIndexOf("/src/")) +
+								"/src/main/java/";
+					}
+					else {
+						srcDir = _getUtilTaglibSrcDirName();
+
+						if (Validator.isNull(srcDir)) {
+							continue outerLoop;
+						}
+					}
+				}
+
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(srcDir);
+				sb.append(
+					StringUtil.replace(
+						tagClassName, CharPool.PERIOD, CharPool.SLASH));
+				sb.append(".java");
+
+				File tagJavaFile = new File(sb.toString());
+
+				if (!tagJavaFile.exists()) {
+					continue;
+				}
+
+				JavaDocBuilder javaDocBuilder = new JavaDocBuilder(
+					new DefaultDocletTagFactory(),
+					new ThreadSafeClassLibrary());
+
+				try {
+					javaDocBuilder.addSource(tagJavaFile);
+				}
+				catch (ParseException pe) {
+					continue;
+				}
+
+				JavaClass tagJavaClass = javaDocBuilder.getClassByName(
+					tagClassName);
+
+				Element tagNameElement = tagElement.element("name");
+
+				String tagName = tagNameElement.getStringValue();
+
+				tagJavaClassesMap.put(
+					shortName + StringPool.COLON + tagName, tagJavaClass);
+			}
+		}
+
+		return tagJavaClassesMap;
+	}
+
+	private List<String> _getTLDFileNames() throws Exception {
+		String[] excludes =
+			new String[] {
+				"**/dependencies/**", "**/util-taglib/**", "**/portal-web/**"
+			};
+
+		if (getExcludes() != null) {
+			excludes = ArrayUtil.append(excludes, getExcludes());
+		}
+
+		List<String> tldFileNames = SourceFormatterUtil.filterFileNames(
+			getAllFileNames(), excludes, new String[] {"**/*.tld"});
+
+		if (!isPortalSource()) {
+			return tldFileNames;
+		}
+
+		String tldDirLocation = "portal-web/docroot/WEB-INF/tld/";
+
+		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL - 1; i++) {
+			File file = new File(getBaseDirName() + tldDirLocation);
+
+			if (file.exists()) {
+				tldFileNames.addAll(
+					getFileNames(
+						getBaseDirName() + tldDirLocation, new String[0],
+						new String[] {"**/*.tld"}));
+
+				break;
+			}
+
+			tldDirLocation = "../" + tldDirLocation;
+		}
+
+		return tldFileNames;
+	}
+
+	private String _getUtilTaglibSrcDirName() {
+		File utilTaglibDir = getFile(
+			"util-taglib/src", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (utilTaglibDir == null) {
+			return StringPool.BLANK;
+		}
+
+		String utilTaglibSrcDirName = utilTaglibDir.getAbsolutePath();
+
+		utilTaglibSrcDirName = StringUtil.replace(
+			utilTaglibSrcDirName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+		utilTaglibSrcDirName += StringPool.SLASH;
+
+		return utilTaglibSrcDirName;
 	}
 
 	private boolean _isValidTagAttributeValue(String value, String dataType) {

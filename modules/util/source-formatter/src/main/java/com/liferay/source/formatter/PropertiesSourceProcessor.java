@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.checks.PropertiesDefinitionKeysCheck;
 import com.liferay.source.formatter.checks.PropertiesDependenciesFileCheck;
 import com.liferay.source.formatter.checks.PropertiesLiferayPluginPackageFileCheck;
@@ -24,16 +23,9 @@ import com.liferay.source.formatter.checks.PropertiesPortletFileCheck;
 import com.liferay.source.formatter.checks.PropertiesSourceFormatterFileCheck;
 import com.liferay.source.formatter.checks.PropertiesWhitespaceCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
-import com.liferay.source.formatter.util.FileUtil;
-
-import java.io.File;
-
-import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * @author Hugo Huijser
@@ -74,53 +66,11 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		sourceChecks.add(new PropertiesDependenciesFileCheck());
 		sourceChecks.add(new PropertiesLiferayPluginPackageFileCheck());
 		sourceChecks.add(new PropertiesLongLinesCheck());
-		sourceChecks.add(
-			new PropertiesPortalFileCheck(_getPortalPortalPropertiesContent()));
+		sourceChecks.add(new PropertiesPortalFileCheck());
 		sourceChecks.add(new PropertiesPortletFileCheck());
-		sourceChecks.add(
-			new PropertiesSourceFormatterFileCheck(_hasPrivateAppsDir()));
+		sourceChecks.add(new PropertiesSourceFormatterFileCheck());
 
 		return sourceChecks;
-	}
-
-	private String _getPortalPortalPropertiesContent() throws Exception {
-		String portalPortalPropertiesContent = null;
-
-		if (portalSource) {
-			File file = getFile(
-				"portal-impl/src/portal.properties", PORTAL_MAX_DIR_LEVEL);
-
-			return FileUtil.read(file);
-		}
-
-		ClassLoader classLoader =
-			PropertiesSourceProcessor.class.getClassLoader();
-
-		URL url = classLoader.getResource("portal.properties");
-
-		if (url != null) {
-			portalPortalPropertiesContent = IOUtils.toString(url);
-		}
-		else {
-			portalPortalPropertiesContent = StringPool.BLANK;
-		}
-
-		return portalPortalPropertiesContent;
-	}
-
-	private boolean _hasPrivateAppsDir() {
-		if (!portalSource) {
-			return false;
-		}
-
-		File privateAppsDir = getFile(
-			"modules/private/apps", PORTAL_MAX_DIR_LEVEL);
-
-		if (privateAppsDir != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 }

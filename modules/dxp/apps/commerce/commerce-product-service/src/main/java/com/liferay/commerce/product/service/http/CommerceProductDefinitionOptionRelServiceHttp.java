@@ -60,7 +60,8 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 		long commerceProductOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority,
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -71,7 +72,7 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceProductDefinitionId, commerceProductOptionId,
 					nameMap, descriptionMap, ddmFormFieldTypeName, priority,
-					serviceContext);
+					facetable, skuContributor, serviceContext);
 
 			Object returnObj = null;
 
@@ -371,7 +372,8 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 		long commerceProductOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority,
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -382,7 +384,8 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceProductDefinitionOptionRelId,
 					commerceProductOptionId, nameMap, descriptionMap,
-					ddmFormFieldTypeName, priority, serviceContext);
+					ddmFormFieldTypeName, priority, facetable, skuContributor,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -410,7 +413,7 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 	private static final Class<?>[] _addCommerceProductDefinitionOptionRelParameterTypes0 =
 		new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, int.class,
+			java.lang.String.class, int.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCommerceProductDefinitionOptionRelParameterTypes1 =
@@ -440,7 +443,7 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 	private static final Class<?>[] _updateCommerceProductDefinitionOptionRelParameterTypes9 =
 		new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, int.class,
+			java.lang.String.class, int.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

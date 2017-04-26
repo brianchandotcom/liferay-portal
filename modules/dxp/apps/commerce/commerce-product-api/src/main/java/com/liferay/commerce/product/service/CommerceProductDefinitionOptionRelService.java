@@ -66,8 +66,9 @@ public interface CommerceProductDefinitionOptionRelService extends BaseService {
 		long commerceProductDefinitionId, long commerceProductOptionId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority,
-		ServiceContext serviceContext) throws PortalException;
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor, ServiceContext serviceContext)
+		throws PortalException;
 
 	public CommerceProductDefinitionOptionRel deleteCommerceProductDefinitionOptionRel(
 		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel)
@@ -88,8 +89,9 @@ public interface CommerceProductDefinitionOptionRelService extends BaseService {
 		long commerceProductDefinitionOptionRelId,
 		long commerceProductOptionId, Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority,
-		ServiceContext serviceContext) throws PortalException;
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceProductDefinitionOptionRelsCount(

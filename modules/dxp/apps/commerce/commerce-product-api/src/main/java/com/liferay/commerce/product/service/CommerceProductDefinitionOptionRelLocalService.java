@@ -87,8 +87,9 @@ public interface CommerceProductDefinitionOptionRelLocalService
 		long commerceProductDefinitionId, long commerceProductOptionId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority,
-		ServiceContext serviceContext) throws PortalException;
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new commerce product definition option rel with the primary key. Does not add the commerce product definition option rel to the database.
@@ -175,8 +176,9 @@ public interface CommerceProductDefinitionOptionRelLocalService
 		long commerceProductDefinitionOptionRelId,
 		long commerceProductOptionId, Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority,
-		ServiceContext serviceContext) throws PortalException;
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

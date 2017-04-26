@@ -75,7 +75,8 @@ public class CommerceProductDefinitionOptionRelServiceSoap {
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
-		java.lang.String ddmFormFieldTypeName, int priority,
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -87,7 +88,8 @@ public class CommerceProductDefinitionOptionRelServiceSoap {
 			com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel returnValue =
 				CommerceProductDefinitionOptionRelServiceUtil.addCommerceProductDefinitionOptionRel(commerceProductDefinitionId,
 					commerceProductOptionId, nameMap, descriptionMap,
-					ddmFormFieldTypeName, priority, serviceContext);
+					ddmFormFieldTypeName, priority, facetable, skuContributor,
+					serviceContext);
 
 			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModel(returnValue);
 		}
@@ -233,7 +235,8 @@ public class CommerceProductDefinitionOptionRelServiceSoap {
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
-		java.lang.String ddmFormFieldTypeName, int priority,
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -245,7 +248,8 @@ public class CommerceProductDefinitionOptionRelServiceSoap {
 			com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel returnValue =
 				CommerceProductDefinitionOptionRelServiceUtil.updateCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId,
 					commerceProductOptionId, nameMap, descriptionMap,
-					ddmFormFieldTypeName, priority, serviceContext);
+					ddmFormFieldTypeName, priority, facetable, skuContributor,
+					serviceContext);
 
 			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModel(returnValue);
 		}

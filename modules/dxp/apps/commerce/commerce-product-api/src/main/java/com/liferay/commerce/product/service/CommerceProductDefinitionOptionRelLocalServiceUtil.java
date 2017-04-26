@@ -67,13 +67,15 @@ public class CommerceProductDefinitionOptionRelLocalServiceUtil {
 		long commerceProductDefinitionId, long commerceProductOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority,
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceProductDefinitionOptionRel(commerceProductDefinitionId,
 			commerceProductOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, priority, serviceContext);
+			ddmFormFieldTypeName, priority, facetable, skuContributor,
+			serviceContext);
 	}
 
 	/**
@@ -183,13 +185,15 @@ public class CommerceProductDefinitionOptionRelLocalServiceUtil {
 		long commerceProductOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority,
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId,
 			commerceProductOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, priority, serviceContext);
+			ddmFormFieldTypeName, priority, facetable, skuContributor,
+			serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

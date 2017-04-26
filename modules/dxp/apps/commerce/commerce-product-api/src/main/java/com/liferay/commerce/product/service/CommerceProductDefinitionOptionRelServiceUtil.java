@@ -54,13 +54,15 @@ public class CommerceProductDefinitionOptionRelServiceUtil {
 		long commerceProductDefinitionId, long commerceProductOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority,
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceProductDefinitionOptionRel(commerceProductDefinitionId,
 			commerceProductOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, priority, serviceContext);
+			ddmFormFieldTypeName, priority, facetable, skuContributor,
+			serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel deleteCommerceProductDefinitionOptionRel(
@@ -96,13 +98,15 @@ public class CommerceProductDefinitionOptionRelServiceUtil {
 		long commerceProductOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority,
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId,
 			commerceProductOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, priority, serviceContext);
+			ddmFormFieldTypeName, priority, facetable, skuContributor,
+			serviceContext);
 	}
 
 	public static int getCommerceProductDefinitionOptionRelsCount(

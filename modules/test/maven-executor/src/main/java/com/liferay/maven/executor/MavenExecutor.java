@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.junit.rules.ExternalResource;
 
@@ -98,8 +99,16 @@ public class MavenExecutor extends ExternalResource {
 		return new Result(exitCode, sb.toString());
 	}
 
+	public String getHttpNonProxyHosts() {
+		return System.getProperty("http.nonProxyHosts");
+	}
+
 	public String getHttpProxyHost() {
 		return System.getProperty("http.proxyHost");
+	}
+
+	public String getHttpProxyPassword() {
+		return System.getProperty("http.proxyPassword");
 	}
 
 	public int getHttpProxyPort() {
@@ -110,6 +119,10 @@ public class MavenExecutor extends ExternalResource {
 		}
 
 		return Integer.parseInt(port);
+	}
+
+	public String getHttpProxyUser() {
+		return System.getProperty("http.proxyUser");
 	}
 
 	public Path getMavenHomeDirPath() {
@@ -244,6 +257,16 @@ public class MavenExecutor extends ExternalResource {
 				"[$HTTP_PROXY_HOST$]", httpProxyHost);
 			mavenSettingsXml = mavenSettingsXml.replace(
 				"[$HTTP_PROXY_PORT$]", String.valueOf(httpProxyPort));
+
+			mavenSettingsXml = _replaceSettingsXmlElement(
+				mavenSettingsXml, "[$HTTP_PROXY_USERNAME$]",
+				getHttpProxyUser());
+			mavenSettingsXml = _replaceSettingsXmlElement(
+				mavenSettingsXml, "[$HTTP_PROXY_PASSWORD$]",
+				getHttpProxyPassword());
+			mavenSettingsXml = _replaceSettingsXmlElement(
+				mavenSettingsXml, "[$HTTP_PROXY_NON_PROXY_HOSTS$]",
+				getHttpNonProxyHosts());
 		}
 		else {
 			mavenSettingsXml = mavenSettingsXml.replaceFirst(
@@ -280,6 +303,20 @@ public class MavenExecutor extends ExternalResource {
 		}
 
 		return false;
+	}
+
+	private static String _replaceSettingsXmlElement(
+		String settingsXml, String placeholder, String value) {
+
+		if (Validator.isNotNull(value)) {
+			settingsXml = settingsXml.replace(placeholder, value);
+		}
+		else {
+			settingsXml = settingsXml.replaceFirst(
+				"<\\w+>" + Pattern.quote(placeholder) + "<\\/\\w+>\\s+", "");
+		}
+
+		return settingsXml;
 	}
 
 	private Path _checkMavenHomeDirPath() {

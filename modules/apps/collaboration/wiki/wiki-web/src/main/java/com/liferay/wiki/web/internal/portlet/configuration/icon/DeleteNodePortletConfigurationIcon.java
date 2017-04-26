@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeService;
@@ -140,7 +140,7 @@ public class DeleteNodePortletConfigurationIcon
 
 	protected boolean isTrashEnabled(long groupId) {
 		try {
-			if (TrashUtil.isTrashEnabled(groupId)) {
+			if (_trashHelper.isTrashEnabled(groupId)) {
 				return true;
 			}
 		}
@@ -157,6 +157,9 @@ public class DeleteNodePortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 	private WikiNodeService _wikiNodeService;
 

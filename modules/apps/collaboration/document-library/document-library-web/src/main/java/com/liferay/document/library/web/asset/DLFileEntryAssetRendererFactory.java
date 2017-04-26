@@ -44,6 +44,7 @@ import com.liferay.portlet.documentlibrary.asset.DLFileEntryClassTypeReader;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.trash.TrashHelper;
 
 import java.util.Locale;
 
@@ -114,7 +115,7 @@ public class DLFileEntryAssetRendererFactory
 
 		DLFileEntryAssetRenderer dlFileEntryAssetRenderer =
 			new DLFileEntryAssetRenderer(
-				fileEntry, fileVersion, _dlFileEntryLocalService);
+				fileEntry, fileVersion, _dlFileEntryLocalService, _trashHelper);
 
 		dlFileEntryAssetRenderer.setAssetRendererType(type);
 
@@ -262,5 +263,8 @@ public class DLFileEntryAssetRendererFactory
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

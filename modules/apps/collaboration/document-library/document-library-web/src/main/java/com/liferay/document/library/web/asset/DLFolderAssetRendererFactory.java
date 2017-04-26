@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.trash.TrashHelper;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -61,7 +62,7 @@ public class DLFolderAssetRendererFactory
 		Folder folder = _dlAppLocalService.getFolder(classPK);
 
 		DLFolderAssetRenderer dlFolderAssetRenderer = new DLFolderAssetRenderer(
-			folder);
+			folder, _trashHelper);
 
 		dlFolderAssetRenderer.setAssetRendererType(type);
 
@@ -117,5 +118,8 @@ public class DLFolderAssetRendererFactory
 	}
 
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

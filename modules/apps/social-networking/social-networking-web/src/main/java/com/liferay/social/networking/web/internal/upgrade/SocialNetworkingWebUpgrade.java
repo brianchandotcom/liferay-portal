@@ -20,8 +20,6 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
 import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 
-import java.sql.SQLException;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -65,12 +63,10 @@ public class SocialNetworkingWebUpgrade implements UpgradeStepRegistrator {
 			};
 
 		try {
-			if (!baseUpgradeWebModuleRelease.hasRelease()) {
-				baseUpgradeWebModuleRelease.upgrade();
-			}
+			baseUpgradeWebModuleRelease.upgrade();
 		}
-		catch (UpgradeException | SQLException e) {
-			throw new RuntimeException(e);
+		catch (UpgradeException ue) {
+			throw new RuntimeException(ue);
 		}
 
 		registry.register(

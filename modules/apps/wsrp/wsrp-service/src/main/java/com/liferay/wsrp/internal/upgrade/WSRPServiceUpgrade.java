@@ -24,8 +24,6 @@ import com.liferay.wsrp.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.wsrp.internal.upgrade.v1_0_0.UpgradeUuid;
 import com.liferay.wsrp.internal.upgrade.v1_0_0.UpgradeWSRP;
 
-import java.sql.SQLException;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -93,12 +91,10 @@ public class WSRPServiceUpgrade implements UpgradeStepRegistrator {
 			};
 
 		try {
-			if (!upgradeWebModuleRelease.hasRelease()) {
-				upgradeWebModuleRelease.upgrade();
-			}
+			upgradeWebModuleRelease.upgrade();
 		}
-		catch (UpgradeException | SQLException e) {
-			throw new RuntimeException(e);
+		catch (UpgradeException ue) {
+			throw new RuntimeException(ue);
 		}
 
 		registry.register(

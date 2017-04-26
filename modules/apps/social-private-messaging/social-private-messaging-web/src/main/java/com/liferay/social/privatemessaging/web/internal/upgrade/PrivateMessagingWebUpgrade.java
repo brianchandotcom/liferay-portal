@@ -21,8 +21,6 @@ import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
 import com.liferay.social.privatemessaging.constants.PrivateMessagingPortletKeys;
 import com.liferay.social.privatemessaging.web.internal.upgrade.v1_0_0.UpgradePortletId;
 
-import java.sql.SQLException;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -52,12 +50,10 @@ public class PrivateMessagingWebUpgrade implements UpgradeStepRegistrator {
 			};
 
 		try {
-			if (!baseUpgradeWebModuleRelease.hasRelease()) {
-				baseUpgradeWebModuleRelease.upgrade();
-			}
+			baseUpgradeWebModuleRelease.upgrade();
 		}
-		catch (UpgradeException | SQLException e) {
-			throw new RuntimeException(e);
+		catch (UpgradeException ue) {
+			throw new RuntimeException(ue);
 		}
 
 		registry.register(

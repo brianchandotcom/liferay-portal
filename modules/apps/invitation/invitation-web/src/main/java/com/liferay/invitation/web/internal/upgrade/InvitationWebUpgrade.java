@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
 
-import java.sql.SQLException;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -51,12 +49,10 @@ public class InvitationWebUpgrade implements UpgradeStepRegistrator {
 			};
 
 		try {
-			if (!upgradeWebModuleRelease.hasRelease()) {
-				upgradeWebModuleRelease.upgrade();
-			}
+			upgradeWebModuleRelease.upgrade();
 		}
-		catch (UpgradeException | SQLException e) {
-			throw new RuntimeException(e);
+		catch (UpgradeException ue) {
+			throw new RuntimeException(ue);
 		}
 
 		registry.register(

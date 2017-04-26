@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_0_3;
 
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_0_3.util.GroupTable;
 
@@ -29,9 +30,11 @@ public class UpgradeGroup extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
+		DBInspector dbInspector = new DBInspector(connection);
 
 		try (ResultSet rs = databaseMetaData.getColumns(
-				null, null, normalizeName("Group_", databaseMetaData),
+				dbInspector.getCatalog(), dbInspector.getSchema(),
+				normalizeName("Group_", databaseMetaData),
 				normalizeName("groupKey", databaseMetaData))) {
 
 			if (rs.next()) {

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.wiki.asset.WikiNodeTrashRenderer;
@@ -174,7 +175,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
 		WikiNode node = _wikiNodeLocalService.getNode(classPK);
 
-		return new WikiNodeTrashRenderer(node);
+		return new WikiNodeTrashRenderer(node, _trashHelper);
 	}
 
 	@Override
@@ -254,6 +255,9 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 	private WikiNodeLocalService _wikiNodeLocalService;
 	private WikiPageLocalService _wikiPageLocalService;

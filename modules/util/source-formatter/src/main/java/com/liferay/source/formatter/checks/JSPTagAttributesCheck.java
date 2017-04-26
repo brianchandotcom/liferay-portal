@@ -63,6 +63,11 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	@Override
+	public void setAllFileNames(List<String> allFileNames) {
+		_allFileNames = allFileNames;
+	}
+
+	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {
@@ -404,7 +409,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		}
 
 		List<String> tldFileNames = SourceFormatterUtil.filterFileNames(
-			getAllFileNames(), excludes, new String[] {"**/*.tld"});
+			_allFileNames, excludes, new String[] {"**/*.tld"});
 
 		if (!isPortalSource()) {
 			return tldFileNames;
@@ -473,6 +478,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		return false;
 	}
 
+	private List<String> _allFileNames;
 	private final Pattern _jspTaglibPattern = Pattern.compile(
 		"<[-\\w]+:[-\\w]+ .");
 	private final Pattern _multilineTagPattern = Pattern.compile(

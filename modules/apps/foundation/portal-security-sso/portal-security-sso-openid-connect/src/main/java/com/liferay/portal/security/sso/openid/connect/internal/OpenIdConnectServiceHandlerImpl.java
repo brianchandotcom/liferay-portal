@@ -276,13 +276,15 @@ public class OpenIdConnectServiceHandlerImpl
 			httpServletResponse.sendRedirect(
 				authenticationRequestURI.toString());
 
-			OpenIdConnectSession oidcSession = new OpenIdConnectSession(
-				openIdConnectProviderName, nonce, state);
+			OpenIdConnectSession openIdConnectSession =
+				new OpenIdConnectSession(
+					openIdConnectProviderName, nonce, state);
 
 			HttpSession httpSession = httpServletRequest.getSession();
 
 			httpSession.setAttribute(
-				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION, oidcSession);
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION,
+				openIdConnectSession);
 		}
 		catch (IOException | URISyntaxException e) {
 			throw new SystemException(

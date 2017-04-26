@@ -63,6 +63,8 @@ public class CommerceProductOptionsDisplayContext {
 		throws PortalException {
 
 		_httpServletRequest = httpServletRequest;
+		_commerceProductOptionLocalService = commerceProductOptionLocalService;
+		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 
 		_commerceProductRequestHelper = new CommerceProductRequestHelper(
 			_httpServletRequest);
@@ -71,9 +73,6 @@ public class CommerceProductOptionsDisplayContext {
 			_commerceProductRequestHelper.getLiferayPortletRequest();
 		_liferayPortletResponse =
 			_commerceProductRequestHelper.getLiferayPortletResponse();
-
-		_commerceProductOptionLocalService = commerceProductOptionLocalService;
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_httpServletRequest);

@@ -295,20 +295,7 @@ AUI.add(
 
 				instance._addCondition(index);
 
-				instance._updateLogicOperatorVisibility();
-			},
-
-			_updateLogicOperatorVisibility: function() {
-				var instance = this;
-
-				var logicOperatorNode = instance.get('boundingBox').one('.liferay-ddl-form-builder-rule-condition-list').one('.dropdown button');
-
-				if (instance._conditionsIndexes.length > 1) {
-					logicOperatorNode.removeAttribute('disabled');
-				}
-				else {
-					logicOperatorNode.setAttribute('disabled', '');
-				}
+				instance._updateLogicOperatorEnableState();
 			},
 
 			_handleConditionFieldsChange: function(event) {
@@ -349,7 +336,7 @@ AUI.add(
 
 				instance._toggleDeleteConditionButton();
 
-				instance._updateLogicOperatorVisibility();
+				instance._updateLogicOperatorEnableState();
 			},
 
 			_handleLogicOperatorChange: function(event) {
@@ -634,6 +621,19 @@ AUI.add(
 				var conditionItems = conditionList.all('.timeline-item');
 
 				conditionList.toggleClass(CSS_CAN_REMOVE_ITEM, conditionItems.size() > 2);
+			},
+
+			_updateLogicOperatorEnableState: function() {
+				var instance = this;
+
+				var logicOperatorNode = instance.get('boundingBox').one('.liferay-ddl-form-builder-rule-condition-list').one('.dropdown button');
+
+				if (instance._conditionsIndexes.length > 1) {
+					logicOperatorNode.removeAttribute('disabled');
+				}
+				else {
+					logicOperatorNode.setAttribute('disabled', '');
+				}
 			},
 
 			_updateOperatorList: function(dataType, conditionIndex) {

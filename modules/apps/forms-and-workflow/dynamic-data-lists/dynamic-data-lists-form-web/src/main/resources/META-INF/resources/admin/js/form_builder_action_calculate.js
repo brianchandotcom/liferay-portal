@@ -126,9 +126,11 @@ AUI.add(
 
 						instance._expressionField = new Liferay.DDM.Field.Text(
 							{
+								bubbleTargets: [instance],
 								displayStyle: 'multiline',
 								fieldName: instance.get('index') + '-action',
 								placeholder: Liferay.Language.get('the-expression-will-be-displayed-here'),
+								readOnly: true,
 								value: value,
 								visible: true
 							}
@@ -150,6 +152,7 @@ AUI.add(
 
 						instance._targetField = new Liferay.DDM.Field.Select(
 							{
+								bubbleTargets: [instance],
 								fieldName: instance.get('index') + '-action',
 								label: Liferay.Language.get('choose-a-field-to-show-the-result'),
 								options: instance.get('options'),
@@ -207,7 +210,8 @@ AUI.add(
 							}
 						}
 
-						instance._expressionField.setValue(instance._processExpressionString());
+						instance._expressionField.set('value', instance._processExpressionString());
+						instance._expressionField.render();
 					},
 
 					_processExpressionString: function(keyActions) {

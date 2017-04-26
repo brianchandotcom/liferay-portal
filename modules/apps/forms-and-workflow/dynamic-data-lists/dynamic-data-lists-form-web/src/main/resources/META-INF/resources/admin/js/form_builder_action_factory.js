@@ -71,6 +71,7 @@ AUI.add(
 								{
 									action: act,
 									boundingBox: container,
+									bubbleTargets: [instance],
 									fields: instance.get('fields'),
 									getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
 									getDataProviders: instance.get('getDataProviders'),
@@ -85,6 +86,7 @@ AUI.add(
 								{
 									action: act,
 									boundingBox: container,
+									bubbleTargets: [instance],
 									getFunctionsURL: instance.get('getFunctionsURL'),
 									index: index,
 									options: instance.get('fields'),

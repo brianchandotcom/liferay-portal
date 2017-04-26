@@ -68,7 +68,6 @@
 				<version>3.3.0</version>
 				<executions>
 					<execution>
-						<id>default-bnd-process</id>
 						<goals>
 							<goal>bnd-process</goal>
 						</goals>
@@ -93,7 +92,6 @@
 				<version>@com.liferay.css.builder.version@</version>
 				<executions>
 					<execution>
-						<id>default-build</id>
 						<phase>generate-sources</phase>
 						<goals>
 							<goal>build</goal>
@@ -102,6 +100,25 @@
 				</executions>
 				<configuration>
 					<docrootDirName>src/main/resources</docrootDirName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.portal.tools.soy.builder</artifactId>
+				<version>@com.liferay.portal.tools.soy.builder.version@</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>build</goal>
+							<goal>wrap-alloy-template</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<dir>${project.build.directory}/classes/META-INF/resources</dir>
+					<moduleName>${artifactId}-form-field-template</moduleName>
+					<namespace>ddm</namespace>
 				</configuration>
 			</plugin>
 		</plugins>

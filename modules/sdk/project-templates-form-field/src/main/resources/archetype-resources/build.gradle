@@ -22,11 +22,8 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.cmpn", version: "6.0.0"
 }
 
-task wrapSoyTemplates
-
 classes {
 	dependsOn buildSoy
-	dependsOn wrapSoyTemplates
 }
 
 transpileJS {
@@ -34,19 +31,10 @@ transpileJS {
 	srcIncludes = "**/*.es.js"
 }
 
-wrapSoyTemplates {
-	doLast {
-		FileTree soyJsFileTree = fileTree(dir: "build", include: "**/*.soy.js")
-
-		String soyJsWrapperHeader = "AUI.add('${artifactId}-form-field-template', function(A) {"
-		String soyJsWrapperFooter = "}, '', {requires: ['soyutils']});";
-
-		soyJsFileTree.each {
-			File soyJsFile ->
-
-			soyJsFile.text = soyJsWrapperHeader + soyJsFile.text.replace("(typeof ddm == 'undefined') { var ddm = {}; }", "(typeof ddm == 'undefined') { window.ddm = {}; }") + soyJsWrapperFooter
-		}
-	}
+wrapSoyAlloyTemplate {
+	enabled = true
+	moduleName = "${artifactId}-form-field-template"
+	namespace = "ddm"
 }
 #if (${projectType} != "workspace")
 

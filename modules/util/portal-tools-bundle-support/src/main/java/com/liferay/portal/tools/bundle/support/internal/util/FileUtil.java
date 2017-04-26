@@ -15,7 +15,6 @@
 package com.liferay.portal.tools.bundle.support.internal.util;
 
 import com.liferay.portal.tools.bundle.support.BundleSupport;
-import com.liferay.portal.tools.bundle.support.util.StreamLogger;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -23,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import java.net.URI;
 import java.net.URL;
@@ -56,29 +54,6 @@ import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.apache.commons.compress.utils.IOUtils;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHeaders;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.config.CookieSpecs;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.client.utils.DateUtils;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.client.RedirectLocations;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
 
 /**
  * @author Andrea Di Giorgi
@@ -178,129 +153,6 @@ public class FileUtil {
 			});
 	}
 
-	public static Path downloadFile(
-			URI uri, String userName, String password, Path cacheDirPath,
-			StreamLogger streamLogger)
-		throws Exception {
-
-		Path path;
-
-		try (CloseableHttpClient closeableHttpClient = _getHttpClient(
-				uri, userName, password)) {
-
-			HttpHead httpHead = new HttpHead(uri);
-
-			HttpContext httpContext = new BasicHttpContext();
-
-			String fileName = null;
-			Date lastModifiedDate;
-
-			try (CloseableHttpResponse closeableHttpResponse =
-					closeableHttpClient.execute(httpHead, httpContext)) {
-
-				_checkResponseStatus(closeableHttpResponse);
-
-				Header dispositionHeader = closeableHttpResponse.getFirstHeader(
-					"Content-Disposition");
-
-				if (dispositionHeader != null) {
-					String dispositionValue = dispositionHeader.getValue();
-
-					int index = dispositionValue.indexOf("filename=");
-
-					if (index > 0) {
-						fileName = dispositionValue.substring(
-							index + 10, dispositionValue.length() - 1);
-					}
-				}
-				else {
-					RedirectLocations redirectLocations = (RedirectLocations)
-						httpContext.getAttribute(
-							HttpClientContext.REDIRECT_LOCATIONS);
-
-					if (redirectLocations != null) {
-						uri = redirectLocations.get(
-							redirectLocations.size() - 1);
-					}
-				}
-
-				Header lastModifiedHeader =
-					closeableHttpResponse.getFirstHeader(
-						HttpHeaders.LAST_MODIFIED);
-
-				if (lastModifiedHeader != null) {
-					lastModifiedDate = DateUtils.parseDate(
-						lastModifiedHeader.getValue());
-				}
-				else {
-					lastModifiedDate = new Date();
-				}
-			}
-
-			if (fileName == null) {
-				String uriPath = uri.getPath();
-
-				fileName = uriPath.substring(uriPath.lastIndexOf('/') + 1);
-			}
-
-			if (cacheDirPath == null) {
-				cacheDirPath = Files.createTempDirectory(null);
-			}
-
-			path = cacheDirPath.resolve(fileName);
-
-			if (Files.exists(path)) {
-				FileTime fileTime = Files.getLastModifiedTime(path);
-
-				if (fileTime.toMillis() == lastModifiedDate.getTime()) {
-					return path;
-				}
-
-				Files.delete(path);
-			}
-
-			Files.createDirectories(cacheDirPath);
-
-			HttpGet httpGet = new HttpGet(uri);
-
-			try (CloseableHttpResponse closeableHttpResponse =
-					closeableHttpClient.execute(httpGet)) {
-
-				_checkResponseStatus(closeableHttpResponse);
-
-				HttpEntity httpEntity = closeableHttpResponse.getEntity();
-
-				long length = httpEntity.getContentLength();
-
-				streamLogger.onStarted();
-
-				try (InputStream inputStream = httpEntity.getContent();
-					OutputStream outputStream = Files.newOutputStream(path)) {
-
-					byte[] buffer = new byte[10 * 1024];
-					int completed = 0;
-					int read = -1;
-
-					while ((read = inputStream.read(buffer)) >= 0) {
-						outputStream.write(buffer, 0, read);
-
-						completed += read;
-
-						streamLogger.onProgress(completed, length);
-					}
-				}
-				finally {
-					streamLogger.onCompleted();
-				}
-			}
-
-			Files.setLastModifiedTime(
-				path, FileTime.fromMillis(lastModifiedDate.getTime()));
-		}
-
-		return path;
-	}
-
 	public static String getFileLength(long length) {
 		DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
@@ -326,6 +178,13 @@ public class FileUtil {
 		URL url = codeSource.getLocation();
 
 		return new File(url.toURI());
+	}
+
+	public static String getToken() throws IOException {
+		File file = new File(
+			System.getProperty("user.home"), ".liferay/.token");
+
+		return new String(Files.readAllBytes(file.toPath()));
 	}
 
 	public static boolean isPosixSupported(Path path) {
@@ -459,16 +318,6 @@ public class FileUtil {
 		copyFile(entryFile.toPath(), zipPath);
 	}
 
-	private static void _checkResponseStatus(HttpResponse httpResponse)
-		throws IOException {
-
-		StatusLine statusLine = httpResponse.getStatusLine();
-
-		if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
-			throw new IOException(statusLine.getReasonPhrase());
-		}
-	}
-
 	private static FileSystem _createFileSystem(Path path, boolean create)
 		throws Exception {
 
@@ -481,49 +330,6 @@ public class FileUtil {
 
 		return FileSystems.newFileSystem(
 			new URI("jar:" + uri.getScheme(), uri.getPath(), null), properties);
-	}
-
-	private static CloseableHttpClient _getHttpClient(
-		URI uri, String userName, String password) {
-
-		HttpClientBuilder httpClientBuilder = HttpClients.custom();
-
-		CredentialsProvider credentialsProvider =
-			new BasicCredentialsProvider();
-
-		httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
-
-		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
-
-		requestConfigBuilder.setCookieSpec(CookieSpecs.STANDARD);
-		requestConfigBuilder.setRedirectsEnabled(true);
-
-		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
-
-		if ((userName != null) && (password != null)) {
-			credentialsProvider.setCredentials(
-				new AuthScope(uri.getHost(), uri.getPort()),
-				new UsernamePasswordCredentials(userName, password));
-		}
-
-		String scheme = uri.getScheme();
-
-		String proxyHost = System.getProperty(scheme + ".proxyHost");
-		String proxyPort = System.getProperty(scheme + ".proxyPort");
-		String proxyUser = System.getProperty(scheme + ".proxyUser");
-		String proxyPassword = System.getProperty(scheme + ".proxyPassword");
-
-		if ((proxyHost != null) && (proxyPort != null) && (proxyUser != null) &&
-			(proxyPassword != null)) {
-
-			credentialsProvider.setCredentials(
-				new AuthScope(proxyHost, Integer.parseInt(proxyPort)),
-				new UsernamePasswordCredentials(proxyUser, proxyPassword));
-		}
-
-		httpClientBuilder.useSystemProperties();
-
-		return httpClientBuilder.build();
 	}
 
 	private static void _untar(

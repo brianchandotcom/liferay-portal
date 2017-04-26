@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -145,44 +144,10 @@ public class TrashImpl implements Trash {
 		ActionRequest actionRequest, List<TrashedModel> trashedModels,
 		String cmd) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<String> classNames = new ArrayList<>();
-		List<Long> restoreTrashEntryIds = new ArrayList<>();
-		List<String> titles = new ArrayList<>();
-
-		for (int i = 0; i < trashedModels.size(); i++) {
-			try {
-				TrashedModel trashedModel = trashedModels.get(i);
-
-				TrashEntry trashEntry = trashedModel.getTrashEntry();
-
-				TrashHandler trashHandler = trashedModel.getTrashHandler();
-
-				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-					trashedModel.getTrashEntryClassPK());
-
-				classNames.add(trashRenderer.getClassName());
-
-				restoreTrashEntryIds.add(trashEntry.getEntryId());
-				titles.add(trashRenderer.getTitle(themeDisplay.getLocale()));
-			}
-			catch (Exception e) {
-			}
-		}
-
-		Map<String, String[]> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<>();
 
 		data.put(Constants.CMD, new String[] {cmd});
-
-		data.put(
-			"deleteEntryClassName",
-			ArrayUtil.toStringArray(classNames.toArray()));
-		data.put("deleteEntryTitle", ArrayUtil.toStringArray(titles.toArray()));
-		data.put(
-			"restoreTrashEntryIds",
-			ArrayUtil.toStringArray(restoreTrashEntryIds.toArray()));
+		data.put("trashedModels", trashedModels);
 
 		SessionMessages.add(
 			actionRequest,

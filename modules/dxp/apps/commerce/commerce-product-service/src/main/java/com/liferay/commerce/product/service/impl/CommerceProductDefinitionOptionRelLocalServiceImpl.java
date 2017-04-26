@@ -146,8 +146,8 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 
 	@Override
 	public void deleteCommerceProductDefinitionOptionRels(
-		long commerceProductDefinitionId)
-	throws PortalException {
+			long commerceProductDefinitionId)
+		throws PortalException {
 
 		List<CommerceProductDefinitionOptionRel>
 			commerceProductDefinitionOptionRels =
@@ -156,16 +156,14 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 						commerceProductDefinitionId, QueryUtil.ALL_POS,
 						QueryUtil.ALL_POS);
 
-		for(CommerceProductDefinitionOptionRel
+		for (CommerceProductDefinitionOptionRel
 				commerceProductDefinitionOptionRel
-				:commerceProductDefinitionOptionRels){
+				:commerceProductDefinitionOptionRels) {
 
 			commerceProductDefinitionOptionRelLocalService.
 				deleteCommerceProductDefinitionOptionRel(
 					commerceProductDefinitionOptionRel);
-
 		}
-
 	}
 
 	@Override

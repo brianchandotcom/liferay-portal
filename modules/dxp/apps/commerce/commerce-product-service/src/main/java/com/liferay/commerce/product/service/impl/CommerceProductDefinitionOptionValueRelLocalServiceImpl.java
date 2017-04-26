@@ -141,9 +141,10 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceImpl
 						commerceProductDefinitionOptionRelId, QueryUtil.ALL_POS,
 						QueryUtil.ALL_POS);
 
-		for(CommerceProductDefinitionOptionValueRel
+		for (CommerceProductDefinitionOptionValueRel
 				commerceProductDefinitionOptionValueRel :
-					commerceProductDefinitionOptionValueRels){
+					commerceProductDefinitionOptionValueRels) {
+
 			commerceProductDefinitionOptionValueRelLocalService.
 				deleteCommerceProductDefinitionOptionValueRel(
 					commerceProductDefinitionOptionValueRel);

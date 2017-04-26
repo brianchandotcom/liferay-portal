@@ -158,8 +158,7 @@ public class CommerceProductInstanceLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceProductInstances(
-		long commerceProductDefinitionId)
+	public void deleteCommerceProductInstances(long commerceProductDefinitionId)
 		throws PortalException {
 
 		List<CommerceProductInstance> commerceProductInstances =
@@ -168,11 +167,11 @@ public class CommerceProductInstanceLocalServiceImpl
 				QueryUtil.ALL_POS);
 
 		for (CommerceProductInstance commerceProductInstance
-				: commerceProductInstances){
+				: commerceProductInstances) {
+
 			commerceProductInstanceLocalService.deleteCommerceProductInstance(
 				commerceProductInstance);
 		}
-
 	}
 
 	@Override

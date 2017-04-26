@@ -176,14 +176,12 @@ public class CommerceProductDefinitionLocalServiceImpl
 
 		commerceProductDefinitionOptionRelLocalService.
 			deleteCommerceProductDefinitionOptionRels(
-				commerceProductDefinition.
-					getCommerceProductDefinitionId());
+				commerceProductDefinition.getCommerceProductDefinitionId());
 
 		// Commerce product instances
 
 		commerceProductInstanceLocalService.deleteCommerceProductInstances(
-			commerceProductDefinition.
-				getCommerceProductDefinitionId());
+			commerceProductDefinition.getCommerceProductDefinitionId());
 
 		// Resources
 
@@ -278,8 +276,6 @@ public class CommerceProductDefinitionLocalServiceImpl
 	public int getCommerceProductDefinitionsCount(long groupId) {
 		return commerceProductDefinitionPersistence.countByGroupId(groupId);
 	}
-
-
 
 	@Override
 	public void updateAsset(

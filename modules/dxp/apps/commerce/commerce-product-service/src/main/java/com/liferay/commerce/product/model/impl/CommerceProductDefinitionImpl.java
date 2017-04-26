@@ -17,11 +17,7 @@ package com.liferay.commerce.product.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.service.CommerceProductDefinitionLocalServiceUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -47,6 +43,5 @@ public class CommerceProductDefinitionImpl
 		return availableLanguageIds.toArray(
 			new String[availableLanguageIds.size()]);
 	}
-
 
 }

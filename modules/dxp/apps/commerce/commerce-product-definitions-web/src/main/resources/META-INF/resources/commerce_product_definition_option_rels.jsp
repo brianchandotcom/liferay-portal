@@ -60,8 +60,8 @@ renderResponse.setTitle(commerceProductDefinition.getTitle(languageId));
 		</c:if>
 
 		<liferay-frontend:management-bar-display-buttons
+			disabled=""
 			displayViews='<%= new String[] {"list"} %>'
-            disabled=""
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= commerceProductDefinitionOptionRelDisplayContext.getDisplayStyle() %>"
 		/>
@@ -153,7 +153,7 @@ renderResponse.setTitle(commerceProductDefinition.getTitle(languageId));
 
 <aui:form action="<%= addCommerceProductDefinitionOptionRelURL %>" cssClass="hide" name="addCommerceProductDefinitionOptionRelFm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-    <aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceProductDefinitionId" type="hidden" value="<%= commerceProductDefinitionId %>" />
 	<aui:input name="commerceProductOptionId" type="hidden" value="" />
 </aui:form>

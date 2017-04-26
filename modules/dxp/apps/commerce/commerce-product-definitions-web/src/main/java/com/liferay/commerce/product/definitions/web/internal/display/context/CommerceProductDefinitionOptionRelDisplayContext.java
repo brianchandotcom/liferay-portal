@@ -17,7 +17,6 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 import com.liferay.commerce.product.definitions.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.internal.util.CommerceProductDefinitionsPortletUtil;
 import com.liferay.commerce.product.item.selector.criterion.CommerceProductOptionItemSelectorCriterion;
-import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
 import com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
@@ -101,16 +100,6 @@ public class CommerceProductDefinitionOptionRelDisplayContext
 			getCommerceProductDefinitionOptionRelId();
 	}
 
-	@Override
-	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName","viewProductDefinitionOptionRels");
-
-		return portletURL;
-	}
-
 	public List<DDMFormFieldType> getDDMFormFieldTypes() {
 		Stream<DDMFormFieldType> stream =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes().stream();
@@ -153,6 +142,16 @@ public class CommerceProductDefinitionOptionRelDisplayContext
 			commerceProductOptionItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
+	}
+
+	@Override
+	public PortletURL getPortletURL() throws PortalException {
+		PortletURL portletURL = super.getPortletURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "viewProductDefinitionOptionRels");
+
+		return portletURL;
 	}
 
 	@Override
@@ -200,13 +199,12 @@ public class CommerceProductDefinitionOptionRelDisplayContext
 		return this.searchContainer;
 	}
 
+	private CommerceProductDefinitionOptionRel
+		_commerceProductDefinitionOptionRel;
 	private final CommerceProductDefinitionOptionRelService
 		_commerceProductDefinitionOptionRelService;
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
 	private final ItemSelector _itemSelector;
-
-	private CommerceProductDefinitionOptionRel
-		_commerceProductDefinitionOptionRel;
 
 }

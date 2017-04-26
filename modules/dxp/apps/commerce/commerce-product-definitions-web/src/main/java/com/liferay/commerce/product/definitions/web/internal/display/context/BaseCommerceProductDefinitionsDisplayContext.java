@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -191,13 +190,15 @@ public abstract class BaseCommerceProductDefinitionsDisplayContext<T> {
 			portletURL.setParameter("delta", delta);
 		}
 
-		String deltaEntry = ParamUtil.getString(httpServletRequest, "deltaEntry");
+		String deltaEntry = ParamUtil.getString(
+			httpServletRequest, "deltaEntry");
 
 		if (Validator.isNotNull(deltaEntry)) {
 			portletURL.setParameter("deltaEntry", deltaEntry);
 		}
 
-		String displayStyle = ParamUtil.getString(httpServletRequest, "displayStyle");
+		String displayStyle = ParamUtil.getString(
+			httpServletRequest, "displayStyle");
 
 		if (Validator.isNotNull(displayStyle)) {
 			portletURL.setParameter("displayStyle", getDisplayStyle());
@@ -224,7 +225,7 @@ public abstract class BaseCommerceProductDefinitionsDisplayContext<T> {
 		CommerceProductDefinition commerceProductDefinition =
 			getCommerceProductDefinition();
 
-		if(commerceProductDefinition != null){
+		if (commerceProductDefinition != null) {
 			portletURL.setParameter("commerceProductDefinitionId",
 				String.valueOf(getCommerceProductDefinitionId()));
 		}
@@ -255,7 +256,8 @@ public abstract class BaseCommerceProductDefinitionsDisplayContext<T> {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	public abstract SearchContainer<T> getSearchContainer() throws PortalException;
+	public abstract SearchContainer<T> getSearchContainer()
+		throws PortalException;
 
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {

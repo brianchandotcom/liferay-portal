@@ -54,7 +54,9 @@ public class CommerceProductDefinitionInfoPanelMVCResourceCommand
 			CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITIONS,
 			commerceProductDefinitions);
 
-		include(resourceRequest, resourceResponse, "/commerce_product_definition_info_panel.jsp");
+		include(
+			resourceRequest, resourceResponse,
+			"/commerce_product_definition_info_panel.jsp");
 	}
 
 	@Reference

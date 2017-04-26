@@ -15,8 +15,6 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CommerceProductWebKeys;
-import com.liferay.commerce.product.exception.NoSuchProductDefinitionException;
-import com.liferay.commerce.product.exception.NoSuchProductDefinitionOptionRelException;
 import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
 import com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelService;
@@ -39,42 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ActionHelper.class)
 public class ActionHelper {
 
-	public CommerceProductDefinitionOptionRel
-			getCommerceProductDefinitionOptionRel(
-				RenderRequest renderRequest)
-		throws PortalException {
-
-		CommerceProductDefinitionOptionRel
-			commerceProductDefinitionOptionRel = null;
-
-		commerceProductDefinitionOptionRel =
-			(CommerceProductDefinitionOptionRel)renderRequest.getAttribute(
-				CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL);
-
-		if (commerceProductDefinitionOptionRel != null) {
-			return commerceProductDefinitionOptionRel;
-		}
-
-		long commerceProductDefinitionOptionRelId = ParamUtil.getLong(
-			renderRequest, "commerceProductDefinitionOptionRelId");
-
-		if (commerceProductDefinitionOptionRelId > 0) {
-
-			commerceProductDefinitionOptionRel =
-				_commerceProductDefinitionOptionRelService.
-					fetchCommerceProductDefinitionOptionRel(
-						commerceProductDefinitionOptionRelId);
-		}
-
-		if (commerceProductDefinitionOptionRel != null) {
-			renderRequest.setAttribute(
-				CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL,
-				commerceProductDefinitionOptionRel);
-		}
-
-		return commerceProductDefinitionOptionRel;
-	}
-
 	public CommerceProductDefinition getCommerceProductDefinition(
 			RenderRequest renderRequest)
 		throws PortalException {
@@ -92,28 +54,25 @@ public class ActionHelper {
 		long commerceProductDefinitionId = ParamUtil.getLong(
 			renderRequest, "commerceProductDefinitionId");
 
-		if(commerceProductDefinitionId <= 0){
+		if (commerceProductDefinitionId <= 0) {
 
 			//Try to get from an related entity if exist
 
 			CommerceProductDefinitionOptionRel
-				commerceProductDefinitionOptionRel=
+				commerceProductDefinitionOptionRel =
 				getCommerceProductDefinitionOptionRel(renderRequest);
 
-			if(commerceProductDefinitionOptionRel != null) {
+			if (commerceProductDefinitionOptionRel != null) {
 				commerceProductDefinitionId =
 					commerceProductDefinitionOptionRel.
 						getCommerceProductDefinitionId();
-
 			}
 		}
 
 		if (commerceProductDefinitionId > 0) {
 			commerceProductDefinition =
 				_commerceProductDefinitionService.
-					fetchCommerceProductDefinition(
-						commerceProductDefinitionId);
-
+					fetchCommerceProductDefinition(commerceProductDefinitionId);
 		}
 
 		if (commerceProductDefinition != null) {
@@ -123,6 +82,41 @@ public class ActionHelper {
 		}
 
 		return commerceProductDefinition;
+	}
+
+	public CommerceProductDefinitionOptionRel
+			getCommerceProductDefinitionOptionRel(
+				RenderRequest renderRequest)
+		throws PortalException {
+
+		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel =
+			null;
+
+		commerceProductDefinitionOptionRel =
+			(CommerceProductDefinitionOptionRel)renderRequest.getAttribute(
+				CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL);
+
+		if (commerceProductDefinitionOptionRel != null) {
+			return commerceProductDefinitionOptionRel;
+		}
+
+		long commerceProductDefinitionOptionRelId = ParamUtil.getLong(
+			renderRequest, "commerceProductDefinitionOptionRelId");
+
+		if (commerceProductDefinitionOptionRelId > 0) {
+			commerceProductDefinitionOptionRel =
+				_commerceProductDefinitionOptionRelService.
+					fetchCommerceProductDefinitionOptionRel(
+						commerceProductDefinitionOptionRelId);
+		}
+
+		if (commerceProductDefinitionOptionRel != null) {
+			renderRequest.setAttribute(
+				CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL,
+				commerceProductDefinitionOptionRel);
+		}
+
+		return commerceProductDefinitionOptionRel;
 	}
 
 	public List<CommerceProductDefinitionOptionRel>
@@ -174,8 +168,10 @@ public class ActionHelper {
 	}
 
 	@Reference
-	private CommerceProductDefinitionService _commerceProductDefinitionService;
+	private CommerceProductDefinitionOptionRelService
+		_commerceProductDefinitionOptionRelService;
 
 	@Reference
-	private CommerceProductDefinitionOptionRelService _commerceProductDefinitionOptionRelService;
+	private CommerceProductDefinitionService _commerceProductDefinitionService;
+
 }

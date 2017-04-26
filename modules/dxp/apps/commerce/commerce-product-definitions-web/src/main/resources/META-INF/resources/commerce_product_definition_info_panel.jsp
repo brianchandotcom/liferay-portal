@@ -66,7 +66,7 @@ if (ListUtil.isEmpty(commerceProductDefinitions)) {
 			</p>
 		</div>
 	</c:when>
-    <c:otherwise>
+	<c:otherwise>
 		<div class="sidebar-header">
 			<h4><liferay-ui:message arguments="<%= commerceProductDefinitions.size() %>" key="x-items-are-selected" /></h4>
 		</div>

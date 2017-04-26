@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 import com.liferay.portal.kernel.portlet.ManagePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

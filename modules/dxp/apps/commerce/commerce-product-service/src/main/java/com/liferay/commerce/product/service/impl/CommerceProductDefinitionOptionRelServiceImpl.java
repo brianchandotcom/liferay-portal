@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.service.impl;
 
-import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
 import com.liferay.commerce.product.service.base.CommerceProductDefinitionOptionRelServiceBaseImpl;
 import com.liferay.commerce.product.service.permission.CommerceProductDefinitionPermission;
@@ -50,27 +49,6 @@ public class CommerceProductDefinitionOptionRelServiceImpl
 			addCommerceProductDefinitionOptionRel(
 				commerceProductDefinitionId, commerceProductOptionId, nameMap,
 				descriptionMap, ddmFormFieldTypeName, priority, serviceContext);
-	}
-
-	@Override
-	public CommerceProductDefinitionOptionRel
-		fetchCommerceProductDefinitionOptionRel(
-			long commerceProductDefinitionOptionRelId)
-		throws PortalException {
-
-		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel =
-			commerceProductDefinitionOptionRelLocalService.
-				fetchCommerceProductDefinitionOptionRel(
-					commerceProductDefinitionOptionRelId);
-
-		if (commerceProductDefinitionOptionRel != null) {
-			CommerceProductDefinitionPermission.
-				checkCommerceProductDefinitionOptionRel(
-					getPermissionChecker(), commerceProductDefinitionOptionRel,
-					ActionKeys.VIEW);
-		}
-
-		return commerceProductDefinitionOptionRel;
 	}
 
 	@Override
@@ -121,6 +99,27 @@ public class CommerceProductDefinitionOptionRelServiceImpl
 		return commerceProductDefinitionOptionRelLocalService.
 			deleteCommerceProductDefinitionOptionRel(
 				commerceProductDefinitionOptionRelId);
+	}
+
+	@Override
+	public CommerceProductDefinitionOptionRel
+		fetchCommerceProductDefinitionOptionRel(
+			long commerceProductDefinitionOptionRelId)
+		throws PortalException {
+
+		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel =
+			commerceProductDefinitionOptionRelLocalService.
+				fetchCommerceProductDefinitionOptionRel(
+					commerceProductDefinitionOptionRelId);
+
+		if (commerceProductDefinitionOptionRel != null) {
+			CommerceProductDefinitionPermission.
+				checkCommerceProductDefinitionOptionRel(
+					getPermissionChecker(), commerceProductDefinitionOptionRel,
+					ActionKeys.VIEW);
+		}
+
+		return commerceProductDefinitionOptionRel;
 	}
 
 	@Override

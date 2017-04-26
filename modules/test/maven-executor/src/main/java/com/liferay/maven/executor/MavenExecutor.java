@@ -43,6 +43,8 @@ import org.junit.rules.ExternalResource;
 public class MavenExecutor extends ExternalResource {
 
 	public Result execute(File projectDir, String... args) throws Exception {
+		writeSettingsXmlFile();
+
 		boolean mavenDebug = isMavenDebug();
 		Path mavenHomeDirPath = _checkMavenHomeDirPath();
 
@@ -172,8 +174,6 @@ public class MavenExecutor extends ExternalResource {
 			Files.setPosixFilePermissions(
 				_mavenHomeDirPath.resolve("bin/mvn"), posixFilePermissions);
 		}
-
-		writeSettingsXmlFile();
 	};
 
 	protected String getMavenDistributionFileName() {

@@ -132,17 +132,17 @@ renderResponse.setTitle(commerceProductDefinition.getTitle(languageId));
 					<%= commerceProductDefinitionOptionRel.getName(locale) %>
 				</liferay-ui:search-container-column-text>
 
-                <liferay-ui:search-container-column-text
-                        cssClass="table-cell-content"
-                        name="facetable"
-                        property="facetable"
-                />
+				<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="facetable"
+						property="facetable"
+				/>
 
-                <liferay-ui:search-container-column-text
-                        cssClass="table-cell-content"
-                        name="skuContributor"
-                        property="skuContributor"
-                />
+				<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="skuContributor"
+						property="skuContributor"
+				/>
 
 				<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"

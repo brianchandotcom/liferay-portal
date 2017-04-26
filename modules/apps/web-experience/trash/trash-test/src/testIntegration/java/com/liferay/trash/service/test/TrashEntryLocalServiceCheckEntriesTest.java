@@ -53,6 +53,7 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.test.util.TrashTestUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -148,7 +149,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 
 		createFileEntryTrashEntry(group, false);
 
-		TrashUtil.disableTrash(group);
+		TrashTestUtil.disableTrash(group);
 
 		TrashEntryLocalServiceUtil.checkEntries();
 
@@ -205,7 +206,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 	public void testStagingTrashDisabled() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
 
-		Group group = TrashUtil.disableTrash(createGroup(companyId));
+		Group group = TrashTestUtil.disableTrash(createGroup(companyId));
 		User user = UserTestUtil.getAdminUser(companyId);
 
 		ServiceContext serviceContext =

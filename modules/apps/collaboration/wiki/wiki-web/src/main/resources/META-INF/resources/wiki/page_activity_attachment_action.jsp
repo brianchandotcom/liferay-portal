@@ -53,7 +53,7 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 	<c:if test="<%= !fileEntry.isInTrash() && ((socialActivity.getType() == SocialActivityConstants.TYPE_ADD_ATTACHMENT) || (socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH)) && WikiPagePermissionChecker.contains(permissionChecker, wikiPage.getNodeId(), wikiPage.getTitle(), ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/wiki/edit_page_attachment" var="deleteURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 			<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
@@ -61,8 +61,8 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			message='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "remove-attachment" : "delete-attachment" %>'
-			trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
+			message='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "remove-attachment" : "delete-attachment" %>'
+			trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
 			url="<%= deleteURL %>"
 		/>
 	</c:if>

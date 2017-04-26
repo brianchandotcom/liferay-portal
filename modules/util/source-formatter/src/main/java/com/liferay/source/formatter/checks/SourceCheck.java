@@ -32,6 +32,8 @@ public interface SourceCheck {
 
 	public void setBaseDirName(String baseDirName);
 
+	public void setExcludes(String[] excludes);
+
 	public void setMaxLineLength(int maxLineLength);
 
 	public void setPortalSource(boolean portalSource);

@@ -61,6 +61,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public void setExcludes(String[] excludes) {
+		_excludes = excludes;
+	}
+
+	@Override
 	public void setMaxLineLength(int maxLineLength) {
 		_maxLineLength = maxLineLength;
 	}
@@ -360,6 +365,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	private List<String> _allFileNames;
 	private String _baseDirName;
+	private String[] _excludes;
 	private int _maxLineLength;
 	private boolean _portalSource;
 	private Properties _properties;

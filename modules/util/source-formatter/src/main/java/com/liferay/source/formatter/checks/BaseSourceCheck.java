@@ -319,8 +319,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected List<String> getPropertyList(String key) {
 		return ListUtil.fromString(
-			GetterUtil.getString(
-				_properties.getProperty(key)), StringPool.COMMA);
+			GetterUtil.getString(_properties.getProperty(key)),
+			StringPool.COMMA);
 	}
 
 	protected boolean isExcludedPath(String key, String path) {

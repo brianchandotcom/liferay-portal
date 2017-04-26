@@ -30,6 +30,7 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
+
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
 import com.thoughtworks.qdox.model.JavaClass;
@@ -38,6 +39,7 @@ import com.thoughtworks.qdox.model.Type;
 import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -393,10 +395,9 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	private List<String> _getTLDFileNames() throws Exception {
-		String[] excludes =
-			new String[] {
-				"**/dependencies/**", "**/util-taglib/**", "**/portal-web/**"
-			};
+		String[] excludes = new String[] {
+			"**/dependencies/**", "**/util-taglib/**", "**/portal-web/**"
+		};
 
 		if (getExcludes() != null) {
 			excludes = ArrayUtil.append(excludes, getExcludes());

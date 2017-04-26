@@ -86,6 +86,28 @@ public class CommerceProductDefinitionOptionValueRelServiceImpl
 
 	@Override
 	public CommerceProductDefinitionOptionValueRel
+			fetchCommerceProductDefinitionOptionValueRel(
+				long commerceProductDefinitionOptionValueRelId)
+		throws PortalException {
+
+		CommerceProductDefinitionOptionValueRel
+			commerceProductDefinitionOptionValueRel =
+				commerceProductDefinitionOptionValueRelLocalService.
+					fetchCommerceProductDefinitionOptionValueRel(
+						commerceProductDefinitionOptionValueRelId);
+
+		if (commerceProductDefinitionOptionValueRel != null) {
+			CommerceProductDefinitionPermission.
+				checkCommerceProductDefinitionOptionValueRel(
+					getPermissionChecker(),
+					commerceProductDefinitionOptionValueRel, ActionKeys.VIEW);
+		}
+
+		return commerceProductDefinitionOptionValueRel;
+	}
+
+	@Override
+	public CommerceProductDefinitionOptionValueRel
 			getCommerceProductDefinitionOptionValueRel(
 				long commerceProductDefinitionOptionValueRelId)
 		throws PortalException {

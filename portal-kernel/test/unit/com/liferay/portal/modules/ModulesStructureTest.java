@@ -657,6 +657,12 @@ public class ModulesStructureTest {
 				gradlePropertiesPath,
 			gradleProperties.trim(), gradleProperties);
 
+		String gradlePropertiesPrefix = StringUtil.replace(
+			String.valueOf(dirPath.getFileName()), CharPool.DASH,
+			CharPool.PERIOD);
+
+		gradlePropertiesPrefix = "com.liferay." + gradlePropertiesPrefix + ".";
+
 		String previousKey = null;
 		String projectGroup = null;
 		String projectPathPrefix = null;
@@ -718,7 +724,8 @@ public class ModulesStructureTest {
 				Assert.assertTrue(
 					"Incorrect key \"" + key + "\" in " +
 						gradlePropertiesPath,
-					_gitRepoGradlePropertiesKeys.contains(key));
+					_gitRepoGradlePropertiesKeys.contains(key) ||
+						key.startsWith(gradlePropertiesPrefix));
 			}
 
 			previousKey = key;

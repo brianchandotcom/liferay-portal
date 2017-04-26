@@ -18,25 +18,33 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.exception.CommerceProductInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CommerceProductInstanceExpirationDateException;
+import com.liferay.commerce.product.internal.util.SKUCombinationsIterator;
+import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
 import com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CommerceProductInstance;
 import com.liferay.commerce.product.service.base.CommerceProductInstanceLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
 import java.io.Serializable;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -49,31 +57,46 @@ import java.util.Map;
 public class CommerceProductInstanceLocalServiceImpl
 	extends CommerceProductInstanceLocalServiceBaseImpl {
 
-	public void autoGeneratePommerceProductInstances(
-			long commerceProductDefinitionId)
-		throws PortalException{
+	public CommerceProductInstance addCommerceProductInstance(
+			long commerceProductDefinitionId, String sku, String ddmContent,
+			Date displayDate, Date expirationDate, boolean neverExpire,
+			ServiceContext serviceContext)
+		throws PortalException {
 
-		List<CommerceProductDefinitionOptionRel>
-			commerceProductDefinitionOptionRels =
-				commerceProductDefinitionOptionRelLocalService.
-					getSkuContributorCommerceProductDefinitionOptionRels(
-						commerceProductDefinitionId);
+		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
+			displayDate.getTime());
 
-		for(CommerceProductDefinitionOptionRel
-				commerceProductDefinitionOptionRel :
-					commerceProductDefinitionOptionRels){
+		int displayDateMonth = displayDateCalendar.get(Calendar.MONTH);
+		int displayDateDay = displayDateCalendar.get(Calendar.DAY_OF_MONTH);
+		int displayDateYear = displayDateCalendar.get(Calendar.YEAR);
+		int displayDateHour = displayDateCalendar.get(Calendar.HOUR);
+		int displayDateMinute = displayDateCalendar.get(Calendar.MINUTE);
 
-			List<CommerceProductDefinitionOptionValueRel>
-				commerceProductDefinitionOptionValueRels =
-					commerceProductDefinitionOptionValueRelLocalService.
-						getCommerceProductDefinitionOptionValueRels(
-							commerceProductDefinitionOptionRel.
-								getCommerceProductDefinitionOptionRelId(),
-							QueryUtil.ALL_POS,QueryUtil.ALL_POS);
+		int expirationDateMonth = 0;
+		int expirationDateDay = 0;
+		int expirationDateYear = 0;
+		int expirationDateHour = 0;
+		int expirationDateMinute = 0;
 
+		if (!neverExpire) {
+			Calendar expirationDateCalendar = CalendarFactoryUtil.getCalendar(
+				expirationDate.getTime());
 
-
+			expirationDateMonth = expirationDateCalendar.get(Calendar.MONTH);
+			expirationDateDay = expirationDateCalendar.get(
+				Calendar.DAY_OF_MONTH);
+			expirationDateYear = expirationDateCalendar.get(Calendar.YEAR);
+			expirationDateHour = expirationDateCalendar.get(Calendar.HOUR);
+			expirationDateMinute = expirationDateCalendar.get(Calendar.MINUTE);
 		}
+
+		return commerceProductInstanceLocalService.
+			addCommerceProductInstance(
+				commerceProductDefinitionId, sku, ddmContent, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -144,6 +167,94 @@ public class CommerceProductInstanceLocalServiceImpl
 
 		return startWorkflowInstance(
 			user.getUserId(), commerceProductInstance, serviceContext);
+	}
+
+	public void buildCommerceProductInstances(
+			long commerceProductDefinitionId, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceProductDefinition commerceProductDefinition =
+			commerceProductDefinitionLocalService.getCommerceProductDefinition(
+				commerceProductDefinitionId);
+
+		Map<CommerceProductDefinitionOptionRel,
+			CommerceProductDefinitionOptionValueRel[]> combinationGeneratorMap =
+				new HashMap<>();
+
+		List<CommerceProductDefinitionOptionRel>
+			commerceProductDefinitionOptionRels =
+				commerceProductDefinitionOptionRelLocalService.
+					getSkuContributorCommerceProductDefinitionOptionRels(
+						commerceProductDefinitionId);
+
+		for (CommerceProductDefinitionOptionRel
+				commerceProductDefinitionOptionRel :
+					commerceProductDefinitionOptionRels) {
+
+			List<CommerceProductDefinitionOptionValueRel>
+				commerceProductDefinitionOptionValueRels =
+					commerceProductDefinitionOptionRel.
+						getCommerceProductDefinitionOptionValueRels();
+
+			CommerceProductDefinitionOptionValueRel[]
+				commerceProductDefinitionOptionValueRelArray =
+					new CommerceProductDefinitionOptionValueRel[
+						commerceProductDefinitionOptionValueRels.size()];
+
+			commerceProductDefinitionOptionValueRelArray =
+				commerceProductDefinitionOptionValueRels.toArray(
+					commerceProductDefinitionOptionValueRelArray);
+
+			combinationGeneratorMap.put(
+				commerceProductDefinitionOptionRel,
+				commerceProductDefinitionOptionValueRelArray);
+		}
+
+		SKUCombinationsIterator iterator = new SKUCombinationsIterator(
+			combinationGeneratorMap);
+
+		while (iterator.hasNext()) {
+			CommerceProductDefinitionOptionValueRel[] skuCombination =
+				iterator.next();
+
+			JSONArray skuCombinationJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			StringBuilder sku = new StringBuilder(
+				commerceProductDefinition.getBaseSKU());
+
+			for (CommerceProductDefinitionOptionValueRel
+				commerceProductDefinitionOptionValueRel : skuCombination) {
+
+				sku.append(
+					StringUtil.toUpperCase(
+						commerceProductDefinitionOptionValueRel.
+							getTitle(serviceContext.getLanguageId())));
+
+				JSONObject skuCombinationJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				skuCombinationJSONObject.put(
+					"commerceProductDefinitionOptionValueRelId",
+					commerceProductDefinitionOptionValueRel.
+						getCommerceProductDefinitionOptionValueRelId());
+
+				skuCombinationJSONObject.put(
+					"commerceProductDefinitionOptionRelId",
+					commerceProductDefinitionOptionValueRel.
+						getCommerceProductDefinitionOptionRelId());
+
+				skuCombinationJSONArray.put(skuCombinationJSONObject);
+			}
+
+			commerceProductInstanceLocalService.addCommerceProductInstance(
+				commerceProductDefinitionId, sku.toString(),
+				skuCombinationJSONArray.toString(),
+				commerceProductDefinition.getDisplayDate(),
+				commerceProductDefinition.getExpirationDate(),
+				commerceProductDefinition.getExpirationDate() == null,
+				serviceContext);
+		}
 	}
 
 	@Indexable(type = IndexableType.DELETE)

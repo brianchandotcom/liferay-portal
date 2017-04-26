@@ -201,18 +201,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			Matcher matcher = _includeFilePattern.matcher(content);
 
-			String newContent = content;
-
 			while (matcher.find()) {
-				newContent = StringUtil.replaceFirst(
-					newContent, matcher.group(),
+				content = StringUtil.replaceFirst(
+					content, matcher.group(),
 					"@ include file=\"" + matcher.group(1) + "\"",
 					matcher.start());
 			}
 
-			processFormattedFile(file, fileName, content, newContent);
-
-			contentsMap.put(fileName, newContent);
+			contentsMap.put(fileName, content);
 		}
 
 		return contentsMap;

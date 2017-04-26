@@ -21,8 +21,6 @@ CommerceProductDefinitionOptionValueRelDisplayContext commerceProductDefinitionO
 
 CommerceProductDefinition commerceProductDefinition = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinition();
 
-long commerceProductDefinitionId = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinitionId();
-
 CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinitionOptionRel();
 
 long commerceProductDefinitionOptionRelId = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinitionOptionRelId();
@@ -152,3 +150,14 @@ portletDisplay.setURLBack(backURL);
 		</liferay-ui:search-container>
 	</div>
 </aui:form>
+
+<liferay-portlet:renderURL var="addProductDefinitionOptionValueRelURL">
+	<portlet:param name="mvcRenderCommandName" value="editProductDefinitionOptionValueRel" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="backURL" value="<%= redirect %>" />
+	<portlet:param name="commerceProductDefinitionOptionRelId" value="<%= String.valueOf(commerceProductDefinitionOptionRelId) %>" />
+</liferay-portlet:renderURL>
+
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item title="add-option-value" url="<%= addProductDefinitionOptionValueRelURL.toString() %>" />
+</liferay-frontend:add-menu>

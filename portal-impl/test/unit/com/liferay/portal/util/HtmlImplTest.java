@@ -153,6 +153,11 @@ public class HtmlImplTest {
 	}
 
 	@Test
+	public void testEscapeJS() {
+		Assert.assertEquals("\\x2028", _htmlImpl.escapeJS("\u2028"));
+	}
+
+	@Test
 	public void testEscapeJSLink() {
 		Assert.assertEquals(
 			"javascript%3aalert('hello');",

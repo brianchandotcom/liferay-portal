@@ -86,6 +86,9 @@ public class CommerceProductDefinitionOptionValueRelDisplayContext
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "viewProductDefinitionOptionValueRels");
+		portletURL.setParameter(
+			"commerceProductDefinitionOptionRelId", String.valueOf(
+				getCommerceProductDefinitionOptionRelId()));
 
 		return portletURL;
 	}

@@ -137,8 +137,9 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	public static final long COMMERCEPRODUCTDEFINITIONID_COLUMN_BITMASK = 1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long PRIORITY_COLUMN_BITMASK = 16L;
+	public static final long SKUCONTRIBUTOR_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long PRIORITY_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -812,7 +813,19 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 
 	@Override
 	public void setSkuContributor(boolean skuContributor) {
+		_columnBitmask |= SKUCONTRIBUTOR_COLUMN_BITMASK;
+
+		if (!_setOriginalSkuContributor) {
+			_setOriginalSkuContributor = true;
+
+			_originalSkuContributor = _skuContributor;
+		}
+
 		_skuContributor = skuContributor;
+	}
+
+	public boolean getOriginalSkuContributor() {
+		return _originalSkuContributor;
 	}
 
 	@Override
@@ -1038,6 +1051,10 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		commerceProductDefinitionOptionRelModelImpl._originalCommerceProductDefinitionId = commerceProductDefinitionOptionRelModelImpl._commerceProductDefinitionId;
 
 		commerceProductDefinitionOptionRelModelImpl._setOriginalCommerceProductDefinitionId = false;
+
+		commerceProductDefinitionOptionRelModelImpl._originalSkuContributor = commerceProductDefinitionOptionRelModelImpl._skuContributor;
+
+		commerceProductDefinitionOptionRelModelImpl._setOriginalSkuContributor = false;
 
 		commerceProductDefinitionOptionRelModelImpl._columnBitmask = 0;
 	}
@@ -1277,6 +1294,8 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	private int _priority;
 	private boolean _facetable;
 	private boolean _skuContributor;
+	private boolean _originalSkuContributor;
+	private boolean _setOriginalSkuContributor;
 	private long _columnBitmask;
 	private CommerceProductDefinitionOptionRel _escapedModel;
 }

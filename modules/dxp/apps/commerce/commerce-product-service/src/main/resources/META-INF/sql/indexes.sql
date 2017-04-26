@@ -5,7 +5,7 @@ create unique index IX_E61AC763 on CommerceProductDefinition (uuid_[$COLUMN_LENG
 
 create unique index IX_D56F8C13 on CommerceProductDefinitionLocalization (commerceProductDefinitionPK, languageId[$COLUMN_LENGTH:75$]);
 
-create index IX_FBE6E1CF on CommerceProductDefinitionOptionRel (commerceProductDefinitionId);
+create index IX_FCD6A541 on CommerceProductDefinitionOptionRel (commerceProductDefinitionId, skuContributor);
 create index IX_2F156E05 on CommerceProductDefinitionOptionRel (companyId);
 create index IX_A8BBB1C7 on CommerceProductDefinitionOptionRel (groupId);
 create index IX_C34AB577 on CommerceProductDefinitionOptionRel (uuid_[$COLUMN_LENGTH:75$], companyId);

@@ -3099,6 +3099,579 @@ public class CommerceProductDefinitionOptionRelPersistenceImpl
 
 	private static final String _FINDER_COLUMN_COMMERCEPRODUCTDEFINITIONID_COMMERCEPRODUCTDEFINITIONID_2 =
 		"commerceProductDefinitionOptionRel.commerceProductDefinitionId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_SC = new FinderPath(CommerceProductDefinitionOptionRelModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceProductDefinitionOptionRelModelImpl.FINDER_CACHE_ENABLED,
+			CommerceProductDefinitionOptionRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_SC",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_SC = new FinderPath(CommerceProductDefinitionOptionRelModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceProductDefinitionOptionRelModelImpl.FINDER_CACHE_ENABLED,
+			CommerceProductDefinitionOptionRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_SC",
+			new String[] { Long.class.getName(), Boolean.class.getName() },
+			CommerceProductDefinitionOptionRelModelImpl.COMMERCEPRODUCTDEFINITIONID_COLUMN_BITMASK |
+			CommerceProductDefinitionOptionRelModelImpl.SKUCONTRIBUTOR_COLUMN_BITMASK |
+			CommerceProductDefinitionOptionRelModelImpl.PRIORITY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_SC = new FinderPath(CommerceProductDefinitionOptionRelModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceProductDefinitionOptionRelModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_SC",
+			new String[] { Long.class.getName(), Boolean.class.getName() });
+
+	/**
+	 * Returns all the commerce product definition option rels where commerceProductDefinitionId = &#63; and skuContributor = &#63;.
+	 *
+	 * @param commerceProductDefinitionId the commerce product definition ID
+	 * @param skuContributor the sku contributor
+	 * @return the matching commerce product definition option rels
+	 */
+	@Override
+	public List<CommerceProductDefinitionOptionRel> findByC_SC(
+		long commerceProductDefinitionId, boolean skuContributor) {
+		return findByC_SC(commerceProductDefinitionId, skuContributor,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce product definition option rels where commerceProductDefinitionId = &#63; and skuContributor = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceProductDefinitionId the commerce product definition ID
+	 * @param skuContributor the sku contributor
+	 * @param start the lower bound of the range of commerce product definition option rels
+	 * @param end the upper bound of the range of commerce product definition option rels (not inclusive)
+	 * @return the range of matching commerce product definition option rels
+	 */
+	@Override
+	public List<CommerceProductDefinitionOptionRel> findByC_SC(
+		long commerceProductDefinitionId, boolean skuContributor, int start,
+		int end) {
+		return findByC_SC(commerceProductDefinitionId, skuContributor, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce product definition option rels where commerceProductDefinitionId = &#63; and skuContributor = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceProductDefinitionId the commerce product definition ID
+	 * @param skuContributor the sku contributor
+	 * @param start the lower bound of the range of commerce product definition option rels
+	 * @param end the upper bound of the range of commerce product definition option rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce product definition option rels
+	 */
+	@Override
+	public List<CommerceProductDefinitionOptionRel> findByC_SC(
+		long commerceProductDefinitionId, boolean skuContributor, int start,
+		int end,
+		OrderByComparator<CommerceProductDefinitionOptionRel> orderByComparator) {
+		return findByC_SC(commerceProductDefinitionId, skuContributor, start,
+			end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce product definition option rels where commerceProductDefinitionId = &#63; and skuContributor = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceProductDefinitionOptionRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceProductDefinitionId the commerce product definition ID
+	 * @param skuContributor the sku contributor
+	 * @param start the lower bound of the range of commerce product definition option rels
+	 * @param end the upper bound of the range of commerce product definition option rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce product definition option rels
+	 */
+	@Override
+	public List<CommerceProductDefinitionOptionRel> findByC_SC(
+		long commerceProductDefinitionId, boolean skuContributor, int start,
+		int end,
+		OrderByComparator<CommerceProductDefinitionOptionRel> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_SC;
+			finderArgs = new Object[] {
+					commerceProductDefinitionId, skuContributor
+				};
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_SC;
+			finderArgs = new Object[] {
+					commerceProductDefinitionId, skuContributor,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommerceProductDefinitionOptionRel> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceProductDefinitionOptionRel>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel : list) {
+					if ((commerceProductDefinitionId != commerceProductDefinitionOptionRel.getCommerceProductDefinitionId()) ||
+							(skuContributor != commerceProductDefinitionOptionRel.getSkuContributor())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_COMMERCEPRODUCTDEFINITIONOPTIONREL_WHERE);
+
+			query.append(_FINDER_COLUMN_C_SC_COMMERCEPRODUCTDEFINITIONID_2);
+
+			query.append(_FINDER_COLUMN_C_SC_SKUCONTRIBUTOR_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceProductDefinitionOptionRelModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceProductDefinitionId);
+
+				qPos.add(skuContributor);
+
+				if (!pagination) {
+					list = (List<CommerceProductDefinitionOptionRel>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceProductDefinitionOptionRel>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce product definition option rel in the ordered set where commerceProductDefinitionId = &#63; and skuContributor = &#63;.
+	 *
+	 * @param commerceProductDefinitionId the commerce product definition ID
+	 * @param skuContributor the sku contributor
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce product definition option rel
+	 * @throws NoSuchProductDefinitionOptionRelException if a matching commerce product definition option rel could not be found
+	 */
+	@Override
+	public CommerceProductDefinitionOptionRel findByC_SC_First(
+		long commerceProductDefinitionId, boolean skuContributor,
+		OrderByComparator<CommerceProductDefinitionOptionRel> orderByComparator)
+		throws NoSuchProductDefinitionOptionRelException {
+		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = fetchByC_SC_First(commerceProductDefinitionId,
+				skuContributor, orderByComparator);
+
+		if (commerceProductDefinitionOptionRel != null) {
+			return commerceProductDefinitionOptionRel;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commerceProductDefinitionId=");
+		msg.append(commerceProductDefinitionId);
+
+		msg.append(", skuContributor=");
+		msg.append(skuContributor);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchProductDefinitionOptionRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce product definition option rel in the ordered set where commerceProductDefinitionId = &#63; and skuContributor = &#63;.
+	 *
+	 * @param commerceProductDefinitionId the commerce product definition ID
+	 * @param skuContributor the sku contributor
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce product definition option rel, or <code>null</code> if a matching commerce product definition option rel could not be found
+	 */
+	@Override
+	public CommerceProductDefinitionOptionRel fetchByC_SC_First(
+		long commerceProductDefinitionId, boolean skuContributor,
+		OrderByComparator<CommerceProductDefinitionOptionRel> orderByComparator) {
+		List<CommerceProductDefinitionOptionRel> list = findByC_SC(commerceProductDefinitionId,
+				skuContributor, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce product definition option rel in the ordered set where commerceProductDefinitionId = &#63; and skuContributor = &#63;.
+	 *
+	 * @param commerceProductDefinitionId the commerce product definition ID
+	 * @param skuContributor the sku contributor
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce product definition option rel
+	 * @throws NoSuchProductDefinitionOptionRelException if a matching commerce product definition option rel could not be found
+	 */
+	@Override
+	public CommerceProductDefinitionOptionRel findByC_SC_Last(
+		long commerceProductDefinitionId, boolean skuContributor,
+		OrderByComparator<CommerceProductDefinitionOptionRel> orderByComparator)
+		throws NoSuchProductDefinitionOptionRelException {
+		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = fetchByC_SC_Last(commerceProductDefinitionId,
+				skuContributor, orderByComparator);
+
+		if (commerceProductDefinitionOptionRel != null) {
+			return commerceProductDefinitionOptionRel;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commerceProductDefinitionId=");
+		msg.append(commerceProductDefinitionId);
+
+		msg.append(", skuContributor=");
+		msg.append(skuContributor);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchProductDefinitionOptionRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce product definition option rel in the ordered set where commerceProductDefinitionId = &#63; and skuContributor = &#63;.
+	 *
+	 * @param commerceProductDefinitionId the commerce product definition ID
+	 * @param skuContributor the sku contributor
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce product definition option rel, or <code>null</code> if a matching commerce product definition option rel could not be found
+	 */
+	@Override
+	public CommerceProductDefinitionOptionRel fetchByC_SC_Last(
+		long commerceProductDefinitionId, boolean skuContributor,
+		OrderByComparator<CommerceProductDefinitionOptionRel> orderByComparator) {
+		int count = countByC_SC(commerceProductDefinitionId, skuContributor);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceProductDefinitionOptionRel> list = findByC_SC(commerceProductDefinitionId,
+				skuContributor, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce product definition option rels before and after the current commerce product definition option rel in the ordered set where commerceProductDefinitionId = &#63; and skuContributor = &#63;.
+	 *
+	 * @param commerceProductDefinitionOptionRelId the primary key of the current commerce product definition option rel
+	 * @param commerceProductDefinitionId the commerce product definition ID
+	 * @param skuContributor the sku contributor
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce product definition option rel
+	 * @throws NoSuchProductDefinitionOptionRelException if a commerce product definition option rel with the primary key could not be found
+	 */
+	@Override
+	public CommerceProductDefinitionOptionRel[] findByC_SC_PrevAndNext(
+		long commerceProductDefinitionOptionRelId,
+		long commerceProductDefinitionId, boolean skuContributor,
+		OrderByComparator<CommerceProductDefinitionOptionRel> orderByComparator)
+		throws NoSuchProductDefinitionOptionRelException {
+		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = findByPrimaryKey(commerceProductDefinitionOptionRelId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceProductDefinitionOptionRel[] array = new CommerceProductDefinitionOptionRelImpl[3];
+
+			array[0] = getByC_SC_PrevAndNext(session,
+					commerceProductDefinitionOptionRel,
+					commerceProductDefinitionId, skuContributor,
+					orderByComparator, true);
+
+			array[1] = commerceProductDefinitionOptionRel;
+
+			array[2] = getByC_SC_PrevAndNext(session,
+					commerceProductDefinitionOptionRel,
+					commerceProductDefinitionId, skuContributor,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceProductDefinitionOptionRel getByC_SC_PrevAndNext(
+		Session session,
+		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel,
+		long commerceProductDefinitionId, boolean skuContributor,
+		OrderByComparator<CommerceProductDefinitionOptionRel> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_COMMERCEPRODUCTDEFINITIONOPTIONREL_WHERE);
+
+		query.append(_FINDER_COLUMN_C_SC_COMMERCEPRODUCTDEFINITIONID_2);
+
+		query.append(_FINDER_COLUMN_C_SC_SKUCONTRIBUTOR_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceProductDefinitionOptionRelModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(commerceProductDefinitionId);
+
+		qPos.add(skuContributor);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceProductDefinitionOptionRel);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceProductDefinitionOptionRel> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce product definition option rels where commerceProductDefinitionId = &#63; and skuContributor = &#63; from the database.
+	 *
+	 * @param commerceProductDefinitionId the commerce product definition ID
+	 * @param skuContributor the sku contributor
+	 */
+	@Override
+	public void removeByC_SC(long commerceProductDefinitionId,
+		boolean skuContributor) {
+		for (CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel : findByC_SC(
+				commerceProductDefinitionId, skuContributor, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(commerceProductDefinitionOptionRel);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce product definition option rels where commerceProductDefinitionId = &#63; and skuContributor = &#63;.
+	 *
+	 * @param commerceProductDefinitionId the commerce product definition ID
+	 * @param skuContributor the sku contributor
+	 * @return the number of matching commerce product definition option rels
+	 */
+	@Override
+	public int countByC_SC(long commerceProductDefinitionId,
+		boolean skuContributor) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_SC;
+
+		Object[] finderArgs = new Object[] {
+				commerceProductDefinitionId, skuContributor
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COMMERCEPRODUCTDEFINITIONOPTIONREL_WHERE);
+
+			query.append(_FINDER_COLUMN_C_SC_COMMERCEPRODUCTDEFINITIONID_2);
+
+			query.append(_FINDER_COLUMN_C_SC_SKUCONTRIBUTOR_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceProductDefinitionId);
+
+				qPos.add(skuContributor);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_SC_COMMERCEPRODUCTDEFINITIONID_2 =
+		"commerceProductDefinitionOptionRel.commerceProductDefinitionId = ? AND ";
+	private static final String _FINDER_COLUMN_C_SC_SKUCONTRIBUTOR_2 = "commerceProductDefinitionOptionRel.skuContributor = ?";
 
 	public CommerceProductDefinitionOptionRelPersistenceImpl() {
 		setModelClass(CommerceProductDefinitionOptionRel.class);
@@ -3478,6 +4051,15 @@ public class CommerceProductDefinitionOptionRelPersistenceImpl
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEPRODUCTDEFINITIONID,
 				args);
 
+			args = new Object[] {
+					commerceProductDefinitionOptionRelModelImpl.getCommerceProductDefinitionId(),
+					commerceProductDefinitionOptionRelModelImpl.getSkuContributor()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_SC, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_SC,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -3580,6 +4162,27 @@ public class CommerceProductDefinitionOptionRelPersistenceImpl
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCEPRODUCTDEFINITIONID,
 					args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEPRODUCTDEFINITIONID,
+					args);
+			}
+
+			if ((commerceProductDefinitionOptionRelModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_SC.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceProductDefinitionOptionRelModelImpl.getOriginalCommerceProductDefinitionId(),
+						commerceProductDefinitionOptionRelModelImpl.getOriginalSkuContributor()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_SC, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_SC,
+					args);
+
+				args = new Object[] {
+						commerceProductDefinitionOptionRelModelImpl.getCommerceProductDefinitionId(),
+						commerceProductDefinitionOptionRelModelImpl.getSkuContributor()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_SC, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_SC,
 					args);
 			}
 		}

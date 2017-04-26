@@ -105,6 +105,21 @@ public class ActionHelper {
 		long commerceProductDefinitionOptionRelId = ParamUtil.getLong(
 			renderRequest, "commerceProductDefinitionOptionRelId");
 
+		if (commerceProductDefinitionOptionRelId <= 0) {
+
+			//Try to get from an related entity if exist
+
+			CommerceProductDefinitionOptionValueRel
+				commerceProductDefinitionOptionValueRel =
+					getCommerceProductDefinitionOptionValueRel(renderRequest);
+
+			if (commerceProductDefinitionOptionValueRel != null) {
+				commerceProductDefinitionOptionRelId =
+					commerceProductDefinitionOptionValueRel.
+						getCommerceProductDefinitionOptionRelId();
+			}
+		}
+
 		if (commerceProductDefinitionOptionRelId > 0) {
 			commerceProductDefinitionOptionRel =
 				_commerceProductDefinitionOptionRelService.
@@ -146,6 +161,43 @@ public class ActionHelper {
 		}
 
 		return commerceProductDefinitionOptionRels;
+	}
+
+	public CommerceProductDefinitionOptionValueRel
+			getCommerceProductDefinitionOptionValueRel(
+				RenderRequest renderRequest)
+		throws PortalException {
+
+		CommerceProductDefinitionOptionValueRel
+			commerceProductDefinitionOptionValueRel = null;
+
+		commerceProductDefinitionOptionValueRel =
+			(CommerceProductDefinitionOptionValueRel)renderRequest.getAttribute(
+				CommerceProductWebKeys.
+					COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL);
+
+		if (commerceProductDefinitionOptionValueRel != null) {
+			return commerceProductDefinitionOptionValueRel;
+		}
+
+		long commerceProductDefinitionOptionValueRelId = ParamUtil.getLong(
+			renderRequest, "commerceProductDefinitionOptionValueRelId");
+
+		if (commerceProductDefinitionOptionValueRelId > 0) {
+			commerceProductDefinitionOptionValueRel =
+				_commerceProductDefinitionOptionValueRelService.
+					fetchCommerceProductDefinitionOptionValueRel(
+						commerceProductDefinitionOptionValueRelId);
+		}
+
+		if (commerceProductDefinitionOptionValueRel != null) {
+			renderRequest.setAttribute(
+				CommerceProductWebKeys.
+					COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL,
+				commerceProductDefinitionOptionValueRel);
+		}
+
+		return commerceProductDefinitionOptionValueRel;
 	}
 
 	public List<CommerceProductDefinitionOptionValueRel>

@@ -1533,6 +1533,7 @@ version 1.0.154.
 to version 1.0.122.
 - [LPS-71164]: Update the [Liferay Source Formatter] dependency to version
 1.0.389.
+- [LPS-71601]: Update the [Liferay Alloy Taglib] dependency to version 1.1.12.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -1664,6 +1665,7 @@ to version 1.0.122.
 [LPS-71555]: https://issues.liferay.com/browse/LPS-71555
 [LPS-71558]: https://issues.liferay.com/browse/LPS-71558
 [LPS-71591]: https://issues.liferay.com/browse/LPS-71591
+[LPS-71601]: https://issues.liferay.com/browse/LPS-71601
 [LPS-71603]: https://issues.liferay.com/browse/LPS-71603
 [LPS-71686]: https://issues.liferay.com/browse/LPS-71686
 [LPS-71722]: https://issues.liferay.com/browse/LPS-71722

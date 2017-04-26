@@ -166,8 +166,8 @@ public class CommerceProductInstanceLocalServiceImpl
 				commerceProductDefinitionId, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		for (CommerceProductInstance commerceProductInstance
-				: commerceProductInstances) {
+		for (CommerceProductInstance commerceProductInstance :
+				commerceProductInstances) {
 
 			commerceProductInstanceLocalService.deleteCommerceProductInstance(
 				commerceProductInstance);

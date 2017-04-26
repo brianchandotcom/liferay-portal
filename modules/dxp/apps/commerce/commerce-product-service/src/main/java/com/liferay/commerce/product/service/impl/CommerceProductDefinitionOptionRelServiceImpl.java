@@ -53,9 +53,9 @@ public class CommerceProductDefinitionOptionRelServiceImpl
 
 	@Override
 	public CommerceProductDefinitionOptionRel
-		addCommerceProductDefinitionOptionRel(
-			long commerceProductDefinitionId, long commerceProductOptionId,
-			ServiceContext serviceContext)
+			addCommerceProductDefinitionOptionRel(
+				long commerceProductDefinitionId, long commerceProductOptionId,
+				ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceProductDefinitionPermission.check(
@@ -103,8 +103,8 @@ public class CommerceProductDefinitionOptionRelServiceImpl
 
 	@Override
 	public CommerceProductDefinitionOptionRel
-		fetchCommerceProductDefinitionOptionRel(
-			long commerceProductDefinitionOptionRelId)
+			fetchCommerceProductDefinitionOptionRel(
+				long commerceProductDefinitionOptionRelId)
 		throws PortalException {
 
 		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel =

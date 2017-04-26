@@ -236,11 +236,11 @@ public class CommerceProductDefinitionLocalServiceImpl
 	public List<String> getCommerceProductDefinitionLocalizationLanguageIds(
 		long commerceProductDefinitionId) {
 
-			List<CommerceProductDefinitionLocalization>
-				commerceProductDefinitionLocalizationList =
-					commerceProductDefinitionLocalizationPersistence.
-						findByCommerceProductDefinitionPK (
-							commerceProductDefinitionId);
+		List<CommerceProductDefinitionLocalization>
+			commerceProductDefinitionLocalizationList =
+				commerceProductDefinitionLocalizationPersistence.
+					findByCommerceProductDefinitionPK(
+						commerceProductDefinitionId);
 
 		List<String> availableLanguageIds = new ArrayList<>();
 

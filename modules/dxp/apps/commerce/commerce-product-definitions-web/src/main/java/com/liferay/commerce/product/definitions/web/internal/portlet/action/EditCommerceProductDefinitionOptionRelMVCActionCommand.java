@@ -44,8 +44,9 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceProductDefinitionOptionRelMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected CommerceProductDefinitionOptionRel addCommerceProductDefinitionOptionRel(
-			ActionRequest actionRequest)
+	protected CommerceProductDefinitionOptionRel
+			addCommerceProductDefinitionOptionRel(
+				ActionRequest actionRequest)
 		throws Exception {
 
 		long commerceProductDefinitionId = ParamUtil.getLong(

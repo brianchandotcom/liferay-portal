@@ -147,7 +147,8 @@ public class CommerceProductOptionPermission
 
 	@Reference(unbind = "-")
 	protected void setCommerceProductOptionValueLocalService(
-		CommerceProductOptionValueLocalService commerceProductOptionValueLocalService) {
+		CommerceProductOptionValueLocalService
+			commerceProductOptionValueLocalService) {
 
 		_commerceProductOptionValueLocalService =
 			commerceProductOptionValueLocalService;

@@ -63,10 +63,10 @@ public class EditCommerceProductDefinitionMVCRenderCommand
 
 			CommerceProductDefinitionsDisplayContext
 				commerceProductDefinitionsDisplayContext =
-				new CommerceProductDefinitionsDisplayContext(
-					_actionHelper, httpServletRequest,
-					_commerceProductDefinitionService,
-					_commerceProductTypeServicesTracker);
+					new CommerceProductDefinitionsDisplayContext(
+						_actionHelper, httpServletRequest,
+						_commerceProductDefinitionService,
+						_commerceProductTypeServicesTracker);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

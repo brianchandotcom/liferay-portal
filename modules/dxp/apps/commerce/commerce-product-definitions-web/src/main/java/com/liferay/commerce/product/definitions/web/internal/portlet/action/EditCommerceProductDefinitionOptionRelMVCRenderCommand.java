@@ -60,10 +60,10 @@ public class EditCommerceProductDefinitionOptionRelMVCRenderCommand
 
 			CommerceProductDefinitionOptionRelDisplayContext
 				commerceProductDefinitionOptionRelDisplayContext =
-				new CommerceProductDefinitionOptionRelDisplayContext(
-					_actionHelper, httpServletRequest,
-					_commerceProductDefinitionOptionRelService,
-					_ddmFormFieldTypeServicesTracker, _itemSelector);
+					new CommerceProductDefinitionOptionRelDisplayContext(
+						_actionHelper, httpServletRequest,
+						_commerceProductDefinitionOptionRelService,
+						_ddmFormFieldTypeServicesTracker, _itemSelector);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

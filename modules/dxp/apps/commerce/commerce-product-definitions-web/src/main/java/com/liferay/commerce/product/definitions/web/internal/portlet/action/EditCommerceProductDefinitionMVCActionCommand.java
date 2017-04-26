@@ -143,10 +143,11 @@ public class EditCommerceProductDefinitionMVCActionCommand
 			CommerceProductDefinition.class.getName(),
 			PortletProvider.Action.EDIT);
 
-		portletURL.
-			setParameter("mvcRenderCommandName", "editProductDefinition");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductDefinition");
 		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter("commerceProductDefinitionId",
+		portletURL.setParameter(
+			"commerceProductDefinitionId",
 			String.valueOf(commerceProductDefinition.
 				getCommerceProductDefinitionId()));
 
@@ -163,8 +164,8 @@ public class EditCommerceProductDefinitionMVCActionCommand
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "titleMapAsXML");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.
-				getLocalizationMap(actionRequest, "descriptionMapAsXML");
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "descriptionMapAsXML");
 		String productTypeName = ParamUtil.getString(
 			actionRequest, "productTypeName");
 		String baseSKU = ParamUtil.getString(actionRequest, "baseSKU");

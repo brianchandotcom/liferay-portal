@@ -205,7 +205,8 @@ public class CommerceProductDefinitionPermission
 
 	@Reference(unbind = "-")
 	protected void setCommerceProductDefinitionLocalService(
-		CommerceProductDefinitionLocalService commerceProductDefinitionLocalService) {
+		CommerceProductDefinitionLocalService
+			commerceProductDefinitionLocalService) {
 
 		_commerceProductDefinitionLocalService =
 			commerceProductDefinitionLocalService;
@@ -213,7 +214,8 @@ public class CommerceProductDefinitionPermission
 
 	@Reference(unbind = "-")
 	protected void setCommerceProductDefinitionOptionRelLocalService(
-		CommerceProductDefinitionOptionRelLocalService commerceProductDefinitionOptionRelLocalService) {
+		CommerceProductDefinitionOptionRelLocalService
+			commerceProductDefinitionOptionRelLocalService) {
 
 		_commerceProductDefinitionOptionRelLocalService =
 			commerceProductDefinitionOptionRelLocalService;
@@ -221,7 +223,8 @@ public class CommerceProductDefinitionPermission
 
 	@Reference(unbind = "-")
 	protected void setCommerceProductDefinitionOptionValueRelLocalService(
-		CommerceProductDefinitionOptionValueRelLocalService commerceProductDefinitionOptionValueRelLocalService) {
+		CommerceProductDefinitionOptionValueRelLocalService
+			commerceProductDefinitionOptionValueRelLocalService) {
 
 		_commerceProductDefinitionOptionValueRelLocalService =
 			commerceProductDefinitionOptionValueRelLocalService;
@@ -229,7 +232,8 @@ public class CommerceProductDefinitionPermission
 
 	@Reference(unbind = "-")
 	protected void setCommerceProductInstanceLocalService(
-		CommerceProductInstanceLocalService commerceProductInstanceLocalService) {
+		CommerceProductInstanceLocalService
+			commerceProductInstanceLocalService) {
 
 		_commerceProductInstanceLocalService =
 			commerceProductInstanceLocalService;

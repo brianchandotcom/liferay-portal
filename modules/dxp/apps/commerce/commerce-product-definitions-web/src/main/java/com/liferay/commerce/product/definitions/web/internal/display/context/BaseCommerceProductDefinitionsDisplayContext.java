@@ -226,7 +226,8 @@ public abstract class BaseCommerceProductDefinitionsDisplayContext<T> {
 			getCommerceProductDefinition();
 
 		if (commerceProductDefinition != null) {
-			portletURL.setParameter("commerceProductDefinitionId",
+			portletURL.setParameter(
+				"commerceProductDefinitionId",
 				String.valueOf(getCommerceProductDefinitionId()));
 		}
 

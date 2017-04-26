@@ -1,7 +1,3 @@
-<%@ page import="java.util.HashSet" %><%@
-page import="java.util.Locale" %><%@
-page import="java.util.Set" %>
-
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -70,21 +66,21 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 	<c:if test="<%= (commerceProductDefinition != null) && !commerceProductDefinition.isNew() %>">
 		<liferay-frontend:info-bar>
 			<aui:workflow-status
-					id="<%= String.valueOf(commerceProductDefinitionId) %>"
-					markupView="lexicon"
-					showHelpMessage="<%= false %>"
-					showIcon="<%= false %>"
-					showLabel="<%= false %>"
-					status="<%= commerceProductDefinition.getStatus() %>"
+				id="<%= String.valueOf(commerceProductDefinitionId) %>"
+				markupView="lexicon"
+				showHelpMessage="<%= false %>"
+				showIcon="<%= false %>"
+				showLabel="<%= false %>"
+				status="<%= commerceProductDefinition.getStatus() %>"
 			/>
 		</liferay-frontend:info-bar>
 	</c:if>
 
 	<liferay-frontend:translation-manager
-			availableLocales="<%= availableLocales %>"
-			componentId='<%= renderResponse.getNamespace() + "translationManager" %>'
-			defaultLanguageId="<%= defaultLanguageId %>"
-			id="translationManager"
+		availableLocales="<%= availableLocales %>"
+		componentId='<%= renderResponse.getNamespace() + "translationManager" %>'
+		defaultLanguageId="<%= defaultLanguageId %>"
+		id="translationManager"
 	/>
 
 	<div class="lfr-form-content">

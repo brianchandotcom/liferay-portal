@@ -132,7 +132,7 @@ public class CommerceProductDefinitionOptionRelDisplayContext
 
 		CommerceProductOptionItemSelectorCriterion
 			commerceProductOptionItemSelectorCriterion =
-			new CommerceProductOptionItemSelectorCriterion();
+				new CommerceProductOptionItemSelectorCriterion();
 
 		commerceProductOptionItemSelectorCriterion.
 			setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);

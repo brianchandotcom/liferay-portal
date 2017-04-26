@@ -82,9 +82,9 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 	}
 
 	public CommerceProductDefinitionOptionRel
-		addCommerceProductDefinitionOptionRel(
-			long commerceProductDefinitionId, long commerceProductOptionId,
-			ServiceContext serviceContext)
+			addCommerceProductDefinitionOptionRel(
+				long commerceProductDefinitionId, long commerceProductOptionId,
+				ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceProductOption commerceProductOption =
@@ -157,8 +157,8 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 						QueryUtil.ALL_POS);
 
 		for (CommerceProductDefinitionOptionRel
-				commerceProductDefinitionOptionRel
-				:commerceProductDefinitionOptionRels) {
+				commerceProductDefinitionOptionRel :
+					commerceProductDefinitionOptionRels) {
 
 			commerceProductDefinitionOptionRelLocalService.
 				deleteCommerceProductDefinitionOptionRel(

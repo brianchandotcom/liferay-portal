@@ -38,10 +38,10 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceImpl
 	extends CommerceProductDefinitionOptionValueRelLocalServiceBaseImpl {
 
 	public CommerceProductDefinitionOptionValueRel
-				addCommerceProductDefinitionOptionValueRel(
-					long commerceProductDefinitionOptionRelId,
-					CommerceProductOptionValue commerceProductOptionValue,
-					ServiceContext serviceContext)
+			addCommerceProductDefinitionOptionValueRel(
+				long commerceProductDefinitionOptionRelId,
+				CommerceProductOptionValue commerceProductOptionValue,
+				ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceProductDefinitionOptionValueRelLocalService.
@@ -51,7 +51,7 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceImpl
 				commerceProductOptionValue.getPriority(), serviceContext);
 	}
 
-		public CommerceProductDefinitionOptionValueRel
+	public CommerceProductDefinitionOptionValueRel
 			addCommerceProductDefinitionOptionValueRel(
 				long commerceProductDefinitionOptionRelId,
 				Map<Locale, String> titleMap, int priority,
@@ -189,16 +189,18 @@ public class CommerceProductDefinitionOptionValueRelLocalServiceImpl
 		throws PortalException {
 
 		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel =
-		commerceProductDefinitionOptionRelLocalService.
-			getCommerceProductDefinitionOptionRel(
-				commerceProductDefinitionOptionRelId);
+			commerceProductDefinitionOptionRelLocalService.
+				getCommerceProductDefinitionOptionRel(
+					commerceProductDefinitionOptionRelId);
 
 		CommerceProductOption commerceProductOption =
 			commerceProductOptionLocalService.fetchCommerceProductOption(
 				commerceProductDefinitionOptionRel.
 					getCommerceProductOptionId());
 
-		if (commerceProductOption == null) return;
+		if (commerceProductOption == null) {
+			return;
+		}
 
 		List<CommerceProductOptionValue> commerceProductOptionValues =
 			commerceProductOptionValueLocalService.

@@ -52,9 +52,14 @@ page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Date" %><%@
+page import="java.util.HashSet" %><%@
 page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
+
+<%@
+		page import="java.util.Locale" %><%@
+		page import="java.util.Set" %>
 
 <liferay-frontend:defineObjects />
 

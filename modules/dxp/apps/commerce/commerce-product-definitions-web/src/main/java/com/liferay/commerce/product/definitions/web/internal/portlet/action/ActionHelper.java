@@ -60,7 +60,7 @@ public class ActionHelper {
 
 			CommerceProductDefinitionOptionRel
 				commerceProductDefinitionOptionRel =
-				getCommerceProductDefinitionOptionRel(renderRequest);
+					getCommerceProductDefinitionOptionRel(renderRequest);
 
 			if (commerceProductDefinitionOptionRel != null) {
 				commerceProductDefinitionId =
@@ -131,13 +131,13 @@ public class ActionHelper {
 			commerceProductDefinitionOptionRels = new ArrayList<>();
 
 		for (long commerceProductDefinitionOptionRelId :
-			commerceProductDefinitionOptionRelIds) {
+				commerceProductDefinitionOptionRelIds) {
 
 			CommerceProductDefinitionOptionRel
 				commerceProductDefinitionOptionRel =
-				_commerceProductDefinitionOptionRelService.
-					getCommerceProductDefinitionOptionRel(
-						commerceProductDefinitionOptionRelId);
+					_commerceProductDefinitionOptionRelService.
+						getCommerceProductDefinitionOptionRel(
+							commerceProductDefinitionOptionRelId);
 
 			commerceProductDefinitionOptionRels.add(
 				commerceProductDefinitionOptionRel);

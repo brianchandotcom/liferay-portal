@@ -17,32 +17,29 @@
 <%@ include file="/init.jsp" %>
 
 <%
+long classPK = 0;
+
 CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION);
-List<CommerceProductType> commerceProductTypes = commerceProductDefinitionsDisplayContext.getCommerceProductTypes();
+
+if (commerceProductDefinition != null) {
+	classPK = commerceProductDefinition.getCommerceProductDefinitionId();
+}
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="base-information" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="categorizations" />
 
 <aui:model-context bean="<%= commerceProductDefinition %>" model="<%= CommerceProductDefinition.class %>" />
 
-<aui:fieldset cssClass="col-md-4">
-	<aui:select label="product-type" name="productTypeName">
+<liferay-ui:asset-categories-error />
 
-		<%
-		for (CommerceProductType commerceProductType : commerceProductTypes) {
-		%>
+<liferay-ui:asset-tags-error />
 
-			<aui:option
-				label="<%= commerceProductType.getName() %>"
-				selected="<%= (commerceProductDefinition != null) && commerceProductDefinition.getProductTypeName().equals(commerceProductType.getName()) %>"
-				value="<%= commerceProductType.getName() %>"
-			/>
+<div class="metadata">
+	<aui:field-wrapper>
+		<liferay-asset:asset-categories-selector className="<%= CommerceProductDefinition.class.getName() %>" classPK="<%= classPK %>" />
+	</aui:field-wrapper>
 
-		<%
-		}
-		%>
-
-	</aui:select>
-
-	<aui:input label="SKU" name="baseSKU" />
-</aui:fieldset>
+	<aui:field-wrapper label="tags">
+		<liferay-asset:asset-tags-selector className="<%= CommerceProductDefinition.class.getName() %>" classPK="<%= classPK %>" />
+	</aui:field-wrapper>
+</div>

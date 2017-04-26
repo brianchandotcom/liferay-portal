@@ -15,15 +15,12 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
-import com.liferay.commerce.product.constants.CommerceProductWebKeys;
-import com.liferay.commerce.product.definitions.web.internal.display.context.CommerceProductDefinitionsDisplayContext;
-import com.liferay.commerce.product.exception.NoSuchProductDefinitionException;
-import com.liferay.commerce.product.model.CommerceProductDefinition;
-import com.liferay.commerce.product.service.CommerceProductDefinitionService;
-import com.liferay.commerce.product.type.CommerceProductTypeServicesTracker;
+import com.liferay.commerce.product.definitions.web.internal.display.context.CommerceProductDefinitionOptionRelDisplayContext;
+import com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelService;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -45,11 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceProductPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
-		"mvc.command.name=editProductDefinition"
+		"mvc.command.name=viewProductDefinitionOptionRels"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCommerceProductDefinitionMVCRenderCommand
+public class ViewCommerceProductDefinitionOptionRelsMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -61,58 +58,36 @@ public class EditCommerceProductDefinitionMVCRenderCommand
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 
-			CommerceProductDefinitionsDisplayContext
-				commerceProductDefinitionsDisplayContext =
-				new CommerceProductDefinitionsDisplayContext(
-					_actionHelper, httpServletRequest,
-					_commerceProductDefinitionService,
-					_commerceProductTypeServicesTracker);
+			CommerceProductDefinitionOptionRelDisplayContext
+				commerceProductDefinitionOptionRelDisplayContext =
+					new CommerceProductDefinitionOptionRelDisplayContext(
+						_actionHelper, httpServletRequest,
+						_commerceProductDefinitionOptionRelService,
+						_ddmFormFieldTypeServicesTracker, _itemSelector);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceProductDefinitionsDisplayContext);
-
-			setCommerceProductDefinitionRequestAttribute(renderRequest);
+				commerceProductDefinitionOptionRelDisplayContext);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchProductDefinitionException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
+		catch (PortalException pe) {
+			SessionErrors.add(renderRequest, pe.getClass());
 		}
 
-		return "/edit_commerce_product_definition.jsp";
-	}
-
-	protected void setCommerceProductDefinitionRequestAttribute(
-			RenderRequest renderRequest)
-		throws PortalException {
-
-		CommerceProductDefinition commerceProductDefinition = null;
-
-		commerceProductDefinition = _actionHelper.getCommerceProductDefinition(
-			renderRequest);
-
-		renderRequest.setAttribute(
-			CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION,
-			commerceProductDefinition);
+		return "/commerce_product_definition_option_rels.jsp";
 	}
 
 	@Reference
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CommerceProductDefinitionService _commerceProductDefinitionService;
+	private CommerceProductDefinitionOptionRelService
+		_commerceProductDefinitionOptionRelService;
 
 	@Reference
-	private CommerceProductTypeServicesTracker
-		_commerceProductTypeServicesTracker;
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

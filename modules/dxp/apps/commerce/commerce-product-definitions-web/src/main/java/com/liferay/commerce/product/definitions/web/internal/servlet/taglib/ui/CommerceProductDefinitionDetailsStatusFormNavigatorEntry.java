@@ -59,7 +59,7 @@ public class CommerceProductDefinitionDetailsStatusFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/product/status.jsp";
+		return "/product_definition/status.jsp";
 	}
 
 }

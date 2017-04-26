@@ -21,10 +21,8 @@ CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
-if (commerceProductDefinition != null) {
-	if (commerceProductDefinition.getExpirationDate() != null) {
-		neverExpire = false;
-	}
+if ((commerceProductDefinition != null) && (commerceProductDefinition.getExpirationDate() != null)) {
+	neverExpire = false;
 }
 %>
 
@@ -32,7 +30,7 @@ if (commerceProductDefinition != null) {
 
 <aui:model-context bean="<%= commerceProductDefinition %>" model="<%= CommerceProductDefinition.class %>" />
 
-<aui:fieldset cssClass="col-md-4">
+<aui:fieldset>
 	<aui:input name="published" type="checkbox" />
 
 	<aui:input formName="fm1" name="displayDate" />

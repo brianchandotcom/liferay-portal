@@ -16,7 +16,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.constants.CommerceProductWebKeys;
-import com.liferay.commerce.product.model.CommerceProductDefinition;
+import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 
@@ -35,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceProductPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
-		"mvc.command.name=commerceProductDefinitionInfoPanel"
+		"mvc.command.name=commerceProductDefinitionOptionRelInfoPanel"
 	},
 	service = MVCResourceCommand.class
 )
-public class CommerceProductDefinitionInfoPanelMVCResourceCommand
+public class CommerceProductDefinitionOptionRelInfoPanelMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -47,14 +47,18 @@ public class CommerceProductDefinitionInfoPanelMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		List<CommerceProductDefinition> commerceProductDefinitions =
-			_actionHelper.getCommerceProductDefinitions(resourceRequest);
+		List<CommerceProductDefinitionOptionRel>
+			commerceProductDefinitionOptionRels =
+				_actionHelper.getCommerceProductDefinitionOptionRels(
+					resourceRequest);
 
 		resourceRequest.setAttribute(
-			CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITIONS,
-			commerceProductDefinitions);
+			CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_RELS,
+			commerceProductDefinitionOptionRels);
 
-		include(resourceRequest, resourceResponse, "/commerce_product_definition_info_panel.jsp");
+		include(
+			resourceRequest, resourceResponse,
+			"/commerce_product_definition_option_rel_info_panel.jsp");
 	}
 
 	@Reference

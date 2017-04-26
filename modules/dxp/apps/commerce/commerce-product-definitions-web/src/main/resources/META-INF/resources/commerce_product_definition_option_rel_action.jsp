@@ -19,22 +19,21 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceProductDefinition commerceProductDefinition = null;
+CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = null;
 
 if (row != null) {
-	commerceProductDefinition = (CommerceProductDefinition)row.getObject();
+	commerceProductDefinitionOptionRel = (CommerceProductDefinitionOptionRel)row.getObject();
 }
 else {
-	commerceProductDefinition = (CommerceProductDefinition)request.getAttribute("commerce_product_definition_info_panel.jsp-entry");
+	commerceProductDefinitionOptionRel = (CommerceProductDefinitionOptionRel)request.getAttribute("commerce_product_definition_option_rel_info_panel.jsp-entry");
 }
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
+		<portlet:param name="mvcRenderCommandName" value="editProductDefinitionOptionRel" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceProductDefinitionId" value="<%= String.valueOf(commerceProductDefinition.getCommerceProductDefinitionId()) %>" />
-		<portlet:param name="toolbarItem" value="view-product-definition-details" />
+		<portlet:param name="commerceProductDefinitionOptionRelId" value="<%= String.valueOf(commerceProductDefinitionOptionRel.getCommerceProductDefinitionOptionRelId()) %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon
@@ -42,10 +41,10 @@ else {
 		url="<%= editURL %>"
 	/>
 
-	<portlet:actionURL name="editProductDefinition" var="deleteURL">
+	<portlet:actionURL name="editProductDefinitionOptionRel" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-		<portlet:param name="redirect" value="<%= redirect %>" />
-		<portlet:param name="commerceProductDefinitionId" value="<%= String.valueOf(commerceProductDefinition.getCommerceProductDefinitionId()) %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="commerceProductDefinitionOptionRelId" value="<%= String.valueOf(commerceProductDefinitionOptionRel.getCommerceProductDefinitionOptionRelId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete

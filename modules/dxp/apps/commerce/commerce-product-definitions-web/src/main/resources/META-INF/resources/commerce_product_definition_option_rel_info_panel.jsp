@@ -17,33 +17,33 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<CommerceProductDefinition> commerceProductDefinitions = (List<CommerceProductDefinition>)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITIONS);
+List<CommerceProductDefinitionOptionRel> commerceProductDefinitionOptionRels = (List<CommerceProductDefinitionOptionRel>)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_RELS);
 
-if (ListUtil.isEmpty(commerceProductDefinitions)) {
-	commerceProductDefinitions = new ArrayList<CommerceProductDefinition>();
+if (ListUtil.isEmpty(commerceProductDefinitionOptionRels)) {
+	commerceProductDefinitionOptionRels = new ArrayList<CommerceProductDefinitionOptionRel>();
 }
 %>
 
 <c:choose>
-	<c:when test="<%= commerceProductDefinitions.size() == 1 %>">
+	<c:when test="<%= commerceProductDefinitionOptionRels.size() == 1 %>">
 
 		<%
-		CommerceProductDefinition commerceProductDefinition = commerceProductDefinitions.get(0);
+		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = commerceProductDefinitionOptionRels.get(0);
 
-		request.setAttribute("info_panel.jsp-entry", commerceProductDefinition);
+		request.setAttribute("commerce_product_definition_option_rel_info_panel.jsp-entry", commerceProductDefinitionOptionRel);
 		%>
 
 		<div class="sidebar-header">
 			<ul class="sidebar-header-actions">
 				<li>
 					<liferay-util:include
-						page="/commerce_product_definition_action.jsp"
+						page="/commerce_product_definition_option_rel_action.jsp"
 						servletContext="<%= application %>"
 					/>
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape(commerceProductDefinition.getTitle(themeDisplay.getLanguageId())) %></h4>
+			<h4><%= HtmlUtil.escape(commerceProductDefinitionOptionRel.getName(locale)) %></h4>
 		</div>
 
 		<aui:nav-bar markupView="lexicon">
@@ -56,19 +56,13 @@ if (ListUtil.isEmpty(commerceProductDefinitions)) {
 			<h5><liferay-ui:message key="id" /></h5>
 
 			<p>
-				<%= HtmlUtil.escape(String.valueOf(commerceProductDefinition.getCommerceProductDefinitionId())) %>
-			</p>
-
-			<h5><liferay-ui:message key="status" /></h5>
-
-			<p>
-				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commerceProductDefinition.getStatus() %>" />
+				<%= HtmlUtil.escape(String.valueOf(commerceProductDefinitionOptionRel.getCommerceProductDefinitionOptionRelId())) %>
 			</p>
 		</div>
 	</c:when>
-	<c:when test="<%= commerceProductDefinitions.size() > 1 %>">
+	<c:when test="<%= commerceProductDefinitionOptionRels.size() > 1 %>">
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= commerceProductDefinitions.size() %>" key="x-items-are-selected" /></h4>
+			<h4><liferay-ui:message arguments="<%= commerceProductDefinitionOptionRels.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
 		<aui:nav-bar>
@@ -78,7 +72,7 @@ if (ListUtil.isEmpty(commerceProductDefinitions)) {
 		</aui:nav-bar>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message arguments="<%= commerceProductDefinitions.size() %>" key="x-items-are-selected" /></h5>
+			<h5><liferay-ui:message arguments="<%= commerceProductDefinitionOptionRels.size() %>" key="x-items-are-selected" /></h5>
 		</div>
 	</c:when>
 	<c:otherwise>
@@ -89,7 +83,7 @@ if (ListUtil.isEmpty(commerceProductDefinitions)) {
 		</aui:nav-bar>
 
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= commerceProductDefinitions.size() %>" key="x-items-are-selected" /></h4>
+			<h4><liferay-ui:message arguments="<%= commerceProductDefinitionOptionRels.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 	</c:otherwise>
 </c:choose>

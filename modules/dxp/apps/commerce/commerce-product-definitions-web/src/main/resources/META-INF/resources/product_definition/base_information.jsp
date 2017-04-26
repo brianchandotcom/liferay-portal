@@ -18,13 +18,34 @@
 
 <%
 CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION);
+
+CommerceProductDefinitionsDisplayContext commerceProductDefinitionsDisplayContext = (CommerceProductDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+List<CommerceProductType> commerceProductTypes = commerceProductDefinitionsDisplayContext.getCommerceProductTypes();
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="base-information" />
 
 <aui:model-context bean="<%= commerceProductDefinition %>" model="<%= CommerceProductDefinition.class %>" />
 
-<aui:fieldset>
-	<aui:input label="title" name="title" />
-	<aui:input label="description" name="description" />
+<aui:fieldset cssClass="col-md-4">
+	<aui:select label="product-type" name="productTypeName">
+
+		<%
+		for (CommerceProductType commerceProductType : commerceProductTypes) {
+		%>
+
+			<aui:option
+				label="<%= commerceProductType.getName() %>"
+				selected="<%= (commerceProductDefinition != null) && commerceProductDefinition.getProductTypeName().equals(commerceProductType.getName()) %>"
+				value="<%= commerceProductType.getName() %>"
+			/>
+
+		<%
+		}
+		%>
+
+	</aui:select>
+
+	<aui:input label="SKU" name="baseSKU" />
 </aui:fieldset>

@@ -20,13 +20,20 @@ import com.liferay.commerce.product.constants.CommerceProductPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchProductDefinitionException;
 import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.service.CommerceProductDefinitionService;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -36,7 +43,13 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -71,6 +84,14 @@ public class EditCommerceProductDefinitionMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		CommerceProductDefinition commerceProductDefinition = null;
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		int workflowAction = ParamUtil.getInteger(
+			actionRequest, "workflowAction",
+			WorkflowConstants.ACTION_SAVE_DRAFT);
+
 		try {
 			if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceProductDefinition(actionRequest);
@@ -78,8 +99,20 @@ public class EditCommerceProductDefinitionMVCActionCommand
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				updateCommerceProductDefinition(actionRequest);
+				commerceProductDefinition =
+					updateCommerceProductDefinition(actionRequest);
 			}
+
+
+			if ((commerceProductDefinition != null) &&
+				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
+
+				redirect = getSaveAndContinueRedirect(
+					actionRequest, commerceProductDefinition, redirect);
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchProductDefinitionException ||
@@ -108,9 +141,10 @@ public class EditCommerceProductDefinitionMVCActionCommand
 			actionRequest, "commerceProductDefinitionId");
 
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "title");
+			actionRequest, "titleMapAsXML");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+			LocalizationUtil.
+				getLocalizationMap(actionRequest, "descriptionMapAsXML");
 		String productTypeName = ParamUtil.getString(
 			actionRequest, "productTypeName");
 		String baseSKU = ParamUtil.getString(actionRequest, "baseSKU");
@@ -186,6 +220,30 @@ public class EditCommerceProductDefinitionMVCActionCommand
 		}
 
 		return commerceProductDefinition;
+	}
+
+	protected String getSaveAndContinueRedirect(
+			ActionRequest actionRequest,
+			CommerceProductDefinition commerceProductDefinition,
+			String redirect)
+		throws Exception {
+
+		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);;
+
+		PortletURL portletURL  = PortletProviderUtil.getPortletURL(actionRequest, themeDisplay.getScopeGroup(),CommerceProductDefinition.class.getName(), PortletProvider.Action.EDIT);
+
+		portletURL.
+			setParameter("mvcRenderCommandName", "editProductDefinition");
+		portletURL.setParameter("redirect", redirect);
+		portletURL.setParameter("commerceProductDefinitionId",
+			String.valueOf(commerceProductDefinition.
+				getCommerceProductDefinitionId()));
+
+		return portletURL.toString();
 	}
 
 	@Reference

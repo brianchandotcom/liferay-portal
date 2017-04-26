@@ -15,3 +15,16 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = (CommerceProductDefinitionOptionRel)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL);
+%>
+
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+
+<aui:model-context bean="<%= commerceProductDefinitionOptionRel %>" model="<%= CommerceProductDefinitionOptionRel.class %>" />
+
+<aui:fieldset>
+	<aui:input label="name" name="name" />
+	<aui:input label="description" name="description" />
+</aui:fieldset>

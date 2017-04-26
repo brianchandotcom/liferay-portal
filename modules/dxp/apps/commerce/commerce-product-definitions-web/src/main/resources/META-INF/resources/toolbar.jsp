@@ -18,6 +18,8 @@
 
 <%
 String searchContainerId = ParamUtil.getString(request, "searchContainerId", "commerceProductDefinitions");
+
+CommerceProductDefinitionsDisplayContext commerceProductDefinitionsDisplayContext = (CommerceProductDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <liferay-frontend:management-bar

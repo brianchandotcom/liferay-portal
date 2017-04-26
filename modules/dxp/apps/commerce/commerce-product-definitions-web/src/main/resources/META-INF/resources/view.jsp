@@ -19,6 +19,8 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-definitions");
 
+CommerceProductDefinitionsDisplayContext commerceProductDefinitionsDisplayContext = (CommerceProductDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 SearchContainer productDefinitionSearchContainer = commerceProductDefinitionsDisplayContext.getSearchContainer();
 
 String displayStyle = commerceProductDefinitionsDisplayContext.getDisplayStyle();
@@ -56,12 +58,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	<liferay-util:param name="searchContainerId" value="commerceProductDefinitions" />
 </liferay-util:include>
 
-<div id="<portlet:namespace />productsContainer">
+<div id="<portlet:namespace />productDefinitionsContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<c:if test="<%= commerceProductDefinitionsDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL
 				copyCurrentRenderParameters="<%= false %>"
-				id="infoPanel"
+				id="commerceProductDefinitionInfoPanel"
 				var="sidebarPanelURL"
 			/>
 
@@ -69,7 +71,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				resourceURL="<%= sidebarPanelURL %>"
 				searchContainerId="commerceProductDefinitions"
 			>
-				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/commerce_product_definition_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
 		</c:if>
 
@@ -104,7 +106,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 											icon="web-content"
 											resultRow="<%= row %>"
 											rowChecker="<%= commerceProductDefinitionsDisplayContext.getRowChecker() %>"
-											title="<%= HtmlUtil.escape(commerceProductDefinition.getTitle(themeDisplay.getLanguageId())) %>"
+											title="<%= HtmlUtil.escape(commerceProductDefinition.getTitle(languageId)) %>"
 										>
 											<%@ include file="/commerce_product_definition_vertical_card.jspf" %>
 										</liferay-frontend:icon-vertical-card>
@@ -124,11 +126,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</div>
 </div>
 
-<liferay-portlet:renderURL var="editProductDefinitionURL">
+<liferay-portlet:renderURL var="addProductDefinitionURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 	<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
 	<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
+	<portlet:param name="toolbarItem" value="view-product-definition-details" />
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title="add-product" url="<%= editProductDefinitionURL.toString() %>" />
+	<liferay-frontend:add-menu-item title="add-product" url="<%= addProductDefinitionURL.toString() %>" />
 </liferay-frontend:add-menu>

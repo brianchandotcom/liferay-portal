@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.trash.TrashHelper;
 
 import javax.portlet.PortletRequest;
 
@@ -116,7 +117,7 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
 		BookmarksFolder folder = getBookmarksFolder(classPK);
 
-		return new BookmarksFolderAssetRenderer(folder);
+		return new BookmarksFolderAssetRenderer(folder, _trashHelper);
 	}
 
 	@Override
@@ -211,5 +212,8 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

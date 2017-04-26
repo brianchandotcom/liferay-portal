@@ -51,6 +51,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public void setAllFileNames(List<String> allFileNames) {
+		_allFileNames = allFileNames;
+	}
+
+	@Override
 	public void setBaseDirName(String baseDirName) {
 		_baseDirName = baseDirName;
 	}
@@ -109,6 +114,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected void clearSourceFormatterMessages(String fileName) {
 		_sourceFormatterMessagesMap.remove(fileName);
+	}
+
+	protected List<String> getAllFileNames() {
+		return _allFileNames;
 	}
 
 	protected String getBaseDirName() {
@@ -349,6 +358,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return sb.toString();
 	}
 
+	private List<String> _allFileNames;
 	private String _baseDirName;
 	private int _maxLineLength;
 	private boolean _portalSource;

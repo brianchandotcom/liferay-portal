@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.source.formatter.SourceFormatterMessage;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -26,6 +27,8 @@ public interface SourceCheck {
 
 	public Set<SourceFormatterMessage> getSourceFormatterMessages(
 		String fileName);
+
+	public void setAllFileNames(List<String> allFileNames);
 
 	public void setBaseDirName(String baseDirName);
 

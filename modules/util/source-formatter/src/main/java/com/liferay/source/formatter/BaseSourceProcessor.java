@@ -693,6 +693,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private void _initSourceCheck(SourceCheck sourceCheck) {
+		sourceCheck.setAllFileNames(_allFileNames);
 		sourceCheck.setBaseDirName(sourceFormatterArgs.getBaseDirName());
 		sourceCheck.setMaxLineLength(sourceFormatterArgs.getMaxLineLength());
 		sourceCheck.setPortalSource(portalSource);

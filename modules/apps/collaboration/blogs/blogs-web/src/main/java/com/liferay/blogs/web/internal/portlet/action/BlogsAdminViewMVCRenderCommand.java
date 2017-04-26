@@ -18,6 +18,8 @@ import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.blogs.web.constants.BlogsWebKeys;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.trash.TrashHelper;
+import com.liferay.trash.util.TrashWebKeys;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -49,6 +51,8 @@ public class BlogsAdminViewMVCRenderCommand implements MVCRenderCommand {
 			BlogsWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
 			_dlMimeTypeDisplayContext);
 
+		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
+
 		return "/blogs_admin/view.jsp";
 	}
 
@@ -70,5 +74,8 @@ public class BlogsAdminViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

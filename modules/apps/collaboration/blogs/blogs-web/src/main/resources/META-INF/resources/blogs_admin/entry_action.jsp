@@ -60,11 +60,11 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/blogs/edit_entry" var="deleteEntryURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>" url="<%= deleteEntryURL %>" />
+		<liferay-ui:icon-delete trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>" url="<%= deleteEntryURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

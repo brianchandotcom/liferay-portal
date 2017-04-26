@@ -90,13 +90,12 @@ public class CommerceProductInstanceLocalServiceImpl
 			expirationDateMinute = expirationDateCalendar.get(Calendar.MINUTE);
 		}
 
-		return commerceProductInstanceLocalService.
-			addCommerceProductInstance(
-				commerceProductDefinitionId, sku, ddmContent, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+		return commerceProductInstanceLocalService.addCommerceProductInstance(
+			commerceProductDefinitionId, sku, ddmContent, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -224,12 +223,12 @@ public class CommerceProductInstanceLocalServiceImpl
 				commerceProductDefinition.getBaseSKU());
 
 			for (CommerceProductDefinitionOptionValueRel
-				commerceProductDefinitionOptionValueRel : skuCombination) {
+					commerceProductDefinitionOptionValueRel : skuCombination) {
 
 				sku.append(
 					StringUtil.toUpperCase(
-						commerceProductDefinitionOptionValueRel.
-							getTitle(serviceContext.getLanguageId())));
+						commerceProductDefinitionOptionValueRel.getTitle(
+							serviceContext.getLanguageId())));
 
 				JSONObject skuCombinationJSONObject =
 					JSONFactoryUtil.createJSONObject();

@@ -15,10 +15,8 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CommerceProductActionKeys;
-import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.model.CommerceProductOption;
 import com.liferay.commerce.product.service.base.CommerceProductOptionServiceBaseImpl;
-import com.liferay.commerce.product.service.permission.CommerceProductDefinitionPermission;
 import com.liferay.commerce.product.service.permission.CommerceProductOptionPermission;
 import com.liferay.commerce.product.service.permission.CommerceProductPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,25 +33,6 @@ import java.util.Map;
  */
 public class CommerceProductOptionServiceImpl
 	extends CommerceProductOptionServiceBaseImpl {
-
-
-	@Override
-	public CommerceProductOption fetchCommerceProductOption(
-		long commerceProductOptionId)
-		throws PortalException {
-
-		CommerceProductOption commerceProductOption =
-			commerceProductOptionLocalService.
-				fetchCommerceProductOption(commerceProductOptionId);
-
-		if (commerceProductOption != null) {
-			CommerceProductOptionPermission.check(
-				getPermissionChecker(), commerceProductOption,
-				ActionKeys.VIEW);
-		}
-
-		return commerceProductOption;
-	}
 
 	@Override
 	public CommerceProductOption addCommerceProductOption(
@@ -91,6 +70,23 @@ public class CommerceProductOptionServiceImpl
 
 		return commerceProductOptionLocalService.deleteCommerceProductOption(
 			commerceProductOptionId);
+	}
+
+	@Override
+	public CommerceProductOption fetchCommerceProductOption(
+			long commerceProductOptionId)
+		throws PortalException {
+
+		CommerceProductOption commerceProductOption =
+			commerceProductOptionLocalService.fetchCommerceProductOption(
+				commerceProductOptionId);
+
+		if (commerceProductOption != null) {
+			CommerceProductOptionPermission.check(
+				getPermissionChecker(), commerceProductOption, ActionKeys.VIEW);
+		}
+
+		return commerceProductOption;
 	}
 
 	@Override

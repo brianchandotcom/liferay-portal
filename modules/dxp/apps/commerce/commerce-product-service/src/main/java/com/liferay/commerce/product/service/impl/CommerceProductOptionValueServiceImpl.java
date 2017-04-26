@@ -34,24 +34,6 @@ public class CommerceProductOptionValueServiceImpl
 	extends CommerceProductOptionValueServiceBaseImpl {
 
 	@Override
-	public CommerceProductOptionValue fetchCommerceProductOptionValue(
-		long commerceProductOptionValueId)
-		throws PortalException {
-
-		CommerceProductOptionValue commerceProductOptionValue =
-			commerceProductOptionValueLocalService.
-				fetchCommerceProductOptionValue(commerceProductOptionValueId);
-
-		if (commerceProductOptionValue != null) {
-			CommerceProductOptionPermission.checkCommerceProductOptionValue(
-				getPermissionChecker(), commerceProductOptionValue,
-				ActionKeys.VIEW);
-		}
-
-		return commerceProductOptionValue;
-	}
-
-	@Override
 	public CommerceProductOptionValue addCommerceProductOptionValue(
 			long commerceProductOptionId, Map<Locale, String> titleMap,
 			int priority, ServiceContext serviceContext)
@@ -91,6 +73,24 @@ public class CommerceProductOptionValueServiceImpl
 
 		return commerceProductOptionValueLocalService.
 			deleteCommerceProductOptionValue(commerceProductOptionValueId);
+	}
+
+	@Override
+	public CommerceProductOptionValue fetchCommerceProductOptionValue(
+			long commerceProductOptionValueId)
+		throws PortalException {
+
+		CommerceProductOptionValue commerceProductOptionValue =
+			commerceProductOptionValueLocalService.
+				fetchCommerceProductOptionValue(commerceProductOptionValueId);
+
+		if (commerceProductOptionValue != null) {
+			CommerceProductOptionPermission.checkCommerceProductOptionValue(
+				getPermissionChecker(), commerceProductOptionValue,
+				ActionKeys.VIEW);
+		}
+
+		return commerceProductOptionValue;
 	}
 
 	@Override

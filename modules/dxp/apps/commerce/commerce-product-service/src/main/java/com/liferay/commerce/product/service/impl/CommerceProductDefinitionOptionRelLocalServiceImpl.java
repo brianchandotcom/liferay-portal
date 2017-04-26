@@ -203,8 +203,8 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 		getSkuContributorCommerceProductDefinitionOptionRels(
 			long commerceProductDefinitionId) {
 
-		return commerceProductDefinitionOptionRelPersistence.
-			findByC_SC(commerceProductDefinitionId, true);
+		return commerceProductDefinitionOptionRelPersistence.findByC_SC(
+			commerceProductDefinitionId, true);
 	}
 
 	public CommerceProductDefinitionOptionRel

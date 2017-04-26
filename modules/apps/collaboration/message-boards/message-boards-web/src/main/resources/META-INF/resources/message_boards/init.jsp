@@ -163,7 +163,8 @@ page import="com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil" %>
 page import="com.liferay.portlet.messageboards.util.MBUtil" %><%@
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %>
+page import="com.liferay.trash.TrashHelper" %><%@
+page import="com.liferay.trash.util.TrashWebKeys" %>
 
 <%@ page import="java.text.Format" %><%@
 page import="java.text.NumberFormat" %>
@@ -224,6 +225,8 @@ Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
 NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+
+TrashHelper trashHelper = (TrashHelper)request.getAttribute(TrashWebKeys.TRASH_HELPER);
 %>
 
 <%@ include file="/message_boards/init-ext.jsp" %>

@@ -43,7 +43,7 @@ public class BundleSupportUtil {
 
 		valueString = setSystemProperty(key, valueString);
 
-		if (valueString == null) {
+		if ((valueString == null) || valueString.isEmpty()) {
 			return null;
 		}
 

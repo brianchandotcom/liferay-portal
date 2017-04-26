@@ -3624,6 +3624,8 @@ public class CommerceProductDefinitionOptionRelPersistenceImpl
 		commerceProductDefinitionOptionRelImpl.setDescription(commerceProductDefinitionOptionRel.getDescription());
 		commerceProductDefinitionOptionRelImpl.setDDMFormFieldTypeName(commerceProductDefinitionOptionRel.getDDMFormFieldTypeName());
 		commerceProductDefinitionOptionRelImpl.setPriority(commerceProductDefinitionOptionRel.getPriority());
+		commerceProductDefinitionOptionRelImpl.setFacetable(commerceProductDefinitionOptionRel.isFacetable());
+		commerceProductDefinitionOptionRelImpl.setSkuContributor(commerceProductDefinitionOptionRel.isSkuContributor());
 
 		return commerceProductDefinitionOptionRelImpl;
 	}

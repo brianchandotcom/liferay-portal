@@ -46,7 +46,9 @@ create table CommerceProductDefinitionOptionRel (
 	name STRING null,
 	description STRING null,
 	DDMFormFieldTypeName VARCHAR(75) null,
-	priority INTEGER
+	priority INTEGER,
+	facetable BOOLEAN,
+	skuContributor BOOLEAN
 );
 
 create table CommerceProductDefinitionOptionValueRel (

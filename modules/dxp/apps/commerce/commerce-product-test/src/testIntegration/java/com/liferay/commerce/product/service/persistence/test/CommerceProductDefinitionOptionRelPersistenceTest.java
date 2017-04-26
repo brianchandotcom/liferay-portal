@@ -155,6 +155,10 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 
 		newCommerceProductDefinitionOptionRel.setPriority(RandomTestUtil.nextInt());
 
+		newCommerceProductDefinitionOptionRel.setFacetable(RandomTestUtil.randomBoolean());
+
+		newCommerceProductDefinitionOptionRel.setSkuContributor(RandomTestUtil.randomBoolean());
+
 		_commerceProductDefinitionOptionRels.add(_persistence.update(
 				newCommerceProductDefinitionOptionRel));
 
@@ -193,6 +197,10 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 			newCommerceProductDefinitionOptionRel.getDDMFormFieldTypeName());
 		Assert.assertEquals(existingCommerceProductDefinitionOptionRel.getPriority(),
 			newCommerceProductDefinitionOptionRel.getPriority());
+		Assert.assertEquals(existingCommerceProductDefinitionOptionRel.getFacetable(),
+			newCommerceProductDefinitionOptionRel.getFacetable());
+		Assert.assertEquals(existingCommerceProductDefinitionOptionRel.getSkuContributor(),
+			newCommerceProductDefinitionOptionRel.getSkuContributor());
 	}
 
 	@Test
@@ -276,7 +284,7 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 			true, "createDate", true, "modifiedDate", true,
 			"commerceProductDefinitionId", true, "commerceProductOptionId",
 			true, "name", true, "description", true, "DDMFormFieldTypeName",
-			true, "priority", true);
+			true, "priority", true, "facetable", true, "skuContributor", true);
 	}
 
 	@Test
@@ -553,6 +561,10 @@ public class CommerceProductDefinitionOptionRelPersistenceTest {
 		commerceProductDefinitionOptionRel.setDDMFormFieldTypeName(RandomTestUtil.randomString());
 
 		commerceProductDefinitionOptionRel.setPriority(RandomTestUtil.nextInt());
+
+		commerceProductDefinitionOptionRel.setFacetable(RandomTestUtil.randomBoolean());
+
+		commerceProductDefinitionOptionRel.setSkuContributor(RandomTestUtil.randomBoolean());
 
 		_commerceProductDefinitionOptionRels.add(_persistence.update(
 				commerceProductDefinitionOptionRel));

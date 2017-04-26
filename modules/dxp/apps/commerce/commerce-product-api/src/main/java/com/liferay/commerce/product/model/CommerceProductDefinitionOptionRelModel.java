@@ -472,6 +472,48 @@ public interface CommerceProductDefinitionOptionRelModel extends BaseModel<Comme
 	 */
 	public void setPriority(int priority);
 
+	/**
+	 * Returns the facetable of this commerce product definition option rel.
+	 *
+	 * @return the facetable of this commerce product definition option rel
+	 */
+	public boolean getFacetable();
+
+	/**
+	 * Returns <code>true</code> if this commerce product definition option rel is facetable.
+	 *
+	 * @return <code>true</code> if this commerce product definition option rel is facetable; <code>false</code> otherwise
+	 */
+	public boolean isFacetable();
+
+	/**
+	 * Sets whether this commerce product definition option rel is facetable.
+	 *
+	 * @param facetable the facetable of this commerce product definition option rel
+	 */
+	public void setFacetable(boolean facetable);
+
+	/**
+	 * Returns the sku contributor of this commerce product definition option rel.
+	 *
+	 * @return the sku contributor of this commerce product definition option rel
+	 */
+	public boolean getSkuContributor();
+
+	/**
+	 * Returns <code>true</code> if this commerce product definition option rel is sku contributor.
+	 *
+	 * @return <code>true</code> if this commerce product definition option rel is sku contributor; <code>false</code> otherwise
+	 */
+	public boolean isSkuContributor();
+
+	/**
+	 * Sets whether this commerce product definition option rel is sku contributor.
+	 *
+	 * @param skuContributor the sku contributor of this commerce product definition option rel
+	 */
+	public void setSkuContributor(boolean skuContributor);
+
 	@Override
 	public boolean isNew();
 

@@ -62,6 +62,8 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="DDMFormFieldTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="facetable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="skuContributor" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.commerce.product.model.impl.CommerceProductDefinitionOptionValueRelImpl" table="CommerceProductDefinitionOptionValueRel">
 		<id column="definitionOptionValueRelId" name="commerceProductDefinitionOptionValueRelId" type="long">

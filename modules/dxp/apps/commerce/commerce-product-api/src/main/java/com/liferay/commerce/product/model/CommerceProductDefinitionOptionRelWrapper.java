@@ -78,6 +78,8 @@ public class CommerceProductDefinitionOptionRelWrapper
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
 		attributes.put("priority", getPriority());
+		attributes.put("facetable", getFacetable());
+		attributes.put("skuContributor", getSkuContributor());
 
 		return attributes;
 	}
@@ -171,6 +173,18 @@ public class CommerceProductDefinitionOptionRelWrapper
 		if (priority != null) {
 			setPriority(priority);
 		}
+
+		Boolean facetable = (Boolean)attributes.get("facetable");
+
+		if (facetable != null) {
+			setFacetable(facetable);
+		}
+
+		Boolean skuContributor = (Boolean)attributes.get("skuContributor");
+
+		if (skuContributor != null) {
+			setSkuContributor(skuContributor);
+		}
 	}
 
 	@Override
@@ -183,6 +197,26 @@ public class CommerceProductDefinitionOptionRelWrapper
 		return new CommerceProductDefinitionOptionRelWrapper(_commerceProductDefinitionOptionRel.toUnescapedModel());
 	}
 
+	/**
+	* Returns the facetable of this commerce product definition option rel.
+	*
+	* @return the facetable of this commerce product definition option rel
+	*/
+	@Override
+	public boolean getFacetable() {
+		return _commerceProductDefinitionOptionRel.getFacetable();
+	}
+
+	/**
+	* Returns the sku contributor of this commerce product definition option rel.
+	*
+	* @return the sku contributor of this commerce product definition option rel
+	*/
+	@Override
+	public boolean getSkuContributor() {
+		return _commerceProductDefinitionOptionRel.getSkuContributor();
+	}
+
 	@Override
 	public boolean isCachedModel() {
 		return _commerceProductDefinitionOptionRel.isCachedModel();
@@ -193,9 +227,29 @@ public class CommerceProductDefinitionOptionRelWrapper
 		return _commerceProductDefinitionOptionRel.isEscapedModel();
 	}
 
+	/**
+	* Returns <code>true</code> if this commerce product definition option rel is facetable.
+	*
+	* @return <code>true</code> if this commerce product definition option rel is facetable; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isFacetable() {
+		return _commerceProductDefinitionOptionRel.isFacetable();
+	}
+
 	@Override
 	public boolean isNew() {
 		return _commerceProductDefinitionOptionRel.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this commerce product definition option rel is sku contributor.
+	*
+	* @return <code>true</code> if this commerce product definition option rel is sku contributor; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isSkuContributor() {
+		return _commerceProductDefinitionOptionRel.isSkuContributor();
 	}
 
 	@Override
@@ -714,6 +768,16 @@ public class CommerceProductDefinitionOptionRelWrapper
 	}
 
 	/**
+	* Sets whether this commerce product definition option rel is facetable.
+	*
+	* @param facetable the facetable of this commerce product definition option rel
+	*/
+	@Override
+	public void setFacetable(boolean facetable) {
+		_commerceProductDefinitionOptionRel.setFacetable(facetable);
+	}
+
+	/**
 	* Sets the group ID of this commerce product definition option rel.
 	*
 	* @param groupId the group ID of this commerce product definition option rel
@@ -822,6 +886,16 @@ public class CommerceProductDefinitionOptionRelWrapper
 	@Override
 	public void setPriority(int priority) {
 		_commerceProductDefinitionOptionRel.setPriority(priority);
+	}
+
+	/**
+	* Sets whether this commerce product definition option rel is sku contributor.
+	*
+	* @param skuContributor the sku contributor of this commerce product definition option rel
+	*/
+	@Override
+	public void setSkuContributor(boolean skuContributor) {
+		_commerceProductDefinitionOptionRel.setSkuContributor(skuContributor);
 	}
 
 	/**

@@ -93,7 +93,9 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "DDMFormFieldTypeName", Types.VARCHAR },
-			{ "priority", Types.INTEGER }
+			{ "priority", Types.INTEGER },
+			{ "facetable", Types.BOOLEAN },
+			{ "skuContributor", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -112,9 +114,11 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMFormFieldTypeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("facetable", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinitionOptionRel (uuid_ VARCHAR(75) null,definitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductDefinitionId LONG,commerceProductOptionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceProductDefinitionOptionRel (uuid_ VARCHAR(75) null,definitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceProductDefinitionId LONG,commerceProductOptionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,priority INTEGER,facetable BOOLEAN,skuContributor BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceProductDefinitionOptionRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceProductDefinitionOptionRel.priority DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceProductDefinitionOptionRel.priority DESC";
@@ -164,6 +168,8 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		model.setDescription(soapModel.getDescription());
 		model.setDDMFormFieldTypeName(soapModel.getDDMFormFieldTypeName());
 		model.setPriority(soapModel.getPriority());
+		model.setFacetable(soapModel.getFacetable());
+		model.setSkuContributor(soapModel.getSkuContributor());
 
 		return model;
 	}
@@ -245,6 +251,8 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
 		attributes.put("priority", getPriority());
+		attributes.put("facetable", getFacetable());
+		attributes.put("skuContributor", getSkuContributor());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -340,6 +348,18 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Boolean facetable = (Boolean)attributes.get("facetable");
+
+		if (facetable != null) {
+			setFacetable(facetable);
+		}
+
+		Boolean skuContributor = (Boolean)attributes.get("skuContributor");
+
+		if (skuContributor != null) {
+			setSkuContributor(skuContributor);
 		}
 	}
 
@@ -761,6 +781,40 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		_priority = priority;
 	}
 
+	@JSON
+	@Override
+	public boolean getFacetable() {
+		return _facetable;
+	}
+
+	@JSON
+	@Override
+	public boolean isFacetable() {
+		return _facetable;
+	}
+
+	@Override
+	public void setFacetable(boolean facetable) {
+		_facetable = facetable;
+	}
+
+	@JSON
+	@Override
+	public boolean getSkuContributor() {
+		return _skuContributor;
+	}
+
+	@JSON
+	@Override
+	public boolean isSkuContributor() {
+		return _skuContributor;
+	}
+
+	@Override
+	public void setSkuContributor(boolean skuContributor) {
+		_skuContributor = skuContributor;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -895,6 +949,8 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		commerceProductDefinitionOptionRelImpl.setDescription(getDescription());
 		commerceProductDefinitionOptionRelImpl.setDDMFormFieldTypeName(getDDMFormFieldTypeName());
 		commerceProductDefinitionOptionRelImpl.setPriority(getPriority());
+		commerceProductDefinitionOptionRelImpl.setFacetable(getFacetable());
+		commerceProductDefinitionOptionRelImpl.setSkuContributor(getSkuContributor());
 
 		commerceProductDefinitionOptionRelImpl.resetOriginalValues();
 
@@ -1064,12 +1120,16 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 
 		commerceProductDefinitionOptionRelCacheModel.priority = getPriority();
 
+		commerceProductDefinitionOptionRelCacheModel.facetable = getFacetable();
+
+		commerceProductDefinitionOptionRelCacheModel.skuContributor = getSkuContributor();
+
 		return commerceProductDefinitionOptionRelCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1099,6 +1159,10 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 		sb.append(getDDMFormFieldTypeName());
 		sb.append(", priority=");
 		sb.append(getPriority());
+		sb.append(", facetable=");
+		sb.append(getFacetable());
+		sb.append(", skuContributor=");
+		sb.append(getSkuContributor());
 		sb.append("}");
 
 		return sb.toString();
@@ -1106,7 +1170,7 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -1169,6 +1233,14 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
 		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>facetable</column-name><column-value><![CDATA[");
+		sb.append(getFacetable());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>skuContributor</column-name><column-value><![CDATA[");
+		sb.append(getSkuContributor());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1203,6 +1275,8 @@ public class CommerceProductDefinitionOptionRelModelImpl extends BaseModelImpl<C
 	private String _descriptionCurrentLanguageId;
 	private String _DDMFormFieldTypeName;
 	private int _priority;
+	private boolean _facetable;
+	private boolean _skuContributor;
 	private long _columnBitmask;
 	private CommerceProductDefinitionOptionRel _escapedModel;
 }

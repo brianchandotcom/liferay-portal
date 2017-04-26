@@ -67,7 +67,7 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -97,6 +97,10 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 		sb.append(DDMFormFieldTypeName);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", facetable=");
+		sb.append(facetable);
+		sb.append(", skuContributor=");
+		sb.append(skuContributor);
 		sb.append("}");
 
 		return sb.toString();
@@ -167,6 +171,8 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 		}
 
 		commerceProductDefinitionOptionRelImpl.setPriority(priority);
+		commerceProductDefinitionOptionRelImpl.setFacetable(facetable);
+		commerceProductDefinitionOptionRelImpl.setSkuContributor(skuContributor);
 
 		commerceProductDefinitionOptionRelImpl.resetOriginalValues();
 
@@ -196,6 +202,10 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 		DDMFormFieldTypeName = objectInput.readUTF();
 
 		priority = objectInput.readInt();
+
+		facetable = objectInput.readBoolean();
+
+		skuContributor = objectInput.readBoolean();
 	}
 
 	@Override
@@ -252,6 +262,10 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 		}
 
 		objectOutput.writeInt(priority);
+
+		objectOutput.writeBoolean(facetable);
+
+		objectOutput.writeBoolean(skuContributor);
 	}
 
 	public String uuid;
@@ -268,4 +282,6 @@ public class CommerceProductDefinitionOptionRelCacheModel implements CacheModel<
 	public String description;
 	public String DDMFormFieldTypeName;
 	public int priority;
+	public boolean facetable;
+	public boolean skuContributor;
 }

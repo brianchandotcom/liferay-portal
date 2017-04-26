@@ -45,6 +45,7 @@ import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
@@ -73,7 +74,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -88,7 +88,6 @@ import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -126,7 +125,9 @@ public class CalEventImporter {
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			connection = con;
 
-			importCalEvents();
+			DBInspector dbInspector = new DBInspector(connection);
+
+			importCalEvents(dbInspector);
 		}
 		finally {
 			connection = null;
@@ -522,26 +523,6 @@ public class CalEventImporter {
 		return RecurrenceSerializer.serialize(recurrence);
 	}
 
-	protected boolean doHasTable(String tableName) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			DatabaseMetaData metadata = connection.getMetaData();
-
-			rs = metadata.getTables(null, null, tableName, null);
-
-			while (rs.next()) {
-				return true;
-			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
-
-		return false;
-	}
-
 	protected long getActionId(
 		ResourceAction oldResourceAction, String newClassName) {
 
@@ -729,17 +710,6 @@ public class CalEventImporter {
 				_classNameLocalService.getClassNameId(Group.class), groupId,
 				null, null, nameMap, descriptionMap, true, serviceContext);
 		}
-	}
-
-	protected boolean hasTable(String tableName) throws Exception {
-		if (doHasTable(StringUtil.toLowerCase(tableName)) ||
-			doHasTable(StringUtil.toUpperCase(tableName)) ||
-			doHasTable(tableName)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	protected void importAssetLink(
@@ -1026,8 +996,8 @@ public class CalEventImporter {
 		return calendarBooking;
 	}
 
-	protected void importCalEvents() throws Exception {
-		if (!hasTable("CalEvent")) {
+	protected void importCalEvents(DBInspector dbInspector) throws Exception {
+		if (!dbInspector.hasTable("CalEvent", true)) {
 			return;
 		}
 

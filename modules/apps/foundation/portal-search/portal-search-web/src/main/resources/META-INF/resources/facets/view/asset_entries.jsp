@@ -32,7 +32,7 @@ if (dataJSONObject.has("values")) {
 	}
 }
 
-com.liferay.portal.search.web.internal.facet.display.builder.AssetEntriesSearchFacetDisplayBuilder assetEntriesSearchFacetDisplayBuilder = new com.liferay.portal.search.web.internal.facet.display.builder.AssetEntriesSearchFacetDisplayBuilder();
+AssetEntriesSearchFacetDisplayBuilder assetEntriesSearchFacetDisplayBuilder = new AssetEntriesSearchFacetDisplayBuilder();
 
 assetEntriesSearchFacetDisplayBuilder.setClassNames(values);
 assetEntriesSearchFacetDisplayBuilder.setFacet(facet);
@@ -42,7 +42,7 @@ assetEntriesSearchFacetDisplayBuilder.setLocale(locale);
 assetEntriesSearchFacetDisplayBuilder.setParameterName(facet.getFieldId());
 assetEntriesSearchFacetDisplayBuilder.setParameterValue(fieldParam);
 
-com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = assetEntriesSearchFacetDisplayBuilder.build();
+AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = assetEntriesSearchFacetDisplayBuilder.build();
 %>
 
 <div class="panel panel-default">
@@ -62,7 +62,7 @@ com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchF
 				</li>
 
 				<%
-				for (com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetTermDisplayContext assetEntriesSearchFacetTermDisplayContext : assetEntriesSearchFacetDisplayContext.getTermDisplayContexts()) {
+				for (AssetEntriesSearchFacetTermDisplayContext assetEntriesSearchFacetTermDisplayContext : assetEntriesSearchFacetDisplayContext.getTermDisplayContexts()) {
 				%>
 
 					<li class="facet-value">

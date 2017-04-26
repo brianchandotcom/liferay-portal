@@ -107,6 +107,8 @@ public class DDLFormDisplayContext {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			createDDMFormRenderingContext(ddmForm);
 
+		ddmFormRenderingContext.setGroupId(recordSet.getGroupId());
+
 		boolean showSubmitButton = isShowSubmitButton();
 
 		ddmFormRenderingContext.setShowSubmitButton(showSubmitButton);

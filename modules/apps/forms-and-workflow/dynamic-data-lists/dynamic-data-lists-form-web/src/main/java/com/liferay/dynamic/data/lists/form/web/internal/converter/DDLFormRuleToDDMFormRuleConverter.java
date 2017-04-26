@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.math.NumberUtils;
 
@@ -65,15 +67,13 @@ public class DDLFormRuleToDDMFormRuleConverter {
 				_operatorMap.get(operator), convertOperand(operands.get(1)));
 		}
 
-		String action = String.format(
-			_functionCallUnaryExpressionFormat, functionName,
-			convertOperands(operands));
+		String condition = createCondition(functionName, operands);
 
 		if (operator.startsWith("not")) {
-			return String.format(_notExpressionFormat, action);
+			return String.format(_notExpressionFormat, condition);
 		}
 
-		return action;
+		return condition;
 	}
 
 	protected String convertConditions(
@@ -113,7 +113,11 @@ public class DDLFormRuleToDDMFormRuleConverter {
 			return value;
 		}
 
-		return StringUtil.quote(value);
+		String[] values = StringUtil.split(value);
+
+		Stream<String> valueStream = Stream.of(values).map(StringUtil::quote);
+
+		return valueStream.collect(Collectors.joining(StringPool.COMMA));
 	}
 
 	protected String convertOperands(
@@ -145,6 +149,18 @@ public class DDLFormRuleToDDMFormRuleConverter {
 		}
 
 		return new DDMFormRule(condition, actions);
+	}
+
+	protected String createCondition(
+		String functionName, List<DDLFormRuleCondition.Operand> operands) {
+
+		if (Objects.equals(functionName, "belongsTo")) {
+			operands.remove(0);
+		}
+
+		return String.format(
+			_functionCallUnaryExpressionFormat, functionName,
+			convertOperands(operands));
 	}
 
 	private static final String _comparisonExpressionFormat = "%s %s %s";

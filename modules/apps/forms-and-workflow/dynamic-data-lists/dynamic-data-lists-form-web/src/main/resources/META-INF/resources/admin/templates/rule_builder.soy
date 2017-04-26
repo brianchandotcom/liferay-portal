@@ -25,9 +25,9 @@
 /**
  * Prints the DDL form card rule.
  *
+ * @param kebab
  * @param rules
  * @param strings
- * @param kebab
  */
 {template .rule_list  autoescape="deprecated-contextual"}
 	{if length($rules) > 0}
@@ -53,8 +53,8 @@
 							{/if}
 
 							{if not isLast($condition)}
-							<br />
-							<b> {$condition.logicOperator} </b>
+								<br />
+								<b> {$rule.logicOperator} </b>
 							{/if}
 						{/foreach}
 
@@ -149,7 +149,10 @@
  * @param operandValue
  */
 {template .condition autoescape="deprecated-contextual"}
-	<span>{$operandType} </span>
+	{if $operandType != 'user' and $operandType != 'list'}
+		<span>{$operandType} </span>
+	{/if}
+
 	{call .badge}
 		{param content: $operandValue /}
 	{/call}

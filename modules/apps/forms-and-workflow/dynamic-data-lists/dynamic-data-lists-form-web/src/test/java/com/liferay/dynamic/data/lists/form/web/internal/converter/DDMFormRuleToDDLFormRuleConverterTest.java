@@ -59,7 +59,7 @@ public class DDMFormRuleToDDLFormRuleConverterTest
 	public void testBelongsToCondition() throws Exception {
 		assertConversion(
 			"ddm-form-rules-belongs-to-condition.json",
-			"ddl-form-rules-belongs-to-condition.json");
+			"ddl-form-rules-belongs-to-condition-without-user-operand.json");
 	}
 
 	@Test
@@ -115,8 +115,6 @@ public class DDMFormRuleToDDLFormRuleConverterTest
 		List<DDLFormRule> actualDDLFormRules =
 			_ddmFormRulesToDDLFormRulesConverter.convert(
 				ListUtil.toList(ddmFormRules));
-
-		System.out.println(serialize(actualDDLFormRules));
 
 		JSONAssert.assertEquals(
 			read(toFileName), serialize(actualDDLFormRules), false);

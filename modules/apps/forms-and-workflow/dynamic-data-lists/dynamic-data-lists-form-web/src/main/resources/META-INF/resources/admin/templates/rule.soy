@@ -18,31 +18,33 @@
 	<div class="ddl-form-body-content">
 		<ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline {length($conditions) > 1 ? 'can-remove-item' : ''}">
 			{call .rulesHeader}
-				{param logicalOperator: $logicalOperator /}
-				{param title: 'Condition' /}
 				{param extraContent kind="html"}
 					{call .logicOperatorDropDown data="all" /}
 				{/param}
+				{param logicalOperator: $logicalOperator /}
+				{param title: 'Condition' /}
 			{/call}
 
 			{foreach $condition in $conditions}
 				{call .condition}
-					{param index: index($condition) /}
 					{param deleteIcon: $deleteIcon /}
+					{param if: $strings.if /}
+					{param index: index($condition) /}
 					{param logicOperator: $logicalOperator /}
 				{/call}
 				{ifempty}
 					{call .condition}
-						{param index: 0 /}
 						{param deleteIcon: $deleteIcon /}
+						{param if: $strings.if /}
+						{param index: 0 /}
 						{param logicOperator: $logicalOperator /}
 					{/call}
 			{/foreach}
 		</ul>
 
 		{call .btnAddNewTimelineItem}
-			{param plusIcon: $plusIcon /}
 			{param cssClass: 'form-builder-rule-add-condition' /}
+			{param plusIcon: $plusIcon /}
 		{/call}
 
 		<ul class="action-list liferay-ddl-form-builder-rule-action-list liferay-ddl-form-rule-builder-timeline timeline {length($actions) > 1 ? 'can-remove-item' : ''}">
@@ -53,20 +55,22 @@
 
 			{foreach $action in $actions}
 				{call .action}
-					{param index: index($action) /}
 					{param deleteIcon: $deleteIcon /}
+					{param do: $strings.do /}
+					{param index: index($action) /}
 				{/call}
 				{ifempty}
 					{call .action}
-						{param index: 0 /}
 						{param deleteIcon: $deleteIcon /}
+						{param do: $strings.do /}
+						{param index: 0 /}
 					{/call}
 			{/foreach}
 		</ul>
 
 		{call .btnAddNewTimelineItem}
-			{param plusIcon: $plusIcon /}
 			{param cssClass: 'form-builder-rule-add-action' /}
+			{param plusIcon: $plusIcon /}
 		{/call}
 
 		<div class="liferay-ddl-form-rule-builder-footer">
@@ -83,15 +87,16 @@
 /**
  * Prints the DDL rule condition.
  *
- * @param index
  * @param deleteIcon
+ * @param if
+ * @param index
  * @param logicOperator
  */
 {template .condition autoescape="deprecated-contextual"}
 	<li class="form-builder-rule-condition-container-{$index} timeline-item">
 		<div class="panel panel-default">
 			<div class="flex-container panel-body">
-				<h4>If</h4>
+				<h4>{$if}</h4>
 
 				<div class="condition-if-{$index} form-group"></div>
 				<div class="condition-operator-{$index} form-group"></div>
@@ -124,8 +129,8 @@
 /**
  * Prints the DDL rule condition.
  *
- * @param plusIcon
  * @param? cssClass
+ * @param plusIcon
  */
 {template .btnAddNewTimelineItem autoescape="deprecated-contextual"}
 	<div class="addbutton-timeline-item">
@@ -138,8 +143,8 @@
 {/template}
 
 /**
- * @param title
  * @param? extraContent
+ * @param title
  */
 {template .rulesHeader autoescape="deprecated-contextual"}
 	<li class="timeline-item">
@@ -182,8 +187,9 @@
 /**
  * Prints the DDL property change action.
  *
- * @param index
  * @param deleteIcon
+ * @param do
+ * @param index
  */
 {template .action autoescape="deprecated-contextual"}
 	<li class="form-builder-rule-action-container-{$index} timeline-item">
@@ -191,7 +197,7 @@
 			<div class="no-padding-bottom panel-body">
 				<div class="row">
 					<div class="col-md-12 flex-container ">
-						<h4>Do</h4>
+						<h4>{$do}</h4>
 						<div class="action-{$index} form-group"></div>
 						<div class="container-target-action form-group target-{$index}"></div>
 					</div>

@@ -10,10 +10,6 @@
 			{
 				"operands": [
 					{
-						"type": "user",
-						"value": "User"
-					},
-					{
 						"type": "list",
 						"value": "Role1,Role2"
 					}

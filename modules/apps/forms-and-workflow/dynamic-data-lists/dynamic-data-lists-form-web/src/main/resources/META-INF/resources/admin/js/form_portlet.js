@@ -774,6 +774,7 @@ AUI.add(
 								getDataProviderInstancesURL: instance.get('getDataProviderInstancesURL'),
 								getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
 								getFunctionsURL: instance.get('getFunctionsURL'),
+								getRolesURL: instance.get('getRolesURL'),
 								portletNamespace: instance.get('namespace'),
 								rules: instance.get('rules'),
 								visible: false

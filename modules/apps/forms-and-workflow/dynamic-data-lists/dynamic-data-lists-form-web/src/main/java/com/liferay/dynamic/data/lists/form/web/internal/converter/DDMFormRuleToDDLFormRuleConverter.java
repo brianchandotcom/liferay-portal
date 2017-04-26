@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.form.web.internal.converter;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRule;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleAction;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleCondition;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleCondition.Operand;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
@@ -30,6 +31,7 @@ import com.liferay.dynamic.data.mapping.expression.model.NotExpression;
 import com.liferay.dynamic.data.mapping.expression.model.OrExpression;
 import com.liferay.dynamic.data.mapping.expression.model.Term;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +40,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Stack;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -225,11 +229,8 @@ public class DDMFormRuleToDDLFormRuleConverter {
 					(DDLFormRuleCondition.Operand)doVisit(parameterExpression));
 			}
 
-			DDLFormRuleCondition ddlFormRuleCondition =
-				new DDLFormRuleCondition(
-					_functionNameOperatorMap.get(functionName), operands);
-
-			_conditions.push(ddlFormRuleCondition);
+			_conditions.push(
+				createDDLFormRuleCondition(functionName, operands));
 
 			return _conditions;
 		}
@@ -258,6 +259,36 @@ public class DDMFormRuleToDDLFormRuleConverter {
 		public Object visit(Term term) {
 			return new DDLFormRuleCondition.Operand(
 				"constant", term.getValue());
+		}
+
+		protected DDLFormRuleCondition createBelongsToCondition(
+			String belongsToFunctionName, List<Operand> operands) {
+
+			List<Operand> belongsToOperands = new ArrayList<>();
+
+			Stream<String> valueStream = operands.stream().map(
+				operand -> operand.getValue());
+
+			belongsToOperands.add(
+				new Operand(
+					"list",
+					valueStream.collect(Collectors.joining(StringPool.COMMA))));
+
+			return new DDLFormRuleCondition(
+				belongsToFunctionName, belongsToOperands);
+		}
+
+		protected DDLFormRuleCondition createDDLFormRuleCondition(
+			String functionName, List<DDLFormRuleCondition.Operand> operands) {
+
+			String functionNameOperator = _functionNameOperatorMap.get(
+				functionName);
+
+			if (Objects.equals(functionNameOperator, "belongs-to")) {
+				return createBelongsToCondition(functionNameOperator, operands);
+			}
+
+			return new DDLFormRuleCondition(functionNameOperator, operands);
 		}
 
 		protected <T> T doVisit(Expression expression) {

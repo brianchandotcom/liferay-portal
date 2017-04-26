@@ -31,9 +31,8 @@ AUI.add(
 						if (instance._isPropertyAction(action.action)) {
 							return action.target;
 						}
-						else {
-							return true;
-						}
+
+						return true;
 					},
 
 					_isValidActions: function(actions) {

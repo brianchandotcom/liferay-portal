@@ -34,8 +34,10 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -738,7 +740,7 @@ public class ModulesStructureTest {
 					!matcher.matches()) {
 
 					StringBundler sb = new StringBundler(
-						_gitRepoGradlePropertiesKeys.size() * 3 + 8);
+						(_gitRepoGradlePropertiesKeys.size() + 5) * 3 + 8);
 
 					sb.append("Incorrect key \"");
 					sb.append(key);
@@ -746,15 +748,30 @@ public class ModulesStructureTest {
 					sb.append(gradlePropertiesPath);
 					sb.append(". Allowed keys are: ");
 
-					for (String gitRepoGradlePropertiesKey :
-							_gitRepoGradlePropertiesKeys) {
+					List<String> allowedKeys = new ArrayList<>(
+						_gitRepoGradlePropertiesKeys);
 
+					allowedKeys.add(_GIT_REPO_GRADLE_PROJECT_GROUP_KEY);
+					allowedKeys.add(_GIT_REPO_GRADLE_PROJECT_PATH_PREFIX_KEY);
+
+					if (privateRepo) {
+						allowedKeys.add(
+							_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_PASSWORD);
+						allowedKeys.add(
+							_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_URL);
+						allowedKeys.add(
+							_GIT_REPO_GRADLE_REPOSITORY_PRIVATE_USERNAME);
+					}
+
+					Collections.sort(allowedKeys);
+
+					for (String allowedKey : allowedKeys) {
 						sb.append(CharPool.QUOTE);
-						sb.append(gitRepoGradlePropertiesKey);
+						sb.append(allowedKey);
 						sb.append("\", ");
 					}
 
-					sb.append("keys matching the pattern \"");
+					sb.append("and keys matching the pattern \"");
 					sb.append(gradlePropertiesPattern.pattern());
 					sb.append("\".");
 

@@ -112,10 +112,10 @@ public class OpenIdConnectProviderMetadataFactoryImpl
 	public OIDCProviderMetadata getOIDCProviderMetadata()
 		throws OpenIdConnectServiceException.ProviderException {
 
-		long curTime = System.currentTimeMillis();
+		long currentTime = System.currentTimeMillis();
 
-		if (needsRefresh(curTime)) {
-			refresh(curTime);
+		if (needsRefresh(currentTime)) {
+			refresh(currentTime);
 		}
 
 		return _oidcProviderMetadata;

@@ -17,34 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
+List<String> classNames = (List<String>)request.getAttribute("liferay-trash:undo:classNames");
+String cmd = (String)request.getAttribute("liferay-trash:undo:cmd");
 String portletURL = (String)request.getAttribute("liferay-trash:undo:portletURL");
-
-Map<String, Object> data = (HashMap<String, Object>)SessionMessages.get(portletRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);
-
-List<TrashedModel> trashedModels = (List<TrashedModel>)data.get("trashedModels");
-
-List<String> classNames = new ArrayList<>();
-List<Long> restoreTrashEntryIds = new ArrayList<>();
-List<String> titles = new ArrayList<>();
-
-for (TrashedModel trashedModel : trashedModels) {
-	try {
-		TrashEntry trashEntry = trashedModel.getTrashEntry();
-
-		TrashHandler trashHandler = trashedModel.getTrashHandler();
-
-		TrashRenderer trashRenderer = trashHandler.getTrashRenderer(trashedModel.getTrashEntryClassPK());
-
-		classNames.add(trashRenderer.getClassName());
-
-		restoreTrashEntryIds.add(trashEntry.getEntryId());
-		titles.add(trashRenderer.getTitle(themeDisplay.getLocale()));
-	}
-	catch (Exception e) {
-	}
-}
-
-int trashedEntriesCount = restoreTrashEntryIds.size();
+List<Long> restoreTrashEntryIds = (List<Long>)request.getAttribute("liferay-trash:undo:restoreTrashEntryIds");
+List<String> titles = (List<String>)request.getAttribute("liferay-trash:undo:titles");
+int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-trash:undo:trashedEntriesCount"));
 %>
 
 <liferay-util:buffer var="alertMessage">
@@ -64,10 +42,6 @@ int trashedEntriesCount = restoreTrashEntryIds.size();
 				</c:otherwise>
 			</c:choose>
 		</liferay-util:buffer>
-
-		<%
-		String cmd = MapUtil.getString(data, Constants.CMD);
-		%>
 
 		<c:choose>
 			<c:when test="<%= trashedEntriesCount > 1 %>">

@@ -15,6 +15,13 @@
 package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+import com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel;
+import com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelLocalService;
+import com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelLocalServiceUtil;
+import com.liferay.commerce.product.service.persistence.CommerceProductDefinitionOptionValueRelUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
@@ -26,4 +33,15 @@ public class CommerceProductDefinitionOptionRelImpl
 	public CommerceProductDefinitionOptionRelImpl() {
 	}
 
+
+	@Override
+	public List<CommerceProductDefinitionOptionValueRel>
+		getCommerceProductDefinitionOptionValueRels() {
+
+		return CommerceProductDefinitionOptionValueRelLocalServiceUtil.
+			getCommerceProductDefinitionOptionValueRels(
+				getCommerceProductDefinitionOptionRelId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+	}
 }

@@ -41,7 +41,7 @@ import com.liferay.source.formatter.checks.JSPStylingCheck;
 import com.liferay.source.formatter.checks.JSPSubnameCheck;
 import com.liferay.source.formatter.checks.JSPTagAttributesCheck;
 import com.liferay.source.formatter.checks.JSPTaglibVariableCheck;
-import com.liferay.source.formatter.checks.JSPUnusedTermCheck;
+import com.liferay.source.formatter.checks.JSPUnusedTermsCheck;
 import com.liferay.source.formatter.checks.JSPWhitespaceCheck;
 import com.liferay.source.formatter.checks.JSPXSSVulnerabilitiesCheck;
 import com.liferay.source.formatter.checks.MethodCallsOrderCheck;
@@ -134,7 +134,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		sourceChecks.add(new JSPSubnameCheck());
 		sourceChecks.add(new JSPTagAttributesCheck());
 		sourceChecks.add(new JSPTaglibVariableCheck());
-		sourceChecks.add(new JSPUnusedTermCheck());
+		sourceChecks.add(new JSPUnusedTermsCheck());
 		sourceChecks.add(new JSPXSSVulnerabilitiesCheck());
 		sourceChecks.add(new MethodCallsOrderCheck());
 		sourceChecks.add(new PrimitiveWrapperInstantiationCheck());

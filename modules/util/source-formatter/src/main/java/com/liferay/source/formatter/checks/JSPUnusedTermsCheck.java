@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JSPUnusedTermCheck extends BaseFileCheck {
+public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 	@Override
 	public void init() throws Exception {

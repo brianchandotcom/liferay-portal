@@ -28,8 +28,9 @@ import java.util.regex.Pattern;
  */
 public class JSPUnusedTaglibCheck extends JSPUnusedTermCheck {
 
-	public JSPUnusedTaglibCheck(Map<String, String> contentsMap) {
-		_contentsMap = contentsMap;
+	@Override
+	public void init() throws Exception {
+		_contentsMap = getContentsMap();
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class JSPUnusedTaglibCheck extends JSPUnusedTermCheck {
 		return content;
 	}
 
-	private final Map<String, String> _contentsMap;
+	private Map<String, String> _contentsMap;
 	private final Pattern _taglibURIPattern = Pattern.compile(
 		"<%@\\s+taglib uri=.* prefix=\"(.*?)\" %>");
 

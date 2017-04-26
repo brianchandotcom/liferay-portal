@@ -35,8 +35,9 @@ import java.util.regex.Pattern;
  */
 public class JSPUnusedImportCheck extends JSPUnusedTermCheck {
 
-	public JSPUnusedImportCheck(Map<String, String> contentsMap) {
-		_contentsMap = contentsMap;
+	@Override
+	public void init() throws Exception {
+		_contentsMap = getContentsMap();
 	}
 
 	@Override
@@ -204,6 +205,6 @@ public class JSPUnusedImportCheck extends JSPUnusedTermCheck {
 
 	private final Pattern _compressedJSPImportPattern = Pattern.compile(
 		"(<.*\n*page import=\".*>\n*)+", Pattern.MULTILINE);
-	private final Map<String, String> _contentsMap;
+	private Map<String, String> _contentsMap;
 
 }

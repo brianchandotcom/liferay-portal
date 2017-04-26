@@ -14,10 +14,13 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -27,6 +30,24 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public abstract class JSPUnusedTermCheck extends BaseFileCheck {
+
+	@Override
+	public void setAllFileNames(List<String> allFileNames) {
+		_allFileNames = allFileNames;
+	}
+
+	protected Map<String, String> getContentsMap() throws Exception {
+		String[] excludes = new String[] {"**/null.jsp", "**/tools/**"};
+
+		if (getExcludes() != null) {
+			excludes = ArrayUtil.append(excludes, getExcludes());
+		}
+
+		List<String> allJSPFileNames = SourceFormatterUtil.filterFileNames(
+			_allFileNames, excludes, new String[] {"**/*.jsp", "**/*.jspf"});
+
+		return JSPSourceUtil.getContentsMap(allJSPFileNames);
+	}
 
 	protected boolean hasUnusedJSPTerm(
 		String fileName, String regex, String type,
@@ -98,5 +119,7 @@ public abstract class JSPUnusedTermCheck extends BaseFileCheck {
 
 		return false;
 	}
+
+	private List<String> _allFileNames;
 
 }

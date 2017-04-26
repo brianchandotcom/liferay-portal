@@ -30,8 +30,9 @@ import java.util.Set;
  */
 public class JSPUnusedVariableCheck extends JSPUnusedTermCheck {
 
-	public JSPUnusedVariableCheck(Map<String, String> contentsMap) {
-		_contentsMap = contentsMap;
+	@Override
+	public void init() throws Exception {
+		_contentsMap = getContentsMap();
 	}
 
 	@Override
@@ -157,6 +158,6 @@ public class JSPUnusedVariableCheck extends JSPUnusedTermCheck {
 	private static final String _UNUSED_VARIABLES_EXCLUDES =
 		"jsp.unused.variables.excludes";
 
-	private final Map<String, String> _contentsMap;
+	private Map<String, String> _contentsMap;
 
 }

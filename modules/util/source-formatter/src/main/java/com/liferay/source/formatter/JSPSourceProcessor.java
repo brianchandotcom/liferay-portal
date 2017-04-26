@@ -112,11 +112,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected List<SourceCheck> getSourceChecks() throws Exception {
 		List<SourceCheck> sourceChecks = new ArrayList<>();
 
-		if (_contentsMap == null) {
-			_contentsMap = JSPSourceUtil.getContentsMap(
-				sourceFormatterArgs.getFileNames());
-		}
-
 		sourceChecks.add(new JSPWhitespaceCheck());
 
 		sourceChecks.add(new CopyrightCheck(getCopyright()));
@@ -141,7 +136,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		sourceChecks.add(new JSPSubnameCheck());
 		sourceChecks.add(new JSPTagAttributesCheck());
 		sourceChecks.add(new JSPTaglibVariableCheck());
-		sourceChecks.add(new JSPUnusedImportCheck(_contentsMap));
+		sourceChecks.add(new JSPUnusedImportCheck());
 		sourceChecks.add(new JSPXSSVulnerabilitiesCheck());
 		sourceChecks.add(new MethodCallsOrderCheck());
 		sourceChecks.add(new PrimitiveWrapperInstantiationCheck());
@@ -152,8 +147,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource || subrepository) {
 			sourceChecks.add(new JSPStringMethodsCheck());
-			sourceChecks.add(new JSPUnusedTaglibCheck(_contentsMap));
-			sourceChecks.add(new JSPUnusedVariableCheck(_contentsMap));
+			sourceChecks.add(new JSPUnusedTaglibCheck());
+			sourceChecks.add(new JSPUnusedVariableCheck());
 			sourceChecks.add(new ResourceBundleCheck());
 		}
 		else {

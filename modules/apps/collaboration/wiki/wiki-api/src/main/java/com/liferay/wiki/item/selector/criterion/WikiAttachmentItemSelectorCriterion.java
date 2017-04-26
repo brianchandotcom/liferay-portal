@@ -27,8 +27,7 @@ public class WikiAttachmentItemSelectorCriterion
 	}
 
 	public WikiAttachmentItemSelectorCriterion(long wikiPageResourceId) {
-		new WikiAttachmentItemSelectorCriterion(
-			wikiPageResourceId, new String[0]);
+		this(wikiPageResourceId, new String[0]);
 	}
 
 	public WikiAttachmentItemSelectorCriterion(

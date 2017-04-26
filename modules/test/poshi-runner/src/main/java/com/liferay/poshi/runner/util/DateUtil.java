@@ -14,10 +14,7 @@
 
 package com.liferay.poshi.runner.util;
 
-import java.text.SimpleDateFormat;
-
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -26,14 +23,14 @@ import java.util.Locale;
 public class DateUtil {
 
 	@Override
-	public String getCurrentDay() {
+	public String getCurrentDate() {
 		Calendar calendar = Calendar.getInstance();
 
 		return StringUtil.valueOf(calendar.get(Calendar.DATE));
 	}
 
 	@Override
-	public String getCurrentDayName() {
+	public String getCurrentDayOfWeek() {
 		Calendar calendar = Calendar.getInstance();
 
 		return StringUtil.valueOf(
@@ -59,8 +56,8 @@ public class DateUtil {
 	public String getCurrentMonthName() {
 		Calendar calendar = Calendar.getInstance();
 
-		return String.valueOf(calendar.getDisplayName(
-			Calendar.MONTH, Calendar.LONG, Locale.US));
+		return String.valueOf(
+			calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US));
 	}
 
 	@Override
@@ -71,16 +68,18 @@ public class DateUtil {
 	}
 
 	@Override
-	public String getDay(String days) {
+	public String getDate(String days) {
 		Calendar calendar = Calendar.getInstance();
+
 		calendar.add(Calendar.DATE, Integer.valueOf(days));
 
 		return StringUtil.valueOf(calendar.get(Calendar.DATE));
 	}
 
 	@Override
-	public String getDayName(String days) {
+	public String getDayOfWeek(String days) {
 		Calendar calendar = Calendar.getInstance();
+
 		calendar.add(Calendar.DATE, Integer.valueOf(days));
 
 		return StringUtil.valueOf(
@@ -91,6 +90,7 @@ public class DateUtil {
 	@Override
 	public String getMonth(String days) {
 		Calendar calendar = Calendar.getInstance();
+
 		calendar.add(Calendar.DATE, Integer.valueOf(days));
 
 		return StringUtil.valueOf(calendar.get(Calendar.MONTH) + 1);
@@ -99,10 +99,11 @@ public class DateUtil {
 	@Override
 	public String getMonthName(String days) {
 		Calendar calendar = Calendar.getInstance();
+
 		calendar.add(Calendar.DATE, Integer.valueOf(days));
 
-		return String.valueOf(calendar.getDisplayName(
-			Calendar.MONTH, Calendar.LONG, Locale.US));
+		return String.valueOf(
+			calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US));
 	}
 
 	public static String getNanoseconds() {
@@ -112,6 +113,7 @@ public class DateUtil {
 	@Override
 	public String getYear(String days) {
 		Calendar calendar = Calendar.getInstance();
+
 		calendar.add(Calendar.DATE, Integer.valueOf(days));
 
 		return StringUtil.valueOf(calendar.get(Calendar.YEAR));

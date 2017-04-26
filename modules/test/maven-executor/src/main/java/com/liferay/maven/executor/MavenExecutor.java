@@ -230,53 +230,51 @@ public class MavenExecutor extends ExternalResource {
 			return;
 		}
 
-		String mavenSettingsXml = FileUtil.read(
+		String settingsXml = FileUtil.read(
 			MavenExecutor.class, "dependencies/settings_xml.tmpl");
 
 		if (localRepository) {
-			mavenSettingsXml = mavenSettingsXml.replace(
+			settingsXml = settingsXml.replace(
 				"[$LOCAL_REPOSITORY_DIR$]",
 				FileUtil.getAbsolutePath(localRepositoryDirPath));
 		}
 		else {
-			mavenSettingsXml = mavenSettingsXml.replaceFirst(
+			settingsXml = settingsXml.replaceFirst(
 				"<localRepository>[\\s\\S]+<\\/localRepository>", "");
 		}
 
 		if (mirrors) {
-			mavenSettingsXml = mavenSettingsXml.replace(
+			settingsXml = settingsXml.replace(
 				"[$REPOSITORY_URL$]", repositoryUrl);
 		}
 		else {
-			mavenSettingsXml = mavenSettingsXml.replaceFirst(
+			settingsXml = settingsXml.replaceFirst(
 				"<mirrors>[\\s\\S]+<\\/mirrors>", "");
 		}
 
 		if (proxies) {
-			mavenSettingsXml = mavenSettingsXml.replace(
+			settingsXml = settingsXml.replace(
 				"[$HTTP_PROXY_HOST$]", httpProxyHost);
-			mavenSettingsXml = mavenSettingsXml.replace(
+			settingsXml = settingsXml.replace(
 				"[$HTTP_PROXY_PORT$]", String.valueOf(httpProxyPort));
 
-			mavenSettingsXml = _replaceSettingsXmlElement(
-				mavenSettingsXml, "[$HTTP_PROXY_USERNAME$]",
-				getHttpProxyUser());
-			mavenSettingsXml = _replaceSettingsXmlElement(
-				mavenSettingsXml, "[$HTTP_PROXY_PASSWORD$]",
-				getHttpProxyPassword());
-			mavenSettingsXml = _replaceSettingsXmlElement(
-				mavenSettingsXml, "[$HTTP_PROXY_NON_PROXY_HOSTS$]",
+			settingsXml = _replaceSettingsXmlElement(
+				settingsXml, "[$HTTP_PROXY_USERNAME$]", getHttpProxyUser());
+			settingsXml = _replaceSettingsXmlElement(
+				settingsXml, "[$HTTP_PROXY_PASSWORD$]", getHttpProxyPassword());
+			settingsXml = _replaceSettingsXmlElement(
+				settingsXml, "[$HTTP_PROXY_NON_PROXY_HOSTS$]",
 				getHttpNonProxyHosts());
 		}
 		else {
-			mavenSettingsXml = mavenSettingsXml.replaceFirst(
+			settingsXml = settingsXml.replaceFirst(
 				"<proxies>[\\s\\S]+<\\/proxies>", "");
 		}
 
 		Path settingsXmlPath = _mavenHomeDirPath.resolve("conf/settings.xml");
 
 		Files.write(
-			settingsXmlPath, mavenSettingsXml.getBytes(StandardCharsets.UTF_8));
+			settingsXmlPath, settingsXml.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private static void _append(StringBuilder sb, InputStream inputStream)

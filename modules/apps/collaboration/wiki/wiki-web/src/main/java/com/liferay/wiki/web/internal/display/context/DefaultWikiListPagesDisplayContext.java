@@ -55,7 +55,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 import com.liferay.taglib.search.ResultRow;
 import com.liferay.taglib.security.PermissionsURLTag;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiWebKeys;
@@ -93,10 +93,11 @@ public class DefaultWikiListPagesDisplayContext
 
 	public DefaultWikiListPagesDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
-		WikiNode wikiNode) {
+		WikiNode wikiNode, TrashHelper trashHelper) {
 
 		_request = request;
 		_wikiNode = wikiNode;
+		_trashHelper = trashHelper;
 
 		_wikiRequestHelper = new WikiRequestHelper(request);
 	}
@@ -506,7 +507,8 @@ public class DefaultWikiListPagesDisplayContext
 
 			deleteMenuItem.setKey(WikiUIItemKeys.DELETE);
 			deleteMenuItem.setTrash(
-				TrashUtil.isTrashEnabled(_wikiRequestHelper.getScopeGroupId()));
+				_trashHelper.isTrashEnabled(
+					_wikiRequestHelper.getScopeGroupId()));
 
 			LiferayPortletResponse liferayPortletResponse =
 				_wikiRequestHelper.getLiferayPortletResponse();
@@ -518,7 +520,7 @@ public class DefaultWikiListPagesDisplayContext
 
 			String cmd = Constants.DELETE;
 
-			if (TrashUtil.isTrashEnabled(
+			if (_trashHelper.isTrashEnabled(
 					_wikiRequestHelper.getScopeGroupId())) {
 
 				cmd = Constants.MOVE_TO_TRASH;
@@ -812,6 +814,7 @@ public class DefaultWikiListPagesDisplayContext
 		DefaultWikiListPagesDisplayContext.class);
 
 	private final HttpServletRequest _request;
+	private final TrashHelper _trashHelper;
 	private final WikiNode _wikiNode;
 	private final WikiRequestHelper _wikiRequestHelper;
 

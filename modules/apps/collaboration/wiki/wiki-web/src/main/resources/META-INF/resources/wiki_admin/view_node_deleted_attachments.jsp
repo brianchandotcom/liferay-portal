@@ -49,7 +49,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "removed-attachments"));
 	</portlet:actionURL>
 
 	<%
-	String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
+	String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, trashHelper.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
 	%>
 
 	<liferay-trash:empty

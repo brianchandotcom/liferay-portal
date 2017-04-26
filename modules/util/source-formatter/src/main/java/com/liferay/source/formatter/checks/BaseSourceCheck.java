@@ -196,6 +196,20 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return compatClassNamesMap;
 	}
 
+	protected String getContent(String fileName, int level) throws Exception {
+		File file = getFile(fileName, level);
+
+		if (file != null) {
+			String content = FileUtil.read(file);
+
+			if (Validator.isNotNull(content)) {
+				return content;
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	protected String[] getExcludes() {
 		return _excludes;
 	}

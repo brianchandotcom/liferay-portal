@@ -47,7 +47,6 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -1006,96 +1005,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public String getCurrentDay() {
-		Calendar calendar = Calendar.getInstance();
-
-		return StringUtil.valueOf(calendar.get(Calendar.DATE));
-	}
-
-	@Override
-	public String getCurrentDayName() {
-		Calendar calendar = Calendar.getInstance();
-
-		return StringUtil.valueOf(
-			calendar.getDisplayName(
-				Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US));
-	}
-
-	@Override
-	public String getCurrentHour() {
-		Calendar calendar = Calendar.getInstance();
-
-		return StringUtil.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
-	}
-
-	@Override
-	public String getCurrentMonth() {
-		Calendar calendar = Calendar.getInstance();
-
-		return StringUtil.valueOf(calendar.get(Calendar.MONTH) + 1);
-	}
-
-	@Override
-	public String getCurrentMonthName() {
-		Calendar calendar = Calendar.getInstance();
-
-		return String.valueOf(calendar.getDisplayName(
-			Calendar.MONTH, Calendar.LONG, Locale.US));
-	}
-
-	@Override
 	public String getCurrentUrl() {
 		return _webDriver.getCurrentUrl();
-	}
-
-	@Override
-	public String getCurrentYear() {
-		Calendar calendar = Calendar.getInstance();
-
-		return StringUtil.valueOf(calendar.get(Calendar.YEAR));
-	}
-
-	@Override
-	public String getDay(String days) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DATE, Integer.valueOf(days));
-
-		return StringUtil.valueOf(calendar.get(Calendar.DATE));
-	}
-
-	@Override
-	public String getDayName(String days) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DATE, Integer.valueOf(days));
-
-		return StringUtil.valueOf(
-			calendar.getDisplayName(
-				Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US));
-	}
-
-	@Override
-	public String getMonth(String days) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DATE, Integer.valueOf(days));
-
-		return StringUtil.valueOf(calendar.get(Calendar.MONTH) + 1);
-	}
-
-	@Override
-	public String getMonthName(String days) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DATE, Integer.valueOf(days));
-
-		return String.valueOf(calendar.getDisplayName(
-			Calendar.MONTH, Calendar.LONG, Locale.US));
-	}
-
-	@Override
-	public String getYear(String days) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DATE, Integer.valueOf(days));
-
-		return StringUtil.valueOf(calendar.get(Calendar.YEAR));
 	}
 
 	@Override

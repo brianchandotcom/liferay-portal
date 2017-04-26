@@ -155,31 +155,6 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public String getCurrentDay() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getCurrentDayName() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getCurrentHour() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getCurrentMonth() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getCurrentYear() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public String getElementValue(String locator, String timeout)
 		throws Exception {
 

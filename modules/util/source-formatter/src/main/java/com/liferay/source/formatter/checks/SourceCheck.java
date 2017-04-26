@@ -28,6 +28,8 @@ public interface SourceCheck {
 	public Set<SourceFormatterMessage> getSourceFormatterMessages(
 		String fileName);
 
+	public void init() throws Exception;
+
 	public void setAllFileNames(List<String> allFileNames);
 
 	public void setBaseDirName(String baseDirName);

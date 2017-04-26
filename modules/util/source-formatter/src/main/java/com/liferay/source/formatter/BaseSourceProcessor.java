@@ -599,6 +599,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		sourceCheck.setPortalSource(portalSource);
 		sourceCheck.setProperties(_properties);
 		sourceCheck.setSubrepository(subrepository);
+
+		sourceCheck.init();
 	}
 
 	private void _initSourceChecks() throws Exception {

@@ -59,6 +59,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public void init() throws Exception {
+	}
+
+	@Override
 	public void setAllFileNames(List<String> allFileNames) {
 		_allFileNames = allFileNames;
 	}

@@ -21,6 +21,7 @@ import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.subscription.model.Subscription;
@@ -61,7 +62,8 @@ public class MBSubscriptionHelper {
 			category.setGroupId(group.getGroupId());
 			category.setCompanyId(group.getCompanyId());
 			category.setName(group.getDescriptiveName());
-			category.setDescription(group.getDescription());
+			category.setDescription(
+				HtmlUtil.extractText(group.getDescription()));
 			category.setThreadCount(threadCount);
 			category.setMessageCount(messageCount);
 

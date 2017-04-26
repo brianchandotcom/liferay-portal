@@ -25,12 +25,12 @@ public class CommerceProductDefinitionOptionValueRelTitleComparator
 	extends OrderByComparator<CommerceProductDefinitionOptionValueRel> {
 
 	public static final String ORDER_BY_ASC =
-		"CommerceProductDefinitionOptionRel.name ASC";
+		"title ASC";
 
 	public static final String ORDER_BY_DESC =
-		"CommerceProductDefinitionOptionRel.name DESC";
+		"title DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"name"};
+	public static final String[] ORDER_BY_FIELDS = {"title"};
 
 	public CommerceProductDefinitionOptionValueRelTitleComparator() {
 		this(false);

@@ -44,24 +44,20 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<SourceCheck> getSourceChecks() {
-		return _sourceChecks;
-	}
+	protected List<SourceCheck> getSourceChecks() throws Exception {
+		List<SourceCheck> sourceChecks = new ArrayList<>();
 
-	@Override
-	protected void populateSourceChecks() throws Exception {
-		_sourceChecks.add(new JSWhitespaceCheck());
+		sourceChecks.add(new JSWhitespaceCheck());
 
-		_sourceChecks.add(new JSStylingCheck());
+		sourceChecks.add(new JSStylingCheck());
 
 		if (portalSource) {
-			_sourceChecks.add(
-				new LanguageKeysCheck(getPortalLanguageProperties()));
+			sourceChecks.add(new LanguageKeysCheck());
 		}
+
+		return sourceChecks;
 	}
 
 	private static final String[] _INCLUDES = {"**/*.js"};
-
-	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

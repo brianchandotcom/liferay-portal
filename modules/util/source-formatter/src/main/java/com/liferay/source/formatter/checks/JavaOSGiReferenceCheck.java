@@ -30,6 +30,8 @@ import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,12 +45,11 @@ import java.util.regex.Pattern;
  */
 public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
-	public JavaOSGiReferenceCheck(
-		Map<String, String> moduleFileNamesMap,
-		List<String> serviceReferenceUtilClassNames) {
-
-		_moduleFileNamesMap = moduleFileNamesMap;
-		_serviceReferenceUtilClassNames = serviceReferenceUtilClassNames;
+	@Override
+	public void init() throws Exception {
+		_moduleFileNamesMap = _getModuleFileNamesMap();
+		_serviceReferenceUtilClassNames = getPropertyList(
+			"service.reference.util.class.names");
 	}
 
 	@Override
@@ -388,6 +389,44 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		return classContent;
 	}
 
+	private Map<String, String> _getModuleFileNamesMap() throws Exception {
+		Map<String, String> moduleFileNamesMap = new HashMap<>();
+
+		List<String> fileNames = new ArrayList<>();
+
+		String moduleRootDirLocation = "modules/";
+
+		for (int i = 0; i < 6; i++) {
+			File file = new File(getBaseDirName() + moduleRootDirLocation);
+
+			if (file.exists()) {
+				fileNames = getFileNames(
+					getBaseDirName() + moduleRootDirLocation, new String[0],
+					new String[] {"**/*.java"});
+
+				break;
+			}
+
+			moduleRootDirLocation = "../" + moduleRootDirLocation;
+		}
+
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			String className = StringUtil.replace(
+				fileName, CharPool.SLASH, CharPool.PERIOD);
+
+			int pos = className.lastIndexOf(".com.liferay.");
+
+			className = className.substring(pos + 1, fileName.length() - 5);
+
+			moduleFileNamesMap.put(className, fileName);
+		}
+
+		return moduleFileNamesMap;
+	}
+
 	private String _getModuleServicePackagePath(String fileName) {
 		String serviceDirLocation = fileName;
 
@@ -472,13 +511,13 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	private final Set<String> _bndFileNames = new CopyOnWriteArraySet<>();
 	private final Map<String, String> _moduleFileContentsMap =
 		new ConcurrentHashMap<>();
-	private final Map<String, String> _moduleFileNamesMap;
+	private Map<String, String> _moduleFileNamesMap;
 	private final Pattern _referenceMethodContentPattern = Pattern.compile(
 		"^(\\w+) =\\s+\\w+;$");
 	private final Pattern _referenceMethodPattern = Pattern.compile(
 		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
-	private final List<String> _serviceReferenceUtilClassNames;
+	private List<String> _serviceReferenceUtilClassNames;
 	private final Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 

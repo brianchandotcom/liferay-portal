@@ -23,8 +23,9 @@ import java.util.regex.Pattern;
  */
 public class CompatClassImportsCheck extends BaseFileCheck {
 
-	public CompatClassImportsCheck(Map<String, String> compatClassNamesMap) {
-		_compatClassNamesMap = compatClassNamesMap;
+	@Override
+	public void init() throws Exception {
+		_compatClassNamesMap = getCompatClassNamesMap();
 	}
 
 	@Override
@@ -65,6 +66,6 @@ public class CompatClassImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Map<String, String> _compatClassNamesMap;
+	private Map<String, String> _compatClassNamesMap;
 
 }

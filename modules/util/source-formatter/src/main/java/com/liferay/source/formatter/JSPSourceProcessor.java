@@ -17,12 +17,7 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.CompatClassImportsCheck;
 import com.liferay.source.formatter.checks.CopyrightCheck;
 import com.liferay.source.formatter.checks.EmptyArrayCheck;
@@ -64,12 +59,6 @@ import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
 import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
-import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
-
-import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
-import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
 
@@ -78,12 +67,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.dom4j.Document;
-import org.dom4j.Element;
 
 /**
  * @author Hugo Huijser
@@ -124,80 +109,73 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<SourceCheck> getModuleSourceChecks() {
-		return _moduleSourceChecks;
+		List<SourceCheck> moduleSourceChecks = new ArrayList<>();
+
+		moduleSourceChecks.add(new JSPModuleIllegalImportsCheck());
+
+		return moduleSourceChecks;
 	}
 
 	@Override
-	protected List<SourceCheck> getSourceChecks() {
-		return _sourceChecks;
-	}
+	protected List<SourceCheck> getSourceChecks() throws Exception {
+		List<SourceCheck> sourceChecks = new ArrayList<>();
 
-	@Override
-	protected void populateModuleSourceChecks() throws Exception {
-		_moduleSourceChecks.add(new JSPModuleIllegalImportsCheck());
-	}
-
-	@Override
-	protected void populateSourceChecks() throws Exception {
 		if (_contentsMap == null) {
 			_contentsMap = _getContentsMap(sourceFormatterArgs.getFileNames());
 		}
 
-		_sourceChecks.add(new JSPWhitespaceCheck());
+		sourceChecks.add(new JSPWhitespaceCheck());
 
-		_sourceChecks.add(new CopyrightCheck(getCopyright()));
-		_sourceChecks.add(new EmptyArrayCheck());
-		_sourceChecks.add(new EmptyCollectionCheck());
-		_sourceChecks.add(new GetterUtilCheck());
-		_sourceChecks.add(new JSPButtonTagCheck());
-		_sourceChecks.add(
-			new JSPDefineObjectsCheck(getPluginsInsideModulesDirectoryNames()));
-		_sourceChecks.add(new JSPEmptyLinesCheck());
-		_sourceChecks.add(new JSPExceptionOrderCheck());
-		_sourceChecks.add(new JSPIfStatementCheck());
-		_sourceChecks.add(new JSPImportsCheck());
-		_sourceChecks.add(new JSPIncludeCheck());
-		_sourceChecks.add(new JSPIndentationCheck());
-		_sourceChecks.add(new JSPLanguageUtilCheck());
-		_sourceChecks.add(new JSPLogFileNameCheck());
-		_sourceChecks.add(new JSPRedirectBackURLCheck());
-		_sourceChecks.add(new JSPSendRedirectCheck());
-		_sourceChecks.add(new JSPSessionKeysCheck());
-		_sourceChecks.add(new JSPStringBundlerCheck());
-		_sourceChecks.add(new JSPStylingCheck());
-		_sourceChecks.add(new JSPSubnameCheck());
-		_sourceChecks.add(
-			new JSPTagAttributesCheck(
-				_getPrimitiveTagAttributeDataTypes(), _getTagJavaClassesMap()));
-		_sourceChecks.add(new JSPTaglibVariableCheck());
-		_sourceChecks.add(new JSPUnusedImportCheck(_contentsMap));
-		_sourceChecks.add(new JSPXSSVulnerabilitiesCheck());
-		_sourceChecks.add(new MethodCallsOrderCheck());
-		_sourceChecks.add(new PrimitiveWrapperInstantiationCheck());
-		_sourceChecks.add(new PrincipalExceptionCheck());
-		_sourceChecks.add(new StringUtilCheck());
-		_sourceChecks.add(new UnparameterizedClassCheck());
-		_sourceChecks.add(new ValidatorEqualsCheck());
+		sourceChecks.add(new CopyrightCheck(getCopyright()));
+		sourceChecks.add(new EmptyArrayCheck());
+		sourceChecks.add(new EmptyCollectionCheck());
+		sourceChecks.add(new GetterUtilCheck());
+		sourceChecks.add(new JSPButtonTagCheck());
+		sourceChecks.add(new JSPDefineObjectsCheck());
+		sourceChecks.add(new JSPEmptyLinesCheck());
+		sourceChecks.add(new JSPExceptionOrderCheck());
+		sourceChecks.add(new JSPIfStatementCheck());
+		sourceChecks.add(new JSPImportsCheck());
+		sourceChecks.add(new JSPIncludeCheck());
+		sourceChecks.add(new JSPIndentationCheck());
+		sourceChecks.add(new JSPLanguageUtilCheck());
+		sourceChecks.add(new JSPLogFileNameCheck());
+		sourceChecks.add(new JSPRedirectBackURLCheck());
+		sourceChecks.add(new JSPSendRedirectCheck());
+		sourceChecks.add(new JSPSessionKeysCheck());
+		sourceChecks.add(new JSPStringBundlerCheck());
+		sourceChecks.add(new JSPStylingCheck());
+		sourceChecks.add(new JSPSubnameCheck());
+		sourceChecks.add(new JSPTagAttributesCheck());
+		sourceChecks.add(new JSPTaglibVariableCheck());
+		sourceChecks.add(new JSPUnusedImportCheck(_contentsMap));
+		sourceChecks.add(new JSPXSSVulnerabilitiesCheck());
+		sourceChecks.add(new MethodCallsOrderCheck());
+		sourceChecks.add(new PrimitiveWrapperInstantiationCheck());
+		sourceChecks.add(new PrincipalExceptionCheck());
+		sourceChecks.add(new StringUtilCheck());
+		sourceChecks.add(new UnparameterizedClassCheck());
+		sourceChecks.add(new ValidatorEqualsCheck());
 
 		if (portalSource || subrepository) {
-			_sourceChecks.add(new JSPStringMethodsCheck());
-			_sourceChecks.add(new JSPUnusedTaglibCheck(_contentsMap));
-			_sourceChecks.add(new JSPUnusedVariableCheck(_contentsMap));
-			_sourceChecks.add(new ResourceBundleCheck());
+			sourceChecks.add(new JSPStringMethodsCheck());
+			sourceChecks.add(new JSPUnusedTaglibCheck(_contentsMap));
+			sourceChecks.add(new JSPUnusedVariableCheck(_contentsMap));
+			sourceChecks.add(new ResourceBundleCheck());
 		}
 		else {
 			if (GetterUtil.getBoolean(
 					getProperty("use.portal.compat.import"))) {
 
-				_sourceChecks.add(
-					new CompatClassImportsCheck(getCompatClassNamesMap()));
+				sourceChecks.add(new CompatClassImportsCheck());
 			}
 		}
 
 		if (portalSource) {
-			_sourceChecks.add(
-				new JSPLanguageKeysCheck(getPortalLanguageProperties()));
+			sourceChecks.add(new JSPLanguageKeysCheck());
 		}
+
+		return sourceChecks;
 	}
 
 	private Map<String, String> _getContentsMap(List<String> fileNames)
@@ -240,164 +218,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return contentsMap;
 	}
 
-	private Set<String> _getPrimitiveTagAttributeDataTypes() {
-		return SetUtil.fromArray(
-			new String[] {
-				"java.lang.Boolean", "Boolean", "boolean", "java.lang.Double",
-				"Double", "double", "java.lang.Integer", "Integer", "int",
-				"java.lang.Long", "Long", "long"
-			});
-	}
-
-	private Map<String, JavaClass> _getTagJavaClassesMap() throws Exception {
-		Map<String, JavaClass> tagJavaClassesMap = new HashMap<>();
-
-		outerLoop:
-		for (String tldFileName : _getTLDFileNames()) {
-			tldFileName = StringUtil.replace(
-				tldFileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			File tldFile = new File(tldFileName);
-
-			String content = FileUtil.read(tldFile);
-
-			Document document = readXML(content);
-
-			Element rootElement = document.getRootElement();
-
-			Element shortNameElement = rootElement.element("short-name");
-
-			String shortName = shortNameElement.getStringValue();
-
-			List<Element> tagElements = rootElement.elements("tag");
-
-			String srcDir = null;
-
-			for (Element tagElement : tagElements) {
-				Element tagClassElement = tagElement.element("tag-class");
-
-				String tagClassName = tagClassElement.getStringValue();
-
-				if (!tagClassName.startsWith("com.liferay")) {
-					continue;
-				}
-
-				if (srcDir == null) {
-					if (tldFileName.contains("/src/")) {
-						srcDir = tldFile.getAbsolutePath();
-
-						srcDir = StringUtil.replace(
-							srcDir, CharPool.BACK_SLASH, CharPool.SLASH);
-
-						srcDir =
-							srcDir.substring(0, srcDir.lastIndexOf("/src/")) +
-								"/src/main/java/";
-					}
-					else {
-						srcDir = _getUtilTaglibSrcDirName();
-
-						if (Validator.isNull(srcDir)) {
-							continue outerLoop;
-						}
-					}
-				}
-
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(srcDir);
-				sb.append(
-					StringUtil.replace(
-						tagClassName, CharPool.PERIOD, CharPool.SLASH));
-				sb.append(".java");
-
-				File tagJavaFile = new File(sb.toString());
-
-				if (!tagJavaFile.exists()) {
-					continue;
-				}
-
-				JavaDocBuilder javaDocBuilder = new JavaDocBuilder(
-					new DefaultDocletTagFactory(),
-					new ThreadSafeClassLibrary());
-
-				try {
-					javaDocBuilder.addSource(tagJavaFile);
-				}
-				catch (ParseException pe) {
-					continue;
-				}
-
-				JavaClass tagJavaClass = javaDocBuilder.getClassByName(
-					tagClassName);
-
-				Element tagNameElement = tagElement.element("name");
-
-				String tagName = tagNameElement.getStringValue();
-
-				tagJavaClassesMap.put(
-					shortName + StringPool.COLON + tagName, tagJavaClass);
-			}
-		}
-
-		return tagJavaClassesMap;
-	}
-
-	private List<String> _getTLDFileNames() throws Exception {
-		List<String> tldFileNames = getFileNames(
-			new String[] {
-				"**/dependencies/**", "**/util-taglib/**", "**/portal-web/**"
-			},
-			new String[] {"**/*.tld"}, true);
-
-		if (!portalSource) {
-			return tldFileNames;
-		}
-
-		String tldDirLocation = "portal-web/docroot/WEB-INF/tld/";
-
-		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL - 1; i++) {
-			File file = new File(
-				sourceFormatterArgs.getBaseDirName() + tldDirLocation);
-
-			if (file.exists()) {
-				tldFileNames.addAll(
-					getFileNames(
-						sourceFormatterArgs.getBaseDirName() + tldDirLocation,
-						new String[0], new String[] {"**/*.tld"}));
-
-				break;
-			}
-
-			tldDirLocation = "../" + tldDirLocation;
-		}
-
-		return tldFileNames;
-	}
-
-	private String _getUtilTaglibSrcDirName() {
-		File utilTaglibDir = getFile("util-taglib/src", PORTAL_MAX_DIR_LEVEL);
-
-		if (utilTaglibDir == null) {
-			return StringPool.BLANK;
-		}
-
-		String utilTaglibSrcDirName = utilTaglibDir.getAbsolutePath();
-
-		utilTaglibSrcDirName = StringUtil.replace(
-			utilTaglibSrcDirName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-		utilTaglibSrcDirName += StringPool.SLASH;
-
-		return utilTaglibSrcDirName;
-	}
-
 	private static final String[] _INCLUDES =
 		new String[] {"**/*.jsp", "**/*.jspf", "**/*.tpl", "**/*.vm"};
 
 	private Map<String, String> _contentsMap;
 	private final Pattern _includeFilePattern = Pattern.compile(
 		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
-	private final List<SourceCheck> _moduleSourceChecks = new ArrayList<>();
-	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

@@ -19,14 +19,24 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.PropertiesSourceProcessor;
+import com.liferay.source.formatter.util.FileUtil;
+
+import java.io.File;
+
+import java.net.URL;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  * @author Hugo Huijser
  */
 public class PropertiesPortalFileCheck extends BaseFileCheck {
 
-	public PropertiesPortalFileCheck(String portalPortalPropertiesContent) {
-		_portalPortalPropertiesContent = portalPortalPropertiesContent;
+	@Override
+	public void init() throws Exception {
+		_portalPortalPropertiesContent = _getPortalPortalPropertiesContent();
 	}
 
 	@Override
@@ -87,6 +97,32 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		}
 	}
 
-	private final String _portalPortalPropertiesContent;
+	private String _getPortalPortalPropertiesContent() throws Exception {
+		String portalPortalPropertiesContent = null;
+
+		if (isPortalSource()) {
+			File file = getFile(
+				"portal-impl/src/portal.properties",
+				ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+			return FileUtil.read(file);
+		}
+
+		ClassLoader classLoader =
+			PropertiesSourceProcessor.class.getClassLoader();
+
+		URL url = classLoader.getResource("portal.properties");
+
+		if (url != null) {
+			portalPortalPropertiesContent = IOUtils.toString(url);
+		}
+		else {
+			portalPortalPropertiesContent = StringPool.BLANK;
+		}
+
+		return portalPortalPropertiesContent;
+	}
+
+	private String _portalPortalPropertiesContent;
 
 }

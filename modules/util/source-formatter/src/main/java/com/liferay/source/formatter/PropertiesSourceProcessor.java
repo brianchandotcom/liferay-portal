@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.checks.PropertiesDefinitionKeysCheck;
 import com.liferay.source.formatter.checks.PropertiesDependenciesFileCheck;
 import com.liferay.source.formatter.checks.PropertiesLiferayPluginPackageFileCheck;
@@ -24,16 +23,9 @@ import com.liferay.source.formatter.checks.PropertiesPortletFileCheck;
 import com.liferay.source.formatter.checks.PropertiesSourceFormatterFileCheck;
 import com.liferay.source.formatter.checks.PropertiesWhitespaceCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
-import com.liferay.source.formatter.util.FileUtil;
-
-import java.io.File;
-
-import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * @author Hugo Huijser
@@ -65,68 +57,20 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<SourceCheck> getSourceChecks() {
-		return _sourceChecks;
+	protected List<SourceCheck> getSourceChecks() throws Exception {
+		List<SourceCheck> sourceChecks = new ArrayList<>();
+
+		sourceChecks.add(new PropertiesWhitespaceCheck(true));
+
+		sourceChecks.add(new PropertiesDefinitionKeysCheck());
+		sourceChecks.add(new PropertiesDependenciesFileCheck());
+		sourceChecks.add(new PropertiesLiferayPluginPackageFileCheck());
+		sourceChecks.add(new PropertiesLongLinesCheck());
+		sourceChecks.add(new PropertiesPortalFileCheck());
+		sourceChecks.add(new PropertiesPortletFileCheck());
+		sourceChecks.add(new PropertiesSourceFormatterFileCheck());
+
+		return sourceChecks;
 	}
-
-	@Override
-	protected void populateSourceChecks() throws Exception {
-		_sourceChecks.add(new PropertiesWhitespaceCheck(true));
-
-		_sourceChecks.add(new PropertiesDefinitionKeysCheck());
-		_sourceChecks.add(new PropertiesDependenciesFileCheck());
-		_sourceChecks.add(
-			new PropertiesLiferayPluginPackageFileCheck(
-				getProjectPathPrefix()));
-		_sourceChecks.add(new PropertiesLongLinesCheck());
-		_sourceChecks.add(
-			new PropertiesPortalFileCheck(_getPortalPortalPropertiesContent()));
-		_sourceChecks.add(new PropertiesPortletFileCheck());
-		_sourceChecks.add(
-			new PropertiesSourceFormatterFileCheck(
-				getProjectPathPrefix(), _hasPrivateAppsDir()));
-	}
-
-	private String _getPortalPortalPropertiesContent() throws Exception {
-		String portalPortalPropertiesContent = null;
-
-		if (portalSource) {
-			File file = getFile(
-				"portal-impl/src/portal.properties", PORTAL_MAX_DIR_LEVEL);
-
-			return FileUtil.read(file);
-		}
-
-		ClassLoader classLoader =
-			PropertiesSourceProcessor.class.getClassLoader();
-
-		URL url = classLoader.getResource("portal.properties");
-
-		if (url != null) {
-			portalPortalPropertiesContent = IOUtils.toString(url);
-		}
-		else {
-			portalPortalPropertiesContent = StringPool.BLANK;
-		}
-
-		return portalPortalPropertiesContent;
-	}
-
-	private boolean _hasPrivateAppsDir() {
-		if (!portalSource) {
-			return false;
-		}
-
-		File privateAppsDir = getFile(
-			"modules/private/apps", PORTAL_MAX_DIR_LEVEL);
-
-		if (privateAppsDir != null) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

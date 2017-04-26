@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -21,12 +22,19 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -51,13 +59,34 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public void init() throws Exception {
+	}
+
+	@Override
+	public void setAllFileNames(List<String> allFileNames) {
+	}
+
+	@Override
 	public void setBaseDirName(String baseDirName) {
 		_baseDirName = baseDirName;
 	}
 
 	@Override
+	public void setExcludes(String[] excludes) {
+		_excludes = excludes;
+	}
+
+	@Override
 	public void setMaxLineLength(int maxLineLength) {
 		_maxLineLength = maxLineLength;
+	}
+
+	@Override
+	public void setPluginsInsideModulesDirectoryNames(
+		List<String> pluginsInsideModulesDirectoryNames) {
+
+		_pluginsInsideModulesDirectoryNames =
+			pluginsInsideModulesDirectoryNames;
 	}
 
 	@Override
@@ -115,6 +144,76 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _baseDirName;
 	}
 
+	protected Map<String, String> getCompatClassNamesMap() throws Exception {
+		Map<String, String> compatClassNamesMap = new HashMap<>();
+
+		String[] includes = new String[] {
+			"**/portal-compat-shared/src/com/liferay/compat/**/*.java"
+		};
+
+		String baseDirName = _baseDirName;
+
+		List<String> fileNames = new ArrayList<>();
+
+		for (int i = 0; i < ToolsUtil.PLUGINS_MAX_DIR_LEVEL; i++) {
+			File sharedDir = new File(baseDirName + "shared");
+
+			if (sharedDir.exists()) {
+				fileNames = getFileNames(baseDirName, new String[0], includes);
+
+				break;
+			}
+
+			baseDirName = baseDirName + "../";
+		}
+
+		for (String fileName : fileNames) {
+			File file = new File(fileName);
+
+			String content = FileUtil.read(file);
+
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			fileName = StringUtil.replace(
+				fileName, CharPool.SLASH, CharPool.PERIOD);
+
+			int pos = fileName.indexOf("com.");
+
+			String compatClassName = fileName.substring(pos);
+
+			compatClassName = compatClassName.substring(
+				0, compatClassName.length() - 5);
+
+			String extendedClassName = StringUtil.replace(
+				compatClassName, "compat.", StringPool.BLANK);
+
+			if (content.contains("extends " + extendedClassName)) {
+				compatClassNamesMap.put(compatClassName, extendedClassName);
+			}
+		}
+
+		return compatClassNamesMap;
+	}
+
+	protected String getContent(String fileName, int level) throws Exception {
+		File file = getFile(fileName, level);
+
+		if (file != null) {
+			String content = FileUtil.read(file);
+
+			if (Validator.isNotNull(content)) {
+				return content;
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	protected String[] getExcludes() {
+		return _excludes;
+	}
+
 	protected File getFile(String fileName, int level) {
 		for (int i = 0; i < level; i++) {
 			File file = new File(_baseDirName + fileName);
@@ -127,6 +226,18 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return null;
+	}
+
+	protected List<String> getFileNames(
+			String basedir, String[] excludes, String[] includes)
+		throws Exception {
+
+		if (_excludes != null) {
+			excludes = ArrayUtil.append(excludes, _excludes);
+		}
+
+		return SourceFormatterUtil.scanForFiles(
+			basedir, excludes, includes, true);
 	}
 
 	protected int getLeadingTabCount(String line) {
@@ -175,6 +286,52 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _maxLineLength;
 	}
 
+	protected List<String> getPluginsInsideModulesDirectoryNames() {
+		return _pluginsInsideModulesDirectoryNames;
+	}
+
+	protected Properties getPortalLanguageProperties() throws Exception {
+		Properties portalLanguageProperties = new Properties();
+
+		File portalLanguagePropertiesFile = getFile(
+			"portal-impl/src/content/Language.properties",
+			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (portalLanguagePropertiesFile != null) {
+			InputStream inputStream = new FileInputStream(
+				portalLanguagePropertiesFile);
+
+			portalLanguageProperties.load(inputStream);
+		}
+
+		return portalLanguageProperties;
+	}
+
+	protected String getProjectPathPrefix() throws Exception {
+		if (!_subrepository) {
+			return null;
+		}
+
+		File file = getFile(
+			"gradle.properties", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		Properties properties = new Properties();
+
+		properties.load(new FileInputStream(file));
+
+		return properties.getProperty("project.path.prefix");
+	}
+
+	protected List<String> getPropertyList(String key) {
+		return ListUtil.fromString(
+			GetterUtil.getString(_properties.getProperty(key)),
+			StringPool.COMMA);
+	}
+
 	protected boolean isExcludedPath(String key, String path) {
 		return isExcludedPath(key, path, -1);
 	}
@@ -186,9 +343,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected boolean isExcludedPath(
 		String key, String path, int lineCount, String parameter) {
 
-		List<String> excludes = ListUtil.fromString(
-			GetterUtil.getString(_properties.getProperty(key)),
-			StringPool.COMMA);
+		List<String> excludes = getPropertyList(key);
 
 		if (ListUtil.isEmpty(excludes)) {
 			return false;
@@ -350,7 +505,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	private String _baseDirName;
+	private String[] _excludes;
 	private int _maxLineLength;
+	private List<String> _pluginsInsideModulesDirectoryNames;
 	private boolean _portalSource;
 	private Properties _properties;
 	private final Map<String, Set<SourceFormatterMessage>>

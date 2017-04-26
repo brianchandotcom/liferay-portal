@@ -33,11 +33,10 @@ import java.util.Properties;
  */
 public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
-	public PropertiesSourceFormatterFileCheck(
-		String projectPathPrefix, boolean hasPrivateAppsDir) {
-
-		_projectPathPrefix = projectPathPrefix;
-		_hasPrivateAppsDir = hasPrivateAppsDir;
+	@Override
+	public void init() throws Exception {
+		_hasPrivateAppsDir = _hasPrivateAppsDir();
+		_projectPathPrefix = getProjectPathPrefix();
 	}
 
 	@Override
@@ -114,7 +113,22 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		}
 	}
 
-	private final boolean _hasPrivateAppsDir;
-	private final String _projectPathPrefix;
+	private boolean _hasPrivateAppsDir() {
+		if (isPortalSource()) {
+			return false;
+		}
+
+		File privateAppsDir = getFile(
+			"modules/private/apps", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (privateAppsDir != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasPrivateAppsDir;
+	private String _projectPathPrefix;
 
 }

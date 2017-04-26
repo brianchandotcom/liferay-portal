@@ -48,23 +48,20 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<SourceCheck> getSourceChecks() {
-		return _sourceChecks;
-	}
+		List<SourceCheck> sourceChecks = new ArrayList<>();
 
-	@Override
-	protected void populateSourceChecks() {
-		_sourceChecks.add(new FTLWhitespaceCheck());
+		sourceChecks.add(new FTLWhitespaceCheck());
 
-		_sourceChecks.add(new FTLEmptyLinesCheck());
-		_sourceChecks.add(new FTLIfStatementCheck());
-		_sourceChecks.add(new FTLImportsCheck());
-		_sourceChecks.add(new FTLLiferayVariableOrderCheck());
-		_sourceChecks.add(new FTLStringRelationalOperatorCheck());
-		_sourceChecks.add(new FTLTagCheck());
+		sourceChecks.add(new FTLEmptyLinesCheck());
+		sourceChecks.add(new FTLIfStatementCheck());
+		sourceChecks.add(new FTLImportsCheck());
+		sourceChecks.add(new FTLLiferayVariableOrderCheck());
+		sourceChecks.add(new FTLStringRelationalOperatorCheck());
+		sourceChecks.add(new FTLTagCheck());
+
+		return sourceChecks;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.ftl"};
-
-	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

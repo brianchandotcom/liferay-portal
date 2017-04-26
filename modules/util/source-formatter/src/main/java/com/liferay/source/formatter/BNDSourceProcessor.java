@@ -49,39 +49,34 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<SourceCheck> getModuleSourceChecks() {
-		return _moduleSourceChecks;
+		List<SourceCheck> moduleSourceChecks = new ArrayList<>();
+
+		moduleSourceChecks.add(new BNDBundleNameCheck());
+		moduleSourceChecks.add(new BNDDirectoryNameCheck());
+		moduleSourceChecks.add(new BNDExportsCheck());
+		moduleSourceChecks.add(new BNDIncludeResourceCheck());
+		moduleSourceChecks.add(new BNDWebContextPathCheck());
+
+		return moduleSourceChecks;
 	}
 
 	@Override
 	protected List<SourceCheck> getSourceChecks() {
-		return _sourceChecks;
-	}
+		List<SourceCheck> sourceChecks = new ArrayList<>();
 
-	@Override
-	protected void populateModuleSourceChecks() throws Exception {
-		_moduleSourceChecks.add(new BNDBundleNameCheck());
-		_moduleSourceChecks.add(new BNDDirectoryNameCheck());
-		_moduleSourceChecks.add(new BNDExportsCheck());
-		_moduleSourceChecks.add(new BNDIncludeResourceCheck());
-		_moduleSourceChecks.add(new BNDWebContextPathCheck());
-	}
+		sourceChecks.add(new BNDWhitespaceCheck());
 
-	@Override
-	protected void populateSourceChecks() {
-		_sourceChecks.add(new BNDWhitespaceCheck());
+		sourceChecks.add(new BNDCapabilityCheck());
+		sourceChecks.add(new BNDDefinitionKeysCheck());
+		sourceChecks.add(new BNDImportsCheck());
+		sourceChecks.add(new BNDLineBreaksCheck());
+		sourceChecks.add(new BNDRangeCheck());
+		sourceChecks.add(new BNDSchemaVersionCheck());
+		sourceChecks.add(new BNDStylingCheck());
 
-		_sourceChecks.add(new BNDCapabilityCheck());
-		_sourceChecks.add(new BNDDefinitionKeysCheck());
-		_sourceChecks.add(new BNDImportsCheck());
-		_sourceChecks.add(new BNDLineBreaksCheck());
-		_sourceChecks.add(new BNDRangeCheck());
-		_sourceChecks.add(new BNDSchemaVersionCheck());
-		_sourceChecks.add(new BNDStylingCheck());
+		return sourceChecks;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};
-
-	private final List<SourceCheck> _moduleSourceChecks = new ArrayList<>();
-	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

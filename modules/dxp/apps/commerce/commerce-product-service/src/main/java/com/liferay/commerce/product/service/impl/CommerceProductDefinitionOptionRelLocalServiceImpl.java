@@ -191,6 +191,15 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceProductDefinitionOptionRel>
+		getSkuContributorCommerceProductDefinitionOptionRels(
+			long commerceProductDefinitionId) {
+
+		return commerceProductDefinitionOptionRelPersistence.
+			findByC_SC(commerceProductDefinitionId, true);
+	}
+
+	@Override
 	public int getCommerceProductDefinitionOptionRelsCount(
 		long commerceProductDefinitionId) {
 

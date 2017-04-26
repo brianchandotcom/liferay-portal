@@ -14,11 +14,11 @@
 
 package com.liferay.source.formatter.checks;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser

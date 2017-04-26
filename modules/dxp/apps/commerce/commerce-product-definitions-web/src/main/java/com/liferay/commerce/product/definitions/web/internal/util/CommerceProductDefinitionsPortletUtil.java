@@ -18,16 +18,21 @@ import com.liferay.commerce.product.definitions.web.internal.util.comparator.Com
 import com.liferay.commerce.product.definitions.web.internal.util.comparator.CommerceProductDefinitionDisplayDateComparator;
 import com.liferay.commerce.product.definitions.web.internal.util.comparator.CommerceProductDefinitionOptionRelCreateDateComparator;
 import com.liferay.commerce.product.definitions.web.internal.util.comparator.CommerceProductDefinitionOptionRelNameComparator;
+import com.liferay.commerce.product.definitions.web.internal.util.comparator.CommerceProductDefinitionOptionRelPriorityComparator;
+import com.liferay.commerce.product.definitions.web.internal.util.comparator.CommerceProductDefinitionOptionValueRelPriorityComparator;
+import com.liferay.commerce.product.definitions.web.internal.util.comparator.CommerceProductDefinitionOptionValueRelTitleComparator;
 import com.liferay.commerce.product.definitions.web.internal.util.comparator.CommerceProductInstanceCreateDateComparator;
 import com.liferay.commerce.product.definitions.web.internal.util.comparator.CommerceProductInstanceDisplayDateComparator;
 import com.liferay.commerce.product.definitions.web.internal.util.comparator.CommerceProductInstanceSkuComparator;
 import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
+import com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CommerceProductInstance;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 public class CommerceProductDefinitionsPortletUtil {
 
@@ -52,6 +57,38 @@ public class CommerceProductDefinitionsPortletUtil {
 		else if (orderByCol.equals("name")) {
 			orderByComparator =
 				new CommerceProductDefinitionOptionRelNameComparator(
+					orderByAsc);
+		}
+		else if (orderByCol.equals("priority")) {
+			orderByComparator =
+				new CommerceProductDefinitionOptionRelPriorityComparator(
+					orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static OrderByComparator<CommerceProductDefinitionOptionValueRel>
+		getCommerceProductDefinitionOptionValueRelOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommerceProductDefinitionOptionValueRel>
+			orderByComparator = null;
+
+		if (orderByCol.equals("priority")) {
+			orderByComparator =
+				new CommerceProductDefinitionOptionValueRelPriorityComparator(
+					orderByAsc);
+		}
+		else if (orderByCol.equals("title")) {
+			orderByComparator =
+				new CommerceProductDefinitionOptionValueRelTitleComparator(
 					orderByAsc);
 		}
 

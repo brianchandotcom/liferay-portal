@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.product.constants.CommerceProductWebKeys" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CommerceProductDefinitionOptionRelDisplayContext" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.display.context.CommerceProductDefinitionOptionValueRelDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CommerceProductDefinitionsDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CommerceProductInstanceDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CommerceProductDefinitionFormNavigatorConstants" %><%@
@@ -35,6 +36,7 @@ page import="com.liferay.commerce.product.definitions.web.internal.servlet.tagli
 page import="com.liferay.commerce.product.exception.NoSuchProductDefinitionException" %><%@
 page import="com.liferay.commerce.product.model.CommerceProductDefinition" %><%@
 page import="com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel" %><%@
+page import="com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel" %><%@
 page import="com.liferay.commerce.product.model.CommerceProductInstance" %><%@
 page import="com.liferay.commerce.product.type.CommerceProductType" %><%@
 page import="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType" %><%@

@@ -25,10 +25,19 @@ CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = commerce
 
 long commerceProductDefinitionOptionRelId = commerceProductDefinitionOptionRelDisplayContext.getCommerceProductDefinitionOptionRelId();
 
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-commerce-product-definition-option-rel-details");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("toolbarItem", toolbarItem);
+portletURL.setParameter("mvcRenderCommandName", "editProductDefinitionOptionRel");
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(commerceProductDefinition.getTitle(languageId) + " - " + commerceProductDefinitionOptionRel.getName(locale));
 %>
+
+<%@ include file="/commerce_product_definition_option_rel_navbar.jspf" %>
 
 <portlet:actionURL name="editProductDefinitionOptionRel" var="editProductDefinitionOptionRelActionURL" />
 

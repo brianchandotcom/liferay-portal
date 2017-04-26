@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-ddl-form-builder-action-autofill',
 	function(A) {
+		var AObject = A.Object;
+
 		var Lang = A.Lang;
 
 		var TPL_CONTAINER_INPUT_OUTPUT_COMPONENT = '<div class="col-md-9 container-input-field container-input-field-{index}"></div>';
@@ -291,7 +293,9 @@ AUI.add(
 
 						var dataProviderParametersContainer = instance.get('boundingBox').one('.additional-info-' + index);
 
-						dataProviderParametersContainer.setHTML(instance._getRuleContainerTemplate());
+						instance._retriveRequiredInputs(dataProviderParametersSettings.inputs);
+
+						dataProviderParametersContainer.setHTML(instance._getRuleContainerTemplate(dataProviderParametersSettings.inputs));
 
 						instance._createDataProviderInputParametersSettings(dataProviderParametersSettings.inputs);
 
@@ -358,20 +362,10 @@ AUI.add(
 					_getRequiredInputs: function() {
 						var instance = this;
 
-						var inputParameters = instance._inputParameters;
-
-						var inputsRequired = {};
-
-						for (var i = 0; i < inputParameters.length; i++) {
-							if (inputParameters[i].required) {
-								inputsRequired[inputParameters[i].parameter] = true;
-							}
-						}
-
-						return inputsRequired;
+						return instance._requiredInputs;
 					},
 
-					_getRuleContainerTemplate: function() {
+					_getRuleContainerTemplate: function(inputs) {
 						var instance = this;
 
 						var strings = instance.get('strings');
@@ -380,6 +374,8 @@ AUI.add(
 
 						return dataProviderParametersTemplateRenderer(
 							{
+								hasInputs: inputs.length > 0,
+								hasRequiredInputs: !AObject.isEmpty(instance._getRequiredInputs()),
 								strings: strings
 							}
 						);
@@ -429,6 +425,18 @@ AUI.add(
 						instance._dataProvidersList.set('options', dataProvidersList);
 
 						instance._dataProvidersList.setValue(value);
+					},
+
+					_retriveRequiredInputs: function(inputs) {
+						var instance = this;
+
+						instance._requiredInputs = {};
+
+						for (var i = 0; i < inputs.length; i++) {
+							if (inputs[i].required) {
+								instance._requiredInputs[inputs[i].name] = true;
+							}
+						}
 					}
 				}
 			}

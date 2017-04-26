@@ -14,10 +14,7 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.CompatClassImportsCheck;
 import com.liferay.source.formatter.checks.CopyrightCheck;
 import com.liferay.source.formatter.checks.EmptyArrayCheck;
@@ -58,17 +55,11 @@ import com.liferay.source.formatter.checks.StringUtilCheck;
 import com.liferay.source.formatter.checks.UnparameterizedClassCheck;
 import com.liferay.source.formatter.checks.ValidatorEqualsCheck;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
-import com.liferay.source.formatter.util.FileUtil;
-
-import java.io.File;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -90,7 +81,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		List<String> allJSPFileNames = getFileNames(
 			excludes, getIncludes(), true);
 
-		_contentsMap = _getContentsMap(allJSPFileNames);
+		_contentsMap = JSPSourceUtil.getContentsMap(allJSPFileNames);
 
 		if (sourceFormatterArgs.isFormatCurrentBranch() ||
 			sourceFormatterArgs.isFormatLatestAuthor() ||
@@ -122,7 +113,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		List<SourceCheck> sourceChecks = new ArrayList<>();
 
 		if (_contentsMap == null) {
-			_contentsMap = _getContentsMap(sourceFormatterArgs.getFileNames());
+			_contentsMap = JSPSourceUtil.getContentsMap(
+				sourceFormatterArgs.getFileNames());
 		}
 
 		sourceChecks.add(new JSPWhitespaceCheck());
@@ -179,47 +171,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return sourceChecks;
 	}
 
-	private Map<String, String> _getContentsMap(List<String> fileNames)
-		throws Exception {
-
-		Map<String, String> contentsMap = new HashMap<>();
-
-		if (ListUtil.isEmpty(fileNames)) {
-			return contentsMap;
-		}
-
-		for (String fileName : fileNames) {
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			File file = new File(fileName);
-
-			String content = FileUtil.read(file);
-
-			if (content == null) {
-				continue;
-			}
-
-			Matcher matcher = _includeFilePattern.matcher(content);
-
-			while (matcher.find()) {
-				content = StringUtil.replaceFirst(
-					content, matcher.group(),
-					"@ include file=\"" + matcher.group(1) + "\"",
-					matcher.start());
-			}
-
-			contentsMap.put(fileName, content);
-		}
-
-		return contentsMap;
-	}
-
 	private static final String[] _INCLUDES =
 		new String[] {"**/*.jsp", "**/*.jspf", "**/*.tpl", "**/*.vm"};
 
 	private Map<String, String> _contentsMap;
-	private final Pattern _includeFilePattern = Pattern.compile(
-		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 
 }

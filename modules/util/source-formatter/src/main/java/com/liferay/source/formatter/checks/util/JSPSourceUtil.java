@@ -15,11 +15,16 @@
 package com.liferay.source.formatter.checks.util;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.FileUtil;
+
+import java.io.File;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -116,6 +121,42 @@ public class JSPSourceUtil {
 
 		return content.substring(0, x) + importsOrTaglibs +
 			content.substring(y);
+	}
+
+	public static Map<String, String> getContentsMap(List<String> fileNames)
+		throws Exception {
+
+		Map<String, String> contentsMap = new HashMap<>();
+
+		if (ListUtil.isEmpty(fileNames)) {
+			return contentsMap;
+		}
+
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			File file = new File(fileName);
+
+			String content = FileUtil.read(file);
+
+			if (content == null) {
+				continue;
+			}
+
+			Matcher matcher = _includeFilePattern.matcher(content);
+
+			while (matcher.find()) {
+				content = StringUtil.replaceFirst(
+					content, matcher.group(),
+					"@ include file=\"" + matcher.group(1) + "\"",
+					matcher.start());
+			}
+
+			contentsMap.put(fileName, content);
+		}
+
+		return contentsMap;
 	}
 
 	public static Set<String> getJSPIncludeFileNames(
@@ -298,6 +339,8 @@ public class JSPSourceUtil {
 		return false;
 	}
 
+	private static final Pattern _includeFilePattern = Pattern.compile(
+		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 	private static final Pattern _javaEndTagPattern = Pattern.compile(
 		"[\n\t]%>(\n|\\Z)");
 	private static final Pattern _javaStartTagPattern = Pattern.compile(

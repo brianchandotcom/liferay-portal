@@ -33,7 +33,8 @@ import java.util.regex.Pattern;
  */
 public class JavaTermOrderCheck extends BaseJavaTermCheck {
 
-	public JavaTermOrderCheck() throws Exception {
+	@Override
+	public void init() throws Exception {
 		_portalCustomSQLContent = _getPortalCustomSQLContent();
 	}
 
@@ -189,6 +190,6 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
-	private final String _portalCustomSQLContent;
+	private String _portalCustomSQLContent;
 
 }

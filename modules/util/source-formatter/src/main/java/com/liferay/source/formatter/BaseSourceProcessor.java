@@ -52,6 +52,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,12 +102,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_pluginsInsideModulesDirectoryNames =
 			getPluginsInsideModulesDirectoryNames();
 
-		_populateGenericSourceChecks();
+		_initGenericSourceChecks();
 
-		populateSourceChecks();
+		_initSourceChecks();
 
 		if ((portalSource || subrepository) && _containsModuleFile(fileNames)) {
-			populateModuleSourceChecks();
+			_initModuleSourceChecks();
 		}
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
@@ -368,8 +369,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			_allFileNames, excludes, includes);
 	}
 
-	protected List<SourceCheck> getModuleSourceChecks() {
-		return null;
+	protected List<SourceCheck> getModuleSourceChecks() throws Exception {
+		return Collections.emptyList();
 	}
 
 	protected List<String> getPluginsInsideModulesDirectoryNames()
@@ -454,12 +455,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(getProperty(key)), StringPool.COMMA);
 	}
 
-	protected abstract List<SourceCheck> getSourceChecks();
-
-	protected void populateModuleSourceChecks() throws Exception {
-	}
-
-	protected abstract void populateSourceChecks() throws Exception;
+	protected abstract List<SourceCheck> getSourceChecks() throws Exception;
 
 	protected void postFormat() throws Exception {
 	}
@@ -547,11 +543,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			fileName, absolutePath, content, _genericSourceChecks);
 
 		content = _processSourceChecks(
-			fileName, absolutePath, content, getSourceChecks());
+			fileName, absolutePath, content, _sourceChecks);
 
 		if (_isModulesFile(absolutePath)) {
 			content = _processSourceChecks(
-				fileName, absolutePath, content, getModuleSourceChecks());
+				fileName, absolutePath, content, _moduleSourceChecks);
 		}
 
 		return content;
@@ -679,6 +675,39 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_excludes = _getExcludes();
 	}
 
+	private void _initGenericSourceChecks() {
+		_genericSourceChecks.add(new IncorrectFileLocationCheck());
+		_genericSourceChecks.add(new ReturnCharacterCheck());
+
+		for (SourceCheck sourceCheck : _genericSourceChecks) {
+			_initSourceCheck(sourceCheck);
+		}
+	}
+
+	private void _initModuleSourceChecks() throws Exception {
+		_moduleSourceChecks = getModuleSourceChecks();
+
+		for (SourceCheck sourceCheck : _moduleSourceChecks) {
+			_initSourceCheck(sourceCheck);
+		}
+	}
+
+	private void _initSourceCheck(SourceCheck sourceCheck) {
+		sourceCheck.setBaseDirName(sourceFormatterArgs.getBaseDirName());
+		sourceCheck.setMaxLineLength(sourceFormatterArgs.getMaxLineLength());
+		sourceCheck.setPortalSource(portalSource);
+		sourceCheck.setProperties(_properties);
+		sourceCheck.setSubrepository(subrepository);
+	}
+
+	private void _initSourceChecks() throws Exception {
+		_sourceChecks = getSourceChecks();
+
+		for (SourceCheck sourceCheck : _sourceChecks) {
+			_initSourceCheck(sourceCheck);
+		}
+	}
+
 	private boolean _isMatchPath(String fileName) {
 		for (String pattern : getIncludes()) {
 			if (SelectorUtils.matchPath(_normalizePattern(pattern), fileName)) {
@@ -763,11 +792,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return pattern;
 	}
 
-	private void _populateGenericSourceChecks() throws Exception {
-		_genericSourceChecks.add(new IncorrectFileLocationCheck());
-		_genericSourceChecks.add(new ReturnCharacterCheck());
-	}
-
 	private String _processSourceChecks(
 			String fileName, String absolutePath, String content,
 			List<SourceCheck> sourceChecks)
@@ -781,13 +805,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<JavaClass> anonymousClasses = null;
 
 		for (SourceCheck sourceCheck : sourceChecks) {
-			sourceCheck.setBaseDirName(sourceFormatterArgs.getBaseDirName());
-			sourceCheck.setMaxLineLength(
-				sourceFormatterArgs.getMaxLineLength());
-			sourceCheck.setPortalSource(portalSource);
-			sourceCheck.setProperties(_properties);
-			sourceCheck.setSubrepository(subrepository);
-
 			String newContent = null;
 
 			if (sourceCheck instanceof FileCheck) {
@@ -855,8 +872,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private final List<SourceCheck> _genericSourceChecks = new ArrayList<>();
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
+	private List<SourceCheck> _moduleSourceChecks = new ArrayList<>();
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private Properties _properties;
+	private List<SourceCheck> _sourceChecks = new ArrayList<>();
 	private Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 

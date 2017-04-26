@@ -39,19 +39,16 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<SourceCheck> getSourceChecks() {
-		return _sourceChecks;
-	}
+		List<SourceCheck> sourceChecks = new ArrayList<>();
 
-	@Override
-	protected void populateSourceChecks() {
-		_sourceChecks.add(new JSONWhitespaceCheck(true));
+		sourceChecks.add(new JSONWhitespaceCheck(true));
 
-		_sourceChecks.add(new JSONIndentationCheck());
-		_sourceChecks.add(new JSONPropertyOrderCheck());
+		sourceChecks.add(new JSONIndentationCheck());
+		sourceChecks.add(new JSONPropertyOrderCheck());
+
+		return sourceChecks;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.json"};
-
-	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

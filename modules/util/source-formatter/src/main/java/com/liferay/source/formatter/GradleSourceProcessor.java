@@ -39,20 +39,17 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<SourceCheck> getSourceChecks() {
-		return _sourceChecks;
-	}
+	protected List<SourceCheck> getSourceChecks() throws Exception {
+		List<SourceCheck> sourceChecks = new ArrayList<>();
 
-	@Override
-	protected void populateSourceChecks() throws Exception {
-		_sourceChecks.add(new WhitespaceCheck());
+		sourceChecks.add(new WhitespaceCheck());
 
-		_sourceChecks.add(new GradleDependenciesCheck(getProjectPathPrefix()));
-		_sourceChecks.add(new GradleVersionCheck());
+		sourceChecks.add(new GradleDependenciesCheck(getProjectPathPrefix()));
+		sourceChecks.add(new GradleVersionCheck());
+
+		return sourceChecks;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/build.gradle"};
-
-	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

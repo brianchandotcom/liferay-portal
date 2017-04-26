@@ -37,16 +37,13 @@ public class SoySourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<SourceCheck> getSourceChecks() {
-		return _sourceChecks;
-	}
+		List<SourceCheck> sourceChecks = new ArrayList<>();
 
-	@Override
-	protected void populateSourceChecks() {
-		_sourceChecks.add(new WhitespaceCheck());
+		sourceChecks.add(new WhitespaceCheck());
+
+		return sourceChecks;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.soy"};
-
-	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

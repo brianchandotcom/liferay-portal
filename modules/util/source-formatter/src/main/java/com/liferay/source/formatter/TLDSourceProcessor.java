@@ -41,19 +41,16 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<SourceCheck> getSourceChecks() {
-		return _sourceChecks;
-	}
+		List<SourceCheck> sourceChecks = new ArrayList<>();
 
-	@Override
-	protected void populateSourceChecks() {
-		_sourceChecks.add(new WhitespaceCheck());
+		sourceChecks.add(new WhitespaceCheck());
 
-		_sourceChecks.add(new TLDElementOrderCheck());
-		_sourceChecks.add(new TLDTypeCheck());
+		sourceChecks.add(new TLDElementOrderCheck());
+		sourceChecks.add(new TLDTypeCheck());
+
+		return sourceChecks;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.tld"};
-
-	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

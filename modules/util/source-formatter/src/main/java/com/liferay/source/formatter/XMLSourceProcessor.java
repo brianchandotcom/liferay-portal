@@ -67,53 +67,50 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<SourceCheck> getSourceChecks() {
-		return _sourceChecks;
-	}
+	protected List<SourceCheck> getSourceChecks() throws Exception {
+		List<SourceCheck> sourceChecks = new ArrayList<>();
 
-	@Override
-	protected void populateSourceChecks() throws Exception {
-		_sourceChecks.add(new XMLBuildFileCheck());
-		_sourceChecks.add(new XMLCustomSQLFileCheck());
-		_sourceChecks.add(new XMLDDLStructuresFileCheck());
-		_sourceChecks.add(new XMLFriendlyURLRoutesFileCheck());
-		_sourceChecks.add(new XMLHBMFileCheck());
-		_sourceChecks.add(new XMLLog4jFileCheck());
-		_sourceChecks.add(new XMLLookAndFeelFileCheck());
-		_sourceChecks.add(new XMLModelHintsFileCheck());
-		_sourceChecks.add(new XMLPortletFileCheck());
-		_sourceChecks.add(new XMLPortletPreferencesFileCheck());
-		_sourceChecks.add(new XMLPoshiFileCheck());
-		_sourceChecks.add(new XMLResourceActionsFileCheck());
-		_sourceChecks.add(
+		sourceChecks.add(new XMLBuildFileCheck());
+		sourceChecks.add(new XMLCustomSQLFileCheck());
+		sourceChecks.add(new XMLDDLStructuresFileCheck());
+		sourceChecks.add(new XMLFriendlyURLRoutesFileCheck());
+		sourceChecks.add(new XMLHBMFileCheck());
+		sourceChecks.add(new XMLLog4jFileCheck());
+		sourceChecks.add(new XMLLookAndFeelFileCheck());
+		sourceChecks.add(new XMLModelHintsFileCheck());
+		sourceChecks.add(new XMLPortletFileCheck());
+		sourceChecks.add(new XMLPortletPreferencesFileCheck());
+		sourceChecks.add(new XMLPoshiFileCheck());
+		sourceChecks.add(new XMLResourceActionsFileCheck());
+		sourceChecks.add(
 			new XMLServiceFileCheck(
 				getContent("sql/portal-tables.sql", PORTAL_MAX_DIR_LEVEL),
 				getPluginsInsideModulesDirectoryNames()));
-		_sourceChecks.add(new XMLSolrSchemaFileCheck());
-		_sourceChecks.add(new XMLSpringFileCheck());
-		_sourceChecks.add(new XMLToggleFileCheck());
+		sourceChecks.add(new XMLSolrSchemaFileCheck());
+		sourceChecks.add(new XMLSpringFileCheck());
+		sourceChecks.add(new XMLToggleFileCheck());
 
 		if (portalSource || subrepository) {
-			_sourceChecks.add(new XMLStrutsConfigFileCheck());
-			_sourceChecks.add(new XMLTestIgnorableErrorLinesFileCheck());
-			_sourceChecks.add(new XMLTilesDefsFileCheck());
-			_sourceChecks.add(new XMLWebFileCheck());
+			sourceChecks.add(new XMLStrutsConfigFileCheck());
+			sourceChecks.add(new XMLTestIgnorableErrorLinesFileCheck());
+			sourceChecks.add(new XMLTilesDefsFileCheck());
+			sourceChecks.add(new XMLWebFileCheck());
 		}
 
-		_sourceChecks.add(new XMLWhitespaceCheck());
+		sourceChecks.add(new XMLWhitespaceCheck());
 
-		_sourceChecks.add(new XMLTagAttributesCheck());
+		sourceChecks.add(new XMLTagAttributesCheck());
 
 		if (portalSource || subrepository) {
-			_sourceChecks.add(new XMLEmptyLinesCheck());
+			sourceChecks.add(new XMLEmptyLinesCheck());
 		}
+
+		return sourceChecks;
 	}
 
 	private static final String[] _INCLUDES = new String[] {
 		"**/*.action", "**/*.function", "**/*.jrxml", "**/*.macro",
 		"**/*.testcase", "**/*.toggle", "**/*.xml"
 	};
-
-	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

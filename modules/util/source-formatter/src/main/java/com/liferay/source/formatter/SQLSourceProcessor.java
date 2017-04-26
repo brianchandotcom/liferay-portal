@@ -40,19 +40,16 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<SourceCheck> getSourceChecks() {
-		return _sourceChecks;
-	}
+		List<SourceCheck> sourceChecks = new ArrayList<>();
 
-	@Override
-	protected void populateSourceChecks() {
-		_sourceChecks.add(new WhitespaceCheck());
+		sourceChecks.add(new WhitespaceCheck());
 
-		_sourceChecks.add(new SQLEmptyLinesCheck());
-		_sourceChecks.add(new SQLStylingCheck());
+		sourceChecks.add(new SQLEmptyLinesCheck());
+		sourceChecks.add(new SQLStylingCheck());
+
+		return sourceChecks;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.sql"};
-
-	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

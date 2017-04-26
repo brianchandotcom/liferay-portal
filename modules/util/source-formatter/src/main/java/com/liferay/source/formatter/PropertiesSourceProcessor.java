@@ -65,26 +65,25 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<SourceCheck> getSourceChecks() {
-		return _sourceChecks;
-	}
+	protected List<SourceCheck> getSourceChecks() throws Exception {
+		List<SourceCheck> sourceChecks = new ArrayList<>();
 
-	@Override
-	protected void populateSourceChecks() throws Exception {
-		_sourceChecks.add(new PropertiesWhitespaceCheck(true));
+		sourceChecks.add(new PropertiesWhitespaceCheck(true));
 
-		_sourceChecks.add(new PropertiesDefinitionKeysCheck());
-		_sourceChecks.add(new PropertiesDependenciesFileCheck());
-		_sourceChecks.add(
+		sourceChecks.add(new PropertiesDefinitionKeysCheck());
+		sourceChecks.add(new PropertiesDependenciesFileCheck());
+		sourceChecks.add(
 			new PropertiesLiferayPluginPackageFileCheck(
 				getProjectPathPrefix()));
-		_sourceChecks.add(new PropertiesLongLinesCheck());
-		_sourceChecks.add(
+		sourceChecks.add(new PropertiesLongLinesCheck());
+		sourceChecks.add(
 			new PropertiesPortalFileCheck(_getPortalPortalPropertiesContent()));
-		_sourceChecks.add(new PropertiesPortletFileCheck());
-		_sourceChecks.add(
+		sourceChecks.add(new PropertiesPortletFileCheck());
+		sourceChecks.add(
 			new PropertiesSourceFormatterFileCheck(
 				getProjectPathPrefix(), _hasPrivateAppsDir()));
+
+		return sourceChecks;
 	}
 
 	private String _getPortalPortalPropertiesContent() throws Exception {
@@ -126,7 +125,5 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		return false;
 	}
-
-	private final List<SourceCheck> _sourceChecks = new ArrayList<>();
 
 }

@@ -365,6 +365,12 @@ public class CommerceProductDefinitionOptionRelLocalServiceUtil {
 			companyId, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel> getSkuContributorCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionId) {
+		return getService()
+				   .getSkuContributorCommerceProductDefinitionOptionRels(commerceProductDefinitionId);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

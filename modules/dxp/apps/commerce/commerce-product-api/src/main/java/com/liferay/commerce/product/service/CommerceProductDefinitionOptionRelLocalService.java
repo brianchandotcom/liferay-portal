@@ -312,6 +312,10 @@ public interface CommerceProductDefinitionOptionRelLocalService
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CommerceProductDefinitionOptionRel> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceProductDefinitionOptionRel> getSkuContributorCommerceProductDefinitionOptionRels(
+		long commerceProductDefinitionId);
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

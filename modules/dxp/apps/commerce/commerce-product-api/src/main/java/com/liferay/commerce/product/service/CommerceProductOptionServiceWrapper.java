@@ -60,6 +60,13 @@ public class CommerceProductOptionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CommerceProductOption fetchCommerceProductOption(
+		long commerceProductOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductOptionService.fetchCommerceProductOption(commerceProductOptionId);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CommerceProductOption getCommerceProductOption(
 		long commerceProductOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

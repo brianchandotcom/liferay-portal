@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +87,12 @@ public interface CommerceProductInstanceLocalService extends BaseLocalService,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
+
+	public CommerceProductInstance addCommerceProductInstance(
+		long commerceProductDefinitionId, java.lang.String sku,
+		java.lang.String ddmContent, Date displayDate, Date expirationDate,
+		boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new commerce product instance with the primary key. Does not add the commerce product instance to the database.
@@ -334,8 +341,9 @@ public interface CommerceProductInstanceLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	public void autoGeneratePommerceProductInstances(
-		long commerceProductDefinitionId) throws PortalException;
+	public void buildCommerceProductInstances(
+		long commerceProductDefinitionId, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteCommerceProductInstances(long commerceProductDefinitionId)
 		throws PortalException;

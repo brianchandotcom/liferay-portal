@@ -62,6 +62,18 @@ public class CommerceProductInstanceLocalServiceWrapper
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CommerceProductInstance addCommerceProductInstance(
+		long commerceProductDefinitionId, java.lang.String sku,
+		java.lang.String ddmContent, java.util.Date displayDate,
+		java.util.Date expirationDate, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductInstanceLocalService.addCommerceProductInstance(commerceProductDefinitionId,
+			sku, ddmContent, displayDate, expirationDate, neverExpire,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new commerce product instance with the primary key. Does not add the commerce product instance to the database.
 	*
@@ -401,10 +413,12 @@ public class CommerceProductInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public void autoGeneratePommerceProductInstances(
-		long commerceProductDefinitionId)
+	public void buildCommerceProductInstances(
+		long commerceProductDefinitionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceProductInstanceLocalService.autoGeneratePommerceProductInstances(commerceProductDefinitionId);
+		_commerceProductInstanceLocalService.buildCommerceProductInstances(commerceProductDefinitionId,
+			serviceContext);
 	}
 
 	@Override

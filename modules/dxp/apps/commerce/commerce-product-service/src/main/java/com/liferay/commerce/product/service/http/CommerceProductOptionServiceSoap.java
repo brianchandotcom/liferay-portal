@@ -69,6 +69,21 @@ import java.util.Map;
  */
 @ProviderType
 public class CommerceProductOptionServiceSoap {
+	public static com.liferay.commerce.product.model.CommerceProductOptionSoap fetchCommerceProductOption(
+		long commerceProductOptionId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductOption returnValue =
+				CommerceProductOptionServiceUtil.fetchCommerceProductOption(commerceProductOptionId);
+
+			return com.liferay.commerce.product.model.CommerceProductOptionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CommerceProductOptionSoap addCommerceProductOption(
 		java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues,

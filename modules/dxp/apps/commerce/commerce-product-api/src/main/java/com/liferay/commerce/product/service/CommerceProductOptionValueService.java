@@ -70,6 +70,10 @@ public interface CommerceProductOptionValueService extends BaseService {
 		long commerceProductOptionValueId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceProductOptionValue fetchCommerceProductOptionValue(
+		long commerceProductOptionValueId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceProductOptionValue getCommerceProductOptionValue(
 		long commerceProductOptionValueId) throws PortalException;
 

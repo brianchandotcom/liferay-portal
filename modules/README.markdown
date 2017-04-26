@@ -135,3 +135,16 @@ closure arguments.
 	* Order assignments alphabetically, leaving an empty line after multiple
 	calls to the same method (e.g., after multiple `dependsOn` declarations) or if
 	the assignment has a closure.
+
+## Subrepositories
+
+### `gradle.properties`
+
+Property Name | Mandatory | Description
+------------- | --------- | -----------
+`com.liferay.source.formatter.version` | No | The version of Source Formatter to use in the subrepository. If the property is not set, the latest version is used.
+`project.group` | No | The group ID of the artifacts the are published from the subrepository. If this property is not set, the default value `com.liferay` is used.
+`project.path.prefix` | Yes | The project path of the Gradle prefix. It must start with a `':'` character and be equal to the relative path of the subrepository directory inside the main Liferay repository, with path components separated by `':'` character instead of slashes.
+`systemProp.repository.private.password` | No | The password used to access the private Maven repository. If set, this property must be equal to the value of the property `build.repository.private.password` in `build.properties`.
+`systemProp.repository.private.url` | No | The URL of the private Maven repository. If set, this property must be equal to the value of the property `build.repository.private.url` in `build.properties`.
+`systemProp.repository.private.username` | No | The user name used to access the private private Maven repository. If set, this property must be equal to the value of the property `build.repository.private.username` in `build.properties`.

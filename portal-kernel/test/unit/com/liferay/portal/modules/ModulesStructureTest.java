@@ -466,6 +466,13 @@ public class ModulesStructureTest {
 				_APP_BUILD_GRADLE + StringPool.NEW_LINE + StringPool.NEW_LINE);
 		}
 
+		if (Files.notExists(dirPath.resolve("build-ext.gradle"))) {
+			buildGradleTemplate = StringUtil.removeSubstring(
+				buildGradleTemplate,
+				StringPool.NEW_LINE + StringPool.NEW_LINE +
+					"apply from: \"build-ext.gradle\"");
+		}
+
 		final Set<String> pluginNames = new TreeSet<>();
 
 		pluginNames.add("com.liferay.gradle.plugins.defaults");

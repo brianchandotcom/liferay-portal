@@ -60,6 +60,13 @@ public class CommerceProductDefinitionOptionValueRelServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel fetchCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionValueRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceProductDefinitionOptionValueRelService.fetchCommerceProductDefinitionOptionValueRel(commerceProductDefinitionOptionValueRelId);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel getCommerceProductDefinitionOptionValueRel(
 		long commerceProductDefinitionOptionValueRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {

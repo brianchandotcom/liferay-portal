@@ -95,39 +95,6 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel fetchCommerceProductDefinitionOptionRel(
-		HttpPrincipal httpPrincipal, long commerceProductDefinitionOptionRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionRelServiceUtil.class,
-					"fetchCommerceProductDefinitionOptionRel",
-					_fetchCommerceProductDefinitionOptionRelParameterTypes1);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceProductDefinitionOptionRelId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel addCommerceProductDefinitionOptionRel(
 		HttpPrincipal httpPrincipal, long commerceProductDefinitionId,
 		long commerceProductOptionId,
@@ -136,7 +103,7 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionRelServiceUtil.class,
 					"addCommerceProductDefinitionOptionRel",
-					_addCommerceProductDefinitionOptionRelParameterTypes2);
+					_addCommerceProductDefinitionOptionRelParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceProductDefinitionId, commerceProductOptionId,
@@ -171,7 +138,7 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionRelServiceUtil.class,
 					"deleteCommerceProductDefinitionOptionRel",
-					_deleteCommerceProductDefinitionOptionRelParameterTypes3);
+					_deleteCommerceProductDefinitionOptionRelParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceProductDefinitionOptionRel);
@@ -204,7 +171,40 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionRelServiceUtil.class,
 					"deleteCommerceProductDefinitionOptionRel",
-					_deleteCommerceProductDefinitionOptionRelParameterTypes4);
+					_deleteCommerceProductDefinitionOptionRelParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceProductDefinitionOptionRelId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel fetchCommerceProductDefinitionOptionRel(
+		HttpPrincipal httpPrincipal, long commerceProductDefinitionOptionRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceProductDefinitionOptionRelServiceUtil.class,
+					"fetchCommerceProductDefinitionOptionRel",
+					_fetchCommerceProductDefinitionOptionRelParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceProductDefinitionOptionRelId);
@@ -413,18 +413,18 @@ public class CommerceProductDefinitionOptionRelServiceHttp {
 			java.lang.String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _fetchCommerceProductDefinitionOptionRelParameterTypes1 =
-		new Class[] { long.class };
-	private static final Class<?>[] _addCommerceProductDefinitionOptionRelParameterTypes2 =
+	private static final Class<?>[] _addCommerceProductDefinitionOptionRelParameterTypes1 =
 		new Class[] {
 			long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteCommerceProductDefinitionOptionRelParameterTypes3 =
+	private static final Class<?>[] _deleteCommerceProductDefinitionOptionRelParameterTypes2 =
 		new Class[] {
 			com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel.class
 		};
-	private static final Class<?>[] _deleteCommerceProductDefinitionOptionRelParameterTypes4 =
+	private static final Class<?>[] _deleteCommerceProductDefinitionOptionRelParameterTypes3 =
+		new Class[] { long.class };
+	private static final Class<?>[] _fetchCommerceProductDefinitionOptionRelParameterTypes4 =
 		new Class[] { long.class };
 	private static final Class<?>[] _getCommerceProductDefinitionOptionRelParameterTypes5 =
 		new Class[] { long.class };

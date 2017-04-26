@@ -98,21 +98,6 @@ public class CommerceProductDefinitionOptionRelServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap fetchCommerceProductDefinitionOptionRel(
-		long commerceProductDefinitionOptionRelId) throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel returnValue =
-				CommerceProductDefinitionOptionRelServiceUtil.fetchCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId);
-
-			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap addCommerceProductDefinitionOptionRel(
 		long commerceProductDefinitionId, long commerceProductOptionId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -153,6 +138,21 @@ public class CommerceProductDefinitionOptionRelServiceSoap {
 		try {
 			com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel returnValue =
 				CommerceProductDefinitionOptionRelServiceUtil.deleteCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId);
+
+			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap fetchCommerceProductDefinitionOptionRel(
+		long commerceProductDefinitionOptionRelId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel returnValue =
+				CommerceProductDefinitionOptionRelServiceUtil.fetchCommerceProductDefinitionOptionRel(commerceProductDefinitionOptionRelId);
 
 			return com.liferay.commerce.product.model.CommerceProductDefinitionOptionRelSoap.toSoapModel(returnValue);
 		}

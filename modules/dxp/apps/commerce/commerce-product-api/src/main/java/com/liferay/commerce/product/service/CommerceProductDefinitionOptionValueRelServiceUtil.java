@@ -66,6 +66,13 @@ public class CommerceProductDefinitionOptionValueRelServiceUtil {
 				   .deleteCommerceProductDefinitionOptionValueRel(commerceProductDefinitionOptionValueRelId);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel fetchCommerceProductDefinitionOptionValueRel(
+		long commerceProductDefinitionOptionValueRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchCommerceProductDefinitionOptionValueRel(commerceProductDefinitionOptionValueRelId);
+	}
+
 	public static com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel getCommerceProductDefinitionOptionValueRel(
 		long commerceProductDefinitionOptionValueRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {

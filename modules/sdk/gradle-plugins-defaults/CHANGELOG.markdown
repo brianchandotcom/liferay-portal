@@ -1419,7 +1419,7 @@ not contain a class or JAR file.
 ### Changed
 - [LPS-71722]: Update the [Liferay Gradle Plugins] dependency to version 3.3.4.
 
-## 3.6.7 - 2017-04-21
+## 3.6.7 - 2017-04-25
 
 ### Changed
 - [LPS-70819]: Use Gradle dependency management in the `downloadCompiledJSP`

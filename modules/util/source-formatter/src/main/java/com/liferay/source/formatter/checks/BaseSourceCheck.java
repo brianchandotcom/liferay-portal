@@ -71,6 +71,14 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public void setPluginsInsideModulesDirectoryNames(
+		List<String> pluginsInsideModulesDirectoryNames) {
+
+		_pluginsInsideModulesDirectoryNames =
+			pluginsInsideModulesDirectoryNames;
+	}
+
+	@Override
 	public void setPortalSource(boolean portalSource) {
 		_portalSource = portalSource;
 	}
@@ -367,6 +375,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private String _baseDirName;
 	private String[] _excludes;
 	private int _maxLineLength;
+	private List<String> _pluginsInsideModulesDirectoryNames;
 	private boolean _portalSource;
 	private Properties _properties;
 	private final Map<String, Set<SourceFormatterMessage>>

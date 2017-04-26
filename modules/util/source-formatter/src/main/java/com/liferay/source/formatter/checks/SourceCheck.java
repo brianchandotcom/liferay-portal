@@ -36,6 +36,9 @@ public interface SourceCheck {
 
 	public void setMaxLineLength(int maxLineLength);
 
+	public void setPluginsInsideModulesDirectoryNames(
+		List<String> pluginsInsideModulesDirectoryNames);
+
 	public void setPortalSource(boolean portalSource);
 
 	public void setProperties(Properties properties);

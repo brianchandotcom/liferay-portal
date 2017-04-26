@@ -25,29 +25,39 @@ CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = commerce
 
 long commerceProductDefinitionOptionRelId = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinitionOptionRelId();
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-commerce-product-definition-option-rel-details");
+CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinitionOptionValueRel();
+
+long commerceProductDefinitionOptionValueRelId = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinitionOptionValueRelId();
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("mvcRenderCommandName", "editProductDefinitionOptionRel");
+portletURL.setParameter("mvcRenderCommandName", "editProductDefinitionOptionValueRel");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
-renderResponse.setTitle(commerceProductDefinition.getTitle(languageId) + " - " + commerceProductDefinitionOptionRel.getName(locale));
+
+String contextTitle = commerceProductDefinition.getTitle(languageId) + " - " + commerceProductDefinitionOptionRel.getName(locale);
+
+String title;
+
+if (commerceProductDefinitionOptionValueRel == null) {
+	title = LanguageUtil.get(request, "add-product-definition-option-value-rel-to-x", contextTitle);
+}
+else {
+	title = contextTitle + " - " + commerceProductDefinitionOptionValueRel.getTitle(locale);
+}
+
+renderResponse.setTitle(title);
 %>
 
-<%@ include file="/commerce_product_definition_option_rel_navbar.jspf" %>
+<portlet:actionURL name="editProductDefinitionOptionValueRel" var="editProductDefinitionOptionValueRelActionURL" />
 
-<portlet:actionURL name="editProductDefinitionOptionRel" var="editProductDefinitionOptionRelActionURL" />
-
-<aui:form action="<%= editProductDefinitionOptionRelActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editProductDefinitionOptionValueRelActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-	<aui:input name="commerceProductDefinitionId" type="hidden" value="<%= commerceProductDefinitionOptionRel.getCommerceProductDefinitionId() %>" />
 	<aui:input name="commerceProductDefinitionOptionRelId" type="hidden" value="<%= String.valueOf(commerceProductDefinitionOptionRelId) %>" />
-	<aui:input name="commerceProductOptionId" type="hidden" value="<%= commerceProductDefinitionOptionRel.getCommerceProductOptionId() %>" />
+	<aui:input name="commerceProductDefinitionOptionValueRelId" type="hidden" value="<%= String.valueOf(commerceProductDefinitionOptionValueRelId) %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator

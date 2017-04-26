@@ -80,6 +80,35 @@ public class CommerceProductDefinitionOptionValueRelDisplayContext
 			getCommerceProductDefinitionOptionRelId();
 	}
 
+	public CommerceProductDefinitionOptionValueRel
+		getCommerceProductDefinitionOptionValueRel() throws PortalException {
+
+		if (_commerceProductDefinitionOptionValueRel != null) {
+			return _commerceProductDefinitionOptionValueRel;
+		}
+
+		_commerceProductDefinitionOptionValueRel =
+			actionHelper.getCommerceProductDefinitionOptionValueRel(
+				commerceProductRequestHelper.getRenderRequest());
+
+		return _commerceProductDefinitionOptionValueRel;
+	}
+
+	public long getCommerceProductDefinitionOptionValueRelId()
+		throws PortalException {
+
+		CommerceProductDefinitionOptionValueRel
+			commerceProductDefinitionOptionValueRel =
+				getCommerceProductDefinitionOptionValueRel();
+
+		if (commerceProductDefinitionOptionValueRel == null) {
+			return 0;
+		}
+
+		return commerceProductDefinitionOptionValueRel.
+			getCommerceProductDefinitionOptionValueRelId();
+	}
+
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
@@ -141,6 +170,8 @@ public class CommerceProductDefinitionOptionValueRelDisplayContext
 
 	private CommerceProductDefinitionOptionRel
 		_commerceProductDefinitionOptionRel;
+	private CommerceProductDefinitionOptionValueRel
+		_commerceProductDefinitionOptionValueRel;
 	private final CommerceProductDefinitionOptionValueRelService
 		_commerceProductDefinitionOptionValueRelService;
 

@@ -70,7 +70,7 @@ public class EditCommerceProductDefinitionOptionValueRelMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.EDIT)) {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateCommerceProductDefinitionOptionValueRel(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
@@ -95,7 +95,7 @@ public class EditCommerceProductDefinitionOptionValueRelMVCActionCommand
 			actionRequest, "commerceProductDefinitionOptionRelId");
 
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "titleMapAsXML");
+			actionRequest, "title");
 
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
 

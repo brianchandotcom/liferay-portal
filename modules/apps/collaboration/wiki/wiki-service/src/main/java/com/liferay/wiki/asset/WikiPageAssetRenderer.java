@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -72,11 +72,24 @@ public class WikiPageAssetRenderer
 		}
 	}
 
+	/**
+	 * @deprecated As of 1.6.0, replaced by {@link #WikiPageAssetRenderer(WikiPage,
+	 *             WikiEngineRenderer, TrashHelper)}
+	 */
+	@Deprecated
 	public WikiPageAssetRenderer(
 		WikiPage page, WikiEngineRenderer wikiEngineRenderer) {
 
+		this(page, wikiEngineRenderer, null);
+	}
+
+	public WikiPageAssetRenderer(
+		WikiPage page, WikiEngineRenderer wikiEngineRenderer,
+		TrashHelper trashHelper) {
+
 		_page = page;
 		_wikiEngineRenderer = wikiEngineRenderer;
+		_trashHelper = trashHelper;
 	}
 
 	@Override
@@ -177,7 +190,11 @@ public class WikiPageAssetRenderer
 			return _page.getTitle();
 		}
 
-		return TrashUtil.getOriginalTitle(_page.getTitle());
+		if (_trashHelper == null) {
+			return _page.getTitle();
+		}
+
+		return _trashHelper.getOriginalTitle(_page.getTitle());
 	}
 
 	@Override
@@ -339,6 +356,7 @@ public class WikiPageAssetRenderer
 		WikiPageAssetRenderer.class);
 
 	private final WikiPage _page;
+	private final TrashHelper _trashHelper;
 	private final WikiEngineRenderer _wikiEngineRenderer;
 	private WikiGroupServiceOverriddenConfiguration
 		_wikiGroupServiceOverriddenConfiguration;

@@ -282,6 +282,23 @@ public class HtmlImpl implements Html {
 
 				lastReplacementIndex = i + 1;
 			}
+			else if ((mode == ESCAPE_MODE_JS) && (c == '\u2028')) {
+				if (sb == null) {
+					sb = new StringBuilder(text.length() + 64);
+				}
+
+				if (i > lastReplacementIndex) {
+					sb.append(text, lastReplacementIndex, i);
+				}
+
+				sb.append(prefix);
+
+				_appendHexChars(sb, hexBuffer, c);
+
+				sb.append(postfix);
+
+				lastReplacementIndex = i + 1;
+			}
 		}
 
 		if (sb == null) {

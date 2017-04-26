@@ -19,6 +19,8 @@
 <%
 CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION);
 
+long commerceProductDefinitionId = 0;
+
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-definition-images");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -37,7 +39,7 @@ String backURLString = backUrl.toString();
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURLString);
 
-renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(request, "add-product-definition") : commerceProductDefinition.getTitle(locale));
+renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(request, "add-product-definition") : commerceProductDefinition.getTitle(languageId));
 %>
 
 <%@ include file="/commerce_product_definition_navbar.jspf" %>

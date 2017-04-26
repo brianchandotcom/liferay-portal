@@ -24,11 +24,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class CommerceProductDefinitionOptionValueRelTitleComparator
 	extends OrderByComparator<CommerceProductDefinitionOptionValueRel> {
 
-	public static final String ORDER_BY_ASC =
-		"title ASC";
+	public static final String ORDER_BY_ASC = "title ASC";
 
-	public static final String ORDER_BY_DESC =
-		"title DESC";
+	public static final String ORDER_BY_DESC = "title DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"title"};
 

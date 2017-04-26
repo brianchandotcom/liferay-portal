@@ -184,8 +184,7 @@ public abstract class BaseCommerceProductDefinitionsDisplayContext<T> {
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		String redirect = ParamUtil.getString(
-			httpServletRequest, "redirect");
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 		if (Validator.isNotNull(redirect)) {
 			portletURL.setParameter("redirect", redirect);

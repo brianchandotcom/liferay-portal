@@ -18,7 +18,7 @@
 	<aui:nav cssClass="navbar-nav">
 		<liferay-portlet:renderURL var="editProductDefinitionOptionRelUrl">
 			<portlet:param name="mvcRenderCommandName" value="editProductDefinitionOptionRel" />
-            <portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="commerceProductDefinitionOptionRelId" value="<%= String.valueOf(commerceProductDefinitionOptionRelId) %>" />
 			<portlet:param name="toolbarItem" value="view-commerce-product-definition-option-rel-details" />
 		</liferay-portlet:renderURL>

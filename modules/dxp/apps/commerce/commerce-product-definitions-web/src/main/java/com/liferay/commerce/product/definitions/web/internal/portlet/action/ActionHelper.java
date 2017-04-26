@@ -17,7 +17,9 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CommerceProductWebKeys;
 import com.liferay.commerce.product.model.CommerceProductDefinition;
 import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
+import com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelService;
+import com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CommerceProductDefinitionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -146,6 +148,35 @@ public class ActionHelper {
 		return commerceProductDefinitionOptionRels;
 	}
 
+	public List<CommerceProductDefinitionOptionValueRel>
+			getCommerceProductDefinitionOptionValueRels(
+				ResourceRequest resourceRequest)
+		throws Exception {
+
+		long[] commerceProductDefinitionOptionValueRelIds =
+			ParamUtil.getLongValues(
+				resourceRequest,
+				"rowIdsCommerceProductDefinitionOptionValueRel");
+
+		List<CommerceProductDefinitionOptionValueRel>
+			commerceProductDefinitionOptionValueRels = new ArrayList<>();
+
+		for (long commerceProductDefinitionOptionValueRelId :
+				commerceProductDefinitionOptionValueRelIds) {
+
+			CommerceProductDefinitionOptionValueRel
+				commerceProductDefinitionOptionValueRel =
+					_commerceProductDefinitionOptionValueRelService.
+						getCommerceProductDefinitionOptionValueRel(
+							commerceProductDefinitionOptionValueRelId);
+
+			commerceProductDefinitionOptionValueRels.add(
+				commerceProductDefinitionOptionValueRel);
+		}
+
+		return commerceProductDefinitionOptionValueRels;
+	}
+
 	public List<CommerceProductDefinition> getCommerceProductDefinitions(
 			ResourceRequest resourceRequest)
 		throws Exception {
@@ -170,6 +201,10 @@ public class ActionHelper {
 	@Reference
 	private CommerceProductDefinitionOptionRelService
 		_commerceProductDefinitionOptionRelService;
+
+	@Reference
+	private CommerceProductDefinitionOptionValueRelService
+		_commerceProductDefinitionOptionValueRelService;
 
 	@Reference
 	private CommerceProductDefinitionService _commerceProductDefinitionService;

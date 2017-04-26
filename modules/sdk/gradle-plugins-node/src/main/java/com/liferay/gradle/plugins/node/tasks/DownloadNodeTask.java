@@ -35,6 +35,7 @@ import org.gradle.api.Task;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
 
@@ -90,6 +91,29 @@ public class DownloadNodeTask extends DefaultTask {
 
 			_download(getNodeExeUrl(), nodeBinDir);
 		}
+
+		String npmUrl = getNpmUrl();
+
+		if (Validator.isNotNull(npmUrl)) {
+			final File npmFile = _download(npmUrl, null);
+
+			final File npmDir = new File(nodeDir, "lib/node_modules/npm");
+
+			project.delete(npmDir);
+
+			project.copy(
+				new Action<CopySpec>() {
+
+					@Override
+					public void execute(CopySpec copySpec) {
+						copySpec.eachFile(new StripPathSegmentsAction(1));
+						copySpec.from(project.tarTree(npmFile));
+						copySpec.into(npmDir);
+						copySpec.setIncludeEmptyDirs(false);
+					}
+
+				});
+		}
 	}
 
 	@OutputDirectory
@@ -107,6 +131,12 @@ public class DownloadNodeTask extends DefaultTask {
 		return GradleUtil.toString(_nodeUrl);
 	}
 
+	@Input
+	@Optional
+	public String getNpmUrl() {
+		return GradleUtil.toString(_npmUrl);
+	}
+
 	public void setNodeDir(Object nodeDir) {
 		_nodeExecutor.setNodeDir(nodeDir);
 	}
@@ -117,6 +147,10 @@ public class DownloadNodeTask extends DefaultTask {
 
 	public void setNodeUrl(Object nodeUrl) {
 		_nodeUrl = nodeUrl;
+	}
+
+	public void setNpmUrl(Object npmUrl) {
+		_npmUrl = npmUrl;
 	}
 
 	private File _download(String url, File destinationFile)
@@ -156,5 +190,6 @@ public class DownloadNodeTask extends DefaultTask {
 	private final NodeExecutor _nodeExecutor;
 	private Object _nodeExeUrl;
 	private Object _nodeUrl;
+	private Object _npmUrl;
 
 }

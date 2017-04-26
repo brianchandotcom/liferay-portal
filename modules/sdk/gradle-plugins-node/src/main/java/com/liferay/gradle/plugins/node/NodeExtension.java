@@ -129,6 +129,22 @@ public class NodeExtension {
 
 		};
 
+		_npmUrl = new Callable<String>() {
+
+			@Override
+			public String call() throws Exception {
+				String npmVersion = getNpmVersion();
+
+				if (Validator.isNull(npmVersion)) {
+					return null;
+				}
+
+				return "https://registry.npmjs.org/npm/-/npm-" + npmVersion +
+					".tgz";
+			}
+
+		};
+
 		_project = project;
 	}
 
@@ -150,6 +166,14 @@ public class NodeExtension {
 
 	public List<String> getNpmArgs() {
 		return GradleUtil.toStringList(_npmArgs);
+	}
+
+	public String getNpmUrl() {
+		return GradleUtil.toString(_npmUrl);
+	}
+
+	public String getNpmVersion() {
+		return GradleUtil.toString(_npmVersion);
 	}
 
 	public boolean isDownload() {
@@ -204,6 +228,14 @@ public class NodeExtension {
 		setNpmArgs(Arrays.asList(npmArgs));
 	}
 
+	public void setNpmUrl(Object npmUrl) {
+		_npmUrl = npmUrl;
+	}
+
+	public void setNpmVersion(Object npmVersion) {
+		_npmVersion = npmVersion;
+	}
+
 	private boolean _download;
 	private boolean _global;
 	private Object _nodeDir;
@@ -211,6 +243,8 @@ public class NodeExtension {
 	private Object _nodeUrl;
 	private Object _nodeVersion = "5.5.0";
 	private final List<Object> _npmArgs = new ArrayList<>();
+	private Object _npmUrl;
+	private Object _npmVersion;
 	private final Project _project;
 
 }

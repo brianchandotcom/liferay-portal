@@ -39,7 +39,6 @@ else {
 	<liferay-ui:icon
 		message="edit"
 		url="<%= editProductDefinitionOptionValueRelURL %>"
-		useDialog="<%= true %>"
 	/>
 
 	<portlet:actionURL name="editProductDefinitionOptionValueRel" var="deleteProductDefinitionOptionValueRelURL">

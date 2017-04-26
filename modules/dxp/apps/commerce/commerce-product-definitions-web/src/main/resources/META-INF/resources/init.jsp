@@ -33,6 +33,7 @@ page import="com.liferay.commerce.product.definitions.web.internal.display.conte
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CommerceProductInstanceDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CommerceProductDefinitionFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CommerceProductDefinitionOptionRelFormNavigatorConstants" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CommerceProductDefinitionOptionValueRelFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchProductDefinitionException" %><%@
 page import="com.liferay.commerce.product.model.CommerceProductDefinition" %><%@
 page import="com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel" %><%@

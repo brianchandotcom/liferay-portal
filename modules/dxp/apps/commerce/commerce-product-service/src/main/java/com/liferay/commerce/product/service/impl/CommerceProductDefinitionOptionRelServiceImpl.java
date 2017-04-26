@@ -37,8 +37,8 @@ public class CommerceProductDefinitionOptionRelServiceImpl
 			addCommerceProductDefinitionOptionRel(
 				long commerceProductDefinitionId, long commerceProductOptionId,
 				Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-				String ddmFormFieldTypeName, int priority,
-				ServiceContext serviceContext)
+				String ddmFormFieldTypeName, int priority, boolean facetable,
+				boolean skuContributor, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceProductDefinitionPermission.check(
@@ -48,7 +48,8 @@ public class CommerceProductDefinitionOptionRelServiceImpl
 		return commerceProductDefinitionOptionRelLocalService.
 			addCommerceProductDefinitionOptionRel(
 				commerceProductDefinitionId, commerceProductOptionId, nameMap,
-				descriptionMap, ddmFormFieldTypeName, priority, serviceContext);
+				descriptionMap, ddmFormFieldTypeName, priority, facetable,
+				skuContributor, serviceContext);
 	}
 
 	@Override
@@ -190,7 +191,8 @@ public class CommerceProductDefinitionOptionRelServiceImpl
 				long commerceProductDefinitionOptionRelId,
 				long commerceProductOptionId, Map<Locale, String> nameMap,
 				Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
-				int priority, ServiceContext serviceContext)
+				int priority, boolean facetable, boolean skuContributor,
+				ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceProductDefinitionPermission.
@@ -202,7 +204,7 @@ public class CommerceProductDefinitionOptionRelServiceImpl
 			updateCommerceProductDefinitionOptionRel(
 				commerceProductDefinitionOptionRelId, commerceProductOptionId,
 				nameMap, descriptionMap, ddmFormFieldTypeName, priority,
-				serviceContext);
+				facetable, skuContributor, serviceContext);
 	}
 
 }

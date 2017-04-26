@@ -39,8 +39,8 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 			addCommerceProductDefinitionOptionRel(
 				long commerceProductDefinitionId, long commerceProductOptionId,
 				Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-				String ddmFormFieldTypeName, int priority,
-				ServiceContext serviceContext)
+				String ddmFormFieldTypeName, int priority, boolean facetable,
+				boolean skuContributor, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option rel
@@ -63,11 +63,13 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 			commerceProductDefinitionId);
 		commerceProductDefinitionOptionRel.setCommerceProductOptionId(
 			commerceProductOptionId);
-		commerceProductDefinitionOptionRel.setPriority(priority);
 		commerceProductDefinitionOptionRel.setNameMap(nameMap);
 		commerceProductDefinitionOptionRel.setDescriptionMap(descriptionMap);
 		commerceProductDefinitionOptionRel.setDDMFormFieldTypeName(
 			ddmFormFieldTypeName);
+		commerceProductDefinitionOptionRel.setPriority(priority);
+		commerceProductDefinitionOptionRel.setFacetable(facetable);
+		commerceProductDefinitionOptionRel.setSkuContributor(skuContributor);
 		commerceProductDefinitionOptionRel.setExpandoBridgeAttributes(
 			serviceContext);
 
@@ -96,8 +98,8 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 				commerceProductDefinitionId, commerceProductOptionId,
 				commerceProductOption.getNameMap(),
 				commerceProductOption.getDescriptionMap(),
-				commerceProductOption.getDDMFormFieldTypeName(), 0,
-				serviceContext);
+				commerceProductOption.getDDMFormFieldTypeName(), 0, false,
+				false, serviceContext);
 	}
 
 	@Override
@@ -201,7 +203,8 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 				long commerceProductDefinitionOptionRelId,
 				long commerceProductOptionId, Map<Locale, String> nameMap,
 				Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
-				int priority, ServiceContext serviceContext)
+				int priority, boolean facetable, boolean skuContributor,
+				ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option rel
@@ -212,11 +215,13 @@ public class CommerceProductDefinitionOptionRelLocalServiceImpl
 
 		commerceProductDefinitionOptionRel.setCommerceProductOptionId(
 			commerceProductOptionId);
-		commerceProductDefinitionOptionRel.setPriority(priority);
 		commerceProductDefinitionOptionRel.setNameMap(nameMap);
 		commerceProductDefinitionOptionRel.setDescriptionMap(descriptionMap);
 		commerceProductDefinitionOptionRel.setDDMFormFieldTypeName(
 			ddmFormFieldTypeName);
+		commerceProductDefinitionOptionRel.setPriority(priority);
+		commerceProductDefinitionOptionRel.setFacetable(facetable);
+		commerceProductDefinitionOptionRel.setSkuContributor(skuContributor);
 		commerceProductDefinitionOptionRel.setExpandoBridgeAttributes(
 			serviceContext);
 

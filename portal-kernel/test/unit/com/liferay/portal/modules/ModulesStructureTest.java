@@ -668,7 +668,11 @@ public class ModulesStructureTest {
 			String.valueOf(dirPath.getFileName()), CharPool.DASH,
 			CharPool.PERIOD);
 
-		gradlePropertiesPrefix = "com.liferay." + gradlePropertiesPrefix + ".";
+		gradlePropertiesPrefix = "com.liferay." + gradlePropertiesPrefix;
+
+		Pattern gradlePropertiesPattern = Pattern.compile(
+			StringUtil.replace(gradlePropertiesPrefix, CharPool.PERIOD, "\\.") +
+				"(\\.[a-z0-9]+)+");
 
 		String previousKey = null;
 		String projectGroup = null;
@@ -728,8 +732,10 @@ public class ModulesStructureTest {
 				repositoryPrivateUsername = value;
 			}
 			else {
+				Matcher matcher = gradlePropertiesPattern.matcher(key);
+
 				if (!_gitRepoGradlePropertiesKeys.contains(key) &&
-					!key.startsWith(gradlePropertiesPrefix)) {
+					!matcher.matches()) {
 
 					StringBundler sb = new StringBundler(
 						_gitRepoGradlePropertiesKeys.size() * 3 + 8);
@@ -748,8 +754,8 @@ public class ModulesStructureTest {
 						sb.append("\", ");
 					}
 
-					sb.append("keys starting with \"");
-					sb.append(gradlePropertiesPrefix);
+					sb.append("keys matching the pattern \"");
+					sb.append(gradlePropertiesPattern.pattern());
 					sb.append("\".");
 
 					Assert.fail(sb.toString());

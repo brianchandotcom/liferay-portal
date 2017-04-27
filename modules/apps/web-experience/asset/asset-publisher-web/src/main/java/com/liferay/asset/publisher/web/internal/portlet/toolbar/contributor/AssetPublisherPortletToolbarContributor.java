@@ -243,8 +243,7 @@ public class AssetPublisherPortletToolbarContributor
 
 		String url = AssetUtil.getAddURLPopUp(
 			curGroupId, themeDisplay.getPlid(), portletURL,
-			assetRendererFactory.getPortletId(), addDisplayPageParameter,
-			themeDisplay.getLayout());
+			addDisplayPageParameter, themeDisplay.getLayout());
 
 		urlMenuItem.setURL(url);
 

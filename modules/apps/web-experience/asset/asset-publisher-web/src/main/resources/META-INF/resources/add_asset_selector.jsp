@@ -75,7 +75,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 							Map<String, Object> data = new HashMap<String, Object>();
 
 							data.put("title", LanguageUtil.format((HttpServletRequest)pageContext.getRequest(), "new-x", HtmlUtil.escape(message), false));
-							data.put("url", AssetUtil.getAddURLPopUp(curGroupId, plid, assetPortletAddURL.getAddPortletURL(), assetPortletAddURL.getPortletId(), false, null));
+							data.put("url", AssetUtil.getAddURLPopUp(curGroupId, plid, assetPortletAddURL.getAddPortletURL(), false, null));
 						%>
 
 							<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(message) %>" />

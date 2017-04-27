@@ -460,7 +460,7 @@ public class AssetUtil {
 	}
 
 	public static String getAddURLPopUp(
-		long groupId, long plid, PortletURL addPortletURL, String portletId,
+		long groupId, long plid, PortletURL addPortletURL,
 		boolean addDisplayPageParameter, Layout layout) {
 
 		addPortletURL.setParameter(
@@ -482,6 +482,19 @@ public class AssetUtil {
 
 		return HttpUtil.addParameter(
 			addPortletURL.toString(), "refererPlid", plid);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getAddURLPopUp(long, long,
+	 *             PortletURL, boolean, Layout)}
+	 */
+	@Deprecated
+	public static String getAddURLPopUp(
+		long groupId, long plid, PortletURL addPortletURL, String portletId,
+		boolean addDisplayPageParameter, Layout layout) {
+
+		return getAddURLPopUp(
+			groupId, plid, addPortletURL, addDisplayPageParameter, layout);
 	}
 
 	public static List<AssetEntry> getAssetEntries(Hits hits) {

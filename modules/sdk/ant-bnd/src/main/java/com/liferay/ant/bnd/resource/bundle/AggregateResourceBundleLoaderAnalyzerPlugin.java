@@ -19,7 +19,6 @@ import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.service.AnalyzerPlugin;
-
 import aQute.libg.filters.AndFilter;
 import aQute.libg.filters.Filter;
 import aQute.libg.filters.LiteralFilter;
@@ -101,7 +100,11 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 
 		attrs.put("service.ranking:Long", "1");
 
-		provideCapabilityHeaders.add("liferay.resource.bundle", attrs);
+		Parameters parameters = new Parameters();
+
+		parameters.add("liferay.resource.bundle", attrs);
+
+		provideCapabilityHeaders.mergeWith(parameters, false);
 
 		analyzer.setProperty(
 			Constants.PROVIDE_CAPABILITY, provideCapabilityHeaders.toString());
@@ -113,6 +116,8 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 		Parameters requireCapabilityHeaders = new SortedParameters(
 			analyzer.getProperty(Constants.REQUIRE_CAPABILITY));
 
+		Parameters parameters = new Parameters();
+
 		for (String aggregateResourceBundle : aggregateResourceBundles) {
 			Attrs attrs = new Attrs();
 
@@ -121,8 +126,10 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 
 			attrs.put("filter:", filter.toString());
 
-			requireCapabilityHeaders.add("liferay.resource.bundle", attrs);
+			parameters.add("liferay.resource.bundle", attrs);
 		}
+
+		requireCapabilityHeaders.mergeWith(parameters, false);
 
 		analyzer.setProperty(
 			Constants.REQUIRE_CAPABILITY, requireCapabilityHeaders.toString());

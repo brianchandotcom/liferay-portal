@@ -20,8 +20,7 @@ import aQute.bnd.annotation.ProviderType;
  * @author Marco Leo
  */
 @ProviderType
-public class CPOptionValueImpl
-	extends CPOptionValueBaseImpl {
+public class CPOptionValueImpl extends CPOptionValueBaseImpl {
 
 	public CPOptionValueImpl() {
 	}

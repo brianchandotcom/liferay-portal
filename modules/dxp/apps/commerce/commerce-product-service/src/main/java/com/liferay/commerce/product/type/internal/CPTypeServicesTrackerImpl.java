@@ -40,8 +40,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Marco Leo
  */
 @Component(immediate = true)
-public class CPTypeServicesTrackerImpl
-	implements CPTypeServicesTracker {
+public class CPTypeServicesTrackerImpl implements CPTypeServicesTracker {
 
 	@Override
 	public CPType getCPType(String name) {
@@ -69,20 +68,16 @@ public class CPTypeServicesTrackerImpl
 	public List<CPType> getCPTypes() {
 		List<CPType> cpTypes = new ArrayList<>();
 
-		List<ServiceWrapper<CPType>>
-			cpTypeServiceWrappers = ListUtil.fromCollection(
-				_cpTypeServiceTrackerMap.values());
+		List<ServiceWrapper<CPType>> cpTypeServiceWrappers =
+			ListUtil.fromCollection(_cpTypeServiceTrackerMap.values());
 
 		Collections.sort(
-			cpTypeServiceWrappers,
-			_cpTypeServiceWrapperDisplayOrderComparator);
+			cpTypeServiceWrappers, _cpTypeServiceWrapperDisplayOrderComparator);
 
-		for (ServiceWrapper<CPType>
-				cpTypeServiceWrapper :
+		for (ServiceWrapper<CPType> cpTypeServiceWrapper :
 					cpTypeServiceWrappers) {
 
-			cpTypes.add(
-				cpTypeServiceWrapper.getService());
+			cpTypes.add(cpTypeServiceWrapper.getService());
 		}
 
 		return Collections.unmodifiableList(cpTypes);
@@ -90,12 +85,10 @@ public class CPTypeServicesTrackerImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_cpTypeServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, CPType.class,
-				"commerce.product.type.name",
-				ServiceTrackerCustomizerFactory.
-					<CPType>serviceWrapper(bundleContext));
+		_cpTypeServiceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, CPType.class, "commerce.product.type.name",
+			ServiceTrackerCustomizerFactory.
+				<CPType>serviceWrapper(bundleContext));
 	}
 
 	@Deactivate

@@ -30,9 +30,7 @@ public class CPTypeServiceWrapperDisplayOrderComparator
 		this(true);
 	}
 
-	public CPTypeServiceWrapperDisplayOrderComparator(
-		boolean ascending) {
-
+	public CPTypeServiceWrapperDisplayOrderComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 

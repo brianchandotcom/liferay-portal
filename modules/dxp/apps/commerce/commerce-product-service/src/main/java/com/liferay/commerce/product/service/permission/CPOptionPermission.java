@@ -35,12 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"model.class.name=com.liferay.commerce.product.model.CPOption"},
 	service = BaseModelPermissionChecker.class
 )
-public class CPOptionPermission
-	implements BaseModelPermissionChecker {
+public class CPOptionPermission implements BaseModelPermissionChecker {
 
 	public static void check(
-			PermissionChecker permissionChecker,
-			CPOption cpOption, String actionId)
+			PermissionChecker permissionChecker, CPOption cpOption,
+			String actionId)
 		throws PortalException {
 
 		if (!contains(permissionChecker, cpOption, actionId)) {
@@ -57,63 +56,55 @@ public class CPOptionPermission
 
 		if (!contains(permissionChecker, cpOptionId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, CPOption.class.getName(),
-				cpOptionId, actionId);
+				permissionChecker, CPOption.class.getName(), cpOptionId,
+				actionId);
 		}
 	}
 
 	public static void checkCPOptionValue(
-			PermissionChecker permissionChecker,
-			CPOptionValue cpOptionValue,
+			PermissionChecker permissionChecker, CPOptionValue cpOptionValue,
 			String actionId)
 		throws PortalException {
 
-		long cpOptionId =
-			cpOptionValue.getCPOptionId();
+		long cpOptionId = cpOptionValue.getCPOptionId();
 
 		check(permissionChecker, cpOptionId, actionId);
 	}
 
 	public static void checkCPOptionValue(
-			PermissionChecker permissionChecker,
-			long cpOptionValueId, String actionId)
+			PermissionChecker permissionChecker, long cpOptionValueId,
+			String actionId)
 		throws PortalException {
 
 		CPOptionValue cpOptionValue =
-			_cpOptionValueLocalService.
-				getCPOptionValue(cpOptionValueId);
+			_cpOptionValueLocalService.getCPOptionValue(cpOptionValueId);
 
-		checkCPOptionValue(
-			permissionChecker, cpOptionValue, actionId);
+		checkCPOptionValue(permissionChecker, cpOptionValue, actionId);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker,
-			CPOption cpOption, String actionId)
+			PermissionChecker permissionChecker, CPOption cpOption,
+			String actionId)
 		throws PortalException {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, cpOption.getGroupId(),
-			CPOption.class.getName(),
-			cpOption.getCPOptionId(),
-			CPPortletKeys.COMMERCE_PRODUCT_OPTIONS, actionId);
+			permissionChecker, cpOption.getGroupId(), CPOption.class.getName(),
+			cpOption.getCPOptionId(), CPPortletKeys.COMMERCE_PRODUCT_OPTIONS,
+			actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
 		}
 
 		if (permissionChecker.hasOwnerPermission(
-				cpOption.getCompanyId(),
-				CPOption.class.getName(),
-				cpOption.getCPOptionId(),
-				cpOption.getUserId(), actionId)) {
+				cpOption.getCompanyId(), CPOption.class.getName(),
+				cpOption.getCPOptionId(), cpOption.getUserId(), actionId)) {
 
 			return true;
 		}
 
 		return permissionChecker.hasPermission(
-			cpOption.getGroupId(),
-			CPOption.class.getName(),
+			cpOption.getGroupId(), CPOption.class.getName(),
 			cpOption.getCPOptionId(), actionId);
 	}
 
@@ -122,9 +113,7 @@ public class CPOptionPermission
 			String actionId)
 		throws PortalException {
 
-		CPOption cpOption =
-			_cpOptionLocalService.getCPOption(
-				cpOptionId);
+		CPOption cpOption = _cpOptionLocalService.getCPOption(cpOptionId);
 
 		return contains(permissionChecker, cpOption, actionId);
 	}
@@ -150,13 +139,10 @@ public class CPOptionPermission
 		CPOptionValueLocalService
 			cpOptionValueLocalService) {
 
-		_cpOptionValueLocalService =
-			cpOptionValueLocalService;
+		_cpOptionValueLocalService = cpOptionValueLocalService;
 	}
 
-	private static CPOptionLocalService
-		_cpOptionLocalService;
-	private static CPOptionValueLocalService
-		_cpOptionValueLocalService;
+	private static CPOptionLocalService _cpOptionLocalService;
+	private static CPOptionValueLocalService _cpOptionValueLocalService;
 
 }

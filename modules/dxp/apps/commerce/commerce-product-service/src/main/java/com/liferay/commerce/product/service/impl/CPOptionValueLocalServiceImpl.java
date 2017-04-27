@@ -35,8 +35,8 @@ public class CPOptionValueLocalServiceImpl
 
 	@Override
 	public CPOptionValue addCPOptionValue(
-			long cpOptionId, Map<Locale, String> titleMap,
-			int priority, ServiceContext serviceContext)
+			long cpOptionId, Map<Locale, String> titleMap, int priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product option value
@@ -46,56 +46,47 @@ public class CPOptionValueLocalServiceImpl
 
 		long cpOptionValueId = counterLocalService.increment();
 
-		CPOptionValue cpOptionValue =
-			cpOptionValuePersistence.create(
-				cpOptionValueId);
+		CPOptionValue cpOptionValue = cpOptionValuePersistence.create(
+			cpOptionValueId);
 
 		cpOptionValue.setGroupId(groupId);
 		cpOptionValue.setCompanyId(user.getCompanyId());
 		cpOptionValue.setUserId(user.getUserId());
 		cpOptionValue.setUserName(user.getFullName());
-		cpOptionValue.setCPOptionId(
-			cpOptionId);
+		cpOptionValue.setCPOptionId(cpOptionId);
 		cpOptionValue.setTitleMap(titleMap);
 		cpOptionValue.setPriority(priority);
 		cpOptionValue.setExpandoBridgeAttributes(serviceContext);
 
-		cpOptionValuePersistence.update(
-			cpOptionValue);
+		cpOptionValuePersistence.update(cpOptionValue);
 
 		return cpOptionValue;
 	}
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CPOptionValue deleteCPOptionValue(
-			CPOptionValue cpOptionValue)
+	public CPOptionValue deleteCPOptionValue(CPOptionValue cpOptionValue)
 		throws PortalException {
 
 		// Commerce product option value
 
-		cpOptionValuePersistence.remove(
-			cpOptionValue);
+		cpOptionValuePersistence.remove(cpOptionValue);
 
 		// Expando
 
-		expandoRowLocalService.deleteRows(
-			cpOptionValue.getCPOptionValueId());
+		expandoRowLocalService.deleteRows(cpOptionValue.getCPOptionValueId());
 
 		return cpOptionValue;
 	}
 
 	@Override
-	public CPOptionValue deleteCPOptionValue(
-			long cpOptionValueId)
+	public CPOptionValue deleteCPOptionValue(long cpOptionValueId)
 		throws PortalException {
 
-		CPOptionValue cpOptionValue =
-			cpOptionValuePersistence.findByPrimaryKey(
-				cpOptionValueId);
+		CPOptionValue cpOptionValue = cpOptionValuePersistence.findByPrimaryKey(
+			cpOptionValueId);
 
-		return cpOptionValueLocalService.
-			deleteCPOptionValue(cpOptionValue);
+		return cpOptionValueLocalService.deleteCPOptionValue(cpOptionValue);
 	}
 
 	@Override
@@ -112,36 +103,30 @@ public class CPOptionValueLocalServiceImpl
 		OrderByComparator<CPOptionValue> orderByComparator) {
 
 		return cpOptionValuePersistence.
-			findByCPOptionId(
-				cpOptionId, start, end, orderByComparator);
+			findByCPOptionId(cpOptionId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCPOptionValuesCount(
-		long cpOptionId) {
-
-		return cpOptionValuePersistence.
-			countByCPOptionId(cpOptionId);
+	public int getCPOptionValuesCount(long cpOptionId) {
+		return cpOptionValuePersistence.countByCPOptionId(cpOptionId);
 	}
 
 	@Override
 	public CPOptionValue updateCPOptionValue(
-			long cpOptionValueId, Map<Locale, String> titleMap,
-			int priority, ServiceContext serviceContext)
+			long cpOptionValueId, Map<Locale, String> titleMap, int priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product option value
 
-		CPOptionValue cpOptionValue =
-			cpOptionValuePersistence.findByPrimaryKey(
-				cpOptionValueId);
+		CPOptionValue cpOptionValue = cpOptionValuePersistence.findByPrimaryKey(
+			cpOptionValueId);
 
 		cpOptionValue.setTitleMap(titleMap);
 		cpOptionValue.setPriority(priority);
 		cpOptionValue.setExpandoBridgeAttributes(serviceContext);
 
-		cpOptionValuePersistence.update(
-			cpOptionValue);
+		cpOptionValuePersistence.update(cpOptionValue);
 
 		return cpOptionValue;
 	}

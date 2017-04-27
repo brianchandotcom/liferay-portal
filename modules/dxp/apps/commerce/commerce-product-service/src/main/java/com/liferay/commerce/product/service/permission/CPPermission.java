@@ -50,8 +50,7 @@ public class CPPermission extends BaseResourcePermissionChecker {
 
 		return contains(
 			permissionChecker, RESOURCE_NAME,
-			CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, classPK,
-			actionId);
+			CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, classPK, actionId);
 	}
 
 	@Override

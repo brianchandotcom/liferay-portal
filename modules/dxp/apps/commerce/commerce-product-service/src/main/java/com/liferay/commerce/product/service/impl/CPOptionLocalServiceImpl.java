@@ -31,8 +31,7 @@ import java.util.Map;
 /**
  * @author Marco Leo
  */
-public class CPOptionLocalServiceImpl
-	extends CPOptionLocalServiceBaseImpl {
+public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 	@Override
 	public CPOption addCPOption(
@@ -47,8 +46,7 @@ public class CPOptionLocalServiceImpl
 
 		long cpOptionId = counterLocalService.increment();
 
-		CPOption cpOption =
-			cpOptionPersistence.create(cpOptionId);
+		CPOption cpOption = cpOptionPersistence.create(cpOptionId);
 
 		cpOption.setGroupId(groupId);
 		cpOption.setCompanyId(user.getCompanyId());
@@ -63,17 +61,14 @@ public class CPOptionLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(
-			cpOption, serviceContext);
+		resourceLocalService.addModelResources(cpOption, serviceContext);
 
 		return cpOption;
 	}
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CPOption deleteCPOption(
-			CPOption cpOption)
-		throws PortalException {
+	public CPOption deleteCPOption(CPOption cpOption) throws PortalException {
 
 		// Commerce product option
 
@@ -82,38 +77,26 @@ public class CPOptionLocalServiceImpl
 		// Resources
 
 		resourceLocalService.deleteResource(
-			cpOption.getCompanyId(),
-			CPOption.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			cpOption.getCPOptionId());
+			cpOption.getCompanyId(), CPOption.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, cpOption.getCPOptionId());
 
 		// Expando
 
-		expandoRowLocalService.deleteRows(
-			cpOption.getCPOptionId());
+		expandoRowLocalService.deleteRows(cpOption.getCPOptionId());
 
 		return cpOption;
 	}
 
 	@Override
-	public CPOption deleteCPOption(
-			long cpOptionId)
-		throws PortalException {
+	public CPOption deleteCPOption(long cpOptionId) throws PortalException {
+		CPOption cpOption = cpOptionPersistence.findByPrimaryKey(cpOptionId);
 
-		CPOption cpOption =
-			cpOptionPersistence.findByPrimaryKey(
-				cpOptionId);
-
-		return cpOptionLocalService.deleteCPOption(
-			cpOption);
+		return cpOptionLocalService.deleteCPOption(cpOption);
 	}
 
 	@Override
-	public List<CPOption> getCPOptions(
-		long groupId, int start, int end) {
-
-		return cpOptionPersistence.findByGroupId(
-			groupId, start, end);
+	public List<CPOption> getCPOptions(long groupId, int start, int end) {
+		return cpOptionPersistence.findByGroupId(groupId, start, end);
 	}
 
 	@Override
@@ -139,9 +122,7 @@ public class CPOptionLocalServiceImpl
 
 		// Commerce product option
 
-		CPOption cpOption =
-			cpOptionPersistence.findByPrimaryKey(
-				cpOptionId);
+		CPOption cpOption = cpOptionPersistence.findByPrimaryKey(cpOptionId);
 
 		cpOption.setNameMap(nameMap);
 		cpOption.setDescriptionMap(descriptionMap);

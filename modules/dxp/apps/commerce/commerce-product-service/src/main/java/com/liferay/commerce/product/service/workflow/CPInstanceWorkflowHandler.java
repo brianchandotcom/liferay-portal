@@ -39,8 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"model.class.name=com.liferay.commerce.product.model.CPInstance"},
 	service = WorkflowHandler.class
 )
-public class CPInstanceWorkflowHandler
-	extends BaseWorkflowHandler<CPInstance> {
+public class CPInstanceWorkflowHandler extends BaseWorkflowHandler<CPInstance> {
 
 	@Override
 	public String getClassName() {
@@ -71,7 +70,6 @@ public class CPInstanceWorkflowHandler
 	}
 
 	@Reference
-	private CPInstanceLocalService
-		_cpInstanceLocalService;
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 }

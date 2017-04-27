@@ -31,8 +31,7 @@ import java.util.Map;
 /**
  * @author Marco Leo
  */
-public class CPOptionServiceImpl
-	extends CPOptionServiceBaseImpl {
+public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 
 	@Override
 	public CPOption addCPOption(
@@ -49,37 +48,24 @@ public class CPOptionServiceImpl
 	}
 
 	@Override
-	public CPOption deleteCPOption(
-			CPOption cpOption)
-		throws PortalException {
-
+	public CPOption deleteCPOption(CPOption cpOption) throws PortalException {
 		CPOptionPermission.check(
 			getPermissionChecker(), cpOption, ActionKeys.DELETE);
 
-		return cpOptionLocalService.deleteCPOption(
-			cpOption);
+		return cpOptionLocalService.deleteCPOption(cpOption);
 	}
 
 	@Override
-	public CPOption deleteCPOption(
-			long cpOptionId)
-		throws PortalException {
-
+	public CPOption deleteCPOption(long cpOptionId) throws PortalException {
 		CPOptionPermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.DELETE);
 
-		return cpOptionLocalService.deleteCPOption(
-			cpOptionId);
+		return cpOptionLocalService.deleteCPOption(cpOptionId);
 	}
 
 	@Override
-	public CPOption fetchCPOption(
-			long cpOptionId)
-		throws PortalException {
-
-		CPOption cpOption =
-			cpOptionLocalService.fetchCPOption(
-				cpOptionId);
+	public CPOption fetchCPOption(long cpOptionId) throws PortalException {
+		CPOption cpOption = cpOptionLocalService.fetchCPOption(cpOptionId);
 
 		if (cpOption != null) {
 			CPOptionPermission.check(
@@ -90,23 +76,16 @@ public class CPOptionServiceImpl
 	}
 
 	@Override
-	public CPOption getCPOption(
-			long cpOptionId)
-		throws PortalException {
-
+	public CPOption getCPOption(long cpOptionId) throws PortalException {
 		CPOptionPermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
 
-		return cpOptionLocalService.getCPOption(
-			cpOptionId);
+		return cpOptionLocalService.getCPOption(cpOptionId);
 	}
 
 	@Override
-	public List<CPOption> getCPOptions(
-		long groupId, int start, int end) {
-
-		return cpOptionLocalService.getCPOptions(
-			groupId, start, end);
+	public List<CPOption> getCPOptions(long groupId, int start, int end) {
+		return cpOptionLocalService.getCPOptions(groupId, start, end);
 	}
 
 	@Override
@@ -120,8 +99,7 @@ public class CPOptionServiceImpl
 
 	@Override
 	public int getCPOptionsCount(long groupId) {
-		return cpOptionLocalService.getCPOptionsCount(
-			groupId);
+		return cpOptionLocalService.getCPOptionsCount(groupId);
 	}
 
 	@Override
@@ -135,8 +113,8 @@ public class CPOptionServiceImpl
 			getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
 
 		return cpOptionLocalService.updateCPOption(
-			cpOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, serviceContext);
+			cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
+			serviceContext);
 	}
 
 }

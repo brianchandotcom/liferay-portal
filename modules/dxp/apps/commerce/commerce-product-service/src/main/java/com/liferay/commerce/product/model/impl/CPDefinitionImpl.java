@@ -25,8 +25,7 @@ import java.util.TreeSet;
  * @author Marco Leo
  */
 @ProviderType
-public class CPDefinitionImpl
-	extends CPDefinitionBaseImpl {
+public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 
 	public CPDefinitionImpl() {
 	}
@@ -37,8 +36,7 @@ public class CPDefinitionImpl
 
 		availableLanguageIds.addAll(
 			CPDefinitionLocalServiceUtil.
-				getCPDefinitionLocalizationLanguageIds(
-					getCPDefinitionId()));
+				getCPDefinitionLocalizationLanguageIds(getCPDefinitionId()));
 
 		return availableLanguageIds.toArray(
 			new String[availableLanguageIds.size()]);

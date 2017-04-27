@@ -39,34 +39,29 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"model.class.name=com.liferay.commerce.product.model.CPDefinition"},
 	service = BaseModelPermissionChecker.class
 )
-public class CPDefinitionPermission
-	implements BaseModelPermissionChecker {
+public class CPDefinitionPermission implements BaseModelPermissionChecker {
 
 	public static void check(
-			PermissionChecker permissionChecker,
-			CPDefinition cpDefinition,
+			PermissionChecker permissionChecker, CPDefinition cpDefinition,
 			String actionId)
 		throws PortalException {
 
 		if (!contains(permissionChecker, cpDefinition, actionId)) {
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, CPDefinition.class.getName(),
-				cpDefinition.getCPDefinitionId(),
-				actionId);
+				cpDefinition.getCPDefinitionId(), actionId);
 		}
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker,
-			long cpDefinitionId, String actionId)
+			PermissionChecker permissionChecker, long cpDefinitionId,
+			String actionId)
 		throws PortalException {
 
-		if (!contains(
-				permissionChecker, cpDefinitionId, actionId)) {
-
+		if (!contains(permissionChecker, cpDefinitionId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, CPDefinition.class.getName(),
-				cpDefinitionId, actionId);
+				permissionChecker, CPDefinition.class.getName(), cpDefinitionId,
+				actionId);
 		}
 	}
 
@@ -76,21 +71,19 @@ public class CPDefinitionPermission
 				cpDefinitionOptionRel, String actionId)
 		throws PortalException {
 
-		long cpDefinitionId =
-			cpDefinitionOptionRel.getCPDefinitionId();
+		long cpDefinitionId = cpDefinitionOptionRel.getCPDefinitionId();
 
 		check(permissionChecker, cpDefinitionId, actionId);
 	}
 
 	public static void checkCPDefinitionOptionRel(
-			PermissionChecker permissionChecker,
-			long cpDefinitionOptionRelId, String actionId)
+			PermissionChecker permissionChecker, long cpDefinitionOptionRelId,
+			String actionId)
 		throws PortalException {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			_cpDefinitionOptionRelLocalService.
-				getCPDefinitionOptionRel(
-					cpDefinitionOptionRelId);
+				getCPDefinitionOptionRel(cpDefinitionOptionRelId);
 
 		checkCPDefinitionOptionRel(
 			permissionChecker, cpDefinitionOptionRel, actionId);
@@ -103,8 +96,7 @@ public class CPDefinitionPermission
 		throws PortalException {
 
 		long cpDefinitionOptionRelId =
-			cpDefinitionOptionValueRel.
-				getCPDefinitionOptionRelId();
+			cpDefinitionOptionValueRel.getCPDefinitionOptionRelId();
 
 		checkCPDefinitionOptionRel(
 			permissionChecker, cpDefinitionOptionRelId, actionId);
@@ -115,24 +107,20 @@ public class CPDefinitionPermission
 			long cpDefinitionOptionValueRelId, String actionId)
 		throws PortalException {
 
-		CPDefinitionOptionValueRel
-			cpDefinitionOptionValueRel =
-				_cpDefinitionOptionValueRelLocalService.
-					getCPDefinitionOptionValueRel(
-						cpDefinitionOptionValueRelId);
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			_cpDefinitionOptionValueRelLocalService.
+				getCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
 
 		checkCPDefinitionOptionValueRel(
-			permissionChecker, cpDefinitionOptionValueRel,
-			actionId);
+			permissionChecker, cpDefinitionOptionValueRel, actionId);
 	}
 
 	public static void checkCPInstance(
-			PermissionChecker permissionChecker,
-			CPInstance cpInstance, String actionId)
+			PermissionChecker permissionChecker, CPInstance cpInstance,
+			String actionId)
 		throws PortalException {
 
-		long cpDefinitionId =
-			cpInstance.getCPDefinitionId();
+		long cpDefinitionId = cpInstance.getCPDefinitionId();
 
 		check(permissionChecker, cpDefinitionId, actionId);
 	}
@@ -142,24 +130,20 @@ public class CPDefinitionPermission
 			String actionId)
 		throws PortalException {
 
-		CPInstance cpInstance =
-			_cpInstanceLocalService.getCPInstance(
-				cpInstanceId);
+		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
 
-		checkCPInstance(
-			permissionChecker, cpInstance, actionId);
+		checkCPInstance(permissionChecker, cpInstance, actionId);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker,
-			CPDefinition cpDefinition,
+			PermissionChecker permissionChecker, CPDefinition cpDefinition,
 			String actionId)
 		throws PortalException {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, cpDefinition.getGroupId(),
-			CPDefinition.class.getName(),
-			cpDefinition.getCPDefinitionId(),
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
 			CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, actionId);
 
 		if (hasPermission != null) {
@@ -167,29 +151,25 @@ public class CPDefinitionPermission
 		}
 
 		if (permissionChecker.hasOwnerPermission(
-				cpDefinition.getCompanyId(),
-				CPDefinition.class.getName(),
-				cpDefinition.getCPDefinitionId(),
-				cpDefinition.getUserId(), actionId)) {
+				cpDefinition.getCompanyId(), CPDefinition.class.getName(),
+				cpDefinition.getCPDefinitionId(), cpDefinition.getUserId(),
+				actionId)) {
 
 			return true;
 		}
 
 		return permissionChecker.hasPermission(
-			cpDefinition.getGroupId(),
-			CPDefinition.class.getName(),
-			cpDefinition.getCPDefinitionId(),
-			actionId);
+			cpDefinition.getGroupId(), CPDefinition.class.getName(),
+			cpDefinition.getCPDefinitionId(), actionId);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker,
-			long cpDefinitionId, String actionId)
+			PermissionChecker permissionChecker, long cpDefinitionId,
+			String actionId)
 		throws PortalException {
 
-		CPDefinition cpDefinition =
-			_cpDefinitionLocalService.getCPDefinition(
-				cpDefinitionId);
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpDefinitionId);
 
 		return contains(permissionChecker, cpDefinition, actionId);
 	}
@@ -208,8 +188,7 @@ public class CPDefinitionPermission
 		CPDefinitionLocalService
 			cpDefinitionLocalService) {
 
-		_cpDefinitionLocalService =
-			cpDefinitionLocalService;
+		_cpDefinitionLocalService = cpDefinitionLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -217,8 +196,7 @@ public class CPDefinitionPermission
 		CPDefinitionOptionRelLocalService
 			cpDefinitionOptionRelLocalService) {
 
-		_cpDefinitionOptionRelLocalService =
-			cpDefinitionOptionRelLocalService;
+		_cpDefinitionOptionRelLocalService = cpDefinitionOptionRelLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -235,17 +213,14 @@ public class CPDefinitionPermission
 		CPInstanceLocalService
 			cpInstanceLocalService) {
 
-		_cpInstanceLocalService =
-			cpInstanceLocalService;
+		_cpInstanceLocalService = cpInstanceLocalService;
 	}
 
-	private static CPDefinitionLocalService
-		_cpDefinitionLocalService;
+	private static CPDefinitionLocalService _cpDefinitionLocalService;
 	private static CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
 	private static CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
-	private static CPInstanceLocalService
-		_cpInstanceLocalService;
+	private static CPInstanceLocalService _cpInstanceLocalService;
 
 }

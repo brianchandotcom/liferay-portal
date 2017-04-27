@@ -26,16 +26,13 @@ import java.util.List;
  * @author Marco Leo
  */
 @ProviderType
-public class CPDefinitionOptionRelImpl
-	extends CPDefinitionOptionRelBaseImpl {
+public class CPDefinitionOptionRelImpl extends CPDefinitionOptionRelBaseImpl {
 
 	public CPDefinitionOptionRelImpl() {
 	}
 
 	@Override
-	public List<CPDefinitionOptionValueRel>
-		getCPDefinitionOptionValueRels() {
-
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels() {
 		return CPDefinitionOptionValueRelLocalServiceUtil.
 			getCPDefinitionOptionValueRels(
 				getCPDefinitionOptionRelId(), QueryUtil.ALL_POS,

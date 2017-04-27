@@ -42,14 +42,13 @@ public class CPDefinitionOptionRelServiceImpl
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.
 			addCPDefinitionOptionRel(
-				cpDefinitionId, cpOptionId, nameMap,
-				descriptionMap, ddmFormFieldTypeName, priority, facetable,
-				skuContributor, serviceContext);
+				cpDefinitionId, cpOptionId, nameMap, descriptionMap,
+				ddmFormFieldTypeName, priority, facetable, skuContributor,
+				serviceContext);
 	}
 
 	@Override
@@ -60,13 +59,11 @@ public class CPDefinitionOptionRelServiceImpl
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.
 			addCPDefinitionOptionRel(
-				cpDefinitionId, cpOptionId,
-				serviceContext);
+				cpDefinitionId, cpOptionId, serviceContext);
 	}
 
 	@Override
@@ -82,8 +79,7 @@ public class CPDefinitionOptionRelServiceImpl
 				ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.
-			deleteCPDefinitionOptionRel(
-				cpDefinitionOptionRel);
+			deleteCPDefinitionOptionRel(cpDefinitionOptionRel);
 	}
 
 	@Override
@@ -98,8 +94,7 @@ public class CPDefinitionOptionRelServiceImpl
 				ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.
-			deleteCPDefinitionOptionRel(
-				cpDefinitionOptionRelId);
+			deleteCPDefinitionOptionRel(cpDefinitionOptionRelId);
 	}
 
 	@Override
@@ -110,8 +105,7 @@ public class CPDefinitionOptionRelServiceImpl
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionRelLocalService.
-				fetchCPDefinitionOptionRel(
-					cpDefinitionOptionRelId);
+				fetchCPDefinitionOptionRel(cpDefinitionOptionRelId);
 
 		if (cpDefinitionOptionRel != null) {
 			CPDefinitionPermission.
@@ -135,36 +129,29 @@ public class CPDefinitionOptionRelServiceImpl
 				ActionKeys.VIEW);
 
 		return cpDefinitionOptionRelLocalService.
-			getCPDefinitionOptionRel(
-				cpDefinitionOptionRelId);
+			getCPDefinitionOptionRel(cpDefinitionOptionRelId);
 	}
 
 	@Override
-	public List<CPDefinitionOptionRel>
-			getCPDefinitionOptionRels(
-				long cpDefinitionId, int start, int end)
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
+			long cpDefinitionId, int start, int end)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			ActionKeys.VIEW);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionOptionRelLocalService.
-			getCPDefinitionOptionRels(
-				cpDefinitionId, start, end);
+			getCPDefinitionOptionRels(cpDefinitionId, start, end);
 	}
 
 	@Override
-	public List<CPDefinitionOptionRel>
-			getCPDefinitionOptionRels(
-				long cpDefinitionId, int start, int end,
-				OrderByComparator<CPDefinitionOptionRel>
-					orderByComparator)
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
+			long cpDefinitionId, int start, int end,
+			OrderByComparator<CPDefinitionOptionRel> orderByComparator)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			ActionKeys.VIEW);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionOptionRelLocalService.
 			getCPDefinitionOptionRels(
@@ -172,27 +159,23 @@ public class CPDefinitionOptionRelServiceImpl
 	}
 
 	@Override
-	public int getCPDefinitionOptionRelsCount(
-			long cpDefinitionId)
+	public int getCPDefinitionOptionRelsCount(long cpDefinitionId)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			ActionKeys.VIEW);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionOptionRelLocalService.
-			getCPDefinitionOptionRelsCount(
-				cpDefinitionId);
+			getCPDefinitionOptionRelsCount(cpDefinitionId);
 	}
 
 	@Override
 	public CPDefinitionOptionRel
 			updateCPDefinitionOptionRel(
-				long cpDefinitionOptionRelId,
-				long cpOptionId, Map<Locale, String> nameMap,
-				Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
-				int priority, boolean facetable, boolean skuContributor,
-				ServiceContext serviceContext)
+				long cpDefinitionOptionRelId, long cpOptionId,
+				Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+				String ddmFormFieldTypeName, int priority, boolean facetable,
+				boolean skuContributor, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.
@@ -202,9 +185,9 @@ public class CPDefinitionOptionRelServiceImpl
 
 		return cpDefinitionOptionRelLocalService.
 			updateCPDefinitionOptionRel(
-				cpDefinitionOptionRelId, cpOptionId,
-				nameMap, descriptionMap, ddmFormFieldTypeName, priority,
-				facetable, skuContributor, serviceContext);
+				cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
+				ddmFormFieldTypeName, priority, facetable, skuContributor,
+				serviceContext);
 	}
 
 }

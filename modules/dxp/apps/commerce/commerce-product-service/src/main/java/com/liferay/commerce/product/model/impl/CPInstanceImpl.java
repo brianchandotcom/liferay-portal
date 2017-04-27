@@ -20,8 +20,7 @@ import aQute.bnd.annotation.ProviderType;
  * @author Marco Leo
  */
 @ProviderType
-public class CPInstanceImpl
-	extends CPInstanceBaseImpl {
+public class CPInstanceImpl extends CPInstanceBaseImpl {
 
 	public CPInstanceImpl() {
 	}

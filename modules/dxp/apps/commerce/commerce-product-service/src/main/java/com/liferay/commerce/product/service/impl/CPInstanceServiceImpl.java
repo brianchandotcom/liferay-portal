@@ -34,8 +34,7 @@ import java.util.Map;
  * @author Marco Leo
  */
 @ProviderType
-public class CPInstanceServiceImpl
-	extends CPInstanceServiceBaseImpl {
+public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 	@Override
 	public CPInstance addCPInstance(
@@ -52,49 +51,41 @@ public class CPInstanceServiceImpl
 			CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.addCPInstance(
-			cpDefinitionId, sku, ddmContent, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			cpDefinitionId, sku, ddmContent, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
 	}
 
 	@Override
-	public CPInstance deleteCPInstance(
-			CPInstance cpInstance)
+	public CPInstance deleteCPInstance(CPInstance cpInstance)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPInstance(
 			getPermissionChecker(), cpInstance,
 			CPActionKeys.DELETE_COMMERCE_PRODUCT_INSTANCE);
 
-		return cpInstanceLocalService.
-			deleteCPInstance(cpInstance);
+		return cpInstanceLocalService.deleteCPInstance(cpInstance);
 	}
 
 	@Override
-	public CPInstance deleteCPInstance(
-			long cpInstanceId)
+	public CPInstance deleteCPInstance(long cpInstanceId)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPInstance(
 			getPermissionChecker(), cpInstanceId,
 			CPActionKeys.DELETE_COMMERCE_PRODUCT_INSTANCE);
 
-		return cpInstanceLocalService.
-			deleteCPInstance(cpInstanceId);
+		return cpInstanceLocalService.deleteCPInstance(cpInstanceId);
 	}
 
 	@Override
-	public CPInstance getCPInstance(
-			long cpInstanceId)
-		throws PortalException {
-
+	public CPInstance getCPInstance(long cpInstanceId) throws PortalException {
 		CPDefinitionPermission.checkCPInstance(
 			getPermissionChecker(), cpInstanceId, ActionKeys.VIEW);
 
-		return cpInstanceLocalService.getCPInstance(
-			cpInstanceId);
+		return cpInstanceLocalService.getCPInstance(cpInstanceId);
 	}
 
 	@Override
@@ -103,8 +94,7 @@ public class CPInstanceServiceImpl
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			ActionKeys.VIEW);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpInstanceLocalService.getCPInstances(
 			cpDefinitionId, start, end);
@@ -117,24 +107,18 @@ public class CPInstanceServiceImpl
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			ActionKeys.VIEW);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpInstanceLocalService.getCPInstances(
 			cpDefinitionId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCPInstancesCount(
-			long cpDefinitionId)
-		throws PortalException {
-
+	public int getCPInstancesCount(long cpDefinitionId) throws PortalException {
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			ActionKeys.VIEW);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
-		return cpInstanceLocalService.
-			getCPInstancesCount(cpDefinitionId);
+		return cpInstanceLocalService.getCPInstancesCount(cpDefinitionId);
 	}
 
 	@Override
@@ -153,11 +137,11 @@ public class CPInstanceServiceImpl
 
 		return cpInstanceLocalService.
 			updateCPInstance(
-				cpInstanceId, sku, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+				cpInstanceId, sku, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
 	}
 
 	@Override
@@ -172,8 +156,7 @@ public class CPInstanceServiceImpl
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.updateStatus(
-			userId, cpInstanceId, status, serviceContext,
-			workflowContext);
+			userId, cpInstanceId, status, serviceContext, workflowContext);
 	}
 
 }

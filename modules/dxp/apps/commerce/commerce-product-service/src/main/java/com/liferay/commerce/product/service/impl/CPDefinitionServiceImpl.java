@@ -36,8 +36,7 @@ import java.util.Map;
  * @author Marco Leo
  */
 @ProviderType
-public class CPDefinitionServiceImpl
-	extends CPDefinitionServiceBaseImpl {
+public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public CPDefinition addCPDefinition(
@@ -66,68 +65,55 @@ public class CPDefinitionServiceImpl
 	}
 
 	@Override
-	public CPDefinition deleteCPDefinition(
-			CPDefinition cpDefinition)
+	public CPDefinition deleteCPDefinition(CPDefinition cpDefinition)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinition,
-			ActionKeys.DELETE);
+			getPermissionChecker(), cpDefinition, ActionKeys.DELETE);
 
-		return cpDefinitionLocalService.
-			deleteCPDefinition(cpDefinition);
+		return cpDefinitionLocalService.deleteCPDefinition(cpDefinition);
 	}
 
 	@Override
-	public CPDefinition deleteCPDefinition(
-			long cpDefinitionId)
+	public CPDefinition deleteCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			ActionKeys.DELETE);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.DELETE);
 
-		return cpDefinitionLocalService.
-			deleteCPDefinition(cpDefinitionId);
+		return cpDefinitionLocalService.deleteCPDefinition(cpDefinitionId);
 	}
 
 	@Override
-	public CPDefinition fetchCPDefinition(
-			long cpDefinitionId)
+	public CPDefinition fetchCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
-		CPDefinition cpDefinition =
-			cpDefinitionLocalService.
-				fetchCPDefinition(cpDefinitionId);
+		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(
+			cpDefinitionId);
 
 		if (cpDefinition != null) {
 			CPDefinitionPermission.check(
-				getPermissionChecker(), cpDefinition,
-				ActionKeys.VIEW);
+				getPermissionChecker(), cpDefinition, ActionKeys.VIEW);
 		}
 
 		return cpDefinition;
 	}
 
 	@Override
-	public CPDefinition getCPDefinition(
-			long cpDefinitionId)
+	public CPDefinition getCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
-		return cpDefinitionLocalService.
-			getCPDefinition(cpDefinitionId);
+		return cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
 	}
 
 	@Override
 	public List<CPDefinition> getCPDefinitions(
 		long groupId, int start, int end) {
 
-		return cpDefinitionLocalService.
-			getCPDefinitions(groupId, start, end);
+		return cpDefinitionLocalService.getCPDefinitions(groupId, start, end);
 	}
 
 	@Override
@@ -136,31 +122,28 @@ public class CPDefinitionServiceImpl
 		OrderByComparator<CPDefinition> orderByComparator) {
 
 		return cpDefinitionLocalService.
-			getCPDefinitions(
-				groupId, start, end, orderByComparator);
+			getCPDefinitions(groupId, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getCPDefinitionsCount(long groupId) {
-		return cpDefinitionLocalService.
-			getCPDefinitionsCount(groupId);
+		return cpDefinitionLocalService.getCPDefinitionsCount(groupId);
 	}
 
 	@Override
 	public CPDefinition updateCPDefinition(
-			long cpDefinitionId, String baseSKU,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String productTypeName, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String productTypeName,
+			String ddmStructureKey, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.
 			updateCPDefinition(
@@ -180,12 +163,10 @@ public class CPDefinitionServiceImpl
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateStatus(
-			userId, cpDefinitionId, status, serviceContext,
-			workflowContext);
+			userId, cpDefinitionId, status, serviceContext, workflowContext);
 	}
 
 }

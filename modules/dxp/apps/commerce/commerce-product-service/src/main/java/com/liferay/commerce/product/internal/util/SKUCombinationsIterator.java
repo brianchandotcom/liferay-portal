@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.TreeSet;
 
 /**
  * @author Marco Leo
@@ -36,8 +35,7 @@ public class SKUCombinationsIterator
 
 		_combinationLength = cpDefinitionOptionRelMap.size();
 
-		_values =
-			new CPDefinitionOptionValueRel[_combinationLength][];
+		_values = new CPDefinitionOptionValueRel[_combinationLength][];
 		_maxIndexes = new int[_combinationLength];
 		_currentIndexes = new int[_combinationLength];
 
@@ -50,7 +48,8 @@ public class SKUCombinationsIterator
 
 		int valuesIndex = 0;
 
-		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>(cpDefinitionOptionRelMap.keySet());
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>(
+			cpDefinitionOptionRelMap.keySet());
 
 		for (CPDefinitionOptionRel
 				cpDefinitionOptionRel :

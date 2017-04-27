@@ -30,13 +30,12 @@ import java.util.Map;
 /**
  * @author Marco Leo
  */
-public class CPOptionValueServiceImpl
-	extends CPOptionValueServiceBaseImpl {
+public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 
 	@Override
 	public CPOptionValue addCPOptionValue(
-			long cpOptionId, Map<Locale, String> titleMap,
-			int priority, ServiceContext serviceContext)
+			long cpOptionId, Map<Locale, String> titleMap, int priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPOptionPermission.check(
@@ -44,66 +43,54 @@ public class CPOptionValueServiceImpl
 			CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_VALUE);
 
 		return cpOptionValueLocalService.
-			addCPOptionValue(
-				cpOptionId, titleMap, priority, serviceContext);
+			addCPOptionValue(cpOptionId, titleMap, priority, serviceContext);
 	}
 
 	@Override
-	public CPOptionValue deleteCPOptionValue(
-			CPOptionValue cpOptionValue)
+	public CPOptionValue deleteCPOptionValue(CPOptionValue cpOptionValue)
 		throws PortalException {
 
 		CPOptionPermission.checkCPOptionValue(
-			getPermissionChecker(),
-			cpOptionValue.getCPOptionValueId(),
+			getPermissionChecker(), cpOptionValue.getCPOptionValueId(),
 			CPActionKeys.DELETE_COMMERCE_PRODUCT_OPTION_VALUE);
 
-		return cpOptionValueLocalService.
-			deleteCPOptionValue(cpOptionValue);
+		return cpOptionValueLocalService.deleteCPOptionValue(cpOptionValue);
 	}
 
 	@Override
-	public CPOptionValue deleteCPOptionValue(
-			long cpOptionValueId)
+	public CPOptionValue deleteCPOptionValue(long cpOptionValueId)
 		throws PortalException {
 
 		CPOptionPermission.checkCPOptionValue(
 			getPermissionChecker(), cpOptionValueId,
 			CPActionKeys.DELETE_COMMERCE_PRODUCT_OPTION_VALUE);
 
-		return cpOptionValueLocalService.
-			deleteCPOptionValue(cpOptionValueId);
+		return cpOptionValueLocalService.deleteCPOptionValue(cpOptionValueId);
 	}
 
 	@Override
-	public CPOptionValue fetchCPOptionValue(
-			long cpOptionValueId)
+	public CPOptionValue fetchCPOptionValue(long cpOptionValueId)
 		throws PortalException {
 
 		CPOptionValue cpOptionValue =
-			cpOptionValueLocalService.
-				fetchCPOptionValue(cpOptionValueId);
+			cpOptionValueLocalService.fetchCPOptionValue(cpOptionValueId);
 
 		if (cpOptionValue != null) {
 			CPOptionPermission.checkCPOptionValue(
-				getPermissionChecker(), cpOptionValue,
-				ActionKeys.VIEW);
+				getPermissionChecker(), cpOptionValue, ActionKeys.VIEW);
 		}
 
 		return cpOptionValue;
 	}
 
 	@Override
-	public CPOptionValue getCPOptionValue(
-			long cpOptionValueId)
+	public CPOptionValue getCPOptionValue(long cpOptionValueId)
 		throws PortalException {
 
 		CPOptionPermission.checkCPOptionValue(
-			getPermissionChecker(), cpOptionValueId,
-			ActionKeys.VIEW);
+			getPermissionChecker(), cpOptionValueId, ActionKeys.VIEW);
 
-		return cpOptionValueLocalService.
-			getCPOptionValue(cpOptionValueId);
+		return cpOptionValueLocalService.getCPOptionValue(cpOptionValueId);
 	}
 
 	@Override
@@ -126,25 +113,21 @@ public class CPOptionValueServiceImpl
 		CPOptionPermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
 		return cpOptionValueLocalService.
-			getCPOptionValues(
-				cpOptionId, start, end, orderByComparator);
+			getCPOptionValues(cpOptionId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCPOptionValuesCount(long cpOptionId)
-		throws PortalException {
-
+	public int getCPOptionValuesCount(long cpOptionId) throws PortalException {
 		CPOptionPermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
 
-		return cpOptionValueLocalService.
-			getCPOptionValuesCount(cpOptionId);
+		return cpOptionValueLocalService.getCPOptionValuesCount(cpOptionId);
 	}
 
 	@Override
 	public CPOptionValue updateCPOptionValue(
-			long cpOptionValueId, Map<Locale, String> titleMap,
-			int priority, ServiceContext serviceContext)
+			long cpOptionValueId, Map<Locale, String> titleMap, int priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPOptionPermission.checkCPOptionValue(
@@ -153,8 +136,7 @@ public class CPOptionValueServiceImpl
 
 		return cpOptionValueLocalService.
 			updateCPOptionValue(
-				cpOptionValueId, titleMap, priority,
-				serviceContext);
+				cpOptionValueId, titleMap, priority, serviceContext);
 	}
 
 }

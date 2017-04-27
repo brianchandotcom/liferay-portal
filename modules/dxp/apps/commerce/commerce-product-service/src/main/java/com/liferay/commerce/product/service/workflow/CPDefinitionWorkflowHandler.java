@@ -75,11 +75,9 @@ public class CPDefinitionWorkflowHandler
 		CPDefinitionLocalService
 			cpDefinitionLocalService) {
 
-		_cpDefinitionLocalService =
-			cpDefinitionLocalService;
+		_cpDefinitionLocalService = cpDefinitionLocalService;
 	}
 
-	private CPDefinitionLocalService
-		_cpDefinitionLocalService;
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 }

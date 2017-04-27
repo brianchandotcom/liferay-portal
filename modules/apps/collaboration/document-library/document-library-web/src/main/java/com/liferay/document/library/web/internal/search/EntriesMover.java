@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.internal.search;
 
 import com.liferay.admin.kernel.util.PortalProductMenuApplicationType;
-import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.portal.kernel.dao.search.RowMover;
 import com.liferay.portal.kernel.dao.search.RowMoverDropTarget;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,9 +27,7 @@ import com.liferay.trash.kernel.model.TrashEntry;
  */
 public class EntriesMover extends RowMover {
 
-	public EntriesMover(long scopeGroupId, long repositoryId)
-		throws PortalException {
-
+	public EntriesMover(boolean trashEnabled) throws PortalException {
 		RowMoverDropTarget moveToFolderRowMoverDropTarget =
 			new RowMoverDropTarget();
 
@@ -40,7 +37,7 @@ public class EntriesMover extends RowMover {
 
 		addRowMoverDropTarget(moveToFolderRowMoverDropTarget);
 
-		if (DLTrashUtil.isTrashEnabled(scopeGroupId, repositoryId)) {
+		if (trashEnabled) {
 			RowMoverDropTarget moveToTrashRowMoverDropTarget =
 				new RowMoverDropTarget();
 

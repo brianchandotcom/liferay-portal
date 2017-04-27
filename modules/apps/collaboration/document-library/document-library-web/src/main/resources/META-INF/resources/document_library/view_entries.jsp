@@ -60,7 +60,7 @@ EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, lifera
 entriesChecker.setCssClass("entry-selector");
 entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.getNamespace() + "redirect).*(folderId=" + String.valueOf(folderId) + ")");
 
-EntriesMover entriesMover = new EntriesMover(scopeGroupId, repositoryId);
+EntriesMover entriesMover = new EntriesMover(DLTrashUtil.isTrashEnabled(scopeGroupId, repositoryId));
 
 String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
 

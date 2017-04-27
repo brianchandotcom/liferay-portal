@@ -69,11 +69,12 @@ public class SecurePrintStream extends PrintStream {
 	public void flush() {
 		if (!_suspendFlush) {
 			synchronized (this) {
-				try {
-					_tempByteArrayOutputStream = new ByteArrayOutputStream();
+				ByteArrayOutputStream tempByteArrayOutputStream =
+					new ByteArrayOutputStream();
 
+				try {
 					_tempPrintStream = new PrintStream(
-						_tempByteArrayOutputStream);
+						tempByteArrayOutputStream);
 
 					_suspendFlush = true;
 
@@ -90,13 +91,13 @@ public class SecurePrintStream extends PrintStream {
 
 					try {
 						_byteArrayOutputStream.write(
-							_tempByteArrayOutputStream.toByteArray());
+							tempByteArrayOutputStream.toByteArray());
 					}
 					catch (IOException ioe) {
 						ioe.printStackTrace();
 					}
 					finally {
-						_tempByteArrayOutputStream.reset();
+						tempByteArrayOutputStream.reset();
 					}
 
 					_tempPrintStream.close();
@@ -365,7 +366,6 @@ public class SecurePrintStream extends PrintStream {
 	private final SecurePrintStreamByteArrayOutputStream _byteArrayOutputStream;
 	private final PrintStream _standardOut;
 	private boolean _suspendFlush;
-	private ByteArrayOutputStream _tempByteArrayOutputStream;
 	private PrintStream _tempPrintStream;
 
 	private static class SecurePrintStreamByteArrayOutputStream

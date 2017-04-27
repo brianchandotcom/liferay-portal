@@ -14,15 +14,25 @@
 
 package com.liferay.trash.taglib.servlet.taglib;
 
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.taglib.servlet.ServletContextUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -71,6 +81,70 @@ public class UndoTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
+		if (ListUtil.isEmpty(_getTrashedModels())) {
+			return null;
+		}
+
+		return _PAGE;
+	}
+
+	@Override
+	protected boolean isCleanUpSetAttributes() {
+		return _CLEAN_UP_SET_ATTRIBUTES;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<TrashedModel> trashedModels = _getTrashedModels();
+
+		List<String> classNames = new ArrayList<>();
+		List<Long> restoreTrashEntryIds = new ArrayList<>();
+		List<String> titles = new ArrayList<>();
+
+		for (TrashedModel trashedModel : trashedModels) {
+			try {
+				TrashEntry trashEntry = trashedModel.getTrashEntry();
+
+				TrashHandler trashHandler = trashedModel.getTrashHandler();
+
+				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
+					trashedModel.getTrashEntryClassPK());
+
+				classNames.add(trashRenderer.getClassName());
+
+				restoreTrashEntryIds.add(trashEntry.getEntryId());
+				titles.add(trashRenderer.getTitle(themeDisplay.getLocale()));
+			}
+			catch (Exception e) {
+			}
+		}
+
+		request.setAttribute("liferay-trash:undo:classNames", classNames);
+		request.setAttribute("liferay-trash:undo:cmd", _getCmd());
+		request.setAttribute("liferay-trash:undo:portletURL", _portletURL);
+		request.setAttribute("liferay-trash:undo:redirect", _redirect);
+		request.setAttribute(
+			"liferay-trash:undo:restoreTrashEntryIds", restoreTrashEntryIds);
+		request.setAttribute("liferay-trash:undo:titles", titles);
+		request.setAttribute(
+			"liferay-trash:undo:trashedEntriesCount",
+			restoreTrashEntryIds.size());
+	}
+
+	private String _getCmd() {
+		Map<String, Object> data = _getData();
+
+		if (data == null) {
+			return Constants.MOVE_TO_TRASH;
+		}
+
+		return MapUtil.getString(data, Constants.CMD);
+	}
+
+	private Map<String, Object> _getData() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -87,25 +161,25 @@ public class UndoTag extends IncludeTag {
 			return null;
 		}
 
-		Map<String, String[]> data =
-			(HashMap<String, String[]>)SessionMessages.get(portletRequest, key);
+		return (HashMap<String, Object>)SessionMessages.get(
+			portletRequest, key);
+	}
+
+	private List<TrashedModel> _getTrashedModels() {
+		Map<String, Object> data = _getData();
 
 		if (data == null) {
-			return null;
+			return Collections.emptyList();
 		}
 
-		return _PAGE;
-	}
+		List<TrashedModel> trashedModels = (List<TrashedModel>)data.get(
+			"trashedModels");
 
-	@Override
-	protected boolean isCleanUpSetAttributes() {
-		return _CLEAN_UP_SET_ATTRIBUTES;
-	}
+		if (ListUtil.isEmpty(trashedModels)) {
+			return Collections.emptyList();
+		}
 
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-trash:undo:portletURL", _portletURL);
-		request.setAttribute("liferay-trash:undo:redirect", _redirect);
+		return trashedModels;
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

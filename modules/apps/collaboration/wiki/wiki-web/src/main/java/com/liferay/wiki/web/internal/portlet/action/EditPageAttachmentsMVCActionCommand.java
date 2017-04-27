@@ -55,11 +55,15 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.web.internal.WikiAttachmentsHelper;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -103,10 +107,17 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, moveToTrash);
 
 		if (moveToTrash && (trashedModel != null)) {
-			TrashUtil.addTrashSessionMessages(
-				actionRequest, trashedModel, Constants.REMOVE);
+			Map<String, Object> data = new HashMap<>();
 
-			hideDefaultSuccessMessage(actionRequest);
+			data.put(Constants.CMD, Constants.REMOVE);
+
+			List<TrashedModel> trashedModels = new ArrayList<>();
+
+			trashedModels.add(trashedModel);
+
+			data.put("trashedModels", trashedModels);
+
+			addDeleteSuccessData(actionRequest, data);
 		}
 	}
 

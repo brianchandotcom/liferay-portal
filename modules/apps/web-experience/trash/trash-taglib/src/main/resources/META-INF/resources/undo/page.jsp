@@ -17,25 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
+List<String> classNames = (List<String>)request.getAttribute("liferay-trash:undo:classNames");
+String cmd = (String)request.getAttribute("liferay-trash:undo:cmd");
 String portletURL = (String)request.getAttribute("liferay-trash:undo:portletURL");
-
-Map<String, String[]> data = (HashMap<String, String[]>)SessionMessages.get(portletRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);
-
-int trashedEntriesCount = 0;
-
-String[] primaryKeys = new String[0];
-
-Set<String> keys = data.keySet();
-
-for (String key : keys) {
-	if (!key.endsWith("Ids")) {
-		continue;
-	}
-
-	primaryKeys = ArrayUtil.append(primaryKeys, data.get(key));
-
-	trashedEntriesCount = primaryKeys.length;
-}
+List<Long> restoreTrashEntryIds = (List<Long>)request.getAttribute("liferay-trash:undo:restoreTrashEntryIds");
+List<String> titles = (List<String>)request.getAttribute("liferay-trash:undo:titles");
+int trashedEntriesCount = GetterUtil.getInteger((String)request.getAttribute("liferay-trash:undo:trashedEntriesCount"));
 %>
 
 <liferay-util:buffer var="alertMessage">
@@ -45,7 +32,7 @@ for (String key : keys) {
 				<c:when test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
 
 					<%
-					PortletURL trashURL = TrashUtil.getViewURL(request);
+					PortletURL trashURL = PortletProviderUtil.getPortletURL(request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
 					%>
 
 					<aui:a cssClass="alert-link" href="<%= trashURL.toString() %>" label="the-recycle-bin" />
@@ -55,10 +42,6 @@ for (String key : keys) {
 				</c:otherwise>
 			</c:choose>
 		</liferay-util:buffer>
-
-		<%
-		String cmd = MapUtil.getString(data, Constants.CMD);
-		%>
 
 		<c:choose>
 			<c:when test="<%= trashedEntriesCount > 1 %>">
@@ -74,24 +57,20 @@ for (String key : keys) {
 			<c:otherwise>
 
 				<%
-				String[] classNames = data.get("deleteEntryClassName");
-
 				String className = null;
 
 				String type = "selected-item";
 
-				if (ArrayUtil.isNotEmpty(classNames)) {
-					className = classNames[0];
+				if (ListUtil.isNotEmpty(classNames)) {
+					className = classNames.get(0);
 
 					type = ResourceActionsUtil.getModelResource(request, className);
 				}
 
-				String[] titles = data.get("deleteEntryTitle");
-
 				String title = StringPool.BLANK;
 
-				if (ArrayUtil.isNotEmpty(titles)) {
-					title = titles[0];
+				if (ListUtil.isNotEmpty(titles)) {
+					title = titles.get(0);
 				}
 				%>
 
@@ -112,20 +91,7 @@ for (String key : keys) {
 			</c:otherwise>
 		</c:choose>
 
-		<%
-		for (String key : keys) {
-			if (!key.endsWith("Ids")) {
-				continue;
-			}
-
-			primaryKeys = data.get(key);
-		%>
-
-			<aui:input name="<%= key %>" type="hidden" value="<%= StringUtil.merge(primaryKeys) %>" />
-
-		<%
-		}
-		%>
+		<aui:input name="restoreTrashEntryIds" type="hidden" value="<%= StringUtil.merge(restoreTrashEntryIds) %>" />
 
 		<aui:button cssClass="alert-link btn-link trash-undo-button" type="submit" value="undo" />
 	</aui:form>

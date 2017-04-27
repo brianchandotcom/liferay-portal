@@ -31,7 +31,8 @@ import com.liferay.commerce.product.service.base.CPMediaTypeServiceBaseImpl;
  * @see com.liferay.commerce.product.service.CPMediaTypeServiceUtil
  */
 public class CPMediaTypeServiceImpl extends CPMediaTypeServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CPMediaTypeServiceUtil} to access the cp media type remote service.

@@ -58,21 +58,17 @@ public abstract class BaseCPDefinitionsDisplayContext<T> {
 		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			this.httpServletRequest);
 
-		cpRequestHelper = new CPRequestHelper(
-			httpServletRequest);
+		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
-		liferayPortletRequest =
-			cpRequestHelper.getLiferayPortletRequest();
-		liferayPortletResponse =
-			cpRequestHelper.getLiferayPortletResponse();
+		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
+		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 
 		_defaultOrderByCol = "create-date";
 		_defaultOrderByType = "asc";
 	}
 
 	public List<Locale> getAvailableLocales() throws PortalException {
-		CPDefinition cpDefinition =
-			getCPDefinition();
+		CPDefinition cpDefinition = getCPDefinition();
 
 		if (cpDefinition == null) {
 			return Collections.emptyList();
@@ -80,18 +76,14 @@ public abstract class BaseCPDefinitionsDisplayContext<T> {
 
 		List<Locale> availableLocales = new ArrayList<>();
 
-		for (String languageId :
-				cpDefinition.getAvailableLanguageIds()) {
-
+		for (String languageId : cpDefinition.getAvailableLanguageIds()) {
 			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
 		}
 
 		return availableLocales;
 	}
 
-	public CPDefinition getCPDefinition()
-		throws PortalException {
-
+	public CPDefinition getCPDefinition() throws PortalException {
 		if (_cpDefinition != null) {
 			return _cpDefinition;
 		}
@@ -103,8 +95,7 @@ public abstract class BaseCPDefinitionsDisplayContext<T> {
 	}
 
 	public long getCPDefinitionId() throws PortalException {
-		CPDefinition cpDefinition =
-			getCPDefinition();
+		CPDefinition cpDefinition = getCPDefinition();
 
 		if (cpDefinition == null) {
 			return 0;
@@ -228,13 +219,11 @@ public abstract class BaseCPDefinitionsDisplayContext<T> {
 			portletURL.setParameter("orderByType", orderByType);
 		}
 
-		CPDefinition cpDefinition =
-			getCPDefinition();
+		CPDefinition cpDefinition = getCPDefinition();
 
 		if (cpDefinition != null) {
 			portletURL.setParameter(
-				"cpDefinitionId",
-				String.valueOf(getCPDefinitionId()));
+				"cpDefinitionId", String.valueOf(getCPDefinitionId()));
 		}
 
 		return portletURL;

@@ -71,12 +71,10 @@ public class CPOptionItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
-			resourceBundle, "options");
+		return LanguageUtil.get(resourceBundle, "options");
 	}
 
 	@Override
@@ -111,13 +109,11 @@ public class CPOptionItemSelectorView
 		int start = (delta * cur) - delta;
 		int end = (delta * cur) + delta;
 
-		List<CPOption> cpOptions =
-			_cpOptionLocalService.getCPOptions(
-				themeDisplay.getScopeGroupId(), start, end);
+		List<CPOption> cpOptions = _cpOptionLocalService.getCPOptions(
+			themeDisplay.getScopeGroupId(), start, end);
 
-		long cpOptionsCount =
-			_cpOptionLocalService.getCPOptionsCount(
-				themeDisplay.getScopeGroupId());
+		long cpOptionsCount = _cpOptionLocalService.getCPOptionsCount(
+			themeDisplay.getScopeGroupId());
 
 		request.setAttribute("cpOptions", cpOptions);
 		request.setAttribute("itemSelectedEventName", itemSelectedEventName);
@@ -141,8 +137,7 @@ public class CPOptionItemSelectorView
 				}));
 
 	@Reference
-	private CPOptionLocalService
-		_cpOptionLocalService;
+	private CPOptionLocalService _cpOptionLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.item.selector.web)"

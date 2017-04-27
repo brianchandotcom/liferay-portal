@@ -40,8 +40,7 @@ public class CPDefinitionDisplayDateComparator
 
 	@Override
 	public int compare(
-		CPDefinition productDefinition1,
-		CPDefinition productDefinition2) {
+		CPDefinition productDefinition1, CPDefinition productDefinition2) {
 
 		int value = DateUtil.compareTo(
 			productDefinition1.getDisplayDate(),

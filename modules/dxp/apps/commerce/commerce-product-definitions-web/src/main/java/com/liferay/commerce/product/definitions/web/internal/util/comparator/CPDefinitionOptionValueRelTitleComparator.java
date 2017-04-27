@@ -34,9 +34,7 @@ public class CPDefinitionOptionValueRelTitleComparator
 		this(false);
 	}
 
-	public CPDefinitionOptionValueRelTitleComparator(
-		boolean ascending) {
-
+	public CPDefinitionOptionValueRelTitleComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 

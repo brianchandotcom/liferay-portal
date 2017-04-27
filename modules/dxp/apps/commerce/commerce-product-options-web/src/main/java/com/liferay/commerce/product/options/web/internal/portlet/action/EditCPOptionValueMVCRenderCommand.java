@@ -18,8 +18,6 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.exception.NoSuchProductOptionValueException;
 import com.liferay.commerce.product.model.CPOptionValue;
-import com.liferay.commerce.product.service.CPOptionService;
-import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -45,8 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCPOptionValueMVCRenderCommand
-	implements MVCRenderCommand {
+public class EditCPOptionValueMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -72,8 +69,7 @@ public class EditCPOptionValueMVCRenderCommand
 		return "/edit_commerce_product_option_value.jsp";
 	}
 
-	protected void setCPOptionValueRequestAttribute(
-			RenderRequest renderRequest)
+	protected void setCPOptionValueRequestAttribute(RenderRequest renderRequest)
 		throws PortalException {
 
 		long cpOptionValueId = ParamUtil.getLong(
@@ -82,14 +78,12 @@ public class EditCPOptionValueMVCRenderCommand
 		CPOptionValue cpOptionValue = null;
 
 		if (cpOptionValueId > 0) {
-			cpOptionValue =
-				_cpOptionValueService.
-					getCPOptionValue(cpOptionValueId);
+			cpOptionValue = _cpOptionValueService.getCPOptionValue(
+				cpOptionValueId);
 		}
 
 		renderRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUE,
-			cpOptionValue);
+			CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUE, cpOptionValue);
 	}
 
 	@Reference

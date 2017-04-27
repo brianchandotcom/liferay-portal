@@ -21,13 +21,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPOptionNameComparator
-	extends OrderByComparator<CPOption> {
+public class CPOptionNameComparator extends OrderByComparator<CPOption> {
 
 	public static final String ORDER_BY_ASC = "CPOption.name ASC";
 
-	public static final String ORDER_BY_DESC =
-		"CPOption.name DESC";
+	public static final String ORDER_BY_DESC = "CPOption.name DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
@@ -40,10 +38,7 @@ public class CPOptionNameComparator
 	}
 
 	@Override
-	public int compare(
-		CPOption productOption1,
-		CPOption productOption2) {
-
+	public int compare(CPOption productOption1, CPOption productOption2) {
 		String name1 = StringUtil.toLowerCase(productOption1.getName());
 		String name2 = StringUtil.toLowerCase(productOption2.getName());
 

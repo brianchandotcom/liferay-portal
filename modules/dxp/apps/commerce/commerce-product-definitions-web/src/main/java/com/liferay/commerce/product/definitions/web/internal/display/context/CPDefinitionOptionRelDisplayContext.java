@@ -57,14 +57,12 @@ public class CPDefinitionOptionRelDisplayContext
 		throws PortalException {
 
 		super(
-			actionHelper, httpServletRequest,
-			"rowIdsCPDefinitionOptionRel",
+			actionHelper, httpServletRequest, "rowIdsCPDefinitionOptionRel",
 			"CPDefinitionOptionRel");
 
 		setDefaultOrderByCol("priority");
 
-		_cpDefinitionOptionRelService =
-			cpDefinitionOptionRelService;
+		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 
@@ -79,16 +77,13 @@ public class CPDefinitionOptionRelDisplayContext
 			return _cpDefinitionOptionRel;
 		}
 
-		_cpDefinitionOptionRel =
-			actionHelper.getCPDefinitionOptionRel(
-				cpRequestHelper.getRenderRequest());
+		_cpDefinitionOptionRel = actionHelper.getCPDefinitionOptionRel(
+			cpRequestHelper.getRenderRequest());
 
 		return _cpDefinitionOptionRel;
 	}
 
-	public long getCPDefinitionOptionRelId()
-		throws PortalException {
-
+	public long getCPDefinitionOptionRelId() throws PortalException {
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			getCPDefinitionOptionRel();
 
@@ -96,8 +91,7 @@ public class CPDefinitionOptionRelDisplayContext
 			return 0;
 		}
 
-		return cpDefinitionOptionRel.
-			getCPDefinitionOptionRelId();
+		return cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 	}
 
 	public List<DDMFormFieldType> getDDMFormFieldTypes() {
@@ -130,12 +124,11 @@ public class CPDefinitionOptionRelDisplayContext
 
 		desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
 
-		CPOptionItemSelectorCriterion
-			cpOptionItemSelectorCriterion =
-				new CPOptionItemSelectorCriterion();
+		CPOptionItemSelectorCriterion cpOptionItemSelectorCriterion =
+			new CPOptionItemSelectorCriterion();
 
-		cpOptionItemSelectorCriterion.
-			setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
+		cpOptionItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, "productOptionsSelectItem",
@@ -166,11 +159,9 @@ public class CPDefinitionOptionRelDisplayContext
 			new SearchContainer<>(
 				liferayPortletRequest, getPortletURL(), null, null);
 
-		OrderByComparator<CPDefinitionOptionRel>
-			orderByComparator =
-				CPDefinitionsPortletUtil.
-					getCPDefinitionOptionRelOrderByComparator(
-						getOrderByCol(), getOrderByType());
+		OrderByComparator<CPDefinitionOptionRel> orderByComparator =
+			CPDefinitionsPortletUtil.getCPDefinitionOptionRelOrderByComparator(
+				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
@@ -179,18 +170,15 @@ public class CPDefinitionOptionRelDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		int total =
-			_cpDefinitionOptionRelService.
-				getCPDefinitionOptionRelsCount(
-					getCPDefinitionId());
+			_cpDefinitionOptionRelService.getCPDefinitionOptionRelsCount(
+				getCPDefinitionId());
 
 		searchContainer.setTotal(total);
 
 		List<CPDefinitionOptionRel> results =
-			_cpDefinitionOptionRelService.
-				getCPDefinitionOptionRels(
-					getCPDefinitionId(),
-					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator);
+			_cpDefinitionOptionRelService.getCPDefinitionOptionRels(
+				getCPDefinitionId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 
@@ -199,10 +187,8 @@ public class CPDefinitionOptionRelDisplayContext
 		return this.searchContainer;
 	}
 
-	private CPDefinitionOptionRel
-		_cpDefinitionOptionRel;
-	private final CPDefinitionOptionRelService
-		_cpDefinitionOptionRelService;
+	private CPDefinitionOptionRel _cpDefinitionOptionRel;
+	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
 	private final ItemSelector _itemSelector;

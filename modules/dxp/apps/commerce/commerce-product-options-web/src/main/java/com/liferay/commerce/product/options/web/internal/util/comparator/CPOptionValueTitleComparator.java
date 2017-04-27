@@ -24,11 +24,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class CPOptionValueTitleComparator
 	extends OrderByComparator<CPOptionValue> {
 
-	public static final String ORDER_BY_ASC =
-		"CPOptionValue.title ASC";
+	public static final String ORDER_BY_ASC = "CPOptionValue.title ASC";
 
-	public static final String ORDER_BY_DESC =
-		"CPOptionValue.title DESC";
+	public static final String ORDER_BY_DESC = "CPOptionValue.title DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"title"};
 
@@ -42,8 +40,7 @@ public class CPOptionValueTitleComparator
 
 	@Override
 	public int compare(
-		CPOptionValue productOptionValue1,
-		CPOptionValue productOptionValue2) {
+		CPOptionValue productOptionValue1, CPOptionValue productOptionValue2) {
 
 		String title1 = StringUtil.toLowerCase(productOptionValue1.getTitle());
 		String title2 = StringUtil.toLowerCase(productOptionValue2.getTitle());

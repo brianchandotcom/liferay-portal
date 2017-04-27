@@ -31,8 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPOptionValueDisplayContext
-	extends BaseCPOptionsDisplayContext {
+public class CPOptionValueDisplayContext extends BaseCPOptionsDisplayContext {
 
 	public CPOptionValueDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
@@ -40,8 +39,8 @@ public class CPOptionValueDisplayContext
 		throws PortalException {
 
 		super(
-			actionHelper, httpServletRequest,
-			"rowIdsCPOptionValue", "CPOptionValue");
+			actionHelper, httpServletRequest, "rowIdsCPOptionValue",
+			"CPOptionValue");
 
 		_cpOptionValueService = cpOptionValueService;
 
@@ -54,9 +53,7 @@ public class CPOptionValueDisplayContext
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "viewProductOptionValues");
-		portletURL.setParameter(
-			"cpOptionId",
-			String.valueOf(getCPOptionId()));
+		portletURL.setParameter("cpOptionId", String.valueOf(getCPOptionId()));
 
 		return portletURL;
 	}
@@ -69,8 +66,7 @@ public class CPOptionValueDisplayContext
 		SearchContainer<CPOptionValue> searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
-		searchContainer.setEmptyResultsMessage(
-			"no-option-values-were-found");
+		searchContainer.setEmptyResultsMessage("no-option-values-were-found");
 
 		OrderByComparator<CPOptionValue> orderByComparator =
 			CPOptionsPortletUtil.getCPOptionValueOrderByComparator(
@@ -81,15 +77,14 @@ public class CPOptionValueDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total =
-			_cpOptionValueService.getCPOptionValuesCount(getCPOptionId());
+		int total = _cpOptionValueService.getCPOptionValuesCount(
+			getCPOptionId());
 
 		searchContainer.setTotal(total);
 
-		List<CPOptionValue> results =
-			_cpOptionValueService.getCPOptionValues(
-				getCPOptionId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+		List<CPOptionValue> results = _cpOptionValueService.getCPOptionValues(
+			getCPOptionId(), searchContainer.getStart(),
+			searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 

@@ -48,8 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCPDefinitionOptionValueRelMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCPDefinitionOptionValueRel(
-			ActionRequest actionRequest)
+	protected void deleteCPDefinitionOptionValueRel(ActionRequest actionRequest)
 		throws Exception {
 
 		long cpDefinitionOptionValueRelId = ParamUtil.getLong(
@@ -57,9 +56,8 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 
 		// Delete commerce product definition option value rel
 
-		_cpDefinitionOptionValueRelService.
-			deleteCPDefinitionOptionValueRel(
-				cpDefinitionOptionValueRelId);
+		_cpDefinitionOptionValueRelService.deleteCPDefinitionOptionValueRel(
+			cpDefinitionOptionValueRelId);
 	}
 
 	@Override
@@ -100,11 +98,9 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPDefinitionOptionValueRel.class.getName(),
-			actionRequest);
+			CPDefinitionOptionValueRel.class.getName(), actionRequest);
 
-		CPDefinitionOptionValueRel
-			cpDefinitionOptionValueRel = null;
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel = null;
 
 		if (cpDefinitionOptionValueRelId <= 0) {
 
@@ -113,8 +109,8 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 			cpDefinitionOptionValueRel =
 				_cpDefinitionOptionValueRelService.
 					addCPDefinitionOptionValueRel(
-						cpDefinitionOptionRelId, titleMap,
-						priority, serviceContext);
+						cpDefinitionOptionRelId, titleMap, priority,
+						serviceContext);
 		}
 		else {
 
@@ -123,8 +119,8 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 			cpDefinitionOptionValueRel =
 				_cpDefinitionOptionValueRelService.
 					updateCPDefinitionOptionValueRel(
-						cpDefinitionOptionValueRelId, titleMap,
-						priority, serviceContext);
+						cpDefinitionOptionValueRelId, titleMap, priority,
+						serviceContext);
 		}
 
 		return cpDefinitionOptionValueRel;

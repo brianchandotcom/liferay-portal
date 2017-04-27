@@ -40,8 +40,7 @@ public class CPInstanceDisplayDateComparator
 
 	@Override
 	public int compare(
-		CPInstance productInstance1,
-		CPInstance productInstance2) {
+		CPInstance productInstance1, CPInstance productInstance2) {
 
 		int value = DateUtil.compareTo(
 			productInstance1.getDisplayDate(),

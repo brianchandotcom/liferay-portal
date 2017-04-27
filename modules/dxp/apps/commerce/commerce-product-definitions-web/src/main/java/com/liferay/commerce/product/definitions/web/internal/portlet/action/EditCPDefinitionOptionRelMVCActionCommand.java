@@ -90,16 +90,15 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
-		long cpOptionId = ParamUtil.getLong(
-			actionRequest, "cpOptionId");
+		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
-		Map<Locale, String> descriptionMap = LocalizationUtil.
-			getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		String ddmFormFieldTypeName = ParamUtil.
-			getString(actionRequest, "ddmFormFieldTypeName");
+		String ddmFormFieldTypeName = ParamUtil.getString(
+			actionRequest, "ddmFormFieldTypeName");
 
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
 
@@ -110,37 +109,31 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionOptionRel.class.getName(), actionRequest);
 
-		CPDefinitionOptionRel cpDefinitionOptionRel =
-			null;
+		CPDefinitionOptionRel cpDefinitionOptionRel = null;
 
 		if (cpDefinitionOptionRelId <= 0) {
 
 			// Add commerce product definition option rel
 
 			cpDefinitionOptionRel =
-				_cpDefinitionOptionRelService.
-					addCPDefinitionOptionRel(
-						cpDefinitionId, cpOptionId,
-						serviceContext);
+				_cpDefinitionOptionRelService.addCPDefinitionOptionRel(
+					cpDefinitionId, cpOptionId, serviceContext);
 		}
 		else {
 
 			// Update commerce product definition option rel
 
 			cpDefinitionOptionRel =
-				_cpDefinitionOptionRelService.
-					updateCPDefinitionOptionRel(
-						cpDefinitionOptionRelId,
-						cpOptionId, nameMap, descriptionMap,
-						ddmFormFieldTypeName, priority, facetable,
-						skuContributor, serviceContext);
+				_cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
+					cpDefinitionOptionRelId, cpOptionId, nameMap,
+					descriptionMap, ddmFormFieldTypeName, priority, facetable,
+					skuContributor, serviceContext);
 		}
 
 		return cpDefinitionOptionRel;
 	}
 
 	@Reference
-	private CPDefinitionOptionRelService
-		_cpDefinitionOptionRelService;
+	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
 }

@@ -30,8 +30,10 @@ import com.liferay.commerce.product.service.base.CPMediaTypeLocalServiceBaseImpl
  * @see CPMediaTypeLocalServiceBaseImpl
  * @see com.liferay.commerce.product.service.CPMediaTypeLocalServiceUtil
  */
-public class CPMediaTypeLocalServiceImpl extends CPMediaTypeLocalServiceBaseImpl {
-	/*
+public class CPMediaTypeLocalServiceImpl
+	extends CPMediaTypeLocalServiceBaseImpl {
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CPMediaTypeLocalServiceUtil} to access the cp media type local service.

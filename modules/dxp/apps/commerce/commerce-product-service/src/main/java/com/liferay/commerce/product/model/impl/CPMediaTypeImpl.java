@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class CPMediaTypeImpl extends CPMediaTypeBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a cp media type model instance should use the {@link com.liferay.commerce.product.model.CPMediaType} interface instead.
 	 */
 	public CPMediaTypeImpl() {
 	}
+
 }

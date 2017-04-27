@@ -32,7 +32,8 @@ import com.liferay.commerce.product.service.base.CPDefinitionMediaLocalServiceBa
  */
 public class CPDefinitionMediaLocalServiceImpl
 	extends CPDefinitionMediaLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CPDefinitionMediaLocalServiceUtil} to access the cp definition media local service.

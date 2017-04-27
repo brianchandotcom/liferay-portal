@@ -41,11 +41,9 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class EditCPInstanceMVCActionCommand
-	extends BaseMVCActionCommand {
+public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void autoGenerateCPInstances(
-			ActionRequest actionRequest)
+	protected void autoGenerateCPInstances(ActionRequest actionRequest)
 		throws Exception {
 
 		long cpDefinitionId = ParamUtil.getLong(
@@ -56,18 +54,15 @@ public class EditCPInstanceMVCActionCommand
 
 		// Generate commerce product instances
 
-		_cpInstanceService.buildCPInstances(
-			cpDefinitionId, serviceContext);
+		_cpInstanceService.buildCPInstances(cpDefinitionId, serviceContext);
 	}
 
 	protected void deleteCPInstance(ActionRequest actionRequest)
 		throws Exception {
 
-		long cpInstanceId = ParamUtil.getLong(
-			actionRequest, "cpInstanceId");
+		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 
-		_cpInstanceService.deleteCPInstance(
-			cpInstanceId);
+		_cpInstanceService.deleteCPInstance(cpInstanceId);
 	}
 
 	@Override

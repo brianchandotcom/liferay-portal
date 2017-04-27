@@ -21,8 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Marco Leo
  */
 @ProviderType
-public class CPInstanceExpirationDateException
-	extends PortalException {
+public class CPInstanceExpirationDateException extends PortalException {
 
 	public CPInstanceExpirationDateException() {
 	}
@@ -31,9 +30,7 @@ public class CPInstanceExpirationDateException
 		super(msg);
 	}
 
-	public CPInstanceExpirationDateException(
-		String msg, Throwable cause) {
-
+	public CPInstanceExpirationDateException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 

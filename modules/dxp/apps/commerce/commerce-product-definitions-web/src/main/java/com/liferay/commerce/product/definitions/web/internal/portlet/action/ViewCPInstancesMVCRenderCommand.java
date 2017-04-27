@@ -44,8 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewCPInstancesMVCRenderCommand
-	implements MVCRenderCommand {
+public class ViewCPInstancesMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -56,15 +55,12 @@ public class ViewCPInstancesMVCRenderCommand
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 
-			CPInstanceDisplayContext
-				cpInstanceDisplayContext =
-					new CPInstanceDisplayContext(
-						_actionHelper, httpServletRequest,
-						_cpInstanceService);
+			CPInstanceDisplayContext cpInstanceDisplayContext =
+				new CPInstanceDisplayContext(
+					_actionHelper, httpServletRequest, _cpInstanceService);
 
 			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpInstanceDisplayContext);
+				WebKeys.PORTLET_DISPLAY_CONTEXT, cpInstanceDisplayContext);
 		}
 		catch (PortalException pe) {
 			SessionErrors.add(renderRequest, pe.getClass());

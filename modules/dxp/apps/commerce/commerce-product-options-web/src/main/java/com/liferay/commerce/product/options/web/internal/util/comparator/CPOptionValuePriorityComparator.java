@@ -23,11 +23,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class CPOptionValuePriorityComparator
 	extends OrderByComparator<CPOptionValue> {
 
-	public static final String ORDER_BY_ASC =
-		"CPOptionValue.priority ASC";
+	public static final String ORDER_BY_ASC = "CPOptionValue.priority ASC";
 
-	public static final String ORDER_BY_DESC =
-		"CPOptionValue.priority DESC";
+	public static final String ORDER_BY_DESC = "CPOptionValue.priority DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
@@ -41,8 +39,7 @@ public class CPOptionValuePriorityComparator
 
 	@Override
 	public int compare(
-		CPOptionValue productOptionValue1,
-		CPOptionValue productOptionValue2) {
+		CPOptionValue productOptionValue1, CPOptionValue productOptionValue2) {
 
 		int priority1 = productOptionValue1.getPriority();
 		int priority2 = productOptionValue2.getPriority();

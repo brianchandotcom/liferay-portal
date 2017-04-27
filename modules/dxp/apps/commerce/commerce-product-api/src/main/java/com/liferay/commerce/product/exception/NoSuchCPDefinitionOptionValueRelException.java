@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Marco Leo
  */
 @ProviderType
-public class NoSuchCPDefinitionOptionValueRelException extends NoSuchModelException {
+public class NoSuchCPDefinitionOptionValueRelException
+	extends NoSuchModelException {
 
 	public NoSuchCPDefinitionOptionValueRelException() {
 	}
@@ -30,7 +31,9 @@ public class NoSuchCPDefinitionOptionValueRelException extends NoSuchModelExcept
 		super(msg);
 	}
 
-	public NoSuchCPDefinitionOptionValueRelException(String msg, Throwable cause) {
+	public NoSuchCPDefinitionOptionValueRelException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

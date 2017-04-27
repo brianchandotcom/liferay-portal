@@ -51,8 +51,7 @@ public class CommerceProductOptionValueInfoPanelMVCResourceCommand
 			resourceRequest);
 
 		resourceRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUES,
-			cpOptionValues);
+			CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUES, cpOptionValues);
 
 		include(
 			resourceRequest, resourceResponse,

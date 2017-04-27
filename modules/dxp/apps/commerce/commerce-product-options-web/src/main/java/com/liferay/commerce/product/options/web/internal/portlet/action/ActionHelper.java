@@ -37,27 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ActionHelper.class)
 public class ActionHelper {
 
-	public List<CPOption> getCPOptions(
-			ResourceRequest resourceRequest)
-		throws Exception {
-
-		long[] cpOptionsIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIdsCPOption");
-
-		List<CPOption> cpOptions = new ArrayList<>();
-
-		for (long cpOptionsId : cpOptionsIds) {
-			CPOption cpOption =
-				_cpOptionService.getCPOption(cpOptionsId);
-
-			cpOptions.add(cpOption);
-		}
-
-		return cpOptions;
-	}
-
-	public CPOption getCPOption(
-			RenderRequest renderRequest)
+	public CPOption getCPOption(RenderRequest renderRequest)
 		throws PortalException {
 
 		CPOption cpOption = null;
@@ -69,8 +49,7 @@ public class ActionHelper {
 			return cpOption;
 		}
 
-		long cpOptionId = ParamUtil.getLong(
-				renderRequest, "cpOptionId");
+		long cpOptionId = ParamUtil.getLong(renderRequest, "cpOptionId");
 
 		if (cpOptionId <= 0) {
 
@@ -95,6 +74,23 @@ public class ActionHelper {
 		return cpOption;
 	}
 
+	public List<CPOption> getCPOptions(ResourceRequest resourceRequest)
+		throws Exception {
+
+		long[] cpOptionsIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIdsCPOption");
+
+		List<CPOption> cpOptions = new ArrayList<>();
+
+		for (long cpOptionsId : cpOptionsIds) {
+			CPOption cpOption = _cpOptionService.getCPOption(cpOptionsId);
+
+			cpOptions.add(cpOption);
+		}
+
+		return cpOptions;
+	}
+
 	public CPOptionValue getCPOptionValue(RenderRequest renderRequest)
 		throws PortalException {
 
@@ -108,7 +104,7 @@ public class ActionHelper {
 		}
 
 		long cpOptionValueId = ParamUtil.getLong(
-				renderRequest, "cpOptionValueId");
+			renderRequest, "cpOptionValueId");
 
 		if (cpOptionValueId > 0) {
 			cpOptionValue = _cpOptionValueService.fetchCPOptionValue(
@@ -123,17 +119,16 @@ public class ActionHelper {
 		return cpOptionValue;
 	}
 
-	public List<CPOptionValue> getCPOptionValues(ResourceRequest resourceRequest)
+	public List<CPOptionValue> getCPOptionValues(
+			ResourceRequest resourceRequest)
 		throws Exception {
 
 		long[] cpOptionValuesIds = ParamUtil.getLongValues(
-				resourceRequest, "rowIdsCPOptionValue");
+			resourceRequest, "rowIdsCPOptionValue");
 
-		List<CPOptionValue> cpOptionValues =
-				new ArrayList<>();
+		List<CPOptionValue> cpOptionValues = new ArrayList<>();
 
 		for (long cpOptionValuesId : cpOptionValuesIds) {
-
 			CPOptionValue cpOptionValue =
 				_cpOptionValueService.getCPOptionValue(cpOptionValuesId);
 
@@ -143,11 +138,10 @@ public class ActionHelper {
 		return cpOptionValues;
 	}
 
+	@Reference
+	private CPOptionService _cpOptionService;
 
 	@Reference
 	private CPOptionValueService _cpOptionValueService;
-
-	@Reference
-	private CPOptionService _cpOptionService;
 
 }

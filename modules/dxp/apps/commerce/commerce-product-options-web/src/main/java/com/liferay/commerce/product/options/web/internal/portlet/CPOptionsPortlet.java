@@ -74,15 +74,13 @@ public class CPOptionsPortlet extends MVCPortlet {
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 
-			CPOptionDisplayContext
-				cpOptionDisplayContext =
-					new CPOptionDisplayContext(
-						_actionHelper, httpServletRequest,_cpOptionService,
-						_ddmFormFieldTypeServicesTracker);
+			CPOptionDisplayContext cpOptionDisplayContext =
+				new CPOptionDisplayContext(
+					_actionHelper, httpServletRequest, _cpOptionService,
+					_ddmFormFieldTypeServicesTracker);
 
 			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpOptionDisplayContext);
+				WebKeys.PORTLET_DISPLAY_CONTEXT, cpOptionDisplayContext);
 		}
 		catch (PortalException pe) {
 			SessionErrors.add(renderRequest, pe.getClass());
@@ -92,11 +90,10 @@ public class CPOptionsPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	ActionHelper _actionHelper;
+	private ActionHelper _actionHelper;
 
 	@Reference
-	private CPOptionService
-		_cpOptionService;
+	private CPOptionService _cpOptionService;
 
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

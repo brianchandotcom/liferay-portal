@@ -32,7 +32,8 @@ import com.liferay.commerce.product.service.base.CPDefinitionMediaServiceBaseImp
  */
 public class CPDefinitionMediaServiceImpl
 	extends CPDefinitionMediaServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CPDefinitionMediaServiceUtil} to access the cp definition media remote service.

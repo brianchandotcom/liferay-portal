@@ -39,8 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPOptionDisplayContext
-	extends BaseCPOptionsDisplayContext {
+public class CPOptionDisplayContext extends BaseCPOptionsDisplayContext {
 
 	public CPOptionDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
@@ -48,16 +47,13 @@ public class CPOptionDisplayContext
 			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker)
 		throws PortalException {
 
-		super(
-			actionHelper, httpServletRequest, "rowIdsCPOption",
-			"CPOption");
+		super(actionHelper, httpServletRequest, "rowIdsCPOption", "CPOption");
 
 		_cpOptionService = cpOptionService;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 	}
 
-	public List<CPOption> getCommerceProductOptions(
-			ResourceRequest request)
+	public List<CPOption> getCommerceProductOptions(ResourceRequest request)
 		throws Exception {
 
 		String[] cpOptionIds = ParamUtil.getStringValues(
@@ -100,32 +96,27 @@ public class CPOptionDisplayContext
 			return searchContainer;
 		}
 
-		SearchContainer<CPOption> searchContainer =
-			new SearchContainer<>(
-				liferayPortletRequest, getPortletURL(), null, null);
+		SearchContainer<CPOption> searchContainer = new SearchContainer<>(
+			liferayPortletRequest, getPortletURL(), null, null);
 
 		searchContainer.setEmptyResultsMessage("no-options-were-found");
 
 		OrderByComparator<CPOption> orderByComparator =
-			CPOptionsPortletUtil.
-				getCPOptionOrderByComparator(
-					getOrderByCol(), getOrderByType());
+			CPOptionsPortletUtil.getCPOptionOrderByComparator(
+				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total =
-			_cpOptionService.getCPOptionsCount(
-				getScopeGroupId());
+		int total = _cpOptionService.getCPOptionsCount(getScopeGroupId());
 
 		searchContainer.setTotal(total);
 
-		List<CPOption> results =
-			_cpOptionService.getCPOptions(
-				getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+		List<CPOption> results = _cpOptionService.getCPOptions(
+			getScopeGroupId(), searchContainer.getStart(),
+			searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 

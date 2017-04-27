@@ -75,16 +75,13 @@ public class CPDefinitionsPortlet extends MVCPortlet {
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 
-			CPDefinitionsDisplayContext
-				cpDefinitionsDisplayContext =
-					new CPDefinitionsDisplayContext(
-						_actionHelper, httpServletRequest,
-						_cpDefinitionService,
-						_cpTypeServicesTracker);
+			CPDefinitionsDisplayContext cpDefinitionsDisplayContext =
+				new CPDefinitionsDisplayContext(
+					_actionHelper, httpServletRequest, _cpDefinitionService,
+					_cpTypeServicesTracker);
 
 			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpDefinitionsDisplayContext);
+				WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionsDisplayContext);
 		}
 		catch (PortalException pe) {
 			SessionErrors.add(renderRequest, pe.getClass());
@@ -100,8 +97,7 @@ public class CPDefinitionsPortlet extends MVCPortlet {
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private CPTypeServicesTracker
-		_cpTypeServicesTracker;
+	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 	@Reference
 	private Portal _portal;

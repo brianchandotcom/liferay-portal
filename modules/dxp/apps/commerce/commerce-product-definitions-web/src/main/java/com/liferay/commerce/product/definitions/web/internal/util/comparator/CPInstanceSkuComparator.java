@@ -21,13 +21,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPInstanceSkuComparator
-	extends OrderByComparator<CPInstance> {
+public class CPInstanceSkuComparator extends OrderByComparator<CPInstance> {
 
 	public static final String ORDER_BY_ASC = "CPInstance.sku ASC";
 
-	public static final String ORDER_BY_DESC =
-		"CPInstance.sku DESC";
+	public static final String ORDER_BY_DESC = "CPInstance.sku DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"sku"};
 
@@ -41,8 +39,7 @@ public class CPInstanceSkuComparator
 
 	@Override
 	public int compare(
-		CPInstance productInstance1,
-		CPInstance productInstance2) {
+		CPInstance productInstance1, CPInstance productInstance2) {
 
 		String sku1 = StringUtil.toLowerCase(productInstance1.getSku());
 		String sku2 = StringUtil.toLowerCase(productInstance2.getSku());

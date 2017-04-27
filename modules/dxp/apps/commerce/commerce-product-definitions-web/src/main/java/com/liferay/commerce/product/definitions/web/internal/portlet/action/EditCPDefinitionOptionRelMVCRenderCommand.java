@@ -89,8 +89,7 @@ public class EditCPDefinitionOptionRelMVCRenderCommand
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CPDefinitionOptionRelService
-		_cpDefinitionOptionRelService;
+	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

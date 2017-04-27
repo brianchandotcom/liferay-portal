@@ -26,9 +26,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
  */
 public class CPOptionsPortletUtil {
 
-	public static OrderByComparator<CPOption>
-		getCPOptionOrderByComparator(
-			String orderByCol, String orderByType) {
+	public static OrderByComparator<CPOption> getCPOptionOrderByComparator(
+		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
 
@@ -39,8 +38,7 @@ public class CPOptionsPortletUtil {
 		OrderByComparator<CPOption> orderByComparator = null;
 
 		if (orderByCol.equals("name")) {
-			orderByComparator = new CPOptionNameComparator(
-				orderByAsc);
+			orderByComparator = new CPOptionNameComparator(orderByAsc);
 		}
 
 		return orderByComparator;
@@ -59,12 +57,10 @@ public class CPOptionsPortletUtil {
 		OrderByComparator<CPOptionValue> orderByComparator = null;
 
 		if (orderByCol.equals("priority")) {
-			orderByComparator =
-				new CPOptionValuePriorityComparator(orderByAsc);
+			orderByComparator = new CPOptionValuePriorityComparator(orderByAsc);
 		}
 		else if (orderByCol.equals("title")) {
-			orderByComparator = new CPOptionValueTitleComparator(
-				orderByAsc);
+			orderByComparator = new CPOptionValueTitleComparator(orderByAsc);
 		}
 
 		return orderByComparator;

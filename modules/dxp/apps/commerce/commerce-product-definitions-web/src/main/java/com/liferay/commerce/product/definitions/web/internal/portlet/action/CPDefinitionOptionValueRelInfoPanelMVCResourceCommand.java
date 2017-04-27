@@ -47,14 +47,11 @@ public class CPDefinitionOptionValueRelInfoPanelMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		List<CPDefinitionOptionValueRel>
-			cpDefinitionOptionValueRels =
-				_actionHelper.getCPDefinitionOptionValueRels(
-					resourceRequest);
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			_actionHelper.getCPDefinitionOptionValueRels(resourceRequest);
 
 		resourceRequest.setAttribute(
-			CPWebKeys.
-				COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_RELS,
+			CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_RELS,
 			cpDefinitionOptionValueRels);
 
 		include(

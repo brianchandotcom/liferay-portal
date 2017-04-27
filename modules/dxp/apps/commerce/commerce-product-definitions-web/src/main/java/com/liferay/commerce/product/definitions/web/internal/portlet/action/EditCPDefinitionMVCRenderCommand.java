@@ -49,8 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCPDefinitionMVCRenderCommand
-	implements MVCRenderCommand {
+public class EditCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -61,16 +60,13 @@ public class EditCPDefinitionMVCRenderCommand
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 
-			CPDefinitionsDisplayContext
-				cpDefinitionsDisplayContext =
-					new CPDefinitionsDisplayContext(
-						_actionHelper, httpServletRequest,
-						_cpDefinitionService,
-						_cpTypeServicesTracker);
+			CPDefinitionsDisplayContext cpDefinitionsDisplayContext =
+				new CPDefinitionsDisplayContext(
+					_actionHelper, httpServletRequest, _cpDefinitionService,
+					_cpTypeServicesTracker);
 
 			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpDefinitionsDisplayContext);
+				WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionsDisplayContext);
 
 			setCPDefinitionRequestAttribute(renderRequest);
 		}
@@ -90,18 +86,15 @@ public class EditCPDefinitionMVCRenderCommand
 		return "/edit_commerce_product_definition.jsp";
 	}
 
-	protected void setCPDefinitionRequestAttribute(
-			RenderRequest renderRequest)
+	protected void setCPDefinitionRequestAttribute(RenderRequest renderRequest)
 		throws PortalException {
 
 		CPDefinition cpDefinition = null;
 
-		cpDefinition = _actionHelper.getCPDefinition(
-			renderRequest);
+		cpDefinition = _actionHelper.getCPDefinition(renderRequest);
 
 		renderRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_DEFINITION,
-			cpDefinition);
+			CPWebKeys.COMMERCE_PRODUCT_DEFINITION, cpDefinition);
 	}
 
 	@Reference
@@ -111,8 +104,7 @@ public class EditCPDefinitionMVCRenderCommand
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private CPTypeServicesTracker
-		_cpTypeServicesTracker;
+	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 	@Reference
 	private Portal _portal;

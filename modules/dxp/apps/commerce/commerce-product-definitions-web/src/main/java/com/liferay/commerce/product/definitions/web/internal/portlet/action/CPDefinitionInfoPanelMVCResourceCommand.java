@@ -47,12 +47,11 @@ public class CPDefinitionInfoPanelMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		List<CPDefinition> cpDefinitions =
-			_actionHelper.getCPDefinitions(resourceRequest);
+		List<CPDefinition> cpDefinitions = _actionHelper.getCPDefinitions(
+			resourceRequest);
 
 		resourceRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_DEFINITIONS,
-			cpDefinitions);
+			CPWebKeys.COMMERCE_PRODUCT_DEFINITIONS, cpDefinitions);
 
 		include(
 			resourceRequest, resourceResponse,

@@ -24,8 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class CPDefinitionOptionRelNameComparator
 	extends OrderByComparator<CPDefinitionOptionRel> {
 
-	public static final String ORDER_BY_ASC =
-		"CPDefinitionOptionRel.name ASC";
+	public static final String ORDER_BY_ASC = "CPDefinitionOptionRel.name ASC";
 
 	public static final String ORDER_BY_DESC =
 		"CPDefinitionOptionRel.name DESC";

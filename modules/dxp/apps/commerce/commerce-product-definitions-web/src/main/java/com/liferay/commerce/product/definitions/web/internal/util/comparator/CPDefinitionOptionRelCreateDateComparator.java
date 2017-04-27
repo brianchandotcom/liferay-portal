@@ -34,9 +34,7 @@ public class CPDefinitionOptionRelCreateDateComparator
 		this(false);
 	}
 
-	public CPDefinitionOptionRelCreateDateComparator(
-		boolean ascending) {
-
+	public CPDefinitionOptionRelCreateDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 

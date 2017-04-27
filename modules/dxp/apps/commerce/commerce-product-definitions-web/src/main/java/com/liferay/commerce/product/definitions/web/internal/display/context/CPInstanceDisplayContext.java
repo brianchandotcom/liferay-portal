@@ -30,8 +30,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alessio Antonio Rendina
  * @author Marco Leo
  */
-public class CPInstanceDisplayContext
-	extends BaseCPDefinitionsDisplayContext {
+public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 
 	public CPInstanceDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
@@ -40,8 +39,7 @@ public class CPInstanceDisplayContext
 		throws PortalException {
 
 		super(
-			actionHelper, httpServletRequest, "rowIdsCPInstance",
-			"CPInstance");
+			actionHelper, httpServletRequest, "rowIdsCPInstance", "CPInstance");
 
 		setDefaultOrderByCol("sku");
 
@@ -55,14 +53,12 @@ public class CPInstanceDisplayContext
 			return searchContainer;
 		}
 
-		SearchContainer<CPInstance> searchContainer =
-			new SearchContainer<>(
-				liferayPortletRequest, getPortletURL(), null, null);
+		SearchContainer<CPInstance> searchContainer = new SearchContainer<>(
+			liferayPortletRequest, getPortletURL(), null, null);
 
 		OrderByComparator<CPInstance> orderByComparator =
-			CPDefinitionsPortletUtil.
-				getCPInstanceOrderByComparator(
-					getOrderByCol(), getOrderByType());
+			CPDefinitionsPortletUtil.getCPInstanceOrderByComparator(
+				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
@@ -71,16 +67,13 @@ public class CPInstanceDisplayContext
 
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total =
-			_cpInstanceService.getCPInstancesCount(
-				getCPDefinitionId());
+		int total = _cpInstanceService.getCPInstancesCount(getCPDefinitionId());
 
 		searchContainer.setTotal(total);
 
-		List<CPInstance> results =
-			_cpInstanceService.getCPInstances(
-				getCPDefinitionId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+		List<CPInstance> results = _cpInstanceService.getCPInstances(
+			getCPDefinitionId(), searchContainer.getStart(),
+			searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 
@@ -89,7 +82,6 @@ public class CPInstanceDisplayContext
 		return this.searchContainer;
 	}
 
-	private final CPInstanceService
-		_cpInstanceService;
+	private final CPInstanceService _cpInstanceService;
 
 }

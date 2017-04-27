@@ -57,13 +57,10 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			this.httpServletRequest);
 
-		cpRequestHelper = new CPRequestHelper(
-			httpServletRequest);
+		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
-		liferayPortletRequest =
-			cpRequestHelper.getLiferayPortletRequest();
-		liferayPortletResponse =
-			cpRequestHelper.getLiferayPortletResponse();
+		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
+		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 
 		_defaultOrderByCol = "name";
 		_defaultOrderByType = "asc";
@@ -78,18 +75,14 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 
 		List<Locale> availableLocales = new ArrayList<>();
 
-		for (String languageId :
-				cpOption.getAvailableLanguageIds()) {
-
+		for (String languageId : cpOption.getAvailableLanguageIds()) {
 			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
 		}
 
 		return availableLocales;
 	}
 
-	public CPOption getCPOption()
-		throws PortalException {
-
+	public CPOption getCPOption() throws PortalException {
 		if (_cpOption != null) {
 			return _cpOption;
 		}
@@ -229,8 +222,7 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 
 		if (cpOption != null) {
 			portletURL.setParameter(
-			"cpOptionId",
-			String.valueOf(getCPOptionId()));
+				"cpOptionId", String.valueOf(getCPOptionId()));
 		}
 
 		return portletURL;

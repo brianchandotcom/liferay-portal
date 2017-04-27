@@ -21,8 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Marco Leo
  */
 @ProviderType
-public class CPInstanceDisplayDateException
-	extends PortalException {
+public class CPInstanceDisplayDateException extends PortalException {
 
 	public CPInstanceDisplayDateException() {
 	}
@@ -31,9 +30,7 @@ public class CPInstanceDisplayDateException
 		super(msg);
 	}
 
-	public CPInstanceDisplayDateException(
-		String msg, Throwable cause) {
-
+	public CPInstanceDisplayDateException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 

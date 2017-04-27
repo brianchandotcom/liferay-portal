@@ -19,6 +19,5 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
 /**
  * @author Marco Leo
  */
-public class CPOptionItemSelectorCriterion
-	extends BaseItemSelectorCriterion {
+public class CPOptionItemSelectorCriterion extends BaseItemSelectorCriterion {
 }

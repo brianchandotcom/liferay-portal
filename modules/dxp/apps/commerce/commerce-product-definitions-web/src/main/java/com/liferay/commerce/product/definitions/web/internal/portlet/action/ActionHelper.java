@@ -39,15 +39,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ActionHelper.class)
 public class ActionHelper {
 
-	public CPDefinition getCPDefinition(
-			RenderRequest renderRequest)
+	public CPDefinition getCPDefinition(RenderRequest renderRequest)
 		throws PortalException {
 
 		CPDefinition cpDefinition = null;
 
-		cpDefinition =
-			(CPDefinition)renderRequest.getAttribute(
-				CPWebKeys.COMMERCE_PRODUCT_DEFINITION);
+		cpDefinition = (CPDefinition)renderRequest.getAttribute(
+			CPWebKeys.COMMERCE_PRODUCT_DEFINITION);
 
 		if (cpDefinition != null) {
 			return cpDefinition;
@@ -60,27 +58,22 @@ public class ActionHelper {
 
 			//Try to get from an related entity if exist
 
-			CPDefinitionOptionRel
-				cpDefinitionOptionRel =
-					getCPDefinitionOptionRel(renderRequest);
+			CPDefinitionOptionRel cpDefinitionOptionRel =
+				getCPDefinitionOptionRel(renderRequest);
 
 			if (cpDefinitionOptionRel != null) {
-				cpDefinitionId =
-					cpDefinitionOptionRel.
-						getCPDefinitionId();
+				cpDefinitionId = cpDefinitionOptionRel.getCPDefinitionId();
 			}
 		}
 
 		if (cpDefinitionId > 0) {
-			cpDefinition =
-				_cpDefinitionService.
-					fetchCPDefinition(cpDefinitionId);
+			cpDefinition = _cpDefinitionService.fetchCPDefinition(
+				cpDefinitionId);
 		}
 
 		if (cpDefinition != null) {
 			renderRequest.setAttribute(
-				CPWebKeys.COMMERCE_PRODUCT_DEFINITION,
-				cpDefinition);
+				CPWebKeys.COMMERCE_PRODUCT_DEFINITION, cpDefinition);
 		}
 
 		return cpDefinition;
@@ -91,8 +84,7 @@ public class ActionHelper {
 				RenderRequest renderRequest)
 		throws PortalException {
 
-		CPDefinitionOptionRel cpDefinitionOptionRel =
-			null;
+		CPDefinitionOptionRel cpDefinitionOptionRel = null;
 
 		cpDefinitionOptionRel =
 			(CPDefinitionOptionRel)renderRequest.getAttribute(
@@ -109,22 +101,19 @@ public class ActionHelper {
 
 			//Try to get from an related entity if exist
 
-			CPDefinitionOptionValueRel
-				cpDefinitionOptionValueRel =
-					getCPDefinitionOptionValueRel(renderRequest);
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+				getCPDefinitionOptionValueRel(renderRequest);
 
 			if (cpDefinitionOptionValueRel != null) {
 				cpDefinitionOptionRelId =
-					cpDefinitionOptionValueRel.
-						getCPDefinitionOptionRelId();
+					cpDefinitionOptionValueRel.getCPDefinitionOptionRelId();
 			}
 		}
 
 		if (cpDefinitionOptionRelId > 0) {
 			cpDefinitionOptionRel =
-				_cpDefinitionOptionRelService.
-					fetchCPDefinitionOptionRel(
-						cpDefinitionOptionRelId);
+				_cpDefinitionOptionRelService.fetchCPDefinitionOptionRel(
+					cpDefinitionOptionRelId);
 		}
 
 		if (cpDefinitionOptionRel != null) {
@@ -136,28 +125,21 @@ public class ActionHelper {
 		return cpDefinitionOptionRel;
 	}
 
-	public List<CPDefinitionOptionRel>
-			getCPDefinitionOptionRels(
-				ResourceRequest resourceRequest)
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
+			ResourceRequest resourceRequest)
 		throws Exception {
 
 		long[] cpDefinitionOptionRelIds = ParamUtil.getLongValues(
 			resourceRequest, "rowIdsCPDefinitionOptionRel");
 
-		List<CPDefinitionOptionRel>
-			cpDefinitionOptionRels = new ArrayList<>();
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
 
-		for (long cpDefinitionOptionRelId :
-				cpDefinitionOptionRelIds) {
+		for (long cpDefinitionOptionRelId : cpDefinitionOptionRelIds) {
+			CPDefinitionOptionRel cpDefinitionOptionRel =
+				_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
+					cpDefinitionOptionRelId);
 
-			CPDefinitionOptionRel
-				cpDefinitionOptionRel =
-					_cpDefinitionOptionRelService.
-						getCPDefinitionOptionRel(
-							cpDefinitionOptionRelId);
-
-			cpDefinitionOptionRels.add(
-				cpDefinitionOptionRel);
+			cpDefinitionOptionRels.add(cpDefinitionOptionRel);
 		}
 
 		return cpDefinitionOptionRels;
@@ -168,13 +150,11 @@ public class ActionHelper {
 				RenderRequest renderRequest)
 		throws PortalException {
 
-		CPDefinitionOptionValueRel
-			cpDefinitionOptionValueRel = null;
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel = null;
 
 		cpDefinitionOptionValueRel =
 			(CPDefinitionOptionValueRel)renderRequest.getAttribute(
-				CPWebKeys.
-					COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL);
+				CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL);
 
 		if (cpDefinitionOptionValueRel != null) {
 			return cpDefinitionOptionValueRel;
@@ -192,57 +172,47 @@ public class ActionHelper {
 
 		if (cpDefinitionOptionValueRel != null) {
 			renderRequest.setAttribute(
-				CPWebKeys.
-					COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL,
+				CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL,
 				cpDefinitionOptionValueRel);
 		}
 
 		return cpDefinitionOptionValueRel;
 	}
 
-	public List<CPDefinitionOptionValueRel>
-			getCPDefinitionOptionValueRels(
-				ResourceRequest resourceRequest)
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+			ResourceRequest resourceRequest)
 		throws Exception {
 
-		long[] cpDefinitionOptionValueRelIds =
-			ParamUtil.getLongValues(
-				resourceRequest,
-				"rowIdsCPDefinitionOptionValueRel");
+		long[] cpDefinitionOptionValueRelIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIdsCPDefinitionOptionValueRel");
 
-		List<CPDefinitionOptionValueRel>
-			cpDefinitionOptionValueRels = new ArrayList<>();
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			new ArrayList<>();
 
 		for (long cpDefinitionOptionValueRelId :
 				cpDefinitionOptionValueRelIds) {
 
-			CPDefinitionOptionValueRel
-				cpDefinitionOptionValueRel =
-					_cpDefinitionOptionValueRelService.
-						getCPDefinitionOptionValueRel(
-							cpDefinitionOptionValueRelId);
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+				_cpDefinitionOptionValueRelService.
+					getCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
 
-			cpDefinitionOptionValueRels.add(
-				cpDefinitionOptionValueRel);
+			cpDefinitionOptionValueRels.add(cpDefinitionOptionValueRel);
 		}
 
 		return cpDefinitionOptionValueRels;
 	}
 
-	public List<CPDefinition> getCPDefinitions(
-			ResourceRequest resourceRequest)
+	public List<CPDefinition> getCPDefinitions(ResourceRequest resourceRequest)
 		throws Exception {
 
 		long[] cpDefinitionIds = ParamUtil.getLongValues(
 			resourceRequest, "rowIdsCPDefinition");
 
-		List<CPDefinition> cpDefinitions =
-			new ArrayList<>();
+		List<CPDefinition> cpDefinitions = new ArrayList<>();
 
 		for (long cpDefinitionId : cpDefinitionIds) {
-			CPDefinition cpDefinition =
-				_cpDefinitionService.getCPDefinition(
-					cpDefinitionId);
+			CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+				cpDefinitionId);
 
 			cpDefinitions.add(cpDefinition);
 		}
@@ -251,8 +221,7 @@ public class ActionHelper {
 	}
 
 	@Reference
-	private CPDefinitionOptionRelService
-		_cpDefinitionOptionRelService;
+	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
 	@Reference
 	private CPDefinitionOptionValueRelService

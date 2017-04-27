@@ -17,7 +17,6 @@ package com.liferay.commerce.product.options.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchProductOptionException;
 import com.liferay.commerce.product.model.CPOption;
-import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -49,14 +48,12 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class EditCPOptionMVCActionCommand
-	extends BaseMVCActionCommand {
+public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteCPOption(ActionRequest actionRequest)
 		throws Exception {
 
-		long cpOptionId = ParamUtil.getLong(
-			actionRequest, "cpOptionId");
+		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
 
 		_cpOptionService.deleteCPOption(cpOptionId);
 	}
@@ -92,12 +89,10 @@ public class EditCPOptionMVCActionCommand
 		}
 	}
 
-	protected CPOption updateCPOption(
-			ActionRequest actionRequest)
+	protected CPOption updateCPOption(ActionRequest actionRequest)
 		throws Exception {
 
-		long cpOptionId = ParamUtil.getLong(
-			actionRequest, "cpOptionId");
+		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
@@ -115,19 +110,16 @@ public class EditCPOptionMVCActionCommand
 
 			// Add commerce product option
 
-			cpOption =
-				_cpOptionService.addCPOption(
-					nameMap, descriptionMap, ddmFormFieldTypeName,
-					serviceContext);
+			cpOption = _cpOptionService.addCPOption(
+				nameMap, descriptionMap, ddmFormFieldTypeName, serviceContext);
 		}
 		else {
 
 			// Update commerce product option
 
-			cpOption =
-				_cpOptionService.updateCPOption(
-					cpOptionId, nameMap, descriptionMap,
-					ddmFormFieldTypeName, serviceContext);
+			cpOption = _cpOptionService.updateCPOption(
+				cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
+				serviceContext);
 		}
 
 		return cpOption;

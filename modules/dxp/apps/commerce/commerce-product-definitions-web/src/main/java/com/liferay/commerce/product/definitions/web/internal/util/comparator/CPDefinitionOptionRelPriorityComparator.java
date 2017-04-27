@@ -23,11 +23,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class CPDefinitionOptionRelPriorityComparator
 	extends OrderByComparator<CPDefinitionOptionRel> {
 
-	public static final String ORDER_BY_ASC =
-		"CPOptionValue.priority ASC";
+	public static final String ORDER_BY_ASC = "CPOptionValue.priority ASC";
 
-	public static final String ORDER_BY_DESC =
-		"CPOptionValue.priority DESC";
+	public static final String ORDER_BY_DESC = "CPOptionValue.priority DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
@@ -35,9 +33,7 @@ public class CPDefinitionOptionRelPriorityComparator
 		this(false);
 	}
 
-	public CPDefinitionOptionRelPriorityComparator(
-		boolean ascending) {
-
+	public CPDefinitionOptionRelPriorityComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 

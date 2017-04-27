@@ -48,8 +48,7 @@ public class CPDefinitionsDisplayContext
 			"CPDefinition");
 
 		_cpDefinitionService = cpDefinitionService;
-		_cpTypeServicesTracker =
-			cpTypeServicesTracker;
+		_cpTypeServicesTracker = cpTypeServicesTracker;
 	}
 
 	public List<CPType> getCPTypes() {
@@ -62,30 +61,26 @@ public class CPDefinitionsDisplayContext
 			return searchContainer;
 		}
 
-		SearchContainer<CPDefinition> searchContainer =
-			new SearchContainer<>(
-				liferayPortletRequest, getPortletURL(), null, null);
+		SearchContainer<CPDefinition> searchContainer = new SearchContainer<>(
+			liferayPortletRequest, getPortletURL(), null, null);
 
 		OrderByComparator<CPDefinition> orderByComparator =
-			CPDefinitionsPortletUtil.
-				getCPDefinitionOrderByComparator(
-					getOrderByCol(), getOrderByType());
+			CPDefinitionsPortletUtil.getCPDefinitionOrderByComparator(
+				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total =
-			_cpDefinitionService.
-				getCPDefinitionsCount(getScopeGroupId());
+		int total = _cpDefinitionService.getCPDefinitionsCount(
+			getScopeGroupId());
 
 		searchContainer.setTotal(total);
 
-		List<CPDefinition> results =
-			_cpDefinitionService.getCPDefinitions(
-				getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+		List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
+			getScopeGroupId(), searchContainer.getStart(),
+			searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 
@@ -94,9 +89,7 @@ public class CPDefinitionsDisplayContext
 		return this.searchContainer;
 	}
 
-	private final CPDefinitionService
-		_cpDefinitionService;
-	private final CPTypeServicesTracker
-		_cpTypeServicesTracker;
+	private final CPDefinitionService _cpDefinitionService;
+	private final CPTypeServicesTracker _cpTypeServicesTracker;
 
 }

@@ -59,8 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class EditCPDefinitionMVCActionCommand
-	extends BaseMVCActionCommand {
+public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteCPDefinition(ActionRequest actionRequest)
 		throws Exception {
@@ -68,8 +67,7 @@ public class EditCPDefinitionMVCActionCommand
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
-		_cpDefinitionService.deleteCPDefinition(
-			cpDefinitionId);
+		_cpDefinitionService.deleteCPDefinition(cpDefinitionId);
 	}
 
 	@Override
@@ -94,8 +92,7 @@ public class EditCPDefinitionMVCActionCommand
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				cpDefinition = updateCPDefinition(
-					actionRequest);
+				cpDefinition = updateCPDefinition(actionRequest);
 			}
 
 			if ((cpDefinition != null) &&
@@ -127,8 +124,7 @@ public class EditCPDefinitionMVCActionCommand
 	}
 
 	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest,
-			CPDefinition cpDefinition,
+			ActionRequest actionRequest, CPDefinition cpDefinition,
 			String redirect)
 		throws Exception {
 
@@ -140,22 +136,18 @@ public class EditCPDefinitionMVCActionCommand
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			actionRequest, themeDisplay.getScopeGroup(),
-			CPDefinition.class.getName(),
-			PortletProvider.Action.EDIT);
+			CPDefinition.class.getName(), PortletProvider.Action.EDIT);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "editProductDefinition");
 		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter(
-			"cpDefinitionId",
-			String.valueOf(cpDefinition.
-				getCPDefinitionId()));
+			"cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
 
 		return portletURL.toString();
 	}
 
-	protected CPDefinition updateCPDefinition(
-			ActionRequest actionRequest)
+	protected CPDefinition updateCPDefinition(ActionRequest actionRequest)
 		throws Exception {
 
 		long cpDefinitionId = ParamUtil.getLong(
@@ -216,28 +208,24 @@ public class EditCPDefinitionMVCActionCommand
 
 			// Add commerce product definition
 
-			cpDefinition =
-				_cpDefinitionService.addCPDefinition(
-					baseSKU, titleMap, descriptionMap, productTypeName, null,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+			cpDefinition = _cpDefinitionService.addCPDefinition(
+				baseSKU, titleMap, descriptionMap, productTypeName, null,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 		else {
 
 			// Update commerce product definition
 
-			cpDefinition =
-				_cpDefinitionService.
-					updateCPDefinition(
-						cpDefinitionId, baseSKU, titleMap,
-						descriptionMap, productTypeName, null, displayDateMonth,
-						displayDateDay, displayDateYear, displayDateHour,
-						displayDateMinute, expirationDateMonth,
-						expirationDateDay, expirationDateYear,
-						expirationDateHour, expirationDateMinute, neverExpire,
-						serviceContext);
+			cpDefinition = _cpDefinitionService.updateCPDefinition(
+				cpDefinitionId, baseSKU, titleMap, descriptionMap,
+				productTypeName, null, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
 		}
 
 		return cpDefinition;

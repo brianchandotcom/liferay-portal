@@ -43,13 +43,11 @@ public class CPDefinitionOptionValueRelDisplayContext
 
 		super(
 			actionHelper, httpServletRequest,
-			"rowIdsCPDefinitionOptionValueRel",
-			"CPDefinitionOptionValueRel");
+			"rowIdsCPDefinitionOptionValueRel", "CPDefinitionOptionValueRel");
 
 		setDefaultOrderByCol("priority");
 
-		_cpDefinitionOptionValueRelService =
-			cpDefinitionOptionValueRelService;
+		_cpDefinitionOptionValueRelService = cpDefinitionOptionValueRelService;
 	}
 
 	public CPDefinitionOptionRel
@@ -59,16 +57,13 @@ public class CPDefinitionOptionValueRelDisplayContext
 			return _cpDefinitionOptionRel;
 		}
 
-		_cpDefinitionOptionRel =
-			actionHelper.getCPDefinitionOptionRel(
-				cpRequestHelper.getRenderRequest());
+		_cpDefinitionOptionRel = actionHelper.getCPDefinitionOptionRel(
+			cpRequestHelper.getRenderRequest());
 
 		return _cpDefinitionOptionRel;
 	}
 
-	public long getCPDefinitionOptionRelId()
-		throws PortalException {
-
+	public long getCPDefinitionOptionRelId() throws PortalException {
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			getCPDefinitionOptionRel();
 
@@ -76,8 +71,7 @@ public class CPDefinitionOptionValueRelDisplayContext
 			return 0;
 		}
 
-		return cpDefinitionOptionRel.
-			getCPDefinitionOptionRelId();
+		return cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 	}
 
 	public CPDefinitionOptionValueRel
@@ -94,19 +88,15 @@ public class CPDefinitionOptionValueRelDisplayContext
 		return _cpDefinitionOptionValueRel;
 	}
 
-	public long getCPDefinitionOptionValueRelId()
-		throws PortalException {
-
-		CPDefinitionOptionValueRel
-			cpDefinitionOptionValueRel =
-				getCPDefinitionOptionValueRel();
+	public long getCPDefinitionOptionValueRelId() throws PortalException {
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			getCPDefinitionOptionValueRel();
 
 		if (cpDefinitionOptionValueRel == null) {
 			return 0;
 		}
 
-		return cpDefinitionOptionValueRel.
-			getCPDefinitionOptionValueRelId();
+		return cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId();
 	}
 
 	@Override
@@ -130,21 +120,19 @@ public class CPDefinitionOptionValueRelDisplayContext
 			return searchContainer;
 		}
 
-		SearchContainer<CPDefinitionOptionValueRel>
-			searchContainer = new SearchContainer<>(
+		SearchContainer<CPDefinitionOptionValueRel> searchContainer =
+			new SearchContainer<>(
 				liferayPortletRequest, getPortletURL(), null, null);
 
-		OrderByComparator<CPDefinitionOptionValueRel>
-			orderByComparator =
-				CPDefinitionsPortletUtil.
-					getCPDefinitionOptionValueRelOrderByComparator(
-						getOrderByCol(), getOrderByType());
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator =
+			CPDefinitionsPortletUtil.
+				getCPDefinitionOptionValueRelOrderByComparator(
+					getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setEmptyResultsMessage(
-			"no-option-values-were-found");
+		searchContainer.setEmptyResultsMessage("no-option-values-were-found");
 		searchContainer.setRowChecker(getRowChecker());
 
 		int total =
@@ -155,11 +143,9 @@ public class CPDefinitionOptionValueRelDisplayContext
 		searchContainer.setTotal(total);
 
 		List<CPDefinitionOptionValueRel> results =
-			_cpDefinitionOptionValueRelService.
-				getCPDefinitionOptionValueRels(
-					getCPDefinitionOptionRelId(),
-					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator);
+			_cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRels(
+				getCPDefinitionOptionRelId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 
@@ -168,10 +154,8 @@ public class CPDefinitionOptionValueRelDisplayContext
 		return this.searchContainer;
 	}
 
-	private CPDefinitionOptionRel
-		_cpDefinitionOptionRel;
-	private CPDefinitionOptionValueRel
-		_cpDefinitionOptionValueRel;
+	private CPDefinitionOptionRel _cpDefinitionOptionRel;
+	private CPDefinitionOptionValueRel _cpDefinitionOptionValueRel;
 	private final CPDefinitionOptionValueRelService
 		_cpDefinitionOptionValueRelService;
 

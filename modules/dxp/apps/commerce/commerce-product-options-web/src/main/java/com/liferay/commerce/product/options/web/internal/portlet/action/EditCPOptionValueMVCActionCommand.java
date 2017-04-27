@@ -17,7 +17,6 @@ package com.liferay.commerce.product.options.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchProductOptionValueException;
 import com.liferay.commerce.product.model.CPOptionValue;
-import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -49,8 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class EditCPOptionValueMVCActionCommand
-	extends BaseMVCActionCommand {
+public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteCPOptionValue(ActionRequest actionRequest)
 		throws Exception {
@@ -92,15 +90,13 @@ public class EditCPOptionValueMVCActionCommand
 		}
 	}
 
-	protected CPOptionValue updateCPOptionValue(
-			ActionRequest actionRequest)
+	protected CPOptionValue updateCPOptionValue(ActionRequest actionRequest)
 		throws Exception {
 
 		long cpOptionValueId = ParamUtil.getLong(
 			actionRequest, "cpOptionValueId");
 
-		long cpOptionId = ParamUtil.getLong(
-			actionRequest, "cpOptionId");
+		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
@@ -114,19 +110,15 @@ public class EditCPOptionValueMVCActionCommand
 
 			// Add commerce product option value
 
-			cpOptionValue =
-				_cpOptionValueService.addCPOptionValue(
-					cpOptionId, titleMap, priority,
-					serviceContext);
+			cpOptionValue = _cpOptionValueService.addCPOptionValue(
+				cpOptionId, titleMap, priority, serviceContext);
 		}
 		else {
 
 			// Update commerce product option value
 
-			cpOptionValue =
-				_cpOptionValueService.updateCPOptionValue(
-					cpOptionValueId, titleMap, priority,
-					serviceContext);
+			cpOptionValue = _cpOptionValueService.updateCPOptionValue(
+				cpOptionValueId, titleMap, priority, serviceContext);
 		}
 
 		return cpOptionValue;

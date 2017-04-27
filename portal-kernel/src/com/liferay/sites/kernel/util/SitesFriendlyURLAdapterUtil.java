@@ -16,10 +16,8 @@ package com.liferay.sites.kernel.util;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.Locale;
 
@@ -57,19 +55,12 @@ public class SitesFriendlyURLAdapterUtil {
 	}
 
 	public static SitesFriendlyURLAdapter getSiteFriendlyURLAdapter() {
-		return _serviceTracker.getService();
+		return _sitesFriendlyURLAdapter;
 	}
 
-	private static final
-		ServiceTracker<SitesFriendlyURLAdapter, SitesFriendlyURLAdapter>
-			_serviceTracker;
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(SitesFriendlyURLAdapter.class);
-
-		_serviceTracker.open();
-	}
+	private static volatile SitesFriendlyURLAdapter _sitesFriendlyURLAdapter =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			SitesFriendlyURLAdapter.class, SitesFriendlyURLAdapterUtil.class,
+			"_sitesFriendlyURLAdapter", false);
 
 }

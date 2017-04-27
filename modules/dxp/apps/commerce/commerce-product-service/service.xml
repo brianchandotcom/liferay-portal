@@ -65,6 +65,32 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
+	<entity local-service="true" name="CPDefinitionMedia" remote-service="true" trash-enabled="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPDefinitionMediaId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionId" type="long" />
+		<column name="fileEntryId" type="long" />
+		<column name="DDMContent" type="String" />
+		<column name="priority" type="int" />
+		<column name="CPMediaTypeId" type="long" />
+	</entity>
 	<entity local-service="true" name="CPDefinitionOptionRel" remote-service="true"  uuid="true">
 
 		<!-- PK fields -->
@@ -227,6 +253,30 @@
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
+	</entity>
+	<entity local-service="true" name="CPMediaType" remote-service="true"  uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPMediaTypeId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="title" type="long" />
+		<column localized="true" name="description" type="long" />
+		<column name="priority" type="int" />
 	</entity>
 	<entity local-service="true" name="CPOption" remote-service="true"  uuid="true">
 

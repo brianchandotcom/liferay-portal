@@ -35,6 +35,7 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.reporting.ReportingExtension;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.JavaExec;
@@ -291,6 +292,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 		javaExec.setClasspath(classpath);
 		javaExec.setDescription("Runs FindSecurityBugs on this project.");
+		javaExec.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 		javaExec.setMain("edu.umd.cs.findbugs.FindBugs2");
 
 		javaExec.systemProperty(

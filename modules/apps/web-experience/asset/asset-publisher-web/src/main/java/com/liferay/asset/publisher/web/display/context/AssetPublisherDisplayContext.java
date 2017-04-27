@@ -624,28 +624,16 @@ public class AssetPublisherDisplayContext {
 			return Collections.emptyMap();
 		}
 
-		Map<Long, Map<String, PortletURL>> scopeAddPortletURLs = new HashMap();
-
-		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)_portletResponse;
-
-		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-		redirectURL.setParameter(
-			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
-		redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
+		Map<Long, Map<String, PortletURL>> scopeAddPortletURLs =
+			new HashMap<>();
 
 		LiferayPortletRequest liferayPortletRequest =
 			(LiferayPortletRequest)_portletRequest;
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)_portletResponse;
 
-		PortletURL currentURLObj = PortletURLUtil.getCurrent(
+		String redirect = _getScopeAssetPortletRedirect(
 			liferayPortletRequest, liferayPortletResponse);
-
-		redirectURL.setParameter("redirect", currentURLObj.toString());
-
-		redirectURL.setWindowState(LiferayWindowState.POP_UP);
-
-		String redirect = redirectURL.toString();
 
 		for (long groupId : groupIds) {
 			Map<String, PortletURL> addPortletURLs =
@@ -1222,6 +1210,27 @@ public class AssetPublisherDisplayContext {
 
 			_ddmStructureFieldLabel = classTypeField.getLabel();
 		}
+	}
+
+	private String _getScopeAssetPortletRedirect(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+
+		redirectURL.setParameter(
+			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
+		redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
+
+		PortletURL currentURLObj = PortletURLUtil.getCurrent(
+			liferayPortletRequest, liferayPortletResponse);
+
+		redirectURL.setParameter("redirect", currentURLObj.toString());
+
+		redirectURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return redirectURL.toString();
 	}
 
 	private Integer _abstractLength;

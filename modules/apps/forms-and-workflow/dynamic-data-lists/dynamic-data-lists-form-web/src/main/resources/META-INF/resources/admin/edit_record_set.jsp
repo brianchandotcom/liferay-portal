@@ -49,7 +49,17 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 	</aui:nav-bar>
 
 	<div class="autosave-bar management-bar management-bar-default">
-		<span class="autosave-feedback management-bar-text" id="<portlet:namespace />autosaveMessage"></span>
+		<div class="container-fluid-1280">
+			<span class="autosave-feedback management-bar-text" id="<portlet:namespace />autosaveMessage"></span>
+
+			<span class="publish-icon" data-original-title="<liferay-ui:message key="copy-url" />" id="<portlet:namespace />publishIcon" title="<liferay-ui:message key="copy-url" />">
+				<svg class="lexicon-icon">
+					<use xlink:href="<%= ddlFormAdminDisplayContext.getLexiconIconsPath() %>link" />
+				</svg>
+			</span>
+		</div>
+	</div>
+
 	<div class="edit-popover publish-popover-content">
 		<div class="form-group">
 			<label><liferay-ui:message key="copy-url" /></label>

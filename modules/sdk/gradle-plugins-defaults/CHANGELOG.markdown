@@ -1426,6 +1426,12 @@ not contain a class or JAR file.
 task if the URL is protected.
 - [LPS-72152]: Update the [Liferay Gradle Plugins] dependency to version 3.3.5.
 
+## 3.6.8 - 2017-04-27
+
+### Added
+- [LPS-68813]: Execute `findSecurityBugs` with the `check` task.
+- [LPS-68813]: Make `findSecurityBugs` task visible in `gradle task`.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

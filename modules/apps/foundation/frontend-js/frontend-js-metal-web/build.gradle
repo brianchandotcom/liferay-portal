@@ -10,7 +10,6 @@ configJSModules {
 	moduleFormat "/.soy/g,.soy.js"
 }
 
-
 transpileJS {
 	skipWhenEmpty = false
 	sourceDir = npmInstall.nodeModulesDir

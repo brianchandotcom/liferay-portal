@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.kernel.util.comparator.EntryCreateDateComparator;
+import com.liferay.trash.kernel.util.comparator.EntryTypeComparator;
+import com.liferay.trash.kernel.util.comparator.EntryUserNameComparator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,7 +102,7 @@ public class EntrySearch extends SearchContainer<TrashEntry> {
 			}
 
 			OrderByComparator<TrashEntry> orderByComparator =
-				TrashUtil.getEntryOrderByComparator(orderByCol, orderByType);
+				_getEntryOrderByComparator(orderByCol, orderByType);
 
 			setOrderableHeaders(orderableHeaders);
 			setOrderByCol(orderByCol);
@@ -110,6 +112,30 @@ public class EntrySearch extends SearchContainer<TrashEntry> {
 		catch (Exception e) {
 			_log.error(e);
 		}
+	}
+
+	private OrderByComparator<TrashEntry> _getEntryOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<TrashEntry> orderByComparator = null;
+
+		if (orderByCol.equals("removed-by")) {
+			orderByComparator = new EntryUserNameComparator(orderByAsc);
+		}
+		else if (orderByCol.equals("removed-date")) {
+			orderByComparator = new EntryCreateDateComparator(orderByAsc);
+		}
+		else if (orderByCol.equals("type")) {
+			orderByComparator = new EntryTypeComparator(orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(EntrySearch.class);

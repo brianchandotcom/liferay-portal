@@ -14,7 +14,6 @@
 
 package com.liferay.exportimport.internal.staged.model.repository;
 
-import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,8 +22,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.List;
 
@@ -128,20 +127,13 @@ public class StagedModelRepositoryHelperImpl
 
 	@Override
 	public boolean isStagedModelInTrash(StagedModel stagedModel) {
-		String className = ExportImportClassedModelUtil.getClassName(
-			stagedModel);
-		long classPK = ExportImportClassedModelUtil.getClassPK(stagedModel);
-
-		try {
-			return TrashUtil.isInTrash(className, classPK);
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
+		if (!(stagedModel instanceof TrashedModel)) {
+			return false;
 		}
 
-		return false;
+		TrashedModel trashedModel = (TrashedModel)stagedModel;
+
+		return trashedModel.isInTrash();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

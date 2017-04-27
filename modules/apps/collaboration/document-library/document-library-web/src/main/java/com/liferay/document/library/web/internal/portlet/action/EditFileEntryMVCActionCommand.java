@@ -85,14 +85,15 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.trash.kernel.service.TrashEntryService;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -378,14 +379,23 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
-		if (fileEntry.isRepositoryCapabilityProvided(TrashCapability.class)) {
-			fileEntry = _dlTrashService.moveFileEntryToTrash(fileEntryId);
+		if (!fileEntry.isRepositoryCapabilityProvided(TrashCapability.class)) {
+			hideDefaultSuccessMessage(actionRequest);
 
-			TrashUtil.addTrashSessionMessages(
-				actionRequest, (TrashedModel)fileEntry.getModel());
+			return;
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
+		fileEntry = _dlTrashService.moveFileEntryToTrash(fileEntryId);
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		trashedModels.add((TrashedModel)fileEntry.getModel());
+
+		Map<String, Object> data = new HashMap<>();
+
+		data.put("trashedModels", trashedModels);
+
+		addDeleteSuccessData(actionRequest, data);
 	}
 
 	protected void deleteTempFileEntry(

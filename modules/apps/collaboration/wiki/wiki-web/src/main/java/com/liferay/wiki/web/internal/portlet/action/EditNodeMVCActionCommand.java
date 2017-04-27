@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.kernel.service.TrashEntryService;
-import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.DuplicateNodeNameException;
 import com.liferay.wiki.exception.NoSuchNodeException;
@@ -47,7 +46,9 @@ import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -131,9 +132,11 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 		WikiCacheThreadLocal.setClearCache(true);
 
 		if (moveToTrash && !trashedModels.isEmpty()) {
-			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+			Map<String, Object> data = new HashMap<>();
 
-			hideDefaultSuccessMessage(actionRequest);
+			data.put("trashedModels", trashedModels);
+
+			addDeleteSuccessData(actionRequest, data);
 		}
 	}
 

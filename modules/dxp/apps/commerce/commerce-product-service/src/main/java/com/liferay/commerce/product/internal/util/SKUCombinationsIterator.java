@@ -17,7 +17,9 @@ package com.liferay.commerce.product.internal.util;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
@@ -30,9 +32,9 @@ public class SKUCombinationsIterator
 
 	public SKUCombinationsIterator(
 		Map<CPDefinitionOptionRel, CPDefinitionOptionValueRel[]>
-			map) {
+			cpDefinitionOptionRelMap) {
 
-		_combinationLength = map.size();
+		_combinationLength = cpDefinitionOptionRelMap.size();
 
 		_values =
 			new CPDefinitionOptionValueRel[_combinationLength][];
@@ -48,11 +50,13 @@ public class SKUCombinationsIterator
 
 		int valuesIndex = 0;
 
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>(cpDefinitionOptionRelMap.keySet());
+
 		for (CPDefinitionOptionRel
 				cpDefinitionOptionRel :
-					new TreeSet<>(map.keySet())) {
+					cpDefinitionOptionRels) {
 
-			_values[valuesIndex++] = map.get(
+			_values[valuesIndex++] = cpDefinitionOptionRelMap.get(
 				cpDefinitionOptionRel);
 		}
 

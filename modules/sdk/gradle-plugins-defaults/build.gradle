@@ -1,3 +1,13 @@
+import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
+
+String pluginsSDKVersion = project.properties["plugins.sdk.version"]
+
+configurations {
+	pluginsSDK {
+		transitive = false
+	}
+}
+
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.3.5"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.app.javadoc.builder", version: "1.2.0"
@@ -10,4 +20,22 @@ dependencies {
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.0.3"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
+
+	pluginsSDK group: "com.liferay.portal", name: "com.liferay.portal.plugins.sdk", version: pluginsSDKVersion
+}
+
+processResources {
+	String destinationDirName = "com/liferay/gradle/plugins/defaults/dependencies"
+	String zipDirName = "com.liferay.portal.plugins.sdk-${pluginsSDKVersion}/dependencies/net.sourceforge.pmd/rulesets/java"
+
+	into(destinationDirName) {
+		eachFile new ReplaceLeadingPathAction("${destinationDirName}/${zipDirName}": destinationDirName)
+
+		from {
+			zipTree(configurations.pluginsSDK.singleFile)
+		}
+
+		include "${zipDirName}/standard-rules.xml"
+		includeEmptyDirs = false
+	}
 }

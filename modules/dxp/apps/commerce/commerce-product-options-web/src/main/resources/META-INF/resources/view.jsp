@@ -127,7 +127,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 </div>
 
 <liferay-portlet:renderURL var="addProductOptionURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 	<portlet:param name="mvcRenderCommandName" value="editProductOption" />
 	<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
 	<portlet:param name="toolbarItem" value="view-product-option-details" />

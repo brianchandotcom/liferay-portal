@@ -21,7 +21,7 @@ FileEntry fileEntry = ActionUtil.getFileEntry(liferayPortletRequest);
 
 FileVersion fileVersion = ActionUtil.getFileVersion(liferayPortletRequest, fileEntry);
 
-UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(request, fileVersion, resourceBundle);
+UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(request, fileVersion, resourceBundle, dlTrashUtil);
 
 JavaScriptMenuItem javaScriptMenuItem = uiItemsBuilder.getJavacriptCheckinMenuItem();
 %>

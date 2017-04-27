@@ -21,6 +21,7 @@ import com.liferay.document.library.display.context.DLViewFileEntryHistoryDispla
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -112,7 +113,7 @@ public class DLDisplayContextProvider {
 		DLViewFileEntryHistoryDisplayContext
 			dlViewFileEntryHistoryDisplayContext =
 				new DefaultDLViewFileEntryHistoryDisplayContext(
-					request, fileVersion, resourceBundle);
+					request, fileVersion, resourceBundle, _dlTrashUtil);
 
 		if (fileVersion == null) {
 			return dlViewFileEntryHistoryDisplayContext;
@@ -146,7 +147,7 @@ public class DLDisplayContextProvider {
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
 					request, response, fileShortcut, _dlMimeTypeDisplayContext,
-					resourceBundle, _storageEngine);
+					resourceBundle, _storageEngine, _dlTrashUtil);
 
 			if (fileShortcut == null) {
 				return dlViewFileVersionDisplayContext;
@@ -182,7 +183,7 @@ public class DLDisplayContextProvider {
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
 				request, response, fileVersion, _dlMimeTypeDisplayContext,
-				resourceBundle, _storageEngine);
+				resourceBundle, _storageEngine, _dlTrashUtil);
 
 		if (fileVersion == null) {
 			return dlViewFileVersionDisplayContext;
@@ -249,6 +250,9 @@ public class DLDisplayContextProvider {
 	private ServiceTrackerList<DLDisplayContextFactory, DLDisplayContextFactory>
 		_dlDisplayContextFactories;
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+
+	@Reference
+	private DLTrashUtil _dlTrashUtil;
 
 	@Reference
 	private DLValidator _dlValidator;

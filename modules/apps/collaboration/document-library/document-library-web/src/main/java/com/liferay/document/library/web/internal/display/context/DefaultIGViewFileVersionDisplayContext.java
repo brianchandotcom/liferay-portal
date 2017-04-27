@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.internal.display.context.util.IGRequestHelper;
+import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -40,18 +41,19 @@ public class DefaultIGViewFileVersionDisplayContext
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileShortcut fileShortcut, ResourceBundle resourceBundle)
+			FileShortcut fileShortcut, ResourceBundle resourceBundle,
+			DLTrashUtil dlTrashUtil)
 		throws PortalException {
 
 		this(
 			request, response, fileShortcut.getFileVersion(), fileShortcut,
-			resourceBundle);
+			resourceBundle, dlTrashUtil);
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion, FileShortcut fileShortcut,
-			ResourceBundle resourceBundle)
+			ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil)
 		throws PortalException {
 
 		_igRequestHelper = new IGRequestHelper(request);
@@ -61,20 +63,21 @@ public class DefaultIGViewFileVersionDisplayContext
 
 		if (fileShortcut == null) {
 			_uiItemsBuilder = new UIItemsBuilder(
-				request, fileVersion, resourceBundle);
+				request, fileVersion, resourceBundle, dlTrashUtil);
 		}
 		else {
 			_uiItemsBuilder = new UIItemsBuilder(
-				request, fileShortcut, resourceBundle);
+				request, fileShortcut, resourceBundle, dlTrashUtil);
 		}
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion, ResourceBundle resourceBundle)
+			FileVersion fileVersion, ResourceBundle resourceBundle,
+			DLTrashUtil dlTrashUtil)
 		throws PortalException {
 
-		this(request, response, fileVersion, null, resourceBundle);
+		this(request, response, fileVersion, null, resourceBundle, dlTrashUtil);
 	}
 
 	@Override

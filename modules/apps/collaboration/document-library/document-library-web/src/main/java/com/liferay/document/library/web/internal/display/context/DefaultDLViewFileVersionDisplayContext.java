@@ -30,6 +30,7 @@ import com.liferay.document.library.web.internal.display.context.logic.FileVersi
 import com.liferay.document.library.web.internal.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.display.context.util.JSPRenderer;
+import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -68,23 +69,26 @@ public class DefaultDLViewFileVersionDisplayContext
 			HttpServletRequest request, HttpServletResponse response,
 			FileShortcut fileShortcut,
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
-			ResourceBundle resourceBundle, StorageEngine storageEngine)
+			ResourceBundle resourceBundle, StorageEngine storageEngine,
+			DLTrashUtil dlTrashUtil)
 		throws PortalException {
 
 		this(
 			request, fileShortcut.getFileVersion(), fileShortcut,
-			dlMimeTypeDisplayContext, resourceBundle, storageEngine);
+			dlMimeTypeDisplayContext, resourceBundle, storageEngine,
+			dlTrashUtil);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
-		ResourceBundle resourceBundle, StorageEngine storageEngine) {
+		ResourceBundle resourceBundle, StorageEngine storageEngine,
+		DLTrashUtil dlTrashUtil) {
 
 		this(
 			request, fileVersion, null, dlMimeTypeDisplayContext,
-			resourceBundle, storageEngine);
+			resourceBundle, storageEngine, dlTrashUtil);
 	}
 
 	@Override
@@ -243,7 +247,8 @@ public class DefaultDLViewFileVersionDisplayContext
 		HttpServletRequest request, FileVersion fileVersion,
 		FileShortcut fileShortcut,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
-		ResourceBundle resourceBundle, StorageEngine storageEngine) {
+		ResourceBundle resourceBundle, StorageEngine storageEngine,
+		DLTrashUtil dlTrashUtil) {
 
 		try {
 			_fileVersion = fileVersion;
@@ -265,11 +270,11 @@ public class DefaultDLViewFileVersionDisplayContext
 
 			if (fileShortcut == null) {
 				_uiItemsBuilder = new UIItemsBuilder(
-					request, fileVersion, _resourceBundle);
+					request, fileVersion, _resourceBundle, dlTrashUtil);
 			}
 			else {
 				_uiItemsBuilder = new UIItemsBuilder(
-					request, fileShortcut, _resourceBundle);
+					request, fileShortcut, _resourceBundle, dlTrashUtil);
 			}
 		}
 		catch (PortalException pe) {

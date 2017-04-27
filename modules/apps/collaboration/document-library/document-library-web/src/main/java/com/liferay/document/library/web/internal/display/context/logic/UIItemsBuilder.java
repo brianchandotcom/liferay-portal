@@ -84,19 +84,19 @@ public class UIItemsBuilder {
 
 	public UIItemsBuilder(
 			HttpServletRequest request, FileShortcut fileShortcut,
-			ResourceBundle resourceBundle)
+			ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil)
 		throws PortalException {
 
 		this(
 			request, fileShortcut.getFileVersion(), fileShortcut,
-			resourceBundle);
+			resourceBundle, dlTrashUtil);
 	}
 
 	public UIItemsBuilder(
 		HttpServletRequest request, FileVersion fileVersion,
-		ResourceBundle resourceBundle) {
+		ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil) {
 
-		this(request, fileVersion, null, resourceBundle);
+		this(request, fileVersion, null, resourceBundle, dlTrashUtil);
 	}
 
 	public void addCancelCheckoutMenuItem(List<MenuItem> menuItems)
@@ -941,13 +941,15 @@ public class UIItemsBuilder {
 
 	private UIItemsBuilder(
 		HttpServletRequest request, FileVersion fileVersion,
-		FileShortcut fileShortcut, ResourceBundle resourceBundle) {
+		FileShortcut fileShortcut, ResourceBundle resourceBundle,
+		DLTrashUtil dlTrashUtil) {
 
 		try {
 			_request = request;
 			_fileVersion = fileVersion;
 			_fileShortcut = fileShortcut;
 			_resourceBundle = resourceBundle;
+			_dlTrashUtil = dlTrashUtil;
 
 			FileEntry fileEntry = null;
 
@@ -1110,8 +1112,14 @@ public class UIItemsBuilder {
 	}
 
 	private boolean _isTrashEnabled() throws PortalException {
-		if (_trashEnabled == null) {
-			_trashEnabled = DLTrashUtil.isTrashEnabled(
+		if (_trashEnabled != null) {
+			return _trashEnabled;
+		}
+
+		_trashEnabled = false;
+
+		if (_dlTrashUtil != null) {
+			_trashEnabled = _dlTrashUtil.isTrashEnabled(
 				_themeDisplay.getScopeGroupId(), _fileEntry.getRepositoryId());
 		}
 
@@ -1125,6 +1133,7 @@ public class UIItemsBuilder {
 	}
 
 	private String _currentURL;
+	private final DLTrashUtil _dlTrashUtil;
 	private final FileEntry _fileEntry;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
 	private FileShortcut _fileShortcut;

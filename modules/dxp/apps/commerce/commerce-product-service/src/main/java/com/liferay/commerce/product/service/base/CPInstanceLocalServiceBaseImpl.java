@@ -19,10 +19,12 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
+import com.liferay.commerce.product.service.persistence.CPDefinitionMediaPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
+import com.liferay.commerce.product.service.persistence.CPMediaTypePersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionValuePersistence;
 
@@ -560,6 +562,44 @@ public abstract class CPInstanceLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the cp definition media local service.
+	 *
+	 * @return the cp definition media local service
+	 */
+	public com.liferay.commerce.product.service.CPDefinitionMediaLocalService getCPDefinitionMediaLocalService() {
+		return cpDefinitionMediaLocalService;
+	}
+
+	/**
+	 * Sets the cp definition media local service.
+	 *
+	 * @param cpDefinitionMediaLocalService the cp definition media local service
+	 */
+	public void setCPDefinitionMediaLocalService(
+		com.liferay.commerce.product.service.CPDefinitionMediaLocalService cpDefinitionMediaLocalService) {
+		this.cpDefinitionMediaLocalService = cpDefinitionMediaLocalService;
+	}
+
+	/**
+	 * Returns the cp definition media persistence.
+	 *
+	 * @return the cp definition media persistence
+	 */
+	public CPDefinitionMediaPersistence getCPDefinitionMediaPersistence() {
+		return cpDefinitionMediaPersistence;
+	}
+
+	/**
+	 * Sets the cp definition media persistence.
+	 *
+	 * @param cpDefinitionMediaPersistence the cp definition media persistence
+	 */
+	public void setCPDefinitionMediaPersistence(
+		CPDefinitionMediaPersistence cpDefinitionMediaPersistence) {
+		this.cpDefinitionMediaPersistence = cpDefinitionMediaPersistence;
+	}
+
+	/**
 	 * Returns the cp definition option rel local service.
 	 *
 	 * @return the cp definition option rel local service
@@ -671,6 +711,44 @@ public abstract class CPInstanceLocalServiceBaseImpl
 	public void setCPInstancePersistence(
 		CPInstancePersistence cpInstancePersistence) {
 		this.cpInstancePersistence = cpInstancePersistence;
+	}
+
+	/**
+	 * Returns the cp media type local service.
+	 *
+	 * @return the cp media type local service
+	 */
+	public com.liferay.commerce.product.service.CPMediaTypeLocalService getCPMediaTypeLocalService() {
+		return cpMediaTypeLocalService;
+	}
+
+	/**
+	 * Sets the cp media type local service.
+	 *
+	 * @param cpMediaTypeLocalService the cp media type local service
+	 */
+	public void setCPMediaTypeLocalService(
+		com.liferay.commerce.product.service.CPMediaTypeLocalService cpMediaTypeLocalService) {
+		this.cpMediaTypeLocalService = cpMediaTypeLocalService;
+	}
+
+	/**
+	 * Returns the cp media type persistence.
+	 *
+	 * @return the cp media type persistence
+	 */
+	public CPMediaTypePersistence getCPMediaTypePersistence() {
+		return cpMediaTypePersistence;
+	}
+
+	/**
+	 * Sets the cp media type persistence.
+	 *
+	 * @param cpMediaTypePersistence the cp media type persistence
+	 */
+	public void setCPMediaTypePersistence(
+		CPMediaTypePersistence cpMediaTypePersistence) {
+		this.cpMediaTypePersistence = cpMediaTypePersistence;
 	}
 
 	/**
@@ -1107,6 +1185,10 @@ public abstract class CPInstanceLocalServiceBaseImpl
 	protected CPDefinitionPersistence cpDefinitionPersistence;
 	@BeanReference(type = CPDefinitionLocalizationPersistence.class)
 	protected CPDefinitionLocalizationPersistence cpDefinitionLocalizationPersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionMediaLocalService.class)
+	protected com.liferay.commerce.product.service.CPDefinitionMediaLocalService cpDefinitionMediaLocalService;
+	@BeanReference(type = CPDefinitionMediaPersistence.class)
+	protected CPDefinitionMediaPersistence cpDefinitionMediaPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService.class)
 	protected com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService cpDefinitionOptionRelLocalService;
 	@BeanReference(type = CPDefinitionOptionRelPersistence.class)
@@ -1119,6 +1201,10 @@ public abstract class CPInstanceLocalServiceBaseImpl
 	protected CPInstanceLocalService cpInstanceLocalService;
 	@BeanReference(type = CPInstancePersistence.class)
 	protected CPInstancePersistence cpInstancePersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPMediaTypeLocalService.class)
+	protected com.liferay.commerce.product.service.CPMediaTypeLocalService cpMediaTypeLocalService;
+	@BeanReference(type = CPMediaTypePersistence.class)
+	protected CPMediaTypePersistence cpMediaTypePersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPOptionLocalService.class)
 	protected com.liferay.commerce.product.service.CPOptionLocalService cpOptionLocalService;
 	@BeanReference(type = CPOptionPersistence.class)

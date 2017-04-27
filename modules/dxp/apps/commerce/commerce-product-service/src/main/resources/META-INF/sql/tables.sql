@@ -32,6 +32,22 @@ create table CPDefinitionLocalization (
 	description VARCHAR(75) null
 );
 
+create table CPDefinitionMedia (
+	uuid_ VARCHAR(75) null,
+	CPDefinitionMediaId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	CPDefinitionId LONG,
+	fileEntryId LONG,
+	DDMContent VARCHAR(75) null,
+	priority INTEGER,
+	CPMediaTypeId LONG
+);
+
 create table CPDefinitionOptionRel (
 	uuid_ VARCHAR(75) null,
 	CPDefinitionOptionRelId LONG not null primary key,
@@ -84,6 +100,20 @@ create table CPInstance (
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
 	statusDate DATE null
+);
+
+create table CPMediaType (
+	uuid_ VARCHAR(75) null,
+	CPMediaTypeId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	title LONG,
+	description LONG,
+	priority INTEGER
 );
 
 create table CPOption (

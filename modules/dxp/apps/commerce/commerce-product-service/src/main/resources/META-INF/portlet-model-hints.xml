@@ -33,6 +33,21 @@
 		<field name="urlTitle" type="String" />
 		<field name="description" type="String" />
 	</model>
+	<model name="com.liferay.commerce.product.model.CPDefinitionMedia">
+		<field name="uuid" type="String" />
+		<field name="CPDefinitionMediaId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="fileEntryId" type="long" />
+		<field name="DDMContent" type="String" />
+		<field name="priority" type="int" />
+		<field name="CPMediaTypeId" type="long" />
+	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionOptionRel">
 		<field name="uuid" type="String" />
 		<field name="CPDefinitionOptionRelId" type="long" />
@@ -85,6 +100,19 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPMediaType">
+		<field name="uuid" type="String" />
+		<field name="CPMediaTypeId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="title" type="long" />
+		<field localized="true" name="description" type="long" />
+		<field name="priority" type="int" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPOption">
 		<field name="uuid" type="String" />

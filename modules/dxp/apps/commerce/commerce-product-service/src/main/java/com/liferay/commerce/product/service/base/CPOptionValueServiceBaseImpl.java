@@ -17,10 +17,12 @@ package com.liferay.commerce.product.service.base;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
+import com.liferay.commerce.product.service.persistence.CPDefinitionMediaPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
+import com.liferay.commerce.product.service.persistence.CPMediaTypePersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionValuePersistence;
 
@@ -135,6 +137,63 @@ public abstract class CPOptionValueServiceBaseImpl extends BaseServiceImpl
 	public void setCPDefinitionLocalizationPersistence(
 		CPDefinitionLocalizationPersistence cpDefinitionLocalizationPersistence) {
 		this.cpDefinitionLocalizationPersistence = cpDefinitionLocalizationPersistence;
+	}
+
+	/**
+	 * Returns the cp definition media local service.
+	 *
+	 * @return the cp definition media local service
+	 */
+	public com.liferay.commerce.product.service.CPDefinitionMediaLocalService getCPDefinitionMediaLocalService() {
+		return cpDefinitionMediaLocalService;
+	}
+
+	/**
+	 * Sets the cp definition media local service.
+	 *
+	 * @param cpDefinitionMediaLocalService the cp definition media local service
+	 */
+	public void setCPDefinitionMediaLocalService(
+		com.liferay.commerce.product.service.CPDefinitionMediaLocalService cpDefinitionMediaLocalService) {
+		this.cpDefinitionMediaLocalService = cpDefinitionMediaLocalService;
+	}
+
+	/**
+	 * Returns the cp definition media remote service.
+	 *
+	 * @return the cp definition media remote service
+	 */
+	public com.liferay.commerce.product.service.CPDefinitionMediaService getCPDefinitionMediaService() {
+		return cpDefinitionMediaService;
+	}
+
+	/**
+	 * Sets the cp definition media remote service.
+	 *
+	 * @param cpDefinitionMediaService the cp definition media remote service
+	 */
+	public void setCPDefinitionMediaService(
+		com.liferay.commerce.product.service.CPDefinitionMediaService cpDefinitionMediaService) {
+		this.cpDefinitionMediaService = cpDefinitionMediaService;
+	}
+
+	/**
+	 * Returns the cp definition media persistence.
+	 *
+	 * @return the cp definition media persistence
+	 */
+	public CPDefinitionMediaPersistence getCPDefinitionMediaPersistence() {
+		return cpDefinitionMediaPersistence;
+	}
+
+	/**
+	 * Sets the cp definition media persistence.
+	 *
+	 * @param cpDefinitionMediaPersistence the cp definition media persistence
+	 */
+	public void setCPDefinitionMediaPersistence(
+		CPDefinitionMediaPersistence cpDefinitionMediaPersistence) {
+		this.cpDefinitionMediaPersistence = cpDefinitionMediaPersistence;
 	}
 
 	/**
@@ -306,6 +365,63 @@ public abstract class CPOptionValueServiceBaseImpl extends BaseServiceImpl
 	public void setCPInstancePersistence(
 		CPInstancePersistence cpInstancePersistence) {
 		this.cpInstancePersistence = cpInstancePersistence;
+	}
+
+	/**
+	 * Returns the cp media type local service.
+	 *
+	 * @return the cp media type local service
+	 */
+	public com.liferay.commerce.product.service.CPMediaTypeLocalService getCPMediaTypeLocalService() {
+		return cpMediaTypeLocalService;
+	}
+
+	/**
+	 * Sets the cp media type local service.
+	 *
+	 * @param cpMediaTypeLocalService the cp media type local service
+	 */
+	public void setCPMediaTypeLocalService(
+		com.liferay.commerce.product.service.CPMediaTypeLocalService cpMediaTypeLocalService) {
+		this.cpMediaTypeLocalService = cpMediaTypeLocalService;
+	}
+
+	/**
+	 * Returns the cp media type remote service.
+	 *
+	 * @return the cp media type remote service
+	 */
+	public com.liferay.commerce.product.service.CPMediaTypeService getCPMediaTypeService() {
+		return cpMediaTypeService;
+	}
+
+	/**
+	 * Sets the cp media type remote service.
+	 *
+	 * @param cpMediaTypeService the cp media type remote service
+	 */
+	public void setCPMediaTypeService(
+		com.liferay.commerce.product.service.CPMediaTypeService cpMediaTypeService) {
+		this.cpMediaTypeService = cpMediaTypeService;
+	}
+
+	/**
+	 * Returns the cp media type persistence.
+	 *
+	 * @return the cp media type persistence
+	 */
+	public CPMediaTypePersistence getCPMediaTypePersistence() {
+		return cpMediaTypePersistence;
+	}
+
+	/**
+	 * Sets the cp media type persistence.
+	 *
+	 * @param cpMediaTypePersistence the cp media type persistence
+	 */
+	public void setCPMediaTypePersistence(
+		CPMediaTypePersistence cpMediaTypePersistence) {
+		this.cpMediaTypePersistence = cpMediaTypePersistence;
 	}
 
 	/**
@@ -666,6 +782,12 @@ public abstract class CPOptionValueServiceBaseImpl extends BaseServiceImpl
 	protected CPDefinitionPersistence cpDefinitionPersistence;
 	@BeanReference(type = CPDefinitionLocalizationPersistence.class)
 	protected CPDefinitionLocalizationPersistence cpDefinitionLocalizationPersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionMediaLocalService.class)
+	protected com.liferay.commerce.product.service.CPDefinitionMediaLocalService cpDefinitionMediaLocalService;
+	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionMediaService.class)
+	protected com.liferay.commerce.product.service.CPDefinitionMediaService cpDefinitionMediaService;
+	@BeanReference(type = CPDefinitionMediaPersistence.class)
+	protected CPDefinitionMediaPersistence cpDefinitionMediaPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService.class)
 	protected com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService cpDefinitionOptionRelLocalService;
 	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionOptionRelService.class)
@@ -684,6 +806,12 @@ public abstract class CPOptionValueServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.commerce.product.service.CPInstanceService cpInstanceService;
 	@BeanReference(type = CPInstancePersistence.class)
 	protected CPInstancePersistence cpInstancePersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPMediaTypeLocalService.class)
+	protected com.liferay.commerce.product.service.CPMediaTypeLocalService cpMediaTypeLocalService;
+	@BeanReference(type = com.liferay.commerce.product.service.CPMediaTypeService.class)
+	protected com.liferay.commerce.product.service.CPMediaTypeService cpMediaTypeService;
+	@BeanReference(type = CPMediaTypePersistence.class)
+	protected CPMediaTypePersistence cpMediaTypePersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPOptionLocalService.class)
 	protected com.liferay.commerce.product.service.CPOptionLocalService cpOptionLocalService;
 	@BeanReference(type = com.liferay.commerce.product.service.CPOptionService.class)

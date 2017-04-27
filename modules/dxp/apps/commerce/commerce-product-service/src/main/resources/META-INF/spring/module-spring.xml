@@ -5,6 +5,9 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLocalizationPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionMediaLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionMediaLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionMediaServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionMediaService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionMediaPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionMediaPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionRelServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionRelService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionOptionRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence" parent="basePersistence" />
@@ -14,6 +17,9 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceLocalServiceImpl" id="com.liferay.commerce.product.service.CPInstanceLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceServiceImpl" id="com.liferay.commerce.product.service.CPInstanceService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstancePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPInstancePersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPMediaTypeLocalServiceImpl" id="com.liferay.commerce.product.service.CPMediaTypeLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPMediaTypeServiceImpl" id="com.liferay.commerce.product.service.CPMediaTypeService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPMediaTypePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPMediaTypePersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionLocalServiceImpl" id="com.liferay.commerce.product.service.CPOptionLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionServiceImpl" id="com.liferay.commerce.product.service.CPOptionService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPOptionPersistence" parent="basePersistence" />

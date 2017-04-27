@@ -23,6 +23,14 @@ DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<c:if test="<%= ddlFormAdminDisplayContext.isShowCopyURLRecordSetIcon(recordSet) && ddlFormAdminDisplayContext.isFormPublished(recordSet) %>">
+		<liferay-ui:icon
+			message="copy-url"
+			onClick='<%= "Liferay.fire('" + renderResponse.getNamespace() + "copyFormURL', { url:'" + ddlFormAdminDisplayContext.getPublishedFormURL(recordSet) + "' , node: this});" %>'
+			url="javascript:;"
+		/>
+	</c:if>
+
 	<c:if test="<%= ddlFormAdminDisplayContext.isShowViewEntriesRecordSetIcon(recordSet) %>">
 		<portlet:renderURL var="viewEntriesURL">
 			<portlet:param name="mvcPath" value="/admin/view_records.jsp" />

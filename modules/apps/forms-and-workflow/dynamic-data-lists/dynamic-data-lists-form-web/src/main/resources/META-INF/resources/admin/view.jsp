@@ -113,4 +113,137 @@ portletURL.setParameter("displayStyle", displayStyle);
 
 <%@ include file="/admin/export_record_set.jspf" %>
 
-<aui:script use="liferay-ddl-portlet"></aui:script>
+<div class="publish-popover-content view-popover">
+	<div class="form-group">
+		<label><liferay-ui:message key="copy-url" /></label>
+		<div class="input-group">
+			<input class="form-control" id="<portlet:namespace />clipboardView" readOnly type="text" value="<%= ddlFormAdminDisplayContext.getPublishedFormURL() %>" />
+
+			<div class="help-block"><liferay-ui:message key="copied-to-clipboard" /></div>
+
+			<span class="input-group-btn">
+				<button class="btn btn-default" data-clipboard data-target="#<portlet:namespace />clipboardView" type="button">
+					<span class="publish-button-text">
+						<liferay-ui:message key="copy" />
+					</span>
+					<span class="publish-button-success-icon">
+						<svg class="lexicon-icon">
+							<use xlink:href="<%= ddlFormAdminDisplayContext.getLexiconIconsPath() %>check" />
+						</svg>
+					</span>
+				</button>
+			</span>
+		</div>
+	</div>
+</div>
+
+<aui:script use="aui-popover,event-outside">
+	var A = AUI();
+
+	var popover = new A.Popover(
+		{
+			bodyContent: A.one('.publish-popover-content.view-popover'),
+			constrain: false,
+			cssClass: 'form-builder-publish-popover',
+			position: 'left',
+			visible: false,
+			width: 500,
+			zIndex: 999
+		}
+	).render();
+
+	popover.set(
+		'hideOn',[
+			{
+				eventName: 'key',
+				keyCode: 'esc',
+				node: A.getDoc()
+			},
+			{
+				eventName: 'clickoutside',
+				node: A.one('.form-builder-publish-popover')
+			}
+		]
+	);
+
+	popover.after("visibleChange", function(event) {
+		if (event.prevVal) {
+			var popoverContent = A.one('.publish-popover-content.view-popover');
+
+			var formGroup = popoverContent.one('.form-group');
+
+			formGroup.removeClass('has-error');
+			formGroup.removeClass('has-success');
+
+			var copyButton = popoverContent.one('.btn');
+
+			copyButton.removeClass('btn-danger');
+			copyButton.removeClass('btn-success');
+
+			popoverContent.one('.publish-button-text').html(Liferay.Language.get('copy'));
+		}
+	});
+
+	Liferay.on(
+		'<portlet:namespace />copyFormURL',
+		function(event) {
+
+			if (popover.get('visible')) {
+				popover.hide();
+			}
+
+			var url = event.url;
+
+			var clipboardInput = A.one('#<portlet:namespace />clipboardView');
+
+			clipboardInput.set('value', url);
+
+			popover.set("align", {
+				node: Liferay.Menu._INSTANCE._activeTrigger,
+				points: [A.WidgetPositionAlign.TR, A.WidgetPositionAlign.TR]
+			});
+
+			popover.show();
+		}
+	);
+
+	Liferay.on('destroyPortlet', function() {
+		popover.destroy();
+	});
+</aui:script>
+
+<aui:script require="metal-clipboard/src/Clipboard">
+	var A = AUI();
+
+	var viewClipboard = new metalClipboardSrcClipboard.default();
+
+	viewClipboard.on('success', function() {
+		var popoverContent = A.one('.publish-popover-content.view-popover');
+
+		popoverContent.one('.form-group').addClass('has-success');
+		popoverContent.one('.form-group').removeClass('has-error');
+
+		popoverContent.one('.btn').addClass('btn-success');
+		popoverContent.one('.btn').removeClass('btn-danger');
+
+		popoverContent.one('.help-block').html('<liferay-ui:message key="copied-to-clipboard" />');
+		popoverContent.one('.publish-button-text').html('<liferay-ui:message key="Copy" />');
+	});
+
+	viewClipboard.on('error', function() {
+		var popoverContent = A.one('.publish-popover-content.view-popover');
+
+		popoverContent.one('.form-group').addClass('has-error');
+		popoverContent.one('.form-group').removeClass('has-success');
+
+		popoverContent.one('.btn').addClass('btn-danger');
+		popoverContent.one('.btn').removeClass('btn-success');
+
+		popoverContent.one('.help-block').html('<liferay-ui:message key="sorry-something-wrong-happened" />');
+		popoverContent.one('.publish-button-text').html('<liferay-ui:message key="retry" />');
+	});
+
+	Liferay.on('destroyPortlet', function() {
+		viewClipboard.dispose();
+	});
+</aui:script>

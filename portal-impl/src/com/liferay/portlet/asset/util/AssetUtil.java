@@ -509,13 +509,13 @@ public class AssetUtil {
 						allAssetTagNames, redirect);
 
 					if (addPortletURL != null) {
-						String mesage =
+						String message =
 							className + CLASSNAME_SEPARATOR +
-							classType.getName();
+								classType.getName();
 
 						addPortletURLs.add(
 							new AssetPortletAddURL(
-								portlet.getPortletId(), mesage, resourceBundle,
+								portlet.getPortletId(), message, resourceBundle,
 								locale, addPortletURL));
 					}
 				}

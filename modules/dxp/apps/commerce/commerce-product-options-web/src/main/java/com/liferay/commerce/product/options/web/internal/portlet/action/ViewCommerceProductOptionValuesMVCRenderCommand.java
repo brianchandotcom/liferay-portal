@@ -15,21 +15,19 @@
 package com.liferay.commerce.product.options.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.constants.CPWebKeys;
-import com.liferay.commerce.product.exception.NoSuchProductOptionValueException;
-import com.liferay.commerce.product.model.CPOptionValue;
-import com.liferay.commerce.product.service.CPOptionService;
-import com.liferay.commerce.product.service.CPOptionValueLocalService;
+import com.liferay.commerce.product.options.web.internal.display.context.CPOptionValueDisplayContext;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,11 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_OPTIONS,
-		"mvc.command.name=editProductOptionValue"
+		"mvc.command.name=viewProductOptionValues"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCPOptionValueMVCRenderCommand
+public class ViewCommerceProductOptionValuesMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -54,45 +52,30 @@ public class EditCPOptionValueMVCRenderCommand
 		throws PortletException {
 
 		try {
-			setCPOptionValueRequestAttribute(renderRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
+
+			CPOptionValueDisplayContext cpOptionValueDisplayContext =
+				new CPOptionValueDisplayContext(
+					_actionHelper, httpServletRequest, _cpOptionValueService);
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT, cpOptionValueDisplayContext);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchProductOptionValueException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
-		}
-
-		return "/edit_commerce_product_option_value.jsp";
-	}
-
-	protected void setCPOptionValueRequestAttribute(
-			RenderRequest renderRequest)
-		throws PortalException {
-
-		long cpOptionValueId = ParamUtil.getLong(
-			renderRequest, "cpOptionValueId");
-
-		CPOptionValue cpOptionValue = null;
-
-		if (cpOptionValueId > 0) {
-			cpOptionValue =
-				_cpOptionValueService.
-					getCPOptionValue(cpOptionValueId);
+		catch (PortalException pe) {
+			SessionErrors.add(renderRequest, pe.getClass());
 		}
 
-		renderRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUE,
-			cpOptionValue);
+		return "/commerce_product_option_values.jsp";
 	}
 
 	@Reference
+	private ActionHelper _actionHelper;
+
+	@Reference
 	private CPOptionValueService _cpOptionValueService;
+
+	@Reference
+	private Portal _portal;
 
 }

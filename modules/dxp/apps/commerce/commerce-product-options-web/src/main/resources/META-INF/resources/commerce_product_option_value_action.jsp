@@ -19,7 +19,14 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CPOptionValue cpOptionValue = (CPOptionValue)row.getObject();
+CPOptionValue cpOptionValue = null;
+
+if (row != null) {
+	cpOptionValue = (CPOptionValue)row.getObject();
+}
+else {
+	cpOptionValue = (CPOptionValue)request.getAttribute("commerce_product_option_value_info_panel.jsp-entry");
+}
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
@@ -37,11 +44,10 @@ CPOptionValue cpOptionValue = (CPOptionValue)row.getObject();
 	<portlet:actionURL name="editProductOptionValue" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionValueId" value="<%= String.valueOf(cpOptionValue.getCPOptionValueId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon
+	<liferay-ui:icon-delete
 		message="delete"
 		url="<%= deleteURL %>"
 	/>

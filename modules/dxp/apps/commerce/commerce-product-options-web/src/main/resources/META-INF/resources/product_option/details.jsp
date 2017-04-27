@@ -18,10 +18,13 @@
 
 <%
 CPOption cpOption = (CPOption)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_OPTION);
-List<DDMFormFieldType> ddmFormFieldTypes = cpOptionsDisplayContext.getDDMFormFieldTypes();
+
+CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFieldTypes();
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="product-option-base-information" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="product-option-details" />
 
 <aui:model-context bean="<%= cpOption %>" model="<%= CPOption.class %>" />
 

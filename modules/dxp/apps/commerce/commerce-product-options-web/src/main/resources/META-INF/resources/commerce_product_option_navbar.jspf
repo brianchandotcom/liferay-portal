@@ -1,0 +1,62 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<liferay-portlet:renderURL varImpl="viewProductOptionDetailsURL">
+			<portlet:param name="mvcRenderCommandName" value="editProductOption" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOptionId) %>" />
+			<portlet:param name="toolbarItem" value="view-product-option-details" />
+		</liferay-portlet:renderURL>
+
+		<aui:nav-item
+			href="<%= viewProductOptionDetailsURL.toString() %>"
+			label='<%= LanguageUtil.get(request, "details") %>'
+			selected='<%= toolbarItem.equals("view-product-option-details") %>'
+		/>
+
+		<c:if test="<%= cpOption != null %>">
+			<liferay-portlet:renderURL varImpl="viewProductOptionValuesURL">
+				<portlet:param name="mvcRenderCommandName" value="viewProductOptionValues" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOptionId) %>" />
+				<portlet:param name="toolbarItem" value="view-product-option-values" />
+			</liferay-portlet:renderURL>
+
+			<aui:nav-item
+				href="<%= viewProductOptionValuesURL.toString() %>"
+				label='<%= LanguageUtil.get(request, "values") %>'
+				selected='<%= toolbarItem.equals("view-product-option-values") %>'
+			/>
+		</c:if>
+	</aui:nav>
+
+	<%
+	if (toolbarItem.equals("view-product-option-values")) {
+	%>
+
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<aui:nav-bar-search>
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:nav-bar-search>
+		</aui:form>
+
+	<%
+	}
+	%>
+
+</aui:nav-bar>

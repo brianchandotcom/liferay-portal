@@ -30,7 +30,7 @@ if (ListUtil.isEmpty(cpOptions)) {
 		<%
 		CPOption cpOption = cpOptions.get(0);
 
-		request.setAttribute("info_panel.jsp-entry", cpOption);
+		request.setAttribute("commerce_product_option_info_panel.jsp-entry", cpOption);
 		%>
 
 		<div class="sidebar-header">

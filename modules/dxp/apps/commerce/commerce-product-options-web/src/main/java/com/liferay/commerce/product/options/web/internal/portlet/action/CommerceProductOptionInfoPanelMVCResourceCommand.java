@@ -35,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_OPTIONS,
-		"mvc.command.name=infoPanel"
+		"mvc.command.name=cpOptionInfoPanel"
 	},
 	service = MVCResourceCommand.class
 )
-public class CPOptionInfoPanelMVCResourceCommand
+public class CommerceProductOptionInfoPanelMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -47,14 +47,14 @@ public class CPOptionInfoPanelMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		List<CPOption> cpOptions =
-			_actionHelper.getCPOptions(resourceRequest);
+		List<CPOption> cpOptions = _actionHelper.getCPOptions(resourceRequest);
 
 		resourceRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_OPTIONS,
-			cpOptions);
+			CPWebKeys.COMMERCE_PRODUCT_OPTIONS, cpOptions);
 
-		include(resourceRequest, resourceResponse, "/info_panel.jsp");
+		include(
+			resourceRequest, resourceResponse,
+			"/commerce_product_option_info_panel.jsp");
 	}
 
 	@Reference

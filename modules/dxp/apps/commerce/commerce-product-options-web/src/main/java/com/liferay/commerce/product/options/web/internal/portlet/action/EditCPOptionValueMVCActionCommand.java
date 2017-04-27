@@ -18,6 +18,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchProductOptionValueException;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionValueLocalService;
+import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -57,8 +58,7 @@ public class EditCPOptionValueMVCActionCommand
 		long cpOptionValueId = ParamUtil.getLong(
 			actionRequest, "cpOptionValueId");
 
-		_cpOptionValueLocalService.
-			deleteCPOptionValue(cpOptionValueId);
+		_cpOptionValueService.deleteCPOptionValue(cpOptionValueId);
 	}
 
 	@Override
@@ -115,27 +115,24 @@ public class EditCPOptionValueMVCActionCommand
 			// Add commerce product option value
 
 			cpOptionValue =
-				_cpOptionValueLocalService.
-					addCPOptionValue(
-						cpOptionId, titleMap, priority,
-						serviceContext);
+				_cpOptionValueService.addCPOptionValue(
+					cpOptionId, titleMap, priority,
+					serviceContext);
 		}
 		else {
 
 			// Update commerce product option value
 
 			cpOptionValue =
-				_cpOptionValueLocalService.
-					updateCPOptionValue(
-						cpOptionValueId, titleMap, priority,
-						serviceContext);
+				_cpOptionValueService.updateCPOptionValue(
+					cpOptionValueId, titleMap, priority,
+					serviceContext);
 		}
 
 		return cpOptionValue;
 	}
 
 	@Reference
-	private CPOptionValueLocalService
-		_cpOptionValueLocalService;
+	private CPOptionValueService _cpOptionValueService;
 
 }

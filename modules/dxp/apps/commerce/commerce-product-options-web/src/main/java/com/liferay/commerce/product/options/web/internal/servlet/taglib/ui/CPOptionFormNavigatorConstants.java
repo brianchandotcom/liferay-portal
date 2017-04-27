@@ -22,9 +22,6 @@ public class CPOptionFormNavigatorConstants {
 	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_OPTION_DETAILS =
 		"details";
 
-	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_OPTION_VALUES =
-		"values";
-
 	public static final String FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION =
 		"commerce.product.option.form";
 

@@ -14,13 +14,18 @@
 
 package com.liferay.commerce.product.options.web.internal.portlet.action;
 
+import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPOption;
-import com.liferay.commerce.product.service.CPOptionLocalService;
+import com.liferay.commerce.product.model.CPOptionValue;
+import com.liferay.commerce.product.service.CPOptionService;
+import com.liferay.commerce.product.service.CPOptionValueService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.RenderRequest;
 import javax.portlet.ResourceRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,8 +48,7 @@ public class ActionHelper {
 
 		for (long cpOptionsId : cpOptionsIds) {
 			CPOption cpOption =
-				_cpOptionLocalService.getCPOption(
-					cpOptionsId);
+				_cpOptionService.getCPOption(cpOptionsId);
 
 			cpOptions.add(cpOption);
 		}
@@ -52,8 +56,98 @@ public class ActionHelper {
 		return cpOptions;
 	}
 
+	public CPOption getCPOption(
+			RenderRequest renderRequest)
+		throws PortalException {
+
+		CPOption cpOption = null;
+
+		cpOption = (CPOption)renderRequest.getAttribute(
+			CPWebKeys.COMMERCE_PRODUCT_OPTION);
+
+		if (cpOption != null) {
+			return cpOption;
+		}
+
+		long cpOptionId = ParamUtil.getLong(
+				renderRequest, "cpOptionId");
+
+		if (cpOptionId <= 0) {
+
+			//Try to get from an related entity if exist
+
+			CPOptionValue cpOptionValue = getCPOptionValue(renderRequest);
+
+			if (cpOptionValue != null) {
+				cpOptionId = cpOptionValue.getCPOptionId();
+			}
+		}
+
+		if (cpOptionId > 0) {
+			cpOption = _cpOptionService.fetchCPOption(cpOptionId);
+		}
+
+		if (cpOption != null) {
+			renderRequest.setAttribute(
+				CPWebKeys.COMMERCE_PRODUCT_OPTION, cpOption);
+		}
+
+		return cpOption;
+	}
+
+	public CPOptionValue getCPOptionValue(RenderRequest renderRequest)
+		throws PortalException {
+
+		CPOptionValue cpOptionValue = null;
+
+		cpOptionValue = (CPOptionValue)renderRequest.getAttribute(
+			CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUE);
+
+		if (cpOptionValue != null) {
+			return cpOptionValue;
+		}
+
+		long cpOptionValueId = ParamUtil.getLong(
+				renderRequest, "cpOptionValueId");
+
+		if (cpOptionValueId > 0) {
+			cpOptionValue = _cpOptionValueService.fetchCPOptionValue(
+				cpOptionValueId);
+		}
+
+		if (cpOptionValue != null) {
+			renderRequest.setAttribute(
+				CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUE, cpOptionValue);
+		}
+
+		return cpOptionValue;
+	}
+
+	public List<CPOptionValue> getCPOptionValues(ResourceRequest resourceRequest)
+		throws Exception {
+
+		long[] cpOptionValuesIds = ParamUtil.getLongValues(
+				resourceRequest, "rowIdsCPOptionValue");
+
+		List<CPOptionValue> cpOptionValues =
+				new ArrayList<>();
+
+		for (long cpOptionValuesId : cpOptionValuesIds) {
+
+			CPOptionValue cpOptionValue =
+				_cpOptionValueService.getCPOptionValue(cpOptionValuesId);
+
+			cpOptionValues.add(cpOptionValue);
+		}
+
+		return cpOptionValues;
+	}
+
+
 	@Reference
-	private CPOptionLocalService
-		_cpOptionLocalService;
+	private CPOptionValueService _cpOptionValueService;
+
+	@Reference
+	private CPOptionService _cpOptionService;
 
 }

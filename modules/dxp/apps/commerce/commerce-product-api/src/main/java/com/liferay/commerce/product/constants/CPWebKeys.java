@@ -49,6 +49,9 @@ public class CPWebKeys {
 	public static final String COMMERCE_PRODUCT_OPTION_VALUE =
 		"COMMERCE_PRODUCT_OPTION_VALUE";
 
+	public static final String COMMERCE_PRODUCT_OPTION_VALUES =
+		"COMMERCE_PRODUCT_OPTION_VALUES";
+
 	public static final String COMMERCE_PRODUCT_OPTIONS =
 		"COMMERCE_PRODUCT_OPTIONS";
 

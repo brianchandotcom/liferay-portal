@@ -25,16 +25,16 @@ if (row != null) {
 	cpOption = (CPOption)row.getObject();
 }
 else {
-	cpOption = (CPOption)request.getAttribute("info_panel.jsp-entry");
+	cpOption = (CPOption)request.getAttribute("commerce_product_option_info_panel.jsp-entry");
 }
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editProductOption" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
+		<portlet:param name="toolbarItem" value="view-product-option-details" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon
@@ -48,7 +48,7 @@ else {
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon
+	<liferay-ui:icon-delete
 		message="delete"
 		url="<%= deleteURL %>"
 	/>

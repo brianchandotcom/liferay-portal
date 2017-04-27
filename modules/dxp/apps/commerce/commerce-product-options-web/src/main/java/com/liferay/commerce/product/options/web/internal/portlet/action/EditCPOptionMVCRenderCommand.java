@@ -19,6 +19,7 @@ import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.exception.NoSuchProductOptionException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionLocalService;
+import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -67,7 +68,7 @@ public class EditCPOptionMVCRenderCommand
 			}
 		}
 
-		return "/edit_product_option.jsp";
+		return "/edit_commerce_product_option.jsp";
 	}
 
 	protected void setCPOptionRequestAttribute(
@@ -80,9 +81,7 @@ public class EditCPOptionMVCRenderCommand
 		CPOption cpOption = null;
 
 		if (cpOptionId > 0) {
-			cpOption =
-				_cpOptionLocalService.getCPOption(
-					cpOptionId);
+			cpOption = _cpOptionService.getCPOption(cpOptionId);
 		}
 
 		renderRequest.setAttribute(
@@ -91,7 +90,6 @@ public class EditCPOptionMVCRenderCommand
 	}
 
 	@Reference
-	private CPOptionLocalService
-		_cpOptionLocalService;
+	private CPOptionService _cpOptionService;
 
 }

@@ -19,11 +19,13 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-options");
 
-SearchContainer<CPOption> productOptionSearchContainer = cpOptionsDisplayContext.getCPOptionSearchContainer();
+CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-String displayStyle = cpOptionsDisplayContext.getDisplayStyle();
+SearchContainer cpOptionSearchContainer = cpOptionDisplayContext.getSearchContainer();
 
-PortletURL portletURL = cpOptionsDisplayContext.getPortletURL();
+String displayStyle = cpOptionDisplayContext.getDisplayStyle();
+
+PortletURL portletURL = cpOptionDisplayContext.getPortletURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
 portletURL.setParameter("searchContainerId", "cpOptions");
@@ -58,10 +60,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <div id="<portlet:namespace />productOptionsContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<c:if test="<%= cpOptionsDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= cpOptionDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL
 				copyCurrentRenderParameters="<%= false %>"
-				id="infoPanel"
+				id="cpOptionInfoPanel"
 				var="sidebarPanelURL"
 			/>
 
@@ -69,18 +71,16 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				resourceURL="<%= sidebarPanelURL %>"
 				searchContainerId="cpOptions"
 			>
-				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/commerce_product_option_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
 		</c:if>
 
 		<div class="sidenav-content">
 			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
 				<div class="product-options-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
 						id="cpOptions"
-						searchContainer="<%= productOptionSearchContainer %>"
+						searchContainer="<%= cpOptionSearchContainer %>"
 					>
 						<liferay-ui:search-container-row
 							className="com.liferay.commerce.product.model.CPOption"
@@ -88,8 +88,19 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							keyProperty="cpOptionId"
 							modelVar="cpOption"
 						>
+
+							<%
+							PortletURL rowURL = renderResponse.createRenderURL();
+
+							rowURL.setParameter(Constants.CMD, Constants.UPDATE);
+							rowURL.setParameter("mvcRenderCommandName", "editProductOption");
+							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("cpOptionId", String.valueOf(cpOption.getCPOptionId()));
+							%>
+
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
+								href="<%= rowURL %>"
 								name="name"
 							>
 								<%= cpOption.getName(locale) %>
@@ -107,7 +118,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							/>
 						</liferay-ui:search-container-row>
 
-						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= productOptionSearchContainer %>" />
+						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= cpOptionSearchContainer %>" />
 					</liferay-ui:search-container>
 				</div>
 			</aui:form>
@@ -118,7 +129,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 <liferay-portlet:renderURL var="addProductOptionURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 	<portlet:param name="mvcRenderCommandName" value="editProductOption" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
+	<portlet:param name="toolbarItem" value="view-product-option-details" />
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>

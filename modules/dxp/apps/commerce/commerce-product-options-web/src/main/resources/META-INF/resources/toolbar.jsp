@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 String searchContainerId = ParamUtil.getString(request, "searchContainerId", "cpOptions");
 %>
 
@@ -25,7 +27,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId", "cp
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= cpOptionsDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= cpOptionDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
@@ -36,19 +38,19 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId", "cp
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= cpOptionsDisplayContext.getPortletURL() %>"
+			portletURL="<%= cpOptionDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= cpOptionsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= cpOptionsDisplayContext.getOrderByType() %>"
+			orderByCol="<%= cpOptionDisplayContext.getOrderByCol() %>"
+			orderByType="<%= cpOptionDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= cpOptionsDisplayContext.getPortletURL() %>"
+			portletURL="<%= cpOptionDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<c:if test="<%= cpOptionsDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= cpOptionDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"

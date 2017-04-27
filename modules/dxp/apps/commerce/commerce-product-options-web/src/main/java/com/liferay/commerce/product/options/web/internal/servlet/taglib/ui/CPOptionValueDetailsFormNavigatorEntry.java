@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.options.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
@@ -52,7 +53,7 @@ public class CPOptionValueDetailsFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return "details";
+		return LanguageUtil.get(locale, "details");
 	}
 
 	@Override

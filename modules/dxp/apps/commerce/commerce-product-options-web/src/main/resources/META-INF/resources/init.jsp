@@ -30,7 +30,8 @@ page import="com.liferay.commerce.product.exception.NoSuchProductOptionException
 page import="com.liferay.commerce.product.exception.NoSuchProductOptionValueException" %><%@
 page import="com.liferay.commerce.product.model.CPOption" %><%@
 page import="com.liferay.commerce.product.model.CPOptionValue" %><%@
-page import="com.liferay.commerce.product.options.web.internal.display.context.CPOptionsDisplayContext" %><%@
+page import="com.liferay.commerce.product.options.web.internal.display.context.CPOptionDisplayContext" %><%@
+page import="com.liferay.commerce.product.options.web.internal.display.context.CPOptionValueDisplayContext" %><%@
 page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CPOptionFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CPOptionValueFormNavigatorConstants" %><%@
 page import="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType" %><%@
@@ -41,12 +42,17 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.List" %>
+page import="java.util.HashSet" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Locale" %><%@
+page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
@@ -60,6 +66,4 @@ page import="java.util.List" %>
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
-
-CPOptionsDisplayContext cpOptionsDisplayContext = (CPOptionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>

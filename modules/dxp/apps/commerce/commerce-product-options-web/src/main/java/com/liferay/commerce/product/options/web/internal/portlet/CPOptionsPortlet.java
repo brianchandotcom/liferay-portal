@@ -15,9 +15,9 @@
 package com.liferay.commerce.product.options.web.internal.portlet;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.options.web.internal.display.context.CPOptionsDisplayContext;
-import com.liferay.commerce.product.service.CPOptionLocalService;
-import com.liferay.commerce.product.service.CPOptionValueLocalService;
+import com.liferay.commerce.product.options.web.internal.display.context.CPOptionDisplayContext;
+import com.liferay.commerce.product.options.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -74,16 +74,15 @@ public class CPOptionsPortlet extends MVCPortlet {
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 
-			CPOptionsDisplayContext
-				cpOptionsDisplayContext =
-					new CPOptionsDisplayContext(
-						httpServletRequest, _cpOptionLocalService,
-						_cpOptionValueLocalService,
+			CPOptionDisplayContext
+				cpOptionDisplayContext =
+					new CPOptionDisplayContext(
+						_actionHelper, httpServletRequest,_cpOptionService,
 						_ddmFormFieldTypeServicesTracker);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpOptionsDisplayContext);
+				cpOptionDisplayContext);
 		}
 		catch (PortalException pe) {
 			SessionErrors.add(renderRequest, pe.getClass());
@@ -93,12 +92,11 @@ public class CPOptionsPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private CPOptionLocalService
-		_cpOptionLocalService;
+	ActionHelper _actionHelper;
 
 	@Reference
-	private CPOptionValueLocalService
-		_cpOptionValueLocalService;
+	private CPOptionService
+		_cpOptionService;
 
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

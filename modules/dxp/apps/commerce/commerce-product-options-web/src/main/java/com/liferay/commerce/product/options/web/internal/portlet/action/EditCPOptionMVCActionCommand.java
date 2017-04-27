@@ -18,6 +18,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchProductOptionException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionLocalService;
+import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -57,8 +58,7 @@ public class EditCPOptionMVCActionCommand
 		long cpOptionId = ParamUtil.getLong(
 			actionRequest, "cpOptionId");
 
-		_cpOptionLocalService.deleteCPOption(
-			cpOptionId);
+		_cpOptionService.deleteCPOption(cpOptionId);
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class EditCPOptionMVCActionCommand
 			// Add commerce product option
 
 			cpOption =
-				_cpOptionLocalService.addCPOption(
+				_cpOptionService.addCPOption(
 					nameMap, descriptionMap, ddmFormFieldTypeName,
 					serviceContext);
 		}
@@ -125,7 +125,7 @@ public class EditCPOptionMVCActionCommand
 			// Update commerce product option
 
 			cpOption =
-				_cpOptionLocalService.updateCPOption(
+				_cpOptionService.updateCPOption(
 					cpOptionId, nameMap, descriptionMap,
 					ddmFormFieldTypeName, serviceContext);
 		}
@@ -134,7 +134,6 @@ public class EditCPOptionMVCActionCommand
 	}
 
 	@Reference
-	private CPOptionLocalService
-		_cpOptionLocalService;
+	private CPOptionService _cpOptionService;
 
 }

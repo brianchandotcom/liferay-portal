@@ -176,6 +176,8 @@ import org.gradle.api.plugins.quality.Pmd;
 import org.gradle.api.plugins.quality.PmdExtension;
 import org.gradle.api.plugins.quality.PmdPlugin;
 import org.gradle.api.reporting.SingleFileReport;
+import org.gradle.api.resources.ResourceHandler;
+import org.gradle.api.resources.TextResourceFactory;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
@@ -2271,16 +2273,22 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		PmdExtension pmdExtension = GradleUtil.getExtension(
 			project, PmdExtension.class);
 
-		Gradle gradle = project.getGradle();
+		ResourceHandler resourceHandler = project.getResources();
 
-		File ruleSetFile = new File(
-			gradle.getGradleUserHomeDir(),
-			"../tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java" +
-				"/standard-rules.xml");
+		TextResourceFactory textResourceFactory = resourceHandler.getText();
 
-		if (ruleSetFile.exists()) {
-			pmdExtension.setRuleSetFiles(project.files(ruleSetFile));
+		String ruleSet;
+
+		try {
+			ruleSet = FileUtil.read(
+				"com/liferay/gradle/plugins/defaults/dependencies" +
+					"/standard-rules.xml");
 		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
+
+		pmdExtension.setRuleSetConfig(textResourceFactory.fromString(ruleSet));
 
 		List<String> ruleSets = Collections.emptyList();
 

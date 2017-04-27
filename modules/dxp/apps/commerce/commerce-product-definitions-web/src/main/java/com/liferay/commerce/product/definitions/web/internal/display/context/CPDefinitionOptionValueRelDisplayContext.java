@@ -144,7 +144,7 @@ public class CPDefinitionOptionValueRelDisplayContext
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setEmptyResultsMessage(
-			"no-options-value-were-found");
+			"no-option-values-were-found");
 		searchContainer.setRowChecker(getRowChecker());
 
 		int total =

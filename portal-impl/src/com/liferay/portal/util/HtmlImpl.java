@@ -293,7 +293,7 @@ public class HtmlImpl implements Html {
 					sb.append(text, lastReplacementIndex, i);
 				}
 
-				sb.append(prefix);
+				sb.append("\\u");
 
 				_appendHexChars(sb, hexBuffer, c);
 

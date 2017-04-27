@@ -60,13 +60,13 @@ page import="com.liferay.trash.kernel.model.TrashEntry" %><%@
 page import="com.liferay.trash.kernel.model.TrashEntryList" %><%@
 page import="com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.trash.kernel.service.TrashEntryServiceUtil" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %><%@
 page import="com.liferay.trash.web.internal.constants.TrashWebKeys" %><%@
 page import="com.liferay.trash.web.internal.dao.search.TrashResultRowSplitter" %><%@
 page import="com.liferay.trash.web.internal.display.context.TrashContainerModelDisplayContext" %><%@
 page import="com.liferay.trash.web.internal.display.context.TrashDisplayContext" %><%@
 page import="com.liferay.trash.web.internal.search.EntrySearch" %><%@
-page import="com.liferay.trash.web.internal.search.EntrySearchTerms" %>
+page import="com.liferay.trash.web.internal.search.EntrySearchTerms" %><%@
+page import="com.liferay.trash.web.internal.util.TrashUtil" %>
 
 <%@ page import="java.text.Format" %>
 
@@ -89,7 +89,7 @@ TrashDisplayContext trashDisplayContext = new TrashDisplayContext(request, lifer
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
-String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
+String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, com.liferay.trash.kernel.util.TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
 
 String description = LanguageUtil.get(request, "javax.portlet.description.com_liferay_trash_web_portlet_TrashPortlet") + LanguageUtil.format(request, "entries-that-have-been-in-the-recycle-bin-for-more-than-x-are-automatically-deleted", StringUtil.toLowerCase(trashEntriesMaxAgeTimeDescription), false);
 

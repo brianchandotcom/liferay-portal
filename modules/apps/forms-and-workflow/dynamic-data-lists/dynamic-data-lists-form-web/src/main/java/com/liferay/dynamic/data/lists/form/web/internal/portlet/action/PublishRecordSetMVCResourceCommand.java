@@ -64,7 +64,6 @@ public class PublishRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 		boolean published = ParamUtil.getBoolean(resourceRequest, "published");
 
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
-
 		updateRecordSetPermission(resourceRequest, recordSetId, published);
 
 		DDMFormValues settingsDDMFormValues =

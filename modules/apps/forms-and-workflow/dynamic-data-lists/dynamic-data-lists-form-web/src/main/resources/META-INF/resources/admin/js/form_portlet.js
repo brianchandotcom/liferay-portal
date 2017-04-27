@@ -412,60 +412,6 @@ AUI.add(
 						return dialog;
 					},
 
-					openPublishModal: function() {
-						var instance = this;
-
-						var publishCheckbox = instance.one('#publishCheckbox');
-
-						publishCheckbox.setData('previousValue', publishCheckbox.attr('checked'));
-
-						var requireAuthenticationCheckbox = instance.one('#requireAuthenticationCheckbox');
-
-						requireAuthenticationCheckbox.setData('previousValue', requireAuthenticationCheckbox.attr('checked'));
-
-						Liferay.Util.openWindow(
-							{
-								dialog: {
-									cssClass: 'publish-modal-container',
-									height: 430,
-									resizable: false,
-									'toolbars.footer': [
-										{
-											cssClass: 'btn-lg btn-primary',
-											label: Liferay.Language.get('confirm'),
-											on: {
-												click: A.bind('_onConfirmPublishModal', instance)
-											}
-										},
-										{
-											cssClass: 'btn-lg btn-link',
-											label: Liferay.Language.get('cancel'),
-											on: {
-												click: A.bind('_onCancelPublishModal', instance)
-											}
-										}
-									],
-									width: 720
-								},
-								id: instance.ns('publishModalContainer'),
-								title: Liferay.Language.get('publish-form')
-							},
-							function(dialogWindow) {
-								var publishNode = instance.byId(instance.ns('publishModal'));
-
-								if (publishNode) {
-									publishNode.show();
-
-									dialogWindow.bodyNode.append(publishNode);
-								}
-							}
-						);
-					},
-
-					publishForm: function() {
-
-					},
-
 					serializeFormBuilder: function() {
 						var instance = this;
 
@@ -689,28 +635,6 @@ AUI.add(
 								}
 							);
 						}
-					},
-
-					_onCancelPublishModal: function() {
-						var instance = this;
-
-						var publishCheckbox = instance.one('#publishCheckbox');
-
-						publishCheckbox.attr('checked', publishCheckbox.getData('previousValue'));
-
-						var requireAuthenticationCheckbox = instance.one('#requireAuthenticationCheckbox');
-
-						requireAuthenticationCheckbox.attr('checked', requireAuthenticationCheckbox.getData('previousValue'));
-
-						Liferay.Util.getWindow(instance.ns('publishModalContainer')).hide();
-					},
-
-					_onConfirmPublishModal: function() {
-						var instance = this;
-
-						instance._setFormAsPublished();
-
-						Liferay.Util.getWindow(instance.ns('publishModalContainer')).hide();
 					},
 
 					_onDestroyPortlet: function(event) {

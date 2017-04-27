@@ -138,7 +138,17 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 				ResourceBundleLoader.class, resourceBundleLoader, properties));
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void destroyPortlet(Portlet portlet, Set<String> portletIds)
+		throws Exception{
+
+		_destroyPortlet(portlet, portletIds);
+	}
+
+	private void _destroyPortlet(Portlet portlet, Set<String> portletIds)
 		throws Exception {
 
 		PortletApp portletApp = portlet.getPortletApp();
@@ -347,7 +357,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			}
 
 			for (Portlet portlet : portlets) {
-				destroyPortlet(portlet, portletIds);
+				_destroyPortlet(portlet, portletIds);
 			}
 		}
 

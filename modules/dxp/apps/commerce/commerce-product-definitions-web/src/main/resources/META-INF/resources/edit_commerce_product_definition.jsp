@@ -41,7 +41,7 @@ String backURLString = backUrl.toString();
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURLString);
 
-renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-product-definition") : cpDefinition.getTitle(languageId));
+renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-product") : cpDefinition.getTitle(languageId));
 
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 

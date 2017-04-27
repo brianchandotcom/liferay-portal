@@ -208,7 +208,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 							}
 						}
 					},
-					title: '<liferay-ui:message key="add-new-commerce-product-option-to-x" />',
+					title: '<liferay-ui:message key="add-new-commerce-product-option-to-x" arguments="<%= cpDefinition.getTitle(languageId) %>" />',
 					url: '<%= cpDefinitionOptionRelDisplayContext.getItemSelectorUrl() %>'
 				}
 			);

@@ -1,7 +1,7 @@
 {
 	"devDependencies": {
 		"babel-preset-react": "^6.11.1",
-		"metal-cli": "^2.0.0"
+		"metal-cli": "^4.0.1"
 	},
 	"name": "frontend-editor-alloyeditor-accessibility-web",
 	"version": "1.0.4"

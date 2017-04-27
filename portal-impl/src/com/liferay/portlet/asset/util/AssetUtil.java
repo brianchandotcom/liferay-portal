@@ -435,102 +435,6 @@ public class AssetUtil {
 		return addPortletURLs;
 	}
 
-	public static List<AssetPortletAddURL> getAssetPortletAddURLs(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, long groupId,
-		long[] classNameIds, long[] classTypeIds,
-		long[] allAssetCategoryIds, String[] allAssetTagNames,
-		String redirect)
-		throws Exception {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Locale locale = themeDisplay.getLocale();
-
-		List<AssetPortletAddURL> addPortletURLs = new ArrayList<>();
-
-		for (long classNameId : classNameIds) {
-			String className = PortalUtil.getClassName(classNameId);
-
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
-
-			if (Validator.isNull(assetRendererFactory.getPortletId())) {
-				continue;
-			}
-
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				themeDisplay.getCompanyId(),
-				assetRendererFactory.getPortletId());
-
-			if (!portlet.isActive()) {
-				continue;
-			}
-
-			PortletBag portletBag = PortletBagPool.get(
-				portlet.getRootPortletId());
-
-			ResourceBundle resourceBundle = portletBag.getResourceBundle(
-				locale);
-
-			ClassTypeReader classTypeReader =
-				assetRendererFactory.getClassTypeReader();
-
-			List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
-				themeDisplay.getLocale());
-
-			if (classTypes.isEmpty()) {
-				PortletURL addPortletURL = getAddPortletURL(
-					liferayPortletRequest, liferayPortletResponse, groupId,
-					className, 0, allAssetCategoryIds, allAssetTagNames,
-					redirect);
-
-				if (addPortletURL != null) {
-					addPortletURLs.add(
-						new AssetPortletAddURL(
-							portlet.getPortletId(), className, resourceBundle,
-							locale, addPortletURL));
-				}
-			}
-
-			for (ClassType classType : classTypes) {
-				long classTypeId = classType.getClassTypeId();
-
-				if (ArrayUtil.contains(classTypeIds, classTypeId) ||
-					(classTypeIds.length == 0)) {
-
-					PortletURL addPortletURL = getAddPortletURL(
-						liferayPortletRequest, liferayPortletResponse, groupId,
-						className, classTypeId, allAssetCategoryIds,
-						allAssetTagNames, redirect);
-
-					if (addPortletURL != null) {
-						String message =
-							className + CLASSNAME_SEPARATOR +
-								classType.getName();
-
-						addPortletURLs.add(
-							new AssetPortletAddURL(
-								portlet.getPortletId(), message, resourceBundle,
-								locale, addPortletURL));
-					}
-				}
-			}
-		}
-
-		if (addPortletURLs.size() <= 1) {
-			return addPortletURLs;
-		}
-
-		addPortletURLs.sort(null);
-
-		return addPortletURLs;
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getAssetPortletAddURLs(LiferayPortletRequest,
@@ -623,6 +527,102 @@ public class AssetUtil {
 		sb.append(ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR));
 
 		return sb.toString();
+	}
+
+	public static List<AssetPortletAddURL> getAssetPortletAddURLs(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long groupId,
+			long[] classNameIds, long[] classTypeIds,
+			long[] allAssetCategoryIds, String[] allAssetTagNames,
+			String redirect)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
+		List<AssetPortletAddURL> addPortletURLs = new ArrayList<>();
+
+		for (long classNameId : classNameIds) {
+			String className = PortalUtil.getClassName(classNameId);
+
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(className);
+
+			if (Validator.isNull(assetRendererFactory.getPortletId())) {
+				continue;
+			}
+
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				themeDisplay.getCompanyId(),
+				assetRendererFactory.getPortletId());
+
+			if (!portlet.isActive()) {
+				continue;
+			}
+
+			PortletBag portletBag = PortletBagPool.get(
+				portlet.getRootPortletId());
+
+			ResourceBundle resourceBundle = portletBag.getResourceBundle(
+				locale);
+
+			ClassTypeReader classTypeReader =
+				assetRendererFactory.getClassTypeReader();
+
+			List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
+				themeDisplay.getLocale());
+
+			if (classTypes.isEmpty()) {
+				PortletURL addPortletURL = getAddPortletURL(
+					liferayPortletRequest, liferayPortletResponse, groupId,
+					className, 0, allAssetCategoryIds, allAssetTagNames,
+					redirect);
+
+				if (addPortletURL != null) {
+					addPortletURLs.add(
+						new AssetPortletAddURL(
+							portlet.getPortletId(), className, resourceBundle,
+							locale, addPortletURL));
+				}
+			}
+
+			for (ClassType classType : classTypes) {
+				long classTypeId = classType.getClassTypeId();
+
+				if (ArrayUtil.contains(classTypeIds, classTypeId) ||
+					(classTypeIds.length == 0)) {
+
+					PortletURL addPortletURL = getAddPortletURL(
+						liferayPortletRequest, liferayPortletResponse, groupId,
+						className, classTypeId, allAssetCategoryIds,
+						allAssetTagNames, redirect);
+
+					if (addPortletURL != null) {
+						String message =
+							className + CLASSNAME_SEPARATOR +
+								classType.getName();
+
+						addPortletURLs.add(
+							new AssetPortletAddURL(
+								portlet.getPortletId(), message, resourceBundle,
+								locale, addPortletURL));
+					}
+				}
+			}
+		}
+
+		if (addPortletURLs.size() <= 1) {
+			return addPortletURLs;
+		}
+
+		addPortletURLs.sort(null);
+
+		return addPortletURLs;
 	}
 
 	public static String getClassName(String className) {

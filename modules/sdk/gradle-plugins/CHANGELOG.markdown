@@ -1543,6 +1543,12 @@ dependency to version 2.1.13.
 - [LPS-72152]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.3.11.
 
+## 3.3.6 - 2017-04-26
+
+### Changed
+- [LPS-72152]: Configure [Liferay Gradle Plugins Node] to use version 4.5.0 of
+NPM.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

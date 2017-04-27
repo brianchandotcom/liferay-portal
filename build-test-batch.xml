@@ -1236,38 +1236,13 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
-							<if>
-								<equals arg1="@{subrepository.name}" arg2="" />
-								<then>
-									<print-test-class-group test.class.group.index="${axis.variable}" />
+							<print-test-class-group test.class.group.index="${axis.variable}" />
 
-									<gradle-execute dir="modules" task="testIntegration">
-										<arg value="-Ddatabase.type=@{database.type}" />
-										<arg value="-Dbuild.exclude.ant.plugin=true" />
-										<arg value="-Dtest.class.group.index=${axis.variable}" />
-									</gradle-execute>
-								</then>
-								<else>
-									<get-module-base-dir-from-subrepository-name subrepository.name="@{subrepository.name}" />
-
-									<trycatch property="failure.property">
-										<try>
-											<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
-
-											<gradle-execute dir="${module.base.dir}" task="testIntegration">
-												<arg value="-Ddatabase.type=@{database.type}" />
-												<arg value="-Dbuild.exclude.ant.plugin=true" />
-											</gradle-execute>
-										</try>
-										<catch>
-											<fail message="${failure.property}" />
-										</catch>
-										<finally>
-											<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
-										</finally>
-									</trycatch>
-								</else>
-							</if>
+							<gradle-execute dir="modules" task="testIntegration">
+								<arg value="-Ddatabase.type=@{database.type}" />
+								<arg value="-Dbuild.exclude.ant.plugin=true" />
+								<arg value="-Dtest.class.group.index=${axis.variable}" />
+							</gradle-execute>
 
 							<ant dir="portal-kernel" inheritAll="false" target="test-class">
 								<property name="test.class" value="PortalLogAssertorTest" />
@@ -1281,13 +1256,26 @@ app.server.type=@{app.server.type}]]></echo>
 						<isset property="env.DIST_PATH" />
 						<then>
 							<prepare-test-environment />
+						</then>
+						<else>
+							<prepare-test-build />
+						</else>
+					</if>
 
+					<if>
+						<equals arg1="@{subrepository.name}" arg2="" />
+						<then>
 							<antcall inheritAll="false" target="record-test-class-file-names">
 								<param name="test.class.groups.size" value="${test.batch.size}" />
 							</antcall>
 						</then>
 						<else>
-							<prepare-test-build />
+							<get-module-base-dir-from-subrepository-name subrepository.name="@{subrepository.name}" />
+
+							<antcall inheritAll="false" target="record-test-class-file-names">
+								<param name="test.class.modules.base.dir" value="${module.base.dir}" />
+								<param name="test.class.groups.size" value="${test.batch.size}" />
+							</antcall>
 						</else>
 					</if>
 				</test-set-up>

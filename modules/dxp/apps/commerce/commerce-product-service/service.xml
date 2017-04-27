@@ -274,8 +274,8 @@
 
 		<!-- Other fields -->
 
-		<column localized="true" name="title" type="long" />
-		<column localized="true" name="description" type="long" />
+		<column localized="true" name="title" type="String" />
+		<column localized="true" name="description" type="String" />
 		<column name="priority" type="int" />
 	</entity>
 	<entity local-service="true" name="CPOption" remote-service="true"  uuid="true">

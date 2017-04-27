@@ -1014,7 +1014,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 					${localizationEntity.varName}.setCompanyId(${entity.varName}.getCompanyId());
 				</#if>
 
-				${localizationEntity.varName}.set${entity.name}PK(${entity.varName}.getPrimaryKey());
+				${localizationEntity.varName}.set${localizationEntity.primaryKeyMethodName}(${entity.varName}.getPrimaryKey());
 				${localizationEntity.varName}.setLanguageId(languageId);
 			}
 
@@ -1083,7 +1083,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 					${localizationEntity.varName}.setCompanyId(${entity.varName}.getCompanyId());
 				</#if>
 
-				${localizationEntity.varName}.set${entity.name}PK(${entity.varName}.getPrimaryKey());
+				${localizationEntity.varName}.set${localizationEntity.primaryKeyMethodName}(${entity.varName}.getPrimaryKey());
 				${localizationEntity.varName}.setLanguageId(languageId);
 
 				<#list localizationColumns as column>

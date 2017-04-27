@@ -50,10 +50,19 @@ public class LocalizationEntity extends Entity {
 		return _localizationFinderName;
 	}
 
+	public String getPrimaryKeyMethodName() {
+		return _primaryKeyMethodName;
+	}
+
 	public void setLocalizationFinderName(String localizationFinderName) {
 		_localizationFinderName = localizationFinderName;
 	}
 
+	public void setPrimaryKeyMethodName(String primaryKeyMethodName) {
+		_primaryKeyMethodName = primaryKeyMethodName;
+	}
+
 	private String _localizationFinderName;
+	private String _primaryKeyMethodName;
 
 }

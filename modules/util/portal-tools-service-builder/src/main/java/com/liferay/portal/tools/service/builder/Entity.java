@@ -1053,6 +1053,8 @@ public class Entity implements Comparable<Entity> {
 			Collections.singletonList(this), _txRequiredList);
 
 		_localizationEntity.setLocalizationFinderName(localizationFinderName);
+		_localizationEntity.setPrimaryKeyMethodName(
+			primaryEntityPKColumn.getMethodName());
 
 		return _localizationEntity;
 	}

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletFilter;
 import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.portlet.CustomUserAttributes;
@@ -59,6 +60,7 @@ import com.liferay.portlet.PortletURLListenerFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
+import com.liferay.util.JS;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -145,7 +147,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 	protected void destroyPortlet(Portlet portlet, Set<String> portletIds)
 		throws Exception {
 
-		_destroyPortlet(portlet, portletIds);
+		_destroyPortlet(null, portlet, portletIds);
 	}
 
 	protected void doInvokeDeploy(HotDeployEvent hotDeployEvent)
@@ -325,7 +327,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			}
 
 			for (Portlet portlet : portlets) {
-				_destroyPortlet(portlet, portletIds);
+				_destroyPortlet(servletContext, portlet, portletIds);
 			}
 		}
 
@@ -506,7 +508,9 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	private void _destroyPortlet(Portlet portlet, Set<String> portletIds)
+	private void _destroyPortlet(
+			ServletContext servletContext, Portlet portlet,
+			Set<String> portletIds)
 		throws Exception {
 
 		PortletApp portletApp = portlet.getPortletApp();
@@ -536,6 +540,23 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		if (resourceBundleLoaderServiceRegistration != null) {
 			resourceBundleLoaderServiceRegistration.unregister();
 		}
+
+		String portletName = portlet.getPortletName();
+
+		if (servletContext != null) {
+			String servletContextName = servletContext.getServletContextName();
+
+			if (servletContextName != null) {
+				portletName = portletName.concat(
+					PortletConstants.WAR_SEPARATOR);
+
+				portletName = portletName.concat(servletContextName);
+			}
+		}
+
+		portletName = JS.getSafeName(portletName);
+
+		ResourceActionsUtil.removePortletResource(portletName);
 	}
 
 	private static final String _JNDI_JDBC = "java_liferay:jdbc";

@@ -15,9 +15,11 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -32,8 +34,16 @@ import org.osgi.service.component.annotations.Component;
 public class ViewSlideShowMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Override
+	protected DLTrashUtil getDLTrashUtil() {
+		return _dlTrashUtil;
+	}
+
+	@Override
 	protected String getPath() {
 		return "/image_gallery_display/view_slide_show.jsp";
 	}
+
+	@Reference
+	private DLTrashUtil _dlTrashUtil;
 
 }

@@ -15,6 +15,8 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
+import com.liferay.document.library.web.constants.DLWebKeys;
+import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -39,6 +41,9 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 			Folder folder = ActionUtil.getFolder(renderRequest);
 
 			renderRequest.setAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
+
+			renderRequest.setAttribute(
+				DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, getDLTrashUtil());
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFolderException ||
@@ -55,6 +60,8 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 
 		return getPath();
 	}
+
+	protected abstract DLTrashUtil getDLTrashUtil();
 
 	protected abstract String getPath();
 

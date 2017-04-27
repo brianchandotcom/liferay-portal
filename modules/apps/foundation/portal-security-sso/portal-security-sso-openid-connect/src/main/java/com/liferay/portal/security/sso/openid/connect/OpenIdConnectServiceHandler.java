@@ -17,22 +17,27 @@ package com.liferay.portal.security.sso.openid.connect;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Thuong Dinh
  */
 public interface OpenIdConnectServiceHandler {
 
+	public boolean hasValidOpenIdConnectSession(HttpSession httpSession)
+		throws PortalException;
+
 	public String processAuthenticationResponse(
-			ThemeDisplay themeDisplay, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
 	public void requestAuthentication(
-			String openIdConnectProviderName, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+			String openIdConnectProviderName,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
 }

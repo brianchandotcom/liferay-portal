@@ -21,8 +21,6 @@ public class OpenIdConnectWebKeys {
 
 	public static final String OPEN_ID_CONNECT_LOGIN = "OPEN_ID_CONNECT_LOGIN";
 
-	public static final String OPEN_ID_CONNECT_NONCE = "OPEN_ID_CONNECT_NONCE";
-
 	public static final String OPEN_ID_CONNECT_PROVIDER_NAME =
 		"OPEN_ID_CONNECT_PROVIDER_NAME";
 
@@ -35,6 +33,7 @@ public class OpenIdConnectWebKeys {
 	public static final String OPEN_ID_CONNECT_RESPONSE_ACTION_NAME =
 		"/login/openid_connect_response";
 
-	public static final String OPEN_ID_CONNECT_STATE = "OPEN_ID_CONNECT_STATE";
+	public static final String OPEN_ID_CONNECT_SESSION =
+		"OPEN_ID_CONNECT_SESSION";
 
 }

@@ -37,6 +37,7 @@ Liferay-Releng-Module-Group-Title: Security Frameworks
 	com.nimbusds.oauth2.sdk.util,\
 	com.nimbusds.openid.connect.sdk,\
 	com.nimbusds.openid.connect.sdk.claims,\
+	com.nimbusds.openid.connect.sdk.op,\
 	com.nimbusds.openid.connect.sdk.token,\
 	\
 	net.jcip.annotations,\

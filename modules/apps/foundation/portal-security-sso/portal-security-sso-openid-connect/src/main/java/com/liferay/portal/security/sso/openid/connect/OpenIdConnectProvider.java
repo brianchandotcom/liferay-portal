@@ -16,15 +16,21 @@ package com.liferay.portal.security.sso.openid.connect;
 
 /**
  * @author Thuong Dinh
+ * @author Edward C. Han
  */
 public class OpenIdConnectProvider {
 
-	public OpenIdConnectProvider(String name) {
-		_name = name;
-	}
+	public OpenIdConnectProvider(
+		String name, String clientId, String clientSecret, String scopes,
+		OpenIdConnectProviderMetadataFactory
+			openIdConnectProviderMetadataFactory) {
 
-	public String getAuthorizationEndPoint() {
-		return _authorizationEndPoint;
+		_name = name;
+		_clientId = clientId;
+		_clientSecret = clientSecret;
+		_scopes = scopes;
+		_openIdConnectProviderMetadataFactory =
+			openIdConnectProviderMetadataFactory;
 	}
 
 	public String getClientId() {
@@ -35,79 +41,25 @@ public class OpenIdConnectProvider {
 		return _clientSecret;
 	}
 
-	public String getDiscoveryEndPoint() {
-		return _discoveryEndPoint;
-	}
-
-	public String getIssuerURL() {
-		return _issuerURL;
-	}
-
-	public String getJWKSURI() {
-		return _jwksURI;
-	}
-
 	public String getName() {
 		return _name;
 	}
 
-	public String[] getSubjectTypes() {
-		return _subjectTypes;
+	public OpenIdConnectProviderMetadataFactory
+		getOpenIdConnectProviderMetadataFactory() {
+
+		return _openIdConnectProviderMetadataFactory;
 	}
 
-	public String getTokenEndPoint() {
-		return _tokenEndPoint;
+	public String getScopes() {
+		return _scopes;
 	}
 
-	public String getUserInfoEndPoint() {
-		return _userInfoEndPoint;
-	}
-
-	public void setAuthorizationEndPoint(String authorizationEndPoint) {
-		_authorizationEndPoint = authorizationEndPoint;
-	}
-
-	public void setClientId(String clientId) {
-		_clientId = clientId;
-	}
-
-	public void setClientSecret(String clientSecret) {
-		_clientSecret = clientSecret;
-	}
-
-	public void setDiscoveryEndPoint(String discoveryEndPoint) {
-		_discoveryEndPoint = discoveryEndPoint;
-	}
-
-	public void setIssuerURL(String issuerURL) {
-		_issuerURL = issuerURL;
-	}
-
-	public void setJWKSURI(String jwksURI) {
-		_jwksURI = jwksURI;
-	}
-
-	public void setSubjectTypes(String[] subjectTypes) {
-		_subjectTypes = subjectTypes;
-	}
-
-	public void setTokenEndPoint(String tokenEndPoint) {
-		_tokenEndPoint = tokenEndPoint;
-	}
-
-	public void setUserInfoEndPoint(String userInfoEndPoint) {
-		_userInfoEndPoint = userInfoEndPoint;
-	}
-
-	private String _authorizationEndPoint;
-	private String _clientId;
-	private String _clientSecret;
-	private String _discoveryEndPoint;
-	private String _issuerURL;
-	private String _jwksURI;
+	private final String _clientId;
+	private final String _clientSecret;
 	private final String _name;
-	private String[] _subjectTypes;
-	private String _tokenEndPoint;
-	private String _userInfoEndPoint;
+	private final OpenIdConnectProviderMetadataFactory
+		_openIdConnectProviderMetadataFactory;
+	private final String _scopes;
 
 }

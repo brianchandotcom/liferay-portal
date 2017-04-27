@@ -15,10 +15,11 @@
 package com.liferay.portal.security.sso.openid.connect.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -43,8 +44,10 @@ public class OpenIdConnectUserInfoProcessorImpl
 	implements OpenIdConnectUserInfoProcessor {
 
 	@Override
-	public long processUserInfo(UserInfo userInfo, ThemeDisplay themeDisplay)
+	public long processUserInfo(UserInfo userInfo, long companyId)
 		throws PortalException {
+
+		Company company = _companyLocalService.getCompany(companyId);
 
 		String firstName = userInfo.getGivenName();
 		String lastName = userInfo.getFamilyName();
@@ -54,7 +57,7 @@ public class OpenIdConnectUserInfoProcessorImpl
 		String emailAddress = internetAddress.getAddress();
 
 		User user = _userLocalService.fetchUserByEmailAddress(
-			themeDisplay.getCompanyId(), emailAddress);
+			companyId, emailAddress);
 
 		if (user != null) {
 			return user.getUserId();
@@ -68,7 +71,6 @@ public class OpenIdConnectUserInfoProcessorImpl
 		}
 
 		long creatorUserId = 0;
-		long companyId = themeDisplay.getCompanyId();
 		boolean autoPassword = false;
 
 		String password1 = PwdGenerator.getPassword();
@@ -78,7 +80,7 @@ public class OpenIdConnectUserInfoProcessorImpl
 		boolean autoScreenName = true;
 		String screenName = StringPool.BLANK;
 		long facebookId = 0;
-		Locale locale = themeDisplay.getLocale();
+		Locale locale = company.getLocale();
 		String middleName = userInfo.getMiddleName();
 		long prefixId = 0;
 		long suffixId = 0;
@@ -106,6 +108,9 @@ public class OpenIdConnectUserInfoProcessorImpl
 
 		return user.getUserId();
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

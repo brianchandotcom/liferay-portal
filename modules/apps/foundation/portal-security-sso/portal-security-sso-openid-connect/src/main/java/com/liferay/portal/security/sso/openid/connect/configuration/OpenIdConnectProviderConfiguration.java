@@ -33,61 +33,52 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface OpenIdConnectProviderConfiguration {
 
-	@Meta.AD(
-		deflt = "google", description = "provider-name-help", required = false
-	)
+	@Meta.AD(deflt = "", description = "provider-name-help")
 	public String providerName();
 
-	@Meta.AD(
-		deflt = "", description = "open-id-connect-client-id-help",
-		required = false
-	)
+	@Meta.AD(deflt = "", description = "open-id-connect-client-id-help")
 	public String openIdConnectClientId();
 
-	@Meta.AD(
-		deflt = "", description = "open-id-connect-client-secret-help",
-		required = false
-	)
+	@Meta.AD(deflt = "", description = "open-id-connect-client-secret-help")
 	public String openIdConnectClientSecret();
 
 	@Meta.AD(
-		deflt = "https://accounts.google.com/o/oauth2/v2/auth",
-		description = "authorization-endpoint-help", required = false
+		deflt = "openid email profile", description = "scopes-help",
+		required = true
 	)
-	public String authorizationEndPoint();
+	public String scopes();
 
 	@Meta.AD(
-		deflt = "https://accounts.google.com/.well-known/openid-configuration",
-		description = "discovery-endpoint-help", required = false
+		deflt = "", description = "discovery-endpoint-help", required = false
 	)
 	public String discoveryEndPoint();
 
 	@Meta.AD(
-		deflt = "https://accounts.google.com", description = "issuer-url-help",
+		deflt = "360000", description = "discovery-endpoint-cache-help",
 		required = false
 	)
+	public long discoveryEndPointCacheInMillis();
+
+	@Meta.AD(
+		deflt = "", description = "authorization-endpoint-help",
+		required = false
+	)
+	public String authorizationEndPoint();
+
+	@Meta.AD(deflt = "", description = "issuer-url-help", required = false)
 	public String issuerURL();
 
-	@Meta.AD(
-		deflt = "https://www.googleapis.com/oauth2/v3/certs",
-		description = "jwks-uri-help", required = false
-	)
+	@Meta.AD(deflt = "", description = "jwks-uri-help", required = false)
 	public String jwksURI();
 
-	@Meta.AD(
-		deflt = "public", description = "subject-types-help", required = false
-	)
+	@Meta.AD(deflt = "", description = "subject-types-help", required = false)
 	public String[] subjectTypes();
 
-	@Meta.AD(
-		deflt = "https://www.googleapis.com/oauth2/v4/token",
-		description = "token-endpoint-help", required = false
-	)
+	@Meta.AD(deflt = "", description = "token-endpoint-help", required = false)
 	public String tokenEndPoint();
 
 	@Meta.AD(
-		deflt = "https://www.googleapis.com/oauth2/v3/userinfo",
-		description = "user-info-endpoint-help", required = false
+		deflt = "", description = "user-info-endpoint-help", required = false
 	)
 	public String userInfoEndPoint();
 

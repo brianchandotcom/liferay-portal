@@ -55,6 +55,19 @@ public class OpenIdConnectServiceException extends PortalException {
 
 	}
 
+	public static class ProviderException
+		extends OpenIdConnectServiceException {
+
+		public ProviderException(String msg) {
+			super(msg);
+		}
+
+		public ProviderException(String msg, Throwable cause) {
+			super(msg, cause);
+		}
+
+	}
+
 	public static class TokenErrorException
 		extends OpenIdConnectServiceException {
 

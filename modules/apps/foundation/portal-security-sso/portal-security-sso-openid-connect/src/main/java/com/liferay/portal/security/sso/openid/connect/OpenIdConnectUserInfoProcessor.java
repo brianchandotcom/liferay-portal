@@ -15,7 +15,6 @@
 package com.liferay.portal.security.sso.openid.connect;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 
@@ -24,7 +23,7 @@ import com.nimbusds.openid.connect.sdk.claims.UserInfo;
  */
 public interface OpenIdConnectUserInfoProcessor {
 
-	public long processUserInfo(UserInfo userInfo, ThemeDisplay themeDisplay)
+	public long processUserInfo(UserInfo userInfo, long companyId)
 		throws PortalException;
 
 }

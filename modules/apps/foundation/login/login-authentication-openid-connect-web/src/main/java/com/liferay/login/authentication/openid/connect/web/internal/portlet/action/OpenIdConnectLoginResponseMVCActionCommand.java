@@ -31,6 +31,9 @@ import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWeb
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -60,8 +63,17 @@ public class OpenIdConnectLoginResponseMVCActionCommand
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(actionRequest);
+
+			httpServletRequest = _portal.getOriginalServletRequest(
+				httpServletRequest);
+
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(actionResponse);
+
 			_openIdConnectServiceHandler.processAuthenticationResponse(
-				themeDisplay, actionRequest, actionResponse);
+				themeDisplay, httpServletRequest, httpServletResponse);
 
 			actionResponse.sendRedirect(themeDisplay.getURLHome());
 		}

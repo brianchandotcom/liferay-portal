@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.sso.openid.connect;
 
-import java.net.URL;
-
 import java.util.Collection;
 
 /**
@@ -23,11 +21,7 @@ import java.util.Collection;
  */
 public interface OpenIdConnectProviderRegistry {
 
-	public static final String OPEN_ID_CONNECT_PROVIDER_NAME_DEFAULT = "google";
-
 	public OpenIdConnectProvider getOpenIdConnectProvider(String name);
-
-	public OpenIdConnectProvider getOpenIdConnectProvider(URL issuerURL);
 
 	public Collection<String> getOpenIdConnectProviderNames();
 

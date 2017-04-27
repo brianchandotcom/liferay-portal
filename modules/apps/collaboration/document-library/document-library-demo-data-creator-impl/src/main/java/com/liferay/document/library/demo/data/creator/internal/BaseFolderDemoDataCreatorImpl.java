@@ -37,20 +37,18 @@ public abstract class BaseFolderDemoDataCreatorImpl
 
 	@Override
 	public void delete() throws PortalException {
-		try {
-			for (long folderId : _folderIds) {
-				_folderIds.remove(folderId);
-
+		for (long folderId : _folderIds) {
+			try {
 				dlAppLocalService.deleteFolder(folderId);
 			}
-		}
-		catch (NoSuchFolderException nsfe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsfe, nsfe);
+			catch (NoSuchFolderException nsfe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(nsfe, nsfe);
+				}
 			}
-		}
 
-		_folderIds.clear();
+			_folderIds.remove(folderId);
+		}
 	}
 
 	protected Folder createFolder(
@@ -77,11 +75,7 @@ public abstract class BaseFolderDemoDataCreatorImpl
 		return folder;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDlAppLocalService(DLAppLocalService dlAppLocalService) {
-		this.dlAppLocalService = dlAppLocalService;
-	}
-
+	@Reference
 	protected DLAppLocalService dlAppLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(

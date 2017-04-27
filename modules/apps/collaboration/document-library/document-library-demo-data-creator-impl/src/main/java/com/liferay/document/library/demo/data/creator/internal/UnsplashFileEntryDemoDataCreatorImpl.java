@@ -32,7 +32,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -78,23 +78,18 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 
 	@Override
 	public void delete() throws PortalException {
-		try {
-			for (long fileEntryId : _fileEntryIds) {
-				_fileEntryIds.remove(fileEntryId);
-
+		for (long fileEntryId : _fileEntryIds) {
+			try {
 				_dlAppLocalService.deleteFileEntry(fileEntryId);
 			}
-		}
-		catch (NoSuchFileEntryException nsfee) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsfee, nsfee);
+			catch (NoSuchFileEntryException nsfee) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(nsfee, nsfee);
+				}
 			}
-		}
-	}
 
-	@Reference(unbind = "-")
-	protected void setDlAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
+			_fileEntryIds.remove(fileEntryId);
+		}
 	}
 
 	private byte[] _getBytes() throws IOException, PortalException {
@@ -146,19 +141,14 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		UnsplashFileEntryDemoDataCreatorImpl.class);
 
-	private static final List<String> _categories = new ArrayList<>();
+	private static final List<String> _categories = Arrays.asList(
+		"buildings", "food", "nature", "people", "technology", "objects");
 
-	static {
-		_categories.add("buildings");
-		_categories.add("food");
-		_categories.add("nature");
-		_categories.add("people");
-		_categories.add("technology");
-		_categories.add("objects");
-	}
+	private volatile int _categoryIndex = -1;
 
-	private int _categoryIndex = -1;
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
 	private final List<Long> _fileEntryIds = new CopyOnWriteArrayList<>();
 
 }

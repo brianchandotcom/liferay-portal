@@ -76,17 +76,17 @@ public abstract class BaseBlogsEntryDemoDataCreator
 
 	@Override
 	public void delete() throws PortalException {
-		try {
-			for (long entryId : entryIds) {
+		for (long entryId : entryIds) {
+			try {
 				blogsEntryLocalService.deleteEntry(entryId);
+			}
+			catch (NoSuchEntryException nsee) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(nsee);
+				}
+			}
 
-				entryIds.remove(entryId);
-			}
-		}
-		catch (NoSuchEntryException nsee) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsee);
-			}
+			entryIds.remove(entryId);
 		}
 
 		fileEntryDemoDataCreator.delete();

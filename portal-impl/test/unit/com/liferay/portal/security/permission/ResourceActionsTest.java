@@ -82,34 +82,43 @@ public class ResourceActionsTest {
 
 		List<String> portletNames = ResourceActionsUtil.getPortletNames();
 
-		Assert.assertTrue(portletNames.contains(_PORTLET_NAME_1));
-		Assert.assertTrue(portletNames.contains(_PORTLET_NAME_2));
+		Assert.assertTrue(
+			portletNames.toString(), portletNames.contains(_PORTLET_NAME_1));
+		Assert.assertTrue(
+			portletNames.toString(), portletNames.contains(_PORTLET_NAME_2));
 
 		List<String> modelNames = ResourceActionsUtil.getModelNames();
 
-		Assert.assertTrue(modelNames.contains(_MODEL_NAME));
+		Assert.assertTrue(
+			modelNames.toString(), modelNames.contains(_MODEL_NAME));
 
 		ResourceActionsUtil.removePortletResource(_PORTLET_NAME_1);
 
 		portletNames = ResourceActionsUtil.getPortletNames();
 
-		Assert.assertFalse(portletNames.contains(_PORTLET_NAME_1));
-		Assert.assertTrue(portletNames.contains(_PORTLET_NAME_2));
+		Assert.assertFalse(
+			portletNames.toString(), portletNames.contains(_PORTLET_NAME_1));
+		Assert.assertTrue(
+			portletNames.toString(), portletNames.contains(_PORTLET_NAME_2));
 
 		modelNames = ResourceActionsUtil.getModelNames();
 
-		Assert.assertTrue(modelNames.contains(_MODEL_NAME));
+		Assert.assertTrue(
+			modelNames.toString(), modelNames.contains(_MODEL_NAME));
 
 		ResourceActionsUtil.removePortletResource(_PORTLET_NAME_2);
 
 		portletNames = ResourceActionsUtil.getPortletNames();
 
-		Assert.assertFalse(portletNames.contains(_PORTLET_NAME_1));
-		Assert.assertFalse(portletNames.contains(_PORTLET_NAME_2));
+		Assert.assertFalse(
+			portletNames.toString(), portletNames.contains(_PORTLET_NAME_1));
+		Assert.assertFalse(
+			portletNames.toString(), portletNames.contains(_PORTLET_NAME_2));
 
 		modelNames = ResourceActionsUtil.getModelNames();
 
-		Assert.assertFalse(modelNames.contains(_MODEL_NAME));
+		Assert.assertFalse(
+			modelNames.toString(), modelNames.contains(_MODEL_NAME));
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();

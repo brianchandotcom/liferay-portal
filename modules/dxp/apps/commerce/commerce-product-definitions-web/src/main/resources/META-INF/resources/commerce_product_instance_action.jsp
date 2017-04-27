@@ -25,7 +25,7 @@ if (row != null) {
 	cpInstance = (CPInstance)row.getObject();
 }
 else {
-	cpInstance = (CPInstance)request.getAttribute("commerce_product_instance_info_panel.jsp-entry");
+	cpInstance = (CPInstance)request.getAttribute("info_panel.jsp-entry");
 }
 %>
 

@@ -25,7 +25,7 @@ if (row != null) {
 	cpDefinition = (CPDefinition)row.getObject();
 }
 else {
-	cpDefinition = (CPDefinition)request.getAttribute("commerce_product_definition_info_panel.jsp-entry");
+	cpDefinition = (CPDefinition)request.getAttribute("info_panel.jsp-entry");
 }
 %>
 

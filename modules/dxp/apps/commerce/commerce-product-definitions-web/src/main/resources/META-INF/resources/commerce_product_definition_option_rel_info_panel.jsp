@@ -30,7 +30,7 @@ if (ListUtil.isEmpty(cpDefinitionOptionRels)) {
 		<%
 		CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionRels.get(0);
 
-		request.setAttribute("commerce_product_definition_option_rel_info_panel.jsp-entry", cpDefinitionOptionRel);
+		request.setAttribute("info_panel.jsp-entry", cpDefinitionOptionRel);
 		%>
 
 		<div class="sidebar-header">

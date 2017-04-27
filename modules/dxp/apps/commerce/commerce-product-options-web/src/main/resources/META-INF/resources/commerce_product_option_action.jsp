@@ -25,7 +25,7 @@ if (row != null) {
 	cpOption = (CPOption)row.getObject();
 }
 else {
-	cpOption = (CPOption)request.getAttribute("commerce_product_option_info_panel.jsp-entry");
+	cpOption = (CPOption)request.getAttribute("info_panel.jsp-entry");
 }
 %>
 

@@ -25,7 +25,7 @@ if (row != null) {
 	cpDefinitionOptionRel = (CPDefinitionOptionRel)row.getObject();
 }
 else {
-	cpDefinitionOptionRel = (CPDefinitionOptionRel)request.getAttribute("commerce_product_definition_option_rel_info_panel.jsp-entry");
+	cpDefinitionOptionRel = (CPDefinitionOptionRel)request.getAttribute("info_panel.jsp-entry");
 }
 %>
 

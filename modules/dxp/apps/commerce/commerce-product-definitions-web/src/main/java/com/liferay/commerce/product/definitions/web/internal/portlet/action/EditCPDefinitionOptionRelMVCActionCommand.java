@@ -48,6 +48,16 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCPDefinitionOptionRelMVCActionCommand
 	extends BaseMVCActionCommand {
 
+	protected void deleteCPDefinitionOptionRel(ActionRequest actionRequest)
+		throws Exception {
+
+		long cpDefinitionOptionRelId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionOptionRelId");
+
+		_cpDefinitionOptionRelService.deleteCPDefinitionOptionRel(
+			cpDefinitionOptionRelId);
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -58,6 +68,9 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateCPDefinitionOptionRel(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteCPDefinitionOptionRel(actionRequest);
 			}
 		}
 		catch (Exception e) {

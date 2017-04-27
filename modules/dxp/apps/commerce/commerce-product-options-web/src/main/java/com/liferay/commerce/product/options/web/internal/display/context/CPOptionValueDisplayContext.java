@@ -70,7 +70,7 @@ public class CPOptionValueDisplayContext
 			liferayPortletRequest, getPortletURL(), null, null);
 
 		searchContainer.setEmptyResultsMessage(
-			"no-product-option-values-were-found");
+			"no-option-values-were-found");
 
 		OrderByComparator<CPOptionValue> orderByComparator =
 			CPOptionsPortletUtil.getCPOptionValueOrderByComparator(

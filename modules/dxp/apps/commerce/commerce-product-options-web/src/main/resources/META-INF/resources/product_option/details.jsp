@@ -33,7 +33,7 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFiel
 	<aui:input label="description" name="description" />
 
 	<aui:select
-		label="product-option-field-type"
+		label="option-field-type"
 		name="ddmFormFieldTypeName"
 		showEmptyOption="<%= true %>"
 	>

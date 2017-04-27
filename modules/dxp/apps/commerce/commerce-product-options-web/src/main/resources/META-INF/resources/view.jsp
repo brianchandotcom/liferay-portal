@@ -42,7 +42,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item
 			href="<%= viewProductOptionsURL.toString() %>"
-			label="product-options"
+			label="options"
 			selected='<%= toolbarItem.equals("view-all-product-options") %>'
 		/>
 	</aui:nav>

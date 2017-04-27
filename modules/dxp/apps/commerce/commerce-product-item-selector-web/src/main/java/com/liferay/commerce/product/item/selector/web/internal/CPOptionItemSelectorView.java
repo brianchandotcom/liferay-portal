@@ -76,7 +76,7 @@ public class CPOptionItemSelectorView
 			"content.Language", locale, getClass());
 
 		return LanguageUtil.get(
-			resourceBundle, "product-options");
+			resourceBundle, "options");
 	}
 
 	@Override

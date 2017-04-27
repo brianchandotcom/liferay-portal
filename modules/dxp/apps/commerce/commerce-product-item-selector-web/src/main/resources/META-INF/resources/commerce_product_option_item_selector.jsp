@@ -24,7 +24,7 @@ String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventNa
 
 <div id="<portlet:namespace />cpOptionSelectorWrapper">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-product-options-were-found"
+		emptyResultsMessage="no-options-were-found"
 		iteratorURL="<%= myportletURL %>"
 		total='<%= GetterUtil.getInteger(request.getAttribute("total")) %>'
 	>

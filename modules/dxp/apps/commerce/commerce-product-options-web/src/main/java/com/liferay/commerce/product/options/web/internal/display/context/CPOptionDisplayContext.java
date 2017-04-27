@@ -104,7 +104,7 @@ public class CPOptionDisplayContext
 			new SearchContainer<>(
 				liferayPortletRequest, getPortletURL(), null, null);
 
-		searchContainer.setEmptyResultsMessage("no-product-options-were-found");
+		searchContainer.setEmptyResultsMessage("no-options-were-found");
 
 		OrderByComparator<CPOption> orderByComparator =
 			CPOptionsPortletUtil.

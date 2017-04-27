@@ -175,7 +175,7 @@ public class CPDefinitionOptionRelDisplayContext
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setEmptyResultsMessage("no-product-options-were-found");
+		searchContainer.setEmptyResultsMessage("no-options-were-found");
 		searchContainer.setRowChecker(getRowChecker());
 
 		int total =

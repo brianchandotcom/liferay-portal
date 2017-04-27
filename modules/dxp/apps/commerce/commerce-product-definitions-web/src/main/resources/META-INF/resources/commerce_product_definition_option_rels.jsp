@@ -140,7 +140,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 				<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
-						name="skuContributor"
+						name="sku-contributor"
 						property="skuContributor"
 				/>
 
@@ -208,7 +208,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 							}
 						}
 					},
-					title: '<liferay-ui:message key="add-new-commerce-product-option-to-x" arguments="<%= cpDefinition.getTitle(languageId) %>" />',
+					title: '<liferay-ui:message key="add-new-option-to-x" arguments="<%= cpDefinition.getTitle(languageId) %>" />',
 					url: '<%= cpDefinitionOptionRelDisplayContext.getItemSelectorUrl() %>'
 				}
 			);

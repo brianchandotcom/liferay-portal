@@ -86,7 +86,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<liferay-ui:search-container-row
 							className="com.liferay.commerce.product.model.CPDefinition"
 							cssClass="entry-display-style"
-							keyProperty="cpDefinitionId"
+							keyProperty="CPDefinitionId"
 							modelVar="cpDefinition"
 						>
 							<c:choose>

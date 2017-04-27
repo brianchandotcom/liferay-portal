@@ -856,6 +856,13 @@ public class JCRStore extends BaseStore {
 	protected void activate(Map<String, Object> properties)
 		throws RepositoryException {
 
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"The JCR implementation of Store service is deprecated. You " +
+					"could migrate your data to Liferay's FileSystemStore or " +
+						"DBStore");
+		}
+
 		_jcrStoreConfiguration = ConfigurableUtil.createConfigurable(
 			JCRStoreConfiguration.class, properties);
 

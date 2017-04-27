@@ -38,7 +38,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.test.util.BaseTrashHandlerTestCase;
 import com.liferay.trash.test.util.DefaultWhenIsAssetable;
 import com.liferay.trash.test.util.DefaultWhenIsIndexableBaseModel;
@@ -54,7 +57,9 @@ import com.liferay.trash.test.util.WhenIsUpdatableBaseModel;
 import com.liferay.trash.test.util.WhenParentModelIsSameType;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -79,6 +84,20 @@ public class DLFolderTrashHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(TrashHelper.class.getName());
+
+		_serviceTracker.open();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceTracker.close();
+	}
 
 	@Override
 	public AssetEntry fetchAssetEntry(ClassedModel classedModel)
@@ -154,6 +173,8 @@ public class DLFolderTrashHandlerTest
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
+		_trashHelper = _serviceTracker.getService();
 
 		setUpPermissionThreadLocal();
 		setUpPrincipalThreadLocal();
@@ -278,7 +299,7 @@ public class DLFolderTrashHandlerTest
 
 		String name = dlFolder.getName();
 
-		return TrashUtil.getOriginalTitle(name);
+		return _trashHelper.getOriginalTitle(name);
 	}
 
 	@Override
@@ -318,8 +339,11 @@ public class DLFolderTrashHandlerTest
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 
+	private static ServiceTracker<TrashHelper, TrashHelper> _serviceTracker;
+
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
+	private TrashHelper _trashHelper;
 	private final WhenIsAssetable _whenIsAssetable =
 		new DefaultWhenIsAssetable();
 	private final WhenIsIndexableBaseModel _whenIsIndexableBaseModel =

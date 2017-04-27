@@ -302,7 +302,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				long folderId = folder.getFolderId();
 
 				if ((folder.getModel() instanceof DLFolder) &&
-					DLTrashUtil.isTrashEnabled(
+					_dlTrashUtil.isTrashEnabled(
 						folder.getGroupId(), folder.getRepositoryId())) {
 
 					_dlTrashService.moveFolderToTrash(folderId);
@@ -323,7 +323,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				long fileEntryId = fileEntry.getFileEntryId();
 
 				if ((fileEntry.getModel() instanceof DLFileEntry) &&
-					DLTrashUtil.isTrashEnabled(
+					_dlTrashUtil.isTrashEnabled(
 						fileEntry.getGroupId(), fileEntry.getRepositoryId())) {
 
 					_dlTrashService.moveFileEntryToTrash(fileEntryId);
@@ -1282,5 +1282,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	private AssetTagLocalService _assetTagLocalService;
 	private DLAppService _dlAppService;
 	private DLTrashService _dlTrashService;
+
+	@Reference
+	private DLTrashUtil _dlTrashUtil;
 
 }

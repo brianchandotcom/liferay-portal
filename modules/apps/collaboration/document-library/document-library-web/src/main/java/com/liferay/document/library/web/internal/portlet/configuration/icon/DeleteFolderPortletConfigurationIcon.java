@@ -171,12 +171,15 @@ public class DeleteFolderPortletConfigurationIcon
 
 	protected boolean isTrashEnabled(long groupId, long repositoryId) {
 		try {
-			return DLTrashUtil.isTrashEnabled(groupId, repositoryId);
+			return _dlTrashUtil.isTrashEnabled(groupId, repositoryId);
 		}
 		catch (PortalException pe) {
 			throw new RuntimeException(pe);
 		}
 	}
+
+	@Reference
+	private DLTrashUtil _dlTrashUtil;
 
 	@Reference
 	private Portal _portal;

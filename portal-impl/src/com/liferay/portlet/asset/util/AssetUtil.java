@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 
@@ -468,20 +469,20 @@ public class AssetUtil {
 		addPortletURL.setParameter("groupId", String.valueOf(groupId));
 		addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
 
-		String addPortletURLString = addPortletURL.toString();
-
-		addPortletURLString = HttpUtil.addParameter(
-			addPortletURLString, "refererPlid", plid);
-
 		if (addDisplayPageParameter && (layout != null)) {
-			String namespace = PortalUtil.getPortletNamespace(portletId);
-
-			addPortletURLString = HttpUtil.addParameter(
-				addPortletURLString, namespace + "layoutUuid",
-				layout.getUuid());
+			addPortletURL.setParameter("layoutUuid", layout.getUuid());
 		}
 
-		return addPortletURLString;
+		if (addPortletURL instanceof PortletURLImpl) {
+			PortletURLImpl portletURLImpl = (PortletURLImpl)addPortletURL;
+
+			portletURLImpl.setRefererPlid(plid);
+
+			return portletURLImpl.toString();
+		}
+
+		return HttpUtil.addParameter(
+			addPortletURL.toString(), "refererPlid", plid);
 	}
 
 	public static List<AssetEntry> getAssetEntries(Hits hits) {

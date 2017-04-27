@@ -20,12 +20,15 @@ import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.trash.kernel.util.TrashUtil;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(immediate = true, service = DLTrashUtil.class)
 public class DLTrashUtil {
 
-	public static boolean isTrashEnabled(long groupId, long repositoryId)
+	public boolean isTrashEnabled(long groupId, long repositoryId)
 		throws PortalException {
 
 		if (!TrashUtil.isTrashEnabled(groupId)) {

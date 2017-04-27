@@ -38,21 +38,6 @@ public class SecurePrintStream extends PrintStream {
 		return _securePrintStream;
 	}
 
-	public static void main(String[] args) throws Exception {
-		JenkinsResultsParserUtil.debug = true;
-
-		System.setOut(getInstance());
-
-		/*JenkinsResultsParserUtil.setBuildProperties(
-			JenkinsResultsParserUtil.getBuildProperties());*/
-
-		String content = JenkinsResultsParserUtil.toString(
-			"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
-				"/liferay-jenkins-ee/commands/build.properties");
-
-		System.out.println(content);
-	}
-
 	@Override
 	public PrintStream append(char c) {
 		if (_suspendFlush) {

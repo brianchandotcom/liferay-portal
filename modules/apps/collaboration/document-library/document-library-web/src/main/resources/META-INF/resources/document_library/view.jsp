@@ -263,7 +263,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 			],
 			scopeGroupId: <%= scopeGroupId %>,
 			searchContainerId: 'entries',
-			trashEnabled: <%= (scopeGroupId == repositoryId) && DLTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) %>,
+			trashEnabled: <%= (scopeGroupId == repositoryId) && dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) %>,
 			updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>,
 			uploadURL: '<%= uploadURL %>',
 			viewFileEntryURL: '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'

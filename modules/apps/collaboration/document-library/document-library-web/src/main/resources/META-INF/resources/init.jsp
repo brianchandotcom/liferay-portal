@@ -273,6 +273,8 @@ IGDisplayContextProvider igDisplayContextProvider = dlWebComponentProvider.getIG
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
+DLTrashUtil dlTrashUtil = (DLTrashUtil)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
 %>
 
 <%@ include file="/init-ext.jsp" %>

@@ -61,13 +61,26 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteCPDefinition(ActionRequest actionRequest)
+	protected void deleteCPDefinitions(ActionRequest actionRequest)
 		throws Exception {
+
+		long[] deleteCPDefinitionIds = null;
 
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
-		_cpDefinitionService.deleteCPDefinition(cpDefinitionId);
+		if (cpDefinitionId > 0) {
+			deleteCPDefinitionIds = new long[] {cpDefinitionId};
+		}
+		else {
+			deleteCPDefinitionIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteCPDefinitionIds"),
+				0L);
+		}
+
+		for (long deleteCPDefinitionId : deleteCPDefinitionIds) {
+			_cpDefinitionService.deleteCPDefinition(deleteCPDefinitionId);
+		}
 	}
 
 	@Override
@@ -87,7 +100,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCPDefinition(actionRequest);
+				deleteCPDefinitions(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {

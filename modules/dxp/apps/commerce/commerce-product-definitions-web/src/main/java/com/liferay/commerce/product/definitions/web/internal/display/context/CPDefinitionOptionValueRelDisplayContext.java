@@ -41,9 +41,7 @@ public class CPDefinitionOptionValueRelDisplayContext
 				cpDefinitionOptionValueRelService)
 		throws PortalException {
 
-		super(
-			actionHelper, httpServletRequest,
-			"rowIdsCPDefinitionOptionValueRel", "CPDefinitionOptionValueRel");
+		super(actionHelper, httpServletRequest, "CPDefinitionOptionValueRel");
 
 		setDefaultOrderByCol("priority");
 

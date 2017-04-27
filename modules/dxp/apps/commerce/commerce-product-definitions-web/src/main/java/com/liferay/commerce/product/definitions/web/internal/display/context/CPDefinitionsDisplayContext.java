@@ -43,9 +43,7 @@ public class CPDefinitionsDisplayContext
 				cpTypeServicesTracker)
 		throws PortalException {
 
-		super(
-			actionHelper, httpServletRequest, "rowIdsCPDefinition",
-			"CPDefinition");
+		super(actionHelper, httpServletRequest, "CPDefinition");
 
 		_cpDefinitionService = cpDefinitionService;
 		_cpTypeServicesTracker = cpTypeServicesTracker;

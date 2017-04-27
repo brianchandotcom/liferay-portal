@@ -130,7 +130,7 @@ public class ActionHelper {
 		throws Exception {
 
 		long[] cpDefinitionOptionRelIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIdsCPDefinitionOptionRel");
+			resourceRequest, "rowIds");
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
 
@@ -206,7 +206,7 @@ public class ActionHelper {
 		throws Exception {
 
 		long[] cpDefinitionIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIdsCPDefinition");
+			resourceRequest, "rowIds");
 
 		List<CPDefinition> cpDefinitions = new ArrayList<>();
 

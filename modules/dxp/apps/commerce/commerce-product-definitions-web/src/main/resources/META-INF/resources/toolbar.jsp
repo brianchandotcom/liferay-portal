@@ -62,5 +62,22 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 				label="info"
 			/>
 		</c:if>
+
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitions();" %>' icon="trash" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
+
+<aui:script>
+	function <portlet:namespace />deleteCPDefinitions() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-products") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+			form.fm('deleteCPDefinitionIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			console.log('CIAO ' + Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			submitForm(form, '<portlet:actionURL name="editProductDefinition" />');
+		}
+	}
+</aui:script>

@@ -38,8 +38,7 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 				cpInstanceService)
 		throws PortalException {
 
-		super(
-			actionHelper, httpServletRequest, "rowIdsCPInstance", "CPInstance");
+		super(actionHelper, httpServletRequest, "CPInstance");
 
 		setDefaultOrderByCol("sku");
 

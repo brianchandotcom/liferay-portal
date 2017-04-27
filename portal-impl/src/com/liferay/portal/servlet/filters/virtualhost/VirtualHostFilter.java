@@ -215,7 +215,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 		int widgetPos = 0;
 
 		if (friendlyURL.contains(PropsValues.WIDGET_SERVLET_MAPPING)) {
-			friendlyURL = StringUtil.replace(
+			friendlyURL = StringUtil.replaceFirst(
 				friendlyURL, PropsValues.WIDGET_SERVLET_MAPPING,
 				StringPool.BLANK);
 

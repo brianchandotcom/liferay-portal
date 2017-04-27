@@ -14,6 +14,10 @@ AUI.add(
 		var DDLPortlet = A.Component.create(
 			{
 				ATTRS: {
+					alert: {
+						valueFn: '_valueAlert'
+					},
+
 					autosaveInterval: {
 					},
 
@@ -85,6 +89,12 @@ AUI.add(
 						value: ''
 					},
 
+					published: {
+						lazyAdd: false,
+						setter: '_setPublished',
+						value: false
+					},
+
 					publishRecordSetURL: {
 					},
 
@@ -152,6 +162,9 @@ AUI.add(
 
 						instance.createEditor(instance.ns('descriptionEditor'));
 						instance.createEditor(instance.ns('nameEditor'));
+
+						instance.createPublishPopover();
+						instance.createPublishTooltip();
 					},
 
 					bindUI: function() {
@@ -166,6 +179,7 @@ AUI.add(
 							instance.one('.back-url-link').on('click', A.bind('_onBack', instance)),
 							instance.one('#preview').on('click', A.bind('_onPreviewButtonClick', instance)),
 							instance.one('#publish').on('click', A.bind('_onPublishButtonClick', instance)),
+							instance.one('#publishIcon').on('click', A.bind('_onPublishIconClick', instance)),
 							instance.one('#save').on('click', A.bind('_onSaveButtonClick', instance)),
 							instance.one('#showRules').on('click', A.bind('_onRulesButtonClick', instance)),
 							instance.one('#showForm').on('click', A.bind('_onFormButtonClick', instance)),
@@ -178,6 +192,7 @@ AUI.add(
 						if (autosaveInterval > 0) {
 							instance._intervalId = setInterval(A.bind('_autosave', instance), autosaveInterval * MINUTE);
 						}
+
 					},
 
 					destructor: function() {
@@ -185,10 +200,14 @@ AUI.add(
 
 						clearInterval(instance._intervalId);
 
+						instance.get('alert').destroy();
 						instance.get('formBuilder').destroy();
 						instance.get('ruleBuilder').destroy();
 
 						(new A.EventHandle(instance._eventHandlers)).detach();
+
+						instance._publishPopover.destroy();
+						instance._publishTooltip.destroy();
 					},
 
 					createEditor: function(editorName) {
@@ -209,6 +228,73 @@ AUI.add(
 								}
 							);
 						}
+					},
+
+					createPublishPopover: function() {
+						var instance = this;
+
+						instance._publishPopover = new A.Popover(
+							{
+								align: {
+									node: A.one('.publish-icon'),
+									points: [A.WidgetPositionAlign.RC, A.WidgetPositionAlign.LC]
+								},
+								bodyContent: A.one('.publish-popover-content.edit-popover'),
+								constrain: false,
+								cssClass: 'form-builder-publish-popover',
+								position: 'left',
+								visible: false,
+								width: 500,
+								zIndex: 999
+							}
+						).render();
+
+						instance._publishPopover.set(
+							'hideOn',[
+								{
+									eventName: 'key',
+									keyCode: 'esc',
+									node: A.getDoc()
+								},
+								{
+									eventName: 'clickoutside',
+									node: A.one('.form-builder-publish-popover')
+								}
+							]
+						);
+
+						instance._publishPopover.after("visibleChange", function(event) {
+
+							if (event.prevVal) {
+								var popoverContent = A.one('.publish-popover-content.edit-popover');
+
+								var formGroup = popoverContent.one('.form-group');
+
+								formGroup.removeClass('has-error');
+								formGroup.removeClass('has-success');
+
+								var copyButton = popoverContent.one('.btn');
+
+								copyButton.removeClass('btn-danger');
+								copyButton.removeClass('btn-success');
+
+								popoverContent.one('.publish-button-text').html(Liferay.Language.get('copy'));
+							}
+						});
+					},
+
+					createPublishTooltip: function() {
+						var instance = this;
+
+						instance._publishTooltip = new A.TooltipDelegate(
+							{
+								position: 'left',
+								trigger: '.publish-icon',
+								triggerHideEvent: ['blur', 'mouseleave'],
+								triggerShowEvent: ['focus', 'mouseover'],
+								visible: false
+							}
+						);
 					},
 
 					disableDescriptionEditor: function() {
@@ -401,13 +487,12 @@ AUI.add(
 
 						var publishedField = settingsDDMForm.getField('published');
 
-						publishedField.setValue(publishCheckbox.attr('checked'));
-
 						var requireAuthenticationCheckbox = instance.one('#requireAuthenticationCheckbox');
 
 						var requireAuthenticationField = settingsDDMForm.getField('requireAuthentication');
 
 						requireAuthenticationField.setValue(requireAuthenticationCheckbox.attr('checked'));
+						publishedField.setValue(instance.get('published'));
 
 						var settings = settingsDDMForm.toJSON();
 
@@ -660,30 +745,83 @@ AUI.add(
 						);
 					},
 
-					_onPublishButtonClick: function(event) {
+					_onPublishIconClick: function() {
 						var instance = this;
 
-						event.preventDefault();
+						if (!instance.get('published')) {
+							return;
+						}
 
-						var publishButton = instance.one('#publish');
-
-						publishButton.html(Liferay.Language.get('saving'));
-
-						publishButton.append(TPL_BUTTON_SPINNER);
-
-						var saveAndPublish = instance.one('input[name*="saveAndPublish"]');
-
-						saveAndPublish.set('value', 'true');
-
-						instance.submitForm();
-					},
-
-					_onRequireAuthenticationCheckboxChanged: function() {
-						var instance = this;
-
-						var clipboardInput = instance.one('#clipboard');
+						var clipboardInput = instance.one('#clipboardEdit');
 
 						clipboardInput.set('value', instance._createFormURL());
+
+						instance._publishPopover.show();
+					},
+
+					_onPublishButtonClick: function() {
+						var instance = this;
+
+						instance._autosave(
+							function() {
+
+								var publishedValue = instance.get('published');
+								var newPublishedValue = !publishedValue;
+
+								var payload = instance.ns(
+									{
+										published: newPublishedValue,
+										recordSetId: instance.get('recordSetId')
+									}
+								);
+
+								A.io.request(
+									instance.get('publishRecordSetURL'),
+									{
+										after: {
+											success: function() {
+												instance.set('published', newPublishedValue);
+
+												if (newPublishedValue) {
+													instance._handlePublishAction();
+												}
+												else {
+													instance._handleUnpublishAction();
+												}
+
+											}
+										},
+										data: payload,
+										dataType: 'JSON',
+										method: 'POST'
+									}
+								);
+
+							}
+						);
+
+					},
+
+					_handlePublishAction: function() {
+						var instance = this;
+
+						var publishMessage = Liferay.Language.get('the-form-was-published-successfully-access-it-with-this-url-x')
+
+						var formUrl = '<span style="font-weight: 500">' + instance._createFormURL() + '</span>';
+
+						publishMessage = publishMessage.replace(/\{0\}/gim, formUrl);
+
+						instance._showAlert(publishMessage, "success");
+
+						instance.one('#publish').html(Liferay.Language.get('unpublish-form'));
+					},
+
+					_handleUnpublishAction: function() {
+						var instance = this;
+
+						instance._showAlert(Liferay.Language.get('the-form-was-unpublished-successfully'), "success");
+
+						instance.one('#publish').html(Liferay.Language.get('publish-form'));
 					},
 
 					_onRulesButtonClick: function() {
@@ -711,39 +849,60 @@ AUI.add(
 
 						saveButton.append(TPL_BUTTON_SPINNER);
 
-						var saveAndPublish = instance.one('input[name*="saveAndPublish"]');
-
-						saveAndPublish.set('value', 'false');
-
 						instance.submitForm();
-					},
-
-					_setFormAsPublished: function() {
-						var instance = this;
-
-						var publishCheckbox = instance.one('#publishCheckbox');
-
-						var payload = instance.ns(
-							{
-								published: publishCheckbox.attr('checked'),
-								recordSetId: instance.get('recordSetId')
-							}
-						);
-
-						A.io.request(
-							instance.get('publishRecordSetURL'),
-							{
-								data: payload,
-								dataType: 'JSON',
-								method: 'POST'
-							}
-						);
 					},
 
 					_setName: function(value) {
 						var instance = this;
 
 						window[instance.ns('nameEditor')].setHTML(value);
+					},
+
+					_setPublished: function(value) {
+						var instance = this;
+
+						if (value) {
+							A.one('.publish-icon').removeClass("disabled");
+						}
+						else {
+							A.one('.publish-icon').addClass("disabled");
+						}
+					},
+
+					_showAlert: function(message, type) {
+						var instance = this;
+
+						var alert = instance.get('alert');
+
+						var icon = "exclamation-full";
+
+						if (type === 'success') {
+							icon = 'check';
+						}
+
+						alert.setAttrs(
+							{
+								icon: icon,
+								message: message,
+								type: type
+							}
+						);
+
+						if (!alert.get('rendered')) {
+							alert.render('.management-bar-default .container-fluid-1280');
+						}
+
+						alert.show();
+					},
+
+					_valueAlert: function() {
+						var instance = this;
+
+						return new Liferay.Alert(
+							{
+								closeable: true
+							}
+						);
 					},
 
 					_valueFormBuilder: function() {
@@ -789,6 +948,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['io-base', 'liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-ddl-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window', 'querystring-parse']
+		requires: ['aui-popover', 'aui-tooltip', 'io-base', 'event-outside', 'liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-ddl-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window', 'querystring-parse']
 	}
 );

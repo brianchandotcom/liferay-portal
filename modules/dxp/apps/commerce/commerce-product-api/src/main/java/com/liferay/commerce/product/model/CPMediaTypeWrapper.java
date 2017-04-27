@@ -125,13 +125,13 @@ public class CPMediaTypeWrapper implements CPMediaType,
 			setModifiedDate(modifiedDate);
 		}
 
-		Long title = (Long)attributes.get("title");
+		String title = (String)attributes.get("title");
 
 		if (title != null) {
 			setTitle(title);
 		}
 
-		Long description = (Long)attributes.get("description");
+		String description = (String)attributes.get("description");
 
 		if (description != null) {
 			setDescription(description);
@@ -215,6 +215,16 @@ public class CPMediaTypeWrapper implements CPMediaType,
 	}
 
 	/**
+	* Returns the description of this cp media type.
+	*
+	* @return the description of this cp media type
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _cpMediaType.getDescription();
+	}
+
+	/**
 	* Returns the localized description of this cp media type in the language. Uses the default language if no localization exists for the requested language.
 	*
 	* @param languageId the ID of the language
@@ -270,6 +280,16 @@ public class CPMediaTypeWrapper implements CPMediaType,
 	@Override
 	public java.lang.String getDescriptionCurrentValue() {
 		return _cpMediaType.getDescriptionCurrentValue();
+	}
+
+	/**
+	* Returns the title of this cp media type.
+	*
+	* @return the title of this cp media type
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _cpMediaType.getTitle();
 	}
 
 	/**
@@ -435,16 +455,6 @@ public class CPMediaTypeWrapper implements CPMediaType,
 	}
 
 	/**
-	* Returns the description of this cp media type.
-	*
-	* @return the description of this cp media type
-	*/
-	@Override
-	public long getDescription() {
-		return _cpMediaType.getDescription();
-	}
-
-	/**
 	* Returns the group ID of this cp media type.
 	*
 	* @return the group ID of this cp media type
@@ -462,16 +472,6 @@ public class CPMediaTypeWrapper implements CPMediaType,
 	@Override
 	public long getPrimaryKey() {
 		return _cpMediaType.getPrimaryKey();
-	}
-
-	/**
-	* Returns the title of this cp media type.
-	*
-	* @return the title of this cp media type
-	*/
-	@Override
-	public long getTitle() {
-		return _cpMediaType.getTitle();
 	}
 
 	/**
@@ -538,6 +538,16 @@ public class CPMediaTypeWrapper implements CPMediaType,
 	}
 
 	/**
+	* Sets the description of this cp media type.
+	*
+	* @param description the description of this cp media type
+	*/
+	@Override
+	public void setDescription(java.lang.String description) {
+		_cpMediaType.setDescription(description);
+	}
+
+	/**
 	* Sets the localized description of this cp media type in the language.
 	*
 	* @param description the localized description of this cp media type
@@ -560,16 +570,6 @@ public class CPMediaTypeWrapper implements CPMediaType,
 	public void setDescription(java.lang.String description,
 		java.util.Locale locale, java.util.Locale defaultLocale) {
 		_cpMediaType.setDescription(description, locale, defaultLocale);
-	}
-
-	/**
-	* Sets the description of this cp media type.
-	*
-	* @param description the description of this cp media type
-	*/
-	@Override
-	public void setDescription(long description) {
-		_cpMediaType.setDescription(description);
 	}
 
 	@Override
@@ -668,6 +668,16 @@ public class CPMediaTypeWrapper implements CPMediaType,
 	}
 
 	/**
+	* Sets the title of this cp media type.
+	*
+	* @param title the title of this cp media type
+	*/
+	@Override
+	public void setTitle(java.lang.String title) {
+		_cpMediaType.setTitle(title);
+	}
+
+	/**
 	* Sets the localized title of this cp media type in the language.
 	*
 	* @param title the localized title of this cp media type
@@ -689,16 +699,6 @@ public class CPMediaTypeWrapper implements CPMediaType,
 	public void setTitle(java.lang.String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_cpMediaType.setTitle(title, locale, defaultLocale);
-	}
-
-	/**
-	* Sets the title of this cp media type.
-	*
-	* @param title the title of this cp media type
-	*/
-	@Override
-	public void setTitle(long title) {
-		_cpMediaType.setTitle(title);
 	}
 
 	@Override

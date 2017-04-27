@@ -88,8 +88,8 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "title", Types.BIGINT },
-			{ "description", Types.BIGINT },
+			{ "title", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
 			{ "priority", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -103,12 +103,12 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("title", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("description", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPMediaType (uuid_ VARCHAR(75) null,CPMediaTypeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title LONG,description LONG,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CPMediaType (uuid_ VARCHAR(75) null,CPMediaTypeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CPMediaType";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpMediaType.CPMediaTypeId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPMediaType.CPMediaTypeId ASC";
@@ -285,13 +285,13 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 			setModifiedDate(modifiedDate);
 		}
 
-		Long title = (Long)attributes.get("title");
+		String title = (String)attributes.get("title");
 
 		if (title != null) {
 			setTitle(title);
 		}
 
-		Long description = (Long)attributes.get("description");
+		String description = (String)attributes.get("description");
 
 		if (description != null) {
 			setDescription(description);
@@ -458,8 +458,13 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 
 	@JSON
 	@Override
-	public long getTitle() {
-		return _title;
+	public String getTitle() {
+		if (_title == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _title;
+		}
 	}
 
 	@Override
@@ -506,7 +511,7 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 	}
 
 	@Override
-	public void setTitle(long title) {
+	public void setTitle(String title) {
 		_title = title;
 	}
 
@@ -552,8 +557,13 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 
 	@JSON
 	@Override
-	public long getDescription() {
-		return _description;
+	public String getDescription() {
+		if (_description == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _description;
+		}
 	}
 
 	@Override
@@ -600,7 +610,7 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 	}
 
 	@Override
-	public void setDescription(long description) {
+	public void setDescription(String description) {
 		_description = description;
 	}
 
@@ -914,7 +924,19 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 
 		cpMediaTypeCacheModel.title = getTitle();
 
+		String title = cpMediaTypeCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			cpMediaTypeCacheModel.title = null;
+		}
+
 		cpMediaTypeCacheModel.description = getDescription();
+
+		String description = cpMediaTypeCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			cpMediaTypeCacheModel.description = null;
+		}
 
 		cpMediaTypeCacheModel.priority = getPriority();
 
@@ -1028,9 +1050,9 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _title;
+	private String _title;
 	private String _titleCurrentLanguageId;
-	private long _description;
+	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private int _priority;
 	private long _columnBitmask;

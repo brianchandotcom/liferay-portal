@@ -139,9 +139,9 @@ public class CPMediaTypePersistenceTest {
 
 		newCPMediaType.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCPMediaType.setTitle(RandomTestUtil.nextLong());
+		newCPMediaType.setTitle(RandomTestUtil.randomString());
 
-		newCPMediaType.setDescription(RandomTestUtil.nextLong());
+		newCPMediaType.setDescription(RandomTestUtil.randomString());
 
 		newCPMediaType.setPriority(RandomTestUtil.nextInt());
 
@@ -461,9 +461,9 @@ public class CPMediaTypePersistenceTest {
 
 		cpMediaType.setModifiedDate(RandomTestUtil.nextDate());
 
-		cpMediaType.setTitle(RandomTestUtil.nextLong());
+		cpMediaType.setTitle(RandomTestUtil.randomString());
 
-		cpMediaType.setDescription(RandomTestUtil.nextLong());
+		cpMediaType.setDescription(RandomTestUtil.randomString());
 
 		cpMediaType.setPriority(RandomTestUtil.nextInt());
 

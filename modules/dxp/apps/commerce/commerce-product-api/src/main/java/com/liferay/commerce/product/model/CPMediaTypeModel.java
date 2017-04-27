@@ -219,7 +219,7 @@ public interface CPMediaTypeModel extends BaseModel<CPMediaType>, GroupedModel,
 	 *
 	 * @return the title of this cp media type
 	 */
-	public long getTitle();
+	public String getTitle();
 
 	/**
 	 * Returns the localized title of this cp media type in the language. Uses the default language if no localization exists for the requested language.
@@ -277,7 +277,7 @@ public interface CPMediaTypeModel extends BaseModel<CPMediaType>, GroupedModel,
 	 *
 	 * @param title the title of this cp media type
 	 */
-	public void setTitle(long title);
+	public void setTitle(String title);
 
 	/**
 	 * Sets the localized title of this cp media type in the language.
@@ -318,7 +318,7 @@ public interface CPMediaTypeModel extends BaseModel<CPMediaType>, GroupedModel,
 	 *
 	 * @return the description of this cp media type
 	 */
-	public long getDescription();
+	public String getDescription();
 
 	/**
 	 * Returns the localized description of this cp media type in the language. Uses the default language if no localization exists for the requested language.
@@ -376,7 +376,7 @@ public interface CPMediaTypeModel extends BaseModel<CPMediaType>, GroupedModel,
 	 *
 	 * @param description the description of this cp media type
 	 */
-	public void setDescription(long description);
+	public void setDescription(String description);
 
 	/**
 	 * Sets the localized description of this cp media type in the language.

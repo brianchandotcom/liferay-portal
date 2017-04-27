@@ -132,8 +132,20 @@ public class CPMediaTypeCacheModel implements CacheModel<CPMediaType>,
 			cpMediaTypeImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		cpMediaTypeImpl.setTitle(title);
-		cpMediaTypeImpl.setDescription(description);
+		if (title == null) {
+			cpMediaTypeImpl.setTitle(StringPool.BLANK);
+		}
+		else {
+			cpMediaTypeImpl.setTitle(title);
+		}
+
+		if (description == null) {
+			cpMediaTypeImpl.setDescription(StringPool.BLANK);
+		}
+		else {
+			cpMediaTypeImpl.setDescription(description);
+		}
+
 		cpMediaTypeImpl.setPriority(priority);
 
 		cpMediaTypeImpl.resetOriginalValues();
@@ -155,10 +167,8 @@ public class CPMediaTypeCacheModel implements CacheModel<CPMediaType>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-
-		title = objectInput.readLong();
-
-		description = objectInput.readLong();
+		title = objectInput.readUTF();
+		description = objectInput.readUTF();
 
 		priority = objectInput.readInt();
 	}
@@ -191,9 +201,19 @@ public class CPMediaTypeCacheModel implements CacheModel<CPMediaType>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(title);
+		if (title == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(title);
+		}
 
-		objectOutput.writeLong(description);
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
 
 		objectOutput.writeInt(priority);
 	}
@@ -206,7 +226,7 @@ public class CPMediaTypeCacheModel implements CacheModel<CPMediaType>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long title;
-	public long description;
+	public String title;
+	public String description;
 	public int priority;
 }

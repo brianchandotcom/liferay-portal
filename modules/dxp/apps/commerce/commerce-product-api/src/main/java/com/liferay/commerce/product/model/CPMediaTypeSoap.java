@@ -161,19 +161,19 @@ public class CPMediaTypeSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getTitle() {
+	public String getTitle() {
 		return _title;
 	}
 
-	public void setTitle(long title) {
+	public void setTitle(String title) {
 		_title = title;
 	}
 
-	public long getDescription() {
+	public String getDescription() {
 		return _description;
 	}
 
-	public void setDescription(long description) {
+	public void setDescription(String description) {
 		_description = description;
 	}
 
@@ -193,7 +193,7 @@ public class CPMediaTypeSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _title;
-	private long _description;
+	private String _title;
+	private String _description;
 	private int _priority;
 }

@@ -111,8 +111,8 @@ create table CPMediaType (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	title LONG,
-	description LONG,
+	title STRING null,
+	description STRING null,
 	priority INTEGER
 );
 

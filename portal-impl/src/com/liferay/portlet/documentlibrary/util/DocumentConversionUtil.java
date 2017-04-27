@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.util.DocumentConversion;
+import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.File;

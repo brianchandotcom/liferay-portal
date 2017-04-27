@@ -166,5 +166,5 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 
 <liferay-frontend:add-menu>
 	<liferay-frontend:add-menu-item id="addSkuButton" title='<%= LanguageUtil.get(request, "add-sku") %>' url="javascript:;" />
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "generate-all-skus") %>' url="<%= addProductDefinitionURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "generate-all-possible-sku-combinations") %>' url="<%= addProductDefinitionURL.toString() %>" />
 </liferay-frontend:add-menu>

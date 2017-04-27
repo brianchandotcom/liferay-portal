@@ -126,7 +126,7 @@ JavaScript dependencies for the `transpileJS` task.
 - [LPS-71826]: Update the [Liferay Gradle Plugins Node] dependency to version
 2.1.0.
 
-## 2.3.11 - 2016-04-24
+## 2.3.11 - 2017-04-25
 
 ### Changed
 - [LPS-72152]: Update the [Liferay Gradle Plugins Node] dependency to version

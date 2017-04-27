@@ -96,7 +96,7 @@ public class SiteFriendlyURLModelImpl extends BaseModelImpl<SiteFriendlyURL>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SiteFriendlyURL (uuid_ VARCHAR(75) null,siteFriendlyURLId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,friendlyURL VARCHAR(75) null,languageId VARCHAR(75) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table SiteFriendlyURL (uuid_ VARCHAR(75) null,siteFriendlyURLId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,friendlyURL VARCHAR(255) null,languageId VARCHAR(75) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table SiteFriendlyURL";
 	public static final String ORDER_BY_JPQL = " ORDER BY siteFriendlyURL.siteFriendlyURLId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SiteFriendlyURL.siteFriendlyURLId ASC";

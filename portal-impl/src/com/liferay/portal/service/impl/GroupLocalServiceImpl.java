@@ -86,6 +86,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -109,6 +110,7 @@ import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.sites.kernel.util.SitesFriendlyURLAdapterUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.File;
@@ -986,7 +988,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return null;
 		}
 
-		friendlyURL = getFriendlyURL(friendlyURL);
+		friendlyURL = getFriendlyURL(HttpUtil.decodePath(friendlyURL));
+
+		Group group = SitesFriendlyURLAdapterUtil.getGroup(
+			companyId, friendlyURL);
+
+		if (group != null) {
+			return group;
+		}
 
 		return groupPersistence.fetchByC_F(companyId, friendlyURL);
 	}
@@ -3900,7 +3909,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected String getFriendlyURL(String friendlyURL) {
-		return FriendlyURLNormalizerUtil.normalize(friendlyURL);
+		return FriendlyURLNormalizerUtil.normalizeWithEncoding(friendlyURL);
 	}
 
 	protected String getOrgGroupName(String name) {

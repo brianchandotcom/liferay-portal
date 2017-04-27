@@ -1559,6 +1559,13 @@ version 1.0.155.
 ## 3.3.7 - 2017-04-28
 
 ### Changed
+- [LPS-70890]: Update the [Liferay CSS Builder] dependency to version 1.0.26.
+- [LPS-70890]: Update the [Liferay Javadoc Formatter] dependency to version
+1.0.20.
+- [LPS-70890]: Update the [Liferay Portal Tools WSDD Builder] dependency to
+version 1.0.8.
+- [LPS-70890]: Update the [Liferay TLD Formatter] dependency to version 1.0.3.
+- [LPS-70890]: Update the [Liferay XML Formatter] dependency to version 1.0.3.
 - [LPS-71728]: Update the [Liferay Ant BND] dependency to version 2.0.37.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin

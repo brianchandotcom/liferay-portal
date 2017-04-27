@@ -183,7 +183,6 @@ AUI.add(
 							instance.one('#save').on('click', A.bind('_onSaveButtonClick', instance)),
 							instance.one('#showRules').on('click', A.bind('_onRulesButtonClick', instance)),
 							instance.one('#showForm').on('click', A.bind('_onFormButtonClick', instance)),
-							instance.one('#requireAuthenticationCheckbox').on('change', A.bind('_onRequireAuthenticationCheckboxChanged', instance)),
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
 
@@ -433,11 +432,6 @@ AUI.add(
 
 						var publishedField = settingsDDMForm.getField('published');
 
-						var requireAuthenticationCheckbox = instance.one('#requireAuthenticationCheckbox');
-
-						var requireAuthenticationField = settingsDDMForm.getField('requireAuthentication');
-
-						requireAuthenticationField.setValue(requireAuthenticationCheckbox.attr('checked'));
 						publishedField.setValue(instance.get('published'));
 
 						var settings = settingsDDMForm.toJSON();
@@ -541,9 +535,11 @@ AUI.add(
 
 						var formURL;
 
-						var requireAuthenticationCheckbox = instance.one('#requireAuthenticationCheckbox');
+						var settingsDDMForm = Liferay.component('settingsDDMForm');
 
-						if (requireAuthenticationCheckbox.attr('checked')) {
+						var requireAuthenticationField = settingsDDMForm.getField('requireAuthentication');
+
+						if (requireAuthenticationField.getValue()) {
 							formURL = instance.get('restrictedFormURL');
 						}
 						else {

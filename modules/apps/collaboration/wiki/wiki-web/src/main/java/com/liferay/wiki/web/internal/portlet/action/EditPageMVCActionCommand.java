@@ -56,7 +56,9 @@ import com.liferay.wiki.web.internal.WikiAttachmentsHelper;
 import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -135,9 +137,11 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		if (moveToTrash && !trashedModels.isEmpty()) {
-			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+			Map<String, Object> data = new HashMap<>();
 
-			hideDefaultSuccessMessage(actionRequest);
+			data.put("trashedModels", trashedModels);
+
+			addDeleteSuccessData(actionRequest, data);
 		}
 	}
 

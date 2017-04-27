@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
@@ -45,7 +46,6 @@ import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.kernel.service.TrashEntryServiceUtil;
 import com.liferay.trash.kernel.service.TrashVersionLocalServiceUtil;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -1483,7 +1483,7 @@ public abstract class BaseTrashHandlerTestCase {
 		String baseModelName = whenCanBeDuplicatedInTrash.getBaseModelName(
 			baseModel);
 
-		Assert.assertTrue(TrashUtil.isValidTrashTitle(baseModelName));
+		Assert.assertTrue(isValidTrashTitle(baseModelName));
 
 		BaseModel<?> duplicateBaseModel = addBaseModel(
 			parentBaseModel, serviceContext);
@@ -1503,7 +1503,7 @@ public abstract class BaseTrashHandlerTestCase {
 		String duplicateBaseModelName =
 			whenCanBeDuplicatedInTrash.getBaseModelName(duplicateBaseModel);
 
-		Assert.assertTrue(TrashUtil.isValidTrashTitle(duplicateBaseModelName));
+		Assert.assertTrue(isValidTrashTitle(duplicateBaseModelName));
 	}
 
 	@Test
@@ -3510,6 +3510,14 @@ public abstract class BaseTrashHandlerTestCase {
 		return false;
 	}
 
+	protected boolean isValidTrashTitle(String title) {
+		if (title.startsWith(_TRASH_PREFIX)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected abstract void moveBaseModelToTrash(long primaryKey)
 		throws Exception;
 
@@ -3526,5 +3534,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@DeleteAfterTestRun
 	protected Group group;
+
+	private static final String _TRASH_PREFIX = StringPool.SLASH;
 
 }

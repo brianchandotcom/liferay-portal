@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -59,7 +58,6 @@ import com.liferay.trash.kernel.model.TrashVersion;
 import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.kernel.service.TrashVersionLocalServiceUtil;
 import com.liferay.trash.kernel.util.Trash;
-import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.trash.kernel.util.comparator.EntryCreateDateComparator;
 import com.liferay.trash.kernel.util.comparator.EntryTypeComparator;
 import com.liferay.trash.kernel.util.comparator.EntryUserNameComparator;
@@ -75,7 +73,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -216,7 +213,7 @@ public class TrashImpl implements Trash {
 		String[] attachmentFileNames) {
 
 		for (String attachmentFileName : attachmentFileNames) {
-			String trashTime = TrashUtil.getTrashTime(
+			String trashTime = getTrashTime(
 				attachmentFileName, TRASH_TIME_SEPARATOR);
 
 			long timestamp = GetterUtil.getLong(trashTime);
@@ -432,21 +429,6 @@ public class TrashImpl implements Trash {
 			HttpServletRequest request, String className, long classPK)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String portletId = PortletProviderUtil.getPortletId(
-			TrashEntry.class.getName(), PortletProvider.Action.VIEW);
-
-		if (!themeDisplay.isSignedIn() ||
-			!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
-			!PortletPermissionUtil.hasControlPanelAccessPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), portletId)) {
-
-			return null;
-		}
-
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			className);
 
@@ -465,8 +447,11 @@ public class TrashImpl implements Trash {
 			return null;
 		}
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, portletId, PortletRequest.RENDER_PHASE);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
 
 		portletURL.setParameter("mvcPath", "/view_content.jsp");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
@@ -492,27 +477,8 @@ public class TrashImpl implements Trash {
 	public PortletURL getViewURL(HttpServletRequest request)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String portletId = PortletProviderUtil.getPortletId(
-			TrashEntry.class.getName(), PortletProvider.Action.VIEW);
-
-		if (!themeDisplay.isSignedIn() ||
-			!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
-			!PortletPermissionUtil.hasControlPanelAccessPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), portletId)) {
-
-			return null;
-		}
-
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, portletId, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		return portletURL;
+		return PortletProviderUtil.getPortletURL(
+			request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
 	}
 
 	@Override
@@ -597,7 +563,7 @@ public class TrashImpl implements Trash {
 			if (containerModelTrashHandler.isInTrash(
 					containerModel.getContainerModelId())) {
 
-				name = TrashUtil.getOriginalTitle(name);
+				name = getOriginalTitle(name);
 			}
 
 			PortalUtil.addPortletBreadcrumbEntry(

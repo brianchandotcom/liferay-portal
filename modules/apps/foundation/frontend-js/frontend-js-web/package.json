@@ -11,7 +11,7 @@
 		"liferay-karma-config": "0.0.4",
 		"liferay-module-config-generator": "^1.2.1",
 		"metal": "^2.5.12",
-		"metal-cli": "^2.1.2",
+		"metal-cli": "^4.0.1",
 		"metal-component": "^2.5.13",
 		"metal-dom": "^2.5.13",
 		"metal-events": "^2.5.16",

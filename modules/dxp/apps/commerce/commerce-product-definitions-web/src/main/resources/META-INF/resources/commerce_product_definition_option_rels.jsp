@@ -122,7 +122,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 			<liferay-ui:search-container-row
 				className="com.liferay.commerce.product.model.CPDefinitionOptionRel"
 				cssClass="entry-display-style"
-				keyProperty="cpDefinitionOptionRelId"
+				keyProperty="CPDefinitionOptionRelId"
 				modelVar="cpDefinitionOptionRel"
 			>
 				<liferay-ui:search-container-column-text

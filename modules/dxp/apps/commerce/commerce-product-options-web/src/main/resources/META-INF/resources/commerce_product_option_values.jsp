@@ -120,7 +120,7 @@ renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-prod
 						<liferay-ui:search-container-row
 							className="com.liferay.commerce.product.model.CPOptionValue"
 							cssClass="entry-display-style"
-							keyProperty="cpOptionValueId"
+							keyProperty="CPOptionValueId"
 							modelVar="cpOptionValue"
 						>
 							<liferay-ui:search-container-column-text

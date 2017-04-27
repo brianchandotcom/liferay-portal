@@ -124,7 +124,7 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 			<liferay-ui:search-container-row
 				className="com.liferay.commerce.product.model.CPInstance"
 				cssClass="entry-display-style"
-				keyProperty="cpInstanceId"
+				keyProperty="CPInstanceId"
 				modelVar="cpInstance"
 			>
 

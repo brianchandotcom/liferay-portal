@@ -118,7 +118,7 @@ portletDisplay.setURLBack(backURL);
 			<liferay-ui:search-container-row
 				className="com.liferay.commerce.product.model.CPDefinitionOptionValueRel"
 				cssClass="entry-display-style"
-				keyProperty="cpDefinitionOptionValueRelId"
+				keyProperty="CPDefinitionOptionValueRelId"
 				modelVar="cpDefinitionOptionValueRel"
 			>
 				<liferay-ui:search-container-column-text

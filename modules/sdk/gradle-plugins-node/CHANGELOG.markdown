@@ -101,7 +101,7 @@ executing the `PublishNodeModuleTask`.
 - [LPS-71826]: Add the ability to set the NPM log level by setting the property
 `logLevel` of `ExecuteNPMTask`.
 
-## 2.2.0 - 2017-04-24
+## 2.2.0 - 2017-04-25
 
 ### Added
 - [LPS-72152]: Add property `npmUrl` to all tasks that extend

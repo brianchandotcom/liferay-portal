@@ -16,7 +16,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.xml.formatter</artifactId>
-				<version>1.0.2</version>
+				<version>1.0.3</version>
 				<configuration>
 					<fileName>sample.xml</fileName>
 				</configuration>

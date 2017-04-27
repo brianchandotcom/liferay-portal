@@ -1543,6 +1543,22 @@ dependency to version 2.1.13.
 - [LPS-72152]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.3.11.
 
+## 3.3.6 - 2017-04-27
+
+### Changed
+- [LPS-71728]: Update the [Liferay Ant BND] dependency to version 2.0.36.
+
+## 3.3.7 - 2017-04-27
+
+### Changed
+- [LPS-70890]: Update the [Liferay CSS Builder] dependency to version 1.0.26.
+- [LPS-70890]: Update the [Liferay Javadoc Formatter] dependency to version
+1.0.20.
+- [LPS-70890]: Update the [Liferay Portal Tools WSDD Builder] dependency to
+version 1.0.8.
+- [LPS-70890]: Update the [Liferay TLD Formatter] dependency to version 1.0.3.
+- [LPS-70890]: Update the [Liferay XML Formatter] dependency to version 1.0.3.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -1677,6 +1693,7 @@ version 2.3.11.
 [LPS-71603]: https://issues.liferay.com/browse/LPS-71603
 [LPS-71686]: https://issues.liferay.com/browse/LPS-71686
 [LPS-71722]: https://issues.liferay.com/browse/LPS-71722
+[LPS-71728]: https://issues.liferay.com/browse/LPS-71728
 [LPS-71826]: https://issues.liferay.com/browse/LPS-71826
 [LPS-71925]: https://issues.liferay.com/browse/LPS-71925
 [LPS-72030]: https://issues.liferay.com/browse/LPS-72030

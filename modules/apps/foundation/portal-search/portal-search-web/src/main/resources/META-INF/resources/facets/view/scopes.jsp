@@ -21,12 +21,23 @@ if (Validator.isNull(fieldParam)) {
 	fieldParam = String.valueOf(searchDisplayContext.getSearchScopeGroupId());
 }
 
-ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = new ScopeSearchFacetDisplayContext(facet, fieldParam, locale, dataJSONObject.getInt("frequencyThreshold"), dataJSONObject.getInt("maxTerms"), dataJSONObject.getBoolean("showAssetCount", true), GroupLocalServiceUtil.getService());
+ScopeSearchFacetDisplayBuilder scopeSearchFacetDisplayBuilder = new ScopeSearchFacetDisplayBuilder();
+
+scopeSearchFacetDisplayBuilder.setFacet(facet);
+scopeSearchFacetDisplayBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));
+scopeSearchFacetDisplayBuilder.setFrequencyThreshold(dataJSONObject.getInt("frequencyThreshold"));
+scopeSearchFacetDisplayBuilder.setGroupLocalService(GroupLocalServiceUtil.getService());
+scopeSearchFacetDisplayBuilder.setLocale(locale);
+scopeSearchFacetDisplayBuilder.setMaxTerms(dataJSONObject.getInt("maxTerms"));
+scopeSearchFacetDisplayBuilder.setParameterName(facet.getFieldId());
+scopeSearchFacetDisplayBuilder.setParameterValue(fieldParam);
+
+ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = scopeSearchFacetDisplayBuilder.build();
 %>
 
 <c:choose>
 	<c:when test="<%= scopeSearchFacetDisplayContext.isRenderNothing() %>">
-		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getFieldParamInputName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getFieldParamInputValue() %>" />
+		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>" />
 	</c:when>
 	<c:otherwise>
 		<div class="panel panel-default">
@@ -38,7 +49,7 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = new ScopeSearchF
 
 			<div class="panel-body">
 				<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getFieldParamInputName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getFieldParamInputValue() %>" />
+					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>" />
 
 					<ul class="list-unstyled scopes">
 						<li class="default facet-value">

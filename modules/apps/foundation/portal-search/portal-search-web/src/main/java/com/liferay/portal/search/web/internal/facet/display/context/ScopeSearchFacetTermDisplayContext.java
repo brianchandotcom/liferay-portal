@@ -15,36 +15,22 @@
 package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
-
-import java.util.Locale;
 
 /**
  * @author André de Oliveira
  */
 public class ScopeSearchFacetTermDisplayContext {
 
-	public ScopeSearchFacetTermDisplayContext(
-		Group group, boolean selected, int count, boolean showCount,
-		Locale locale) {
-
-		_group = group;
-		_selected = selected;
-		_count = count;
-		_showCount = showCount;
-		_locale = locale;
-	}
-
 	public int getCount() {
 		return _count;
 	}
 
 	public String getDescriptiveName() throws PortalException {
-		return _group.getDescriptiveName(_locale);
+		return _descriptiveName;
 	}
 
 	public long getGroupId() {
-		return _group.getGroupId();
+		return _groupId;
 	}
 
 	public boolean isSelected() {
@@ -55,10 +41,30 @@ public class ScopeSearchFacetTermDisplayContext {
 		return _showCount;
 	}
 
-	private final int _count;
-	private final Group _group;
-	private final Locale _locale;
-	private final boolean _selected;
-	private final boolean _showCount;
+	public void setCount(int count) {
+		_count = count;
+	}
+
+	public void setDescriptiveName(String descriptiveName) {
+		_descriptiveName = descriptiveName;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	public void setSelected(boolean selected) {
+		_selected = selected;
+	}
+
+	public void setShowCount(boolean showCount) {
+		_showCount = showCount;
+	}
+
+	private int _count;
+	private String _descriptiveName;
+	private long _groupId;
+	private boolean _selected;
+	private boolean _showCount;
 
 }

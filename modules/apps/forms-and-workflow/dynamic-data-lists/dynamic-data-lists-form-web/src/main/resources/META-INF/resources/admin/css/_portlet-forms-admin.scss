@@ -1,3 +1,67 @@
+.form-builder-publish-popover{
+	&:not(.popover-hidden) {
+		display: table !important;
+	}
+}
+
+.form-builder-publish-popover .publish-popover-content {
+	display: block;
+
+	.form-group {
+		margin-bottom: 10px;
+
+		&.has-success {
+			margin-bottom: 0px;
+
+			.help-block {
+				display: block;
+				margin-bottom: 0px;
+			}
+
+			.publish-button-success-icon {
+				display: block;
+			}
+
+			.publish-button-text {
+				display: none;
+			}
+		}
+
+		&.has-error {
+			margin-bottom: 0px;
+
+			.help-block {
+				display: block;
+				margin-bottom: 0px;
+			}
+		}
+
+		.help-block{
+			display: none;
+			margin-bottom: 0px;
+		}
+
+		.input-group-btn{
+			vertical-align: top;
+		}
+
+		.publish-button-success-icon {
+			display: none;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	}
+}
+
+.form-builder-publish-popover-content {
+	display: table;
+	width: 500px;
+}
+
+.publish-popover-content {
+	display: none;
+}
+
 .portlet-forms-admin {
 	.aspect-ratio img {
 		top: 0;
@@ -9,6 +73,37 @@
 		padding-top: 18.07142857px;
 		text-align: center;
 		width: 100%;
+	}
+
+	.management-bar .liferayalert {
+		margin-left: auto;
+		margin-right: auto;
+		width: 80%;
+	}
+
+	.publish-icon {
+		color: #879DAE;
+		cursor: pointer;
+		float: right;
+		margin-right: 12px;
+		margin-top: -25px;
+		padding-left: 15px;
+
+		&.disabled {
+			cursor: not-allowed;
+		}
+
+		&:hover:not(.disabled) {
+			color: #65B3F0;
+		}
+	}
+
+	.publish-icon-modal {
+		z-index: 10;
+
+		.modal-body {
+			background-color: #FFF;
+		}
 	}
 
 	.ddl-form-basic-info {

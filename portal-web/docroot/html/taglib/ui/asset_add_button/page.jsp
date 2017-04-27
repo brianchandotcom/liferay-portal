@@ -56,7 +56,7 @@ for (long groupId : groupIds) {
 					%>
 
 					<aui:nav-item
-						href="<%= _getURL(curGroupId, plid, assetPortletAddURL.getAddPortletURL(), assetPortletAddURL.getPortletId(), message, addDisplayPageParameter, layout, pageContext, portletResponse, useDialog) %>"
+						href="<%= _getURL(curGroupId, plid, assetPortletAddURL.getAddPortletURL(), message, addDisplayPageParameter, layout, pageContext, portletResponse, useDialog) %>"
 						label='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "add-x" : "add-x-in-x", new Object[] {HtmlUtil.escape(message), HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}, false) %>'
 					/>
 				</c:when>
@@ -80,7 +80,7 @@ for (long groupId : groupIds) {
 						%>
 
 							<aui:nav-item
-								href="<%= _getURL(curGroupId, plid, assetPortletAddURL.getAddPortletURL(), assetPortletAddURL.getPortletId(), message, addDisplayPageParameter, layout, pageContext, portletResponse, useDialog) %>"
+								href="<%= _getURL(curGroupId, plid, assetPortletAddURL.getAddPortletURL(), message, addDisplayPageParameter, layout, pageContext, portletResponse, useDialog) %>"
 								label="<%= HtmlUtil.escape(message) %>"
 							/>
 
@@ -101,8 +101,8 @@ request.setAttribute("liferay-ui:asset-add-button:hasAddPortletURLs", hasAddPort
 %>
 
 <%!
-private String _getURL(long groupId, long plid, PortletURL addPortletURL, String portletId, String message, boolean addDisplayPageParameter, Layout layout, PageContext pageContext, PortletResponse portletResponse, boolean useDialog) {
-	String addPortletURLString = AssetUtil.getAddURLPopUp(groupId, plid, addPortletURL, portletId, addDisplayPageParameter, layout);
+private String _getURL(long groupId, long plid, PortletURL addPortletURL, String message, boolean addDisplayPageParameter, Layout layout, PageContext pageContext, PortletResponse portletResponse, boolean useDialog) {
+	String addPortletURLString = AssetUtil.getAddURLPopUp(groupId, plid, addPortletURL, addDisplayPageParameter, layout);
 
 	if (useDialog) {
 		return "javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, dialogIframe: {bodyCssClass: 'dialog-with-footer'}, id: '" + portletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format((HttpServletRequest) pageContext.getRequest(), "new-x", HtmlUtil.escape(message), false)) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";

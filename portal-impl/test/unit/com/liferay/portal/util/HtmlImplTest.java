@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -153,8 +157,23 @@ public class HtmlImplTest {
 	}
 
 	@Test
-	public void testEscapeJS() {
-		Assert.assertEquals("\\x2028", _htmlImpl.escapeJS("\u2028"));
+	public void testEscapeJS() throws ScriptException {
+		ScriptEngineManager factory = new ScriptEngineManager();
+
+		ScriptEngine engine = factory.getEngineByName("JavaScript");
+
+		String[] dangerousStringLiterals =
+			new String[] {"'", "\"", "\\", "\n", "\r", "\u2028", "\u2029"};
+
+		for (String stringLiteral : dangerousStringLiterals) {
+			String escaped = _htmlImpl.escapeJS(stringLiteral);
+
+			engine.eval(String.format("var result = '%1$s';", escaped));
+
+			String evaluated = (String)engine.get("result");
+
+			Assert.assertEquals(stringLiteral, evaluated);
+		}
 	}
 
 	@Test

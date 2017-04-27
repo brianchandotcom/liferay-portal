@@ -143,41 +143,9 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 	 */
 	@Deprecated
 	protected void destroyPortlet(Portlet portlet, Set<String> portletIds)
-		throws Exception{
-
-		_destroyPortlet(portlet, portletIds);
-	}
-
-	private void _destroyPortlet(Portlet portlet, Set<String> portletIds)
 		throws Exception {
 
-		PortletApp portletApp = portlet.getPortletApp();
-
-		Set<PortletFilter> portletFilters = portletApp.getPortletFilters();
-
-		for (PortletFilter portletFilter : portletFilters) {
-			PortletFilterFactory.destroy(portletFilter);
-		}
-
-		Set<PortletURLListener> portletURLListeners =
-			portletApp.getPortletURLListeners();
-
-		for (PortletURLListener portletURLListener : portletURLListeners) {
-			PortletURLListenerFactory.destroy(portletURLListener);
-		}
-
-		PortletInstanceFactoryUtil.destroy(portlet);
-
-		portletIds.add(portlet.getPortletId());
-
-		ServiceRegistration<ResourceBundleLoader>
-			resourceBundleLoaderServiceRegistration =
-				_resourceBundleLoaderServiceRegistrations.remove(
-					portlet.getPortletId());
-
-		if (resourceBundleLoaderServiceRegistration != null) {
-			resourceBundleLoaderServiceRegistration.unregister();
-		}
+		_destroyPortlet(portlet, portletIds);
 	}
 
 	protected void doInvokeDeploy(HotDeployEvent hotDeployEvent)
@@ -535,6 +503,38 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 					"Unable to dynamically unbind the Liferay data source: " +
 						e.getMessage());
 			}
+		}
+	}
+
+	private void _destroyPortlet(Portlet portlet, Set<String> portletIds)
+		throws Exception {
+
+		PortletApp portletApp = portlet.getPortletApp();
+
+		Set<PortletFilter> portletFilters = portletApp.getPortletFilters();
+
+		for (PortletFilter portletFilter : portletFilters) {
+			PortletFilterFactory.destroy(portletFilter);
+		}
+
+		Set<PortletURLListener> portletURLListeners =
+			portletApp.getPortletURLListeners();
+
+		for (PortletURLListener portletURLListener : portletURLListeners) {
+			PortletURLListenerFactory.destroy(portletURLListener);
+		}
+
+		PortletInstanceFactoryUtil.destroy(portlet);
+
+		portletIds.add(portlet.getPortletId());
+
+		ServiceRegistration<ResourceBundleLoader>
+			resourceBundleLoaderServiceRegistration =
+				_resourceBundleLoaderServiceRegistrations.remove(
+					portlet.getPortletId());
+
+		if (resourceBundleLoaderServiceRegistration != null) {
+			resourceBundleLoaderServiceRegistration.unregister();
 		}
 	}
 

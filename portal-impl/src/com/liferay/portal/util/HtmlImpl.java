@@ -282,7 +282,9 @@ public class HtmlImpl implements Html {
 
 				lastReplacementIndex = i + 1;
 			}
-			else if ((mode == ESCAPE_MODE_JS) && (c == '\u2028')) {
+			else if ((mode == ESCAPE_MODE_JS) &&
+					 ((c == '\u2028') || (c == '\u2029'))) {
+
 				if (sb == null) {
 					sb = new StringBuilder(text.length() + 64);
 				}

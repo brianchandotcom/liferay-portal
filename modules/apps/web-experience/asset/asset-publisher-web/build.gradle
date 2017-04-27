@@ -12,7 +12,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portlet.display.template", version: "2.1.0"
 	provided group: "com.liferay", name: "com.liferay.rss.util", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/ui/asset_add_button/init.jsp" %>
 
 <%
 boolean addDisplayPageParameter = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-add-button:addDisplayPageParameter"));
@@ -29,9 +29,9 @@ boolean useDialog = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset
 boolean hasAddPortletURLs = false;
 
 for (long groupId : groupIds) {
-	Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, groupId, classNameIds, classTypeIds, allAssetCategoryIds, allAssetTagNames, redirect);
+	List<AssetPortletAddURL> assetPortletAddURLs = AssetUtil.getAssetPortletAddURLs((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, groupId, classNameIds, classTypeIds, allAssetCategoryIds, allAssetTagNames, redirect);
 
-	if ((addPortletURLs != null) && !addPortletURLs.isEmpty()) {
+	if ((assetPortletAddURLs != null) && !assetPortletAddURLs.isEmpty()) {
 		hasAddPortletURLs = true;
 	}
 %>
@@ -39,30 +39,24 @@ for (long groupId : groupIds) {
 	<c:if test="<%= hasAddPortletURLs %>">
 		<aui:nav>
 			<c:choose>
-				<c:when test="<%= addPortletURLs.size() == 1 %>">
+				<c:when test="<%= assetPortletAddURLs.size() == 1 %>">
 
 					<%
-					Set<Map.Entry<String, PortletURL>> addPortletURLsSet = addPortletURLs.entrySet();
+					AssetPortletAddURL assetPortletAddURL = assetPortletAddURLs.get(0);
 
-					Iterator<Map.Entry<String, PortletURL>> iterator = addPortletURLsSet.iterator();
-
-					Map.Entry<String, PortletURL> entry = iterator.next();
-
-					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(AssetUtil.getClassName(entry.getKey()));
-
-					String message = AssetUtil.getClassNameMessage(entry.getKey(), locale);
+					String message = assetPortletAddURL.getModelResource();
 
 					long curGroupId = groupId;
 
 					Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-					if (!group.isStagedPortlet(assetRendererFactory.getPortletId()) && !group.isStagedRemotely()) {
+					if (!group.isStagedPortlet(assetPortletAddURL.getPortletId()) && !group.isStagedRemotely()) {
 						curGroupId = group.getLiveGroupId();
 					}
 					%>
 
 					<aui:nav-item
-						href="<%= _getURL(curGroupId, plid, entry.getValue(), assetRendererFactory.getPortletId(), message, addDisplayPageParameter, layout, pageContext, portletResponse, useDialog) %>"
+						href="<%= _getURL(curGroupId, plid, assetPortletAddURL.getAddPortletURL(), assetPortletAddURL.getPortletId(), message, addDisplayPageParameter, layout, pageContext, portletResponse, useDialog) %>"
 						label='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "add-x" : "add-x-in-x", new Object[] {HtmlUtil.escape(message), HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}, false) %>'
 					/>
 				</c:when>
@@ -73,22 +67,20 @@ for (long groupId : groupIds) {
 					>
 
 						<%
-						for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
-							AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(AssetUtil.getClassName(entry.getKey()));
-
-							String message = AssetUtil.getClassNameMessage(entry.getKey(), locale);
+						for (AssetPortletAddURL assetPortletAddURL : assetPortletAddURLs) {
+							String message = assetPortletAddURL.getModelResource();
 
 							long curGroupId = groupId;
 
 							Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-							if (!group.isStagedPortlet(assetRendererFactory.getPortletId()) && !group.isStagedRemotely()) {
+							if (!group.isStagedPortlet(assetPortletAddURL.getPortletId()) && !group.isStagedRemotely()) {
 								curGroupId = group.getLiveGroupId();
 							}
 						%>
 
 							<aui:nav-item
-								href="<%= _getURL(curGroupId, plid, entry.getValue(), assetRendererFactory.getPortletId(), message, addDisplayPageParameter, layout, pageContext, portletResponse, useDialog) %>"
+								href="<%= _getURL(curGroupId, plid, assetPortletAddURL.getAddPortletURL(), assetPortletAddURL.getPortletId(), message, addDisplayPageParameter, layout, pageContext, portletResponse, useDialog) %>"
 								label="<%= HtmlUtil.escape(message) %>"
 							/>
 

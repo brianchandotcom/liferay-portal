@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -60,12 +61,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.asset.util.AssetPortletAddURL;
 import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -614,6 +617,11 @@ public class AssetPublisherDisplayContext {
 		return _rssName;
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link
+	 *             #getScopeAssetPortletAddURLs(int)}
+	 */
+	@Deprecated
 	public Map<Long, Map<String, PortletURL>> getScopeAddPortletURLs(int max)
 		throws Exception {
 
@@ -643,6 +651,46 @@ public class AssetPublisherDisplayContext {
 
 			if (MapUtil.isNotEmpty(addPortletURLs)) {
 				scopeAddPortletURLs.put(groupId, addPortletURLs);
+			}
+
+			if (scopeAddPortletURLs.size() > max) {
+				break;
+			}
+		}
+
+		return scopeAddPortletURLs;
+	}
+
+	public Map<Long, List<AssetPortletAddURL>> getScopeAssetPortletAddURLs(
+			int max)
+		throws Exception {
+
+		long[] groupIds = getGroupIds();
+
+		if (groupIds.length == 0) {
+			return Collections.emptyMap();
+		}
+
+		Map<Long, List<AssetPortletAddURL>> scopeAddPortletURLs =
+			new HashMap<>();
+
+		LiferayPortletRequest liferayPortletRequest =
+			(LiferayPortletRequest)_portletRequest;
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)_portletResponse;
+
+		String redirect = _getScopeAssetPortletRedirect(
+			liferayPortletRequest, liferayPortletResponse);
+
+		for (long groupId : groupIds) {
+			List<AssetPortletAddURL> assetPortletAddURLs =
+				AssetUtil.getAssetPortletAddURLs(
+					liferayPortletRequest, liferayPortletResponse, groupId,
+					getClassNameIds(), getClassTypeIds(),
+					getAllAssetCategoryIds(), getAllAssetTagNames(), redirect);
+
+			if (ListUtil.isNotEmpty(assetPortletAddURLs)) {
+				scopeAddPortletURLs.put(groupId, assetPortletAddURLs);
 			}
 
 			if (scopeAddPortletURLs.size() > max) {

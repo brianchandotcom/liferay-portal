@@ -417,7 +417,13 @@
 				<classpath mode="compile">lib/portal/jmatio.jar</classpath>
 				<classpath mode="compile">lib/portal/jna.jar</classpath>
 				<classpath mode="compile">lib/portal/jodconverter.jar</classpath>
-				<classpath mode="compile">lib/portal/jodd.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-bean.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-core.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-http.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-json.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-proxetta.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-servlet.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-upload.jar</classpath>
 				<classpath mode="compile">lib/portal/jrcs-diff.jar</classpath>
 				<classpath mode="compile">lib/portal/json-java.jar</classpath>
 				<classpath mode="compile">lib/portal/json-schema-validator.jar</classpath>

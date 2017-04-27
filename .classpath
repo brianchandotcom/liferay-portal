@@ -191,7 +191,13 @@
 	<classpathentry kind="lib" path="lib/portal/jmatio.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jna.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodconverter.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jodd.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-bean.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-core.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-http.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-json.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-proxetta.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-servlet.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-upload.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jrcs-diff.jar"/>
 	<classpathentry kind="lib" path="lib/portal/json-java.jar"/>
 	<classpathentry kind="lib" path="lib/portal/json-schema-validator.jar"/>

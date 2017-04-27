@@ -70,6 +70,18 @@ public abstract class BaseMVCActionCommand implements MVCActionCommand {
 		}
 	}
 
+	protected void addDeleteSuccessData(
+		PortletRequest portletRequest, Object data) {
+
+		SessionMessages.add(
+			portletRequest,
+			PortalUtil.getPortletId(portletRequest) +
+				SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA,
+			data);
+
+		hideDefaultSuccessMessage(portletRequest);
+	}
+
 	protected void addSuccessMessage(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 

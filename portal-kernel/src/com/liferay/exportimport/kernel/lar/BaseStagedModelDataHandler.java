@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -810,20 +809,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	protected boolean isStagedModelInTrash(T stagedModel) {
-		String className = ExportImportClassedModelUtil.getClassName(
-			stagedModel);
-		long classPK = ExportImportClassedModelUtil.getClassPK(stagedModel);
-
-		try {
-			return TrashUtil.isInTrash(className, classPK);
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
+		if (!(stagedModel instanceof TrashedModel)) {
+			return false;
 		}
 
-		return false;
+		TrashedModel trashedModel = (TrashedModel)stagedModel;
+
+		return trashedModel.isInTrash();
 	}
 
 	protected void validateExport(

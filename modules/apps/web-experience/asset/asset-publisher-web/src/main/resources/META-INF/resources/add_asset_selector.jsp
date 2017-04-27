@@ -41,9 +41,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 				long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 
 				for (long groupId : groupIds) {
-					Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, groupId, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), redirectURL.toString());
+					List<AssetPortletAddURL> assetPortletAddURLs = AssetUtil.getAssetPortletAddURLs(liferayPortletRequest, liferayPortletResponse, groupId, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), redirectURL.toString());
 
-					if ((addPortletURLs != null) && !addPortletURLs.isEmpty()) {
+					if ((assetPortletAddURLs != null) && !assetPortletAddURLs.isEmpty()) {
 						addPortletURLsGroupIds.add(groupId);
 				%>
 
@@ -58,30 +58,28 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 			<%
 			for (Long groupId : addPortletURLsGroupIds) {
-				Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, groupId, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), redirectURL.toString());
+				List<AssetPortletAddURL> assetPortletAddURLs = AssetUtil.getAssetPortletAddURLs(liferayPortletRequest, liferayPortletResponse, groupId, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), redirectURL.toString());
 			%>
 
 				<div class="asset-entry-type <%= (groupId == scopeGroupId) ? StringPool.BLANK : "hide" %>" id="<%= liferayPortletResponse.getNamespace() + groupId %>">
 					<aui:select cssClass="asset-entry-type-select" label="asset-entry-type" name="selectAssetEntryType">
 
 						<%
-						for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
-							AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(AssetUtil.getClassName(entry.getKey()));
-
-							String message = AssetUtil.getClassNameMessage(entry.getKey(), locale);
+						for (AssetPortletAddURL assetPortletAddURL : assetPortletAddURLs) {
+							String message = assetPortletAddURL.getModelResource();
 
 							long curGroupId = groupId;
 
 							Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-							if (!group.isStagedPortlet(assetRendererFactory.getPortletId()) && !group.isStagedRemotely()) {
+							if (!group.isStagedPortlet(assetPortletAddURL.getPortletId()) && !group.isStagedRemotely()) {
 								curGroupId = group.getLiveGroupId();
 							}
 
 							Map<String, Object> data = new HashMap<String, Object>();
 
 							data.put("title", LanguageUtil.format((HttpServletRequest)pageContext.getRequest(), "new-x", HtmlUtil.escape(message), false));
-							data.put("url", AssetUtil.getAddURLPopUp(curGroupId, plid, entry.getValue(), assetRendererFactory.getPortletId(), false, null));
+							data.put("url", AssetUtil.getAddURLPopUp(curGroupId, plid, assetPortletAddURL.getAddPortletURL(), assetPortletAddURL.getPortletId(), false, null));
 						%>
 
 							<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(message) %>" />

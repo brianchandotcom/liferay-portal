@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.asset.util.AssetPortletAddURL;
 import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.ArrayList;
@@ -105,34 +106,33 @@ public class AssetPublisherPortletToolbarContributor
 			return;
 		}
 
-		Map<Long, Map<String, PortletURL>> scopeAddPortletURLs =
-			assetPublisherDisplayContext.getScopeAddPortletURLs(1);
+		Map<Long, List<AssetPortletAddURL>> scopeAddPortletURLs =
+			assetPublisherDisplayContext.getScopeAssetPortletAddURLs(1);
 
 		if (MapUtil.isEmpty(scopeAddPortletURLs)) {
 			return;
 		}
 
 		if (scopeAddPortletURLs.size() == 1) {
-			Set<Map.Entry<Long, Map<String, PortletURL>>> entrySet =
+			Set<Map.Entry<Long, List<AssetPortletAddURL>>> entrySet =
 				scopeAddPortletURLs.entrySet();
 
-			Iterator<Map.Entry<Long, Map<String, PortletURL>>> iterator =
+			Iterator<Map.Entry<Long, List<AssetPortletAddURL>>> iterator =
 				entrySet.iterator();
 
-			Map.Entry<Long, Map<String, PortletURL>> scopeAddPortletURL =
+			Map.Entry<Long, List<AssetPortletAddURL>> scopeAddPortletURL =
 				iterator.next();
 
 			long groupId = scopeAddPortletURL.getKey();
 
-			Map<String, PortletURL> addPortletURLs =
+			List<AssetPortletAddURL> assetPortletAddURLs =
 				scopeAddPortletURL.getValue();
 
-			for (Map.Entry<String, PortletURL> entry :
-					addPortletURLs.entrySet()) {
-
+			for (AssetPortletAddURL assetPortletAddURL : assetPortletAddURLs) {
 				URLMenuItem urlMenuItem = _getPortletTitleAddAssetEntryMenuItem(
 					themeDisplay, assetPublisherDisplayContext, groupId,
-					entry.getKey(), entry.getValue());
+					assetPortletAddURL.getName(),
+					assetPortletAddURL.getAddPortletURL());
 
 				menuItems.add(urlMenuItem);
 			}

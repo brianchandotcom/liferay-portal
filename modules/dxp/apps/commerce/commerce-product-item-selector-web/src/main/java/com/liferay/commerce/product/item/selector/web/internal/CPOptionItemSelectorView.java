@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -32,6 +33,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -69,7 +71,12 @@ public class CPOptionItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return LanguageUtil.get(locale, "product-options");
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(
+			resourceBundle, "product-options");
 	}
 
 	@Override

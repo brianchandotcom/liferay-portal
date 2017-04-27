@@ -57,22 +57,19 @@ public class SitesFriendlyURLAdapterUtil {
 	}
 
 	public static SitesFriendlyURLAdapter getSiteFriendlyURLAdapter() {
-		return _instance._serviceTracker.getService();
+		return _serviceTracker.getService();
 	}
 
-	private SitesFriendlyURLAdapterUtil() {
+	private static final
+		ServiceTracker<SitesFriendlyURLAdapter, SitesFriendlyURLAdapter>
+			_serviceTracker;
+
+	static {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(SitesFriendlyURLAdapter.class);
 
 		_serviceTracker.open();
 	}
-
-	private static final SitesFriendlyURLAdapterUtil _instance =
-		new SitesFriendlyURLAdapterUtil();
-
-	private final
-		ServiceTracker<SitesFriendlyURLAdapter, SitesFriendlyURLAdapter>
-			_serviceTracker;
 
 }

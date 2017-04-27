@@ -42,12 +42,6 @@
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminOpenOfficeConversionPanel" markupView="lexicon" persistState="<%= true %>" title="enabling-openoffice-integration-provides-document-conversion-functionality">
-				<aui:input label="enabled" name="openOfficeEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED) %>" />
-
-				<aui:input cssClass="lfr-input-text-container" label="port" name="openOfficePort" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.OPENOFFICE_SERVER_PORT) %>" />
-			</liferay-ui:panel>
-
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminXugglerPanel" markupView="lexicon" persistState="<%= true %>" title="enabling-xuggler-provides-video-conversion-functionality">
 				<liferay-ui:error exception="<%= XugglerInstallException.class %>" targetNode="#controlMenuAlertsContainer">
 

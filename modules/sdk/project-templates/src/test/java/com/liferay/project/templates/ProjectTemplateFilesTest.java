@@ -278,6 +278,27 @@ public class ProjectTemplateFilesTest {
 				packagingElement.getTextContent());
 		}
 
+		Element propertiesElement = _getChildElement(
+			projectElement, "properties");
+
+		Assert.assertNotNull(
+			"Missing \"properties\" element in " + pomXmlPath,
+			propertiesElement);
+
+		String sourceEncoding = null;
+
+		Element sourceEncodingElement = _getChildElement(
+			propertiesElement, "project.build.sourceEncoding");
+
+		if (sourceEncodingElement != null) {
+			sourceEncoding = sourceEncodingElement.getTextContent();
+		}
+
+		Assert.assertEquals(
+			"Incorrect property \"project.build.sourceEncoding\" in " +
+				pomXmlPath,
+			sourceEncoding, StandardCharsets.UTF_8.name());
+
 		NodeList executionNodeList = projectElement.getElementsByTagName(
 			"execution");
 

@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletBag;
+import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -54,7 +56,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -77,8 +78,6 @@ import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 
 import java.io.Serializable;
 
-import java.text.Collator;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -87,9 +86,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.TreeMap;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletURL;
@@ -403,6 +402,12 @@ public class AssetUtil {
 			allAssetCategoryIds, allAssetTagNames, redirect);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getAssetPortletAddURLs(
+	 *             LiferayPortletRequest, LiferayPortletResponse, long, long[],
+	 *             long[], long[], String[], String)}
+	 */
+	@Deprecated
 	public static Map<String, PortletURL> getAddPortletURLs(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long groupId,
@@ -411,11 +416,40 @@ public class AssetUtil {
 			String redirect)
 		throws Exception {
 
+		List<AssetPortletAddURL> assetPortletResourceURLs =
+			getAssetPortletAddURLs(
+				liferayPortletRequest, liferayPortletResponse, groupId,
+				classNameIds, classTypeIds, allAssetCategoryIds,
+				allAssetTagNames, redirect);
+
+		Map<String, PortletURL> addPortletURLs = new LinkedHashMap<>();
+
+		for (AssetPortletAddURL assetPortletResourceURL :
+				assetPortletResourceURLs) {
+
+			addPortletURLs.put(
+				assetPortletResourceURL.getName(),
+				assetPortletResourceURL.getAddPortletURL());
+		}
+
+		return addPortletURLs;
+	}
+
+	public static List<AssetPortletAddURL> getAssetPortletAddURLs(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, long groupId,
+		long[] classNameIds, long[] classTypeIds,
+		long[] allAssetCategoryIds, String[] allAssetTagNames,
+		String redirect)
+		throws Exception {
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Map<String, PortletURL> addPortletURLs = new HashMap<>();
+		Locale locale = themeDisplay.getLocale();
+
+		List<AssetPortletAddURL> addPortletURLs = new ArrayList<>();
 
 		for (long classNameId : classNameIds) {
 			String className = PortalUtil.getClassName(classNameId);
@@ -436,6 +470,12 @@ public class AssetUtil {
 				continue;
 			}
 
+			PortletBag portletBag = PortletBagPool.get(
+				portlet.getRootPortletId());
+
+			ResourceBundle resourceBundle = portletBag.getResourceBundle(
+				locale);
+
 			ClassTypeReader classTypeReader =
 				assetRendererFactory.getClassTypeReader();
 
@@ -450,7 +490,10 @@ public class AssetUtil {
 					redirect);
 
 				if (addPortletURL != null) {
-					addPortletURLs.put(className, addPortletURL);
+					addPortletURLs.add(
+						new AssetPortletAddURL(
+							portlet.getPortletId(), className, resourceBundle,
+							locale, addPortletURL));
 				}
 			}
 
@@ -468,9 +511,12 @@ public class AssetUtil {
 					if (addPortletURL != null) {
 						String mesage =
 							className + CLASSNAME_SEPARATOR +
-								classType.getName();
+							classType.getName();
 
-						addPortletURLs.put(mesage, addPortletURL);
+						addPortletURLs.add(
+							new AssetPortletAddURL(
+								portlet.getPortletId(), mesage, resourceBundle,
+								locale, addPortletURL));
 					}
 				}
 			}
@@ -480,13 +526,14 @@ public class AssetUtil {
 			return addPortletURLs;
 		}
 
-		return _getSortedMapByModelResource(
-			addPortletURLs, themeDisplay.getLocale());
+		addPortletURLs.sort(null);
+
+		return addPortletURLs;
 	}
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getAddPortletURLs(LiferayPortletRequest,
+	 *             #getAssetPortletAddURLs(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, long[], long[], long[],
 	 *             String[], String)}
 	 */
@@ -961,30 +1008,6 @@ public class AssetUtil {
 		}
 
 		return sortType;
-	}
-
-	private static Map<String, PortletURL> _getSortedMapByModelResource(
-		Map<String, PortletURL> addPortletURLs, Locale locale) {
-
-		Map<String, Map.Entry<String, PortletURL>> tempSortedMap =
-			new TreeMap<>(Collator.getInstance(locale));
-
-		for (Map.Entry<String, PortletURL> addPortletURL :
-				addPortletURLs.entrySet()) {
-
-			tempSortedMap.put(
-				ResourceActionsUtil.getModelResource(
-					locale, addPortletURL.getKey()),
-				addPortletURL);
-		}
-
-		Map<String, PortletURL> sortedAddPortletURLs = new LinkedHashMap<>();
-
-		for (Map.Entry<String, PortletURL> entry : tempSortedMap.values()) {
-			sortedAddPortletURLs.put(entry.getKey(), entry.getValue());
-		}
-
-		return sortedAddPortletURLs;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AssetUtil.class);

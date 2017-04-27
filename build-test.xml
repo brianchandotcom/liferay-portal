@@ -2399,8 +2399,28 @@ ${tomcat-gc-log}
 					List getClassFileNames() {
 						DirectoryScanner directoryScanner = new DirectoryScanner();
 
+						String testClassModulesBaseDir = project.getProperty("test.class.modules.base.dir");
 						String testClassNamesExcludes = project.getProperty("test.class.names.excludes");
 						String testClassNamesIncludes = project.getProperty("test.class.names.includes");
+
+						if (testClassModulesBaseDir != null) {
+							int x = testClassModulesBaseDir.indexOf("modules");
+
+							if (x != -1) {
+								testClassModulesBaseDir = testClassModulesBaseDir.substring(x);
+
+								StringBuilder sb = new StringBuilder();
+
+								for (String testClassNamesInclude : testClassNamesIncludes.split(",")) {
+									sb.append(testClassModulesBaseDir);
+									sb.append(File.separator);
+									sb.append(testClassNamesInclude);
+									sb.append(",");
+								}
+
+								testClassNamesIncludes = sb.toString();
+							}
+						}
 
 						directoryScanner.setBasedir(project.getBaseDir());
 						directoryScanner.setExcludes(testClassNamesExcludes.split(","));

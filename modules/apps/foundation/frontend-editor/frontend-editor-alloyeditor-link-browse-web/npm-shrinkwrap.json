@@ -46,7 +46,7 @@
 			"version": "6.23.0"
 		},
 		"babel-preset-react": {
-			"from": "babel-preset-react@>=6.11.1 <7.0.0",
+			"from": "babel-preset-react@>=6.22.0 <7.0.0",
 			"resolved": "https://registry.npmjs.org/babel-preset-react/-/babel-preset-react-6.24.1.tgz",
 			"version": "6.24.1"
 		},
@@ -1799,6 +1799,6 @@
 			"version": "1.0.2"
 		}
 	},
-	"name": "frontend-editor-alloyeditor-accessibility-web",
-	"version": "1.0.4"
+	"name": "frontend-editor-alloyeditor-link-browse-web",
+	"version": "1.0.2"
 }

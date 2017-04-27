@@ -32,33 +32,29 @@ String redirect = ParamUtil.getString(request, "redirect");
 			redirectURL.setParameter("redirect", redirect);
 			redirectURL.setWindowState(LiferayWindowState.POP_UP);
 
-			List<Long> addPortletURLsGroupIds = new ArrayList();
+			long[] groupIds = assetPublisherDisplayContext.getGroupIds();
+
+			Map<Long, List<AssetPortletAddURL>> scopeAddPortletURLs = assetPublisherDisplayContext.getScopeAssetPortletAddURLs(groupIds.length);
 			%>
 
 			<aui:select label="scope" name="selectScope">
 
 				<%
-				long[] groupIds = assetPublisherDisplayContext.getGroupIds();
-
-				for (long groupId : groupIds) {
-					List<AssetPortletAddURL> assetPortletAddURLs = AssetUtil.getAssetPortletAddURLs(liferayPortletRequest, liferayPortletResponse, groupId, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), redirectURL.toString());
-
-					if ((assetPortletAddURLs != null) && !assetPortletAddURLs.isEmpty()) {
-						addPortletURLsGroupIds.add(groupId);
+				for (Long groupId : scopeAddPortletURLs.keySet()) {
 				%>
 
-						<aui:option label="<%= HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)) %>" selected="<%= groupId == scopeGroupId %>" value="<%= groupId %>" />
+					<aui:option label="<%= HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)) %>" selected="<%= groupId == scopeGroupId %>" value="<%= groupId %>" />
 
 				<%
-					}
 				}
 				%>
 
 			</aui:select>
 
 			<%
-			for (Long groupId : addPortletURLsGroupIds) {
-				List<AssetPortletAddURL> assetPortletAddURLs = AssetUtil.getAssetPortletAddURLs(liferayPortletRequest, liferayPortletResponse, groupId, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), redirectURL.toString());
+			for (Map.Entry<Long, List<AssetPortletAddURL>> entry : scopeAddPortletURLs.entrySet()) {
+				Long groupId = entry.getKey();
+				List<AssetPortletAddURL> assetPortletAddURLs = entry.getValue();
 			%>
 
 				<div class="asset-entry-type <%= (groupId == scopeGroupId) ? StringPool.BLANK : "hide" %>" id="<%= liferayPortletResponse.getNamespace() + groupId %>">

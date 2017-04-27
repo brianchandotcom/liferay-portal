@@ -41,8 +41,10 @@ public class SecurePrintStream extends PrintStream {
 	public static void main(String[] args) throws Exception {
 		JenkinsResultsParserUtil.debug = true;
 
-		JenkinsResultsParserUtil.setBuildProperties(
-			JenkinsResultsParserUtil.getBuildProperties());
+		System.setOut(getInstance());
+
+		/*JenkinsResultsParserUtil.setBuildProperties(
+			JenkinsResultsParserUtil.getBuildProperties());*/
 
 		String content = JenkinsResultsParserUtil.toString(
 			"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
@@ -52,25 +54,312 @@ public class SecurePrintStream extends PrintStream {
 	}
 
 	@Override
+	public PrintStream append(char c) {
+		if (_suspendFlush) {
+			return _tempPrintStream.append(c);
+		}
+
+		return super.append(c);
+	}
+
+	@Override
+	public PrintStream append(CharSequence csq) {
+		if (_suspendFlush) {
+			return _tempPrintStream.append(csq);
+		}
+
+		return super.append(csq);
+	}
+
+	@Override
+	public PrintStream append(CharSequence csq, int start, int end) {
+		if (_suspendFlush) {
+			return _tempPrintStream.append(csq, start, end);
+		}
+
+		return super.append(csq, start, end);
+	}
+
+	@Override
 	public void flush() {
-		synchronized (_byteArrayOutputStream) {
-			try {
-				String content = _byteArrayOutputStream.toString();
+		if (!_suspendFlush) {
+			synchronized (this) {
+				try {
+					_tempByteArrayOutputStream = new ByteArrayOutputStream();
 
-				content = JenkinsResultsParserUtil.redact(content);
+					_tempPrintStream = new PrintStream(
+						_tempByteArrayOutputStream);
 
-				_standardOut.print(content);
-			}
-			finally {
-				_byteArrayOutputStream.reset();
+					_suspendFlush = true;
+
+					String content = _byteArrayOutputStream.toString();
+
+					content = JenkinsResultsParserUtil.redact(content);
+
+					_standardOut.print(content);
+				}
+				finally {
+					_byteArrayOutputStream.reset();
+
+					_suspendFlush = false;
+
+					try {
+						_byteArrayOutputStream.write(
+							_tempByteArrayOutputStream.toByteArray());
+					}
+					catch (IOException ioe) {
+						ioe.printStackTrace();
+					}
+					finally {
+						_tempByteArrayOutputStream.reset();
+					}
+
+					_tempPrintStream.close();
+				}
 			}
 		}
 	}
 
 	@Override
+	public void print(boolean b) {
+		if (_suspendFlush) {
+			_tempPrintStream.print(b);
+
+			return;
+		}
+
+		super.print(b);
+	}
+
+	@Override
+	public void print(char c) {
+		if (_suspendFlush) {
+			_tempPrintStream.print(c);
+
+			return;
+		}
+
+		super.print(c);
+	}
+
+	@Override
+	public void print(char[] s) {
+		if (_suspendFlush) {
+			_tempPrintStream.print(s);
+
+			return;
+		}
+
+		super.print(s);
+	}
+
+	@Override
+	public void print(double d) {
+		if (_suspendFlush) {
+			_tempPrintStream.print(d);
+
+			return;
+		}
+
+		super.print(d);
+	}
+
+	@Override
+	public void print(float f) {
+		if (_suspendFlush) {
+			_tempPrintStream.print(f);
+
+			return;
+		}
+
+		super.print(f);
+	}
+
+	@Override
+	public void print(int i) {
+		if (_suspendFlush) {
+			_tempPrintStream.print(i);
+
+			return;
+		}
+
+		super.print(i);
+	}
+
+	@Override
+	public void print(long l) {
+		if (_suspendFlush) {
+			_tempPrintStream.print(l);
+
+			return;
+		}
+
+		super.print(l);
+	}
+
+	@Override
+	public void print(Object obj) {
+		if (_suspendFlush) {
+			_tempPrintStream.print(obj);
+
+			return;
+		}
+
+		super.print(obj);
+	}
+
+	@Override
+	public void print(String s) {
+		if (_suspendFlush) {
+			_tempPrintStream.print(s);
+
+			return;
+		}
+
+		super.print(s);
+	}
+
+	@Override
+	public void println() {
+		if (_suspendFlush) {
+			_tempPrintStream.println();
+
+			return;
+		}
+
+		super.println();
+	}
+
+	@Override
+	public void println(boolean x) {
+		if (_suspendFlush) {
+			_tempPrintStream.println(x);
+
+			return;
+		}
+
+		super.println(x);
+	}
+
+	@Override
+	public void println(char x) {
+		if (_suspendFlush) {
+			_tempPrintStream.println(x);
+
+			return;
+		}
+
+		super.println(x);
+	}
+
+	@Override
+	public void println(char[] x) {
+		if (_suspendFlush) {
+			_tempPrintStream.println(x);
+
+			return;
+		}
+
+		super.println(x);
+	}
+
+	@Override
+	public void println(double x) {
+		if (_suspendFlush) {
+			_tempPrintStream.println(x);
+
+			return;
+		}
+
+		super.println(x);
+	}
+
+	@Override
+	public void println(float x) {
+		if (_suspendFlush) {
+			_tempPrintStream.println(x);
+
+			return;
+		}
+
+		super.println(x);
+	}
+
+	@Override
+	public void println(int x) {
+		if (_suspendFlush) {
+			_tempPrintStream.println(x);
+
+			return;
+		}
+
+		super.println(x);
+	}
+
+	@Override
+	public void println(long x) {
+		if (_suspendFlush) {
+			_tempPrintStream.println(x);
+
+			return;
+		}
+
+		super.println(x);
+	}
+
+	@Override
+	public void println(Object x) {
+		if (_suspendFlush) {
+			_tempPrintStream.println(x);
+
+			return;
+		}
+
+		super.println(x);
+	}
+
+	@Override
 	public void println(String string) {
+		if (_suspendFlush) {
+			_tempPrintStream.println(string);
+
+			return;
+		}
+
 		super.println(string);
-		//flush();
+	}
+
+	@Override
+	public void write(byte[] b) throws IOException {
+		if (_suspendFlush) {
+			_tempPrintStream.write(b);
+
+			return;
+		}
+
+		super.write(b);
+	}
+
+	@Override
+	public void write(byte[] buf, int off, int len) {
+		if (_suspendFlush) {
+			_tempPrintStream.write(buf, off, len);
+
+			return;
+		}
+
+		super.write(buf, off, len);
+	}
+
+	@Override
+	public void write(int b) {
+		if (_suspendFlush) {
+			_tempPrintStream.write(b);
+
+			return;
+		}
+
+		super.write(b);
 	}
 
 	private SecurePrintStream(
@@ -90,6 +379,9 @@ public class SecurePrintStream extends PrintStream {
 
 	private final SecurePrintStreamByteArrayOutputStream _byteArrayOutputStream;
 	private final PrintStream _standardOut;
+	private boolean _suspendFlush;
+	private ByteArrayOutputStream _tempByteArrayOutputStream;
+	private PrintStream _tempPrintStream;
 
 	private static class SecurePrintStreamByteArrayOutputStream
 		extends ByteArrayOutputStream {

@@ -135,13 +135,12 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			getPermissionChecker(), cpInstanceId,
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 
-		return cpInstanceLocalService.
-			updateCPInstance(
-				cpInstanceId, sku, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+		return cpInstanceLocalService.updateCPInstance(
+			cpInstanceId, sku, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override

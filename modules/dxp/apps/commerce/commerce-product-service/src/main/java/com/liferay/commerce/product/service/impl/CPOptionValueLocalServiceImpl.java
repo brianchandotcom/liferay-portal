@@ -93,8 +93,8 @@ public class CPOptionValueLocalServiceImpl
 	public List<CPOptionValue> getCPOptionValues(
 		long cpOptionId, int start, int end) {
 
-		return cpOptionValuePersistence.
-			findByCPOptionId(cpOptionId, start, end);
+		return cpOptionValuePersistence.findByCPOptionId(
+			cpOptionId, start, end);
 	}
 
 	@Override
@@ -102,8 +102,8 @@ public class CPOptionValueLocalServiceImpl
 		long cpOptionId, int start, int end,
 		OrderByComparator<CPOptionValue> orderByComparator) {
 
-		return cpOptionValuePersistence.
-			findByCPOptionId(cpOptionId, start, end, orderByComparator);
+		return cpOptionValuePersistence.findByCPOptionId(
+			cpOptionId, start, end, orderByComparator);
 	}
 
 	@Override

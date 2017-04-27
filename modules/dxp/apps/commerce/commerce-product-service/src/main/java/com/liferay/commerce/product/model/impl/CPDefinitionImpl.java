@@ -35,8 +35,8 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 		Set<String> availableLanguageIds = new TreeSet<>();
 
 		availableLanguageIds.addAll(
-			CPDefinitionLocalServiceUtil.
-				getCPDefinitionLocalizationLanguageIds(getCPDefinitionId()));
+			CPDefinitionLocalServiceUtil.getCPDefinitionLocalizationLanguageIds(
+				getCPDefinitionId()));
 
 		return availableLanguageIds.toArray(
 			new String[availableLanguageIds.size()]);

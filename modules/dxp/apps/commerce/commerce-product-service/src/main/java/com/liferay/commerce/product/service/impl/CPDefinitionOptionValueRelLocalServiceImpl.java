@@ -70,8 +70,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRel.setCompanyId(user.getCompanyId());
 		cpDefinitionOptionValueRel.setUserId(user.getUserId());
 		cpDefinitionOptionValueRel.setUserName(user.getFullName());
-		cpDefinitionOptionValueRel.
-			setCPDefinitionOptionRelId(cpDefinitionOptionRelId);
+		cpDefinitionOptionValueRel.setCPDefinitionOptionRelId(
+			cpDefinitionOptionRelId);
 		cpDefinitionOptionValueRel.setPriority(priority);
 		cpDefinitionOptionValueRel.setTitleMap(titleMap);
 		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
@@ -110,8 +110,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		throws PortalException {
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			cpDefinitionOptionValueRelPersistence.
-				findByPrimaryKey(cpDefinitionOptionValueRelId);
+			cpDefinitionOptionValueRelPersistence.findByPrimaryKey(
+				cpDefinitionOptionValueRelId);
 
 		return cpDefinitionOptionValueRelLocalService.
 			deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
@@ -124,10 +124,10 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		throws PortalException {
 
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-				cpDefinitionOptionValueRelLocalService.
-					getCPDefinitionOptionValueRels(
-						cpDefinitionOptionRelId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS);
+			cpDefinitionOptionValueRelLocalService.
+				getCPDefinitionOptionValueRels(
+					cpDefinitionOptionRelId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
 
 		for (CPDefinitionOptionValueRel
 				cpDefinitionOptionValueRel :
@@ -169,8 +169,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		throws PortalException {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
-			cpDefinitionOptionRelLocalService.
-				getCPDefinitionOptionRel(cpDefinitionOptionRelId);
+			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
 
 		CPOption cpOption = cpOptionLocalService.fetchCPOption(
 			cpDefinitionOptionRel.getCPOptionId());
@@ -180,10 +180,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		}
 
 		List<CPOptionValue> cpOptionValues =
-			cpOptionValueLocalService.
-				getCPOptionValues(
-					cpOption.getCPOptionId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS);
+			cpOptionValueLocalService.getCPOptionValues(
+				cpOption.getCPOptionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (CPOptionValue cpOptionValue : cpOptionValues) {
 			cpDefinitionOptionValueRelLocalService.
@@ -201,8 +199,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		// Commerce product definition option value rel
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			cpDefinitionOptionValueRelPersistence.
-				findByPrimaryKey(cpDefinitionOptionValueRelId);
+			cpDefinitionOptionValueRelPersistence.findByPrimaryKey(
+				cpDefinitionOptionValueRelId);
 
 		cpDefinitionOptionValueRel.setTitleMap(titleMap);
 		cpDefinitionOptionValueRel.setPriority(priority);

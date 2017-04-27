@@ -162,13 +162,13 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product definition localization
 
-		cpDefinitionLocalizationPersistence.
-			removeByCPDefinitionPK(cpDefinition.getCPDefinitionId());
+		cpDefinitionLocalizationPersistence.removeByCPDefinitionPK(
+			cpDefinition.getCPDefinitionId());
 
 		// Commerce product definition option rels
 
-		cpDefinitionOptionRelLocalService.
-			deleteCPDefinitionOptionRels(cpDefinition.getCPDefinitionId());
+		cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRels(
+			cpDefinition.getCPDefinitionId());
 
 		// Commerce product instances
 
@@ -220,8 +220,8 @@ public class CPDefinitionLocalServiceImpl
 		long cpDefinitionId) {
 
 		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
-				cpDefinitionLocalizationPersistence.
-					findByCPDefinitionPK(cpDefinitionId);
+			cpDefinitionLocalizationPersistence.findByCPDefinitionPK(
+				cpDefinitionId);
 
 		List<String> availableLanguageIds = new ArrayList<>();
 
@@ -524,12 +524,12 @@ public class CPDefinitionLocalServiceImpl
 
 		List<CPDefinitionLocalization> oldCPDefinitionLocalizations =
 			new ArrayList<>(
-				cpDefinitionLocalizationPersistence.
-					findByCPDefinitionPK(cpDefinitionId));
+				cpDefinitionLocalizationPersistence.findByCPDefinitionPK(
+					cpDefinitionId));
 
 		List<CPDefinitionLocalization> newCPDefinitionLocalizations =
-				_addCPDefinitionLocalizedFields(
-					companyId, cpDefinitionId, titleMap, descriptionMap);
+			_addCPDefinitionLocalizedFields(
+				companyId, cpDefinitionId, titleMap, descriptionMap);
 
 		oldCPDefinitionLocalizations.removeAll(newCPDefinitionLocalizations);
 

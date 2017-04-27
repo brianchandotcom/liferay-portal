@@ -44,11 +44,10 @@ public class CPDefinitionOptionRelServiceImpl
 		CPDefinitionPermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
-		return cpDefinitionOptionRelLocalService.
-			addCPDefinitionOptionRel(
-				cpDefinitionId, cpOptionId, nameMap, descriptionMap,
-				ddmFormFieldTypeName, priority, facetable, skuContributor,
-				serviceContext);
+		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
+			cpDefinitionId, cpOptionId, nameMap, descriptionMap,
+			ddmFormFieldTypeName, priority, facetable, skuContributor,
+			serviceContext);
 	}
 
 	@Override
@@ -61,9 +60,8 @@ public class CPDefinitionOptionRelServiceImpl
 		CPDefinitionPermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
-		return cpDefinitionOptionRelLocalService.
-			addCPDefinitionOptionRel(
-				cpDefinitionId, cpOptionId, serviceContext);
+		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
+			cpDefinitionId, cpOptionId, serviceContext);
 	}
 
 	@Override
@@ -73,13 +71,11 @@ public class CPDefinitionOptionRelServiceImpl
 					cpDefinitionOptionRel)
 		throws PortalException {
 
-		CPDefinitionPermission.
-			checkCPDefinitionOptionRel(
-				getPermissionChecker(), cpDefinitionOptionRel,
-				ActionKeys.UPDATE);
+		CPDefinitionPermission.checkCPDefinitionOptionRel(
+			getPermissionChecker(), cpDefinitionOptionRel, ActionKeys.UPDATE);
 
-		return cpDefinitionOptionRelLocalService.
-			deleteCPDefinitionOptionRel(cpDefinitionOptionRel);
+		return cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
+			cpDefinitionOptionRel);
 	}
 
 	@Override
@@ -88,13 +84,11 @@ public class CPDefinitionOptionRelServiceImpl
 				long cpDefinitionOptionRelId)
 		throws PortalException {
 
-		CPDefinitionPermission.
-			checkCPDefinitionOptionRel(
-				getPermissionChecker(), cpDefinitionOptionRelId,
-				ActionKeys.UPDATE);
+		CPDefinitionPermission.checkCPDefinitionOptionRel(
+			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.UPDATE);
 
-		return cpDefinitionOptionRelLocalService.
-			deleteCPDefinitionOptionRel(cpDefinitionOptionRelId);
+		return cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
+			cpDefinitionOptionRelId);
 	}
 
 	@Override
@@ -104,14 +98,12 @@ public class CPDefinitionOptionRelServiceImpl
 		throws PortalException {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
-			cpDefinitionOptionRelLocalService.
-				fetchCPDefinitionOptionRel(cpDefinitionOptionRelId);
+			cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
 
 		if (cpDefinitionOptionRel != null) {
-			CPDefinitionPermission.
-				checkCPDefinitionOptionRel(
-					getPermissionChecker(), cpDefinitionOptionRel,
-					ActionKeys.VIEW);
+			CPDefinitionPermission.checkCPDefinitionOptionRel(
+				getPermissionChecker(), cpDefinitionOptionRel, ActionKeys.VIEW);
 		}
 
 		return cpDefinitionOptionRel;
@@ -123,13 +115,11 @@ public class CPDefinitionOptionRelServiceImpl
 				long cpDefinitionOptionRelId)
 		throws PortalException {
 
-		CPDefinitionPermission.
-			checkCPDefinitionOptionRel(
-				getPermissionChecker(), cpDefinitionOptionRelId,
-				ActionKeys.VIEW);
+		CPDefinitionPermission.checkCPDefinitionOptionRel(
+			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.VIEW);
 
-		return cpDefinitionOptionRelLocalService.
-			getCPDefinitionOptionRel(cpDefinitionOptionRelId);
+		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
+			cpDefinitionOptionRelId);
 	}
 
 	@Override
@@ -140,8 +130,8 @@ public class CPDefinitionOptionRelServiceImpl
 		CPDefinitionPermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
-		return cpDefinitionOptionRelLocalService.
-			getCPDefinitionOptionRels(cpDefinitionId, start, end);
+		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+			cpDefinitionId, start, end);
 	}
 
 	@Override
@@ -153,9 +143,8 @@ public class CPDefinitionOptionRelServiceImpl
 		CPDefinitionPermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
-		return cpDefinitionOptionRelLocalService.
-			getCPDefinitionOptionRels(
-				cpDefinitionId, start, end, orderByComparator);
+		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+			cpDefinitionId, start, end, orderByComparator);
 	}
 
 	@Override
@@ -165,8 +154,8 @@ public class CPDefinitionOptionRelServiceImpl
 		CPDefinitionPermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
-		return cpDefinitionOptionRelLocalService.
-			getCPDefinitionOptionRelsCount(cpDefinitionId);
+		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
+			cpDefinitionId);
 	}
 
 	@Override
@@ -178,16 +167,13 @@ public class CPDefinitionOptionRelServiceImpl
 				boolean skuContributor, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.
-			checkCPDefinitionOptionRel(
-				getPermissionChecker(), cpDefinitionOptionRelId,
-				ActionKeys.UPDATE);
+		CPDefinitionPermission.checkCPDefinitionOptionRel(
+			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.UPDATE);
 
-		return cpDefinitionOptionRelLocalService.
-			updateCPDefinitionOptionRel(
-				cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
-				ddmFormFieldTypeName, priority, facetable, skuContributor,
-				serviceContext);
+		return cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
+			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
+			ddmFormFieldTypeName, priority, facetable, skuContributor,
+			serviceContext);
 	}
 
 }

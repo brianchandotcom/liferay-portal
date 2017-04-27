@@ -54,14 +54,12 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
 
-		return cpDefinitionLocalService.
-			addCPDefinition(
-				baseSKU, titleMap, descriptionMap, productTypeName,
-				ddmStructureKey, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+		return cpDefinitionLocalService.addCPDefinition(
+			baseSKU, titleMap, descriptionMap, productTypeName, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override
@@ -121,8 +119,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 		long groupId, int start, int end,
 		OrderByComparator<CPDefinition> orderByComparator) {
 
-		return cpDefinitionLocalService.
-			getCPDefinitions(groupId, start, end, orderByComparator);
+		return cpDefinitionLocalService.getCPDefinitions(
+			groupId, start, end, orderByComparator);
 	}
 
 	@Override
@@ -145,14 +143,12 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 		CPDefinitionPermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
-		return cpDefinitionLocalService.
-			updateCPDefinition(
-				cpDefinitionId, baseSKU, titleMap, descriptionMap,
-				productTypeName, ddmStructureKey, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+		return cpDefinitionLocalService.updateCPDefinition(
+			cpDefinitionId, baseSKU, titleMap, descriptionMap, productTypeName,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override

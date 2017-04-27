@@ -175,8 +175,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				new HashMap<>();
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-				cpDefinitionOptionRelLocalService.
-					getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
+			cpDefinitionOptionRelLocalService.
+				getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
 
 		for (CPDefinitionOptionRel
 				cpDefinitionOptionRel :
@@ -289,8 +289,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public List<CPInstance> getCPInstances(
 		long cpDefinitionId, int start, int end) {
 
-		return cpInstancePersistence.
-			findByCPDefinitionId(cpDefinitionId, start, end);
+		return cpInstancePersistence.findByCPDefinitionId(
+			cpDefinitionId, start, end);
 	}
 
 	@Override
@@ -298,8 +298,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		long cpDefinitionId, int start, int end,
 		OrderByComparator<CPInstance> orderByComparator) {
 
-		return cpInstancePersistence.
-			findByCPDefinitionId(cpDefinitionId, start, end, orderByComparator);
+		return cpInstancePersistence.findByCPDefinitionId(
+			cpDefinitionId, start, end, orderByComparator);
 	}
 
 	@Override

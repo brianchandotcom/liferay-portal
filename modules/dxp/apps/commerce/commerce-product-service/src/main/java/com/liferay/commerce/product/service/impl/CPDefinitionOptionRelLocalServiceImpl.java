@@ -69,9 +69,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		cpDefinitionOptionRelPersistence.update(cpDefinitionOptionRel);
 
-		cpDefinitionOptionValueRelLocalService.
-			importCPDefinitionOptionRels(
-				cpDefinitionOptionRelId, serviceContext);
+		cpDefinitionOptionValueRelLocalService.importCPDefinitionOptionRels(
+			cpDefinitionOptionRelId, serviceContext);
 
 		return cpDefinitionOptionRel;
 	}
@@ -84,12 +83,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		CPOption cpOption = cpOptionLocalService.getCPOption(cpOptionId);
 
-		return cpDefinitionOptionRelLocalService.
-			addCPDefinitionOptionRel(
-				cpDefinitionId, cpOptionId, cpOption.getNameMap(),
-				cpOption.getDescriptionMap(),
-				cpOption.getDDMFormFieldTypeName(), 0, false, false,
-				serviceContext);
+		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
+			cpDefinitionId, cpOptionId, cpOption.getNameMap(),
+			cpOption.getDescriptionMap(), cpOption.getDDMFormFieldTypeName(), 0,
+			false, false, serviceContext);
 	}
 
 	@Override
@@ -128,8 +125,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionOptionRelPersistence.findByPrimaryKey(
 				cpDefinitionOptionRelId);
 
-		return cpDefinitionOptionRelLocalService.
-			deleteCPDefinitionOptionRel(cpDefinitionOptionRel);
+		return cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
+			cpDefinitionOptionRel);
 	}
 
 	@Override
@@ -137,16 +134,15 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		throws PortalException {
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-				cpDefinitionOptionRelLocalService.
-					getCPDefinitionOptionRels(
-						cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+				cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (CPDefinitionOptionRel
 				cpDefinitionOptionRel :
 					cpDefinitionOptionRels) {
 
-			cpDefinitionOptionRelLocalService.
-				deleteCPDefinitionOptionRel(cpDefinitionOptionRel);
+			cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
+				cpDefinitionOptionRel);
 		}
 	}
 
@@ -154,8 +150,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
 		long cpDefinitionId, int start, int end) {
 
-		return cpDefinitionOptionRelPersistence.
-			findByCPDefinitionId(cpDefinitionId, start, end);
+		return cpDefinitionOptionRelPersistence.findByCPDefinitionId(
+			cpDefinitionId, start, end);
 	}
 
 	@Override
@@ -163,14 +159,14 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		long cpDefinitionId, int start, int end,
 		OrderByComparator<CPDefinitionOptionRel> orderByComparator) {
 
-		return cpDefinitionOptionRelPersistence.
-			findByCPDefinitionId(cpDefinitionId, start, end, orderByComparator);
+		return cpDefinitionOptionRelPersistence.findByCPDefinitionId(
+			cpDefinitionId, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getCPDefinitionOptionRelsCount(long cpDefinitionId) {
-		return cpDefinitionOptionRelPersistence.
-			countByCPDefinitionId(cpDefinitionId);
+		return cpDefinitionOptionRelPersistence.countByCPDefinitionId(
+			cpDefinitionId);
 	}
 
 	@Override

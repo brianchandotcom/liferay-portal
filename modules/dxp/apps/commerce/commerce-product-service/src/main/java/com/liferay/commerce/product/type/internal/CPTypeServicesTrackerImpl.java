@@ -75,7 +75,7 @@ public class CPTypeServicesTrackerImpl implements CPTypeServicesTracker {
 			cpTypeServiceWrappers, _cpTypeServiceWrapperDisplayOrderComparator);
 
 		for (ServiceWrapper<CPType> cpTypeServiceWrapper :
-					cpTypeServiceWrappers) {
+				cpTypeServiceWrappers) {
 
 			cpTypes.add(cpTypeServiceWrapper.getService());
 		}
@@ -87,8 +87,8 @@ public class CPTypeServicesTrackerImpl implements CPTypeServicesTracker {
 	protected void activate(BundleContext bundleContext) {
 		_cpTypeServiceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, CPType.class, "commerce.product.type.name",
-			ServiceTrackerCustomizerFactory.
-				<CPType>serviceWrapper(bundleContext));
+			ServiceTrackerCustomizerFactory.<CPType>serviceWrapper(
+				bundleContext));
 	}
 
 	@Deactivate

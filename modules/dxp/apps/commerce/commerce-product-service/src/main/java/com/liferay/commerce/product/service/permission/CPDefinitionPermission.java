@@ -82,8 +82,8 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
-			_cpDefinitionOptionRelLocalService.
-				getCPDefinitionOptionRel(cpDefinitionOptionRelId);
+			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
 
 		checkCPDefinitionOptionRel(
 			permissionChecker, cpDefinitionOptionRel, actionId);

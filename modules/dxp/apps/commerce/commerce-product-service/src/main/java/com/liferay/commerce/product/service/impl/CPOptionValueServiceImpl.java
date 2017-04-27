@@ -42,8 +42,8 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 			getPermissionChecker(), cpOptionId,
 			CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_VALUE);
 
-		return cpOptionValueLocalService.
-			addCPOptionValue(cpOptionId, titleMap, priority, serviceContext);
+		return cpOptionValueLocalService.addCPOptionValue(
+			cpOptionId, titleMap, priority, serviceContext);
 	}
 
 	@Override
@@ -100,8 +100,8 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 
 		CPOptionPermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
-		return cpOptionValueLocalService.
-			getCPOptionValues(cpOptionId, start, end);
+		return cpOptionValueLocalService.getCPOptionValues(
+			cpOptionId, start, end);
 	}
 
 	@Override
@@ -112,8 +112,8 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 
 		CPOptionPermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
-		return cpOptionValueLocalService.
-			getCPOptionValues(cpOptionId, start, end, orderByComparator);
+		return cpOptionValueLocalService.getCPOptionValues(
+			cpOptionId, start, end, orderByComparator);
 	}
 
 	@Override
@@ -134,9 +134,8 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 			getPermissionChecker(), cpOptionValueId,
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_OPTION_VALUE);
 
-		return cpOptionValueLocalService.
-			updateCPOptionValue(
-				cpOptionValueId, titleMap, priority, serviceContext);
+		return cpOptionValueLocalService.updateCPOptionValue(
+			cpOptionValueId, titleMap, priority, serviceContext);
 	}
 
 }

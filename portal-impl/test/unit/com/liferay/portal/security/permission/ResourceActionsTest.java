@@ -25,9 +25,6 @@ import com.liferay.portal.xml.SAXReaderImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-
 import java.util.List;
 
 import org.junit.Assert;
@@ -40,7 +37,7 @@ import org.junit.Test;
 public class ResourceActionsTest {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		UnsecureSAXReaderUtil unsecureSAXReaderUtil =
@@ -56,30 +53,19 @@ public class ResourceActionsTest {
 			resourceActionsImpl, "portletLocalService",
 			ProxyUtil.newProxyInstance(
 				_classLoader, new Class<?>[] {PortletLocalService.class},
-				new InvocationHandler() {
-
-					@Override
-					public Object invoke(
-							Object proxy, Method method, Object[] args)
-						throws Throwable {
-
-						return new PortletImpl(_COMPANY_ID, (String)args[0]);
-					}
-
-				}));
+				(proxy, method, args) -> new PortletImpl(
+					RandomTestUtil.randomLong(), (String)args[0])));
 
 		resourceActionsImpl.afterPropertiesSet();
 
 		resourceActionsUtil.setResourceActions(resourceActionsImpl);
-	}
-
-	@Test
-	public void testModelGetsRemovedWhenRemovingAllReferencedPortlets()
-		throws Exception {
 
 		ResourceActionsUtil.read(
 			null, _classLoader, _SOURCE_PATH + "default.xml");
+	}
 
+	@Test
+	public void testRemovePortletResource() {
 		List<String> portletNames = ResourceActionsUtil.getPortletNames();
 
 		Assert.assertTrue(
@@ -120,8 +106,6 @@ public class ResourceActionsTest {
 		Assert.assertFalse(
 			modelNames.toString(), modelNames.contains(_MODEL_NAME));
 	}
-
-	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private static final String _MODEL_NAME =
 		"com.liferay.test.portlet.TestModel";

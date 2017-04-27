@@ -26,7 +26,6 @@
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>
-
 	<portlet-resource>
 		<portlet-name>com_liferay_test_portlet_TestPortlet2</portlet-name>
 		<permissions>
@@ -51,7 +50,6 @@
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>
-
 	<model-resource>
 		<model-name>com.liferay.test.portlet.TestModel</model-name>
 		<portlet-ref>

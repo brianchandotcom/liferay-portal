@@ -33,7 +33,7 @@ else {
 	<portlet:actionURL name="editProductInstance" var="copyURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.COPY %>" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
-		<portlet:param name="cpInstanceId" value="<%= String.valueOf(cpInstance.getCPDefinitionId()) %>" />
+		<portlet:param name="cpInstanceId" value="<%= String.valueOf(cpInstance.getCPInstanceId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
@@ -44,7 +44,7 @@ else {
 	<portlet:actionURL name="editProductInstance" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
-		<portlet:param name="cpInstanceId" value="<%= String.valueOf(cpInstance.getCPDefinitionId()) %>" />
+		<portlet:param name="cpInstanceId" value="<%= String.valueOf(cpInstance.getCPInstanceId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.document.library.kernel.document.conversion;
 
 import java.io.File;
 import java.io.IOException;
